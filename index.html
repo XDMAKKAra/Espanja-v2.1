@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kielio — Harjoittele kieliä yo-kokeeseen</title>
+  <meta name="description" content="Kielio on tekoälypohjainen harjoitteluympäristö espanjan ylioppilaskirjoituksiin. Sanasto, kielioppi, luetun ymmärtäminen ja kirjoittaminen." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="landing.css" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <a href="/" class="nav-logo">Kiel<span>io</span></a>
+    <div class="nav-links">
+      <a href="#features">Toiminnot</a>
+      <a href="#how">Miten toimii</a>
+      <a href="#cta">Aloita</a>
+    </div>
+    <a href="app.html" class="nav-cta">Aloita harjoittelu →</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-tag">Espanja &nbsp;·&nbsp; Lyhyt oppimäärä &nbsp;·&nbsp; Yo-koe</div>
+
+    <h1>Harjoittele espanjaa.<br/><em>Pärjää yo-kokeessa.</em></h1>
+
+    <p class="hero-sub">
+      Kielio on tekoälypohjainen harjoitteluympäristö ylioppilaskirjoituksiin.
+      Sanastoa, kielioppia, luetun ymmärtämistä ja kirjoittamista — kaikki samassa paikassa.
+    </p>
+
+    <div class="hero-actions">
+      <a href="app.html" class="btn-hero">Aloita harjoittelu — ilmaiseksi →</a>
+      <span class="hero-note">Ei rekisteröitymistä &nbsp;·&nbsp; Toimii heti</span>
+    </div>
+
+    <!-- Floating exercise card mockup -->
+    <div class="hero-card-wrap">
+      <div class="hc">
+        <div class="hc-meta">
+          <span class="hc-badge mode">📚 Sanasto</span>
+          <span class="hc-badge level">Taso M</span>
+        </div>
+        <div class="hc-question">¿Qué significa 'el ayuntamiento'?</div>
+        <div class="hc-options">
+          <div class="hc-opt correct">✓ kaupungintalo</div>
+          <div class="hc-opt">sairaala</div>
+          <div class="hc-opt">koulu</div>
+          <div class="hc-opt">yliopisto</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS BAR -->
+  <div class="stats-bar">
+    <div class="stat-item">
+      <span class="stat-num">4</span>
+      <span class="stat-label">Osa-aluetta</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">7</span>
+      <span class="stat-label">Tasoa (I – L)</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">AI</span>
+      <span class="stat-label">Arviointi</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">YTL</span>
+      <span class="stat-label">Kriteerit</span>
+    </div>
+  </div>
+
+  <!-- FEATURES -->
+  <section id="features" class="section">
+    <div class="section-tag">Toiminnot</div>
+    <h2>Kaikki yo-kokeen<br/>osa-alueet</h2>
+    <p class="section-sub">
+      Harjoittele juuri niitä asioita, joita yo-kokeessa testataan.
+      Tekoäly luo uudet tehtävät joka kerta.
+    </p>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <span class="feature-icon">📚</span>
+        <div class="feature-title">Sanasto</div>
+        <div class="feature-desc">
+          Adaptiivinen monivalinta. Taso nousee tai laskee suorituksen mukaan.
+          Aiheina yhteiskunta, kulttuuri, matkailu, terveys ja paljon muuta.
+        </div>
+        <span class="feature-tag">Adaptiivinen · Tasot I–L</span>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-icon">🔧</span>
+        <div class="feature-title">Kielioppi</div>
+        <div class="feature-desc">
+          Kohdennetut harjoitukset YTL:n yleisimpiin virheisiin:
+          ser/estar, hay, subjunktiivi, konditionaali, preteriti vs. imperfekti.
+        </div>
+        <span class="feature-tag">7 aihetta · 5 tasoa</span>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-icon">📖</span>
+        <div class="feature-title">Luetun ymmärtäminen</div>
+        <div class="feature-desc">
+          AI-luotu espanjankielinen teksti + 4 kysymystä:
+          monivalinta, oikein/väärin ja lyhyt vastaus. Tekstit vastaavat oikeaa yo-koetta.
+        </div>
+        <span class="feature-tag">AI-luotu teksti · 6 aihealuetta</span>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-icon">✍️</span>
+        <div class="feature-title">Kirjoittaminen</div>
+        <div class="feature-desc">
+          Lyhyt (33 p) tai laajempi (66 p) kirjoitustehtävä. Tekoäly arvioi
+          YTL-kriteereillä: viestinnällisyys, tehtävänanto, kielelliset resurssit.
+        </div>
+        <span class="feature-tag">33 + 66 pistettä · YTL-kriteerit</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section id="how" class="section" style="padding-top: 0">
+    <div class="section-tag">Miten toimii</div>
+    <h2>Kolme askelta<br/>parempaan arvosanaan</h2>
+    <p class="section-sub">Ei rekisteröitymistä. Ei asennusta. Avaa selain ja aloita.</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-title">Valitse osa-alue</div>
+        <div class="step-desc">
+          Sanasto, kielioppi, luetun ymmärtäminen tai kirjoittaminen —
+          tai harjoittele kaikkia vuorotellen.
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-title">Valitse tasosi</div>
+        <div class="step-desc">
+          Tasot I–L vastaavat yo-kokeen arvosteluasteikkoa.
+          Taso nousee automaattisesti onnistumisten myötä.
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-title">Harjoittele ja kehity</div>
+        <div class="step-desc">
+          Tekoäly luo uudet tehtävät joka kerralla ja antaa
+          yksityiskohtaisen palautteen suorituksestasi.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div id="cta" class="cta-section">
+    <h2>Valmis aloittamaan?</h2>
+    <p>Ilmainen. Ei rekisteröitymistä. Aloita nyt.</p>
+    <a href="app.html" class="btn-hero">Aloita harjoittelu →</a>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Kiel<span>io</span></div>
+    <div class="footer-text">
+      Tekoälypohjainen kieliharjoittelu yo-kokeeseen<br/>
+      © 2025 Kielio
+    </div>
+    <div class="footer-coming">Tulossa: ruotsi · saksa · ranska</div>
+  </footer>
+
+</body>
+</html>

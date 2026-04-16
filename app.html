@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kielio — Harjoittele</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- SCREEN: Auth (login / register) -->
+  <div id="screen-auth" class="screen active">
+    <div class="auth-inner">
+      <a href="index.html" class="logo">Kiel<span>io</span></a>
+      <h1 id="auth-title">Kirjaudu sisään</h1>
+      <p class="subtitle">Seuraa edistymistäsi ja jatka siitä mihin jäit.</p>
+
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="tab-login">Kirjaudu</button>
+        <button class="auth-tab" id="tab-register">Rekisteröidy</button>
+      </div>
+
+      <div class="config-block">
+        <label>Sähköposti</label>
+        <input type="email" id="auth-email" class="auth-input" placeholder="sinä@esimerkki.fi" autocomplete="email" />
+      </div>
+      <div class="config-block">
+        <label>Salasana</label>
+        <input type="password" id="auth-password" class="auth-input" placeholder="••••••••" autocomplete="current-password" />
+      </div>
+
+      <div class="auth-error hidden" id="auth-error"></div>
+      <button class="btn-primary" id="btn-auth-submit">Kirjaudu sisään →</button>
+
+      <button class="btn-ghost" id="btn-guest">Jatka ilman tiliä →</button>
+    </div>
+  </div>
+
+  <!-- SCREEN: Dashboard -->
+  <div id="screen-dashboard" class="screen">
+    <div class="dashboard-inner">
+
+      <div class="dash-header">
+        <div>
+          <div class="dash-greeting">Hei, <span id="dash-username"></span>!</div>
+          <div class="dash-motivation" id="dash-motivation"></div>
+        </div>
+        <button class="btn-logout" id="btn-logout">Kirjaudu ulos</button>
+      </div>
+
+      <!-- Stats row: estimated level, streak, this week -->
+      <div class="dash-stats-row">
+        <div class="dash-stat-card">
+          <div class="dash-stat-label">Arvioitu taso</div>
+          <div class="dash-stat-value dash-stat-grade" id="dash-est-level">—</div>
+        </div>
+        <div class="dash-stat-card">
+          <div class="dash-stat-label">Putki</div>
+          <div class="dash-stat-value" id="dash-streak">0</div>
+        </div>
+        <div class="dash-stat-card">
+          <div class="dash-stat-label">Tällä viikolla</div>
+          <div class="dash-stat-value" id="dash-week-val">0<span class="week-trend-arrow same" id="dash-week-trend">→</span></div>
+        </div>
+      </div>
+
+      <!-- Progress chart -->
+      <div class="dash-chart-section">
+        <div class="dash-section-label">Kehitys ajan mittaan</div>
+        <div class="dash-chart-container" id="dash-chart">
+          <div class="dash-chart-empty">Tee ensimmäinen harjoitus nähdäksesi kehityksesi!</div>
+        </div>
+      </div>
+
+      <div class="dash-modes" id="dash-modes"></div>
+
+      <div id="dash-recent-wrap" class="hidden">
+        <div class="dash-section-label">Viimeisimmät harjoitukset</div>
+        <div id="dash-recent-list"></div>
+      </div>
+
+      <div class="dash-empty hidden" id="dash-empty">
+        <p>Et ole vielä suorittanut yhtään harjoitusta.</p>
+        <p>Aloita alta!</p>
+      </div>
+
+      <button class="btn-primary" id="btn-dash-start">Aloita harjoittelu →</button>
+    </div>
+  </div>
+
+  <!-- SCREEN: Start -->
+  <div id="screen-start" class="screen">
+    <div class="start-inner">
+      <div class="start-topbar">
+        <a href="index.html" class="logo">Kiel<span>io</span></a>
+        <button class="btn-dash-back hidden" id="btn-back-to-dash">← Omat tiedot</button>
+      </div>
+      <h1>Espanja<br/>Yo-koe</h1>
+      <p class="subtitle">Adaptiivinen tekoälyharjoittelu ylioppilaskirjoituksiin</p>
+
+      <!-- Mode picker -->
+      <div class="config-block">
+        <label>Harjoittelutapa</label>
+        <div class="mode-picker" id="mode-picker">
+          <button class="mode-btn active" data-mode="vocab">
+            <span class="mode-icon">📚</span>
+            <span class="mode-title">Sanasto</span>
+            <span class="mode-desc">Monivalinta · adaptiivinen</span>
+          </button>
+          <button class="mode-btn" data-mode="grammar">
+            <span class="mode-icon">🔧</span>
+            <span class="mode-title">Kielioppi</span>
+            <span class="mode-desc">ser/estar · subj. · kondit.</span>
+          </button>
+          <button class="mode-btn" data-mode="reading">
+            <span class="mode-icon">📖</span>
+            <span class="mode-title">Luetun ymmärtäminen</span>
+            <span class="mode-desc">Teksti + kysymykset</span>
+          </button>
+          <button class="mode-btn" data-mode="writing">
+            <span class="mode-icon">✍️</span>
+            <span class="mode-title">Kirjoittaminen</span>
+            <span class="mode-desc">Tehtävä + AI-palaute · 99 p</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Vocab config (shown in vocab mode) -->
+      <div id="vocab-config">
+        <div class="config-block">
+          <label>Lähtötaso</label>
+          <div class="level-picker" id="level-picker">
+            <button class="lvl-btn" data-level="I">I</button>
+            <button class="lvl-btn" data-level="A">A</button>
+            <button class="lvl-btn active" data-level="B">B</button>
+            <button class="lvl-btn" data-level="C">C</button>
+            <button class="lvl-btn" data-level="M">M</button>
+            <button class="lvl-btn" data-level="E">E</button>
+            <button class="lvl-btn" data-level="L">L</button>
+          </div>
+        </div>
+        <div class="config-block">
+          <label>Aihe</label>
+          <select id="topic-select">
+            <option value="general vocabulary">Yleinen sanasto</option>
+            <option value="society and politics">Yhteiskunta &amp; politiikka</option>
+            <option value="environment and nature">Ympäristö &amp; luonto</option>
+            <option value="health and body">Terveys &amp; keho</option>
+            <option value="travel and transport">Matkailu &amp; liikenne</option>
+            <option value="culture and arts">Kulttuuri &amp; taiteet</option>
+            <option value="work and economy">Työ &amp; talous</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Writing config (shown in writing mode) -->
+      <div id="writing-config" class="hidden">
+        <div class="config-block">
+          <label>Tehtävätyyppi</label>
+          <div class="task-type-picker" id="task-type-picker">
+            <button class="task-type-btn active" data-type="short">
+              <span class="task-type-title">Lyhyt tehtävä</span>
+              <span class="task-type-pts">33 p · 160–240 merkkiä</span>
+            </button>
+            <button class="task-type-btn" data-type="long">
+              <span class="task-type-title">Laajempi tehtävä</span>
+              <span class="task-type-pts">66 p · 300–450 merkkiä</span>
+            </button>
+          </div>
+        </div>
+        <div class="config-block">
+          <label>Aihe</label>
+          <select id="writing-topic-select">
+            <option value="general">Sekalaiset aiheet</option>
+            <option value="environment and sustainability">Ympäristö &amp; kestävä kehitys</option>
+            <option value="social life and relationships">Ihmissuhteet &amp; arki</option>
+            <option value="travel and places">Matkailu &amp; paikat</option>
+            <option value="culture and identity">Kulttuuri &amp; identiteetti</option>
+            <option value="work and future">Työ &amp; tulevaisuus</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Grammar config -->
+      <div id="grammar-config" class="hidden">
+        <div class="config-block">
+          <label>Kielioppiaihe</label>
+          <select id="grammar-topic-select">
+            <option value="mixed">Sekaisin — kaikki aiheet</option>
+            <option value="ser_estar">Ser vs. Estar</option>
+            <option value="hay_estar">Hay vs. Estar</option>
+            <option value="subjunctive">Subjunktiivi (ojalá, para que...)</option>
+            <option value="conditional">Konditionaali (me gustaría...)</option>
+            <option value="preterite_imperfect">Preteriti vs. Imperfekti</option>
+            <option value="pronouns">Pronominit ja relatiivit</option>
+          </select>
+        </div>
+        <div class="config-block">
+          <label>Taso</label>
+          <div class="level-picker" id="grammar-level-picker">
+            <button class="lvl-btn" data-level="B">B</button>
+            <button class="lvl-btn active" data-level="C">C</button>
+            <button class="lvl-btn" data-level="M">M</button>
+            <button class="lvl-btn" data-level="E">E</button>
+            <button class="lvl-btn" data-level="L">L</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Reading config -->
+      <div id="reading-config" class="hidden">
+        <div class="config-block">
+          <label>Tekstin aihe</label>
+          <select id="reading-topic-select">
+            <option value="animals and nature">Eläimet &amp; luonto</option>
+            <option value="travel and places">Matkailu &amp; paikat</option>
+            <option value="culture and history">Kulttuuri &amp; historia</option>
+            <option value="social media and technology">Sosiaalinen media &amp; teknologia</option>
+            <option value="health and sports">Terveys &amp; urheilu</option>
+            <option value="environment">Ympäristö &amp; kestävyys</option>
+          </select>
+        </div>
+        <div class="config-block">
+          <label>Taso</label>
+          <div class="level-picker" id="reading-level-picker">
+            <button class="lvl-btn" data-level="B">B</button>
+            <button class="lvl-btn active" data-level="C">C</button>
+            <button class="lvl-btn" data-level="M">M</button>
+            <button class="lvl-btn" data-level="E">E</button>
+            <button class="lvl-btn" data-level="L">L</button>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn-primary" id="btn-start">Aloita harjoittelu →</button>
+    </div>
+  </div>
+
+  <!-- SCREEN: Loading -->
+  <div id="screen-loading" class="screen">
+    <div class="loading-inner">
+      <div class="spinner"></div>
+      <p id="loading-text">Luodaan tehtäviä...</p>
+    </div>
+  </div>
+
+  <!-- SCREEN: Exercise (vocab mode) -->
+  <div id="screen-exercise" class="screen">
+    <div class="exercise-inner">
+      <div class="ex-header">
+        <div class="ex-meta">
+          <span id="ex-counter">Q 1 / 12</span>
+          <span id="ex-round" class="ex-round-badge">Round 1/3</span>
+          <span class="ex-level-badge" id="ex-level-badge">B</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+      </div>
+
+      <div class="question-block">
+        <p class="question-label">¿Qué significa?</p>
+        <h2 id="question-text">Loading...</h2>
+      </div>
+
+      <div class="options-grid" id="options-grid"></div>
+
+      <div class="explanation-block hidden" id="explanation-block">
+        <p id="explanation-text"></p>
+        <button class="btn-next" id="btn-next">Seuraava →</button>
+      </div>
+
+      <div class="kbd-hint" id="vocab-kbd-hint">
+        <span class="kbd-key">A</span><span class="kbd-key">B</span><span class="kbd-key">C</span><span class="kbd-key">D</span>
+        <span class="kbd-sep">·</span>
+        <span class="kbd-key">↵</span><span class="kbd-label">seuraava</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCREEN: Level transition -->
+  <div id="screen-level" class="screen">
+    <div class="level-inner">
+      <p class="level-transition-label">kierros valmis</p>
+      <div class="level-transition-arrow" id="level-arrow">↑</div>
+      <div class="level-transition-display" id="level-new">C</div>
+      <p class="level-transition-sub" id="level-sub">3/4 oikein · taso nousee!</p>
+      <p class="level-next-info">Kierros <span id="level-next-round">2</span>/3 alkaa nyt</p>
+      <button class="btn-primary" id="btn-continue">Jatka →</button>
+    </div>
+  </div>
+
+  <!-- SCREEN: Results (vocab mode) -->
+  <div id="screen-results" class="screen">
+    <div class="results-inner">
+      <p class="results-label">Arvioitu yo-arvosana</p>
+      <div class="grade-display" id="grade-display">M</div>
+      <div class="score-row"><span id="score-text">7 / 12 oikein · 58%</span></div>
+      <div class="results-timer hidden" id="results-timer"></div>
+      <div class="journey-row" id="journey-text">B → C</div>
+      <div class="improvement-banner hidden" id="improvement-banner"></div>
+      <div class="grade-scale">
+        <span>I</span><span>A</span><span>B</span><span>C</span><span>M</span><span>E</span><span class="highlight-grade" id="scale-highlight">L</span>
+      </div>
+      <button class="btn-primary" id="btn-restart">Uusi harjoitus →</button>
+    </div>
+  </div>
+
+  <!-- SCREEN: Writing task -->
+  <div id="screen-writing" class="screen">
+    <div class="writing-inner">
+      <div class="writing-header">
+        <div class="writing-meta">
+          <span class="writing-type-badge" id="writing-type-badge">Lyhyt tehtävä</span>
+          <span class="writing-pts-badge" id="writing-pts-badge">33 p</span>
+        </div>
+        <div class="writing-limit-info" id="writing-limit-info">160–240 merkkiä (ei välilyöntejä)</div>
+      </div>
+
+      <div class="writing-situation" id="writing-situation"></div>
+
+      <div class="writing-prompt-block">
+        <p class="writing-prompt-label">Tehtävä</p>
+        <p class="writing-prompt-text" id="writing-prompt-text">Loading...</p>
+      </div>
+
+      <div class="writing-requirements" id="writing-requirements"></div>
+
+      <div class="textarea-wrapper">
+        <textarea
+          id="writing-input"
+          placeholder="Kirjoita vastauksesi tähän espanjaksi..."
+          spellcheck="false"
+        ></textarea>
+        <div class="char-counter" id="char-counter">
+          <span id="char-count">0</span>
+          <span class="char-sep">/</span>
+          <span id="char-max">240</span>
+          <span class="char-label">merkkiä</span>
+        </div>
+        <div class="char-bar-wrap">
+          <div class="char-bar-min" id="char-bar-min"></div>
+          <div class="char-bar-fill" id="char-bar-fill"></div>
+        </div>
+      </div>
+
+      <button class="btn-primary" id="btn-submit-writing" disabled>Lähetä arvioitavaksi →</button>
+    </div>
+  </div>
+
+  <!-- SCREEN: Writing feedback -->
+  <div id="screen-writing-feedback" class="screen">
+    <div class="feedback-inner">
+      <div class="feedback-score-row">
+        <div class="feedback-score-main">
+          <span class="feedback-score-num" id="feedback-score-num">27</span>
+          <span class="feedback-score-denom" id="feedback-score-denom">/ 33</span>
+        </div>
+        <div class="feedback-grade-badge" id="feedback-grade-badge">M</div>
+      </div>
+
+      <div class="feedback-criteria" id="feedback-criteria"></div>
+
+      <div class="feedback-section" id="feedback-errors-section">
+        <h3 class="feedback-section-title">Korjattavaa</h3>
+        <div id="feedback-errors"></div>
+      </div>
+
+      <div class="feedback-section" id="feedback-positives-section">
+        <h3 class="feedback-section-title">Hyvin tehty</h3>
+        <ul id="feedback-positives"></ul>
+      </div>
+
+      <div class="feedback-overall" id="feedback-overall"></div>
+
+      <div class="feedback-actions">
+        <button class="btn-secondary" id="btn-try-again">Uusi tehtävä</button>
+        <button class="btn-primary" id="btn-back-home">Etusivulle →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCREEN: Grammar drill -->
+  <div id="screen-grammar" class="screen">
+    <div class="exercise-inner">
+      <div class="ex-header">
+        <div class="ex-meta">
+          <span id="gram-counter">1 / 6</span>
+          <span class="ex-round-badge" id="gram-topic-badge"></span>
+          <span class="ex-level-badge" id="gram-level-badge">C</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" id="gram-progress-fill"></div></div>
+      </div>
+      <div class="question-block">
+        <p class="question-label" id="gram-instruction">Täydennä aukko.</p>
+        <h2 id="gram-sentence" class="gram-sentence">Loading...</h2>
+      </div>
+      <div class="options-grid" id="gram-options-grid"></div>
+      <div class="explanation-block hidden" id="gram-explanation-block">
+        <div class="gram-rule-tag" id="gram-rule-tag"></div>
+        <p id="gram-explanation-text"></p>
+        <button class="btn-next" id="gram-btn-next">Seuraava →</button>
+      </div>
+      <div class="kbd-hint">
+        <span class="kbd-key">A</span><span class="kbd-key">B</span><span class="kbd-key">C</span><span class="kbd-key">D</span>
+        <span class="kbd-sep">·</span>
+        <span class="kbd-key">↵</span><span class="kbd-label">seuraava</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCREEN: Grammar results -->
+  <div id="screen-grammar-results" class="screen">
+    <div class="results-inner">
+      <p class="results-label">Kielioppiharjoitus valmis</p>
+      <div class="grade-display" id="gram-score-display">5/6</div>
+      <div class="score-row"><span id="gram-score-text">5 / 6 oikein</span></div>
+      <div class="gram-error-summary" id="gram-error-summary"></div>
+      <button class="btn-primary" id="gram-btn-restart">Uusi harjoitus →</button>
+    </div>
+  </div>
+
+  <!-- SCREEN: Reading comprehension -->
+  <div id="screen-reading" class="screen">
+    <div class="reading-inner">
+
+      <div id="reading-sub-text">
+        <div class="reading-header-bar">
+          <span class="reading-source-tag" id="reading-source-tag">Texto</span>
+          <span class="reading-level-badge" id="reading-level-badge">C</span>
+        </div>
+        <h3 class="reading-title" id="reading-title">Título</h3>
+        <div class="reading-text-body" id="reading-text-body"></div>
+        <button class="btn-primary" id="btn-start-questions">Aloita kysymykset →</button>
+      </div>
+
+      <div id="reading-sub-questions" class="hidden">
+        <div class="ex-header">
+          <div class="ex-meta">
+            <span id="reading-q-counter">K 1 / 4</span>
+            <span class="reading-q-type-badge" id="reading-q-type">Monivalinta</span>
+          </div>
+          <div class="progress-bar"><div class="progress-fill" id="reading-progress-fill"></div></div>
+        </div>
+
+        <details class="reading-text-ref">
+          <summary>Näytä teksti ▾</summary>
+          <div class="reading-text-ref-content" id="reading-text-ref-content"></div>
+        </details>
+
+        <div class="question-block">
+          <h2 id="reading-question-text" class="reading-question-h2">Loading...</h2>
+        </div>
+
+        <div id="reading-options-container">
+          <div class="options-grid" id="reading-options-grid"></div>
+        </div>
+        <div id="reading-tf-container" class="hidden">
+          <div class="tf-buttons">
+            <button class="tf-btn" id="tf-true">✓ Oikein</button>
+            <button class="tf-btn" id="tf-false">✗ Väärin</button>
+          </div>
+          <div class="kbd-hint" style="justify-content:center">
+            <span class="kbd-key">T</span><span class="kbd-label">Oikein</span>
+            <span class="kbd-sep">·</span>
+            <span class="kbd-key">F</span><span class="kbd-label">Väärin</span>
+          </div>
+        </div>
+        <div id="reading-short-container" class="hidden">
+          <textarea id="reading-short-input" class="reading-short-textarea" placeholder="Kirjoita vastauksesi suomeksi..."></textarea>
+          <button class="btn-primary" id="reading-short-submit">Tarkista →</button>
+        </div>
+
+        <div class="explanation-block hidden" id="reading-explanation-block">
+          <p id="reading-explanation-text"></p>
+          <button class="btn-next" id="reading-btn-next">Seuraava →</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SCREEN: Reading results -->
+  <div id="screen-reading-results" class="screen">
+    <div class="results-inner">
+      <p class="results-label">Luetun ymmärtäminen</p>
+      <div class="grade-display" id="reading-score-display">3/4</div>
+      <div class="score-row"><span id="reading-score-text">3 / 4 oikein</span></div>
+      <div class="feedback-overall" id="reading-overall-feedback" style="margin-bottom:32px;text-align:left"></div>
+      <div style="display:flex;gap:10px">
+        <button class="btn-secondary" id="reading-btn-new">Uusi teksti</button>
+        <button class="btn-primary" id="reading-btn-home">Etusivulle →</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
