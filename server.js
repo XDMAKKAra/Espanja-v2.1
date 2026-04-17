@@ -16,6 +16,7 @@ import exerciseRoutes from "./routes/exercises.js";
 import writingRoutes from "./routes/writing.js";
 import emailRoutes from "./routes/email.js";
 import paymentRoutes, { handleWebhook } from "./routes/stripe.js";
+import examRoutes from "./routes/exam.js";
 
 const app = express();
 
@@ -83,6 +84,7 @@ app.use("/api", exerciseRoutes);
 app.use("/api", writingRoutes);
 app.use("/api/email", emailRoutes);
 app.use("/api/payments", paymentRoutes);
+app.use("/api/exam", examRoutes);
 
 // ─── Start ───────────────────────────────────────────────────────────────────
 

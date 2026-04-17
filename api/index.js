@@ -10,6 +10,7 @@ try {
   const { default: writingRoutes } = await import("../routes/writing.js");
   const { default: emailRoutes } = await import("../routes/email.js");
   const { default: paymentRoutes, handleWebhook } = await import("../routes/stripe.js");
+  const { default: examRoutes } = await import("../routes/exam.js");
 
   app = express();
 
@@ -33,6 +34,7 @@ try {
   app.use("/api", writingRoutes);
   app.use("/api/email", emailRoutes);
   app.use("/api/payments", paymentRoutes);
+  app.use("/api/exam", examRoutes);
 
 } catch (e) {
   const { default: express } = await import("express");

@@ -13,6 +13,7 @@ import { initGrammar, loadGrammarDrill } from "./screens/grammar.js";
 import { initReading, loadReadingTask } from "./screens/reading.js";
 import { initWriting, showProUpsell, startCheckout, openBillingPortal, loadWritingTask } from "./screens/writing.js";
 import { initExam, startMockExam } from "./screens/exam.js";
+import { initFullExam, startFullExam } from "./screens/fullExam.js";
 
 // ─── Inject show into api.js (avoids circular dep) ─────────────────────────
 setShowFn(show);
@@ -78,6 +79,7 @@ initGrammar({ loadDashboard, saveProgress });
 initReading({ loadDashboard, saveProgress, showProUpsell });
 initWriting({ loadDashboard, saveProgress });
 initExam({ loadDashboard, saveProgress, shareResult });
+initFullExam({ loadDashboard, saveProgress, shareResult });
 
 // ─── Sidebar navigation clicks ─────────────────────────────────────────────
 
@@ -90,8 +92,7 @@ document.querySelectorAll(".sidebar-item[data-nav], .mobile-nav-item[data-nav]")
     if (nav === "dashboard") {
       loadDashboard();
     } else if (nav === "exam") {
-      state.mode = "exam";
-      show("screen-start");
+      startFullExam("demo");
     } else {
       showModePage(nav);
     }
@@ -160,6 +161,12 @@ if ($("btn-start-writing")) $("btn-start-writing").addEventListener("click", () 
 // Pro upgrade buttons on mode pages
 if ($("reading-upgrade-btn")) $("reading-upgrade-btn").addEventListener("click", () => startCheckout());
 if ($("writing-upgrade-btn")) $("writing-upgrade-btn").addEventListener("click", () => startCheckout());
+
+// Full exam start button
+const fullExamBtn = $("btn-start-full-exam");
+if (fullExamBtn) {
+  fullExamBtn.addEventListener("click", () => startFullExam("demo"));
+}
 
 // Sidebar logout
 const sidebarLogout = $("sidebar-logout");

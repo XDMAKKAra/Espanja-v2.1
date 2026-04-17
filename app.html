@@ -172,7 +172,18 @@
         <p>Aloita alta!</p>
       </div>
 
-      <button class="btn-primary" id="btn-dash-start">Aloita harjoittelu →</button>
+      <!-- Full exam section -->
+      <div class="dash-section-label" style="margin-top:24px">Yo-koesimulaatio</div>
+      <div class="dash-full-exam-card" id="dash-full-exam-card">
+        <div class="dash-full-exam-info">
+          <div class="dash-full-exam-title">Tayskoe — 4 osaa, 199p</div>
+          <div class="dash-full-exam-desc">Luetun ymmartaminen, rakenteet, lyhyt ja pitka kirjoitustehtava. Aikaraja 2h (demo) tai 6h (taydellinen).</div>
+        </div>
+        <button class="btn-primary" id="btn-start-full-exam">Aloita tayskoe</button>
+      </div>
+      <div id="dash-exam-history"></div>
+
+      <button class="btn-primary" id="btn-dash-start" style="margin-top:16px">Aloita harjoittelu →</button>
     </div>
   </div>
 
@@ -856,6 +867,52 @@
       <div class="auth-error hidden" id="reset-error"></div>
       <div class="auth-success hidden" id="reset-success"></div>
       <button class="btn-primary" id="btn-reset-submit">Vaihda salasana →</button>
+    </div>
+  </div>
+
+  <!-- SCREEN: Full Exam -->
+  <div id="screen-full-exam" class="screen">
+    <div class="exam-inner">
+      <div class="exam-header">
+        <div>
+          <div class="exam-title">Yo-koe — espanja, lyhyt</div>
+          <div class="exam-subtitle" id="full-exam-part-label">Osa 1: Luetun ymmärtäminen</div>
+        </div>
+        <div class="exam-timer" id="full-exam-timer">02:00:00</div>
+      </div>
+      <div class="exam-progress-bar"><div class="exam-progress-fill" id="full-exam-progress-fill"></div></div>
+
+      <!-- Part tabs -->
+      <div class="exam-tabs" id="full-exam-tabs">
+        <button class="exam-tab active" data-part="1">1. Luetun ymm.</button>
+        <button class="exam-tab" data-part="2">2. Rakenteet</button>
+        <button class="exam-tab" data-part="3">3. Lyhyt kirj.</button>
+        <button class="exam-tab" data-part="4">4. Pitkä kirj.</button>
+      </div>
+
+      <!-- Part content (swapped by JS) -->
+      <div id="full-exam-content"></div>
+
+      <div class="exam-actions" style="display:flex;gap:10px;margin-top:24px">
+        <button class="btn-secondary" id="full-exam-btn-pause">Keskeytä</button>
+        <button class="btn-primary" id="full-exam-btn-submit">Palauta koe</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCREEN: Full Exam Results -->
+  <div id="screen-full-exam-results" class="screen">
+    <div class="results-inner" style="max-width:600px">
+      <p class="results-label">Yo-koe — espanja, lyhyt oppimäärä</p>
+      <div class="grade-display" id="full-exam-grade-display">—</div>
+      <div id="full-exam-points" class="exam-points"></div>
+      <div class="exam-results-breakdown" id="full-exam-breakdown"></div>
+      <div class="feedback-overall" id="full-exam-feedback" style="text-align:left;margin-top:16px;margin-bottom:32px"></div>
+      <button class="btn-share" id="btn-share-full-exam" style="margin-bottom:10px">Jaa tulos</button>
+      <div style="display:flex;gap:10px">
+        <button class="btn-secondary" id="full-exam-btn-retry">Uusi koe</button>
+        <button class="btn-primary" id="full-exam-btn-home">Etusivulle</button>
+      </div>
     </div>
   </div>
 

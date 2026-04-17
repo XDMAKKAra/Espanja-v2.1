@@ -184,6 +184,7 @@ function renderDashboard({
   }
 
   renderRecommendations(modeDaysAgo, modeStats, totalSessions);
+  loadExamHistory();
 
   if (recent.length > 0) {
     $("dash-recent-wrap").classList.remove("hidden");
@@ -401,6 +402,32 @@ function renderRecommendations(modeDaysAgo, modeStats, totalSessions) {
     card.innerHTML = `<span class="dash-rec-icon">${rec.icon}</span><div><div class="dash-rec-text">${rec.text}</div><div class="dash-rec-sub">${rec.sub}</div></div>`;
     card.addEventListener("click", () => navigateToMode(rec.mode));
     recList.appendChild(card);
+  }
+}
+
+async function loadExamHistory() {
+  const el = $("dash-exam-history");
+  if (!el) return;
+  try {
+    const res = await apiFetch(`${API}/api/exam/history`, { headers: authHeader() });
+    if (!res.ok) { el.innerHTML = ""; return; }
+    const { exams } = await res.json();
+    if (!exams || exams.length === 0) { el.innerHTML = ""; return; }
+
+    let html = '<div class="dash-section-label" style="margin-top:8px">Aiemmat kokeet</div>';
+    for (const ex of exams.slice(0, 5)) {
+      const date = ex.ended_at ? new Date(ex.ended_at).toLocaleDateString("fi-FI") : "—";
+      html += `<div class="dash-exam-history-item">
+        <div>
+          <span>${date}</span>
+          <span style="color:var(--text-muted);margin-left:8px">${ex.total_points}/${ex.max_points}p</span>
+        </div>
+        <div class="dash-exam-history-grade">${ex.final_grade || "—"}</div>
+      </div>`;
+    }
+    el.innerHTML = html;
+  } catch {
+    el.innerHTML = "";
   }
 }
 
