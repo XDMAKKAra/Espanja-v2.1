@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kielio — Tietosuojaseloste</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="landing.css" />
+  <style>
+    .page-content {
+      position: relative;
+      z-index: 1;
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 120px 32px 80px;
+    }
+    .page-content h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 8px;
+    }
+    .page-date {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 48px;
+    }
+    .page-content h2 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-top: 40px;
+      margin-bottom: 12px;
+    }
+    .page-content p, .page-content li {
+      font-size: 14px;
+      font-family: var(--mono);
+      color: var(--text-muted);
+      line-height: 1.8;
+      margin-bottom: 12px;
+    }
+    .page-content ul {
+      list-style: disc;
+      padding-left: 20px;
+      margin-bottom: 16px;
+    }
+    .page-content a { color: var(--brand-light); }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <a href="/" class="nav-logo">Kiel<span>io</span></a>
+    <div class="nav-links">
+      <a href="/pricing.html">Hinnoittelu</a>
+    </div>
+    <a href="app.html" class="nav-cta">Aloita harjoittelu</a>
+  </nav>
+
+  <div class="page-content">
+    <h1>Tietosuojaseloste</h1>
+    <p class="page-date">Päivitetty: 16. huhtikuuta 2026</p>
+
+    <h2>1. Rekisterinpitäjä</h2>
+    <p>Kielio<br/>Sähköposti: <a href="mailto:marcel.catchot@gmail.com">marcel.catchot@gmail.com</a></p>
+
+    <h2>2. Kerättyjen tietojen tarkoitus</h2>
+    <p>Keräämme tietoja Palvelun tarjoamiseksi, käyttäjakokemuksen parantamiseksi ja maksujen käsittelemiseksi.</p>
+
+    <h2>3. Kerättävät tiedot</h2>
+    <p>Voimme kerätä seuraavia tietoja:</p>
+    <ul>
+      <li><strong>Tilin tiedot:</strong> sähköpostiosoite ja salattu salasana</li>
+      <li><strong>Käyttötiedot:</strong> harjoitushistoria, pisteet, taso ja edistyminen</li>
+      <li><strong>Maksutiedot:</strong> maksujen käsittelyyn tarvittavat tiedot (käsittelee kolmas osapuoli, Paddle)</li>
+      <li><strong>Tekniset tiedot:</strong> IP-osoite, selaintyyppi ja käyttöjärjestelmä</li>
+    </ul>
+
+    <h2>4. Tietojen käsittelyn peruste</h2>
+    <p>Tietoja käsitellään:</p>
+    <ul>
+      <li>Sopimuksen toteuttamiseksi (tilin hallinta, palvelun tarjoaminen)</li>
+      <li>Oikeutetun edun perusteella (palvelun kehittäminen)</li>
+      <li>Suostumuksen perusteella (markkinointiviestit, jos käyttäjä on antanut luvan)</li>
+    </ul>
+
+    <h2>5. Tietojen jakaminen</h2>
+    <p>Emme myy henkilötietojasi. Jaamme tietoja ainoastaan:</p>
+    <ul>
+      <li><strong>Paddle:</strong> maksujen käsittely (Merchant of Record)</li>
+      <li><strong>Supabase:</strong> tietojen tallennus (EU-palvelimet)</li>
+      <li><strong>OpenAI/Anthropic:</strong> tekoälypalvelut (harjoitusten luonti ja arviointi — henkilötietoja ei lähetetä)</li>
+    </ul>
+
+    <h2>6. Tietojen säilytys</h2>
+    <p>Säilytämme tietoja niin kauan kuin tilisi on aktiivinen. Voit pyytää tietojesi poistamista milloin tahansa lähettämällä sähköpostia osoitteeseen <a href="mailto:marcel.catchot@gmail.com">marcel.catchot@gmail.com</a>.</p>
+
+    <h2>7. Käyttäjän oikeudet</h2>
+    <p>GDPR:n mukaisesti sinulla on oikeus:</p>
+    <ul>
+      <li>Saada pääsy tietoihisi</li>
+      <li>Pyytää tietojen oikaisua tai poistoa</li>
+      <li>Rajoittaa käsittelyä tai vastustaa sitä</li>
+      <li>Siirtää tietosi toiseen palveluun</li>
+    </ul>
+
+    <h2>8. Evästeet</h2>
+    <p>Käytämme välttämättömiä evästeitä Palvelun toiminnan turvaamiseksi (esim. kirjautuminen). Emme käytä kolmannen osapuolen seurantaevästeitä.</p>
+
+    <h2>9. Yhteystiedot</h2>
+    <p>Tietosuojaan liittyvät kysymykset: <a href="mailto:marcel.catchot@gmail.com">marcel.catchot@gmail.com</a></p>
+  </div>
+
+  <footer>
+    <div class="footer-logo">Kiel<span>io</span></div>
+    <div class="footer-text">
+      <a href="/terms.html" style="color:var(--text-muted)">Käyttöehdot</a> &middot;
+      <a href="/privacy.html" style="color:var(--text-muted)">Tietosuoja</a> &middot;
+      <a href="/refund.html" style="color:var(--text-muted)">Palautukset</a>
+    </div>
+  </footer>
+
+</body>
+</html>

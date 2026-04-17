@@ -4,11 +4,59 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Kielio — Harjoittele</title>
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="theme-color" content="#6d5ef4" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+
+  <!-- Skip to main content -->
+  <a href="#app-main" class="skip-link">Siirry sisältöön</a>
+
+  <!-- SIDEBAR (desktop only) -->
+  <aside class="app-sidebar" id="app-sidebar" role="navigation" aria-label="Päävalikko">
+    <a href="index.html" class="sidebar-logo">Kiel<span>io</span></a>
+    <nav class="sidebar-nav">
+      <button class="sidebar-item active" data-nav="dashboard" id="nav-dashboard">
+        <span class="sidebar-item-icon">🏠</span> Oma sivu
+      </button>
+      <button class="sidebar-item" data-nav="vocab" id="nav-vocab">
+        <span class="sidebar-item-icon">📚</span> Sanasto
+      </button>
+      <button class="sidebar-item" data-nav="grammar" id="nav-grammar">
+        <span class="sidebar-item-icon">🔧</span> Kielioppi
+      </button>
+      <button class="sidebar-item" data-nav="reading" id="nav-reading">
+        <span class="sidebar-item-icon">📖</span> Luetun ymmärt.
+      </button>
+      <button class="sidebar-item" data-nav="writing" id="nav-writing">
+        <span class="sidebar-item-icon">✍️</span> Kirjoittaminen
+      </button>
+      <div class="sidebar-divider"></div>
+      <button class="sidebar-item" data-nav="exam" id="nav-exam">
+        <span class="sidebar-item-icon">🎓</span> Koeharjoitus
+      </button>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="sidebar-user" id="sidebar-user"></div>
+      <button class="sidebar-item" id="sidebar-logout">
+        <span class="sidebar-item-icon">🚪</span> Kirjaudu ulos
+      </button>
+    </div>
+  </aside>
+
+  <!-- MOBILE BOTTOM NAV -->
+  <nav class="mobile-nav" id="mobile-nav" role="navigation" aria-label="Mobiilinavigaatio">
+    <button class="mobile-nav-item active" data-nav="dashboard"><span>🏠</span>Koti</button>
+    <button class="mobile-nav-item" data-nav="vocab"><span>📚</span>Sanasto</button>
+    <button class="mobile-nav-item" data-nav="grammar"><span>🔧</span>Kielioppi</button>
+    <button class="mobile-nav-item" data-nav="reading"><span>📖</span>Lukeminen</button>
+    <button class="mobile-nav-item" data-nav="writing"><span>✍️</span>Kirjoitus</button>
+  </nav>
+
+  <main class="app-main" id="app-main" role="main">
 
   <!-- SCREEN: Auth (login / register) -->
   <div id="screen-auth" class="screen active">
@@ -24,16 +72,18 @@
 
       <div class="config-block">
         <label>Sähköposti</label>
-        <input type="email" id="auth-email" class="auth-input" placeholder="sinä@esimerkki.fi" autocomplete="email" />
+        <input type="email" id="auth-email" class="auth-input" placeholder="sinä@esimerkki.fi" autocomplete="email" aria-label="Sähköposti" />
       </div>
       <div class="config-block">
         <label>Salasana</label>
-        <input type="password" id="auth-password" class="auth-input" placeholder="••••••••" autocomplete="current-password" />
+        <input type="password" id="auth-password" class="auth-input" placeholder="••••••••" autocomplete="current-password" aria-label="Salasana" />
       </div>
 
       <div class="auth-error hidden" id="auth-error"></div>
+      <div class="auth-success hidden" id="auth-success"></div>
       <button class="btn-primary" id="btn-auth-submit">Kirjaudu sisään →</button>
 
+      <button class="btn-link" id="btn-forgot">Unohditko salasanan?</button>
       <button class="btn-ghost" id="btn-guest">Jatka ilman tiliä →</button>
     </div>
   </div>
@@ -47,23 +97,50 @@
           <div class="dash-greeting">Hei, <span id="dash-username"></span>!</div>
           <div class="dash-motivation" id="dash-motivation"></div>
         </div>
-        <button class="btn-logout" id="btn-logout">Kirjaudu ulos</button>
+        <div class="dash-pro-area">
+          <span id="dash-pro-badge"></span>
+          <button class="btn-logout" id="btn-logout">Kirjaudu ulos</button>
+        </div>
       </div>
 
-      <!-- Stats row: estimated level, streak, this week -->
+      <!-- Hero grade card -->
+      <div class="dash-hero-grade" id="dash-hero-grade">
+        <div class="dash-hero-left">
+          <div class="dash-hero-grade-circle" id="dash-grade-circle">—</div>
+        </div>
+        <div class="dash-hero-right">
+          <div class="dash-hero-label">Arvioitu yo-arvosana</div>
+          <div class="dash-hero-scale" id="dash-hero-scale">
+            <span data-g="I">I</span><span data-g="A">A</span><span data-g="B">B</span>
+            <span data-g="C">C</span><span data-g="M">M</span><span data-g="E">E</span><span data-g="L">L</span>
+          </div>
+          <div class="dash-hero-sub" id="dash-hero-sub">Tee harjoituksia saadaksesi arvion</div>
+        </div>
+      </div>
+
+      <!-- Stats row -->
       <div class="dash-stats-row">
         <div class="dash-stat-card">
-          <div class="dash-stat-label">Arvioitu taso</div>
-          <div class="dash-stat-value dash-stat-grade" id="dash-est-level">—</div>
-        </div>
-        <div class="dash-stat-card">
-          <div class="dash-stat-label">Putki</div>
+          <div class="dash-stat-icon">🔥</div>
           <div class="dash-stat-value" id="dash-streak">0</div>
+          <div class="dash-stat-label">Putki</div>
         </div>
         <div class="dash-stat-card">
-          <div class="dash-stat-label">Tällä viikolla</div>
-          <div class="dash-stat-value" id="dash-week-val">0<span class="week-trend-arrow same" id="dash-week-trend">→</span></div>
+          <div class="dash-stat-icon">📝</div>
+          <div class="dash-stat-value" id="dash-total-sessions">0</div>
+          <div class="dash-stat-label">Harjoituksia</div>
         </div>
+        <div class="dash-stat-card">
+          <div class="dash-stat-icon">📅</div>
+          <div class="dash-stat-value" id="dash-week-val">0<span class="week-trend-arrow same" id="dash-week-trend"></span></div>
+          <div class="dash-stat-label">Tällä viikolla</div>
+        </div>
+      </div>
+
+      <!-- Activity heatmap -->
+      <div class="dash-heatmap-section">
+        <div class="dash-section-label">Aktiivisuus · 30 päivää</div>
+        <div class="dash-heatmap" id="dash-heatmap"></div>
       </div>
 
       <!-- Progress chart -->
@@ -74,8 +151,17 @@
         </div>
       </div>
 
+      <!-- Mode performance cards -->
+      <div class="dash-section-label">Osa-alueet</div>
       <div class="dash-modes" id="dash-modes"></div>
 
+      <!-- Recommendations -->
+      <div class="dash-recommendations hidden" id="dash-recommendations">
+        <div class="dash-section-label">Suositukset</div>
+        <div id="dash-rec-list"></div>
+      </div>
+
+      <!-- Recent activity -->
       <div id="dash-recent-wrap" class="hidden">
         <div class="dash-section-label">Viimeisimmät harjoitukset</div>
         <div id="dash-recent-list"></div>
@@ -90,15 +176,188 @@
     </div>
   </div>
 
-  <!-- SCREEN: Start -->
+  <!-- SCREEN: Mode — Sanasto -->
+  <div id="screen-mode-vocab" class="screen">
+    <div class="mode-page">
+      <div class="mode-page-header">
+        <span class="mode-page-icon">📚</span>
+        <div>
+          <h1 class="mode-page-title">Sanasto</h1>
+          <p class="mode-page-sub">Adaptiivinen sanastoharjoittelu yo-kokeeseen</p>
+        </div>
+      </div>
+      <div class="mode-page-stats" id="vocab-page-stats"></div>
+
+      <div class="mode-page-section">
+        <label class="mode-page-label">Aihe</label>
+        <div class="topic-cards" id="vocab-topic-cards">
+          <button class="topic-card active" data-topic="general vocabulary"><span class="topic-card-icon">🌍</span><span class="topic-card-name">Yleinen sanasto</span></button>
+          <button class="topic-card" data-topic="society and politics"><span class="topic-card-icon">🏛️</span><span class="topic-card-name">Yhteiskunta</span></button>
+          <button class="topic-card" data-topic="environment and nature"><span class="topic-card-icon">🌿</span><span class="topic-card-name">Ympäristö</span></button>
+          <button class="topic-card" data-topic="health and body"><span class="topic-card-icon">🏥</span><span class="topic-card-name">Terveys</span></button>
+          <button class="topic-card" data-topic="travel and transport"><span class="topic-card-icon">✈️</span><span class="topic-card-name">Matkailu</span></button>
+          <button class="topic-card" data-topic="culture and arts"><span class="topic-card-icon">🎭</span><span class="topic-card-name">Kulttuuri</span></button>
+          <button class="topic-card" data-topic="work and economy"><span class="topic-card-icon">💼</span><span class="topic-card-name">Työ & talous</span></button>
+        </div>
+      </div>
+
+      <div class="mode-page-section">
+        <label class="mode-page-label">Lähtötaso</label>
+        <div class="level-picker" id="vocab-page-level-picker">
+          <button class="lvl-btn" data-level="I">I</button>
+          <button class="lvl-btn" data-level="A">A</button>
+          <button class="lvl-btn active" data-level="B">B</button>
+          <button class="lvl-btn" data-level="C">C</button>
+          <button class="lvl-btn" data-level="M">M</button>
+          <button class="lvl-btn" data-level="E">E</button>
+          <button class="lvl-btn" data-level="L">L</button>
+        </div>
+        <p class="mode-page-hint">Taso mukautuu automaattisesti suorituksen mukaan (3 kierrosta × 4 kysymystä)</p>
+      </div>
+
+      <button class="btn-primary" id="btn-start-vocab">Aloita sanastoharjoittelu →</button>
+    </div>
+  </div>
+
+  <!-- SCREEN: Mode — Kielioppi -->
+  <div id="screen-mode-grammar" class="screen">
+    <div class="mode-page">
+      <div class="mode-page-header">
+        <span class="mode-page-icon">🔧</span>
+        <div>
+          <h1 class="mode-page-title">Kielioppi</h1>
+          <p class="mode-page-sub">Kohdennetut harjoitukset YTL:n yleisimpiin virheisiin</p>
+        </div>
+      </div>
+      <div class="mode-page-stats" id="grammar-page-stats"></div>
+
+      <div class="mode-page-section">
+        <label class="mode-page-label">Kielioppiaihe</label>
+        <div class="topic-cards" id="grammar-topic-cards">
+          <button class="topic-card active" data-topic="mixed"><span class="topic-card-icon">🎲</span><span class="topic-card-name">Sekaisin</span><span class="topic-card-desc">Kaikki aiheet</span></button>
+          <button class="topic-card" data-topic="ser_estar"><span class="topic-card-icon">🔄</span><span class="topic-card-name">Ser vs. Estar</span><span class="topic-card-desc">Pysyvä vs. tilapäinen</span></button>
+          <button class="topic-card" data-topic="hay_estar"><span class="topic-card-icon">📍</span><span class="topic-card-name">Hay vs. Estar</span><span class="topic-card-desc">Olemassaolo vs. sijainti</span></button>
+          <button class="topic-card" data-topic="subjunctive"><span class="topic-card-icon">🌀</span><span class="topic-card-name">Subjunktiivi</span><span class="topic-card-desc">Ojalá, para que...</span></button>
+          <button class="topic-card" data-topic="conditional"><span class="topic-card-icon">💭</span><span class="topic-card-name">Konditionaali</span><span class="topic-card-desc">Me gustaría...</span></button>
+          <button class="topic-card" data-topic="preterite_imperfect"><span class="topic-card-icon">⏳</span><span class="topic-card-name">Pret. vs. Imperf.</span><span class="topic-card-desc">Yksittäinen vs. toistuva</span></button>
+          <button class="topic-card" data-topic="pronouns"><span class="topic-card-icon">👉</span><span class="topic-card-name">Pronominit</span><span class="topic-card-desc">Que, quien, donde...</span></button>
+        </div>
+      </div>
+
+      <div class="mode-page-section">
+        <label class="mode-page-label">Taso</label>
+        <div class="level-picker" id="grammar-page-level-picker">
+          <button class="lvl-btn" data-level="B">B</button>
+          <button class="lvl-btn active" data-level="C">C</button>
+          <button class="lvl-btn" data-level="M">M</button>
+          <button class="lvl-btn" data-level="E">E</button>
+          <button class="lvl-btn" data-level="L">L</button>
+        </div>
+      </div>
+
+      <button class="btn-primary" id="btn-start-grammar">Aloita kielioppiharjoittelu →</button>
+    </div>
+  </div>
+
+  <!-- SCREEN: Mode — Luetun ymmärtäminen -->
+  <div id="screen-mode-reading" class="screen">
+    <div class="mode-page">
+      <div class="mode-page-header">
+        <span class="mode-page-icon">📖</span>
+        <div>
+          <h1 class="mode-page-title">Luetun ymmärtäminen</h1>
+          <p class="mode-page-sub">AI-luotu espanjankielinen teksti + kysymykset</p>
+        </div>
+      </div>
+      <div class="mode-page-stats" id="reading-page-stats"></div>
+
+      <div class="mode-page-section">
+        <label class="mode-page-label">Tekstin aihe</label>
+        <div class="topic-cards" id="reading-topic-cards">
+          <button class="topic-card active" data-topic="animals and nature"><span class="topic-card-icon">🦁</span><span class="topic-card-name">Eläimet & luonto</span></button>
+          <button class="topic-card" data-topic="travel and places"><span class="topic-card-icon">🗺️</span><span class="topic-card-name">Matkailu & paikat</span></button>
+          <button class="topic-card" data-topic="culture and history"><span class="topic-card-icon">🏛️</span><span class="topic-card-name">Kulttuuri & historia</span></button>
+          <button class="topic-card" data-topic="social media and technology"><span class="topic-card-icon">📱</span><span class="topic-card-name">Some & teknologia</span></button>
+          <button class="topic-card" data-topic="health and sports"><span class="topic-card-icon">⚽</span><span class="topic-card-name">Terveys & urheilu</span></button>
+          <button class="topic-card" data-topic="environment"><span class="topic-card-icon">♻️</span><span class="topic-card-name">Ympäristö</span></button>
+        </div>
+      </div>
+
+      <div class="mode-page-section">
+        <label class="mode-page-label">Taso</label>
+        <div class="level-picker" id="reading-page-level-picker">
+          <button class="lvl-btn" data-level="B">B</button>
+          <button class="lvl-btn active" data-level="C">C</button>
+          <button class="lvl-btn" data-level="M">M</button>
+          <button class="lvl-btn" data-level="E">E</button>
+          <button class="lvl-btn" data-level="L">L</button>
+        </div>
+      </div>
+
+      <div class="mode-page-pro-note hidden" id="reading-pro-note">🔒 Pro-ominaisuus — <button class="btn-link" style="display:inline;width:auto;padding:0" id="reading-upgrade-btn">Päivitä Pro</button></div>
+      <button class="btn-primary" id="btn-start-reading">Aloita luetun ymmärtäminen →</button>
+    </div>
+  </div>
+
+  <!-- SCREEN: Mode — Kirjoittaminen -->
+  <div id="screen-mode-writing" class="screen">
+    <div class="mode-page">
+      <div class="mode-page-header">
+        <span class="mode-page-icon">✍️</span>
+        <div>
+          <h1 class="mode-page-title">Kirjoittaminen</h1>
+          <p class="mode-page-sub">Kirjoitustehtävä + YTL-kriteerien mukainen AI-arviointi</p>
+        </div>
+      </div>
+      <div class="mode-page-stats" id="writing-page-stats"></div>
+
+      <div class="mode-page-section">
+        <label class="mode-page-label">Tehtävätyyppi</label>
+        <div class="topic-cards two-col" id="writing-type-cards">
+          <button class="topic-card active" data-type="short">
+            <span class="topic-card-icon">📝</span>
+            <span class="topic-card-name">Lyhyt tehtävä</span>
+            <span class="topic-card-desc">33 p · 160–240 merkkiä</span>
+          </button>
+          <button class="topic-card" data-type="long">
+            <span class="topic-card-icon">📄</span>
+            <span class="topic-card-name">Laajempi tehtävä</span>
+            <span class="topic-card-desc">66 p · 300–450 merkkiä</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="mode-page-section">
+        <label class="mode-page-label">Aihe</label>
+        <div class="topic-cards" id="writing-topic-cards">
+          <button class="topic-card active" data-topic="general"><span class="topic-card-icon">🎲</span><span class="topic-card-name">Sekalaiset</span></button>
+          <button class="topic-card" data-topic="environment and sustainability"><span class="topic-card-icon">🌿</span><span class="topic-card-name">Ympäristö</span></button>
+          <button class="topic-card" data-topic="social life and relationships"><span class="topic-card-icon">👥</span><span class="topic-card-name">Ihmissuhteet</span></button>
+          <button class="topic-card" data-topic="travel and places"><span class="topic-card-icon">✈️</span><span class="topic-card-name">Matkailu</span></button>
+          <button class="topic-card" data-topic="culture and identity"><span class="topic-card-icon">🎭</span><span class="topic-card-name">Kulttuuri</span></button>
+          <button class="topic-card" data-topic="work and future"><span class="topic-card-icon">💼</span><span class="topic-card-name">Työ & tulevaisuus</span></button>
+        </div>
+      </div>
+
+      <div class="mode-page-pro-note hidden" id="writing-pro-note">🔒 Pro-ominaisuus — <button class="btn-link" style="display:inline;width:auto;padding:0" id="writing-upgrade-btn">Päivitä Pro</button></div>
+      <button class="btn-primary" id="btn-start-writing">Aloita kirjoittaminen →</button>
+    </div>
+  </div>
+
+  <!-- SCREEN: Start (legacy/guest fallback) -->
   <div id="screen-start" class="screen">
     <div class="start-inner">
       <div class="start-topbar">
         <a href="index.html" class="logo">Kiel<span>io</span></a>
-        <button class="btn-dash-back hidden" id="btn-back-to-dash">← Omat tiedot</button>
+        <div class="start-topbar-right">
+          <div class="streak-badge hidden" id="start-streak-badge"></div>
+          <button class="btn-dash-back hidden" id="btn-back-to-dash">← Omat tiedot</button>
+        </div>
       </div>
-      <h1>Espanja<br/>Yo-koe</h1>
+      <h1 id="start-lang-title">Espanja<br/>Yo-koe</h1>
       <p class="subtitle">Adaptiivinen tekoälyharjoittelu ylioppilaskirjoituksiin</p>
+
+      <!-- Language (Spanish only) -->
 
       <!-- Mode picker -->
       <div class="config-block">
@@ -123,6 +382,11 @@
             <span class="mode-icon">✍️</span>
             <span class="mode-title">Kirjoittaminen</span>
             <span class="mode-desc">Tehtävä + AI-palaute · 99 p</span>
+          </button>
+          <button class="mode-btn mode-btn-exam" data-mode="exam">
+            <span class="mode-icon">🎓</span>
+            <span class="mode-title">Koeharjoitus</span>
+            <span class="mode-desc">Luettu + kirjoitus · ajastettu</span>
           </button>
         </div>
       </div>
@@ -241,8 +505,10 @@
   <!-- SCREEN: Loading -->
   <div id="screen-loading" class="screen">
     <div class="loading-inner">
-      <div class="spinner"></div>
+      <div class="spinner" id="loading-spinner"></div>
       <p id="loading-text">Luodaan tehtäviä...</p>
+      <p id="loading-subtext" class="loading-subtext hidden"></p>
+      <button class="btn-primary hidden" id="loading-retry" style="margin-top:16px">Yritä uudelleen →</button>
     </div>
   </div>
 
@@ -259,11 +525,13 @@
       </div>
 
       <div class="question-block">
-        <p class="question-label">¿Qué significa?</p>
+        <div class="ex-type-badge hidden" id="ex-type-badge"></div>
+        <div class="ex-context-sentence hidden" id="ex-context-sentence"></div>
+        <p class="question-label" id="question-label">¿Qué significa?</p>
         <h2 id="question-text">Loading...</h2>
       </div>
 
-      <div class="options-grid" id="options-grid"></div>
+      <div class="options-grid" id="options-grid" role="group" aria-label="Vastausvaihtoehdot"></div>
 
       <div class="explanation-block hidden" id="explanation-block">
         <p id="explanation-text"></p>
@@ -271,6 +539,8 @@
       </div>
 
       <div class="kbd-hint" id="vocab-kbd-hint">
+        <span class="kbd-key">1</span><span class="kbd-key">2</span><span class="kbd-key">3</span><span class="kbd-key">4</span>
+        <span class="kbd-sep">tai</span>
         <span class="kbd-key">A</span><span class="kbd-key">B</span><span class="kbd-key">C</span><span class="kbd-key">D</span>
         <span class="kbd-sep">·</span>
         <span class="kbd-key">↵</span><span class="kbd-label">seuraava</span>
@@ -302,6 +572,7 @@
       <div class="grade-scale">
         <span>I</span><span>A</span><span>B</span><span>C</span><span>M</span><span>E</span><span class="highlight-grade" id="scale-highlight">L</span>
       </div>
+      <button class="btn-share" id="btn-share-vocab">📤 Jaa tulos</button>
       <button class="btn-primary" id="btn-restart">Uusi harjoitus →</button>
     </div>
   </div>
@@ -331,6 +602,7 @@
           id="writing-input"
           placeholder="Kirjoita vastauksesi tähän espanjaksi..."
           spellcheck="false"
+          aria-label="Kirjoita vastauksesi espanjaksi"
         ></textarea>
         <div class="char-counter" id="char-counter">
           <span id="char-count">0</span>
@@ -395,7 +667,7 @@
         <p class="question-label" id="gram-instruction">Täydennä aukko.</p>
         <h2 id="gram-sentence" class="gram-sentence">Loading...</h2>
       </div>
-      <div class="options-grid" id="gram-options-grid"></div>
+      <div class="options-grid" id="gram-options-grid" role="group" aria-label="Vastausvaihtoehdot"></div>
       <div class="explanation-block hidden" id="gram-explanation-block">
         <div class="gram-rule-tag" id="gram-rule-tag"></div>
         <p id="gram-explanation-text"></p>
@@ -453,7 +725,7 @@
         </div>
 
         <div id="reading-options-container">
-          <div class="options-grid" id="reading-options-grid"></div>
+          <div class="options-grid" id="reading-options-grid" role="group" aria-label="Vastausvaihtoehdot"></div>
         </div>
         <div id="reading-tf-container" class="hidden">
           <div class="tf-buttons">
@@ -494,6 +766,97 @@
     </div>
   </div>
 
+  <!-- SCREEN: Mock Exam -->
+  <div id="screen-exam" class="screen">
+    <div class="exam-inner">
+      <div class="exam-header">
+        <div>
+          <div class="exam-title">Koeharjoitus</div>
+          <div class="exam-subtitle" id="exam-phase-label">Luetun ymmärtäminen</div>
+        </div>
+        <div class="exam-timer" id="exam-timer">45:00</div>
+      </div>
+      <div class="exam-progress-bar"><div class="exam-progress-fill" id="exam-progress-fill"></div></div>
+
+      <!-- Phase 1: Reading -->
+      <div id="exam-reading-phase">
+        <div class="exam-text" id="exam-reading-text"></div>
+        <div id="exam-reading-questions"></div>
+        <button class="btn-primary" id="exam-btn-to-writing" style="margin-top:24px">Jatka kirjoittamiseen →</button>
+      </div>
+
+      <!-- Phase 2: Writing -->
+      <div id="exam-writing-phase" class="hidden">
+        <div class="writing-task-box" id="exam-task-box"></div>
+        <textarea id="exam-writing-input" class="writing-input" placeholder="Kirjoita vastauksesi tähän..." rows="8"></textarea>
+        <div class="writing-meta-row">
+          <span class="char-count" id="exam-char-count">0 merkkiä</span>
+        </div>
+        <button class="btn-primary" id="exam-btn-submit">Palauta koe →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCREEN: Exam Results -->
+  <div id="screen-exam-results" class="screen">
+    <div class="results-inner" style="max-width:560px">
+      <p class="results-label">Koeharjoitus — tulos</p>
+      <div class="grade-display" id="exam-grade-display">—</div>
+      <div class="exam-results-breakdown" id="exam-results-breakdown"></div>
+      <div class="feedback-overall" id="exam-overall-feedback" style="text-align:left;margin-top:16px;margin-bottom:32px"></div>
+      <button class="btn-share" id="btn-share-exam" style="margin-bottom:10px">📤 Jaa tulos</button>
+      <div style="display:flex;gap:10px">
+        <button class="btn-secondary" id="exam-btn-retry">Uusi koe</button>
+        <button class="btn-primary" id="exam-btn-home">Etusivulle →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCREEN: Pro Upsell -->
+  <div id="screen-pro-upsell" class="screen">
+    <div class="auth-inner" style="text-align:center">
+      <div style="font-size:48px;margin-bottom:16px">🔒</div>
+      <h1>Pro-tili vaaditaan</h1>
+      <p class="subtitle">Luetun ymmärtäminen, kirjoittaminen ja koeharjoitus vaativat Pro-tilin.</p>
+      <div class="pro-features-list">
+        <div class="pro-feature">📖 Luetun ymmärtäminen — AI-tekstit + kysymykset</div>
+        <div class="pro-feature">✍️ Kirjoittaminen — YTL-kriteerien mukainen AI-arviointi</div>
+        <div class="pro-feature">🎓 Koeharjoitus — Aikataulutettu simulaatio</div>
+        <div class="pro-feature">🎧 Kuullun ymmärtäminen — Tulossa pian</div>
+        <div class="pro-feature">📊 Yksityiskohtainen edistymisraportti</div>
+      </div>
+      <button class="btn-primary" id="btn-upgrade-pro" style="margin-top:24px">Päivitä Pro →</button>
+      <button class="btn-ghost" id="btn-upsell-back" style="margin-top:8px">← Takaisin</button>
+    </div>
+  </div>
+
+  <!-- SCREEN: Reset Password -->
+  <div id="screen-reset-password" class="screen">
+    <div class="auth-inner">
+      <a href="index.html" class="logo">Kiel<span>io</span></a>
+      <h1>Aseta uusi salasana</h1>
+      <p class="subtitle">Kirjoita uusi salasanasi alle.</p>
+      <div class="config-block">
+        <label>Uusi salasana</label>
+        <input type="password" id="reset-new-password" class="auth-input" placeholder="••••••••" autocomplete="new-password" aria-label="Uusi salasana" />
+      </div>
+      <div class="config-block">
+        <label>Vahvista salasana</label>
+        <input type="password" id="reset-confirm-password" class="auth-input" placeholder="••••••••" autocomplete="new-password" aria-label="Vahvista salasana" />
+      </div>
+      <div class="auth-error hidden" id="reset-error"></div>
+      <div class="auth-success hidden" id="reset-success"></div>
+      <button class="btn-primary" id="btn-reset-submit">Vaihda salasana →</button>
+    </div>
+  </div>
+
+  </main><!-- /app-main -->
+
   <script src="app.js"></script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("/sw.js").catch(() => {});
+    }
+  </script>
 </body>
 </html>
