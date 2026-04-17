@@ -1,5 +1,10 @@
 {
   "outputDirectory": ".",
+  "functions": {
+    "api/index.js": {
+      "includeFiles": "routes/**,middleware/**,lib/**,supabase.js,email.js"
+    }
+  },
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api" }
   ]
