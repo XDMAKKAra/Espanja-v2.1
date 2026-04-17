@@ -3,6 +3,7 @@ import { API, isLoggedIn, authHeader, apiFetch } from "../api.js";
 import { state } from "../state.js";
 import { CRITERIA_LABELS, RATING_COLORS } from "../state.js";
 import { showLoading, showLoadingError } from "../ui/loading.js";
+import { trackCheckoutStarted, trackProUpsellShown, trackExerciseCompleted } from "../analytics.js";
 
 let _deps = {};
 export function initWriting({ loadDashboard, saveProgress }) {
@@ -10,10 +11,12 @@ export function initWriting({ loadDashboard, saveProgress }) {
 }
 
 export function showProUpsell() {
+  trackProUpsellShown();
   show("screen-pro-upsell");
 }
 
 export async function startCheckout() {
+  trackCheckoutStarted();
   $("btn-upgrade-pro").disabled = true;
   $("btn-upgrade-pro").textContent = "Ohjataan maksuun...";
   try {

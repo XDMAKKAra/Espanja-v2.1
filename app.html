@@ -973,6 +973,11 @@
 
   </main><!-- /app-main -->
 
+  <script>
+    // Analytics config (injected server-side or set manually)
+    window.__POSTHOG_KEY = "";  // Set via env or hardcode
+    window.__SENTRY_DSN = "";   // Set via env or hardcode
+  </script>
   <script type="module" src="js/main.js"></script>
   <script>
     if ("serviceWorker" in navigator) {

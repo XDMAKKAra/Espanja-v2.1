@@ -15,6 +15,7 @@ import { initWriting, showProUpsell, startCheckout, openBillingPortal, loadWriti
 import { initExam, startMockExam } from "./screens/exam.js";
 import { initFullExam, startFullExam } from "./screens/fullExam.js";
 import { initAdaptive, masteryNext, masteryDone } from "./screens/adaptive.js";
+import { initAnalytics, trackError } from "./analytics.js";
 
 // ─── Inject show into api.js (avoids circular dep) ─────────────────────────
 setShowFn(show);
@@ -522,6 +523,7 @@ updateSidebarState();
 if (!resetToken && isLoggedIn()) {
   loadDashboard();
   initPushNotifications();
+  initAnalytics(null, getAuthEmail()); // userId set after dashboard load
 }
 
 // Handle manifest shortcuts (hash-based routing)

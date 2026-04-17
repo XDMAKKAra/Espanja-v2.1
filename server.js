@@ -1,11 +1,21 @@
 import express from "express";
 import cors from "cors";
 import helmet from "helmet";
+import * as Sentry from "@sentry/node";
 import dotenv from "dotenv";
 import path from "path";
 import { fileURLToPath } from "url";
 
 dotenv.config();
+
+// ─── Sentry (backend) ─────────────────────────────────────────────────────
+if (process.env.SENTRY_DSN) {
+  Sentry.init({
+    dsn: process.env.SENTRY_DSN,
+    environment: process.env.NODE_ENV || "development",
+    tracesSampleRate: 0.1,
+  });
+}
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -28,7 +38,7 @@ app.use(helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'self'"],
-      scriptSrc: ["'self'"],
+      scriptSrc: ["'self'", "'unsafe-inline'", "https://browser.sentry-cdn.com", "https://cdn.jsdelivr.net"],
       styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
       fontSrc: ["'self'", "https://fonts.gstatic.com"],
       imgSrc: ["'self'", "data:"],
@@ -37,6 +47,8 @@ app.use(helmet({
         "https://*.supabase.co",
         "https://api.lemonsqueezy.com",
         "https://api.openai.com",
+        "https://eu.i.posthog.com",
+        "https://*.ingest.sentry.io",
       ],
       frameSrc: ["https://*.lemonsqueezy.com"],
     },
@@ -91,6 +103,11 @@ app.use("/api/exam", examRoutes);
 app.use("/api/sr", srRoutes);
 app.use("/api", adaptiveRoutes);
 app.use("/api/push", pushRoutes);
+
+// ─── Sentry error handler (must be after routes) ──────────────────────────
+if (process.env.SENTRY_DSN) {
+  Sentry.setupExpressErrorHandler(app);
+}
 
 // ─── Start ───────────────────────────────────────────────────────────────────
 

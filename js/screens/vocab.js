@@ -4,6 +4,7 @@ import { state, LEVELS, BATCH_SIZE, MAX_BATCHES } from "../state.js";
 import { showLoading, showLoadingError } from "../ui/loading.js";
 import { srPop, srAddWrong, srMarkCorrect, srReview, srGetDue } from "../features/spacedRepetition.js";
 import { authHeader, apiFetch } from "../api.js";
+import { trackExerciseStarted, trackExerciseCompleted, trackError } from "../analytics.js";
 
 let _deps = {};
 export function initVocab({ loadDashboard, shareResult, saveProgress }) {
@@ -80,6 +81,7 @@ export async function loadNextBatch() {
 
     state.exercises = [...srItems, ...data.exercises];
     state.bankId = data.bankId || null;
+    if (state.batchNumber === 1) trackExerciseStarted("vocab", state.level, state.topic, state.language);
     renderExercise();
     show("screen-exercise");
   } catch (err) {
@@ -344,8 +346,10 @@ async function showVocabResults() {
       ytlGrade: data.grade,
     });
 
+    trackExerciseCompleted("vocab", state.peakLevel, state.totalCorrect, state.totalAnswered, state.sessionStartTime ? Date.now() - state.sessionStartTime : 0);
     show("screen-results");
   } catch (err) {
+    trackError("vocab_results", err.message);
     showLoadingError("Virhe arvosanan laskemisessa: " + err.message, () => showVocabResults());
   }
 }
