@@ -1,15 +1,11 @@
 import express from "express";
 import cors from "cors";
-import dotenv from "dotenv";
-
-dotenv.config();
-
-const { default: authRoutes } = await import("../routes/auth.js");
-const { default: progressRoutes } = await import("../routes/progress.js");
-const { default: exerciseRoutes } = await import("../routes/exercises.js");
-const { default: writingRoutes } = await import("../routes/writing.js");
-const { default: emailRoutes } = await import("../routes/email.js");
-const { default: paymentRoutes, handleWebhook } = await import("../routes/stripe.js");
+import authRoutes from "../routes/auth.js";
+import progressRoutes from "../routes/progress.js";
+import exerciseRoutes from "../routes/exercises.js";
+import writingRoutes from "../routes/writing.js";
+import emailRoutes from "../routes/email.js";
+import paymentRoutes, { handleWebhook } from "../routes/stripe.js";
 
 const app = express();
 
