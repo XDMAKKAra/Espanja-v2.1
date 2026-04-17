@@ -12,6 +12,7 @@ try {
   const { default: paymentRoutes, handleWebhook } = await import("../routes/stripe.js");
   const { default: examRoutes } = await import("../routes/exam.js");
   const { default: srRoutes } = await import("../routes/sr.js");
+  const { default: adaptiveRoutes } = await import("../routes/adaptive.js");
 
   app = express();
 
@@ -37,6 +38,7 @@ try {
   app.use("/api/payments", paymentRoutes);
   app.use("/api/exam", examRoutes);
   app.use("/api/sr", srRoutes);
+  app.use("/api", adaptiveRoutes);
 
 } catch (e) {
   const { default: express } = await import("express");

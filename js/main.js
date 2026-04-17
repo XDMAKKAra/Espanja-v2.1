@@ -14,6 +14,7 @@ import { initReading, loadReadingTask } from "./screens/reading.js";
 import { initWriting, showProUpsell, startCheckout, openBillingPortal, loadWritingTask } from "./screens/writing.js";
 import { initExam, startMockExam } from "./screens/exam.js";
 import { initFullExam, startFullExam } from "./screens/fullExam.js";
+import { initAdaptive, masteryNext, masteryDone } from "./screens/adaptive.js";
 
 // ─── Inject show into api.js (avoids circular dep) ─────────────────────────
 setShowFn(show);
@@ -80,6 +81,7 @@ initReading({ loadDashboard, saveProgress, showProUpsell });
 initWriting({ loadDashboard, saveProgress });
 initExam({ loadDashboard, saveProgress, shareResult });
 initFullExam({ loadDashboard, saveProgress, shareResult });
+initAdaptive({ loadDashboard });
 
 // ─── Sidebar navigation clicks ─────────────────────────────────────────────
 
@@ -173,6 +175,13 @@ const reviewBtn = $("btn-start-review");
 if (reviewBtn) {
   reviewBtn.addEventListener("click", () => startReviewSession());
 }
+
+// Mastery test navigation
+const masteryNextBtn = $("mastery-btn-next");
+if (masteryNextBtn) masteryNextBtn.addEventListener("click", () => masteryNext());
+
+const masteryDoneBtn = $("mastery-btn-done");
+if (masteryDoneBtn) masteryDoneBtn.addEventListener("click", () => masteryDone());
 
 // Sidebar logout
 const sidebarLogout = $("sidebar-logout");
@@ -367,6 +376,20 @@ document.addEventListener("keydown", (e) => {
                !$("reading-explanation-block").classList.contains("hidden")) {
       const nextBtn = $("reading-btn-next");
       if (nextBtn.style.display !== "none") { e.preventDefault(); nextBtn.click(); }
+    }
+    return;
+  }
+
+  // Mastery test screen
+  if ($("screen-mastery-test") && $("screen-mastery-test").classList.contains("active")) {
+    if (["A", "B", "C", "D"].includes(resolvedKey)) {
+      const btn = [...document.querySelectorAll("#mastery-options-grid .option-btn:not(:disabled)")]
+        .find((b) => b.textContent.trim()[0].toUpperCase() === resolvedKey);
+      if (btn) btn.click();
+    } else if ((e.key === "Enter" || e.key === " ") &&
+               !$("mastery-explanation-block").classList.contains("hidden")) {
+      e.preventDefault();
+      $("mastery-btn-next").click();
     }
     return;
   }

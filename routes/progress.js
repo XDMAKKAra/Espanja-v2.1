@@ -2,10 +2,12 @@ import { Router } from "express";
 import supabase from "../supabase.js";
 import { requireAuth, isPro } from "../middleware/auth.js";
 import { GRADES, GRADE_ORDER, DAY_MS, WEEK_MS, calculateStreak, calculateEstLevel } from "../lib/openai.js";
+import { computeEligibility, LEVEL_ORDER } from "../lib/adaptive.js";
 
 const router = Router();
 
 const VALID_MODES = new Set(["vocab", "grammar", "reading", "writing", "exam"]);
+const ADAPTIVE_MODES = new Set(["vocab", "grammar", "reading"]);
 
 router.post("/progress", requireAuth, async (req, res) => {
   const { mode, level, scoreCorrect, scoreTotal, ytlGrade } = req.body;
@@ -23,7 +25,86 @@ router.post("/progress", requireAuth, async (req, res) => {
     ytl_grade: ytlGrade ?? null,
   });
   if (error) return res.status(500).json({ error: "Failed to save progress" });
-  res.json({ ok: true });
+
+  // ─── Adaptive: increment questions_at_level + compute status ────────────
+  let adaptive = null;
+  if (ADAPTIVE_MODES.has(mode) && scoreTotal > 0) {
+    try {
+      // Increment questions_at_level
+      const { data: ulp } = await supabase
+        .from("user_level_progress")
+        .select("*")
+        .eq("user_id", req.user.userId)
+        .eq("mode", mode)
+        .single();
+
+      if (ulp) {
+        await supabase
+          .from("user_level_progress")
+          .update({ questions_at_level: ulp.questions_at_level + (scoreTotal || 0) })
+          .eq("user_id", req.user.userId)
+          .eq("mode", mode);
+
+        // Fetch recent session pcts for current level
+        const { data: logs } = await supabase
+          .from("exercise_logs")
+          .select("score_correct, score_total")
+          .eq("user_id", req.user.userId)
+          .eq("mode", mode)
+          .eq("level", ulp.current_level)
+          .gt("score_total", 0)
+          .order("created_at", { ascending: false })
+          .limit(20);
+
+        const sessionPcts = (logs || []).map((l) =>
+          Math.round((l.score_correct / l.score_total) * 100)
+        );
+
+        const { count: sessionsAtLevel } = await supabase
+          .from("exercise_logs")
+          .select("id", { count: "exact", head: true })
+          .eq("user_id", req.user.userId)
+          .eq("mode", mode)
+          .eq("level", ulp.current_level)
+          .gte("created_at", ulp.level_started_at);
+
+        adaptive = computeEligibility({
+          currentLevel: ulp.current_level,
+          sessionPcts,
+          questionsAtLevel: ulp.questions_at_level + (scoreTotal || 0),
+          levelStartedAt: new Date(ulp.level_started_at),
+          masteryTestEligibleAt: ulp.mastery_test_eligible_at
+            ? new Date(ulp.mastery_test_eligible_at)
+            : null,
+          lastDemotionAt: ulp.last_demotion_at
+            ? new Date(ulp.last_demotion_at)
+            : null,
+          sessionsAtLevel: sessionsAtLevel || 0,
+          adaptiveEnabled: ulp.adaptive_enabled,
+        });
+
+        // Handle silent demotion
+        if (adaptive.status === "needs_demotion") {
+          const prevLevel = LEVEL_ORDER[LEVEL_ORDER.indexOf(ulp.current_level) - 1];
+          if (prevLevel) {
+            await supabase
+              .from("user_level_progress")
+              .update({
+                current_level: prevLevel,
+                level_started_at: new Date().toISOString(),
+                questions_at_level: 0,
+                last_demotion_at: new Date().toISOString(),
+              })
+              .eq("user_id", req.user.userId)
+              .eq("mode", mode);
+            adaptive.demotedTo = prevLevel;
+          }
+        }
+      }
+    } catch { /* don't break progress saving */ }
+  }
+
+  res.json({ ok: true, adaptive });
 });
 
 router.get("/dashboard", requireAuth, async (req, res) => {

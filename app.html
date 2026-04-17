@@ -163,6 +163,9 @@
         <button class="btn-primary btn-sm" id="btn-start-review">Kertaa nyt →</button>
       </div>
 
+      <!-- Adaptive level card -->
+      <div class="dash-adaptive-card hidden" id="dash-adaptive-card"></div>
+
       <!-- Mode performance cards -->
       <div class="dash-section-label">Osa-alueet</div>
       <div class="dash-modes" id="dash-modes"></div>
@@ -804,6 +807,34 @@
         <button class="btn-secondary" id="reading-btn-new">Uusi teksti</button>
         <button class="btn-primary" id="reading-btn-home">Etusivulle →</button>
       </div>
+    </div>
+  </div>
+
+  <!-- SCREEN: Mastery Test -->
+  <div id="screen-mastery-test" class="screen">
+    <div class="exercise-inner">
+      <div class="exercise-topbar">
+        <div class="ex-round-badge" id="mastery-round-badge">Tasokoe</div>
+        <div class="ex-counter" id="mastery-counter">1 / 10</div>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" id="mastery-progress-fill"></div></div>
+      <div class="question-block">
+        <p class="question-label" id="mastery-label">Kysymys</p>
+        <h2 id="mastery-question">Loading...</h2>
+      </div>
+      <div class="options-grid" id="mastery-options-grid"></div>
+      <div class="explanation-block hidden" id="mastery-explanation-block">
+        <p id="mastery-explanation-text"></p>
+        <button class="btn-next" id="mastery-btn-next">Seuraava →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCREEN: Mastery Test Results -->
+  <div id="screen-mastery-results" class="screen">
+    <div class="results-inner" style="max-width:500px">
+      <div id="mastery-result-content"></div>
+      <button class="btn-primary" id="mastery-btn-done">Jatka →</button>
     </div>
   </div>
 

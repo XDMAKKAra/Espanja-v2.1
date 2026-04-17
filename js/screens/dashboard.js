@@ -3,6 +3,7 @@ import { API, isLoggedIn, clearAuth, authHeader, apiFetch, getAuthEmail } from "
 import { state } from "../state.js";
 import { showLoading } from "../ui/loading.js";
 import { srDueCount } from "../features/spacedRepetition.js";
+import { renderAdaptiveCard } from "./adaptive.js";
 
 let _deps = {};
 export function initDashboard({ loadGrammarDrill, loadReadingTask, loadWritingTask, startCheckout, openBillingPortal, startMockExam, showModePage, renderModePageStats, loadNextBatch, showProUpsell }) {
@@ -187,6 +188,7 @@ function renderDashboard({
   renderRecommendations(modeDaysAgo, modeStats, totalSessions);
   loadExamHistory();
   updateSrBadge();
+  renderAdaptiveCard("vocab");
 
   if (recent.length > 0) {
     $("dash-recent-wrap").classList.remove("hidden");
