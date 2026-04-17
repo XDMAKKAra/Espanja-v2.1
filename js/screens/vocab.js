@@ -16,6 +16,10 @@ export const VOCAB_TYPE_LABELS = {
   translate: "Käännös",
   gap: "Täydennä",
   meaning: "Sanasto",
+  gap_fill: "Aukkotehtävä",
+  matching: "Yhdistä",
+  reorder: "Järjestä",
+  translate_mini: "Käännä",
 };
 
 export const GRAMMAR_TYPE_LABELS = {
@@ -70,16 +74,40 @@ export async function loadNextBatch() {
     const srItems = state.batchNumber === 1 ? srPop(2) : [];
 
     const freshCount = BATCH_SIZE - srItems.length;
+
+    // Mix in a new exercise type every other batch
+    let mixedExercises = [];
+    if (state.batchNumber >= 2 && state.batchNumber % 2 === 0) {
+      try {
+        const mixTypes = ["gap-fill", "reorder", "matching"];
+        const pick = mixTypes[Math.floor(Math.random() * mixTypes.length)];
+        const mixRes = await fetch(`${API}/api/${pick}`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ level: state.level, count: 1, language: state.language }),
+        });
+        if (mixRes.ok) {
+          const mixData = await mixRes.json();
+          if (pick === "matching" && mixData.exercise) {
+            mixedExercises = [mixData.exercise];
+          } else if (mixData.exercises?.length) {
+            mixedExercises = mixData.exercises.slice(0, 1);
+          }
+        }
+      } catch { /* silent — just skip mixed type */ }
+    }
+
+    const mcCount = Math.max(1, freshCount - mixedExercises.length);
     const res = await fetch(`${API}/api/generate`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ level: state.level, topic: state.topic, count: freshCount, language: state.language }),
+      body: JSON.stringify({ level: state.level, topic: state.topic, count: mcCount, language: state.language }),
     });
     const data = await res.json();
     if (!res.ok) throw new Error(data.error || "Tehtävien luonti epäonnistui");
     if (!data.exercises?.length) throw new Error("No exercises");
 
-    state.exercises = [...srItems, ...data.exercises];
+    state.exercises = [...srItems, ...data.exercises, ...mixedExercises];
     state.bankId = data.bankId || null;
     if (state.batchNumber === 1) trackExerciseStarted("vocab", state.level, state.topic, state.language);
     renderExercise();
@@ -87,6 +115,17 @@ export async function loadNextBatch() {
   } catch (err) {
     showLoadingError(err.message, () => loadNextBatch());
   }
+}
+
+function hideAllExerciseAreas() {
+  $("options-grid").innerHTML = "";
+  $("options-grid").style.display = "";
+  const areas = ["gap-fill-area", "matching-area", "reorder-area", "translate-area"];
+  areas.forEach(id => { const el = $(id); if (el) el.classList.add("hidden"); });
+  const contextEl = $("ex-context-sentence");
+  if (contextEl) contextEl.classList.add("hidden");
+  const kbdHint = $("vocab-kbd-hint");
+  if (kbdHint) kbdHint.style.display = "";
 }
 
 function renderExercise() {
@@ -98,24 +137,34 @@ function renderExercise() {
   $("ex-round").textContent = ex._sr ? "🔁 Kertaus" : `Kierros ${state.batchNumber}/${MAX_BATCHES}`;
   $("ex-level-badge").textContent = state.level;
   $("progress-fill").style.width = `${((questionNum - 1) / totalQuestions) * 100}%`;
-  $("question-text").textContent = ex.question;
 
-  const typeBadge = $("ex-type-badge");
   const exType = ex.type || "meaning";
-  const typeLabel = VOCAB_TYPE_LABELS[exType] || "Sanasto";
+  const typeBadge = $("ex-type-badge");
+  const typeLabel = VOCAB_TYPE_LABELS[exType] || GRAMMAR_TYPE_LABELS[exType] || "Sanasto";
   if (typeBadge) {
     typeBadge.textContent = typeLabel;
     typeBadge.className = `ex-type-badge type-${exType}`;
     typeBadge.classList.remove("hidden");
   }
 
+  $("explanation-block").classList.add("hidden");
+  $("explanation-text").textContent = "";
+  hideAllExerciseAreas();
+
+  // Route to type-specific renderer
+  if (exType === "gap_fill") return renderGapFill(ex, questionNum, totalQuestions);
+  if (exType === "matching") return renderMatching(ex);
+  if (exType === "reorder") return renderReorder(ex);
+  if (exType === "translate_mini") return renderTranslateMini(ex);
+
+  // Default: multiple-choice
+  $("question-text").textContent = ex.question;
+
   const contextEl = $("ex-context-sentence");
   if (contextEl) {
     if (ex.type === "context" && ex.context) {
       contextEl.textContent = ex.context;
       contextEl.classList.remove("hidden");
-    } else {
-      contextEl.classList.add("hidden");
     }
   }
 
@@ -141,9 +190,334 @@ function renderExercise() {
     btn.addEventListener("click", () => handleAnswer(letter, btn));
     grid.appendChild(btn);
   });
+}
 
-  $("explanation-block").classList.add("hidden");
-  $("explanation-text").textContent = "";
+// ─── Gap-fill renderer ────────────────────────────────────────────────────
+
+function renderGapFill(ex) {
+  $("question-label").textContent = "Kirjoita puuttuva sana";
+  $("question-text").textContent = "";
+  $("options-grid").style.display = "none";
+  const kbdHint = $("vocab-kbd-hint");
+  if (kbdHint) kbdHint.style.display = "none";
+
+  const area = $("gap-fill-area");
+  area.classList.remove("hidden");
+  $("gap-fill-sentence").textContent = ex.sentence;
+  $("gap-fill-hint").textContent = `Vihje: ${ex.hint}`;
+
+  const input = $("gap-fill-input");
+  input.value = "";
+  input.className = "gap-fill-input";
+  input.disabled = false;
+  input.focus();
+
+  const feedback = $("gap-fill-feedback");
+  feedback.classList.add("hidden");
+
+  const submitBtn = $("gap-fill-submit");
+  submitBtn.disabled = false;
+
+  const doSubmit = () => {
+    const answer = input.value.trim();
+    if (!answer) return;
+    submitBtn.disabled = true;
+    input.disabled = true;
+
+    // Lenient matching: normalize accents for comparison
+    const normalize = s => s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    const exactMatch = answer.toLowerCase() === ex.correctAnswer.toLowerCase();
+    const lenientMatch = normalize(answer) === normalize(ex.correctAnswer);
+    const altMatch = (ex.alternativeAnswers || []).some(
+      a => answer.toLowerCase() === a.toLowerCase() || normalize(answer) === normalize(a)
+    );
+
+    const isCorrect = exactMatch || altMatch;
+    const isAccentError = !exactMatch && lenientMatch;
+
+    if (isCorrect || isAccentError) {
+      input.classList.add("correct");
+      state.totalCorrect++;
+      state.batchCorrect++;
+      state._lastCorrect = true;
+      let msg = `✓ Oikein! ${ex.correctAnswer}`;
+      if (isAccentError) msg += " (tarkista aksentit: " + ex.correctAnswer + ")";
+      feedback.innerHTML = `<span style="color:var(--correct)">${msg}</span><br>${ex.explanation}`;
+    } else {
+      input.classList.add("wrong");
+      state._lastCorrect = false;
+      feedback.innerHTML = `<span style="color:var(--wrong)">✗ ${ex.correctAnswer}</span><br>${ex.explanation}`;
+    }
+
+    state.totalAnswered++;
+    feedback.classList.remove("hidden");
+    $("explanation-block").classList.remove("hidden");
+    $("explanation-text").textContent = ex.explanation;
+  };
+
+  submitBtn.onclick = doSubmit;
+  input.onkeydown = (e) => { if (e.key === "Enter") doSubmit(); };
+}
+
+// ─── Matching renderer ────────────────────────────────────────────────────
+
+function renderMatching(ex) {
+  $("question-label").textContent = "Yhdistä parit";
+  $("question-text").textContent = "";
+  $("options-grid").style.display = "none";
+  const kbdHint = $("vocab-kbd-hint");
+  if (kbdHint) kbdHint.style.display = "none";
+
+  const area = $("matching-area");
+  area.classList.remove("hidden");
+
+  const pairs = ex.pairs || [];
+  const leftCol = $("matching-left");
+  const rightCol = $("matching-right");
+  const statusEl = $("matching-status");
+  leftCol.innerHTML = "";
+  rightCol.innerHTML = "";
+
+  // Shuffle right side
+  const shuffledRight = [...pairs].sort(() => Math.random() - 0.5);
+
+  let selectedLeft = null;
+  let matchedCount = 0;
+
+  pairs.forEach((pair, i) => {
+    const item = document.createElement("div");
+    item.className = "matching-item";
+    item.textContent = pair.spanish;
+    item.dataset.idx = i;
+    item.addEventListener("click", () => selectLeft(item, i));
+    leftCol.appendChild(item);
+  });
+
+  shuffledRight.forEach((pair, i) => {
+    const item = document.createElement("div");
+    item.className = "matching-item";
+    item.textContent = pair.finnish;
+    item.dataset.spanish = pair.spanish;
+    item.addEventListener("click", () => selectRight(item, pair.spanish));
+    rightCol.appendChild(item);
+  });
+
+  statusEl.textContent = `0 / ${pairs.length} yhdistetty`;
+
+  function selectLeft(el, idx) {
+    if (el.classList.contains("matched")) return;
+    leftCol.querySelectorAll(".matching-item").forEach(i => i.classList.remove("selected"));
+    el.classList.add("selected");
+    selectedLeft = { el, idx, spanish: pairs[idx].spanish };
+  }
+
+  function selectRight(el, spanish) {
+    if (el.classList.contains("matched") || !selectedLeft) return;
+
+    if (selectedLeft.spanish === spanish) {
+      // Correct match
+      selectedLeft.el.classList.remove("selected");
+      selectedLeft.el.classList.add("matched");
+      el.classList.add("matched");
+      matchedCount++;
+      statusEl.textContent = `${matchedCount} / ${pairs.length} yhdistetty`;
+
+      if (matchedCount === pairs.length) {
+        // All matched
+        state.totalCorrect++;
+        state.batchCorrect++;
+        state.totalAnswered++;
+        state._lastCorrect = true;
+        statusEl.innerHTML = `<span style="color:var(--correct)">✓ Kaikki oikein!</span>`;
+        $("explanation-block").classList.remove("hidden");
+        $("explanation-text").textContent = "Kaikki parit yhdistetty oikein!";
+      }
+      selectedLeft = null;
+    } else {
+      // Wrong match
+      el.classList.add("wrong-flash");
+      setTimeout(() => el.classList.remove("wrong-flash"), 400);
+    }
+  }
+}
+
+// ─── Reorder renderer ─────────────────────────────────────────────────────
+
+function renderReorder(ex) {
+  $("question-label").textContent = "Järjestä sanat lauseeksi";
+  $("question-text").textContent = "";
+  $("options-grid").style.display = "none";
+  const kbdHint = $("vocab-kbd-hint");
+  if (kbdHint) kbdHint.style.display = "none";
+
+  const area = $("reorder-area");
+  area.classList.remove("hidden");
+  $("reorder-hint").textContent = ex.finnishHint;
+
+  const chipsEl = $("reorder-chips");
+  const targetEl = $("reorder-target");
+  const feedback = $("reorder-feedback");
+  feedback.classList.add("hidden");
+  chipsEl.innerHTML = "";
+  targetEl.innerHTML = '<span class="reorder-placeholder">Klikkaa sanoja oikeaan järjestykseen</span>';
+
+  const placed = [];
+
+  ex.scrambled.forEach((word, i) => {
+    const chip = document.createElement("div");
+    chip.className = "reorder-chip";
+    chip.textContent = word;
+    chip.dataset.idx = i;
+    chip.addEventListener("click", () => {
+      if (chip.classList.contains("used")) return;
+      chip.classList.add("used");
+      placed.push({ word, chipEl: chip });
+      updateTarget();
+    });
+    chipsEl.appendChild(chip);
+  });
+
+  function updateTarget() {
+    const placeholder = targetEl.querySelector(".reorder-placeholder");
+    if (placeholder) placeholder.remove();
+    // Rebuild target
+    targetEl.innerHTML = "";
+    placed.forEach((p, i) => {
+      const chip = document.createElement("div");
+      chip.className = "reorder-chip";
+      chip.textContent = p.word;
+      chip.addEventListener("click", () => {
+        // Remove from target, re-enable source
+        placed.splice(i, 1);
+        p.chipEl.classList.remove("used");
+        updateTarget();
+      });
+      targetEl.appendChild(chip);
+    });
+    if (placed.length === 0) {
+      targetEl.innerHTML = '<span class="reorder-placeholder">Klikkaa sanoja oikeaan järjestykseen</span>';
+    }
+  }
+
+  $("reorder-undo").onclick = () => {
+    if (placed.length === 0) return;
+    const last = placed.pop();
+    last.chipEl.classList.remove("used");
+    updateTarget();
+  };
+
+  $("reorder-submit").onclick = () => {
+    const userOrder = placed.map(p => p.word);
+    const correctOrder = ex.correct;
+
+    // Normalize comparison (case-insensitive)
+    const isCorrect = userOrder.length === correctOrder.length &&
+      userOrder.every((w, i) => w.toLowerCase() === correctOrder[i].toLowerCase());
+
+    state.totalAnswered++;
+
+    if (isCorrect) {
+      state.totalCorrect++;
+      state.batchCorrect++;
+      state._lastCorrect = true;
+      feedback.className = "reorder-feedback correct";
+      feedback.textContent = "✓ Oikein! " + correctOrder.join(" ");
+    } else {
+      state._lastCorrect = false;
+      feedback.className = "reorder-feedback wrong";
+      feedback.innerHTML = `✗ Oikea järjestys: <strong>${correctOrder.join(" ")}</strong><br>${ex.explanation}`;
+    }
+    feedback.classList.remove("hidden");
+    $("explanation-block").classList.remove("hidden");
+    $("explanation-text").textContent = ex.explanation;
+
+    // Disable further interaction
+    chipsEl.querySelectorAll(".reorder-chip").forEach(c => c.style.pointerEvents = "none");
+    targetEl.querySelectorAll(".reorder-chip").forEach(c => c.style.pointerEvents = "none");
+    $("reorder-submit").disabled = true;
+    $("reorder-undo").disabled = true;
+  };
+}
+
+// ─── Translate-mini renderer ──────────────────────────────────────────────
+
+function renderTranslateMini(ex) {
+  $("question-label").textContent = "Käännä espanjaksi";
+  $("question-text").textContent = "";
+  $("options-grid").style.display = "none";
+  const kbdHint = $("vocab-kbd-hint");
+  if (kbdHint) kbdHint.style.display = "none";
+
+  const area = $("translate-area");
+  area.classList.remove("hidden");
+  $("translate-source").textContent = ex.finnishSentence;
+
+  const input = $("translate-input");
+  input.value = "";
+  input.disabled = false;
+  input.focus();
+
+  const submitBtn = $("translate-submit");
+  submitBtn.disabled = false;
+  submitBtn.textContent = "Lähetä arvioitavaksi →";
+
+  const feedback = $("translate-feedback");
+  feedback.classList.add("hidden");
+
+  submitBtn.onclick = async () => {
+    const answer = input.value.trim();
+    if (!answer) return;
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Arvioidaan...";
+    input.disabled = true;
+
+    try {
+      const res = await fetch(`${API}/api/grade-translate`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          userAnswer: answer,
+          acceptedTranslations: ex.acceptedTranslations,
+          finnishSentence: ex.finnishSentence,
+        }),
+      });
+      const data = await res.json();
+
+      state.totalAnswered++;
+      const isCorrect = data.score >= 2;
+      if (isCorrect) {
+        state.totalCorrect++;
+        state.batchCorrect++;
+      }
+      state._lastCorrect = isCorrect;
+
+      const scoreClass = data.score >= 3 ? "good" : data.score >= 2 ? "ok" : "bad";
+      feedback.innerHTML = `
+        <div class="translate-score ${scoreClass}">${data.score} / ${data.maxScore}</div>
+        <div class="translate-best">
+          <strong>Paras käännös:</strong> ${data.bestTranslation}<br>
+          ${data.feedback || ""}<br>
+          <span style="color:var(--text-muted)">${data.explanation || ""}</span>
+        </div>
+      `;
+      feedback.classList.remove("hidden");
+      $("explanation-block").classList.remove("hidden");
+      $("explanation-text").textContent = data.explanation || ex.explanation || "";
+    } catch (err) {
+      // Fallback: simple check against accepted translations
+      const normalize = s => s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
+      const isClose = ex.acceptedTranslations.some(t => normalize(answer) === normalize(t));
+      state.totalAnswered++;
+      if (isClose) { state.totalCorrect++; state.batchCorrect++; }
+      state._lastCorrect = isClose;
+      feedback.innerHTML = `<div class="translate-best">${isClose ? "✓" : "✗"} ${ex.acceptedTranslations[0]}<br>${ex.explanation}</div>`;
+      feedback.classList.remove("hidden");
+      $("explanation-block").classList.remove("hidden");
+      $("explanation-text").textContent = ex.explanation;
+    }
+
+    submitBtn.textContent = "Arvioitu";
+  };
 }
 
 function handleAnswer(chosen, clickedBtn) {

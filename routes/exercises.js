@@ -482,4 +482,255 @@ router.get("/admin/costs-by-user", requireAuth, async (req, res) => {
   }
 });
 
+// ─── Gap-fill exercises (write the missing word) ─────────────────────────────
+
+router.post("/gap-fill", aiLimiter, checkMonthlyCostLimit, async (req, res) => {
+  const { level = "B", count = 6, language = "spanish" } = req.body;
+
+  if (!VALID_LEVELS.has(level)) return res.status(400).json({ error: "Virheellinen taso" });
+  if (!VALID_LANGUAGES.has(language)) return res.status(400).json({ error: "Virheellinen kieli" });
+  const clampedCount = Math.max(1, Math.min(10, Number(count) || 6));
+
+  try {
+    const userId = await getUserId(req);
+    const lang = LANGUAGE_META[language];
+    const levelDesc = LEVEL_DESCRIPTIONS[level];
+    const profileCtx = await getUserProfileContext(userId);
+
+    const prompt = `Generate ${clampedCount} gap-fill exercises for Finnish students studying ${lang.name} (yo-koe, lyhyt oppimäärä).
+${profileCtx}
+LEVEL: ${level} = ${levelDesc}
+
+Each exercise has a ${lang.name} sentence with ONE blank (___). A hint is given in parentheses: either the Finnish meaning or the ${lang.name} infinitive form. The student must type the correct word.
+
+REQUIREMENTS:
+- Sentences must be realistic yo-koe level
+- Hints: use infinitive + grammatical hint, e.g. "(ser, imperfekti)" or "(hablar, subjunktiivi)"
+- correctAnswer: the exact word that fills the blank
+- alternativeAnswers: array of acceptable variants (accent errors, synonyms)
+- Level ${level}: match difficulty exactly
+
+Return ONLY JSON array:
+[
+  {
+    "id": 1,
+    "type": "gap_fill",
+    "sentence": "Cuando ___ pequeño, jugaba al fútbol todos los días.",
+    "hint": "(ser, imperfekti)",
+    "correctAnswer": "era",
+    "alternativeAnswers": ["era"],
+    "explanation": "Ser imperfektissä: era (olin). Imperfekti = toistuva/kuvaava menneisyys."
+  }
+]`;
+
+    const exercises = await callOpenAI(prompt, 2000);
+    logAiUsage(userId, "gap-fill", exercises._usage).catch(() => {});
+    delete exercises._usage;
+    res.json({ exercises });
+  } catch (err) {
+    console.error("Gap-fill error:", err.message);
+    res.status(500).json({ error: err.message || "Failed to generate gap-fill" });
+  }
+});
+
+// ─── Matching exercises (connect pairs) ──────────────────────────────────────
+
+router.post("/matching", aiLimiter, checkMonthlyCostLimit, async (req, res) => {
+  const { level = "B", language = "spanish" } = req.body;
+
+  if (!VALID_LEVELS.has(level)) return res.status(400).json({ error: "Virheellinen taso" });
+  if (!VALID_LANGUAGES.has(language)) return res.status(400).json({ error: "Virheellinen kieli" });
+
+  try {
+    const userId = await getUserId(req);
+    const lang = LANGUAGE_META[language];
+    const levelDesc = LEVEL_DESCRIPTIONS[level];
+    const profileCtx = await getUserProfileContext(userId);
+
+    const prompt = `Generate a matching exercise for Finnish students studying ${lang.name} (yo-koe, lyhyt oppimäärä).
+${profileCtx}
+LEVEL: ${level} = ${levelDesc}
+
+Create 6 ${lang.name} words/phrases and their Finnish translations. Student must match each ${lang.name} word to its Finnish meaning.
+
+REQUIREMENTS:
+- Words must be appropriate for level ${level}
+- Include a mix: nouns, verbs, adjectives, expressions
+- No cognates (too easy) unless level is A
+- Distractors should be semantically related (same topic area)
+
+Return ONLY JSON:
+{
+  "type": "matching",
+  "pairs": [
+    { "spanish": "el ayuntamiento", "finnish": "kaupungintalo" },
+    { "spanish": "sin embargo", "finnish": "kuitenkin" },
+    { "spanish": "desarrollar", "finnish": "kehittää" },
+    { "spanish": "la huella", "finnish": "jälki" },
+    { "spanish": "imprescindible", "finnish": "välttämätön" },
+    { "spanish": "fomentar", "finnish": "edistää" }
+  ]
+}`;
+
+    const exercise = await callOpenAI(prompt, 1000);
+    logAiUsage(userId, "matching", exercise._usage).catch(() => {});
+    delete exercise._usage;
+    exercise.type = "matching";
+    res.json({ exercise });
+  } catch (err) {
+    console.error("Matching error:", err.message);
+    res.status(500).json({ error: err.message || "Failed to generate matching" });
+  }
+});
+
+// ─── Reorder exercises (arrange words into sentence) ─────────────────────────
+
+router.post("/reorder", aiLimiter, checkMonthlyCostLimit, async (req, res) => {
+  const { level = "B", count = 4, language = "spanish" } = req.body;
+
+  if (!VALID_LEVELS.has(level)) return res.status(400).json({ error: "Virheellinen taso" });
+  if (!VALID_LANGUAGES.has(language)) return res.status(400).json({ error: "Virheellinen kieli" });
+  const clampedCount = Math.max(1, Math.min(8, Number(count) || 4));
+
+  try {
+    const userId = await getUserId(req);
+    const lang = LANGUAGE_META[language];
+    const levelDesc = LEVEL_DESCRIPTIONS[level];
+    const profileCtx = await getUserProfileContext(userId);
+
+    const prompt = `Generate ${clampedCount} word-reorder exercises for Finnish students studying ${lang.name} (yo-koe, lyhyt oppimäärä).
+${profileCtx}
+LEVEL: ${level} = ${levelDesc}
+
+Each exercise: give a Finnish translation and the ${lang.name} words in SCRAMBLED order. Student arranges them into the correct sentence.
+
+Focus on tricky word order: adjective placement, pronoun position before verbs, clitic doubling, negation placement.
+
+REQUIREMENTS:
+- Sentences 4-8 words (short enough to reorder)
+- finnishHint: the Finnish meaning
+- scrambled: array of words in random order
+- correct: array of words in correct order
+- Level ${level} appropriate
+
+Return ONLY JSON array:
+[
+  {
+    "id": 1,
+    "type": "reorder",
+    "finnishHint": "En pidä kylmästä vedestä.",
+    "scrambled": ["gusta", "fría", "el", "no", "me", "agua"],
+    "correct": ["No", "me", "gusta", "el", "agua", "fría"],
+    "explanation": "No me gusta + artikkeli + substantiivi + adjektiivi. Espanjassa adjektiivi tulee substantiivin jälkeen."
+  }
+]`;
+
+    const exercises = await callOpenAI(prompt, 1500);
+    logAiUsage(userId, "reorder", exercises._usage).catch(() => {});
+    delete exercises._usage;
+    res.json({ exercises });
+  } catch (err) {
+    console.error("Reorder error:", err.message);
+    res.status(500).json({ error: err.message || "Failed to generate reorder" });
+  }
+});
+
+// ─── Translate-mini (short Finnish→Spanish, AI-graded) ───────────────────────
+
+router.post("/translate-mini", aiLimiter, checkMonthlyCostLimit, async (req, res) => {
+  const { level = "B", count = 3, language = "spanish" } = req.body;
+
+  if (!VALID_LEVELS.has(level)) return res.status(400).json({ error: "Virheellinen taso" });
+  if (!VALID_LANGUAGES.has(language)) return res.status(400).json({ error: "Virheellinen kieli" });
+  const clampedCount = Math.max(1, Math.min(6, Number(count) || 3));
+
+  try {
+    const userId = await getUserId(req);
+    const lang = LANGUAGE_META[language];
+    const levelDesc = LEVEL_DESCRIPTIONS[level];
+    const profileCtx = await getUserProfileContext(userId);
+
+    const prompt = `Generate ${clampedCount} mini-translation exercises for Finnish students studying ${lang.name} (yo-koe, lyhyt oppimäärä).
+${profileCtx}
+LEVEL: ${level} = ${levelDesc}
+
+Each exercise: a SHORT Finnish sentence (5-12 words) that the student translates to ${lang.name}.
+
+REQUIREMENTS:
+- Finnish sentence tests specific grammar: ser/estar, subjunctive, preterite vs imperfect, etc.
+- acceptedTranslations: array of 2-4 valid ${lang.name} translations
+- grammarFocus: what grammar point this tests
+- Level ${level} appropriate
+
+Return ONLY JSON array:
+[
+  {
+    "id": 1,
+    "type": "translate_mini",
+    "finnishSentence": "Haluaisin matkustaa Espanjaan ensi kesänä.",
+    "acceptedTranslations": [
+      "Me gustaría viajar a España el próximo verano.",
+      "Querría viajar a España el verano que viene.",
+      "Me gustaría ir a España el próximo verano."
+    ],
+    "grammarFocus": "konditionaali",
+    "explanation": "Me gustaría / Querría = haluaisin (konditionaali). El próximo verano = ensi kesänä."
+  }
+]`;
+
+    const exercises = await callOpenAI(prompt, 1500);
+    logAiUsage(userId, "translate-mini", exercises._usage).catch(() => {});
+    delete exercises._usage;
+    res.json({ exercises });
+  } catch (err) {
+    console.error("Translate-mini error:", err.message);
+    res.status(500).json({ error: err.message || "Failed to generate translate-mini" });
+  }
+});
+
+// ─── Grade translate-mini (AI grading for free-text) ─────────────────────────
+
+router.post("/grade-translate", aiLimiter, checkMonthlyCostLimit, async (req, res) => {
+  const { userAnswer, acceptedTranslations, finnishSentence } = req.body;
+
+  if (!userAnswer || !acceptedTranslations || !finnishSentence) {
+    return res.status(400).json({ error: "Puuttuvia kenttiä" });
+  }
+
+  try {
+    const userId = await getUserId(req);
+
+    const prompt = `You are grading a Finnish student's Spanish translation.
+
+FINNISH ORIGINAL: "${finnishSentence}"
+STUDENT'S ANSWER: "${userAnswer}"
+ACCEPTED TRANSLATIONS: ${JSON.stringify(acceptedTranslations)}
+
+Grade 0-3:
+3 = Perfect or near-perfect (minor accent errors OK)
+2 = Understandable, correct grammar, minor word choice issues
+1 = Partially correct, some grammar/vocabulary errors
+0 = Incorrect or incomprehensible
+
+Return ONLY JSON:
+{
+  "score": 2,
+  "maxScore": 3,
+  "correct": false,
+  "feedback": "Lyhyt palaute suomeksi — mitä oli oikein, mitä väärin",
+  "bestTranslation": "Me gustaría viajar a España el próximo verano.",
+  "explanation": "Lyhyt selitys avainrakenteista suomeksi"
+}`;
+
+    const result = await callOpenAI(prompt, 500);
+    logAiUsage(userId, "grade-translate", result._usage).catch(() => {});
+    delete result._usage;
+    result.correct = result.score >= 2;
+    res.json(result);
+  } catch (err) {
+    console.error("Grade translate error:", err.message);
+    res.status(500).json({ error: err.message || "Failed to grade translation" });
+  }
+});
+
 export default router;

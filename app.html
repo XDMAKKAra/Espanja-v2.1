@@ -495,7 +495,7 @@
         <span class="mode-page-icon">🔧</span>
         <div>
           <h1 class="mode-page-title">Puheoppi</h1>
-          <p class="mode-page-sub">Kohdennetut harjoitukset YTL:n yleisimpiin virheisiin</p>
+          <p class="mode-page-sub">Kohdennetut harjoitukset YO-kokeen yleisimpiin virheisiin</p>
         </div>
       </div>
       <div class="mode-page-stats" id="grammar-page-stats"></div>
@@ -801,6 +801,48 @@
       </div>
 
       <div class="options-grid" id="options-grid" role="group" aria-label="Vastausvaihtoehdot"></div>
+
+      <!-- Gap-fill: text input -->
+      <div class="gap-fill-area hidden" id="gap-fill-area">
+        <div class="gap-fill-sentence" id="gap-fill-sentence"></div>
+        <div class="gap-fill-hint" id="gap-fill-hint"></div>
+        <div class="gap-fill-input-row">
+          <input type="text" id="gap-fill-input" class="gap-fill-input" placeholder="Kirjoita puuttuva sana..." autocomplete="off" spellcheck="false" />
+          <button class="btn-primary btn-sm" id="gap-fill-submit">Tarkista</button>
+        </div>
+        <div class="gap-fill-feedback hidden" id="gap-fill-feedback"></div>
+      </div>
+
+      <!-- Matching: two columns -->
+      <div class="matching-area hidden" id="matching-area">
+        <div class="matching-cols">
+          <div class="matching-col" id="matching-left"></div>
+          <div class="matching-col" id="matching-right"></div>
+        </div>
+        <div class="matching-status" id="matching-status"></div>
+      </div>
+
+      <!-- Reorder: draggable chips -->
+      <div class="reorder-area hidden" id="reorder-area">
+        <div class="reorder-hint" id="reorder-hint"></div>
+        <div class="reorder-chips" id="reorder-chips"></div>
+        <div class="reorder-target" id="reorder-target">
+          <span class="reorder-placeholder">Klikkaa sanoja oikeaan j&auml;rjestykseen</span>
+        </div>
+        <div class="reorder-actions">
+          <button class="btn-secondary btn-sm" id="reorder-undo">Kumoa</button>
+          <button class="btn-primary btn-sm" id="reorder-submit">Tarkista</button>
+        </div>
+        <div class="reorder-feedback hidden" id="reorder-feedback"></div>
+      </div>
+
+      <!-- Translate-mini: text input + AI grade -->
+      <div class="translate-area hidden" id="translate-area">
+        <div class="translate-source" id="translate-source"></div>
+        <textarea id="translate-input" class="translate-input" placeholder="Kirjoita k&auml;&auml;nn&ouml;s espanjaksi..." rows="2" spellcheck="false"></textarea>
+        <button class="btn-primary" id="translate-submit">L&auml;het&auml; arvioitavaksi &rarr;</button>
+        <div class="translate-feedback hidden" id="translate-feedback"></div>
+      </div>
 
       <div class="explanation-block hidden" id="explanation-block">
         <p id="explanation-text"></p>
