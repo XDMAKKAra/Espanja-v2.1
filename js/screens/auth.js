@@ -1,6 +1,8 @@
 import { $, show } from "../ui/nav.js";
 import { API, setAuth, clearAuth } from "../api.js";
 import { state } from "../state.js";
+import { checkOnboarding } from "./onboarding.js";
+import { checkPlacementNeeded, showPlacementIntro } from "./placement.js";
 
 let _deps = {};
 export function initAuth({ updateSidebarState, loadDashboard }) {
@@ -57,7 +59,16 @@ $("btn-auth-submit").addEventListener("click", async () => {
     }
     setAuth(data.token, data.refreshToken, data.email);
     _deps.updateSidebarState();
-    await _deps.loadDashboard();
+    // Check onboarding → placement → dashboard
+    const needsOnboarding = await checkOnboarding();
+    if (!needsOnboarding) {
+      const needsPlacement = await checkPlacementNeeded();
+      if (needsPlacement) {
+        showPlacementIntro();
+      } else {
+        await _deps.loadDashboard();
+      }
+    }
   } catch {
     errEl.textContent = "Ei yhteyttä palvelimeen";
     errEl.classList.remove("hidden");

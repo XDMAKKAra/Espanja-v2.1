@@ -3,9 +3,9 @@ const LEVELS = ["I", "A", "B", "C", "M", "E", "L"];
 
 // ─── Auth state ───────────────────────────────────────────────────────────────
 
-let authToken        = localStorage.getItem("kielio_token");
-let authRefreshToken = localStorage.getItem("kielio_refresh_token");
-let authEmail        = localStorage.getItem("kielio_email");
+let authToken        = localStorage.getItem("puheo_token");
+let authRefreshToken = localStorage.getItem("puheo_refresh_token");
+let authEmail        = localStorage.getItem("puheo_email");
 
 function isLoggedIn() { return !!authToken; }
 
@@ -17,18 +17,18 @@ function setAuth(token, refreshToken, email) {
   authToken        = token;
   authRefreshToken = refreshToken;
   authEmail        = email;
-  localStorage.setItem("kielio_token",         token);
-  localStorage.setItem("kielio_refresh_token", refreshToken);
-  localStorage.setItem("kielio_email",         email);
+  localStorage.setItem("puheo_token",         token);
+  localStorage.setItem("puheo_refresh_token", refreshToken);
+  localStorage.setItem("puheo_email",         email);
 }
 
 function clearAuth() {
   authToken = null;
   authRefreshToken = null;
   authEmail = null;
-  localStorage.removeItem("kielio_token");
-  localStorage.removeItem("kielio_refresh_token");
-  localStorage.removeItem("kielio_email");
+  localStorage.removeItem("puheo_token");
+  localStorage.removeItem("puheo_refresh_token");
+  localStorage.removeItem("puheo_email");
 }
 
 // Auto-refresh: if any authed request gets 401, try refreshing once then retry
@@ -95,7 +95,7 @@ function showLoadingError(errorMsg, retryFn) {
 // Stores up to 20 wrong vocab questions in localStorage, re-injects them as
 // priority items at the start of the next session.
 
-const SR_KEY = "kielio_sr_queue";
+const SR_KEY = "puheo_sr_queue";
 const SR_MAX = 20;
 
 function srLoad() {
@@ -766,7 +766,7 @@ function navigateToMode(mode) {
 
 function saveLastSettings() {
   try {
-    localStorage.setItem("kielio_settings", JSON.stringify({
+    localStorage.setItem("puheo_settings", JSON.stringify({
       mode: state.mode,
       level: state.level,
       topic: $("topic-select").value,
@@ -790,7 +790,7 @@ function loadLastSettings(forcedMode) {
       );
     }
 
-    const p = JSON.parse(localStorage.getItem("kielio_settings") || "null");
+    const p = JSON.parse(localStorage.getItem("puheo_settings") || "null");
 
     // Apply suggested vocab level from server if available
     const sugLevel = window._dashSuggestedLevel;
@@ -876,7 +876,7 @@ if (resetToken) {
     .then((r) => r.json())
     .then((d) => {
       if (d.ok) {
-        localStorage.setItem("kielio_email_verified", "true");
+        localStorage.setItem("puheo_email_verified", "true");
         alert("Sähköpostisi on vahvistettu!");
       } else {
         alert(d.error || "Vahvistus epäonnistui");
@@ -1488,7 +1488,7 @@ async function showVocabResults() {
     const bannerEl = $("improvement-banner");
     if (bannerEl) {
       try {
-        const prevGrade = localStorage.getItem("kielio_last_vocab_grade");
+        const prevGrade = localStorage.getItem("puheo_last_vocab_grade");
         const GRADE_ORDER_LOCAL = { I: 0, A: 1, B: 2, C: 3, M: 4, E: 5, L: 6 };
         if (prevGrade && (GRADE_ORDER_LOCAL[data.grade] ?? -1) > (GRADE_ORDER_LOCAL[prevGrade] ?? -1)) {
           bannerEl.textContent = `🎉 Parempi kuin viime kerralla! ${prevGrade} → ${data.grade}`;
@@ -1497,7 +1497,7 @@ async function showVocabResults() {
           bannerEl.classList.add("hidden");
         }
       } catch { bannerEl.classList.add("hidden"); }
-      localStorage.setItem("kielio_last_vocab_grade", data.grade);
+      localStorage.setItem("puheo_last_vocab_grade", data.grade);
     }
 
     document.querySelectorAll(".grade-scale span").forEach((s) => {
@@ -1539,7 +1539,7 @@ function shareResult(text) {
 $("btn-share-vocab").addEventListener("click", () => {
   const grade = $("grade-display").textContent;
   const score = $("score-text").textContent;
-  shareResult(`Harjoittelin espanjan yo-koetta Kieliossa 📚\nArvosana: ${grade} · ${score}\nhttps://kielio.fi`);
+  shareResult(`Harjoittelin espanjan yo-koetta Puheossa 📚\nArvosana: ${grade} · ${score}\nhttps://puheo.fi`);
 });
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -2364,7 +2364,7 @@ $("exam-btn-home").addEventListener("click", () =>
 );
 $("btn-share-exam").addEventListener("click", () => {
   const grade = $("exam-grade-display").textContent;
-  shareResult(`Tein koeharjoituksen Kieliossa 🎓\nYo-koearvosana: ${grade}\nhttps://kielio.fi`);
+  shareResult(`Tein koeharjoituksen Puheossa 🎓\nYo-koearvosana: ${grade}\nhttps://puheo.fi`);
 });
 
 // ─── Report exercise ───────────────────────────────────────────────────────

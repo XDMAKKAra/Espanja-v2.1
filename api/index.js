@@ -14,6 +14,8 @@ try {
   const { default: srRoutes } = await import("../routes/sr.js");
   const { default: adaptiveRoutes } = await import("../routes/adaptive.js");
   const { default: pushRoutes } = await import("../routes/push.js");
+  const { default: profileRoutes } = await import("../routes/profile.js");
+  const { default: placementRoutes } = await import("../routes/placement.js");
 
   app = express();
 
@@ -41,6 +43,8 @@ try {
   app.use("/api/sr", srRoutes);
   app.use("/api", adaptiveRoutes);
   app.use("/api/push", pushRoutes);
+  app.use("/api", profileRoutes);
+  app.use("/api/placement", placementRoutes);
 
 } catch (e) {
   const { default: express } = await import("express");

@@ -1,4 +1,4 @@
-const CACHE_VERSION = "kielio-v2";
+const CACHE_VERSION = "puheo-v2";
 const STATIC_ASSETS = [
   "/app.html",
   "/index.html",
@@ -94,7 +94,7 @@ self.addEventListener("fetch", (e) => {
 // ─── Push notifications ─────────────────────────────────────────────────────
 
 self.addEventListener("push", (e) => {
-  let data = { title: "Kielio", body: "Sinulla on uusia harjoituksia!", url: "/app.html" };
+  let data = { title: "Puheo", body: "Sinulla on uusia harjoituksia!", url: "/app.html" };
 
   try {
     if (e.data) data = { ...data, ...e.data.json() };

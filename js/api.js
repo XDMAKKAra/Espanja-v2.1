@@ -2,9 +2,9 @@
 
 export const API = window.location.origin;
 
-let authToken        = localStorage.getItem("kielio_token");
-let authRefreshToken = localStorage.getItem("kielio_refresh_token");
-let authEmail        = localStorage.getItem("kielio_email");
+let authToken        = localStorage.getItem("puheo_token");
+let authRefreshToken = localStorage.getItem("puheo_refresh_token");
+let authEmail        = localStorage.getItem("puheo_email");
 
 export function isLoggedIn() { return !!authToken; }
 
@@ -18,18 +18,18 @@ export function setAuth(token, refreshToken, email) {
   authToken        = token;
   authRefreshToken = refreshToken;
   authEmail        = email;
-  localStorage.setItem("kielio_token",         token);
-  localStorage.setItem("kielio_refresh_token", refreshToken);
-  localStorage.setItem("kielio_email",         email);
+  localStorage.setItem("puheo_token",         token);
+  localStorage.setItem("puheo_refresh_token", refreshToken);
+  localStorage.setItem("puheo_email",         email);
 }
 
 export function clearAuth() {
   authToken = null;
   authRefreshToken = null;
   authEmail = null;
-  localStorage.removeItem("kielio_token");
-  localStorage.removeItem("kielio_refresh_token");
-  localStorage.removeItem("kielio_email");
+  localStorage.removeItem("puheo_token");
+  localStorage.removeItem("puheo_refresh_token");
+  localStorage.removeItem("puheo_email");
 }
 
 // Auto-refresh: if any authed request gets 401, try refreshing once then retry

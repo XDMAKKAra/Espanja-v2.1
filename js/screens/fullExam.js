@@ -431,5 +431,5 @@ const shareBtn = $("btn-share-full-exam");
 if (shareBtn) shareBtn.addEventListener("click", () => {
   const grade = $("full-exam-grade-display").textContent;
   const points = $("full-exam-points").textContent;
-  _deps.shareResult(`Tein yo-koesimulaation Kieliossa!\nArvosana: ${grade} (${points})\nhttps://kielio.fi`);
+  _deps.shareResult(`Tein yo-koesimulaation Puheossa!\nArvosana: ${grade} (${points})\nhttps://puheo.fi`);
 });

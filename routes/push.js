@@ -8,7 +8,7 @@ const router = Router();
 // Configure web-push with VAPID keys (set in env)
 if (process.env.VAPID_PUBLIC_KEY && process.env.VAPID_PRIVATE_KEY) {
   webpush.setVapidDetails(
-    `mailto:${process.env.EMAIL_FROM || "noreply@kielio.fi"}`,
+    `mailto:${process.env.EMAIL_FROM || "noreply@puheo.fi"}`,
     process.env.VAPID_PUBLIC_KEY,
     process.env.VAPID_PRIVATE_KEY,
   );

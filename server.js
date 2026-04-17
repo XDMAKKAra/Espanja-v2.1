@@ -30,6 +30,9 @@ import examRoutes from "./routes/exam.js";
 import srRoutes from "./routes/sr.js";
 import adaptiveRoutes from "./routes/adaptive.js";
 import pushRoutes from "./routes/push.js";
+import profileRoutes from "./routes/profile.js";
+import placementRoutes from "./routes/placement.js";
+import supabase from "./supabase.js";
 
 const app = express();
 
@@ -76,6 +79,25 @@ app.use(express.static(__dirname));
 // ─── Health check ───────────────────────────────────────────────────────────
 app.get("/health", (req, res) => res.json({ status: "ok", uptime: process.uptime() }));
 
+// ─── Public user count (for landing page social proof) ──────────────────────
+let _userCountCache = { count: 0, ts: 0 };
+app.get("/api/user-count", async (req, res) => {
+  const now = Date.now();
+  if (now - _userCountCache.ts < 300000) { // 5 min cache
+    return res.json({ count: _userCountCache.count });
+  }
+  try {
+    const { count, error } = await supabase
+      .from("user_profile")
+      .select("*", { count: "exact", head: true });
+    const c = error ? 0 : (count || 0);
+    _userCountCache = { count: c, ts: now };
+    res.json({ count: c });
+  } catch {
+    res.json({ count: _userCountCache.count });
+  }
+});
+
 // ─── Request logging ────────────────────────────────────────────────────────
 let _reqId = 0;
 app.use((req, res, next) => {
@@ -103,6 +125,8 @@ app.use("/api/exam", examRoutes);
 app.use("/api/sr", srRoutes);
 app.use("/api", adaptiveRoutes);
 app.use("/api/push", pushRoutes);
+app.use("/api", profileRoutes);
+app.use("/api/placement", placementRoutes);
 
 // ─── Sentry error handler (must be after routes) ──────────────────────────
 if (process.env.SENTRY_DSN) {

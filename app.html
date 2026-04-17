@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kielio — Harjoittele</title>
+  <title>Puheo — Harjoittele</title>
   <link rel="manifest" href="/manifest.json" />
   <meta name="theme-color" content="#6d5ef4" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -17,7 +17,7 @@
 
   <!-- SIDEBAR (desktop only) -->
   <aside class="app-sidebar" id="app-sidebar" role="navigation" aria-label="Päävalikko">
-    <a href="index.html" class="sidebar-logo">Kiel<span>io</span></a>
+    <a href="index.html" class="sidebar-logo">Puhe<span>o</span></a>
     <nav class="sidebar-nav">
       <button class="sidebar-item active" data-nav="dashboard" id="nav-dashboard">
         <span class="sidebar-item-icon">🏠</span> Oma sivu
@@ -26,7 +26,7 @@
         <span class="sidebar-item-icon">📚</span> Sanasto
       </button>
       <button class="sidebar-item" data-nav="grammar" id="nav-grammar">
-        <span class="sidebar-item-icon">🔧</span> Kielioppi
+        <span class="sidebar-item-icon">🔧</span> Puheoppi
       </button>
       <button class="sidebar-item" data-nav="reading" id="nav-reading">
         <span class="sidebar-item-icon">📖</span> Luetun ymmärt.
@@ -51,7 +51,7 @@
   <nav class="mobile-nav" id="mobile-nav" role="navigation" aria-label="Mobiilinavigaatio">
     <button class="mobile-nav-item active" data-nav="dashboard"><span>🏠</span>Koti</button>
     <button class="mobile-nav-item" data-nav="vocab"><span>📚</span>Sanasto</button>
-    <button class="mobile-nav-item" data-nav="grammar"><span>🔧</span>Kielioppi</button>
+    <button class="mobile-nav-item" data-nav="grammar"><span>🔧</span>Puheoppi</button>
     <button class="mobile-nav-item" data-nav="reading"><span>📖</span>Lukeminen</button>
     <button class="mobile-nav-item" data-nav="writing"><span>✍️</span>Kirjoitus</button>
   </nav>
@@ -61,7 +61,7 @@
   <!-- SCREEN: Auth (login / register) -->
   <div id="screen-auth" class="screen active">
     <div class="auth-inner">
-      <a href="index.html" class="logo">Kiel<span>io</span></a>
+      <a href="index.html" class="logo">Puhe<span>o</span></a>
       <h1 id="auth-title">Kirjaudu sisään</h1>
       <p class="subtitle">Seuraa edistymistäsi ja jatka siitä mihin jäit.</p>
 
@@ -88,6 +88,213 @@
     </div>
   </div>
 
+  <!-- SCREEN: Onboarding -->
+  <div id="screen-onboarding" class="screen">
+    <div class="onboarding-inner">
+      <div class="onboarding-header">
+        <div class="onboarding-logo">Puhe<span>o</span></div>
+        <button class="onboarding-skip" id="onboarding-skip">Täytän myöhemmin →</button>
+      </div>
+
+      <!-- Progress bar -->
+      <div class="onboarding-progress">
+        <div class="onboarding-progress-fill" id="onboarding-progress-fill"></div>
+      </div>
+      <div class="onboarding-step-label" id="onboarding-step-label">1 / 7</div>
+
+      <!-- Step container (swapped by JS) -->
+      <div class="onboarding-step-container" id="onboarding-step-container">
+
+        <!-- Step 1: Exam date -->
+        <div class="onboarding-step" data-step="1">
+          <h1 class="onboarding-question">Milloin kirjoitat espanjan yo-kokeen?</h1>
+          <p class="onboarding-hint">Tämä auttaa meitä aikatauluttamaan harjoittelusi.</p>
+          <div class="onboarding-options" id="ob-exam-date">
+            <button class="ob-option" data-value="2026-09">Syksy 2026</button>
+            <button class="ob-option" data-value="2027-03">Kevät 2027</button>
+            <button class="ob-option" data-value="2027-09">Syksy 2027</button>
+            <button class="ob-option" data-value="unknown">Ei vielä päätöksiä</button>
+          </div>
+        </div>
+
+        <!-- Step 2: Current grade -->
+        <div class="onboarding-step hidden" data-step="2">
+          <h1 class="onboarding-question">Mikä on nykyinen kouluarvosanasi espanjasta?</h1>
+          <p class="onboarding-hint">Ei haittaa vaikka et tiedä tarkalleen!</p>
+          <div class="onboarding-options grade-grid" id="ob-current-grade">
+            <button class="ob-option ob-grade" data-value="4">4</button>
+            <button class="ob-option ob-grade" data-value="5">5</button>
+            <button class="ob-option ob-grade" data-value="6">6</button>
+            <button class="ob-option ob-grade" data-value="7">7</button>
+            <button class="ob-option ob-grade" data-value="8">8</button>
+            <button class="ob-option ob-grade" data-value="9">9</button>
+            <button class="ob-option ob-grade" data-value="10">10</button>
+            <button class="ob-option" data-value="unknown">En tiedä vielä</button>
+          </div>
+        </div>
+
+        <!-- Step 3: Target grade -->
+        <div class="onboarding-step hidden" data-step="3">
+          <h1 class="onboarding-question">Mitä arvosanaa tavoittelet yo-kokeessa?</h1>
+          <p class="onboarding-hint">Aseta tavoite — räätälöimme harjoittelun sen mukaan.</p>
+          <div class="onboarding-options target-grid" id="ob-target-grade">
+            <button class="ob-option ob-target" data-value="B">
+              <span class="ob-target-grade">B</span>
+              <span class="ob-target-desc">Hyväksytty</span>
+            </button>
+            <button class="ob-option ob-target" data-value="C">
+              <span class="ob-target-grade">C</span>
+              <span class="ob-target-desc">Tyydyttävä</span>
+            </button>
+            <button class="ob-option ob-target" data-value="M">
+              <span class="ob-target-grade">M</span>
+              <span class="ob-target-desc">Hyvä</span>
+            </button>
+            <button class="ob-option ob-target" data-value="E">
+              <span class="ob-target-grade">E</span>
+              <span class="ob-target-desc">Erinomainen</span>
+            </button>
+            <button class="ob-option ob-target" data-value="L">
+              <span class="ob-target-grade">L</span>
+              <span class="ob-target-desc">Huippu</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Step 4: Study years -->
+        <div class="onboarding-step hidden" data-step="4">
+          <h1 class="onboarding-question">Kuinka kauan olet opiskellut espanjaa?</h1>
+          <p class="onboarding-hint">Tämä auttaa valitsemaan sopivan lähtötason.</p>
+          <div class="onboarding-options" id="ob-study-years">
+            <button class="ob-option" data-value="0.5">Alle vuoden</button>
+            <button class="ob-option" data-value="1">Noin vuoden</button>
+            <button class="ob-option" data-value="2">2 vuotta</button>
+            <button class="ob-option" data-value="3">3 vuotta</button>
+            <button class="ob-option" data-value="4">Kauemmin</button>
+          </div>
+        </div>
+
+        <!-- Step 5: Weak areas -->
+        <div class="onboarding-step hidden" data-step="5">
+          <h1 class="onboarding-question">Mitkä ovat heikkoja alueitasi?</h1>
+          <p class="onboarding-hint">Valitse 1–3. Painotamme harjoittelua näihin.</p>
+          <div class="onboarding-options checkbox-grid" id="ob-weak-areas">
+            <button class="ob-option ob-checkbox" data-value="vocabulary">📚 Sanasto</button>
+            <button class="ob-option ob-checkbox" data-value="grammar">🔧 Puheoppi yleisesti</button>
+            <button class="ob-option ob-checkbox" data-value="ser_estar">🔄 Ser / Estar</button>
+            <button class="ob-option ob-checkbox" data-value="subjunctive">🌀 Subjunktiivi</button>
+            <button class="ob-option ob-checkbox" data-value="preterite_imperfect">⏳ Pret. vs. Imperf.</button>
+            <button class="ob-option ob-checkbox" data-value="writing">✍️ Kirjoittaminen</button>
+            <button class="ob-option ob-checkbox" data-value="reading">📖 Luetun ymmärtäminen</button>
+            <button class="ob-option ob-checkbox" data-value="verbs">🏃 Verbit yleisesti</button>
+            <button class="ob-option ob-checkbox" data-value="unknown">🤷 En tiedä vielä</button>
+          </div>
+          <button class="btn-primary onboarding-next-btn hidden" id="ob-weak-next">Seuraava →</button>
+        </div>
+
+        <!-- Step 6: Daily goal -->
+        <div class="onboarding-step hidden" data-step="6">
+          <h1 class="onboarding-question">Kuinka monta minuuttia päivässä haluat harjoitella?</h1>
+          <p class="onboarding-hint">Pienikin määrä riittää — säännöllisyys ratkaisee!</p>
+          <div class="onboarding-options" id="ob-daily-goal">
+            <button class="ob-option" data-value="10">🌱 10 min<span class="ob-option-sub">Kevyt alku</span></button>
+            <button class="ob-option" data-value="20">⚡ 20 min<span class="ob-option-sub">Suositeltu</span></button>
+            <button class="ob-option" data-value="30">🔥 30 min<span class="ob-option-sub">Tehokas</span></button>
+            <button class="ob-option" data-value="45">💪 45 min<span class="ob-option-sub">Intensiivinen</span></button>
+            <button class="ob-option" data-value="60">🚀 60 min<span class="ob-option-sub">Maksimivauhti</span></button>
+          </div>
+        </div>
+
+        <!-- Step 7: Referral source -->
+        <div class="onboarding-step hidden" data-step="7">
+          <h1 class="onboarding-question">Mistä kuulit Puheosta?</h1>
+          <p class="onboarding-hint">Tämä auttaa meitä tavoittamaan lisää opiskelijoita!</p>
+          <div class="onboarding-options" id="ob-referral">
+            <button class="ob-option" data-value="friend">👥 Kaveri</button>
+            <button class="ob-option" data-value="teacher">👩‍🏫 Opettaja</button>
+            <button class="ob-option" data-value="google">🔍 Google</button>
+            <button class="ob-option" data-value="tiktok">🎵 TikTok</button>
+            <button class="ob-option" data-value="instagram">📸 Instagram</button>
+            <button class="ob-option" data-value="other">💬 Muu</button>
+          </div>
+        </div>
+
+        <!-- Done screen -->
+        <div class="onboarding-step hidden" data-step="done">
+          <div class="onboarding-done-icon">🎉</div>
+          <h1 class="onboarding-question">Valmis!</h1>
+          <p class="onboarding-done-sub">Olemme räätälöineet kokemuksesi sinulle.</p>
+          <div class="onboarding-summary" id="onboarding-summary"></div>
+          <button class="btn-primary" id="onboarding-start-btn">Aloita harjoittelu →</button>
+        </div>
+
+      </div><!-- /step-container -->
+
+      <!-- Encouraging messages -->
+      <div class="onboarding-encouragement hidden" id="onboarding-encouragement"></div>
+    </div>
+  </div>
+
+  <!-- SCREEN: Placement intro -->
+  <div id="screen-placement-intro" class="screen">
+    <div class="placement-inner">
+      <div class="placement-intro-icon">🎯</div>
+      <h1 class="placement-intro-title">Tasokartoitus</h1>
+      <p class="placement-intro-sub">
+        Tehdään ensin 2 minuutin kartoitus, jotta tiedämme tarkalleen mistä kannattaa aloittaa.
+      </p>
+      <div class="placement-intro-details">
+        <div class="placement-intro-detail"><span>📝</span> 8 kysymystä, 4 vaikeustasoa</div>
+        <div class="placement-intro-detail"><span>⏱️</span> Kestää noin 2 minuuttia</div>
+        <div class="placement-intro-detail"><span>🎯</span> Löydämme sinulle sopivan aloitustason</div>
+      </div>
+      <button class="btn-primary" id="placement-btn-start">Aloita kartoitus →</button>
+      <button class="placement-skip-link" id="placement-btn-skip">Ohita ja aloita B-tasolta →</button>
+    </div>
+  </div>
+
+  <!-- SCREEN: Placement test -->
+  <div id="screen-placement-test" class="screen">
+    <div class="placement-inner">
+      <div class="placement-test-header">
+        <div class="placement-test-meta">
+          <span class="placement-test-badge" id="placement-level-badge">Taso A</span>
+          <span class="placement-test-counter" id="placement-counter">1 / 8</span>
+        </div>
+        <div class="placement-progress-bar">
+          <div class="placement-progress-fill" id="placement-progress-fill"></div>
+        </div>
+      </div>
+
+      <div class="placement-context hidden" id="placement-context"></div>
+      <h2 class="placement-question" id="placement-question"></h2>
+      <div class="placement-options" id="placement-options"></div>
+
+      <div class="placement-explanation hidden" id="placement-explanation">
+        <div class="placement-explanation-icon" id="placement-explanation-icon"></div>
+        <p class="placement-explanation-text" id="placement-explanation-text"></p>
+        <button class="btn-primary" id="placement-btn-next">Seuraava →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCREEN: Placement results -->
+  <div id="screen-placement-results" class="screen">
+    <div class="placement-inner">
+      <h1 class="placement-results-title">Kartoituksen tulos</h1>
+      <div class="placement-results-grade" id="placement-results-grade">C</div>
+      <p class="placement-results-sub" id="placement-results-sub">Aloitat C-tasolta</p>
+
+      <!-- Bar chart -->
+      <div class="placement-chart" id="placement-chart"></div>
+
+      <div class="placement-results-actions">
+        <button class="btn-primary" id="placement-btn-accept">Aloita <span id="placement-accept-level">C</span>-tason harjoittelu →</button>
+        <button class="placement-alt-btn hidden" id="placement-btn-alt">Haluan aloittaa helpommasta (<span id="placement-alt-level">B</span>)</button>
+      </div>
+    </div>
+  </div>
+
   <!-- SCREEN: Dashboard -->
   <div id="screen-dashboard" class="screen">
     <div class="dashboard-inner">
@@ -101,6 +308,15 @@
           <span id="dash-pro-badge"></span>
           <button class="btn-logout" id="btn-logout">Kirjaudu ulos</button>
         </div>
+      </div>
+
+      <!-- Onboarding banner (shown if not completed) -->
+      <div class="dash-onboarding-banner hidden" id="dash-onboarding-banner">
+        <span class="dash-onboarding-banner-icon">✨</span>
+        <div class="dash-onboarding-banner-text">
+          <strong>Täydennä profiilisi</strong> 2 minuutissa — räätälöimme harjoittelun sinulle!
+        </div>
+        <span class="dash-onboarding-banner-arrow">→</span>
       </div>
 
       <!-- Hero grade card -->
@@ -134,6 +350,25 @@
           <div class="dash-stat-icon">📅</div>
           <div class="dash-stat-value" id="dash-week-val">0<span class="week-trend-arrow same" id="dash-week-trend"></span></div>
           <div class="dash-stat-label">Tällä viikolla</div>
+        </div>
+      </div>
+
+      <!-- Exam countdown + daily goal -->
+      <div class="dash-goal-row hidden" id="dash-goal-row">
+        <div class="dash-goal-card" id="dash-exam-countdown">
+          <span class="dash-goal-icon">📅</span>
+          <div class="dash-goal-text">
+            <div class="dash-goal-value" id="dash-countdown-value">—</div>
+            <div class="dash-goal-label">päivää kokeeseen</div>
+          </div>
+        </div>
+        <div class="dash-goal-card" id="dash-daily-goal">
+          <span class="dash-goal-icon">🎯</span>
+          <div class="dash-goal-text">
+            <div class="dash-goal-value"><span id="dash-today-minutes">0</span> / <span id="dash-goal-minutes">20</span> min</div>
+            <div class="dash-goal-label">tämän päivän tavoite</div>
+          </div>
+          <div class="dash-goal-bar"><div class="dash-goal-bar-fill" id="dash-goal-bar-fill"></div></div>
         </div>
       </div>
 
@@ -202,6 +437,11 @@
       <div id="dash-exam-history"></div>
 
       <button class="btn-primary" id="btn-dash-start" style="margin-top:16px">Aloita harjoittelu →</button>
+
+      <!-- Retake placement test -->
+      <div class="dash-placement-retake hidden" id="dash-placement-retake">
+        <button class="dash-retake-btn" id="btn-retake-placement">🎯 Tee tasokartoitus uudelleen</button>
+      </div>
     </div>
   </div>
 
@@ -248,20 +488,20 @@
     </div>
   </div>
 
-  <!-- SCREEN: Mode — Kielioppi -->
+  <!-- SCREEN: Mode — Puheoppi -->
   <div id="screen-mode-grammar" class="screen">
     <div class="mode-page">
       <div class="mode-page-header">
         <span class="mode-page-icon">🔧</span>
         <div>
-          <h1 class="mode-page-title">Kielioppi</h1>
+          <h1 class="mode-page-title">Puheoppi</h1>
           <p class="mode-page-sub">Kohdennetut harjoitukset YTL:n yleisimpiin virheisiin</p>
         </div>
       </div>
       <div class="mode-page-stats" id="grammar-page-stats"></div>
 
       <div class="mode-page-section">
-        <label class="mode-page-label">Kielioppiaihe</label>
+        <label class="mode-page-label">Puheoppiaihe</label>
         <div class="topic-cards" id="grammar-topic-cards">
           <button class="topic-card active" data-topic="mixed"><span class="topic-card-icon">🎲</span><span class="topic-card-name">Sekaisin</span><span class="topic-card-desc">Kaikki aiheet</span></button>
           <button class="topic-card" data-topic="ser_estar"><span class="topic-card-icon">🔄</span><span class="topic-card-name">Ser vs. Estar</span><span class="topic-card-desc">Pysyvä vs. tilapäinen</span></button>
@@ -377,7 +617,7 @@
   <div id="screen-start" class="screen">
     <div class="start-inner">
       <div class="start-topbar">
-        <a href="index.html" class="logo">Kiel<span>io</span></a>
+        <a href="index.html" class="logo">Puhe<span>o</span></a>
         <div class="start-topbar-right">
           <div class="streak-badge hidden" id="start-streak-badge"></div>
           <button class="btn-dash-back hidden" id="btn-back-to-dash">← Omat tiedot</button>
@@ -399,7 +639,7 @@
           </button>
           <button class="mode-btn" data-mode="grammar">
             <span class="mode-icon">🔧</span>
-            <span class="mode-title">Kielioppi</span>
+            <span class="mode-title">Puheoppi</span>
             <span class="mode-desc">ser/estar · subj. · kondit.</span>
           </button>
           <button class="mode-btn" data-mode="reading">
@@ -479,7 +719,7 @@
       <!-- Grammar config -->
       <div id="grammar-config" class="hidden">
         <div class="config-block">
-          <label>Kielioppiaihe</label>
+          <label>Puheoppiaihe</label>
           <select id="grammar-topic-select">
             <option value="mixed">Sekaisin — kaikki aiheet</option>
             <option value="ser_estar">Ser vs. Estar</option>
@@ -728,7 +968,7 @@
   <!-- SCREEN: Grammar results -->
   <div id="screen-grammar-results" class="screen">
     <div class="results-inner">
-      <p class="results-label">Kielioppiharjoitus valmis</p>
+      <p class="results-label">Puheoppiharjoitus valmis</p>
       <div class="grade-display" id="gram-score-display">5/6</div>
       <div class="score-row"><span id="gram-score-text">5 / 6 oikein</span></div>
       <div class="gram-error-summary" id="gram-error-summary"></div>
@@ -908,7 +1148,7 @@
   <!-- SCREEN: Reset Password -->
   <div id="screen-reset-password" class="screen">
     <div class="auth-inner">
-      <a href="index.html" class="logo">Kiel<span>io</span></a>
+      <a href="index.html" class="logo">Puhe<span>o</span></a>
       <h1>Aseta uusi salasana</h1>
       <p class="subtitle">Kirjoita uusi salasanasi alle.</p>
       <div class="config-block">

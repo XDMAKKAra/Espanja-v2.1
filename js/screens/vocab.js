@@ -321,7 +321,7 @@ async function showVocabResults() {
     const bannerEl = $("improvement-banner");
     if (bannerEl) {
       try {
-        const prevGrade = localStorage.getItem("kielio_last_vocab_grade");
+        const prevGrade = localStorage.getItem("puheo_last_vocab_grade");
         const GRADE_ORDER_LOCAL = { I: 0, A: 1, B: 2, C: 3, M: 4, E: 5, L: 6 };
         if (prevGrade && (GRADE_ORDER_LOCAL[data.grade] ?? -1) > (GRADE_ORDER_LOCAL[prevGrade] ?? -1)) {
           bannerEl.textContent = `🎉 Parempi kuin viime kerralla! ${prevGrade} → ${data.grade}`;
@@ -330,7 +330,7 @@ async function showVocabResults() {
           bannerEl.classList.add("hidden");
         }
       } catch { bannerEl.classList.add("hidden"); }
-      localStorage.setItem("kielio_last_vocab_grade", data.grade);
+      localStorage.setItem("puheo_last_vocab_grade", data.grade);
     }
 
     document.querySelectorAll(".grade-scale span").forEach((s) => {
@@ -361,5 +361,5 @@ $("btn-restart").addEventListener("click", () =>
 $("btn-share-vocab").addEventListener("click", () => {
   const grade = $("grade-display").textContent;
   const score = $("score-text").textContent;
-  _deps.shareResult(`Harjoittelin espanjan yo-koetta Kieliossa 📚\nArvosana: ${grade} · ${score}\nhttps://kielio.fi`);
+  _deps.shareResult(`Harjoittelin espanjan yo-koetta Puheossa 📚\nArvosana: ${grade} · ${score}\nhttps://puheo.fi`);
 });

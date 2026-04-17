@@ -190,5 +190,5 @@ $("exam-btn-home").addEventListener("click", () =>
 );
 $("btn-share-exam").addEventListener("click", () => {
   const grade = $("exam-grade-display").textContent;
-  _deps.shareResult(`Tein koeharjoituksen Kieliossa 🎓\nYo-koearvosana: ${grade}\nhttps://kielio.fi`);
+  _deps.shareResult(`Tein koeharjoituksen Puheossa 🎓\nYo-koearvosana: ${grade}\nhttps://puheo.fi`);
 });

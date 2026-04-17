@@ -15,6 +15,8 @@ import { initWriting, showProUpsell, startCheckout, openBillingPortal, loadWriti
 import { initExam, startMockExam } from "./screens/exam.js";
 import { initFullExam, startFullExam } from "./screens/fullExam.js";
 import { initAdaptive, masteryNext, masteryDone } from "./screens/adaptive.js";
+import { initOnboarding, checkOnboarding } from "./screens/onboarding.js";
+import { initPlacement, checkPlacementNeeded, showPlacementIntro, startPlacementFromRetake } from "./screens/placement.js";
 import { initAnalytics, trackError } from "./analytics.js";
 
 // ─── Inject show into api.js (avoids circular dep) ─────────────────────────
@@ -83,6 +85,10 @@ initWriting({ loadDashboard, saveProgress });
 initExam({ loadDashboard, saveProgress, shareResult });
 initFullExam({ loadDashboard, saveProgress, shareResult });
 initAdaptive({ loadDashboard });
+initOnboarding({ loadDashboard });
+initPlacement({ loadDashboard });
+window._onboardingRef = { checkOnboarding };
+window._placementRef = { checkPlacementNeeded, showPlacementIntro, startPlacementFromRetake };
 
 // ─── Sidebar navigation clicks ─────────────────────────────────────────────
 
@@ -184,6 +190,12 @@ if (masteryNextBtn) masteryNextBtn.addEventListener("click", () => masteryNext()
 const masteryDoneBtn = $("mastery-btn-done");
 if (masteryDoneBtn) masteryDoneBtn.addEventListener("click", () => masteryDone());
 
+// Retake placement test
+const retakeBtn = $("btn-retake-placement");
+if (retakeBtn) {
+  retakeBtn.addEventListener("click", () => startPlacementFromRetake());
+}
+
 // Sidebar logout
 const sidebarLogout = $("sidebar-logout");
 if (sidebarLogout) {
@@ -214,7 +226,7 @@ if (resetToken) {
     .then((r) => r.json())
     .then((d) => {
       if (d.ok) {
-        localStorage.setItem("kielio_email_verified", "true");
+        localStorage.setItem("puheo_email_verified", "true");
         alert("Sähköpostisi on vahvistettu!");
       } else {
         alert(d.error || "Vahvistus epäonnistui");
@@ -521,9 +533,19 @@ function urlBase64ToUint8Array(base64String) {
 
 updateSidebarState();
 if (!resetToken && isLoggedIn()) {
-  loadDashboard();
+  // Check onboarding first, then placement, then dashboard
+  checkOnboarding().then(async (needsOnboarding) => {
+    if (needsOnboarding) return; // onboarding screen shown
+    // Check if placement test is needed
+    const needsPlacement = await checkPlacementNeeded();
+    if (needsPlacement) {
+      showPlacementIntro();
+      return;
+    }
+    loadDashboard();
+  });
   initPushNotifications();
-  initAnalytics(null, getAuthEmail()); // userId set after dashboard load
+  initAnalytics(null, getAuthEmail());
 }
 
 // Handle manifest shortcuts (hash-based routing)

@@ -1,5 +1,5 @@
 -- ============================================================
--- Full database setup for Kielio
+-- Full database setup for Puheo
 -- Run this in Supabase SQL Editor for a fresh project
 -- ============================================================
 

@@ -4,7 +4,7 @@ import { API, isLoggedIn, authHeader, apiFetch } from "../api.js";
 
 // ─── localStorage fallback for guests ──────────────────────────────────────
 
-const SR_KEY = "kielio_sr_queue";
+const SR_KEY = "puheo_sr_queue";
 const SR_MAX = 20;
 
 function memLoad() {

@@ -4,8 +4,8 @@ dotenv.config();
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-const FROM = process.env.EMAIL_FROM || "Kielio <noreply@kielio.fi>";
-const APP_URL = process.env.APP_URL || "https://kielio.fi";
+const FROM = process.env.EMAIL_FROM || "Puheo <noreply@puheo.fi>";
+const APP_URL = process.env.APP_URL || "https://puheo.fi";
 
 // ─── Shared email layout ─────────────────────────────────────────────────────
 
@@ -21,7 +21,7 @@ function layout(title, bodyHtml) {
 <!-- Header -->
 <tr><td style="padding:32px 40px 0">
   <div style="font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:#fff">
-    Kiel<span style="color:#6d5ef4">io</span>
+    Puhe<span style="color:#6d5ef4">o</span>
   </div>
 </td></tr>
 
@@ -36,7 +36,7 @@ function layout(title, bodyHtml) {
 <!-- Footer -->
 <tr><td style="padding:20px 40px;border-top:1px solid #2a2a3a">
   <p style="color:#555;font-size:12px;margin:0;text-align:center">
-    Kielio — Adaptiivinen tekoälyharjoittelu ylioppilaskirjoituksiin<br/>
+    Puheo — Adaptiivinen tekoälyharjoittelu ylioppilaskirjoituksiin<br/>
     <a href="${APP_URL}" style="color:#6d5ef4;text-decoration:none">${APP_URL.replace("https://", "")}</a>
   </p>
 </td></tr>
@@ -59,18 +59,18 @@ export async function sendWelcomeEmail(email, name) {
   return resend.emails.send({
     from: FROM,
     to: email,
-    subject: "Tervetuloa Kielioon! 🎓",
+    subject: "Tervetuloa Puheoon! 🎓",
     html: layout("Tervetuloa, " + displayName + "!", `
       <p>Tilisi on luotu onnistuneesti. Olet valmis aloittamaan harjoittelun ylioppilaskirjoituksia varten.</p>
-      <p>Kielio tarjoaa sinulle:</p>
+      <p>Puheo tarjoaa sinulle:</p>
       <ul style="color:#c0c0d8;padding-left:20px">
         <li><strong style="color:#fff">Adaptiivinen sanastoharjoittelu</strong> — taso mukautuu osaamiseesi</li>
-        <li><strong style="color:#fff">Kielioppidrilli</strong> — ser/estar, subjunktiivi, konditionaali...</li>
+        <li><strong style="color:#fff">Puheoppidrilli</strong> — ser/estar, subjunktiivi, konditionaali...</li>
         <li><strong style="color:#fff">Luetun ymmärtäminen</strong> — oikeita yo-koe-tyyppisiä tekstejä</li>
         <li><strong style="color:#fff">Kirjoittaminen + AI-palaute</strong> — YTL-kriteerien mukainen arviointi</li>
       </ul>
       ${btn("Aloita harjoittelu →", APP_URL + "/app.html")}
-      <p style="color:#666;font-size:13px">Jos et luonut tiliä Kielioon, voit jättää tämän viestin huomiotta.</p>
+      <p style="color:#666;font-size:13px">Jos et luonut tiliä Puheoon, voit jättää tämän viestin huomiotta.</p>
     `),
   });
 }
@@ -80,7 +80,7 @@ export async function sendPasswordResetEmail(email, resetToken) {
   return resend.emails.send({
     from: FROM,
     to: email,
-    subject: "Salasanan palautus — Kielio",
+    subject: "Salasanan palautus — Puheo",
     html: layout("Salasanan palautus", `
       <p>Sait tämän viestin, koska pyysit salasanan palautusta.</p>
       <p>Klikkaa alla olevaa painiketta asettaaksesi uuden salasanan. Linkki on voimassa <strong style="color:#fff">1 tunnin</strong>.</p>
@@ -95,7 +95,7 @@ export async function sendPasswordChangedEmail(email) {
   return resend.emails.send({
     from: FROM,
     to: email,
-    subject: "Salasanasi on vaihdettu — Kielio",
+    subject: "Salasanasi on vaihdettu — Puheo",
     html: layout("Salasana vaihdettu", `
       <p>Salasanasi on vaihdettu onnistuneesti.</p>
       <p>Jos et tehnyt tätä muutosta, ota meihin heti yhteyttä vastaamalla tähän viestiin.</p>
@@ -109,9 +109,9 @@ export async function sendEmailVerification(email, verifyToken) {
   return resend.emails.send({
     from: FROM,
     to: email,
-    subject: "Vahvista sähköpostisi — Kielio",
+    subject: "Vahvista sähköpostisi — Puheo",
     html: layout("Vahvista sähköpostiosoitteesi", `
-      <p>Kiitos rekisteröitymisestä Kielioon! Vahvista sähköpostiosoitteesi klikkaamalla alla olevaa painiketta.</p>
+      <p>Kiitos rekisteröitymisestä Puheoon! Vahvista sähköpostiosoitteesi klikkaamalla alla olevaa painiketta.</p>
       ${btn("Vahvista sähköposti →", verifyUrl)}
       <p style="color:#666;font-size:13px">Linkki on voimassa 24 tuntia.</p>
       <p style="color:#555;font-size:12px;word-break:break-all">Tai kopioi linkki: ${verifyUrl}</p>

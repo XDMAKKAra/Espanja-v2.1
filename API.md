@@ -1,6 +1,6 @@
-# Kielio API Documentation
+# Puheo API Documentation
 
-Base URL: `http://localhost:3000` (dev) or `https://kielio.fi` (prod)
+Base URL: `http://localhost:3000` (dev) or `https://puheo.fi` (prod)
 
 ## Authentication
 
@@ -277,9 +277,9 @@ CRON_SECRET=
 
 # Optional
 PORT=3000
-APP_URL=https://kielio.fi
-EMAIL_FROM=Kielio <noreply@kielio.fi>
-ALLOWED_ORIGINS=https://kielio.fi
+APP_URL=https://puheo.fi
+EMAIL_FROM=Puheo <noreply@puheo.fi>
+ALLOWED_ORIGINS=https://puheo.fi
 TEST_PRO_EMAILS=           # comma-separated, for testing only
 TEST_FREE_EMAILS=          # comma-separated, for testing only
 ```

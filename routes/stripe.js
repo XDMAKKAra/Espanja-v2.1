@@ -43,6 +43,47 @@ router.post("/create-checkout-session", requireAuth, async (req, res) => {
   }
 });
 
+// Summer package checkout (one-time payment)
+router.post("/create-summer-checkout", requireAuth, async (req, res) => {
+  const userId = req.user.userId;
+  const email = req.user.email;
+
+  // Only sell summer package June 1 – August 31
+  const now = new Date();
+  const month = now.getMonth(); // 0-indexed
+  if (month < 5 || month > 7) {
+    return res.status(400).json({ error: "Kesäpaketti on saatavilla vain 1.6.–31.8.2026" });
+  }
+
+  const variantId = process.env.LEMONSQUEEZY_SUMMER_VARIANT_ID;
+  if (!variantId) {
+    return res.status(500).json({ error: "Kesäpaketti ei ole konfiguroitu" });
+  }
+
+  try {
+    const { data, error } = await createCheckout(process.env.LEMONSQUEEZY_STORE_ID, variantId, {
+      checkoutData: {
+        email,
+        custom: { user_id: userId, package: "summer_2026" },
+      },
+      checkoutOptions: { embed: false },
+      productOptions: {
+        redirectUrl: `${process.env.APP_URL}/app.html?checkout=success`,
+      },
+    });
+
+    if (error) {
+      console.error("Summer checkout error:", error);
+      return res.status(500).json({ error: "Maksun avaaminen epäonnistui" });
+    }
+
+    res.json({ url: data.data.attributes.url });
+  } catch (err) {
+    console.error("Summer checkout error:", err);
+    res.status(500).json({ error: "Maksun avaaminen epäonnistui" });
+  }
+});
+
 router.get("/portal-session", requireAuth, async (req, res) => {
   const { data: sub } = await supabase
     .from("subscriptions")
@@ -88,6 +129,23 @@ export async function handleWebhook(req, res) {
   const userId = event.meta.custom_data?.user_id;
 
   switch (eventName) {
+    // One-time payment (summer package)
+    case "order_created": {
+      const customData = event.meta.custom_data || {};
+      if (customData.package === "summer_2026" && customData.user_id) {
+        const expiresAt = "2026-09-30T23:59:59+03:00"; // Helsinki time
+        await supabase
+          .from("user_profile")
+          .upsert({
+            user_id: customData.user_id,
+            summer_package_expires_at: expiresAt,
+            updated_at: new Date().toISOString(),
+          }, { onConflict: "user_id" });
+        console.log(`Summer package activated for user ${customData.user_id}`);
+      }
+      break;
+    }
+
     case "subscription_created":
     case "subscription_updated": {
       const active = attrs.status === "active" || attrs.status === "on_trial";

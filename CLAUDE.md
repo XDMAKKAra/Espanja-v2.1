@@ -1,4 +1,4 @@
-# Kielio — Spanish YO-koe Learning App
+# Puheo — Spanish YO-koe Learning App
 
 ## Project Overview
 AI-powered adaptive Spanish language learning platform for Finnish high school students preparing for the "ylioppilastutkinto" matriculation exam (lyhyt oppimäärä).

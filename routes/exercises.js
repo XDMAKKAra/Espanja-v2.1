@@ -1,7 +1,7 @@
 import { Router } from "express";
 import supabase from "../supabase.js";
 import {
-  callOpenAI,
+  callOpenAI, getUserProfileContext,
   LEVEL_DESCRIPTIONS, TOPIC_CONTEXT, LANGUAGE_META,
   GRAMMAR_TOPIC_DESCS, READING_LEVEL_DESCS, READING_TOPIC_CONTEXTS,
   GRADES, GRADE_ORDER,
@@ -126,9 +126,10 @@ router.post("/generate", aiLimiter, checkMonthlyCostLimit, async (req, res) => {
     const lang = LANGUAGE_META[language];
     const levelDesc = LEVEL_DESCRIPTIONS[level];
     const topicContext = TOPIC_CONTEXT[topic];
+    const profileCtx = await getUserProfileContext(userId);
 
     const prompt = `You are generating vocabulary exercises for Finnish high school students taking the ${lang.name} "lyhyt oppimäärä" yo-koe (matriculation exam). Students have studied ${lang.name} for about ${lang.yearsStudied}.
-
+${profileCtx}
 TARGET LEVEL: ${level} = ${levelDesc}
 
 TOPIC: ${topicContext}
@@ -235,9 +236,10 @@ router.post("/grammar-drill", aiLimiter, checkMonthlyCostLimit, async (req, res)
 
     const lang = LANGUAGE_META[language];
     const topicDesc = GRAMMAR_TOPIC_DESCS[topic];
+    const profileCtx = await getUserProfileContext(userId);
 
     const prompt = `You are generating ${lang.name} grammar exercises for Finnish high school students (yo-koe, lyhyt oppimäärä, ${lang.yearsStudied} of ${lang.name}).
-
+${profileCtx}
 GRAMMAR FOCUS: ${topicDesc}
 LEVEL: ${level} — appropriate difficulty for this yo-koe level
 COUNT: ${clampedCount} exercises
@@ -327,9 +329,10 @@ router.post("/reading-task", aiStrictLimiter, softProGate, checkMonthlyCostLimit
     const lang = LANGUAGE_META[language];
     const levelDesc = READING_LEVEL_DESCS[level];
     const topicContext = READING_TOPIC_CONTEXTS[topic];
+    const profileCtx = await getUserProfileContext(userId);
 
     const prompt = `Generate a reading comprehension exercise for Finnish students taking the ${lang.name} yo-koe (lyhyt oppimäärä, ${lang.yearsStudied} of ${lang.name}).
-
+${profileCtx}
 Text level: ${level} — ${levelDesc}
 Topic: ${topicContext}
 

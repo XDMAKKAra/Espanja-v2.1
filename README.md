@@ -1,4 +1,4 @@
-# Kielio
+# Puheo
 
 AI-powered language practice for the Finnish matriculation exam (yo-koe).
 

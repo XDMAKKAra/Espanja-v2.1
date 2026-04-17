@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { callOpenAI, LANGUAGE_META, VALID_LANGUAGES } from "../lib/openai.js";
+import { callOpenAI, getUserProfileContext, LANGUAGE_META, VALID_LANGUAGES } from "../lib/openai.js";
 import { buildGradingPrompt, processGradingResult, SHORT_MAX, LONG_MAX } from "../lib/writingGrading.js";
 import { softProGate } from "../middleware/auth.js";
 import { aiStrictLimiter } from "../middleware/rateLimit.js";
@@ -20,8 +20,10 @@ router.post("/writing-task", aiStrictLimiter, softProGate, checkMonthlyCostLimit
   const isShort = taskType === "short";
   const maxPoints = isShort ? SHORT_MAX : LONG_MAX;
   const charRange = isShort ? "160–240" : "300–450";
+  const profileCtx = await getUserProfileContext(req.user?.userId);
 
   const prompt = `Generate ONE realistic ${lang.name} yo-koe writing task for Finnish students (lyhyt oppimäärä, ${lang.yearsStudied} of ${lang.name}).
+${profileCtx}
 
 Task type: ${isShort ? "SHORT task (lyhyt kirjoitelma)" : "LONG task (pitkä kirjoitelma)"}
 Character limit: ${charRange} characters (spaces and line breaks NOT counted)

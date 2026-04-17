@@ -32,6 +32,16 @@ export async function isPro(userId) {
     }
   }
 
+  // Check summer package (one-time purchase with expiry)
+  const { data: profile } = await supabase
+    .from("user_profile")
+    .select("summer_package_expires_at")
+    .eq("user_id", userId)
+    .single();
+  if (profile?.summer_package_expires_at && new Date(profile.summer_package_expires_at) > new Date()) {
+    return true;
+  }
+
   const { data } = await supabase
     .from("subscriptions")
     .select("active")
