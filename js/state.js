@@ -5,9 +5,9 @@ export const BATCH_SIZE = 4;
 export const MAX_BATCHES = 3;
 
 export const CRITERIA_LABELS = {
-  viestinnallisyys: "Viestinnällisyys",
-  tehtavananto: "Tehtävänanto",
-  kielioppi: "Kielelliset resurssit",
+  content: "Sisältö ja ymmärrettävyys",
+  vocabulary: "Kielellinen laajuus",
+  grammar: "Kielellinen oikeellisuus",
 };
 
 export const RATING_COLORS = {

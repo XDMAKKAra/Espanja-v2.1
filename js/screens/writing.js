@@ -171,6 +171,13 @@ $("btn-submit-writing").addEventListener("click", async () => {
   }
 });
 
+const CATEGORY_LABELS = {
+  grammar: "Kielioppi",
+  vocabulary: "Sanasto",
+  spelling: "Oikeinkirjoitus",
+  register: "Rekisteri",
+};
+
 function renderWritingFeedback(result) {
   $("feedback-score-num").textContent = result.finalScore;
   $("feedback-score-denom").textContent = `/ ${result.maxScore}`;
@@ -179,43 +186,52 @@ function renderWritingFeedback(result) {
   gradeBadge.textContent = result.ytlGrade;
   gradeBadge.className = "feedback-grade-badge grade-" + result.ytlGrade;
 
+  // Criteria with score bars
   const criteriaEl = $("feedback-criteria");
   criteriaEl.innerHTML = "";
   for (const [key, label] of Object.entries(CRITERIA_LABELS)) {
     const c = result.criteria[key];
     if (!c) continue;
-    const ratingClass = RATING_COLORS[c.rating] || "";
+    const pct = c.max > 0 ? Math.round((c.score / c.max) * 100) : 0;
+    const barColor = pct >= 75 ? "var(--correct)" : pct >= 50 ? "var(--gold)" : "var(--wrong)";
     const block = document.createElement("div");
     block.className = "criteria-block";
     block.innerHTML = `
       <div class="criteria-header">
         <span class="criteria-label">${label}</span>
-        <span class="criteria-rating ${ratingClass}">${c.rating}</span>
+        <span class="criteria-score">${c.score} / ${c.max}</span>
       </div>
-      <p class="criteria-comment">${c.comment}</p>
+      <div class="criteria-bar"><div class="criteria-bar-fill" style="width:${pct}%;background:${barColor}"></div></div>
+      <p class="criteria-comment">${c.feedback || ""}</p>
     `;
     criteriaEl.appendChild(block);
   }
 
+  // Penalty notice
   if (result.penalty > 0) {
     const notice = document.createElement("div");
     notice.className = "penalty-notice";
-    notice.textContent = `⚠ Merkkirajoitus ylitetty: −${result.penalty} pistettä`;
+    notice.textContent = `⚠ Liian lyhyt teksti: −${result.penalty} pistettä`;
     criteriaEl.insertAdjacentElement("afterend", notice);
   }
 
+  // Errors with diff-style display
   const errorsEl = $("feedback-errors");
   errorsEl.innerHTML = "";
   if (result.errors?.length) {
     $("feedback-errors-section").style.display = "";
     result.errors.forEach((err) => {
+      const catLabel = CATEGORY_LABELS[err.category] || err.category || "";
       const el = document.createElement("div");
       el.className = "error-item";
       el.innerHTML = `
-        <div class="error-comparison">
-          <span class="error-wrong">${err.original}</span>
-          <span class="error-arrow">→</span>
-          <span class="error-correct">${err.correct}</span>
+        <div class="error-diff">
+          <span class="error-cat-tag">${catLabel}</span>
+          <div class="error-comparison">
+            <span class="error-wrong"><del>${err.excerpt || err.original || ""}</del></span>
+            <span class="error-arrow">→</span>
+            <span class="error-correct"><ins>${err.corrected || err.correct || ""}</ins></span>
+          </div>
         </div>
         <p class="error-explanation">${err.explanation}</p>
       `;
@@ -225,6 +241,7 @@ function renderWritingFeedback(result) {
     $("feedback-errors-section").style.display = "none";
   }
 
+  // Positives
   const posEl = $("feedback-positives");
   posEl.innerHTML = "";
   if (result.positives?.length) {
