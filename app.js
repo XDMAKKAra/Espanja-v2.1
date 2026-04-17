@@ -1263,6 +1263,7 @@ async function loadNextBatch() {
 
     // SR items go first so user sees them immediately
     state.exercises = [...srItems, ...data.exercises];
+    state.bankId = data.bankId || null;
     renderExercise();
     show("screen-exercise");
   } catch (err) {
@@ -1365,6 +1366,16 @@ function handleAnswer(chosen, clickedBtn) {
   document.querySelectorAll(".option-btn").forEach((b) => (b.disabled = true));
   $("explanation-text").textContent = ex.explanation;
   $("explanation-block").classList.remove("hidden");
+
+  // Show report button if exercise came from bank
+  const reportBtn = $("btn-report-vocab");
+  if (state.bankId) {
+    reportBtn.classList.remove("hidden");
+    reportBtn.disabled = false;
+    reportBtn.textContent = "⚠ Virhe tehtävässä";
+  } else {
+    reportBtn.classList.add("hidden");
+  }
 }
 
 $("btn-next").addEventListener("click", () => {
@@ -1806,6 +1817,7 @@ async function loadGrammarDrill() {
     if (!data.exercises?.length) throw new Error("No exercises");
 
     state.grammarExercises = data.exercises;
+    state.grammarBankId = data.bankId || null;
     state.grammarCurrent = 0;
     state.grammarCorrect = 0;
     state.grammarErrors = [];
@@ -1884,6 +1896,15 @@ function handleGrammarAnswer(chosen, clickedBtn, ex) {
   $("gram-rule-tag").textContent = ex.rule || "";
   $("gram-explanation-text").textContent = ex.explanation;
   $("gram-explanation-block").classList.remove("hidden");
+
+  const reportBtn = $("btn-report-gram");
+  if (state.grammarBankId) {
+    reportBtn.classList.remove("hidden");
+    reportBtn.disabled = false;
+    reportBtn.textContent = "⚠ Virhe tehtävässä";
+  } else {
+    reportBtn.classList.add("hidden");
+  }
 }
 
 $("gram-btn-next").addEventListener("click", () => {
@@ -1954,6 +1975,7 @@ async function loadReadingTask() {
     if (!data.reading) throw new Error("No reading");
 
     state.currentReading = data.reading;
+    state.readingBankId = data.bankId || null;
     state.readingQIndex = 0;
     state.readingScore = 0;
 
@@ -1990,6 +2012,14 @@ function renderReadingQuestion() {
   $("reading-progress-fill").style.width = `${(state.readingQIndex / total) * 100}%`;
   $("reading-explanation-block").classList.add("hidden");
   $("reading-btn-next").style.display = "";
+  const readReportBtn = $("btn-report-reading");
+  if (state.readingBankId) {
+    readReportBtn.classList.remove("hidden");
+    readReportBtn.disabled = false;
+    readReportBtn.textContent = "⚠ Virhe tehtävässä";
+  } else {
+    readReportBtn.classList.add("hidden");
+  }
 
   // Hide all answer containers
   $("reading-options-container").classList.add("hidden");
@@ -2336,3 +2366,29 @@ $("btn-share-exam").addEventListener("click", () => {
   const grade = $("exam-grade-display").textContent;
   shareResult(`Tein koeharjoituksen Kieliossa 🎓\nYo-koearvosana: ${grade}\nhttps://kielio.fi`);
 });
+
+// ─── Report exercise ───────────────────────────────────────────────────────
+
+async function reportExercise(bankId, btn) {
+  if (!bankId) return;
+  btn.disabled = true;
+  btn.textContent = "Lähetetään...";
+  try {
+    const res = await fetch(`${API}/api/report-exercise`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ bankId }),
+    });
+    if (res.ok) {
+      btn.textContent = "✓ Raportoitu";
+    } else {
+      btn.textContent = "Virhe";
+    }
+  } catch {
+    btn.textContent = "Virhe";
+  }
+}
+
+$("btn-report-vocab").addEventListener("click", (e) => reportExercise(state.bankId, e.target));
+$("btn-report-gram").addEventListener("click", (e) => reportExercise(state.grammarBankId, e.target));
+$("btn-report-reading").addEventListener("click", (e) => reportExercise(state.readingBankId, e.target));

@@ -535,7 +535,10 @@
 
       <div class="explanation-block hidden" id="explanation-block">
         <p id="explanation-text"></p>
-        <button class="btn-next" id="btn-next">Seuraava →</button>
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+          <button class="btn-next" id="btn-next">Seuraava →</button>
+          <button class="btn-report hidden" id="btn-report-vocab" title="Raportoi virheellinen tehtävä">⚠ Virhe tehtävässä</button>
+        </div>
       </div>
 
       <div class="kbd-hint" id="vocab-kbd-hint">
@@ -671,7 +674,10 @@
       <div class="explanation-block hidden" id="gram-explanation-block">
         <div class="gram-rule-tag" id="gram-rule-tag"></div>
         <p id="gram-explanation-text"></p>
-        <button class="btn-next" id="gram-btn-next">Seuraava →</button>
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+          <button class="btn-next" id="gram-btn-next">Seuraava →</button>
+          <button class="btn-report hidden" id="btn-report-gram" title="Raportoi virheellinen tehtävä">⚠ Virhe tehtävässä</button>
+        </div>
       </div>
       <div class="kbd-hint">
         <span class="kbd-key">A</span><span class="kbd-key">B</span><span class="kbd-key">C</span><span class="kbd-key">D</span>
@@ -745,7 +751,10 @@
 
         <div class="explanation-block hidden" id="reading-explanation-block">
           <p id="reading-explanation-text"></p>
-          <button class="btn-next" id="reading-btn-next">Seuraava →</button>
+          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+            <button class="btn-next" id="reading-btn-next">Seuraava →</button>
+            <button class="btn-report hidden" id="btn-report-reading" title="Raportoi virheellinen tehtävä">⚠ Virhe tehtävässä</button>
+          </div>
         </div>
       </div>
 
@@ -852,7 +861,7 @@
 
   </main><!-- /app-main -->
 
-  <script src="app.js"></script>
+  <script type="module" src="js/main.js"></script>
   <script>
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker.register("/sw.js").catch(() => {});

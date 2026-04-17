@@ -498,6 +498,19 @@ select option { background: var(--surface2); }
 }
 .btn-next:hover { border-color: var(--accent); color: var(--accent); }
 
+.btn-report {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text-muted);
+  padding: 6px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.btn-report:hover { border-color: #e74c3c; color: #e74c3c; }
+.btn-report:disabled { opacity: 0.4; cursor: default; }
+
 /* ── ROUND BADGE ── */
 .ex-round-badge {
   font-family: var(--font-mono);
