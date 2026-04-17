@@ -285,12 +285,30 @@
           <li class="bonus">BONUS: Prioriteettituki (vastaus 12h sis&auml;ll&auml;)</li>
           <li class="bonus">BONUS: 1 henkil&ouml;kohtainen kirjoitelmapalaute minulta</li>
         </ul>
-        <a href="app.html" class="price-btn primary summer-btn">Osta kes&auml;paketti 29&euro; &rarr;</a>
+        <a href="app.html" class="price-btn primary summer-btn" id="summer-cta">Osta kes&auml;paketti 29&euro; &rarr;</a>
         <div class="price-footer-note">Kertamaksu &mdash; ei kuukausilaskutusta &middot; P&auml;&auml;sy p&auml;&auml;ttyy 30.9.2026</div>
       </div>
 
     </div>
   </section>
+
+  <!-- Waitlist modal -->
+  <div class="waitlist-overlay hidden" id="waitlist-overlay">
+    <div class="waitlist-modal">
+      <button class="waitlist-close" id="waitlist-close">&times;</button>
+      <div class="waitlist-icon">&#9993;&#65039;</div>
+      <h3>Ilmoita kun kes&auml;paketti aukeaa</h3>
+      <p>J&auml;t&auml; s&auml;hk&ouml;postisi niin kerromme heti kun kes&auml;paketti 2026 on ostettavissa (1.6.2026).</p>
+      <form id="waitlist-form" class="waitlist-form">
+        <input type="email" id="waitlist-email" placeholder="email@esimerkki.fi" required autocomplete="email" />
+        <button type="submit" class="waitlist-submit" id="waitlist-submit">Ilmoita minulle &rarr;</button>
+      </form>
+      <div class="waitlist-success hidden" id="waitlist-success">
+        &#10003; Kiitos! Ilmoitamme kun kes&auml;paketti aukeaa 1.6.
+      </div>
+      <div class="waitlist-error hidden" id="waitlist-error"></div>
+    </div>
+  </div>
 
   <!-- CTA -->
   <div class="cta-section">
@@ -387,39 +405,113 @@
       });
     })();
 
-    // Pricing card order (summer vs. non-summer)
+    // Pricing card order + summer package state machine
     (function() {
       var month = new Date().getMonth();
-      var summerSeason = month >= 5 && month <= 8;
       var grid = document.getElementById('pricing-grid');
       var free = document.getElementById('price-free');
       var pro = document.getElementById('price-pro');
       var summer = document.getElementById('price-summer');
       var proBadge = document.getElementById('pro-badge');
       var summerBadge = document.getElementById('summer-badge');
+      var summerCta = document.getElementById('summer-cta');
 
-      if (summerSeason) {
+      if (month >= 5 && month <= 7) {
+        // June–Aug: summer on sale, featured
         grid.innerHTML = '';
         grid.appendChild(free);
         grid.appendChild(summer);
         grid.appendChild(pro);
         summer.classList.add('popular');
+        summer.classList.remove('teaser');
         pro.classList.remove('popular');
         summerBadge.classList.remove('hidden');
         proBadge.classList.add('hidden');
-      } else {
+      } else if (month === 4) {
+        // May: preorder
+        grid.innerHTML = '';
+        grid.appendChild(free);
+        grid.appendChild(summer);
+        grid.appendChild(pro);
+        summer.classList.add('teaser');
+        summer.classList.add('popular');
+        pro.classList.remove('popular');
+        summerBadge.textContent = 'Tulossa 1.6.';
+        summerBadge.classList.remove('hidden');
+        proBadge.classList.add('hidden');
+        summerCta.textContent = 'Preorder — 29€';
+        summerCta.href = 'app.html';
+      } else if (month >= 0 && month <= 3) {
+        // Jan–Apr: waitlist teaser
         grid.innerHTML = '';
         grid.appendChild(free);
         grid.appendChild(pro);
         grid.appendChild(summer);
+        summer.classList.add('teaser');
         pro.classList.add('popular');
-        summer.classList.remove('popular');
         proBadge.classList.remove('hidden');
-        if (month > 8 || month < 5) {
-          summer.style.display = 'none';
-        }
+        summerBadge.textContent = 'Tulossa 1.6.2026';
+        summerBadge.classList.remove('hidden');
+        summerCta.textContent = 'Ilmoita kun saatavilla';
+        summerCta.href = '#';
+        summerCta.addEventListener('click', function(e) {
+          e.preventDefault();
+          document.getElementById('waitlist-overlay').classList.remove('hidden');
+        });
+      } else {
+        // Sep–Dec: hide (exam is over)
+        grid.innerHTML = '';
+        grid.appendChild(free);
+        grid.appendChild(pro);
+        grid.appendChild(summer);
+        summer.style.display = 'none';
+        pro.classList.add('popular');
+        proBadge.classList.remove('hidden');
         summerBadge.classList.add('hidden');
       }
+
+      // Waitlist modal logic
+      var overlay = document.getElementById('waitlist-overlay');
+      document.getElementById('waitlist-close').addEventListener('click', function() {
+        overlay.classList.add('hidden');
+      });
+      overlay.addEventListener('click', function(e) {
+        if (e.target === overlay) overlay.classList.add('hidden');
+      });
+
+      document.getElementById('waitlist-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        var email = document.getElementById('waitlist-email').value.trim();
+        var btn = document.getElementById('waitlist-submit');
+        var errEl = document.getElementById('waitlist-error');
+        errEl.classList.add('hidden');
+        btn.disabled = true;
+        btn.textContent = 'Lähetetään...';
+
+        fetch('/api/waitlist', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: email, product: 'summer-2026' })
+        })
+        .then(function(r) { return r.json().then(function(d) { return { ok: r.ok, data: d }; }); })
+        .then(function(res) {
+          if (res.ok) {
+            document.getElementById('waitlist-form').classList.add('hidden');
+            document.getElementById('waitlist-success').classList.remove('hidden');
+          } else {
+            errEl.textContent = res.data.error || 'Jokin meni pieleen';
+            errEl.classList.remove('hidden');
+          }
+        })
+        .catch(function() {
+          errEl.textContent = 'Ei yhteyttä palvelimeen';
+          errEl.classList.remove('hidden');
+        })
+        .finally(function() {
+          btn.disabled = false;
+          btn.textContent = 'Ilmoita minulle →';
+        });
+      });
     })();
 
     // Social proof user count

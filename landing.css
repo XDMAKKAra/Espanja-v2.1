@@ -482,6 +482,98 @@ body::before {
   color: var(--text-muted); margin-top: 12px; line-height: 1.5;
 }
 
+/* ── SUMMER TEASER ── */
+.price-card.summer.teaser { opacity: 0.85; }
+.price-card.summer.teaser .summer-btn {
+  background: linear-gradient(135deg, var(--brand-light), #e67e22);
+  border-color: var(--brand-light);
+  opacity: 1;
+}
+
+/* ── WAITLIST MODAL ── */
+.waitlist-overlay {
+  position: fixed; inset: 0; z-index: 300;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px;
+}
+.waitlist-overlay.hidden { display: none; }
+.waitlist-modal {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 36px 32px;
+  max-width: 420px;
+  width: 100%;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
+}
+.waitlist-close {
+  position: absolute;
+  top: 12px; right: 16px;
+  background: none; border: none;
+  color: var(--text-muted);
+  font-size: 22px; cursor: pointer;
+  line-height: 1;
+}
+.waitlist-close:hover { color: var(--text); }
+.waitlist-icon { font-size: 36px; margin-bottom: 12px; }
+.waitlist-modal h3 {
+  font-size: 18px; font-weight: 800;
+  margin-bottom: 8px;
+}
+.waitlist-modal p {
+  font-size: 13px; color: var(--text-muted);
+  font-family: var(--mono); line-height: 1.6;
+  margin-bottom: 20px;
+}
+.waitlist-form {
+  display: flex; gap: 8px;
+}
+.waitlist-form input {
+  flex: 1;
+  padding: 12px 14px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 14px;
+  outline: none;
+}
+.waitlist-form input:focus { border-color: var(--brand-light); }
+.waitlist-form input::placeholder { color: var(--text-muted); }
+.waitlist-submit {
+  padding: 12px 20px;
+  background: var(--brand);
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  font-family: var(--font);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity 0.15s;
+}
+.waitlist-submit:hover { opacity: 0.88; }
+.waitlist-submit:disabled { opacity: 0.5; cursor: default; }
+.waitlist-success {
+  padding: 16px;
+  color: var(--correct);
+  font-family: var(--mono);
+  font-size: 14px;
+  font-weight: 600;
+}
+.waitlist-error {
+  margin-top: 10px;
+  color: var(--wrong);
+  font-family: var(--mono);
+  font-size: 12px;
+}
+
 /* ── CTA SECTION ── */
 .cta-section {
   position: relative; z-index: 1; text-align: center;

@@ -128,6 +128,28 @@ app.use("/api/push", pushRoutes);
 app.use("/api", profileRoutes);
 app.use("/api/placement", placementRoutes);
 
+// ─── Waitlist (public, no auth) ─────────────────────────────────────────────
+app.post("/api/waitlist", async (req, res) => {
+  const { email, product } = req.body;
+  if (!email || !product) {
+    return res.status(400).json({ error: "Email ja tuote vaaditaan" });
+  }
+  const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRe.test(email)) {
+    return res.status(400).json({ error: "Tarkista sähköpostiosoite" });
+  }
+  try {
+    const { error } = await supabase
+      .from("waitlist")
+      .upsert({ email: email.toLowerCase().trim(), product }, { onConflict: "email,product" });
+    if (error) throw error;
+    res.json({ ok: true });
+  } catch (err) {
+    console.error("Waitlist error:", err);
+    res.status(500).json({ error: "Jokin meni pieleen" });
+  }
+});
+
 // ─── Sentry error handler (must be after routes) ──────────────────────────
 if (process.env.SENTRY_DSN) {
   Sentry.setupExpressErrorHandler(app);
