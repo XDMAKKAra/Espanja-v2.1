@@ -6,7 +6,7 @@
   <title>Kielio — Harjoittele kieliä yo-kokeeseen</title>
   <meta name="description" content="Kielio on tekoälypohjainen harjoitteluympäristö espanjan ylioppilaskirjoituksiin. Sanasto, kielioppi, luetun ymmärtäminen ja kirjoittaminen." />
   <link rel="manifest" href="/manifest.json" />
-  <meta name="theme-color" content="#6d5ef4" />
+  <meta name="theme-color" content="#e63946" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="landing.css" />
@@ -17,27 +17,27 @@
   <nav class="nav">
     <a href="/" class="nav-logo">Kiel<span>io</span></a>
     <div class="nav-links">
-      <a href="#features">Toiminnot</a>
       <a href="#how">Miten toimii</a>
-      <a href="/pricing.html">Hinnoittelu</a>
+      <a href="#pricing">Hinnoittelu</a>
+      <a href="#faq">UKK</a>
     </div>
-    <a href="app.html" class="nav-cta">Aloita harjoittelu →</a>
+    <a href="app.html" class="nav-cta">Kokeile ilmaiseksi</a>
   </nav>
 
   <!-- HERO -->
   <section class="hero">
-    <div class="hero-tag">Espanja &nbsp;·&nbsp; Lyhyt oppimäärä &nbsp;·&nbsp; Yo-koe</div>
+    <div class="hero-tag">Espanja &nbsp;·&nbsp; Lyhyt oppimäärä &nbsp;·&nbsp; Yo-koe 2026</div>
 
-    <h1>Harjoittele espanjaa.<br/><em>Pärjää yo-kokeessa.</em></h1>
+    <h1>Nosta espanjan<br/>YTL-arvosanaasi<br/><em>kesän aikana.</em></h1>
 
     <p class="hero-sub">
-      Kielio on tekoälypohjainen harjoitteluympäristö ylioppilaskirjoituksiin.
-      Sanastoa, kielioppia, luetun ymmärtämistä ja kirjoittamista — kaikki samassa paikassa.
+      AI-opettaja joka harjoittaa juuri sinun heikkouksiasi.<br/>
+      29 &euro; koko kesältä. Ei sitoutumista.
     </p>
 
     <div class="hero-actions">
-      <a href="app.html" class="btn-hero">Aloita harjoittelu — ilmaiseksi →</a>
-      <span class="hero-note">Ei rekisteröitymistä &nbsp;·&nbsp; Toimii heti</span>
+      <a href="#demo" class="btn-hero">Kokeile ilmaiseksi &darr;</a>
+      <a href="#how" class="hero-link">Miten se toimii?</a>
     </div>
 
     <!-- Floating exercise card mockup -->
@@ -49,7 +49,7 @@
         </div>
         <div class="hc-question">¿Qué significa 'el ayuntamiento'?</div>
         <div class="hc-options">
-          <div class="hc-opt correct">✓ kaupungintalo</div>
+          <div class="hc-opt correct">&#10003; kaupungintalo</div>
           <div class="hc-opt">sairaala</div>
           <div class="hc-opt">koulu</div>
           <div class="hc-opt">yliopisto</div>
@@ -58,133 +58,242 @@
     </div>
   </section>
 
-  <!-- STATS BAR -->
-  <div class="stats-bar">
-    <div class="stat-item">
-      <span class="stat-num">4</span>
-      <span class="stat-label">Osa-aluetta</span>
-    </div>
-    <div class="stat-item">
-      <span class="stat-num">7</span>
-      <span class="stat-label">Tasoa (I – L)</span>
-    </div>
-    <div class="stat-item">
-      <span class="stat-num">AI</span>
-      <span class="stat-label">Arviointi</span>
-    </div>
-    <div class="stat-item">
-      <span class="stat-num">YTL</span>
-      <span class="stat-label">Kriteerit</span>
-    </div>
-  </div>
-
-  <!-- FEATURES -->
-  <section id="features" class="section">
-    <div class="section-tag">Toiminnot</div>
-    <h2>Kaikki yo-kokeen<br/>osa-alueet</h2>
+  <!-- PROBLEM → SOLUTION -->
+  <section class="section" id="problem">
+    <div class="section-tag">Ongelma &amp; ratkaisu</div>
+    <h2>Abitreenit kertoo mitä vastasit väärin.<br/><em>Kielio kertoo MIKSI.</em></h2>
     <p class="section-sub">
-      Harjoittele juuri niitä asioita, joita yo-kokeessa testataan.
-      Tekoäly luo uudet tehtävät joka kerta.
+      Saat kolme vastaavaa harjoitusta heti virheen jälkeen.
+      Taso sopeutuu sinuun, ei toisin päin.
     </p>
 
     <div class="features-grid">
       <div class="feature-card">
-        <span class="feature-icon">📚</span>
-        <div class="feature-title">Sanasto</div>
+        <span class="feature-icon">🎯</span>
+        <div class="feature-title">Adaptiivinen taso</div>
         <div class="feature-desc">
-          Adaptiivinen monivalinta. Taso nousee tai laskee suorituksen mukaan.
-          Aiheina yhteiskunta, kulttuuri, matkailu, terveys ja paljon muuta.
+          Järjestelmä seuraa suoritustasi ja ehdottaa tasonvaihtoa
+          vasta kun olet oikeasti valmis. Ei arvailua.
         </div>
-        <span class="feature-tag">Adaptiivinen · Tasot I–L</span>
       </div>
-
-      <div class="feature-card">
-        <span class="feature-icon">🔧</span>
-        <div class="feature-title">Kielioppi</div>
-        <div class="feature-desc">
-          Kohdennetut harjoitukset YTL:n yleisimpiin virheisiin:
-          ser/estar, hay, subjunktiivi, konditionaali, preteriti vs. imperfekti.
-        </div>
-        <span class="feature-tag">7 aihetta · 5 tasoa</span>
-      </div>
-
-      <div class="feature-card">
-        <span class="feature-icon">📖</span>
-        <div class="feature-title">Luetun ymmärtäminen</div>
-        <div class="feature-desc">
-          AI-luotu espanjankielinen teksti + 4 kysymystä:
-          monivalinta, oikein/väärin ja lyhyt vastaus. Tekstit vastaavat oikeaa yo-koetta.
-        </div>
-        <span class="feature-tag">AI-luotu teksti · 6 aihealuetta</span>
-      </div>
-
       <div class="feature-card">
         <span class="feature-icon">✍️</span>
-        <div class="feature-title">Kirjoittaminen</div>
+        <div class="feature-title">Kirjoitelman AI-palaute</div>
         <div class="feature-desc">
-          Lyhyt (33 p) tai laajempi (66 p) kirjoitustehtävä. Tekoäly arvioi
-          YTL-kriteereillä: viestinnällisyys, tehtävänanto, kielelliset resurssit.
+          Kirjoitat, tekoäly arvioi YTL:n pisteytysrubriikilla.
+          Näet tarkalleen missä menetät pisteitä.
         </div>
-        <span class="feature-tag">33 + 66 pistettä · YTL-kriteerit</span>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">📊</span>
+        <div class="feature-title">Edistymisen seuranta</div>
+        <div class="feature-desc">
+          Dashboardilla näet kehityksesi, putkesi ja
+          heikkoutesi. Tiedät mitä harjoitella seuraavaksi.
+        </div>
       </div>
     </div>
   </section>
 
   <!-- HOW IT WORKS -->
-  <section id="how" class="section" style="padding-top: 0">
-    <div class="section-tag">Miten toimii</div>
-    <h2>Kolme askelta<br/>parempaan arvosanaan</h2>
-    <p class="section-sub">Ei rekisteröitymistä. Ei asennusta. Avaa selain ja aloita.</p>
+  <section id="how" class="section">
+    <div class="section-tag">Miten se toimii</div>
+    <h2>Kolme askelta.<br/><em>Parempi arvosana.</em></h2>
+    <p class="section-sub">Ei asennusta. Avaa selain ja aloita.</p>
 
     <div class="steps">
       <div class="step">
         <div class="step-num">1</div>
-        <div class="step-title">Valitse osa-alue</div>
+        <div class="step-title">Tee taustakartoitus</div>
         <div class="step-desc">
-          Sanasto, kielioppi, luetun ymmärtäminen tai kirjoittaminen —
-          tai harjoittele kaikkia vuorotellen.
+          2 minuuttia. Järjestelmä arvioi tasosi
+          ja löytää kehityskohteesi.
         </div>
       </div>
       <div class="step">
         <div class="step-num">2</div>
-        <div class="step-title">Valitse tasosi</div>
+        <div class="step-title">Harjoittele omalla tasollasi</div>
         <div class="step-desc">
-          Tasot I–L vastaavat yo-kokeen arvosteluasteikkoa.
-          Taso nousee automaattisesti onnistumisten myötä.
+          Sanasto, kielioppi, lukeminen ja kirjoittaminen.
+          15 min päivässä riittää.
         </div>
       </div>
       <div class="step">
         <div class="step-num">3</div>
-        <div class="step-title">Harjoittele ja kehity</div>
+        <div class="step-title">Simuloi yo-koe</div>
         <div class="step-desc">
-          Tekoäly luo uudet tehtävät joka kerralla ja antaa
-          yksityiskohtaisen palautteen suorituksestasi.
+          Täyskoe-simulaatio YTL:n rakenteella.
+          Tiedät tarkalleen missä olet ennen koepäivää.
         </div>
       </div>
     </div>
   </section>
 
-  <!-- CTA -->
-  <div id="cta" class="cta-section">
-    <h2>Valmis aloittamaan?</h2>
-    <p>Ilmainen. Ei rekisteröitymistä. Aloita nyt.</p>
-    <a href="app.html" class="btn-hero">Aloita harjoittelu →</a>
+  <!-- COMPARISON -->
+  <section class="section" id="compare">
+    <div class="section-tag">Vertailu</div>
+    <h2>Kielio vs. Abitreenit</h2>
+    <p class="section-sub">Abitreenit on hyvä. Kielio vie pidemmälle.</p>
+
+    <div class="compare-table">
+      <div class="compare-header">
+        <div class="compare-feature-label"></div>
+        <div class="compare-col-label">Kielio</div>
+        <div class="compare-col-label compare-col-other">Abitreenit</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-feature">Adaptiivinen taso</div>
+        <div class="compare-check yes">&#10003;</div>
+        <div class="compare-check no">&#10007;</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-feature">Kirjoitelman AI-palaute</div>
+        <div class="compare-check yes">&#10003;</div>
+        <div class="compare-check no">&#10007;</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-feature">YTL-rubriikin mukainen pisteytys</div>
+        <div class="compare-check yes">&#10003;</div>
+        <div class="compare-check partial">Osittain</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-feature">Henkilökohtainen edistyminen</div>
+        <div class="compare-check yes">&#10003;</div>
+        <div class="compare-check no">&#10007;</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-feature">Yo-koe-simulaatio</div>
+        <div class="compare-check yes">&#10003;</div>
+        <div class="compare-check no">&#10007;</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-feature">Hinta</div>
+        <div class="compare-check price">29 &euro; / kesä</div>
+        <div class="compare-check price">Ilmainen</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS (hidden until filled) -->
+  <!-- TODO: täytä beta-käyttäjistä -->
+  <section class="section testimonials-section" id="testimonials" style="display:none">
+    <div class="section-tag">Kokemuksia</div>
+    <h2>Mitä opiskelijat sanovat</h2>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <p class="testimonial-quote">"Placeholder-lainaus beta-käyttäjältä."</p>
+        <div class="testimonial-author">Nimi &mdash; abi 2026, Helsinki</div>
+      </div>
+      <div class="testimonial-card">
+        <p class="testimonial-quote">"Placeholder-lainaus beta-käyttäjältä."</p>
+        <div class="testimonial-author">Nimi &mdash; abi 2026, Tampere</div>
+      </div>
+      <div class="testimonial-card">
+        <p class="testimonial-quote">"Placeholder-lainaus beta-käyttäjältä."</p>
+        <div class="testimonial-author">Nimi &mdash; abi 2026, Turku</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section class="section" id="pricing">
+    <div class="section-tag">Hinnoittelu</div>
+    <h2>Valitse sinulle sopiva</h2>
+    <p class="section-sub">Rahat takaisin 14 päivän aikana, ilman kysymyksiä.</p>
+
+    <div class="pricing-grid">
+      <div class="price-card">
+        <div class="price-name">Ilmainen</div>
+        <div class="price-amount">0 &euro;</div>
+        <div class="price-period">ikuisesti</div>
+        <ul class="price-features">
+          <li>3 harjoitusta päivässä</li>
+          <li>Sanasto + kielioppi</li>
+          <li>Perusedistyminen</li>
+        </ul>
+        <a href="app.html" class="price-btn">Aloita ilmaiseksi</a>
+      </div>
+
+      <div class="price-card popular">
+        <div class="price-badge">Suosituin</div>
+        <div class="price-name">Pro kesäkausi</div>
+        <div class="price-amount">29 &euro;</div>
+        <div class="price-period">1.6.&mdash;15.10.2026</div>
+        <ul class="price-features">
+          <li>Rajaton harjoittelu</li>
+          <li>Kaikki osa-alueet</li>
+          <li>Kirjoitelman AI-palaute</li>
+          <li>Yo-koe-simulaatio</li>
+          <li>Adaptiivinen taso</li>
+          <li>SM-2 kertausjärjestelmä</li>
+        </ul>
+        <a href="app.html" class="price-btn primary">Aloita Pro &rarr;</a>
+      </div>
+
+      <div class="price-card">
+        <div class="price-name">Pro kuukausi</div>
+        <div class="price-amount">9,90 &euro;</div>
+        <div class="price-period">kuukaudessa</div>
+        <ul class="price-features">
+          <li>Kaikki Pro-ominaisuudet</li>
+          <li>Peruuta milloin tahansa</li>
+        </ul>
+        <a href="app.html" class="price-btn">Aloita Pro</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEMO CTA -->
+  <div id="demo" class="cta-section">
+    <h2>Kokeile nyt. Ilmaiseksi.</h2>
+    <p>Ei rekisteröitymistä. Ei luottokorttia. Aloita 30 sekunnissa.</p>
+    <a href="app.html" class="btn-hero">Aloita harjoittelu &rarr;</a>
   </div>
+
+  <!-- FAQ -->
+  <section class="section" id="faq">
+    <div class="section-tag">Usein kysyttyä</div>
+    <h2>Kysymyksiä ja vastauksia</h2>
+
+    <div class="faq-list">
+      <details class="faq-item">
+        <summary>Tarvitseeko rekisteröityä?</summary>
+        <p>Ei pakollista. Voit harjoitella ilman tiliä. Rekisteröitymällä edistymisesi tallentuu ja saat käyttöösi dashboardin.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Miten AI-arviointi eroaa opettajan palautteesta?</summary>
+        <p>Kielion tekoäly arvioi kirjoitelmasi YTL:n virallisella pisteytysrubriikilla. Saat pisteet kriteereittäin ja tarkan listan virheistä korjausehdotuksineen. Opettaja antaa samanlaista palautetta, mutta Kielio on käytettävissä 24/7.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Sopiiko tämä myös pitkän oppimäärän opiskelijoille?</summary>
+        <p>Tällä hetkellä Kielio on suunniteltu lyhyen oppimäärän yo-kokeeseen. Pitkän oppimäärän tuki on suunnitteilla.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Voinko peruuttaa Pro-tilauksen?</summary>
+        <p>Kyllä, milloin tahansa. Kuukausitilaus peruuntuu heti. Kesäkausitilauksesta saat rahat takaisin 14 päivän sisällä ilman kysymyksiä.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Toimiiko puhelimella?</summary>
+        <p>Kyllä. Kielio on suunniteltu mobile-first. Toimii kaikissa selaimissa, ei vaadi asennusta.</p>
+      </details>
+    </div>
+  </section>
 
   <!-- FOOTER -->
   <footer>
-    <div class="footer-logo">Kiel<span>io</span></div>
-    <div class="footer-text">
-      Tekoälypohjainen kieliharjoittelu yo-kokeeseen<br/>
-      © 2025 Kielio
+    <div class="footer-inner">
+      <div class="footer-logo">Kiel<span>io</span></div>
+      <div class="footer-text">
+        Tekoälypohjainen kieliharjoittelu yo-kokeeseen<br/>
+        &copy; 2025 Kielio
+      </div>
     </div>
-    <div class="footer-coming">Tulossa: ruotsi · saksa · ranska</div>
   </footer>
   <div class="footer-links">
-    <a href="/pricing.html">Hinnoittelu</a>
     <a href="/terms.html">Käyttöehdot</a>
     <a href="/privacy.html">Tietosuoja</a>
     <a href="/refund.html">Palautukset</a>
+    <a href="mailto:tuki@kielio.fi">tuki@kielio.fi</a>
   </div>
 
 </body>
