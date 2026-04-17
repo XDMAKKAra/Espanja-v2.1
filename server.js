@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import helmet from "helmet";
 import dotenv from "dotenv";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -18,11 +19,30 @@ import paymentRoutes, { handleWebhook } from "./routes/stripe.js";
 
 const app = express();
 
+// ─── Security headers ──────────────────────────────────────────────────────
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'"],
+      styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+      fontSrc: ["'self'", "https://fonts.gstatic.com"],
+      imgSrc: ["'self'", "data:"],
+      connectSrc: [
+        "'self'",
+        "https://*.supabase.co",
+        "https://api.lemonsqueezy.com",
+        "https://api.openai.com",
+      ],
+      frameSrc: ["https://*.lemonsqueezy.com"],
+    },
+  },
+}));
+
 // ─── CORS — restrict to allowed origins ─────────────────────────────────────
 const allowedOrigins = (process.env.ALLOWED_ORIGINS || process.env.APP_URL || "").split(",").map(s => s.trim()).filter(Boolean);
 app.use(cors(allowedOrigins.length ? {
   origin(origin, cb) {
-    // Allow requests with no origin (mobile apps, curl, server-to-server)
     if (!origin || allowedOrigins.includes(origin)) return cb(null, true);
     cb(new Error("Not allowed by CORS"));
   },
