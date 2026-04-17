@@ -416,6 +416,55 @@ select option { background: var(--surface2); }
   transition: width 0.4s ease;
 }
 
+/* ── SCAFFOLD INDICATOR ── */
+.scaffold-indicator {
+  display: flex; align-items: center; gap: 8px;
+  margin-top: 8px; font-family: var(--font-mono); font-size: 11px;
+  color: var(--text-muted); min-height: 20px;
+}
+.scaffold-indicator.hidden { display: none; }
+.scaffold-fire { font-size: 14px; }
+.scaffold-fire.hidden { display: none; }
+.scaffold-text { flex: 1; }
+.scaffold-help-btn {
+  background: none; border: 1px solid var(--border);
+  border-radius: 6px; padding: 3px 10px;
+  font-family: var(--font-mono); font-size: 10px;
+  color: var(--text-muted); cursor: pointer;
+  transition: all 0.15s;
+}
+.scaffold-help-btn:hover { border-color: var(--accent); color: var(--text); }
+.scaffold-help-btn.hidden { display: none; }
+
+/* ── DASH LEVEL PROGRESS ── */
+.dash-level-progress {
+  display: flex; align-items: center; gap: 16px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 14px 18px;
+  margin-bottom: 12px;
+}
+.dash-level-progress.hidden { display: none; }
+.dash-level-bar-wrap { flex: 1; }
+.dash-level-bar-label {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 14px; font-weight: 700; margin-bottom: 6px;
+}
+.dash-level-arrow { color: var(--text-muted); font-size: 12px; }
+.dash-level-bar {
+  height: 6px; background: var(--surface2);
+  border-radius: 3px; overflow: hidden;
+}
+.dash-level-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--gold));
+  border-radius: 3px;
+  transition: width 0.8s ease;
+}
+.dash-level-detail {
+  font-family: var(--font-mono); font-size: 11px;
+  color: var(--text-muted); margin-top: 4px;
+}
+
 .question-block { margin-bottom: 32px; }
 .question-label {
   font-family: var(--font-mono);

@@ -114,6 +114,9 @@ function renderDashboard({
     }
   }
 
+  // ── Adaptive level progress bar ──
+  loadAdaptiveState().catch(() => {});
+
   const streakEl = $("dash-streak");
   if (streakEl) {
     streakEl.textContent = streak;
@@ -703,5 +706,97 @@ export function shareResult(text) {
       btn.textContent = "✓ Kopioitu!";
       setTimeout(() => { btn.textContent = orig; }, 2000);
     }).catch(() => alert(text));
+  }
+}
+
+// ─── Adaptive level progress ──────────────────────────────────────────────
+
+async function loadAdaptiveState() {
+  if (!isLoggedIn()) return;
+  const progressEl = $("dash-level-progress");
+  if (!progressEl) return;
+
+  try {
+    const res = await apiFetch(`${API}/api/adaptive-state`, {
+      headers: authHeader(),
+    });
+    if (!res.ok) return;
+    const data = await res.json();
+
+    progressEl.classList.remove("hidden");
+
+    const currentEl = $("dash-level-current");
+    const nextEl = $("dash-level-next");
+    const fillEl = $("dash-level-fill");
+    const detailEl = $("dash-level-detail");
+    const checkBtn = $("btn-checkpoint");
+
+    if (currentEl) currentEl.textContent = data.level;
+    if (nextEl) nextEl.textContent = data.nextLevel || "MAX";
+
+    // Animate progress bar
+    if (fillEl) {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          fillEl.style.width = data.progressToNext + "%";
+        });
+      });
+    }
+
+    if (detailEl) {
+      detailEl.textContent = `30 päivän tarkkuus: ${data.rollingAccuracy}% · ${data.rollingSessions} harjoitusta`;
+    }
+
+    // Checkpoint button
+    if (checkBtn) {
+      if (data.canCheckpoint) {
+        checkBtn.classList.remove("hidden");
+        checkBtn.textContent = `Tee ${data.nextLevel}-tason checkpoint →`;
+        checkBtn.onclick = () => {
+          if (confirm(`Haluatko yrittää ${data.nextLevel}-tason checkpointia?\n\n20 kysymystä ilman vihjeitä.\n80% oikein nostaa tasosi.`)) {
+            startCheckpoint();
+          }
+        };
+      } else {
+        checkBtn.classList.add("hidden");
+      }
+    }
+
+    // Update grade circle to use persistent level
+    const gradeCircle = $("dash-grade-circle");
+    if (gradeCircle && data.level) {
+      gradeCircle.textContent = data.level;
+    }
+
+  } catch { /* silent */ }
+}
+
+async function startCheckpoint() {
+  showLoading("Luodaan checkpoint-testiä...");
+  try {
+    const res = await apiFetch(`${API}/api/checkpoint/start`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", ...authHeader() },
+      body: JSON.stringify({ language: state.language || "spanish" }),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || "Checkpoint-virhe");
+
+    // Use the existing exercise flow for checkpoint
+    state.mode = "checkpoint";
+    state.exercises = data.exercises;
+    state.current = 0;
+    state.totalCorrect = 0;
+    state.totalAnswered = 0;
+    state.batchCorrect = 0;
+    state.batchNumber = 1;
+    state._checkpointTarget = data.targetLevel;
+
+    // Import and call renderExercise from vocab
+    const { default: vocabModule } = await import("./vocab.js");
+    show("screen-exercise");
+  } catch (err) {
+    const { showLoadingError } = await import("../ui/loading.js");
+    showLoadingError(err.message, () => show("screen-dashboard"));
   }
 }

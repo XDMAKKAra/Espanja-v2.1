@@ -12,6 +12,9 @@ import { requireAuth, softProGate } from "../middleware/auth.js";
 import { aiLimiter, aiStrictLimiter } from "../middleware/rateLimit.js";
 import { checkMonthlyCostLimit } from "../middleware/costLimit.js";
 import { logAiUsage } from "../lib/aiCost.js";
+import { getUserLevel, refreshUserLevel, processCheckpointResult, progressToNextLevel } from "../lib/levelEngine.js";
+import { getSessionState, processAnswer, describeScaffold } from "../lib/scaffoldEngine.js";
+import { pickExerciseType, composePrompt, getMaxTokens } from "../lib/exerciseComposer.js";
 
 const router = Router();
 
@@ -730,6 +733,198 @@ Return ONLY JSON:
   } catch (err) {
     console.error("Grade translate error:", err.message);
     res.status(500).json({ error: err.message || "Failed to grade translation" });
+  }
+});
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// ADAPTIVE EXERCISE SYSTEM
+// Level = slow/persistent, Scaffold = session-internal, Type = variety
+// ═══════════════════════════════════════════════════════════════════════════════
+
+// ─── Get user's adaptive state ───────────────────────────────────────────────
+
+router.get("/adaptive-state", requireAuth, async (req, res) => {
+  try {
+    const userId = req.user.userId;
+    const levelData = await refreshUserLevel(userId);
+    const progress = progressToNextLevel(
+      levelData.rolling_accuracy_30d,
+      levelData.rolling_sessions_30d
+    );
+
+    res.json({
+      level: levelData.current_level,
+      levelSince: levelData.level_since,
+      rollingAccuracy: Math.round(levelData.rolling_accuracy_30d * 100),
+      rollingSessions: levelData.rolling_sessions_30d,
+      canCheckpoint: levelData.canCheckpoint,
+      nextLevel: levelData.nextLevel,
+      progressToNext: progress,
+      shouldWarnDown: levelData.shouldWarnDown,
+    });
+  } catch (err) {
+    console.error("Adaptive state error:", err.message);
+    res.status(500).json({ error: "Failed to get adaptive state" });
+  }
+});
+
+// ─── Generate adaptive exercise ─────────────────────────────────────────────
+
+router.post("/adaptive-exercise", requireAuth, aiLimiter, checkMonthlyCostLimit, async (req, res) => {
+  const { topic = "vocab", count = 4, language = "spanish", recentTypes = [] } = req.body;
+
+  if (!VALID_LANGUAGES.has(language)) return res.status(400).json({ error: "Virheellinen kieli" });
+  const clampedCount = Math.max(1, Math.min(8, Number(count) || 4));
+
+  try {
+    const userId = req.user.userId;
+
+    // 1. Get persistent level
+    const levelData = await getUserLevel(userId);
+    const level = levelData.current_level;
+
+    // 2. Get session scaffold state
+    const sessionState = await getSessionState(userId, topic, level);
+    const scaffoldLevel = sessionState.scaffold_level;
+    const scaffold = describeScaffold(scaffoldLevel);
+
+    // 3. Pick exercise type
+    const type = pickExerciseType(topic, recentTypes);
+
+    // 4. Build prompt
+    const profileCtx = await getUserProfileContext(userId);
+    const prompt = composePrompt({
+      level,
+      type,
+      scaffoldLevel,
+      topic,
+      count: clampedCount,
+      language,
+      profileContext: profileCtx,
+    });
+
+    // 5. Generate
+    const maxTokens = getMaxTokens(type, clampedCount);
+    const result = await callOpenAI(prompt, maxTokens);
+    logAiUsage(userId, "adaptive-exercise", result._usage).catch(() => {});
+    delete result._usage;
+
+    // Normalize result
+    const exercises = Array.isArray(result) ? result : result.pairs ? [result] : [result];
+
+    res.json({
+      exercises,
+      meta: {
+        level,
+        scaffoldLevel,
+        scaffold,
+        type,
+        topic,
+      },
+    });
+  } catch (err) {
+    console.error("Adaptive exercise error:", err.message);
+    res.status(500).json({ error: err.message || "Failed to generate adaptive exercise" });
+  }
+});
+
+// ─── Report answer (updates scaffold) ───────────────────────────────────────
+
+router.post("/adaptive-answer", requireAuth, async (req, res) => {
+  const { topic, isCorrect } = req.body;
+  if (typeof isCorrect !== "boolean" || !topic) {
+    return res.status(400).json({ error: "topic and isCorrect required" });
+  }
+
+  try {
+    const userId = req.user.userId;
+    const levelData = await getUserLevel(userId);
+    const result = await processAnswer(userId, topic, isCorrect, levelData.current_level);
+
+    res.json({
+      scaffoldLevel: result.scaffoldLevel,
+      scaffoldChanged: result.scaffoldChanged,
+      direction: result.direction,
+      scaffold: describeScaffold(result.scaffoldLevel),
+    });
+  } catch (err) {
+    console.error("Adaptive answer error:", err.message);
+    res.status(500).json({ error: "Failed to process answer" });
+  }
+});
+
+// ─── Checkpoint test (20 questions, next level, no scaffolding) ─────────────
+
+router.post("/checkpoint/start", requireAuth, aiLimiter, checkMonthlyCostLimit, async (req, res) => {
+  const { language = "spanish" } = req.body;
+
+  try {
+    const userId = req.user.userId;
+    const levelData = await refreshUserLevel(userId);
+
+    if (!levelData.canCheckpoint) {
+      return res.status(400).json({
+        error: "Et ole vielä valmis checkpointiin",
+        reason: !levelData.nextLevel ? "max_level" : "not_eligible",
+      });
+    }
+
+    const nextLevel = levelData.nextLevel;
+    const lang = LANGUAGE_META[language] || LANGUAGE_META.spanish;
+    const profileCtx = await getUserProfileContext(userId);
+
+    // Generate 20 questions at next level with NO scaffolding
+    const types = ["multichoice", "gap_fill", "reorder", "translate_mini", "gap_fill"];
+    const exercises = [];
+
+    // Generate in batches of 4-5 across different types
+    for (let i = 0; i < 4; i++) {
+      const type = types[i];
+      const prompt = composePrompt({
+        level: nextLevel,
+        type,
+        scaffoldLevel: 0, // no scaffolding
+        topic: i < 2 ? "vocab" : "grammar",
+        count: 5,
+        language,
+        profileContext: profileCtx,
+      });
+
+      const batch = await callOpenAI(prompt, getMaxTokens(type, 5));
+      logAiUsage(userId, "checkpoint", batch._usage).catch(() => {});
+      delete batch._usage;
+
+      const arr = Array.isArray(batch) ? batch : [batch];
+      exercises.push(...arr);
+    }
+
+    res.json({
+      exercises: exercises.slice(0, 20),
+      targetLevel: nextLevel,
+      currentLevel: levelData.current_level,
+      passThreshold: 80,
+    });
+  } catch (err) {
+    console.error("Checkpoint start error:", err.message);
+    res.status(500).json({ error: err.message || "Failed to start checkpoint" });
+  }
+});
+
+router.post("/checkpoint/submit", requireAuth, async (req, res) => {
+  const { correct, total } = req.body;
+
+  if (typeof correct !== "number" || typeof total !== "number" || total <= 0) {
+    return res.status(400).json({ error: "Virheelliset pisteet" });
+  }
+
+  try {
+    const userId = req.user.userId;
+    const result = await processCheckpointResult(userId, correct, total);
+
+    res.json(result);
+  } catch (err) {
+    console.error("Checkpoint submit error:", err.message);
+    res.status(500).json({ error: "Failed to process checkpoint" });
   }
 });
 

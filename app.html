@@ -334,6 +334,22 @@
         </div>
       </div>
 
+      <!-- Level progress + checkpoint -->
+      <div class="dash-level-progress hidden" id="dash-level-progress">
+        <div class="dash-level-bar-wrap">
+          <div class="dash-level-bar-label">
+            <span id="dash-level-current">B</span>
+            <span class="dash-level-arrow">&rarr;</span>
+            <span id="dash-level-next">C</span>
+          </div>
+          <div class="dash-level-bar">
+            <div class="dash-level-bar-fill" id="dash-level-fill" style="width:0%"></div>
+          </div>
+          <div class="dash-level-detail" id="dash-level-detail">30 p&auml;iv&auml;n tarkkuus: 72% &middot; 14 harjoitusta</div>
+        </div>
+        <button class="btn-primary btn-sm hidden" id="btn-checkpoint">Tee checkpoint-testi &rarr;</button>
+      </div>
+
       <!-- Stats row -->
       <div class="dash-stats-row">
         <div class="dash-stat-card">
@@ -791,6 +807,11 @@
           <span class="ex-level-badge" id="ex-level-badge">B</span>
         </div>
         <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+        <div class="scaffold-indicator hidden" id="scaffold-indicator">
+          <span class="scaffold-fire hidden" id="scaffold-fire">&#128293;</span>
+          <span class="scaffold-text" id="scaffold-text"></span>
+          <button class="scaffold-help-btn hidden" id="scaffold-help-btn">Pyyd&auml; vihjett&auml;</button>
+        </div>
       </div>
 
       <div class="question-block">

@@ -7,8 +7,68 @@ import { authHeader, apiFetch } from "../api.js";
 import { trackExerciseStarted, trackExerciseCompleted, trackError } from "../analytics.js";
 
 let _deps = {};
+let _scaffoldMeta = null; // { level, scaffoldLevel, scaffold, type, topic }
+let _recentTypes = [];
+
 export function initVocab({ loadDashboard, shareResult, saveProgress }) {
   _deps = { loadDashboard, shareResult, saveProgress };
+
+  // Scaffold help button — request hints back
+  const helpBtn = $("scaffold-help-btn");
+  if (helpBtn) {
+    helpBtn.addEventListener("click", () => {
+      if (_scaffoldMeta) {
+        _scaffoldMeta.scaffoldLevel = Math.min(3, (_scaffoldMeta.scaffoldLevel || 0) + 1);
+        updateScaffoldIndicator(_scaffoldMeta.scaffoldLevel);
+      }
+      helpBtn.classList.add("hidden");
+    });
+  }
+}
+
+function updateScaffoldIndicator(scaffoldLevel) {
+  const indicator = $("scaffold-indicator");
+  if (!indicator) return;
+
+  indicator.classList.remove("hidden");
+  const fireEl = $("scaffold-fire");
+  const textEl = $("scaffold-text");
+  const helpBtn = $("scaffold-help-btn");
+
+  if (scaffoldLevel <= 0) {
+    fireEl.classList.remove("hidden");
+    textEl.textContent = "Ei vihjeitä — olet tulessa!";
+    helpBtn.classList.remove("hidden");
+  } else if (scaffoldLevel === 1) {
+    fireEl.classList.add("hidden");
+    textEl.textContent = "Vain vihje";
+    helpBtn.classList.remove("hidden");
+  } else if (scaffoldLevel === 2) {
+    fireEl.classList.add("hidden");
+    textEl.textContent = "";
+    helpBtn.classList.add("hidden");
+  } else {
+    fireEl.classList.add("hidden");
+    textEl.textContent = "";
+    helpBtn.classList.add("hidden");
+  }
+}
+
+async function reportAdaptiveAnswer(topic, isCorrect) {
+  try {
+    const res = await apiFetch(`${API}/api/adaptive-answer`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", ...authHeader() },
+      body: JSON.stringify({ topic, isCorrect }),
+    });
+    const data = await res.json();
+    if (data.scaffoldChanged && data.direction === "down") {
+      updateScaffoldIndicator(data.scaffoldLevel);
+    } else if (data.scaffoldChanged && data.direction === "up") {
+      // Silently add more help — no announcement
+      if (_scaffoldMeta) _scaffoldMeta.scaffoldLevel = data.scaffoldLevel;
+    }
+  } catch { /* silent */ }
 }
 
 export const VOCAB_TYPE_LABELS = {
@@ -540,6 +600,11 @@ function handleAnswer(chosen, clickedBtn) {
   document.querySelectorAll(".option-btn").forEach((b) => (b.disabled = true));
   $("explanation-text").textContent = ex.explanation;
   $("explanation-block").classList.remove("hidden");
+
+  // Report to adaptive engine (fire-and-forget)
+  if (isLoggedIn()) {
+    reportAdaptiveAnswer(state.topic || state.mode || "vocab", isCorrect);
+  }
 
   // Show SM-2 grade buttons
   const gradeRow = $("sr-grade-row");
