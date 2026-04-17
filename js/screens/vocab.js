@@ -2,7 +2,8 @@ import { $, show } from "../ui/nav.js";
 import { API, isLoggedIn } from "../api.js";
 import { state, LEVELS, BATCH_SIZE, MAX_BATCHES } from "../state.js";
 import { showLoading, showLoadingError } from "../ui/loading.js";
-import { srPop, srAddWrong, srMarkCorrect } from "../features/spacedRepetition.js";
+import { srPop, srAddWrong, srMarkCorrect, srReview, srGetDue } from "../features/spacedRepetition.js";
+import { authHeader, apiFetch } from "../api.js";
 
 let _deps = {};
 export function initVocab({ loadDashboard, shareResult, saveProgress }) {
@@ -23,10 +24,44 @@ export const GRAMMAR_TYPE_LABELS = {
   pick_rule: "Tunnista sääntö",
 };
 
+/**
+ * Start a review-only session with due SR cards.
+ */
+export async function startReviewSession() {
+  showLoading("Haetaan kertauskortteja...");
+
+  try {
+    const dueCards = await srGetDue(12, state.language);
+    if (!dueCards.length) {
+      showLoadingError("Ei kertauskortteja juuri nyt! Harjoittele ensin uusia sanoja.", () => {
+        show("screen-start");
+      });
+      return;
+    }
+
+    state.mode = "vocab";
+    state.exercises = dueCards;
+    state.current = 0;
+    state.totalCorrect = 0;
+    state.totalAnswered = 0;
+    state.batchCorrect = 0;
+    state.batchNumber = 1;
+    state.bankId = null;
+    state._reviewMode = true;
+    state.sessionStartTime = Date.now();
+
+    renderExercise();
+    show("screen-exercise");
+  } catch (err) {
+    showLoadingError(err.message, () => startReviewSession());
+  }
+}
+
 export async function loadNextBatch() {
   state.batchNumber++;
   state.batchCorrect = 0;
   state.current = 0;
+  state._reviewMode = false;
 
   showLoading(`Luodaan kierros ${state.batchNumber}/${MAX_BATCHES}...`);
 
@@ -117,19 +152,34 @@ function handleAnswer(chosen, clickedBtn) {
     state.totalCorrect++;
     state.batchCorrect++;
     clickedBtn.classList.add("correct");
-    srMarkCorrect(ex);
   } else {
     clickedBtn.classList.add("wrong");
     document.querySelectorAll(".option-btn").forEach((btn) => {
       if (btn.textContent.trim()[0] === ex.correct) btn.classList.add("correct");
     });
-    srAddWrong(ex);
   }
 
   state.totalAnswered++;
+  state._lastCorrect = isCorrect;
   document.querySelectorAll(".option-btn").forEach((b) => (b.disabled = true));
   $("explanation-text").textContent = ex.explanation;
   $("explanation-block").classList.remove("hidden");
+
+  // Show SM-2 grade buttons
+  const gradeRow = $("sr-grade-row");
+  if (gradeRow) {
+    gradeRow.classList.remove("hidden");
+    // Pre-select based on answer
+    gradeRow.querySelectorAll(".sr-grade-btn").forEach((btn) => {
+      btn.classList.remove("active");
+      btn.disabled = false;
+    });
+    // Auto-select: wrong=Again(0), correct=Good(4)
+    const autoGrade = isCorrect ? 4 : 0;
+    const autoBtn = gradeRow.querySelector(`.sr-grade-btn[data-grade="${autoGrade}"]`);
+    if (autoBtn) autoBtn.classList.add("active");
+    state._srGrade = autoGrade;
+  }
 
   const reportBtn = $("btn-report-vocab");
   if (state.bankId) {
@@ -142,6 +192,15 @@ function handleAnswer(chosen, clickedBtn) {
 }
 
 $("btn-next").addEventListener("click", () => {
+  // Submit SR review with selected grade
+  const ex = state.exercises[state.current];
+  const grade = state._srGrade ?? (state._lastCorrect ? 4 : 0);
+  srReview(ex, grade, state.language);
+
+  // Hide grade row
+  const gradeRow = $("sr-grade-row");
+  if (gradeRow) gradeRow.classList.add("hidden");
+
   state.current++;
   if (state.current >= state.exercises.length) {
     endBatch();
@@ -149,6 +208,18 @@ $("btn-next").addEventListener("click", () => {
     renderExercise();
   }
 });
+
+// SM-2 grade button clicks
+const gradeRow = $("sr-grade-row");
+if (gradeRow) {
+  gradeRow.addEventListener("click", (e) => {
+    const btn = e.target.closest(".sr-grade-btn");
+    if (!btn) return;
+    gradeRow.querySelectorAll(".sr-grade-btn").forEach((b) => b.classList.remove("active"));
+    btn.classList.add("active");
+    state._srGrade = parseInt(btn.dataset.grade);
+  });
+}
 
 function endBatch() {
   if (state.batchNumber >= MAX_BATCHES) {

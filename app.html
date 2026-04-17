@@ -151,6 +151,18 @@
         </div>
       </div>
 
+      <!-- SR review badge -->
+      <div class="dash-sr-review hidden" id="dash-sr-review">
+        <div class="dash-sr-info">
+          <span class="dash-sr-icon">🔁</span>
+          <div>
+            <div class="dash-sr-title"><span id="dash-sr-count">0</span> kertauskorttia odottaa</div>
+            <div class="dash-sr-sub">SM-2 välitoistojärjestelmä</div>
+          </div>
+        </div>
+        <button class="btn-primary btn-sm" id="btn-start-review">Kertaa nyt →</button>
+      </div>
+
       <!-- Mode performance cards -->
       <div class="dash-section-label">Osa-alueet</div>
       <div class="dash-modes" id="dash-modes"></div>
@@ -546,6 +558,15 @@
 
       <div class="explanation-block hidden" id="explanation-block">
         <p id="explanation-text"></p>
+        <div class="sr-grade-row hidden" id="sr-grade-row">
+          <span class="sr-grade-label">Kuinka hyvin muistit?</span>
+          <div class="sr-grade-buttons">
+            <button class="sr-grade-btn sr-again" data-grade="0">Uudelleen</button>
+            <button class="sr-grade-btn sr-hard" data-grade="2">Vaikea</button>
+            <button class="sr-grade-btn sr-good" data-grade="4">Hyvä</button>
+            <button class="sr-grade-btn sr-easy" data-grade="5">Helppo</button>
+          </div>
+        </div>
         <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
           <button class="btn-next" id="btn-next">Seuraava →</button>
           <button class="btn-report hidden" id="btn-report-vocab" title="Raportoi virheellinen tehtävä">⚠ Virhe tehtävässä</button>

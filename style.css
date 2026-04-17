@@ -498,6 +498,65 @@ select option { background: var(--surface2); }
 }
 .btn-next:hover { border-color: var(--accent); color: var(--accent); }
 
+/* ── SM-2 GRADE BUTTONS ── */
+.sr-grade-row {
+  margin: 12px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.sr-grade-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+.sr-grade-buttons {
+  display: flex;
+  gap: 6px;
+}
+.sr-grade-btn {
+  flex: 1;
+  padding: 6px 4px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  font-family: var(--font-display);
+  cursor: pointer;
+  transition: all 0.15s;
+  border: 1px solid var(--border);
+  background: none;
+  color: var(--text-muted);
+}
+.sr-grade-btn:hover { border-color: var(--text); color: var(--text); }
+.sr-grade-btn.active { border-width: 2px; }
+.sr-again { color: #ef4444; border-color: #ef4444; }
+.sr-again.active { background: rgba(239,68,68,0.15); color: #ef4444; border-color: #ef4444; }
+.sr-hard { color: #f59e0b; border-color: #f59e0b; }
+.sr-hard.active { background: rgba(245,158,11,0.15); color: #f59e0b; border-color: #f59e0b; }
+.sr-good { color: #22c55e; border-color: #22c55e; }
+.sr-good.active { background: rgba(34,197,94,0.15); color: #22c55e; border-color: #22c55e; }
+.sr-easy { color: #3b82f6; border-color: #3b82f6; }
+.sr-easy.active { background: rgba(59,130,246,0.15); color: #3b82f6; border-color: #3b82f6; }
+
+/* ── SR DASHBOARD BADGE ── */
+.dash-sr-review {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  margin-bottom: 20px;
+}
+.dash-sr-info { display: flex; align-items: center; gap: 10px; }
+.dash-sr-icon { font-size: 24px; }
+.dash-sr-title { font-size: 14px; font-weight: 600; }
+.dash-sr-sub { font-size: 11px; color: var(--text-muted); font-family: var(--font-mono); }
+.btn-sm { padding: 8px 16px; font-size: 12px; }
+
 .btn-report {
   background: none;
   border: 1px solid var(--border);

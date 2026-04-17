@@ -2,6 +2,7 @@ import { $, show } from "../ui/nav.js";
 import { API, isLoggedIn, clearAuth, authHeader, apiFetch, getAuthEmail } from "../api.js";
 import { state } from "../state.js";
 import { showLoading } from "../ui/loading.js";
+import { srDueCount } from "../features/spacedRepetition.js";
 
 let _deps = {};
 export function initDashboard({ loadGrammarDrill, loadReadingTask, loadWritingTask, startCheckout, openBillingPortal, startMockExam, showModePage, renderModePageStats, loadNextBatch, showProUpsell }) {
@@ -185,6 +186,7 @@ function renderDashboard({
 
   renderRecommendations(modeDaysAgo, modeStats, totalSessions);
   loadExamHistory();
+  updateSrBadge();
 
   if (recent.length > 0) {
     $("dash-recent-wrap").classList.remove("hidden");
@@ -528,6 +530,19 @@ export async function saveProgress({ mode, level, scoreCorrect, scoreTotal, ytlG
       body: JSON.stringify({ mode, level, scoreCorrect, scoreTotal, ytlGrade }),
     });
   } catch { /* silently skip — never disrupt UX */ }
+}
+
+async function updateSrBadge() {
+  const badge = $("dash-sr-review");
+  if (!badge) return;
+
+  const count = await srDueCount("spanish");
+  if (count > 0) {
+    $("dash-sr-count").textContent = count;
+    badge.classList.remove("hidden");
+  } else {
+    badge.classList.add("hidden");
+  }
 }
 
 export function shareResult(text) {

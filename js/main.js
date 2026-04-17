@@ -8,7 +8,7 @@ import { showLoading, showLoadingError } from "./ui/loading.js";
 
 import { initAuth } from "./screens/auth.js";
 import { initDashboard, loadDashboard, navigateToMode, saveLastSettings, loadLastSettings, saveProgress, shareResult } from "./screens/dashboard.js";
-import { initVocab, loadNextBatch } from "./screens/vocab.js";
+import { initVocab, loadNextBatch, startReviewSession } from "./screens/vocab.js";
 import { initGrammar, loadGrammarDrill } from "./screens/grammar.js";
 import { initReading, loadReadingTask } from "./screens/reading.js";
 import { initWriting, showProUpsell, startCheckout, openBillingPortal, loadWritingTask } from "./screens/writing.js";
@@ -166,6 +166,12 @@ if ($("writing-upgrade-btn")) $("writing-upgrade-btn").addEventListener("click",
 const fullExamBtn = $("btn-start-full-exam");
 if (fullExamBtn) {
   fullExamBtn.addEventListener("click", () => startFullExam("demo"));
+}
+
+// SR review button
+const reviewBtn = $("btn-start-review");
+if (reviewBtn) {
+  reviewBtn.addEventListener("click", () => startReviewSession());
 }
 
 // Sidebar logout
