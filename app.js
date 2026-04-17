@@ -643,54 +643,97 @@ function renderProgressChart(chartData) {
   el.innerHTML = `<svg viewBox="0 0 ${VW} ${VH}" style="width:100%;height:130px;display:block">${s.join("")}</svg>`;
 }
 
-// ─── Activity heatmap ───────────────────────────────────────────────────────
+// ─── Activity heatmap (GitHub-style, vertical days) ─────────────────────────
 
 function renderHeatmap(chartData) {
   const el = $("dash-heatmap");
   if (!el) return;
 
-  // Build a map of date → count from chartData
-  const dayCounts = {};
+  const dayStats = {};
   for (const log of chartData) {
     if (!log.createdAt) continue;
-    const day = log.createdAt.slice(0, 10); // "YYYY-MM-DD"
-    dayCounts[day] = (dayCounts[day] || 0) + 1;
+    const day = log.createdAt.slice(0, 10);
+    if (!dayStats[day]) dayStats[day] = { count: 0, correct: 0, total: 0 };
+    dayStats[day].count++;
+    dayStats[day].correct += log.scoreCorrect || 0;
+    dayStats[day].total += log.scoreTotal || 0;
   }
 
-  // Generate last 28 days (4 weeks, aligns to grid)
   const today = new Date();
-  const cells = [];
-  const dayNames = ["Ma", "Ti", "Ke", "To", "Pe", "La", "Su"];
+  const dayLabels = ["Ma", "Ti", "Ke", "To", "Pe", "La", "Su"];
 
-  // Day labels row
-  let html = '<div class="heatmap-day-labels">';
-  for (const d of dayNames) html += `<span class="heatmap-day-label">${d}</span>`;
-  html += "</div>";
-
-  // Find the Monday 4 weeks ago
   const startDate = new Date(today);
-  startDate.setDate(startDate.getDate() - 27); // 28 days total
-  // Align to Monday
+  startDate.setDate(startDate.getDate() - 29);
   while (startDate.getDay() !== 1) startDate.setDate(startDate.getDate() - 1);
 
-  for (let i = 0; i < 35; i++) { // 5 weeks × 7 days
-    const d = new Date(startDate);
-    d.setDate(d.getDate() + i);
-    const key = d.toISOString().slice(0, 10);
-    const count = dayCounts[key] || 0;
-    const isFuture = d > today;
+  const msPerDay = 86400000;
+  const totalDays = Math.ceil((today - startDate) / msPerDay) + 1;
+  const numWeeks = Math.ceil(totalDays / 7);
 
-    let lvl = "";
-    if (isFuture) lvl = "future";
-    else if (count >= 4) lvl = "lvl-4";
-    else if (count >= 3) lvl = "lvl-3";
-    else if (count >= 2) lvl = "lvl-2";
-    else if (count >= 1) lvl = "lvl-1";
+  let html = "";
 
-    cells.push(`<div class="heatmap-cell ${lvl}" title="${key}: ${count} harjoitusta"></div>`);
+  for (let row = 0; row < 7; row++) {
+    const show = row === 0 || row === 2 || row === 4 || row === 6;
+    html += `<div class="heatmap-label">${show ? dayLabels[row] : ""}</div>`;
   }
 
-  el.innerHTML = html + cells.join("");
+  for (let w = 0; w < numWeeks; w++) {
+    for (let row = 0; row < 7; row++) {
+      const d = new Date(startDate);
+      d.setDate(d.getDate() + w * 7 + row);
+      const key = d.toISOString().slice(0, 10);
+      const isFuture = d > today;
+      const stats = dayStats[key];
+      const count = stats ? stats.count : 0;
+
+      let lvl = "";
+      if (isFuture) lvl = "future";
+      else if (count >= 8) lvl = "lvl-4";
+      else if (count >= 4) lvl = "lvl-3";
+      else if (count >= 1) lvl = "lvl-2";
+
+      const dd = d.getDate();
+      const mm = d.getMonth() + 1;
+      const yyyy = d.getFullYear();
+      const dateStr = `${dd}.${mm}.${yyyy}`;
+      let tip = dateStr;
+      if (!isFuture && count === 0) {
+        tip = `${dateStr} — ei harjoituksia`;
+      } else if (!isFuture && count > 0) {
+        const pct = stats.total > 0 ? Math.round((stats.correct / stats.total) * 100) : 0;
+        tip = `${dateStr} — ${count} harjoitus${count > 1 ? "ta" : ""}`
+            + (stats.total > 0 ? `, ${pct}% oikein` : "");
+      }
+
+      html += `<div class="heatmap-cell ${lvl}" data-tip="${tip}"></div>`;
+    }
+  }
+
+  el.style.setProperty("--heatmap-cols", numWeeks + 1);
+  el.innerHTML = html;
+
+  el.addEventListener("pointerenter", (e) => {
+    const cell = e.target.closest(".heatmap-cell[data-tip]");
+    if (!cell) return;
+    let tooltip = el.querySelector(".heatmap-tooltip");
+    if (!tooltip) {
+      tooltip = document.createElement("div");
+      tooltip.className = "heatmap-tooltip";
+      el.appendChild(tooltip);
+    }
+    tooltip.textContent = cell.dataset.tip;
+    tooltip.classList.add("visible");
+    const r = cell.getBoundingClientRect();
+    const pr = el.getBoundingClientRect();
+    tooltip.style.left = (r.left - pr.left + r.width / 2) + "px";
+    tooltip.style.top = (r.top - pr.top - 30) + "px";
+  }, true);
+  el.addEventListener("pointerleave", (e) => {
+    if (e.target.classList.contains("heatmap-cell")) {
+      const t = el.querySelector(".heatmap-tooltip");
+      if (t) t.classList.remove("visible");
+    }
+  }, true);
 }
 
 // ─── Recommendations engine ─────────────────────────────────────────────────
