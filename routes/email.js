@@ -103,11 +103,24 @@ router.post("/streak-reminders", async (req, res) => {
         .single();
       if (prefs && prefs.streak_reminders === false) continue;
 
-      sendStreakReminderEmail(user.email, {
-        name: user.email.split("@")[0],
-        streak,
-        lastPracticeDate: yesterdayStr,
-      }).catch((err) => console.error("Streak reminder failed for", user.email, err));
+      // Try push notification first, fall back to email
+      let pushed = 0;
+      try {
+        const { sendPushToUser } = await import("./push.js");
+        pushed = await sendPushToUser(userId, {
+          title: `🔥 ${streak} päivän putki!`,
+          body: "Älä katkaise putkea — harjoittele tänään!",
+          url: "/app.html",
+        });
+      } catch { /* push not available */ }
+
+      if (pushed === 0) {
+        sendStreakReminderEmail(user.email, {
+          name: user.email.split("@")[0],
+          streak,
+          lastPracticeDate: yesterdayStr,
+        }).catch((err) => console.error("Streak reminder failed for", user.email, err));
+      }
       sent++;
     }
   }

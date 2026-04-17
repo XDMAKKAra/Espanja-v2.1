@@ -472,9 +472,61 @@ $("btn-report-vocab").addEventListener("click", (e) => reportExercise(state.bank
 $("btn-report-gram").addEventListener("click", (e) => reportExercise(state.grammarBankId, e.target));
 $("btn-report-reading").addEventListener("click", (e) => reportExercise(state.readingBankId, e.target));
 
+// ─── Push notifications (Pro users, Chrome/Firefox) ────────────────────────
+
+async function initPushNotifications() {
+  if (!isLoggedIn() || !("PushManager" in window) || !("serviceWorker" in navigator)) return;
+
+  try {
+    // Fetch VAPID key
+    const res = await fetch(`${API}/api/push/vapid-key`);
+    const { key } = await res.json();
+    if (!key) return;
+
+    const reg = await navigator.serviceWorker.ready;
+    const existing = await reg.pushManager.getSubscription();
+    if (existing) return; // Already subscribed
+
+    // Only ask Pro users (check window._isPro set by dashboard)
+    // Delay asking until dashboard has loaded
+    setTimeout(async () => {
+      if (!window._isPro) return;
+
+      const permission = await Notification.requestPermission();
+      if (permission !== "granted") return;
+
+      const subscription = await reg.pushManager.subscribe({
+        userVisuallyOnly: true,
+        applicationServerKey: urlBase64ToUint8Array(key),
+      });
+
+      await apiFetch(`${API}/api/push/subscribe`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", ...authHeader() },
+        body: JSON.stringify({ subscription }),
+      });
+    }, 5000);
+  } catch { /* silent */ }
+}
+
+function urlBase64ToUint8Array(base64String) {
+  const padding = "=".repeat((4 - base64String.length % 4) % 4);
+  const base64 = (base64String + padding).replace(/-/g, "+").replace(/_/g, "/");
+  const raw = atob(base64);
+  return Uint8Array.from([...raw].map((c) => c.charCodeAt(0)));
+}
+
 // ─── Startup ───────────────────────────────────────────────────────────────
 
 updateSidebarState();
 if (!resetToken && isLoggedIn()) {
   loadDashboard();
+  initPushNotifications();
+}
+
+// Handle manifest shortcuts (hash-based routing)
+const hash = window.location.hash.slice(1);
+if (hash && ["vocab", "grammar", "reading", "writing"].includes(hash)) {
+  window.location.hash = "";
+  setTimeout(() => showModePage(hash), 500);
 }

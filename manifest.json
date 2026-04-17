@@ -4,11 +4,31 @@
   "description": "Adaptiivinen tekoälyharjoittelu ylioppilaskirjoituksiin",
   "start_url": "/app.html",
   "display": "standalone",
-  "background_color": "#07070f",
-  "theme_color": "#6d5ef4",
+  "background_color": "#0c0808",
+  "theme_color": "#e63946",
   "orientation": "portrait-primary",
   "icons": [
     { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
     { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ],
+  "shortcuts": [
+    {
+      "name": "Sanasto",
+      "short_name": "Sanasto",
+      "url": "/app.html#vocab",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Kielioppi",
+      "short_name": "Kielioppi",
+      "url": "/app.html#grammar",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Luetun ymmärtäminen",
+      "short_name": "Lukeminen",
+      "url": "/app.html#reading",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    }
   ]
 }

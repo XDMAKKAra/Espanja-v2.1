@@ -19,6 +19,7 @@ import paymentRoutes, { handleWebhook } from "./routes/stripe.js";
 import examRoutes from "./routes/exam.js";
 import srRoutes from "./routes/sr.js";
 import adaptiveRoutes from "./routes/adaptive.js";
+import pushRoutes from "./routes/push.js";
 
 const app = express();
 
@@ -89,6 +90,7 @@ app.use("/api/payments", paymentRoutes);
 app.use("/api/exam", examRoutes);
 app.use("/api/sr", srRoutes);
 app.use("/api", adaptiveRoutes);
+app.use("/api/push", pushRoutes);
 
 // ─── Start ───────────────────────────────────────────────────────────────────
 
