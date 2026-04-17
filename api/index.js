@@ -1,20 +1,17 @@
-let app;
-let initError = null;
+import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
 
-try {
-  const { default: express } = await import("express");
-  const { default: cors } = await import("cors");
-  const { default: dotenv } = await import("dotenv");
-  dotenv.config();
+dotenv.config();
 
-  const { default: authRoutes } = await import("../routes/auth.js");
-  const { default: progressRoutes } = await import("../routes/progress.js");
-  const { default: exerciseRoutes } = await import("../routes/exercises.js");
-  const { default: writingRoutes } = await import("../routes/writing.js");
-  const { default: emailRoutes } = await import("../routes/email.js");
-  const { default: paymentRoutes, handleWebhook } = await import("../routes/stripe.js");
+import authRoutes from "../routes/auth.js";
+import progressRoutes from "../routes/progress.js";
+import exerciseRoutes from "../routes/exercises.js";
+import writingRoutes from "../routes/writing.js";
+import emailRoutes from "../routes/email.js";
+import paymentRoutes, { handleWebhook } from "../routes/stripe.js";
 
-  app = express();
+const app = express();
 
 // ─── CORS — restrict to allowed origins ─────────────────────────────────────
 const allowedOrigins = (process.env.ALLOWED_ORIGINS || process.env.APP_URL || "").split(",").map(s => s.trim()).filter(Boolean);
@@ -41,18 +38,5 @@ app.use("/api", exerciseRoutes);
 app.use("/api", writingRoutes);
 app.use("/api/email", emailRoutes);
 app.use("/api/payments", paymentRoutes);
-
-} catch (e) {
-  initError = e;
-  const { default: express } = await import("express");
-  app = express();
-  app.use((req, res) => {
-    res.status(500).json({
-      error: "Init failed",
-      message: initError.message,
-      stack: initError.stack
-    });
-  });
-}
 
 export default app;
