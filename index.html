@@ -128,22 +128,27 @@
     <div class="section-tag">Ratkaisu</div>
     <h2>Puheo ratkaisee kaikki kolme.<br/><em>Teko&auml;lyll&auml;.</em></h2>
 
-    <div class="features-grid">
-      <div class="feature-card">
-        <span class="feature-icon">&#129302;</span>
+    <div class="features-grid" id="features-grid">
+      <div class="feature-card reveal">
+        <span class="feature-icon anim-pulse">&#129302;</span>
         <div class="feature-title">Personoitu AI-opettaja</div>
         <div class="feature-desc">J&auml;rjestelm&auml; oppii heikkoutesi ja luo harjoituksia juuri sinulle. Taso sopeutuu suoritukseesi.</div>
       </div>
-      <div class="feature-card">
-        <span class="feature-icon">&#9989;</span>
+      <div class="feature-card reveal">
+        <span class="feature-icon anim-bounce">&#9989;</span>
         <div class="feature-title">YTL-rubriikin mukainen arviointi</div>
         <div class="feature-desc">Kirjoitelmasi arvioidaan oikealla pisteytysrubriikilla. N&auml;et tarkalleen miss&auml; menet&auml;t pisteita.</div>
       </div>
-      <div class="feature-card">
-        <span class="feature-icon">&#128257;</span>
+      <div class="feature-card reveal">
+        <span class="feature-icon anim-spin">&#128257;</span>
         <div class="feature-title">Spaced repetition</div>
         <div class="feature-desc">SM-2-algoritmi varmistaa, ett&auml; kertaat sanat juuri ennen kuin ne unohtuvat. Muistat ne kokeeseen.</div>
       </div>
+    </div>
+    <div class="feature-dots" id="feature-dots">
+      <button class="feature-dot active" data-idx="0"></button>
+      <button class="feature-dot" data-idx="1"></button>
+      <button class="feature-dot" data-idx="2"></button>
     </div>
   </section>
 
@@ -173,6 +178,36 @@
         <div class="step-num">4</div>
         <div class="step-title">Simuloi t&auml;yskoe kellonvalvonnassa</div>
         <div class="step-desc">4-osainen koe YTL:n rakenteella. Tied&auml;t miss&auml; olet ennen koep&auml;iv&auml;&auml;.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4b) HOW PUHEO TEACHES — vertical timeline -->
+  <section class="section" id="teaching">
+    <div class="section-tag">Kuinka Puheo opettaa</div>
+    <h2>Adaptiivinen oppimispolku.<br/><em>Joka kerta fiksumpi.</em></h2>
+    <p class="section-sub">Puheo ei anna kaikille samoja teht&auml;vi&auml;. Se oppii sinun heikkoutesi.</p>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-dot">1</div>
+        <div class="timeline-title">Arvioi taitotasosi</div>
+        <div class="timeline-desc">Diagnostinen testi tunnistaa tasosi 2 minuutissa &mdash; sanasto, kielioppi ja luetun ymm&auml;rt&auml;minen. Aloitat juuri oikealta tasolta.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot">2</div>
+        <div class="timeline-title">Generoi personoituja teht&auml;vi&auml;</div>
+        <div class="timeline-desc">AI luo teht&auml;v&auml;t sinun tasoosi ja heikkouksiisi perustuen. Aukkoteht&auml;vi&auml;, yhdist&auml;mist&auml;, k&auml;&auml;nn&ouml;ksi&auml;, sanaj&auml;rjestyst&auml; &mdash; monipuolisesti.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot">3</div>
+        <div class="timeline-title">Spaced repetition kertaa virheet</div>
+        <div class="timeline-desc">Jokainen v&auml;&auml;r&auml; vastaus menee kertausjonoon. SM-2-algoritmi palauttaa sen juuri ennen kuin unohdat &mdash; virheiden m&auml;&auml;r&auml; laskee viikko viikolta.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot">4</div>
+        <div class="timeline-title">Simuloi YO-koe</div>
+        <div class="timeline-desc">T&auml;yskoe YTL:n rakenteella ja aikarajalla: luetun ymm., rakenteet, lyhyt ja pitk&auml; kirjoitelma. Tiedat tarkalleen miss&auml; olet ennen koep&auml;iv&auml;&auml;.</div>
       </div>
     </div>
   </section>
@@ -560,6 +595,93 @@
     window.addEventListener('scroll', function() {
       document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 20);
     });
+
+    // ── IntersectionObserver: scroll-triggered reveal ──
+    (function() {
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, { threshold: 0.15 });
+
+      // Timeline items
+      document.querySelectorAll('.timeline-item').forEach(function(el, i) {
+        el.style.transitionDelay = (i * 0.15) + 's';
+        observer.observe(el);
+      });
+
+      // Reveal elements
+      document.querySelectorAll('.reveal').forEach(function(el, i) {
+        el.style.transitionDelay = (i * 0.1) + 's';
+        observer.observe(el);
+      });
+    })();
+
+    // ── Number counter animation ──
+    (function() {
+      var counted = false;
+      var el = document.getElementById('hero-user-count');
+      if (!el) return;
+
+      var observer = new IntersectionObserver(function(entries) {
+        if (entries[0].isIntersecting && !counted) {
+          counted = true;
+          var target = parseInt(el.textContent) || 0;
+          if (target < 1) return;
+          var duration = 1200;
+          var start = performance.now();
+          function tick(now) {
+            var progress = Math.min((now - start) / duration, 1);
+            var eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+            el.textContent = Math.round(eased * target);
+            if (progress < 1) requestAnimationFrame(tick);
+          }
+          el.textContent = '0';
+          requestAnimationFrame(tick);
+        }
+      }, { threshold: 0.5 });
+
+      observer.observe(el.closest('.hero-social-proof') || el);
+    })();
+
+    // ── Price card tilt on mouse ──
+    (function() {
+      document.querySelectorAll('.price-card').forEach(function(card) {
+        card.addEventListener('mousemove', function(e) {
+          var rect = card.getBoundingClientRect();
+          var x = (e.clientX - rect.left) / rect.width - 0.5;
+          var y = (e.clientY - rect.top) / rect.height - 0.5;
+          card.style.transform = 'perspective(600px) rotateY(' + (x * 6) + 'deg) rotateX(' + (-y * 6) + 'deg) translateY(-2px)';
+        });
+        card.addEventListener('mouseleave', function() {
+          card.style.transform = '';
+        });
+      });
+    })();
+
+    // ── Feature dots (mobile snap carousel) ──
+    (function() {
+      var grid = document.getElementById('features-grid');
+      var dots = document.querySelectorAll('.feature-dot');
+      if (!grid || !dots.length) return;
+
+      grid.addEventListener('scroll', function() {
+        var scrollLeft = grid.scrollLeft;
+        var cardWidth = grid.querySelector('.feature-card').offsetWidth + 12;
+        var idx = Math.round(scrollLeft / cardWidth);
+        dots.forEach(function(d, i) { d.classList.toggle('active', i === idx); });
+      });
+
+      dots.forEach(function(dot) {
+        dot.addEventListener('click', function() {
+          var idx = parseInt(dot.dataset.idx);
+          var cardWidth = grid.querySelector('.feature-card').offsetWidth + 12;
+          grid.scrollTo({ left: idx * cardWidth, behavior: 'smooth' });
+        });
+      });
+    })();
   </script>
 
   <script type="module" src="js/demo.js"></script>
