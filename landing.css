@@ -88,7 +88,7 @@ body::before {
 
 /* Push nav down when urgency bar is visible */
 .urgency-bar:not(.hidden) ~ .nav { top: 38px; }
-.urgency-bar:not(.hidden) ~ .hero { padding-top: 160px; }
+.urgency-bar:not(.hidden) ~ .hero { padding-top: 110px; }
 
 /* ── NAV ── */
 .nav {
@@ -133,11 +133,12 @@ body::before {
 /* ── HERO ── */
 .hero {
   position: relative; z-index: 1;
-  min-height: 100vh; min-height: 100dvh;
+  min-height: 0;
+  height: 100vh; height: 100dvh;
   display: flex; flex-direction: column;
   align-items: center; justify-content: center;
   text-align: center;
-  padding: 120px 20px 60px;
+  padding: 80px 24px 40px;
 }
 
 .hero-tag {
@@ -197,7 +198,7 @@ body::before {
 .hero-social-proof {
   display: flex; align-items: center; gap: 8px;
   font-family: var(--mono); font-size: 12px;
-  color: var(--text-muted); margin-bottom: 48px;
+  color: var(--text-muted); margin-bottom: 16px;
 }
 .hero-proof-dot {
   width: 8px; height: 8px; border-radius: 50%;
