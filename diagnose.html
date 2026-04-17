@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Testaa espanjan tasosi — Puheo</title>
+  <meta name="description" content="Ilmainen diagnostinen testi: selvitä espanjan YO-arvosanasi 2 minuutissa. 15 kysymystä, adaptiivinen vaikeustaso." />
+
+  <meta property="og:title" content="Testaa espanjan YO-tasosi — Puheo" />
+  <meta property="og:description" content="Selvitä espanjan arvosanasi 2 minuutissa. Ilmainen diagnostinen testi." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://puheo.fi/diagnose" />
+  <meta property="og:image" content="https://puheo.fi/og-image.png" />
+  <meta property="og:locale" content="fi_FI" />
+
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="theme-color" content="#e63946" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg: #0c0808;
+      --surface: #180f0f;
+      --surface2: #201414;
+      --border: #3d2020;
+      --brand: #e63946;
+      --brand-light: #f59e0b;
+      --brand-glow: rgba(230, 57, 70, 0.25);
+      --text: #f5e8e0;
+      --text-muted: #9e7a7a;
+      --correct: #22c55e;
+      --wrong: #ef4444;
+      --radius: 14px;
+      --font: 'Syne', sans-serif;
+      --mono: 'DM Mono', monospace;
+      --serif: 'Lora', serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      line-height: 1.5;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 15% 60%, rgba(198, 32, 32, 0.15) 0%, transparent 55%),
+        radial-gradient(ellipse at 85% 15%, rgba(245, 158, 11, 0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 55% 95%, rgba(230, 57, 70, 0.07) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .hidden { display: none !important; }
+
+    /* ── NAV ── */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 48px;
+      height: 64px;
+      background: rgba(12, 8, 8, 0.75);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-size: 20px; font-weight: 800; color: var(--text);
+      text-decoration: none; letter-spacing: -0.03em;
+    }
+    .nav-logo span { color: var(--brand-light); }
+
+    .nav-cta {
+      padding: 9px 20px; background: var(--brand); border-radius: 8px;
+      color: #fff; text-decoration: none; font-size: 13px; font-weight: 700;
+      transition: opacity 0.15s, transform 0.1s;
+    }
+    .nav-cta:hover { opacity: 0.88; transform: translateY(-1px); }
+
+    /* ── SCREENS ── */
+    .screen {
+      display: none;
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      padding-top: 64px;
+    }
+    .screen.active { display: block; }
+
+    /* ── INTRO SCREEN ── */
+    .intro {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      min-height: 100vh;
+      padding: 100px 20px 60px;
+    }
+
+    .intro-icon {
+      font-size: 56px;
+      margin-bottom: 20px;
+    }
+
+    .intro h1 {
+      font-size: clamp(1.8rem, 5vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 16px;
+      line-height: 1.1;
+    }
+    .intro h1 em {
+      font-style: normal;
+      background: linear-gradient(130deg, var(--brand-light) 0%, var(--brand) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .intro-desc {
+      font-size: 15px;
+      color: var(--text-muted);
+      max-width: 440px;
+      line-height: 1.7;
+      margin-bottom: 36px;
+    }
+
+    .intro-stats {
+      display: flex;
+      gap: 24px;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .intro-stat {
+      text-align: center;
+    }
+    .intro-stat-num {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--brand-light);
+      display: block;
+    }
+    .intro-stat-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .btn-start {
+      display: inline-block;
+      padding: 18px 48px;
+      background: var(--brand);
+      border: none;
+      border-radius: 12px;
+      color: #fff;
+      font-family: var(--font);
+      font-size: 17px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 0 40px rgba(230, 57, 70, 0.4);
+    }
+    .btn-start:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 50px rgba(230, 57, 70, 0.5);
+    }
+
+    .intro-note {
+      margin-top: 16px;
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* ── TEST SCREEN ── */
+    .test-container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 40px 20px 60px;
+    }
+
+    .test-header {
+      margin-bottom: 32px;
+    }
+
+    .test-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .test-level-badge {
+      font-family: var(--mono);
+      font-size: 11px;
+      padding: 4px 14px;
+      border-radius: 20px;
+      border: 1px solid var(--brand);
+      color: var(--brand-light);
+      letter-spacing: 0.06em;
+    }
+
+    .test-counter {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .test-type-badge {
+      font-family: var(--mono);
+      font-size: 10px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .test-progress {
+      height: 4px;
+      background: var(--surface2);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .test-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--brand), var(--brand-light));
+      border-radius: 2px;
+      transition: width 0.4s ease;
+    }
+
+    .test-question {
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.4;
+      margin-bottom: 24px;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .test-options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .test-option {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 18px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      font-family: var(--font);
+      color: var(--text);
+      font-size: 15px;
+      text-align: left;
+      width: 100%;
+    }
+    .test-option:hover:not(.disabled) {
+      border-color: var(--brand);
+      background: rgba(230, 57, 70, 0.06);
+    }
+
+    .test-option-key {
+      font-family: var(--mono);
+      font-weight: 700;
+      font-size: 13px;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      background: rgba(245, 232, 224, 0.06);
+      flex-shrink: 0;
+    }
+
+    .test-option.disabled { cursor: default; opacity: 0.5; }
+    .test-option.correct {
+      border-color: var(--correct);
+      background: rgba(34, 197, 94, 0.1);
+      opacity: 1;
+    }
+    .test-option.correct .test-option-key {
+      background: var(--correct);
+      color: #fff;
+    }
+    .test-option.wrong {
+      border-color: var(--wrong);
+      background: rgba(239, 68, 68, 0.1);
+      opacity: 1;
+    }
+    .test-option.wrong .test-option-key {
+      background: var(--wrong);
+      color: #fff;
+    }
+
+    .test-explanation {
+      margin-top: 20px;
+      padding: 16px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      animation: fadeIn 0.25s ease;
+    }
+    .test-explanation-icon {
+      font-size: 20px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+    .test-explanation-icon.is-correct { color: var(--correct); }
+    .test-explanation-icon.is-wrong { color: var(--wrong); }
+    .test-explanation-text {
+      font-size: 13px;
+      line-height: 1.7;
+      color: var(--text-muted);
+      font-family: var(--mono);
+    }
+
+    /* ── RESULTS SCREEN ── */
+    .results-container {
+      max-width: 560px;
+      margin: 0 auto;
+      padding: 40px 20px 80px;
+      text-align: center;
+    }
+
+    .results-grade-wrap {
+      margin-bottom: 28px;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .results-grade {
+      font-size: 80px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      background: linear-gradient(130deg, var(--brand-light) 0%, var(--brand) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+    }
+
+    .results-grade-label {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .results-title {
+      font-size: 22px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .results-subtitle {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 32px;
+      line-height: 1.6;
+      font-family: var(--mono);
+    }
+
+    .results-chart {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 32px;
+      text-align: left;
+    }
+
+    .results-bar-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .results-bar-label {
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+      width: 28px;
+      text-align: right;
+      color: var(--text-muted);
+    }
+
+    .results-bar-track {
+      flex: 1;
+      height: 28px;
+      background: var(--surface);
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .results-bar-fill {
+      height: 100%;
+      border-radius: 7px;
+      transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      align-items: center;
+      padding-left: 10px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .results-bar-fill.high { background: linear-gradient(90deg, var(--correct), #16a34a); }
+    .results-bar-fill.mid { background: linear-gradient(90deg, var(--brand-light), #d97706); }
+    .results-bar-fill.low { background: linear-gradient(90deg, var(--wrong), #dc2626); }
+    .results-bar-fill.none { background: var(--surface2); }
+
+    .results-bar-pct {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      width: 38px;
+    }
+
+    /* Strengths & weaknesses */
+    .results-feedback {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      margin-bottom: 32px;
+      text-align: left;
+    }
+
+    .results-feedback-title {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .results-feedback-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 0;
+      font-size: 13px;
+      font-family: var(--mono);
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .results-feedback-icon {
+      flex-shrink: 0;
+      font-size: 16px;
+    }
+
+    /* CTA */
+    .results-cta {
+      margin-top: 12px;
+    }
+
+    .btn-cta-primary {
+      display: block;
+      padding: 16px 36px;
+      background: var(--brand);
+      border: none;
+      border-radius: 12px;
+      color: #fff;
+      text-decoration: none;
+      font-family: var(--font);
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 0 40px rgba(230, 57, 70, 0.4);
+      text-align: center;
+      margin-bottom: 12px;
+    }
+    .btn-cta-primary:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+    }
+
+    .btn-cta-secondary {
+      display: block;
+      padding: 12px 24px;
+      background: none;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      color: var(--text-muted);
+      font-family: var(--font);
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s;
+      text-align: center;
+      text-decoration: none;
+      margin-bottom: 12px;
+    }
+    .btn-cta-secondary:hover {
+      border-color: var(--brand);
+      color: var(--text);
+    }
+
+    .btn-share {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-muted);
+      font-family: var(--font);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .btn-share:hover {
+      border-color: var(--brand-light);
+      color: var(--text);
+    }
+
+    /* Share canvas (hidden) */
+    .share-canvas-wrap {
+      position: fixed;
+      top: -9999px;
+      left: -9999px;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 760px) {
+      .nav { padding: 0 16px; }
+      .test-question { font-size: 16px; }
+      .results-grade { font-size: 60px; }
+      .intro-stats { gap: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <a href="/" class="nav-logo">Puhe<span>o</span></a>
+    <a href="app.html" class="nav-cta">Kirjaudu</a>
+  </nav>
+
+  <!-- SCREEN: INTRO -->
+  <div id="screen-intro" class="screen active">
+    <div class="intro">
+      <div class="intro-icon">&#127919;</div>
+      <h1>Testaa <em>espanjan tasosi</em></h1>
+      <p class="intro-desc">
+        Adaptiivinen diagnostinen testi arvioi YO-arvosanasi 2 minuutissa.
+        Sanastoa, kielioppia ja luetun ymmärtämistä — kuten oikeassa kokeessa.
+      </p>
+      <div class="intro-stats">
+        <div class="intro-stat">
+          <span class="intro-stat-num">15</span>
+          <span class="intro-stat-label">kysymystä</span>
+        </div>
+        <div class="intro-stat">
+          <span class="intro-stat-num">~2 min</span>
+          <span class="intro-stat-label">kesto</span>
+        </div>
+        <div class="intro-stat">
+          <span class="intro-stat-num">6</span>
+          <span class="intro-stat-label">tasoa</span>
+        </div>
+      </div>
+      <button class="btn-start" id="btn-start">Aloita testi</button>
+      <p class="intro-note">Ei vaadi rekisteröitymistä</p>
+    </div>
+  </div>
+
+  <!-- SCREEN: TEST -->
+  <div id="screen-test" class="screen">
+    <div class="test-container">
+      <div class="test-header">
+        <div class="test-meta">
+          <span class="test-level-badge" id="test-level">B</span>
+          <span class="test-counter" id="test-counter">1 / 15</span>
+          <span class="test-type-badge" id="test-type">sanasto</span>
+        </div>
+        <div class="test-progress">
+          <div class="test-progress-fill" id="test-progress" style="width: 0%"></div>
+        </div>
+      </div>
+
+      <div id="test-question" class="test-question"></div>
+      <div id="test-options" class="test-options"></div>
+      <div id="test-explanation" class="test-explanation hidden"></div>
+    </div>
+  </div>
+
+  <!-- SCREEN: RESULTS -->
+  <div id="screen-results" class="screen">
+    <div class="results-container">
+      <div class="results-grade-wrap">
+        <div class="results-grade" id="results-grade">B</div>
+        <div class="results-grade-label" id="results-grade-label">lubenter approbatur</div>
+      </div>
+
+      <h2 class="results-title" id="results-title">Arvioimamme YO-arvosana: B</h2>
+      <p class="results-subtitle" id="results-subtitle"></p>
+
+      <div class="results-chart" id="results-chart"></div>
+
+      <div class="results-feedback" id="results-feedback"></div>
+
+      <div class="results-cta">
+        <a href="app.html" class="btn-cta-primary" id="btn-register">
+          Luo tili jatkaaksesi tästä tasosta &#8594;
+        </a>
+        <button class="btn-cta-secondary" id="btn-retake">Tee testi uudelleen</button>
+        <button class="btn-share" id="btn-share">
+          &#128247; Jaa tuloksesi
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hidden canvas for share image -->
+  <div class="share-canvas-wrap">
+    <canvas id="share-canvas" width="600" height="400"></canvas>
+  </div>
+
+<script>
+(function() {
+  'use strict';
+
+  // ── CONSTANTS ──
+  const LEVELS = ['A', 'B', 'C', 'M', 'E', 'L'];
+  const LEVEL_NAMES = {
+    A: 'approbatur',
+    B: 'lubenter approbatur',
+    C: 'cum laude approbatur',
+    M: 'magna cum laude',
+    E: 'eximia cum laude',
+    L: 'laudatur'
+  };
+  const LEVEL_IDX = {};
+  LEVELS.forEach((l, i) => LEVEL_IDX[l] = i);
+
+  const TYPE_LABELS = {
+    sanasto: 'Sanasto',
+    kielioppi: 'Kielioppi',
+    luettu: 'Luetun ymmärtäminen'
+  };
+
+  const MAX_QUESTIONS = 15;
+  const CYCLE_SIZE = 3;
+
+  // ── STATE ──
+  let allQuestions = [];
+  let testQuestions = [];
+  let currentIdx = 0;
+  let answers = [];
+  let currentLevel = 'B';
+  let cycleCorrect = 0;
+  let cycleCount = 0;
+  let sameLevelCycles = 0;
+  let previousLevel = null;
+  let usedIds = new Set();
+
+  // ── DOM REFS ──
+  const $ = id => document.getElementById(id);
+
+  function showScreen(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    $(id).classList.add('active');
+    window.scrollTo(0, 0);
+  }
+
+  // ── LOAD QUESTIONS ──
+  async function loadQuestions() {
+    try {
+      const resp = await fetch('/data/diagnose_questions.json');
+      allQuestions = await resp.json();
+    } catch (e) {
+      console.error('Failed to load questions:', e);
+      allQuestions = [];
+    }
+  }
+
+  // ── QUESTION SELECTION ──
+  function shuffle(arr) {
+    const a = [...arr];
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  function pickQuestionsForLevel(level, count) {
+    const available = allQuestions.filter(
+      q => q.level === level && !usedIds.has(q.id)
+    );
+
+    // Try to get a mix of types
+    const byType = {};
+    for (const q of available) {
+      if (!byType[q.type]) byType[q.type] = [];
+      byType[q.type].push(q);
+    }
+
+    const picked = [];
+    const types = Object.keys(byType);
+    let typeIdx = 0;
+
+    while (picked.length < count && picked.length < available.length) {
+      const type = types[typeIdx % types.length];
+      const pool = byType[type];
+      if (pool && pool.length > 0) {
+        const rndIdx = Math.floor(Math.random() * pool.length);
+        picked.push(pool.splice(rndIdx, 1)[0]);
+      }
+      typeIdx++;
+      // Safety: if all pools are empty, break
+      if (types.every(t => !byType[t] || byType[t].length === 0)) break;
+    }
+
+    // If not enough from this level, grab from adjacent
+    if (picked.length < count) {
+      const idx = LEVEL_IDX[level];
+      const adjacent = [idx - 1, idx + 1]
+        .filter(i => i >= 0 && i < LEVELS.length)
+        .map(i => LEVELS[i]);
+      for (const adjLevel of adjacent) {
+        const extra = allQuestions.filter(
+          q => q.level === adjLevel && !usedIds.has(q.id) && !picked.find(p => p.id === q.id)
+        );
+        const shuffled = shuffle(extra);
+        while (picked.length < count && shuffled.length > 0) {
+          picked.push(shuffled.shift());
+        }
+      }
+    }
+
+    picked.forEach(q => usedIds.add(q.id));
+    return shuffle(picked);
+  }
+
+  // ── ADAPTIVE ENGINE ──
+  function evaluateCycle() {
+    cycleCount++;
+    const wasLevel = currentLevel;
+
+    if (cycleCorrect >= 3) {
+      // All correct → level up
+      const idx = LEVEL_IDX[currentLevel];
+      if (idx < LEVELS.length - 1) {
+        previousLevel = currentLevel;
+        currentLevel = LEVELS[idx + 1];
+        sameLevelCycles = 0;
+      } else {
+        sameLevelCycles++;
+      }
+    } else if (cycleCorrect <= 1) {
+      // 0-1 correct → level down
+      const idx = LEVEL_IDX[currentLevel];
+      if (idx > 0) {
+        previousLevel = currentLevel;
+        currentLevel = LEVELS[idx - 1];
+        sameLevelCycles = 0;
+      } else {
+        sameLevelCycles++;
+      }
+    } else {
+      // 2/3 → stay
+      sameLevelCycles++;
+    }
+
+    cycleCorrect = 0;
+
+    // Check stop condition: stayed same level for 2 cycles
+    if (sameLevelCycles >= 2 && answers.length >= 6) {
+      return true; // stop
+    }
+
+    return false;
+  }
+
+  function shouldStop() {
+    return answers.length >= MAX_QUESTIONS;
+  }
+
+  // ── START TEST ──
+  function startTest() {
+    currentLevel = 'B';
+    currentIdx = 0;
+    answers = [];
+    testQuestions = [];
+    cycleCorrect = 0;
+    cycleCount = 0;
+    sameLevelCycles = 0;
+    previousLevel = null;
+    usedIds = new Set();
+
+    // Pick first cycle
+    const firstBatch = pickQuestionsForLevel('B', CYCLE_SIZE);
+    testQuestions.push(...firstBatch);
+
+    showScreen('screen-test');
+    renderQuestion();
+  }
+
+  // ── RENDER QUESTION ──
+  function renderQuestion() {
+    const q = testQuestions[currentIdx];
+    $('test-level').textContent = `Taso ${q.level}`;
+    $('test-counter').textContent = `${currentIdx + 1} / ${MAX_QUESTIONS}`;
+    $('test-type').textContent = TYPE_LABELS[q.type] || q.type;
+    $('test-progress').style.width = `${((currentIdx) / MAX_QUESTIONS) * 100}%`;
+    $('test-question').textContent = q.question;
+    $('test-explanation').classList.add('hidden');
+
+    const optionsEl = $('test-options');
+    optionsEl.innerHTML = '';
+    const keys = ['A', 'B', 'C', 'D'];
+
+    q.options.forEach((opt, i) => {
+      const btn = document.createElement('button');
+      btn.className = 'test-option';
+      btn.innerHTML = `
+        <span class="test-option-key">${keys[i]}</span>
+        <span>${opt}</span>
+      `;
+      btn.addEventListener('click', () => handleAnswer(i));
+      optionsEl.appendChild(btn);
+    });
+
+    // Keyboard support
+    document.onkeydown = function(e) {
+      const keyMap = { 'a': 0, 'b': 1, 'c': 2, 'd': 3, '1': 0, '2': 1, '3': 2, '4': 3 };
+      const idx = keyMap[e.key.toLowerCase()];
+      if (idx !== undefined && idx < q.options.length) {
+        handleAnswer(idx);
+        document.onkeydown = null;
+      }
+    };
+  }
+
+  // ── HANDLE ANSWER ──
+  function handleAnswer(selectedIdx) {
+    const q = testQuestions[currentIdx];
+    const isCorrect = selectedIdx === q.correct;
+
+    answers.push({
+      id: q.id,
+      level: q.level,
+      type: q.type,
+      selected: selectedIdx,
+      correct: q.correct,
+      isCorrect
+    });
+
+    if (isCorrect) cycleCorrect++;
+
+    // Disable options & show feedback
+    const options = document.querySelectorAll('.test-option');
+    options.forEach((opt, i) => {
+      opt.classList.add('disabled');
+      if (i === q.correct) opt.classList.add('correct');
+      else if (i === selectedIdx && !isCorrect) opt.classList.add('wrong');
+    });
+    document.onkeydown = null;
+
+    // Show explanation
+    const explEl = $('test-explanation');
+    explEl.classList.remove('hidden');
+    explEl.innerHTML = `
+      <div class="test-explanation-icon ${isCorrect ? 'is-correct' : 'is-wrong'}">
+        ${isCorrect ? '&#10003; Oikein!' : '&#10007; Väärin'}
+      </div>
+      <div class="test-explanation-text">${q.explanation}</div>
+    `;
+
+    // Advance after delay
+    setTimeout(() => {
+      currentIdx++;
+
+      // Check if cycle complete
+      const posInCycle = answers.length % CYCLE_SIZE;
+      if (posInCycle === 0) {
+        const stop = evaluateCycle();
+        if (stop || shouldStop()) {
+          finishTest();
+          return;
+        }
+        // Pick next cycle
+        const nextBatch = pickQuestionsForLevel(currentLevel, CYCLE_SIZE);
+        testQuestions.push(...nextBatch);
+      } else if (shouldStop()) {
+        finishTest();
+        return;
+      }
+
+      if (currentIdx < testQuestions.length) {
+        renderQuestion();
+      } else {
+        finishTest();
+      }
+    }, 1200);
+  }
+
+  // ── SCORE & FINISH ──
+  function finishTest() {
+    // Score by level
+    const scoreByLevel = {};
+    const scoreByType = {};
+
+    for (const a of answers) {
+      if (!scoreByLevel[a.level]) scoreByLevel[a.level] = { correct: 0, total: 0 };
+      scoreByLevel[a.level].total++;
+      if (a.isCorrect) scoreByLevel[a.level].correct++;
+
+      if (!scoreByType[a.type]) scoreByType[a.type] = { correct: 0, total: 0 };
+      scoreByType[a.type].total++;
+      if (a.isCorrect) scoreByType[a.type].correct++;
+    }
+
+    // Calculate percentages
+    for (const l in scoreByLevel) {
+      scoreByLevel[l].pct = Math.round((scoreByLevel[l].correct / scoreByLevel[l].total) * 100);
+    }
+    for (const t in scoreByType) {
+      scoreByType[t].pct = Math.round((scoreByType[t].correct / scoreByType[t].total) * 100);
+    }
+
+    // Determine placement level: highest level with >= 60% correct
+    let placementLevel = 'A';
+    for (const level of LEVELS) {
+      const s = scoreByLevel[level];
+      if (s && s.pct >= 60) {
+        placementLevel = level;
+      }
+    }
+
+    const totalCorrect = answers.filter(a => a.isCorrect).length;
+    const totalQuestions = answers.length;
+
+    // Save to localStorage
+    const result = {
+      placementLevel,
+      scoreByLevel,
+      scoreByType,
+      totalCorrect,
+      totalQuestions,
+      questionIds: answers.map(a => a.id),
+      timestamp: new Date().toISOString()
+    };
+
+    localStorage.setItem('puheo_diagnostic', JSON.stringify(result));
+
+    renderResults(result);
+  }
+
+  // ── RENDER RESULTS ──
+  function renderResults(result) {
+    showScreen('screen-results');
+
+    const { placementLevel, scoreByLevel, scoreByType, totalCorrect, totalQuestions } = result;
+
+    $('results-grade').textContent = placementLevel;
+    $('results-grade-label').textContent = LEVEL_NAMES[placementLevel];
+    $('results-title').textContent = `Arvioimamme YO-arvosana: ${placementLevel}`;
+    $('results-subtitle').textContent = `${totalCorrect}/${totalQuestions} oikein`;
+
+    // Bar chart by level
+    const chartEl = $('results-chart');
+    chartEl.innerHTML = '';
+    for (const level of LEVELS) {
+      const s = scoreByLevel[level];
+      if (!s) continue;
+      const pct = s.pct;
+      let barClass = 'none';
+      if (pct >= 80) barClass = 'high';
+      else if (pct >= 50) barClass = 'mid';
+      else if (pct > 0) barClass = 'low';
+
+      const row = document.createElement('div');
+      row.className = 'results-bar-row';
+      row.innerHTML = `
+        <span class="results-bar-label">${level}</span>
+        <div class="results-bar-track">
+          <div class="results-bar-fill ${barClass}" style="width: 0%">
+            ${s.correct}/${s.total}
+          </div>
+        </div>
+        <span class="results-bar-pct">${pct}%</span>
+      `;
+      chartEl.appendChild(row);
+
+      // Animate bar
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          row.querySelector('.results-bar-fill').style.width = `${Math.max(pct, 12)}%`;
+        });
+      });
+    }
+
+    // Feedback
+    const feedbackEl = $('results-feedback');
+    const strengths = [];
+    const weaknesses = [];
+
+    for (const type in scoreByType) {
+      const s = scoreByType[type];
+      if (s.pct >= 80) strengths.push(TYPE_LABELS[type]);
+      else if (s.pct < 50) weaknesses.push(TYPE_LABELS[type]);
+    }
+
+    let feedbackHtml = '<div class="results-feedback-title">Analyysi</div>';
+
+    if (strengths.length > 0) {
+      feedbackHtml += `
+        <div class="results-feedback-item">
+          <span class="results-feedback-icon">&#9989;</span>
+          <span><strong>Vahvuudet:</strong> ${strengths.join(', ')}</span>
+        </div>
+      `;
+    }
+    if (weaknesses.length > 0) {
+      feedbackHtml += `
+        <div class="results-feedback-item">
+          <span class="results-feedback-icon">&#128170;</span>
+          <span><strong>Harjoittele:</strong> ${weaknesses.join(', ')}</span>
+        </div>
+      `;
+    }
+
+    // Level-specific advice
+    const adviceMap = {
+      A: 'Keskity perussanastoon ja ser/estar-erottamiseen. Pienetkin päivittäiset harjoitukset vievät nopeasti eteenpäin.',
+      B: 'Sinulla on hyvä perusta! Keskity preteriittiin ja imperfektiin sekä laajenna sanavarastoasi arkiteemoista.',
+      C: 'Hyvä taso! Subjunktiivi ja vaativampi sanasto vievät sinut M-tasolle. Lue espanjankielisiä tekstejä päivittäin.',
+      M: 'Vahva taso! Hieno konditionaalien ja subjunktiivin hallinta. Hio akateemista sanastoa ja tekstin tulkintaa.',
+      E: 'Erinomainen! Keskity vaativiin rakenteisiin ja abstraktiin sanastoon. YO-kokeen erittelytehtävät ovat seuraava haaste.',
+      L: 'Huipputaso! Viimeistele akateeminen kirjoittaminen ja nyanssien tunnistaminen. Laudatur on ulottuvilla!'
+    };
+
+    feedbackHtml += `
+      <div class="results-feedback-item">
+        <span class="results-feedback-icon">&#128161;</span>
+        <span>${adviceMap[placementLevel] || adviceMap['B']}</span>
+      </div>
+    `;
+
+    feedbackEl.innerHTML = feedbackHtml;
+  }
+
+  // ── SHARE IMAGE ──
+  function generateShareImage(level) {
+    const canvas = $('share-canvas');
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width;
+    const h = canvas.height;
+
+    // Background
+    ctx.fillStyle = '#0c0808';
+    ctx.fillRect(0, 0, w, h);
+
+    // Gradient overlay
+    const grad = ctx.createRadialGradient(w * 0.3, h * 0.5, 0, w * 0.3, h * 0.5, w * 0.6);
+    grad.addColorStop(0, 'rgba(230, 57, 70, 0.15)');
+    grad.addColorStop(1, 'transparent');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, w, h);
+
+    // Border
+    ctx.strokeStyle = '#3d2020';
+    ctx.lineWidth = 2;
+    ctx.roundRect(10, 10, w - 20, h - 20, 16);
+    ctx.stroke();
+
+    // "Puheo" logo
+    ctx.font = '700 20px Syne, sans-serif';
+    ctx.fillStyle = '#f5e8e0';
+    ctx.textAlign = 'left';
+    ctx.fillText('Puhe', 40, 50);
+    ctx.fillStyle = '#f59e0b';
+    ctx.fillText('o', 40 + ctx.measureText('Puhe').width, 50);
+
+    // "Espanja-tasoni"
+    ctx.font = '600 16px Syne, sans-serif';
+    ctx.fillStyle = '#9e7a7a';
+    ctx.textAlign = 'center';
+    ctx.fillText('Espanjan YO-tasoni', w / 2, 130);
+
+    // Grade
+    ctx.font = '800 120px Syne, sans-serif';
+    const gradient = ctx.createLinearGradient(w / 2 - 60, 160, w / 2 + 60, 280);
+    gradient.addColorStop(0, '#f59e0b');
+    gradient.addColorStop(1, '#e63946');
+    ctx.fillStyle = gradient;
+    ctx.fillText(level, w / 2, 270);
+
+    // Level name
+    ctx.font = '500 14px "DM Mono", monospace';
+    ctx.fillStyle = '#9e7a7a';
+    ctx.fillText(LEVEL_NAMES[level] || '', w / 2, 300);
+
+    // CTA
+    ctx.font = '600 14px Syne, sans-serif';
+    ctx.fillStyle = '#f5e8e0';
+    ctx.fillText('Testaa sinäkin: puheo.fi/diagnose', w / 2, 360);
+
+    return canvas;
+  }
+
+  async function shareResult() {
+    const stored = localStorage.getItem('puheo_diagnostic');
+    if (!stored) return;
+    const { placementLevel } = JSON.parse(stored);
+
+    const canvas = generateShareImage(placementLevel);
+
+    try {
+      const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+      const file = new File([blob], 'puheo-tulos.png', { type: 'image/png' });
+
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        await navigator.share({
+          title: `Espanjan YO-tasoni: ${placementLevel}`,
+          text: `Sain arvosanan ${placementLevel} (${LEVEL_NAMES[placementLevel]}) Puheon diagnostisessa testissä! Testaa sinäkin:`,
+          files: [file]
+        });
+      } else {
+        // Fallback: download
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'puheo-tulos.png';
+        a.click();
+        URL.revokeObjectURL(url);
+      }
+    } catch (err) {
+      // Fallback: download
+      canvas.toBlob(blob => {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'puheo-tulos.png';
+        a.click();
+        URL.revokeObjectURL(url);
+      });
+    }
+  }
+
+  // ── INIT ──
+  async function init() {
+    await loadQuestions();
+
+    $('btn-start').addEventListener('click', startTest);
+    $('btn-retake').addEventListener('click', startTest);
+    $('btn-share').addEventListener('click', shareResult);
+
+    // Check for previous result
+    const stored = localStorage.getItem('puheo_diagnostic');
+    if (stored) {
+      try {
+        const prev = JSON.parse(stored);
+        const note = $('intro-note') || document.querySelector('.intro-note');
+        if (note && prev.placementLevel) {
+          note.innerHTML = `Edellinen tuloksesi: <strong>${prev.placementLevel}</strong> (${LEVEL_NAMES[prev.placementLevel]})`;
+        }
+      } catch (e) {}
+    }
+  }
+
+  // Polyfill roundRect for older browsers
+  if (!CanvasRenderingContext2D.prototype.roundRect) {
+    CanvasRenderingContext2D.prototype.roundRect = function(x, y, w, h, r) {
+      this.beginPath();
+      this.moveTo(x + r, y);
+      this.lineTo(x + w - r, y);
+      this.arcTo(x + w, y, x + w, y + r, r);
+      this.lineTo(x + w, y + h - r);
+      this.arcTo(x + w, y + h, x + w - r, y + h, r);
+      this.lineTo(x + r, y + h);
+      this.arcTo(x, y + h, x, y + h - r, r);
+      this.lineTo(x, y + r);
+      this.arcTo(x, y, x + r, y, r);
+      this.closePath();
+    };
+  }
+
+  init();
+})();
+</script>
+
+</body>
+</html>

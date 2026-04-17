@@ -3,51 +3,82 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kielio — Harjoittele kieliä yo-kokeeseen</title>
-  <meta name="description" content="Kielio on tekoälypohjainen harjoitteluympäristö espanjan ylioppilaskirjoituksiin. Sanasto, kielioppi, luetun ymmärtäminen ja kirjoittaminen." />
+
+  <title>Puheo — Espanjan YO-kokeeseen tekoälyllä</title>
+  <meta name="description" content="Paranna espanjan YO-arvosanaasi tekoälyllä. Personoidut harjoitukset, YTL-rubriikin mukainen arviointi, täyskoe-simulaatio. Aloita ilmaiseksi." />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Puheo — Espanjan YO-kokeeseen tekoälyllä" />
+  <meta property="og:description" content="Personoidut harjoitukset, YTL-rubriikin mukainen arviointi. Kesäpaketti 29€ — valmistaudu syksyn kirjoituksiin." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://puheo.fi" />
+  <meta property="og:image" content="https://puheo.fi/og-image.png" />
+  <meta property="og:locale" content="fi_FI" />
+  <meta name="twitter:card" content="summary_large_image" />
+
   <link rel="manifest" href="/manifest.json" />
   <meta name="theme-color" content="#e63946" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+
   <link rel="stylesheet" href="landing.css" />
 </head>
 <body>
 
+  <!-- 0) URGENCY BAR (visible June–September only) -->
+  <div class="urgency-bar hidden" id="urgency-bar">
+    <a href="#pricing" class="urgency-bar-inner">
+      <span class="urgency-bar-text">
+        &#9203; Syksyn YO-kirjoituksiin <strong id="urgency-days">X</strong> p&auml;iv&auml;&auml; &mdash;
+        <strong>Kes&auml;paketti 29&euro;</strong> (kes&auml;&ndash;syyskuu, s&auml;&auml;st&auml;t 10,96&euro;)
+      </span>
+    </a>
+    <button class="urgency-bar-close" id="urgency-bar-close" aria-label="Sulje">&times;</button>
+  </div>
+
   <!-- NAV -->
-  <nav class="nav">
-    <a href="/" class="nav-logo">Kiel<span>io</span></a>
+  <nav class="nav" id="nav">
+    <a href="/" class="nav-logo">Puhe<span>o</span></a>
     <div class="nav-links">
+      <a href="diagnose.html">Testaa tasosi</a>
       <a href="#how">Miten toimii</a>
       <a href="#pricing">Hinnoittelu</a>
       <a href="#faq">UKK</a>
     </div>
-    <a href="app.html" class="nav-cta">Kokeile ilmaiseksi</a>
+    <a href="app.html" class="nav-cta">Aloita ilmaiseksi</a>
   </nav>
 
-  <!-- HERO -->
+  <!-- 1) HERO -->
   <section class="hero">
-    <div class="hero-tag">Espanja &nbsp;·&nbsp; Lyhyt oppimäärä &nbsp;·&nbsp; Yo-koe 2026</div>
+    <div class="hero-tag">Espanja &middot; Lyhyt oppim&auml;&auml;r&auml; &middot; YO-koe 2026</div>
 
-    <h1>Nosta espanjan<br/>YTL-arvosanaasi<br/><em>kesän aikana.</em></h1>
+    <h1>Paranna espanjan<br/>YO-arvosanaasi<br/><em>teko&auml;lyll&auml;.</em></h1>
 
     <p class="hero-sub">
-      AI-opettaja joka harjoittaa juuri sinun heikkouksiasi.<br/>
-      29 &euro; koko kesältä. Ei sitoutumista.
+      Personoidut harjoitukset, autenttinen YTL-rubriikki,<br/>
+      alkaen 9,99&euro;/kk. Ei vaadi maksukorttia.
     </p>
 
     <div class="hero-actions">
-      <a href="#demo" class="btn-hero">Kokeile ilmaiseksi &darr;</a>
-      <a href="#how" class="hero-link">Miten se toimii?</a>
+      <a href="app.html" class="btn-hero">Aloita ilmaiseksi &rarr;</a>
+      <a href="diagnose.html" class="btn-hero-secondary">&#127919; Testaa tasosi &mdash; 2 min</a>
+    </div>
+
+    <div class="hero-social-proof hidden" id="hero-social-proof">
+      <span class="hero-proof-dot"></span>
+      <span>K&auml;yt&ouml;ss&auml; <strong id="hero-user-count">0</strong> lukiolaisella</span>
     </div>
 
     <!-- Floating exercise card mockup -->
     <div class="hero-card-wrap">
       <div class="hc">
         <div class="hc-meta">
-          <span class="hc-badge mode">📚 Sanasto</span>
+          <span class="hc-badge mode">&#128218; Sanasto</span>
           <span class="hc-badge level">Taso M</span>
         </div>
-        <div class="hc-question">¿Qué significa 'el ayuntamiento'?</div>
+        <div class="hc-question">&iquest;Qu&eacute; significa 'el ayuntamiento'?</div>
         <div class="hc-options">
           <div class="hc-opt correct">&#10003; kaupungintalo</div>
           <div class="hc-opt">sairaala</div>
@@ -58,243 +89,391 @@
     </div>
   </section>
 
-  <!-- PROBLEM → SOLUTION -->
+  <!-- 2) PROBLEM -->
   <section class="section" id="problem">
-    <div class="section-tag">Ongelma &amp; ratkaisu</div>
-    <h2>Abitreenit kertoo mitä vastasit väärin.<br/><em>Kielio kertoo MIKSI.</em></h2>
-    <p class="section-sub">
-      Saat kolme vastaavaa harjoitusta heti virheen jälkeen.
-      Taso sopeutuu sinuun, ei toisin päin.
-    </p>
+    <div class="section-tag">Ongelma</div>
+    <h2>Espanja YO on vaikea koe.<br/><em>Kurssikirjat eiv&auml;t riit&auml;.</em></h2>
+    <p class="section-sub">Suurin osa opiskelijoista ei saa tarpeeksi harjoitusta eik&auml; palautetta.</p>
 
-    <div class="features-grid">
-      <div class="feature-card">
-        <span class="feature-icon">🎯</span>
-        <div class="feature-title">Adaptiivinen taso</div>
-        <div class="feature-desc">
-          Järjestelmä seuraa suoritustasi ja ehdottaa tasonvaihtoa
-          vasta kun olet oikeasti valmis. Ei arvailua.
+    <div class="problem-bullets">
+      <div class="problem-bullet">
+        <span class="problem-icon">&#10060;</span>
+        <div>
+          <strong>Ei tarpeeksi harjoituksia</strong>
+          <p>Kurssikirjoissa on muutama harjoitus per aihe. Yo-kokeessa tulee yll&auml;tyksi&auml;.</p>
         </div>
       </div>
-      <div class="feature-card">
-        <span class="feature-icon">✍️</span>
-        <div class="feature-title">Kirjoitelman AI-palaute</div>
-        <div class="feature-desc">
-          Kirjoitat, tekoäly arvioi YTL:n pisteytysrubriikilla.
-          Näet tarkalleen missä menetät pisteitä.
+      <div class="problem-bullet">
+        <span class="problem-icon">&#10060;</span>
+        <div>
+          <strong>Kielioppi j&auml;&auml; jumiin</strong>
+          <p>Subjunktiivi, ser/estar, preteriti &mdash; vaikeimmat aiheet j&auml;&auml;v&auml;t usein puolitiehen.</p>
         </div>
       </div>
-      <div class="feature-card">
-        <span class="feature-icon">📊</span>
-        <div class="feature-title">Edistymisen seuranta</div>
-        <div class="feature-desc">
-          Dashboardilla näet kehityksesi, putkesi ja
-          heikkoutesi. Tiedät mitä harjoitella seuraavaksi.
+      <div class="problem-bullet">
+        <span class="problem-icon">&#10060;</span>
+        <div>
+          <strong>Kirjoitelmaan ei saa palautetta</strong>
+          <p>Opettaja ehtii lukea kirjoitelmasi ehk&auml; kerran kaudessa. Kokeessa tarvitset enemm&auml;n.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- HOW IT WORKS -->
+  <!-- 3) SOLUTION -->
+  <section class="section" id="solution">
+    <div class="section-tag">Ratkaisu</div>
+    <h2>Puheo ratkaisee kaikki kolme.<br/><em>Teko&auml;lyll&auml;.</em></h2>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <span class="feature-icon">&#129302;</span>
+        <div class="feature-title">Personoitu AI-opettaja</div>
+        <div class="feature-desc">J&auml;rjestelm&auml; oppii heikkoutesi ja luo harjoituksia juuri sinulle. Taso sopeutuu suoritukseesi.</div>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">&#9989;</span>
+        <div class="feature-title">YTL-rubriikin mukainen arviointi</div>
+        <div class="feature-desc">Kirjoitelmasi arvioidaan oikealla pisteytysrubriikilla. N&auml;et tarkalleen miss&auml; menet&auml;t pisteita.</div>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">&#128257;</span>
+        <div class="feature-title">Spaced repetition</div>
+        <div class="feature-desc">SM-2-algoritmi varmistaa, ett&auml; kertaat sanat juuri ennen kuin ne unohtuvat. Muistat ne kokeeseen.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4) HOW IT WORKS -->
   <section id="how" class="section">
     <div class="section-tag">Miten se toimii</div>
-    <h2>Kolme askelta.<br/><em>Parempi arvosana.</em></h2>
+    <h2>Nelj&auml; askelta.<br/><em>Parempi arvosana.</em></h2>
     <p class="section-sub">Ei asennusta. Avaa selain ja aloita.</p>
 
     <div class="steps">
       <div class="step">
         <div class="step-num">1</div>
-        <div class="step-title">Tee taustakartoitus</div>
-        <div class="step-desc">
-          2 minuuttia. Järjestelmä arvioi tasosi
-          ja löytää kehityskohteesi.
-        </div>
+        <div class="step-title">Vastaa 7 kysymykseen itsest&auml;si</div>
+        <div class="step-desc">2 minuuttia. J&auml;rjestelm&auml; r&auml;&auml;t&auml;l&ouml;i harjoittelun sinulle.</div>
       </div>
       <div class="step">
         <div class="step-num">2</div>
-        <div class="step-title">Harjoittele omalla tasollasi</div>
-        <div class="step-desc">
-          Sanasto, kielioppi, lukeminen ja kirjoittaminen.
-          15 min päivässä riittää.
-        </div>
+        <div class="step-title">AI luo sinun tasoosi sopivat harjoitukset</div>
+        <div class="step-desc">Sanasto, kielioppi, lukeminen ja kirjoittaminen &mdash; kaikki osa-alueet.</div>
       </div>
       <div class="step">
         <div class="step-num">3</div>
-        <div class="step-title">Simuloi yo-koe</div>
-        <div class="step-desc">
-          Täyskoe-simulaatio YTL:n rakenteella.
-          Tiedät tarkalleen missä olet ennen koepäivää.
+        <div class="step-title">Kirjoita kirjoitelma &mdash; saat tarkan palautteen</div>
+        <div class="step-desc">AI arvioi YTL:n rubriikilla. N&auml;et pisteet, virheet ja korjausehdotukset.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-title">Simuloi t&auml;yskoe kellonvalvonnassa</div>
+        <div class="step-desc">4-osainen koe YTL:n rakenteella. Tied&auml;t miss&auml; olet ennen koep&auml;iv&auml;&auml;.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5) SCREENSHOTS carousel -->
+  <section class="section screenshots-section" id="screenshots">
+    <div class="section-tag">N&auml;in se n&auml;ytt&auml;&auml;</div>
+    <h2>Puheo k&auml;yt&auml;nn&ouml;ss&auml;</h2>
+
+    <div class="screenshot-carousel" id="screenshot-carousel">
+      <div class="screenshot-track" id="screenshot-track">
+        <div class="screenshot-slide active" data-idx="0">
+          <div class="screenshot-placeholder">
+            <span>&#128202;</span>
+            <p>Dashboard &mdash; edistyminen ja suositukset</p>
+          </div>
+        </div>
+        <div class="screenshot-slide" data-idx="1">
+          <div class="screenshot-placeholder">
+            <span>&#128218;</span>
+            <p>Sanastoharjoitus &mdash; adaptiivinen monivalinta</p>
+          </div>
+        </div>
+        <div class="screenshot-slide" data-idx="2">
+          <div class="screenshot-placeholder">
+            <span>&#9997;&#65039;</span>
+            <p>Kirjoitelman palaute &mdash; YTL-pisteytys + virhekohdat</p>
+          </div>
+        </div>
+        <div class="screenshot-slide" data-idx="3">
+          <div class="screenshot-placeholder">
+            <span>&#127891;</span>
+            <p>T&auml;yskoe &mdash; 4 osaa, aikaraja, kokonaisarvosana</p>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- COMPARISON -->
-  <section class="section" id="compare">
-    <div class="section-tag">Vertailu</div>
-    <h2>Kielio vs. Abitreenit</h2>
-    <p class="section-sub">Abitreenit on hyvä. Kielio vie pidemmälle.</p>
-
-    <div class="compare-table">
-      <div class="compare-header">
-        <div class="compare-feature-label"></div>
-        <div class="compare-col-label">Kielio</div>
-        <div class="compare-col-label compare-col-other">Abitreenit</div>
-      </div>
-      <div class="compare-row">
-        <div class="compare-feature">Adaptiivinen taso</div>
-        <div class="compare-check yes">&#10003;</div>
-        <div class="compare-check no">&#10007;</div>
-      </div>
-      <div class="compare-row">
-        <div class="compare-feature">Kirjoitelman AI-palaute</div>
-        <div class="compare-check yes">&#10003;</div>
-        <div class="compare-check no">&#10007;</div>
-      </div>
-      <div class="compare-row">
-        <div class="compare-feature">YTL-rubriikin mukainen pisteytys</div>
-        <div class="compare-check yes">&#10003;</div>
-        <div class="compare-check partial">Osittain</div>
-      </div>
-      <div class="compare-row">
-        <div class="compare-feature">Henkilökohtainen edistyminen</div>
-        <div class="compare-check yes">&#10003;</div>
-        <div class="compare-check no">&#10007;</div>
-      </div>
-      <div class="compare-row">
-        <div class="compare-feature">Yo-koe-simulaatio</div>
-        <div class="compare-check yes">&#10003;</div>
-        <div class="compare-check no">&#10007;</div>
-      </div>
-      <div class="compare-row">
-        <div class="compare-feature">Hinta</div>
-        <div class="compare-check price">29 &euro; / kesä</div>
-        <div class="compare-check price">Ilmainen</div>
+      <div class="screenshot-dots" id="screenshot-dots">
+        <button class="screenshot-dot active" data-idx="0" aria-label="Kuva 1"></button>
+        <button class="screenshot-dot" data-idx="1" aria-label="Kuva 2"></button>
+        <button class="screenshot-dot" data-idx="2" aria-label="Kuva 3"></button>
+        <button class="screenshot-dot" data-idx="3" aria-label="Kuva 4"></button>
       </div>
     </div>
   </section>
 
-  <!-- TESTIMONIALS (hidden until filled) -->
-  <!-- TODO: täytä beta-käyttäjistä -->
-  <section class="section testimonials-section" id="testimonials" style="display:none">
+  <!-- 6) TESTIMONIALS -->
+  <section class="section" id="testimonials">
     <div class="section-tag">Kokemuksia</div>
-    <h2>Mitä opiskelijat sanovat</h2>
-    <div class="testimonials-grid">
-      <div class="testimonial-card">
-        <p class="testimonial-quote">"Placeholder-lainaus beta-käyttäjältä."</p>
-        <div class="testimonial-author">Nimi &mdash; abi 2026, Helsinki</div>
-      </div>
-      <div class="testimonial-card">
-        <p class="testimonial-quote">"Placeholder-lainaus beta-käyttäjältä."</p>
-        <div class="testimonial-author">Nimi &mdash; abi 2026, Tampere</div>
-      </div>
-      <div class="testimonial-card">
-        <p class="testimonial-quote">"Placeholder-lainaus beta-käyttäjältä."</p>
-        <div class="testimonial-author">Nimi &mdash; abi 2026, Turku</div>
+    <h2>Mit&auml; k&auml;ytt&auml;j&auml;t sanovat</h2>
+
+    <div class="testimonials-grid" id="testimonials-grid">
+      <div class="testimonial-placeholder">
+        <span class="testimonial-placeholder-icon">&#128172;</span>
+        <p>Beta-testaajien palaute tulossa pian.</p>
+        <p class="testimonial-placeholder-sub">Kokeile itse ja kerro mielipiteesi!</p>
       </div>
     </div>
   </section>
 
-  <!-- PRICING -->
+  <!-- 7) PRICING -->
   <section class="section" id="pricing">
     <div class="section-tag">Hinnoittelu</div>
     <h2>Valitse sinulle sopiva</h2>
-    <p class="section-sub">Rahat takaisin 14 päivän aikana, ilman kysymyksiä.</p>
+    <p class="section-sub">14 p&auml;iv&auml;n rahat takaisin -takuu, ei kysymyksi&auml;.</p>
 
-    <div class="pricing-grid">
-      <div class="price-card">
-        <div class="price-name">Ilmainen</div>
-        <div class="price-amount">0 &euro;</div>
-        <div class="price-period">ikuisesti</div>
+    <div class="pricing-grid" id="pricing-grid">
+
+      <!-- CARD 1: Free -->
+      <div class="price-card" id="price-free">
+        <div class="price-name">Free</div>
+        <div class="price-amount">0&euro;</div>
+        <div class="price-tagline">Riitt&auml;&auml; kokeilemiseen</div>
         <ul class="price-features">
-          <li>3 harjoitusta päivässä</li>
-          <li>Sanasto + kielioppi</li>
-          <li>Perusedistyminen</li>
+          <li>5 harjoitusta / p&auml;iv&auml;</li>
+          <li>1 t&auml;yskoe yhteens&auml;</li>
+          <li>Perussanasto</li>
         </ul>
-        <a href="app.html" class="price-btn">Aloita ilmaiseksi</a>
+        <a href="app.html" class="price-btn">Aloita Free</a>
       </div>
 
-      <div class="price-card popular">
-        <div class="price-badge">Suosituin</div>
-        <div class="price-name">Pro kesäkausi</div>
-        <div class="price-amount">29 &euro;</div>
-        <div class="price-period">1.6.&mdash;15.10.2026</div>
+      <!-- CARD 2: Pro -->
+      <div class="price-card" id="price-pro">
+        <div class="price-badge hidden" id="pro-badge">Suosituin</div>
+        <div class="price-name">Pro</div>
+        <div class="price-amount">9,99&euro;<span class="price-period"> / kk</span></div>
+        <div class="price-tagline">Vakavalle YO-kokeeseen valmistautujalle</div>
         <ul class="price-features">
-          <li>Rajaton harjoittelu</li>
-          <li>Kaikki osa-alueet</li>
-          <li>Kirjoitelman AI-palaute</li>
-          <li>Yo-koe-simulaatio</li>
-          <li>Adaptiivinen taso</li>
-          <li>SM-2 kertausjärjestelmä</li>
+          <li>Rajaton harjoitusm&auml;&auml;r&auml;</li>
+          <li>Rajattomat t&auml;yskoesimulaatiot</li>
+          <li>Kirjoitelmien AI-palaute</li>
+          <li>Adaptiivinen vaikeustaso + mastery testit</li>
+          <li>Peruta milloin tahansa</li>
         </ul>
-        <a href="app.html" class="price-btn primary">Aloita Pro &rarr;</a>
+        <a href="app.html" class="price-btn primary">Hanki Pro &rarr;</a>
       </div>
 
-      <div class="price-card">
-        <div class="price-name">Pro kuukausi</div>
-        <div class="price-amount">9,90 &euro;</div>
-        <div class="price-period">kuukaudessa</div>
+      <!-- CARD 3: Kes&auml;paketti -->
+      <div class="price-card summer" id="price-summer">
+        <div class="price-badge summer-badge hidden" id="summer-badge">Suosituin</div>
+        <div class="price-name">Kes&auml;paketti 2026</div>
+        <div class="price-amount summer-price">29&euro;</div>
+        <div class="price-compare"><s>39,96&euro;</s> &rarr; 29&euro; &middot; <strong>S&auml;&auml;st&auml; 10,96&euro;</strong></div>
+        <div class="price-per-month">Vain 7,25&euro; / kk &mdash; kertamaksu</div>
+        <div class="price-tagline">Valmistaudu syksyn YO-kirjoituksiin ilman seurantaa</div>
         <ul class="price-features">
-          <li>Kaikki Pro-ominaisuudet</li>
-          <li>Peruuta milloin tahansa</li>
+          <li class="highlight">Kaikki mit&auml; Pro:ssa &mdash; ja lis&auml;&auml;</li>
+          <li>4kk t&auml;ysi p&auml;&auml;sy: 1.6.&ndash;30.9.2026</li>
+          <li>Ei automaattista uusimista &mdash; 0 peruutushuolta</li>
+          <li class="bonus">BONUS: Viikkosuunnitelma syksyn YO-kirjoituksiin</li>
+          <li class="bonus">BONUS: Prioriteettituki (vastaus 12h sis&auml;ll&auml;)</li>
+          <li class="bonus">BONUS: 1 henkil&ouml;kohtainen kirjoitelmapalaute minulta</li>
         </ul>
-        <a href="app.html" class="price-btn">Aloita Pro</a>
+        <a href="app.html" class="price-btn primary summer-btn">Osta kes&auml;paketti 29&euro; &rarr;</a>
+        <div class="price-footer-note">Kertamaksu &mdash; ei kuukausilaskutusta &middot; P&auml;&auml;sy p&auml;&auml;ttyy 30.9.2026</div>
       </div>
+
     </div>
   </section>
 
-  <!-- DEMO CTA -->
-  <div id="demo" class="cta-section">
-    <h2>Kokeile nyt. Ilmaiseksi.</h2>
-    <p>Ei rekisteröitymistä. Ei luottokorttia. Aloita 30 sekunnissa.</p>
+  <!-- CTA -->
+  <div class="cta-section">
+    <h2>Aloita nyt. Ilmaiseksi.</h2>
+    <p>Ei luottokorttia. 5 harjoitusta p&auml;iv&auml;ss&auml; ilmaiseksi.</p>
     <a href="app.html" class="btn-hero">Aloita harjoittelu &rarr;</a>
   </div>
 
-  <!-- FAQ -->
+  <!-- 8) FAQ -->
   <section class="section" id="faq">
-    <div class="section-tag">Usein kysyttyä</div>
-    <h2>Kysymyksiä ja vastauksia</h2>
+    <div class="section-tag">Usein kysetty&auml;</div>
+    <h2>Kysymyksi&auml; ja vastauksia</h2>
 
     <div class="faq-list">
       <details class="faq-item">
-        <summary>Tarvitseeko rekisteröityä?</summary>
-        <p>Ei pakollista. Voit harjoitella ilman tiliä. Rekisteröitymällä edistymisesi tallentuu ja saat käyttöösi dashboardin.</p>
+        <summary>Mit&auml; kes&auml;paketti sis&auml;lt&auml;&auml; ja milloin se on saatavilla?</summary>
+        <p>Kes&auml;paketti antaa t&auml;yden Pro-p&auml;&auml;syn 1.6.&ndash;30.9.2026 (4 kuukautta) yhdell&auml; 29&euro; kertamaksulla. Sis&auml;lt&auml;&auml; kaikki Pro-ominaisuudet + henkil&ouml;kohtaisen viikkosuunnitelman, prioriteettituen ja yhden henkil&ouml;kohtaisen kirjoitelmapalautteen. Paketti on ostettavissa 1.6.&ndash;31.8.2026.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Mit&auml; tapahtuu syyskuun j&auml;lkeen jos ostan kes&auml;paketin?</summary>
+        <p>P&auml;&auml;sy p&auml;&auml;ttyy automaattisesti 30.9.2026 &mdash; voit tilata Pro:n 9,99&euro;/kk jatkaaksesi. Espanjan kirjoitukset ovat syyskuussa, joten tarve yleens&auml; loppuu silloin.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Paljonko s&auml;&auml;st&auml;n kes&auml;paketilla vs. kuukausitilauksella?</summary>
+        <p>4 kuukautta Pro:ta kuukausimaksuna = 39,96&euro;. Kes&auml;paketti = 29&euro;. S&auml;&auml;st&auml;t 10,96&euro; eli noin 27%.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Tarvitseeko rekister&ouml;ity&auml;?</summary>
+        <p>Ei pakollista. Voit harjoitella ilman tili&auml;. Rekister&ouml;itym&auml;ll&auml; edistymisesi tallentuu ja saat k&auml;ytt&ouml;&ouml;si dashboardin sek&auml; spaced repetition -kertauksen.</p>
       </details>
       <details class="faq-item">
         <summary>Miten AI-arviointi eroaa opettajan palautteesta?</summary>
-        <p>Kielion tekoäly arvioi kirjoitelmasi YTL:n virallisella pisteytysrubriikilla. Saat pisteet kriteereittäin ja tarkan listan virheistä korjausehdotuksineen. Opettaja antaa samanlaista palautetta, mutta Kielio on käytettävissä 24/7.</p>
+        <p>Puheon teko&auml;ly arvioi kirjoitelmasi YTL:n virallisella pisteytysrubriikilla. Saat pisteet kriteereitt&auml;in ja tarkan listan virheist&auml; korjausehdotuksineen. Opettaja antaa samanlaista palautetta, mutta Puheo on k&auml;ytett&auml;viss&auml; 24/7.</p>
       </details>
       <details class="faq-item">
-        <summary>Sopiiko tämä myös pitkän oppimäärän opiskelijoille?</summary>
-        <p>Tällä hetkellä Kielio on suunniteltu lyhyen oppimäärän yo-kokeeseen. Pitkän oppimäärän tuki on suunnitteilla.</p>
+        <summary>Sopiiko t&auml;m&auml; my&ouml;s pitk&auml;n oppim&auml;&auml;r&auml;n opiskelijoille?</summary>
+        <p>T&auml;ll&auml; hetkell&auml; Puheo on suunniteltu lyhyen oppim&auml;&auml;r&auml;n yo-kokeeseen. Pitk&auml;n oppim&auml;&auml;r&auml;n tuki on suunnitteilla.</p>
       </details>
       <details class="faq-item">
         <summary>Voinko peruuttaa Pro-tilauksen?</summary>
-        <p>Kyllä, milloin tahansa. Kuukausitilaus peruuntuu heti. Kesäkausitilauksesta saat rahat takaisin 14 päivän sisällä ilman kysymyksiä.</p>
+        <p>Kyll&auml;, milloin tahansa. Kuukausitilaus peruuntuu heti. Kes&auml;paketista saat rahat takaisin 14 p&auml;iv&auml;n sis&auml;ll&auml; ilman kysymyksi&auml;.</p>
       </details>
       <details class="faq-item">
         <summary>Toimiiko puhelimella?</summary>
-        <p>Kyllä. Kielio on suunniteltu mobile-first. Toimii kaikissa selaimissa, ei vaadi asennusta.</p>
+        <p>Kyll&auml;. Puheo on suunniteltu mobile-first. Toimii kaikissa selaimissa, ei vaadi asennusta. Voit my&ouml;s asentaa sen kotin&auml;yt&ouml;lle (PWA).</p>
+      </details>
+      <details class="faq-item">
+        <summary>Miten Puheo eroaa Abitreeneist&auml;?</summary>
+        <p>Abitreenit on hyv&auml; harjoituspankki, mutta Puheo vie pidemm&auml;lle: adaptiivinen taso, YTL-rubriikin mukainen kirjoitelma-arviointi, t&auml;yskoe-simulaatio, spaced repetition ja personoidut AI-harjoitukset heikkouksiesi mukaan.</p>
       </details>
     </div>
   </section>
 
-  <!-- FOOTER -->
+  <!-- 9) FOOTER -->
   <footer>
     <div class="footer-inner">
-      <div class="footer-logo">Kiel<span>io</span></div>
-      <div class="footer-text">
-        Tekoälypohjainen kieliharjoittelu yo-kokeeseen<br/>
-        &copy; 2025 Kielio
+      <div class="footer-left">
+        <div class="footer-logo">Puhe<span>o</span></div>
+        <div class="footer-text">
+          Teko&auml;lypohjainen harjoitteluymp&auml;rist&ouml;<br/>
+          espanjan ylioppilaskirjoituksiin
+        </div>
+      </div>
+      <div class="footer-right">
+        <div class="footer-made">Suomessa tehty &#10084;&#65039;</div>
+        <div class="footer-company">Y-tunnus 3516174-4</div>
+        <div class="footer-copy">&copy; 2025 Puheo</div>
       </div>
     </div>
   </footer>
   <div class="footer-links">
-    <a href="/terms.html">Käyttöehdot</a>
     <a href="/privacy.html">Tietosuoja</a>
+    <a href="/terms.html">K&auml;ytt&ouml;ehdot</a>
     <a href="/refund.html">Palautukset</a>
-    <a href="mailto:tuki@kielio.fi">tuki@kielio.fi</a>
+    <a href="mailto:tuki@puheo.fi">tuki@puheo.fi</a>
   </div>
 
+  <script>
+    // Urgency bar (visible June-September)
+    (function() {
+      var month = new Date().getMonth();
+      var summerSeason = month >= 5 && month <= 8;
+      var bar = document.getElementById('urgency-bar');
+
+      if (summerSeason && !sessionStorage.getItem('urgency-dismissed')) {
+        bar.classList.remove('hidden');
+        var examDate = new Date(2026, 8, 15);
+        var daysLeft = Math.max(0, Math.ceil((examDate - new Date()) / (24*60*60*1000)));
+        document.getElementById('urgency-days').textContent = daysLeft;
+      }
+
+      document.getElementById('urgency-bar-close').addEventListener('click', function(e) {
+        e.stopPropagation();
+        bar.classList.add('hidden');
+        sessionStorage.setItem('urgency-dismissed', '1');
+      });
+    })();
+
+    // Pricing card order (summer vs. non-summer)
+    (function() {
+      var month = new Date().getMonth();
+      var summerSeason = month >= 5 && month <= 8;
+      var grid = document.getElementById('pricing-grid');
+      var free = document.getElementById('price-free');
+      var pro = document.getElementById('price-pro');
+      var summer = document.getElementById('price-summer');
+      var proBadge = document.getElementById('pro-badge');
+      var summerBadge = document.getElementById('summer-badge');
+
+      if (summerSeason) {
+        grid.innerHTML = '';
+        grid.appendChild(free);
+        grid.appendChild(summer);
+        grid.appendChild(pro);
+        summer.classList.add('popular');
+        pro.classList.remove('popular');
+        summerBadge.classList.remove('hidden');
+        proBadge.classList.add('hidden');
+      } else {
+        grid.innerHTML = '';
+        grid.appendChild(free);
+        grid.appendChild(pro);
+        grid.appendChild(summer);
+        pro.classList.add('popular');
+        summer.classList.remove('popular');
+        proBadge.classList.remove('hidden');
+        if (month > 8 || month < 5) {
+          summer.style.display = 'none';
+        }
+        summerBadge.classList.add('hidden');
+      }
+    })();
+
+    // Social proof user count
+    (function() {
+      fetch('/api/user-count')
+        .then(function(r) { return r.json(); })
+        .then(function(d) {
+          var count = d.count || 0;
+          if (count > 0) {
+            document.getElementById('hero-user-count').textContent = count;
+            document.getElementById('hero-social-proof').classList.remove('hidden');
+          }
+        })
+        .catch(function() {});
+    })();
+
+    // Screenshot carousel
+    (function() {
+      var current = 0;
+      var slides = document.querySelectorAll('.screenshot-slide');
+      var dots = document.querySelectorAll('.screenshot-dot');
+      var total = slides.length;
+
+      function goTo(idx) {
+        current = idx;
+        slides.forEach(function(s, i) { s.classList.toggle('active', i === idx); });
+        dots.forEach(function(d, i) { d.classList.toggle('active', i === idx); });
+      }
+
+      dots.forEach(function(dot) {
+        dot.addEventListener('click', function() {
+          goTo(parseInt(dot.dataset.idx));
+        });
+      });
+
+      setInterval(function() { goTo((current + 1) % total); }, 5000);
+    })();
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(function(a) {
+      a.addEventListener('click', function(e) {
+        var target = document.querySelector(a.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    // Nav shadow on scroll
+    window.addEventListener('scroll', function() {
+      document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 20);
+    });
+  </script>
+
+  <script type="module" src="js/demo.js"></script>
 </body>
 </html>
