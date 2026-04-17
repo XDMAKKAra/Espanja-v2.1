@@ -425,7 +425,7 @@
         .then(function(r) { return r.json(); })
         .then(function(d) {
           var count = d.count || 0;
-          if (count > 0) {
+          if (count >= 10) {
             document.getElementById('hero-user-count').textContent = count;
             document.getElementById('hero-social-proof').classList.remove('hidden');
           }
