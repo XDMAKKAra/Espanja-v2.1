@@ -38,6 +38,7 @@ function renderDashboard({
   totalSessions, modeStats, recent, chartData = [], estLevel = null,
   streak = 0, weekSessions = 0, prevWeekSessions = 0,
   suggestedLevel = "B", modeDaysAgo = {}, pro = false,
+  aiUsage = null,
 }) {
   const proBadgeEl = $("dash-pro-badge");
   if (proBadgeEl) {
@@ -189,6 +190,7 @@ function renderDashboard({
   loadExamHistory();
   updateSrBadge();
   renderAdaptiveCard("vocab");
+  renderAiUsage(aiUsage, pro);
 
   if (recent.length > 0) {
     $("dash-recent-wrap").classList.remove("hidden");
@@ -544,6 +546,18 @@ async function updateSrBadge() {
     badge.classList.remove("hidden");
   } else {
     badge.classList.add("hidden");
+  }
+}
+
+function renderAiUsage(aiUsage, isPro) {
+  const el = $("dash-ai-usage");
+  if (!el || !aiUsage) { if (el) el.classList.add("hidden"); return; }
+
+  if (aiUsage.callCount > 0) {
+    el.textContent = `🤖 AI-kutsuja tässä kuussa: ${aiUsage.callCount}`;
+    el.classList.remove("hidden");
+  } else {
+    el.classList.add("hidden");
   }
 }
 

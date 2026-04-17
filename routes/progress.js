@@ -3,6 +3,7 @@ import supabase from "../supabase.js";
 import { requireAuth, isPro } from "../middleware/auth.js";
 import { GRADES, GRADE_ORDER, DAY_MS, WEEK_MS, calculateStreak, calculateEstLevel } from "../lib/openai.js";
 import { computeEligibility, LEVEL_ORDER } from "../lib/adaptive.js";
+import { getMonthlyUsage } from "../lib/aiCost.js";
 
 const router = Router();
 
@@ -183,10 +184,12 @@ router.get("/dashboard", requireAuth, async (req, res) => {
   }
 
   const pro = await isPro(userId);
+  const aiUsage = await getMonthlyUsage(userId);
 
   res.json({
     totalSessions, modeStats, recent, chartData, estLevel,
     streak, weekSessions, prevWeekSessions, suggestedLevel, modeDaysAgo, pro,
+    aiUsage,
   });
 });
 

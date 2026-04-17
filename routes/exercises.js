@@ -10,6 +10,8 @@ import {
 } from "../lib/openai.js";
 import { requireAuth, softProGate } from "../middleware/auth.js";
 import { aiLimiter, aiStrictLimiter } from "../middleware/rateLimit.js";
+import { checkMonthlyCostLimit } from "../middleware/costLimit.js";
+import { logAiUsage } from "../lib/aiCost.js";
 
 const router = Router();
 
@@ -104,7 +106,7 @@ async function saveToBankBulk(mode, level, topic, language, exercises) {
 
 // ─── Vocab exercises ───────────────────────────────────────────────────────
 
-router.post("/generate", aiLimiter, async (req, res) => {
+router.post("/generate", aiLimiter, checkMonthlyCostLimit, async (req, res) => {
   const { level = "B", topic = "general vocabulary", count = 4, language = "spanish" } = req.body;
 
   if (!VALID_LEVELS.has(level)) return res.status(400).json({ error: "Virheellinen taso" });
@@ -172,6 +174,8 @@ Return ONLY a JSON array, no markdown:
 ]`;
 
     const exercises = await callOpenAI(prompt, 2000);
+    logAiUsage(userId, "generate", exercises._usage).catch(() => {});
+    delete exercises._usage;
 
     // Save to bank (fire-and-forget)
     saveToBankBulk("vocab", level, topic, language, exercises).catch(() => {});
@@ -214,7 +218,7 @@ router.post("/grade", async (req, res) => {
 
 // ─── Grammar exercises ─────────────────────────────────────────────────────
 
-router.post("/grammar-drill", aiLimiter, async (req, res) => {
+router.post("/grammar-drill", aiLimiter, checkMonthlyCostLimit, async (req, res) => {
   const { topic = "mixed", level = "C", count = 6, language = "spanish" } = req.body;
 
   if (!VALID_GRAMMAR_TOPICS.has(topic)) return res.status(400).json({ error: "Virheellinen kielioppiaihe" });
@@ -294,6 +298,8 @@ Return ONLY a JSON array (no markdown):
 ]`;
 
     const exercises = await callOpenAI(prompt, 2500);
+    logAiUsage(userId, "grammar-drill", exercises._usage).catch(() => {});
+    delete exercises._usage;
     saveToBankBulk("grammar", level, topic, language, exercises).catch(() => {});
     res.json({ exercises });
   } catch (err) {
@@ -304,7 +310,7 @@ Return ONLY a JSON array (no markdown):
 
 // ─── Reading exercises ─────────────────────────────────────────────────────
 
-router.post("/reading-task", aiStrictLimiter, softProGate, async (req, res) => {
+router.post("/reading-task", aiStrictLimiter, softProGate, checkMonthlyCostLimit, async (req, res) => {
   const { level = "C", topic = "animals and nature", language = "spanish" } = req.body;
 
   if (!VALID_READING_LEVELS.has(level)) return res.status(400).json({ error: "Virheellinen taso" });
@@ -376,6 +382,8 @@ Return ONLY this JSON (no markdown):
 }`;
 
     const reading = await callOpenAI(prompt, 3000);
+    logAiUsage(userId, "reading-task", reading._usage).catch(() => {});
+    delete reading._usage;
     saveToBankBulk("reading", level, topic, language, reading).catch(() => {});
     res.json({ reading });
   } catch (err) {
@@ -428,6 +436,47 @@ router.get("/admin/flagged-exercises", requireAuth, async (req, res) => {
 
   if (error) return res.status(500).json({ error: error.message });
   res.json({ exercises: data });
+});
+
+// ─── Admin: AI costs by user ───────────────────────────────────────────────
+
+router.get("/admin/costs-by-user", requireAuth, async (req, res) => {
+  if (!ADMIN_EMAILS.includes(req.user.email.toLowerCase())) {
+    return res.status(403).json({ error: "Ei oikeutta" });
+  }
+
+  const startOfMonth = new Date();
+  startOfMonth.setDate(1);
+  startOfMonth.setHours(0, 0, 0, 0);
+
+  try {
+    const { data, error } = await supabase
+      .from("ai_usage")
+      .select("user_id, cost_usd, input_tokens, output_tokens")
+      .gte("created_at", startOfMonth.toISOString());
+
+    if (error) throw error;
+
+    // Aggregate by user
+    const userMap = {};
+    for (const row of (data || [])) {
+      const uid = row.user_id || "anonymous";
+      if (!userMap[uid]) userMap[uid] = { userId: uid, totalCost: 0, totalInputTokens: 0, totalOutputTokens: 0, callCount: 0 };
+      userMap[uid].totalCost += Number(row.cost_usd || 0);
+      userMap[uid].totalInputTokens += row.input_tokens || 0;
+      userMap[uid].totalOutputTokens += row.output_tokens || 0;
+      userMap[uid].callCount++;
+    }
+
+    const sorted = Object.values(userMap)
+      .sort((a, b) => b.totalCost - a.totalCost)
+      .slice(0, 20)
+      .map((u) => ({ ...u, totalCost: Math.round(u.totalCost * 10000) / 10000 }));
+
+    res.json({ users: sorted, month: startOfMonth.toISOString().slice(0, 7) });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
 export default router;
