@@ -106,7 +106,7 @@ export async function startFullExam(durationMode = "demo") {
       }
     }
 
-    showLoading("Luodaan koetta...", { subtext: "Generoidaan 4 osaa tekoälyllä (luettu, rakenteet, kirjoitus)" });
+    showLoading("Valmistellaan koetta...", { subtext: "Arvotaan 4 osaa koepankista" });
 
     const startRes = await apiFetch(`${API}/api/exam/start`, {
       method: "POST",

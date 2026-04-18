@@ -1,12 +1,95 @@
 import { Router } from "express";
+import { readFileSync } from "fs";
+import { fileURLToPath } from "url";
+import { dirname, join } from "path";
 import supabase from "../supabase.js";
-import { callOpenAI, LANGUAGE_META, READING_LEVEL_DESCS, READING_TOPIC_CONTEXTS } from "../lib/openai.js";
+import { callOpenAI } from "../lib/openai.js";
 import { requireAuth } from "../middleware/auth.js";
-import { aiLimiter } from "../middleware/rateLimit.js";
 
 const router = Router();
 
 const MAX_POINTS = 199; // 60 reading + 40 structure + 33 short + 66 long
+
+// ─── Pre-generated exam content pools ──────────────────────────────────────
+// Loaded once at server start. To expand the pools, add items to the JSON
+// files in /data/examPools/. No code changes required.
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+function loadPool(name) {
+  try {
+    const raw = readFileSync(join(__dirname, "..", "data", "examPools", `${name}.json`), "utf8");
+    return JSON.parse(raw);
+  } catch (err) {
+    console.error(`Failed to load exam pool '${name}':`, err.message);
+    return [];
+  }
+}
+
+const POOLS = {
+  reading: loadPool("reading"),
+  structure: loadPool("structure"),
+  shortWriting: loadPool("shortWriting"),
+  longWriting: loadPool("longWriting"),
+};
+
+console.log(
+  `[exam] Pools loaded — reading: ${POOLS.reading.length}, structure: ${POOLS.structure.length}, ` +
+    `shortWriting: ${POOLS.shortWriting.length}, longWriting: ${POOLS.longWriting.length}`
+);
+
+// ─── Random pickers ────────────────────────────────────────────────────────
+
+function pickOne(arr) {
+  if (!arr || arr.length === 0) return null;
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
+function pickN(arr, n) {
+  if (!arr || arr.length === 0) return [];
+  const shuffled = [...arr].sort(() => Math.random() - 0.5);
+  return shuffled.slice(0, Math.min(n, arr.length));
+}
+
+function buildReadingPart() {
+  // Pick 1 text per level (C/M/E) for proper YO-koe difficulty progression
+  const byLevel = { C: [], M: [], E: [] };
+  for (const t of POOLS.reading) {
+    if (byLevel[t.level]) byLevel[t.level].push(t);
+  }
+
+  const texts = [];
+  if (byLevel.C.length) texts.push(pickOne(byLevel.C));
+  if (byLevel.M.length) texts.push(pickOne(byLevel.M));
+  if (byLevel.E.length) texts.push(pickOne(byLevel.E));
+
+  // Safety: if any level is missing, fill from whole pool
+  if (texts.length < 3 && POOLS.reading.length >= 3) {
+    const used = new Set(texts.map((t) => t?.id));
+    for (const t of POOLS.reading) {
+      if (texts.length >= 3) break;
+      if (!used.has(t.id)) { texts.push(t); used.add(t.id); }
+    }
+  }
+
+  return { type: "reading", texts: texts.filter(Boolean), maxPoints: 60 };
+}
+
+function buildStructurePart() {
+  const exercises = pickN(POOLS.structure, 20);
+  return { type: "structure", exercises, maxPoints: 40 };
+}
+
+function buildShortWritingPart() {
+  const task = pickOne(POOLS.shortWriting);
+  return { type: "shortWriting", task, maxPoints: 33 };
+}
+
+function buildLongWritingPart() {
+  const task = pickOne(POOLS.longWriting);
+  return { type: "longWriting", task, maxPoints: 66 };
+}
 
 const GRADE_THRESHOLDS = [
   { min: Math.round(MAX_POINTS * 0.80), grade: "L" },  // 80%+
@@ -23,139 +106,6 @@ function pointsToGrade(points) {
     if (points >= t.min) return t.grade;
   }
   return "I";
-}
-
-const lang = LANGUAGE_META.spanish;
-
-// ─── Generate Part 1: Reading Comprehension (60p) ──────────────────────────
-
-async function generateReading() {
-  const levels = [
-    { level: "C", desc: READING_LEVEL_DESCS["C"], topic: "travel and places" },
-    { level: "M", desc: READING_LEVEL_DESCS["M"], topic: "culture and history" },
-    { level: "E", desc: READING_LEVEL_DESCS["E"], topic: "environment" },
-  ];
-
-  const texts = [];
-  for (const l of levels) {
-    const prompt = `Generate a reading comprehension exercise for Finnish students taking the ${lang.name} yo-koe (lyhyt oppimäärä, ${lang.yearsStudied} of ${lang.name}).
-
-Text level: ${l.level} — ${l.desc}
-Topic: ${READING_TOPIC_CONTEXTS[l.topic]}
-
-Make the text feel like a REAL source: a blog post, news snippet, interview excerpt, or webpage.
-
-Generate EXACTLY 5 questions after the text:
-1-3. Multiple choice (monivalinta) — 4 options, 1 correct
-4. True/false (oikein/väärin) — a statement to evaluate
-5. Short factual answer in Finnish (1-5 word answer)
-
-Return ONLY this JSON (no markdown):
-{
-  "title": "Title in Spanish",
-  "text": "Full text in Spanish...",
-  "source": "Fictitious source",
-  "level": "${l.level}",
-  "questions": [
-    { "id": 1, "type": "multiple_choice", "question": "Kysymys suomeksi?", "options": ["A) ...", "B) ...", "C) ...", "D) ..."], "correct": "A", "explanation": "Selitys suomeksi" },
-    { "id": 2, "type": "multiple_choice", "question": "?", "options": ["A) ...", "B) ...", "C) ...", "D) ..."], "correct": "B", "explanation": "Selitys" },
-    { "id": 3, "type": "multiple_choice", "question": "?", "options": ["A) ...", "B) ...", "C) ...", "D) ..."], "correct": "C", "explanation": "Selitys" },
-    { "id": 4, "type": "true_false", "statement": "Väite suomeksi", "correct": true, "explanation": "Selitys" },
-    { "id": 5, "type": "short_answer", "question": "Faktakysymys?", "acceptedAnswers": ["vastaus", "alt"], "explanation": "Selitys" }
-  ]
-}`;
-
-    const reading = await callOpenAI(prompt, 3000);
-    texts.push(reading);
-  }
-
-  return { type: "reading", texts, maxPoints: 60 };
-}
-
-// ─── Generate Part 2: Structure & Vocabulary (40p) ─────────────────────────
-
-async function generateStructure() {
-  const prompt = `You are generating Spanish grammar and vocabulary exercises for Finnish high school students (yo-koe, lyhyt oppimäärä, ${lang.yearsStudied} of ${lang.name}).
-
-Generate EXACTLY 20 gap-fill / grammar / vocabulary questions. Mix these types:
-- "gap": Sentence with ___ blank — choose the correct Spanish form
-- "correction": Sentence WITH an error — choose the corrected version
-- "vocab_gap": Sentence with ___ blank — choose the correct vocabulary word
-
-Mix grammar topics: ser/estar, hay/estar, subjunctive, conditional, preterite/imperfect, pronouns, articles.
-Mix difficulty: 8 questions at B1 level, 7 at B1+, 5 at B2.
-
-Each question has 4 options (A-D), one correct.
-
-Return ONLY a JSON array of 20 objects (no markdown):
-[
-  {
-    "id": 1,
-    "type": "gap",
-    "instruction": "Täydennä aukko oikealla muodolla.",
-    "sentence": "Cuando era pequeño, siempre ___ al parque con mis amigos.",
-    "options": ["A) iba", "B) fui", "C) voy", "D) iré"],
-    "correct": "A",
-    "explanation": "iba = imperfekti. Siempre + toistuva menneisyys → imperfekti."
-  }
-]`;
-
-  const exercises = await callOpenAI(prompt, 4000);
-  return { type: "structure", exercises, maxPoints: 40 };
-}
-
-// ─── Generate Part 3: Short Writing (33p) ──────────────────────────────────
-
-async function generateShortWriting() {
-  const prompt = `Generate ONE realistic ${lang.name} yo-koe writing task for Finnish students (lyhyt oppimäärä, ${lang.yearsStudied} of ${lang.name}).
-
-Task type: SHORT task (lyhyt kirjoitustehtävä)
-Character limit: 160–240 characters (spaces NOT counted)
-Max points: 33
-
-SHORT TASK RULES:
-- A SHORT practical message: email, message to a neighbor, short note, social media message
-- Must have a clear SITUATION and RECIPIENT
-- Give 2-3 specific things to mention
-
-Return ONLY JSON:
-{
-  "taskType": "short", "points": 33, "charMin": 160, "charMax": 240,
-  "situation": "Finnish context sentence",
-  "prompt": "Task instruction in Spanish",
-  "requirements": ["req 1 in Finnish", "req 2", "req 3"],
-  "textType": "e.g. sähköpostiviesti"
-}`;
-
-  const task = await callOpenAI(prompt, 1000);
-  return { type: "shortWriting", task, maxPoints: 33 };
-}
-
-// ─── Generate Part 4: Long Writing (66p) ───────────────────────────────────
-
-async function generateLongWriting() {
-  const prompt = `Generate ONE realistic ${lang.name} yo-koe writing task for Finnish students (lyhyt oppimäärä, ${lang.yearsStudied} of ${lang.name}).
-
-Task type: LONG task (laajempi kirjoitustehtävä)
-Character limit: 300–450 characters (spaces NOT counted)
-Max points: 66
-
-LONG TASK RULES:
-- A LONGER text: forum comment, TripAdvisor review, opinion piece, letter
-- Must require taking a STANCE or sharing multiple perspectives
-- Give 2-3 angles to explore
-
-Return ONLY JSON:
-{
-  "taskType": "long", "points": 66, "charMin": 300, "charMax": 450,
-  "situation": "Finnish context sentence",
-  "prompt": "Task instruction in Spanish",
-  "requirements": ["req 1 in Finnish", "req 2", "req 3"],
-  "textType": "e.g. foorumikommentti"
-}`;
-
-  const task = await callOpenAI(prompt, 1000);
-  return { type: "longWriting", task, maxPoints: 66 };
 }
 
 // ─── Grade reading answers ─────────────────────────────────────────────────
@@ -265,7 +215,7 @@ Return ONLY JSON:
 
 // ─── POST /api/exam/start ──────────────────────────────────────────────────
 
-router.post("/start", requireAuth, aiLimiter, async (req, res) => {
+router.post("/start", requireAuth, async (req, res) => {
   const { durationMode = "demo" } = req.body;
   const userId = req.user.userId;
 
@@ -281,12 +231,18 @@ router.post("/start", requireAuth, aiLimiter, async (req, res) => {
       return res.status(409).json({ error: "active_session", sessionId: active[0].id, message: "Sinulla on jo aktiivinen koe." });
     }
 
-    // Generate 4 parts (no listening/kuullun ymmärtäminen)
-    const parts = [];
-    parts.push(await generateReading());
-    parts.push(await generateStructure());
-    parts.push(await generateShortWriting());
-    parts.push(await generateLongWriting());
+    // Sanity check — if any pool is empty, we can't build a full exam
+    if (!POOLS.reading.length || !POOLS.structure.length || !POOLS.shortWriting.length || !POOLS.longWriting.length) {
+      return res.status(503).json({ error: "Koesisältö ei ole saatavilla. Yritä myöhemmin uudelleen." });
+    }
+
+    // Assemble 4 parts from pre-generated pools (instant, no AI call)
+    const parts = [
+      buildReadingPart(),
+      buildStructurePart(),
+      buildShortWritingPart(),
+      buildLongWritingPart(),
+    ];
 
     const secondsRemaining = durationMode === "full" ? 6 * 60 * 60 : 2 * 60 * 60;
 
