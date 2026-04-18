@@ -16,6 +16,7 @@ import { getUserLevel, refreshUserLevel, processCheckpointResult, progressToNext
 import { getSessionState, processAnswer, describeScaffold } from "../lib/scaffoldEngine.js";
 import { pickExerciseType, composePrompt, getMaxTokens } from "../lib/exerciseComposer.js";
 import { topicLabel, VALID_TOPICS } from "../lib/mistakeTaxonomy.js";
+import { getUserPath, recordMasteryAttempt, getTopicByKey, getMasteredTopics, LEARNING_PATH, MASTERY_TEST_SIZE } from "../lib/learningPath.js";
 
 const router = Router();
 
@@ -1026,6 +1027,180 @@ Return ONLY JSON array of ${clampedCount} exercises. Mix the types. Example:
   } catch (err) {
     console.error("Focus session error:", err.message);
     res.status(500).json({ error: err.message || "Failed to generate focus session" });
+  }
+});
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// LEARNING PATH — sequential topic progression with mastery tests
+// ═══════════════════════════════════════════════════════════════════════════════
+
+router.get("/learning-path", requireAuth, async (req, res) => {
+  try {
+    const userId = req.user.userId;
+    const path = await getUserPath(userId);
+
+    const masteredCount = path.filter(t => t.status === "mastered").length;
+    const currentIdx = path.findIndex(t => t.status === "available" || t.status === "in_progress");
+
+    res.json({
+      path,
+      totalTopics: path.length,
+      masteredCount,
+      currentIndex: currentIdx >= 0 ? currentIdx : masteredCount,
+    });
+  } catch (err) {
+    console.error("Learning path error:", err.message);
+    res.status(500).json({ error: "Failed to load learning path" });
+  }
+});
+
+router.post("/mastery-test/start", requireAuth, aiLimiter, checkMonthlyCostLimit, async (req, res) => {
+  const { topicKey, language = "spanish" } = req.body;
+  const topic = getTopicByKey(topicKey);
+  if (!topic) return res.status(400).json({ error: "Virheellinen aihe" });
+
+  try {
+    const userId = req.user.userId;
+    const path = await getUserPath(userId);
+    const topicState = path.find(t => t.key === topicKey);
+
+    if (!topicState || topicState.status === "locked") {
+      return res.status(403).json({ error: "Aihe ei ole vielä auki" });
+    }
+
+    const profileCtx = await getUserProfileContext(userId);
+    const lang = LANGUAGE_META[language] || LANGUAGE_META.spanish;
+
+    // Generate 20 mastery questions targeting this topic
+    const prompt = `Generate ${MASTERY_TEST_SIZE} mastery-test exercises for a Finnish student (yo-koe lyhyt oppimäärä) on this specific topic:
+
+TOPIC: ${topic.label}
+FOCUS: ${topic.promptFocus}
+LEVEL: ${topic.level}
+${profileCtx}
+
+This is a MASTERY TEST — all ${MASTERY_TEST_SIZE} exercises MUST test this exact grammar point. The student needs 80% correct (16/20) to prove mastery.
+
+Mix exercise types:
+- multichoice (8-10): traditional question with 4 options
+- gap_fill (6-8): sentence with blank + hint (infinitive form)
+- reorder (2-3): scrambled words to arrange
+- translate_mini (1-2): short Finnish → ${lang.name} sentence
+
+Difficulty: test the rule thoroughly — include edge cases, common mistakes, near-minimal pairs.
+
+Return ONLY a JSON array:
+[
+  {
+    "id": 1,
+    "type": "multichoice",
+    "topics": ["${topicKey}"],
+    "question": "...",
+    "options": ["A) ...", "B) ...", "C) ...", "D) ..."],
+    "correct": "A",
+    "explanation": "Lyhyt selitys suomeksi"
+  },
+  {
+    "id": 2,
+    "type": "gap_fill",
+    "topics": ["${topicKey}"],
+    "sentence": "... ___ ...",
+    "hint": "(infinitive, form)",
+    "correctAnswer": "...",
+    "alternativeAnswers": ["..."],
+    "explanation": "..."
+  }
+]`;
+
+    const exercises = await callOpenAI(prompt, 4000);
+    logAiUsage(userId, "mastery-test", exercises._usage).catch(() => {});
+    delete exercises._usage;
+
+    const arr = Array.isArray(exercises) ? exercises : [exercises];
+
+    res.json({
+      exercises: arr.slice(0, MASTERY_TEST_SIZE),
+      topic: topicKey,
+      topicLabel: topic.label,
+      total: MASTERY_TEST_SIZE,
+      passThreshold: 80,
+    });
+  } catch (err) {
+    console.error("Mastery test start error:", err.message);
+    res.status(500).json({ error: err.message || "Failed to start mastery test" });
+  }
+});
+
+router.post("/mastery-test/submit", requireAuth, async (req, res) => {
+  const { topicKey, correct, total } = req.body;
+  if (!topicKey || typeof correct !== "number" || typeof total !== "number") {
+    return res.status(400).json({ error: "Virheelliset parametrit" });
+  }
+
+  try {
+    const userId = req.user.userId;
+    const result = await recordMasteryAttempt(userId, topicKey, correct, total);
+
+    // If newly mastered, add the next topic info
+    let nextTopicLabel = null;
+    if (result.unlockedNext) {
+      const next = getTopicByKey(result.unlockedNext);
+      nextTopicLabel = next?.label || null;
+    }
+
+    res.json({ ...result, nextTopicLabel });
+  } catch (err) {
+    console.error("Mastery test submit error:", err.message);
+    res.status(500).json({ error: "Failed to submit mastery test" });
+  }
+});
+
+// Mixed review of all mastered topics
+router.post("/mixed-review", requireAuth, aiLimiter, checkMonthlyCostLimit, async (req, res) => {
+  const { count = 15, language = "spanish" } = req.body;
+
+  try {
+    const userId = req.user.userId;
+    const mastered = await getMasteredTopics(userId);
+
+    if (mastered.length === 0) {
+      return res.status(400).json({ error: "Ei vielä osattuja aiheita. Suorita ensin polku-aiheita." });
+    }
+
+    const clampedCount = Math.max(5, Math.min(20, Number(count) || 15));
+    const topicDetails = mastered
+      .map(k => getTopicByKey(k))
+      .filter(Boolean)
+      .map(t => `- ${t.label}: ${t.promptFocus}`)
+      .join("\n");
+
+    const lang = LANGUAGE_META[language] || LANGUAGE_META.spanish;
+    const profileCtx = await getUserProfileContext(userId);
+
+    const prompt = `Generate ${clampedCount} MIXED review exercises combining these mastered topics:
+${topicDetails}
+${profileCtx}
+
+Distribute exercises across ALL listed topics roughly equally.
+Mix exercise types: multichoice, gap_fill, reorder, translate_mini.
+
+Each exercise MUST have "topics" field with the topic key(s) tested.
+
+Return ONLY JSON array of ${clampedCount} exercises.`;
+
+    const exercises = await callOpenAI(prompt, 3500);
+    logAiUsage(userId, "mixed-review", exercises._usage).catch(() => {});
+    delete exercises._usage;
+
+    const arr = Array.isArray(exercises) ? exercises : [exercises];
+
+    res.json({
+      exercises: arr.slice(0, clampedCount),
+      masteredTopics: mastered,
+    });
+  } catch (err) {
+    console.error("Mixed review error:", err.message);
+    res.status(500).json({ error: err.message || "Failed to generate mixed review" });
   }
 });
 

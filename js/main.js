@@ -17,6 +17,7 @@ import { initFullExam, startFullExam } from "./screens/fullExam.js";
 import { initAdaptive, masteryNext, masteryDone } from "./screens/adaptive.js";
 import { initOnboarding, checkOnboarding } from "./screens/onboarding.js";
 import { initPlacement, checkPlacementNeeded, showPlacementIntro, startPlacementFromRetake } from "./screens/placement.js";
+import { initLearningPath, loadPath, submitMasteryResult } from "./screens/learningPath.js";
 import { initAnalytics, trackError } from "./analytics.js";
 
 // ─── Inject show into api.js (avoids circular dep) ─────────────────────────
@@ -87,6 +88,8 @@ initFullExam({ loadDashboard, saveProgress, shareResult });
 initAdaptive({ loadDashboard });
 initOnboarding({ loadDashboard });
 initPlacement({ loadDashboard });
+initLearningPath({ loadDashboard });
+window._learningPathRef = { submitMasteryResult };
 window._onboardingRef = { checkOnboarding };
 window._placementRef = { checkPlacementNeeded, showPlacementIntro, startPlacementFromRetake };
 

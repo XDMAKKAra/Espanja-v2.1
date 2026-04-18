@@ -35,6 +35,9 @@
         <span class="sidebar-item-icon">✍️</span> Kirjoittaminen
       </button>
       <div class="sidebar-divider"></div>
+      <button class="sidebar-item" data-nav="path" id="nav-path">
+        <span class="sidebar-item-icon">🗺️</span> Oppimispolku
+      </button>
       <button class="sidebar-item" data-nav="exam" id="nav-exam">
         <span class="sidebar-item-icon">🎓</span> Koeharjoitus
       </button>
@@ -296,6 +299,68 @@
   </div>
 
   <!-- SCREEN: Dashboard -->
+  <!-- SCREEN: Learning path -->
+  <div id="screen-path" class="screen">
+    <div class="path-inner">
+      <div class="path-header">
+        <h2 class="path-title">Oppimispolku</h2>
+        <p class="path-sub" id="path-sub">Edisty vaihe kerrallaan. Jokainen aihe avautuu kun edellinen on suoritettu.</p>
+      </div>
+
+      <div class="path-progress">
+        <div class="path-progress-bar">
+          <div class="path-progress-fill" id="path-progress-fill"></div>
+        </div>
+        <div class="path-progress-label" id="path-progress-label">0 / 10 aihetta osattu</div>
+      </div>
+
+      <div class="path-nodes" id="path-nodes"></div>
+
+      <div class="path-mixed-review hidden" id="path-mixed-review">
+        <div class="path-mixed-info">
+          <span class="path-mixed-icon">&#127913;</span>
+          <div>
+            <div class="path-mixed-title">Sekoitettu kertaus</div>
+            <div class="path-mixed-sub" id="path-mixed-sub">Harjoittele kaikkia osaamiasi aiheita yhdess&auml; sessiossa</div>
+          </div>
+        </div>
+        <button class="btn-primary btn-sm" id="btn-mixed-review">Aloita &rarr;</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCREEN: Mastery test start -->
+  <div id="screen-mastery-intro" class="screen">
+    <div class="mastery-intro-inner">
+      <div class="mastery-intro-icon">&#127919;</div>
+      <div class="mastery-intro-topic" id="mastery-intro-topic">Preteriti</div>
+      <p class="mastery-intro-desc" id="mastery-intro-desc">Yksinkertainen mennyt aika: yksitt&auml;iset tapahtumat.</p>
+      <div class="mastery-intro-rules">
+        <div class="mastery-intro-rule"><strong>20</strong> kysymyst&auml;</div>
+        <div class="mastery-intro-rule"><strong>80%</strong> oikein &mdash; avaa seuraavan aiheen</div>
+        <div class="mastery-intro-rule">Ei vihjeit&auml;, ei scaffoldingia</div>
+      </div>
+      <button class="btn-primary mastery-intro-start" id="btn-mastery-start">Aloita mastery-testi &rarr;</button>
+      <button class="btn-secondary" id="btn-mastery-back">Takaisin polulle</button>
+    </div>
+  </div>
+
+  <!-- SCREEN: Mastery test result -->
+  <div id="screen-mastery-result" class="screen">
+    <div class="mastery-result-inner">
+      <div class="mastery-result-icon" id="mastery-result-icon">&#127881;</div>
+      <div class="mastery-result-pct" id="mastery-result-pct">90%</div>
+      <div class="mastery-result-score" id="mastery-result-score">18 / 20 oikein</div>
+      <div class="mastery-result-message" id="mastery-result-message">Osaat t&auml;m&auml;n aiheen!</div>
+      <div class="mastery-result-unlock hidden" id="mastery-result-unlock">
+        &#128275; Seuraava aihe avattu: <strong id="mastery-result-next"></strong>
+      </div>
+      <div class="mastery-result-actions">
+        <button class="btn-primary" id="btn-mastery-continue">Takaisin polulle &rarr;</button>
+      </div>
+    </div>
+  </div>
+
   <div id="screen-dashboard" class="screen">
     <div class="dashboard-inner">
 

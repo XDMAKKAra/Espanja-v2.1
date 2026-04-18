@@ -237,8 +237,19 @@ export function renderExercise() {
   const questionNum = (state.batchNumber - 1) * BATCH_SIZE + state.current + 1;
   const totalQuestions = MAX_BATCHES * BATCH_SIZE;
 
-  $("ex-counter").textContent = `Q ${questionNum} / ${totalQuestions}`;
+  // Mastery test uses different counter
+  if (state._masteryMode) {
+    const total = state._masteryTotal || state.exercises.length;
+    $("ex-counter").textContent = `Q ${state.current + 1} / ${total}`;
+  } else {
+    $("ex-counter").textContent = `Q ${questionNum} / ${totalQuestions}`;
+  }
 
+  // Mastery badge
+  if (state._masteryMode) {
+    $("ex-round").textContent = "🎯 Mastery-testi";
+    $("ex-round").classList.remove("sr-review-badge");
+  } else
   // SR review badge with repetition number
   if (ex._sr) {
     const repNum = ex.reviewNumber || (ex.repetitions || 0) + 1;
@@ -782,6 +793,17 @@ if (gradeRow) {
 }
 
 function endBatch() {
+  // Mastery test: submit result and show mastery result screen
+  if (state._masteryMode && state._masteryTopicKey) {
+    const submit = window._learningPathRef?.submitMasteryResult;
+    if (submit) {
+      submit(state.totalCorrect, state.totalAnswered);
+    }
+    state._masteryMode = false;
+    state._masteryTopicKey = null;
+    return;
+  }
+
   if (state.batchNumber >= MAX_BATCHES) {
     showVocabResults();
     return;
