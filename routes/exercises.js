@@ -15,6 +15,7 @@ import { logAiUsage } from "../lib/aiCost.js";
 import { getUserLevel, refreshUserLevel, processCheckpointResult, progressToNextLevel } from "../lib/levelEngine.js";
 import { getSessionState, processAnswer, describeScaffold } from "../lib/scaffoldEngine.js";
 import { pickExerciseType, composePrompt, getMaxTokens } from "../lib/exerciseComposer.js";
+import { topicLabel, VALID_TOPICS } from "../lib/mistakeTaxonomy.js";
 
 const router = Router();
 
@@ -925,6 +926,106 @@ router.post("/checkpoint/submit", requireAuth, async (req, res) => {
   } catch (err) {
     console.error("Checkpoint submit error:", err.message);
     res.status(500).json({ error: "Failed to process checkpoint" });
+  }
+});
+
+// ─── Focus session: topic-targeted exercises based on past mistakes ────────
+
+router.post("/focus-session", requireAuth, aiLimiter, checkMonthlyCostLimit, async (req, res) => {
+  const { topic, count = 10, language = "spanish" } = req.body;
+
+  if (!topic || !VALID_TOPICS.has(topic)) {
+    return res.status(400).json({ error: "Virheellinen aihe" });
+  }
+  if (!VALID_LANGUAGES.has(language)) return res.status(400).json({ error: "Virheellinen kieli" });
+  const clampedCount = Math.max(5, Math.min(15, Number(count) || 10));
+
+  try {
+    const userId = req.user.userId;
+    const levelData = await getUserLevel(userId);
+    const level = levelData.current_level;
+
+    // Fetch past mistakes for this topic (last 14 days) to use as examples
+    const since = new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString();
+    const { data: pastMistakes } = await supabase
+      .from("user_mistakes")
+      .select("question, wrong_answer, correct_answer")
+      .eq("user_id", userId)
+      .contains("topics", [topic])
+      .gte("created_at", since)
+      .order("created_at", { ascending: false })
+      .limit(5);
+
+    const mistakeExamples = (pastMistakes || []).map(m =>
+      `- Kysymys: "${m.question}" | Väärä vastaus: "${m.wrong_answer}" | Oikea: "${m.correct_answer}"`
+    ).join("\n");
+
+    const lang = LANGUAGE_META[language] || LANGUAGE_META.spanish;
+    const topicLbl = topicLabel(topic);
+    const profileCtx = await getUserProfileContext(userId);
+
+    const prompt = `Generate ${clampedCount} FOCUSED ${lang.name} exercises targeting ONLY this grammar/vocab topic: ${topicLbl} (key: ${topic}).
+${profileCtx}
+LEVEL: ${level}
+
+IMPORTANT: Every single exercise MUST test ${topicLbl}. Mix up exercise types for variety:
+- Multiple choice (multichoice)
+- Gap-fill (gap_fill)
+- Reorder (reorder)
+- Mini translation (translate_mini)
+
+${pastMistakes?.length ? `
+USER HAS ALREADY FAILED ON THESE (generate similar but DIFFERENT exercises that test the same concept):
+${mistakeExamples}
+
+Create exercises with the same underlying rule but varied contexts and examples.
+` : ""}
+
+Each exercise MUST have "topics" field with ["${topic}"] as the primary topic tag.
+
+Return ONLY JSON array of ${clampedCount} exercises. Mix the types. Example:
+[
+  {
+    "id": 1,
+    "type": "gap_fill",
+    "topics": ["${topic}"],
+    "sentence": "...",
+    "hint": "...",
+    "correctAnswer": "...",
+    "alternativeAnswers": ["..."],
+    "explanation": "..."
+  },
+  {
+    "id": 2,
+    "type": "multichoice",
+    "topics": ["${topic}"],
+    "question": "...",
+    "options": ["A) ...", "B) ...", "C) ...", "D) ..."],
+    "correct": "A",
+    "explanation": "..."
+  }
+]`;
+
+    const exercises = await callOpenAI(prompt, Math.min(clampedCount * 250, 3500));
+    logAiUsage(userId, "focus-session", exercises._usage).catch(() => {});
+    delete exercises._usage;
+
+    // Ensure all exercises have the topic tag
+    const tagged = (Array.isArray(exercises) ? exercises : [exercises]).map(ex => ({
+      ...ex,
+      topics: Array.isArray(ex.topics) && ex.topics.length ? ex.topics : [topic],
+    }));
+
+    res.json({
+      exercises: tagged,
+      topic,
+      topicLabel: topicLbl,
+      level,
+      pastMistakesUsed: pastMistakes?.length || 0,
+    });
+  } catch (err) {
+    console.error("Focus session error:", err.message);
+    res.status(500).json({ error: err.message || "Failed to generate focus session" });
   }
 });
 

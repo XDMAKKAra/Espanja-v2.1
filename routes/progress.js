@@ -4,6 +4,7 @@ import { requireAuth, isPro } from "../middleware/auth.js";
 import { GRADES, GRADE_ORDER, DAY_MS, WEEK_MS, calculateStreak, calculateEstLevel } from "../lib/openai.js";
 import { computeEligibility, LEVEL_ORDER } from "../lib/adaptive.js";
 import { getMonthlyUsage } from "../lib/aiCost.js";
+import { normalizeTopics, topicLabel, inferTopics } from "../lib/mistakeTaxonomy.js";
 
 const router = Router();
 
@@ -191,6 +192,112 @@ router.get("/dashboard", requireAuth, async (req, res) => {
     streak, weekSessions, prevWeekSessions, suggestedLevel, modeDaysAgo, pro,
     aiUsage,
   });
+});
+
+// ─── Mistake logging ─────────────────────────────────────────────────────────
+
+router.post("/mistake", requireAuth, async (req, res) => {
+  const {
+    topics, exerciseType, level, question,
+    wrongAnswer, correctAnswer, explanation,
+  } = req.body;
+
+  // Normalize/validate topics (infer from content if not provided)
+  let validTopics = normalizeTopics(topics);
+  if (validTopics.length === 0) {
+    validTopics = inferTopics({ question, explanation });
+  }
+  if (validTopics.length === 0) {
+    // Fallback: use exercise type as topic
+    validTopics = [exerciseType || "general"];
+  }
+
+  try {
+    const { error } = await supabase.from("user_mistakes").insert({
+      user_id: req.user.userId,
+      topics: validTopics,
+      exercise_type: exerciseType || null,
+      level: level || null,
+      question: question ? String(question).slice(0, 500) : null,
+      wrong_answer: wrongAnswer ? String(wrongAnswer).slice(0, 200) : null,
+      correct_answer: correctAnswer ? String(correctAnswer).slice(0, 200) : null,
+      explanation: explanation ? String(explanation).slice(0, 500) : null,
+    });
+
+    if (error) {
+      console.error("Mistake insert error:", error.message);
+      return res.status(500).json({ error: "Failed to log mistake" });
+    }
+    res.json({ ok: true, topics: validTopics });
+  } catch (err) {
+    console.error("Mistake error:", err.message);
+    res.status(500).json({ error: "Failed to log mistake" });
+  }
+});
+
+// ─── Weak topics (7-day aggregation) ────────────────────────────────────────
+
+router.get("/weak-topics", requireAuth, async (req, res) => {
+  const days = Math.max(1, Math.min(30, Number(req.query.days) || 7));
+  const since = new Date(Date.now() - days * DAY_MS).toISOString();
+
+  try {
+    const { data: mistakes, error } = await supabase
+      .from("user_mistakes")
+      .select("topics, created_at")
+      .eq("user_id", req.user.userId)
+      .gte("created_at", since);
+
+    if (error) return res.status(500).json({ error: error.message });
+
+    // Count topic frequencies
+    const topicCounts = {};
+    for (const m of mistakes || []) {
+      for (const t of m.topics || []) {
+        topicCounts[t] = (topicCounts[t] || 0) + 1;
+      }
+    }
+
+    // Sort + top 3
+    const sorted = Object.entries(topicCounts)
+      .map(([topic, count]) => ({ topic, label: topicLabel(topic), count }))
+      .sort((a, b) => b.count - a.count);
+
+    res.json({
+      topics: sorted.slice(0, 3),
+      all: sorted,
+      days,
+      totalMistakes: (mistakes || []).length,
+    });
+  } catch (err) {
+    console.error("Weak topics error:", err.message);
+    res.status(500).json({ error: "Failed to fetch weak topics" });
+  }
+});
+
+// ─── Drill-down: individual mistakes for a topic ────────────────────────────
+
+router.get("/mistakes-by-topic/:topic", requireAuth, async (req, res) => {
+  const { topic } = req.params;
+  const days = Math.max(1, Math.min(30, Number(req.query.days) || 7));
+  const since = new Date(Date.now() - days * DAY_MS).toISOString();
+
+  try {
+    const { data, error } = await supabase
+      .from("user_mistakes")
+      .select("id, topics, exercise_type, level, question, wrong_answer, correct_answer, explanation, created_at")
+      .eq("user_id", req.user.userId)
+      .contains("topics", [topic])
+      .gte("created_at", since)
+      .order("created_at", { ascending: false })
+      .limit(50);
+
+    if (error) return res.status(500).json({ error: error.message });
+    res.json({ mistakes: data || [], topic, label: topicLabel(topic), days });
+  } catch (err) {
+    console.error("Mistakes by topic error:", err.message);
+    res.status(500).json({ error: "Failed to fetch mistakes" });
+  }
 });
 
 export default router;

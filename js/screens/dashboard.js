@@ -117,6 +117,9 @@ function renderDashboard({
   // ── Adaptive level progress bar ──
   loadAdaptiveState().catch(() => {});
 
+  // ── Weak topics ──
+  loadWeakTopics().catch(() => {});
+
   const streakEl = $("dash-streak");
   if (streakEl) {
     streakEl.textContent = streak;
@@ -800,3 +803,141 @@ async function startCheckpoint() {
     showLoadingError(err.message, () => show("screen-dashboard"));
   }
 }
+
+// ─── Weak topics (mistake taxonomy) ───────────────────────────────────────
+
+async function loadWeakTopics() {
+  if (!isLoggedIn()) return;
+  const wrap = $("dash-weak-topics");
+  const list = $("dash-weak-list");
+  if (!wrap || !list) return;
+
+  try {
+    const res = await apiFetch(`${API}/api/weak-topics?days=7`, {
+      headers: authHeader(),
+    });
+    if (!res.ok) return;
+    const data = await res.json();
+    const topics = data.topics || [];
+
+    if (topics.length === 0) {
+      wrap.classList.add("hidden");
+      return;
+    }
+
+    wrap.classList.remove("hidden");
+    const maxCount = topics[0]?.count || 1;
+
+    list.innerHTML = topics.map(t => `
+      <div class="dash-weak-item" data-topic="${t.topic}">
+        <div class="dash-weak-top">
+          <span class="dash-weak-label">${t.label}</span>
+          <span class="dash-weak-count">${t.count} virhe${t.count > 1 ? "ttä" : ""}</span>
+        </div>
+        <div class="dash-weak-bar">
+          <div class="dash-weak-bar-fill" style="width: ${Math.round((t.count / maxCount) * 100)}%"></div>
+        </div>
+      </div>
+    `).join("");
+
+    list.querySelectorAll(".dash-weak-item").forEach(item => {
+      item.addEventListener("click", () => {
+        openMistakeModal(item.dataset.topic);
+      });
+    });
+  } catch { /* silent */ }
+}
+
+async function openMistakeModal(topic) {
+  const overlay = $("mistake-modal-overlay");
+  const topicEl = $("mistake-modal-topic");
+  const subEl = $("mistake-modal-sub");
+  const listEl = $("mistake-modal-list");
+  const ctaBtn = $("mistake-modal-practice");
+  if (!overlay) return;
+
+  try {
+    const res = await apiFetch(`${API}/api/mistakes-by-topic/${topic}?days=7`, {
+      headers: authHeader(),
+    });
+    if (!res.ok) return;
+    const data = await res.json();
+    const mistakes = data.mistakes || [];
+
+    topicEl.textContent = data.label || topic;
+    subEl.textContent = `${mistakes.length} virhe${mistakes.length !== 1 ? "ttä" : ""} viimeisen 7 päivän aikana`;
+
+    listEl.innerHTML = mistakes.length ? mistakes.map(m => `
+      <div class="mistake-modal-item">
+        <div class="mistake-modal-q">${escapeHtml(m.question || "")}</div>
+        <div class="mistake-modal-answers">
+          <span class="mistake-modal-wrong">✗ ${escapeHtml(m.wrong_answer || "")}</span><br>
+          <span class="mistake-modal-correct">✓ ${escapeHtml(m.correct_answer || "")}</span>
+        </div>
+        ${m.explanation ? `<div class="mistake-modal-expl">${escapeHtml(m.explanation)}</div>` : ""}
+      </div>
+    `).join("") : '<p style="color:var(--text-muted);font-family:var(--font-mono);font-size:13px">Ei virheitä tällä aikavälillä.</p>';
+
+    ctaBtn.onclick = () => startFocusSession(topic);
+
+    overlay.classList.remove("hidden");
+  } catch { /* silent */ }
+}
+
+function closeMistakeModal() {
+  const overlay = $("mistake-modal-overlay");
+  if (overlay) overlay.classList.add("hidden");
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, c => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+  }[c]));
+}
+
+async function startFocusSession(topic) {
+  closeMistakeModal();
+  showLoading("Luodaan teemaharjoitusta...");
+  try {
+    const res = await apiFetch(`${API}/api/focus-session`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", ...authHeader() },
+      body: JSON.stringify({ topic, count: 10, language: state.language || "spanish" }),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || "Harjoituksen luonti epäonnistui");
+
+    state.mode = "vocab";
+    state.topic = topic;
+    state.exercises = data.exercises;
+    state.current = 0;
+    state.totalCorrect = 0;
+    state.totalAnswered = 0;
+    state.batchCorrect = 0;
+    state.batchNumber = 1;
+    state.level = data.level || "B";
+    state.peakLevel = state.level;
+    state._focusMode = true;
+
+    show("screen-exercise");
+    // Trigger render via vocab module
+    const vocabMod = await import("./vocab.js");
+    if (vocabMod.renderExercise) vocabMod.renderExercise();
+    else window.dispatchEvent(new CustomEvent("puheo:render-exercise"));
+  } catch (err) {
+    const { showLoadingError } = await import("../ui/loading.js");
+    showLoadingError(err.message, () => show("screen-dashboard"));
+  }
+}
+
+// Wire up modal close
+(function() {
+  const overlay = document.getElementById("mistake-modal-overlay");
+  const closeBtn = document.getElementById("mistake-modal-close");
+  if (closeBtn) closeBtn.addEventListener("click", closeMistakeModal);
+  if (overlay) {
+    overlay.addEventListener("click", e => {
+      if (e.target === overlay) closeMistakeModal();
+    });
+  }
+})();

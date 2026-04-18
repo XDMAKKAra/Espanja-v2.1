@@ -436,6 +436,118 @@ select option { background: var(--surface2); }
 .scaffold-help-btn:hover { border-color: var(--accent); color: var(--text); }
 .scaffold-help-btn.hidden { display: none; }
 
+/* ── WEAK TOPICS ── */
+.dash-weak-topics {
+  margin-bottom: 16px;
+}
+.dash-weak-topics.hidden { display: none; }
+.dash-weak-list {
+  display: flex; flex-direction: column; gap: 8px;
+}
+.dash-weak-item {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 12px 16px;
+  cursor: pointer; transition: all 0.15s;
+}
+.dash-weak-item:hover {
+  border-color: var(--accent);
+  transform: translateX(2px);
+}
+.dash-weak-top {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 6px;
+}
+.dash-weak-label {
+  font-size: 14px; font-weight: 700;
+}
+.dash-weak-count {
+  font-family: var(--font-mono); font-size: 12px;
+  color: var(--wrong); font-weight: 600;
+}
+.dash-weak-bar {
+  height: 4px; background: var(--surface2);
+  border-radius: 2px; overflow: hidden;
+}
+.dash-weak-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--wrong), var(--accent));
+  border-radius: 2px;
+  transition: width 0.8s ease;
+}
+
+/* ── MISTAKE DRILL-DOWN MODAL ── */
+.mistake-modal-overlay {
+  position: fixed; inset: 0; z-index: 400;
+  background: rgba(0,0,0,0.75);
+  backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px;
+  animation: fadeIn 0.2s ease;
+}
+.mistake-modal-overlay.hidden { display: none; }
+.mistake-modal {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  max-width: 560px; width: 100%;
+  max-height: 85vh;
+  display: flex; flex-direction: column;
+  position: relative;
+  box-shadow: 0 24px 70px rgba(0,0,0,0.6);
+  animation: fadeUp 0.3s ease;
+}
+.mistake-modal-close {
+  position: absolute; top: 12px; right: 16px;
+  background: none; border: none;
+  color: var(--text-muted);
+  font-size: 24px; cursor: pointer;
+  line-height: 1; z-index: 1;
+}
+.mistake-modal-close:hover { color: var(--text); }
+.mistake-modal-header {
+  padding: 24px 28px 16px;
+  border-bottom: 1px solid var(--border);
+}
+.mistake-modal-topic {
+  font-size: 20px; font-weight: 800;
+  margin-bottom: 4px;
+}
+.mistake-modal-sub {
+  font-family: var(--font-mono); font-size: 12px;
+  color: var(--text-muted);
+}
+.mistake-modal-list {
+  flex: 1; overflow-y: auto;
+  padding: 20px 28px;
+}
+.mistake-modal-item {
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(61, 32, 32, 0.4);
+}
+.mistake-modal-item:last-child { border-bottom: none; }
+.mistake-modal-q {
+  font-size: 14px; line-height: 1.5; margin-bottom: 8px;
+  font-weight: 500;
+}
+.mistake-modal-answers {
+  font-family: var(--font-mono); font-size: 12px;
+  line-height: 1.7;
+}
+.mistake-modal-wrong {
+  color: var(--wrong);
+}
+.mistake-modal-correct {
+  color: var(--correct);
+}
+.mistake-modal-expl {
+  margin-top: 6px; font-family: var(--font-mono);
+  font-size: 11px; color: var(--text-muted);
+  line-height: 1.5;
+}
+.mistake-modal-cta {
+  margin: 16px 28px 24px;
+}
+
 /* ── DASH LEVEL PROGRESS ── */
 .dash-level-progress {
   display: flex; align-items: center; gap: 16px;

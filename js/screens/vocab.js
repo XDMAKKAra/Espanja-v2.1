@@ -54,6 +54,50 @@ function updateScaffoldIndicator(scaffoldLevel) {
   }
 }
 
+async function logMistake(ex, chosen) {
+  if (!isLoggedIn()) return;
+  try {
+    // Build wrong/correct answer strings depending on type
+    let question = ex.question || ex.sentence || ex.finnishSentence || "";
+    let wrongAnswer = "";
+    let correctAnswer = "";
+
+    if (ex.options && ex.correct) {
+      // Multiple choice
+      const chosenOpt = (ex.options || []).find(o => o.trim()[0] === chosen);
+      const correctOpt = (ex.options || []).find(o => o.trim()[0] === ex.correct);
+      wrongAnswer = chosenOpt || chosen;
+      correctAnswer = correctOpt || ex.correct;
+    } else if (ex.correctAnswer !== undefined) {
+      // Gap-fill
+      wrongAnswer = chosen;
+      correctAnswer = ex.correctAnswer;
+    } else if (ex.acceptedTranslations) {
+      // Translate-mini
+      wrongAnswer = chosen;
+      correctAnswer = ex.acceptedTranslations[0];
+    } else if (ex.correct && Array.isArray(ex.correct)) {
+      // Reorder
+      wrongAnswer = Array.isArray(chosen) ? chosen.join(" ") : String(chosen);
+      correctAnswer = ex.correct.join(" ");
+    }
+
+    await apiFetch(`${API}/api/mistake`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", ...authHeader() },
+      body: JSON.stringify({
+        topics: ex.topics || [],
+        exerciseType: ex.type || "multichoice",
+        level: state.level,
+        question: question.slice(0, 500),
+        wrongAnswer: String(wrongAnswer).slice(0, 200),
+        correctAnswer: String(correctAnswer).slice(0, 200),
+        explanation: (ex.explanation || "").slice(0, 500),
+      }),
+    });
+  } catch { /* silent */ }
+}
+
 async function reportAdaptiveAnswer(topic, isCorrect) {
   try {
     const res = await apiFetch(`${API}/api/adaptive-answer`, {
@@ -188,7 +232,7 @@ function hideAllExerciseAreas() {
   if (kbdHint) kbdHint.style.display = "";
 }
 
-function renderExercise() {
+export function renderExercise() {
   const ex = state.exercises[state.current];
   const questionNum = (state.batchNumber - 1) * BATCH_SIZE + state.current + 1;
   const totalQuestions = MAX_BATCHES * BATCH_SIZE;
@@ -307,6 +351,7 @@ function renderGapFill(ex) {
       input.classList.add("wrong");
       state._lastCorrect = false;
       feedback.innerHTML = `<span style="color:var(--wrong)">✗ ${ex.correctAnswer}</span><br>${ex.explanation}`;
+      if (isLoggedIn()) logMistake(ex, answer);
     }
 
     state.totalAnswered++;
@@ -486,6 +531,7 @@ function renderReorder(ex) {
       state._lastCorrect = false;
       feedback.className = "reorder-feedback wrong";
       feedback.innerHTML = `✗ Oikea järjestys: <strong>${correctOrder.join(" ")}</strong><br>${ex.explanation}`;
+      if (isLoggedIn()) logMistake(ex, userOrder);
     }
     feedback.classList.remove("hidden");
     $("explanation-block").classList.remove("hidden");
@@ -548,6 +594,8 @@ function renderTranslateMini(ex) {
       if (isCorrect) {
         state.totalCorrect++;
         state.batchCorrect++;
+      } else if (isLoggedIn()) {
+        logMistake(ex, answer);
       }
       state._lastCorrect = isCorrect;
 
@@ -604,6 +652,7 @@ function handleAnswer(chosen, clickedBtn) {
   // Report to adaptive engine (fire-and-forget)
   if (isLoggedIn()) {
     reportAdaptiveAnswer(state.topic || state.mode || "vocab", isCorrect);
+    if (!isCorrect) logMistake(ex, chosen);
   }
 
   // Show SM-2 grade buttons

@@ -388,6 +388,12 @@
         </div>
       </div>
 
+      <!-- Weak topics card -->
+      <div class="dash-weak-topics hidden" id="dash-weak-topics">
+        <div class="dash-section-label">Heikot kohtasi &middot; 7 p&auml;iv&auml;&auml;</div>
+        <div class="dash-weak-list" id="dash-weak-list"></div>
+      </div>
+
       <!-- Activity heatmap -->
       <div class="dash-heatmap-section">
         <div class="dash-section-label">Aktiivisuus · 30 päivää</div>
@@ -1281,6 +1287,21 @@
     window.__POSTHOG_KEY = "phc_pDqvRspyx5eukF7fHFz2P3oKWmNAwJXChBBCPAUsfpwE";
     window.__SENTRY_DSN = "https://7cb568cdf1a71bc8881775edab27ab86@o4511236850909184.ingest.de.sentry.io/4511236858511440";
   </script>
+  <!-- Mistakes drill-down modal -->
+  <div class="mistake-modal-overlay hidden" id="mistake-modal-overlay">
+    <div class="mistake-modal">
+      <button class="mistake-modal-close" id="mistake-modal-close" aria-label="Sulje">&times;</button>
+      <div class="mistake-modal-header">
+        <div class="mistake-modal-topic" id="mistake-modal-topic">Subjunktiivi</div>
+        <div class="mistake-modal-sub" id="mistake-modal-sub">8 virhett&auml; viimeisen 7 p&auml;iv&auml;n aikana</div>
+      </div>
+      <div class="mistake-modal-list" id="mistake-modal-list"></div>
+      <button class="btn-primary mistake-modal-cta" id="mistake-modal-practice">
+        Harjoittele t&auml;t&auml; aihetta (15 min) &rarr;
+      </button>
+    </div>
+  </div>
+
   <script type="module" src="js/main.js"></script>
   <script>
     if ("serviceWorker" in navigator) {
