@@ -181,13 +181,143 @@ const CATEGORY_LABELS = {
   register: "Rekisteri",
 };
 
+// Store last feedback for retry-with-corrections
+let _lastFeedback = null;
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, c => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+  }[c]));
+}
+
+/**
+ * Render the student's text with inline annotations.
+ * Matches errors (red) and annotations (green) against the text.
+ */
+function renderAnnotatedText(originalText, errors, annotations) {
+  const container = $("feedback-annotated-text");
+  if (!container || !originalText) return;
+
+  // Build a list of all spans to highlight: {start, end, kind, data}
+  const spans = [];
+
+  for (const err of errors || []) {
+    const excerpt = err.excerpt || err.original || "";
+    if (!excerpt) continue;
+    const idx = originalText.indexOf(excerpt);
+    if (idx >= 0) {
+      spans.push({
+        start: idx,
+        end: idx + excerpt.length,
+        kind: "error",
+        data: err,
+      });
+    }
+  }
+
+  for (const ann of annotations || []) {
+    const excerpt = ann.excerpt || ann.text || "";
+    if (!excerpt) continue;
+    const idx = originalText.indexOf(excerpt);
+    if (idx >= 0) {
+      // Check for overlap with errors (errors take priority)
+      const overlap = spans.some(s => s.kind === "error" && !(s.end <= idx || s.start >= idx + excerpt.length));
+      if (!overlap) {
+        spans.push({
+          start: idx,
+          end: idx + excerpt.length,
+          kind: "positive",
+          data: ann,
+        });
+      }
+    }
+  }
+
+  // Sort by start, remove overlapping spans
+  spans.sort((a, b) => a.start - b.start);
+  const nonOverlapping = [];
+  let lastEnd = -1;
+  for (const s of spans) {
+    if (s.start >= lastEnd) {
+      nonOverlapping.push(s);
+      lastEnd = s.end;
+    }
+  }
+
+  // Build HTML with inline markers
+  let html = "";
+  let cursor = 0;
+  for (const s of nonOverlapping) {
+    if (s.start > cursor) {
+      html += escapeHtml(originalText.slice(cursor, s.start));
+    }
+    const text = escapeHtml(originalText.slice(s.start, s.end));
+    const dataAttr = encodeURIComponent(JSON.stringify(s.data));
+    const klass = s.kind === "error" ? "annotation-error" : "annotation-positive";
+    html += `<span class="annotation-span ${klass}" data-kind="${s.kind}" data-annotation="${dataAttr}">${text}</span>`;
+    cursor = s.end;
+  }
+  if (cursor < originalText.length) {
+    html += escapeHtml(originalText.slice(cursor));
+  }
+
+  container.innerHTML = html;
+
+  // Wire up hover tooltips
+  const tooltip = $("feedback-tooltip");
+  if (!tooltip) return;
+
+  container.querySelectorAll(".annotation-span").forEach(span => {
+    span.addEventListener("mouseenter", (e) => {
+      const kind = span.dataset.kind;
+      let data;
+      try { data = JSON.parse(decodeURIComponent(span.dataset.annotation)); } catch { return; }
+
+      tooltip.className = "feedback-tooltip " + kind;
+      if (kind === "error") {
+        const catLabel = CATEGORY_LABELS[data.category] || data.category || "Virhe";
+        tooltip.innerHTML = `
+          <div class="feedback-tooltip-header">${escapeHtml(catLabel)}</div>
+          <div class="feedback-tooltip-diff">
+            <span class="feedback-tooltip-wrong">${escapeHtml(data.excerpt || "")}</span>
+            &rarr;
+            <span class="feedback-tooltip-correct">${escapeHtml(data.corrected || "")}</span>
+          </div>
+          <div class="feedback-tooltip-expl">${escapeHtml(data.explanation || "")}</div>
+        `;
+      } else {
+        tooltip.innerHTML = `
+          <div class="feedback-tooltip-header">✓ Hyvin tehty</div>
+          <div class="feedback-tooltip-expl">${escapeHtml(data.comment || "")}</div>
+        `;
+      }
+
+      tooltip.classList.add("visible");
+
+      const rect = span.getBoundingClientRect();
+      tooltip.style.left = (rect.left + rect.width / 2) + "px";
+      tooltip.style.top = (rect.top - 10) + "px";
+      tooltip.style.transform = "translate(-50%, -100%)";
+    });
+
+    span.addEventListener("mouseleave", () => {
+      tooltip.classList.remove("visible");
+    });
+  });
+}
+
 function renderWritingFeedback(result) {
+  _lastFeedback = result;
+
   $("feedback-score-num").textContent = result.finalScore;
   $("feedback-score-denom").textContent = `/ ${result.maxScore}`;
 
   const gradeBadge = $("feedback-grade-badge");
   gradeBadge.textContent = result.ytlGrade;
   gradeBadge.className = "feedback-grade-badge grade-" + result.ytlGrade;
+
+  // Inline annotated text (the centerpiece)
+  renderAnnotatedText(result.originalText || "", result.errors || [], result.annotations || []);
 
   // Criteria with score bars
   const criteriaEl = $("feedback-criteria");
@@ -218,44 +348,46 @@ function renderWritingFeedback(result) {
     criteriaEl.insertAdjacentElement("afterend", notice);
   }
 
-  // Errors with diff-style display
+  // Errors summary (below the annotated text)
   const errorsEl = $("feedback-errors");
+  const errorsSection = $("feedback-errors-section");
   errorsEl.innerHTML = "";
   if (result.errors?.length) {
-    $("feedback-errors-section").style.display = "";
+    errorsSection.classList.remove("hidden");
     result.errors.forEach((err) => {
       const catLabel = CATEGORY_LABELS[err.category] || err.category || "";
       const el = document.createElement("div");
       el.className = "error-item";
       el.innerHTML = `
         <div class="error-diff">
-          <span class="error-cat-tag">${catLabel}</span>
+          <span class="error-cat-tag">${escapeHtml(catLabel)}</span>
           <div class="error-comparison">
-            <span class="error-wrong"><del>${err.excerpt || err.original || ""}</del></span>
+            <span class="error-wrong"><del>${escapeHtml(err.excerpt || err.original || "")}</del></span>
             <span class="error-arrow">→</span>
-            <span class="error-correct"><ins>${err.corrected || err.correct || ""}</ins></span>
+            <span class="error-correct"><ins>${escapeHtml(err.corrected || err.correct || "")}</ins></span>
           </div>
         </div>
-        <p class="error-explanation">${err.explanation}</p>
+        <p class="error-explanation">${escapeHtml(err.explanation || "")}</p>
       `;
       errorsEl.appendChild(el);
     });
   } else {
-    $("feedback-errors-section").style.display = "none";
+    errorsSection.classList.add("hidden");
   }
 
-  // Positives
+  // Positives (sidebar)
   const posEl = $("feedback-positives");
+  const posSection = $("feedback-positives-section");
   posEl.innerHTML = "";
   if (result.positives?.length) {
-    $("feedback-positives-section").style.display = "";
+    posSection.classList.remove("hidden");
     result.positives.forEach((p) => {
       const li = document.createElement("li");
       li.textContent = p;
       posEl.appendChild(li);
     });
   } else {
-    $("feedback-positives-section").style.display = "none";
+    posSection.classList.add("hidden");
   }
 
   $("feedback-overall").textContent = result.overallFeedback || "";
@@ -265,3 +397,21 @@ $("btn-try-again").addEventListener("click", () => loadWritingTask());
 $("btn-back-home").addEventListener("click", () =>
   isLoggedIn() ? _deps.loadDashboard() : show("screen-start")
 );
+
+// Retry with corrections: prefill textarea with original text, stay on same task
+const retryBtn = $("btn-try-again-with-corrections");
+if (retryBtn) {
+  retryBtn.addEventListener("click", () => {
+    if (!_lastFeedback || !_lastFeedback.originalText) {
+      loadWritingTask();
+      return;
+    }
+    // Go back to writing screen with original text prefilled
+    const input = $("writing-input");
+    if (input) {
+      input.value = _lastFeedback.originalText;
+      updateCharCounter();
+    }
+    show("screen-writing");
+  });
+}

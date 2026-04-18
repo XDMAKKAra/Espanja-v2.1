@@ -980,36 +980,64 @@
     </div>
   </div>
 
-  <!-- SCREEN: Writing feedback -->
+  <!-- SCREEN: Writing feedback (visual split-pane) -->
   <div id="screen-writing-feedback" class="screen">
-    <div class="feedback-inner">
-      <div class="feedback-score-row">
-        <div class="feedback-score-main">
-          <span class="feedback-score-num" id="feedback-score-num">27</span>
-          <span class="feedback-score-denom" id="feedback-score-denom">/ 33</span>
+    <div class="feedback-split">
+
+      <!-- LEFT: annotated text -->
+      <div class="feedback-main">
+        <div class="feedback-main-header">
+          <h2 class="feedback-main-title">Kirjoitelmasi</h2>
+          <div class="feedback-legend">
+            <span class="feedback-legend-item">
+              <span class="legend-swatch legend-error"></span>Korjattavaa
+            </span>
+            <span class="feedback-legend-item">
+              <span class="legend-swatch legend-positive"></span>Hyvin tehty
+            </span>
+          </div>
         </div>
-        <div class="feedback-grade-badge" id="feedback-grade-badge">M</div>
+        <div class="feedback-annotated-text" id="feedback-annotated-text"></div>
+
+        <div class="feedback-section hidden" id="feedback-errors-section">
+          <h3 class="feedback-section-title">Yhteenveto korjauksista</h3>
+          <div id="feedback-errors"></div>
+        </div>
+
+        <div class="feedback-actions">
+          <button class="btn-secondary" id="btn-try-again-with-corrections">Yrit&auml; uudestaan korjauksilla</button>
+          <button class="btn-secondary" id="btn-try-again">Uusi teht&auml;v&auml;</button>
+          <button class="btn-primary" id="btn-back-home">Etusivulle &rarr;</button>
+        </div>
       </div>
 
-      <div class="feedback-criteria" id="feedback-criteria"></div>
+      <!-- RIGHT: sidebar with score & rubric -->
+      <aside class="feedback-sidebar">
+        <div class="feedback-score-card">
+          <div class="feedback-score-main">
+            <span class="feedback-score-num" id="feedback-score-num">27</span>
+            <span class="feedback-score-denom" id="feedback-score-denom">/ 33</span>
+          </div>
+          <div class="feedback-grade-badge" id="feedback-grade-badge">M</div>
+        </div>
 
-      <div class="feedback-section" id="feedback-errors-section">
-        <h3 class="feedback-section-title">Korjattavaa</h3>
-        <div id="feedback-errors"></div>
-      </div>
+        <div class="feedback-sidebar-section">
+          <h3 class="feedback-sidebar-title">YTL-rubriikki</h3>
+          <div class="feedback-criteria" id="feedback-criteria"></div>
+        </div>
 
-      <div class="feedback-section" id="feedback-positives-section">
-        <h3 class="feedback-section-title">Hyvin tehty</h3>
-        <ul id="feedback-positives"></ul>
-      </div>
+        <div class="feedback-sidebar-section hidden" id="feedback-positives-section">
+          <h3 class="feedback-sidebar-title">Vahvuudet</h3>
+          <ul id="feedback-positives"></ul>
+        </div>
 
-      <div class="feedback-overall" id="feedback-overall"></div>
+        <div class="feedback-overall" id="feedback-overall"></div>
+      </aside>
 
-      <div class="feedback-actions">
-        <button class="btn-secondary" id="btn-try-again">Uusi tehtävä</button>
-        <button class="btn-primary" id="btn-back-home">Etusivulle →</button>
-      </div>
     </div>
+
+    <!-- Floating tooltip for annotations -->
+    <div class="feedback-tooltip" id="feedback-tooltip"></div>
   </div>
 
   <!-- SCREEN: Grammar drill -->

@@ -76,10 +76,11 @@ router.post("/grade-writing", aiStrictLimiter, softProGate, checkMonthlyCostLimi
   const prompt = buildGradingPrompt(task, studentText, isShort);
 
   try {
-    const aiResult = await callOpenAI(prompt, 2000);
+    const aiResult = await callOpenAI(prompt, 2500);
     logAiUsage(req.user?.userId, "grade-writing", aiResult._usage).catch(() => {});
     delete aiResult._usage;
     const result = processGradingResult(aiResult, charCount, task.charMin, isShort);
+    result.originalText = studentText;
     res.json({ result });
   } catch (err) {
     console.error(err);
