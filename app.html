@@ -29,6 +29,9 @@
       <button class="sidebar-item" data-nav="grammar" id="nav-grammar">
         <span class="sidebar-item-icon">🔧</span> Puheoppi
       </button>
+      <button class="sidebar-item" data-nav="verbsprint" id="nav-verbsprint">
+        <span class="sidebar-item-icon">⚡</span> Verbisprintti
+      </button>
       <button class="sidebar-item" data-nav="reading" id="nav-reading">
         <span class="sidebar-item-icon">📖</span> Luetun ymmärt.
       </button>
@@ -45,6 +48,9 @@
     </nav>
     <div class="sidebar-footer">
       <div class="sidebar-user" id="sidebar-user"></div>
+      <button class="sidebar-item" data-nav="settings" id="nav-settings">
+        <span class="sidebar-item-icon">⚙</span> Asetukset
+      </button>
       <button class="sidebar-item" id="sidebar-logout">
         <span class="sidebar-item-icon">🚪</span> Kirjaudu ulos
       </button>
@@ -104,7 +110,7 @@
       <div class="onboarding-progress">
         <div class="onboarding-progress-fill" id="onboarding-progress-fill"></div>
       </div>
-      <div class="onboarding-step-label" id="onboarding-step-label">1 / 7</div>
+      <div class="onboarding-step-label" id="onboarding-step-label">1 / 9</div>
 
       <!-- Step container (swapped by JS) -->
       <div class="onboarding-step-container" id="onboarding-step-container">
@@ -121,24 +127,40 @@
           </div>
         </div>
 
-        <!-- Step 2: Current grade -->
+        <!-- Step 2: Courses completed -->
         <div class="onboarding-step hidden" data-step="2">
-          <h1 class="onboarding-question">Mikä on nykyinen kouluarvosanasi espanjasta?</h1>
-          <p class="onboarding-hint">Ei haittaa vaikka et tiedä tarkalleen!</p>
-          <div class="onboarding-options grade-grid" id="ob-current-grade">
+          <h1 class="onboarding-question">Montako espanjan kurssia olet suorittanut tai suoritat parhaillaan?</h1>
+          <p class="onboarding-hint">Lukion lyhyessä espanjassa on yhteensä 8 kurssia.</p>
+          <div class="onboarding-options grade-grid" id="ob-courses-completed">
+            <button class="ob-option ob-grade" data-value="1">1</button>
+            <button class="ob-option ob-grade" data-value="2">2</button>
+            <button class="ob-option ob-grade" data-value="3">3</button>
             <button class="ob-option ob-grade" data-value="4">4</button>
+            <button class="ob-option ob-grade" data-value="5">5</button>
+            <button class="ob-option ob-grade" data-value="6">6</button>
+            <button class="ob-option ob-grade" data-value="7">7</button>
+            <button class="ob-option ob-grade" data-value="8">8</button>
+            <button class="ob-option" data-value="unknown">En tiedä</button>
+          </div>
+        </div>
+
+        <!-- Step 3: Grade average -->
+        <div class="onboarding-step hidden" data-step="3">
+          <h1 class="onboarding-question">Mikä on keskiarvosi espanjan kursseilta?</h1>
+          <p class="onboarding-hint">Karkea arvio riittää.</p>
+          <div class="onboarding-options grade-grid" id="ob-grade-average">
             <button class="ob-option ob-grade" data-value="5">5</button>
             <button class="ob-option ob-grade" data-value="6">6</button>
             <button class="ob-option ob-grade" data-value="7">7</button>
             <button class="ob-option ob-grade" data-value="8">8</button>
             <button class="ob-option ob-grade" data-value="9">9</button>
             <button class="ob-option ob-grade" data-value="10">10</button>
-            <button class="ob-option" data-value="unknown">En tiedä vielä</button>
+            <button class="ob-option" data-value="unknown">En tiedä</button>
           </div>
         </div>
 
-        <!-- Step 3: Target grade -->
-        <div class="onboarding-step hidden" data-step="3">
+        <!-- Step 4: Target grade -->
+        <div class="onboarding-step hidden" data-step="4">
           <h1 class="onboarding-question">Mitä arvosanaa tavoittelet yo-kokeessa?</h1>
           <p class="onboarding-hint">Aseta tavoite — räätälöimme harjoittelun sen mukaan.</p>
           <div class="onboarding-options target-grid" id="ob-target-grade">
@@ -165,21 +187,21 @@
           </div>
         </div>
 
-        <!-- Step 4: Study years -->
-        <div class="onboarding-step hidden" data-step="4">
-          <h1 class="onboarding-question">Kuinka kauan olet opiskellut espanjaa?</h1>
-          <p class="onboarding-hint">Tämä auttaa valitsemaan sopivan lähtötason.</p>
-          <div class="onboarding-options" id="ob-study-years">
-            <button class="ob-option" data-value="0.5">Alle vuoden</button>
-            <button class="ob-option" data-value="1">Noin vuoden</button>
-            <button class="ob-option" data-value="2">2 vuotta</button>
-            <button class="ob-option" data-value="3">3 vuotta</button>
-            <button class="ob-option" data-value="4">Kauemmin</button>
+        <!-- Step 5: Study background -->
+        <div class="onboarding-step hidden" data-step="5">
+          <h1 class="onboarding-question">Mistä lähtien olet opiskellut espanjaa?</h1>
+          <p class="onboarding-hint">Tämä vaikuttaa paljon lähtötasoon.</p>
+          <div class="onboarding-options" id="ob-study-background">
+            <button class="ob-option" data-value="lukio">Vain lukiossa</button>
+            <button class="ob-option" data-value="ylakoulu_lukio">Yläkoulusta alkaen (B2-kieli)</button>
+            <button class="ob-option" data-value="alakoulu">Alakoulusta tai A-kielenä</button>
+            <button class="ob-option" data-value="asunut">Asunut espanjankielisessä maassa</button>
+            <button class="ob-option" data-value="kotikieli">Puhun espanjaa kotona / suvun kanssa</button>
           </div>
         </div>
 
-        <!-- Step 5: Weak areas -->
-        <div class="onboarding-step hidden" data-step="5">
+        <!-- Step 6: Weak areas -->
+        <div class="onboarding-step hidden" data-step="6">
           <h1 class="onboarding-question">Mitkä ovat heikkoja alueitasi?</h1>
           <p class="onboarding-hint">Valitse 1–3. Painotamme harjoittelua näihin.</p>
           <div class="onboarding-options checkbox-grid" id="ob-weak-areas">
@@ -196,8 +218,28 @@
           <button class="btn-primary onboarding-next-btn hidden" id="ob-weak-next">Seuraava →</button>
         </div>
 
-        <!-- Step 6: Daily goal -->
-        <div class="onboarding-step hidden" data-step="6">
+        <!-- Step 7: Strength areas (optional) -->
+        <div class="onboarding-step hidden" data-step="7">
+          <h1 class="onboarding-question">Entä vahvuutesi?</h1>
+          <p class="onboarding-hint">Jos on joku osa-alue joka sujuu, painotamme muita. Valinnainen.</p>
+          <div class="onboarding-options checkbox-grid" id="ob-strong-areas">
+            <button class="ob-option ob-checkbox" data-value="vocabulary">📚 Sanasto</button>
+            <button class="ob-option ob-checkbox" data-value="grammar">🔧 Puheoppi yleisesti</button>
+            <button class="ob-option ob-checkbox" data-value="ser_estar">🔄 Ser / Estar</button>
+            <button class="ob-option ob-checkbox" data-value="subjunctive">🌀 Subjunktiivi</button>
+            <button class="ob-option ob-checkbox" data-value="preterite_imperfect">⏱ Preteriti / imperfekti</button>
+            <button class="ob-option ob-checkbox" data-value="writing">✍ Kirjoittaminen</button>
+            <button class="ob-option ob-checkbox" data-value="reading">📖 Tekstinymmärrys</button>
+          </div>
+          <div class="onboarding-strong-error hidden" id="ob-strong-error" role="alert"></div>
+          <div class="onboarding-strong-actions">
+            <button class="btn-secondary" id="ob-strong-skip">Ohita</button>
+            <button class="btn-primary hidden" id="ob-strong-save">Tallenna →</button>
+          </div>
+        </div>
+
+        <!-- Step 8: Daily goal -->
+        <div class="onboarding-step hidden" data-step="8">
           <h1 class="onboarding-question">Kuinka monta minuuttia päivässä haluat harjoitella?</h1>
           <p class="onboarding-hint">Pienikin määrä riittää — säännöllisyys ratkaisee!</p>
           <div class="onboarding-options" id="ob-daily-goal">
@@ -209,8 +251,8 @@
           </div>
         </div>
 
-        <!-- Step 7: Referral source -->
-        <div class="onboarding-step hidden" data-step="7">
+        <!-- Step 9: Referral source -->
+        <div class="onboarding-step hidden" data-step="9">
           <h1 class="onboarding-question">Mistä kuulit Puheosta?</h1>
           <p class="onboarding-hint">Tämä auttaa meitä tavoittamaan lisää opiskelijoita!</p>
           <div class="onboarding-options" id="ob-referral">
@@ -622,7 +664,124 @@
         </div>
       </div>
 
-      <button class="btn-primary" id="btn-start-grammar">Aloita kielioppiharjoittelu →</button>
+      <div class="grammar-start-row">
+        <button class="btn-secondary btn-quickreview" id="btn-show-quickreview" hidden>📖 Näytä kertaus ensin</button>
+        <button class="btn-primary" id="btn-start-grammar">Aloita kielioppiharjoittelu →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCREEN: Mode — Verbisprintti -->
+  <div id="screen-mode-verbsprint" class="screen">
+    <div class="mode-page">
+      <div class="mode-page-header">
+        <span class="mode-page-icon">⚡</span>
+        <div>
+          <h1 class="mode-page-title">Verbisprintti</h1>
+          <p class="mode-page-sub">Nopea taivutusharjoitus — 40 yleisintä verbiä YO-tasolla</p>
+        </div>
+      </div>
+      <div class="mode-page-stats" id="verbsprint-page-stats"></div>
+
+      <div class="mode-page-section">
+        <label class="mode-page-label">Aikamuoto</label>
+        <div class="topic-cards" id="verbsprint-tense-cards">
+          <button class="topic-card active" data-tense="preterite"><span class="topic-card-icon">⏮</span><span class="topic-card-name">Preteriti</span><span class="topic-card-desc">Hablé, tuve, fui...</span></button>
+          <button class="topic-card" data-tense="imperfect"><span class="topic-card-icon">⏳</span><span class="topic-card-name">Imperfekti</span><span class="topic-card-desc">Hablaba, tenía...</span></button>
+          <button class="topic-card" data-tense="subjunctive_present"><span class="topic-card-icon">🌀</span><span class="topic-card-name">Subj. preesens</span><span class="topic-card-desc">Ojalá hable, tenga...</span></button>
+          <button class="topic-card" data-tense="conditional"><span class="topic-card-icon">💭</span><span class="topic-card-name">Konditionaali</span><span class="topic-card-desc">Hablaría, tendría...</span></button>
+          <button class="topic-card" data-tense="imperative"><span class="topic-card-icon">❗</span><span class="topic-card-name">Imperatiivi</span><span class="topic-card-desc">¡Habla! ¡Ten!</span></button>
+        </div>
+      </div>
+
+      <div class="mode-page-section">
+        <label class="mode-page-label">Kesto</label>
+        <div class="level-picker" id="verbsprint-duration-picker">
+          <button class="lvl-btn active" data-duration="10">10</button>
+          <button class="lvl-btn" data-duration="20">20</button>
+        </div>
+        <p class="mode-page-hint">Taivutusta per sprintti</p>
+      </div>
+
+      <button class="btn-primary" id="btn-start-verbsprint">Aloita sprintti →</button>
+    </div>
+  </div>
+
+  <!-- SCREEN: Verbisprintti drill -->
+  <div id="screen-verbsprint" class="screen">
+    <div class="exercise-inner">
+      <div class="ex-header">
+        <div class="ex-meta">
+          <span id="vs-counter">1 / 10</span>
+          <span class="ex-round-badge" id="vs-tense-badge">Preteriti</span>
+          <span class="ex-level-badge" id="vs-paradigms-badge" title="Paradigmakatsauksia jäljellä">📖 3</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" id="vs-progress-fill"></div></div>
+      </div>
+
+      <div class="vs-prompt" id="vs-prompt">
+        <div class="vs-verb-row">
+          <span class="vs-infinitive" id="vs-infinitive">tener</span>
+          <span class="vs-translation" id="vs-translation">olla (omistaa)</span>
+        </div>
+        <div class="vs-person-row">
+          <span class="vs-person-label">Persoona</span>
+          <span class="vs-person" id="vs-person">yo</span>
+        </div>
+      </div>
+
+      <form class="vs-answer-form" id="vs-answer-form" autocomplete="off">
+        <input
+          type="text"
+          id="vs-input"
+          class="vs-input"
+          placeholder="Kirjoita taivutus…"
+          autocomplete="off"
+          autocapitalize="off"
+          autocorrect="off"
+          spellcheck="false"
+          aria-label="Kirjoita verbin taivutus"
+        />
+        <button type="submit" class="btn-primary vs-submit">Tarkista</button>
+      </form>
+
+      <div class="vs-feedback hidden" id="vs-feedback">
+        <div class="vs-feedback-status" id="vs-feedback-status"></div>
+        <div class="vs-feedback-correct" id="vs-feedback-correct"></div>
+        <button class="btn-next" id="vs-btn-next" type="button">Seuraava →</button>
+      </div>
+
+      <button class="btn-secondary vs-paradigm-btn" id="vs-paradigm-btn" type="button">📖 Näytä paradigma</button>
+    </div>
+  </div>
+
+  <!-- SCREEN: Verbisprintti results -->
+  <div id="screen-verbsprint-results" class="screen">
+    <div class="results-inner">
+      <p class="results-label">Sprintti valmis</p>
+      <div class="grade-display" id="vs-score-display">8/10</div>
+      <div class="score-row"><span id="vs-score-text">8 / 10 oikein</span></div>
+      <div class="vs-timing" id="vs-timing"></div>
+      <div class="vs-weakest" id="vs-weakest"></div>
+      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+        <button class="btn-secondary" id="vs-btn-again">Uusi sprintti samalla aikamuodolla</button>
+        <button class="btn-primary" id="vs-btn-restart">Takaisin valintaan →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Verb paradigm modal (shown from sprint) -->
+  <div class="paradigm-overlay hidden" id="paradigm-overlay" role="dialog" aria-modal="true" aria-labelledby="paradigm-title">
+    <div class="paradigm-modal">
+      <button class="paradigm-close" id="paradigm-close" aria-label="Sulje">&times;</button>
+      <div class="paradigm-header">
+        <div class="paradigm-kicker" id="paradigm-kicker">Paradigma</div>
+        <h2 class="paradigm-title" id="paradigm-title">tener — preteriti</h2>
+      </div>
+      <div class="paradigm-body" id="paradigm-body"></div>
+      <div class="paradigm-actions">
+        <button class="btn-primary paradigm-continue" id="paradigm-continue">Seuraava verbi →</button>
+      </div>
     </div>
   </div>
 
@@ -1011,7 +1170,13 @@
           <span class="writing-type-badge" id="writing-type-badge">Lyhyt tehtävä</span>
           <span class="writing-pts-badge" id="writing-pts-badge">33 p</span>
         </div>
-        <div class="writing-limit-info" id="writing-limit-info">160–240 merkkiä (ei välilyöntejä)</div>
+        <div class="writing-header-right">
+          <button type="button" class="verb-ref-btn" id="verb-ref-btn" aria-label="Avaa verbitaulukko" title="Verbit">
+            <span class="verb-ref-btn-icon" aria-hidden="true">📖</span>
+            <span class="verb-ref-btn-label">Verbit</span>
+          </button>
+          <div class="writing-limit-info" id="writing-limit-info">160–240 merkkiä (ei välilyöntejä)</div>
+        </div>
       </div>
 
       <div class="writing-situation" id="writing-situation"></div>
@@ -1145,6 +1310,13 @@
       <div class="grade-display" id="gram-score-display">5/6</div>
       <div class="score-row"><span id="gram-score-text">5 / 6 oikein</span></div>
       <div class="gram-error-summary" id="gram-error-summary"></div>
+      <a class="blog-cta-banner hidden" id="gram-blog-cta" href="#" target="_blank" rel="noopener">
+        <span class="blog-cta-icon" aria-hidden="true">📖</span>
+        <span class="blog-cta-text">
+          <span class="blog-cta-kicker" id="gram-blog-cta-kicker">Haluatko syventyä?</span>
+          <span class="blog-cta-title" id="gram-blog-cta-title">Lue artikkeli →</span>
+        </span>
+      </a>
       <button class="btn-primary" id="gram-btn-restart">Uusi harjoitus →</button>
     </div>
   </div>
@@ -1391,6 +1563,107 @@
     window.__POSTHOG_KEY = "phc_pDqvRspyx5eukF7fHFz2P3oKWmNAwJXChBBCPAUsfpwE";
     window.__SENTRY_DSN = "https://7cb568cdf1a71bc8881775edab27ab86@o4511236850909184.ingest.de.sentry.io/4511236858511440";
   </script>
+  <!-- SCREEN: Settings / profile editor -->
+  <div id="screen-settings" class="screen">
+    <div class="settings-inner">
+      <div class="settings-header">
+        <h1 class="settings-title">Asetukset</h1>
+        <p class="settings-sub">Päivitä profiilitietosi kurssien edistyessä. Adaptiivinen harjoittelu säätyy muutosten mukaan.</p>
+      </div>
+
+      <section class="settings-section">
+        <h2 class="settings-section-title">Opiskeluprofiili</h2>
+        <div class="settings-rows" id="settings-profile-rows" aria-busy="true">
+          <p class="settings-loading">Ladataan profiilia…</p>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- Inline edit modal for settings rows -->
+  <div class="settings-modal-overlay hidden" id="settings-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="settings-modal-title">
+    <div class="settings-modal">
+      <button class="settings-modal-close" id="settings-modal-close" aria-label="Sulje">&times;</button>
+      <div class="settings-modal-head">
+        <h2 class="settings-modal-title" id="settings-modal-title">Muokkaa</h2>
+        <p class="settings-modal-hint" id="settings-modal-hint"></p>
+      </div>
+      <div class="settings-modal-body" id="settings-modal-body"></div>
+      <div class="settings-modal-error hidden" id="settings-modal-error" role="alert"></div>
+      <div class="settings-modal-actions">
+        <button class="btn-secondary" id="settings-modal-cancel">Peruuta</button>
+        <button class="btn-primary" id="settings-modal-save">Tallenna</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Level bump prompt (shown after grade-avg increase) -->
+  <div class="level-bump-overlay hidden" id="level-bump-overlay" role="dialog" aria-modal="true" aria-labelledby="level-bump-title">
+    <div class="level-bump-modal">
+      <button class="level-bump-close" id="level-bump-close" aria-label="Sulje">&times;</button>
+      <div class="level-bump-icon">📈</div>
+      <h2 class="level-bump-title" id="level-bump-title">Haluatko päivittää myös lähtötasosi?</h2>
+      <p class="level-bump-body" id="level-bump-body">Keskiarvosi parani — arvioitu lähtötaso voi nyt olla korkeampi.</p>
+      <div class="level-bump-suggestion" id="level-bump-suggestion"></div>
+      <div class="level-bump-actions">
+        <button class="btn-primary" id="level-bump-apply">Päivitä taso automaattisesti</button>
+        <button class="btn-secondary" id="level-bump-placement">Tee tasotesti</button>
+        <button class="btn-ghost" id="level-bump-skip">Ei nyt</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Verb reference modal (writing only) -->
+  <div class="verbref-overlay hidden" id="verbref-overlay" role="dialog" aria-modal="true" aria-labelledby="verbref-title">
+    <div class="verbref-modal">
+      <button class="verbref-close" id="verbref-close" aria-label="Sulje">&times;</button>
+      <div class="verbref-header">
+        <h2 class="verbref-title" id="verbref-title">Verbit — taivutustaulukko</h2>
+        <p class="verbref-sub">Hae infinitiivillä: tener, poner, ir…</p>
+        <div class="verbref-search-wrap">
+          <input
+            type="text"
+            id="verbref-input"
+            class="verbref-input"
+            placeholder="Kirjoita infinitiivi…"
+            autocomplete="off"
+            autocapitalize="off"
+            autocorrect="off"
+            spellcheck="false"
+            aria-label="Hae verbiä infinitiivillä"
+          />
+          <span class="verbref-count" id="verbref-count"></span>
+        </div>
+        <div class="verbref-suggestions" id="verbref-suggestions" role="listbox"></div>
+      </div>
+      <div class="verbref-body" id="verbref-body">
+        <p class="verbref-empty">Valitse verbi yllä olevasta hakukentästä.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick review modal -->
+  <div class="quickreview-overlay hidden" id="quickreview-overlay" role="dialog" aria-modal="true" aria-labelledby="quickreview-title">
+    <div class="quickreview-modal">
+      <button class="quickreview-close" id="quickreview-close" aria-label="Sulje">&times;</button>
+      <div class="quickreview-header">
+        <div class="quickreview-kicker" id="quickreview-kicker">Pikakertaus · 30–60 s</div>
+        <h2 class="quickreview-title" id="quickreview-title">Aihe</h2>
+      </div>
+      <div class="quickreview-body">
+        <div class="quickreview-rule" id="quickreview-rule"></div>
+        <div class="quickreview-section-label">Esimerkit</div>
+        <div class="quickreview-examples" id="quickreview-examples"></div>
+        <div class="quickreview-section-label">Yleisin virhe</div>
+        <div class="quickreview-mistake" id="quickreview-mistake"></div>
+      </div>
+      <div class="quickreview-actions">
+        <a class="btn-secondary quickreview-blog" id="quickreview-blog" href="#" target="_blank" rel="noopener">Lue lisää blogista →</a>
+        <button class="btn-primary quickreview-start" id="quickreview-start">Aloita harjoitus →</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Mistakes drill-down modal -->
   <div class="mistake-modal-overlay hidden" id="mistake-modal-overlay">
     <div class="mistake-modal">

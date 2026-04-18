@@ -4,6 +4,7 @@ import { state } from "../state.js";
 import { showLoading } from "../ui/loading.js";
 import { srDueCount } from "../features/spacedRepetition.js";
 import { renderAdaptiveCard } from "./adaptive.js";
+import { getBlogForTopic, trackBlogClick } from "../features/topicBlogMap.js";
 
 let _deps = {};
 export function initDashboard({ loadGrammarDrill, loadReadingTask, loadWritingTask, startCheckout, openBillingPortal, startMockExam, showModePage, renderModePageStats, loadNextBatch, showProUpsell }) {
@@ -872,20 +873,37 @@ async function loadWeakTopics() {
     wrap.classList.remove("hidden");
     const maxCount = topics[0]?.count || 1;
 
-    list.innerHTML = topics.map(t => `
-      <div class="dash-weak-item" data-topic="${t.topic}">
-        <div class="dash-weak-top">
-          <span class="dash-weak-label">${t.label}</span>
-          <span class="dash-weak-count">${t.count} virhe${t.count > 1 ? "ttä" : ""}</span>
+    const blogs = await Promise.all(topics.map(t => getBlogForTopic(t.topic)));
+
+    list.innerHTML = topics.map((t, i) => {
+      const blog = blogs[i];
+      const linkHtml = blog
+        ? `<a class="dash-weak-blog-link" href="${blog.url}" target="_blank" rel="noopener" data-topic-key="${blog.key}" data-topic-url="${blog.url}">Lue aiheesta →</a>`
+        : "";
+      return `
+        <div class="dash-weak-item" data-topic="${t.topic}">
+          <div class="dash-weak-top">
+            <span class="dash-weak-label">${t.label}</span>
+            <span class="dash-weak-count">${t.count} virhe${t.count > 1 ? "ttä" : ""}</span>
+          </div>
+          <div class="dash-weak-bar">
+            <div class="dash-weak-bar-fill" style="width: ${Math.round((t.count / maxCount) * 100)}%"></div>
+          </div>
+          ${linkHtml}
         </div>
-        <div class="dash-weak-bar">
-          <div class="dash-weak-bar-fill" style="width: ${Math.round((t.count / maxCount) * 100)}%"></div>
-        </div>
-      </div>
-    `).join("");
+      `;
+    }).join("");
+
+    list.querySelectorAll(".dash-weak-blog-link").forEach(link => {
+      link.addEventListener("click", (e) => {
+        e.stopPropagation();
+        trackBlogClick("dashboard_weak_topic", link.dataset.topicKey, link.dataset.topicUrl);
+      });
+    });
 
     list.querySelectorAll(".dash-weak-item").forEach(item => {
-      item.addEventListener("click", () => {
+      item.addEventListener("click", (e) => {
+        if (e.target.closest(".dash-weak-blog-link")) return;
         openMistakeModal(item.dataset.topic);
       });
     });

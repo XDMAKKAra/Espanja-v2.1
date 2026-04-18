@@ -18,6 +18,10 @@ import { initAdaptive, masteryNext, masteryDone } from "./screens/adaptive.js";
 import { initOnboarding, checkOnboarding } from "./screens/onboarding.js";
 import { initPlacement, checkPlacementNeeded, showPlacementIntro, startPlacementFromRetake } from "./screens/placement.js";
 import { initLearningPath, loadPath, submitMasteryResult } from "./screens/learningPath.js";
+import { initQuickReview } from "./screens/quickReview.js";
+import { initVerbSprint } from "./screens/verbSprint.js";
+import { initVerbReference } from "./screens/verbReference.js";
+import { initSettings, showSettings } from "./screens/settings.js";
 import { initAnalytics, trackError } from "./analytics.js";
 
 // ─── Inject show into api.js (avoids circular dep) ─────────────────────────
@@ -105,6 +109,8 @@ document.querySelectorAll(".sidebar-item[data-nav], .mobile-nav-item[data-nav]")
       loadDashboard();
     } else if (nav === "exam") {
       startFullExam("demo");
+    } else if (nav === "settings") {
+      showSettings();
     } else {
       showModePage(nav);
     }
@@ -146,13 +152,20 @@ if ($("btn-start-vocab")) $("btn-start-vocab").addEventListener("click", () => {
   loadNextBatch();
 });
 
-if ($("btn-start-grammar")) $("btn-start-grammar").addEventListener("click", () => {
+function startGrammarDrill() {
   state.mode = "grammar";
   state.grammarLevel = document.querySelector("#grammar-page-level-picker .lvl-btn.active")?.dataset.level || "C";
   state.grammarTopic = document.querySelector("#grammar-topic-cards .topic-card.active")?.dataset.topic || "mixed";
   state.sessionStartTime = Date.now();
   loadGrammarDrill();
-});
+}
+
+if ($("btn-start-grammar")) $("btn-start-grammar").addEventListener("click", startGrammarDrill);
+
+initQuickReview({ startGrammarDrill });
+initVerbSprint({ saveProgress });
+initVerbReference();
+initSettings({ loadDashboard });
 
 if ($("btn-start-reading")) $("btn-start-reading").addEventListener("click", () => {
   state.mode = "reading";

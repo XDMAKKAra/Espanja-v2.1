@@ -3,6 +3,8 @@ import { API, isLoggedIn } from "../api.js";
 import { state } from "../state.js";
 import { showLoading, showLoadingError } from "../ui/loading.js";
 import { GRAMMAR_TYPE_LABELS } from "./vocab.js";
+import { resetAutoTriggerTracking, recordAnswerForAutoTrigger } from "./quickReview.js";
+import { getBlogForTopic, trackBlogClick } from "../features/topicBlogMap.js";
 
 let _deps = {};
 export function initGrammar({ loadDashboard, saveProgress }) {
@@ -32,6 +34,7 @@ export async function loadGrammarDrill() {
     state.grammarCurrent = 0;
     state.grammarCorrect = 0;
     state.grammarErrors = [];
+    resetAutoTriggerTracking();
 
     renderGrammarExercise();
     show("screen-grammar");
@@ -100,6 +103,10 @@ function handleGrammarAnswer(chosen, clickedBtn, ex) {
     state.grammarErrors.push(ex.rule || "kielioppi");
   }
 
+  if (state.grammarCurrent < 3) {
+    recordAnswerForAutoTrigger(isCorrect, state.grammarTopic);
+  }
+
   document.querySelectorAll("#gram-options-grid .option-btn").forEach((b) => (b.disabled = true));
   $("gram-rule-tag").textContent = ex.rule || "";
   $("gram-explanation-text").textContent = ex.explanation;
@@ -153,7 +160,25 @@ function showGrammarResults() {
     scoreTotal: state.grammarExercises.length,
     ytlGrade: null,
   });
+
+  renderBlogCta(state.grammarTopic);
   show("screen-grammar-results");
+}
+
+async function renderBlogCta(topicKey) {
+  const cta = $("gram-blog-cta");
+  if (!cta) return;
+  const blog = await getBlogForTopic(topicKey);
+  if (!blog) {
+    cta.classList.add("hidden");
+    return;
+  }
+  cta.href = blog.url;
+  $("gram-blog-cta-kicker").textContent = "Haluatko syventyä?";
+  $("gram-blog-cta-title").textContent = `Lue ${blog.read_minutes} min artikkeli →`;
+  cta.classList.remove("hidden");
+
+  cta.onclick = () => trackBlogClick("grammar_results", blog.key, blog.url);
 }
 
 $("gram-btn-restart").addEventListener("click", () =>

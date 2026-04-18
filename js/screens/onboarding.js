@@ -1,6 +1,7 @@
 import { $, show } from "../ui/nav.js";
 import { API, authHeader, apiFetch } from "../api.js";
 import { track } from "../analytics.js";
+import { computeStartingLevel } from "../features/startingLevel.js";
 
 let _deps = {};
 export function initOnboarding({ loadDashboard }) {
@@ -10,33 +11,37 @@ export function initOnboarding({ loadDashboard }) {
 // ─── State ─────────────────────────────────────────────────────────────────
 
 let currentStep = 1;
-const TOTAL_STEPS = 7;
+const TOTAL_STEPS = 9;
 
 const answers = {
   exam_date: null,
-  current_grade: null,
+  spanish_courses_completed: null,
+  spanish_grade_average: null,
   target_grade: null,
-  study_years: null,
+  study_background: null,
   weak_areas: [],
+  strong_areas: null, // null = skipped, [] = saved empty, array = chosen
   daily_goal: null,
   referral: null,
 };
 
 const ENCOURAGEMENTS = [
   "Hyvä alku! 💪",
+  "Kiva, jatketaan!",
   "Loistavaa — jatka samaan malliin!",
   "Melkein valmis! 🚀",
   "Täydellistä!",
   "Hienoa — lähes perillä!",
+  "Mitä osaatkin? 💫",
   "Maalissa kohta! 🎯",
   "Viimeinen kysymys! 🏁",
 ];
 
-// Grade mapping: school grade → YTL grade
-const SCHOOL_TO_YTL = {
-  "4": "I", "5": "A", "6": "B", "7": "C",
-  "8": "M", "9": "E", "10": "L", "unknown": "en tiedä",
-};
+function parseNumberOrNull(v) {
+  if (v === "unknown" || v == null) return null;
+  const n = Number(v);
+  return Number.isFinite(n) ? n : null;
+}
 
 // ─── Initialization ────────────────────────────────────────────────────────
 
@@ -178,14 +183,75 @@ function handleMultiSelect() {
   });
 }
 
+// Step 7: strengths — checkbox with skip + save buttons, overlap validation
+function handleStrongAreas() {
+  const container = $("ob-strong-areas");
+  const skipBtn = $("ob-strong-skip");
+  const saveBtn = $("ob-strong-save");
+  const errEl = $("ob-strong-error");
+  if (!container || !skipBtn || !saveBtn || !errEl) return;
+
+  let selected = [];
+  let errTimeout = null;
+
+  function flashError(msg) {
+    clearTimeout(errTimeout);
+    errEl.textContent = msg;
+    errEl.classList.remove("hidden");
+    errTimeout = setTimeout(() => errEl.classList.add("hidden"), 3500);
+  }
+
+  container.addEventListener("click", (e) => {
+    const btn = e.target.closest(".ob-checkbox");
+    if (!btn) return;
+    const val = btn.dataset.value;
+
+    // Overlap guard — same area can't be both weakness and strength
+    if (!btn.classList.contains("selected") && answers.weak_areas.includes(val)) {
+      btn.classList.remove("selected");
+      selected = selected.filter(a => a !== val);
+      saveBtn.classList.toggle("hidden", selected.length === 0);
+      flashError("Sama alue voi olla vain heikkous tai vahvuus.");
+      return;
+    }
+
+    if (btn.classList.contains("selected")) {
+      btn.classList.remove("selected");
+      selected = selected.filter(a => a !== val);
+    } else {
+      if (selected.length >= 3) {
+        flashError("Valitse enintään 3 vahvuutta.");
+        return;
+      }
+      btn.classList.add("selected");
+      selected.push(val);
+    }
+    saveBtn.classList.toggle("hidden", selected.length === 0);
+  });
+
+  skipBtn.addEventListener("click", () => {
+    answers.strong_areas = null;
+    track("onboarding_answer", { step: "strong_areas", value: "skip" });
+    nextStep();
+  });
+
+  saveBtn.addEventListener("click", () => {
+    answers.strong_areas = selected.slice();
+    track("onboarding_answer", { step: "strong_areas", value: answers.strong_areas });
+    nextStep();
+  });
+}
+
 // Wire up all handlers
 handleSingleSelect("ob-exam-date", "exam_date");
-handleSingleSelect("ob-current-grade", "current_grade", (v) => SCHOOL_TO_YTL[v] || v);
+handleSingleSelect("ob-courses-completed", "spanish_courses_completed", parseNumberOrNull);
+handleSingleSelect("ob-grade-average", "spanish_grade_average", parseNumberOrNull);
 handleSingleSelect("ob-target-grade", "target_grade");
-handleSingleSelect("ob-study-years", "study_years");
+handleSingleSelect("ob-study-background", "study_background");
 handleSingleSelect("ob-daily-goal", "daily_goal");
 handleSingleSelect("ob-referral", "referral");
 handleMultiSelect();
+handleStrongAreas();
 
 // ─── Confetti ──────────────────────────────────────────────────────────────
 
@@ -222,14 +288,18 @@ function renderSummary() {
 
 function buildInsights() {
   const insights = [];
-  const grade = answers.current_grade;
   const target = answers.target_grade;
+  const startingLevel = computeStartingLevel(
+    answers.spanish_courses_completed,
+    answers.spanish_grade_average,
+    answers.study_background,
+  );
 
   // Starting level insight
-  if (grade && grade !== "en tiedä") {
+  if (startingLevel) {
     insights.push({
       icon: "📊",
-      text: `Aloitat ${grade}-tasolta harjoituksissa (nykyinen tasosi).`,
+      text: `Aloitat ${startingLevel}-tasolta harjoituksissa (kurssit + keskiarvo).`,
     });
   } else {
     insights.push({
@@ -274,6 +344,20 @@ function buildInsights() {
     });
   }
 
+  // Strengths
+  if (Array.isArray(answers.strong_areas) && answers.strong_areas.length > 0) {
+    const AREA_NAMES = {
+      vocabulary: "sanasto", grammar: "kielioppi", ser_estar: "ser/estar",
+      subjunctive: "subjunktiivi", preterite_imperfect: "pret./imperf.",
+      writing: "kirjoittaminen", reading: "lukeminen",
+    };
+    const areas = answers.strong_areas.map(a => AREA_NAMES[a] || a).join(", ");
+    insights.push({
+      icon: "⭐",
+      text: `Vähemmän toistoa: ${areas}.`,
+    });
+  }
+
   return insights;
 }
 
@@ -314,12 +398,21 @@ async function saveAndFinish() {
       }
     } catch { /* ignore */ }
 
+    const derivedStartingLevel = computeStartingLevel(
+      answers.spanish_courses_completed,
+      answers.spanish_grade_average,
+      answers.study_background,
+    );
+
     const body = {
-      current_grade: diagnosticGrade || answers.current_grade || "en tiedä",
+      current_grade: diagnosticGrade || derivedStartingLevel || "en tiedä",
+      spanish_courses_completed: answers.spanish_courses_completed,
+      spanish_grade_average: answers.spanish_grade_average,
+      study_background: answers.study_background || null,
       target_grade: answers.target_grade || "M",
       exam_date: examDate,
-      study_years: Number(answers.study_years) || 1,
       weak_areas: answers.weak_areas.length > 0 ? answers.weak_areas : [],
+      strong_areas: answers.strong_areas,
       weekly_goal_minutes: daily * 7,
       preferred_session_length: daily,
       referral_source: answers.referral || null,
@@ -335,8 +428,13 @@ async function saveAndFinish() {
     track("onboarding_completed", {
       exam_date: examDate,
       target_grade: answers.target_grade,
+      spanish_courses_completed: answers.spanish_courses_completed,
+      spanish_grade_average: answers.spanish_grade_average,
+      study_background: answers.study_background,
+      starting_level: derivedStartingLevel,
       daily_goal: daily,
       referral: answers.referral,
+      strong_areas_count: Array.isArray(answers.strong_areas) ? answers.strong_areas.length : null,
     });
 
     window._userProfile = body;

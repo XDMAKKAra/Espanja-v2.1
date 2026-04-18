@@ -911,19 +911,37 @@
 
     <div class="features-grid" id="features-grid">
       <div class="feature-card reveal">
-        <span class="feature-icon anim-pulse">&#129302;</span>
+        <span class="feature-icon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m12 3-1.9 5.8a2 2 0 0 1-1.287 1.288L3 12l5.8 1.9a2 2 0 0 1 1.288 1.287L12 21l1.9-5.8a2 2 0 0 1 1.287-1.288L21 12l-5.8-1.9a2 2 0 0 1-1.288-1.287Z"/>
+            <path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/>
+          </svg>
+        </span>
         <div class="feature-title">Personoitu AI-opettaja</div>
         <div class="feature-desc">J&auml;rjestelm&auml; oppii heikkoutesi ja luo harjoituksia juuri sinulle. Taso sopeutuu suoritukseesi.</div>
       </div>
       <div class="feature-card reveal">
-        <span class="feature-icon anim-bounce">&#9989;</span>
+        <span class="feature-icon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <rect width="8" height="4" x="8" y="2" rx="1" ry="1"/>
+            <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/>
+            <path d="m9 14 2 2 4-4"/>
+          </svg>
+        </span>
         <div class="feature-title">YTL-rubriikin mukainen arviointi</div>
         <div class="feature-desc">Kirjoitelmasi arvioidaan oikealla pisteytysrubriikilla. N&auml;et tarkalleen miss&auml; menet&auml;t pisteita.</div>
       </div>
       <div class="feature-card reveal">
-        <span class="feature-icon anim-spin">&#128257;</span>
-        <div class="feature-title">Spaced repetition</div>
-        <div class="feature-desc">SM-2-algoritmi varmistaa, ett&auml; kertaat sanat juuri ennen kuin ne unohtuvat. Muistat ne kokeeseen.</div>
+        <span class="feature-icon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/>
+            <path d="M21 3v5h-5"/>
+            <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/>
+            <path d="M8 16H3v5"/>
+          </svg>
+        </span>
+        <div class="feature-title">Muistiin j&auml;&auml;v&auml; kertaus</div>
+        <div class="feature-desc">J&auml;rjestelm&auml; palauttaa sanat ja s&auml;&auml;nn&ouml;t kertaukseen juuri ennen kuin unohtaisit ne. Ei turhaa p&auml;nttäämist&auml;.</div>
       </div>
     </div>
     <div class="feature-dots" id="feature-dots" role="tablist" aria-label="Ominaisuudet">
@@ -982,8 +1000,8 @@
       </div>
       <div class="timeline-item">
         <div class="timeline-dot">3</div>
-        <div class="timeline-title">Spaced repetition kertaa virheet</div>
-        <div class="timeline-desc">Jokainen v&auml;&auml;r&auml; vastaus menee kertausjonoon. SM-2-algoritmi palauttaa sen juuri ennen kuin unohdat &mdash; virheiden m&auml;&auml;r&auml; laskee viikko viikolta.</div>
+        <div class="timeline-title">Virheesi kertautuvat &auml;lykk&auml;&auml;sti</div>
+        <div class="timeline-desc">Jokainen v&auml;&auml;r&auml; vastaus palaa kertaukseen juuri ennen kuin unohtaisit sen. Virheiden m&auml;&auml;r&auml; laskee viikko viikolta ilman ett&auml; sinun tarvitsee suunnitella kertausta.</div>
       </div>
       <div class="timeline-item">
         <div class="timeline-dot">4</div>
@@ -1134,9 +1152,9 @@
             <td class="is-ours" data-label="Puheo"><span class="mark yes">&#10003;</span> YTL-rubriikin mukaan</td>
           </tr>
           <tr>
-            <th scope="row" data-label="Ominaisuus">Spaced repetition</th>
+            <th scope="row" data-label="Ominaisuus">&Auml;lyk&auml;s kertaus</th>
             <td data-label="Abitreenit"><span class="mark no">&#10007;</span> Ei</td>
-            <td class="is-ours" data-label="Puheo"><span class="mark yes">&#10003;</span> Unohdukset kertautuvat</td>
+            <td class="is-ours" data-label="Puheo"><span class="mark yes">&#10003;</span> Virheet palautuvat automaattisesti</td>
           </tr>
           <tr>
             <th scope="row" data-label="Ominaisuus">Mobiili UX</th>
@@ -1394,7 +1412,7 @@
           "name": "Tarvitseeko rekisteröityä?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Ei pakollista. Voit harjoitella ilman tiliä. Rekisteröitymällä edistymisesi tallentuu ja saat käyttöösi dashboardin sekä spaced repetition -kertauksen."
+            "text": "Ei pakollista. Voit harjoitella ilman tiliä. Rekisteröitymällä edistymisesi tallentuu ja saat käyttöösi dashboardin sekä älykkään kertausjärjestelmän, joka palauttaa virheesi ennen kuin unohdat ne."
           }
         },
         {
@@ -1434,7 +1452,7 @@
           "name": "Miten Puheo eroaa Abitreeneistä?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Abitreenit on hyvä harjoituspankki, mutta Puheo vie pidemmälle: adaptiivinen taso, YTL-rubriikin mukainen kirjoitelma-arviointi, täyskoe-simulaatio, spaced repetition ja personoidut AI-harjoitukset heikkouksiesi mukaan."
+            "text": "Abitreenit on hyvä harjoituspankki, mutta Puheo vie pidemmälle: adaptiivinen taso, YTL-rubriikin mukainen kirjoitelma-arviointi, täyskoe-simulaatio, älykäs kertaus ja personoidut AI-harjoitukset heikkouksiesi mukaan."
           }
         }
       ]
@@ -1456,7 +1474,7 @@
       </details>
       <details class="faq-item">
         <summary>Tarvitseeko rekister&ouml;ity&auml;?</summary>
-        <p>Ei pakollista. Voit harjoitella ilman tili&auml;. Rekister&ouml;itym&auml;ll&auml; edistymisesi tallentuu ja saat k&auml;ytt&ouml;&ouml;si dashboardin sek&auml; spaced repetition -kertauksen.</p>
+        <p>Ei pakollista. Voit harjoitella ilman tili&auml;. Rekister&ouml;itym&auml;ll&auml; edistymisesi tallentuu ja saat k&auml;ytt&ouml;&ouml;si dashboardin sek&auml; &auml;lykk&auml;&auml;n kertausj&auml;rjestelm&auml;n, joka palauttaa virheesi ennen kuin unohdat ne.</p>
       </details>
       <details class="faq-item">
         <summary>Miten AI-arviointi eroaa opettajan palautteesta?</summary>
@@ -1476,7 +1494,7 @@
       </details>
       <details class="faq-item">
         <summary>Miten Puheo eroaa Abitreeneist&auml;?</summary>
-        <p>Abitreenit on hyv&auml; harjoituspankki, mutta Puheo vie pidemm&auml;lle: adaptiivinen taso, YTL-rubriikin mukainen kirjoitelma-arviointi, t&auml;yskoe-simulaatio, spaced repetition ja personoidut AI-harjoitukset heikkouksiesi mukaan.</p>
+        <p>Abitreenit on hyv&auml; harjoituspankki, mutta Puheo vie pidemm&auml;lle: adaptiivinen taso, YTL-rubriikin mukainen kirjoitelma-arviointi, t&auml;yskoe-simulaatio, &auml;lyk&auml;s kertaus ja personoidut AI-harjoitukset heikkouksiesi mukaan.</p>
       </details>
     </div>
   </section>

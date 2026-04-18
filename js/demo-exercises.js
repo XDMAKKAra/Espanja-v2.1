@@ -36,6 +36,6 @@ export const DEMO_EXERCISES = [
     context: null,
     options: ["A) iba", "B) fui", "C) voy", "D) iré"],
     correct: "A",
-    explanation: "Iba = imperfekti (menin toistuvasti). Siempre + toistuva menneisyys → imperfekti. Fui = preteriti (yksittäinen kerta). Tämä preteriti vs. imperfekti -ero on yksi YTL:n yleisimmistä virheistä."
+    explanation: "Iba = imperfekti (menin toistuvasti). Siempre + toistuva menneisyys → imperfekti. Fui = preteriti (yksittäinen kerta). Tämä preteriti vs. imperfekti -ero on yksi YO-kokeen yleisimmistä virheistä."
   }
 ];

@@ -7,6 +7,7 @@ const router = Router();
 const VALID_GRADES = ["I", "A", "B", "C", "M", "E", "L", "en tiedä"];
 const VALID_TARGET_GRADES = ["B", "C", "M", "E", "L"];
 const VALID_REFERRALS = ["friend", "teacher", "google", "tiktok", "instagram", "other"];
+const VALID_STUDY_BACKGROUNDS = ["lukio", "ylakoulu_lukio", "alakoulu", "asunut", "kotikieli"];
 const VALID_WEAK_AREAS = [
   "vocabulary", "grammar", "ser_estar", "subjunctive", "preterite_imperfect",
   "conditional", "pronouns", "writing", "reading", "idioms", "verbs", "unknown",
@@ -46,10 +47,13 @@ router.post("/profile", requireAuth, async (req, res) => {
   try {
     const {
       current_grade,
+      spanish_courses_completed,
+      spanish_grade_average,
+      study_background,
       target_grade,
       exam_date,
-      study_years,
       weak_areas,
+      strong_areas,
       weekly_goal_minutes,
       preferred_session_length,
       referral_source,
@@ -63,6 +67,21 @@ router.post("/profile", requireAuth, async (req, res) => {
     if (target_grade && !VALID_TARGET_GRADES.includes(target_grade)) {
       return res.status(400).json({ error: "Virheellinen tavoitearvosana" });
     }
+    if (
+      spanish_courses_completed != null &&
+      !(Number.isInteger(spanish_courses_completed) && spanish_courses_completed >= 1 && spanish_courses_completed <= 8)
+    ) {
+      return res.status(400).json({ error: "Virheellinen kurssimäärä (1–8 tai null)" });
+    }
+    if (
+      spanish_grade_average != null &&
+      !(Number.isInteger(spanish_grade_average) && spanish_grade_average >= 4 && spanish_grade_average <= 10)
+    ) {
+      return res.status(400).json({ error: "Virheellinen keskiarvo (4–10 tai null)" });
+    }
+    if (study_background != null && !VALID_STUDY_BACKGROUNDS.includes(study_background)) {
+      return res.status(400).json({ error: "Virheellinen opiskelutausta" });
+    }
     if (weak_areas && !Array.isArray(weak_areas)) {
       return res.status(400).json({ error: "weak_areas pitää olla taulukko" });
     }
@@ -72,6 +91,24 @@ router.post("/profile", requireAuth, async (req, res) => {
         return res.status(400).json({ error: `Virheelliset heikkoudet: ${invalid.join(", ")}` });
       }
     }
+    if (strong_areas !== undefined && strong_areas !== null) {
+      if (!Array.isArray(strong_areas)) {
+        return res.status(400).json({ error: "strong_areas pitää olla taulukko tai null" });
+      }
+      if (strong_areas.length > 3) {
+        return res.status(400).json({ error: "Enintään 3 vahvuutta" });
+      }
+      const invalid = strong_areas.filter(a => !VALID_WEAK_AREAS.includes(a) || a === "unknown");
+      if (invalid.length > 0) {
+        return res.status(400).json({ error: `Virheelliset vahvuudet: ${invalid.join(", ")}` });
+      }
+      if (Array.isArray(weak_areas)) {
+        const overlap = strong_areas.filter(a => weak_areas.includes(a));
+        if (overlap.length > 0) {
+          return res.status(400).json({ error: `Sama alue ei voi olla heikkous ja vahvuus: ${overlap.join(", ")}` });
+        }
+      }
+    }
 
     const profileData = {
       user_id: req.user.userId,
@@ -79,10 +116,13 @@ router.post("/profile", requireAuth, async (req, res) => {
     };
 
     if (current_grade !== undefined) profileData.current_grade = current_grade;
+    if (spanish_courses_completed !== undefined) profileData.spanish_courses_completed = spanish_courses_completed;
+    if (spanish_grade_average !== undefined) profileData.spanish_grade_average = spanish_grade_average;
     if (target_grade !== undefined) profileData.target_grade = target_grade;
     if (exam_date !== undefined) profileData.exam_date = exam_date;
-    if (study_years !== undefined) profileData.study_years = Number(study_years) || 0;
+    if (study_background !== undefined) profileData.study_background = study_background;
     if (weak_areas !== undefined) profileData.weak_areas = weak_areas;
+    if (strong_areas !== undefined) profileData.strong_areas = strong_areas;
     if (weekly_goal_minutes !== undefined) profileData.weekly_goal_minutes = Number(weekly_goal_minutes) || 60;
     if (preferred_session_length !== undefined) profileData.preferred_session_length = Number(preferred_session_length) || 10;
     if (referral_source !== undefined) {

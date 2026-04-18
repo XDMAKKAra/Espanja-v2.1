@@ -49,6 +49,8 @@ export let state = {
   grammarCurrent: 0,
   grammarCorrect: 0,
   grammarErrors: [],
+  quickReviewStreak: 0,
+  quickReviewAutoTriggered: false,
 
   // Reading mode
   readingTopic: "animals and nature",

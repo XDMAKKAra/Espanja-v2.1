@@ -193,7 +193,7 @@ Commit: "feat(adaptive): rigorous level progression with mastery tests"
 Puheon kirjoitustehtävien arviointi ei vastaa YTL:n oikeaa rubriikkia.
 Tee arvostelusta autenttinen.
 
-YTL lyhyt espanja kirjoitelma (kirje/sähköposti, 50-80 sanaa tai 80-120 sanaa):
+YO-kokeen lyhyt espanja kirjoitelma (kirje/sähköposti, 50-80 sanaa tai 80-120 sanaa):
 - Sisältö (max 30p): aihe käsitelty, tehtävänanto täytetty
 - Rakenne (max 20p): kappalejako, sidossanat, loogisuus
 - Kieli (max 50p): kielioppi, sanasto, oikeinkirjoitus, tyylirekisteri
@@ -231,7 +231,7 @@ Commit: "feat(writing): authentic YTL rubric + detailed feedback"
 ## #B8 Kuullun ymmärtäminen
 
 ```
-Puheosta puuttuu kuullun ymmärtäminen — se on 1/3 YTL-kokeesta.
+Puheosta puuttuu kuullun ymmärtäminen — se on 1/3 YO-kokeesta.
 Käytä Web Speech API:n speechSynthesis → ei vaadi maksullista TTS-palvelua.
 
 Tehtävä:
@@ -269,9 +269,9 @@ Commit: "feat(listening): listening comprehension with Web Speech API"
 ## #B9 Täyskoe-simulaatio + ajastin
 
 ```
-Puheoon täyskoesimulaatio — autenttinen YTL-koetilanne.
+Puheoon täyskoesimulaatio — autenttinen YO-koetilanne.
 
-YTL lyhyt espanja rakenne:
+YO-kokeen lyhyt espanja rakenne:
 - Osa 1: Kuullun ymmärtäminen (~30 min, 20-25 p)
 - Osa 2: Kirjallinen osio: sanasto, kielioppi, luetun ymmärtäminen (~2h)
 - Osa 3: Kirjoitelma (~1h)
@@ -520,7 +520,7 @@ TÄRKEÄ KONTEKSTI:
 - Puheolla on kolme hinnoittelutasoa: Free, Pro (9,99€/kk), ja KESÄPAKETTI (29€ kertamaksu).
 - Kesäpaketti = KESÄ-SYYSKUU täysi Pro-pääsy yhdellä maksulla (4kk = 7,25€/kk).
 - Säästö vs. kuukausimaksu: 39,96€ → 29€ = **SÄÄSTÄT 10,96€ (~27%)**.
-- Kohdistettu syksyn 2026 YTL-kokelaille (espanjan kirjoitukset syyskuussa 2026).
+- Kohdistettu syksyn 2026 YO-kokelaille (espanjan kirjoitukset syyskuussa 2026).
 - Kesäpaketti on PÄÄTUOTE kesä-syyskuun markkinoinnissa — nosta se näkyvimmin.
 
 Rakenne (ylhäältä alas):
@@ -668,7 +668,7 @@ Tehtävä:
 4) Kysymyspankki:
    - data/diagnose_questions.json
    - ~60 kysymystä (10 per taso I-L)
-   - Voi käyttää olemassa olevia YTL-arkistoja
+   - Voi käyttää olemassa olevia YO-koearkistoja
 
 5) Lopputulos:
    - "Arvioimamme YTL-arvosana: X"

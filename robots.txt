@@ -1,0 +1,19 @@
+User-agent: *
+Allow: /
+
+# Estä admin/API-reitit hakukoneista
+Disallow: /api/
+Disallow: /routes/
+Disallow: /middleware/
+Disallow: /lib/
+Disallow: /migrations/
+Disallow: /.env
+Disallow: /node_modules/
+
+# Salli kaikki muu julkinen sisältö
+Allow: /blog/
+Allow: /app.html
+Allow: /diagnose.html
+
+# Sitemap
+Sitemap: https://espanja-v2-1.vercel.app/sitemap.xml
