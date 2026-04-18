@@ -223,10 +223,10 @@ body::before {
   display: flex; gap: 6px; flex-wrap: wrap;
 }
 .lang-btn {
-  flex: 1; min-width: 80px; padding: 9px 8px;
+  flex: 1; min-width: 80px; min-height: 44px; padding: 12px 8px;
   background: var(--surface); border: 1px solid var(--border);
   border-radius: 8px; color: var(--text-muted);
-  font-family: var(--font-display); font-size: 13px; font-weight: 600;
+  font-family: var(--font-display); font-size: 14px; font-weight: 600;
   cursor: pointer; transition: all 0.15s; white-space: nowrap;
 }
 .lang-btn:hover { border-color: var(--accent); color: var(--text); }
@@ -795,10 +795,11 @@ select option { background: var(--surface2); }
 }
 .gap-fill-input-row { display: flex; gap: 8px; margin-bottom: 12px; }
 .gap-fill-input {
-  flex: 1; padding: 12px 14px;
+  flex: 1; padding: 14px 14px; min-height: 48px;
   background: var(--surface); border: 1.5px solid var(--border);
   border-radius: 10px; color: var(--text);
-  font-family: var(--font-mono); font-size: 15px;
+  /* 16px prevents iOS auto-zoom on focus */
+  font-family: var(--font-mono); font-size: 16px;
   outline: none; transition: border-color 0.15s;
 }
 .gap-fill-input:focus { border-color: var(--accent); }
@@ -891,7 +892,8 @@ select option { background: var(--surface2); }
   width: 100%; padding: 14px;
   background: var(--surface); border: 1.5px solid var(--border);
   border-radius: 10px; color: var(--text);
-  font-family: var(--font-mono); font-size: 14px;
+  /* 16px prevents iOS auto-zoom on focus */
+  font-family: var(--font-mono); font-size: 16px;
   resize: vertical; outline: none;
   margin-bottom: 12px; transition: border-color 0.15s;
 }
@@ -947,9 +949,10 @@ select option { background: var(--surface2); }
 }
 .sr-grade-btn {
   flex: 1;
-  padding: 6px 4px;
+  padding: 12px 4px;
+  min-height: 44px;
   border-radius: 6px;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
   font-family: var(--font-display);
   cursor: pointer;
@@ -1196,7 +1199,8 @@ select option { background: var(--surface2); }
 #writing-input {
   width: 100%; min-height: 160px; padding: 16px; background: var(--surface);
   border: 1px solid var(--border); border-radius: var(--radius); color: var(--text);
-  font-family: var(--font-mono); font-size: 14px; line-height: 1.7; resize: vertical; outline: none;
+  /* 16px prevents iOS auto-zoom on focus */
+  font-family: var(--font-mono); font-size: 16px; line-height: 1.7; resize: vertical; outline: none;
   transition: border-color 0.2s;
 }
 #writing-input:focus { border-color: var(--accent); }
@@ -1483,7 +1487,8 @@ select option { background: var(--surface2); }
 .reading-short-textarea {
   width: 100%; min-height: 80px; padding: 12px 16px; background: var(--surface);
   border: 1px solid var(--border); border-radius: var(--radius); color: var(--text);
-  font-family: var(--font-mono); font-size: 13px; line-height: 1.6; resize: none; outline: none;
+  /* 16px prevents iOS auto-zoom on focus */
+  font-family: var(--font-mono); font-size: 16px; line-height: 1.6; resize: none; outline: none;
   display: block; margin-bottom: 10px;
 }
 .reading-short-textarea:focus { border-color: var(--accent); }
@@ -1506,19 +1511,20 @@ select option { background: var(--surface2); }
   border-radius: 10px; padding: 4px; margin-bottom: 24px;
 }
 .auth-tab {
-  flex: 1; padding: 9px; border: none; border-radius: 7px;
+  flex: 1; padding: 12px 9px; min-height: 44px; border: none; border-radius: 7px;
   background: transparent; color: var(--text-muted);
-  font-family: var(--font-display); font-size: 13px; font-weight: 600;
+  font-family: var(--font-display); font-size: 14px; font-weight: 600;
   cursor: pointer; transition: all 0.15s;
 }
 .auth-tab.active {
   background: var(--accent2); color: #fff;
 }
 .auth-input {
-  width: 100%; padding: 12px 16px;
+  width: 100%; padding: 14px 16px; min-height: 48px;
   background: var(--surface); border: 1px solid var(--border);
   border-radius: var(--radius); color: var(--text);
-  font-family: var(--font-display); font-size: 14px; outline: none;
+  /* 16px prevents iOS auto-zoom on focus */
+  font-family: var(--font-display); font-size: 16px; outline: none;
   transition: border-color 0.15s;
 }
 .auth-input:focus { border-color: var(--accent); }

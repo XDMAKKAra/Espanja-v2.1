@@ -12,6 +12,13 @@ const VALID_WEAK_AREAS = [
   "conditional", "pronouns", "writing", "reading", "idioms", "verbs", "unknown",
 ];
 
+// Must match keys in lib/learningPath.js
+const VALID_MASTERY_TOPICS = new Set([
+  "present_regular", "present_irregular", "preterite", "imperfect",
+  "preterite_vs_imperfect", "future", "conditional", "subjunctive_present",
+  "pluscuamperfecto", "subjunctive_imperfect",
+]);
+
 // GET /api/profile — fetch user profile
 router.get("/profile", requireAuth, async (req, res) => {
   try {
@@ -104,6 +111,57 @@ router.post("/profile", requireAuth, async (req, res) => {
     return res.json({ ok: true, profile: data });
   } catch (err) {
     console.error("Profile error:", err.message);
+    return res.status(500).json({ error: "Palvelinvirhe" });
+  }
+});
+
+// POST /api/profile/mastery-seed — initial mastery rows from landing mini-diagnostic.
+// Correct answers pre-unlock that topic (status="available") without cascading.
+// Uses ignoreDuplicates so re-registering or re-seeding never overwrites real progress.
+router.post("/profile/mastery-seed", requireAuth, async (req, res) => {
+  try {
+    const { mastery } = req.body;
+    if (!Array.isArray(mastery)) {
+      return res.status(400).json({ error: "mastery-lista puuttuu" });
+    }
+    if (mastery.length > 20) {
+      return res.status(400).json({ error: "Liian monta merkint\u00e4\u00e4" });
+    }
+
+    const now = new Date().toISOString();
+    const rows = [];
+    for (const m of mastery) {
+      if (!m || typeof m.topic_key !== "string") continue;
+      if (!VALID_MASTERY_TOPICS.has(m.topic_key)) continue;
+      const bestPct = Math.max(0, Math.min(1, Number(m.best_pct) || 0));
+      // Only pre-unlock for correct answers; skip wrong ones (normal unlock chain handles those)
+      if (bestPct < 0.5) continue;
+      rows.push({
+        user_id: req.user.userId,
+        topic_key: m.topic_key,
+        status: "available",
+        best_pct: 0,       // don't credit mastery from 1-question diagnostic
+        best_score: 0,
+        attempts: 0,
+        unlocked_at: now,
+        updated_at: now,
+      });
+    }
+
+    if (rows.length === 0) return res.json({ ok: true, inserted: 0 });
+
+    const { error } = await supabase
+      .from("user_mastery")
+      .upsert(rows, { onConflict: "user_id,topic_key", ignoreDuplicates: true });
+
+    if (error) {
+      console.error("Mastery seed error:", error.message);
+      return res.status(500).json({ error: "Siemennys ep\u00e4onnistui" });
+    }
+
+    return res.json({ ok: true, inserted: rows.length });
+  } catch (err) {
+    console.error("Mastery seed error:", err.message);
     return res.status(500).json({ error: "Palvelinvirhe" });
   }
 });

@@ -4,6 +4,7 @@
   --surface2: #201414;
   --border: #3d2020;
   --brand: #e63946;
+  --brand-btn: #c62020;        /* darker brand for white-text buttons — passes WCAG AA (5.80:1) */
   --brand-light: #f59e0b;
   --brand-glow: rgba(230, 57, 70, 0.25);
   --text: #f5e8e0;
@@ -60,6 +61,10 @@ body::after {
   pointer-events: none;
   z-index: 0;
 }
+/* Disable heavy animated background on mobile + reduced-motion (budget Android perf) */
+@media (max-width: 720px), (prefers-reduced-motion: reduce) {
+  body::after { animation: none; }
+}
 @keyframes meshRotate {
   to { transform: rotate(360deg); }
 }
@@ -74,13 +79,18 @@ body::after {
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 200;
-  background: linear-gradient(90deg, #c62020 0%, #e63946 50%, #c62020 100%);
+  /* Gradient stays within AA range for white text (mid-point not lighter than c62020) */
+  background: linear-gradient(90deg, #a01818 0%, #c62020 50%, #a01818 100%);
   color: #fff;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
   display: flex;
   align-items: center;
   justify-content: center;
+  /* Safe-area: iPhone notch / Dynamic Island */
+  padding-top: env(safe-area-inset-top, 0);
+  padding-left: env(safe-area-inset-left, 0);
+  padding-right: env(safe-area-inset-right, 0);
 }
 .urgency-bar-inner {
   display: flex;
@@ -98,15 +108,20 @@ body::after {
 .urgency-emoji { margin-right: 6px; }
 .urgency-bar-close {
   position: absolute;
-  right: 12px;
+  right: 4px;
   top: 50%; transform: translateY(-50%);
   background: none;
   border: none;
   color: rgba(255,255,255,0.7);
   font-size: 20px;
   cursor: pointer;
-  padding: 4px 8px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 12px;
   line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 .urgency-bar-close:hover { color: #fff; }
 
@@ -148,8 +163,8 @@ body::after {
 .nav-links a:hover { color: var(--text); }
 
 .nav-cta {
-  padding: 9px 20px; background: var(--brand); border-radius: 8px;
-  color: #fff; text-decoration: none; font-size: 13px; font-weight: 700;
+  padding: 9px 20px; background: var(--brand-btn); border-radius: 8px;
+  color: #fff; text-decoration: none; font-size: 14px; font-weight: 700;
   transition: opacity 0.15s, transform 0.1s;
 }
 .nav-cta:hover { opacity: 0.88; transform: translateY(-1px); }
@@ -197,7 +212,7 @@ body::after {
 
 .btn-hero {
   display: inline-block; padding: 16px 36px;
-  background: var(--brand); border-radius: 12px;
+  background: var(--brand-btn); border-radius: 12px;
   color: #fff; text-decoration: none; font-size: 16px; font-weight: 700;
   transition: all 0.2s;
   box-shadow: 0 0 40px rgba(230, 57, 70, 0.4);
@@ -405,14 +420,30 @@ body::after {
   margin-top: 20px;
 }
 .screenshot-dot {
-  width: 10px; height: 10px;
+  /* Invisible 44×44 hit area around a 10px visual dot (Apple HIG) */
+  width: 44px; height: 44px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s;
+  opacity: 0.7;
+}
+.screenshot-dot::before {
+  content: "";
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   border: 1px solid var(--border);
   background: transparent;
-  cursor: pointer;
-  transition: all 0.2s;
+  transition: background 0.2s, border-color 0.2s;
 }
-.screenshot-dot.active {
+.screenshot-dot.active { opacity: 1; }
+.screenshot-dot.active::before {
   background: var(--brand);
   border-color: var(--brand);
 }
@@ -462,7 +493,7 @@ body::after {
 .price-card.popular.summer { border-color: var(--brand-light); }
 .price-badge {
   position: absolute; top: -11px; left: 50%; transform: translateX(-50%);
-  background: var(--brand); color: #fff; font-family: var(--mono);
+  background: var(--brand-btn); color: #fff; font-family: var(--mono);
   font-size: 10px; font-weight: 700; letter-spacing: 0.1em;
   text-transform: uppercase; padding: 4px 14px; border-radius: 20px;
   white-space: nowrap;
@@ -505,7 +536,7 @@ body::after {
 }
 .price-btn:hover { border-color: var(--brand); color: var(--brand); }
 .price-btn.primary {
-  background: var(--brand); border-color: var(--brand); color: #fff;
+  background: var(--brand-btn); border-color: var(--brand-btn); color: #fff;
   box-shadow: 0 0 20px rgba(230, 57, 70, 0.3);
 }
 .price-btn.primary:hover { opacity: 0.9; }
@@ -585,12 +616,12 @@ body::after {
 .waitlist-form input::placeholder { color: var(--text-muted); }
 .waitlist-submit {
   padding: 12px 20px;
-  background: var(--brand);
+  background: var(--brand-btn);
   border: none;
   border-radius: 10px;
   color: #fff;
   font-family: var(--font);
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 700;
   cursor: pointer;
   white-space: nowrap;
@@ -669,6 +700,9 @@ footer {
 .footer-links a {
   font-family: var(--mono); font-size: 12px; color: var(--text-muted);
   text-decoration: none; transition: color 0.15s;
+  /* Touch target: 44×44 minimum */
+  display: inline-flex; align-items: center;
+  min-height: 44px; padding: 6px 4px;
 }
 .footer-links a:hover { color: var(--text); }
 
@@ -747,8 +781,8 @@ footer {
   font-family: var(--mono); margin-bottom: 14px;
 }
 .demo-btn-next {
-  display: inline-block; padding: 10px 24px;
-  background: var(--brand); border: none; border-radius: 8px;
+  display: inline-block; padding: 12px 24px; min-height: 44px;
+  background: var(--brand-btn); border: none; border-radius: 8px;
   color: #fff; font-family: var(--font); font-size: 14px; font-weight: 700;
   cursor: pointer; transition: opacity 0.15s, transform 0.1s;
 }
@@ -771,8 +805,8 @@ footer {
 .demo-results-pitch { font-size: 14px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.6; }
 .demo-results-actions { display: flex; flex-direction: column; gap: 10px; align-items: center; }
 .demo-btn-primary {
-  display: inline-block; padding: 14px 32px; background: var(--brand);
-  border-radius: 10px; color: #fff; text-decoration: none; font-size: 15px;
+  display: inline-block; padding: 14px 32px; background: var(--brand-btn);
+  border-radius: 10px; color: #fff; text-decoration: none; font-size: 16px;
   font-weight: 700; transition: all 0.15s; width: 100%; text-align: center;
   box-shadow: 0 0 30px rgba(230, 57, 70, 0.35);
 }
@@ -873,7 +907,7 @@ footer {
   box-shadow: 0 0 12px rgba(230, 57, 70, 0.2);
 }
 .timeline-item.visible .timeline-dot {
-  background: var(--brand);
+  background: var(--brand-btn);
   color: #fff;
   transition: background 0.4s 0.3s, color 0.4s 0.3s;
 }
@@ -967,4 +1001,66 @@ footer {
 @media (max-width: 480px) {
   .steps { grid-template-columns: 1fr; }
   .urgency-bar-inner { padding: 8px 32px 8px 12px; }
+}
+
+/* ============================================================
+   EXAM COUNTDOWN (below hero)
+   ============================================================ */
+.exam-countdown {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 8px 24px 40px;
+}
+.exam-countdown-inner {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px 24px 26px;
+  text-align: center;
+}
+.countdown-kicker {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--brand-light);
+  margin-bottom: 16px;
+}
+.countdown-number {
+  font-family: var(--font);
+  font-weight: 800;
+  font-size: 56px;
+  line-height: 1;
+  color: var(--text);
+  letter-spacing: -0.02em;
+  margin-bottom: 12px;
+}
+.countdown-number .countdown-unit {
+  font-weight: 600;
+  font-size: 26px;
+  color: var(--text-muted);
+  letter-spacing: 0;
+}
+.countdown-exam {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  margin-bottom: 18px;
+}
+.countdown-context {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--text);
+  max-width: 440px;
+  margin: 0 auto;
+}
+.exam-countdown.is-post-exam .countdown-number { font-size: 32px; }
+.exam-countdown.is-post-exam .countdown-number .countdown-unit { display: none; }
+@media (max-width: 560px) {
+  .countdown-number { font-size: 44px; }
+  .countdown-number .countdown-unit { font-size: 20px; }
+  .exam-countdown-inner { padding: 24px 18px 22px; }
 }

@@ -4,6 +4,37 @@ import { state } from "../state.js";
 import { checkOnboarding } from "./onboarding.js";
 import { checkPlacementNeeded, showPlacementIntro } from "./placement.js";
 
+const DIAG_STORAGE_KEY = "puheo_diagnostic_v1";
+
+async function seedMasteryFromDiagnostic(token) {
+  let payload;
+  try {
+    const raw = localStorage.getItem(DIAG_STORAGE_KEY);
+    if (!raw) return;
+    const parsed = JSON.parse(raw);
+    if (!parsed || !Array.isArray(parsed.mastery_seed) || parsed.mastery_seed.length === 0) return;
+    payload = { mastery: parsed.mastery_seed };
+  } catch {
+    return;
+  }
+
+  try {
+    const res = await fetch(`${API}/api/profile/mastery-seed`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(payload),
+    });
+    if (res.ok) {
+      localStorage.removeItem(DIAG_STORAGE_KEY);
+    }
+  } catch {
+    // Silent — diagnostic seeding is best-effort, never blocks registration
+  }
+}
+
 let _deps = {};
 export function initAuth({ updateSidebarState, loadDashboard }) {
   _deps = { updateSidebarState, loadDashboard };
@@ -18,6 +49,8 @@ $("tab-login").addEventListener("click", () => {
   $("auth-title").textContent = "Kirjaudu sisään";
   $("btn-auth-submit").textContent = "Kirjaudu sisään →";
   $("auth-error").classList.add("hidden");
+  // Browser password-manager hint
+  $("auth-password").setAttribute("autocomplete", "current-password");
 });
 
 $("tab-register").addEventListener("click", () => {
@@ -27,6 +60,8 @@ $("tab-register").addEventListener("click", () => {
   $("auth-title").textContent = "Luo tili";
   $("btn-auth-submit").textContent = "Luo tili →";
   $("auth-error").classList.add("hidden");
+  // Tells password managers to offer/save a strong new password
+  $("auth-password").setAttribute("autocomplete", "new-password");
 });
 
 $("btn-auth-submit").addEventListener("click", async () => {
@@ -59,6 +94,10 @@ $("btn-auth-submit").addEventListener("click", async () => {
     }
     setAuth(data.token, data.refreshToken, data.email);
     _deps.updateSidebarState();
+    if (authMode === "register") {
+      // Fire-and-forget: seed user_mastery from landing-page mini-diagnostic
+      seedMasteryFromDiagnostic(data.token);
+    }
     // Check onboarding → placement → dashboard
     const needsOnboarding = await checkOnboarding();
     if (!needsOnboarding) {
