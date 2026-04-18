@@ -68,7 +68,7 @@
 
     <div class="hero-social-proof hidden" id="hero-social-proof">
       <span class="hero-proof-dot"></span>
-      <span>K&auml;yt&ouml;ss&auml; <strong id="hero-user-count">0</strong> lukiolaisella</span>
+      <span><strong id="hero-user-count">0</strong> lukiolaista harjoittelee Puheolla</span>
     </div>
 
   </section>
@@ -242,6 +242,56 @@
         <button class="screenshot-dot" data-idx="2" aria-label="Kuva 3"></button>
         <button class="screenshot-dot" data-idx="3" aria-label="Kuva 4"></button>
       </div>
+    </div>
+  </section>
+
+  <!-- 5b) AUTHORITY SIGNALS - "Miksi Puheo toimii" -->
+  <section class="section authority-section" id="why-works">
+    <div class="section-tag">Miksi Puheo toimii</div>
+    <h2>Rakennettu <em>YTL:n rubriikin</em> mukaan.</h2>
+    <p class="section-sub">Jokainen harjoitus ja arviointi perustuu YO-kokeen viralliseen rakenteeseen ja arviointiohjeisiin.</p>
+
+    <div class="authority-grid">
+
+      <!-- 1. YTL rubric -->
+      <div class="authority-card">
+        <div class="authority-icon">&#128203;</div>
+        <h3 class="authority-title">YTL:n virallinen rubriikki</h3>
+        <p class="authority-desc">
+          Kirjoitelmasi arvioidaan samoilla kolmella kriteerill&auml; kuin oikeassa YO-kokeessa:
+          sis&auml;lt&ouml; ja ymm&auml;rrett&auml;vyys, kielellinen laajuus, kielellinen oikeellisuus.
+        </p>
+        <a href="https://www.ylioppilastutkinto.fi/images/sivuston_tiedostot/Ohjeet/Koekohtaiset/fi_ruotsi_lyhyt.pdf" target="_blank" rel="noopener" class="authority-link">
+          Katso YTL:n arviointiohjeet &rarr;
+        </a>
+      </div>
+
+      <!-- 2. 10-year archive -->
+      <div class="authority-card">
+        <div class="authority-icon">&#128218;</div>
+        <h3 class="authority-title">10 vuoden YO-arkisto pohjana</h3>
+        <p class="authority-desc">
+          Harjoitukset heijastelevat todellisia koetehtavia: sanasto todellisista yo-teksteist&auml;,
+          kielioppi samoista rakenteista kuin kokeissa &mdash; ei kurssikirjan k&auml;&auml;nn&ouml;smekaniikkaa.
+        </p>
+        <a href="https://yle.fi/aihe/abitreenit/espanja" target="_blank" rel="noopener" class="authority-link">
+          Katso YLE Abitreenit-arkisto &rarr;
+        </a>
+      </div>
+
+      <!-- 3. Exam structure -->
+      <div class="authority-card">
+        <div class="authority-icon">&#127919;</div>
+        <h3 class="authority-title">Kokeen rakenne &mdash; kaikki osa-alueet</h3>
+        <p class="authority-desc">
+          Espanjan lyhyen oppim&auml;&auml;r&auml;n YO-koe koostuu kuullun ja luetun ymm&auml;rt&auml;misest&auml;,
+          rakenteista ja sanastosta sek&auml; lyhyest&auml; ja pitk&auml;st&auml; kirjoitelmasta. Puheo harjoittaa kaikkia.
+        </p>
+        <a href="https://www.ylioppilastutkinto.fi/ylioppilastutkinto/koe-ja-tehtavatyypit/kielikokeet" target="_blank" rel="noopener" class="authority-link">
+          YTL: vieraan kielen kokeet &rarr;
+        </a>
+      </div>
+
     </div>
   </section>
 
@@ -541,16 +591,24 @@
       });
     })();
 
-    // Social proof user count
+    // Social proof user count — hidden until count is credible (>=50)
     (function() {
+      var el = document.getElementById('hero-social-proof');
+      // Force hide by default (belt & suspenders: class + inline style)
+      if (el) el.style.display = 'none';
+
       fetch('/api/user-count')
         .then(function(r) { return r.json(); })
         .then(function(d) {
           var count = d.count || 0;
-          if (count >= 10) {
+          if (count >= 50) {
             document.getElementById('hero-user-count').textContent = count;
-            document.getElementById('hero-social-proof').classList.remove('hidden');
+            if (el) {
+              el.classList.remove('hidden');
+              el.style.display = '';
+            }
           }
+          // else: leave hidden — 0 or low numbers hurt conversion more than no signal
         })
         .catch(function() {});
     })();
