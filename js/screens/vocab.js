@@ -238,7 +238,22 @@ export function renderExercise() {
   const totalQuestions = MAX_BATCHES * BATCH_SIZE;
 
   $("ex-counter").textContent = `Q ${questionNum} / ${totalQuestions}`;
-  $("ex-round").textContent = ex._sr ? "🔁 Kertaus" : `Kierros ${state.batchNumber}/${MAX_BATCHES}`;
+
+  // SR review badge with repetition number
+  if (ex._sr) {
+    const repNum = ex.reviewNumber || (ex.repetitions || 0) + 1;
+    const daysSince = ex.daysSinceLearned;
+    let srLabel = `🔁 Kertaus #${repNum}`;
+    if (typeof daysSince === "number" && daysSince > 0) {
+      srLabel += ` · opit ${daysSince}pv sitten`;
+    }
+    $("ex-round").textContent = srLabel;
+    $("ex-round").classList.add("sr-review-badge");
+  } else {
+    $("ex-round").textContent = `Kierros ${state.batchNumber}/${MAX_BATCHES}`;
+    $("ex-round").classList.remove("sr-review-badge");
+  }
+
   $("ex-level-badge").textContent = state.level;
   $("progress-fill").style.width = `${((questionNum - 1) / totalQuestions) * 100}%`;
 
@@ -681,15 +696,29 @@ function handleAnswer(chosen, clickedBtn) {
   }
 }
 
-$("btn-next").addEventListener("click", () => {
+$("btn-next").addEventListener("click", async () => {
   // Submit SR review with selected grade
   const ex = state.exercises[state.current];
   const grade = state._srGrade ?? (state._lastCorrect ? 4 : 0);
-  srReview(ex, grade, state.language);
 
-  // Hide grade row
+  // For review cards, wait for response and animate interval change
+  if (ex._sr && isLoggedIn() && !state._srAnimationShown) {
+    const srResponse = await srReview(ex, grade, state.language);
+    if (srResponse) {
+      showSrIntervalAnimation(srResponse, ex);
+      state._srAnimationShown = true;
+      return; // wait for user to click next again
+    }
+  } else {
+    srReview(ex, grade, state.language);
+  }
+
+  state._srAnimationShown = false;
+
+  // Hide grade row + animation
   const gradeRow = $("sr-grade-row");
   if (gradeRow) gradeRow.classList.add("hidden");
+  removeSrAnimation();
 
   state.current++;
   if (state.current >= state.exercises.length) {
@@ -698,6 +727,47 @@ $("btn-next").addEventListener("click", () => {
     renderExercise();
   }
 });
+
+function showSrIntervalAnimation(sr, ex) {
+  const explBlock = $("explanation-block");
+  if (!explBlock) return;
+
+  const remembered = (sr.last_grade ?? 0) >= 3;
+  const prev = sr.previousInterval || 0;
+  const next = sr.interval_days || 1;
+
+  // Remove any prior animation
+  removeSrAnimation();
+
+  const container = document.createElement("div");
+  container.className = "sr-interval-wrap";
+  container.innerHTML = `
+    <div class="sr-interval-message ${remembered ? "remembered" : "forgot"}">
+      ${remembered ? "✓ Muistit!" : "✗ Unohdit."}
+    </div>
+    <div class="sr-interval-animation">
+      <div class="sr-interval-from">${prev > 0 ? prev + " pv" : "uusi"}</div>
+      <div class="sr-interval-arrow">→</div>
+      <div class="sr-interval-to ${remembered ? "" : "reset"}">${next} pv</div>
+    </div>
+    <div class="sr-review-meta" style="text-align:center">
+      ${remembered
+        ? `Seuraava kertaus ${next} päivän päästä`
+        : `Palautetaan huomiseen`}
+    </div>
+  `;
+  explBlock.appendChild(container);
+
+  // Update button text
+  const btn = $("btn-next");
+  if (btn) btn.textContent = "Jatka →";
+}
+
+function removeSrAnimation() {
+  document.querySelectorAll(".sr-interval-wrap").forEach(el => el.remove());
+  const btn = $("btn-next");
+  if (btn) btn.textContent = "Seuraava →";
+}
 
 // SM-2 grade button clicks
 const gradeRow = $("sr-grade-row");

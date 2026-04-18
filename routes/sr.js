@@ -69,6 +69,7 @@ router.post("/review", requireAuth, async (req, res) => {
       repetitions: 0,
     };
 
+    const previousInterval = current.interval_days || 0;
     const updated = sm2(current, grade);
 
     const { error } = await supabase
@@ -84,7 +85,12 @@ router.post("/review", requireAuth, async (req, res) => {
 
     if (error) throw error;
 
-    res.json({ ok: true, ...updated });
+    res.json({
+      ok: true,
+      ...updated,
+      previousInterval,
+      intervalGrew: updated.interval_days > previousInterval,
+    });
   } catch (err) {
     console.error("SR review error:", err.message);
     res.status(500).json({ error: "Kertauspäivitys epäonnistui" });
@@ -101,7 +107,7 @@ router.get("/due", requireAuth, async (req, res) => {
   try {
     const { data, error } = await supabase
       .from("sr_cards")
-      .select("id, word, question, language, ease_factor, interval_days, repetitions, next_review, last_grade")
+      .select("id, word, question, language, ease_factor, interval_days, repetitions, next_review, last_grade, created_at, updated_at")
       .eq("user_id", userId)
       .eq("language", language)
       .lte("next_review", today)
@@ -110,7 +116,19 @@ router.get("/due", requireAuth, async (req, res) => {
 
     if (error) throw error;
 
-    res.json({ cards: data || [], count: data?.length || 0 });
+    // Annotate with days since learned + last review
+    const now = Date.now();
+    const cards = (data || []).map(c => {
+      const learnedAt = new Date(c.created_at).getTime();
+      const daysSinceLearned = Math.floor((now - learnedAt) / (24 * 60 * 60 * 1000));
+      return {
+        ...c,
+        daysSinceLearned,
+        reviewNumber: (c.repetitions || 0) + 1,
+      };
+    });
+
+    res.json({ cards, count: cards.length });
   } catch (err) {
     console.error("SR due error:", err.message);
     res.status(500).json({ error: "Kertauskorttien haku epäonnistui" });
@@ -137,6 +155,70 @@ router.get("/count", requireAuth, async (req, res) => {
     res.json({ count: count || 0 });
   } catch (err) {
     res.json({ count: 0 });
+  }
+});
+
+// ─── GET /api/sr/forecast ──────────────────────────────────────────────────
+
+router.get("/forecast", requireAuth, async (req, res) => {
+  const { language = "spanish", days = 30 } = req.query;
+  const userId = req.user.userId;
+  const clampedDays = Math.max(7, Math.min(60, Number(days) || 30));
+
+  try {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const endDate = new Date(today);
+    endDate.setDate(endDate.getDate() + clampedDays);
+
+    const { data, error } = await supabase
+      .from("sr_cards")
+      .select("next_review")
+      .eq("user_id", userId)
+      .eq("language", language)
+      .lte("next_review", endDate.toISOString().slice(0, 10));
+
+    if (error) throw error;
+
+    // Bucket by day
+    const buckets = new Array(clampedDays).fill(0);
+    const todayStr = today.toISOString().slice(0, 10);
+
+    for (const card of data || []) {
+      const reviewDate = new Date(card.next_review);
+      reviewDate.setHours(0, 0, 0, 0);
+      const dayDiff = Math.floor((reviewDate - today) / (24 * 60 * 60 * 1000));
+      if (dayDiff < 0) {
+        // Overdue → bucket into day 0 (today)
+        buckets[0]++;
+      } else if (dayDiff < clampedDays) {
+        buckets[dayDiff]++;
+      }
+    }
+
+    // Build response with dates
+    const forecast = buckets.map((count, i) => {
+      const d = new Date(today);
+      d.setDate(d.getDate() + i);
+      return {
+        date: d.toISOString().slice(0, 10),
+        dayOffset: i,
+        count,
+      };
+    });
+
+    const totalCards = (data || []).length;
+    const dueTodayOrOverdue = buckets[0];
+
+    res.json({
+      forecast,
+      totalCards,
+      dueToday: dueTodayOrOverdue,
+      maxDaily: Math.max(...buckets),
+    });
+  } catch (err) {
+    console.error("SR forecast error:", err.message);
+    res.status(500).json({ error: "Ennusteen haku epäonnistui" });
   }
 });
 

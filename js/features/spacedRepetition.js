@@ -43,12 +43,14 @@ export async function srReview(ex, grade, language = "spanish") {
   // Logged in: call SM-2 API
   const word = ex.question || ex.sentence || ex.word || "";
   try {
-    await apiFetch(`${API}/api/sr/review`, {
+    const res = await apiFetch(`${API}/api/sr/review`, {
       method: "POST",
       headers: { "Content-Type": "application/json", ...authHeader() },
       body: JSON.stringify({ word, question: ex.question, language, grade }),
     });
+    if (res.ok) return await res.json();
   } catch { /* silent */ }
+  return null;
 }
 
 /**

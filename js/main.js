@@ -177,11 +177,11 @@ if (fullExamBtn) {
   fullExamBtn.addEventListener("click", () => startFullExam("demo"));
 }
 
-// SR review button
+// SR review buttons (legacy + new top bar)
 const reviewBtn = $("btn-start-review");
-if (reviewBtn) {
-  reviewBtn.addEventListener("click", () => startReviewSession());
-}
+if (reviewBtn) reviewBtn.addEventListener("click", () => startReviewSession());
+const topBarBtn = $("sr-top-btn");
+if (topBarBtn) topBarBtn.addEventListener("click", () => startReviewSession());
 
 // Mastery test navigation
 const masteryNextBtn = $("mastery-btn-next");

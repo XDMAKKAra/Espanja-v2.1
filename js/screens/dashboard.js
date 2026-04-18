@@ -675,16 +675,60 @@ export async function saveProgress({ mode, level, scoreCorrect, scoreTotal, ytlG
 }
 
 async function updateSrBadge() {
-  const badge = $("dash-sr-review");
-  if (!badge) return;
-
-  const count = await srDueCount("spanish");
-  if (count > 0) {
-    $("dash-sr-count").textContent = count;
-    badge.classList.remove("hidden");
-  } else {
-    badge.classList.add("hidden");
+  // Top bar
+  const topBar = $("sr-top-bar");
+  const topText = $("sr-top-text");
+  if (topBar) {
+    const count = await srDueCount("spanish");
+    if (count > 0) {
+      topText.textContent = `${count} kortti${count === 1 ? "" : "a"} odottaa kertausta tänään`;
+      topBar.classList.remove("hidden");
+    } else {
+      topBar.classList.add("hidden");
+    }
+    const countEl = $("dash-sr-count");
+    if (countEl) countEl.textContent = count;
   }
+
+  // Forecast chart
+  renderSrForecast().catch(() => {});
+}
+
+async function renderSrForecast() {
+  if (!isLoggedIn()) return;
+  const section = $("dash-forecast-section");
+  const chart = $("dash-forecast-chart");
+  if (!section || !chart) return;
+
+  try {
+    const res = await apiFetch(`${API}/api/sr/forecast?days=30`, {
+      headers: authHeader(),
+    });
+    if (!res.ok) return;
+    const data = await res.json();
+
+    if (!data.totalCards) {
+      section.classList.add("hidden");
+      return;
+    }
+
+    section.classList.remove("hidden");
+    $("dash-forecast-total").textContent = data.totalCards;
+    $("dash-forecast-max").textContent = data.maxDaily;
+
+    const maxCount = Math.max(data.maxDaily, 1);
+    const bars = data.forecast.map((day, i) => {
+      const heightPct = day.count > 0 ? Math.max((day.count / maxCount) * 100, 8) : 2;
+      const klass = i === 0 ? "today" : (day.count > 0 ? "has-cards" : "");
+      const showLabel = i === 0 || i % 7 === 0 || i === data.forecast.length - 1;
+      const dateLabel = i === 0 ? "tänään" : showLabel ? `+${i}pv` : "";
+      return `<div class="forecast-bar ${klass}" style="height: ${heightPct}%" title="${day.date}: ${day.count} korttia"${dateLabel ? ` data-label="${dateLabel}"` : ""}>
+        ${dateLabel ? `<span class="forecast-bar-label">${dateLabel}</span>` : ""}
+      </div>`;
+    });
+
+    chart.innerHTML = bars.join("");
+  } catch { /* silent */ }
 }
 
 function renderAiUsage(aiUsage, isPro) {
