@@ -2,6 +2,7 @@ import { $, show } from "../ui/nav.js";
 import { API, isLoggedIn } from "../api.js";
 import { state } from "../state.js";
 import { showLoading, showLoadingError } from "../ui/loading.js";
+import { createExamTimer, clearPersisted as clearTimerPersisted } from "../features/examTimer.js";
 
 let _deps = {};
 export function initExam({ loadDashboard, saveProgress, shareResult }) {
@@ -11,7 +12,7 @@ export function initExam({ loadDashboard, saveProgress, shareResult }) {
 const EXAM_DURATION_S = 45 * 60; // 45 minutes
 
 let examState = {
-  timerInterval: null,
+  timer: null,
   secondsLeft: EXAM_DURATION_S,
   readingData: null,
   writingTask: null,
@@ -19,13 +20,47 @@ let examState = {
   phase: "reading", // "reading" | "writing"
 };
 
-function examTick() {
-  examState.secondsLeft--;
-  const m = Math.floor(examState.secondsLeft / 60).toString().padStart(2, "0");
-  const s = (examState.secondsLeft % 60).toString().padStart(2, "0");
-  $("exam-timer").textContent = `${m}:${s}`;
-  if (examState.secondsLeft <= 300) $("exam-timer").classList.add("exam-timer-warn");
-  if (examState.secondsLeft <= 0) submitExam();
+function renderExamTimer(remaining) {
+  examState.secondsLeft = remaining;
+  const m = Math.floor(remaining / 60).toString().padStart(2, "0");
+  const s = (remaining % 60).toString().padStart(2, "0");
+  const el = $("exam-timer");
+  if (!el) return;
+  el.textContent = `${m}:${s}`;
+  if (remaining <= 300) el.classList.add("exam-timer-warn");
+  else el.classList.remove("exam-timer-warn");
+}
+
+function setMockExamPausedOverlay(on) {
+  let overlay = document.getElementById("mock-exam-paused-overlay");
+  if (on) {
+    if (!overlay) {
+      overlay = document.createElement("div");
+      overlay.id = "mock-exam-paused-overlay";
+      overlay.className = "exam-paused-overlay";
+      overlay.innerHTML = '<div class="exam-paused-inner">⏸ Tauko</div>';
+      document.body.appendChild(overlay);
+    }
+    overlay.classList.add("is-visible");
+  } else if (overlay) {
+    overlay.classList.remove("is-visible");
+  }
+}
+
+let _mockExamWarningShown = false;
+function showMockExamWarning() {
+  if (_mockExamWarningShown) return;
+  _mockExamWarningShown = true;
+  const overlay = document.createElement("div");
+  overlay.className = "exam-warning-overlay";
+  overlay.innerHTML = `
+    <div class="exam-warning-modal" role="alertdialog" aria-labelledby="mock-exam-warning-title">
+      <h3 id="mock-exam-warning-title">15 minuuttia jäljellä</h3>
+      <p>Tarkista vastaukset ja täydennä kirjoitustehtävä.</p>
+      <button type="button" class="btn-primary" id="mock-exam-warning-dismiss">Jatka</button>
+    </div>`;
+  document.body.appendChild(overlay);
+  overlay.querySelector("#mock-exam-warning-dismiss").addEventListener("click", () => overlay.remove());
 }
 
 export async function startMockExam() {
@@ -49,13 +84,14 @@ export async function startMockExam() {
     if (!readData.reading || !writeData.task) throw new Error("Lataus epäonnistui");
 
     examState = {
-      timerInterval: null,
+      timer: null,
       secondsLeft: EXAM_DURATION_S,
       readingData: readData.reading,
       writingTask: writeData.task,
       readingAnswers: {},
       phase: "reading",
     };
+    _mockExamWarningShown = false;
 
     renderExamReading();
     $("exam-timer").classList.remove("exam-timer-warn");
@@ -65,7 +101,16 @@ export async function startMockExam() {
     $("exam-writing-phase").classList.add("hidden");
     show("screen-exam");
 
-    examState.timerInterval = setInterval(examTick, 1000);
+    examState.timer = createExamTimer({
+      durationSec: EXAM_DURATION_S,
+      examId: "mock-exam",
+      onTick: renderExamTimer,
+      onExpire: () => submitExam(),
+      onWarning: () => showMockExamWarning(),
+      onPause: () => setMockExamPausedOverlay(true),
+      onResume: () => setMockExamPausedOverlay(false),
+    });
+    examState.timer.start();
   } catch (err) {
     showLoadingError("Kokeen lataus epäonnistui: " + err.message, () => startMockExam());
   }
@@ -137,7 +182,8 @@ $("exam-btn-to-writing").addEventListener("click", () => {
 $("exam-btn-submit").addEventListener("click", () => submitExam());
 
 async function submitExam() {
-  clearInterval(examState.timerInterval);
+  if (examState.timer) { examState.timer.stop(); examState.timer = null; }
+  clearTimerPersisted("mock-exam");
   const timeUsed = EXAM_DURATION_S - examState.secondsLeft;
   const mins = Math.floor(timeUsed / 60);
 

@@ -108,7 +108,12 @@ body::before {
 }
 .sidebar-item:hover { background: var(--surface2); color: var(--text); }
 .sidebar-item.active { background: rgba(230,57,70,0.15); color: var(--text); border-left: 3px solid var(--accent); }
-.sidebar-item-icon { font-size: 16px; width: 20px; text-align: center; }
+.sidebar-item-icon {
+  width: 20px; height: 20px;
+  display: inline-flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.sidebar-item-icon svg { width: 18px; height: 18px; }
 .sidebar-divider { height: 1px; background: var(--border); margin: 12px 16px; }
 .sidebar-footer {
   padding: 12px 20px;
@@ -180,20 +185,28 @@ body::before {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2px;
+  justify-content: center;
+  gap: 3px;
   background: none;
   border: none;
   color: var(--text-muted);
   font-family: var(--font-display);
-  font-size: 9px;
+  font-size: 11px;
   font-weight: 600;
-  padding: 4px 8px;
+  padding: 8px 10px;
+  min-height: 48px;
+  min-width: 48px;
   cursor: pointer;
   transition: color 0.15s;
 }
-.mobile-nav-item span { font-size: 18px; }
+.mobile-nav-icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 22px; height: 22px;
+}
+.mobile-nav-icon svg { width: 20px; height: 20px; }
 .mobile-nav-item.active { color: var(--accent); }
 .mobile-nav-item:hover { color: var(--text); }
+.mobile-nav-item:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; border-radius: 8px; }
 
 @media (max-width: 768px) {
   .app-sidebar { display: none; }
@@ -2439,6 +2452,64 @@ select option { background: var(--surface2); }
   margin-left: auto;
 }
 
+.ob-option-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  color: var(--text-muted);
+}
+.ob-option-icon svg { width: 20px; height: 20px; }
+.ob-option:hover .ob-option-icon,
+.ob-option.selected .ob-option-icon { color: var(--accent); }
+
+/* Inline referral picker on the done screen (replaces deleted Step 9) */
+.onboarding-referral-inline {
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+.onboarding-referral-label {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+  letter-spacing: 0.02em;
+}
+.onboarding-referral-optional {
+  opacity: 0.7;
+}
+.onboarding-referral-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+.ob-referral-chip {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  min-height: 36px;
+}
+.ob-referral-chip:hover {
+  border-color: var(--text-muted);
+  color: var(--text);
+}
+.ob-referral-chip.selected {
+  border-color: var(--accent);
+  background: rgba(230, 57, 70, 0.12);
+  color: var(--text);
+}
+
 /* Grade grid (step 2) */
 .grade-grid {
   display: grid;
@@ -4093,3 +4164,72 @@ select option { background: var(--surface2); }
   }
 }
 
+
+/* ── Exam timer: paused overlay + 15-min warning modal (Commit 2) ────────── */
+.exam-paused-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(12, 8, 8, 0.72);
+  backdrop-filter: blur(3px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  pointer-events: none;
+}
+.exam-paused-overlay.is-visible {
+  display: flex;
+}
+.exam-paused-inner {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: -0.02em;
+  padding: 24px 40px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: rgba(24, 15, 15, 0.9);
+}
+
+.exam-warning-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(12, 8, 8, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 210;
+  padding: 20px;
+}
+.exam-warning-modal {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 28px;
+  max-width: 420px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+.exam-warning-modal h3 {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 800;
+  margin-bottom: 12px;
+  color: var(--accent);
+}
+.exam-warning-modal p {
+  font-size: 15px;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+.exam-warning-modal .btn-primary {
+  min-height: 48px;
+  padding: 12px 32px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .exam-paused-overlay, .exam-warning-overlay { backdrop-filter: none; }
+}

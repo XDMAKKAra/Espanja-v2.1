@@ -2,6 +2,7 @@ import { $, show } from "../ui/nav.js";
 import { API, isLoggedIn, authHeader, apiFetch } from "../api.js";
 import { state } from "../state.js";
 import { showLoading, showLoadingError } from "../ui/loading.js";
+import { createExamTimer, clearPersisted as clearTimerPersisted } from "../features/examTimer.js";
 
 let _deps = {};
 export function initFullExam({ loadDashboard, saveProgress, shareResult }) {
@@ -14,7 +15,7 @@ let examState = {
   answers: {},
   secondsRemaining: 0,
   currentPart: 1,
-  timerInterval: null,
+  timer: null,
   autoSaveInterval: null,
   durationMode: "demo",
 };
@@ -31,19 +32,28 @@ const PART_LABELS = [
 
 function startTimer() {
   stopTimer();
-  examState.timerInterval = setInterval(() => {
-    examState.secondsRemaining--;
-    updateTimerDisplay();
-    if (examState.secondsRemaining <= 0) submitFullExam();
-  }, 1000);
+  const duration = examState.secondsRemaining;
+  examState.timer = createExamTimer({
+    durationSec: duration,
+    examId: examState.sessionId || "full-exam-anon",
+    onTick: (remaining) => {
+      examState.secondsRemaining = remaining;
+      updateTimerDisplay(remaining);
+    },
+    onExpire: () => submitFullExam(),
+    onWarning: () => showExamWarningModal(),
+    onPause: () => setPausedOverlay(true),
+    onResume: () => setPausedOverlay(false),
+  });
+  examState.timer.start();
 }
 
 function stopTimer() {
-  if (examState.timerInterval) { clearInterval(examState.timerInterval); examState.timerInterval = null; }
+  if (examState.timer) { examState.timer.stop(); examState.timer = null; }
 }
 
-function updateTimerDisplay() {
-  const s = Math.max(0, examState.secondsRemaining);
+function updateTimerDisplay(seconds) {
+  const s = Math.max(0, seconds ?? examState.secondsRemaining);
   const h = Math.floor(s / 3600).toString().padStart(2, "0");
   const m = Math.floor((s % 3600) / 60).toString().padStart(2, "0");
   const sec = (s % 60).toString().padStart(2, "0");
@@ -51,6 +61,40 @@ function updateTimerDisplay() {
   if (el) el.textContent = `${h}:${m}:${sec}`;
   if (s <= 600 && el) el.classList.add("exam-timer-warn");
   else if (el) el.classList.remove("exam-timer-warn");
+}
+
+function setPausedOverlay(on) {
+  let overlay = document.getElementById("exam-paused-overlay");
+  if (on) {
+    if (!overlay) {
+      overlay = document.createElement("div");
+      overlay.id = "exam-paused-overlay";
+      overlay.className = "exam-paused-overlay";
+      overlay.innerHTML = '<div class="exam-paused-inner">⏸ Tauko</div>';
+      document.body.appendChild(overlay);
+    }
+    overlay.classList.add("is-visible");
+  } else if (overlay) {
+    overlay.classList.remove("is-visible");
+  }
+}
+
+let _warningModalShown = false;
+function showExamWarningModal() {
+  if (_warningModalShown) return;
+  _warningModalShown = true;
+  const overlay = document.createElement("div");
+  overlay.className = "exam-warning-overlay";
+  overlay.innerHTML = `
+    <div class="exam-warning-modal" role="alertdialog" aria-labelledby="exam-warning-title">
+      <h3 id="exam-warning-title">15 minuuttia jäljellä</h3>
+      <p>Tarkista vastaukset ja täydennä kirjoitustehtävä.</p>
+      <button type="button" class="btn-primary" id="exam-warning-dismiss">Jatka</button>
+    </div>`;
+  document.body.appendChild(overlay);
+  overlay.querySelector("#exam-warning-dismiss").addEventListener("click", () => {
+    overlay.remove();
+  });
 }
 
 // ─── Auto-save ──────────────────────────────────────────────────────────────
@@ -341,6 +385,7 @@ function bindCharCount(container, task, countElId) {
 async function submitFullExam() {
   stopTimer();
   stopAutoSave();
+  if (examState.sessionId) clearTimerPersisted(examState.sessionId);
   await saveExamProgress();
 
   showLoading("Arvioidaan koetta...", { subtext: "Kirjoitustehtävät arvioidaan tekoälyllä" });
