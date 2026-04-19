@@ -2,6 +2,7 @@ import { $, show } from "../ui/nav.js";
 import { API, authHeader, apiFetch } from "../api.js";
 import { track } from "../analytics.js";
 import { computeStartingLevel } from "../features/startingLevel.js";
+import { toast } from "../ui/toast.js";
 
 let _deps = {};
 export function initOnboarding({ loadDashboard }) {
@@ -476,7 +477,7 @@ async function saveAndFinish() {
   } catch (err) {
     console.error("Onboarding save failed:", err);
     track("onboarding_save_failed", { message: String(err && err.message || err), status: err && err.status || null });
-    alert("Tallennus epäonnistui, yritä uudelleen.");
+    toast.error("Tallennus epäonnistui, yritä uudelleen.");
     btn.disabled = false;
     btn.textContent = "Aloita harjoittelu →";
     return;
