@@ -1761,6 +1761,21 @@ select option { background: var(--surface2); }
   max-width: var(--w-desktop); width: 100%; max-height: calc(100vh - 48px);
   overflow-y: auto; animation: fadeUp 0.4s ease both; padding-bottom: 24px;
 }
+
+/* Pass 1.5 — pair dashboard sections on desktop so the 1440 px laptop doesn't
+   feel vertically scrolly. Below 1024 px each child stacks as before; if a
+   child is .hidden, the grid collapses to the visible one automatically. */
+.dash-grid-row { display: block; margin-bottom: 28px; }
+.dash-grid-row > * { margin-bottom: 0; }
+@media (min-width: 1024px) {
+  .dash-grid-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--s-6);
+    align-items: start;
+  }
+  .dash-grid-row > .hidden { display: none; }
+}
 .dash-header {
   display: flex; align-items: flex-start; justify-content: space-between;
   margin-bottom: 28px; gap: 12px;
