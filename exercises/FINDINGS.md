@@ -85,6 +85,13 @@ No PostHog instrumentation on exercise submit today. Net-new for Step 2. Good ne
 ### F15. Fixtures for grader unit tests
 `tests/fixtures/openai/` already has `grammar.json` and `reading.json` (seen in `git status`). Reuse this pattern for per-type grader fixtures. Add `aukkotehtava.json`, `lauseen.json`, `kaannos.json`, `tekstinymmarrys.json`, `yhdistaminen.json` — each a bank of `{ input, expected_output }` pairs the grader unit tests mock `callOpenAI` to return.
 
+### F16. No CI — deferred P2, not this pass's job
+The repo has no `.github/workflows/` or equivalent. Lighthouse, pa11y, vitest, and Playwright all run manually. Vercel's deploy-time checks are *deploy* validation, not *pre-merge* validation — a PR that breaks tests can still merge if nobody runs them locally. Baseline capture lives at [exercises/baselines/](baselines/) and is re-run manually before each gate's PR.
+
+**Why not fix now:** inventing a single `audit.yml` in a repo with zero other workflows is an orphan that bitrots. The right fix is a dedicated CI pass that sets up vitest + Playwright + Lighthouse + pa11y on every PR with real PR-comment integration, branch protections, and secret handling for OpenAI keys in test mode. That's its own scoped work.
+
+**Deferral tag:** P2 — before the next major build phase after this one, not blocking this pass.
+
 ---
 
 ## Summary for the three integration surprises (for the Step-1 reply)

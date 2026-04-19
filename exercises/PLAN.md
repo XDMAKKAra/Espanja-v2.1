@@ -12,13 +12,21 @@ Ordered, one-concern-per-commit. Each entry: title · scope · files · test · 
 - **Test:** `tests/schema.test.js` — round-trip a legacy MC item through the translation map.
 - **Accept:** existing vocab + grammar + adaptive tests still pass.
 
-### 2. Client renderer dispatcher (extraction, no new types)
-- New `js/screens/exerciseRenderer.js` with `renderExercise(ex, container, opts)`.
-- Extract monivalinta branch from `vocab.js` / `grammar.js` / `reading.js` / `exam.js` / `fullExam.js` into `js/renderers/monivalinta.js`.
-- Existing screens call dispatcher. Submit shape unchanged.
-- **Files:** 1 new, 5 edited screens, 1 new renderer.
-- **Test:** `tests/renderer-dispatcher.test.js` + Playwright smoke on each screen.
-- **Accept:** all five existing screen e2e tests green; no visual diff > 1%.
+### 2a. Renderer dispatcher + monivalinta renderer (no call sites)
+- New `js/screens/exerciseRenderer.js` — object-map registry `renderers[type]`, `renderExercise()`, `registerRenderer()`.
+- New `js/renderers/monivalinta.js` — consumes unified shape only, owns paint + client-side grading + verdict UI.
+- **No call sites wired.** Pure module addition; cannot break existing screens.
+- **Files:** 2 new modules, 1 new doc (`exercises/DEFERRED.md`).
+- **Test:** none — no call site to exercise. Tests land in 2b alongside wiring.
+- **Accept:** `npm test` still green (252 tests); modules importable; dispatcher throws on unknown type.
+
+### 2b. Wire dispatcher into vocab / grammar / adaptive (3 screens)
+- Rewire `js/screens/vocab.js`, `js/screens/grammar.js`, `js/screens/adaptive.js` to call `renderExercise(toUnified(ex), container, { onAnswer })`.
+- Reading, exam, fullExam, placement, learningPath, dashboard stay inline — see `exercises/DEFERRED.md` D1 (closed at Gate D).
+- Submit shape unchanged; existing Playwright e2e stays green.
+- **Files:** 3 edited screens, 1 new test file.
+- **Test:** `tests/renderer-dispatcher.test.js` — dispatcher routes; monivalinta renderer paints + grades correctly; Playwright e2e remains green on vocab smoke.
+- **Accept:** vocab + writing Playwright tests green at 390×844 and 1440×900; screenshots captured in `exercises/baselines/screenshots/`.
 
 ### 3. Server grading dispatcher + retire client-side MC grading
 - New `lib/grading/dispatcher.js` + `lib/grading/monivalinta.js` (server-side MC grader).
@@ -131,8 +139,8 @@ These are deliberately **not** in this plan; defer:
 
 - **Commit 3** touches the renderer submit shape. If the user wants monivalinta grading to remain client-side (e.g. to preserve offline play), this breaks. Flag early.
 - **Commit 8** is the single heaviest item (L-ish effort). If we want a faster first release, ship commits 1-7 + 9-12 and defer 8 to a follow-up — all 4 other new types work without reading.
-- **14 commits after the approved 4 → 4a/4b/4c split** (grader-first, then renderer, then composer/sub-types). Room to grow to 16 if Gate C or D needs mid-gate splitting. Never one PR across gates — split mid-gate into two PRs instead.
+- **15 commits after the approved splits** (2 → 2a/2b; 4 → 4a/4b/4c). Room to grow to ~17 if Gate C or D needs mid-gate splitting. Never one PR across gates — split mid-gate into two PRs instead.
 
 ---
 
-**Target: 14 commits. Stop for approval.**
+**Target: 15 commits. Stop for approval.**

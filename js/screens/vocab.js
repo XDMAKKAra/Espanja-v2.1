@@ -6,6 +6,11 @@ import { srPop, srAddWrong, srMarkCorrect, srReview, srGetDue } from "../feature
 import { isTranslationAccepted, isTranslationPartial, translationBand, TRANSLATION_BAND_LABELS } from "../features/answerGrading.js";
 import { authHeader, apiFetch } from "../api.js";
 import { trackExerciseStarted, trackExerciseCompleted, trackError } from "../analytics.js";
+import { renderExercise } from "./exerciseRenderer.js";
+import { toUnified } from "../../lib/exerciseTypes.js";
+import { reportMcAdvisory } from "../features/mcAdvisory.js";
+
+const OPTION_LETTERS = ["A", "B", "C", "D", "E", "F"];
 
 let _deps = {};
 let _scaffoldMeta = null; // { level, scaffoldLevel, scaffold, type, topic }
@@ -344,16 +349,16 @@ export function renderExercise() {
   }
 
   const grid = $("options-grid");
-  grid.innerHTML = "";
-
-  ex.options.forEach((opt) => {
-    const letter = opt.trim()[0];
-    const btn = document.createElement("button");
-    btn.className = "option-btn";
-    btn.textContent = opt;
-    btn.addEventListener("click", () => handleAnswer(letter, btn));
-    grid.appendChild(btn);
-  });
+  renderExercise(
+    toUnified(ex, { topic: state.topic || state.mode || "vocab", skill_bucket: "vocab" }),
+    grid,
+    {
+      onAnswer: ({ chosenIndex, correctIndex, isCorrect, button }) => {
+        handleAnswer(OPTION_LETTERS[chosenIndex], button);
+        reportMcAdvisory({ exerciseId: ex.id, chosenIndex, correctIndex, clientIsCorrect: isCorrect });
+      },
+    }
+  );
 }
 
 // ─── Gap-fill renderer ────────────────────────────────────────────────────
