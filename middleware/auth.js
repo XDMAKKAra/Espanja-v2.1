@@ -13,9 +13,12 @@ export async function requireAuth(req, res, next) {
   next();
 }
 
-// Test accounts loaded from env (comma-separated) — never hardcode emails in source
-const ALWAYS_PRO_EMAILS = (process.env.TEST_PRO_EMAILS || "").split(",").map(e => e.trim().toLowerCase()).filter(Boolean);
-const ALWAYS_FREE_EMAILS = (process.env.TEST_FREE_EMAILS || "").split(",").map(e => e.trim().toLowerCase()).filter(Boolean);
+// Test accounts loaded from env (comma-separated) — never hardcode emails in source.
+// Read lazily inside isPro() rather than at module load so env changes on the
+// serverless host apply without relying on container recycling.
+function parseEmailList(envValue) {
+  return (envValue || "").split(",").map(e => e.trim().toLowerCase()).filter(Boolean);
+}
 
 /**
  * Check if a user has an active Pro subscription.
@@ -23,12 +26,15 @@ const ALWAYS_FREE_EMAILS = (process.env.TEST_FREE_EMAILS || "").split(",").map(e
  * @returns {Promise<boolean>} True if user is Pro
  */
 export async function isPro(userId) {
-  // Check test accounts (loaded from env)
-  if (ALWAYS_PRO_EMAILS.length || ALWAYS_FREE_EMAILS.length) {
+  const alwaysPro = parseEmailList(process.env.TEST_PRO_EMAILS);
+  const alwaysFree = parseEmailList(process.env.TEST_FREE_EMAILS);
+
+  // Check test accounts (loaded from env, fresh on every call)
+  if (alwaysPro.length || alwaysFree.length) {
     const { data: { user } } = await supabase.auth.admin.getUserById(userId);
     if (user?.email) {
-      if (ALWAYS_PRO_EMAILS.includes(user.email.toLowerCase())) return true;
-      if (ALWAYS_FREE_EMAILS.includes(user.email.toLowerCase())) return false;
+      if (alwaysPro.includes(user.email.toLowerCase())) return true;
+      if (alwaysFree.includes(user.email.toLowerCase())) return false;
     }
   }
 
