@@ -5,6 +5,7 @@ import { dirname, join } from "path";
 import supabase from "../supabase.js";
 import { callOpenAI } from "../lib/openai.js";
 import { requireAuth } from "../middleware/auth.js";
+import { pointsToYoGrade } from "../lib/grading.js";
 
 const router = Router();
 
@@ -91,21 +92,10 @@ function buildLongWritingPart() {
   return { type: "longWriting", task, maxPoints: 66 };
 }
 
-const GRADE_THRESHOLDS = [
-  { min: Math.round(MAX_POINTS * 0.80), grade: "L" },  // 80%+
-  { min: Math.round(MAX_POINTS * 0.65), grade: "E" },  // 65-79%
-  { min: Math.round(MAX_POINTS * 0.50), grade: "M" },  // 50-64%
-  { min: Math.round(MAX_POINTS * 0.35), grade: "C" },  // 35-49%
-  { min: Math.round(MAX_POINTS * 0.20), grade: "B" },  // 20-34%
-  { min: Math.round(MAX_POINTS * 0.10), grade: "A" },  // 10-19%
-  { min: 0, grade: "I" },
-];
-
+// Grade mapping comes from lib/grading.js (pointsToYoGrade). Delegating here
+// so vocab /grade and full-exam grading share the same thresholds.
 function pointsToGrade(points) {
-  for (const t of GRADE_THRESHOLDS) {
-    if (points >= t.min) return t.grade;
-  }
-  return "I";
+  return pointsToYoGrade(points, MAX_POINTS);
 }
 
 // ─── Grade reading answers ─────────────────────────────────────────────────
@@ -163,8 +153,6 @@ function gradeStructure(partsData, answers) {
 async function gradeWriting(task, studentText, isShort) {
   const maxScore = isShort ? 33 : 66;
   const charCount = studentText.replace(/\s/g, "").length;
-  const overLimit = charCount > task.charMax;
-  const penalty = overLimit ? (isShort ? 3 : 6) : 0;
 
   const shortSteps = [0, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33];
   const longSteps = [0, 6, 10, 14, 18, 22, 26, 30, 34, 38, 42, 46, 50, 54, 58, 62, 66];
@@ -174,6 +162,9 @@ async function gradeWriting(task, studentText, isShort) {
     return { finalScore: 0, maxScore, ytlGrade: "I", overallFeedback: "Vastausta ei annettu tai se oli liian lyhyt." };
   }
 
+  // YTL lyhyt oppimäärä does not penalise exceeding the upper char limit —
+  // the limit is guidance, not a deduction rule. Soft-cap: no extra points
+  // past max, but no penalty either. (Previously we deducted 3/6 pts.)
   const prompt = `You are grading a Finnish high school student's Spanish writing for the yo-koe exam (lyhyt oppimäärä).
 
 TASK:
@@ -187,29 +178,32 @@ STUDENT'S TEXT (${charCount} chars without spaces):
 ${studentText}
 """
 
-${overLimit ? `OVER CHARACTER LIMIT: ${charCount} chars, limit ${task.charMax}. Deduct ${penalty} points.` : ""}
-
 VALID SCORE STEPS: ${validSteps.join(" — ")}
 
-Grade using YTL criteria: viestinnällisyys, tehtävänanto, kielelliset resurssit.
+Grade using YTL criteria: viestinnällisyys, tehtävänanto, kielelliset resurssit. Do NOT penalise exceeding the character guideline — that is guidance, not a deduction rule.
 
 Return ONLY JSON:
 {
   "rawScore": <valid step>,
-  "penalty": ${penalty},
-  "finalScore": <rawScore - penalty, nearest valid step>,
+  "finalScore": <same as rawScore, nearest valid step>,
   "maxScore": ${maxScore},
   "ytlGrade": "<I/A/B/C/M/E/L>",
   "overallFeedback": "<2-3 sentences in Finnish>"
 }`;
 
   try {
-    return await callOpenAI(prompt, 1000);
+    const result = await callOpenAI(prompt, 1000);
+    // Recompute ytlGrade server-side from finalScore to guarantee consistency
+    // with the shared threshold table in lib/grading.js. Trust but verify.
+    if (result && typeof result.finalScore === "number") {
+      result.ytlGrade = pointsToYoGrade(result.finalScore, maxScore);
+    }
+    return result;
   } catch {
     const ratio = Math.min(charCount / task.charMax, 1);
     const est = Math.round(ratio * maxScore * 0.5);
     const closest = validSteps.reduce((prev, curr) => Math.abs(curr - est) < Math.abs(prev - est) ? curr : prev);
-    return { finalScore: closest, maxScore, ytlGrade: "C", overallFeedback: "Arviointi epäonnistui, tulos on arvio." };
+    return { finalScore: closest, maxScore, ytlGrade: pointsToYoGrade(closest, maxScore), overallFeedback: "Arviointi epäonnistui, tulos on arvio." };
   }
 }
 

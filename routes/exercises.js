@@ -8,11 +8,12 @@ import {
   VALID_LEVELS, VALID_VOCAB_TOPICS, VALID_GRAMMAR_TOPICS,
   VALID_READING_TOPICS, VALID_READING_LEVELS, VALID_LANGUAGES,
 } from "../lib/openai.js";
-import { requireAuth, softProGate } from "../middleware/auth.js";
-import { aiLimiter, aiStrictLimiter } from "../middleware/rateLimit.js";
+import { requireAuth, requirePro } from "../middleware/auth.js";
+import { aiLimiter, aiStrictLimiter, reportLimiter } from "../middleware/rateLimit.js";
 import { checkMonthlyCostLimit } from "../middleware/costLimit.js";
 import { logAiUsage } from "../lib/aiCost.js";
 import { getUserLevel, refreshUserLevel, processCheckpointResult, progressToNextLevel } from "../lib/levelEngine.js";
+import { pointsToYoGrade } from "../lib/grading.js";
 import { getSessionState, processAnswer, describeScaffold } from "../lib/scaffoldEngine.js";
 import { pickExerciseType, composePrompt, getMaxTokens } from "../lib/exerciseComposer.js";
 import { topicLabel, VALID_TOPICS } from "../lib/mistakeTaxonomy.js";
@@ -111,7 +112,7 @@ async function saveToBankBulk(mode, level, topic, language, exercises) {
 
 // ─── Vocab exercises ───────────────────────────────────────────────────────
 
-router.post("/generate", aiLimiter, checkMonthlyCostLimit, async (req, res) => {
+router.post("/generate", requireAuth, aiLimiter, checkMonthlyCostLimit, async (req, res) => {
   const { level = "B", topic = "general vocabulary", count = 4, language = "spanish" } = req.body;
 
   if (!VALID_LEVELS.has(level)) return res.status(400).json({ error: "Virheellinen taso" });
@@ -196,35 +197,22 @@ Return ONLY a JSON array, no markdown:
 // ─── Grade ─────────────────────────────────────────────────────────────────
 
 router.post("/grade", async (req, res) => {
-  const { correct, total, level } = req.body;
+  const { correct, total } = req.body;
 
   if (typeof correct !== "number" || typeof total !== "number" || total <= 0) {
     return res.status(400).json({ error: "Virheelliset pisteet" });
   }
 
   const pct = Math.round((correct / total) * 100);
+  // Single source of truth — official YTL bands. Vocab and full-exam now agree.
+  const grade = pointsToYoGrade(correct, total);
 
-  const levelBonus = { I: 2, A: 1, B: 0, C: 0, M: -1, E: -1, L: -2 };
-  const bonus = levelBonus[level] || 0;
-
-  let grade;
-  if (pct >= 92) grade = bonus >= 0 ? "L" : "E";
-  else if (pct >= 80) grade = bonus >= 0 ? "E" : "M";
-  else if (pct >= 67) grade = "M";
-  else if (pct >= 53) grade = "C";
-  else if (pct >= 38) grade = "B";
-  else if (pct >= 22) grade = "A";
-  else grade = "I";
-
-  const idx = GRADES.indexOf(grade);
-  const adjusted = GRADES[Math.max(0, Math.min(6, idx + bonus))];
-
-  res.json({ grade: adjusted, pct, correct, total });
+  res.json({ grade, pct, correct, total });
 });
 
 // ─── Grammar exercises ─────────────────────────────────────────────────────
 
-router.post("/grammar-drill", aiLimiter, checkMonthlyCostLimit, async (req, res) => {
+router.post("/grammar-drill", requireAuth, aiLimiter, checkMonthlyCostLimit, async (req, res) => {
   const { topic = "mixed", level = "C", count = 6, language = "spanish" } = req.body;
 
   if (!VALID_GRAMMAR_TOPICS.has(topic)) return res.status(400).json({ error: "Virheellinen kielioppiaihe" });
@@ -317,7 +305,7 @@ Return ONLY a JSON array (no markdown):
 
 // ─── Reading exercises ─────────────────────────────────────────────────────
 
-router.post("/reading-task", aiStrictLimiter, softProGate, checkMonthlyCostLimit, async (req, res) => {
+router.post("/reading-task", requireAuth, requirePro, aiStrictLimiter, checkMonthlyCostLimit, async (req, res) => {
   const { level = "C", topic = "animals and nature", language = "spanish" } = req.body;
 
   if (!VALID_READING_LEVELS.has(level)) return res.status(400).json({ error: "Virheellinen taso" });
@@ -402,7 +390,7 @@ Return ONLY this JSON (no markdown):
 
 // ─── Report exercise ───────────────────────────────────────────────────────
 
-router.post("/report-exercise", async (req, res) => {
+router.post("/report-exercise", requireAuth, reportLimiter, async (req, res) => {
   const { bankId } = req.body;
   if (!bankId) return res.status(400).json({ error: "bankId vaaditaan" });
 
@@ -489,7 +477,7 @@ router.get("/admin/costs-by-user", requireAuth, async (req, res) => {
 
 // ─── Gap-fill exercises (write the missing word) ─────────────────────────────
 
-router.post("/gap-fill", aiLimiter, checkMonthlyCostLimit, async (req, res) => {
+router.post("/gap-fill", requireAuth, aiLimiter, checkMonthlyCostLimit, async (req, res) => {
   const { level = "B", count = 6, language = "spanish" } = req.body;
 
   if (!VALID_LEVELS.has(level)) return res.status(400).json({ error: "Virheellinen taso" });
@@ -540,7 +528,7 @@ Return ONLY JSON array:
 
 // ─── Matching exercises (connect pairs) ──────────────────────────────────────
 
-router.post("/matching", aiLimiter, checkMonthlyCostLimit, async (req, res) => {
+router.post("/matching", requireAuth, aiLimiter, checkMonthlyCostLimit, async (req, res) => {
   const { level = "B", language = "spanish" } = req.body;
 
   if (!VALID_LEVELS.has(level)) return res.status(400).json({ error: "Virheellinen taso" });
@@ -590,7 +578,7 @@ Return ONLY JSON:
 
 // ─── Reorder exercises (arrange words into sentence) ─────────────────────────
 
-router.post("/reorder", aiLimiter, checkMonthlyCostLimit, async (req, res) => {
+router.post("/reorder", requireAuth, aiLimiter, checkMonthlyCostLimit, async (req, res) => {
   const { level = "B", count = 4, language = "spanish" } = req.body;
 
   if (!VALID_LEVELS.has(level)) return res.status(400).json({ error: "Virheellinen taso" });
@@ -642,7 +630,7 @@ Return ONLY JSON array:
 
 // ─── Translate-mini (short Finnish→Spanish, AI-graded) ───────────────────────
 
-router.post("/translate-mini", aiLimiter, checkMonthlyCostLimit, async (req, res) => {
+router.post("/translate-mini", requireAuth, aiLimiter, checkMonthlyCostLimit, async (req, res) => {
   const { level = "B", count = 3, language = "spanish" } = req.body;
 
   if (!VALID_LEVELS.has(level)) return res.status(400).json({ error: "Virheellinen taso" });
@@ -695,7 +683,7 @@ Return ONLY JSON array:
 
 // ─── Grade translate-mini (AI grading for free-text) ─────────────────────────
 
-router.post("/grade-translate", aiLimiter, checkMonthlyCostLimit, async (req, res) => {
+router.post("/grade-translate", requireAuth, aiLimiter, checkMonthlyCostLimit, async (req, res) => {
   const { userAnswer, acceptedTranslations, finnishSentence } = req.body;
 
   if (!userAnswer || !acceptedTranslations || !finnishSentence) {
