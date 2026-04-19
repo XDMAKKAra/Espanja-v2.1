@@ -29,14 +29,31 @@ Ordered, one-concern-per-commit. Each entry: title · scope · files · test · 
 - **Test:** supertest — client sends `correct: true` for a known-wrong answer, server responds `correct: false`.
 - **Accept:** test passes; no existing tests regress.
 
-### 4. Yhdistämistehtävä — matching (simplest new type first)
-- New `js/renderers/yhdistaminen.js` — click-to-pair UI, all 4 sub-types (a-d) share it.
-- New `lib/grading/yhdistaminen.js` — set-equality on pair IDs, server-authoritative.
-- Schema extension under `payload.yhdistaminen = { leftItems, rightItems, correctPairs }`.
-- Replaces dormant `/api/matching` server endpoint.
-- **Files:** 2 new renderers, 1 grader, 1 composer case, `style.css` (matching skeleton + chips).
-- **Test:** `tests/grading/yhdistaminen.test.js` (deterministic); Playwright e2e for sub-type (a); server-trust supertest.
-- **Accept:** sub-type (a) playable end-to-end on mobile + desktop; pair-success state feels correct (`@starting-style` transition, 160 ms ease-out).
+### 4a. Yhdistäminen — grader + schema (server-first)
+- New `lib/grading/yhdistaminen.js` — deterministic set-equality on pair IDs; band derivation per DESIGN §2.2.
+- Extend dispatcher with `"yhdistaminen"` case.
+- Schema extension under `payload.yhdistaminen = { subtype, leftItems, rightItems, correctPairs }`.
+- Retire dormant `/api/matching` endpoint → dispatcher shim.
+- **Files:** `lib/grading/yhdistaminen.js`, `lib/grading/dispatcher.js` (extend), `routes/exercises.js` (retire `/api/matching`).
+- **Test:** `tests/grading/yhdistaminen.test.js` — full matrix (all correct / 1 wrong / 3 wrong / all wrong, unknown ID, duplicate ID, `correctPairs` in body, order-independent).
+- **Accept:** server-trust supertest passes; legacy `/api/matching` either returns via shim or 410s cleanly.
+
+### 4b. Yhdistäminen — click-to-pair renderer (all 4 sub-types)
+- New `js/renderers/yhdistaminen.js` — one component covering sub-types (a) fi_es, (b) sentence_halves, (c) q_and_a, (d) es_definition.
+- Click-to-pair primary interaction; keyboard path (`Tab` / `Enter` / `Esc`) fully wired.
+- Pair-success animation: `0.97 → 1.02 → 1` scale on both chips (250 ms spring), line drawn with `clip-path` reveal (200 ms ease-out). Skips scale/spring under `prefers-reduced-motion`.
+- New `matching` skeleton variant in `js/ui/loading.js`; `.matching-chip` + `.skeleton-matching` CSS.
+- **Files:** `js/renderers/yhdistaminen.js`, `js/ui/loading.js`, `style.css`.
+- **Test:** Playwright smoke on sub-type (a), keyboard-only flow, reduced-motion.
+- **Accept:** sub-type (a) playable end-to-end on 390×844 and 1440×900; all touch targets ≥ 48 px; pa11y zero errors.
+
+### 4c. Yhdistäminen — composer + adaptive wiring + remaining sub-types
+- Adopt existing `matching` composer template from `lib/exerciseComposer.js`; extend with `subtype` parameter.
+- Add `yhdistaminen` to `TYPE_TOPIC_AFFINITY` for vocab / grammar / ser_estar / subjunctive / preterite_imperfect / verbs.
+- Render + content-generation wiring for sub-types (b), (c), (d) on top of the component from 4b.
+- **Files:** `lib/exerciseComposer.js`, renderer refinements in `js/renderers/yhdistaminen.js`.
+- **Test:** composer unit test — each sub-type emits a correct `leftItems`/`rightItems`/`correctPairs` shape from a mocked OpenAI fixture; Playwright smoke on (b), (c), (d).
+- **Accept:** a single adaptive session served by `/api/adaptive-exercise` includes at least one `yhdistaminen` item of each sub-type.
 
 ### 5. Aukkotehtävä — typed gap-fill
 - New renderer + grader. Grader is deterministic with AI fallback.
@@ -114,8 +131,8 @@ These are deliberately **not** in this plan; defer:
 
 - **Commit 3** touches the renderer submit shape. If the user wants monivalinta grading to remain client-side (e.g. to preserve offline play), this breaks. Flag early.
 - **Commit 8** is the single heaviest item (L-ish effort). If we want a faster first release, ship commits 1-7 + 9-12 and defer 8 to a follow-up — all 4 other new types work without reading.
-- **12 commits as listed is the minimum.** If commit 4 gets split (matching renderer / matching grader / matching composer case) it grows to ~15. Flagging.
+- **14 commits after the approved 4 → 4a/4b/4c split** (grader-first, then renderer, then composer/sub-types). Room to grow to 16 if Gate C or D needs mid-gate splitting. Never one PR across gates — split mid-gate into two PRs instead.
 
 ---
 
-**Target: 12-15 commits. Stop for approval.**
+**Target: 14 commits. Stop for approval.**
