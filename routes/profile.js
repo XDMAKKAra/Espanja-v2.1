@@ -152,7 +152,17 @@ router.post("/profile", requireAuth, async (req, res) => {
         hint: error.hint || null,
         attempted_fields: Object.keys(profileData),
       });
-      return res.status(500).json({ error: "Profiilin tallennus epäonnistui" });
+      // Surface DB details to the client so onboarding regressions are
+      // debuggable without Vercel log access. Revert to a generic string
+      // once we have server-log tooling.
+      return res.status(500).json({
+        error: "Profiilin tallennus epäonnistui",
+        debug_code: error.code || null,
+        debug_message: error.message || null,
+        debug_details: error.details || null,
+        debug_hint: error.hint || null,
+        debug_fields: Object.keys(profileData),
+      });
     }
 
     return res.json({ ok: true, profile: data });

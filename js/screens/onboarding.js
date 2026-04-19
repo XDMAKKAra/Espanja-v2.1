@@ -454,10 +454,14 @@ async function saveAndFinish() {
       body: JSON.stringify(body),
     });
     if (!res.ok) {
-      let detail = "";
-      try { detail = (await res.json()).error || ""; } catch { /* non-json */ }
-      const err = new Error(`profile_save_failed ${res.status} ${detail}`);
+      let body = {};
+      try { body = await res.json(); } catch { /* non-json */ }
+      // Log the full server debug payload so we can diagnose 500s without
+      // Vercel log access. Fields prefixed debug_* come from routes/profile.js.
+      console.error("Onboarding POST /api/profile failed:", res.status, body);
+      const err = new Error(`profile_save_failed ${res.status} ${body.error || ""} ${body.debug_code || ""} ${body.debug_message || ""}`.trim());
       err.status = res.status;
+      err.serverBody = body;
       throw err;
     }
 

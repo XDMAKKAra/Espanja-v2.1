@@ -367,6 +367,7 @@ document.querySelectorAll(".task-type-btn").forEach((btn) => {
 
 document.addEventListener("keydown", (e) => {
   if (["INPUT", "TEXTAREA"].includes(document.activeElement.tagName)) return;
+  if (typeof e.key !== "string") return;    // synthetic events (IME, autofill) have no .key
 
   const key = e.key.toUpperCase();
   const numToLetter = { "1": "A", "2": "B", "3": "C", "4": "D" };
