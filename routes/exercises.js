@@ -14,6 +14,7 @@ import { checkMonthlyCostLimit } from "../middleware/costLimit.js";
 import { logAiUsage } from "../lib/aiCost.js";
 import { getUserLevel, refreshUserLevel, processCheckpointResult, progressToNextLevel } from "../lib/levelEngine.js";
 import { pointsToYoGrade } from "../lib/grading.js";
+import { validateGrammarBatch } from "../lib/grammarScope.js";
 import { getSessionState, processAnswer, describeScaffold } from "../lib/scaffoldEngine.js";
 import { pickExerciseType, composePrompt, getMaxTokens } from "../lib/exerciseComposer.js";
 import { topicLabel, VALID_TOPICS } from "../lib/mistakeTaxonomy.js";
@@ -320,8 +321,13 @@ REQUIREMENTS:
 - Each exercise MUST have "type" field: "gap", "correction", "transform", or "pick_rule"
 - Sentences must look like real yo-koe essay sentences (messages, opinions, descriptions)
 - Distractors must be plausible near-misses students actually make
-- Explanations in Finnish, SHORT and memorable — state the RULE
+- Explanations in Finnish, SHORT and memorable — state the RULE (≤160 chars, 1–2 sentences)
 - "rule" field: short label like "ser/estar", "ojalá+subj.", "konditionaali", "pretériti/imperfekti", "hay+artikkeli", "relatiivi"
+
+YTL LYHYT OPPIMÄÄRÄ SCOPE — MANDATORY:
+- Stay inside B1 / lyhyt oppimäärä scope. Allowed structures: present, preterite, imperfect, present perfect, future (simple), conditional (simple), present subjunctive (ojalá/para que/querer que), ser vs estar, hay vs estar, relative pronouns (que/quien/donde), pronoun order.
+- DO NOT generate items that test: conditional perfect (habría hecho), past subjunctive / imperfect subjunctive (-ara/-iese forms), future subjunctive (-are/-iere), passive voice with ser + por. These are OUT OF SCOPE.
+- When topic=mixed, ensure the batch covers AT LEAST 3 distinct grammar rules (e.g. one ser/estar + one preterite/imperfect + one subjunctive) — not three of the same rule with different exercise formats.
 
 Return ONLY a JSON array (no markdown):
 [
@@ -357,11 +363,33 @@ Return ONLY a JSON array (no markdown):
   }
 ]`;
 
-    const exercises = await callOpenAI(prompt, 2500);
+    const warnings = [];
+    let exercises = await callOpenAI(prompt, 2500);
     logAiUsage(userId, "grammar-drill", exercises._usage).catch(() => {});
     delete exercises._usage;
-    saveToBankBulk("grammar", level, topic, language, exercises).catch(() => {});
-    res.json({ exercises });
+
+    let validation = validateGrammarBatch(exercises, { topic });
+    if (!validation.ok) {
+      // One retry with the same prompt.
+      const retry = await callOpenAI(prompt, 2500);
+      logAiUsage(userId, "grammar-drill", retry._usage).catch(() => {});
+      delete retry._usage;
+      const retryValidation = validateGrammarBatch(retry, { topic });
+      if (retryValidation.ok) {
+        exercises = retry;
+        validation = retryValidation;
+      } else {
+        // Filter out the out-of-scope items so the client never renders them,
+        // and keep whatever is in-scope. Warnings let telemetry see the drift.
+        const { checkGrammarItemScope } = await import("../lib/grammarScope.js");
+        exercises = (Array.isArray(exercises) ? exercises : [])
+          .filter((ex) => checkGrammarItemScope(ex).length === 0);
+        warnings.push(...validation.issues);
+      }
+    }
+
+    if (validation.ok) saveToBankBulk("grammar", level, topic, language, exercises).catch(() => {});
+    res.json({ exercises, ...(warnings.length ? { warnings } : {}) });
   } catch (err) {
     console.error("Grammar drill error:", err.message);
     res.status(500).json({ error: err.message || "Failed to generate grammar exercises" });
