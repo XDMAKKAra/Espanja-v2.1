@@ -6,7 +6,13 @@
     "start": "node server.js",
     "dev": "node --watch server.js",
     "build": "echo 'No build step required'",
-    "test": "vitest run"
+    "test": "vitest run",
+    "test:unit": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "lint": "eslint . --ext .js,.mjs",
+    "audit:a11y": "pa11y-ci --sitemap http://localhost:3000/sitemap.xml",
+    "audit:lighthouse": "lighthouse http://localhost:3000/app.html --only-categories=performance,accessibility,best-practices --preset=desktop --output=json --output-path=./ui-ux/lighthouse-app.json --chrome-flags=--headless"
   },
   "dependencies": {
     "@lemonsqueezy/lemonsqueezy.js": "^4.0.0",
@@ -25,9 +31,18 @@
     "web-push": "^3.6.7"
   },
   "devDependencies": {
+    "@eslint/js": "^9.17.0",
+    "@playwright/test": "^1.59.1",
+    "@vitest/ui": "^4.1.4",
+    "axe-core": "^4.11.3",
     "eslint": "^10.2.0",
     "eslint-config-prettier": "^10.1.8",
+    "happy-dom": "^20.9.0",
+    "lighthouse": "^13.1.0",
+    "pa11y-ci": "^4.1.0",
+    "playwright": "^1.59.1",
     "prettier": "^3.8.3",
+    "supertest": "^7.2.2",
     "vitest": "^4.1.4"
   }
 }
