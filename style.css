@@ -1745,8 +1745,12 @@ select option { background: var(--surface2); }
 .btn-ghost:hover { border-color: var(--accent); color: var(--text); }
 
 /* ── DASHBOARD SCREEN ── */
+/* Gate D: widen from 800px to --w-desktop (1080px) — fixes the user-reported
+   narrow-desktop bug (AUDIT §3). The dashboard keeps its single-column layout
+   for now; two-column stats/activity grid is a follow-up once we've confirmed
+   the wider container doesn't break the existing content. */
 .dashboard-inner {
-  max-width: 800px; width: 100%; max-height: calc(100vh - 48px);
+  max-width: var(--w-desktop); width: 100%; max-height: calc(100vh - 48px);
   overflow-y: auto; animation: fadeUp 0.4s ease both; padding-bottom: 24px;
 }
 .dash-header {
