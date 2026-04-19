@@ -33,6 +33,27 @@ try {
 
   app.get("/api/health", (req, res) => res.json({ status: "ok", env: !!process.env.SUPABASE_URL }));
 
+  // TEMP: diagnose TEST_PRO_EMAILS resolution (remove after debugging)
+  const { requireAuth, isPro } = await import("../middleware/auth.js");
+  const { default: supabaseClient } = await import("../supabase.js");
+  app.get("/api/debug/pro", requireAuth, async (req, res) => {
+    const { data } = await supabaseClient.auth.admin.getUserById(req.user.userId);
+    const email = data?.user?.email || null;
+    const rawEnv = process.env.TEST_PRO_EMAILS || "";
+    const parsed = rawEnv.split(",").map(e => e.trim().toLowerCase()).filter(Boolean);
+    const match = email ? parsed.includes(email.toLowerCase()) : false;
+    const proResult = await isPro(req.user.userId);
+    res.json({
+      email,
+      emailLowercase: email?.toLowerCase() || null,
+      testProEmailsRaw: rawEnv,
+      testProEmailsRawLength: rawEnv.length,
+      testProEmailsParsed: parsed,
+      matchInList: match,
+      isProResult: proResult,
+    });
+  });
+
   app.use("/api/auth", authRoutes);
   app.use("/api", progressRoutes);
   app.use("/api", exerciseRoutes);
