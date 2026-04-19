@@ -4,6 +4,10 @@ import { $, show } from "../ui/nav.js";
 import { API, authHeader, apiFetch } from "../api.js";
 import { state } from "../state.js";
 import { showLoading, showLoadingError } from "../ui/loading.js";
+import { renderExercise } from "./exerciseRenderer.js";
+import { toUnified } from "../../lib/exerciseTypes.js";
+
+const OPTION_LETTERS = ["A", "B", "C", "D", "E", "F"];
 
 let _deps = {};
 export function initAdaptive({ loadDashboard }) {
@@ -177,14 +181,16 @@ function renderMasteryQuestion() {
   $("mastery-question").textContent = ex.question || "";
 
   const grid = $("mastery-options-grid");
-  grid.innerHTML = "";
-  for (const opt of (ex.options || [])) {
-    const btn = document.createElement("button");
-    btn.className = "option-btn";
-    btn.textContent = opt;
-    btn.addEventListener("click", () => handleMasteryAnswer(btn, opt, ex));
-    grid.appendChild(btn);
-  }
+  renderExercise(
+    toUnified(ex, { topic: "mastery", skill_bucket: "vocab" }),
+    grid,
+    {
+      onAnswer: ({ chosenIndex, button }) => {
+        const optText = button.textContent;
+        handleMasteryAnswer(button, optText, ex);
+      },
+    }
+  );
 
   $("mastery-explanation-block").classList.add("hidden");
 }

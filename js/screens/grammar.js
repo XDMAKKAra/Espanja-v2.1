@@ -5,6 +5,10 @@ import { showLoading, showLoadingError, showSkeleton, showFetchError } from "../
 import { GRAMMAR_TYPE_LABELS } from "./vocab.js";
 import { resetAutoTriggerTracking, recordAnswerForAutoTrigger } from "./quickReview.js";
 import { getBlogForTopic, trackBlogClick } from "../features/topicBlogMap.js";
+import { renderExercise } from "./exerciseRenderer.js";
+import { toUnified } from "../../lib/exerciseTypes.js";
+
+const OPTION_LETTERS = ["A", "B", "C", "D", "E", "F"];
 
 let _deps = {};
 export function initGrammar({ loadDashboard, saveProgress }) {
@@ -101,22 +105,21 @@ function renderGrammarExercise() {
   $("gram-explanation-block").classList.add("hidden");
 
   const grid = $("gram-options-grid");
-  grid.innerHTML = "";
-
   if (exType === "transform" || exType === "pick_rule") {
     grid.style.gridTemplateColumns = "1fr";
   } else {
     grid.style.gridTemplateColumns = "1fr 1fr";
   }
 
-  ex.options.forEach((opt) => {
-    const letter = opt.trim()[0];
-    const btn = document.createElement("button");
-    btn.className = "option-btn";
-    btn.textContent = opt;
-    btn.addEventListener("click", () => handleGrammarAnswer(letter, btn, ex));
-    grid.appendChild(btn);
-  });
+  renderExercise(
+    toUnified(ex, { topic: state.grammarTopic || "grammar", skill_bucket: "grammar" }),
+    grid,
+    {
+      onAnswer: ({ chosenIndex, button }) => {
+        handleGrammarAnswer(OPTION_LETTERS[chosenIndex], button, ex);
+      },
+    }
+  );
 }
 
 function handleGrammarAnswer(chosen, clickedBtn, ex) {
