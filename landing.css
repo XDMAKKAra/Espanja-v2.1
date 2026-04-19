@@ -64,6 +64,8 @@
   --grad-pro:     linear-gradient(135deg, var(--brand-light), var(--brand));
   --grad-hero:    linear-gradient(130deg, var(--brand-light) 0%, var(--brand) 100%);
   --grad-urgency: linear-gradient(90deg, #a01818 0%, var(--brand-btn) 50%, #a01818 100%);
+  --brand-ochre:  #e67e22;   /* summer-paket accent — sits between --brand-light and --brand */
+  --grad-summer:  linear-gradient(135deg, var(--brand-light), var(--brand-ochre));
 
   /* Spacing */
   --s-0: 0; --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px;
@@ -208,8 +210,8 @@ body::after {
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 200;
-  /* Gradient stays within AA range for white text (mid-point not lighter than c62020) */
-  background: linear-gradient(90deg, #a01818 0%, #c62020 50%, #a01818 100%);
+  /* Uses --grad-urgency token (AA-verified for white text). */
+  background: var(--grad-urgency);
   color: #fff;
   font-size: 14px;
   font-weight: 600;
@@ -691,7 +693,7 @@ body::after {
   white-space: nowrap;
 }
 .price-badge.hidden { display: none; }
-.price-badge.summer-badge { background: linear-gradient(135deg, var(--brand-light), #e67e22); }
+.price-badge.summer-badge { background: var(--grad-summer); }
 .price-name { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
 .price-amount { font-size: 36px; font-weight: 800; letter-spacing: -0.02em; }
 .price-amount .price-period { font-size: 14px; font-weight: 600; color: var(--text-muted); }
@@ -733,7 +735,7 @@ body::after {
 }
 .price-btn.primary:hover { opacity: 0.9; }
 .price-btn.summer-btn {
-  background: linear-gradient(135deg, var(--brand-light), #e67e22);
+  background: var(--grad-summer);
   border-color: var(--brand-light);
   box-shadow: 0 0 24px rgba(245, 158, 11, 0.3);
 }
@@ -746,7 +748,7 @@ body::after {
 /* ── SUMMER TEASER ── */
 .price-card.summer.teaser { opacity: 0.85; }
 .price-card.summer.teaser .summer-btn {
-  background: linear-gradient(135deg, var(--brand-light), #e67e22);
+  background: var(--grad-summer);
   border-color: var(--brand-light);
   opacity: 1;
 }
@@ -851,7 +853,7 @@ body::after {
 }
 
 /* ── FAQ ── */
-.faq-list { max-width: 640px; }
+.faq-list { max-width: 800px; }
 .faq-item {
   border-bottom: 1px solid var(--border); padding: 16px 0;
 }
