@@ -954,32 +954,58 @@ router.post("/checkpoint/start", requireAuth, aiLimiter, checkMonthlyCostLimit, 
 
     const nextLevel = levelData.nextLevel;
     const lang = LANGUAGE_META[language] || LANGUAGE_META.spanish;
+    if (!nextLevel) {
+      return res.status(400).json({ error: "Ei seuraavaa tasoa saatavilla" });
+    }
     const profileCtx = await getUserProfileContext(userId);
 
-    // Generate 20 questions at next level with NO scaffolding
-    const types = ["multichoice", "gap_fill", "reorder", "translate_mini", "gap_fill"];
+    // Checkpoint = 20 questions at next level with NO scaffolding.
+    // Before Commit 8 this made 4 sequential OpenAI calls of 5 questions
+    // each (~$0.008/checkpoint). Now 2 calls of 10 (~$0.004/checkpoint).
+    // Split vocab vs grammar across the two calls; keep type variety by
+    // using multichoice for vocab (10) and gap_fill for grammar (10).
     const exercises = [];
+    const tokensBefore = { input: 0, output: 0 };
 
-    // Generate in batches of 4-5 across different types
-    for (let i = 0; i < 4; i++) {
-      const type = types[i];
+    // Call 1: 10 vocab multichoice items
+    {
       const prompt = composePrompt({
         level: nextLevel,
-        type,
-        scaffoldLevel: 0, // no scaffolding
-        topic: i < 2 ? "vocab" : "grammar",
-        count: 5,
+        type: "multichoice",
+        scaffoldLevel: 0,
+        topic: "vocab",
+        count: 10,
         language,
         profileContext: profileCtx,
       });
-
-      const batch = await callOpenAI(prompt, getMaxTokens(type, 5));
+      const batch = await callOpenAI(prompt, getMaxTokens("multichoice", 10));
+      tokensBefore.input  += batch._usage?.inputTokens  || 0;
+      tokensBefore.output += batch._usage?.outputTokens || 0;
       logAiUsage(userId, "checkpoint", batch._usage).catch(() => {});
       delete batch._usage;
-
-      const arr = Array.isArray(batch) ? batch : [batch];
-      exercises.push(...arr);
+      exercises.push(...(Array.isArray(batch) ? batch : [batch]));
     }
+
+    // Call 2: 10 grammar gap-fill items
+    {
+      const prompt = composePrompt({
+        level: nextLevel,
+        type: "gap_fill",
+        scaffoldLevel: 0,
+        topic: "grammar",
+        count: 10,
+        language,
+        profileContext: profileCtx,
+      });
+      const batch = await callOpenAI(prompt, getMaxTokens("gap_fill", 10));
+      tokensBefore.input  += batch._usage?.inputTokens  || 0;
+      tokensBefore.output += batch._usage?.outputTokens || 0;
+      logAiUsage(userId, "checkpoint", batch._usage).catch(() => {});
+      delete batch._usage;
+      exercises.push(...(Array.isArray(batch) ? batch : [batch]));
+    }
+
+    console.log(`[checkpoint] user=${userId} level=${nextLevel} items=${exercises.length} tokens=in:${tokensBefore.input}/out:${tokensBefore.output}`);
 
     res.json({
       exercises: exercises.slice(0, 20),
