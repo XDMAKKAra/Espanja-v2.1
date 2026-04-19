@@ -2202,7 +2202,10 @@ select option { background: var(--surface2); }
 
 /* ── MOCK EXAM ── */
 .exam-inner {
-  max-width: 640px; width: 100%; max-height: calc(100vh - 48px);
+  /* Gate D: 640px → --w-desktop. Two-column exam layout (text + questions
+     side-by-side per SCREENS §6) deferred; wider single column already
+     helps for reading-comprehension exam tasks. */
+  max-width: var(--w-desktop); width: 100%; max-height: calc(100vh - 48px);
   overflow-y: auto; animation: fadeUp 0.4s ease both;
 }
 .exam-header {
