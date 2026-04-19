@@ -93,8 +93,9 @@ router.post("/submit", requireAuth, async (req, res) => {
 
     const isRetake = (count || 0) > 0;
 
-    // Save diagnostic result
-    await supabase.from("diagnostic_results").insert({
+    // Save diagnostic result — this row is what gates future placement status,
+    // so a silent failure here meant users saw the placement flow every login.
+    const { error: insertError } = await supabase.from("diagnostic_results").insert({
       user_id: req.user.userId,
       placement_level: result.placementLevel,
       chosen_level: result.placementLevel, // updated later if user picks alternative
@@ -104,20 +105,37 @@ router.post("/submit", requireAuth, async (req, res) => {
       question_ids: graded.map(g => g.id),
       is_retake: isRetake,
     });
+    if (insertError) {
+      console.error("Placement insert error:", {
+        user_id: req.user.userId,
+        code: insertError.code || null,
+        message: insertError.message,
+        details: insertError.details || null,
+        hint: insertError.hint || null,
+      });
+      return res.status(500).json({ error: "Kartoituksen tallennus epäonnistui" });
+    }
 
     // Update user_profile with placement level
-    await supabase
+    const { error: profileError } = await supabase
       .from("user_profile")
       .update({
         current_grade: result.placementLevel,
         updated_at: new Date().toISOString(),
       })
       .eq("user_id", req.user.userId);
+    if (profileError) {
+      console.error("Placement profile update error:", {
+        user_id: req.user.userId,
+        code: profileError.code || null,
+        message: profileError.message,
+      });
+    }
 
     // Update user_level_progress for all modes
     const modes = ["vocab", "grammar"];
     for (const mode of modes) {
-      await supabase
+      const { error: lpError } = await supabase
         .from("user_level_progress")
         .upsert({
           user_id: req.user.userId,
@@ -126,6 +144,11 @@ router.post("/submit", requireAuth, async (req, res) => {
           level_started_at: new Date().toISOString(),
           questions_at_level: 0,
         }, { onConflict: "user_id,mode" });
+      if (lpError) {
+        console.error("Placement level_progress upsert error:", {
+          user_id: req.user.userId, mode, code: lpError.code || null, message: lpError.message,
+        });
+      }
     }
 
     // Return full results with explanations
