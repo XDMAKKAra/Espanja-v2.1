@@ -1,10 +1,7 @@
+// This endpoint previously leaked env-var reconnaissance data.
+// It is no longer routed (see vercel.json) and the handler now
+// refuses requests. Delete this file on next deploy if nothing
+// depends on its presence.
 export default function handler(req, res) {
-  res.json({
-    projectName: process.env.VERCEL_PROJECT_NAME,
-    targetEnv: process.env.VERCEL_TARGET_ENV,
-    testVar: process.env.TEST_VAR || "NOT SET",
-    hasSupabaseUrl: !!process.env.SUPABASE_URL,
-    hasServiceKey: !!process.env.SUPABASE_SERVICE_ROLE_KEY,
-    envCount: Object.keys(process.env).length
-  });
+  res.status(404).json({ error: "Not found" });
 }

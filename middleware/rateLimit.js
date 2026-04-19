@@ -151,3 +151,12 @@ export const aiStrictLimiter = createLimiter({
   keyGenerator: (req) => req.user?.userId || req.ip,
   message: { error: "Olet käyttänyt tuntikysyntäsi. Yritä myöhemmin." },
 });
+
+// Per-user limiter for /report-exercise: prevents abusive bulk-reporting.
+// Legit users rarely report more than a handful of exercises per hour.
+export const reportLimiter = createLimiter({
+  windowMs: 60 * 60 * 1000,
+  max: 10,
+  keyGenerator: (req) => req.user?.userId || req.ip,
+  message: { error: "Liian monta raporttia. Yritä myöhemmin." },
+});

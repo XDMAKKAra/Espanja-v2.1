@@ -3,6 +3,11 @@
 // Weaknesses get more reps, strengths get fewer. Topics the user didn't
 // flag either way are neutral. Consumers (task selector, adaptive picker)
 // multiply their base selection weight by this number.
+//
+// NOTE: Scaffold only — not yet wired into any caller. Intended consumer
+// is routes/exercises.js topic selection once we surface weak_areas /
+// strong_areas from user_profile into the picker. Safe to import; no
+// side effects. Delete this file if the feature is abandoned.
 
 export const MULTIPLIER_WEAK = 2.0;
 export const MULTIPLIER_NEUTRAL = 1.0;
