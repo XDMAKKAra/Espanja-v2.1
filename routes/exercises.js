@@ -36,9 +36,10 @@ async function getUserId(req) {
 }
 
 async function tryBankExercise(mode, level, topic, language, userId) {
-  // 50% chance to try the bank
-  if (Math.random() > 0.5) return null;
-
+  // Always try the bank first. Candidates are filtered by seen_exercises so
+  // a user who has already seen everything will still fall through to AI.
+  // Prior code rolled a 50% dice here for "freshness" — removed to cut
+  // OpenAI spend + latency roughly in half on hot combos.
   let query = supabase
     .from("exercise_bank")
     .select("id, payload")
@@ -188,25 +189,16 @@ Return ONLY a JSON array, no markdown:
 ]`;
 
     const warnings = [];
-    let exercises = await callOpenAI(prompt, 2000);
+    const exercises = await callOpenAI(prompt, 2000);
     logAiUsage(userId, "generate", exercises._usage).catch(() => {});
     delete exercises._usage;
 
-    let validation = validateVocabBatch(exercises);
-    if (!validation.ok) {
-      // One retry with the same prompt — OpenAI sometimes needs a second pass.
-      const retry = await callOpenAI(prompt, 2000);
-      logAiUsage(userId, "generate", retry._usage).catch(() => {});
-      delete retry._usage;
-      const retryValidation = validateVocabBatch(retry);
-      if (retryValidation.ok) {
-        exercises = retry;
-        validation = retryValidation;
-      } else {
-        // Surface warnings rather than 500ing. The UI still gets a valid shape.
-        warnings.push(...validation.issues);
-      }
-    }
+    // Single validation pass. Prior code retried on failure (doubled latency
+    // + cost) but most validation issues are heuristic false-positives
+    // (e.g. the headword-duplicate check). Ship the result with warnings;
+    // only skip the bank save when genuinely malformed.
+    const validation = validateVocabBatch(exercises);
+    if (!validation.ok) warnings.push(...validation.issues);
 
     // Save to bank (fire-and-forget) — only for fully-valid batches
     if (validation.ok) saveToBankBulk("vocab", level, topic, language, exercises).catch(() => {});
@@ -393,24 +385,15 @@ Return ONLY a JSON array (no markdown):
     logAiUsage(userId, "grammar-drill", exercises._usage).catch(() => {});
     delete exercises._usage;
 
-    let validation = validateGrammarBatch(exercises, { topic });
+    // Single validation pass (prior code retried; doubled latency + spend).
+    // When validation fails we still keep the in-scope items so the user gets
+    // something useful rather than a 500 or a second 10-second wait.
+    const validation = validateGrammarBatch(exercises, { topic });
     if (!validation.ok) {
-      // One retry with the same prompt.
-      const retry = await callOpenAI(prompt, 2500);
-      logAiUsage(userId, "grammar-drill", retry._usage).catch(() => {});
-      delete retry._usage;
-      const retryValidation = validateGrammarBatch(retry, { topic });
-      if (retryValidation.ok) {
-        exercises = retry;
-        validation = retryValidation;
-      } else {
-        // Filter out the out-of-scope items so the client never renders them,
-        // and keep whatever is in-scope. Warnings let telemetry see the drift.
-        const { checkGrammarItemScope } = await import("../lib/grammarScope.js");
-        exercises = (Array.isArray(exercises) ? exercises : [])
-          .filter((ex) => checkGrammarItemScope(ex).length === 0);
-        warnings.push(...validation.issues);
-      }
+      const { checkGrammarItemScope } = await import("../lib/grammarScope.js");
+      exercises = (Array.isArray(exercises) ? exercises : [])
+        .filter((ex) => checkGrammarItemScope(ex).length === 0);
+      warnings.push(...validation.issues);
     }
 
     if (validation.ok) saveToBankBulk("grammar", level, topic, language, exercises).catch(() => {});
