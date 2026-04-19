@@ -10,7 +10,9 @@
  */
 
 const FLAGS = [
-  "side_panel",      // Gate C.5 pilot — vocab exercise right-side panel at ≥1200px
+  // Pass 1.5 dropped `side_panel` — .split is live everywhere now. Add new
+  // flags here; the runtime sets data-ff-<key>="1" on <body> when localStorage
+  // holds `ff_<key>=1`.
 ];
 
 export function applyFeatureFlags() {
