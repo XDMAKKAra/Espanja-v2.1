@@ -1,10 +1,9 @@
 import { $, show } from "../ui/nav.js";
-import { API, isLoggedIn, authHeader } from "../api.js";
+import { API, isLoggedIn, authHeader, apiFetch } from "../api.js";
 import { state, LEVELS, BATCH_SIZE, MAX_BATCHES } from "../state.js";
 import { showLoading, showLoadingError, showSkeleton, showFetchError } from "../ui/loading.js";
 import { srPop, srAddWrong, srMarkCorrect, srReview, srGetDue } from "../features/spacedRepetition.js";
 import { isTranslationAccepted, isTranslationPartial, translationBand, TRANSLATION_BAND_LABELS } from "../features/answerGrading.js";
-import { authHeader, apiFetch } from "../api.js";
 import { trackExerciseStarted, trackExerciseCompleted, trackError } from "../analytics.js";
 import { renderExercise } from "./exerciseRenderer.js";
 import { toUnified } from "../../lib/exerciseTypes.js";
