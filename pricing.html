@@ -11,7 +11,7 @@
     .page-content {
       position: relative;
       z-index: 1;
-      max-width: 860px;
+      max-width: 1200px;
       margin: 0 auto;
       padding: 120px 32px 80px;
     }
@@ -36,11 +36,12 @@
     }
     .pricing-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(3, 1fr);
       gap: 20px;
       margin-bottom: 48px;
     }
-    @media (max-width: 600px) { .pricing-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 960px) { .pricing-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 640px) { .pricing-grid { grid-template-columns: 1fr; } }
     .price-card {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -54,8 +55,14 @@
       box-shadow: 0 0 40px rgba(230, 57, 70, 0.15);
       position: relative;
     }
-    .price-card.featured::after {
-      content: 'Suosituin';
+    .price-card.summer {
+      border-color: var(--gold, #f59e0b);
+      box-shadow: 0 0 40px rgba(245, 158, 11, 0.12);
+      position: relative;
+    }
+    .price-card.featured::after,
+    .price-card.summer::after {
+      content: attr(data-badge);
       position: absolute;
       top: -11px;
       right: 20px;
@@ -64,10 +71,19 @@
       letter-spacing: 0.1em;
       text-transform: uppercase;
       color: #fff;
-      background: var(--brand);
       padding: 3px 12px;
       border-radius: 20px;
     }
+    .price-card.featured::after { background: var(--brand); }
+    .price-card.summer::after { background: var(--gold, #f59e0b); }
+    .price-compare {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+    .price-compare s { opacity: 0.6; }
+    .price-compare strong { color: var(--gold, #f59e0b); }
     .price-name {
       font-size: 14px;
       font-weight: 700;
@@ -128,6 +144,11 @@
       color: #fff;
       box-shadow: 0 0 20px rgba(230, 57, 70, 0.3);
     }
+    .price-cta.summer {
+      background: linear-gradient(135deg, var(--gold, #f59e0b), #e67e22);
+      color: #fff;
+      box-shadow: 0 0 20px rgba(245, 158, 11, 0.25);
+    }
     .price-cta:hover { opacity: 0.85; transform: translateY(-1px); }
   </style>
 </head>
@@ -160,10 +181,10 @@
         <a href="app.html" class="price-cta free">Aloita ilmaiseksi</a>
       </div>
 
-      <div class="price-card featured">
+      <div class="price-card featured" data-badge="Suosituin">
         <div class="price-name">Pro</div>
-        <div class="price-amount">4,99 <span>&euro;/kk</span></div>
-        <div class="price-period">tai 39,99 &euro;/vuosi (säästä 33%)</div>
+        <div class="price-amount">9,99 <span>&euro;/kk</span></div>
+        <div class="price-period">Peruta milloin tahansa</div>
         <ul class="price-features">
           <li>Kaikki ilmaisen tilin ominaisuudet</li>
           <li>Luetun ymmärtäminen (AI-tekstit)</li>
@@ -171,7 +192,22 @@
           <li>Koeharjoitus (ajastettu simulaatio)</li>
           <li>Yksityiskohtainen edistymisraportti</li>
         </ul>
-        <a href="app.html" class="price-cta pro">Aloita Pro-kokeilu</a>
+        <a href="app.html" class="price-cta pro">Aloita Pro · 9,99 €/kk</a>
+      </div>
+
+      <div class="price-card summer" data-badge="Kesä 2026">
+        <div class="price-name">Kesäpaketti 2026</div>
+        <div class="price-amount">29 <span>&euro;</span></div>
+        <div class="price-compare"><s>39,96 €</s> &rarr; 29 € &middot; <strong>Säästä 10,96 €</strong></div>
+        <div class="price-period">Kertamaksu &middot; ei automaattista uusimista</div>
+        <ul class="price-features">
+          <li>Kaikki mitä Pro:ssa — ja lisää</li>
+          <li>4 kk täysi pääsy: 1.6.–30.9.2026</li>
+          <li>BONUS: Viikkosuunnitelma syksyn YO-kirjoituksiin</li>
+          <li>BONUS: Prioriteettituki (vastaus 12h sisällä)</li>
+          <li>BONUS: 1 henkilökohtainen kirjoitelmapalaute</li>
+        </ul>
+        <a href="app.html" class="price-cta summer">Osta kesäpaketti · 29 €</a>
       </div>
     </div>
 

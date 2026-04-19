@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<<!DOCTYPE html>
 <html lang="fi">
 <head>
   <meta charset="UTF-8" />
@@ -777,14 +777,34 @@
     <h1>Paranna espanjan YO-arvosanaa<br/><em>teko&auml;lyll&auml;.</em></h1>
 
     <p class="hero-sub">
-      Personoidut harjoitukset, autenttinen YTL-rubriikki,<br/>
-      alkaen 9,99&euro;/kk. Ei vaadi maksukorttia.
+      Personoidut harjoitukset &middot; YTL-rubriikin mukainen AI-palaute &middot; t&auml;yskoe-simulaatio.
     </p>
 
     <div class="hero-actions">
-      <a href="app.html" class="btn-hero">Aloita ilmaiseksi &rarr;</a>
-      <a href="diagnose.html" class="btn-hero-secondary">&#127919; Testaa tasosi &mdash; 2 min</a>
+      <a href="app.html" class="btn-hero">Aloita ilmaiseksi &mdash; 2 min</a>
+      <a href="diagnose.html" class="btn-hero-secondary">
+        <svg class="btn-hero-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>
+        </svg>
+        Testaa tasosi
+      </a>
     </div>
+
+    <!-- Trust strip: urgency + risk-reversal directly reinforcing the CTA -->
+    <ul class="hero-trust-strip" aria-label="Luottamussignaalit">
+      <li class="hero-trust-item hero-trust-urgency">
+        <span class="hero-trust-num" id="hero-trust-days">&mdash;</span>
+        <span class="hero-trust-label">p&auml;iv&auml;&auml; YO-kokeeseen 28.9.2026</span>
+      </li>
+      <li class="hero-trust-item">
+        <svg class="hero-trust-icon" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M2 10h20"/></svg>
+        Ei luottokorttia
+      </li>
+      <li class="hero-trust-item">
+        <svg class="hero-trust-icon" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.5 9 8 11 4.5-2 8-6 8-11V5l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>
+        14 pv rahat takaisin
+      </li>
+    </ul>
 
     <div class="hero-social-proof hidden" id="hero-social-proof">
       <span class="hero-proof-dot"></span>
@@ -845,7 +865,7 @@
           <span class="mini-diag-result-label">Tavoite M-tasolle</span>
           <span class="mini-diag-result-val" id="mini-diag-eta">&mdash;</span>
         </div>
-        <a id="mini-diag-register" href="app.html" class="btn-hero mini-diag-cta-register">Aloita ilmaiseksi &rarr;</a>
+        <a id="mini-diag-register" href="app.html" class="btn-hero mini-diag-cta-register">Tee henkil&ouml;kohtainen suunnitelma &rarr;</a>
         <p class="mini-diag-disclaimer">
           Karkea arvio 3 kysymyksest&auml; &mdash; tarkka taso m&auml;&auml;r&auml;ytyy ensimm&auml;isen viikon aikana.
         </p>
@@ -1094,18 +1114,26 @@
     </div>
   </section>
 
-  <!-- 6) TESTIMONIALS -->
-  <section class="section" id="testimonials">
-    <div class="section-tag">Kokemuksia</div>
-    <h2>Mit&auml; k&auml;ytt&auml;j&auml;t sanovat</h2>
-
-    <div class="testimonials-grid" id="testimonials-grid">
-      <div class="testimonial-placeholder">
-        <span class="testimonial-placeholder-icon">&#128172;</span>
-        <p>Beta-testaajien palaute tulossa pian.</p>
-        <p class="testimonial-placeholder-sub">Kokeile itse ja kerro mielipiteesi!</p>
-      </div>
-    </div>
+  <!-- 6) CREDIBILITY STRIP (replaces empty testimonials until real quotes exist) -->
+  <section class="section" id="credibility" aria-label="Luotettavuus">
+    <ul class="credibility-strip">
+      <li class="credibility-item">
+        <svg class="credibility-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/></svg>
+        YTL-rubriikin mukainen arviointi
+      </li>
+      <li class="credibility-item">
+        <svg class="credibility-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg>
+        10 vuoden YO-arkisto pohjana
+      </li>
+      <li class="credibility-item">
+        <svg class="credibility-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+        Lukion OPS 2021 &middot; lyhyt oppim&auml;&auml;r&auml;
+      </li>
+      <li class="credibility-item">
+        <svg class="credibility-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20"/><path d="M12 2a15 15 0 0 0 0 20"/></svg>
+        Tehty Suomessa
+      </li>
+    </ul>
   </section>
 
   <!-- COMPARISON: Why Puheo, not Abitreenit -->
@@ -1538,11 +1566,14 @@
         document.getElementById('urgency-days').textContent = daysLeft;
       }
 
-      document.getElementById('urgency-bar-close').addEventListener('click', function(e) {
-        e.stopPropagation();
-        bar.classList.add('hidden');
-        sessionStorage.setItem('urgency-dismissed', '1');
-      });
+      var urgencyClose = document.getElementById('urgency-bar-close');
+      if (urgencyClose && bar) {
+        urgencyClose.addEventListener('click', function(e) {
+          e.stopPropagation();
+          bar.classList.add('hidden');
+          sessionStorage.setItem('urgency-dismissed', '1');
+        });
+      }
     })();
 
     // Exam countdown (days remaining to autumn 2026 YO — hourly update, Helsinki time)
@@ -1565,11 +1596,18 @@
           daysEl.textContent = 'Syksyn koe ohi.';
           examEl.textContent = 'Kiitos, ett\u00e4 valmistauduit Puheon kanssa.';
           ctxEl.textContent = 'Kev\u00e4\u00e4n kirjoituksiin valmistautuminen kannattaa aloittaa hyviss\u00e4 ajoin.';
+          // Hide the hero urgency pill once the exam has passed
+          var urgencyEl = document.querySelector('.hero-trust-urgency');
+          if (urgencyEl) urgencyEl.hidden = true;
           return;
         }
         var days = Math.ceil(diff / DAY);
         daysEl.textContent = days;
         unitEl.textContent = days === 1 ? ' p\u00e4iv\u00e4' : ' p\u00e4iv\u00e4\u00e4';
+
+        // Mirror the day count into the hero trust strip
+        var heroDaysEl = document.getElementById('hero-trust-days');
+        if (heroDaysEl) heroDaysEl.textContent = days;
 
         var msg;
         if (days >= 150) {
@@ -1641,7 +1679,8 @@
         summerCta.href = '#';
         summerCta.addEventListener('click', function(e) {
           e.preventDefault();
-          document.getElementById('waitlist-overlay').classList.remove('hidden');
+          var waitlistOverlay = document.getElementById('waitlist-overlay');
+          if (waitlistOverlay) waitlistOverlay.classList.remove('hidden');
         });
       } else {
         // Sep–Dec: hide (exam is over)
@@ -1657,14 +1696,20 @@
 
       // Waitlist modal logic
       var overlay = document.getElementById('waitlist-overlay');
-      document.getElementById('waitlist-close').addEventListener('click', function() {
-        overlay.classList.add('hidden');
-      });
-      overlay.addEventListener('click', function(e) {
-        if (e.target === overlay) overlay.classList.add('hidden');
-      });
+      var waitlistClose = document.getElementById('waitlist-close');
+      var waitlistForm = document.getElementById('waitlist-form');
+      if (waitlistClose && overlay) {
+        waitlistClose.addEventListener('click', function() {
+          overlay.classList.add('hidden');
+        });
+      }
+      if (overlay) {
+        overlay.addEventListener('click', function(e) {
+          if (e.target === overlay) overlay.classList.add('hidden');
+        });
+      }
 
-      document.getElementById('waitlist-form').addEventListener('submit', function(e) {
+      if (waitlistForm) waitlistForm.addEventListener('submit', function(e) {
         e.preventDefault();
         var email = document.getElementById('waitlist-email').value.trim();
         var btn = document.getElementById('waitlist-submit');
@@ -1724,12 +1769,19 @@
           .catch(function() {});
       }
 
+      // requestIdleCallback expects an options object {timeout},
+      // setTimeout expects a millisecond number — they're not interchangeable.
+      function deferLoadCount() {
+        if (window.requestIdleCallback) {
+          window.requestIdleCallback(loadCount, { timeout: 1000 });
+        } else {
+          window.setTimeout(loadCount, 1);
+        }
+      }
       if (document.readyState === 'complete') {
-        (window.requestIdleCallback || window.setTimeout)(loadCount, 1);
+        deferLoadCount();
       } else {
-        window.addEventListener('load', function() {
-          (window.requestIdleCallback || window.setTimeout)(loadCount, 1);
-        }, { once: true });
+        window.addEventListener('load', deferLoadCount, { once: true });
       }
     })();
 

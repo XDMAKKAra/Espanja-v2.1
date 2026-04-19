@@ -37,28 +37,28 @@
 
   <link rel="stylesheet" href="../landing.css" />
   <style>
-    body { background: var(--bg, #0B0A08); color: var(--fg, #F5F2EA); font-family: 'Lora', Georgia, serif; line-height: 1.7; }
+    body { background: var(--bg); color: var(--text); font-family: 'Lora', Georgia, serif; line-height: 1.7; }
     .article-wrap { max-width: 720px; margin: 0 auto; padding: 40px 24px 80px; }
-    .breadcrumb { font-size: 14px; color: var(--muted, #8B8578); margin-bottom: 24px; }
-    .breadcrumb a { color: var(--muted, #8B8578); text-decoration: none; }
-    .breadcrumb a:hover { color: var(--fg); text-decoration: underline; }
+    .breadcrumb { font-size: 14px; color: var(--text-muted); margin-bottom: 24px; }
+    .breadcrumb a { color: var(--text-muted); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--text); text-decoration: underline; }
     h1 { font-family: 'Syne', sans-serif; font-size: 2.2rem; line-height: 1.2; margin: 0 0 16px; }
-    .lead { font-size: 1.15rem; color: #C9C2B5; margin-bottom: 32px; }
-    .meta { font-size: 14px; color: var(--muted, #8B8578); margin-bottom: 40px; }
+    .lead { font-size: 1.15rem; color: var(--text-muted); margin-bottom: 32px; }
+    .meta { font-size: 14px; color: var(--text-muted); margin-bottom: 40px; }
     h2 { font-family: 'Syne', sans-serif; font-size: 1.5rem; margin: 48px 0 16px; }
     h3 { font-family: 'Syne', sans-serif; font-size: 1.2rem; margin: 32px 0 12px; }
     p, li { font-size: 17px; }
     ul, ol { padding-left: 24px; }
     li { margin-bottom: 8px; }
-    .article-wrap a { color: #C9A66B; }
-    .example { background: rgba(26, 23, 20, 0.6); border-left: 3px solid #C9A66B; padding: 16px 20px; margin: 16px 0; border-radius: 0 8px 8px 0; font-size: 16px; }
+    .article-wrap a { color: var(--brand-light); }
+    .example { background: var(--surface); border-left: 3px solid var(--brand-light); padding: 16px 20px; margin: 16px 0; border-radius: 0 8px 8px 0; font-size: 16px; }
     .example .wrong { color: #E08080; text-decoration: line-through; }
     .example .right { color: #B5D49E; font-weight: 600; }
-    .rule-box { background: rgba(201, 166, 107, 0.08); border: 1px solid rgba(201, 166, 107, 0.2); border-radius: 10px; padding: 20px; margin: 24px 0; }
-    .rule-box strong { color: #C9A66B; }
-    .cta-box { background: rgba(26, 23, 20, 0.8); border: 1px solid rgba(201, 166, 107, 0.2); border-radius: 12px; padding: 24px; margin: 48px 0; }
+    .rule-box { background: rgba(245, 158, 11, 0.06); border: 1px solid var(--border); border-radius: 10px; padding: 20px; margin: 24px 0; }
+    .rule-box strong { color: var(--brand-light); }
+    .cta-box { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin: 48px 0; }
     .cta-box h3 { margin-top: 0; }
-    .cta-box a { display: inline-block; background: #C9A66B; color: #0B0A08; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: 600; margin-top: 12px; }
+    .cta-box a { display: inline-block; background: var(--brand-light); color: var(--bg); padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: 600; margin-top: 12px; }
   </style>
 </head>
 <body>
@@ -233,8 +233,8 @@
       <li><a href="https://abitreenit.yle.fi" target="_blank" rel="noopener">Yle Abitreenit — espanjan vanhoja YO-kokeita</a></li>
     </ul>
 
-    <hr style="margin: 48px 0; border: none; border-top: 1px solid rgba(201, 166, 107, 0.15);" />
-    <p style="font-size: 14px; color: var(--muted, #8B8578);">Puheo on suomalainen tekoälyavusteinen espanjan YO-kokeen valmennusalusta. <a href="/">Tutustu Puheoon</a> · <a href="/blog/">Lue lisää blogista</a></p>
+    <hr style="margin: 48px 0; border: none; border-top: 1px solid var(--border);" />
+    <p style="font-size: 14px; color: var(--text-muted);">Puheo on suomalainen tekoälyavusteinen espanjan YO-kokeen valmennusalusta. <a href="/">Tutustu Puheoon</a> · <a href="/blog/">Lue lisää blogista</a></p>
   </article>
 </body>
 </html>

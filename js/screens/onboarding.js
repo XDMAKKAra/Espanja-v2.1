@@ -12,6 +12,12 @@ export function initOnboarding({ loadDashboard }) {
 
 let currentStep = 1;
 const TOTAL_STEPS = 9;
+// Steps deferred post-signup to reduce activation friction.
+// 2 = courses completed (redundant w/ placement test)
+// 5 = study background  (redundant w/ placement test)
+// 9 = referral source   (moved to the done screen — pure analytics)
+const SKIPPED_STEPS = new Set([2, 5, 9]);
+const VISIBLE_STEPS = [1, 3, 4, 6, 7, 8];
 
 const answers = {
   exam_date: null,
@@ -94,23 +100,31 @@ function showStep(step) {
 }
 
 function updateProgress() {
-  const pct = currentStep === "done" ? 100 : ((currentStep - 1) / TOTAL_STEPS) * 100;
-  const fill = $("onboarding-progress-fill");
-  if (fill) fill.style.width = `${pct}%`;
-
   const label = $("onboarding-step-label");
-  if (label) label.textContent = currentStep === "done" ? "Valmis!" : `${currentStep} / ${TOTAL_STEPS}`;
+  const fill = $("onboarding-progress-fill");
+  if (currentStep === "done") {
+    if (fill) fill.style.width = "100%";
+    if (label) label.textContent = "Valmis!";
+    return;
+  }
+  const idx = VISIBLE_STEPS.indexOf(currentStep);
+  const shown = idx === -1 ? 1 : idx + 1;
+  const pct = ((shown - 1) / VISIBLE_STEPS.length) * 100;
+  if (fill) fill.style.width = `${pct}%`;
+  if (label) label.textContent = `${shown} / ${VISIBLE_STEPS.length}`;
 }
 
 function nextStep() {
-  if (currentStep < TOTAL_STEPS) {
-    currentStep++;
-    updateProgress();
-    showStep(currentStep);
-  } else {
+  let s = currentStep === "done" ? TOTAL_STEPS : currentStep;
+  do { s++; } while (s <= TOTAL_STEPS && SKIPPED_STEPS.has(s));
+  if (s > TOTAL_STEPS) {
     currentStep = "done";
     updateProgress();
     showStep("done");
+  } else {
+    currentStep = s;
+    updateProgress();
+    showStep(currentStep);
   }
 }
 
@@ -252,6 +266,20 @@ handleSingleSelect("ob-daily-goal", "daily_goal");
 handleSingleSelect("ob-referral", "referral");
 handleMultiSelect();
 handleStrongAreas();
+
+// Inline referral picker on the done screen (replaces deleted Step 9)
+(function handleInlineReferral() {
+  const container = $("ob-referral-inline");
+  if (!container) return;
+  container.addEventListener("click", (e) => {
+    const btn = e.target.closest(".ob-referral-chip");
+    if (!btn) return;
+    container.querySelectorAll(".ob-referral-chip").forEach(b => b.classList.remove("selected"));
+    btn.classList.add("selected");
+    answers.referral = btn.dataset.value;
+    track("onboarding_answer", { step: "referral", value: answers.referral });
+  });
+})();
 
 // ─── Confetti ──────────────────────────────────────────────────────────────
 
