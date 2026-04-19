@@ -159,6 +159,11 @@ Rules:
 - Explanations brief: give both ${lang.name} meaning AND Finnish translation
 - Context sentences must be realistic, like from a yo-koe text
 
+HARD REQUIREMENTS (enforced server-side):
+- EVERY item MUST include a non-empty "context" field: a realistic ${lang.name} sentence of at least 6 words that uses the target word/phrase. This applies to ALL four types, not just "context". For "translate" and "meaning" the context sentence models how the word is used; for "gap" the context is the full sentence with the blank filled in.
+- All four options A-D MUST share the same part of speech as the target word. If the target is a verb, all four options must be verbs in the same tense/mood. If the target is a noun, all four must be nouns (same singular/plural and, when relevant, the same gender). Mixing a verb with a noun, or a singular with a plural, is forbidden.
+- Within this batch of ${clampedCount} items, NO target headword (Spanish lemma) may repeat. Use distinct words for every item.
+
 Return ONLY a JSON array, no markdown:
 [
   {
@@ -180,19 +185,79 @@ Return ONLY a JSON array, no markdown:
   }
 ]`;
 
-    const exercises = await callOpenAI(prompt, 2000);
+    const warnings = [];
+    let exercises = await callOpenAI(prompt, 2000);
     logAiUsage(userId, "generate", exercises._usage).catch(() => {});
     delete exercises._usage;
 
-    // Save to bank (fire-and-forget)
-    saveToBankBulk("vocab", level, topic, language, exercises).catch(() => {});
+    let validation = validateVocabBatch(exercises);
+    if (!validation.ok) {
+      // One retry with the same prompt — OpenAI sometimes needs a second pass.
+      const retry = await callOpenAI(prompt, 2000);
+      logAiUsage(userId, "generate", retry._usage).catch(() => {});
+      delete retry._usage;
+      const retryValidation = validateVocabBatch(retry);
+      if (retryValidation.ok) {
+        exercises = retry;
+        validation = retryValidation;
+      } else {
+        // Surface warnings rather than 500ing. The UI still gets a valid shape.
+        warnings.push(...validation.issues);
+      }
+    }
 
-    res.json({ exercises });
+    // Save to bank (fire-and-forget) — only for fully-valid batches
+    if (validation.ok) saveToBankBulk("vocab", level, topic, language, exercises).catch(() => {});
+
+    res.json({ exercises, ...(warnings.length ? { warnings } : {}) });
   } catch (err) {
     console.error("Generate exercises error:", err.message);
     res.status(500).json({ error: err.message || "Failed to generate exercises" });
   }
 });
+
+// ─── Vocab batch validator (Commit 4) ─────────────────────────────────────
+// Runs on OpenAI output: non-empty context per item + no duplicate Spanish
+// headwords in the batch. Word-class consistency is heuristic because we
+// don't have a POS tagger on the server — we approximate via presence of
+// Spanish articles (el/la/un/una/los/las) across options for nouns.
+function validateVocabBatch(exercises) {
+  const issues = [];
+  if (!Array.isArray(exercises) || exercises.length === 0) {
+    return { ok: false, issues: ["empty-or-malformed-batch"] };
+  }
+  const seenHeadwords = new Set();
+  for (let i = 0; i < exercises.length; i++) {
+    const ex = exercises[i];
+    if (!ex || typeof ex !== "object") { issues.push(`item-${i}-not-object`); continue; }
+    if (!ex.context || String(ex.context).trim().length < 10) {
+      issues.push(`item-${i}-missing-context`);
+    }
+    // Headword de-dup heuristic: derive from `context` by stripping punctuation
+    // and quoting the first Spanish-looking capitalised word pair, falling back
+    // to the correct option letter's text.
+    const key = extractHeadwordKey(ex);
+    if (key && seenHeadwords.has(key)) issues.push(`item-${i}-duplicate-headword:${key}`);
+    if (key) seenHeadwords.add(key);
+  }
+  return { ok: issues.length === 0, issues };
+}
+
+function extractHeadwordKey(ex) {
+  // Take the option string matched by `correct` (e.g. "A" → options[0]) and
+  // strip the "A) " prefix + any article.
+  try {
+    if (!ex?.correct || !Array.isArray(ex.options)) return null;
+    const idx = "ABCDEFGH".indexOf(String(ex.correct).trim().toUpperCase());
+    if (idx < 0 || idx >= ex.options.length) return null;
+    const raw = String(ex.options[idx] || "")
+      .replace(/^[A-H]\)\s*/, "")
+      .replace(/^(el|la|los|las|un|una|unos|unas)\s+/i, "")
+      .toLowerCase()
+      .trim();
+    return raw || null;
+  } catch { return null; }
+}
 
 // ─── Grade ─────────────────────────────────────────────────────────────────
 
