@@ -7,7 +7,8 @@ import { $, show } from "./ui/nav.js";
 import { showLoading, showLoadingError } from "./ui/loading.js";
 import { applyFeatureFlags } from "./features/flags.js";
 
-applyFeatureFlags();
+// Never let a feature-flag wiring error block the rest of the app from loading.
+try { applyFeatureFlags(); } catch (err) { console.error("applyFeatureFlags failed:", err); }
 
 import { initAuth } from "./screens/auth.js";
 import { initDashboard, loadDashboard, navigateToMode, saveLastSettings, loadLastSettings, saveProgress, shareResult } from "./screens/dashboard.js";

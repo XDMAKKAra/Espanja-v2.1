@@ -14,13 +14,15 @@ const FLAGS = [
 ];
 
 export function applyFeatureFlags() {
-  if (typeof document === "undefined") return;
+  if (typeof document === "undefined" || !document.body) return;
   for (const key of FLAGS) {
-    const on = localStorage.getItem(`ff_${key}`) === "1";
+    let on = false;
+    try { on = localStorage.getItem(`ff_${key}`) === "1"; } catch { /* private-mode */ }
+    const attr = `data-ff-${key.replace(/_/g, "-")}`;
     if (on) {
-      document.body.setAttribute(`data-ff-${key.replace(/_/g, "-")}`, "1");
+      document.body.setAttribute(attr, "1");
     } else {
-      document.body.removeAttribute(`data-ff-${key.replace(/_/g, "-")}`);
+      document.body.removeAttribute(attr);
     }
   }
 }
