@@ -162,6 +162,15 @@ body::after {
 }
 .nav-links a:hover { color: var(--text); }
 
+.nav-right { display: flex; align-items: center; gap: 18px; }
+
+.nav-login {
+  color: var(--text-muted); text-decoration: none;
+  font-size: 14px; font-weight: 600;
+  transition: color 0.15s;
+}
+.nav-login:hover { color: var(--text); }
+
 .nav-cta {
   padding: 9px 20px; background: var(--brand-btn); border-radius: 8px;
   color: #fff; text-decoration: none; font-size: 14px; font-weight: 700;

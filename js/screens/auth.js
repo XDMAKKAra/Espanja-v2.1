@@ -42,6 +42,19 @@ export function initAuth({ updateSidebarState, loadDashboard }) {
 
 let authMode = "login"; // "login" | "register"
 
+// Honour ?mode=login / ?mode=register from landing pages so returning users
+// land on the login tab when they click "Kirjaudu sisään" in the nav.
+try {
+  const params = new URLSearchParams(window.location.search);
+  const requested = params.get("mode");
+  if (requested === "register") {
+    // Defer click until DOM is ready — these element handlers register synchronously.
+    queueMicrotask(() => $("tab-register") && $("tab-register").click());
+  } else if (requested === "login") {
+    queueMicrotask(() => $("tab-login") && $("tab-login").click());
+  }
+} catch { /* ignore */ }
+
 $("tab-login").addEventListener("click", () => {
   authMode = "login";
   $("tab-login").classList.add("active");
