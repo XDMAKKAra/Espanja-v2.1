@@ -129,7 +129,14 @@ router.post("/profile", requireAuth, async (req, res) => {
       if (referral_source && !VALID_REFERRALS.includes(referral_source)) {
         return res.status(400).json({ error: "Virheellinen referral_source" });
       }
-      profileData.referral_source = referral_source;
+      // Column doesn't exist in the live Supabase schema yet (PGRST204).
+      // Writing it currently aborts the whole upsert, which silently
+      // reverts onboarding_completed and forces the user through onboarding
+      // on every login. Accept + validate the value here but don't persist
+      // until the migration lands. Track anyway so we don't lose signal.
+      // TODO(migration): add referral_source column to user_profile, then
+      //   uncomment the next line.
+      // profileData.referral_source = referral_source;
     }
 
     if (onboarding_completed) {
