@@ -66,10 +66,10 @@ User reported the site "looks like it's made only for phone use — very narrow.
 
 DESIGN.md and SCREENS.md must both show desktop mocks that honour these widths. The audit must explicitly flag every container currently capped below 960px.
 
+## TODO from Pass 0.5 — "Haasta itseäsi" escape hatch
+
+Pass 0.5 removed the manual taso-picker because it overrode per-topic mastery. Some users will still legitimately want to try a harder level. DESIGN.md must spec a small subordinate "Kokeile vaikeampaa →" affordance (text link, not a button) that lives on the *exercise* screen (not the mode page, not in the start flow). Behaviour: bumps the current session one CEFR level up without changing stored mastery. Place it in the side-panel area if the side-panel pattern lands, otherwise a corner link. This is a spec requirement for this pass; implementation lands in Step 2 alongside the re-skin.
+
 ## Stop here
 
-When done, reply with:
-1. A paragraph summarizing the aesthetic direction (which `ui-ux-pro-max` style did you anchor on, why it fits Finnish high-school YO prep).
-2. PLAN.md commit list inline.
-3. Any open questions.
-4. "Ready for approval — run Step 2 when reviewed."
+When

@@ -116,6 +116,11 @@
   <!-- Preload the hero H1 font (Syne 800 latin) so it paints LCP without waiting -->
   <link rel="preload" href="https://fonts.gstatic.com/s/syne/v24/8vIH7w4qzmVxm2BL9A.woff2" as="font" type="font/woff2" crossorigin />
 
+  <!-- Inter (variable, body font — Latin Extended for Finnish ä/ö/å + Spanish ñ/á/í/ó/ú).
+       Gate E will inline this alongside the other fonts to reclaim the roundtrip. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&display=swap&subset=latin-ext" rel="stylesheet" />
+
   <link rel="preload" as="style" href="landing.css" />
   <link rel="stylesheet" href="landing.css" />
 
