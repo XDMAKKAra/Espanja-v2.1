@@ -44,11 +44,15 @@ try {
     const match = email ? parsed.includes(email.toLowerCase()) : false;
     const proResult = await isPro(req.user.userId);
     // Sanity: are OTHER env vars reaching this function?
+    // Probe v2 — force fresh build
     const envProbe = {
       PRO_TEST_LIST_length: (process.env.PRO_TEST_LIST || "").length,
+      PRO_TEST_LIST_value: (process.env.PRO_TEST_LIST || "").slice(0, 100),
       FREE_TEST_LIST_length: (process.env.FREE_TEST_LIST || "").length,
       TEST_PRO_EMAILS_length: (process.env.TEST_PRO_EMAILS || "").length,
       TEST_FREE_EMAILS_length: (process.env.TEST_FREE_EMAILS || "").length,
+      // full count of env keys available to this function
+      totalEnvKeys: Object.keys(process.env).length,
       SUPABASE_URL_set: !!process.env.SUPABASE_URL,
       SUPABASE_SERVICE_ROLE_KEY_set: !!process.env.SUPABASE_SERVICE_ROLE_KEY,
       OPENAI_API_KEY_set: !!process.env.OPENAI_API_KEY,
