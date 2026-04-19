@@ -300,4 +300,61 @@ router.get("/mistakes-by-topic/:topic", requireAuth, async (req, res) => {
   }
 });
 
+// GET /api/user-level?mode=vocab[&topic=ser_estar]
+//   Returns the level the client should request exercises at for this
+//   (mode, topic) context. Pass 0.6 removed the manual taso-picker;
+//   this endpoint is what replaces it.
+//
+// Resolution order:
+//   1. user_level_progress.current_level for this mode (adaptive engine's
+//      current setpoint — written by placement + mastery-test updates).
+//   2. diagnostic_results.placement_level (from the one-time placement test).
+//   3. Mode-specific default: "B" for vocab, "C" for grammar/reading.
+//
+// `topic` query param is accepted for forward-compat but currently ignored —
+// user_mastery table tracks status/best_pct, not per-topic CEFR level, so
+// topic-granularity would need a schema migration. See plans/00.6-…
+router.get("/user-level", requireAuth, async (req, res) => {
+  try {
+    const mode = String(req.query.mode || "");
+    const DEFAULTS = { vocab: "B", grammar: "C", reading: "C", writing: "C", exam: "C" };
+    if (!DEFAULTS[mode]) {
+      return res.status(400).json({ error: "Virheellinen mode" });
+    }
+
+    // 1. user_level_progress.current_level for this mode
+    const { data: lp } = await supabase
+      .from("user_level_progress")
+      .select("current_level")
+      .eq("user_id", req.user.userId)
+      .eq("mode", mode)
+      .maybeSingle();
+    if (lp?.current_level) {
+      return res.json({ mode, level: lp.current_level, source: "level_progress" });
+    }
+
+    // 2. diagnostic_results.placement_level (chosen_level wins if user picked alt)
+    const { data: diag } = await supabase
+      .from("diagnostic_results")
+      .select("placement_level, chosen_level")
+      .eq("user_id", req.user.userId)
+      .order("created_at", { ascending: false })
+      .limit(1)
+      .maybeSingle();
+    if (diag?.chosen_level || diag?.placement_level) {
+      return res.json({
+        mode,
+        level: diag.chosen_level || diag.placement_level,
+        source: "placement",
+      });
+    }
+
+    // 3. Mode-specific default
+    return res.json({ mode, level: DEFAULTS[mode], source: "default" });
+  } catch (err) {
+    console.error("user-level error:", err.message);
+    return res.status(500).json({ error: "Palvelinvirhe" });
+  }
+});
+
 export default router;
