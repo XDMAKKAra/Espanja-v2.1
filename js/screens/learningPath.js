@@ -56,12 +56,44 @@ export async function loadPath() {
   }
 }
 
+function renderLevelBadge(data) {
+  const badge = $("path-level-badge");
+  const lvl = $("path-level-badge-level");
+  const milestone = $("path-level-badge-milestone");
+  if (!badge || !lvl || !milestone) return;
+
+  const topics = data.path || [];
+  if (topics.length === 0) { badge.hidden = true; return; }
+
+  // "Current" level = highest level where the user has a mastered topic,
+  // falling back to the lowest level that still has an unlocked/in-progress
+  // topic. This matches what the student feels about "where they are."
+  const levelsMastered = [...new Set(topics.filter((t) => t.status === "mastered").map((t) => t.level))].sort();
+  const activeLevel = levelsMastered.length
+    ? levelsMastered[levelsMastered.length - 1]
+    : (topics.find((t) => t.status !== "locked")?.level || topics[0].level);
+
+  lvl.textContent = activeLevel;
+
+  // Next milestone = the first non-mastered topic. Guides the student's eye.
+  const nextTopic = topics.find((t) => t.status !== "mastered" && t.status !== "locked")
+                 || topics.find((t) => t.status === "locked");
+  if (nextTopic) {
+    milestone.textContent = `Seuraava virstanpylväs · ${nextTopic.label}`;
+  } else {
+    milestone.textContent = "Kaikki aiheet osattu — hieno työ!";
+  }
+  badge.hidden = false;
+}
+
 function renderPath(data) {
   const nodesEl = $("path-nodes");
   const progressFill = $("path-progress-fill");
   const progressLabel = $("path-progress-label");
   const mixedReview = $("path-mixed-review");
   const mixedSub = $("path-mixed-sub");
+
+  renderLevelBadge(data);
 
   if (!nodesEl) return;
 
