@@ -1,0 +1,110 @@
+/* =======================================================================
+   Input + textarea — design-system/DESIGN.md §8.2
+   Canonical classes: .field (wrapper) + .input / .textarea / .select
+   ======================================================================= */
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+}
+
+.field__label {
+  font-family: var(--font-body);
+  font-size: var(--fs-body-sm);
+  font-weight: 600;
+  color: var(--text-muted);
+  letter-spacing: 0.01em;
+}
+
+.field__hint {
+  font-family: var(--font-body);
+  font-size: var(--fs-caption);
+  color: var(--text-faint);
+}
+
+/* ── Input / textarea / select base ───────────────────────────── */
+
+.input,
+.textarea,
+.select {
+  width: 100%;
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: 1.5;
+  color: var(--text);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: var(--s-3) var(--s-4);
+  transition:
+    border-color var(--dur-base) var(--ease-out),
+    box-shadow var(--dur-base) var(--ease-out),
+    background var(--dur-base) var(--ease-out);
+  appearance: none;
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color: var(--text-faint);
+  opacity: 1;
+}
+
+.input:hover:not(:disabled),
+.textarea:hover:not(:disabled),
+.select:hover:not(:disabled) {
+  border-color: var(--border-strong);
+}
+
+.input:focus,
+.input:focus-visible,
+.textarea:focus,
+.textarea:focus-visible,
+.select:focus,
+.select:focus-visible {
+  outline: none;
+  border-color: var(--brand-light);
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.15);
+}
+
+.input:disabled,
+.textarea:disabled,
+.select:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ── Textarea ─────────────────────────────────────────────────── */
+
+.textarea {
+  min-height: 120px;
+  resize: vertical;
+  line-height: 1.6;
+}
+
+/* ── Error state — add aria-invalid="true" OR class .field--error ── */
+
+.field--error .field__label,
+.field--error .field__hint { color: var(--error); }
+
+.input[aria-invalid="true"],
+.textarea[aria-invalid="true"],
+.field--error .input,
+.field--error .textarea {
+  border-color: var(--error);
+}
+.input[aria-invalid="true"]:focus,
+.textarea[aria-invalid="true"]:focus,
+.field--error .input:focus,
+.field--error .textarea:focus {
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
+}
+
+/* ── Size variants ─────────────────────────────────────────────── */
+
+.input--sm { padding: var(--s-2) var(--s-3); font-size: var(--fs-body-sm); }
+.input--lg { padding: var(--s-4) var(--s-5); font-size: var(--fs-h4); }
+
+@media (prefers-reduced-motion: reduce) {
+  .input, .textarea, .select { transition: none; }
+}
