@@ -43,6 +43,20 @@ try {
     const parsed = rawEnv.split(",").map(e => e.trim().toLowerCase()).filter(Boolean);
     const match = email ? parsed.includes(email.toLowerCase()) : false;
     const proResult = await isPro(req.user.userId);
+    // Sanity: are OTHER env vars reaching this function?
+    const envProbe = {
+      TEST_PRO_EMAILS_length: (process.env.TEST_PRO_EMAILS || "").length,
+      TEST_FREE_EMAILS_length: (process.env.TEST_FREE_EMAILS || "").length,
+      SUPABASE_URL_set: !!process.env.SUPABASE_URL,
+      SUPABASE_SERVICE_ROLE_KEY_set: !!process.env.SUPABASE_SERVICE_ROLE_KEY,
+      OPENAI_API_KEY_set: !!process.env.OPENAI_API_KEY,
+      NODE_ENV: process.env.NODE_ENV || null,
+      VERCEL_ENV: process.env.VERCEL_ENV || null,
+      VERCEL_URL: process.env.VERCEL_URL || null,
+      VERCEL_GIT_COMMIT_SHA: (process.env.VERCEL_GIT_COMMIT_SHA || "").slice(0, 7),
+      // List any env keys starting with TEST_ (case-insensitive)
+      testKeys: Object.keys(process.env).filter(k => /^TEST/i.test(k)),
+    };
     res.json({
       email,
       emailLowercase: email?.toLowerCase() || null,
@@ -51,6 +65,7 @@ try {
       testProEmailsParsed: parsed,
       matchInList: match,
       isProResult: proResult,
+      envProbe,
     });
   });
 
