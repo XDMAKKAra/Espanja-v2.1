@@ -14,6 +14,7 @@ import { checkMonthlyCostLimit } from "../middleware/costLimit.js";
 import { logAiUsage } from "../lib/aiCost.js";
 import { getUserLevel, refreshUserLevel, processCheckpointResult, progressToNextLevel } from "../lib/levelEngine.js";
 import { pointsToYoGrade } from "../lib/grading.js";
+import { dispatchGrade } from "../lib/grading/dispatcher.js";
 import { validateGrammarBatch } from "../lib/grammarScope.js";
 import { getSessionState, processAnswer, describeScaffold } from "../lib/scaffoldEngine.js";
 import { pickExerciseType, composePrompt, getMaxTokens } from "../lib/exerciseComposer.js";
@@ -274,6 +275,30 @@ router.post("/grade", async (req, res) => {
   const grade = pointsToYoGrade(correct, total);
 
   res.json({ grade, pct, correct, total });
+});
+
+// ─── Per-item advisory grading dispatcher ──────────────────────────────────
+// NEVER trusts client-reported `correct`. Recomputes from the submission.
+// See lib/grading/dispatcher.js + lib/grading/monivalinta.js for the
+// override-#1 monivalinta advisory rationale. New types register their
+// own grader in subsequent Gate B–D commits.
+router.post("/grade/advisory", (req, res) => {
+  const { type, exerciseId, payload } = req.body || {};
+  if (typeof type !== "string" || !type) {
+    return res.status(400).json({ error: "Virheellinen tyyppi" });
+  }
+  const result = dispatchGrade({ type, exerciseId, payload });
+  if (!result.ok) {
+    return res.status(400).json({ error: result.error });
+  }
+  res.json({
+    correct: result.correct,
+    band: result.band,
+    score: result.score,
+    maxScore: result.maxScore,
+    chosenIndex: result.chosenIndex,
+    correctIndex: result.correctIndex,
+  });
 });
 
 // ─── Grammar exercises ─────────────────────────────────────────────────────
