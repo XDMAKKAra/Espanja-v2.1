@@ -100,9 +100,26 @@ Every token has a **dark** (`-d`) and **light** (`-l`) value. Legacy single-valu
 
 ## 2. Typography
 
-**Fonts:** Syne (display, 400/600/700/800) + Inter (body, 400/500/600/700) + DM Mono (500) + Lora (editorial, blog only).
+**Fonts:** Syne (display, static weights 400/600/700/800) + Inter (body, **variable**, Latin Extended subset) + DM Mono (500) + Lora (editorial, blog only).
 
-Why Inter instead of Syne for body: Syne's body weight has low x-height and struggles with Finnish compound nouns at 14–16px. Inter handles ä/ö/å perfectly, ships via Google Fonts, and pairs cleanly with Syne's angular display cut.
+Why Inter instead of Syne for body: Syne's body weight has low x-height and struggles with Finnish compound nouns at 14–16px. Inter handles ä/ö/å perfectly, pairs cleanly with Syne's angular display cut, and the variable font lets us drop the 4-file weight cascade.
+
+**Load strategy (approved):**
+
+```html
+<!-- In <head> of every HTML shell -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="font" type="font/woff2" crossorigin
+  href="https://fonts.gstatic.com/s/inter/[...]latin-ext.woff2">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=Syne:wght@400;600;700;800&family=DM+Mono:wght@500&display=swap&subset=latin-ext"
+      rel="stylesheet">
+```
+
+- Inter: variable axis, range 400–700, **Latin Extended subset** (required for Finnish ä/ö/å/é and Spanish ñ/á/í/ó/ú).
+- Preload the single body `.woff2` file (Inter 400 latin-ext) — blocks first paint less than waiting for CSSOM.
+- Lora is **not** loaded here — only included in blog shell (`blog/*.html`) per FINDINGS §10.
+- Syne stays as discrete weights — variable build isn't available on Google Fonts as of 2026-04.
 
 **Unified tokens** (replaces split `--font-display`/`--font` inconsistency):
 
@@ -316,10 +333,10 @@ Only below 768px. 4 icon+label slots, 56px tall (plus safe-area bottom). Active 
 
 ---
 
-## 10. Dark mode toggle
+## 10. Dark mode only this pass (light mode deferred)
 
-- Stored in `localStorage` key `puheo_theme`, values `dark` | `light` | `auto`.
-- Root class: `html[data-theme="light"]` triggers light-mode token overrides.
-- Toggle lives in Settings screen. Default `auto` (follows `prefers-color-scheme`).
+This pass ships dark-mode only. The tokens above are already named semantically (`--bg`, `--surface`, `--text`, `--text-muted`, etc.) rather than by value (no `--red-500`, no `--gray-900`), so a later pass adds light mode by swapping the values inside one `html[data-theme="light"]` block — no component rewrites needed.
 
-Step 2 implementation: a single `theme.js` loaded synchronously in `<head>` of every page to prevent flash of wrong theme.
+The light column in every table above is the committed future pairing. Keep the column populated even though nothing reads it this pass — it's the spec for whichever pass lights up the toggle.
+
+See `FINDINGS.md §13` for the deferral note.

@@ -86,9 +86,27 @@ The `tests/` folder has unit tests (vitest). Playwright configs exist at repo ro
 
 ---
 
+## 13. Light mode deferred (approved)
+
+DESIGN.md §10 originally specified dark + light tokens with a runtime toggle. Marcel's decision (2026-04-19): **dark only this pass.** The app has never had light mode and no user has asked for one; shipping it now means double the visual QA for zero user-reported value.
+
+Token tables in DESIGN.md §1 keep the light column as a committed future pairing — every token is named semantically (`--bg`, `--surface`, `--text-muted`, `--success`) rather than by value (no `--red-500`), so lighting up light mode later is a single `html[data-theme="light"]` override block + settings toggle. No component CSS rewrite.
+
+**Handling:** Gate E drops the light-mode commit (formerly Commit 20). When light mode ships in a future pass, the work is ~1 commit of CSS + 1 commit of the settings toggle, both scoped to tokens and `js/theme.js`. All component code already works.
+
+## 14. Visual regression baselines live in `exercises/baselines/` (approved)
+
+Marcel's decision: visual regression harness runs locally only (`npm run test:visual` + `playwright.visual.config.js`); CI integration is deferred to Pass 6 Gate A. Baseline screenshots join the existing `exercises/baselines/` directory alongside the lighthouse/pa11y baselines from the exercises Gate A commit (`50ee1af`).
+
+**Why `exercises/baselines/` instead of `design-system/baselines/`:** one baseline directory for the whole project, not a per-pass split. Keeps the convention single and the path predictable: lighthouse + pa11y + visual all resolve to `exercises/baselines/<type>/<name>.*`.
+
+**Handling:** PLAN.md Commit 11 sets up the harness. A reminder line landed in `plans/06-testing-step1.md` so CI wiring isn't forgotten.
+
+---
+
 ## Cross-cutting risks for Step 2
 
 - **Gate D is the fragile gate.** Six commits touching every app screen. If a token rename goes wrong in Gate A, Gate D will surface the pain. Mitigation: Gate A commit 1 keeps every old token name as an alias; delete aliases only in Gate E.
 - **Inter font load.** Adding Inter adds ~60kb. Offset by removing Lora from non-blog pages (Finding 10) and preloading critical subset only.
-- **Light-mode QA.** The app has never had light mode. Every component needs manual QA in both. Don't underestimate Gate E Commit 20.
+- ~~**Light-mode QA.**~~ Deferred this pass — see §13.
 - **Mobile safe-area.** The urgency bar + bottom nav both need `env(safe-area-inset-*)`. Current implementation has this for the urgency bar but not the bottom nav (which doesn't exist yet). Easy to forget.

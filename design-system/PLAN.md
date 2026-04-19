@@ -7,9 +7,9 @@ Ordered list. One concern per commit. Each commit: title, files touched, test ad
 ## Gate A — Tokens + foundation (branch `design-system/gate-a-tokens`)
 
 ### Commit 1 — `design(system): colour + spacing + radius + shadow + breakpoint tokens`
-- **Files:** `style.css` (replace `:root` block lines 1–46), `landing.css` (replace `:root` block lines 1–18).
+- **Files:** `style.css` (replace `:root` block lines 1–46), `landing.css` (replace `:root` block lines 1–18). **Delete `design-system/puheo/`** in this same commit — the auto-generated boilerplate (FINDINGS §1) goes away the moment the real tokens land, so it can't be mistaken for canon.
 - **Test:** `tests/tokens.test.js` — parse CSS, assert every token from DESIGN §1–6 exists; assert no duplicated token names between the two files.
-- **Acceptance:** every token name in DESIGN.md is reachable as a `var(--*)` in at least one file. `grep -nE '#[0-9a-fA-F]{3,6}'` in `style.css`/`landing.css` returns only tokens inside `:root`.
+- **Acceptance:** every token name in DESIGN.md is reachable as a `var(--*)` in at least one file. `grep -nE '#[0-9a-fA-F]{3,6}'` in `style.css`/`landing.css` returns only tokens inside `:root`. `design-system/puheo/` no longer exists; `.gitignore` rule removed.
 
 ### Commit 2 — `design(system): typography scale + global h1–h4 rules`
 - **Files:** `style.css` head, `landing.css` head, font `<link>` in every HTML shell to add Inter.
@@ -68,14 +68,39 @@ Ordered list. One concern per commit. Each commit: title, files touched, test ad
 
 ---
 
+## Gate C.5 — Side-panel pattern pilot (branch `design-system/gate-c5-side-panel`)
+
+**Why this exists:** the desktop side-panel pattern (vocab feedback right column, writing rubric right column, exam text+questions split) is **new UX**, not a re-skin. Shipping it across every screen in Gate D without validation means discovering problems on six screens at once. This gate ships it on **vocab only**, behind a feature flag, and pauses for live-site review before Gate D rolls it out.
+
+### Commit 10.5 — `design(system): vocab side-panel pattern behind feature flag`
+- **Files:** `css/components/side-panel.css` (new), `app.html` (vocab screen adds right column structure, hidden by default), `js/features/flags.js` (new — reads `localStorage.getItem("ff_side_panel") === "1"`), `js/screens/vocab.js` (wraps the split layout behind the flag).
+- **Test:** `tests/side-panel.test.js` — flag off: exercise renders as today. Flag on: right column appears ≥1200px. Matches SCREENS.md §4 desktop mock.
+- **Acceptance:**
+  - Flag default is off. Vocab screen looks identical to pre-Gate-C.5 when flag is off.
+  - With `localStorage.ff_side_panel = "1"`, vocab at ≥1200px shows right panel; below, inline as today.
+  - Nothing else in the app is affected.
+
+### Gate C.5 exit — marcel review on live deploy
+- **Merge** the PR, let Vercel deploy to prod.
+- Marcel sets the flag on in his browser, runs through 10+ vocab questions, reports:
+  - Does the side panel reduce or increase cognitive load?
+  - Does it "waste" right-side whitespace on 13" laptops (likely common)?
+  - Any copy / layout regressions?
+- **Proceed to Gate D only after marcel's explicit approval.** If the pattern fails review, either (a) shrink to a compact-card variant and retry, or (b) drop side panels from Gate D entirely and keep single-column at all viewports. Either outcome is fine — what's not fine is shipping an unreviewed pattern to six screens.
+
+---
+
 ## Gate D — Per-screen re-skins (branch `design-system/gate-d-app`)
 
-One commit per screen. Each: capture before screenshot, apply token migration, capture after, commit.
+One commit per screen. Each: capture before screenshot, apply token migration, capture after, commit. Side-panel pattern applied only if Gate C.5 passed review.
 
-### Commit 11 — `design(system): dashboard re-skin against tokens`
-- **Files:** `style.css` dashboard section (`.dashboard-*` rules), possibly `app.html` structural tweaks for two-column grid.
-- **Test:** `tests/dashboard.visual.test.js` (playwright) — screenshot at 1440×900 matches the mock in SCREENS.md §3.
-- **Acceptance:** desktop shows ≥960px content. Two-column stats/activity grid at ≥1024. Mobile single-column unchanged.
+### Commit 11 — `design(system): visual regression harness + dashboard re-skin`
+- **Files:** `playwright.visual.config.js` (new, dedicated config for visual tests — separate from functional Playwright), `package.json` scripts add `"test:visual": "playwright test -c playwright.visual.config.js"`, `tests/helpers/visual.js` (helper: `await visualMatch(page, 'dashboard-desktop')`), `exercises/baselines/dashboard-{mobile,desktop}.png` (baseline screenshots committed), `style.css` dashboard section, possibly `app.html` for two-column grid.
+- **Test:** `tests/dashboard.visual.test.js` — two viewports (390×844, 1440×900), `visualMatch` compares against `exercises/baselines/`. Diff threshold 0.1% pixel delta.
+- **Acceptance:**
+  - `npm run test:visual` runs locally and is green. CI integration is **deferred to Pass 6 Gate A** — see `plans/06-testing-step1.md` TODO.
+  - Desktop shows ≥960px content. Two-column stats/activity grid at ≥1024. Mobile single-column unchanged.
+  - Baseline images tracked in git under `exercises/baselines/` (joins the existing lighthouse/pa11y baselines from `exercises/gate-a`).
 
 ### Commit 12 — `design(system): learning path re-skin`
 - Same pattern as 11, for learning-path screen.
@@ -109,16 +134,13 @@ One commit per screen. Each: capture before screenshot, apply token migration, c
 - **Files:** every file under `blog/`. Apply `--font-serif` (Lora) for body, `--font-display` for titles. Reuse token colours.
 - **Acceptance:** every blog post visually consistent with the design system. No inline `<style>` blocks remain.
 
-### Commit 20 — `design(system): light mode + toggle`
-- **Files:** `js/theme.js` (inline in `<head>` of every HTML), settings panel entry.
-- **Test:** toggling theme swaps every token without layout shift. `prefers-color-scheme` drives `auto`.
-- **Acceptance:** entire app + marketing works in both modes. axe clean on both.
+**Light mode deferred to a later pass** — see FINDINGS.md §13. Tokens in DESIGN.md §1 are already semantic, so a future commit lands a single `html[data-theme="light"]` block + a settings toggle without touching any component CSS.
 
 ---
 
-## Total: 20 commits, 5 PRs
+## Total: 20 commits, 6 PRs
 
-Gate A: 4 · Gate B: 3 · Gate C: 3 · Gate D: 6 · Gate E: 4.
+Gate A: 4 · Gate B: 3 · Gate C: 3 · Gate C.5: 1 · Gate D: 6 · Gate E: 3.
 
 Diff budget per PR: ~500 lines. Gate D is the risky one — it touches every screen. Split into two PRs (D1 dashboard+path+exam; D2 exercises) if combined diff exceeds 800 lines.
 
