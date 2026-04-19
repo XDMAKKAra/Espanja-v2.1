@@ -174,6 +174,7 @@ if ($("btn-start-vocab")) $("btn-start-vocab").addEventListener("click", async (
   state.batchNumber = 0;
   state.totalCorrect = 0;
   state.totalAnswered = 0;
+  state.sessionItems = [];
   state.sessionStartTime = Date.now();
   loadNextBatch();
 });
@@ -449,6 +450,7 @@ $("btn-start").addEventListener("click", async () => {
     state.batchNumber = 0;
     state.totalCorrect = 0;
     state.totalAnswered = 0;
+    state.sessionItems = [];
     await loadNextBatch();
   } else if (state.mode === "grammar") {
     state.grammarTopic = $("grammar-topic-select").value;
