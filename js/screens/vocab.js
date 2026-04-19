@@ -165,7 +165,7 @@ export async function startReviewSession() {
     state._reviewMode = true;
     state.sessionStartTime = Date.now();
 
-    renderExercise();
+    renderVocabQuestion();
     show("screen-exercise");
   } catch (err) {
     showLoadingError(err.message, () => startReviewSession());
@@ -224,7 +224,7 @@ export async function loadNextBatch() {
     state.bankId = data.bankId || null;
     if (state.batchNumber === 1) trackExerciseStarted("vocab", state.level, state.topic, state.language);
     hideExerciseSkeleton();
-    renderExercise();
+    renderVocabQuestion();
     show("screen-exercise");
   } catch (err) {
     // Commit 9: inline retry — student stays on #screen-exercise, no
@@ -271,7 +271,9 @@ function hideAllExerciseAreas() {
   if (kbdHint) kbdHint.style.display = "";
 }
 
-export function renderExercise() {
+// Renamed from renderExercise to avoid clashing with the imported dispatcher
+// at line 9 (which is called at line 352 with a different signature).
+function renderVocabQuestion() {
   const ex = state.exercises[state.current];
   const questionNum = (state.batchNumber - 1) * BATCH_SIZE + state.current + 1;
   const totalQuestions = MAX_BATCHES * BATCH_SIZE;
@@ -789,7 +791,7 @@ $("btn-next").addEventListener("click", async () => {
   if (state.current >= state.exercises.length) {
     endBatch();
   } else {
-    renderExercise();
+    renderVocabQuestion();
   }
 });
 
