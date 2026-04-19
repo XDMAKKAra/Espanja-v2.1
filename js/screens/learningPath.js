@@ -1,3 +1,4 @@
+// TODO(loading): adopt showSkeleton / showFetchError from js/ui/loading.js (Commit 9 follow-up)
 /**
  * Learning path screen — visual Duolingo-style progression.
  */

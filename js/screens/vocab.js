@@ -1,7 +1,7 @@
 import { $, show } from "../ui/nav.js";
 import { API, isLoggedIn } from "../api.js";
 import { state, LEVELS, BATCH_SIZE, MAX_BATCHES } from "../state.js";
-import { showLoading, showLoadingError } from "../ui/loading.js";
+import { showLoading, showLoadingError, showSkeleton, showFetchError } from "../ui/loading.js";
 import { srPop, srAddWrong, srMarkCorrect, srReview, srGetDue } from "../features/spacedRepetition.js";
 import { authHeader, apiFetch } from "../api.js";
 import { trackExerciseStarted, trackExerciseCompleted, trackError } from "../analytics.js";
@@ -172,7 +172,10 @@ export async function loadNextBatch() {
   state.current = 0;
   state._reviewMode = false;
 
-  showLoading(`Luodaan kierros ${state.batchNumber}/${MAX_BATCHES}...`);
+  // Commit 9: inline skeleton inside #screen-exercise instead of the full-screen
+  // "Loading..." swap. Student keeps chrome + orientation while we fetch.
+  showSkeletonIntoExercise();
+  show("screen-exercise");
 
   try {
     const srItems = state.batchNumber === 1 ? srPop(2) : [];
@@ -214,11 +217,41 @@ export async function loadNextBatch() {
     state.exercises = [...srItems, ...data.exercises, ...mixedExercises];
     state.bankId = data.bankId || null;
     if (state.batchNumber === 1) trackExerciseStarted("vocab", state.level, state.topic, state.language);
+    hideExerciseSkeleton();
     renderExercise();
     show("screen-exercise");
   } catch (err) {
-    showLoadingError(err.message, () => loadNextBatch());
+    // Commit 9: inline retry — student stays on #screen-exercise, no
+    // full-screen loading-error flip.
+    showFetchError($("exercise-skeleton-slot"), {
+      title: "Tehtävien lataus epäonnistui",
+      subtext: err.message,
+      retryFn: () => loadNextBatch(),
+    });
+    $("exercise-skeleton-slot").classList.remove("hidden");
+    $("exercise-question-block").classList.add("hidden");
+    $("options-grid").classList.add("hidden");
   }
+}
+
+function showSkeletonIntoExercise() {
+  const slot = $("exercise-skeleton-slot");
+  const qb = $("exercise-question-block");
+  const opts = $("options-grid");
+  if (qb) qb.classList.add("hidden");
+  if (opts) opts.classList.add("hidden");
+  if (slot) {
+    slot.classList.remove("hidden");
+    showSkeleton(slot, "exercise");
+  }
+}
+function hideExerciseSkeleton() {
+  const slot = $("exercise-skeleton-slot");
+  const qb = $("exercise-question-block");
+  const opts = $("options-grid");
+  if (slot) { slot.innerHTML = ""; slot.classList.add("hidden"); }
+  if (qb) qb.classList.remove("hidden");
+  if (opts) opts.classList.remove("hidden");
 }
 
 function hideAllExerciseAreas() {

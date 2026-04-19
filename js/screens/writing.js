@@ -2,7 +2,7 @@ import { $, show } from "../ui/nav.js";
 import { API, isLoggedIn, authHeader, apiFetch } from "../api.js";
 import { state } from "../state.js";
 import { CRITERIA_LABELS, RATING_COLORS } from "../state.js";
-import { showLoading, showLoadingError } from "../ui/loading.js";
+import { showLoading, showLoadingError, showSkeleton, showFetchError } from "../ui/loading.js";
 import { trackCheckoutStarted, trackProUpsellShown, trackExerciseCompleted } from "../analytics.js";
 
 let _deps = {};
@@ -51,8 +51,38 @@ export async function openBillingPortal() {
   }
 }
 
+function showWritingSkeleton() {
+  const slot = $("writing-skeleton-slot");
+  const hide = ["writing-situation", "writing-requirements"];
+  hide.forEach((id) => { const el = $(id); if (el) el.classList.add("hidden"); });
+  const promptBlock = document.querySelector("#screen-writing .writing-prompt-block");
+  if (promptBlock) promptBlock.classList.add("hidden");
+  const textareaWrap = document.querySelector("#screen-writing .textarea-wrapper");
+  if (textareaWrap) textareaWrap.classList.add("hidden");
+  const submitBtn = $("btn-submit-writing");
+  if (submitBtn) submitBtn.classList.add("hidden");
+  if (slot) {
+    slot.classList.remove("hidden");
+    showSkeleton(slot, "writing-task");
+  }
+}
+function hideWritingSkeleton() {
+  const slot = $("writing-skeleton-slot");
+  if (slot) { slot.innerHTML = ""; slot.classList.add("hidden"); }
+  const show = ["writing-situation", "writing-requirements"];
+  show.forEach((id) => { const el = $(id); if (el) el.classList.remove("hidden"); });
+  const promptBlock = document.querySelector("#screen-writing .writing-prompt-block");
+  if (promptBlock) promptBlock.classList.remove("hidden");
+  const textareaWrap = document.querySelector("#screen-writing .textarea-wrapper");
+  if (textareaWrap) textareaWrap.classList.remove("hidden");
+  const submitBtn = $("btn-submit-writing");
+  if (submitBtn) submitBtn.classList.remove("hidden");
+}
+
 export async function loadWritingTask() {
-  showLoading("Luodaan kirjoitustehtävää...");
+  // Commit 9: inline skeleton on #screen-writing instead of the full-screen swap.
+  showWritingSkeleton();
+  show("screen-writing");
 
   try {
     const res = await fetch(`${API}/api/writing-task`, {
@@ -70,10 +100,15 @@ export async function loadWritingTask() {
     if (!data.task) throw new Error("No task");
 
     state.currentWritingTask = data.task;
+    hideWritingSkeleton();
     renderWritingTask(data.task);
     show("screen-writing");
   } catch (err) {
-    showLoadingError(err.message, () => loadWritingTask());
+    showFetchError($("writing-skeleton-slot"), {
+      title: "Kirjoitustehtävän lataus epäonnistui",
+      subtext: err.message,
+      retryFn: () => loadWritingTask(),
+    });
   }
 }
 

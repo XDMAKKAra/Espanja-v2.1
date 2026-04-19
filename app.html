@@ -1090,12 +1090,15 @@
         </div>
       </div>
 
-      <div class="question-block">
+      <div class="question-block" id="exercise-question-block">
         <div class="ex-type-badge hidden" id="ex-type-badge"></div>
         <div class="ex-context-sentence hidden" id="ex-context-sentence"></div>
         <p class="question-label" id="question-label">¿Qué significa?</p>
         <h2 id="question-text">Loading...</h2>
       </div>
+
+      <!-- Skeleton / fetch-error slot (Commit 9). Hidden while an exercise is visible. -->
+      <div class="exercise-skeleton-slot hidden" id="exercise-skeleton-slot" aria-live="polite"></div>
 
       <div class="options-grid" id="options-grid" role="group" aria-label="Vastausvaihtoehdot"></div>
 
@@ -1200,7 +1203,7 @@
   <!-- SCREEN: Writing task -->
   <div id="screen-writing" class="screen">
     <div class="writing-inner">
-      <div class="writing-header">
+      <div class="writing-header" id="writing-header">
         <div class="writing-meta">
           <span class="writing-type-badge" id="writing-type-badge">Lyhyt tehtävä</span>
           <span class="writing-pts-badge" id="writing-pts-badge">33 p</span>
@@ -1213,6 +1216,8 @@
           <div class="writing-limit-info" id="writing-limit-info">160–240 merkkiä (ei välilyöntejä)</div>
         </div>
       </div>
+
+      <div class="exercise-skeleton-slot hidden" id="writing-skeleton-slot" aria-live="polite"></div>
 
       <div class="writing-situation" id="writing-situation"></div>
 
@@ -1322,10 +1327,11 @@
         </div>
         <div class="progress-bar"><div class="progress-fill" id="gram-progress-fill"></div></div>
       </div>
-      <div class="question-block">
+      <div class="question-block" id="gram-question-block">
         <p class="question-label" id="gram-instruction">Täydennä aukko.</p>
         <h2 id="gram-sentence" class="gram-sentence">Loading...</h2>
       </div>
+      <div class="exercise-skeleton-slot hidden" id="gram-skeleton-slot" aria-live="polite"></div>
       <div class="options-grid" id="gram-options-grid" role="group" aria-label="Vastausvaihtoehdot"></div>
       <div class="explanation-block hidden" id="gram-explanation-block">
         <div class="gram-rule-tag" id="gram-rule-tag"></div>

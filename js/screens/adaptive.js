@@ -1,3 +1,4 @@
+// TODO(loading): adopt showSkeleton / showFetchError from js/ui/loading.js (Commit 9 follow-up)
 // ─── Adaptive level system — frontend ────────────────────────────────────────
 import { $, show } from "../ui/nav.js";
 import { API, authHeader, apiFetch } from "../api.js";

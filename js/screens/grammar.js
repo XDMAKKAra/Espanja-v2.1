@@ -1,7 +1,7 @@
 import { $, show } from "../ui/nav.js";
 import { API, isLoggedIn } from "../api.js";
 import { state } from "../state.js";
-import { showLoading, showLoadingError } from "../ui/loading.js";
+import { showLoading, showLoadingError, showSkeleton, showFetchError } from "../ui/loading.js";
 import { GRAMMAR_TYPE_LABELS } from "./vocab.js";
 import { resetAutoTriggerTracking, recordAnswerForAutoTrigger } from "./quickReview.js";
 import { getBlogForTopic, trackBlogClick } from "../features/topicBlogMap.js";
@@ -11,8 +11,30 @@ export function initGrammar({ loadDashboard, saveProgress }) {
   _deps = { loadDashboard, saveProgress };
 }
 
+function showGramSkeleton() {
+  const qb = $("gram-question-block");
+  const opts = $("gram-options-grid");
+  const slot = $("gram-skeleton-slot");
+  if (qb) qb.classList.add("hidden");
+  if (opts) opts.classList.add("hidden");
+  if (slot) {
+    slot.classList.remove("hidden");
+    showSkeleton(slot, "exercise");
+  }
+}
+function hideGramSkeleton() {
+  const qb = $("gram-question-block");
+  const opts = $("gram-options-grid");
+  const slot = $("gram-skeleton-slot");
+  if (slot) { slot.innerHTML = ""; slot.classList.add("hidden"); }
+  if (qb) qb.classList.remove("hidden");
+  if (opts) opts.classList.remove("hidden");
+}
+
 export async function loadGrammarDrill() {
-  showLoading("Luodaan kielioppiharjoituksia...");
+  // Commit 9: inline skeleton inside #screen-grammar instead of full-screen swap.
+  showGramSkeleton();
+  show("screen-grammar");
 
   try {
     const res = await fetch(`${API}/api/grammar-drill`, {
@@ -36,10 +58,18 @@ export async function loadGrammarDrill() {
     state.grammarErrors = [];
     resetAutoTriggerTracking();
 
+    hideGramSkeleton();
     renderGrammarExercise();
     show("screen-grammar");
   } catch (err) {
-    showLoadingError(err.message, () => loadGrammarDrill());
+    showFetchError($("gram-skeleton-slot"), {
+      title: "Kielioppiharjoitusten lataus epäonnistui",
+      subtext: err.message,
+      retryFn: () => loadGrammarDrill(),
+    });
+    $("gram-skeleton-slot").classList.remove("hidden");
+    $("gram-question-block").classList.add("hidden");
+    $("gram-options-grid").classList.add("hidden");
   }
 }
 
