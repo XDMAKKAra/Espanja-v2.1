@@ -1,0 +1,151 @@
+/* =======================================================================
+   Button component — design-system/DESIGN.md §8.1
+   Variants:  .btn--primary | .btn--secondary | .btn--ghost | .btn--destructive
+   Sizes:     .btn--sm (32px visual, 44px hit) | .btn--md (44px) | .btn--lg (52px)
+   Usage:     <button class="btn btn--primary btn--md">Aloita</button>
+
+   Gate A Commit 3 introduces this canonical class set. Legacy class names
+   (.btn-primary, .btn-hero, .nav-cta, .price-cta, .btn-start) are NOT
+   modified in this commit — they keep their original rules in style.css
+   and landing.css. Gate D re-skins each screen to use the new classes;
+   Gate E removes the legacy rules.
+   ======================================================================= */
+
+.btn {
+  /* Base — shared by every variant + size */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-2);
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0;
+  text-decoration: none;
+  white-space: nowrap;
+  border: 1px solid transparent;
+  border-radius: var(--r-md);
+  cursor: pointer;
+  user-select: none;
+  transition:
+    background var(--dur-base) var(--ease-out),
+    border-color var(--dur-base) var(--ease-out),
+    color var(--dur-base) var(--ease-out),
+    transform var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-base) var(--ease-out);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--brand-light);
+  outline-offset: 2px;
+}
+
+.btn:disabled,
+.btn[aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.btn:active { transform: translateY(1px); }
+
+/* ── Sizes ───────────────────────────────────────────────────────── */
+
+.btn--sm {
+  /* Visual 32px; hit target stays 44px via ::before overlay (touch-target rule). */
+  min-height: 32px;
+  padding: var(--s-2) var(--s-4);
+  font-size: var(--fs-body-sm);
+  position: relative;
+}
+.btn--sm::before {
+  content: "";
+  position: absolute;
+  inset: -6px;         /* expands touch area to ≥44px total height */
+  pointer-events: auto;
+}
+
+.btn--md {
+  min-height: 44px;
+  padding: var(--s-3) var(--s-5);
+  font-size: var(--fs-body);
+}
+
+.btn--lg {
+  min-height: 52px;
+  padding: var(--s-4) var(--s-6);
+  font-size: var(--fs-body);
+}
+
+/* ── Variants ────────────────────────────────────────────────────── */
+
+.btn--primary {
+  background: var(--brand-btn);
+  color: #fff;
+  box-shadow: var(--sh-rest);
+}
+.btn--primary:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--brand-btn) 88%, white);
+  box-shadow: var(--sh-hover);
+  transform: translateY(-1px);
+}
+
+.btn--secondary {
+  background: var(--surface-2);
+  color: var(--text);
+  border-color: var(--border);
+}
+.btn--secondary:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--surface-2) 80%, var(--brand));
+  border-color: var(--border-strong);
+  transform: translateY(-1px);
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--text-muted);
+}
+.btn--ghost:hover:not(:disabled) {
+  background: var(--surface-2);
+  color: var(--text);
+}
+
+.btn--destructive {
+  background: transparent;
+  color: var(--error);
+  border-color: var(--error);
+}
+.btn--destructive:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--error) 12%, transparent);
+}
+
+/* ── Full-width helper (common in exercise flows) ────────────────── */
+
+.btn--block { width: 100%; }
+
+/* ── Loading state ───────────────────────────────────────────────── */
+
+.btn[data-loading="true"] {
+  position: relative;
+  color: transparent !important;
+  pointer-events: none;
+}
+.btn[data-loading="true"]::after {
+  content: "";
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 1em; height: 1em;
+  margin: -0.5em 0 0 -0.5em;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: btn-spin var(--dur-slow) linear infinite;
+  color: #fff;
+}
+@keyframes btn-spin {
+  to { transform: rotate(360deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .btn[data-loading="true"]::after { animation: none; }
+  .btn { transition: none; }
+}
