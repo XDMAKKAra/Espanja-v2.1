@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { callOpenAI, getUserProfileContext, LANGUAGE_META, VALID_LANGUAGES } from "../lib/openai.js";
 import { buildGradingPrompt, processGradingResult, SHORT_MAX, LONG_MAX } from "../lib/writingGrading.js";
-import { softProGate } from "../middleware/auth.js";
+import { requireAuth, requirePro } from "../middleware/auth.js";
 import { aiStrictLimiter } from "../middleware/rateLimit.js";
 import { checkMonthlyCostLimit } from "../middleware/costLimit.js";
 import { logAiUsage } from "../lib/aiCost.js";
@@ -10,7 +10,7 @@ const router = Router();
 
 const VALID_TASK_TYPES = new Set(["short", "long"]);
 
-router.post("/writing-task", aiStrictLimiter, softProGate, checkMonthlyCostLimit, async (req, res) => {
+router.post("/writing-task", requireAuth, requirePro, aiStrictLimiter, checkMonthlyCostLimit, async (req, res) => {
   const { taskType = "short", topic = "general", language = "spanish" } = req.body;
 
   if (!VALID_TASK_TYPES.has(taskType)) return res.status(400).json({ error: "Virheellinen tehtävätyyppi (short/long)" });
@@ -60,7 +60,7 @@ Return ONLY JSON:
   }
 });
 
-router.post("/grade-writing", aiStrictLimiter, softProGate, checkMonthlyCostLimit, async (req, res) => {
+router.post("/grade-writing", requireAuth, requirePro, aiStrictLimiter, checkMonthlyCostLimit, async (req, res) => {
   const { task, studentText } = req.body;
 
   if (!task || !studentText || typeof studentText !== "string" || studentText.trim().length === 0) {
@@ -79,7 +79,7 @@ router.post("/grade-writing", aiStrictLimiter, softProGate, checkMonthlyCostLimi
     const aiResult = await callOpenAI(prompt, 2500);
     logAiUsage(req.user?.userId, "grade-writing", aiResult._usage).catch(() => {});
     delete aiResult._usage;
-    const result = processGradingResult(aiResult, charCount, task.charMin, isShort);
+    const result = processGradingResult(aiResult, charCount, task.charMin, isShort, studentText);
     result.originalText = studentText;
     res.json({ result });
   } catch (err) {

@@ -4,7 +4,19 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Puheo — Harjoittele</title>
+  <meta name="description" content="Puheo — tekoälyvetoinen sovellus espanjan YO-kokeeseen (lyhyt oppimäärä) valmistautumiseen. Sanasto, kielioppi, luetun ymmärtäminen, kirjoittaminen ja täyskokeet." />
+  <meta name="robots" content="noindex,nofollow" />
   <meta name="google-site-verification" content="ZdvxnGbBDKI5J3Zl2GmJt_fRfFQ3CdoIo-K00QvZnk4" />
+  <meta property="og:title" content="Puheo — Harjoittele espanjan YO-koetta" />
+  <meta property="og:description" content="Harjoittele espanjan YO-koetta (lyhyt oppimäärä) tekoälyn avulla. Henkilökohtainen, adaptiivinen, suomeksi." />
+  <meta property="og:image" content="https://puheo.fi/og-image.png" />
+  <meta property="og:url" content="https://puheo.fi/app.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="fi_FI" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Puheo — Harjoittele espanjan YO-koetta" />
+  <meta name="twitter:description" content="Harjoittele espanjan YO-koetta (lyhyt oppimäärä) tekoälyn avulla." />
+  <meta name="twitter:image" content="https://puheo.fi/og-image.png" />
   <link rel="manifest" href="/manifest.json" />
   <meta name="theme-color" content="#6d5ef4" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -21,49 +33,59 @@
     <a href="index.html" class="sidebar-logo">Puhe<span>o</span></a>
     <nav class="sidebar-nav">
       <button class="sidebar-item active" data-nav="dashboard" id="nav-dashboard">
-        <span class="sidebar-item-icon">🏠</span> Oma sivu
+        <span class="sidebar-item-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/><path d="M9 22V12h6v10"/></svg></span> Oma sivu
       </button>
       <button class="sidebar-item" data-nav="vocab" id="nav-vocab">
-        <span class="sidebar-item-icon">📚</span> Sanasto
+        <span class="sidebar-item-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2Z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7Z"/></svg></span> Sanasto
       </button>
       <button class="sidebar-item" data-nav="grammar" id="nav-grammar">
-        <span class="sidebar-item-icon">🔧</span> Puheoppi
+        <span class="sidebar-item-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 1 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76Z"/></svg></span> Puheoppi
       </button>
       <button class="sidebar-item" data-nav="verbsprint" id="nav-verbsprint">
-        <span class="sidebar-item-icon">⚡</span> Verbisprintti
+        <span class="sidebar-item-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7v8l10-12h-7l3-8Z"/></svg></span> Verbisprintti
       </button>
       <button class="sidebar-item" data-nav="reading" id="nav-reading">
-        <span class="sidebar-item-icon">📖</span> Luetun ymmärt.
+        <span class="sidebar-item-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2Z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7Z"/></svg></span> Luetun ymmärt.
       </button>
       <button class="sidebar-item" data-nav="writing" id="nav-writing">
-        <span class="sidebar-item-icon">✍️</span> Kirjoittaminen
+        <span class="sidebar-item-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 1 1 3 3L7 19l-4 1 1-4 12.5-12.5Z"/></svg></span> Kirjoittaminen
       </button>
       <div class="sidebar-divider"></div>
       <button class="sidebar-item" data-nav="path" id="nav-path">
-        <span class="sidebar-item-icon">🗺️</span> Oppimispolku
+        <span class="sidebar-item-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3Z"/><path d="M9 3v15"/><path d="M15 6v15"/></svg></span> Oppimispolku
       </button>
       <button class="sidebar-item" data-nav="exam" id="nav-exam">
-        <span class="sidebar-item-icon">🎓</span> Koeharjoitus
+        <span class="sidebar-item-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5Z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></span> Koeharjoitus
       </button>
     </nav>
     <div class="sidebar-footer">
       <div class="sidebar-user" id="sidebar-user"></div>
       <button class="sidebar-item" data-nav="settings" id="nav-settings">
-        <span class="sidebar-item-icon">⚙</span> Asetukset
+        <span class="sidebar-item-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg></span> Asetukset
       </button>
       <button class="sidebar-item" id="sidebar-logout">
-        <span class="sidebar-item-icon">🚪</span> Kirjaudu ulos
+        <span class="sidebar-item-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/></svg></span> Kirjaudu ulos
       </button>
     </div>
   </aside>
 
   <!-- MOBILE BOTTOM NAV -->
   <nav class="mobile-nav" id="mobile-nav" role="navigation" aria-label="Mobiilinavigaatio">
-    <button class="mobile-nav-item active" data-nav="dashboard"><span>🏠</span>Koti</button>
-    <button class="mobile-nav-item" data-nav="vocab"><span>📚</span>Sanasto</button>
-    <button class="mobile-nav-item" data-nav="grammar"><span>🔧</span>Puheoppi</button>
-    <button class="mobile-nav-item" data-nav="reading"><span>📖</span>Lukeminen</button>
-    <button class="mobile-nav-item" data-nav="writing"><span>✍️</span>Kirjoitus</button>
+    <button class="mobile-nav-item active" data-nav="dashboard" aria-label="Koti">
+      <span class="mobile-nav-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/><path d="M9 22V12h6v10"/></svg></span>Koti
+    </button>
+    <button class="mobile-nav-item" data-nav="vocab" aria-label="Sanasto">
+      <span class="mobile-nav-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2Z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7Z"/></svg></span>Sanasto
+    </button>
+    <button class="mobile-nav-item" data-nav="grammar" aria-label="Puheoppi">
+      <span class="mobile-nav-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 1 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76Z"/></svg></span>Puheoppi
+    </button>
+    <button class="mobile-nav-item" data-nav="reading" aria-label="Lukeminen">
+      <span class="mobile-nav-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2Z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7Z"/></svg></span>Lukeminen
+    </button>
+    <button class="mobile-nav-item" data-nav="writing" aria-label="Kirjoitus">
+      <span class="mobile-nav-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 1 1 3 3L7 19l-4 1 1-4 12.5-12.5Z"/></svg></span>Kirjoitus
+    </button>
   </nav>
 
   <main class="app-main" id="app-main" role="main">
@@ -110,7 +132,7 @@
       <div class="onboarding-progress">
         <div class="onboarding-progress-fill" id="onboarding-progress-fill"></div>
       </div>
-      <div class="onboarding-step-label" id="onboarding-step-label">1 / 9</div>
+      <div class="onboarding-step-label" id="onboarding-step-label">1 / 6</div>
 
       <!-- Step container (swapped by JS) -->
       <div class="onboarding-step-container" id="onboarding-step-container">
@@ -205,15 +227,15 @@
           <h1 class="onboarding-question">Mitkä ovat heikkoja alueitasi?</h1>
           <p class="onboarding-hint">Valitse 1–3. Painotamme harjoittelua näihin.</p>
           <div class="onboarding-options checkbox-grid" id="ob-weak-areas">
-            <button class="ob-option ob-checkbox" data-value="vocabulary">📚 Sanasto</button>
-            <button class="ob-option ob-checkbox" data-value="grammar">🔧 Puheoppi yleisesti</button>
-            <button class="ob-option ob-checkbox" data-value="ser_estar">🔄 Ser / Estar</button>
-            <button class="ob-option ob-checkbox" data-value="subjunctive">🌀 Subjunktiivi</button>
-            <button class="ob-option ob-checkbox" data-value="preterite_imperfect">⏳ Pret. vs. Imperf.</button>
-            <button class="ob-option ob-checkbox" data-value="writing">✍️ Kirjoittaminen</button>
-            <button class="ob-option ob-checkbox" data-value="reading">📖 Luetun ymmärtäminen</button>
-            <button class="ob-option ob-checkbox" data-value="verbs">🏃 Verbit yleisesti</button>
-            <button class="ob-option ob-checkbox" data-value="unknown">🤷 En tiedä vielä</button>
+            <button class="ob-option ob-checkbox" data-value="vocabulary"><span class="ob-option-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2Z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7Z"/></svg></span> Sanasto</button>
+            <button class="ob-option ob-checkbox" data-value="grammar"><span class="ob-option-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 1 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76Z"/></svg></span> Puheoppi yleisesti</button>
+            <button class="ob-option ob-checkbox" data-value="ser_estar"><span class="ob-option-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3l4 4-4 4"/><path d="M21 7H3"/><path d="M7 21l-4-4 4-4"/><path d="M3 17h18"/></svg></span> Ser / Estar</button>
+            <button class="ob-option ob-checkbox" data-value="subjunctive"><span class="ob-option-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></svg></span> Subjunktiivi</button>
+            <button class="ob-option ob-checkbox" data-value="preterite_imperfect"><span class="ob-option-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span> Pret. vs. Imperf.</button>
+            <button class="ob-option ob-checkbox" data-value="writing"><span class="ob-option-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 1 1 3 3L7 19l-4 1 1-4 12.5-12.5Z"/></svg></span> Kirjoittaminen</button>
+            <button class="ob-option ob-checkbox" data-value="reading"><span class="ob-option-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2Z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7Z"/></svg></span> Luetun ymmärtäminen</button>
+            <button class="ob-option ob-checkbox" data-value="verbs"><span class="ob-option-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></span> Verbit yleisesti</button>
+            <button class="ob-option ob-checkbox" data-value="unknown"><span class="ob-option-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg></span> En tiedä vielä</button>
           </div>
           <button class="btn-primary onboarding-next-btn hidden" id="ob-weak-next">Seuraava →</button>
         </div>
@@ -223,13 +245,13 @@
           <h1 class="onboarding-question">Entä vahvuutesi?</h1>
           <p class="onboarding-hint">Jos on joku osa-alue joka sujuu, painotamme muita. Valinnainen.</p>
           <div class="onboarding-options checkbox-grid" id="ob-strong-areas">
-            <button class="ob-option ob-checkbox" data-value="vocabulary">📚 Sanasto</button>
-            <button class="ob-option ob-checkbox" data-value="grammar">🔧 Puheoppi yleisesti</button>
-            <button class="ob-option ob-checkbox" data-value="ser_estar">🔄 Ser / Estar</button>
-            <button class="ob-option ob-checkbox" data-value="subjunctive">🌀 Subjunktiivi</button>
-            <button class="ob-option ob-checkbox" data-value="preterite_imperfect">⏱ Preteriti / imperfekti</button>
-            <button class="ob-option ob-checkbox" data-value="writing">✍ Kirjoittaminen</button>
-            <button class="ob-option ob-checkbox" data-value="reading">📖 Tekstinymmärrys</button>
+            <button class="ob-option ob-checkbox" data-value="vocabulary"><span class="ob-option-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2Z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7Z"/></svg></span> Sanasto</button>
+            <button class="ob-option ob-checkbox" data-value="grammar"><span class="ob-option-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 1 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76Z"/></svg></span> Puheoppi yleisesti</button>
+            <button class="ob-option ob-checkbox" data-value="ser_estar"><span class="ob-option-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3l4 4-4 4"/><path d="M21 7H3"/><path d="M7 21l-4-4 4-4"/><path d="M3 17h18"/></svg></span> Ser / Estar</button>
+            <button class="ob-option ob-checkbox" data-value="subjunctive"><span class="ob-option-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></svg></span> Subjunktiivi</button>
+            <button class="ob-option ob-checkbox" data-value="preterite_imperfect"><span class="ob-option-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span> Preteriti / imperfekti</button>
+            <button class="ob-option ob-checkbox" data-value="writing"><span class="ob-option-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 1 1 3 3L7 19l-4 1 1-4 12.5-12.5Z"/></svg></span> Kirjoittaminen</button>
+            <button class="ob-option ob-checkbox" data-value="reading"><span class="ob-option-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2Z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7Z"/></svg></span> Tekstinymmärrys</button>
           </div>
           <div class="onboarding-strong-error hidden" id="ob-strong-error" role="alert"></div>
           <div class="onboarding-strong-actions">
@@ -243,11 +265,11 @@
           <h1 class="onboarding-question">Kuinka monta minuuttia päivässä haluat harjoitella?</h1>
           <p class="onboarding-hint">Pienikin määrä riittää — säännöllisyys ratkaisee!</p>
           <div class="onboarding-options" id="ob-daily-goal">
-            <button class="ob-option" data-value="10">🌱 10 min<span class="ob-option-sub">Kevyt alku</span></button>
-            <button class="ob-option" data-value="20">⚡ 20 min<span class="ob-option-sub">Suositeltu</span></button>
-            <button class="ob-option" data-value="30">🔥 30 min<span class="ob-option-sub">Tehokas</span></button>
-            <button class="ob-option" data-value="45">💪 45 min<span class="ob-option-sub">Intensiivinen</span></button>
-            <button class="ob-option" data-value="60">🚀 60 min<span class="ob-option-sub">Maksimivauhti</span></button>
+            <button class="ob-option" data-value="10"><span class="ob-option-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6"/></svg></span> 10 min<span class="ob-option-sub">Kevyt alku</span></button>
+            <button class="ob-option" data-value="20"><span class="ob-option-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7v8l10-12h-7l3-8Z"/></svg></span> 20 min<span class="ob-option-sub">Suositeltu</span></button>
+            <button class="ob-option" data-value="30"><span class="ob-option-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5Z"/></svg></span> 30 min<span class="ob-option-sub">Tehokas</span></button>
+            <button class="ob-option" data-value="45"><span class="ob-option-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h4v20H6zM14 2h4v20h-4z"/><path d="M2 10h2v4H2zM20 10h2v4h-2z"/><path d="M10 12h4"/></svg></span> 45 min<span class="ob-option-sub">Intensiivinen</span></button>
+            <button class="ob-option" data-value="60"><span class="ob-option-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg></span> 60 min<span class="ob-option-sub">Maksimivauhti</span></button>
           </div>
         </div>
 
@@ -272,6 +294,19 @@
           <p class="onboarding-done-sub">Olemme räätälöineet kokemuksesi sinulle.</p>
           <div class="onboarding-summary" id="onboarding-summary"></div>
           <button class="btn-primary" id="onboarding-start-btn">Aloita harjoittelu →</button>
+
+          <!-- Optional referral attribution (moved from its own step to reduce friction) -->
+          <div class="onboarding-referral-inline">
+            <p class="onboarding-referral-label">Mistä kuulit Puheosta? <span class="onboarding-referral-optional">(vapaaehtoinen)</span></p>
+            <div class="onboarding-referral-chips" id="ob-referral-inline" role="radiogroup" aria-label="Mistä kuulit Puheosta">
+              <button type="button" class="ob-referral-chip" data-value="friend">Kaveri</button>
+              <button type="button" class="ob-referral-chip" data-value="teacher">Opettaja</button>
+              <button type="button" class="ob-referral-chip" data-value="google">Google</button>
+              <button type="button" class="ob-referral-chip" data-value="tiktok">TikTok</button>
+              <button type="button" class="ob-referral-chip" data-value="instagram">Instagram</button>
+              <button type="button" class="ob-referral-chip" data-value="other">Muu</button>
+            </div>
+          </div>
         </div>
 
       </div><!-- /step-container -->
@@ -1229,6 +1264,11 @@
           </div>
         </div>
         <div class="feedback-annotated-text" id="feedback-annotated-text"></div>
+
+        <div class="feedback-section hidden" id="feedback-corrected-section">
+          <h3 class="feedback-section-title">Korjattu versio</h3>
+          <div class="feedback-corrected-text" id="feedback-corrected-text"></div>
+        </div>
 
         <div class="feedback-section hidden" id="feedback-errors-section">
           <h3 class="feedback-section-title">Yhteenveto korjauksista</h3>

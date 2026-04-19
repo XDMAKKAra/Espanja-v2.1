@@ -319,6 +319,22 @@ function renderWritingFeedback(result) {
   // Inline annotated text (the centerpiece)
   renderAnnotatedText(result.originalText || "", result.errors || [], result.annotations || []);
 
+  // "Korjattu versio" — full corrected essay. Only shown when it differs from
+  // the student's text (guardrail: capped at 1.5× input length server-side).
+  const correctedEl = document.getElementById("feedback-corrected-text");
+  const correctedSec = document.getElementById("feedback-corrected-section");
+  if (correctedEl && correctedSec) {
+    const orig = (result.originalText || "").trim();
+    const corrected = (result.correctedText || "").trim();
+    if (corrected && corrected !== orig) {
+      correctedSec.classList.remove("hidden");
+      correctedEl.textContent = corrected;
+    } else {
+      correctedSec.classList.add("hidden");
+      correctedEl.textContent = "";
+    }
+  }
+
   // Criteria with score bars
   const criteriaEl = $("feedback-criteria");
   criteriaEl.innerHTML = "";
