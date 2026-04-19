@@ -132,6 +132,10 @@ function renderWritingTask(task) {
 
   const input = $("writing-input");
   input.value = "";
+  // Commit 13: maxlength prevents paste-over-limit. We use charMax * 1.5 as a
+  // hard cap (the grader no longer penalises over-length after Commit 3's
+  // policy change, but a hard cap still protects us from 10× wallpaper paste).
+  input.maxLength = Math.round(task.charMax * 1.5);
   $("char-max").textContent = task.charMax;
   updateCharCounter();
 
@@ -167,8 +171,11 @@ function updateCharCounter() {
   const fillPct = Math.min((count / max) * 100, 100);
   const fill = $("char-bar-fill");
   fill.style.width = `${fillPct}%`;
-  fill.classList.remove("bar-ok", "bar-over");
-  fill.classList.add(count > max ? "bar-over" : "bar-ok");
+  fill.classList.remove("bar-ok", "bar-warn", "bar-over");
+  // Commit 13: orange at 80 % of max, red at 100 %+.
+  if (count > max) fill.classList.add("bar-over");
+  else if (count >= max * 0.8) fill.classList.add("bar-warn");
+  else fill.classList.add("bar-ok");
 
   $("btn-submit-writing").disabled = count < min;
 }

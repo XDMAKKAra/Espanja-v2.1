@@ -1247,11 +1247,12 @@ select option { background: var(--surface2); }
 .counter-ok #char-count   { color: var(--correct); }
 .counter-warn #char-count { color: var(--accent); }
 .counter-over #char-count { color: var(--wrong); }
-.char-bar-wrap { position: relative; height: 3px; background: var(--border); border-radius: 3px; overflow: visible; }
-.char-bar-fill { height: 100%; border-radius: 3px; transition: width 0.2s ease, background 0.2s; }
+.char-bar-wrap { position: relative; height: 8px; background: var(--border); border-radius: 4px; overflow: visible; }
+.char-bar-fill { height: 100%; border-radius: 4px; transition: width 0.2s ease, background 0.2s; }
 .char-bar-fill.bar-ok   { background: var(--correct); }
+.char-bar-fill.bar-warn { background: #f59e0b; }
 .char-bar-fill.bar-over { background: var(--wrong); }
-.char-bar-min { position: absolute; top: -3px; width: 2px; height: 9px; background: var(--accent); border-radius: 1px; }
+.char-bar-min { position: absolute; top: -2px; width: 2px; height: 12px; background: var(--accent); border-radius: 1px; }
 .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
 
 /* ── WRITING FEEDBACK (visual split layout) ── */
