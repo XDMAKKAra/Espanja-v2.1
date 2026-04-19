@@ -10,6 +10,7 @@ Every pass follows the two-phase pattern: a Step 1 design prompt (research + DES
 |---|---|---|---|---|
 | 0 | Exercise types (in flight) | done | `exercise-types-step2-prompt.md` | ~May 10 |
 | 0.5 | Critical live-site fixes | `00.5-critical-live-fixes.md` (single prompt, bugfix) | — | ~May 12 |
+| 0.6 | Remove manual taso-picker | `00.6-remove-manual-level-picker.md` (single prompt, bugfix) | — | ~May 13 |
 | 1 | Visual design system | `01-design-system-step1.md` | `01-design-system-step2.md` | ~May 19 |
 | 2 | Content depth | `02-content-depth.md` (single prompt, content not code) | — | ~May 31 |
 | 2.5 | Pedagogy hardening | `02.5-pedagogy-step1.md` | `02.5-pedagogy-step2.md` | ~Jun 7 |
@@ -23,6 +24,7 @@ Every pass follows the two-phase pattern: a Step 1 design prompt (research + DES
 ## Skills reference per pass
 
 - Pass 0.5: no skill (bugfix discipline)
+- Pass 0.6: no skill (bugfix discipline)
 - Pass 1: `ui-ux-pro-max`, `design-taste-frontend`, `theme-factory`
 - Pass 2: `claude-education-skills` — Vocabulary Tiering, Retrieval Practice Generator, Cognitive Load Calibrator, Academic Sentence Frames, Assessment Validity Checker, Scaffolded Task Modification
 - Pass 2.5: `claude-education-skills` — Spaced Practice Scheduler, Interleaving Designer, Adaptive Hint Sequence, Rubric Logic Generator, Spacing Algorithm Customizer, Erroneous Example Generator
@@ -40,4 +42,4 @@ Every pass follows the two-phase pattern: a Step 1 design prompt (research + DES
 - Two-phase (design → approve → build) for non-trivial passes.
 - Phase gates with stop-and-summarize at the end of each gate.
 - No `main` commits in a build pass except prerequisite chores; feature work lives on per-gate branches.
-- **⚠️ No live payments work until y-tunnus.** marcel doesn't have a Finnish business ID yet, so no LemonSqueezy live integration in any pass. Paywall UI, pricing pages, email drip mentioning Pro — all fine to build. Live checkout button → routes to "Coming soon, join waitlist" placeholder. Live wiring happens as Pass 6.5 once y-tunnus is registered (~Aug 2026).
+- **⚠️ No live payments work until y-tunnus.** marcel doesn't have a Finnish business ID yet, so no LemonSqueezy live integration in any pass. Paywall UI, pricing pages, email drip mentioning Pro — all fine to build. Live checkout button → routes to "Coming soon, join waitlist" placeholder. Live wiring happens as Pass 6.5
