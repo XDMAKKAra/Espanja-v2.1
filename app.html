@@ -653,17 +653,13 @@
       </div>
 
       <div class="mode-page-section">
-        <label class="mode-page-label">Lähtötaso</label>
-        <div class="level-picker" id="vocab-page-level-picker">
-          <button class="lvl-btn" data-level="I">I</button>
-          <button class="lvl-btn" data-level="A">A</button>
-          <button class="lvl-btn active" data-level="B">B</button>
-          <button class="lvl-btn" data-level="C">C</button>
-          <button class="lvl-btn" data-level="M">M</button>
-          <button class="lvl-btn" data-level="E">E</button>
-          <button class="lvl-btn" data-level="L">L</button>
+        <!-- Pass 0.6: manual taso-picker removed. Level now comes from
+             user_level_progress / diagnostic_results via GET /api/user-level.
+             Kokeile vaikeampaa affordance will land inside the exercise
+             screen in a later pass. -->
+        <div class="user-level-display" id="vocab-page-level-display" hidden>
+          Tasosi: <strong data-level>—</strong>
         </div>
-        <p class="mode-page-hint">Taso mukautuu automaattisesti suorituksen mukaan (3 kierrosta × 4 kysymystä)</p>
       </div>
 
       <button class="btn-primary" id="btn-start-vocab">Aloita sanastoharjoittelu →</button>
@@ -696,13 +692,9 @@
       </div>
 
       <div class="mode-page-section">
-        <label class="mode-page-label">Taso</label>
-        <div class="level-picker" id="grammar-page-level-picker">
-          <button class="lvl-btn" data-level="B">B</button>
-          <button class="lvl-btn active" data-level="C">C</button>
-          <button class="lvl-btn" data-level="M">M</button>
-          <button class="lvl-btn" data-level="E">E</button>
-          <button class="lvl-btn" data-level="L">L</button>
+        <!-- Pass 0.6: level comes from /api/user-level. -->
+        <div class="user-level-display" id="grammar-page-level-display" hidden>
+          Tasosi: <strong data-level>—</strong>
         </div>
       </div>
 
@@ -852,13 +844,9 @@
       </div>
 
       <div class="mode-page-section">
-        <label class="mode-page-label">Taso</label>
-        <div class="level-picker" id="reading-page-level-picker">
-          <button class="lvl-btn" data-level="B">B</button>
-          <button class="lvl-btn active" data-level="C">C</button>
-          <button class="lvl-btn" data-level="M">M</button>
-          <button class="lvl-btn" data-level="E">E</button>
-          <button class="lvl-btn" data-level="L">L</button>
+        <!-- Pass 0.6: level comes from /api/user-level. -->
+        <div class="user-level-display" id="reading-page-level-display" hidden>
+          Tasosi: <strong data-level>—</strong>
         </div>
       </div>
 
@@ -961,18 +949,9 @@
 
       <!-- Vocab config (shown in vocab mode) -->
       <div id="vocab-config">
-        <div class="config-block">
-          <label>Lähtötaso</label>
-          <div class="level-picker" id="level-picker">
-            <button class="lvl-btn" data-level="I">I</button>
-            <button class="lvl-btn" data-level="A">A</button>
-            <button class="lvl-btn active" data-level="B">B</button>
-            <button class="lvl-btn" data-level="C">C</button>
-            <button class="lvl-btn" data-level="M">M</button>
-            <button class="lvl-btn" data-level="E">E</button>
-            <button class="lvl-btn" data-level="L">L</button>
-          </div>
-        </div>
+        <!-- Pass 0.6: legacy inline level-picker removed. -->
+        <div style="display:none" id="level-picker"></div>
+
         <div class="config-block">
           <label>Aihe</label>
           <select id="topic-select">
@@ -1029,15 +1008,8 @@
             <option value="pronouns">Pronominit ja relatiivit</option>
           </select>
         </div>
-        <div class="config-block">
-          <label>Taso</label>
-          <div class="level-picker" id="grammar-level-picker">
-            <button class="lvl-btn" data-level="B">B</button>
-            <button class="lvl-btn active" data-level="C">C</button>
-            <button class="lvl-btn" data-level="M">M</button>
-            <button class="lvl-btn" data-level="E">E</button>
-            <button class="lvl-btn" data-level="L">L</button>
-          </div>
+        <!-- Pass 0.6: legacy inline grammar-level-picker removed. -->
+        <div style="display:none" id="grammar-level-picker">
         </div>
       </div>
 
@@ -1054,16 +1026,8 @@
             <option value="environment">Ympäristö &amp; kestävyys</option>
           </select>
         </div>
-        <div class="config-block">
-          <label>Taso</label>
-          <div class="level-picker" id="reading-level-picker">
-            <button class="lvl-btn" data-level="B">B</button>
-            <button class="lvl-btn active" data-level="C">C</button>
-            <button class="lvl-btn" data-level="M">M</button>
-            <button class="lvl-btn" data-level="E">E</button>
-            <button class="lvl-btn" data-level="L">L</button>
-          </div>
-        </div>
+        <!-- Pass 0.6: legacy inline reading-level-picker removed. -->
+        <div style="display:none" id="reading-level-picker"></div>
       </div>
 
       <button class="btn-primary" id="btn-start">Aloita harjoittelu →</button>

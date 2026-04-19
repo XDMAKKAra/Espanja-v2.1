@@ -621,20 +621,13 @@ export function loadLastSettings(forcedMode) {
 
     const p = JSON.parse(localStorage.getItem("puheo_settings") || "null");
 
+    // Pass 0.6: level is no longer driven by saved picker state. state.level
+    // et al. get set from /api/user-level in the start-button handlers in
+    // js/main.js. Keep the rest of the saved-settings restore (topic
+    // selects, writing type) since those are real user choices.
     const sugLevel = window._dashSuggestedLevel;
     const savedLevel = p?.level;
-    const levelToUse = savedLevel || sugLevel || "B";
-
-    state.level = levelToUse;
-    document.querySelectorAll("#level-picker .lvl-btn").forEach((b) =>
-      b.classList.toggle("active", b.dataset.level === levelToUse)
-    );
-
-    if (sugLevel) {
-      document.querySelectorAll("#level-picker .lvl-btn").forEach((b) =>
-        b.classList.toggle("suggested", b.dataset.level === sugLevel)
-      );
-    }
+    state.level = savedLevel || sugLevel || "B";
 
     if (!p) return;
 
@@ -643,18 +636,8 @@ export function loadLastSettings(forcedMode) {
     if (p.readingTopic) $("reading-topic-select").value = p.readingTopic;
     if (p.writingTopic) $("writing-topic-select").value = p.writingTopic;
 
-    if (p.grammarLevel) {
-      state.grammarLevel = p.grammarLevel;
-      document.querySelectorAll("#grammar-level-picker .lvl-btn").forEach((b) =>
-        b.classList.toggle("active", b.dataset.level === p.grammarLevel)
-      );
-    }
-    if (p.readingLevel) {
-      state.readingLevel = p.readingLevel;
-      document.querySelectorAll("#reading-level-picker .lvl-btn").forEach((b) =>
-        b.classList.toggle("active", b.dataset.level === p.readingLevel)
-      );
-    }
+    if (p.grammarLevel) state.grammarLevel = p.grammarLevel;
+    if (p.readingLevel) state.readingLevel = p.readingLevel;
     if (p.writingType) {
       state.writingTaskType = p.writingType;
       document.querySelectorAll(".task-type-btn").forEach((b) =>

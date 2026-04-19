@@ -132,21 +132,43 @@ document.querySelectorAll(".topic-cards").forEach((grid) => {
   });
 });
 
-// Level pickers on mode pages
-document.querySelectorAll("[id$='-page-level-picker'] .lvl-btn").forEach((btn) => {
-  btn.addEventListener("click", () => {
-    const picker = btn.closest(".level-picker");
-    picker.querySelectorAll(".lvl-btn").forEach((b) => b.classList.remove("active"));
-    btn.classList.add("active");
-  });
-});
+// Pass 0.6: manual taso-picker listeners removed. Level now comes from
+// GET /api/user-level — the adaptive engine owns it, not a DOM click.
+
+// Mode defaults when the API call fails or the user has no placement yet.
+const MODE_LEVEL_DEFAULTS = { vocab: "B", grammar: "C", reading: "C" };
+
+async function fetchUserLevel(mode, topic) {
+  const fallback = MODE_LEVEL_DEFAULTS[mode] || "B";
+  try {
+    const qs = new URLSearchParams({ mode });
+    if (topic) qs.set("topic", topic);
+    const res = await apiFetch(`${API}/api/user-level?${qs}`, { headers: authHeader() });
+    if (!res.ok) return fallback;
+    const data = await res.json();
+    return data.level || fallback;
+  } catch {
+    return fallback;
+  }
+}
+
+// Optional: populate the "Tasosi: X" status line on mode pages when they open.
+async function showLevelForMode(displayId, mode, topic) {
+  const el = document.getElementById(displayId);
+  if (!el) return;
+  const level = await fetchUserLevel(mode, topic);
+  const strong = el.querySelector("[data-level]");
+  if (strong) strong.textContent = level;
+  el.hidden = false;
+  return level;
+}
 
 // ─── Start buttons on mode pages ───────────────────────────────────────────
 
-if ($("btn-start-vocab")) $("btn-start-vocab").addEventListener("click", () => {
+if ($("btn-start-vocab")) $("btn-start-vocab").addEventListener("click", async () => {
   state.mode = "vocab";
-  state.level = document.querySelector("#vocab-page-level-picker .lvl-btn.active")?.dataset.level || "B";
   state.topic = document.querySelector("#vocab-topic-cards .topic-card.active")?.dataset.topic || "general vocabulary";
+  state.level = await fetchUserLevel("vocab", state.topic);
   state.startLevel = state.level;
   state.peakLevel = state.level;
   state.batchNumber = 0;
@@ -156,10 +178,10 @@ if ($("btn-start-vocab")) $("btn-start-vocab").addEventListener("click", () => {
   loadNextBatch();
 });
 
-function startGrammarDrill() {
+async function startGrammarDrill() {
   state.mode = "grammar";
-  state.grammarLevel = document.querySelector("#grammar-page-level-picker .lvl-btn.active")?.dataset.level || "C";
   state.grammarTopic = document.querySelector("#grammar-topic-cards .topic-card.active")?.dataset.topic || "mixed";
+  state.grammarLevel = await fetchUserLevel("grammar", state.grammarTopic);
   state.sessionStartTime = Date.now();
   loadGrammarDrill();
 }
@@ -171,10 +193,10 @@ initVerbSprint({ saveProgress });
 initVerbReference();
 initSettings({ loadDashboard });
 
-if ($("btn-start-reading")) $("btn-start-reading").addEventListener("click", () => {
+if ($("btn-start-reading")) $("btn-start-reading").addEventListener("click", async () => {
   state.mode = "reading";
-  state.readingLevel = document.querySelector("#reading-page-level-picker .lvl-btn.active")?.dataset.level || "C";
   state.readingTopic = document.querySelector("#reading-topic-cards .topic-card.active")?.dataset.topic || "animals and nature";
+  state.readingLevel = await fetchUserLevel("reading", state.readingTopic);
   state.sessionStartTime = Date.now();
   loadReadingTask();
 });
@@ -328,31 +350,9 @@ document.querySelectorAll(".mode-btn").forEach((btn) => {
 // Language is fixed to Spanish
 state.language = "spanish";
 
-// ─── Level pickers ─────────────────────────────────────────────────────────
-
-document.querySelectorAll("#level-picker .lvl-btn").forEach((btn) => {
-  btn.addEventListener("click", () => {
-    document.querySelectorAll("#level-picker .lvl-btn").forEach((b) => b.classList.remove("active"));
-    btn.classList.add("active");
-    state.level = btn.dataset.level;
-  });
-});
-
-document.querySelectorAll("#grammar-level-picker .lvl-btn").forEach((btn) => {
-  btn.addEventListener("click", () => {
-    document.querySelectorAll("#grammar-level-picker .lvl-btn").forEach((b) => b.classList.remove("active"));
-    btn.classList.add("active");
-    state.grammarLevel = btn.dataset.level;
-  });
-});
-
-document.querySelectorAll("#reading-level-picker .lvl-btn").forEach((btn) => {
-  btn.addEventListener("click", () => {
-    document.querySelectorAll("#reading-level-picker .lvl-btn").forEach((b) => b.classList.remove("active"));
-    btn.classList.add("active");
-    state.readingLevel = btn.dataset.level;
-  });
-});
+// Pass 0.6: legacy #level-picker / #grammar-level-picker / #reading-level-picker
+// listeners removed. The pickers no longer exist; state.level et al. are now
+// set from /api/user-level in the start-button handlers above.
 
 // Task type picker (writing mode)
 document.querySelectorAll(".task-type-btn").forEach((btn) => {
