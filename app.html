@@ -551,17 +551,18 @@
         <div class="dash-weak-list" id="dash-weak-list"></div>
       </div>
 
-      <!-- Activity heatmap -->
-      <div class="dash-heatmap-section">
-        <div class="dash-section-label">Aktiivisuus · 30 päivää</div>
-        <div class="dash-heatmap" id="dash-heatmap"></div>
-      </div>
+      <!-- Activity heatmap + progress chart paired on desktop (Pass 1.5) -->
+      <div class="dash-grid-row">
+        <div class="dash-heatmap-section">
+          <div class="dash-section-label">Aktiivisuus · 30 päivää</div>
+          <div class="dash-heatmap" id="dash-heatmap"></div>
+        </div>
 
-      <!-- Progress chart -->
-      <div class="dash-chart-section">
-        <div class="dash-section-label">Kehitys ajan mittaan</div>
-        <div class="dash-chart-container" id="dash-chart">
-          <div class="dash-chart-empty">Tee ensimmäinen harjoitus nähdäksesi kehityksesi!</div>
+        <div class="dash-chart-section">
+          <div class="dash-section-label">Kehitys ajan mittaan</div>
+          <div class="dash-chart-container" id="dash-chart">
+            <div class="dash-chart-empty">Tee ensimmäinen harjoitus nähdäksesi kehityksesi!</div>
+          </div>
         </div>
       </div>
 
@@ -590,16 +591,17 @@
       <div class="dash-section-label">Osa-alueet</div>
       <div class="dash-modes" id="dash-modes"></div>
 
-      <!-- Recommendations -->
-      <div class="dash-recommendations hidden" id="dash-recommendations">
-        <div class="dash-section-label">Suositukset</div>
-        <div id="dash-rec-list"></div>
-      </div>
+      <!-- Recommendations + recent activity paired on desktop (Pass 1.5) -->
+      <div class="dash-grid-row">
+        <div class="dash-recommendations hidden" id="dash-recommendations">
+          <div class="dash-section-label">Suositukset</div>
+          <div id="dash-rec-list"></div>
+        </div>
 
-      <!-- Recent activity -->
-      <div id="dash-recent-wrap" class="hidden">
-        <div class="dash-section-label">Viimeisimmät harjoitukset</div>
-        <div id="dash-recent-list"></div>
+        <div id="dash-recent-wrap" class="hidden">
+          <div class="dash-section-label">Viimeisimmät harjoitukset</div>
+          <div id="dash-recent-list"></div>
+        </div>
       </div>
 
       <div class="dash-empty hidden" id="dash-empty">

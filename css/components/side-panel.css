@@ -1,31 +1,32 @@
 /* =======================================================================
-   Side-panel pattern — design-system/SCREENS.md §4 (vocab desktop mock).
-   PILOT: wrapped by body[data-ff-side-panel="1"] so it only activates when
-   the feature flag is on. Default off → layout behaves exactly as today.
+   Side-panel pattern — design-system/SCREENS.md §4 + Pass 1.5 viewport fix.
 
-   Canonical structure (inside the feature-flag scope):
+   Canonical structure:
      <div class="split">
-       <div class="split__main"><!-- exercise --></div>
+       <div class="split__main"><!-- exercise / editor / detail --></div>
        <div class="split__aside"><!-- feedback / rubric / hint --></div>
      </div>
 
-   Below 1200px the aside stacks below (single column). Above, two columns
-   with the aside fixed at 380px and the main column taking the rest.
+   Below 1200 px the aside stacks below the main column (single column). At
+   ≥1200 px it becomes a sticky right rail fixed at 380 px, main takes the rest.
+
+   Pass 1 Gate C.5 shipped this behind body[data-ff-side-panel="1"]; Pass 1.5
+   drops the flag so any screen that adopts the markup gets the layout.
    ======================================================================= */
 
-body[data-ff-side-panel="1"] .split {
+.split {
   display: block;
 }
 
 @media (min-width: 1200px) {
-  body[data-ff-side-panel="1"] .split {
+  .split {
     display: grid;
     grid-template-columns: minmax(0, 1fr) 380px;
     gap: var(--s-6);
     align-items: start;
   }
 
-  body[data-ff-side-panel="1"] .split__aside {
+  .split__aside {
     position: sticky;
     top: calc(64px + var(--s-5));   /* clears fixed top-nav */
     max-height: calc(100vh - 64px - var(--s-8));
@@ -37,14 +38,16 @@ body[data-ff-side-panel="1"] .split {
     box-shadow: var(--sh-rest);
   }
 
-  /* Empty aside fades out so there's no lonely panel before the user answers */
-  body[data-ff-side-panel="1"] .split__aside:empty {
+  /* Empty aside fades out so there's no lonely panel before content arrives. */
+  .split__aside:empty {
     opacity: 0;
     pointer-events: none;
   }
 }
 
-/* Flag off — aside content still renders, but inline/flow as today. */
-body:not([data-ff-side-panel="1"]) .split__aside {
-  margin-top: var(--s-4);
+/* Below the split breakpoint the aside just flows under the main column. */
+@media (max-width: 1199px) {
+  .split__aside {
+    margin-top: var(--s-4);
+  }
 }
