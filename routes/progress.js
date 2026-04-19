@@ -2,6 +2,7 @@ import { Router } from "express";
 import supabase from "../supabase.js";
 import { requireAuth, isPro } from "../middleware/auth.js";
 import { GRADES, GRADE_ORDER, DAY_MS, WEEK_MS, calculateStreak, calculateEstLevel } from "../lib/openai.js";
+import { computeGradeEstimate } from "../lib/gradeThreshold.js";
 import { computeEligibility, LEVEL_ORDER } from "../lib/adaptive.js";
 import { getMonthlyUsage } from "../lib/aiCost.js";
 import { normalizeTopics, topicLabel, inferTopics } from "../lib/mistakeTaxonomy.js";
@@ -157,6 +158,7 @@ router.get("/dashboard", requireAuth, async (req, res) => {
   }));
 
   const estLevel = calculateEstLevel(logs);
+  const gradeEstimate = computeGradeEstimate(logs);
   const streak = calculateStreak(logs);
 
   const nowMs = Date.now();
@@ -199,7 +201,7 @@ router.get("/dashboard", requireAuth, async (req, res) => {
     .map(r => r.topic);
 
   res.json({
-    totalSessions, modeStats, recent, chartData, estLevel,
+    totalSessions, modeStats, recent, chartData, estLevel, gradeEstimate,
     streak, weekSessions, prevWeekSessions, suggestedLevel, modeDaysAgo, pro,
     aiUsage, staleTopics,
   });
