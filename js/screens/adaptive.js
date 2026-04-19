@@ -6,6 +6,7 @@ import { state } from "../state.js";
 import { showLoading, showLoadingError } from "../ui/loading.js";
 import { renderExercise } from "./exerciseRenderer.js";
 import { toUnified } from "../../lib/exerciseTypes.js";
+import { reportMcAdvisory } from "../features/mcAdvisory.js";
 
 const OPTION_LETTERS = ["A", "B", "C", "D", "E", "F"];
 
@@ -185,9 +186,10 @@ function renderMasteryQuestion() {
     toUnified(ex, { topic: "mastery", skill_bucket: "vocab" }),
     grid,
     {
-      onAnswer: ({ chosenIndex, button }) => {
+      onAnswer: ({ chosenIndex, correctIndex, isCorrect, button }) => {
         const optText = button.textContent;
         handleMasteryAnswer(button, optText, ex);
+        reportMcAdvisory({ exerciseId: ex.id, chosenIndex, correctIndex, clientIsCorrect: isCorrect });
       },
     }
   );

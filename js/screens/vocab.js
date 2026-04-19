@@ -8,6 +8,7 @@ import { authHeader, apiFetch } from "../api.js";
 import { trackExerciseStarted, trackExerciseCompleted, trackError } from "../analytics.js";
 import { renderExercise } from "./exerciseRenderer.js";
 import { toUnified } from "../../lib/exerciseTypes.js";
+import { reportMcAdvisory } from "../features/mcAdvisory.js";
 
 const OPTION_LETTERS = ["A", "B", "C", "D", "E", "F"];
 
@@ -352,8 +353,9 @@ export function renderExercise() {
     toUnified(ex, { topic: state.topic || state.mode || "vocab", skill_bucket: "vocab" }),
     grid,
     {
-      onAnswer: ({ chosenIndex, button }) => {
+      onAnswer: ({ chosenIndex, correctIndex, isCorrect, button }) => {
         handleAnswer(OPTION_LETTERS[chosenIndex], button);
+        reportMcAdvisory({ exerciseId: ex.id, chosenIndex, correctIndex, clientIsCorrect: isCorrect });
       },
     }
   );

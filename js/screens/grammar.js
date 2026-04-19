@@ -7,6 +7,7 @@ import { resetAutoTriggerTracking, recordAnswerForAutoTrigger } from "./quickRev
 import { getBlogForTopic, trackBlogClick } from "../features/topicBlogMap.js";
 import { renderExercise } from "./exerciseRenderer.js";
 import { toUnified } from "../../lib/exerciseTypes.js";
+import { reportMcAdvisory } from "../features/mcAdvisory.js";
 
 const OPTION_LETTERS = ["A", "B", "C", "D", "E", "F"];
 
@@ -115,8 +116,9 @@ function renderGrammarExercise() {
     toUnified(ex, { topic: state.grammarTopic || "grammar", skill_bucket: "grammar" }),
     grid,
     {
-      onAnswer: ({ chosenIndex, button }) => {
+      onAnswer: ({ chosenIndex, correctIndex, isCorrect, button }) => {
         handleGrammarAnswer(OPTION_LETTERS[chosenIndex], button, ex);
+        reportMcAdvisory({ exerciseId: ex.id, chosenIndex, correctIndex, clientIsCorrect: isCorrect });
       },
     }
   );
