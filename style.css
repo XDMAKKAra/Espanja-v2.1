@@ -1632,7 +1632,9 @@ select option { background: var(--surface2); }
 
 /* ── READING COMPREHENSION ── */
 .reading-inner {
-  max-width: 640px; width: 100%; max-height: calc(100vh - 48px);
+  /* Gate D: 640px → --w-desktop. Keeps paragraphs readable (body font
+     at 1rem × 1.6 line-height stays comfortable at ≤80ch). */
+  max-width: var(--w-desktop); width: 100%; max-height: calc(100vh - 48px);
   overflow-y: auto; animation: fadeUp 0.35s ease both; padding-bottom: 24px;
 }
 .reading-header-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
