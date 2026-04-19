@@ -1,0 +1,28 @@
+{
+  "captured_at": "2026-04-19",
+  "git_commit": "a01bda8",
+  "lighthouse": {
+    "landing": {
+      "url": "http://localhost:3000/",
+      "performance": 1,
+      "accessibility": 0.94,
+      "best_practices": 0.92
+    },
+    "app": {
+      "url": "http://localhost:3000/app.html",
+      "performance": 0.9,
+      "accessibility": 1,
+      "best_practices": 0.96
+    }
+  },
+  "pa11y": {
+    "total_urls": 3,
+    "passes": 0,
+    "errors": 21,
+    "errors_by_url": {
+      "http://localhost:3000/": 2,
+      "http://localhost:3000/app.html": 17,
+      "http://localhost:3000/diagnose.html": 2
+    }
+  }
+}

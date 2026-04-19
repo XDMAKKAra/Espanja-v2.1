@@ -11,8 +11,9 @@
     "test:watch": "vitest",
     "test:e2e": "playwright test",
     "lint": "eslint . --ext .js,.mjs",
-    "audit:a11y": "pa11y-ci --sitemap http://localhost:3000/sitemap.xml",
-    "audit:lighthouse": "lighthouse http://localhost:3000/app.html --only-categories=performance,accessibility,best-practices --preset=desktop --output=json --output-path=./ui-ux/lighthouse-app.json --chrome-flags=--headless"
+    "audit:a11y": "pa11y-ci --config exercises/baselines/pa11y-ci.config.json --json > exercises/baselines/pa11y.json",
+    "audit:lighthouse": "lighthouse http://localhost:3000/app.html --only-categories=performance,accessibility,best-practices --preset=desktop --output=json --output-path=exercises/baselines/lighthouse-app.json --chrome-flags=--headless --quiet",
+    "audit:lighthouse:landing": "lighthouse http://localhost:3000/ --only-categories=performance,accessibility,best-practices --preset=desktop --output=json --output-path=exercises/baselines/lighthouse-landing.json --chrome-flags=--headless --quiet"
   },
   "dependencies": {
     "@lemonsqueezy/lemonsqueezy.js": "^4.0.0",
