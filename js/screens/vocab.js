@@ -108,6 +108,19 @@ async function logMistake(ex, chosen) {
   } catch { /* silent */ }
 }
 
+function recordItem(ex, isCorrect) {
+  if (!Array.isArray(state.sessionItems)) state.sessionItems = [];
+  let label = ex?.correctAnswer || ex?.spanish || ex?.es || ex?.answer || ex?.finnishSentence;
+  if (!label && Array.isArray(ex?.pairs)) {
+    label = ex.pairs.map((p) => p.spanish).join(" / ");
+  }
+  if (!label && Array.isArray(ex?.correct)) {
+    label = ex.correct.join(" ");
+  }
+  if (!label) label = "kysymys";
+  state.sessionItems.push({ label: String(label).trim(), correct: !!isCorrect });
+}
+
 async function reportAdaptiveAnswer(topic, isCorrect) {
   try {
     const res = await apiFetch(`${API}/api/adaptive-answer`, {
@@ -168,6 +181,7 @@ export async function startReviewSession() {
     state.current = 0;
     state.totalCorrect = 0;
     state.totalAnswered = 0;
+    state.sessionItems = [];
     state.batchCorrect = 0;
     state.batchNumber = 1;
     state.bankId = null;
@@ -459,6 +473,7 @@ function renderGapFill(ex) {
     }
 
     state.totalAnswered++;
+    recordItem(ex, isCorrect || isAccentError);
     feedback.classList.remove("hidden");
     $("explanation-block").classList.remove("hidden");
     $("explanation-text").textContent = ex.explanation;
@@ -543,6 +558,7 @@ function renderMatching(ex) {
         state.totalCorrect++;
         state.batchCorrect++;
         state.totalAnswered++;
+        recordItem(ex, true);
         state._lastCorrect = true;
         statusEl.innerHTML = `<span style="color:var(--correct)">✓ Kaikki oikein!</span>`;
         $("explanation-block").classList.remove("hidden");
@@ -631,6 +647,7 @@ function renderReorder(ex) {
       userOrder.every((w, i) => w.toLowerCase() === correctOrder[i].toLowerCase());
 
     state.totalAnswered++;
+    recordItem(ex, isCorrect);
 
     if (isCorrect) {
       state.totalCorrect++;
@@ -703,6 +720,7 @@ function renderTranslateMini(ex) {
       state.totalAnswered++;
       const isCorrect = isTranslationAccepted(data.score);
       const isPartial = isTranslationPartial(data.score);
+      recordItem(ex, isCorrect);
       if (isCorrect) {
         state.totalCorrect++;
         state.batchCorrect++;
@@ -735,6 +753,7 @@ function renderTranslateMini(ex) {
       const normalize = s => s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
       const isClose = ex.acceptedTranslations.some(t => normalize(answer) === normalize(t));
       state.totalAnswered++;
+      recordItem(ex, isClose);
       if (isClose) { state.totalCorrect++; state.batchCorrect++; }
       state._lastCorrect = isClose;
       feedback.innerHTML = `<div class="translate-best">${isClose ? "✓" : "✗"} ${ex.acceptedTranslations[0]}<br>${ex.explanation}</div>`;
@@ -786,6 +805,7 @@ function handleAnswer(chosen, clickedBtn) {
   }
 
   state.totalAnswered++;
+  recordItem(ex, isCorrect);
   state._lastCorrect = isCorrect;
   document.querySelectorAll(".option-btn").forEach((b) => (b.disabled = true));
   $("explanation-text").textContent = ex.explanation;
@@ -979,6 +999,44 @@ function endBatch() {
 
 $("btn-continue").addEventListener("click", () => loadNextBatch());
 
+function dedupe(arr) {
+  const seen = new Set();
+  const out = [];
+  for (const x of arr) {
+    const k = x.toLowerCase();
+    if (!seen.has(k)) { seen.add(k); out.push(x); }
+  }
+  return out;
+}
+
+function renderLearningBlock(items) {
+  const section = $("results-learning");
+  const body = $("results-learning-body");
+  if (!section || !body) return;
+
+  if (!items.length) { section.classList.add("hidden"); return; }
+
+  const rights = dedupe(items.filter((i) => i.correct).map((i) => i.label));
+  const wrongs = dedupe(items.filter((i) => !i.correct).map((i) => i.label));
+
+  const parts = [];
+
+  if (rights.length) {
+    const shown = rights.slice(0, 5);
+    const overflow = rights.length - shown.length;
+    const text = shown.join(", ") + (overflow > 0 ? ` (+ ${overflow} muuta)` : "");
+    parts.push(`<p class="results-learning-line ok"><span style="color:var(--correct)">✓</span> <strong>Vahvistit:</strong> ${text}</p>`);
+  }
+
+  if (wrongs.length) {
+    const bullets = wrongs.map((w) => `<li>${w}</li>`).join("");
+    parts.push(`<p class="results-learning-line bad"><span style="color:var(--wrong)">✗</span> <strong>Harjoittele vielä:</strong></p><ul>${bullets}</ul>`);
+  }
+
+  body.innerHTML = parts.join("");
+  section.classList.remove("hidden");
+}
+
 function showVocabResults() {
   const correct = state.totalCorrect;
   const total = state.totalAnswered;
@@ -998,8 +1056,7 @@ function showVocabResults() {
     }
   }
 
-  const learningEl = $("results-learning");
-  if (learningEl) learningEl.classList.add("hidden");
+  renderLearningBlock(state.sessionItems || []);
 
   try {
     _deps.saveProgress({
@@ -1022,9 +1079,23 @@ function showVocabResults() {
   show("screen-results");
 }
 
-$("btn-restart").addEventListener("click", () =>
-  isLoggedIn() ? _deps.loadDashboard() : show("screen-start")
-);
+$("btn-restart").addEventListener("click", () => {
+  state.batchNumber = 0;
+  state.totalCorrect = 0;
+  state.totalAnswered = 0;
+  state.sessionItems = [];
+  state.startLevel = state.level;
+  state.peakLevel = state.level;
+  state.sessionStartTime = Date.now();
+  loadNextBatch();
+});
+
+const btnBackHome = $("btn-back-home");
+if (btnBackHome) {
+  btnBackHome.addEventListener("click", () =>
+    isLoggedIn() ? _deps.loadDashboard() : show("screen-start"),
+  );
+}
 
 $("btn-share-vocab").addEventListener("click", () => {
   const score = $("results-score").textContent;
