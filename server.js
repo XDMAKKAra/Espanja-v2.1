@@ -79,28 +79,6 @@ app.use(express.static(__dirname));
 // ─── Health check ───────────────────────────────────────────────────────────
 app.get("/health", (req, res) => res.json({ status: "ok", uptime: process.uptime() }));
 
-// ─── TEMP: diagnose TEST_PRO_EMAILS resolution (remove after debugging) ─────
-app.get("/api/debug/pro", async (req, res) => {
-  const { requireAuth, isPro } = await import("./middleware/auth.js");
-  requireAuth(req, res, async () => {
-    const supabase = (await import("./supabase.js")).default;
-    const { data } = await supabase.auth.admin.getUserById(req.user.userId);
-    const email = data?.user?.email || null;
-    const rawEnv = process.env.TEST_PRO_EMAILS || "";
-    const parsed = rawEnv.split(",").map(e => e.trim().toLowerCase()).filter(Boolean);
-    const match = email ? parsed.includes(email.toLowerCase()) : false;
-    const proResult = await isPro(req.user.userId);
-    res.json({
-      email,
-      emailLowercase: email?.toLowerCase() || null,
-      testProEmailsRaw: rawEnv,
-      testProEmailsParsed: parsed,
-      matchInList: match,
-      isProResult: proResult,
-    });
-  });
-});
-
 // ─── Public user count (for landing page social proof) ──────────────────────
 let _userCountCache = { count: 0, ts: 0 };
 app.get("/api/user-count", async (req, res) => {

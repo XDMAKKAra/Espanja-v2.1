@@ -33,48 +33,6 @@ try {
 
   app.get("/api/health", (req, res) => res.json({ status: "ok", env: !!process.env.SUPABASE_URL }));
 
-  // TEMP: diagnose TEST_PRO_EMAILS resolution (remove after debugging)
-  const { requireAuth, isPro } = await import("../middleware/auth.js");
-  const { default: supabaseClient } = await import("../supabase.js");
-  app.get("/api/debug/pro", requireAuth, async (req, res) => {
-    const { data } = await supabaseClient.auth.admin.getUserById(req.user.userId);
-    const email = data?.user?.email || null;
-    const rawEnv = process.env.PRO_TEST_LIST || process.env.TEST_PRO_EMAILS || "";
-    const parsed = rawEnv.split(",").map(e => e.trim().toLowerCase()).filter(Boolean);
-    const match = email ? parsed.includes(email.toLowerCase()) : false;
-    const proResult = await isPro(req.user.userId);
-    // Sanity: are OTHER env vars reaching this function?
-    // Probe v2 — force fresh build
-    const envProbe = {
-      PRO_TEST_LIST_length: (process.env.PRO_TEST_LIST || "").length,
-      PRO_TEST_LIST_value: (process.env.PRO_TEST_LIST || "").slice(0, 100),
-      FREE_TEST_LIST_length: (process.env.FREE_TEST_LIST || "").length,
-      TEST_PRO_EMAILS_length: (process.env.TEST_PRO_EMAILS || "").length,
-      TEST_FREE_EMAILS_length: (process.env.TEST_FREE_EMAILS || "").length,
-      // full count of env keys available to this function
-      totalEnvKeys: Object.keys(process.env).length,
-      SUPABASE_URL_set: !!process.env.SUPABASE_URL,
-      SUPABASE_SERVICE_ROLE_KEY_set: !!process.env.SUPABASE_SERVICE_ROLE_KEY,
-      OPENAI_API_KEY_set: !!process.env.OPENAI_API_KEY,
-      NODE_ENV: process.env.NODE_ENV || null,
-      VERCEL_ENV: process.env.VERCEL_ENV || null,
-      VERCEL_URL: process.env.VERCEL_URL || null,
-      VERCEL_GIT_COMMIT_SHA: (process.env.VERCEL_GIT_COMMIT_SHA || "").slice(0, 7),
-      // List any env keys matching the test-account pattern
-      testKeys: Object.keys(process.env).filter(k => /TEST|PRO_TEST|FREE_TEST/i.test(k)),
-    };
-    res.json({
-      email,
-      emailLowercase: email?.toLowerCase() || null,
-      testProEmailsRaw: rawEnv,
-      testProEmailsRawLength: rawEnv.length,
-      testProEmailsParsed: parsed,
-      matchInList: match,
-      isProResult: proResult,
-      envProbe,
-    });
-  });
-
   app.use("/api/auth", authRoutes);
   app.use("/api", progressRoutes);
   app.use("/api", exerciseRoutes);

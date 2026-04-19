@@ -1,5 +1,7 @@
 import fs from "node:fs";
-const sql = fs.readFileSync("migrations/013_prewarm_bank_b_c.sql", "utf8");
+const file = process.argv[2] || "migrations/013_prewarm_bank_b_c.sql";
+const sql = fs.readFileSync(file, "utf8");
+console.log(`Validating ${file}`);
 const re = /\$json\$([\s\S]*?)\$json\$/g;
 let m, i = 0, ok = 0, fail = 0;
 while ((m = re.exec(sql)) !== null) {

@@ -11,6 +11,7 @@ Every pass follows the two-phase pattern: a Step 1 design prompt (research + DES
 | 0 | Exercise types (in flight) | done | `exercise-types-step2-prompt.md` | ~May 10 |
 | 0.5 | Critical live-site fixes | `00.5-critical-live-fixes.md` (single prompt, bugfix) | — | ~May 12 |
 | 0.6 | Remove manual taso-picker | `00.6-remove-manual-level-picker.md` (single prompt, bugfix) | — | ~May 13 |
+| 0.7 | Fix result screen + YO-arvosana honesty | `00.7-fix-result-screen.md` (single prompt, bugfix + UX) | — | ~May 15 |
 | 1 | Visual design system | `01-design-system-step1.md` | `01-design-system-step2.md` | ~May 19 |
 | 1.5 | Viewport priority correction | `01.5-viewport-correction.md` (single prompt, layout fix) | — | ~May 21 |
 | 2 | Content depth | `02-content-depth.md` (single prompt, content not code) | — | ~Jun 2 |
@@ -26,6 +27,7 @@ Every pass follows the two-phase pattern: a Step 1 design prompt (research + DES
 
 - Pass 0.5: no skill (bugfix discipline)
 - Pass 0.6: no skill (bugfix discipline)
+- Pass 0.7: no skill (bugfix + small UX re-spec)
 - Pass 1: `ui-ux-pro-max`, `design-taste-frontend`, `theme-factory`
 - Pass 2: `claude-education-skills` — Vocabulary Tiering, Retrieval Practice Generator, Cognitive Load Calibrator, Academic Sentence Frames, Assessment Validity Checker, Scaffolded Task Modification
 - Pass 2.5: `claude-education-skills` — Spaced Practice Scheduler, Interleaving Designer, Adaptive Hint Sequence, Rubric Logic Generator, Spacing Algorithm Customizer, Erroneous Example Generator

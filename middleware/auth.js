@@ -1,4 +1,23 @@
 import supabase from "../supabase.js";
+import { readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
+import { dirname, resolve } from "node:path";
+
+// Load the committed test-accounts file. Env vars (TEST_PRO_EMAILS /
+// PRO_TEST_LIST) are still honoured as overrides, but the file is the
+// reliable primary source that doesn't depend on Vercel env injection.
+let TEST_FILE = { always_pro: [], always_free: [] };
+try {
+  const __dirname = dirname(fileURLToPath(import.meta.url));
+  const raw = readFileSync(resolve(__dirname, "../data/test-accounts.json"), "utf8");
+  const parsed = JSON.parse(raw);
+  TEST_FILE = {
+    always_pro: (parsed.always_pro || []).map(e => String(e).trim().toLowerCase()).filter(Boolean),
+    always_free: (parsed.always_free || []).map(e => String(e).trim().toLowerCase()).filter(Boolean),
+  };
+} catch (err) {
+  console.warn("[auth] could not load data/test-accounts.json:", err.message);
+}
 
 /**
  * Express middleware that requires a valid Bearer token.
@@ -26,13 +45,15 @@ function parseEmailList(envValue) {
  * @returns {Promise<boolean>} True if user is Pro
  */
 export async function isPro(userId) {
-  // Accept either TEST_PRO_EMAILS (legacy) or PRO_TEST_LIST (new — avoids the
-  // "EMAIL" substring that Vercel auto-treats as Sensitive and sometimes
-  // fails to expose to serverless runtime).
-  const alwaysPro = parseEmailList(process.env.PRO_TEST_LIST || process.env.TEST_PRO_EMAILS);
-  const alwaysFree = parseEmailList(process.env.FREE_TEST_LIST || process.env.TEST_FREE_EMAILS);
+  // Union of file-based test accounts (data/test-accounts.json) and optional
+  // env overrides (PRO_TEST_LIST / TEST_PRO_EMAILS). File is the reliable
+  // source — env var support is kept only for future ops convenience.
+  const envPro = parseEmailList(process.env.PRO_TEST_LIST || process.env.TEST_PRO_EMAILS);
+  const envFree = parseEmailList(process.env.FREE_TEST_LIST || process.env.TEST_FREE_EMAILS);
+  const alwaysPro = [...new Set([...TEST_FILE.always_pro, ...envPro])];
+  const alwaysFree = [...new Set([...TEST_FILE.always_free, ...envFree])];
 
-  // Check test accounts (loaded from env, fresh on every call)
+  // Check test accounts
   if (alwaysPro.length || alwaysFree.length) {
     const { data: { user } } = await supabase.auth.admin.getUserById(userId);
     if (user?.email) {
