@@ -88,6 +88,13 @@
     }
     .nav-logo span { color: var(--brand-light); }
 
+    .nav-right { display: flex; align-items: center; gap: 18px; }
+    .nav-login {
+      color: var(--text-muted); text-decoration: none;
+      font-size: 13px; font-weight: 600; transition: color 0.15s;
+    }
+    .nav-login:hover { color: var(--text); }
+
     .nav-cta {
       padding: 9px 20px; background: var(--brand); border-radius: 8px;
       color: #fff; text-decoration: none; font-size: 13px; font-weight: 700;
@@ -570,7 +577,10 @@
   <!-- NAV -->
   <nav class="nav">
     <a href="/" class="nav-logo">Puhe<span>o</span></a>
-    <a href="app.html" class="nav-cta">Kirjaudu</a>
+    <div class="nav-right">
+      <a href="app.html?mode=login" class="nav-login">Kirjaudu sisään</a>
+      <a href="app.html" class="nav-cta">Aloita ilmaiseksi</a>
+    </div>
   </nav>
 
   <!-- SCREEN: INTRO -->
