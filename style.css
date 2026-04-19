@@ -1351,7 +1351,9 @@ select option { background: var(--surface2); }
 
 /* ── WRITING TASK SCREEN ── */
 .writing-inner {
-  max-width: 600px; width: 100%; max-height: calc(100vh - 48px);
+  /* Gate D: 600px → --w-desktop. Rubric side-panel (SCREENS §5) deferred;
+     wider textarea area still helps long YO-koe essays on desktop. */
+  max-width: var(--w-desktop); width: 100%; max-height: calc(100vh - 48px);
   overflow-y: auto; animation: fadeUp 0.35s ease both; padding-bottom: 24px;
 }
 .writing-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }

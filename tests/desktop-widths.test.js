@@ -64,4 +64,7 @@ describe("desktop content widths — Pass 0.5 Bug 3 acceptance", () => {
   it(".exercise-inner uses --w-desktop", () => {
     expect(cap(".exercise-inner")).toMatch(/var\(--w-desktop\)/);
   });
+  it(".writing-inner uses --w-desktop", () => {
+    expect(cap(".writing-inner")).toMatch(/var\(--w-desktop\)/);
+  });
 });
