@@ -3,6 +3,7 @@ import { API, isLoggedIn } from "../api.js";
 import { state, LEVELS, BATCH_SIZE, MAX_BATCHES } from "../state.js";
 import { showLoading, showLoadingError, showSkeleton, showFetchError } from "../ui/loading.js";
 import { srPop, srAddWrong, srMarkCorrect, srReview, srGetDue } from "../features/spacedRepetition.js";
+import { isTranslationAccepted, isTranslationPartial, translationBand, TRANSLATION_BAND_LABELS } from "../features/answerGrading.js";
 import { authHeader, apiFetch } from "../api.js";
 import { trackExerciseStarted, trackExerciseCompleted, trackError } from "../analytics.js";
 
@@ -656,18 +657,26 @@ function renderTranslateMini(ex) {
       const data = await res.json();
 
       state.totalAnswered++;
-      const isCorrect = data.score >= 2;
+      const isCorrect = isTranslationAccepted(data.score);
+      const isPartial = isTranslationPartial(data.score);
       if (isCorrect) {
         state.totalCorrect++;
         state.batchCorrect++;
-      } else if (isLoggedIn()) {
-        logMistake(ex, answer);
+      } else {
+        // Commit 14: score 1 still earns XP (partial credit) — logs mistake
+        // and grants half a correct toward the batch tally but does NOT
+        // increment the streak (streak is counted via state.totalCorrect).
+        if (isPartial) state._partialCredits = (state._partialCredits || 0) + 1;
+        if (isLoggedIn()) logMistake(ex, answer);
       }
       state._lastCorrect = isCorrect;
 
+      const band = translationBand(data.score);
+      const bandLabel = TRANSLATION_BAND_LABELS[band];
       const scoreClass = data.score >= 3 ? "good" : data.score >= 2 ? "ok" : "bad";
       feedback.innerHTML = `
         <div class="translate-score ${scoreClass}">${data.score} / ${data.maxScore}</div>
+        <div class="translate-band translate-band-${band}" data-testid="translate-band">${bandLabel}</div>
         <div class="translate-best">
           <strong>Paras käännös:</strong> ${data.bestTranslation}<br>
           ${data.feedback || ""}<br>

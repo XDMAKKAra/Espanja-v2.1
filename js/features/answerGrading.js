@@ -99,6 +99,34 @@ export function isTranslationAccepted(score) {
 }
 
 /**
+ * Partial-credit band (Commit 14). Score 1/3 ("partly understandable") earns
+ * XP but does NOT increment the streak — it nudges toward mastery without
+ * rewarding almost-wrong answers as if they were right.
+ */
+export function isTranslationPartial(score) {
+  return Number.isFinite(score) && score === 1;
+}
+
+/**
+ * Name the 3-band visual label for any 0-3 translate-mini score.
+ * Matches the writing rubric's three bars conceptually so the UI can reuse
+ * the same labels for both surfaces.
+ */
+export function translationBand(score) {
+  if (!Number.isFinite(score)) return "vastaus-puuttuu";
+  if (score >= 3) return "täydellinen";
+  if (score >= 2) return "ymmärrettävä";
+  return "vielä-harjoittelua";
+}
+
+export const TRANSLATION_BAND_LABELS = {
+  "täydellinen":        "Täydellinen",
+  "ymmärrettävä":       "Ymmärrettävä",
+  "vielä-harjoittelua": "Vielä harjoittelua",
+  "vastaus-puuttuu":    "Ei vastausta",
+};
+
+/**
  * Reading short-answer — mirrors routes/exam.js:131-136.
  * Accepted if userAnswer.includes(accepted) OR accepted.includes(userAnswer) for any accepted entry.
  * Case-insensitive, accent-preserving (matches current server behavior).
