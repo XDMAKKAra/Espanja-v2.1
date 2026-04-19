@@ -476,18 +476,30 @@
         <button class="sr-top-btn" id="sr-top-btn">Kertaa nyt &rarr;</button>
       </div>
 
-      <!-- Hero grade card -->
-      <div class="dash-hero-grade" id="dash-hero-grade">
+      <!-- Hero grade card (gated by data coverage) -->
+      <button type="button" class="dash-hero-grade dash-hero-grade--tier-none" id="dash-hero-grade">
         <div class="dash-hero-left">
           <div class="dash-hero-grade-circle" id="dash-grade-circle">—</div>
         </div>
         <div class="dash-hero-right">
-          <div class="dash-hero-label">Arvioitu yo-arvosana</div>
-          <div class="dash-hero-scale" id="dash-hero-scale">
+          <div class="dash-hero-label" id="dash-hero-label">Arvioitu yo-arvosana</div>
+          <div class="dash-hero-scale hidden" id="dash-hero-scale">
             <span data-g="I">I</span><span data-g="A">A</span><span data-g="B">B</span>
             <span data-g="C">C</span><span data-g="M">M</span><span data-g="E">E</span><span data-g="L">L</span>
           </div>
+          <div class="dash-hero-confidence hidden" id="dash-hero-confidence" aria-hidden="true"></div>
           <div class="dash-hero-sub" id="dash-hero-sub">Tee harjoituksia saadaksesi arvion</div>
+          <div class="dash-hero-caption hidden" id="dash-hero-caption"></div>
+        </div>
+      </button>
+
+      <!-- Grade explainer modal -->
+      <div class="grade-explainer-backdrop hidden" id="grade-explainer-backdrop">
+        <div class="grade-explainer" role="dialog" aria-modal="true" aria-labelledby="grade-explainer-title">
+          <button type="button" class="grade-explainer-close" id="grade-explainer-close" aria-label="Sulje">&times;</button>
+          <h3 class="grade-explainer-title" id="grade-explainer-title">Miten arvio lasketaan?</h3>
+          <div class="grade-explainer-body" id="grade-explainer-body"></div>
+          <p class="grade-explainer-caveat">Tämä on arvio nykyisen harjoitteludatan perusteella, ei virallinen YTL-arvio.</p>
         </div>
       </div>
 

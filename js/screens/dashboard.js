@@ -37,6 +37,7 @@ export async function loadDashboard() {
 
 function renderDashboard({
   totalSessions, modeStats, recent, chartData = [], estLevel = null,
+  gradeEstimate = null,
   streak = 0, weekSessions = 0, prevWeekSessions = 0,
   suggestedLevel = "B", modeDaysAgo = {}, pro = false,
   aiUsage = null,
@@ -90,30 +91,7 @@ function renderDashboard({
     }
   }
 
-  const gradeCircle = $("dash-grade-circle");
-  if (gradeCircle) {
-    gradeCircle.textContent = estLevel || "—";
-  }
-  const heroScale = $("dash-hero-scale");
-  if (heroScale) {
-    const GRADE_ORDER = ["I","A","B","C","M","E","L"];
-    const estIdx = GRADE_ORDER.indexOf(estLevel);
-    heroScale.querySelectorAll("span").forEach((s) => {
-      const gIdx = GRADE_ORDER.indexOf(s.dataset.g);
-      s.classList.remove("scale-active", "scale-passed");
-      if (gIdx === estIdx) s.classList.add("scale-active");
-      else if (estIdx >= 0 && gIdx < estIdx) s.classList.add("scale-passed");
-    });
-  }
-  const heroSub = $("dash-hero-sub");
-  if (heroSub) {
-    if (!estLevel) {
-      heroSub.textContent = "Tee harjoituksia saadaksesi arvion";
-    } else {
-      const GRADE_NAMES = { I: "Improbatur", A: "Approbatur", B: "Lubenter", C: "Cum laude", M: "Magna", E: "Eximia", L: "Laudatur" };
-      heroSub.textContent = GRADE_NAMES[estLevel] || "";
-    }
-  }
+  renderGradeWidget(gradeEstimate || { tier: "none", grade: null, confidence: 0, coverage: {}, total: totalSessions || 0 });
 
   // ── Adaptive level progress bar ──
   loadAdaptiveState().catch(() => {});
@@ -657,6 +635,115 @@ export async function saveProgress({ mode, level, scoreCorrect, scoreTotal, ytlG
     });
   } catch { /* silently skip — never disrupt UX */ }
 }
+
+const GRADE_NAMES = { I: "Improbatur", A: "Approbatur", B: "Lubenter", C: "Cum laude", M: "Magna", E: "Eximia", L: "Laudatur" };
+const SECTION_LABELS = { vocab: "Sanasto", grammar: "Kielioppi", reading: "Luetun ymmärtäminen", writing: "Kirjoittaminen" };
+const GRADE_ORDER_LOCAL = ["I","A","B","C","M","E","L"];
+
+function renderGradeWidget(estimate) {
+  const { tier, grade, confidence = 0, coverage = {}, total = 0 } = estimate;
+
+  const card = $("dash-hero-grade");
+  const circle = $("dash-grade-circle");
+  const label = $("dash-hero-label");
+  const scale = $("dash-hero-scale");
+  const conf = $("dash-hero-confidence");
+  const sub = $("dash-hero-sub");
+  const caption = $("dash-hero-caption");
+  if (!card) return;
+
+  card.className = `dash-hero-grade dash-hero-grade--tier-${tier}`;
+  card.onclick = () => openGradeExplainer(estimate);
+
+  // Reset
+  circle.textContent = "—";
+  scale.classList.add("hidden");
+  conf.classList.add("hidden");
+  caption.classList.add("hidden");
+
+  if (tier === "none") {
+    label.textContent = "Arvioitu yo-taso";
+    sub.textContent = "Tee vähintään 10 harjoitusta 3 eri osa-alueesta, jotta voimme arvioida YO-tasoasi.";
+    return;
+  }
+
+  // Common: show grade letter (sized via CSS per tier) + name
+  circle.textContent = grade || "—";
+  sub.textContent = grade ? (GRADE_NAMES[grade] || "") : "";
+
+  if (tier === "preliminary") {
+    label.textContent = "Alustava taso";
+    return;
+  }
+
+  // estimated / full — show scale + confidence
+  label.textContent = tier === "full" ? "Arvioitu yo-arvosana" : "Arvioitu yo-taso";
+  scale.classList.remove("hidden");
+  const gIdx = GRADE_ORDER_LOCAL.indexOf(grade);
+  scale.querySelectorAll("span").forEach((s) => {
+    const idx = GRADE_ORDER_LOCAL.indexOf(s.dataset.g);
+    s.classList.remove("scale-active", "scale-passed");
+    if (idx === gIdx) s.classList.add("scale-active");
+    else if (gIdx >= 0 && idx < gIdx) s.classList.add("scale-passed");
+  });
+
+  const filled = Math.max(0, Math.min(5, confidence));
+  conf.textContent = `${"■".repeat(filled)}${"□".repeat(5 - filled)} ${filled}/5`;
+  conf.classList.remove("hidden");
+
+  if (tier === "full") {
+    const today = new Date().toLocaleDateString("fi-FI");
+    caption.textContent = `päivitetty ${today}`;
+    caption.classList.remove("hidden");
+  }
+}
+
+function openGradeExplainer(estimate) {
+  const { tier, coverage = {}, total = 0, confidence = 0, grade } = estimate;
+  const body = $("grade-explainer-body");
+  const backdrop = $("grade-explainer-backdrop");
+  if (!body || !backdrop) return;
+
+  const rows = ["vocab", "grammar", "reading", "writing"].map((s) => {
+    const n = coverage[s] ?? 0;
+    const enough = n >= 10 ? "✓" : "○";
+    return `<li><span class="grade-explainer-section">${enough} ${SECTION_LABELS[s]}</span><span class="grade-explainer-count">${n} harjoitusta</span></li>`;
+  }).join("");
+
+  const filled = Math.max(0, Math.min(5, confidence));
+  const confBar = `${"■".repeat(filled)}${"□".repeat(5 - filled)}`;
+
+  const tierCopy = {
+    none: `Tarvitset vähintään 10 harjoitusta ennen alustavaa arviota. Tehty tähän mennessä: <strong>${total}</strong>.`,
+    preliminary: `Alustava arvio <strong>${grade || "—"}</strong> perustuu pieneen määrään harjoituksia (<strong>${total}</strong>). Arvio tarkentuu kun teet lisää.`,
+    estimated: `Arvio <strong>${grade || "—"}</strong> perustuu <strong>${total}</strong> harjoitukseen. Varmuustaso ${confBar} ${filled}/5.`,
+    full: `Arvio <strong>${grade || "—"}</strong> perustuu <strong>${total}</strong> harjoitukseen kattavasti kaikilta neljältä osa-alueelta. Varmuustaso ${confBar} ${filled}/5.`,
+  };
+
+  body.innerHTML = `
+    <p class="grade-explainer-summary">${tierCopy[tier]}</p>
+    <p class="grade-explainer-subhead">Kattavuus osa-alueittain</p>
+    <ul class="grade-explainer-sections">${rows}</ul>
+  `;
+  backdrop.classList.remove("hidden");
+}
+
+function closeGradeExplainer() {
+  const backdrop = $("grade-explainer-backdrop");
+  if (backdrop) backdrop.classList.add("hidden");
+}
+
+(function wireGradeExplainer() {
+  const closeBtn = typeof document !== "undefined" ? document.getElementById("grade-explainer-close") : null;
+  const backdrop = typeof document !== "undefined" ? document.getElementById("grade-explainer-backdrop") : null;
+  if (closeBtn) closeBtn.addEventListener("click", closeGradeExplainer);
+  if (backdrop) backdrop.addEventListener("click", (e) => { if (e.target === backdrop) closeGradeExplainer(); });
+  if (typeof document !== "undefined") {
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeGradeExplainer();
+    });
+  }
+})();
 
 async function updateSrBadge() {
   // Top bar

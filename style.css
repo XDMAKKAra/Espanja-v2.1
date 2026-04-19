@@ -1964,6 +1964,133 @@ select option { background: var(--surface2); }
   color: var(--text-muted);
 }
 
+/* ── GRADE WIDGET TIERS ── */
+button.dash-hero-grade {
+  width: 100%;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+button.dash-hero-grade:hover { border-color: var(--gold); }
+
+.dash-hero-grade--tier-none .dash-hero-grade-circle,
+.dash-hero-grade--tier-preliminary .dash-hero-grade-circle {
+  background: var(--surface2);
+  border-color: var(--border);
+  color: var(--text-muted);
+  box-shadow: none;
+  font-size: 22px;
+}
+.dash-hero-grade--tier-none::before,
+.dash-hero-grade--tier-preliminary::before {
+  background: var(--border);
+}
+.dash-hero-grade--tier-none .dash-hero-sub,
+.dash-hero-grade--tier-preliminary .dash-hero-sub {
+  font-size: 12px;
+  line-height: 1.5;
+  white-space: normal;
+}
+
+.dash-hero-grade--tier-estimated .dash-hero-grade-circle {
+  font-size: 28px;
+  opacity: 0.9;
+}
+
+.dash-hero-confidence {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--gold);
+  letter-spacing: 0.08em;
+  margin-bottom: 6px;
+}
+.dash-hero-caption {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-muted);
+  opacity: 0.7;
+  margin-top: 4px;
+}
+
+/* ── GRADE EXPLAINER MODAL ── */
+.grade-explainer-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 16px;
+}
+.grade-explainer {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  max-width: 440px;
+  width: 100%;
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
+}
+.grade-explainer-close {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 24px;
+  cursor: pointer;
+  line-height: 1;
+}
+.grade-explainer-close:hover { color: var(--text); }
+.grade-explainer-title {
+  font-size: 18px;
+  margin: 0 0 12px;
+  color: var(--text);
+}
+.grade-explainer-summary {
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+.grade-explainer-subhead {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin: 12px 0 8px;
+}
+.grade-explainer-sections {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 16px;
+}
+.grade-explainer-sections li {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+}
+.grade-explainer-sections li:last-child { border-bottom: none; }
+.grade-explainer-section { color: var(--text); }
+.grade-explainer-count { color: var(--text-muted); font-family: var(--font-mono); font-size: 12px; }
+.grade-explainer-caveat {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.5;
+  font-style: italic;
+  border-top: 1px solid var(--border);
+  padding-top: 12px;
+  margin: 0;
+}
+
 /* ── DASHBOARD STATS ROW ── */
 .dash-stats-row {
   display: grid;
