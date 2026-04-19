@@ -918,75 +918,47 @@ function endBatch() {
 
 $("btn-continue").addEventListener("click", () => loadNextBatch());
 
-async function showVocabResults() {
-  showLoading("Lasketaan arvosanaa...");
+function showVocabResults() {
+  const correct = state.totalCorrect;
+  const total = state.totalAnswered;
 
-  try {
-    const res = await fetch(`${API}/api/grade`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        correct: state.totalCorrect,
-        total: state.totalAnswered,
-        level: state.peakLevel,
-      }),
-    });
-    const data = await res.json();
+  $("results-score").textContent = `${correct} / ${total} oikein`;
 
-    $("grade-display").textContent = data.grade;
-    $("score-text").textContent = `${data.correct} / ${data.total} oikein · ${data.pct}%`;
-
+  const timerEl = $("results-timer");
+  if (timerEl) {
     if (state.sessionStartTime) {
       const elapsed = Math.round((Date.now() - state.sessionStartTime) / 1000);
       const mins = Math.floor(elapsed / 60);
       const secs = elapsed % 60;
-      const timerEl = $("results-timer");
-      if (timerEl) {
-        timerEl.textContent = mins > 0 ? `⏱ ${mins} min ${secs} s` : `⏱ ${secs} s`;
-        timerEl.classList.remove("hidden");
-      }
+      timerEl.textContent = mins > 0 ? `${mins} min ${secs} s` : `${secs} s`;
+      timerEl.classList.remove("hidden");
+    } else {
+      timerEl.classList.add("hidden");
     }
+  }
 
-    const journey =
-      state.startLevel === state.peakLevel
-        ? `Taso: ${state.startLevel}`
-        : `${state.startLevel} → ${state.peakLevel}`;
-    $("journey-text").textContent = journey;
+  const learningEl = $("results-learning");
+  if (learningEl) learningEl.classList.add("hidden");
 
-    const bannerEl = $("improvement-banner");
-    if (bannerEl) {
-      try {
-        const prevGrade = localStorage.getItem("puheo_last_vocab_grade");
-        const GRADE_ORDER_LOCAL = { I: 0, A: 1, B: 2, C: 3, M: 4, E: 5, L: 6 };
-        if (prevGrade && (GRADE_ORDER_LOCAL[data.grade] ?? -1) > (GRADE_ORDER_LOCAL[prevGrade] ?? -1)) {
-          bannerEl.textContent = `🎉 Parempi kuin viime kerralla! ${prevGrade} → ${data.grade}`;
-          bannerEl.classList.remove("hidden");
-        } else {
-          bannerEl.classList.add("hidden");
-        }
-      } catch { bannerEl.classList.add("hidden"); }
-      localStorage.setItem("puheo_last_vocab_grade", data.grade);
-    }
-
-    document.querySelectorAll(".grade-scale span").forEach((s) => {
-      s.classList.remove("highlight-grade");
-      if (s.textContent === data.grade) s.classList.add("highlight-grade");
-    });
-
+  try {
     _deps.saveProgress({
       mode: "vocab",
       level: state.peakLevel,
-      scoreCorrect: state.totalCorrect,
-      scoreTotal: state.totalAnswered,
-      ytlGrade: data.grade,
+      scoreCorrect: correct,
+      scoreTotal: total,
     });
-
-    trackExerciseCompleted("vocab", state.peakLevel, state.totalCorrect, state.totalAnswered, state.sessionStartTime ? Date.now() - state.sessionStartTime : 0);
-    show("screen-results");
   } catch (err) {
-    trackError("vocab_results", err.message);
-    showLoadingError("Virhe arvosanan laskemisessa: " + err.message, () => showVocabResults());
+    trackError("vocab_results_save", err.message);
   }
+
+  trackExerciseCompleted(
+    "vocab",
+    state.peakLevel,
+    correct,
+    total,
+    state.sessionStartTime ? Date.now() - state.sessionStartTime : 0
+  );
+  show("screen-results");
 }
 
 $("btn-restart").addEventListener("click", () =>
@@ -994,7 +966,6 @@ $("btn-restart").addEventListener("click", () =>
 );
 
 $("btn-share-vocab").addEventListener("click", () => {
-  const grade = $("grade-display").textContent;
-  const score = $("score-text").textContent;
-  _deps.shareResult(`Harjoittelin espanjan yo-koetta Puheossa 📚\nArvosana: ${grade} · ${score}\nhttps://puheo.fi`);
+  const score = $("results-score").textContent;
+  _deps.shareResult(`Harjoittelin espanjan yo-koetta Puheossa 📚\nTulos: ${score}\nhttps://puheo.fi`);
 });
