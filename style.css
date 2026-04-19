@@ -830,7 +830,17 @@ select option { background: var(--surface2); }
   border: 1.5px solid var(--border); border-radius: 10px;
   font-size: 14px; cursor: pointer; transition: all 0.15s;
   text-align: center; user-select: none;
+  min-height: 48px;
+  width: 100%;
+  color: var(--text);
+  font-family: var(--font-display);
+  font-weight: 600;
 }
+.matching-item:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+.matching-item:disabled { cursor: default; }
 .matching-item:hover:not(.matched):not(.selected) { border-color: var(--accent); }
 .matching-item.selected { border-color: var(--gold); background: rgba(245,158,11,0.1); }
 .matching-item.matched {

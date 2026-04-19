@@ -448,20 +448,27 @@ function renderMatching(ex) {
   let selectedLeft = null;
   let matchedCount = 0;
 
+  // Commit 12: buttons instead of divs so tab-nav + Enter/Space works for
+  // keyboard-only users. Click-to-pair flow is preserved; drag stays as a
+  // progressive enhancement on top.
   pairs.forEach((pair, i) => {
-    const item = document.createElement("div");
+    const item = document.createElement("button");
+    item.type = "button";
     item.className = "matching-item";
     item.textContent = pair.spanish;
     item.dataset.idx = i;
+    item.setAttribute("aria-label", `Espanja: ${pair.spanish}`);
     item.addEventListener("click", () => selectLeft(item, i));
     leftCol.appendChild(item);
   });
 
-  shuffledRight.forEach((pair, i) => {
-    const item = document.createElement("div");
+  shuffledRight.forEach((pair) => {
+    const item = document.createElement("button");
+    item.type = "button";
     item.className = "matching-item";
     item.textContent = pair.finnish;
     item.dataset.spanish = pair.spanish;
+    item.setAttribute("aria-label", `Suomi: ${pair.finnish}`);
     item.addEventListener("click", () => selectRight(item, pair.spanish));
     rightCol.appendChild(item);
   });
