@@ -447,11 +447,18 @@ async function saveAndFinish() {
       onboarding_completed: true,
     };
 
-    await apiFetch(`${API}/api/profile`, {
+    const res = await apiFetch(`${API}/api/profile`, {
       method: "POST",
       headers: { "Content-Type": "application/json", ...authHeader() },
       body: JSON.stringify(body),
     });
+    if (!res.ok) {
+      let detail = "";
+      try { detail = (await res.json()).error || ""; } catch { /* non-json */ }
+      const err = new Error(`profile_save_failed ${res.status} ${detail}`);
+      err.status = res.status;
+      throw err;
+    }
 
     track("onboarding_completed", {
       exam_date: examDate,
@@ -466,8 +473,13 @@ async function saveAndFinish() {
     });
 
     window._userProfile = body;
-  } catch {
-    // Silent fail — still let them through
+  } catch (err) {
+    console.error("Onboarding save failed:", err);
+    track("onboarding_save_failed", { message: String(err && err.message || err), status: err && err.status || null });
+    alert("Tallennus epäonnistui, yritä uudelleen.");
+    btn.disabled = false;
+    btn.textContent = "Aloita harjoittelu →";
+    return;
   }
 
   btn.disabled = false;
@@ -486,12 +498,20 @@ async function skipOnboarding() {
   track("onboarding_skipped", { step: currentStep });
   // Save partial data with onboarding_completed = false
   try {
-    await apiFetch(`${API}/api/profile`, {
+    const res = await apiFetch(`${API}/api/profile`, {
       method: "POST",
       headers: { "Content-Type": "application/json", ...authHeader() },
       body: JSON.stringify({ onboarding_completed: false }),
     });
-  } catch { /* silent */ }
+    if (!res.ok) {
+      let detail = "";
+      try { detail = (await res.json()).error || ""; } catch { /* non-json */ }
+      throw new Error(`profile_save_failed ${res.status} ${detail}`);
+    }
+  } catch (err) {
+    console.error("Onboarding skip save failed:", err);
+    track("onboarding_skip_save_failed", { message: String(err && err.message || err) });
+  }
 
   await _deps.loadDashboard();
 }

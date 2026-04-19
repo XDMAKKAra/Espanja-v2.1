@@ -144,13 +144,24 @@ router.post("/profile", requireAuth, async (req, res) => {
       .single();
 
     if (error) {
-      console.error("Profile save error:", error.message);
+      console.error("Profile save error:", {
+        user_id: req.user.userId,
+        code: error.code || null,
+        message: error.message,
+        details: error.details || null,
+        hint: error.hint || null,
+        attempted_fields: Object.keys(profileData),
+      });
       return res.status(500).json({ error: "Profiilin tallennus epäonnistui" });
     }
 
     return res.json({ ok: true, profile: data });
   } catch (err) {
-    console.error("Profile error:", err.message);
+    console.error("Profile error:", {
+      user_id: req.user && req.user.userId || null,
+      message: err.message,
+      stack: err.stack,
+    });
     return res.status(500).json({ error: "Palvelinvirhe" });
   }
 });
