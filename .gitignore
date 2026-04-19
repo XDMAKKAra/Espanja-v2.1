@@ -8,3 +8,19 @@ node_modules/
 *.log
 .vercel
 .agents/
+
+# Local Claude / Continue / scratch setup — do not commit
+.claude/
+.continue/
+skills/
+skills-lock.json
+spanish/
+graphify-out/
+scripts/screenshot_recon.py
+
+# Audit / pass artefacts (local only — see training/, ui-ux/, audit/ in work dir)
+audit/
+ui-ux/
+design-system/
+training/
+*-prompt.md
