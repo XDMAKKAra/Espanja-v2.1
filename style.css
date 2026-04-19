@@ -530,7 +530,10 @@ select option { background: var(--surface2); }
 
 /* ── EXERCISE ── */
 .exercise-inner {
-  max-width: 680px;
+  /* Gate D: 680px → --w-desktop. Shared by vocab + grammar + adaptive
+     exercise shells. Gate C.5 side-panel pattern was skipped; the wider
+     single column is the minimum that satisfies ≥960 on desktop. */
+  max-width: var(--w-desktop);
   width: 100%;
   animation: fadeUp 0.35s ease both;
 }
