@@ -12,7 +12,8 @@ Every pass follows the two-phase pattern: a Step 1 design prompt (research + DES
 | 0.5 | Critical live-site fixes | `00.5-critical-live-fixes.md` (single prompt, bugfix) | — | ~May 12 |
 | 0.6 | Remove manual taso-picker | `00.6-remove-manual-level-picker.md` (single prompt, bugfix) | — | ~May 13 |
 | 1 | Visual design system | `01-design-system-step1.md` | `01-design-system-step2.md` | ~May 19 |
-| 2 | Content depth | `02-content-depth.md` (single prompt, content not code) | — | ~May 31 |
+| 1.5 | Viewport priority correction | `01.5-viewport-correction.md` (single prompt, layout fix) | — | ~May 21 |
+| 2 | Content depth | `02-content-depth.md` (single prompt, content not code) | — | ~Jun 2 |
 | 2.5 | Pedagogy hardening | `02.5-pedagogy-step1.md` | `02.5-pedagogy-step2.md` | ~Jun 7 |
 | 3 | Landing + conversion | `03-landing-step1.md` | `03-landing-step2.md` | ~Jun 14 |
 | 4 | Onboarding + paywall | `04-onboarding-step1.md` | `04-onboarding-step2.md` | ~Jun 21 |
