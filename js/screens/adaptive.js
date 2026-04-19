@@ -135,7 +135,7 @@ async function startMasteryTest(mode) {
   showLoading("Luodaan tasokoe...");
 
   try {
-    const res = await apiFetch(`${API}/api/mastery-test/start`, {
+    const res = await apiFetch(`${API}/api/adaptive/mastery-test/start`, {
       method: "POST",
       headers: { "Content-Type": "application/json", ...authHeader() },
       body: JSON.stringify({ mode }),
@@ -229,7 +229,7 @@ async function submitMasteryTest() {
   showLoading("Arvioidaan tuloksia...");
 
   try {
-    const res = await apiFetch(`${API}/api/mastery-test/submit`, {
+    const res = await apiFetch(`${API}/api/adaptive/mastery-test/submit`, {
       method: "POST",
       headers: { "Content-Type": "application/json", ...authHeader() },
       body: JSON.stringify({

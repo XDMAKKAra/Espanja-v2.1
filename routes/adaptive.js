@@ -121,10 +121,12 @@ router.get("/adaptive/status", requireAuth, async (req, res) => {
 });
 
 // ═══════════════════════════════════════════════════════════════════════════
-// POST /api/mastery-test/start { mode }
+// POST /api/adaptive/mastery-test/start { mode }
+// (Renamed from /mastery-test/start to avoid collision with
+//  routes/exercises.js's learning-path mastery-test endpoint.)
 // ═══════════════════════════════════════════════════════════════════════════
 
-router.post("/mastery-test/start", requireAuth, aiLimiter, async (req, res) => {
+router.post("/adaptive/mastery-test/start", requireAuth, aiLimiter, async (req, res) => {
   const { mode } = req.body;
   if (!mode || !VALID_MODES.has(mode)) {
     return res.status(400).json({ error: "Virheellinen mode" });
@@ -240,10 +242,10 @@ Return ONLY a JSON array (no markdown):
 });
 
 // ═══════════════════════════════════════════════════════════════════════════
-// POST /api/mastery-test/submit { attemptId, answers }
+// POST /api/adaptive/mastery-test/submit { attemptId, answers }
 // ═══════════════════════════════════════════════════════════════════════════
 
-router.post("/mastery-test/submit", requireAuth, async (req, res) => {
+router.post("/adaptive/mastery-test/submit", requireAuth, async (req, res) => {
   const { attemptId, answers } = req.body;
 
   if (!attemptId || !Array.isArray(answers)) {
