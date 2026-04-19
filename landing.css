@@ -205,6 +205,20 @@ body::after {
   outline-offset: 2px;
 }
 
+/* Shared footer-link utility — replaces inline style="color:var(--text-muted)"
+   repeated across pricing/privacy/terms/refund. */
+.footer-link {
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color var(--dur-base) var(--ease-out);
+}
+.footer-link:hover { color: var(--text); }
+.footer-link:focus-visible {
+  outline: 2px solid var(--brand-light);
+  outline-offset: 2px;
+  border-radius: var(--r-sm);
+}
+
 /* ── URGENCY BAR ── */
 .urgency-bar {
   position: fixed;
