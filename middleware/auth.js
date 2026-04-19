@@ -26,8 +26,11 @@ function parseEmailList(envValue) {
  * @returns {Promise<boolean>} True if user is Pro
  */
 export async function isPro(userId) {
-  const alwaysPro = parseEmailList(process.env.TEST_PRO_EMAILS);
-  const alwaysFree = parseEmailList(process.env.TEST_FREE_EMAILS);
+  // Accept either TEST_PRO_EMAILS (legacy) or PRO_TEST_LIST (new — avoids the
+  // "EMAIL" substring that Vercel auto-treats as Sensitive and sometimes
+  // fails to expose to serverless runtime).
+  const alwaysPro = parseEmailList(process.env.PRO_TEST_LIST || process.env.TEST_PRO_EMAILS);
+  const alwaysFree = parseEmailList(process.env.FREE_TEST_LIST || process.env.TEST_FREE_EMAILS);
 
   // Check test accounts (loaded from env, fresh on every call)
   if (alwaysPro.length || alwaysFree.length) {

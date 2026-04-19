@@ -39,12 +39,14 @@ try {
   app.get("/api/debug/pro", requireAuth, async (req, res) => {
     const { data } = await supabaseClient.auth.admin.getUserById(req.user.userId);
     const email = data?.user?.email || null;
-    const rawEnv = process.env.TEST_PRO_EMAILS || "";
+    const rawEnv = process.env.PRO_TEST_LIST || process.env.TEST_PRO_EMAILS || "";
     const parsed = rawEnv.split(",").map(e => e.trim().toLowerCase()).filter(Boolean);
     const match = email ? parsed.includes(email.toLowerCase()) : false;
     const proResult = await isPro(req.user.userId);
     // Sanity: are OTHER env vars reaching this function?
     const envProbe = {
+      PRO_TEST_LIST_length: (process.env.PRO_TEST_LIST || "").length,
+      FREE_TEST_LIST_length: (process.env.FREE_TEST_LIST || "").length,
       TEST_PRO_EMAILS_length: (process.env.TEST_PRO_EMAILS || "").length,
       TEST_FREE_EMAILS_length: (process.env.TEST_FREE_EMAILS || "").length,
       SUPABASE_URL_set: !!process.env.SUPABASE_URL,
@@ -54,8 +56,8 @@ try {
       VERCEL_ENV: process.env.VERCEL_ENV || null,
       VERCEL_URL: process.env.VERCEL_URL || null,
       VERCEL_GIT_COMMIT_SHA: (process.env.VERCEL_GIT_COMMIT_SHA || "").slice(0, 7),
-      // List any env keys starting with TEST_ (case-insensitive)
-      testKeys: Object.keys(process.env).filter(k => /^TEST/i.test(k)),
+      // List any env keys matching the test-account pattern
+      testKeys: Object.keys(process.env).filter(k => /TEST|PRO_TEST|FREE_TEST/i.test(k)),
     };
     res.json({
       email,
