@@ -962,10 +962,10 @@ select option { background: var(--surface2); }
 }
 .sr-grade-btn {
   flex: 1;
-  padding: 12px 4px;
-  min-height: 44px;
+  padding: 12px 8px;
+  min-height: 48px;
   border-radius: 6px;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
   font-family: var(--font-display);
   cursor: pointer;
@@ -973,6 +973,20 @@ select option { background: var(--surface2); }
   border: 1px solid var(--border);
   background: none;
   color: var(--text-muted);
+}
+
+/* Commit 11a: stack SR grade buttons vertically on narrow viewports so
+   labels ("Helppo" etc.) never truncate and each button keeps a comfortable
+   48 px tap target. */
+@media (max-width: 530px) {
+  .sr-grade-buttons {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .sr-grade-btn {
+    width: 100%;
+    min-height: 48px;
+  }
 }
 .sr-grade-btn:hover { border-color: var(--text); color: var(--text); }
 .sr-grade-btn.active { border-width: 2px; }
