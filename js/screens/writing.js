@@ -191,7 +191,7 @@ $("btn-submit-writing").addEventListener("click", async () => {
   try {
     const res = await fetch(`${API}/api/grade-writing`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", ...authHeader() },
       body: JSON.stringify({
         task: state.currentWritingTask,
         studentText: text,

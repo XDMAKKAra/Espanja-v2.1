@@ -1297,7 +1297,7 @@ async function loadNextBatch() {
     const freshCount = BATCH_SIZE - srItems.length;
     const res = await fetch(`${API}/api/generate`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", ...authHeader() },
       body: JSON.stringify({ level: state.level, topic: state.topic, count: freshCount, language: state.language }),
     });
     const data = await res.json();
@@ -1731,7 +1731,7 @@ $("btn-submit-writing").addEventListener("click", async () => {
   try {
     const res = await fetch(`${API}/api/grade-writing`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", ...authHeader() },
       body: JSON.stringify({
         task: state.currentWritingTask,
         studentText: text,
@@ -1847,7 +1847,7 @@ async function loadGrammarDrill() {
   try {
     const res = await fetch(`${API}/api/grammar-drill`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", ...authHeader() },
       body: JSON.stringify({
         topic: state.grammarTopic,
         level: state.grammarLevel,
@@ -2248,12 +2248,12 @@ async function startMockExam() {
     const [readRes, writeRes] = await Promise.all([
       fetch(`${API}/api/reading-task`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", ...authHeader() },
         body: JSON.stringify({ topic: "general", level: "C" }),
       }),
       fetch(`${API}/api/writing-task`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", ...authHeader() },
         body: JSON.stringify({ taskType: "long", topic: "general" }),
       }),
     ]);
@@ -2371,7 +2371,7 @@ async function submitExam() {
     const t = examState.writingTask;
     const gradeRes = await fetch(`${API}/api/grade-writing`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", ...authHeader() },
       body: JSON.stringify({ essay, task: t, taskType: t.taskType }),
     });
     const gradeData = await gradeRes.json();
@@ -2419,7 +2419,7 @@ async function reportExercise(bankId, btn) {
   try {
     const res = await fetch(`${API}/api/report-exercise`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", ...authHeader() },
       body: JSON.stringify({ bankId }),
     });
     if (res.ok) {

@@ -1,5 +1,5 @@
 import { $, show } from "../ui/nav.js";
-import { API, isLoggedIn } from "../api.js";
+import { API, isLoggedIn, authHeader } from "../api.js";
 import { state, LEVELS, BATCH_SIZE, MAX_BATCHES } from "../state.js";
 import { showLoading, showLoadingError, showSkeleton, showFetchError } from "../ui/loading.js";
 import { srPop, srAddWrong, srMarkCorrect, srReview, srGetDue } from "../features/spacedRepetition.js";
@@ -196,7 +196,7 @@ export async function loadNextBatch() {
         const pick = mixTypes[Math.floor(Math.random() * mixTypes.length)];
         const mixRes = await fetch(`${API}/api/${pick}`, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: { "Content-Type": "application/json", ...authHeader() },
           body: JSON.stringify({ level: state.level, count: 1, language: state.language }),
         });
         if (mixRes.ok) {
@@ -213,7 +213,7 @@ export async function loadNextBatch() {
     const mcCount = Math.max(1, freshCount - mixedExercises.length);
     const res = await fetch(`${API}/api/generate`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", ...authHeader() },
       body: JSON.stringify({ level: state.level, topic: state.topic, count: mcCount, language: state.language }),
     });
     const data = await res.json();
@@ -654,7 +654,7 @@ function renderTranslateMini(ex) {
     try {
       const res = await fetch(`${API}/api/grade-translate`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", ...authHeader() },
         body: JSON.stringify({
           userAnswer: answer,
           acceptedTranslations: ex.acceptedTranslations,

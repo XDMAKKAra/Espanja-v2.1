@@ -1,6 +1,6 @@
 // TODO(loading): adopt showSkeleton / showFetchError from js/ui/loading.js (Commit 9 follow-up)
 import { $, show } from "../ui/nav.js";
-import { API, isLoggedIn } from "../api.js";
+import { API, isLoggedIn, authHeader } from "../api.js";
 import { state } from "../state.js";
 import { showLoading, showLoadingError } from "../ui/loading.js";
 import { createExamTimer, clearPersisted as clearTimerPersisted } from "../features/examTimer.js";
@@ -71,12 +71,12 @@ export async function startMockExam() {
     const [readRes, writeRes] = await Promise.all([
       fetch(`${API}/api/reading-task`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", ...authHeader() },
         body: JSON.stringify({ topic: "general", level: "C" }),
       }),
       fetch(`${API}/api/writing-task`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", ...authHeader() },
         body: JSON.stringify({ taskType: "long", topic: "general" }),
       }),
     ]);
@@ -203,7 +203,7 @@ async function submitExam() {
     const t = examState.writingTask;
     const gradeRes = await fetch(`${API}/api/grade-writing`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", ...authHeader() },
       body: JSON.stringify({ essay, task: t, taskType: t.taskType }),
     });
     const gradeData = await gradeRes.json();

@@ -1,5 +1,5 @@
 import { $, show } from "../ui/nav.js";
-import { API, isLoggedIn } from "../api.js";
+import { API, isLoggedIn, authHeader } from "../api.js";
 import { state } from "../state.js";
 import { showLoading, showLoadingError, showSkeleton, showFetchError } from "../ui/loading.js";
 import { GRAMMAR_TYPE_LABELS } from "./vocab.js";
@@ -44,7 +44,7 @@ export async function loadGrammarDrill() {
   try {
     const res = await fetch(`${API}/api/grammar-drill`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", ...authHeader() },
       body: JSON.stringify({
         topic: state.grammarTopic,
         level: state.grammarLevel,

@@ -489,7 +489,7 @@ async function reportExercise(bankId, btn) {
   try {
     const res = await fetch(`${API}/api/report-exercise`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", ...authHeader() },
       body: JSON.stringify({ bankId }),
     });
     if (res.ok) {
