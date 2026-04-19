@@ -1246,64 +1246,72 @@ select option { background: var(--surface2); }
 
 /* ── RESULTS ── */
 .results-inner {
-  max-width: 400px;
+  max-width: 560px;
   width: 100%;
   text-align: center;
   animation: fadeUp 0.4s ease both;
 }
-.results-label {
+.results-score {
+  font-size: 56px;
+  font-weight: 800;
+  line-height: 1.05;
+  color: var(--text);
+  letter-spacing: -0.02em;
+  margin-bottom: 10px;
+}
+.results-timer {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 0;
+}
+.results-divider {
+  height: 1px;
+  background: var(--border, rgba(255,255,255,0.08));
+  margin: 32px auto;
+  max-width: 360px;
+}
+.results-section {
+  margin-bottom: 28px;
+  text-align: left;
+}
+.results-section:last-child { margin-bottom: 0; }
+.results-eyebrow {
   font-family: var(--font-mono);
   font-size: 11px;
   color: var(--text-muted);
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  margin-bottom: 16px;
-}
-.grade-display {
-  font-size: 120px;
-  font-weight: 800;
-  line-height: 1;
-  color: var(--accent);
-  letter-spacing: -0.05em;
   margin-bottom: 12px;
 }
-.score-row {
-  font-family: var(--font-mono);
-  font-size: 13px;
-  color: var(--text-muted);
-  margin-bottom: 8px;
+.results-learning-body {
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--text);
 }
-.journey-row {
-  font-family: var(--font-mono);
-  font-size: 13px;
-  color: var(--accent);
-  letter-spacing: 0.12em;
-  margin-bottom: 28px;
-}
-.grade-scale {
+.results-learning-line { margin: 6px 0; }
+.results-learning-line.ok { color: var(--text); }
+.results-learning-line.bad { color: var(--text); }
+.results-learning-body ul { margin: 4px 0 0 18px; padding: 0; }
+.results-learning-body li { margin: 2px 0; }
+.results-actions {
   display: flex;
-  justify-content: center;
-  gap: 8px;
-  margin-bottom: 40px;
-  font-family: var(--font-mono);
-  font-size: 13px;
+  flex-direction: column;
+  gap: 10px;
+  align-items: stretch;
+}
+.results-actions .btn-primary,
+.results-actions .btn-share { width: 100%; }
+.results-actions .btn-link {
+  background: none;
+  border: none;
   color: var(--text-muted);
+  font-size: 14px;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 8px;
 }
-.grade-scale .highlight-grade {
-  color: var(--accent);
-  font-weight: 700;
-  position: relative;
-}
-.grade-scale .highlight-grade::after {
-  content: '';
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: var(--accent);
-  border-radius: 1px;
-}
+.results-actions .btn-link:hover { color: var(--text); }
 
 /* ── ANIMATIONS ── */
 @keyframes fadeUp {
@@ -2092,9 +2100,6 @@ select option { background: var(--surface2); }
   line-height: 1.7;
 }
 
-/* ── GRADE COLORS on results screen (gold for high grades) ── */
-.grade-display { color: var(--gold); }
-
 /* ── KEYBOARD SHORTCUTS HINT ── */
 .kbd-hint {
   display: flex;
@@ -2170,29 +2175,6 @@ select option { background: var(--surface2); }
   font-size: 10px;
   color: var(--gold);
   line-height: 1;
-}
-
-/* ── SESSION TIMER ON RESULTS ── */
-.results-timer {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--text-muted);
-  margin-bottom: 6px;
-  letter-spacing: 0.06em;
-}
-
-/* ── IMPROVEMENT BANNER ── */
-.improvement-banner {
-  background: rgba(34,197,94,0.1);
-  border: 1px solid var(--correct);
-  border-radius: var(--radius);
-  padding: 10px 16px;
-  font-family: var(--font-mono);
-  font-size: 13px;
-  color: var(--correct);
-  margin-bottom: 20px;
-  text-align: center;
-  animation: fadeUp 0.4s ease both;
 }
 
 /* ── DASHBOARD GREETING: motivational subtitle ── */

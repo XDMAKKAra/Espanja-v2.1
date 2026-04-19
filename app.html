@@ -1165,17 +1165,23 @@
   <!-- SCREEN: Results (vocab mode) -->
   <div id="screen-results" class="screen">
     <div class="results-inner">
-      <p class="results-label">Arvioitu yo-arvosana</p>
-      <div class="grade-display" id="grade-display">M</div>
-      <div class="score-row"><span id="score-text">7 / 12 oikein · 58%</span></div>
+      <div class="results-score" id="results-score">0 / 0 oikein</div>
       <div class="results-timer hidden" id="results-timer"></div>
-      <div class="journey-row" id="journey-text">B → C</div>
-      <div class="improvement-banner hidden" id="improvement-banner"></div>
-      <div class="grade-scale">
-        <span>I</span><span>A</span><span>B</span><span>C</span><span>M</span><span>E</span><span class="highlight-grade" id="scale-highlight">L</span>
-      </div>
-      <button class="btn-share" id="btn-share-vocab">📤 Jaa tulos</button>
-      <button class="btn-primary" id="btn-restart">Uusi harjoitus →</button>
+
+      <div class="results-divider"></div>
+
+      <section class="results-section hidden" id="results-learning">
+        <p class="results-eyebrow">Mitä opit tässä harjoituksessa</p>
+        <div class="results-learning-body" id="results-learning-body"></div>
+      </section>
+
+      <section class="results-section">
+        <p class="results-eyebrow">Seuraavaksi</p>
+        <div class="results-actions" id="results-actions">
+          <button class="btn-primary" id="btn-restart">Uusi harjoitus →</button>
+          <button class="btn-share" id="btn-share-vocab">📤 Jaa tulos</button>
+        </div>
+      </section>
     </div>
   </div>
 
