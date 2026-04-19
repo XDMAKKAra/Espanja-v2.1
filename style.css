@@ -3267,7 +3267,8 @@ select option { background: var(--surface2); }
 
 /* ── LEARNING PATH ── */
 .path-inner {
-  max-width: 640px; width: 100%;
+  /* Gate D: widen from 640px to --w-desktop (Pass 0.5 Bug 3). */
+  max-width: var(--w-desktop); width: 100%;
   max-height: calc(100vh - 48px);
   overflow-y: auto;
   padding: 0 8px 48px 0;
