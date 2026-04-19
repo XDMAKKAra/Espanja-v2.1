@@ -49,8 +49,16 @@ If it already has values, comma-append:
 someoneelse@example.com,testpro123@gmail.com
 ```
 
-**Apply the change to all three environments** — Production, Preview,
-Development — so the account works in local dev, branch previews, and prod.
+**Apply the change to Production + Preview** at minimum — that covers the
+live site and PR/branch previews. Development is optional and only matters
+if you run `vercel dev` locally.
+
+**Heads up — Sensitive flag:** Vercel auto-marks `TEST_PRO_EMAILS` as
+*Sensitive* because its name contains "EMAIL", and Sensitive vars can't be
+added to the Development environment. If you actually need the value in
+Development, open the existing var → Edit → uncheck "Sensitive" → save,
+then re-add it with Development ticked. For most use cases Production +
+Preview is enough.
 
 ### 3. Redeploy
 
