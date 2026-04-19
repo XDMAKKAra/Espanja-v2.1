@@ -1,18 +1,115 @@
+/* ============================================================
+   Puheo tokens — Gate A (see design-system/DESIGN.md §1–7).
+   Every hex value lives here. Component CSS must use var(--*).
+   Legacy names (--accent, --accent2, --gold, --correct, --wrong)
+   are kept as aliases so existing component rules keep working
+   until Gate E removes them.
+   ============================================================ */
 :root {
-  --bg: #0c0808;
-  --surface: #180f0f;
-  --surface2: #201414;
-  --border: #3d2020;
-  --accent: #e63946;
-  --accent2: #c62020;
-  --gold: #f59e0b;
-  --text: #f5e8e0;
-  --text-muted: #9e7a7a;
-  --correct: #22c55e;
-  --wrong: #ef4444;
-  --radius: 12px;
-  --font-display: 'Syne', sans-serif;
-  --font-mono: 'DM Mono', monospace;
+  /* Base + surfaces */
+  --bg:             #0c0808;
+  --surface:        #180f0f;
+  --surface-2:      #201414;
+  --border:         #3d2020;
+  --border-strong:  #5a3030;
+
+  /* Text (muted raised from #9e7a7a to hit AA body contrast) */
+  --text:        #f5e8e0;
+  --text-muted:  #b8988e;
+  --text-faint:  #7c605a;
+
+  /* Brand */
+  --brand:       #e63946;
+  --brand-btn:   #c62020;   /* 5.80:1 white on this — AA */
+  --brand-light: #f59e0b;
+  --brand-glow:  rgba(230, 57, 70, 0.25);
+
+  /* Feedback (onboarding toasts, grading banners) */
+  --success: #22c55e;
+  --warn:    #f59e0b;
+  --error:   #ef4444;
+  --info:    #60a5fa;
+
+  /* SR grading (4-button Anki scale) */
+  --sr-again: #ef4444;
+  --sr-hard:  #f59e0b;
+  --sr-good:  #22c55e;
+  --sr-easy:  #3b82f6;
+
+  /* Finnish YO grades (I / A / B / C / M / E / L) */
+  --grade-i: #7c605a;
+  --grade-a: #9e7070;
+  --grade-b: #7c9abc;
+  --grade-c: #5ba882;
+  --grade-m: #f59e0b;
+  --grade-e: #e8d5b7;
+  --grade-l: #c9b8ff;
+
+  /* Exercise-type badges */
+  --ex-monivalinta:  #f59e0b;
+  --ex-yhdistaminen: #7dd3fc;
+  --ex-taydennys:    #c084fc;
+  --ex-jarjestely:   #67e8f9;
+  --ex-kaannos:      #fbbf24;
+  --ex-luetun:       #86efac;
+
+  /* Named gradients (stop inlining these) */
+  --grad-pro:     linear-gradient(135deg, var(--brand-light), var(--brand));
+  --grad-hero:    linear-gradient(130deg, var(--brand-light) 0%, var(--brand) 100%);
+  --grad-urgency: linear-gradient(90deg, #a01818 0%, var(--brand-btn) 50%, #a01818 100%);
+
+  /* Spacing (4px base) */
+  --s-0:  0;
+  --s-1:  4px;
+  --s-2:  8px;
+  --s-3:  12px;
+  --s-4:  16px;
+  --s-5:  24px;
+  --s-6:  32px;
+  --s-8:  48px;
+  --s-10: 64px;
+
+  /* Radius */
+  --r-sm:   6px;
+  --r-md:   10px;
+  --r-lg:   16px;
+  --r-full: 9999px;
+
+  /* Shadows */
+  --sh-rest:  0 1px 2px rgba(0,0,0,0.3);
+  --sh-hover: 0 4px 12px rgba(0,0,0,0.35);
+  --sh-lift:  0 12px 32px rgba(0,0,0,0.5);
+  --sh-glow:  0 0 40px rgba(230, 57, 70, 0.35);
+
+  /* Breakpoints + container widths (see DESIGN §6) */
+  --bp-tablet:  768px;
+  --bp-desktop: 1024px;
+  --bp-wide:    1440px;
+  --w-tablet:   720px;
+  --w-desktop:  1080px;
+  --w-wide:     1280px;
+
+  /* Motion */
+  --dur-fast:   120ms;
+  --dur-base:   200ms;
+  --dur-slow:   320ms;
+  --ease-in:    cubic-bezier(.4, 0, 1, 1);
+  --ease-out:   cubic-bezier(0, 0, .2, 1);
+  --ease-inout: cubic-bezier(.4, 0, .2, 1);
+
+  /* Fonts (Commit 2 adds Inter; Syne stays on display) */
+  --font-display: 'Syne', ui-sans-serif, system-ui, sans-serif;
+  --font-mono:    'DM Mono', ui-monospace, monospace;
+  --font-serif:   'Lora', Georgia, serif;
+
+  /* Legacy aliases — remove in Gate E */
+  --surface2: var(--surface-2);
+  --accent:   var(--brand);
+  --accent2:  var(--brand-btn);
+  --gold:     var(--brand-light);
+  --correct:  var(--success);
+  --wrong:    var(--error);
+  --radius:   var(--r-md);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
