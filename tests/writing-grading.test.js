@@ -89,30 +89,41 @@ describe("applyPenalty", () => {
 });
 
 // ─── pointsToGrade ─────────────────────────────────────────────────────────
+// Official YTL absolute thresholds: L≥80%, E≥65%, M≥50%, C≥35%, B≥20%, A≥10%, I<10%
 
+// Thresholds from YTL lyhyt oppimäärä pisterajat (3-year avg): L≥92%, E≥84%, M≥73%, C≥60%, B≥48%, A≥39%
 describe("pointsToGrade", () => {
   describe("short essay (max 35)", () => {
-    it("0 points → I", () => expect(pointsToGrade(0, 35)).toBe("I"));
-    it("6 points → I (17%)", () => expect(pointsToGrade(6, 35)).toBe("I"));
-    it("7 points → A (20%)", () => expect(pointsToGrade(7, 35)).toBe("A"));
-    it("13 points → B (37%)", () => expect(pointsToGrade(13, 35)).toBe("B")); // 37%
-    it("14 points → B (40%)", () => expect(pointsToGrade(14, 35)).toBe("B")); // 40%
-    it("18 points → C (51%)", () => expect(pointsToGrade(18, 35)).toBe("C")); // 51.4%
-    it("23 points → M (66%)", () => expect(pointsToGrade(23, 35)).toBe("M")); // 65.7%
-    it("27 points → E (77%)", () => expect(pointsToGrade(27, 35)).toBe("E")); // 77.1%
-    it("32 points → L (91%)", () => expect(pointsToGrade(32, 35)).toBe("L")); // 91.4%
+    it("0 points → I (0%)", () => expect(pointsToGrade(0, 35)).toBe("I"));
+    it("13 points → I (37.1%)", () => expect(pointsToGrade(13, 35)).toBe("I"));    // < 39%
+    it("14 points → A (40%)", () => expect(pointsToGrade(14, 35)).toBe("A"));      // ≥ 39%
+    it("16 points → A (45.7%)", () => expect(pointsToGrade(16, 35)).toBe("A"));    // < 48%
+    it("17 points → B (48.6%)", () => expect(pointsToGrade(17, 35)).toBe("B"));    // ≥ 48%
+    it("20 points → B (57.1%)", () => expect(pointsToGrade(20, 35)).toBe("B"));    // < 60%
+    it("21 points → C (60%)", () => expect(pointsToGrade(21, 35)).toBe("C"));      // ≥ 60%
+    it("25 points → C (71.4%)", () => expect(pointsToGrade(25, 35)).toBe("C"));    // < 73%
+    it("26 points → M (74.3%)", () => expect(pointsToGrade(26, 35)).toBe("M"));    // ≥ 73%
+    it("29 points → M (82.9%)", () => expect(pointsToGrade(29, 35)).toBe("M"));    // < 84%
+    it("30 points → E (85.7%)", () => expect(pointsToGrade(30, 35)).toBe("E"));    // ≥ 84%
+    it("31 points → E (88.6%)", () => expect(pointsToGrade(31, 35)).toBe("E"));    // < 92%
+    it("33 points → L (94.3%)", () => expect(pointsToGrade(33, 35)).toBe("L"));    // ≥ 92%
     it("35 points → L (100%)", () => expect(pointsToGrade(35, 35)).toBe("L"));
   });
 
   describe("long essay (max 99)", () => {
     it("0 points → I", () => expect(pointsToGrade(0, 99)).toBe("I"));
-    it("19 points → I (19%)", () => expect(pointsToGrade(19, 99)).toBe("I"));
-    it("20 points → A (20%)", () => expect(pointsToGrade(20, 99)).toBe("A")); // 20.2%
-    it("35 points → B (35%)", () => expect(pointsToGrade(35, 99)).toBe("B")); // 35.4%
-    it("49 points → C (49%)", () => expect(pointsToGrade(49, 99)).toBe("C")); // 49.5%
-    it("63 points → M (64%)", () => expect(pointsToGrade(63, 99)).toBe("M")); // 63.6%
-    it("77 points → E (78%)", () => expect(pointsToGrade(77, 99)).toBe("E")); // 77.8%
-    it("90 points → L (91%)", () => expect(pointsToGrade(90, 99)).toBe("L")); // 90.9%
+    it("38 points → I (38.4%)", () => expect(pointsToGrade(38, 99)).toBe("I"));    // < 39%
+    it("39 points → A (39.4%)", () => expect(pointsToGrade(39, 99)).toBe("A"));    // ≥ 39%
+    it("47 points → A (47.5%)", () => expect(pointsToGrade(47, 99)).toBe("A"));    // < 48%
+    it("48 points → B (48.5%)", () => expect(pointsToGrade(48, 99)).toBe("B"));    // ≥ 48%
+    it("59 points → B (59.6%)", () => expect(pointsToGrade(59, 99)).toBe("B"));    // < 60%
+    it("60 points → C (60.6%)", () => expect(pointsToGrade(60, 99)).toBe("C"));    // ≥ 60%
+    it("72 points → C (72.7%)", () => expect(pointsToGrade(72, 99)).toBe("C"));    // < 73%
+    it("73 points → M (73.7%)", () => expect(pointsToGrade(73, 99)).toBe("M"));    // ≥ 73%
+    it("83 points → M (83.8%)", () => expect(pointsToGrade(83, 99)).toBe("M"));    // < 84%
+    it("84 points → E (84.8%)", () => expect(pointsToGrade(84, 99)).toBe("E"));    // ≥ 84%
+    it("91 points → E (91.9%)", () => expect(pointsToGrade(91, 99)).toBe("E"));    // < 92%
+    it("92 points → L (92.9%)", () => expect(pointsToGrade(92, 99)).toBe("L"));    // ≥ 92%
     it("99 points → L (100%)", () => expect(pointsToGrade(99, 99)).toBe("L"));
   });
 });
@@ -173,10 +184,8 @@ describe("processGradingResult", () => {
 
   it("maps score to correct YTL grade", () => {
     const result = processGradingResult(mockAiResult, 200, 160, true);
-    // 25/35 = 71.4% → E (≥ 63%, < 77%)
-    // Wait: 71.4% is between 63% and 77%, so it should be M
-    // Actually: 77% threshold for E. 71.4 < 77 → M
-    expect(result.ytlGrade).toBe("M");
+    // 25/35 = 71.4% → C (≥ 60%, < 73%)
+    expect(result.ytlGrade).toBe("C");
   });
 
   it("preserves errors and positives", () => {
