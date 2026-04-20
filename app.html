@@ -1078,7 +1078,8 @@
       <!-- Gap-fill: text input -->
       <div class="gap-fill-area hidden" id="gap-fill-area">
         <div class="gap-fill-sentence" id="gap-fill-sentence"></div>
-        <div class="gap-fill-hint" id="gap-fill-hint"></div>
+        <div class="gap-fill-hint hidden" id="gap-fill-hint"></div>
+        <button class="btn-hint hidden" id="gap-fill-hint-btn">Vihje</button>
         <div class="gap-fill-input-row">
           <input type="text" id="gap-fill-input" class="gap-fill-input" placeholder="Kirjoita puuttuva sana..." autocomplete="off" spellcheck="false" />
           <button class="btn-primary btn-sm" id="gap-fill-submit">Tarkista</button>
@@ -1092,6 +1093,8 @@
           <div class="matching-col" id="matching-left"></div>
           <div class="matching-col" id="matching-right"></div>
         </div>
+        <div class="matching-hint hidden" id="matching-hint"></div>
+        <button class="btn-hint hidden" id="matching-hint-btn">Vihje</button>
         <div class="matching-status" id="matching-status"></div>
       </div>
 
@@ -1109,9 +1112,11 @@
         <div class="reorder-feedback hidden" id="reorder-feedback"></div>
       </div>
 
-      <!-- Translate-mini: text input + AI grade -->
+      <!-- Translate-mini / kaannos / lauseen-muodostus / correction: text input + AI grade -->
       <div class="translate-area hidden" id="translate-area">
         <div class="translate-source" id="translate-source"></div>
+        <div class="translate-hint hidden" id="translate-hint"></div>
+        <button class="btn-hint hidden" id="translate-hint-btn">Vihje</button>
         <textarea id="translate-input" class="translate-input" placeholder="Kirjoita k&auml;&auml;nn&ouml;s espanjaksi..." rows="2" spellcheck="false"></textarea>
         <button class="btn-primary" id="translate-submit">L&auml;het&auml; arvioitavaksi &rarr;</button>
         <div class="translate-feedback hidden" id="translate-feedback"></div>

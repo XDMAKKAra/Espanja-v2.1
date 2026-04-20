@@ -44,7 +44,32 @@ const STRINGS = Object.freeze({
   'err.wrongLang':       'Kirjoita vastaus espanjaksi',
   'err.tooLong':         'Vastaus on liian pitkä',
 
-  // Hints
+  // Hint ladder
+  'hint.step':           'Vihje ({step}/3)',
+  'hint.auto':           'Vihje näytetty automaattisesti',
+  'hint.showAnswer':     'Näytä esimerkki',
+  'hint.nudge.aukko':    'Ajattele, minkälainen sana tähän kohtaan sopii lauseen merkityksen kannalta.',
+  'hint.nudge.kaannos':  'Kirjoita ensin verbi tai pääsana, sitten täydennä lauseen muut osat.',
+  'hint.nudge.lauseen':  'Mieti ensin, mikä on lauseen pääverbi ja mihin kohtaan se kuuluu.',
+  'hint.nudge.yhdista':  'Etsi pari, jonka merkitys tuntuu tutulta. Aloita siitä.',
+  'hint.nudge.mc':       'Mieti, mitä vaihtoehtoa ympäröivä lause tai tilanne vaatii.',
+  'hint.nudge.correction': 'Etsi virhe lukemalla lause uudelleen ääneen mielessäsi.',
+  'hint.example.label':  'Esimerkki:',
+  'hint.pair.revealed':  'Näytetty',
+
+  // Correction exercise
+  'correction.instruction': 'Korjaa virhe espanjankielisessä lauseessa',
+  'correction.placeholder': 'Kirjoita korjattu lause…',
+  'correction.hint.cat.ser_estar':        'Pohdi: onko kyseessä pysyvä ominaisuus vai tilapäinen tila/sijainti?',
+  'correction.hint.cat.agreement':        'Tarkista substantiivin suku ja luku — onko adjektiivi tai artikkeli sopusoinnussa?',
+  'correction.hint.cat.tense':            'Onko kyseessä yksittäinen tapahtuma (pretérito) vai toistuva/kuvaava tila (imperfecto)?',
+  'correction.hint.cat.mood':             'Vaatiiko lauseen rakenne subjunktiivia (mielipide, toive, epävarmuus)?',
+  'correction.hint.cat.por_para':         'Por = syy/kesto, para = tarkoitus/kohde — kumpi sopii tähän lauseeseen?',
+  'correction.hint.cat.word_order':       'Tarkista adjektiivin paikka (yleensä substantiivin jälkeen) ja negation sijainti.',
+  'correction.hint.cat.missing_pronoun':  'Puuttuuko lauseesta objektipronomini tai refleksiivinen se?',
+  'correction.hint.cat.aspect':           'Pretérito perfecto vai indefinido — onko tapahtuma yhteydessä nykyhetkeen?',
+
+  // Hints (legacy feedback categories)
   'hint.spelling':       'Kirjoitusvirhe — melkein oikein',
   'hint.accent':         'Aksentti puuttuu tai on väärin',
   'hint.wordOrder':      'Tarkista sanajärjestys',

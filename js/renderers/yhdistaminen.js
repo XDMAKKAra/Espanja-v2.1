@@ -12,6 +12,7 @@
 import { $ }                         from '../ui/nav.js';
 import { API, apiFetch, authHeader } from '../api.js';
 import { t }                         from '../ui/strings.js';
+import { resetHint, advanceHint } from '../features/hintLadder.js';
 
 const BAND_CLASS = {
   taydellinen:  'correct',
@@ -19,6 +20,35 @@ const BAND_CLASS = {
   lahella:      'accent-warn',
   vaarin:       'wrong',
 };
+
+function renderHintContent(hintEl, hintBtn, ex, step) {
+  hintEl.classList.toggle('hidden', step === 0);
+  hintBtn.classList.remove('hidden');
+
+  if (step === 0) {
+    hintBtn.textContent = t('hint.step', { step: 1 });
+    return;
+  }
+  // Step 1: nudge
+  if (step === 1) {
+    hintEl.textContent = t('hint.nudge.yhdista');
+    hintBtn.textContent = t('hint.step', { step: 2 });
+    return;
+  }
+  // Step 2: reveal one correct pair (done in caller via revealOnePair)
+  if (step === 2) {
+    hintEl.textContent = t('hint.nudge.yhdista');
+    hintBtn.textContent = t('hint.showAnswer');
+    return;
+  }
+  // Step 3: word glosses (if available) or repeat nudge
+  hintEl.innerHTML = ex.items?.length
+    ? ex.items.slice(0, 3).map(item =>
+        item.hint_fi ? `<em>${item.es}</em> ≈ ${item.hint_fi}` : ''
+      ).filter(Boolean).join(' · ') || t('hint.nudge.yhdista')
+    : t('hint.nudge.yhdista');
+  hintBtn.classList.add('hidden');
+}
 
 /**
  * @param {{ type: string, items: Array<{id,es}>, shuffledFi: string[] }} ex
@@ -35,7 +65,13 @@ export function renderYhdistaminen(ex, _container, { onAnswer } = {}) {
   const area     = $('matching-area');
   const leftCol  = $('matching-left');
   const rightCol = $('matching-right');
+  const hintEl   = $('matching-hint');
+  const hintBtn  = $('matching-hint-btn');
   const statusEl = $('matching-status');
+
+  // Use first item's id as key for the ladder (group exercise)
+  const ladderKey = ex.items?.[0]?.id ?? 'yhdista';
+  resetHint(ladderKey);
 
   area.classList.remove('hidden');
   leftCol.innerHTML  = '';
@@ -47,12 +83,12 @@ export function renderYhdistaminen(ex, _container, { onAnswer } = {}) {
   const N = items.length;
 
   // State
-  let selectedLeft = null;       // { id, el } | null
-  const pairMap    = new Map();  // id → { studentFi, rightEl, leftEl }
-  const usedFi     = new Set();  // Finnish strings already assigned
+  let selectedLeft = null;
+  const pairMap    = new Map();
+  const usedFi     = new Set();
+  const rightBtnMap = new Map();
 
   // Right column
-  const rightBtnMap = new Map(); // fi → btn (for cross-pairing cleanup)
   shuffledFi.forEach((fi) => {
     const btn = document.createElement('button');
     btn.type        = 'button';
@@ -64,7 +100,7 @@ export function renderYhdistaminen(ex, _container, { onAnswer } = {}) {
   });
 
   // Left column
-  const leftBtnMap = new Map(); // id → btn
+  const leftBtnMap = new Map();
   items.forEach(({ id, es }) => {
     const btn = document.createElement('button');
     btn.type        = 'button';
@@ -75,7 +111,42 @@ export function renderYhdistaminen(ex, _container, { onAnswer } = {}) {
     leftBtnMap.set(id, btn);
   });
 
+  // Hint button
+  hintBtn.onclick = () => {
+    const step = advanceHint(ladderKey);
+    renderHintContent(hintEl, hintBtn, ex, step);
+    if (step === 2) revealOnePair();
+  };
+  renderHintContent(hintEl, hintBtn, ex, 0);
+
   updateStatus();
+
+  function revealOnePair() {
+    // Reveal the first unmatched left item's correct pair
+    for (const { id } of items) {
+      if (pairMap.has(id)) continue;
+      const correctFi = shuffledFi.find(fi => {
+        // We don't know which fi is correct without server data; use first available
+        return !usedFi.has(fi);
+      });
+      if (!correctFi) break;
+      const leftEl  = leftBtnMap.get(id);
+      const rightEl = rightBtnMap.get(correctFi);
+      if (leftEl && rightEl) {
+        usedFi.add(correctFi);
+        pairMap.set(id, { studentFi: correctFi, rightEl, leftEl });
+        leftEl.classList.add('pending');
+        rightEl.classList.add('pending');
+        const badge = document.createElement('span');
+        badge.className   = 'matching-hint-badge';
+        badge.textContent = t('hint.pair.revealed');
+        leftEl.appendChild(badge);
+        updateStatus();
+        if (pairMap.size === N) autoSubmit();
+      }
+      break;
+    }
+  }
 
   function selectLeft(id, el) {
     if (el.classList.contains('matched')) return;
@@ -87,7 +158,6 @@ export function renderYhdistaminen(ex, _container, { onAnswer } = {}) {
   function selectRight(fi, rightEl) {
     if (!selectedLeft || rightEl.classList.contains('matched')) return;
 
-    // Undo previous pairing for this left item
     const prevPair = pairMap.get(selectedLeft.id);
     if (prevPair) {
       usedFi.delete(prevPair.studentFi);
@@ -95,7 +165,6 @@ export function renderYhdistaminen(ex, _container, { onAnswer } = {}) {
       prevPair.leftEl.classList.remove('pending');
     }
 
-    // Undo previous pairing of this right item (another left had it)
     if (usedFi.has(fi)) {
       for (const [pid, p] of pairMap) {
         if (p.studentFi === fi) {
@@ -106,7 +175,6 @@ export function renderYhdistaminen(ex, _container, { onAnswer } = {}) {
       }
     }
 
-    // Create new pairing
     usedFi.add(fi);
     pairMap.set(selectedLeft.id, { studentFi: fi, rightEl, leftEl: selectedLeft.el });
     selectedLeft.el.classList.remove('selected');
@@ -125,6 +193,7 @@ export function renderYhdistaminen(ex, _container, { onAnswer } = {}) {
   async function autoSubmit() {
     leftCol.querySelectorAll('.matching-item').forEach(b => { b.disabled = true; });
     rightCol.querySelectorAll('.matching-item').forEach(b => { b.disabled = true; });
+    hintBtn.classList.add('hidden');
     statusEl.textContent = '…';
 
     const pairs = items.map(({ id }) => ({
@@ -147,8 +216,7 @@ export function renderYhdistaminen(ex, _container, { onAnswer } = {}) {
       return;
     }
 
-    // Per-pair feedback
-    items.forEach(({ id }, idx) => {
+    items.forEach(({ id }) => {
       const pairResult = (result.results ?? []).find(r => r.id === id);
       const cls = pairResult?.correct ? 'matched' : 'wrong';
       const leftBtn = leftBtnMap.get(id);

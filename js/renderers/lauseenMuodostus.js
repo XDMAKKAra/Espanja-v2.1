@@ -13,12 +13,35 @@
 import { $ }                         from '../ui/nav.js';
 import { API, apiFetch, authHeader } from '../api.js';
 import { t }                         from '../ui/strings.js';
+import { resetHint, advanceHint, trackWrongAttempt } from '../features/hintLadder.js';
 
 function scoreToBand(score) {
   if (score >= 3) return 'taydellinen';
   if (score >= 2) return 'ymmarrettava';
   if (score >= 1) return 'lahella';
   return 'vaarin';
+}
+
+function renderHintContent(hintEl, hintBtn, ex, step) {
+  hintEl.classList.toggle('hidden', step === 0);
+  hintBtn.classList.remove('hidden');
+
+  if (step === 0) {
+    hintBtn.textContent = t('hint.step', { step: 1 });
+    return;
+  }
+  if (step === 1) {
+    hintEl.textContent = ex.hint_fi || t('hint.nudge.lauseen');
+    hintBtn.textContent = t('hint.step', { step: 2 });
+  } else if (step === 2) {
+    hintEl.textContent = ex.hint_partial || t('hint.nudge.lauseen');
+    hintBtn.textContent = t('hint.showAnswer');
+  } else {
+    hintEl.innerHTML = ex.hint_example_es
+      ? `<strong>${t('hint.example.label')}</strong> ${ex.hint_example_es}<br><em>${ex.hint_example_fi || ''}</em>`
+      : (ex.hint_fi || t('hint.nudge.lauseen'));
+    hintBtn.classList.add('hidden');
+  }
 }
 
 /**
@@ -35,15 +58,17 @@ export function renderLauseenMuodostus(ex, _container, { onAnswer } = {}) {
 
   const area     = $('translate-area');
   const source   = $('translate-source');
+  const hintEl   = $('translate-hint');
+  const hintBtn  = $('translate-hint-btn');
   const input    = $('translate-input');
   const submit   = $('translate-submit');
   const feedback = $('translate-feedback');
 
+  resetHint(ex.id);
   area.classList.remove('hidden');
 
-  // Build source: prompt, required-word chips, optional hint
+  // Build source: prompt + required-word chips
   source.innerHTML = '';
-
   const promptEl = document.createElement('div');
   promptEl.className   = 'lauseen-prompt';
   promptEl.textContent = ex.prompt_fi;
@@ -65,12 +90,11 @@ export function renderLauseenMuodostus(ex, _container, { onAnswer } = {}) {
     source.appendChild(chipsWrap);
   }
 
-  if (ex.hint_fi) {
-    const hintEl = document.createElement('div');
-    hintEl.className   = 'translate-hint';
-    hintEl.textContent = `Vihje: ${ex.hint_fi}`;
-    source.appendChild(hintEl);
-  }
+  hintBtn.onclick = () => {
+    const step = advanceHint(ex.id);
+    renderHintContent(hintEl, hintBtn, ex, step);
+  };
+  renderHintContent(hintEl, hintBtn, ex, 0);
 
   input.value       = '';
   input.disabled    = false;
@@ -81,7 +105,6 @@ export function renderLauseenMuodostus(ex, _container, { onAnswer } = {}) {
   feedback.classList.add('hidden');
   feedback.innerHTML = '';
 
-  // Include required words in grader context so AI checks them
   const gradingContext = ex.prompt_fi +
     (ex.required_words?.length
       ? ` (Käytä lauseessa: ${ex.required_words.join(', ')})`
@@ -122,8 +145,16 @@ export function renderLauseenMuodostus(ex, _container, { onAnswer } = {}) {
 
     const score      = data.score ?? 0;
     const maxScore   = data.maxScore ?? 3;
-    const scoreClass = score >= 3 ? 'correct' : score >= 2 ? 'accent-warn' : 'wrong';
+    const band       = scoreToBand(score);
 
+    if (band === 'vaarin') {
+      const step = trackWrongAttempt(ex.id);
+      if (step > 0) renderHintContent(hintEl, hintBtn, ex, step);
+    } else {
+      hintBtn.classList.add('hidden');
+    }
+
+    const scoreClass = score >= 3 ? 'correct' : score >= 2 ? 'accent-warn' : 'wrong';
     feedback.innerHTML = `
       <div class="translate-score ${scoreClass}">${score} / ${maxScore}</div>
       <div class="translate-best">
@@ -136,7 +167,7 @@ export function renderLauseenMuodostus(ex, _container, { onAnswer } = {}) {
 
     onAnswer?.({
       isCorrect:   score >= 3,
-      band:        scoreToBand(score),
+      band,
       score,
       maxScore,
       explanation: data.explanation ?? data.bestTranslation ?? '',
