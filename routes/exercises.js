@@ -407,6 +407,23 @@ router.post("/lauseen-muodostus", requireAuth, async (req, res) => {
   });
 });
 
+// POST /api/correction
+// Serves one correction exercise. correct_sentence is withheld; grading goes
+// through POST /api/grade/advisory with type "correction".
+router.post("/correction", requireAuth, async (req, res) => {
+  const { topic, cefr, error_category } = req.body;
+  const userId = req.user.userId;
+  const excludeIds = await getSeenSeedIds(userId);
+  const items = pickFromSeed("correction", { topic, cefr, count: 1, excludeIds });
+  if (!items.length) return res.status(404).json({ error: "Ei sopivia korjaustehtäviä" });
+  recordSeenSeedItems(userId, [items[0].id]).catch(() => {});
+  const { id, type: itype, subtype, topic: itopic, cefr: icefr, erroneous_sentence, hint_fi, error_category: icat } = items[0];
+  res.json({
+    exercise: { id, type: itype, subtype, topic: itopic, cefr: icefr, erroneous_sentence, hint_fi, error_category: icat },
+    source: "seed",
+  });
+});
+
 // GET /api/seed-counts — diagnostics / health
 router.get("/seed-counts", requireAuth, (_req, res) => {
   res.json(seedCounts);

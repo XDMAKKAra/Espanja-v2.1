@@ -11,6 +11,7 @@ import { renderAukkotehtava }     from "../renderers/aukkotehtava.js";
 import { renderYhdistaminen }     from "../renderers/yhdistaminen.js";
 import { renderKaannos }          from "../renderers/kaannos.js";
 import { renderLauseenMuodostus } from "../renderers/lauseenMuodostus.js";
+import { renderCorrection }       from "../renderers/correction.js";
 import { reportMcAdvisory } from "../features/mcAdvisory.js";
 
 const OPTION_LETTERS = ["A", "B", "C", "D", "E", "F"];
@@ -137,6 +138,7 @@ export const VOCAB_TYPE_LABELS = {
   yhdistaminen:      "Yhdistä parit",
   kaannos:           "Käännä",
   lauseen_muodostus: "Muodosta lause",
+  correction:        "Korjaa virhe",
 };
 
 export const GRAMMAR_TYPE_LABELS = {
@@ -361,6 +363,7 @@ function renderVocabQuestion() {
   if (exType === "yhdistaminen")      return renderYhdistaminen(ex, null, { onAnswer: handleSeedAnswer });
   if (exType === "kaannos")           return renderKaannos(ex, null, { onAnswer: handleSeedAnswer });
   if (exType === "lauseen_muodostus") return renderLauseenMuodostus(ex, null, { onAnswer: handleSeedAnswer });
+  if (exType === "correction")        return renderCorrection(ex, null, { onAnswer: handleSeedAnswer });
 
   // Default: multiple-choice
   $("question-text").textContent = ex.question;

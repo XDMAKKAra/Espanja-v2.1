@@ -15,6 +15,7 @@ import { renderAukkotehtava }     from '../renderers/aukkotehtava.js';
 import { renderYhdistaminen }     from '../renderers/yhdistaminen.js';
 import { renderKaannos }          from '../renderers/kaannos.js';
 import { renderLauseenMuodostus } from '../renderers/lauseenMuodostus.js';
+import { renderCorrection }       from '../renderers/correction.js';
 
 /** @type {Record<string, (ex: object, container: HTMLElement, opts?: object) => void>} */
 export const renderers = {
@@ -23,6 +24,7 @@ export const renderers = {
   yhdistaminen:      renderYhdistaminen,
   kaannos:           renderKaannos,
   lauseen_muodostus: renderLauseenMuodostus,
+  correction:        renderCorrection,
 };
 
 /**
