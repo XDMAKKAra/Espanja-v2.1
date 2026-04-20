@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Puheo — Alhambra direction preview</title>
+
+  <!-- Cormorant Garamond 600/700 + DM Sans 400/500/600 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── Alhambra tokens ────────────────────────────────────── */
+    :root {
+      --bg:            #1a1410;
+      --surface:       #231c15;
+      --surface-2:     #2e241a;
+      --border:        #473828;
+      --border-strong: #5e4c38;
+
+      --text:        #f2e8d4;
+      --text-muted:  #b8a080;
+      --text-faint:  #6e5840;
+
+      /* Muted coral — warm without aggression */
+      --brand:       #d46040;
+      --brand-dark:  #b04e30;
+      --brand-glow:  rgba(212, 96, 64, 0.20);
+
+      /* Red kept distinct (cooler hue) for error-only use */
+      --error:   #d83a3a;
+      --success: #4aaa6e;
+      --warn:    #d4a040;
+
+      --font-serif: 'Cormorant Garamond', Georgia, serif;
+      --font-body:  'DM Sans', system-ui, sans-serif;
+
+      --r-sm: 4px;
+      --r-md: 8px;
+      --r-lg: 14px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* Warm amber ambient from top-right */
+    body::before {
+      content: '';
+      position: fixed;
+      top: -15%;
+      right: -10%;
+      width: 55%;
+      height: 55%;
+      background: radial-gradient(ellipse, rgba(212,96,64,0.08) 0%, transparent 65%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Deep shadow vignette from bottom */
+    body::after {
+      content: '';
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 30%;
+      background: linear-gradient(to top, rgba(26,20,16,0.6), transparent);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── Nav ──────────────────────────────────────────────── */
+    .nav {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 48px;
+      height: 64px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(26, 20, 16, 0.88);
+      backdrop-filter: blur(10px);
+    }
+
+    .nav-logo {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: 0.01em;
+    }
+
+    .nav-logo span { color: var(--brand); }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .nav-link {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      transition: color 150ms;
+    }
+    .nav-link:hover { color: var(--text); }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .nav-login {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: color 150ms;
+    }
+    .nav-login:hover { color: var(--text); }
+
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 22px;
+      background: var(--brand);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.875rem;
+      border-radius: var(--r-md);
+      transition: background 150ms, box-shadow 200ms;
+      letter-spacing: 0.02em;
+    }
+    .nav-cta:hover {
+      background: var(--brand-dark);
+      box-shadow: 0 4px 20px var(--brand-glow);
+    }
+
+    /* ── Hero ─────────────────────────────────────────────── */
+    .hero {
+      position: relative;
+      z-index: 1;
+      max-width: 840px;
+      margin: 0 auto;
+      padding: 100px 48px 80px;
+      text-align: left;
+    }
+
+    .hero-tag {
+      display: inline-block;
+      font-family: var(--font-body);
+      font-size: 0.6875rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--brand);
+      margin-bottom: 24px;
+      padding-left: 20px;
+      position: relative;
+    }
+
+    .hero-tag::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 12px;
+      height: 1px;
+      background: var(--brand);
+    }
+
+    .hero h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(2.6rem, 5.5vw, 4rem);
+      font-weight: 600;
+      line-height: 1.08;
+      letter-spacing: -0.01em;
+      color: var(--text);
+      margin-bottom: 24px;
+      max-width: 620px;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--brand);
+    }
+
+    .hero-sub {
+      font-size: 1rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+      margin-bottom: 40px;
+      max-width: 480px;
+      font-weight: 400;
+    }
+
+    /* ── Buttons ──────────────────────────────────────────── */
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 44px;
+      flex-wrap: wrap;
+    }
+
+    .btn-hero {
+      display: inline-flex;
+      align-items: center;
+      padding: 14px 30px;
+      background: var(--brand);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9375rem;
+      border-radius: var(--r-md);
+      transition: background 150ms, box-shadow 200ms, transform 100ms;
+      letter-spacing: 0.02em;
+    }
+    .btn-hero:hover {
+      background: var(--brand-dark);
+      box-shadow: 0 8px 28px rgba(212,96,64,0.35);
+      transform: translateY(-1px);
+    }
+
+    .btn-hero-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 13px 24px;
+      background: transparent;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.9375rem;
+      border-radius: var(--r-md);
+      border: 1px solid var(--border-strong);
+      transition: color 150ms, border-color 150ms;
+    }
+    .btn-hero-secondary:hover {
+      color: var(--text);
+      border-color: var(--text-muted);
+    }
+
+    /* ── Trust strip ──────────────────────────────────────── */
+    .hero-trust-strip {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      list-style: none;
+      font-size: 0.8125rem;
+      color: var(--text-faint);
+      flex-wrap: wrap;
+    }
+
+    .hero-trust-urgency .hero-trust-num {
+      font-weight: 600;
+      color: var(--warn);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .trust-dot {
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: var(--border-strong);
+    }
+
+    /* ── Cards ────────────────────────────────────────────── */
+    .cards-row {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      gap: 1px;
+      max-width: 860px;
+      margin: 0 auto 72px;
+      padding: 0 48px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      overflow: hidden;
+    }
+
+    .stat-card {
+      flex: 1;
+      background: var(--surface);
+      padding: 28px 24px;
+      text-align: center;
+    }
+
+    .stat-card-value {
+      font-family: var(--font-serif);
+      font-size: 2.2rem;
+      font-weight: 600;
+      color: var(--brand);
+      line-height: 1;
+      margin-bottom: 8px;
+      letter-spacing: -0.01em;
+    }
+
+    .stat-card-label {
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    /* ── Section divider with ornament ───────────────────── */
+    .section-divider {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      max-width: 860px;
+      margin: 0 auto 40px;
+      padding: 0 48px;
+      gap: 16px;
+      color: var(--text-faint);
+    }
+
+    .section-divider::before,
+    .section-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .divider-ornament {
+      font-family: var(--font-serif);
+      font-size: 1rem;
+      font-style: italic;
+      color: var(--text-faint);
+    }
+
+    /* ── Palette swatches ─────────────────────────────────── */
+    .swatch-strip {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      gap: 8px;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 48px 40px;
+      flex-wrap: wrap;
+    }
+
+    .swatch { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+
+    .swatch-color {
+      width: 56px;
+      height: 56px;
+      border-radius: var(--r-md);
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .swatch-name {
+      font-size: 0.6875rem;
+      color: var(--text-faint);
+      text-align: center;
+      line-height: 1.3;
+    }
+
+    /* ── Type specimen ────────────────────────────────────── */
+    .type-specimen {
+      position: relative;
+      z-index: 1;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 48px 64px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .specimen-block {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: 24px;
+    }
+
+    .specimen-label {
+      font-size: 0.6875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-faint);
+      margin-bottom: 14px;
+    }
+
+    .specimen-display {
+      font-family: var(--font-serif);
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.15;
+      margin-bottom: 10px;
+    }
+    .specimen-display em { font-style: italic; color: var(--brand); }
+
+    .specimen-chars {
+      font-family: var(--font-serif);
+      font-size: 1rem;
+      color: var(--text-muted);
+    }
+
+    .specimen-body-text {
+      font-family: var(--font-body);
+      font-size: 0.9375rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    .specimen-body-chars {
+      margin-top: 10px;
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      color: var(--text-faint);
+    }
+
+    /* ── State demo ───────────────────────────────────────── */
+    .state-demo {
+      position: relative;
+      z-index: 1;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 48px 48px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .state-pill {
+      padding: 6px 14px;
+      border-radius: var(--r-sm);
+      font-size: 0.8125rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+
+    .state-pill.error   { background: rgba(216,58,58,0.12); color: #e08080; border: 1px solid rgba(216,58,58,0.25); }
+    .state-pill.success { background: rgba(74,170,110,0.12); color: #6cd498; border: 1px solid rgba(74,170,110,0.25); }
+    .state-pill.warn    { background: rgba(212,160,64,0.12); color: #e0c06a; border: 1px solid rgba(212,160,64,0.25); }
+
+  </style>
+</head>
+<body>
+
+  <!-- ── Nav ─────────────────────────────────────────────── -->
+  <nav class="nav">
+    <a href="#" class="nav-logo">Puhe<span>o</span></a>
+    <div class="nav-links">
+      <a href="#" class="nav-link">Harjoitukset</a>
+      <a href="#" class="nav-link">Hinnat</a>
+    </div>
+    <div class="nav-right">
+      <a href="#" class="nav-login">Kirjaudu sisään</a>
+      <a href="#" class="nav-cta">Aloita ilmaiseksi</a>
+    </div>
+  </nav>
+
+  <!-- ── Hero ──────────────────────────────────────────────── -->
+  <section class="hero">
+    <div class="hero-tag">Espanja &middot; Lyhyt oppimäärä &middot; YO-koe 2026</div>
+    <h1>Paranna espanjan YO-arvosanaa <em>tekoälyllä.</em></h1>
+    <p class="hero-sub">
+      Personoidut harjoitukset. YTL-rubriikin mukainen AI-palaute. Täyskoe-simulaatio.
+    </p>
+    <div class="hero-actions">
+      <a href="#" class="btn-hero">Aloita ilmaiseksi — 2 min</a>
+      <a href="#" class="btn-hero-secondary">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+        Testaa tasosi
+      </a>
+    </div>
+    <ul class="hero-trust-strip">
+      <li class="hero-trust-urgency">
+        <span class="hero-trust-num">161</span>
+        <span>&nbsp;päivää YO-kokeeseen</span>
+      </li>
+      <li class="trust-dot"></li>
+      <li>Ei luottokorttia</li>
+      <li class="trust-dot"></li>
+      <li>YTL-validoitu rubriikki</li>
+    </ul>
+  </section>
+
+  <!-- ── Stat cards ─────────────────────────────────────────── -->
+  <div class="cards-row">
+    <div class="stat-card">
+      <div class="stat-card-value">4 680</div>
+      <div class="stat-card-label">Harjoitustehtävää</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-value">M → E</div>
+      <div class="stat-card-label">Mediaaniparannus</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-value">28.9.</div>
+      <div class="stat-card-label">YO-koe 2026</div>
+    </div>
+  </div>
+
+  <!-- ── Ornamental divider ─────────────────────────────────── -->
+  <div class="section-divider">
+    <span class="divider-ornament">✦</span>
+  </div>
+
+  <!-- ── Palette swatches ───────────────────────────────────── -->
+  <div class="swatch-strip">
+    <div class="swatch"><div class="swatch-color" style="background:#1a1410"></div><div class="swatch-name">bg<br/>#1a1410</div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#231c15"></div><div class="swatch-name">surface<br/>#231c15</div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#f2e8d4"></div><div class="swatch-name">text<br/>#f2e8d4</div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#d46040"></div><div class="swatch-name">brand<br/>#d46040</div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#b8a080"></div><div class="swatch-name">muted<br/>#b8a080</div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#d83a3a"></div><div class="swatch-name">error<br/>#d83a3a</div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#4aaa6e"></div><div class="swatch-name">success<br/>#4aaa6e</div></div>
+  </div>
+
+  <!-- ── Type specimen ──────────────────────────────────────── -->
+  <div class="type-specimen">
+    <div class="specimen-block">
+      <div class="specimen-label">Headline — Cormorant Garamond 600 / Italic</div>
+      <div class="specimen-display">Espanja on <em>avain</em></div>
+      <div class="specimen-chars">Ä Ö Á É Í Ó Ú Ñ ¿ ¡ á é í ó ú ñ</div>
+    </div>
+    <div class="specimen-block">
+      <div class="specimen-label">Body — DM Sans 400/500</div>
+      <div class="specimen-body-text">Preterito indefinido vs. imperfecto. Ojalá que tengas suerte en el examen. Ser vs. estar — tärkein ero.</div>
+      <div class="specimen-body-chars">Ä Ö Á É ñ ¿ ¡ — kaikki tuettu</div>
+    </div>
+  </div>
+
+  <!-- ── State colors ───────────────────────────────────────── -->
+  <div class="state-demo">
+    <span class="state-pill error">Väärä vastaus</span>
+    <span class="state-pill success">Taydellinen</span>
+    <span class="state-pill warn">Lähellä</span>
+  </div>
+
+</body>
+</html>
