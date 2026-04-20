@@ -10,11 +10,19 @@
  * Callers must translate legacy items via `toUnified()` upstream.
  */
 
-import { renderMonivalinta } from '../renderers/monivalinta.js';
+import { renderMonivalinta }      from '../renderers/monivalinta.js';
+import { renderAukkotehtava }     from '../renderers/aukkotehtava.js';
+import { renderYhdistaminen }     from '../renderers/yhdistaminen.js';
+import { renderKaannos }          from '../renderers/kaannos.js';
+import { renderLauseenMuodostus } from '../renderers/lauseenMuodostus.js';
 
 /** @type {Record<string, (ex: object, container: HTMLElement, opts?: object) => void>} */
 export const renderers = {
-  monivalinta: renderMonivalinta,
+  monivalinta:       renderMonivalinta,
+  aukkotehtava:      renderAukkotehtava,
+  yhdistaminen:      renderYhdistaminen,
+  kaannos:           renderKaannos,
+  lauseen_muodostus: renderLauseenMuodostus,
 };
 
 /**

@@ -7,6 +7,10 @@ import { isTranslationAccepted, isTranslationPartial, translationBand, TRANSLATI
 import { trackExerciseStarted, trackExerciseCompleted, trackError } from "../analytics.js";
 import { renderExercise } from "./exerciseRenderer.js";
 import { toUnified } from "../../lib/exerciseTypes.js";
+import { renderAukkotehtava }     from "../renderers/aukkotehtava.js";
+import { renderYhdistaminen }     from "../renderers/yhdistaminen.js";
+import { renderKaannos }          from "../renderers/kaannos.js";
+import { renderLauseenMuodostus } from "../renderers/lauseenMuodostus.js";
 import { reportMcAdvisory } from "../features/mcAdvisory.js";
 
 const OPTION_LETTERS = ["A", "B", "C", "D", "E", "F"];
@@ -121,14 +125,18 @@ async function reportAdaptiveAnswer(topic, isCorrect) {
 }
 
 export const VOCAB_TYPE_LABELS = {
-  context: "Konteksti",
-  translate: "Käännös",
-  gap: "Täydennä",
-  meaning: "Sanasto",
-  gap_fill: "Aukkotehtävä",
-  matching: "Yhdistä",
-  reorder: "Järjestä",
-  translate_mini: "Käännä",
+  context:           "Konteksti",
+  translate:         "Käännös",
+  gap:               "Täydennä",
+  meaning:           "Sanasto",
+  gap_fill:          "Aukkotehtävä",
+  matching:          "Yhdistä",
+  reorder:           "Järjestä",
+  translate_mini:    "Käännä",
+  aukkotehtava:      "Aukkotehtävä",
+  yhdistaminen:      "Yhdistä parit",
+  kaannos:           "Käännä",
+  lauseen_muodostus: "Muodosta lause",
 };
 
 export const GRAMMAR_TYPE_LABELS = {
@@ -191,19 +199,42 @@ export async function loadNextBatch() {
     let mixedExercises = [];
     if (state.batchNumber >= 2 && state.batchNumber % 2 === 0) {
       try {
-        const mixTypes = ["gap-fill", "reorder", "matching"];
-        const pick = mixTypes[Math.floor(Math.random() * mixTypes.length)];
-        const mixRes = await fetch(`${API}/api/${pick}`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json", ...authHeader() },
-          body: JSON.stringify({ level: state.level, count: 1, language: state.language }),
-        });
-        if (mixRes.ok) {
-          const mixData = await mixRes.json();
-          if (pick === "matching" && mixData.exercise) {
-            mixedExercises = [mixData.exercise];
-          } else if (mixData.exercises?.length) {
-            mixedExercises = mixData.exercises.slice(0, 1);
+        const legacyTypes = ["gap-fill", "reorder", "matching"];
+        const seedTypes   = ["aukkotehtava", "yhdistaminen"];
+        const allTypes    = [...legacyTypes, ...seedTypes];
+        const pick = allTypes[Math.floor(Math.random() * allTypes.length)];
+
+        if (seedTypes.includes(pick)) {
+          // Seed-bank endpoints
+          const mixRes = await fetch(`${API}/api/${pick}`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json", ...authHeader() },
+            body: JSON.stringify({ count: pick === "yhdistaminen" ? 5 : 1 }),
+          });
+          if (mixRes.ok) {
+            const mixData = await mixRes.json();
+            if (pick === "aukkotehtava" && mixData.items?.length) {
+              // One item per exercise slot
+              mixedExercises = [{ ...mixData.items[0], type: "aukkotehtava" }];
+            } else if (pick === "yhdistaminen" && mixData.items?.length) {
+              // Whole matching game is one exercise
+              mixedExercises = [{ type: "yhdistaminen", items: mixData.items, shuffledFi: mixData.shuffledFi }];
+            }
+          }
+        } else {
+          // Legacy AI-generated endpoints
+          const mixRes = await fetch(`${API}/api/${pick}`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json", ...authHeader() },
+            body: JSON.stringify({ level: state.level, count: 1, language: state.language }),
+          });
+          if (mixRes.ok) {
+            const mixData = await mixRes.json();
+            if (pick === "matching" && mixData.exercise) {
+              mixedExercises = [mixData.exercise];
+            } else if (mixData.exercises?.length) {
+              mixedExercises = mixData.exercises.slice(0, 1);
+            }
           }
         }
       } catch { /* silent — just skip mixed type */ }
@@ -326,6 +357,10 @@ function renderVocabQuestion() {
   if (exType === "matching") return renderMatching(ex);
   if (exType === "reorder") return renderReorder(ex);
   if (exType === "translate_mini") return renderTranslateMini(ex);
+  if (exType === "aukkotehtava")      return renderAukkotehtava(ex, null, { onAnswer: handleSeedAnswer });
+  if (exType === "yhdistaminen")      return renderYhdistaminen(ex, null, { onAnswer: handleSeedAnswer });
+  if (exType === "kaannos")           return renderKaannos(ex, null, { onAnswer: handleSeedAnswer });
+  if (exType === "lauseen_muodostus") return renderLauseenMuodostus(ex, null, { onAnswer: handleSeedAnswer });
 
   // Default: multiple-choice
   $("question-text").textContent = ex.question;
@@ -707,6 +742,29 @@ function renderTranslateMini(ex) {
 
     submitBtn.textContent = "Arvioitu";
   };
+}
+
+function handleSeedAnswer({ isCorrect, band, score, maxScore, explanation, correctAnswer } = {}) {
+  state.totalAnswered++;
+  if (isCorrect) {
+    state.totalCorrect++;
+    state.batchCorrect++;
+  } else if (band === "ymmarrettava" || band === "lahella") {
+    state._partialCredits = (state._partialCredits || 0) + 1;
+  }
+  state._lastCorrect = isCorrect;
+
+  const explText = explanation || correctAnswer || "";
+  $("explanation-text").textContent = explText;
+  $("explanation-block").classList.remove("hidden");
+
+  if (!isCorrect && isLoggedIn()) {
+    const ex = state.exercises[state.current];
+    logMistake(ex, correctAnswer || "");
+  }
+  if (isLoggedIn()) {
+    reportAdaptiveAnswer(state.topic || state.mode || "vocab", isCorrect);
+  }
 }
 
 function handleAnswer(chosen, clickedBtn) {
