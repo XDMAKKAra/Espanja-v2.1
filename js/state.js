@@ -5,16 +5,10 @@ export const BATCH_SIZE = 4;
 export const MAX_BATCHES = 3;
 
 export const CRITERIA_LABELS = {
-  content: "Sisältö ja ymmärrettävyys",
-  vocabulary: "Kielellinen laajuus",
-  grammar: "Kielellinen oikeellisuus",
-};
-
-export const RATING_COLORS = {
-  heikko: "rating-weak",
-  kohtalainen: "rating-ok",
-  "hyvä": "rating-good",
-  erinomainen: "rating-excellent",
+  viestinnallisyys: "Viestinnällisyys",
+  kielen_rakenteet:  "Kielen rakenteet",
+  sanasto:           "Sanasto",
+  kokonaisuus:       "Kokonaisuus",
 };
 
 export let state = {

@@ -1,7 +1,7 @@
 import { $, show } from "../ui/nav.js";
 import { API, isLoggedIn, authHeader, apiFetch } from "../api.js";
 import { state } from "../state.js";
-import { CRITERIA_LABELS, RATING_COLORS } from "../state.js";
+import { CRITERIA_LABELS } from "../state.js";
 import { showLoading, showLoadingError, showSkeleton, showFetchError } from "../ui/loading.js";
 import { trackCheckoutStarted, trackProUpsellShown, trackExerciseCompleted } from "../analytics.js";
 
@@ -325,12 +325,12 @@ function renderAnnotatedText(originalText, errors, annotations) {
             &rarr;
             <span class="feedback-tooltip-correct">${escapeHtml(data.corrected || "")}</span>
           </div>
-          <div class="feedback-tooltip-expl">${escapeHtml(data.explanation || "")}</div>
+          <div class="feedback-tooltip-expl">${escapeHtml(data.explanation_fi || "")}</div>
         `;
       } else {
         tooltip.innerHTML = `
           <div class="feedback-tooltip-header">✓ Hyvin tehty</div>
-          <div class="feedback-tooltip-expl">${escapeHtml(data.comment || "")}</div>
+          <div class="feedback-tooltip-expl">${escapeHtml(data.comment_fi || "")}</div>
         `;
       }
 
@@ -367,7 +367,7 @@ function renderWritingFeedback(result) {
   const correctedSec = document.getElementById("feedback-corrected-section");
   if (correctedEl && correctedSec) {
     const orig = (result.originalText || "").trim();
-    const corrected = (result.correctedText || "").trim();
+    const corrected = (result.corrected_text || "").trim();
     if (corrected && corrected !== orig) {
       correctedSec.classList.remove("hidden");
       correctedEl.textContent = corrected;
@@ -381,19 +381,19 @@ function renderWritingFeedback(result) {
   const criteriaEl = $("feedback-criteria");
   criteriaEl.innerHTML = "";
   for (const [key, label] of Object.entries(CRITERIA_LABELS)) {
-    const c = result.criteria[key];
+    const c = result[key];
     if (!c) continue;
-    const pct = c.max > 0 ? Math.round((c.score / c.max) * 100) : 0;
+    const pct = Math.round((c.score / 5) * 100);
     const barColor = pct >= 75 ? "var(--correct)" : pct >= 50 ? "var(--gold)" : "var(--wrong)";
     const block = document.createElement("div");
     block.className = "criteria-block";
     block.innerHTML = `
       <div class="criteria-header">
         <span class="criteria-label">${label}</span>
-        <span class="criteria-score">${c.score} / ${c.max}</span>
+        <span class="criteria-score">${c.score} / 5</span>
       </div>
       <div class="criteria-bar"><div class="criteria-bar-fill" style="width:${pct}%;background:${barColor}"></div></div>
-      <p class="criteria-comment">${c.feedback || ""}</p>
+      <p class="criteria-comment">${c.feedback_fi || ""}</p>
     `;
     criteriaEl.appendChild(block);
   }
@@ -425,7 +425,7 @@ function renderWritingFeedback(result) {
             <span class="error-correct"><ins>${escapeHtml(err.corrected || err.correct || "")}</ins></span>
           </div>
         </div>
-        <p class="error-explanation">${escapeHtml(err.explanation || "")}</p>
+        <p class="error-explanation">${escapeHtml(err.explanation_fi || "")}</p>
       `;
       errorsEl.appendChild(el);
     });
@@ -433,22 +433,23 @@ function renderWritingFeedback(result) {
     errorsSection.classList.add("hidden");
   }
 
-  // Positives (sidebar)
+  // Positives (sidebar) — drawn from annotations
   const posEl = $("feedback-positives");
   const posSection = $("feedback-positives-section");
   posEl.innerHTML = "";
-  if (result.positives?.length) {
+  const positives = (result.annotations || []).filter(a => a.type === "positive");
+  if (positives.length) {
     posSection.classList.remove("hidden");
-    result.positives.forEach((p) => {
+    positives.forEach((a) => {
       const li = document.createElement("li");
-      li.textContent = p;
+      li.textContent = a.comment_fi || "";
       posEl.appendChild(li);
     });
   } else {
     posSection.classList.add("hidden");
   }
 
-  $("feedback-overall").textContent = result.overallFeedback || "";
+  $("feedback-overall").textContent = result.overall_feedback_fi || "";
 }
 
 $("btn-try-again").addEventListener("click", () => loadWritingTask());

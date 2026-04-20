@@ -1,7 +1,6 @@
 import { describe, it, expect } from "vitest";
 import {
-  SHORT_MAX, LONG_MAX,
-  SHORT_CRITERIA, LONG_CRITERIA,
+  RUBRIC_MAX, SHORT_MAX, LONG_MAX,
   calculatePenalty, sumScores, applyPenalty,
   pointsToGrade, processGradingResult,
 } from "../lib/writingGrading.js";
@@ -9,24 +8,18 @@ import {
 // ─── Constants ─────────────────────────────────────────────────────────────
 
 describe("Writing grading constants", () => {
-  it("short essay max is 35", () => {
-    expect(SHORT_MAX).toBe(35);
+  it("RUBRIC_MAX is 20", () => {
+    expect(RUBRIC_MAX).toBe(20);
   });
 
-  it("long essay max is 99", () => {
-    expect(LONG_MAX).toBe(99);
-  });
-
-  it("short criteria sum to 35", () => {
-    expect(SHORT_CRITERIA.content + SHORT_CRITERIA.vocabulary + SHORT_CRITERIA.grammar).toBe(35);
-  });
-
-  it("long criteria sum to 99", () => {
-    expect(LONG_CRITERIA.content + LONG_CRITERIA.vocabulary + LONG_CRITERIA.grammar).toBe(99);
+  it("SHORT_MAX and LONG_MAX are both 20 (same 0–20 rubric)", () => {
+    expect(SHORT_MAX).toBe(20);
+    expect(LONG_MAX).toBe(20);
   });
 });
 
 // ─── calculatePenalty ──────────────────────────────────────────────────────
+// 1pt per 40 chars below minimum (rescaled from old 1pt/10chars on 99-scale)
 
 describe("calculatePenalty", () => {
   it("returns 0 when at or above minimum", () => {
@@ -34,15 +27,16 @@ describe("calculatePenalty", () => {
     expect(calculatePenalty(160, 160)).toBe(0);
   });
 
-  it("returns 1 per 10 chars below minimum", () => {
-    expect(calculatePenalty(150, 160)).toBe(1);  // 10 under → -1
-    expect(calculatePenalty(140, 160)).toBe(2);  // 20 under → -2
-    expect(calculatePenalty(100, 160)).toBe(6);  // 60 under → -6
+  it("returns 1 per 40 chars below minimum", () => {
+    expect(calculatePenalty(120, 160)).toBe(1);  // 40 under → -1
+    expect(calculatePenalty(80,  160)).toBe(2);  // 80 under → -2
+    expect(calculatePenalty(0,   160)).toBe(4);  // 160 under → -4
   });
 
-  it("rounds up partial 10s", () => {
-    expect(calculatePenalty(155, 160)).toBe(1);  // 5 under → ceil(0.5) = 1
-    expect(calculatePenalty(141, 160)).toBe(2);  // 19 under → ceil(1.9) = 2
+  it("rounds up partial 40s", () => {
+    expect(calculatePenalty(155, 160)).toBe(1);  // 5 under → ceil(0.125) = 1
+    expect(calculatePenalty(121, 160)).toBe(1);  // 39 under → ceil(0.975) = 1
+    expect(calculatePenalty(119, 160)).toBe(2);  // 41 under → ceil(1.025) = 2
   });
 
   it("no over-length penalty", () => {
@@ -53,21 +47,29 @@ describe("calculatePenalty", () => {
 // ─── sumScores ─────────────────────────────────────────────────────────────
 
 describe("sumScores", () => {
-  it("sums all three criteria", () => {
+  it("sums all four dimensions", () => {
     expect(sumScores({
-      content: { score: 12 },
-      vocabulary: { score: 8 },
-      grammar: { score: 7 },
-    })).toBe(27);
+      viestinnallisyys: { score: 4 },
+      kielen_rakenteet:  { score: 3 },
+      sanasto:           { score: 4 },
+      kokonaisuus:       { score: 3 },
+    })).toBe(14);
   });
 
-  it("handles missing criteria gracefully", () => {
+  it("M anchor: all-3 essay sums to 12", () => {
     expect(sumScores({
-      content: { score: 10 },
-    })).toBe(10);
+      viestinnallisyys: { score: 3 },
+      kielen_rakenteet:  { score: 3 },
+      sanasto:           { score: 3 },
+      kokonaisuus:       { score: 3 },
+    })).toBe(12);
   });
 
-  it("returns 0 for empty criteria", () => {
+  it("handles missing dimensions gracefully", () => {
+    expect(sumScores({ viestinnallisyys: { score: 5 } })).toBe(5);
+  });
+
+  it("returns 0 for empty object", () => {
     expect(sumScores({})).toBe(0);
   });
 });
@@ -76,132 +78,138 @@ describe("sumScores", () => {
 
 describe("applyPenalty", () => {
   it("subtracts penalty from raw score", () => {
-    expect(applyPenalty(27, 3)).toBe(24);
+    expect(applyPenalty(14, 2)).toBe(12);
   });
 
   it("never goes below 0", () => {
-    expect(applyPenalty(5, 10)).toBe(0);
+    expect(applyPenalty(3, 10)).toBe(0);
   });
 
   it("returns raw score when penalty is 0", () => {
-    expect(applyPenalty(27, 0)).toBe(27);
+    expect(applyPenalty(15, 0)).toBe(15);
   });
 });
 
 // ─── pointsToGrade ─────────────────────────────────────────────────────────
-// Official YTL absolute thresholds: L≥80%, E≥65%, M≥50%, C≥35%, B≥20%, A≥10%, I<10%
+// Absolute thresholds on 0–20 scale: 16/13/10/7/4/2
+// YTL lyhyt oppimäärä 100-scale values (80/65/50/35/20/10) ÷ 5 = these values.
 
-// Thresholds from YTL lyhyt oppimäärä pisterajat (3-year avg): L≥92%, E≥84%, M≥73%, C≥60%, B≥48%, A≥39%
 describe("pointsToGrade", () => {
-  describe("short essay (max 35)", () => {
-    it("0 points → I (0%)", () => expect(pointsToGrade(0, 35)).toBe("I"));
-    it("13 points → I (37.1%)", () => expect(pointsToGrade(13, 35)).toBe("I"));    // < 39%
-    it("14 points → A (40%)", () => expect(pointsToGrade(14, 35)).toBe("A"));      // ≥ 39%
-    it("16 points → A (45.7%)", () => expect(pointsToGrade(16, 35)).toBe("A"));    // < 48%
-    it("17 points → B (48.6%)", () => expect(pointsToGrade(17, 35)).toBe("B"));    // ≥ 48%
-    it("20 points → B (57.1%)", () => expect(pointsToGrade(20, 35)).toBe("B"));    // < 60%
-    it("21 points → C (60%)", () => expect(pointsToGrade(21, 35)).toBe("C"));      // ≥ 60%
-    it("25 points → C (71.4%)", () => expect(pointsToGrade(25, 35)).toBe("C"));    // < 73%
-    it("26 points → M (74.3%)", () => expect(pointsToGrade(26, 35)).toBe("M"));    // ≥ 73%
-    it("29 points → M (82.9%)", () => expect(pointsToGrade(29, 35)).toBe("M"));    // < 84%
-    it("30 points → E (85.7%)", () => expect(pointsToGrade(30, 35)).toBe("E"));    // ≥ 84%
-    it("31 points → E (88.6%)", () => expect(pointsToGrade(31, 35)).toBe("E"));    // < 92%
-    it("33 points → L (94.3%)", () => expect(pointsToGrade(33, 35)).toBe("L"));    // ≥ 92%
-    it("35 points → L (100%)", () => expect(pointsToGrade(35, 35)).toBe("L"));
-  });
-
-  describe("long essay (max 99)", () => {
-    it("0 points → I", () => expect(pointsToGrade(0, 99)).toBe("I"));
-    it("38 points → I (38.4%)", () => expect(pointsToGrade(38, 99)).toBe("I"));    // < 39%
-    it("39 points → A (39.4%)", () => expect(pointsToGrade(39, 99)).toBe("A"));    // ≥ 39%
-    it("47 points → A (47.5%)", () => expect(pointsToGrade(47, 99)).toBe("A"));    // < 48%
-    it("48 points → B (48.5%)", () => expect(pointsToGrade(48, 99)).toBe("B"));    // ≥ 48%
-    it("59 points → B (59.6%)", () => expect(pointsToGrade(59, 99)).toBe("B"));    // < 60%
-    it("60 points → C (60.6%)", () => expect(pointsToGrade(60, 99)).toBe("C"));    // ≥ 60%
-    it("72 points → C (72.7%)", () => expect(pointsToGrade(72, 99)).toBe("C"));    // < 73%
-    it("73 points → M (73.7%)", () => expect(pointsToGrade(73, 99)).toBe("M"));    // ≥ 73%
-    it("83 points → M (83.8%)", () => expect(pointsToGrade(83, 99)).toBe("M"));    // < 84%
-    it("84 points → E (84.8%)", () => expect(pointsToGrade(84, 99)).toBe("E"));    // ≥ 84%
-    it("91 points → E (91.9%)", () => expect(pointsToGrade(91, 99)).toBe("E"));    // < 92%
-    it("92 points → L (92.9%)", () => expect(pointsToGrade(92, 99)).toBe("L"));    // ≥ 92%
-    it("99 points → L (100%)", () => expect(pointsToGrade(99, 99)).toBe("L"));
-  });
+  it("0 → I",  () => expect(pointsToGrade(0)).toBe("I"));
+  it("1 → I",  () => expect(pointsToGrade(1)).toBe("I"));
+  it("2 → A",  () => expect(pointsToGrade(2)).toBe("A"));
+  it("3 → A",  () => expect(pointsToGrade(3)).toBe("A"));
+  it("4 → B",  () => expect(pointsToGrade(4)).toBe("B"));
+  it("6 → B",  () => expect(pointsToGrade(6)).toBe("B"));
+  it("7 → C",  () => expect(pointsToGrade(7)).toBe("C"));
+  it("9 → C",  () => expect(pointsToGrade(9)).toBe("C"));
+  it("10 → M", () => expect(pointsToGrade(10)).toBe("M"));
+  it("12 → M (M anchor: all-3 essay)", () => expect(pointsToGrade(12)).toBe("M"));
+  it("13 → E", () => expect(pointsToGrade(13)).toBe("E"));
+  it("15 → E", () => expect(pointsToGrade(15)).toBe("E"));
+  it("16 → L", () => expect(pointsToGrade(16)).toBe("L"));
+  it("20 → L", () => expect(pointsToGrade(20)).toBe("L"));
 });
 
 // ─── processGradingResult ──────────────────────────────────────────────────
 
-describe("processGradingResult", () => {
-  const mockAiResult = {
-    criteria: {
-      content: { score: 12, max: 15, feedback: "Hyvä sisältö." },
-      vocabulary: { score: 7, max: 10, feedback: "Riittävä sanasto." },
-      grammar: { score: 6, max: 10, feedback: "Joitain virheitä." },
-    },
-    errors: [
-      { excerpt: "estoy contento", corrected: "soy contento", category: "grammar", explanation: "ser/estar" },
-    ],
-    positives: ["Hyvä rakenne"],
-    overallFeedback: "Jatka harjoittelua.",
-  };
+const mockAiResult = {
+  viestinnallisyys: { score: 4, feedback_fi: "Tehtävä täytetty." },
+  kielen_rakenteet:  { score: 3, feedback_fi: "Virheitä esiintyy." },
+  sanasto:           { score: 3, feedback_fi: "Riittävä sanasto." },
+  kokonaisuus:       { score: 3, feedback_fi: "Yhtenäinen teksti." },
+  total: 99,        // model's value — ignored server-side
+  band: "L",        // model's value — ignored server-side
+  overall_feedback_fi: "Jatka harjoittelua.",
+  corrected_text: "Texto corregido.",
+  errors: [
+    { excerpt: "estoy contento", corrected: "soy contento", category: "grammar", explanation_fi: "ser/estar" },
+  ],
+  annotations: [
+    { excerpt: "hace mucho que", comment_fi: "Hyvä rakenne.", type: "positive" },
+  ],
+};
 
-  it("calculates correct raw score", () => {
+describe("processGradingResult", () => {
+  it("recomputes rawScore from 4 dimensions (ignores model total)", () => {
     const result = processGradingResult(mockAiResult, 200, 160, true);
-    expect(result.rawScore).toBe(25); // 12 + 7 + 6
+    expect(result.rawScore).toBe(13); // 4+3+3+3
   });
 
-  it("applies no penalty when above minimum", () => {
+  it("applies no penalty when at or above minimum", () => {
     const result = processGradingResult(mockAiResult, 200, 160, true);
     expect(result.penalty).toBe(0);
-    expect(result.finalScore).toBe(25);
+    expect(result.finalScore).toBe(13);
   });
 
-  it("applies penalty when below minimum", () => {
-    const result = processGradingResult(mockAiResult, 130, 160, true);
-    expect(result.penalty).toBe(3); // ceil(30/10) = 3
-    expect(result.finalScore).toBe(22); // 25 - 3
+  it("applies penalty when below minimum (40-char rule)", () => {
+    // 120 chars, min 160 → deficit 40 → ceil(40/40) = 1
+    const result = processGradingResult(mockAiResult, 120, 160, true);
+    expect(result.penalty).toBe(1);
+    expect(result.finalScore).toBe(12);
   });
 
-  it("sets correct maxScore for short", () => {
+  it("maxScore is always RUBRIC_MAX (20)", () => {
+    const rShort = processGradingResult(mockAiResult, 200, 160, true);
+    const rLong  = processGradingResult(mockAiResult, 400, 300, false);
+    expect(rShort.maxScore).toBe(20);
+    expect(rLong.maxScore).toBe(20);
+  });
+
+  it("computes ytlGrade server-side (ignores model band)", () => {
+    // rawScore=13, penalty=0, finalScore=13 → E
     const result = processGradingResult(mockAiResult, 200, 160, true);
-    expect(result.maxScore).toBe(35);
+    expect(result.ytlGrade).toBe("E");
   });
 
-  it("sets correct maxScore for long", () => {
-    const longResult = {
-      criteria: {
-        content: { score: 25, max: 33, feedback: "" },
-        vocabulary: { score: 20, max: 33, feedback: "" },
-        grammar: { score: 22, max: 33, feedback: "" },
-      },
-      errors: [],
-      positives: [],
-      overallFeedback: "",
+  it("M anchor: all-3 essay → M regardless of model output", () => {
+    const allThree = {
+      ...mockAiResult,
+      viestinnallisyys: { score: 3, feedback_fi: "" },
+      kielen_rakenteet:  { score: 3, feedback_fi: "" },
+      sanasto:           { score: 3, feedback_fi: "" },
+      kokonaisuus:       { score: 3, feedback_fi: "" },
+      total: 0, band: "I",
     };
-    const result = processGradingResult(longResult, 400, 300, false);
-    expect(result.maxScore).toBe(99);
-    expect(result.rawScore).toBe(67);
+    const result = processGradingResult(allThree, 200, 160, true);
+    expect(result.rawScore).toBe(12);
+    expect(result.ytlGrade).toBe("M");
   });
 
-  it("maps score to correct YTL grade", () => {
+  it("returns all four dimension objects", () => {
     const result = processGradingResult(mockAiResult, 200, 160, true);
-    // 25/35 = 71.4% → C (≥ 60%, < 73%)
-    expect(result.ytlGrade).toBe("C");
+    expect(result.viestinnallisyys.score).toBe(4);
+    expect(result.kielen_rakenteet.score).toBe(3);
+    expect(result.sanasto.score).toBe(3);
+    expect(result.kokonaisuus.score).toBe(3);
   });
 
-  it("preserves errors and positives", () => {
+  it("passes through corrected_text, errors, annotations, overall_feedback_fi", () => {
     const result = processGradingResult(mockAiResult, 200, 160, true);
+    expect(result.corrected_text).toBe("Texto corregido.");
     expect(result.errors).toHaveLength(1);
-    expect(result.errors[0].category).toBe("grammar");
-    expect(result.positives).toHaveLength(1);
+    expect(result.errors[0].explanation_fi).toBe("ser/estar");
+    expect(result.annotations).toHaveLength(1);
+    expect(result.overall_feedback_fi).toBe("Jatka harjoittelua.");
   });
 
-  it("clamps finalScore to 0 with extreme penalty", () => {
-    const result = processGradingResult(mockAiResult, 10, 160, true);
-    // penalty = ceil(150/10) = 15, rawScore = 25, final = 10
-    expect(result.finalScore).toBe(10);
+  it("clamps finalScore to 0 with extreme under-length", () => {
+    // 0 chars, min 160 → deficit 160 → ceil(160/40) = 4. rawScore=13 → final=9
+    const result = processGradingResult(mockAiResult, 0, 160, true);
+    expect(result.penalty).toBe(4);
+    expect(result.finalScore).toBe(9);
+  });
 
-    const result2 = processGradingResult(mockAiResult, 0, 160, true);
-    // penalty = ceil(160/10) = 16, rawScore = 25, final = 9
-    expect(result2.finalScore).toBe(9);
+  it("clamps to 0, never negative", () => {
+    const lowScore = {
+      ...mockAiResult,
+      viestinnallisyys: { score: 1, feedback_fi: "" },
+      kielen_rakenteet:  { score: 0, feedback_fi: "" },
+      sanasto:           { score: 0, feedback_fi: "" },
+      kokonaisuus:       { score: 0, feedback_fi: "" },
+    };
+    // rawScore=1, penalty=4 → should clamp to 0
+    const result = processGradingResult(lowScore, 0, 160, true);
+    expect(result.finalScore).toBe(0);
   });
 });
