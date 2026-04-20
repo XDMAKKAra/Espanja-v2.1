@@ -12,6 +12,14 @@ export default defineConfig({
     trace: 'retain-on-failure',
     video: 'off',
   },
+  // Auto-start the dev server for e2e unless one is already running.
+  // Skip if BASE_URL is set externally (e.g. preview deploy smoke test).
+  webServer: process.env.BASE_URL ? undefined : {
+    command: 'npm start',
+    url: 'http://localhost:3000/health',
+    reuseExistingServer: true,
+    timeout: 60_000,
+  },
   projects: [
     {
       name: 'mobile',
