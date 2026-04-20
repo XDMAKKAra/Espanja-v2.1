@@ -190,7 +190,10 @@ describe("GET /api/sr/forecast", () => {
   const plus = (n) => {
     const t = today();
     t.setDate(t.getDate() + n);
-    return t.toISOString().slice(0, 10);
+    const y = t.getFullYear();
+    const m = String(t.getMonth() + 1).padStart(2, "0");
+    const d = String(t.getDate()).padStart(2, "0");
+    return `${y}-${m}-${d}`;
   };
 
   it("buckets due dates by day offset", async () => {
