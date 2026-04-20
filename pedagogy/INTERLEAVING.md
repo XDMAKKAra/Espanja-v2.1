@@ -130,7 +130,18 @@ Saturation cap: no topic should appear more than 4 times in a Normaali session o
 
 ## 6. Cold-start rule
 
-Cold-start condition: user has fewer than 30 mastered items across all topics (i.e., `getMasteredTopics(userId)` from `lib/learningPath.js:226` returns fewer than 30 entries, or `user_mastery` table has fewer than 30 rows with `status='mastered'`).
+Cold-start condition: **either** the user has completed fewer than 2 topics (i.e., `user_mastery` has fewer than 2 rows with `status='mastered'`) **or** the user has fewer than 40 mastered items total (`getMasteredTopics(userId)` from `lib/learningPath.js:226` returns fewer than 40 entries). The OR clause protects students who are progressing through smaller seed-bank topics (e.g. a topic with only 20 items can be "completed" with far fewer than 40 mastered items). Cold-start exits once **both** conditions are false: ≥2 completed topics AND ≥40 mastered items.
+
+```js
+// lib/sessionComposer.js — cold-start gate
+const COLD_START_MIN_TOPICS  = 2;
+const COLD_START_MIN_MASTERED = 40;
+
+function isColdStart(masteredTopics, masteredItemCount) {
+  return masteredTopics.length < COLD_START_MIN_TOPICS
+      || masteredItemCount < COLD_START_MIN_MASTERED;
+}
+```
 
 In cold-start the SR queue is too thin to drive session composition. Instead:
 

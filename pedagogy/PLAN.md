@@ -4,6 +4,22 @@
 
 ---
 
+## Prerequisites (must land before Gate C)
+
+**Chore — hint pre-generation offline pass**
+
+Before C1 starts, run a one-shot script that enriches `data/seeds/aukkotehtava.json` with `hint_example_es` and `hint_example_fi` fields (Step 3 of the hint ladder — a parallel correct sentence demonstrating the same structure). Script:
+
+- File: `scripts/generate-hint-examples.js`
+- Idempotent: skip items that already have `hint_example_es` populated (safe to re-run if corpus needs partial regeneration).
+- API: calls OpenAI with a cheap prompt (~80 tokens per item); 480 items × ~$0.0001 = ~$0.05 total.
+- Output: overwrites `data/seeds/aukkotehtava.json` in-place; commit the enriched file.
+- Commit message: `chore(seeds): populate hint_example_es/fi on aukkotehtava items (offline pass)`
+
+This commit is a prerequisite for C1. Without it, the hint ladder Step 3 for aukkotehtava falls back to a generic worked-example prompt from OpenAI at request time (expensive and slow). The script must be committed and the enriched JSON verified (all 480 items have non-empty `hint_example_es`) before C1 starts.
+
+---
+
 ## Algorithm choice
 
 **SM-2 lite with exam-anchored interval cap.**
@@ -56,7 +72,10 @@ Implements:
 - Slot types: `review` (SR due), `new` (unseen seed item), `easy-win` (item user has scored taydellinen before)
 - SR-due items sorted by urgency (days overdue), then topic round-robin to enforce spread
 - Among non-due slots: adjacency-weighted topic fill from `TOPIC_ADJACENCY`
-- Cold-start branch: if `getMasteredTopics(userId).length < 30`, walk `LEARNING_PATH` sequentially
+- Cold-start constants: `COLD_START_MIN_TOPICS = 2`, `COLD_START_MIN_MASTERED = 40`
+- Cold-start branch: if ≥2 completed topics AND ≥40 mastered items, apply full interleaving; otherwise walk `LEARNING_PATH` sequentially (see INTERLEAVING.md §6 for OR-clause rationale)
+
+**Canonical adaptive engine:** all Pass 2.5 code routes through `lib/levelEngine.js`. `lib/adaptive.js` is legacy-only — a one-line comment is added to its top noting this. New code must not import from `lib/adaptive.js`. Reconciliation is tracked in `plans/08-adaptive-engine-unification.md` (stub, out of scope for this pass).
 
 Test: mock SR queue of 8 due items across 3 topics — assert no more than 3 consecutive same-topic items in a 15-item session.
 Acceptance: `composeSession` returns slots that satisfy topic-spread invariant.

@@ -428,6 +428,55 @@ Run the new prompt on all 10 samples. The rubric is calibrated if **every dimens
 
 ---
 
+### Calibration sign-off — 2026-04-20
+
+Independent band assessment against the descriptor table in §3a. Each sample graded blind against the rubric; expected scores quoted from the sample block above.
+
+| # | My scores (V R S K) | My total | My band | Expected band | Verdict |
+|---|---|---|---|---|---|
+| 1 | 5 5 4 5 | 19 | L | L | ✓ Agree |
+| 2 | 4 4 3 3 | 14 | E | L | ✗ Disagree — see note |
+| 3 | 4 4 3 3 | 14 | E | E | ✓ Agree (K=3 not K=4, same band) |
+| 4 | 3 3 3 3 | 12 | M | M | ✓ Agree — anchor holds |
+| 5 | 3 3 2 3 | 11 | M | M | ✓ Agree |
+| 6 | 2 1 2 2 | 7 | C | C | ✓ Agree |
+| 7 | 2 1 1 2 | 6 | B | B | ✓ Agree — flag descriptor gap |
+| 8 | 1 1 1 1 | 4 | B | B | ✓ Agree |
+| 9 | 1 0 1 1 | 3 | A | A | ✓ Agree |
+| 10 | 0 0 0 1 | 1 | I | I | ✓ Agree |
+
+**Result: 9/10 bands agreed. Meets the ≥9/10 acceptance criterion.**
+
+#### Disagreement — Sample 2 (E vs. L)
+
+Expected L (16/20 = all-4 essay). I score 14/20 (E). Specific disagreement:
+
+- **S=3, not S=4.** Vocabulary is *cine, película española, restaurante, pizza, amigos* — intermediate-frequency nouns used correctly but no idiomatic collocations (*lo pasé muy bien* is a fixed expression but a very common one, not above the M anchor). S=4 requires "some idiomatic collocations; little repetition; word-choice errors rare" — this text has no errors and uses *hacía mucho que no veía* (good) but doesn't reach idiomatic territory.
+- **K=3, not K=4.** Connectors are *después, porque, y (implicit)*. K=4 requires a *range* of connectors including *además/sin embargo/por eso/aunque*. Three basic connectors and a clean format is K=3, not K=4.
+
+**Proposed adjustment:** Accept E as the correct answer for Sample 2. The document itself flags this as the knife-edge calibration case. The acceptance criterion already allows one boundary disagreement on samples 2 or 5/7 — this is that disagreement. **Sample 2 expected band should be updated to E, or annotated as "L/E boundary — either accepted."**
+
+#### Flag — K descriptor gap (Samples 7 and 8)
+
+Samples 7 and 8 have both greeting and closing present but zero connectors. The descriptor table has a gap here:
+- K=2 says "opening *or* closing present but not both" — doesn't fit (both present).
+- K=3 says "2–4 connectors used; opening + closing both present" — doesn't fit (zero connectors).
+
+Both texts land at K=2 by examiner judgment (zero connectors outweighs format compliance at this level), but the descriptor doesn't say so explicitly.
+
+**Recommended rubric patch before D1 merges:** Add clarifying note to K=2 descriptor: *"K=2 also applies when both greeting and closing are present but connectors are entirely absent — format alone without cohesion does not reach K=3."*
+
+#### Overall confidence
+
+**High.** The M anchor (Sample 4, all-3) is unambiguous and correctly placed. The gradient from I→A→B→C is clean and the descriptors correctly distinguish them. The main calibration uncertainty is the E/L boundary (Sample 2), which is a known edge case in YTL lyhyt oppimäärä scoring — examiners legitimately disagree on all-4 essays. The rubric is calibrated for all other points on the scale.
+
+**D1 merge condition: met**, subject to two documentation patches before implementation:
+1. Annotate Sample 2 expected band as "E/L boundary — E preferred."
+2. Add K=2 clarifying note about greeting+closing without connectors.
+Neither requires changing the descriptor table or prompt.
+
+---
+
 ## 7. Diff vs. current rubric
 
 | Aspect | Current (in `lib/writingGrading.js`) | New | Why it matters |
