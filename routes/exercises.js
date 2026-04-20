@@ -21,10 +21,37 @@ import { pickExerciseType, composePrompt, getMaxTokens } from "../lib/exerciseCo
 import { pickFromSeed, seedCounts } from "../lib/seedBank.js";
 import { topicLabel, VALID_TOPICS } from "../lib/mistakeTaxonomy.js";
 import { getUserPath, recordMasteryAttempt, getTopicByKey, getMasteredTopics, LEARNING_PATH, MASTERY_TEST_SIZE } from "../lib/learningPath.js";
+import { composeSession } from "../lib/sessionComposer.js";
 
 const router = Router();
 
 const ADMIN_EMAILS = (process.env.ADMIN_EMAILS || "").split(",").map(e => e.trim().toLowerCase()).filter(Boolean);
+
+// ─── Seed-item deduplication helpers ──────────────────────────────────────
+
+const SEEN_WINDOW_MS = 30 * 24 * 60 * 60 * 1000;
+
+async function getSeenSeedIds(userId) {
+  if (!userId) return [];
+  const since = new Date(Date.now() - SEEN_WINDOW_MS).toISOString();
+  const { data } = await supabase
+    .from("seen_seed_items")
+    .select("item_id")
+    .eq("user_id", userId)
+    .gte("seen_at", since);
+  return (data || []).map(r => r.item_id);
+}
+
+async function recordSeenSeedItems(userId, itemIds) {
+  if (!userId || !itemIds.length) return;
+  const now = new Date().toISOString();
+  await supabase
+    .from("seen_seed_items")
+    .upsert(
+      itemIds.map(item_id => ({ user_id: userId, item_id, seen_at: now })),
+      { onConflict: "user_id,item_id" }
+    );
+}
 
 // ─── Exercise bank helpers ─────────────────────────────────────────────────
 
@@ -309,8 +336,11 @@ router.post("/grade/advisory", (req, res) => {
 router.post("/aukkotehtava", requireAuth, async (req, res) => {
   const { topic, cefr, count = 5 } = req.body;
   const clamp = Math.max(1, Math.min(20, Number(count) || 5));
-  const items = pickFromSeed("aukkotehtava", { topic, cefr, count: clamp });
+  const userId = req.user.userId;
+  const excludeIds = await getSeenSeedIds(userId);
+  const items = pickFromSeed("aukkotehtava", { topic, cefr, count: clamp, excludeIds });
   if (!items.length) return res.status(404).json({ error: "Ei sopivia aukkotehtäviä" });
+  recordSeenSeedItems(userId, items.map(x => x.id)).catch(() => {});
   res.json({
     exercises: items.map(({ id, topic, cefr, sentence, hint_fi }) =>
       ({ id, topic, cefr, sentence, hint_fi })
@@ -326,8 +356,11 @@ router.post("/aukkotehtava", requireAuth, async (req, res) => {
 router.post("/yhdistaminen", requireAuth, async (req, res) => {
   const { topic, cefr, pairCount = 5 } = req.body;
   const clamp = Math.max(2, Math.min(8, Number(pairCount) || 5));
-  const items = pickFromSeed("matching", { topic, cefr, count: clamp });
+  const userId = req.user.userId;
+  const excludeIds = await getSeenSeedIds(userId);
+  const items = pickFromSeed("matching", { topic, cefr, count: clamp, excludeIds });
   if (!items.length) return res.status(404).json({ error: "Ei sopivia pareja" });
+  recordSeenSeedItems(userId, items.map(x => x.id)).catch(() => {});
   const shuffledFi = [...items.map(x => x.fi)].sort(() => Math.random() - 0.5);
   res.json({
     items: items.map(({ id, topic, cefr, es }) => ({ id, topic, cefr, es })),
@@ -342,8 +375,11 @@ router.post("/yhdistaminen", requireAuth, async (req, res) => {
 router.post("/kaannos", requireAuth, async (req, res) => {
   const { topic, cefr, count = 3 } = req.body;
   const clamp = Math.max(1, Math.min(10, Number(count) || 3));
-  const items = pickFromSeed("translation", { topic, cefr, count: clamp });
+  const userId = req.user.userId;
+  const excludeIds = await getSeenSeedIds(userId);
+  const items = pickFromSeed("translation", { topic, cefr, count: clamp, excludeIds });
   if (!items.length) return res.status(404).json({ error: "Ei sopivia käännöstehtäviä" });
+  recordSeenSeedItems(userId, items.map(x => x.id)).catch(() => {});
   res.json({
     exercises: items.map(({ id, topic, cefr, prompt_fi, hint_fi }) =>
       ({ id, topic, cefr, prompt_fi, hint_fi })
@@ -358,8 +394,11 @@ router.post("/kaannos", requireAuth, async (req, res) => {
 router.post("/lauseen-muodostus", requireAuth, async (req, res) => {
   const { topic, cefr, count = 3 } = req.body;
   const clamp = Math.max(1, Math.min(10, Number(count) || 3));
-  const items = pickFromSeed("sentenceConstruction", { topic, cefr, count: clamp });
+  const userId = req.user.userId;
+  const excludeIds = await getSeenSeedIds(userId);
+  const items = pickFromSeed("sentenceConstruction", { topic, cefr, count: clamp, excludeIds });
   if (!items.length) return res.status(404).json({ error: "Ei sopivia lauseenmuodostustehtäviä" });
+  recordSeenSeedItems(userId, items.map(x => x.id)).catch(() => {});
   res.json({
     exercises: items.map(({ id, topic, cefr, required_words, prompt_fi, hint_fi }) =>
       ({ id, topic, cefr, required_words, prompt_fi, hint_fi })
@@ -942,7 +981,7 @@ router.get("/adaptive-state", requireAuth, async (req, res) => {
 // ─── Generate adaptive exercise ─────────────────────────────────────────────
 
 router.post("/adaptive-exercise", requireAuth, aiLimiter, checkMonthlyCostLimit, async (req, res) => {
-  const { topic = "vocab", count = 4, language = "spanish", recentTypes = [] } = req.body;
+  const { topic: reqTopic, count = 4, language = "spanish", recentTypes = [], mode = "normaali" } = req.body;
 
   if (!VALID_LANGUAGES.has(language)) return res.status(400).json({ error: "Virheellinen kieli" });
   const clampedCount = Math.max(1, Math.min(8, Number(count) || 4));
@@ -954,7 +993,15 @@ router.post("/adaptive-exercise", requireAuth, aiLimiter, checkMonthlyCostLimit,
     const levelData = await getUserLevel(userId);
     const level = levelData.current_level;
 
-    // 2. Get session scaffold state
+    // 2. Resolve topic — use composer when caller doesn't specify one
+    let topic = reqTopic;
+    if (!topic) {
+      const { slots } = await composeSession({ userId, mode, forceTopic: null });
+      const newSlot = slots.find(s => s.type === "new") || slots[0];
+      topic = newSlot?.topic || "vocab";
+    }
+
+    // 3. Get session scaffold state
     const sessionState = await getSessionState(userId, topic, level);
     const scaffoldLevel = sessionState.scaffold_level;
     const scaffold = describeScaffold(scaffoldLevel);

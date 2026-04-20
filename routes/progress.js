@@ -187,10 +187,21 @@ router.get("/dashboard", requireAuth, async (req, res) => {
   const pro = await isPro(userId);
   const aiUsage = await getMonthlyUsage(userId);
 
+  // Stale topics: in_progress with no activity in last 7 days
+  const { data: masteryRows } = await supabase
+    .from("user_mastery")
+    .select("topic, status, updated_at")
+    .eq("user_id", userId)
+    .eq("status", "in_progress");
+
+  const staleTopics = (masteryRows || [])
+    .filter(r => Math.floor((nowMs - new Date(r.updated_at).getTime()) / DAY_MS) >= 7)
+    .map(r => r.topic);
+
   res.json({
     totalSessions, modeStats, recent, chartData, estLevel,
     streak, weekSessions, prevWeekSessions, suggestedLevel, modeDaysAgo, pro,
-    aiUsage,
+    aiUsage, staleTopics,
   });
 });
 
