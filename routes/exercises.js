@@ -18,6 +18,7 @@ import { dispatchGrade } from "../lib/grading/dispatcher.js";
 import { validateGrammarBatch } from "../lib/grammarScope.js";
 import { getSessionState, processAnswer, describeScaffold } from "../lib/scaffoldEngine.js";
 import { pickExerciseType, composePrompt, getMaxTokens } from "../lib/exerciseComposer.js";
+import { pickFromSeed, seedCounts } from "../lib/seedBank.js";
 import { topicLabel, VALID_TOPICS } from "../lib/mistakeTaxonomy.js";
 import { getUserPath, recordMasteryAttempt, getTopicByKey, getMasteredTopics, LEARNING_PATH, MASTERY_TEST_SIZE } from "../lib/learningPath.js";
 
@@ -269,11 +270,14 @@ router.post("/grade", async (req, res) => {
   res.json({ grade, pct, correct, total });
 });
 
-// ─── Per-item advisory grading dispatcher ──────────────────────────────────
-// NEVER trusts client-reported `correct`. Recomputes from the submission.
-// See lib/grading/dispatcher.js + lib/grading/monivalinta.js for the
-// override-#1 monivalinta advisory rationale. New types register their
-// own grader in subsequent Gate B–D commits.
+// ─── Per-item grading dispatcher ───────────────────────────────────────────
+// Authoritative for all registered types — the server computes `correct`,
+// never echoes it from the client submission.
+//
+// Registered types (lib/grading/dispatcher.js):
+//   monivalinta   — advisory (indices supplied by client; no server-stored answer)
+//   aukkotehtava  — authoritative (looks up answer from seed bank by ID)
+//   yhdistaminen  — authoritative (looks up correct pairs from seed bank by IDs)
 router.post("/grade/advisory", (req, res) => {
   const { type, exerciseId, payload } = req.body || {};
   if (typeof type !== "string" || !type) {
@@ -283,14 +287,90 @@ router.post("/grade/advisory", (req, res) => {
   if (!result.ok) {
     return res.status(400).json({ error: result.error });
   }
+  // Forward all grader fields. Each grader defines its own response shape;
+  // the common fields (correct, band, score, maxScore) are always present.
+  const { ok: _ok, ...body } = result;
+  res.json(body);
+});
+
+// ─── Seed-based exercise endpoints ────────────────────────────────────────
+//
+// These serve from the curated JSON seed bank.  The correct answer is NEVER
+// included in the HTTP response — grading goes through /api/grade/advisory
+// which looks up the answer server-side via seedBank.getSeedItemById.
+//
+// Endpoint contract:
+//   request:  { topic?, cefr?, count? }
+//   response: { exercises: [...], source: "seed" }
+
+// POST /api/aukkotehtava
+// Returns gap-fill items.  Fields stripped from response: answer, alt_answers,
+// explanation_fi (revealed by the grader response after submission).
+router.post("/aukkotehtava", requireAuth, async (req, res) => {
+  const { topic, cefr, count = 5 } = req.body;
+  const clamp = Math.max(1, Math.min(20, Number(count) || 5));
+  const items = pickFromSeed("aukkotehtava", { topic, cefr, count: clamp });
+  if (!items.length) return res.status(404).json({ error: "Ei sopivia aukkotehtäviä" });
   res.json({
-    correct: result.correct,
-    band: result.band,
-    score: result.score,
-    maxScore: result.maxScore,
-    chosenIndex: result.chosenIndex,
-    correctIndex: result.correctIndex,
+    exercises: items.map(({ id, topic, cefr, sentence, hint_fi }) =>
+      ({ id, topic, cefr, sentence, hint_fi })
+    ),
+    source: "seed",
   });
+});
+
+// POST /api/yhdistaminen
+// Returns a set of matching pairs.  The Finnish options are shuffled so the
+// client can render them in a different order from the Spanish column.
+// Fields stripped: nothing structural, but the grader re-verifies from seed.
+router.post("/yhdistaminen", requireAuth, async (req, res) => {
+  const { topic, cefr, pairCount = 5 } = req.body;
+  const clamp = Math.max(2, Math.min(8, Number(pairCount) || 5));
+  const items = pickFromSeed("matching", { topic, cefr, count: clamp });
+  if (!items.length) return res.status(404).json({ error: "Ei sopivia pareja" });
+  const shuffledFi = [...items.map(x => x.fi)].sort(() => Math.random() - 0.5);
+  res.json({
+    items: items.map(({ id, topic, cefr, es }) => ({ id, topic, cefr, es })),
+    shuffledFi,
+    source: "seed",
+  });
+});
+
+// POST /api/kaannos
+// Returns Finnish→Spanish translation prompts.  answer and alt_answers are
+// withheld; grading uses /api/grade-translate (AI) or a future kaannos grader.
+router.post("/kaannos", requireAuth, async (req, res) => {
+  const { topic, cefr, count = 3 } = req.body;
+  const clamp = Math.max(1, Math.min(10, Number(count) || 3));
+  const items = pickFromSeed("translation", { topic, cefr, count: clamp });
+  if (!items.length) return res.status(404).json({ error: "Ei sopivia käännöstehtäviä" });
+  res.json({
+    exercises: items.map(({ id, topic, cefr, prompt_fi, hint_fi }) =>
+      ({ id, topic, cefr, prompt_fi, hint_fi })
+    ),
+    source: "seed",
+  });
+});
+
+// POST /api/lauseen-muodostus
+// Returns sentence-construction prompts.  sample_answer is withheld.
+// Grading: client submits via /api/grade-translate (AI evaluates free text).
+router.post("/lauseen-muodostus", requireAuth, async (req, res) => {
+  const { topic, cefr, count = 3 } = req.body;
+  const clamp = Math.max(1, Math.min(10, Number(count) || 3));
+  const items = pickFromSeed("sentenceConstruction", { topic, cefr, count: clamp });
+  if (!items.length) return res.status(404).json({ error: "Ei sopivia lauseenmuodostustehtäviä" });
+  res.json({
+    exercises: items.map(({ id, topic, cefr, required_words, prompt_fi, hint_fi }) =>
+      ({ id, topic, cefr, required_words, prompt_fi, hint_fi })
+    ),
+    source: "seed",
+  });
+});
+
+// GET /api/seed-counts — diagnostics / health
+router.get("/seed-counts", requireAuth, (_req, res) => {
+  res.json(seedCounts);
 });
 
 // ─── Grammar exercises ─────────────────────────────────────────────────────
