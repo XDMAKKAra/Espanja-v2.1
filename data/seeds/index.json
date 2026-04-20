@@ -1,0 +1,66 @@
+{
+  "version": "2.0.0",
+  "generated": "2026-04-20",
+  "files": [
+    {
+      "file": "vocab.json",
+      "type": "vocab",
+      "count": 500,
+      "description": "Vocabulary items with topic, CEFR, definitions"
+    },
+    {
+      "file": "aukkotehtava.json",
+      "type": "aukkotehtava",
+      "count": 480,
+      "topics": 12,
+      "items_per_topic": 40,
+      "description": "Gap-fill sentences: answer replaces ___ blank"
+    },
+    {
+      "file": "matching.json",
+      "type": "yhdistaminen",
+      "count": 480,
+      "topics": 12,
+      "items_per_topic": 40,
+      "description": "Spanish–Finnish pairs for matching exercises; engine groups 4–6 per card"
+    },
+    {
+      "file": "translation.json",
+      "type": "kaannos",
+      "count": 240,
+      "topics": 12,
+      "items_per_topic": 20,
+      "description": "Finnish prompt → student writes Spanish translation"
+    },
+    {
+      "file": "sentence-construction.json",
+      "type": "lauseen_muodostus",
+      "count": 240,
+      "topics": 12,
+      "items_per_topic": 20,
+      "description": "required_words[] must appear in student's Spanish sentence"
+    },
+    {
+      "file": "reading-passages.json",
+      "type": "tekstinymmarrys",
+      "count": 60,
+      "topics": 20,
+      "items_per_topic": 3,
+      "description": "80–150 word Spanish passages with Finnish comprehension questions"
+    },
+    {
+      "file": "writing-prompts.json",
+      "type": "writing",
+      "count": 30,
+      "description": "Finnish-language writing task prompts with key_elements and hint_vocab"
+    }
+  ],
+  "topics": [
+    "ser_estar", "hay_estar", "preterite_imperfect", "subjunctive",
+    "conditional", "pronouns",
+    "koulu", "perhe", "terveys", "matkustaminen", "ruoka", "tyoelama"
+  ],
+  "cefr_distribution": {
+    "note": "All exercise types target ~A2 40% / B1 40% / B2 20%"
+  }
+}
