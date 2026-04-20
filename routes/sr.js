@@ -1,60 +1,25 @@
 import { Router } from "express";
 import supabase from "../supabase.js";
 import { requireAuth } from "../middleware/auth.js";
+import { sm2, bandToQuality } from "../lib/scheduler.js";
 
 const router = Router();
-
-// ─── SM-2 algorithm ────────────────────────────────────────────────────────
-
-function sm2(card, grade) {
-  let { ease_factor, interval_days, repetitions } = card;
-
-  if (grade < 3) {
-    // Failed: reset
-    repetitions = 0;
-    interval_days = 1;
-  } else {
-    // Passed
-    repetitions += 1;
-    if (repetitions === 1) {
-      interval_days = 1;
-    } else if (repetitions === 2) {
-      interval_days = 6;
-    } else {
-      interval_days = Math.round(interval_days * ease_factor);
-    }
-  }
-
-  // Update ease factor (min 1.3)
-  ease_factor += 0.1 - (5 - grade) * (0.08 + (5 - grade) * 0.02);
-  if (ease_factor < 1.3) ease_factor = 1.3;
-
-  // Next review date
-  const next_review = new Date();
-  next_review.setDate(next_review.getDate() + interval_days);
-
-  return {
-    ease_factor: Math.round(ease_factor * 100) / 100,
-    interval_days,
-    repetitions,
-    next_review: next_review.toISOString().slice(0, 10),
-    last_grade: grade,
-  };
-}
 
 // ─── POST /api/sr/review ───────────────────────────────────────────────────
 
 router.post("/review", requireAuth, async (req, res) => {
-  const { word, question, language = "spanish", grade } = req.body;
+  const { word, question, language = "spanish", grade, band, topic } = req.body;
 
-  if (!word || grade === undefined || grade < 0 || grade > 5) {
-    return res.status(400).json({ error: "word ja grade (0-5) vaaditaan" });
+  // Accept either legacy numeric grade or new band string
+  const quality = band ? bandToQuality(band) : grade;
+
+  if (!word || quality === undefined || quality < 0 || quality > 5) {
+    return res.status(400).json({ error: "word ja grade (0-5) tai band vaaditaan" });
   }
 
   const userId = req.user.userId;
 
   try {
-    // Get existing card or create default
     const { data: existing } = await supabase
       .from("sr_cards")
       .select("*")
@@ -67,21 +32,34 @@ router.post("/review", requireAuth, async (req, res) => {
       ease_factor: 2.5,
       interval_days: 0,
       repetitions: 0,
+      reviews_total: 0,
+      reviews_correct: 0,
     };
 
     const previousInterval = current.interval_days || 0;
-    const updated = sm2(current, grade);
+    const updated = sm2(current, quality);
+    const now = new Date().toISOString();
+
+    const upsertPayload = {
+      user_id: userId,
+      word,
+      question: question || word,
+      language,
+      ...updated,
+      last_band: band || null,
+      reviews_total: (current.reviews_total || 0) + 1,
+      reviews_correct: (current.reviews_correct || 0) + (quality >= 3 ? 1 : 0),
+      first_reviewed_at: current.first_reviewed_at || now,
+      updated_at: now,
+    };
+
+    if (topic) upsertPayload.topic = topic;
+    if (updated.state === "mastered" && !current.mastered_at) upsertPayload.mastered_at = now;
+    if (updated.state === "lapsed") upsertPayload.lapsed_at = now;
 
     const { error } = await supabase
       .from("sr_cards")
-      .upsert({
-        user_id: userId,
-        word,
-        question: question || word,
-        language,
-        ...updated,
-        updated_at: new Date().toISOString(),
-      }, { onConflict: "user_id,word,language" });
+      .upsert(upsertPayload, { onConflict: "user_id,word,language" });
 
     if (error) throw error;
 
