@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Puheo — Cuaderno direction preview</title>
+
+  <!-- Crimson Pro 400i/600/700 + Nunito 400/500/600/700 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,600;0,700;1,600&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── Cuaderno tokens (light mode) ──────────────────────── */
+    :root {
+      --bg:            #f5eedb;
+      --surface:       #ece5ce;
+      --surface-2:     #e0d8bf;
+      --border:        #c8bfa6;
+      --border-strong: #a89f84;
+
+      --text:        #2a1f0e;
+      --text-muted:  #6b5940;
+      --text-faint:  #9c8c70;
+
+      /* Mustard gold — warm scholarly accent */
+      --brand:       #b07e08;
+      --brand-dark:  #8a6206;
+      --brand-light: #e0a820;
+      --brand-glow:  rgba(176, 126, 8, 0.18);
+
+      --error:   #b83030;
+      --success: #2a7a40;
+      --warn:    #a86818;
+
+      --font-serif: 'Crimson Pro', Georgia, serif;
+      --font-body:  'Nunito', system-ui, sans-serif;
+
+      --r-sm: 5px;
+      --r-md: 10px;
+      --r-lg: 16px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* Subtle paper texture */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Warm vignette from top */
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 200px;
+      background: linear-gradient(to bottom, rgba(176,126,8,0.06), transparent);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── Nav ──────────────────────────────────────────────── */
+    .nav {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 48px;
+      height: 64px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(245, 238, 219, 0.92);
+      backdrop-filter: blur(6px);
+    }
+
+    .nav-logo {
+      font-family: var(--font-serif);
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: -0.01em;
+    }
+
+    .nav-logo span { color: var(--brand); }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .nav-link {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 600;
+      transition: color 150ms;
+    }
+    .nav-link:hover { color: var(--text); }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .nav-login {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 600;
+      transition: color 150ms;
+    }
+    .nav-login:hover { color: var(--text); }
+
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 20px;
+      background: var(--text);
+      color: var(--bg);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.875rem;
+      border-radius: var(--r-md);
+      transition: background 150ms, box-shadow 150ms;
+      letter-spacing: 0.01em;
+    }
+    .nav-cta:hover {
+      background: #1a1005;
+      box-shadow: 0 4px 16px rgba(42, 31, 14, 0.2);
+    }
+
+    /* ── Hero ─────────────────────────────────────────────── */
+    .hero {
+      position: relative;
+      z-index: 1;
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 88px 48px 72px;
+      text-align: center;
+    }
+
+    .hero-tag {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--brand);
+      margin-bottom: 24px;
+    }
+
+    /* Decorative ruled line under tag */
+    .hero-tag::after {
+      content: '';
+      display: block;
+      width: 40px;
+      height: 2px;
+      background: var(--brand);
+      margin: 8px auto 0;
+      opacity: 0.5;
+    }
+
+    .hero h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(2.4rem, 5vw, 3.5rem);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+      color: var(--text);
+      margin-bottom: 20px;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--brand);
+      /* Slight underline in mustard — editorial touch */
+      text-decoration: underline;
+      text-decoration-color: rgba(176, 126, 8, 0.35);
+      text-underline-offset: 4px;
+    }
+
+    .hero-sub {
+      font-size: 1rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+      margin-bottom: 36px;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* ── Buttons ──────────────────────────────────────────── */
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 36px;
+      flex-wrap: wrap;
+    }
+
+    .btn-hero {
+      display: inline-flex;
+      align-items: center;
+      padding: 13px 28px;
+      background: var(--text);
+      color: var(--bg);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1rem;
+      border-radius: var(--r-md);
+      transition: background 150ms, box-shadow 200ms, transform 100ms;
+    }
+    .btn-hero:hover {
+      background: #1a1005;
+      box-shadow: 0 6px 24px rgba(42,31,14,0.25);
+      transform: translateY(-1px);
+    }
+
+    .btn-hero-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 12px 22px;
+      background: transparent;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9375rem;
+      border-radius: var(--r-md);
+      border: 1.5px solid var(--border-strong);
+      transition: color 150ms, border-color 150ms;
+    }
+    .btn-hero-secondary:hover {
+      color: var(--text);
+      border-color: var(--text-muted);
+    }
+
+    /* ── Trust strip ──────────────────────────────────────── */
+    .hero-trust-strip {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      list-style: none;
+      font-size: 0.8125rem;
+      color: var(--text-faint);
+      flex-wrap: wrap;
+    }
+
+    .hero-trust-urgency .hero-trust-num {
+      font-weight: 700;
+      color: var(--warn);
+    }
+
+    .trust-dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--border-strong);
+    }
+
+    /* ── Lined paper card effect ──────────────────────────── */
+    .cards-row {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      gap: 16px;
+      max-width: 860px;
+      margin: 0 auto 64px;
+      padding: 0 48px;
+    }
+
+    .stat-card {
+      flex: 1;
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: 28px 20px;
+      text-align: center;
+      /* Subtle ruled-paper lines */
+      background-image: repeating-linear-gradient(
+        to bottom,
+        transparent,
+        transparent 23px,
+        rgba(168, 159, 132, 0.12) 24px
+      );
+    }
+
+    .stat-card-value {
+      font-family: var(--font-serif);
+      font-size: 2.1rem;
+      font-weight: 700;
+      color: var(--brand);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .stat-card-label {
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    /* ── Section divider ──────────────────────────────────── */
+    .section-divider {
+      position: relative;
+      z-index: 1;
+      border: none;
+      border-top: 1.5px solid var(--border);
+      max-width: 860px;
+      margin: 0 auto 40px;
+    }
+
+    /* ── Palette swatches ─────────────────────────────────── */
+    .swatch-strip {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      gap: 8px;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 48px 40px;
+      flex-wrap: wrap;
+    }
+
+    .swatch { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+
+    .swatch-color {
+      width: 56px;
+      height: 56px;
+      border-radius: var(--r-md);
+      border: 1.5px solid var(--border);
+    }
+
+    .swatch-name {
+      font-size: 0.6875rem;
+      color: var(--text-faint);
+      text-align: center;
+      line-height: 1.3;
+    }
+
+    /* ── Type specimen ────────────────────────────────────── */
+    .type-specimen {
+      position: relative;
+      z-index: 1;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 48px 64px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .specimen-block {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: 24px;
+    }
+
+    .specimen-label {
+      font-size: 0.6875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-faint);
+      margin-bottom: 12px;
+    }
+
+    .specimen-display {
+      font-family: var(--font-serif);
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+    .specimen-display em {
+      font-style: italic;
+      color: var(--brand);
+      text-decoration: underline;
+      text-decoration-color: rgba(176,126,8,0.3);
+      text-underline-offset: 3px;
+    }
+
+    .specimen-chars {
+      font-family: var(--font-serif);
+      font-size: 1rem;
+      color: var(--text-muted);
+    }
+
+    .specimen-body-text {
+      font-family: var(--font-body);
+      font-size: 0.9375rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    .specimen-body-chars {
+      margin-top: 10px;
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      color: var(--text-faint);
+    }
+
+    /* ── State demo ───────────────────────────────────────── */
+    .state-demo {
+      position: relative;
+      z-index: 1;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 48px 48px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .state-pill {
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 0.8125rem;
+      font-weight: 700;
+    }
+
+    .state-pill.error   { background: rgba(184,48,48,0.10);  color: #a82020; border: 1.5px solid rgba(184,48,48,0.25); }
+    .state-pill.success { background: rgba(42,122,64,0.10);  color: #236a38; border: 1.5px solid rgba(42,122,64,0.25); }
+    .state-pill.warn    { background: rgba(168,104,24,0.12); color: #8a5010; border: 1.5px solid rgba(168,104,24,0.3); }
+
+  </style>
+</head>
+<body>
+
+  <!-- ── Nav ─────────────────────────────────────────────── -->
+  <nav class="nav">
+    <a href="#" class="nav-logo">Puhe<span>o</span></a>
+    <div class="nav-links">
+      <a href="#" class="nav-link">Harjoitukset</a>
+      <a href="#" class="nav-link">Hinnat</a>
+    </div>
+    <div class="nav-right">
+      <a href="#" class="nav-login">Kirjaudu sisään</a>
+      <a href="#" class="nav-cta">Aloita ilmaiseksi</a>
+    </div>
+  </nav>
+
+  <!-- ── Hero ──────────────────────────────────────────────── -->
+  <section class="hero">
+    <div class="hero-tag">Espanja &middot; Lyhyt oppimäärä &middot; YO-koe 2026</div>
+    <h1>Paranna espanjan YO-arvosanaa<br/><em>tekoälyllä.</em></h1>
+    <p class="hero-sub">
+      Personoidut harjoitukset &middot; YTL-rubriikin mukainen AI-palaute &middot; täyskoe-simulaatio.
+    </p>
+    <div class="hero-actions">
+      <a href="#" class="btn-hero">Aloita ilmaiseksi — 2 min</a>
+      <a href="#" class="btn-hero-secondary">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+        Testaa tasosi
+      </a>
+    </div>
+    <ul class="hero-trust-strip">
+      <li class="hero-trust-item hero-trust-urgency">
+        <span class="hero-trust-num">161</span>
+        <span>päivää YO-kokeeseen</span>
+      </li>
+      <li class="trust-dot"></li>
+      <li>Ei luottokorttia</li>
+      <li class="trust-dot"></li>
+      <li>YTL-validoitu rubriikki</li>
+    </ul>
+  </section>
+
+  <!-- ── Stat cards ─────────────────────────────────────────── -->
+  <div class="cards-row">
+    <div class="stat-card">
+      <div class="stat-card-value">4 680</div>
+      <div class="stat-card-label">Harjoitustehtävää</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-value">M → E</div>
+      <div class="stat-card-label">Mediaaniparannus</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-value">28.9.</div>
+      <div class="stat-card-label">YO-koe 2026</div>
+    </div>
+  </div>
+
+  <hr class="section-divider" />
+
+  <!-- ── Palette swatches ───────────────────────────────────── -->
+  <div class="swatch-strip">
+    <div class="swatch"><div class="swatch-color" style="background:#f5eedb"></div><div class="swatch-name">bg<br/>#f5eedb</div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#ece5ce"></div><div class="swatch-name">surface<br/>#ece5ce</div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#2a1f0e"></div><div class="swatch-name">text<br/>#2a1f0e</div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#b07e08"></div><div class="swatch-name">brand<br/>#b07e08</div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#6b5940"></div><div class="swatch-name">muted<br/>#6b5940</div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#b83030"></div><div class="swatch-name">error<br/>#b83030</div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#2a7a40"></div><div class="swatch-name">success<br/>#2a7a40</div></div>
+  </div>
+
+  <!-- ── Type specimen ──────────────────────────────────────── -->
+  <div class="type-specimen">
+    <div class="specimen-block">
+      <div class="specimen-label">Headline — Crimson Pro 700 / Italic</div>
+      <div class="specimen-display">Espanja on <em>avain</em></div>
+      <div class="specimen-chars">Ä Ö Á É Í Ó Ú Ñ ¿ ¡ á é í ó ú ñ</div>
+    </div>
+    <div class="specimen-block">
+      <div class="specimen-label">Body — Nunito 400/600</div>
+      <div class="specimen-body-text">Preterito indefinido vs. imperfecto. Ojalá que tengas suerte en el examen. Ser vs. estar — tärkein ero.</div>
+      <div class="specimen-body-chars">Ä Ö Á É ñ ¿ ¡ — kaikki tuettu</div>
+    </div>
+  </div>
+
+  <!-- ── State colors ───────────────────────────────────────── -->
+  <div class="state-demo">
+    <span class="state-pill error">Väärä vastaus</span>
+    <span class="state-pill success">Taydellinen</span>
+    <span class="state-pill warn">Lähellä</span>
+  </div>
+
+</body>
+</html>
