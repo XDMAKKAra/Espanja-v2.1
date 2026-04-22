@@ -2617,6 +2617,108 @@ button.dash-hero-grade:hover { border-color: var(--gold); }
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
+   ONBOARDING S5 — GOAL + PUSH
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.ob-goal-inner {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: max(40px, 8vh) 24px 48px;
+}
+.ob-goal-section { margin-bottom: 24px; }
+.ob-goal-eyebrow {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin: 0 0 14px;
+}
+.ob-goal-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.ob-goal-card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 16px 18px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  text-align: left;
+  cursor: pointer;
+  font-family: var(--body);
+  color: var(--text);
+  transition: border-color 120ms, background 120ms;
+}
+.ob-goal-card:hover { border-color: var(--brand-light); }
+.ob-goal-card.selected {
+  border-color: var(--brand);
+  background: color-mix(in srgb, var(--brand-light) 10%, var(--surface));
+}
+.ob-goal-name {
+  font-weight: 600;
+  font-size: 16px;
+}
+.ob-goal-minutes {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text-muted);
+}
+.ob-goal-divider {
+  width: 80px;
+  height: 1px;
+  background: var(--border);
+  margin: 24px auto;
+}
+.ob-goal-reminder-body {
+  font-family: var(--body);
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.55;
+  margin: 0 0 14px;
+  max-width: 440px;
+}
+.ob-goal-push {
+  width: 100%;
+  max-width: 360px;
+}
+.ob-goal-push:disabled { opacity: 0.7; cursor: default; }
+.ob-goal-push-fallback {
+  font-family: var(--body);
+  font-size: 13px;
+  color: var(--text-muted);
+  font-style: italic;
+  margin: 10px 0 0;
+}
+.ob-goal-actions {
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: center;
+}
+#ob-goal-done { width: 100%; max-width: 360px; }
+.ob-goal-skip {
+  background: transparent; border: none;
+  color: var(--text-muted);
+  font-family: var(--body);
+  font-size: 14px;
+  padding: 8px 16px;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.ob-goal-skip:hover { color: var(--text); }
+.ob-goal-skip:disabled { opacity: 0.4; cursor: not-allowed; }
+@media (min-width: 640px) {
+  .ob-goal-cards { flex-direction: row; }
+  .ob-goal-card { flex: 1; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
    FIRST-EXERCISE CELEBRATION OVERLAY
    ═══════════════════════════════════════════════════════════════════════════ */
 

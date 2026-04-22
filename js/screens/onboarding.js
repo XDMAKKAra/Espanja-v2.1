@@ -14,6 +14,7 @@ export function initOnboarding({ loadDashboard, loadNextBatch }) {
   _deps = { loadDashboard, loadNextBatch };
   wireWelcome();
   wirePath();
+  wireGoal();
   wireAppCountdown();
 }
 
@@ -155,11 +156,10 @@ async function startFirstExercise() {
   }
 }
 
-// ─── First-session celebration overlay ─────────────────────────────────────
+// ─── First-session celebration overlay → S5 ────────────────────────────────
 
 // Vocab/grammar result screens call this once on the first-ever completion.
-// Returns a promise that resolves after the 3 s dwell so the caller can
-// continue rendering the result screen underneath.
+// Overlay dismisses after 3 s or tap, then routes into S5 goal screen.
 export function maybeShowFirstCelebration() {
   if (!state.firstSession) return Promise.resolve();
   state.firstSession = false;
@@ -171,7 +171,7 @@ export function maybeShowFirstCelebration() {
   });
 
   const el = $("first-celebration");
-  if (!el) return Promise.resolve();
+  if (!el) { showGoal(); return Promise.resolve(); }
   el.classList.remove("hidden");
 
   return new Promise((resolve) => {
@@ -181,11 +181,108 @@ export function maybeShowFirstCelebration() {
       done = true;
       el.classList.add("hidden");
       el.removeEventListener("click", finish);
+      showGoal();
       resolve();
     };
     el.addEventListener("click", finish, { once: true });
     setTimeout(finish, 3000);
   });
+}
+
+// ─── S5 Goal + push opt-in ─────────────────────────────────────────────────
+
+const GOAL_MAP = {
+  kevyt:         { session_length: 5,  weekly_minutes: 35 },
+  normaali:      { session_length: 15, weekly_minutes: 105 },
+  intensiivinen: { session_length: 30, weekly_minutes: 210 },
+};
+let selectedGoal = "normaali";
+
+function showGoal() {
+  renderAppCountdown();
+  show("screen-ob-goal");
+  track("onboarding_goal_viewed", {});
+
+  // Hide push button if Notification API unavailable (Safari iOS pre-16.4).
+  const pushBtn = $("ob-goal-push");
+  const fallback = $("ob-goal-push-fallback");
+  if (typeof Notification === "undefined") {
+    pushBtn?.classList.add("hidden");
+    fallback?.classList.remove("hidden");
+  }
+}
+
+function wireGoal() {
+  const cards = document.getElementById("ob-goal-cards");
+  const done = $("ob-goal-done");
+  const skip = $("ob-goal-skip");
+  const pushBtn = $("ob-goal-push");
+
+  if (cards && !cards.dataset.wired) {
+    cards.dataset.wired = "1";
+    cards.addEventListener("click", (e) => {
+      const card = e.target.closest(".ob-goal-card");
+      if (!card) return;
+      selectedGoal = card.dataset.goal;
+      cards.querySelectorAll(".ob-goal-card").forEach((c) => {
+        const isSel = c === card;
+        c.classList.toggle("selected", isSel);
+        c.setAttribute("aria-checked", String(isSel));
+        const name = c.querySelector(".ob-goal-name");
+        if (name) name.textContent = name.textContent.replace(" ✓", "") + (isSel ? " ✓" : "");
+      });
+    });
+  }
+
+  if (pushBtn && !pushBtn.dataset.wired) {
+    pushBtn.dataset.wired = "1";
+    pushBtn.addEventListener("click", async () => {
+      if (typeof Notification === "undefined") return;
+      track("push_permission_requested", {});
+      try {
+        const perm = await Notification.requestPermission();
+        track("push_permission_" + perm, {});
+        if (perm === "granted") {
+          await postProfile({ notification_preference: "push" });
+          pushBtn.disabled = true;
+          pushBtn.textContent = "Muistutukset päällä ✓";
+        }
+      } catch { /* silent */ }
+    });
+  }
+
+  if (done && !done.dataset.wired) {
+    done.dataset.wired = "1";
+    done.addEventListener("click", async () => {
+      done.disabled = true;
+      const g = GOAL_MAP[selectedGoal] || GOAL_MAP.normaali;
+      track("onboarding_goal_set", { goal: selectedGoal });
+      await postProfile({
+        preferred_session_length: g.session_length,
+        weekly_goal_minutes: g.weekly_minutes,
+        onboarding_completed: true,
+      });
+      track("onboarding_completed", {
+        goal: selectedGoal,
+        level: state.level,
+        time_total_ms: (() => {
+          const s = Number(localStorage.getItem("puheo_signup_at") || 0);
+          return s ? Date.now() - s : null;
+        })(),
+      });
+      if (_deps.loadDashboard) _deps.loadDashboard();
+    });
+  }
+
+  if (skip && !skip.dataset.wired) {
+    skip.dataset.wired = "1";
+    skip.addEventListener("click", async () => {
+      skip.disabled = true;
+      track("onboarding_skipped", { step: 5 });
+      await postProfile({ onboarding_completed: true });
+      if (_deps.loadDashboard) _deps.loadDashboard();
+    });
+  }
 }
 
 // ─── Persistent top-bar countdown ──────────────────────────────────────────

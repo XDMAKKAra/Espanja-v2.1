@@ -206,6 +206,47 @@
     </div>
   </div>
 
+  <!-- SCREEN: Onboarding S5 — Goal + push opt-in -->
+  <div id="screen-ob-goal" class="screen">
+    <div class="ob-goal-inner">
+      <section class="ob-goal-section">
+        <p class="ob-goal-eyebrow">Päivittäinen tavoite</p>
+        <div class="ob-goal-cards" id="ob-goal-cards" role="radiogroup" aria-label="Päivittäinen harjoitteluaika">
+          <button class="ob-goal-card" data-goal="kevyt" role="radio" aria-checked="false" type="button">
+            <span class="ob-goal-name">Kevyt</span>
+            <span class="ob-goal-minutes">5 min / päivä</span>
+          </button>
+          <button class="ob-goal-card selected" data-goal="normaali" role="radio" aria-checked="true" type="button">
+            <span class="ob-goal-name">Normaali ✓</span>
+            <span class="ob-goal-minutes">15 min / päivä</span>
+          </button>
+          <button class="ob-goal-card" data-goal="intensiivinen" role="radio" aria-checked="false" type="button">
+            <span class="ob-goal-name">Intensiivinen</span>
+            <span class="ob-goal-minutes">30 min / päivä</span>
+          </button>
+        </div>
+      </section>
+
+      <div class="ob-goal-divider"></div>
+
+      <section class="ob-goal-section">
+        <p class="ob-goal-eyebrow">Muistutukset</p>
+        <p class="ob-goal-reminder-body">
+          Muistutamme kerran päivässä, jos streak on vaarassa. Voit peruuttaa milloin tahansa.
+        </p>
+        <button class="btn-secondary ob-goal-push" id="ob-goal-push" type="button">
+          Salli muistutukset
+        </button>
+        <p class="ob-goal-push-fallback hidden" id="ob-goal-push-fallback">Muistutamme sähköpostilla.</p>
+      </section>
+
+      <div class="ob-goal-actions">
+        <button class="btn-primary" id="ob-goal-done" data-cta="onboarding-goal">Valmis &rarr;</button>
+        <button class="ob-goal-skip" id="ob-goal-skip" type="button">Ohita tämä</button>
+      </div>
+    </div>
+  </div>
+
   <!-- SCREEN: Onboarding S3 — Path -->
   <div id="screen-ob-path" class="screen">
     <div class="ob-path-inner">
