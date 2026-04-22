@@ -101,14 +101,11 @@ describe("toast — runtime", () => {
   });
 });
 
-describe("onboarding migrated from alert() to toast.error", () => {
-  it("no alert('Tallennus...') call remains", () => {
-    expect(onboardingJs).not.toMatch(/alert\(\s*["']Tallennus/);
-  });
-  it("imports toast from ui/toast.js", () => {
-    expect(onboardingJs).toMatch(/import\s+\{\s*toast\s*\}\s+from\s+["']\.\.\/ui\/toast\.js["']/);
-  });
-  it("calls toast.error on save failure", () => {
-    expect(onboardingJs).toMatch(/toast\.error\(\s*["']Tallennus/);
+describe("onboarding — no alert() regression", () => {
+  // Pass 4 stripped the profile-wizard save handler that originally held
+  // the toast.error call. The "no alert()" assertion remains — nothing in
+  // onboarding should ever use a native alert.
+  it("no alert() call remains", () => {
+    expect(onboardingJs).not.toMatch(/\balert\(/);
   });
 });
