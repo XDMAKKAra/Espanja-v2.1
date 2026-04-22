@@ -29,6 +29,23 @@
   <!-- Skip to main content -->
   <a href="#app-main" class="skip-link">Siirry sisältöön</a>
 
+  <!-- In-app waitlist modal — shown when window.__WAITLIST_MODE is true
+       (Y-tunnus pending). Replaces live checkout redirect. -->
+  <div class="app-waitlist-overlay hidden" id="app-waitlist-overlay" role="dialog" aria-modal="true" aria-labelledby="app-waitlist-title">
+    <div class="app-waitlist-modal">
+      <button class="app-waitlist-close" id="app-waitlist-close" type="button" aria-label="Sulje">×</button>
+      <h3 id="app-waitlist-title">Maksullinen tilaus avautuu pian</h3>
+      <p>Ilmoita sähköpostisi heti kun Pro-tilaus avautuu ostettavaksi. Arvioimme avauksen kesäkuussa 2026.</p>
+      <form id="app-waitlist-form" class="app-waitlist-form">
+        <input type="email" id="app-waitlist-email" placeholder="email@esimerkki.fi" required autocomplete="email" />
+        <button type="submit" class="btn-primary" id="app-waitlist-submit">Ilmoita minulle →</button>
+      </form>
+      <p class="app-waitlist-success hidden" id="app-waitlist-success">✓ Kiitos! Ilmoitamme heti kun tilaus aukeaa.</p>
+      <p class="app-waitlist-error hidden" id="app-waitlist-error"></p>
+      <button class="btn-dev-pro hidden" id="btn-dev-flip-pro" type="button">[ Flip to Pro (dev) ]</button>
+    </div>
+  </div>
+
   <!-- First-exercise celebration overlay (S4 → once per user) -->
   <div class="first-celebration hidden" id="first-celebration" role="status" aria-live="polite">
     <div class="first-celebration-card">
@@ -1510,6 +1527,10 @@
   <script>
     // Analytics config (injected server-side or set manually)
     window.__POSTHOG_KEY = "phc_pDqvRspyx5eukF7fHFz2P3oKWmNAwJXChBBCPAUsfpwE";
+    // Pass 4 Commit 9 — default to waitlist mode until /api/config/public
+    // hydrates. Fail-safe: never hit live checkout before y-tunnus.
+    window.__WAITLIST_MODE = true;
+    window.__DEV_PRO_ENABLED = false;
     window.__SENTRY_DSN = "https://7cb568cdf1a71bc8881775edab27ab86@o4511236850909184.ingest.de.sentry.io/4511236858511440";
   </script>
   <!-- SCREEN: Settings / profile editor -->

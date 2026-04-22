@@ -31,6 +31,7 @@ import srRoutes from "./routes/sr.js";
 import adaptiveRoutes from "./routes/adaptive.js";
 import pushRoutes from "./routes/push.js";
 import profileRoutes from "./routes/profile.js";
+import configRoutes from "./routes/config.js";
 import placementRoutes from "./routes/placement.js";
 import supabase from "./supabase.js";
 
@@ -127,6 +128,8 @@ app.use("/api", adaptiveRoutes);
 app.use("/api/push", pushRoutes);
 app.use("/api", profileRoutes);
 app.use("/api/placement", placementRoutes);
+app.use("/api/config", configRoutes);
+app.use("/api/dev", configRoutes);
 
 // ─── Waitlist (public, no auth) ─────────────────────────────────────────────
 app.post("/api/waitlist", async (req, res) => {

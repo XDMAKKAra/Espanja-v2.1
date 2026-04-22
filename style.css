@@ -2617,6 +2617,102 @@ button.dash-hero-grade:hover { border-color: var(--gold); }
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
+   IN-APP WAITLIST MODAL (Y-tunnus placeholder)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.app-waitlist-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 220;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: color-mix(in srgb, var(--bg) 70%, transparent);
+  backdrop-filter: blur(6px);
+}
+.app-waitlist-overlay.hidden { display: none; }
+.app-waitlist-modal {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 32px 28px 24px;
+  max-width: 420px;
+  width: 100%;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08), 0 24px 48px rgba(120,80,20,0.12);
+  text-align: center;
+}
+.app-waitlist-close {
+  position: absolute;
+  top: 10px; right: 10px;
+  background: transparent;
+  border: none;
+  font-size: 22px;
+  line-height: 1;
+  width: 32px; height: 32px;
+  color: var(--text-muted);
+  cursor: pointer;
+  border-radius: 50%;
+}
+.app-waitlist-close:hover { color: var(--text); background: color-mix(in srgb, var(--text) 8%, transparent); }
+.app-waitlist-modal h3 {
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0 0 10px;
+  color: var(--text);
+}
+.app-waitlist-modal p {
+  font-family: var(--body);
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--text-muted);
+  margin: 0 0 18px;
+}
+.app-waitlist-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.app-waitlist-form input[type="email"] {
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-family: var(--body);
+  font-size: 15px;
+  color: var(--text);
+  background: var(--bg);
+}
+.app-waitlist-form input[type="email"]:focus {
+  outline: none;
+  border-color: var(--brand);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand-light) 35%, transparent);
+}
+.app-waitlist-success {
+  color: var(--success);
+  font-weight: 500;
+  margin: 8px 0 0;
+}
+.app-waitlist-error {
+  color: var(--error);
+  font-size: 13px;
+  margin: 8px 0 0;
+}
+.btn-dev-pro {
+  margin-top: 14px;
+  background: transparent;
+  border: 1px dashed var(--text-muted);
+  color: var(--text-muted);
+  font-family: var(--mono);
+  font-size: 11px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.btn-dev-pro:hover { color: var(--text); border-color: var(--text); }
+
+/* ═══════════════════════════════════════════════════════════════════════════
    PRO UPSELL — context eyebrow
    ═══════════════════════════════════════════════════════════════════════════ */
 

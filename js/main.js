@@ -15,7 +15,7 @@ import { initDashboard, loadDashboard, navigateToMode, saveLastSettings, loadLas
 import { initVocab, loadNextBatch, startReviewSession } from "./screens/vocab.js";
 import { initGrammar, loadGrammarDrill } from "./screens/grammar.js";
 import { initReading, loadReadingTask } from "./screens/reading.js";
-import { initWriting, showProUpsell, startCheckout, openBillingPortal, loadWritingTask } from "./screens/writing.js";
+import { initWriting, showProUpsell, startCheckout, openBillingPortal, loadWritingTask, wireAppWaitlist, hydrateConfig } from "./screens/writing.js";
 import { initExam, startMockExam } from "./screens/exam.js";
 import { initFullExam, startFullExam } from "./screens/fullExam.js";
 import { initAdaptive, masteryNext, masteryDone } from "./screens/adaptive.js";
@@ -91,6 +91,8 @@ initVocab({ loadDashboard, shareResult, saveProgress });
 initGrammar({ loadDashboard, saveProgress });
 initReading({ loadDashboard, saveProgress, showProUpsell });
 initWriting({ loadDashboard, saveProgress });
+wireAppWaitlist();
+if (isLoggedIn()) hydrateConfig();
 initExam({ loadDashboard, saveProgress, shareResult });
 initFullExam({ loadDashboard, saveProgress, shareResult });
 initAdaptive({ loadDashboard });

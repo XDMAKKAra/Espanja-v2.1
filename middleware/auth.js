@@ -121,6 +121,16 @@ export async function softReadingGate(req, res, next) {
   next();
 }
 
+// Pass 4 Commit 9 — true only when req.user.email is in the TEST_PRO_EMAILS
+// union (file + env). Used by /api/config/public to gate the dev-only
+// "Flip to Pro" button visible inside the Pro upsell modal.
+export function isTestProEmail(email) {
+  if (!email) return false;
+  const envPro = parseEmailList(process.env.PRO_TEST_LIST || process.env.TEST_PRO_EMAILS);
+  const alwaysPro = new Set([...TEST_FILE.always_pro, ...envPro]);
+  return alwaysPro.has(String(email).trim().toLowerCase());
+}
+
 export async function incrementReadingPieces(userId) {
   const { data: profile } = await supabase
     .from("user_profile")

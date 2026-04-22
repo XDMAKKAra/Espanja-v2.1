@@ -97,6 +97,14 @@ function showSoftUpsellBanner(message) {
 
 export async function startCheckout() {
   trackCheckoutStarted();
+  // Pass 4 Commit 9 — until y-tunnus lands, route Pro CTAs to the waitlist
+  // modal instead of live LemonSqueezy checkout. Flag hydrated on app boot
+  // from /api/config/public.
+  if (window.__WAITLIST_MODE) {
+    track("waitlist_opened_from_upsell", { trigger: "startCheckout" });
+    openAppWaitlist();
+    return;
+  }
   $("btn-upgrade-pro").disabled = true;
   $("btn-upgrade-pro").textContent = "Ohjataan maksuun...";
   try {
@@ -115,6 +123,94 @@ export async function startCheckout() {
   } finally {
     $("btn-upgrade-pro").disabled = false;
     $("btn-upgrade-pro").textContent = "Päivitä Pro →";
+  }
+}
+
+// ─── Waitlist modal (Y-tunnus placeholder) ─────────────────────────────────
+
+function openAppWaitlist() {
+  const overlay = document.getElementById("app-waitlist-overlay");
+  if (!overlay) { alert("Maksullinen tilaus avautuu pian."); return; }
+  overlay.classList.remove("hidden");
+  document.getElementById("app-waitlist-form")?.classList.remove("hidden");
+  document.getElementById("app-waitlist-success")?.classList.add("hidden");
+  document.getElementById("app-waitlist-error")?.classList.add("hidden");
+  document.getElementById("btn-dev-flip-pro")?.classList.toggle("hidden", !window.__DEV_PRO_ENABLED);
+}
+
+// Wire once — call from initWriting so it only runs after auth boot.
+let _waitlistWired = false;
+export function wireAppWaitlist() {
+  if (_waitlistWired) return;
+  _waitlistWired = true;
+
+  const overlay = document.getElementById("app-waitlist-overlay");
+  const close = document.getElementById("app-waitlist-close");
+  const form = document.getElementById("app-waitlist-form");
+  const devBtn = document.getElementById("btn-dev-flip-pro");
+
+  close?.addEventListener("click", () => overlay?.classList.add("hidden"));
+  overlay?.addEventListener("click", (e) => {
+    if (e.target === overlay) overlay.classList.add("hidden");
+  });
+
+  form?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const emailEl = document.getElementById("app-waitlist-email");
+    const submit = document.getElementById("app-waitlist-submit");
+    const success = document.getElementById("app-waitlist-success");
+    const err = document.getElementById("app-waitlist-error");
+    err?.classList.add("hidden");
+    submit.disabled = true;
+    submit.textContent = "Lähetetään…";
+    try {
+      const res = await fetch(`${API}/api/waitlist`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: emailEl.value.trim(), product: "in-app-pro" }),
+      });
+      if (!res.ok) throw new Error("waitlist_failed");
+      track("waitlist_email_submitted", { product: "in-app-pro" });
+      form.classList.add("hidden");
+      success?.classList.remove("hidden");
+    } catch {
+      err.textContent = "Jotain meni pieleen. Yritä uudelleen.";
+      err.classList.remove("hidden");
+      submit.disabled = false;
+      submit.textContent = "Ilmoita minulle →";
+    }
+  });
+
+  devBtn?.addEventListener("click", async () => {
+    devBtn.disabled = true;
+    devBtn.textContent = "Flipattavissa…";
+    try {
+      const res = await apiFetch(`${API}/api/dev/grant-pro`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", ...authHeader() },
+      });
+      if (!res.ok) throw new Error("grant_failed");
+      track("dev_pro_flipped", {});
+      location.reload();
+    } catch {
+      devBtn.disabled = false;
+      devBtn.textContent = "[ Flip to Pro (dev) ] — epäonnistui";
+    }
+  });
+}
+
+// Hydrate feature flags from the server. Called once on app boot.
+export async function hydrateConfig() {
+  try {
+    const res = await apiFetch(`${API}/api/config/public`, { headers: authHeader() });
+    if (!res.ok) return;
+    const cfg = await res.json();
+    window.__WAITLIST_MODE = cfg.waitlist_mode !== false;
+    window.__DEV_PRO_ENABLED = cfg.dev_pro_enabled === true;
+  } catch {
+    // Fail-safe: assume waitlist mode is on when the endpoint is unreachable.
+    window.__WAITLIST_MODE = true;
+    window.__DEV_PRO_ENABLED = false;
   }
 }
 

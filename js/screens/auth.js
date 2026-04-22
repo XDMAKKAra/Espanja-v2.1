@@ -107,6 +107,12 @@ $("btn-auth-submit").addEventListener("click", async () => {
     }
     setAuth(data.token, data.refreshToken, data.email);
     _deps.updateSidebarState();
+    // Hydrate feature flags (waitlist mode + dev-Pro gate) before any Pro
+    // CTA becomes interactive — fire-and-forget, the default is already safe.
+    try {
+      const { hydrateConfig } = await import("./writing.js");
+      hydrateConfig();
+    } catch { /* silent */ }
     if (authMode === "register") {
       // Fire-and-forget: seed user_mastery from landing-page mini-diagnostic
       seedMasteryFromDiagnostic(data.token);
