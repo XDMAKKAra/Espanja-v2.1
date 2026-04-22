@@ -90,6 +90,51 @@ export async function requirePro(req, res, next) {
 }
 
 /**
+ * Reading soft→hard gate. Free users get the first 2 reading pieces, then 403.
+ * Pro users pass through. Must be used after requireAuth.
+ * Successful handlers must call incrementReadingPieces(req.user.userId) after
+ * returning a piece so the counter stays in sync with what the user saw.
+ */
+export const FREE_READING_PIECES = 2;
+export async function softReadingGate(req, res, next) {
+  const pro = await isPro(req.user.userId);
+  if (pro) {
+    req.isPro = true;
+    return next();
+  }
+  const { data: profile } = await supabase
+    .from("user_profile")
+    .select("reading_pieces_consumed")
+    .eq("user_id", req.user.userId)
+    .single();
+  const consumed = Number(profile?.reading_pieces_consumed || 0);
+  if (consumed >= FREE_READING_PIECES) {
+    return res.status(403).json({
+      error: "pro_required",
+      reason: "reading_cap_reached",
+      consumed,
+      limit: FREE_READING_PIECES,
+      message: "Olet lukenut 2 ilmaista tekstiä. Pro-tilauksella avaat loput.",
+    });
+  }
+  req.readingPiecesConsumed = consumed;
+  next();
+}
+
+export async function incrementReadingPieces(userId) {
+  const { data: profile } = await supabase
+    .from("user_profile")
+    .select("reading_pieces_consumed")
+    .eq("user_id", userId)
+    .single();
+  const next = Number(profile?.reading_pieces_consumed || 0) + 1;
+  await supabase
+    .from("user_profile")
+    .upsert({ user_id: userId, reading_pieces_consumed: next }, { onConflict: "user_id" });
+  return next;
+}
+
+/**
  * Express middleware that checks Pro status if authenticated, but allows unauthenticated requests through.
  * Returns 403 for authenticated non-Pro users.
  */

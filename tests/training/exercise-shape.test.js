@@ -78,6 +78,9 @@ vi.mock("../../middleware/auth.js", () => ({
   requirePro: (_req, _res, next) => next(),
   isPro: async () => true,
   softProGate: (_req, _res, next) => next(),
+  softReadingGate: (req, _res, next) => { req.isPro = true; next(); },
+  incrementReadingPieces: async () => 1,
+  FREE_READING_PIECES: 2,
 }));
 
 let request, app, express;

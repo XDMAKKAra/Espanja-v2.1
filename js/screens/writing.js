@@ -18,6 +18,39 @@ const SOFT_COPY = {
   frequency_cap: "",
 };
 
+// Per-trigger copy (PAYWALL.md Rule 4). Rendered into #screen-pro-upsell
+// on modal show. Eyebrow + headline vary; bullets + pricing are constant.
+const UPSELL_COPY = {
+  first_session_end: {
+    eyebrow: "Hyvä alku.",
+    headline: "Jatketaanko kokeeseen asti?",
+  },
+  locked_tile_writing: {
+    eyebrow: "Kirjoitusarvio",
+    headline: "Kirjoitusarvio tarvitsee Pro-tilauksen.",
+  },
+  locked_tile_reading: {
+    eyebrow: "Luetun ymmärtäminen",
+    headline: "Luettuasi 2 tekstiä: Pro avaa loput.",
+  },
+  daily_cap: {
+    eyebrow: "Päivän raja",
+    headline: "Pro poistaa päivittäisen rajan.",
+  },
+  week2_dashboard: {
+    eyebrow: "Nopeampi matka",
+    headline: "Pro nopeuttaa kokeeseen valmistautumista.",
+  },
+};
+
+function applyUpsellCopy(trigger) {
+  const copy = UPSELL_COPY[trigger] || UPSELL_COPY.locked_tile_writing;
+  const eyebrow = document.getElementById("pro-upsell-eyebrow");
+  const headline = document.getElementById("pro-upsell-headline");
+  if (eyebrow) eyebrow.textContent = copy.eyebrow;
+  if (headline) headline.textContent = copy.headline;
+}
+
 function readSessionCount() {
   try { return Number(localStorage.getItem(SESSION_COUNT_KEY) || 0); }
   catch { return 0; }
@@ -42,6 +75,8 @@ export function showProUpsell(trigger = UPSELL_TRIGGERS.LOCKED_TILE_WRITING) {
   }
 
   trackProUpsellShown();
+  track("pro_upsell_shown_ctx", { trigger });
+  applyUpsellCopy(trigger);
   try { localStorage.setItem(LAST_FIRED_KEY, String(Date.now())); } catch { /* silent */ }
   show("screen-pro-upsell");
 }

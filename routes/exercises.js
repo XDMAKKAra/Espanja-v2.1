@@ -8,7 +8,7 @@ import {
   VALID_LEVELS, VALID_VOCAB_TOPICS, VALID_GRAMMAR_TOPICS,
   VALID_READING_TOPICS, VALID_READING_LEVELS, VALID_LANGUAGES,
 } from "../lib/openai.js";
-import { requireAuth, requirePro } from "../middleware/auth.js";
+import { requireAuth, requirePro, softReadingGate, incrementReadingPieces } from "../middleware/auth.js";
 import { aiLimiter, aiStrictLimiter, reportLimiter } from "../middleware/rateLimit.js";
 import { checkMonthlyCostLimit } from "../middleware/costLimit.js";
 import { logAiUsage } from "../lib/aiCost.js";
@@ -542,7 +542,7 @@ Return ONLY a JSON array (no markdown):
 
 // ─── Reading exercises ─────────────────────────────────────────────────────
 
-router.post("/reading-task", requireAuth, requirePro, aiStrictLimiter, checkMonthlyCostLimit, async (req, res) => {
+router.post("/reading-task", requireAuth, softReadingGate, aiStrictLimiter, checkMonthlyCostLimit, async (req, res) => {
   const { level = "C", topic = "animals and nature", language = "spanish" } = req.body;
 
   if (!VALID_READING_LEVELS.has(level)) return res.status(400).json({ error: "Virheellinen taso" });
@@ -553,6 +553,7 @@ router.post("/reading-task", requireAuth, requirePro, aiStrictLimiter, checkMont
     const userId = await getUserId(req);
     const banked = await tryBankExercise("reading", level, topic, language, userId);
     if (banked) {
+      if (!req.isPro) await incrementReadingPieces(userId);
       return res.json({ reading: banked.payload, bankId: banked.bankId });
     }
 
@@ -618,6 +619,7 @@ Return ONLY this JSON (no markdown):
     logAiUsage(userId, "reading-task", reading._usage).catch(() => {});
     delete reading._usage;
     saveToBankBulk("reading", level, topic, language, reading).catch(() => {});
+    if (!req.isPro) await incrementReadingPieces(userId);
     res.json({ reading });
   } catch (err) {
     console.error("Reading task error:", err.message);
