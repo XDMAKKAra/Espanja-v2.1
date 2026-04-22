@@ -29,6 +29,13 @@
   <!-- Skip to main content -->
   <a href="#app-main" class="skip-link">Siirry sisältöön</a>
 
+  <!-- Persistent top-bar countdown (shown from S3 onward + dashboard/exercises) -->
+  <div class="app-countdown hidden" id="app-countdown" aria-live="polite">
+    <span class="app-countdown-icon" aria-hidden="true">📅</span>
+    <span class="app-countdown-text"><span id="app-countdown-days">—</span> pv YO-kokeeseen</span>
+    <button class="app-countdown-close" id="app-countdown-close" type="button" aria-label="Piilota päivälaskuri">×</button>
+  </div>
+
   <!-- SIDEBAR (desktop only) -->
   <aside class="app-sidebar" id="app-sidebar" role="navigation" aria-label="Päävalikko">
     <a href="index.html" class="sidebar-logo">Puhe<span>o</span></a>
@@ -186,6 +193,40 @@
       <div class="placement-results-actions">
         <button class="btn-primary" id="placement-btn-accept">Aloita <span id="placement-accept-level">C</span>-tason harjoittelu →</button>
         <button class="placement-alt-btn hidden" id="placement-btn-alt">Haluan aloittaa helpommasta (<span id="placement-alt-level">B</span>)</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCREEN: Onboarding S3 — Path -->
+  <div id="screen-ob-path" class="screen">
+    <div class="ob-path-inner">
+      <section class="ob-path-section">
+        <p class="ob-path-eyebrow">Tasosi nyt</p>
+        <div class="ob-path-level" id="ob-path-level">—</div>
+        <p class="ob-path-gap" id="ob-path-gap"></p>
+      </section>
+
+      <div class="ob-path-divider"></div>
+
+      <section class="ob-path-section">
+        <p class="ob-path-eyebrow">Heikoin alue</p>
+        <p class="ob-path-weakness" id="ob-path-weakness">—</p>
+      </section>
+
+      <div class="ob-path-divider"></div>
+
+      <section class="ob-path-section">
+        <p class="ob-path-eyebrow">Suunnitelmasi</p>
+        <ul class="ob-path-plan">
+          <li><span id="ob-path-plan-min">15</span> min / päivä</li>
+          <li><span id="ob-path-plan-weeks">—</span> viikkoa jäljellä</li>
+          <li>~<span id="ob-path-plan-per-week">—</span> harjoitusta / viikko</li>
+        </ul>
+      </section>
+
+      <div class="ob-path-actions">
+        <button class="btn-primary" id="ob-path-cta" data-cta="onboarding-path">Jatka &rarr; 1. harjoitus</button>
+        <button class="ob-path-skip" id="ob-path-skip" type="button">Näytä sovellus</button>
       </div>
     </div>
   </div>

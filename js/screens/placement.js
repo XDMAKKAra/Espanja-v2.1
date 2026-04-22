@@ -1,6 +1,7 @@
 import { $, show } from "../ui/nav.js";
 import { API, authHeader, apiFetch } from "../api.js";
 import { track } from "../analytics.js";
+import { showPathFromPlacement } from "./onboarding.js";
 
 let _deps = {};
 export function initPlacement({ loadDashboard }) {
@@ -297,8 +298,8 @@ function renderBarChart(scoreByLevel, gradedAnswers) {
 // ─── Accept / alternative / keyboard ───────────────────────────────────────
 
 function wireResultButtons() {
-  $("placement-btn-accept")?.addEventListener("click", async () => {
-    await _deps.loadDashboard();
+  $("placement-btn-accept")?.addEventListener("click", () => {
+    showPathFromPlacement(result);
   });
 
   $("placement-btn-alt")?.addEventListener("click", async () => {
@@ -315,7 +316,7 @@ function wireResultButtons() {
       });
     } catch { /* silent */ }
 
-    await _deps.loadDashboard();
+    showPathFromPlacement({ ...result, placementLevel: result.alternativeLevel });
   });
 }
 
