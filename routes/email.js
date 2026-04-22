@@ -1,7 +1,15 @@
 import { Router } from "express";
 import supabase from "../supabase.js";
 import { requireAuth } from "../middleware/auth.js";
-import { sendWeeklyProgressEmail, sendStreakReminderEmail } from "../email.js";
+import {
+  sendWeeklyProgressEmail,
+  sendStreakReminderEmail,
+  sendD1WeaknessEmail,
+  sendD7OfferEmail,
+  sendExamCountdownEmail,
+} from "../email.js";
+import { isPro } from "../middleware/auth.js";
+import { WEAKNESS_SENTENCES, WEAKNESS_FALLBACK } from "../lib/weakness.js";
 import { GRADES, GRADE_ORDER, DAY_MS, WEEK_MS, calculateStreak, calculateEstLevel } from "../lib/openai.js";
 
 const router = Router();
@@ -136,26 +144,201 @@ router.get("/preferences", requireAuth, async (req, res) => {
     .single();
 
   if (error || !data) {
-    return res.json({ weeklyProgress: true, streakReminders: true });
+    return res.json({
+      weeklyProgress: true, streakReminders: true,
+      d1Weakness: true, d7Offer: true, examCountdown: true,
+    });
   }
   res.json({
     weeklyProgress: data.weekly_progress,
     streakReminders: data.streak_reminders,
+    d1Weakness: data.d1_weakness ?? true,
+    d7Offer: data.d7_offer ?? true,
+    examCountdown: data.exam_countdown ?? true,
   });
 });
 
 router.put("/preferences", requireAuth, async (req, res) => {
-  const { weeklyProgress, streakReminders } = req.body;
-  const { error } = await supabase.from("email_preferences").upsert(
-    {
-      user_id: req.user.userId,
-      weekly_progress: weeklyProgress ?? true,
-      streak_reminders: streakReminders ?? true,
-    },
-    { onConflict: "user_id" }
-  );
+  const { weeklyProgress, streakReminders, d1Weakness, d7Offer, examCountdown } = req.body;
+  const row = { user_id: req.user.userId };
+  if (weeklyProgress !== undefined) row.weekly_progress = weeklyProgress;
+  if (streakReminders !== undefined) row.streak_reminders = streakReminders;
+  if (d1Weakness !== undefined) row.d1_weakness = d1Weakness;
+  if (d7Offer !== undefined) row.d7_offer = d7Offer;
+  if (examCountdown !== undefined) row.exam_countdown = examCountdown;
+  const { error } = await supabase.from("email_preferences").upsert(row, { onConflict: "user_id" });
   if (error) return res.status(500).json({ error: "Asetusten tallennus epäonnistui" });
   res.json({ ok: true });
+});
+
+// ─── Pass 4 lifecycle drip (cron-signed) ────────────────────────────────────
+
+function cronGuard(req, res) {
+  if (req.headers["x-cron-secret"] !== process.env.CRON_SECRET) {
+    res.status(401).json({ error: "Unauthorized" });
+    return false;
+  }
+  return true;
+}
+
+async function getUsersRegisteredInWindow(startAgoMs, endAgoMs) {
+  // listUsers is paginated; for the near-term volume we expect this is fine.
+  const since = new Date(Date.now() - endAgoMs).toISOString();
+  const until = new Date(Date.now() - startAgoMs).toISOString();
+  const { data } = await supabase.auth.admin.listUsers({ page: 1, perPage: 1000 });
+  return (data?.users || []).filter((u) => {
+    const t = u.created_at;
+    return t >= since && t <= until;
+  });
+}
+
+// POST /api/email/d1-weakness — runs hourly. Targets users registered
+// 23–25 h ago with placement_completed = true.
+router.post("/d1-weakness", async (req, res) => {
+  if (!cronGuard(req, res)) return;
+  const HOUR = 60 * 60 * 1000;
+  const users = await getUsersRegisteredInWindow(23 * HOUR, 25 * HOUR);
+  let sent = 0;
+
+  for (const u of users) {
+    const { data: profile } = await supabase
+      .from("user_profile")
+      .select("placement_completed, weakness_category")
+      .eq("user_id", u.id)
+      .single();
+    if (!profile?.placement_completed) continue;
+
+    const { data: prefs } = await supabase
+      .from("email_preferences")
+      .select("d1_weakness")
+      .eq("user_id", u.id)
+      .single();
+    if (prefs && prefs.d1_weakness === false) continue;
+
+    const category = profile.weakness_category || null;
+    const weaknessSentence = (category && WEAKNESS_SENTENCES[category]) || WEAKNESS_FALLBACK;
+    const weaknessShort = category ? category.replace(/_/g, " ") : "sanasto";
+
+    // Real-example lookup: most recent wrong answer in this category from
+    // exercise_logs. Not every log carries category metadata (legacy rows
+    // don't); fall back to the pre-curated seed-bank example if absent.
+    let example = null;
+    if (category) {
+      const { data: wrongLogs } = await supabase
+        .from("exercise_logs")
+        .select("item_snapshot, category, created_at")
+        .eq("user_id", u.id)
+        .eq("correct", false)
+        .eq("category", category)
+        .order("created_at", { ascending: false })
+        .limit(1);
+      if (wrongLogs?.[0]?.item_snapshot) {
+        const snap = wrongLogs[0].item_snapshot;
+        example = {
+          prompt: snap.question || snap.prompt || "",
+          options: snap.options || [],
+          correctLetter: snap.correctLetter || "",
+          correctText: snap.correctText || "",
+          explain: snap.explain || "",
+        };
+      }
+    }
+
+    await sendD1WeaknessEmail(u.email, { weaknessShort, weaknessSentence, example }).catch(() => {});
+    sent++;
+  }
+
+  res.json({ ok: true, sent, fallback_count: users.length - sent });
+});
+
+// POST /api/email/d7-offer — runs hourly. Targets users registered
+// 167–169 h ago (≈ 7 days). Template branches on Pro status.
+router.post("/d7-offer", async (req, res) => {
+  if (!cronGuard(req, res)) return;
+  const HOUR = 60 * 60 * 1000;
+  const users = await getUsersRegisteredInWindow(167 * HOUR, 169 * HOUR);
+  let sent = 0;
+
+  for (const u of users) {
+    const { data: prefs } = await supabase
+      .from("email_preferences")
+      .select("d7_offer")
+      .eq("user_id", u.id)
+      .single();
+    if (prefs && prefs.d7_offer === false) continue;
+
+    // 7-day stats.
+    const weekAgo = new Date(Date.now() - 7 * DAY_MS).toISOString();
+    const { data: logs } = await supabase
+      .from("exercise_logs")
+      .select("score_correct, score_total, mode, level")
+      .eq("user_id", u.id)
+      .gte("created_at", weekAgo);
+    const exercisesCompleted = logs?.length || 0;
+    const totalPts = (logs || []).reduce((s, l) => s + (l.score_correct || 0), 0);
+    const totalMax = (logs || []).reduce((s, l) => s + (l.score_total || 0), 0);
+    const correctPct = totalMax ? Math.round((totalPts / totalMax) * 100) : 0;
+    const topicsTouched = new Set((logs || []).map((l) => l.mode)).size;
+
+    const userIsPro = await isPro(u.id);
+
+    // Seasonal block — June–August: kesäpaketti preferred; rest: monthly.
+    const month = new Date().getMonth();
+    let seasonalBlock = "Pro 9,99 € / kk. Peruuta milloin tahansa.";
+    if (month >= 5 && month <= 7) {
+      seasonalBlock = "Juuri nyt Kesäpaketti 29 € kattaa kesä–syyskuun (säästät 27 % vs. kuukausimaksu).";
+    } else if (month === 8) {
+      seasonalBlock = "Syyskuun kesäpaketti loppuu 30.9. — Pro kuukausimaksulla 9,99 € jatkaa siitä.";
+    }
+
+    const level = logs?.[0]?.level || "C";
+
+    await sendD7OfferEmail(u.email, {
+      exercisesCompleted, correctPct, topicsTouched,
+      seasonalBlock, isPro: userIsPro, level,
+    }).catch(() => {});
+    sent++;
+  }
+
+  res.json({ ok: true, sent });
+});
+
+// POST /api/email/exam-countdown — runs daily at 08:00 Helsinki. Targets
+// users whose exam_date is ~30 or ~7 days out.
+router.post("/exam-countdown", async (req, res) => {
+  if (!cronGuard(req, res)) return;
+
+  // Pull all user_profiles with an exam_date set; filter in JS by days-out
+  // window. At current volumes this is fine; add indexed daily job later.
+  const { data: profiles } = await supabase
+    .from("user_profile")
+    .select("user_id, exam_date");
+  if (!profiles?.length) return res.json({ ok: true, sent: 0 });
+
+  let sent = 0;
+  for (const p of profiles) {
+    if (!p.exam_date) continue;
+    const daysOut = Math.round((new Date(p.exam_date) - Date.now()) / DAY_MS);
+    const inWindow = daysOut === 30 || daysOut === 7;
+    if (!inWindow) continue;
+
+    const { data: prefs } = await supabase
+      .from("email_preferences")
+      .select("exam_countdown")
+      .eq("user_id", p.user_id)
+      .single();
+    if (prefs && prefs.exam_countdown === false) continue;
+
+    const { data: { user } } = await supabase.auth.admin.getUserById(p.user_id);
+    if (!user?.email) continue;
+
+    await sendExamCountdownEmail(user.email, {
+      daysOut,
+      examDate: new Date(p.exam_date).toLocaleDateString("fi-FI"),
+    }).catch(() => {});
+    sent++;
+  }
+  res.json({ ok: true, sent });
 });
 
 export default router;

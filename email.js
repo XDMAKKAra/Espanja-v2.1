@@ -163,6 +163,113 @@ export async function sendWeeklyProgressEmail(email, stats) {
   });
 }
 
+// ─── Pass 4 lifecycle drip ───────────────────────────────────────────────────
+
+// D1 — personalised weakness. Either uses an exercise_logs row (the user's
+// actual most-recent wrong answer) or a pre-curated seed-bank fallback.
+export async function sendD1WeaknessEmail(email, data) {
+  const { weaknessShort, weaknessSentence, example } = data;
+  // example: { prompt, options: [A,B,C,D], correctLetter, correctText, explain }
+  const opts = (example?.options || []).map(o => `<div style="color:#c0c0d8;margin:2px 0">${o}</div>`).join("");
+  const answerBlock = example
+    ? `
+      <div style="background:#1e1e2e;border-radius:10px;padding:16px;margin:16px 0">
+        <div style="color:#888;font-size:12px;margin-bottom:8px">Esimerkki:</div>
+        <div style="color:#fff;font-size:16px;margin-bottom:10px">${example.prompt}</div>
+        ${opts}
+        <div style="color:#6d5ef4;margin-top:12px">Oikea vastaus: <strong>${example.correctLetter} — ${example.correctText}</strong>.${example.explain ? ` <span style="color:#a0a0b8">${example.explain}</span>` : ""}</div>
+      </div>`
+    : "";
+  return resend.emails.send({
+    from: FROM,
+    to: email,
+    subject: "Yksi asia, jonka voit korjata tällä viikolla.",
+    html: layout("Heikoin kohtasi tasotestissä", `
+      <p>Tasotestisi paljasti: <strong style="color:#fff">${weaknessSentence}</strong></p>
+      ${answerBlock}
+      <p>Puheossa odottaa kolmen harjoituksen sarja, joka iskee tähän suoraan (~8 min).</p>
+      ${btn("Avaa harjoitukset →", APP_URL + "/app.html?ref=email-d1")}
+      <p style="color:#555;font-size:12px">Voit peruuttaa nämä viestit tiliasetuksistasi.</p>
+    `),
+  });
+}
+
+// D7 — split by is_pro. One endpoint, two templates.
+export async function sendD7OfferEmail(email, data) {
+  const { exercisesCompleted = 0, correctPct = 0, topicsTouched = 0, seasonalBlock = "", isPro = false, level = "" } = data;
+  if (isPro) {
+    return resend.emails.send({
+      from: FROM,
+      to: email,
+      subject: "Viikko mennyt. Näin jatketaan.",
+      html: layout("Viikkosuunnitelma", `
+        <p>Kiitos Pro-tilauksesta. Viikko mennyt.</p>
+        <p>Ehdotuksemme seuraavalle viikolle:</p>
+        <ul style="color:#c0c0d8;padding-left:20px">
+          <li>3× kirjoitusharjoitus (YTL-aiheita)</li>
+          <li>2× lukuteksti tasoltasi ${level || "C"}</li>
+          <li>Päivittäinen sanastokertaus</li>
+        </ul>
+        ${btn("Avaa viikkosuunnitelma →", APP_URL + "/app.html?ref=email-d7-pro")}
+      `),
+    });
+  }
+  return resend.emails.send({
+    from: FROM,
+    to: email,
+    subject: "Ensimmäinen viikko takana — Pro vie maaliin.",
+    html: layout("Viikko takana", `
+      <p>Hienoa aloitusta. Koonti viikostasi:</p>
+      <ul style="color:#c0c0d8;padding-left:20px">
+        <li><strong style="color:#fff">${exercisesCompleted}</strong> harjoitusta</li>
+        <li><strong style="color:#fff">${correctPct}%</strong> oikein</li>
+        <li><strong style="color:#fff">${topicsTouched}</strong> aihetta käsitelty</li>
+      </ul>
+      <p>Seuraavaksi YO-kokeen tärkein osa: <strong style="color:#fff">kirjoitus</strong>. Se on Pro-ominaisuus — AI-palaute YTL-rubriikin mukaan ei ole halpaa tuottaa.</p>
+      ${seasonalBlock ? `<p>${seasonalBlock}</p>` : ""}
+      ${btn("Tutustu Pro-tilaukseen →", APP_URL + "/app.html?upsell=d7&ref=email-d7")}
+      <p style="color:#666;font-size:13px">Ei kiinnosta? Kaikki sanastotyökalut säilyvät Free-tilillä rajattomasti.</p>
+    `),
+  });
+}
+
+// Exam countdown — one endpoint handles both -30 and -7, branched on daysOut.
+export async function sendExamCountdownEmail(email, data) {
+  const { daysOut, examDate = "28.9.2026" } = data;
+  if (daysOut <= 7) {
+    return resend.emails.send({
+      from: FROM,
+      to: email,
+      subject: "Viikko YO-kokeeseen — viimeinen suunnitelmasi.",
+      html: layout(`${daysOut} päivää kokeeseen`, `
+        <p>Tästä eteenpäin:</p>
+        <ul style="color:#c0c0d8;padding-left:20px">
+          <li><strong style="color:#fff">ÄLÄ</strong> opettele uutta. Ei yllätyksiä.</li>
+          <li>Käy virhelistasi läpi (20 min/pv).</li>
+          <li>Yksi simulaatio viikon alkupuolella.</li>
+          <li>Lepoa. Nukkuminen parantaa kielen hakua enemmän kuin yksi drilli lisää.</li>
+        </ul>
+        ${btn("Avaa virhelista →", APP_URL + "/app.html?tab=errors&ref=email-t7")}
+        <p style="color:#666;font-size:13px">Tsemppiä — näet koetuloksen lokakuussa.</p>
+      `),
+    });
+  }
+  return resend.emails.send({
+    from: FROM,
+    to: email,
+    subject: "Kuukausi YO-kokeeseen — vaihdetaan simulaatioihin.",
+    html: layout(`${daysOut} päivää kokeeseen (${examDate})`, `
+      <p>Paras valmistautumistapa vaihtuu:</p>
+      <ul style="color:#c0c0d8;padding-left:20px">
+        <li>Ennen: sekalaiset harjoitukset.</li>
+        <li><strong style="color:#fff">Nyt: täyskoe-simulaatiot.</strong></li>
+      </ul>
+      <p>Kaksi simulaatiota viikossa riittää. Rauhallista loppusuoraa.</p>
+      ${btn("Avaa simulaatio →", APP_URL + "/app.html?mode=exam-simulation&ref=email-t30")}
+    `),
+  });
+}
+
 export async function sendStreakReminderEmail(email, stats) {
   const { name, streak, lastPracticeDate } = stats;
   const displayName = name || email.split("@")[0];
