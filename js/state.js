@@ -17,6 +17,10 @@ export let state = {
   language: "spanish",
   sessionStartTime: null,
 
+  // First-ever session flag (set by S4 onboarding, consumed + cleared
+  // by the vocab/grammar result screen after the celebration overlay).
+  firstSession: false,
+
   // Vocab mode
   exercises: [],
   current: 0,

@@ -1,7 +1,35 @@
 {
   "permissions": {
     "allow": [
-      "Bash(uipro init *)"
+      "Bash(uipro init *)",
+      "Bash(node -e \"const d = JSON.parse\\(require\\('fs'\\).readFileSync\\('data/seeds/reading-passages.json','utf8'\\)\\); console.log\\('Count:', d.length\\); console.log\\('Topics:', [...new Set\\(d.map\\(p=>p.topic\\)\\)]\\)\")",
+      "Bash(node -e \"const d = JSON.parse\\(require\\('fs'\\).readFileSync\\('data/seeds/reading-passages.json','utf8'\\)\\); console.log\\('Count:', d.length\\)\")",
+      "Bash(node -e ' *)",
+      "Bash(node -e \"const d = JSON.parse\\(require\\('fs'\\).readFileSync\\('data/seeds/aukkotehtava.json','utf8'\\)\\); console.log\\('Count:', d.length\\)\")",
+      "Bash(node -e \"const d = JSON.parse\\(require\\('fs'\\).readFileSync\\('data/seeds/aukkotehtava.json','utf8'\\)\\); console.log\\('Count:', d.length, '— valid JSON'\\)\")",
+      "Bash(node -e \"const d=JSON.parse\\(require\\('fs'\\).readFileSync\\('data/seeds/aukkotehtava.json','utf8'\\)\\);console.log\\('Count:',d.length,'— valid'\\)\")",
+      "Bash(sed -i 's/\"alt_answers\", \"hint_fi\"/\"alt_answers\": [], \"hint_fi\"/g; s/\"alt_answers: \\\\[\\\\],/\"alt_answers\": [],/g' data/seeds/aukkotehtava.json)",
+      "Bash(node -e \"const d=JSON.parse\\(require\\('fs'\\).readFileSync\\('data/seeds/aukkotehtava.json','utf8'\\)\\);console.log\\('Count:',d.length,'topics:',[...new Set\\(d.map\\(x=>x.topic\\)\\)].length,'IDs:',new Set\\(d.map\\(x=>x.id\\)\\).size\\)\")",
+      "Bash(node -e \"const d=JSON.parse\\(require\\('fs'\\).readFileSync\\('data/seeds/matching.json','utf8'\\)\\);console.log\\('Count:',d.length\\)\")",
+      "Bash(node -e \"const d=JSON.parse\\(require\\('fs'\\).readFileSync\\('data/seeds/matching.json','utf8'\\)\\);console.log\\('Count:',d.length,'topics:',[...new Set\\(d.map\\(x=>x.topic\\)\\)].length\\)\")",
+      "Bash(node -e \"const d=JSON.parse\\(require\\('fs'\\).readFileSync\\('data/seeds/matching.json','utf8'\\)\\);console.log\\('Count:',d.length,'topics:',[...new Set\\(d.map\\(x=>x.topic\\)\\)].length,'IDs:',new Set\\(d.map\\(x=>x.id\\)\\).size\\)\")",
+      "Bash(node -e \"const d=JSON.parse\\(require\\('fs'\\).readFileSync\\('data/seeds/translation.json','utf8'\\)\\);console.log\\('Count:',d.length\\)\")",
+      "Bash(node -e \"const d=JSON.parse\\(require\\('fs'\\).readFileSync\\('data/seeds/sentence-construction.json','utf8'\\)\\);console.log\\('Count:',d.length\\)\")",
+      "Bash(node --check lib/seedBank.js)",
+      "Bash(node --check lib/grading/aukkotehtava.js)",
+      "Bash(node --check lib/grading/yhdistaminen.js)",
+      "Bash(node --check lib/grading/dispatcher.js)",
+      "Bash(node --check js/renderers/yhdistaminen.js)",
+      "Bash(node --check js/renderers/kaannos.js)",
+      "Bash(node --check js/renderers/lauseenMuodostus.js)",
+      "Bash(node --check js/screens/exerciseRenderer.js)",
+      "Bash(node --check lib/adaptive.js)",
+      "Bash(node --check js/renderers/aukkotehtava.js)",
+      "Bash(node --check js/features/hintLadder.js)",
+      "Bash(node --check js/screens/writing.js js/state.js)",
+      "Bash(node --check js/screens/writing.js js/state.js lib/writingGrading.js)",
+      "Bash(node *)",
+      "Bash(grep -E \"\\\\.js$\")"
     ]
   }
 }

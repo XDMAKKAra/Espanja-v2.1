@@ -94,7 +94,7 @@ initWriting({ loadDashboard, saveProgress });
 initExam({ loadDashboard, saveProgress, shareResult });
 initFullExam({ loadDashboard, saveProgress, shareResult });
 initAdaptive({ loadDashboard });
-initOnboarding({ loadDashboard });
+initOnboarding({ loadDashboard, loadNextBatch });
 initPlacement({ loadDashboard });
 initLearningPath({ loadDashboard });
 window._learningPathRef = { submitMasteryResult };

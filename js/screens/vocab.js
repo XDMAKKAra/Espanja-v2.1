@@ -5,6 +5,7 @@ import { showLoading, showLoadingError, showSkeleton, showFetchError } from "../
 import { srPop, srAddWrong, srMarkCorrect, srReview, srGetDue } from "../features/spacedRepetition.js";
 import { isTranslationAccepted, isTranslationPartial, translationBand, TRANSLATION_BAND_LABELS } from "../features/answerGrading.js";
 import { trackExerciseStarted, trackExerciseCompleted, trackError } from "../analytics.js";
+import { maybeShowFirstCelebration } from "./onboarding.js";
 import { renderExercise } from "./exerciseRenderer.js";
 import { toUnified } from "../../lib/exerciseTypes.js";
 import { renderAukkotehtava }     from "../renderers/aukkotehtava.js";
@@ -1077,6 +1078,9 @@ function showVocabResults() {
     state.sessionStartTime ? Date.now() - state.sessionStartTime : 0
   );
   show("screen-results");
+  // Celebration is an overlay — fire-and-forget so the result screen
+  // renders underneath and is already visible when the overlay dismisses.
+  maybeShowFirstCelebration();
 }
 
 $("btn-restart").addEventListener("click", () => {

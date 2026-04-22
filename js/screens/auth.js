@@ -110,6 +110,7 @@ $("btn-auth-submit").addEventListener("click", async () => {
     if (authMode === "register") {
       // Fire-and-forget: seed user_mastery from landing-page mini-diagnostic
       seedMasteryFromDiagnostic(data.token);
+      try { localStorage.setItem("puheo_signup_at", String(Date.now())); } catch { /* silent */ }
     }
     // Check onboarding → placement → dashboard
     const needsOnboarding = await checkOnboarding();

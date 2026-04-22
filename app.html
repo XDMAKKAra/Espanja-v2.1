@@ -29,6 +29,15 @@
   <!-- Skip to main content -->
   <a href="#app-main" class="skip-link">Siirry sisältöön</a>
 
+  <!-- First-exercise celebration overlay (S4 → once per user) -->
+  <div class="first-celebration hidden" id="first-celebration" role="status" aria-live="polite">
+    <div class="first-celebration-card">
+      <div class="first-celebration-emoji" aria-hidden="true">🎉</div>
+      <p class="first-celebration-title">Ensimmäinen valmis.</p>
+      <p class="first-celebration-sub">Olet aloittanut — paras askel jo tehty.</p>
+    </div>
+  </div>
+
   <!-- Persistent top-bar countdown (shown from S3 onward + dashboard/exercises) -->
   <div class="app-countdown hidden" id="app-countdown" aria-live="polite">
     <span class="app-countdown-icon" aria-hidden="true">📅</span>

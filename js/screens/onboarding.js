@@ -1,6 +1,7 @@
 import { $, show } from "../ui/nav.js";
 import { API, authHeader, apiFetch } from "../api.js";
 import { track } from "../analytics.js";
+import { state } from "../state.js";
 import { showPlacementIntro } from "./placement.js";
 import { deriveWeakness, gapSentence } from "../../lib/weakness.js";
 
@@ -9,8 +10,8 @@ const EXAM_MS = Date.parse("2026-09-28T09:00:00+03:00");
 const DAY_MS = 24 * 60 * 60 * 1000;
 
 let _deps = {};
-export function initOnboarding({ loadDashboard }) {
-  _deps = { loadDashboard };
+export function initOnboarding({ loadDashboard, loadNextBatch }) {
+  _deps = { loadDashboard, loadNextBatch };
   wireWelcome();
   wirePath();
   wireAppCountdown();
@@ -111,10 +112,7 @@ function wirePath() {
     cta.dataset.wired = "1";
     cta.addEventListener("click", async () => {
       track("onboarding_path_cta", {});
-      // TODO(commit-5): route into S4 first-exercise adaptive session.
-      // Temporary: mark onboarding complete + dashboard.
-      await postProfile({ onboarding_completed: true });
-      if (_deps.loadDashboard) _deps.loadDashboard();
+      await startFirstExercise();
     });
   }
   if (skip && !skip.dataset.wired) {
@@ -126,6 +124,68 @@ function wirePath() {
       if (_deps.loadDashboard) _deps.loadDashboard();
     });
   }
+}
+
+// ─── S4 First Exercise ─────────────────────────────────────────────────────
+
+async function startFirstExercise() {
+  const path = window._obPath || { level: "B", weaknessCategory: null };
+  state.mode = "vocab";
+  state.level = path.level || "B";
+  state.startLevel = state.level;
+  state.peakLevel = state.level;
+  state.batchNumber = 0;
+  state.firstSession = true;
+  state.sessionStartTime = Date.now();
+
+  track("first_exercise_started", {
+    mode: state.mode,
+    level: state.level,
+    category: path.weaknessCategory || null,
+  });
+
+  // Mark onboarding complete up-front so a network hiccup during loadNextBatch
+  // doesn't kick them back through onboarding on refresh.
+  await postProfile({ onboarding_completed: true });
+
+  if (_deps.loadNextBatch) {
+    await _deps.loadNextBatch();
+  } else if (_deps.loadDashboard) {
+    _deps.loadDashboard();
+  }
+}
+
+// ─── First-session celebration overlay ─────────────────────────────────────
+
+// Vocab/grammar result screens call this once on the first-ever completion.
+// Returns a promise that resolves after the 3 s dwell so the caller can
+// continue rendering the result screen underneath.
+export function maybeShowFirstCelebration() {
+  if (!state.firstSession) return Promise.resolve();
+  state.firstSession = false;
+  const signupMs = Number(localStorage.getItem("puheo_signup_at") || 0);
+  track("first_exercise_completed", {
+    mode: state.mode,
+    level: state.level,
+    time_since_signup_ms: signupMs ? Date.now() - signupMs : null,
+  });
+
+  const el = $("first-celebration");
+  if (!el) return Promise.resolve();
+  el.classList.remove("hidden");
+
+  return new Promise((resolve) => {
+    let done = false;
+    const finish = () => {
+      if (done) return;
+      done = true;
+      el.classList.add("hidden");
+      el.removeEventListener("click", finish);
+      resolve();
+    };
+    el.addEventListener("click", finish, { once: true });
+    setTimeout(finish, 3000);
+  });
 }
 
 // ─── Persistent top-bar countdown ──────────────────────────────────────────
