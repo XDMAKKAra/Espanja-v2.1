@@ -1331,7 +1331,7 @@
           <li>Adaptiivinen vaikeustaso + mastery testit</li>
           <li>Peruta milloin tahansa</li>
         </ul>
-        <a href="app.html" class="price-btn primary">Hanki Pro &rarr;</a>
+        <a href="#" class="price-btn primary" id="pro-cta" data-waitlist data-cta="pricing-pro">Hanki Pro &rarr;</a>
       </div>
 
       <!-- CARD 3: Kes&auml;paketti -->
@@ -1350,7 +1350,7 @@
           <li class="bonus">BONUS: Prioriteettituki (vastaus 12h sis&auml;ll&auml;)</li>
           <li class="bonus">BONUS: 1 henkil&ouml;kohtainen kirjoitelmapalaute minulta</li>
         </ul>
-        <a href="app.html" class="price-btn primary summer-btn" id="summer-cta">Osta kes&auml;paketti 29&euro; &rarr;</a>
+        <a href="#" class="price-btn primary summer-btn" id="summer-cta" data-waitlist data-cta="pricing-summer">Osta kes&auml;paketti 29&euro; &rarr;</a>
         <div class="price-footer-note">Kertamaksu &mdash; ei kuukausilaskutusta &middot; P&auml;&auml;sy p&auml;&auml;ttyy 30.9.2026</div>
       </div>
 
@@ -1362,14 +1362,14 @@
     <div class="waitlist-modal">
       <button class="waitlist-close" id="waitlist-close">&times;</button>
       <div class="waitlist-icon">&#9993;&#65039;</div>
-      <h3>Ilmoita kun kes&auml;paketti aukeaa</h3>
-      <p>J&auml;t&auml; s&auml;hk&ouml;postisi niin kerromme heti kun kes&auml;paketti 2026 on ostettavissa (1.6.2026).</p>
+      <h3>Maksullinen tilaus avautuu pian &mdash; ilmoita s&auml;hk&ouml;postisi</h3>
+      <p>Otamme yhteytt&auml; heti kun tilaus on ostettavissa. Arvioimme avauksen kes&auml;kuussa 2026.</p>
       <form id="waitlist-form" class="waitlist-form">
         <input type="email" id="waitlist-email" placeholder="email@esimerkki.fi" required autocomplete="email" />
         <button type="submit" class="waitlist-submit" id="waitlist-submit">Ilmoita minulle &rarr;</button>
       </form>
       <div class="waitlist-success hidden" id="waitlist-success">
-        &#10003; Kiitos! Ilmoitamme kun kes&auml;paketti aukeaa 1.6.
+        &#10003; Kiitos! Ilmoitamme heti kun tilaus on ostettavissa.
       </div>
       <div class="waitlist-error hidden" id="waitlist-error"></div>
     </div>
@@ -1644,8 +1644,7 @@
         summerBadge.textContent = 'Tulossa 1.6.';
         summerBadge.classList.remove('hidden');
         proBadge.classList.add('hidden');
-        summerCta.textContent = 'Preorder — 29€';
-        summerCta.href = 'app.html';
+        summerCta.textContent = 'Ilmoita kun saatavilla';
       } else if (month >= 0 && month <= 3) {
         // Jan–Apr: waitlist teaser
         grid.innerHTML = '';
@@ -1658,12 +1657,6 @@
         summerBadge.textContent = 'Tulossa 1.6.2026';
         summerBadge.classList.remove('hidden');
         summerCta.textContent = 'Ilmoita kun saatavilla';
-        summerCta.href = '#';
-        summerCta.addEventListener('click', function(e) {
-          e.preventDefault();
-          var waitlistOverlay = document.getElementById('waitlist-overlay');
-          if (waitlistOverlay) waitlistOverlay.classList.remove('hidden');
-        });
       } else {
         // Sep–Dec: hide (exam is over)
         grid.innerHTML = '';
@@ -1691,6 +1684,17 @@
         });
       }
 
+      // Delegated: any [data-waitlist] element opens the modal.
+      var lastWaitlistSource = 'pricing';
+      document.addEventListener('click', function(e) {
+        var trigger = e.target.closest('[data-waitlist]');
+        if (!trigger) return;
+        e.preventDefault();
+        lastWaitlistSource = trigger.getAttribute('data-cta') || 'pricing';
+        var o = document.getElementById('waitlist-overlay');
+        if (o) o.classList.remove('hidden');
+      });
+
       if (waitlistForm) waitlistForm.addEventListener('submit', function(e) {
         e.preventDefault();
         var email = document.getElementById('waitlist-email').value.trim();
@@ -1703,7 +1707,7 @@
         fetch('/api/waitlist', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email: email, product: 'summer-2026' })
+          body: JSON.stringify({ email: email, product: lastWaitlistSource })
         })
         .then(function(r) { return r.json().then(function(d) { return { ok: r.ok, data: d }; }); })
         .then(function(res) {
