@@ -739,14 +739,14 @@
   <nav class="nav" id="nav">
     <a href="/" class="nav-logo">Puhe<span>o</span></a>
     <div class="nav-links">
-      <a href="diagnose.html">Testaa tasosi</a>
+      <a href="diagnose.html" data-cta="nav-diagnose">Testaa tasosi</a>
       <a href="#how">Miten toimii</a>
       <a href="#pricing">Hinnoittelu</a>
       <a href="#faq">UKK</a>
     </div>
     <div class="nav-right">
-      <a href="app.html?mode=login" class="nav-login">Kirjaudu sisään</a>
-      <a href="app.html" class="nav-cta">Aloita ilmaiseksi</a>
+      <a href="app.html?mode=login" class="nav-login" data-cta="nav-login">Kirjaudu sisään</a>
+      <a href="app.html" class="nav-cta" data-cta="nav-signup">Aloita ilmaiseksi</a>
     </div>
   </nav>
 
@@ -1318,7 +1318,7 @@
           <li>1 t&auml;yskoe yhteens&auml;</li>
           <li>Perussanasto</li>
         </ul>
-        <a href="app.html" class="price-btn">Aloita Free</a>
+        <a href="app.html" class="price-btn" data-cta="pricing-free">Aloita Free</a>
       </div>
 
       <!-- CARD 2: Pro -->
@@ -1382,7 +1382,7 @@
   <div class="cta-section">
     <h2>Aloita nyt. Ilmaiseksi.</h2>
     <p>Ei luottokorttia. 5 harjoitusta p&auml;iv&auml;ss&auml; ilmaiseksi.</p>
-    <a href="app.html" class="btn-hero">Aloita harjoittelu &rarr;</a>
+    <a href="app.html" class="btn-hero" data-cta="cta-section">Aloita harjoittelu &rarr;</a>
   </div>
 
   <!-- 8) FAQ -->
@@ -1538,6 +1538,58 @@
   </div>
 
   <script>
+    // ── PostHog (EU host, public project key, autocapture off) ──
+    // Funnel events: landing_view, landing_cta_click, diagnostic_started,
+    // diagnostic_completed, diagnostic_email_captured, pricing_viewed, signup_from_landing.
+    (function() {
+      var PH_KEY = 'phc_pDqvRspyx5eukF7fHFz2P3oKWmNAwJXChBBCPAUsfpwE';
+      window.__PH_QUEUE = [];
+      window.track = function(event, props) { window.__PH_QUEUE.push([event, props || {}]); };
+
+      function load() {
+        import('https://cdn.jsdelivr.net/npm/posthog-js@1/dist/module.full.no-external.mjs')
+          .then(function(mod) {
+            var ph = mod.default;
+            ph.init(PH_KEY, {
+              api_host: 'https://eu.i.posthog.com',
+              persistence: 'localStorage',
+              autocapture: false,
+              capture_pageview: false
+            });
+            ph.capture('landing_view', { path: location.pathname });
+            window.track = function(event, props) { ph.capture(event, props || {}); };
+            (window.__PH_QUEUE || []).forEach(function(e) { ph.capture(e[0], e[1]); });
+            window.__PH_QUEUE = null;
+          })
+          .catch(function() { /* silent: PostHog must never block landing */ });
+      }
+      if (window.requestIdleCallback) { requestIdleCallback(load, { timeout: 2000 }); }
+      else { setTimeout(load, 1); }
+
+      // Delegated CTA click tracking — every [data-cta] element fires landing_cta_click.
+      document.addEventListener('click', function(e) {
+        var el = e.target.closest('[data-cta]');
+        if (!el) return;
+        window.track('landing_cta_click', {
+          cta: el.getAttribute('data-cta'),
+          href: el.getAttribute('href') || null,
+          text: (el.textContent || '').trim().slice(0, 80)
+        });
+      });
+
+      // Pricing section in-view → pricing_viewed (once per session).
+      var pricing = document.getElementById('pricing');
+      if (pricing && 'IntersectionObserver' in window) {
+        var seen = false;
+        new IntersectionObserver(function(entries) {
+          if (entries[0].isIntersecting && !seen) {
+            seen = true;
+            window.track('pricing_viewed', {});
+          }
+        }, { threshold: 0.3 }).observe(pricing);
+      }
+    })();
+
     // Urgency bar (visible year-round until exam day)
     (function() {
       var bar = document.getElementById('urgency-bar');
