@@ -1,9 +1,12 @@
 import { $, show } from "../ui/nav.js";
 import { API, authHeader, apiFetch } from "../api.js";
+import { track } from "../analytics.js";
 
 let _deps = {};
 export function initPlacement({ loadDashboard }) {
   _deps = { loadDashboard };
+  wireKeyboardShortcuts();
+  wireResultButtons();
 }
 
 // ─── State ─────────────────────────────────────────────────────────────────
@@ -12,6 +15,7 @@ let questions = [];
 let currentIdx = 0;
 let answers = []; // { id, level, selected }
 let result = null;
+let startedAt = 0;
 
 // ─── Public: check if placement needed ─────────────────────────────────────
 
@@ -26,17 +30,51 @@ export async function checkPlacementNeeded() {
   }
 }
 
-export function showPlacementIntro() {
-  show("screen-placement-intro");
+// ─── Landing diagnostic seed ───────────────────────────────────────────────
+
+function readDiagnosticSeed() {
+  try {
+    const raw = localStorage.getItem("puheo_diagnostic_v1");
+    if (!raw) return null;
+    const seed = JSON.parse(raw);
+    if (!seed || !Array.isArray(seed.answers)) return null;
+    return seed;
+  } catch {
+    return null;
+  }
+}
+
+// ─── Public: start placement ───────────────────────────────────────────────
+
+// Called from S1 welcome CTA. Previously showed an intro screen (#screen-
+// placement-intro); Pass 4 Commit 3 inlined placement so the first item is
+// the first screen the student sees. The name is kept for call-site
+// compatibility with screens/auth.js and screens/onboarding.js.
+export async function showPlacementIntro() {
+  const seed = readDiagnosticSeed();
+  startedAt = Date.now();
+  track("placement_started", {
+    diagnostic_seed: !!seed,
+    seed_items: seed ? seed.answers.length : 0,
+  });
+  await startTest();
 }
 
 export async function startPlacementFromRetake() {
-  // Direct start without intro screen for retakes
-  await fetchQuestions();
-  if (questions.length > 0) {
-    renderQuestion();
-    show("screen-placement-test");
+  startedAt = Date.now();
+  track("placement_started", { diagnostic_seed: false, retake: true });
+  await startTest();
+}
+
+async function startTest() {
+  renderLoadingItem();
+  show("screen-placement-test");
+  const ok = await fetchQuestions();
+  if (!ok) {
+    renderApiFailure();
+    return;
   }
+  renderQuestion();
 }
 
 // ─── Fetch questions ───────────────────────────────────────────────────────
@@ -44,42 +82,73 @@ export async function startPlacementFromRetake() {
 async function fetchQuestions() {
   try {
     const res = await apiFetch(`${API}/api/placement/questions`, { headers: authHeader() });
-    if (!res.ok) return;
+    if (!res.ok) throw new Error("status " + res.status);
     const data = await res.json();
-    questions = data.questions;
+    questions = data.questions || [];
     currentIdx = 0;
     answers = [];
     result = null;
-  } catch { /* silent */ }
+    return questions.length > 0;
+  } catch (err) {
+    track("placement_api_failed", { phase: "fetch", error: String(err?.message || err).slice(0, 60) });
+    return false;
+  }
 }
 
-// ─── Intro screen ──────────────────────────────────────────────────────────
+// ─── Render loading / error states ─────────────────────────────────────────
 
-$("placement-btn-start").addEventListener("click", async () => {
-  $("placement-btn-start").disabled = true;
-  $("placement-btn-start").textContent = "Ladataan...";
-  await fetchQuestions();
-  $("placement-btn-start").disabled = false;
-  $("placement-btn-start").textContent = "Aloita kartoitus →";
+function renderLoadingItem() {
+  $("placement-level-badge").textContent = "…";
+  $("placement-counter").textContent = "";
+  $("placement-progress-fill").style.width = "0%";
+  $("placement-question").textContent = "Valmistellaan tasotestiä…";
+  $("placement-options").innerHTML = "";
+  $("placement-explanation")?.classList.add("hidden");
+}
 
-  if (questions.length > 0) {
-    renderQuestion();
-    show("screen-placement-test");
-  }
-});
+function renderApiFailure() {
+  $("placement-level-badge").textContent = "Virhe";
+  $("placement-counter").textContent = "";
+  $("placement-progress-fill").style.width = "0%";
+  $("placement-question").textContent = "Yhteys katkesi. Yritä uudelleen.";
+  const opts = $("placement-options");
+  opts.innerHTML = "";
+  const retry = document.createElement("button");
+  retry.className = "btn-primary";
+  retry.textContent = "Yritä uudelleen →";
+  retry.addEventListener("click", async () => {
+    retry.disabled = true;
+    retry.textContent = "Yhdistetään…";
+    const ok = await fetchQuestions();
+    if (ok) renderQuestion();
+    else renderBFallback();
+  });
+  opts.appendChild(retry);
+}
 
-$("placement-btn-skip").addEventListener("click", async () => {
-  // Choose B as default and skip
-  try {
-    await apiFetch(`${API}/api/placement/choose-level`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json", ...authHeader() },
-      body: JSON.stringify({ level: "B" }),
-    });
-  } catch { /* silent */ }
-  window._placementDone = true;
-  await _deps.loadDashboard();
-});
+async function renderBFallback() {
+  // Second failure — assume level B and continue to dashboard.
+  $("placement-question").textContent = "Emme saaneet yhteyttä. Arvaamme tasoksi B — tarkennamme myöhemmin.";
+  const opts = $("placement-options");
+  opts.innerHTML = "";
+  const go = document.createElement("button");
+  go.className = "btn-primary";
+  go.textContent = "Jatka →";
+  go.addEventListener("click", async () => {
+    go.disabled = true;
+    try {
+      await apiFetch(`${API}/api/placement/choose-level`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", ...authHeader() },
+        body: JSON.stringify({ level: "B" }),
+      });
+    } catch { /* silent */ }
+    track("placement_completed", { level: "B", items: 0, duration_ms: Date.now() - startedAt, fallback: true });
+    window._placementDone = true;
+    await _deps.loadDashboard();
+  });
+  opts.appendChild(go);
+}
 
 // ─── Render question ───────────────────────────────────────────────────────
 
@@ -87,26 +156,14 @@ function renderQuestion() {
   const q = questions[currentIdx];
   let answered = false;
 
-  // Header
   const LEVEL_LABELS = { A: "Taso A", B: "Taso B", C: "Taso C", M: "Taso M" };
   $("placement-level-badge").textContent = LEVEL_LABELS[q.level] || `Taso ${q.level}`;
   $("placement-counter").textContent = `${currentIdx + 1} / ${questions.length}`;
   $("placement-progress-fill").style.width = `${(currentIdx / questions.length) * 100}%`;
 
-  // Context
-  const contextEl = $("placement-context");
-  // Show context for context/correction types
-  if (q.type === "context" || q.type === "correction") {
-    // Extract context from question if embedded
-    contextEl.classList.add("hidden");
-  } else {
-    contextEl.classList.add("hidden");
-  }
-
-  // Question
+  $("placement-context")?.classList.add("hidden");
   $("placement-question").textContent = q.question;
 
-  // Options
   const optionsEl = $("placement-options");
   optionsEl.innerHTML = "";
   q.options.forEach((opt) => {
@@ -119,16 +176,17 @@ function renderQuestion() {
       if (answered) return;
       answered = true;
 
-      // Record answer
       answers.push({ id: q.id, level: q.level, selected: letter });
+      track("placement_answer", {
+        level: q.level,
+        item_id: q.id,
+        index: currentIdx,
+        time_ms: Date.now() - startedAt,
+      });
 
-      // Disable all and submit to see correct answer
       optionsEl.querySelectorAll(".placement-option").forEach(o => o.classList.add("disabled"));
       btn.classList.add("selected");
 
-      // We don't know the correct answer client-side, so just advance
-      // The explanation will come from server after all answers
-      // But for UX, show immediate visual + advance after delay
       setTimeout(() => {
         if (currentIdx < questions.length - 1) {
           currentIdx++;
@@ -136,13 +194,12 @@ function renderQuestion() {
         } else {
           submitAnswers();
         }
-      }, 400);
+      }, 500);
     });
     optionsEl.appendChild(btn);
   });
 
-  // Hide explanation (we don't show per-question explanations during test)
-  $("placement-explanation").classList.add("hidden");
+  $("placement-explanation")?.classList.add("hidden");
 }
 
 // ─── Submit all answers ────────────────────────────────────────────────────
@@ -161,8 +218,14 @@ async function submitAnswers() {
 
     if (!res.ok) throw new Error("Submit failed");
     result = await res.json();
+    track("placement_completed", {
+      level: result.placementLevel,
+      items: answers.length,
+      duration_ms: Date.now() - startedAt,
+    });
     showResults();
-  } catch {
+  } catch (err) {
+    track("placement_api_failed", { phase: "submit", error: String(err?.message || err).slice(0, 60) });
     $("placement-question").textContent = "Jokin meni pieleen";
     $("placement-options").innerHTML = '<button class="btn-primary" onclick="location.reload()">Yritä uudelleen</button>';
   }
@@ -176,13 +239,10 @@ function showResults() {
   $("placement-results-grade").textContent = pl;
   $("placement-results-sub").textContent = `Kartoituksen perusteella aloitat ${pl}-tasolta`;
 
-  // Bar chart
   renderBarChart(result.scoreByLevel, result.answers);
 
-  // Accept button
   $("placement-accept-level").textContent = pl;
 
-  // Alternative button
   const altBtn = $("placement-btn-alt");
   if (result.alternativeLevel) {
     $("placement-alt-level").textContent = result.alternativeLevel;
@@ -204,7 +264,6 @@ function renderBarChart(scoreByLevel, gradedAnswers) {
     const s = scoreByLevel[level];
     if (!s || s.total === 0) continue;
 
-    // Build individual check/cross marks
     const levelAnswers = (gradedAnswers || []).filter(a => a.level === level);
     let marks = "";
     if (levelAnswers.length > 0) {
@@ -212,7 +271,6 @@ function renderBarChart(scoreByLevel, gradedAnswers) {
         `<span class="placement-chart-mark ${a.correct ? "correct" : "wrong"}">${a.correct ? "✓" : "✗"}</span>`
       ).join("");
     } else {
-      // Fallback: generate from score
       for (let i = 0; i < s.total; i++) {
         const isCorrect = i < s.correct;
         marks += `<span class="placement-chart-mark ${isCorrect ? "correct" : "wrong"}">${isCorrect ? "✓" : "✗"}</span>`;
@@ -236,40 +294,42 @@ function renderBarChart(scoreByLevel, gradedAnswers) {
   chartEl.innerHTML = html;
 }
 
-// ─── Accept / alternative ──────────────────────────────────────────────────
+// ─── Accept / alternative / keyboard ───────────────────────────────────────
 
-$("placement-btn-accept").addEventListener("click", async () => {
-  await _deps.loadDashboard();
-});
+function wireResultButtons() {
+  $("placement-btn-accept")?.addEventListener("click", async () => {
+    await _deps.loadDashboard();
+  });
 
-$("placement-btn-alt").addEventListener("click", async () => {
-  if (!result?.alternativeLevel) return;
+  $("placement-btn-alt")?.addEventListener("click", async () => {
+    if (!result?.alternativeLevel) return;
 
-  $("placement-btn-alt").disabled = true;
-  $("placement-btn-alt").textContent = "Tallennetaan...";
+    $("placement-btn-alt").disabled = true;
+    $("placement-btn-alt").textContent = "Tallennetaan...";
 
-  try {
-    await apiFetch(`${API}/api/placement/choose-level`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json", ...authHeader() },
-      body: JSON.stringify({ level: result.alternativeLevel }),
-    });
-  } catch { /* silent */ }
+    try {
+      await apiFetch(`${API}/api/placement/choose-level`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", ...authHeader() },
+        body: JSON.stringify({ level: result.alternativeLevel }),
+      });
+    } catch { /* silent */ }
 
-  await _deps.loadDashboard();
-});
+    await _deps.loadDashboard();
+  });
+}
 
-// ─── Keyboard shortcuts ────────────────────────────────────────────────────
+function wireKeyboardShortcuts() {
+  document.addEventListener("keydown", (e) => {
+    if (!$("screen-placement-test")?.classList.contains("active")) return;
+    if (["INPUT", "TEXTAREA"].includes(document.activeElement.tagName)) return;
 
-document.addEventListener("keydown", (e) => {
-  if (!$("screen-placement-test")?.classList.contains("active")) return;
-  if (["INPUT", "TEXTAREA"].includes(document.activeElement.tagName)) return;
+    const numToLetter = { "1": "A", "2": "B", "3": "C", "4": "D" };
+    const key = numToLetter[e.key] || e.key.toUpperCase();
 
-  const numToLetter = { "1": "A", "2": "B", "3": "C", "4": "D" };
-  const key = numToLetter[e.key] || e.key.toUpperCase();
-
-  if (["A", "B", "C", "D"].includes(key)) {
-    const btn = $("placement-options")?.querySelector(`.placement-option[data-letter="${key}"]:not(.disabled)`);
-    if (btn) btn.click();
-  }
-});
+    if (["A", "B", "C", "D"].includes(key)) {
+      const btn = $("placement-options")?.querySelector(`.placement-option[data-letter="${key}"]:not(.disabled)`);
+      if (btn) btn.click();
+    }
+  });
+}
