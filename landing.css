@@ -272,7 +272,8 @@ body::after {
 
 /* Push nav down when urgency bar is visible */
 .urgency-bar:not(.hidden) ~ .nav { top: 38px; }
-.urgency-bar:not(.hidden) ~ .hero { padding-top: 110px; }
+.urgency-bar:not(.hidden) ~ #main > .hero { padding-top: 110px; }
+.urgency-bar:not(.hidden) ~ #main .mini-diag { scroll-margin-top: 120px; }
 
 /* ── NAV ── */
 .nav {

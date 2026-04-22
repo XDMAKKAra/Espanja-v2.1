@@ -725,12 +725,11 @@
 </head>
 <body>
 
-  <!-- 0) URGENCY BAR (visible June–September only) -->
+  <!-- 0) URGENCY BAR (visible year-round until exam day) -->
   <div class="urgency-bar hidden" id="urgency-bar">
-    <a href="#pricing" class="urgency-bar-inner">
+    <a href="#mini-diag" class="urgency-bar-inner" data-cta="urgency-bar">
       <span class="urgency-bar-text">
-        &#9203; Syksyn YO-kirjoituksiin <strong id="urgency-days">X</strong> p&auml;iv&auml;&auml; &mdash;
-        <strong>Kes&auml;paketti 29&euro;</strong> (kes&auml;&ndash;syyskuu, s&auml;&auml;st&auml;t 10,96&euro;)
+        &#9203; YO-koe 28.9.2026 &mdash; <strong id="urgency-days">X</strong> p&auml;iv&auml;&auml; j&auml;ljell&auml; &rarr;
       </span>
     </a>
     <button class="urgency-bar-close" id="urgency-bar-close" aria-label="Sulje">&times;</button>
@@ -1536,16 +1535,16 @@
   </div>
 
   <script>
-    // Urgency bar (visible June-September)
+    // Urgency bar (visible year-round until exam day)
     (function() {
-      var month = new Date().getMonth();
-      var summerSeason = month >= 5 && month <= 8;
       var bar = document.getElementById('urgency-bar');
+      if (!bar) return;
 
-      if (summerSeason && !sessionStorage.getItem('urgency-dismissed')) {
+      var examMs = Date.parse('2026-09-28T09:00:00+03:00');
+      var daysLeft = Math.max(0, Math.ceil((examMs - Date.now()) / (24*60*60*1000)));
+
+      if (daysLeft > 0 && !sessionStorage.getItem('urgency-dismissed')) {
         bar.classList.remove('hidden');
-        var examDate = new Date(2026, 8, 15);
-        var daysLeft = Math.max(0, Math.ceil((examDate - new Date()) / (24*60*60*1000)));
         document.getElementById('urgency-days').textContent = daysLeft;
       }
 
