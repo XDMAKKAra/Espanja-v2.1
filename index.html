@@ -754,56 +754,59 @@
 
   <!-- 1) HERO -->
   <section class="hero">
-    <div class="hero-tag">Espanja &middot; Lyhyt oppim&auml;&auml;r&auml; &middot; YO-koe 2026</div>
+    <div class="hero-inner">
+      <div class="hero-copy">
+        <div class="hero-tag">Espanja &middot; Lyhyt oppim&auml;&auml;r&auml; &middot; YO-koe 2026</div>
 
-    <h1>Paranna espanjan YO-arvosanaa<br/><em>teko&auml;lyll&auml;.</em></h1>
+        <h1>Paranna espanjan YO-arvosanaa<br/><em>ennen 28.9.2026.</em></h1>
 
-    <p class="hero-sub">
-      Personoidut harjoitukset &middot; YTL-rubriikin mukainen AI-palaute &middot; t&auml;yskoe-simulaatio.
-    </p>
+        <p class="hero-sub">
+          Personoidut harjoitukset &middot; YTL-rubriikin mukainen AI-palaute &middot; t&auml;yskoe-simulaatio.
+        </p>
 
-    <div class="hero-actions">
-      <a href="app.html" class="btn-hero">Aloita ilmaiseksi &mdash; 2 min</a>
-      <a href="diagnose.html" class="btn-hero-secondary">
-        <svg class="btn-hero-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>
-        </svg>
-        Testaa tasosi
-      </a>
-    </div>
+        <div class="hero-actions">
+          <a href="#mini-diag" class="btn-hero" data-cta="hero-primary">Testaa tasosi &mdash; 60 sekuntia &rarr;</a>
+          <a href="app.html" class="btn-hero-secondary" data-cta="hero-secondary">
+            Aloita harjoittelu ilmaiseksi &rarr;
+          </a>
+        </div>
 
-    <!-- Trust strip: urgency + risk-reversal directly reinforcing the CTA -->
-    <ul class="hero-trust-strip" aria-label="Luottamussignaalit">
-      <li class="hero-trust-item hero-trust-urgency">
-        <span class="hero-trust-num" id="hero-trust-days">&mdash;</span>
-        <span class="hero-trust-label">p&auml;iv&auml;&auml; YO-kokeeseen 28.9.2026</span>
-      </li>
-      <li class="hero-trust-item">
-        <svg class="hero-trust-icon" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M2 10h20"/></svg>
-        Ei luottokorttia
-      </li>
-      <li class="hero-trust-item">
-        <svg class="hero-trust-icon" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.5 9 8 11 4.5-2 8-6 8-11V5l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>
-        14 pv rahat takaisin
-      </li>
-    </ul>
-
-    <div class="hero-social-proof hidden" id="hero-social-proof">
-      <span class="hero-proof-dot"></span>
-      <span><strong id="hero-user-count">0</strong> lukiolaista harjoittelee Puheolla</span>
-    </div>
-
-  </section>
-
-  <!-- Exam countdown -->
-  <section class="exam-countdown" id="exam-countdown">
-    <div class="exam-countdown-inner">
-      <div class="countdown-kicker">Puheon kanssa valmistaudut ajoissa</div>
-      <div class="countdown-number">
-        <span id="countdown-days">&mdash;</span><span class="countdown-unit" id="countdown-unit"> p&auml;iv&auml;&auml;</span>
+        <!-- Trust strip: urgency + risk-reversal directly reinforcing the CTA -->
+        <ul class="hero-trust-strip" aria-label="Luottamussignaalit">
+          <li class="hero-trust-item hero-trust-urgency">
+            <span class="hero-trust-num" id="hero-trust-days">&mdash;</span>
+            <span class="hero-trust-label">p&auml;iv&auml;&auml; YO-kokeeseen 28.9.2026</span>
+          </li>
+          <li class="hero-trust-item">
+            <svg class="hero-trust-icon" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M2 10h20"/></svg>
+            Ei luottokorttia
+          </li>
+          <li class="hero-trust-item">
+            <svg class="hero-trust-icon" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.5 9 8 11 4.5-2 8-6 8-11V5l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>
+            14 pv rahat takaisin
+          </li>
+        </ul>
       </div>
-      <div class="countdown-exam" id="countdown-exam">Syksyn espanjan YO-koe &middot; 28.9.2026 klo 9:00</div>
-      <div class="countdown-context" id="countdown-context"></div>
+
+      <!-- Visual proof: miniature annotation card (desktop only) -->
+      <aside class="hero-proof" aria-hidden="true">
+        <div class="hero-proof-card">
+          <div class="hero-proof-head">
+            <span class="hero-proof-kicker">YTL-palaute</span>
+            <span class="hero-proof-score">82 / 99</span>
+          </div>
+          <p class="hero-proof-text">
+            Me <mark class="hero-proof-mark" data-tip="preteriti">fuimos</mark> a Madrid el verano pasado.
+            El viaje <mark class="hero-proof-mark hero-proof-mark--warn" data-tip="subj.">era</mark> fant&aacute;stico,
+            aunque <mark class="hero-proof-mark hero-proof-mark--err" data-tip="acc.">hacia</mark> mucho calor.
+          </p>
+          <ul class="hero-proof-criteria">
+            <li><span>Sis&auml;lt&ouml;</span><em>29/33</em></li>
+            <li><span>Rakenne</span><em>27/33</em></li>
+            <li><span>Kielen laatu</span><em>26/33</em></li>
+          </ul>
+        </div>
+      </aside>
     </div>
   </section>
 
@@ -1558,52 +1561,21 @@
       }
     })();
 
-    // Exam countdown (days remaining to autumn 2026 YO — hourly update, Helsinki time)
+    // Hero trust-strip days counter (YO-koe 28.9.2026, Helsinki time)
     (function() {
-      var root = document.getElementById('exam-countdown');
-      if (!root) return;
-      var daysEl = document.getElementById('countdown-days');
-      var unitEl = document.getElementById('countdown-unit');
-      var examEl = document.getElementById('countdown-exam');
-      var ctxEl  = document.getElementById('countdown-context');
-
-      // Syksyn espanjan YO-koe: 28.9.2026 klo 9:00 Helsinki (EEST = UTC+3)
+      var heroDaysEl = document.getElementById('hero-trust-days');
+      if (!heroDaysEl) return;
       var examMs = Date.parse('2026-09-28T09:00:00+03:00');
       var DAY = 24 * 60 * 60 * 1000;
 
       function render() {
         var diff = examMs - Date.now();
         if (diff <= 0) {
-          root.classList.add('is-post-exam');
-          daysEl.textContent = 'Syksyn koe ohi.';
-          examEl.textContent = 'Kiitos, ett\u00e4 valmistauduit Puheon kanssa.';
-          ctxEl.textContent = 'Kev\u00e4\u00e4n kirjoituksiin valmistautuminen kannattaa aloittaa hyviss\u00e4 ajoin.';
-          // Hide the hero urgency pill once the exam has passed
           var urgencyEl = document.querySelector('.hero-trust-urgency');
           if (urgencyEl) urgencyEl.hidden = true;
           return;
         }
-        var days = Math.ceil(diff / DAY);
-        daysEl.textContent = days;
-        unitEl.textContent = days === 1 ? ' p\u00e4iv\u00e4' : ' p\u00e4iv\u00e4\u00e4';
-
-        // Mirror the day count into the hero trust strip
-        var heroDaysEl = document.getElementById('hero-trust-days');
-        if (heroDaysEl) heroDaysEl.textContent = days;
-
-        var msg;
-        if (days >= 150) {
-          msg = 'Sopiva aika aloittaa. 15 min/pv riitt\u00e4\u00e4 t\u00e4ss\u00e4 vaiheessa.';
-        } else if (days >= 60) {
-          msg = 'Systemaattinen harjoittelu kannattaa nyt. 20 min/pv.';
-        } else if (days >= 30) {
-          msg = 'Aika tiivist\u00e4\u00e4 \u2014 30 min/pv + simulaatiot.';
-        } else if (days >= 7) {
-          msg = 'Fokus: vanhat virheet + t\u00e4yskoe-simulaatiot.';
-        } else {
-          msg = 'Lep\u00e4\u00e4 hyvin. Olet valmistautunut enemm\u00e4n kuin luulet.';
-        }
-        ctxEl.textContent = msg;
+        heroDaysEl.textContent = Math.ceil(diff / DAY);
       }
 
       render();
@@ -1730,47 +1702,6 @@
       });
     })();
 
-    // Social proof user count — hidden until count is credible (>=50)
-    // Deferred to after `load` so the fetch doesn't sit in the LCP critical path
-    // (Lighthouse flagged this at 1,333ms on slow 4G).
-    (function() {
-      var el = document.getElementById('hero-social-proof');
-      // Force hide by default (belt & suspenders: class + inline style)
-      if (el) el.style.display = 'none';
-
-      function loadCount() {
-        fetch('/api/user-count')
-          .then(function(r) { return r.json(); })
-          .then(function(d) {
-            var count = d.count || 0;
-            if (count >= 50) {
-              document.getElementById('hero-user-count').textContent = count;
-              if (el) {
-                el.classList.remove('hidden');
-                el.style.display = '';
-              }
-            }
-            // else: leave hidden — 0 or low numbers hurt conversion more than no signal
-          })
-          .catch(function() {});
-      }
-
-      // requestIdleCallback expects an options object {timeout},
-      // setTimeout expects a millisecond number — they're not interchangeable.
-      function deferLoadCount() {
-        if (window.requestIdleCallback) {
-          window.requestIdleCallback(loadCount, { timeout: 1000 });
-        } else {
-          window.setTimeout(loadCount, 1);
-        }
-      }
-      if (document.readyState === 'complete') {
-        deferLoadCount();
-      } else {
-        window.addEventListener('load', deferLoadCount, { once: true });
-      }
-    })();
-
     // Dynamic copyright year
     document.getElementById('copy-year').textContent = new Date().getFullYear();
 
@@ -1833,33 +1764,6 @@
         el.style.transitionDelay = (i * 0.1) + 's';
         observer.observe(el);
       });
-    })();
-
-    // ── Number counter animation ──
-    (function() {
-      var counted = false;
-      var el = document.getElementById('hero-user-count');
-      if (!el) return;
-
-      var observer = new IntersectionObserver(function(entries) {
-        if (entries[0].isIntersecting && !counted) {
-          counted = true;
-          var target = parseInt(el.textContent) || 0;
-          if (target < 1) return;
-          var duration = 1200;
-          var start = performance.now();
-          function tick(now) {
-            var progress = Math.min((now - start) / duration, 1);
-            var eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
-            el.textContent = Math.round(eased * target);
-            if (progress < 1) requestAnimationFrame(tick);
-          }
-          el.textContent = '0';
-          requestAnimationFrame(tick);
-        }
-      }, { threshold: 0.5 });
-
-      observer.observe(el.closest('.hero-social-proof') || el);
     })();
 
     // ── Price card tilt on mouse ──

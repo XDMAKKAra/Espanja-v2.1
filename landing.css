@@ -335,6 +335,83 @@ body::after {
   padding: 0 24px 48px;
   padding-top: max(80px, 12vh);
 }
+.hero-inner {
+  width: 100%;
+  max-width: 1100px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 40px;
+  align-items: center;
+}
+.hero-copy { display: flex; flex-direction: column; align-items: center; }
+@media (min-width: 960px) {
+  .hero { text-align: left; }
+  .hero-inner { grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); gap: 56px; }
+  .hero-copy { align-items: flex-start; text-align: left; }
+  .hero-copy .hero-actions { justify-content: flex-start; }
+  .hero-copy .hero-trust-strip { justify-content: flex-start; }
+}
+
+/* Visual proof card (desktop only) */
+.hero-proof { display: none; }
+@media (min-width: 960px) { .hero-proof { display: block; } }
+.hero-proof-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px 24px 20px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04), 0 8px 24px rgba(120,80,20,0.06);
+  transform: rotate(-0.6deg);
+}
+.hero-proof-head {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 14px;
+  font-family: var(--mono);
+}
+.hero-proof-kicker {
+  font-size: 11px; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--brand-light);
+}
+.hero-proof-score {
+  font-family: var(--font); font-weight: 700;
+  font-size: 18px; color: var(--text); letter-spacing: -0.01em;
+}
+.hero-proof-text {
+  font-family: var(--serif);
+  font-size: 16px; line-height: 1.7;
+  color: var(--text); margin: 0 0 16px;
+}
+.hero-proof-mark {
+  background: color-mix(in srgb, var(--correct) 22%, transparent);
+  border-bottom: 2px solid var(--correct);
+  padding: 0 2px; border-radius: 2px;
+  color: inherit;
+}
+.hero-proof-mark--warn {
+  background: color-mix(in srgb, #d49a2a 22%, transparent);
+  border-bottom-color: #d49a2a;
+}
+.hero-proof-mark--err {
+  background: color-mix(in srgb, #c14d3a 20%, transparent);
+  border-bottom-color: #c14d3a;
+}
+.hero-proof-criteria {
+  list-style: none; margin: 0; padding: 14px 0 0;
+  border-top: 1px dashed var(--border);
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  gap: 4px 16px;
+}
+.hero-proof-criteria li {
+  display: flex; flex-direction: column; gap: 2px;
+  font-family: var(--mono); font-size: 11px;
+  color: var(--text-muted); letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.hero-proof-criteria em {
+  font-style: normal; font-family: var(--font);
+  font-weight: 700; font-size: 15px; color: var(--text);
+  letter-spacing: -0.01em; text-transform: none;
+}
 
 .hero-tag {
   display: inline-block; font-family: var(--mono);
@@ -420,21 +497,6 @@ body::after {
   letter-spacing: -0.01em;
 }
 .hero-trust-urgency .hero-trust-label { color: var(--text); opacity: 0.85; }
-
-.hero-social-proof {
-  display: flex; align-items: center; gap: 8px;
-  font-family: var(--mono); font-size: 12px;
-  color: var(--text-muted); margin-bottom: 16px;
-}
-.hero-proof-dot {
-  width: 8px; height: 8px; border-radius: 50%;
-  background: var(--correct);
-  animation: pulse 2s infinite;
-}
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
-}
 
 /* Hero card mockup */
 @keyframes float {
@@ -1208,64 +1270,3 @@ footer {
   .urgency-bar-inner { padding: 8px 32px 8px 12px; }
 }
 
-/* ============================================================
-   EXAM COUNTDOWN (below hero)
-   ============================================================ */
-.exam-countdown {
-  max-width: 640px;
-  margin: 0 auto;
-  padding: 8px 24px 40px;
-}
-.exam-countdown-inner {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 28px 24px 26px;
-  text-align: center;
-}
-.countdown-kicker {
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--brand-light);
-  margin-bottom: 16px;
-}
-.countdown-number {
-  font-family: var(--font);
-  font-weight: 800;
-  font-size: 56px;
-  line-height: 1;
-  color: var(--text);
-  letter-spacing: -0.02em;
-  margin-bottom: 12px;
-}
-.countdown-number .countdown-unit {
-  font-weight: 600;
-  font-size: 26px;
-  color: var(--text-muted);
-  letter-spacing: 0;
-}
-.countdown-exam {
-  font-family: var(--mono);
-  font-size: 12px;
-  letter-spacing: 0.05em;
-  color: var(--text-muted);
-  margin-bottom: 18px;
-}
-.countdown-context {
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: 15px;
-  line-height: 1.55;
-  color: var(--text);
-  max-width: 440px;
-  margin: 0 auto;
-}
-.exam-countdown.is-post-exam .countdown-number { font-size: 32px; }
-.exam-countdown.is-post-exam .countdown-number .countdown-unit { display: none; }
-@media (max-width: 560px) {
-  .countdown-number { font-size: 44px; }
-  .countdown-number .countdown-unit { font-size: 20px; }
-  .exam-countdown-inner { padding: 24px 18px 22px; }
-}
