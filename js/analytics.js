@@ -71,6 +71,14 @@ export function trackExerciseStarted(mode, level, topic, language) {
 
 export function trackExerciseCompleted(mode, level, correct, total, durationMs) {
   track("exercise_completed", { mode, level, correct, total, duration_ms: durationMs });
+  // Pass 4 Commit 7 — drives the paywall first-session gate. Client-side
+  // counter is sufficient for the suppression decision; server still owns
+  // the real count for the dashboard widget.
+  try {
+    const key = "puheo_completed_sessions";
+    const current = Number(localStorage.getItem(key) || 0);
+    localStorage.setItem(key, String(current + 1));
+  } catch { /* silent */ }
 }
 
 export function trackExamStarted(durationMode) {

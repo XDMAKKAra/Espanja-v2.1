@@ -3,16 +3,61 @@ import { API, isLoggedIn, authHeader, apiFetch } from "../api.js";
 import { state } from "../state.js";
 import { CRITERIA_LABELS } from "../state.js";
 import { showLoading, showLoadingError, showSkeleton, showFetchError } from "../ui/loading.js";
-import { trackCheckoutStarted, trackProUpsellShown, trackExerciseCompleted } from "../analytics.js";
+import { trackCheckoutStarted, trackProUpsellShown, trackExerciseCompleted, track } from "../analytics.js";
+import { shouldFireUpsell, UPSELL_TRIGGERS, LAST_FIRED_KEY, SESSION_COUNT_KEY } from "../../lib/paywall.js";
 
 let _deps = {};
 export function initWriting({ loadDashboard, saveProgress }) {
   _deps = { loadDashboard, saveProgress };
 }
 
-export function showProUpsell() {
+// Soft copy shown when the gate suppresses the modal (no CTA, no purchase).
+// Keeps the student in flow instead of hitting them with a commercial.
+const SOFT_COPY = {
+  first_session: "Lukeminen ja kirjoittaminen aukeavat Pro-jäsenillä — aloita sanastosta, tutustu Puheoon ensin.",
+  frequency_cap: "",
+};
+
+function readSessionCount() {
+  try { return Number(localStorage.getItem(SESSION_COUNT_KEY) || 0); }
+  catch { return 0; }
+}
+function readLastFired() {
+  try { return Number(localStorage.getItem(LAST_FIRED_KEY) || 0) || null; }
+  catch { return null; }
+}
+
+export function showProUpsell(trigger = UPSELL_TRIGGERS.LOCKED_TILE_WRITING) {
+  const decision = shouldFireUpsell({
+    sessionCount: readSessionCount(),
+    lastFiredAt: readLastFired(),
+    trigger,
+  });
+
+  if (!decision.allow) {
+    track("pro_upsell_suppressed", { trigger, reason: decision.reason });
+    const msg = SOFT_COPY[decision.reason];
+    if (msg) showSoftUpsellBanner(msg);
+    return;
+  }
+
   trackProUpsellShown();
+  try { localStorage.setItem(LAST_FIRED_KEY, String(Date.now())); } catch { /* silent */ }
   show("screen-pro-upsell");
+}
+
+function showSoftUpsellBanner(message) {
+  // Reuse the generic toast-region pattern from ui/toast.js style — inline
+  // minimal DOM to avoid importing the toast module from this file.
+  const existing = document.getElementById("pro-soft-banner");
+  if (existing) existing.remove();
+  const el = document.createElement("div");
+  el.id = "pro-soft-banner";
+  el.className = "pro-soft-banner";
+  el.setAttribute("role", "status");
+  el.textContent = message;
+  document.body.appendChild(el);
+  setTimeout(() => { el.remove(); }, 5000);
 }
 
 export async function startCheckout() {
