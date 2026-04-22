@@ -79,6 +79,15 @@ export function trackExerciseCompleted(mode, level, correct, total, durationMs) 
     const current = Number(localStorage.getItem(key) || 0);
     localStorage.setItem(key, String(current + 1));
   } catch { /* silent */ }
+  // Pass 4 Commit 10 — daily cap (vocab/grammar only).
+  if (mode === "vocab" || mode === "grammar") {
+    import("../lib/dailyCap.js").then(({ incrementDailyCount, FREE_DAILY_CAP }) => {
+      const count = incrementDailyCount();
+      if (count === FREE_DAILY_CAP) {
+        track("free_cap_hit", { mode, count });
+      }
+    }).catch(() => { /* silent */ });
+  }
 }
 
 export function trackExamStarted(durationMode) {

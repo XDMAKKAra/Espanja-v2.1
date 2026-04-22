@@ -6,6 +6,7 @@ import { GRAMMAR_TYPE_LABELS } from "./vocab.js";
 import { resetAutoTriggerTracking, recordAnswerForAutoTrigger } from "./quickReview.js";
 import { getBlogForTopic, trackBlogClick } from "../features/topicBlogMap.js";
 import { renderExercise } from "./exerciseRenderer.js";
+import { shouldShowCapBanner, CAP_BANNER_COPY } from "../../lib/dailyCap.js";
 import { toUnified } from "../../lib/exerciseTypes.js";
 import { reportMcAdvisory } from "../features/mcAdvisory.js";
 
@@ -198,6 +199,18 @@ function showGrammarResults() {
 
   renderBlogCta(state.grammarTopic);
   show("screen-grammar-results");
+  renderGramCapBanner();
+}
+
+function renderGramCapBanner() {
+  const host = document.querySelector("#screen-grammar-results .results-inner");
+  if (!host) return;
+  host.querySelector(".results-cap-banner")?.remove();
+  if (!shouldShowCapBanner()) return;
+  const el = document.createElement("div");
+  el.className = "results-cap-banner";
+  el.textContent = CAP_BANNER_COPY;
+  host.insertBefore(el, host.firstChild);
 }
 
 async function renderBlogCta(topicKey) {

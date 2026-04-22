@@ -6,6 +6,7 @@ import { srPop, srAddWrong, srMarkCorrect, srReview, srGetDue } from "../feature
 import { isTranslationAccepted, isTranslationPartial, translationBand, TRANSLATION_BAND_LABELS } from "../features/answerGrading.js";
 import { trackExerciseStarted, trackExerciseCompleted, trackError } from "../analytics.js";
 import { maybeShowFirstCelebration } from "./onboarding.js";
+import { shouldShowCapBanner, CAP_BANNER_COPY } from "../../lib/dailyCap.js";
 import { renderExercise } from "./exerciseRenderer.js";
 import { toUnified } from "../../lib/exerciseTypes.js";
 import { renderAukkotehtava }     from "../renderers/aukkotehtava.js";
@@ -1081,6 +1082,21 @@ function showVocabResults() {
   // Celebration is an overlay — fire-and-forget so the result screen
   // renders underneath and is already visible when the overlay dismisses.
   maybeShowFirstCelebration();
+
+  // Daily-cap nudge banner for free users at #15+ (Commit 10).
+  renderCapBanner();
+}
+
+function renderCapBanner() {
+  const host = document.querySelector("#screen-results .results-inner");
+  if (!host) return;
+  // Remove any prior banner so we don't duplicate on restarts.
+  host.querySelector(".results-cap-banner")?.remove();
+  if (!shouldShowCapBanner()) return;
+  const el = document.createElement("div");
+  el.className = "results-cap-banner";
+  el.textContent = CAP_BANNER_COPY;
+  host.insertBefore(el, host.firstChild);
 }
 
 $("btn-restart").addEventListener("click", () => {
