@@ -54,6 +54,7 @@ function showWelcome() {
   if (daysEl) daysEl.textContent = daysToExam();
   hideAppCountdown(); // S1–S2 hide the persistent countdown
   show("screen-ob-welcome");
+  track("onboarding_started", { days_to_exam: daysToExam() });
   track("onboarding_welcome_viewed", { days_to_exam: daysToExam() });
 }
 
@@ -243,6 +244,7 @@ function wireGoal() {
         const perm = await Notification.requestPermission();
         track("push_permission_" + perm, {});
         if (perm === "granted") {
+          track("push_opt_in", {});
           await postProfile({ notification_preference: "push" });
           pushBtn.disabled = true;
           pushBtn.textContent = "Muistutukset päällä ✓";
@@ -256,7 +258,7 @@ function wireGoal() {
     done.addEventListener("click", async () => {
       done.disabled = true;
       const g = GOAL_MAP[selectedGoal] || GOAL_MAP.normaali;
-      track("onboarding_goal_set", { goal: selectedGoal });
+      track("daily_goal_set", { goal: selectedGoal, session_length: g.session_length });
       await postProfile({
         preferred_session_length: g.session_length,
         weekly_goal_minutes: g.weekly_minutes,

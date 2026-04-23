@@ -104,14 +104,19 @@ export function trackCheckoutStarted() {
 
 export function trackCheckoutCompleted() {
   track("checkout_completed");
+  track("paywall_converted", { source: "checkout" });
 }
 
-export function trackProUpsellShown() {
-  track("pro_upsell_shown");
+export function trackProUpsellShown(trigger) {
+  track("paywall_shown", trigger ? { trigger } : {});
 }
 
-export function trackProUpsellDismissed() {
-  track("pro_upsell_dismissed");
+export function trackProUpsellDismissed(trigger) {
+  track("paywall_dismissed", trigger ? { trigger } : {});
+}
+
+export function trackPaywallConverted(source) {
+  track("paywall_converted", source ? { source } : {});
 }
 
 export function trackError(context, message) {

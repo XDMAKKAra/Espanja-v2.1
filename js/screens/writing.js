@@ -74,8 +74,7 @@ export function showProUpsell(trigger = UPSELL_TRIGGERS.LOCKED_TILE_WRITING) {
     return;
   }
 
-  trackProUpsellShown();
-  track("pro_upsell_shown_ctx", { trigger });
+  trackProUpsellShown(trigger);
   applyUpsellCopy(trigger);
   try { localStorage.setItem(LAST_FIRED_KEY, String(Date.now())); } catch { /* silent */ }
   show("screen-pro-upsell");
@@ -191,6 +190,7 @@ export function wireAppWaitlist() {
       });
       if (!res.ok) throw new Error("grant_failed");
       track("dev_pro_flipped", {});
+      track("paywall_converted", { source: "dev_flip" });
       location.reload();
     } catch {
       devBtn.disabled = false;
