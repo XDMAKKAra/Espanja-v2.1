@@ -45,22 +45,22 @@
   --sr-good:  #059669;
   --sr-easy:  #2563EB;
 
-  /* YO grades */
+  /* YO grades (AA on white) */
   --grade-i: #6B7280;
-  --grade-a: #9CA3AF;
+  --grade-a: #6B7280;
   --grade-b: #2563EB;
-  --grade-c: #0D9488;
-  --grade-m: #059669;
+  --grade-c: #0F766E;
+  --grade-m: #047857;
   --grade-e: #047857;
   --grade-l: #064E3B;
 
-  /* Exercise badges */
-  --ex-monivalinta:  #0D9488;
-  --ex-yhdistaminen: #2563EB;
-  --ex-taydennys:    #7C3AED;
-  --ex-jarjestely:   #0891B2;
-  --ex-kaannos:      #059669;
-  --ex-luetun:       #6366F1;
+  /* Exercise badges — darker cool-family siblings, AA as text on 12% tint */
+  --ex-monivalinta:  #0F766E;
+  --ex-yhdistaminen: #1D4ED8;
+  --ex-taydennys:    #6D28D9;
+  --ex-jarjestely:   #0E7490;
+  --ex-kaannos:      #047857;
+  --ex-luetun:       #4338CA;
 
   /* Gradients — only --grad-hero survives (masked into hero H1 text only) */
   --grad-hero:    linear-gradient(130deg, var(--accent) 0%, var(--accent-hover) 100%);
@@ -414,7 +414,7 @@ body::before {
 }
 .hero h1 .hero-accent {
   font-weight: 800;
-  color: var(--accent);
+  color: var(--accent-hover);
   font-style: normal;
 }
 
@@ -572,7 +572,7 @@ body::before {
   display: inline-flex; align-items: center;
   width: auto; height: 20px; margin-right: var(--s-2);
   background: transparent;
-  color: var(--accent);
+  color: var(--accent-hover);
 }
 .feature-icon svg { display: block; width: 20px; height: 20px; }
 .feature-title { font-size: 15px; font-weight: 700; margin-bottom: 8px; display: inline-flex; align-items: center; gap: var(--s-2); color: var(--ink); }
@@ -795,11 +795,11 @@ body::before {
 }
 .price-btn:hover { background: var(--ink); color: #ffffff; }
 .price-btn.primary {
-  background: var(--accent); border-color: var(--accent); color: var(--ink);
+  background: var(--accent); border-color: var(--accent-hover); color: var(--ink);
 }
 .price-btn.primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); color: var(--ink); }
 .price-btn.summer-btn {
-  background: var(--accent); border-color: var(--accent); color: var(--ink);
+  background: var(--accent); border-color: var(--accent-hover); color: var(--ink);
 }
 .price-btn.summer-btn:hover { background: var(--accent-hover); border-color: var(--accent-hover); color: var(--ink); }
 .price-footer-note {
@@ -811,7 +811,7 @@ body::before {
 .price-card.summer.teaser { opacity: 0.85; }
 .price-card.summer.teaser .summer-btn {
   background: var(--accent);
-  border-color: var(--accent);
+  border-color: var(--accent-hover);
   color: var(--ink);
   opacity: 1;
 }
