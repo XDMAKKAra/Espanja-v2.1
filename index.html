@@ -725,11 +725,18 @@
 </head>
 <body>
 
-  <!-- 0) URGENCY BAR (visible year-round until exam day) -->
+  <!-- 0) URGENCY BAR (flat parchment strip with compact countdown) -->
   <div class="urgency-bar hidden" id="urgency-bar">
     <a href="#mini-diag" class="urgency-bar-inner" data-cta="urgency-bar">
       <span class="urgency-bar-text">
-        &#9203; YO-koe 28.9.2026 &mdash; <strong id="urgency-days">X</strong> p&auml;iv&auml;&auml; j&auml;ljell&auml; &rarr;
+        YO-koe 28.9.2026 &middot;
+        <span
+          class="countdown countdown--compact"
+          data-countdown="yo-koe"
+          data-variant="compact"
+          aria-live="off"
+        >&mdash;</span>
+        &middot; j&auml;ljell&auml;
       </span>
     </a>
     <button class="urgency-bar-close" id="urgency-bar-close" aria-label="Sulje">&times;</button>
@@ -771,12 +778,25 @@
           </a>
         </div>
 
-        <!-- Trust strip: urgency + risk-reversal directly reinforcing the CTA -->
+        <!-- Live countdown (hero data block) -->
+        <div
+          class="countdown countdown--full"
+          data-countdown="yo-koe"
+          data-variant="full"
+          aria-live="off"
+        >
+          <div class="countdown__seg"><span class="countdown__num" data-unit="d">&mdash;</span><span class="countdown__lbl">p&auml;iv&auml;&auml;</span></div>
+          <span class="countdown__sep">:</span>
+          <div class="countdown__seg"><span class="countdown__num" data-unit="h">&mdash;</span><span class="countdown__lbl">tuntia</span></div>
+          <span class="countdown__sep">:</span>
+          <div class="countdown__seg"><span class="countdown__num" data-unit="m">&mdash;</span><span class="countdown__lbl">min</span></div>
+          <span class="countdown__sep">:</span>
+          <div class="countdown__seg"><span class="countdown__num" data-unit="s">&mdash;</span><span class="countdown__lbl">sek</span></div>
+        </div>
+        <span class="sr-only">YO-koe alkaa 28.9.2026 klo 9.00</span>
+
+        <!-- Trust strip: risk-reversal under the countdown -->
         <ul class="hero-trust-strip" aria-label="Luottamussignaalit">
-          <li class="hero-trust-item hero-trust-urgency">
-            <span class="hero-trust-num" id="hero-trust-days">&mdash;</span>
-            <span class="hero-trust-label">p&auml;iv&auml;&auml; YO-kokeeseen 28.9.2026</span>
-          </li>
           <li class="hero-trust-item">
             <svg class="hero-trust-icon" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M2 10h20"/></svg>
             Ei luottokorttia
@@ -864,7 +884,7 @@
     <div class="hero-card-wrap">
       <div class="hc">
         <div class="hc-meta">
-          <span class="hc-badge mode">&#128218; Sanasto</span>
+          <span class="hc-badge mode"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-2px;margin-right:4px"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>Sanasto</span>
           <span class="hc-badge level">Taso M</span>
         </div>
         <div class="hc-question">&iquest;Qu&eacute; significa 'el ayuntamiento'?</div>
@@ -881,26 +901,23 @@
   <!-- 2) PROBLEM -->
   <section class="section" id="problem">
     <div class="section-tag">Ongelma</div>
-    <h2>Espanja YO on vaikea koe.<br/><em>Kurssikirjat eiv&auml;t riit&auml;.</em></h2>
+    <h2>Espanja YO on vaikea koe.<br/>Kurssikirjat eiv&auml;t riit&auml;.</h2>
     <p class="section-sub">Suurin osa opiskelijoista ei saa tarpeeksi harjoitusta eik&auml; palautetta.</p>
 
     <div class="problem-bullets">
       <div class="problem-bullet">
-        <span class="problem-icon">&#10060;</span>
         <div>
           <strong>Ei tarpeeksi harjoituksia</strong>
           <p>Kurssikirjoissa on muutama harjoitus per aihe. Yo-kokeessa tulee yll&auml;tyksi&auml;.</p>
         </div>
       </div>
       <div class="problem-bullet">
-        <span class="problem-icon">&#10060;</span>
         <div>
           <strong>Kielioppi j&auml;&auml; jumiin</strong>
           <p>Subjunktiivi, ser/estar, preteriti &mdash; vaikeimmat aiheet j&auml;&auml;v&auml;t usein puolitiehen.</p>
         </div>
       </div>
       <div class="problem-bullet">
-        <span class="problem-icon">&#10060;</span>
         <div>
           <strong>Kirjoitelmaan ei saa palautetta</strong>
           <p>Opettaja ehtii lukea kirjoitelmasi ehk&auml; kerran kaudessa. Kokeessa tarvitset enemm&auml;n.</p>
@@ -912,7 +929,7 @@
   <!-- 3) SOLUTION -->
   <section class="section" id="solution">
     <div class="section-tag">Ratkaisu</div>
-    <h2>Puheo ratkaisee kaikki kolme.<br/><em>Teko&auml;lyll&auml;.</em></h2>
+    <h2>Puheo ratkaisee kaikki kolme.<br/>Teko&auml;lyll&auml;.</h2>
 
     <div class="features-grid" id="features-grid">
       <div class="feature-card reveal">
@@ -959,7 +976,7 @@
   <!-- 4) HOW IT WORKS -->
   <section id="how" class="section">
     <div class="section-tag">Miten se toimii</div>
-    <h2>Nelj&auml; askelta.<br/><em>Parempi arvosana.</em></h2>
+    <h2>Nelj&auml; askelta.<br/>Parempi arvosana.</h2>
     <p class="section-sub">Ei asennusta. Avaa selain ja aloita.</p>
 
     <div class="steps">
@@ -989,7 +1006,7 @@
   <!-- 4b) HOW PUHEO TEACHES — vertical timeline -->
   <section class="section" id="teaching">
     <div class="section-tag">Kuinka Puheo opettaa</div>
-    <h2>Adaptiivinen oppimispolku.<br/><em>Joka kerta fiksumpi.</em></h2>
+    <h2>Adaptiivinen oppimispolku.<br/>Joka kerta fiksumpi.</h2>
     <p class="section-sub">Puheo ei anna kaikille samoja teht&auml;vi&auml;. Se oppii sinun heikkoutesi.</p>
 
     <div class="timeline">
@@ -1590,48 +1607,82 @@
       }
     })();
 
-    // Urgency bar (visible year-round until exam day)
+    // Unified YO-koe countdown — renders into every [data-countdown="yo-koe"]
     (function() {
-      var bar = document.getElementById('urgency-bar');
-      if (!bar) return;
+      var TARGET = Date.parse('2026-09-28T09:00:00+03:00');
+      var URGENT_THRESHOLD_MS = 7 * 24 * 60 * 60 * 1000;
+      function pad(n) { return String(n).padStart(2, '0'); }
 
-      var examMs = Date.parse('2026-09-28T09:00:00+03:00');
-      var daysLeft = Math.max(0, Math.ceil((examMs - Date.now()) / (24*60*60*1000)));
+      var nodes = document.querySelectorAll('[data-countdown="yo-koe"]');
+      if (!nodes.length) return;
 
-      if (daysLeft > 0 && !sessionStorage.getItem('urgency-dismissed')) {
-        bar.classList.remove('hidden');
-        document.getElementById('urgency-days').textContent = daysLeft;
+      var timer = null;
+      var done = false;
+
+      function render() {
+        var diff = TARGET - Date.now();
+        if (diff <= 0) {
+          stop();
+          nodes.forEach(function(n) {
+            n.innerHTML = '<span class="countdown-now">T&auml;n&auml;&auml;n.</span>';
+          });
+          done = true;
+          return;
+        }
+
+        var d = Math.floor(diff / 86400000);
+        var h = Math.floor((diff % 86400000) / 3600000);
+        var m = Math.floor((diff % 3600000) / 60000);
+        var s = Math.floor((diff % 60000) / 1000);
+        var urgent = diff < URGENT_THRESHOLD_MS;
+
+        nodes.forEach(function(n) {
+          n.classList.toggle('is-urgent', urgent);
+          if (n.dataset.variant === 'compact') {
+            n.textContent = d + 'd ' + pad(h) + ':' + pad(m) + ':' + pad(s);
+          } else {
+            var dEl = n.querySelector('[data-unit="d"]');
+            var hEl = n.querySelector('[data-unit="h"]');
+            var mEl = n.querySelector('[data-unit="m"]');
+            var sEl = n.querySelector('[data-unit="s"]');
+            if (dEl) dEl.textContent = String(d);
+            if (hEl) hEl.textContent = pad(h);
+            if (mEl) mEl.textContent = pad(m);
+            if (sEl) sEl.textContent = pad(s);
+          }
+        });
       }
 
-      var urgencyClose = document.getElementById('urgency-bar-close');
-      if (urgencyClose && bar) {
-        urgencyClose.addEventListener('click', function(e) {
+      function start() {
+        if (done || timer) return;
+        render();
+        timer = setInterval(render, 1000);
+      }
+      function stop() {
+        if (timer) { clearInterval(timer); timer = null; }
+      }
+
+      document.addEventListener('visibilitychange', function() {
+        if (document.hidden) stop(); else start();
+      });
+
+      // Urgency-bar visibility + dismissal
+      var bar = document.getElementById('urgency-bar');
+      var closeBtn = document.getElementById('urgency-bar-close');
+      if (bar) {
+        if (TARGET - Date.now() > 0 && sessionStorage.getItem('urgency-dismissed') !== '1') {
+          bar.classList.remove('hidden');
+        }
+      }
+      if (closeBtn && bar) {
+        closeBtn.addEventListener('click', function(e) {
           e.stopPropagation();
           bar.classList.add('hidden');
           sessionStorage.setItem('urgency-dismissed', '1');
         });
       }
-    })();
 
-    // Hero trust-strip days counter (YO-koe 28.9.2026, Helsinki time)
-    (function() {
-      var heroDaysEl = document.getElementById('hero-trust-days');
-      if (!heroDaysEl) return;
-      var examMs = Date.parse('2026-09-28T09:00:00+03:00');
-      var DAY = 24 * 60 * 60 * 1000;
-
-      function render() {
-        var diff = examMs - Date.now();
-        if (diff <= 0) {
-          var urgencyEl = document.querySelector('.hero-trust-urgency');
-          if (urgencyEl) urgencyEl.hidden = true;
-          return;
-        }
-        heroDaysEl.textContent = Math.ceil(diff / DAY);
-      }
-
-      render();
-      setInterval(render, 60 * 60 * 1000);
+      start();
     })();
 
     // Pricing card order + summer package state machine
