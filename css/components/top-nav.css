@@ -32,28 +32,28 @@
   padding: 0 var(--s-6);
   padding-left: max(var(--s-6), env(safe-area-inset-left, 0));
   padding-right: max(var(--s-6), env(safe-area-inset-right, 0));
-  background: color-mix(in srgb, var(--bg) 80%, transparent);
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  border-bottom: 1px solid transparent;
+  border-bottom: 1px solid var(--border);
   transition: border-color var(--dur-slow) var(--ease-out),
               background var(--dur-slow) var(--ease-out);
 }
 
 .top-nav.is-scrolled {
-  border-bottom-color: var(--border);
-  background: color-mix(in srgb, var(--bg) 92%, transparent);
+  border-bottom-color: var(--border-strong);
+  background: var(--surface);
 }
 
 .top-nav__logo {
   font-family: var(--font-display);
   font-size: var(--fs-h3);
   font-weight: 800;
-  color: var(--text);
+  color: var(--ink);
   letter-spacing: -0.03em;
   text-decoration: none;
 }
-.top-nav__logo span { color: var(--brand-light); }
+.top-nav__logo span { color: var(--accent-hover); }
 
 .top-nav__links {
   display: flex;
@@ -63,7 +63,7 @@
   font-family: var(--font-body);
   font-size: var(--fs-body-sm);
   font-weight: 600;
-  color: var(--text-muted);
+  color: var(--ink-soft);
   text-decoration: none;
   min-height: 44px;
   display: inline-flex;
@@ -71,7 +71,7 @@
   padding: 0 var(--s-2);
   transition: color var(--dur-base) var(--ease-out);
 }
-.top-nav__links a:hover { color: var(--text); }
+.top-nav__links a:hover { color: var(--ink); }
 
 .top-nav__right {
   display: flex;
@@ -83,7 +83,7 @@
   font-family: var(--font-body);
   font-size: var(--fs-body-sm);
   font-weight: 600;
-  color: var(--text-muted);
+  color: var(--ink-soft);
   text-decoration: none;
   min-height: 44px;
   display: inline-flex;
@@ -91,11 +91,11 @@
   padding: 0 var(--s-2);
   transition: color var(--dur-base) var(--ease-out);
 }
-.top-nav__login:hover { color: var(--text); }
+.top-nav__login:hover { color: var(--ink); }
 
 .top-nav__login:focus-visible,
 .top-nav__links a:focus-visible {
-  outline: 2px solid var(--brand-light);
+  outline: 2px solid var(--accent);
   outline-offset: 2px;
   border-radius: var(--r-sm);
 }

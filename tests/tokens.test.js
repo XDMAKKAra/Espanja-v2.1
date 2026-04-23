@@ -25,7 +25,9 @@ const REQUIRED = [
   "--bg", "--surface", "--surface-2", "--border", "--border-strong",
   // §1 text
   "--text", "--text-muted", "--text-faint",
-  // §1 brand
+  // §1 ink + accent (mint+navy rebrand; legacy --brand aliases kept too)
+  "--ink", "--ink-soft", "--ink-faint",
+  "--accent", "--accent-hover", "--accent-soft",
   "--brand", "--brand-btn", "--brand-light",
   // §1 feedback
   "--success", "--warn", "--error", "--info",
@@ -36,8 +38,8 @@ const REQUIRED = [
   // §1 exercise badges
   "--ex-monivalinta", "--ex-yhdistaminen", "--ex-taydennys",
   "--ex-jarjestely", "--ex-kaannos", "--ex-luetun",
-  // §1 gradients
-  "--grad-pro", "--grad-hero", "--grad-urgency",
+  // §1 gradients (only --grad-hero survives; --grad-pro aliases it)
+  "--grad-pro", "--grad-hero",
   // §3 spacing
   "--s-0", "--s-1", "--s-2", "--s-3", "--s-4", "--s-5", "--s-6", "--s-8", "--s-10",
   // §4 radius

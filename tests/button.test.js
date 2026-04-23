@@ -45,19 +45,20 @@ describe("button component — sizing + touch targets", () => {
   });
 });
 
-describe("button component — tokenised colours", () => {
-  it("primary uses --brand-btn", () => {
-    expect(buttonCss).toMatch(/\.btn--primary\s*\{[\s\S]*?var\(--brand-btn\)/);
+describe("button component — tokenised colours (mint+navy)", () => {
+  it("primary uses --accent background + --ink text", () => {
+    expect(buttonCss).toMatch(/\.btn--primary\s*\{[\s\S]*?background:\s*var\(--accent\)/);
+    expect(buttonCss).toMatch(/\.btn--primary\s*\{[\s\S]*?color:\s*var\(--ink\)/);
   });
   it("destructive uses --error", () => {
     expect(buttonCss).toMatch(/\.btn--destructive\s*\{[\s\S]*?var\(--error\)/);
   });
-  it("secondary uses --surface-2 + --border", () => {
-    expect(buttonCss).toMatch(/\.btn--secondary\s*\{[\s\S]*?var\(--surface-2\)/);
-    expect(buttonCss).toMatch(/\.btn--secondary\s*\{[\s\S]*?var\(--border\)/);
+  it("secondary uses transparent bg + --ink border (ink-on-white)", () => {
+    expect(buttonCss).toMatch(/\.btn--secondary\s*\{[\s\S]*?background:\s*transparent/);
+    expect(buttonCss).toMatch(/\.btn--secondary\s*\{[\s\S]*?border-color:\s*var\(--ink\)/);
   });
-  it("focus ring uses --brand-light", () => {
-    expect(buttonCss).toMatch(/\.btn:focus-visible\s*\{[\s\S]*?var\(--brand-light\)/);
+  it("focus ring uses --accent", () => {
+    expect(buttonCss).toMatch(/\.btn:focus-visible\s*\{[\s\S]*?var\(--accent\)/);
   });
 });
 

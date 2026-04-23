@@ -17,17 +17,16 @@ describe("input / textarea component", () => {
   it("declares .input, .textarea, .select", () => {
     expect(inputCss).toMatch(/\.input,[\s\S]*?\.textarea,[\s\S]*?\.select/);
   });
-  it("uses --surface-2 background + --border", () => {
-    expect(inputCss).toMatch(/background:\s*var\(--surface-2\)/);
+  it("uses --surface background + --border (mint+navy rebrand)", () => {
+    expect(inputCss).toMatch(/background:\s*var\(--surface\)/);
     expect(inputCss).toMatch(/border:\s*1px solid var\(--border\)/);
   });
-  it("focus border becomes --brand-light", () => {
-    expect(inputCss).toMatch(/:focus[\s\S]*?border-color:\s*var\(--brand-light\)/);
+  it("focus border becomes --accent", () => {
+    expect(inputCss).toMatch(/:focus[\s\S]*?border-color:\s*var\(--accent\)/);
   });
-  it("focus adds a 3px ring (color token may vary by theme)", () => {
-    // Cuaderno theme uses var(--brand-glow); earlier themes used a literal
-    // rgba. Only assert the ring structure, not the color value.
-    expect(inputCss).toMatch(/:focus[\s\S]*?box-shadow:\s*0\s+0\s+0\s+3px\s+(var\(--[a-z-]+\)|rgba\()/);
+  it("focus adds a 2px outline on --accent with offset", () => {
+    expect(inputCss).toMatch(/:focus[\s\S]*?outline:\s*2px\s+solid\s+var\(--accent\)/);
+    expect(inputCss).toMatch(/:focus[\s\S]*?outline-offset:\s*2px/);
   });
   it("textarea has min-height 120px + resize vertical", () => {
     expect(inputCss).toMatch(/\.textarea\s*\{[\s\S]*?min-height:\s*120px/);
@@ -45,12 +44,12 @@ describe("card component", () => {
     expect(cardCss).toMatch(/\.card\s*\{[\s\S]*?border:\s*1px solid var\(--border\)/);
     expect(cardCss).toMatch(/\.card\s*\{[\s\S]*?border-radius:\s*var\(--r-lg\)/);
   });
-  it("interactive card hover raises + shifts background", () => {
-    expect(cardCss).toMatch(/\.card--interactive:hover[\s\S]*?var\(--surface-2\)/);
-    expect(cardCss).toMatch(/\.card--interactive:hover[\s\S]*?translateY\(-2px\)/);
+  it("interactive card hover adds border-strong + sh-rest (no transform)", () => {
+    expect(cardCss).toMatch(/\.card--interactive:hover[\s\S]*?border-color:\s*var\(--border-strong\)/);
+    expect(cardCss).toMatch(/\.card--interactive:hover[\s\S]*?box-shadow:\s*var\(--sh-rest\)/);
   });
-  it("focus-visible outline uses --brand-light", () => {
-    expect(cardCss).toMatch(/:focus-visible[\s\S]*?var\(--brand-light\)/);
+  it("focus-visible outline uses --accent", () => {
+    expect(cardCss).toMatch(/:focus-visible[\s\S]*?var\(--accent\)/);
   });
   it("padding comes from spacing tokens, not raw px", () => {
     expect(cardCss).toMatch(/padding:\s*var\(--s-5\)/);

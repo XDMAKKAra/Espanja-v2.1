@@ -248,7 +248,7 @@ body::before {
   font-family: var(--font-display);
 }
 .sidebar-item:hover { background: var(--surface2); color: var(--text); }
-.sidebar-item.active { background: rgba(45, 212, 191,0.15); color: var(--text); border-left: 3px solid var(--accent); }
+.sidebar-item.active { background: var(--accent-soft); color: var(--ink); border-left: 3px solid var(--accent); }
 .sidebar-item-icon {
   width: 20px; height: 20px;
   display: inline-flex; align-items: center; justify-content: center;
@@ -508,21 +508,21 @@ select option { background: var(--surface2); }
 
 .btn-primary {
   width: 100%;
-  padding: 16px;
+  padding: 14px 24px;
   margin-top: 8px;
-  background: var(--accent2);
+  background: var(--accent);
   border: none;
   border-radius: var(--radius);
-  color: #fff;
-  font-family: var(--font-display);
+  color: var(--ink);
+  font-family: var(--font-body);
   font-size: 15px;
-  font-weight: 700;
+  font-weight: 600;
   cursor: pointer;
-  transition: transform 0.1s, opacity 0.1s;
-  letter-spacing: 0.01em;
+  transition: background var(--dur-base) var(--ease-out);
+  letter-spacing: 0;
 }
-.btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
-.btn-primary:active { transform: translateY(0); }
+.btn-primary:hover { background: var(--accent-hover); color: var(--ink); }
+.btn-primary:active { transform: translateY(1px); box-shadow: var(--sh-rest); }
 
 /* ── LOADING ── */
 .loading-inner {
@@ -1937,7 +1937,7 @@ select option { background: var(--surface2); }
   color: var(--gold);
   letter-spacing: -0.03em;
   flex-shrink: 0;
-  box-shadow: 0 0 30px rgba(45, 212, 191,0.15);
+  /* glow removed — mint+navy rebrand */
 }
 .dash-hero-right { flex: 1; }
 .dash-hero-label {
@@ -1972,7 +1972,7 @@ select option { background: var(--surface2); }
   background: var(--gold);
   color: #0c0808;
   border-color: var(--gold);
-  box-shadow: 0 0 12px rgba(45, 212, 191,0.3);
+  /* glow removed — mint+navy rebrand */
 }
 .dash-hero-scale span.scale-passed {
   background: rgba(45, 212, 191,0.15);
@@ -2313,7 +2313,7 @@ button.dash-hero-grade:hover { border-color: var(--gold); }
 .lvl-btn.suggested {
   position: relative;
   border-color: var(--gold);
-  box-shadow: 0 0 10px rgba(45, 212, 191,0.28);
+  /* glow removed — mint+navy rebrand */
 }
 .lvl-btn.suggested::after {
   content: '★';
@@ -2527,7 +2527,7 @@ button.dash-hero-grade:hover { border-color: var(--gold); }
   border-color: var(--accent);
   background: rgba(45, 212, 191,0.12);
   color: var(--text);
-  box-shadow: 0 0 16px rgba(45, 212, 191,0.15);
+  /* glow removed — mint+navy rebrand */
 }
 .topic-card-icon { font-size: 22px; margin-bottom: 2px; }
 .topic-card-name { font-size: 12px; font-weight: 700; line-height: 1.2; }
@@ -2538,24 +2538,35 @@ button.dash-hero-grade:hover { border-color: var(--gold); }
   .mode-page-stats { flex-wrap: wrap; }
 }
 
-/* ── EXERCISE TYPE BADGES ── */
+/* ── EXERCISE TYPE BADGES ──
+   Pill shape; each semantic type gets its own cool colour at 12% bg,
+   25% border, full text. All text colours pass WCAG AA on white. */
 .ex-type-badge {
   display: inline-block;
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  padding: 3px 10px;
-  border-radius: 20px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0;
+  text-transform: none;
+  padding: 6px 12px;
+  border-radius: var(--r-full);
   margin-bottom: 12px;
+  border: 1px solid transparent;
 }
-.ex-type-badge.type-context   { color: #7dd3fc; border: 1px solid rgba(125,211,252,0.4); }
-.ex-type-badge.type-translate { color: var(--gold); border: 1px solid rgba(45, 212, 191,0.4); }
-.ex-type-badge.type-gap       { color: var(--correct); border: 1px solid rgba(34,197,94,0.4); }
-.ex-type-badge.type-meaning   { color: var(--accent); border: 1px solid rgba(45, 212, 191,0.4); }
-.ex-type-badge.type-correction  { color: var(--wrong); border: 1px solid rgba(184,48,48,0.4); }
-.ex-type-badge.type-transform   { color: #c084fc; border: 1px solid rgba(192,132,252,0.4); }
-.ex-type-badge.type-pick_rule   { color: #67e8f9; border: 1px solid rgba(103,232,249,0.4); }
+/* --ex-yhdistaminen #2563EB */
+.ex-type-badge.type-context   { color: #2563EB; background: rgba(37, 99, 235, 0.12); border-color: rgba(37, 99, 235, 0.25); }
+/* --ex-kaannos #059669 */
+.ex-type-badge.type-translate { color: #059669; background: rgba(5, 150, 105, 0.12); border-color: rgba(5, 150, 105, 0.25); }
+/* --ex-taydennys #7C3AED */
+.ex-type-badge.type-gap       { color: #7C3AED; background: rgba(124, 58, 237, 0.12); border-color: rgba(124, 58, 237, 0.25); }
+/* --ex-monivalinta #0D9488 */
+.ex-type-badge.type-meaning   { color: #0D9488; background: rgba(13, 148, 136, 0.12); border-color: rgba(13, 148, 136, 0.25); }
+/* Correction → red semantic */
+.ex-type-badge.type-correction  { color: var(--error); background: rgba(220, 38, 38, 0.10); border-color: rgba(220, 38, 38, 0.25); }
+/* --ex-luetun #6366F1 */
+.ex-type-badge.type-transform   { color: #6366F1; background: rgba(99, 102, 241, 0.12); border-color: rgba(99, 102, 241, 0.25); }
+/* --ex-jarjestely #0891B2 */
+.ex-type-badge.type-pick_rule   { color: #0891B2; background: rgba(8, 145, 178, 0.12); border-color: rgba(8, 145, 178, 0.25); }
 
 .ex-context-sentence {
   background: var(--surface2);
@@ -3844,7 +3855,7 @@ body:has(.app-countdown:not(.hidden)) #app-main { padding-top: 34px; }
   border: 3px solid var(--accent);
   margin: 0 auto 12px;
   background: rgba(45, 212, 191, 0.08);
-  box-shadow: 0 0 30px rgba(45, 212, 191, 0.2);
+  /* glow removed — mint+navy rebrand */
 }
 .placement-results-sub {
   text-align: center;

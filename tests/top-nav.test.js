@@ -32,11 +32,11 @@ describe("top-nav CSS contract", () => {
   it("collapses .top-nav__links below 768px; login + CTA stay visible", () => {
     expect(css).toMatch(/@media[\s\S]*?max-width:\s*767px[\s\S]*?\.top-nav__links\s*\{[\s\S]*?display:\s*none/);
   });
-  it("scrolled state adds hairline border", () => {
-    expect(css).toMatch(/\.top-nav\.is-scrolled[\s\S]*?border-bottom-color:\s*var\(--border\)/);
+  it("scrolled state uses stronger border token", () => {
+    expect(css).toMatch(/\.top-nav\.is-scrolled[\s\S]*?border-bottom-color:\s*var\(--border(-strong)?\)/);
   });
-  it("focus ring uses --brand-light", () => {
-    expect(css).toMatch(/:focus-visible[\s\S]*?var\(--brand-light\)/);
+  it("focus ring uses --accent", () => {
+    expect(css).toMatch(/:focus-visible[\s\S]*?var\(--accent\)/);
   });
   it("respects prefers-reduced-motion", () => {
     expect(css).toMatch(/prefers-reduced-motion/);

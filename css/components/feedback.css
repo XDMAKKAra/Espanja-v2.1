@@ -52,22 +52,28 @@
 /* States — border-left + soft tinted background via color-mix */
 
 .banner--correct {
-  border-left-color: var(--success);
-  background: color-mix(in srgb, var(--success) 8%, var(--surface));
+  border: 1px solid var(--success);
+  border-left: 4px solid var(--success);
+  background: rgba(5, 150, 105, 0.10);
+  color: var(--success);
 }
 .banner--correct .banner__title,
 .banner--correct .banner__icon { color: var(--success); }
 
 .banner--close {
-  border-left-color: var(--warn);
-  background: color-mix(in srgb, var(--warn) 8%, var(--surface));
+  border: 1px solid var(--warn);
+  border-left: 4px solid var(--warn);
+  background: rgba(217, 119, 6, 0.10);
+  color: var(--warn);
 }
 .banner--close .banner__title,
 .banner--close .banner__icon { color: var(--warn); }
 
 .banner--wrong {
-  border-left-color: var(--error);
-  background: color-mix(in srgb, var(--error) 8%, var(--surface));
+  border: 1px solid var(--error);
+  border-left: 4px solid var(--error);
+  background: rgba(220, 38, 38, 0.10);
+  color: var(--error);
 }
 .banner--wrong .banner__title,
 .banner--wrong .banner__icon { color: var(--error); }
@@ -151,7 +157,7 @@
 }
 .toast__close:hover { color: var(--text); background: var(--surface-2); }
 .toast__close:focus-visible {
-  outline: 2px solid var(--brand-light);
+  outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
 

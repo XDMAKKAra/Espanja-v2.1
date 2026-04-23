@@ -177,7 +177,7 @@
     }
     .mini-diag-progress-fill {
       height: 100%;
-      background: linear-gradient(90deg, var(--brand-light), var(--brand));
+      background: var(--accent);
       width: 0;
       transition: width 0.35s ease;
     }
@@ -299,11 +299,7 @@
       display: inline-block;
       font-size: 44px;
       font-weight: 800;
-      color: var(--text);
-      background: linear-gradient(130deg, var(--brand-light), var(--brand));
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
+      color: var(--accent);
       padding: 0 6px;
       vertical-align: middle;
       line-height: 1;
@@ -408,7 +404,7 @@
     }
     .compare-table thead th.is-ours {
       color: var(--brand-light);
-      background: linear-gradient(180deg, rgba(45, 212, 191, 0.06), transparent);
+      background: var(--surface-2);
     }
     .compare-table tbody tr:last-child th,
     .compare-table tbody tr:last-child td { border-bottom: none; }
@@ -639,7 +635,7 @@
     }
     .score-fill {
       height: 100%;
-      background: linear-gradient(90deg, var(--brand-light), var(--brand));
+      background: var(--accent);
     }
     .score-total {
       display: flex;
@@ -1076,7 +1072,7 @@
 
       <!-- 1. YTL rubric -->
       <div class="authority-card">
-        <div class="authority-icon">&#128203;</div>
+        <div class="authority-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/><path d="M9 4V2.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 .5.5V4"/><path d="M9 10h6M9 14h6M9 18h3"/></svg></div>
         <h3 class="authority-title">YTL:n virallinen rubriikki</h3>
         <p class="authority-desc">
           Kirjoitelmasi arvioidaan samoilla kolmella kriteerill&auml; kuin oikeassa YO-kokeessa:
@@ -1089,7 +1085,7 @@
 
       <!-- 2. 10-year archive -->
       <div class="authority-card">
-        <div class="authority-icon">&#128218;</div>
+        <div class="authority-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
         <h3 class="authority-title">10 vuoden YO-arkisto pohjana</h3>
         <p class="authority-desc">
           Harjoitukset heijastelevat todellisia koetehtavia: sanasto todellisista yo-teksteist&auml;,
@@ -1102,7 +1098,7 @@
 
       <!-- 3. Exam structure -->
       <div class="authority-card">
-        <div class="authority-icon">&#127919;</div>
+        <div class="authority-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
         <h3 class="authority-title">Kokeen rakenne &mdash; kaikki osa-alueet</h3>
         <p class="authority-desc">
           Espanjan lyhyen oppim&auml;&auml;r&auml;n YO-koe koostuu kuullun ja luetun ymm&auml;rt&auml;misest&auml;,
