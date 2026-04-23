@@ -1,7 +1,7 @@
 // TODO(loading): adopt showSkeleton / showFetchError from js/ui/loading.js (Commit 9 follow-up)
 // ─── Adaptive level system — frontend ────────────────────────────────────────
 import { $, show } from "../ui/nav.js";
-import { API, authHeader, apiFetch } from "../api.js";
+import { API, authHeader, apiFetch, retryable } from "../api.js";
 import { state } from "../state.js";
 import { showLoading, showLoadingError } from "../ui/loading.js";
 import { renderExercise } from "./exerciseRenderer.js";
@@ -237,17 +237,22 @@ export function masteryNext() {
 async function submitMasteryTest() {
   showLoading("Arvioidaan tuloksia...");
 
+  // Persist mastery answers — a blip at the submit boundary shouldn't wipe
+  // the student's test attempt (Pass 6 C16).
+  try { localStorage.setItem("puheo_mastery_pending", JSON.stringify({ ..._masteryState, at: Date.now() })); } catch {}
+
   try {
-    const res = await apiFetch(`${API}/api/adaptive/mastery-test/submit`, {
+    const res = await retryable(() => apiFetch(`${API}/api/adaptive/mastery-test/submit`, {
       method: "POST",
       headers: { "Content-Type": "application/json", ...authHeader() },
       body: JSON.stringify({
         attemptId: _masteryState.attemptId,
         answers: _masteryState.answers,
       }),
-    });
+    }), { attempts: 3, baseDelayMs: 500 });
     const data = await res.json();
     if (!res.ok) throw new Error(data.error || "Virhe");
+    try { localStorage.removeItem("puheo_mastery_pending"); } catch {}
 
     renderMasteryResults(data);
     show("screen-mastery-results");

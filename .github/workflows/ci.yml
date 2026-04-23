@@ -11,9 +11,73 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # full history so SW-cache diff vs origin/main works
       - uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: npm
       - run: npm install
-      - run: npm test
+      - name: Lint
+        run: npm run lint
+      - name: Unit tests with coverage
+        run: npm run test:coverage
+      - name: Service-worker cache-version check
+        if: github.event_name == 'pull_request'
+        env:
+          CI_BASE_REF: origin/${{ github.base_ref }}
+        run: npm run check:sw
+      - name: Upload coverage summary
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage
+          path: coverage/
+          retention-days: 14
+
+  e2e:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm install
+      - name: Install Playwright browsers (pinned)
+        run: npx playwright install --with-deps chromium
+      - name: E2E smoke + a11y + offline + paywall
+        env:
+          BASE_URL: ""
+        run: npx playwright test --project=desktop --reporter=list
+      - name: Upload Playwright report on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 14
+
+  visual:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm install
+      - run: npx playwright install --with-deps chromium
+      - name: Visual regression (baselines enforced on Linux only)
+        env:
+          VISUAL_BASELINE: "1"
+        run: npx playwright test tests/e2e-visual.spec.js --project=desktop --reporter=list
+      - name: Upload visual diffs on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-diffs
+          path: test-results/
+          retention-days: 14

@@ -1,5 +1,5 @@
 import { $, show } from "../ui/nav.js";
-import { API, authHeader, apiFetch } from "../api.js";
+import { API, authHeader, apiFetch, retryable } from "../api.js";
 import { track } from "../analytics.js";
 import { showPathFromPlacement } from "./onboarding.js";
 
@@ -210,15 +210,20 @@ async function submitAnswers() {
   $("placement-question").textContent = "Lasketaan tuloksia...";
   $("placement-options").innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-muted)">Analysoidaan vastauksia...</div>';
 
+  // Persist answers to localStorage so a mid-submit network blip doesn't
+  // lose the student's placement work (Pass 6 C16 recovery contract).
+  try { localStorage.setItem("puheo_placement_pending", JSON.stringify({ answers, at: Date.now() })); } catch {}
+
   try {
-    const res = await apiFetch(`${API}/api/placement/submit`, {
+    const res = await retryable(() => apiFetch(`${API}/api/placement/submit`, {
       method: "POST",
       headers: { "Content-Type": "application/json", ...authHeader() },
       body: JSON.stringify({ answers }),
-    });
+    }), { attempts: 3, baseDelayMs: 500 });
 
     if (!res.ok) throw new Error("Submit failed");
     result = await res.json();
+    try { localStorage.removeItem("puheo_placement_pending"); } catch {}
     track("placement_completed", {
       level: result.placementLevel,
       items: answers.length,
@@ -227,7 +232,7 @@ async function submitAnswers() {
     showResults();
   } catch (err) {
     track("placement_api_failed", { phase: "submit", error: String(err?.message || err).slice(0, 60) });
-    $("placement-question").textContent = "Jokin meni pieleen";
+    $("placement-question").textContent = "Verkkovirhe — yritetään uudelleen";
     $("placement-options").innerHTML = '<button class="btn-primary" onclick="location.reload()">Yritä uudelleen</button>';
   }
 }

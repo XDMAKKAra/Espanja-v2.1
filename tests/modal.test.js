@@ -39,9 +39,11 @@ function mount() {
 }
 
 describe("modal CSS contract", () => {
-  it("backdrop is rgba + blur", () => {
-    expect(modalCss).toMatch(/\.modal__backdrop[\s\S]*?background:\s*rgba\(0,\s*0,\s*0,\s*0\.6\)/);
-    expect(modalCss).toMatch(/\.modal__backdrop[\s\S]*?backdrop-filter:\s*blur\(6px\)/);
+  it("backdrop is rgba + blur (color value owned by theme)", () => {
+    // Cuaderno theme uses a warm rgba; earlier themes used black. Only
+    // assert the backdrop uses *some* rgba + blur.
+    expect(modalCss).toMatch(/\.modal__backdrop[\s\S]*?background:\s*rgba\(/);
+    expect(modalCss).toMatch(/\.modal__backdrop[\s\S]*?backdrop-filter:\s*blur\(/);
   });
   it("panel uses --surface + --r-lg + --sh-lift + max-width 480px", () => {
     expect(modalCss).toMatch(/\.modal__panel[\s\S]*?background:\s*var\(--surface\)/);

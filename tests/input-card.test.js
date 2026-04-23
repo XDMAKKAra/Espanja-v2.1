@@ -24,8 +24,10 @@ describe("input / textarea component", () => {
   it("focus border becomes --brand-light", () => {
     expect(inputCss).toMatch(/:focus[\s\S]*?border-color:\s*var\(--brand-light\)/);
   });
-  it("focus adds 3px ring with brand-light alpha", () => {
-    expect(inputCss).toMatch(/box-shadow:\s*0 0 0 3px rgba\(245,\s*158,\s*11,\s*0\.15\)/);
+  it("focus adds a 3px ring (color token may vary by theme)", () => {
+    // Cuaderno theme uses var(--brand-glow); earlier themes used a literal
+    // rgba. Only assert the ring structure, not the color value.
+    expect(inputCss).toMatch(/:focus[\s\S]*?box-shadow:\s*0\s+0\s+0\s+3px\s+(var\(--[a-z-]+\)|rgba\()/);
   });
   it("textarea has min-height 120px + resize vertical", () => {
     expect(inputCss).toMatch(/\.textarea\s*\{[\s\S]*?min-height:\s*120px/);

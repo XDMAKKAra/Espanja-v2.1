@@ -1,6 +1,6 @@
 // TODO(loading): adopt showSkeleton / showFetchError from js/ui/loading.js (Commit 9 follow-up)
 import { $, show } from "../ui/nav.js";
-import { API, isLoggedIn, authHeader } from "../api.js";
+import { API, isLoggedIn, authHeader, retryable } from "../api.js";
 import { state } from "../state.js";
 import { showLoading, showLoadingError } from "../ui/loading.js";
 
@@ -13,7 +13,7 @@ export async function loadReadingTask() {
   showLoading("Luodaan luetun ymmärtämistehtävää...");
 
   try {
-    const res = await fetch(`${API}/api/reading-task`, {
+    const res = await retryable(() => fetch(`${API}/api/reading-task`, {
       method: "POST",
       headers: { "Content-Type": "application/json", ...authHeader() },
       body: JSON.stringify({
@@ -21,7 +21,7 @@ export async function loadReadingTask() {
         topic: state.readingTopic,
         language: state.language,
       }),
-    });
+    }), { attempts: 3, baseDelayMs: 500 });
     if (res.status === 403) { _deps.showProUpsell(); return; }
     const data = await res.json();
     if (!res.ok) throw new Error(data.error || "Tehtävän luonti epäonnistui");

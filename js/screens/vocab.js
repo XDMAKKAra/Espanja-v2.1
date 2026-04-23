@@ -1,5 +1,5 @@
 import { $, show } from "../ui/nav.js";
-import { API, isLoggedIn, authHeader, apiFetch } from "../api.js";
+import { API, isLoggedIn, authHeader, apiFetch, retryable } from "../api.js";
 import { state, LEVELS, BATCH_SIZE, MAX_BATCHES } from "../state.js";
 import { showLoading, showLoadingError, showSkeleton, showFetchError } from "../ui/loading.js";
 import { srPop, srAddWrong, srMarkCorrect, srReview, srGetDue } from "../features/spacedRepetition.js";
@@ -125,11 +125,11 @@ function recordItem(ex, isCorrect) {
 
 async function reportAdaptiveAnswer(topic, isCorrect) {
   try {
-    const res = await apiFetch(`${API}/api/adaptive-answer`, {
+    const res = await retryable(() => apiFetch(`${API}/api/adaptive-answer`, {
       method: "POST",
       headers: { "Content-Type": "application/json", ...authHeader() },
       body: JSON.stringify({ topic, isCorrect }),
-    });
+    }), { attempts: 2, baseDelayMs: 300 });
     const data = await res.json();
     if (data.scaffoldChanged && data.direction === "down") {
       updateScaffoldIndicator(data.scaffoldLevel);

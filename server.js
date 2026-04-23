@@ -33,6 +33,7 @@ import pushRoutes from "./routes/push.js";
 import profileRoutes from "./routes/profile.js";
 import configRoutes from "./routes/config.js";
 import placementRoutes from "./routes/placement.js";
+import statusRoutes from "./routes/status.js";
 import supabase from "./supabase.js";
 
 const app = express();
@@ -130,6 +131,7 @@ app.use("/api", profileRoutes);
 app.use("/api/placement", placementRoutes);
 app.use("/api/config", configRoutes);
 app.use("/api/dev", configRoutes);
+app.use("/api/status", statusRoutes);
 
 // ─── Waitlist (public, no auth) ─────────────────────────────────────────────
 app.post("/api/waitlist", async (req, res) => {

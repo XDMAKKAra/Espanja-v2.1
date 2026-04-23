@@ -25,16 +25,16 @@
     "topic": "ser_estar",
     "error_category": "ser_estar",
     "cefr": "A2",
-    "erroneous_sentence": "El café está muy caliente hoy.",
+    "erroneous_sentence": "El café es muy caliente hoy.",
     "correct_sentence": "El café está muy caliente hoy.",
     "errors": [
       {
         "token_index": 1,
-        "error_type": "estar_instead_of_ser_characteristic",
+        "error_type": "ser_instead_of_estar_temperature",
         "correction": "está"
       }
     ],
-    "explanation_fi": "Tilapäinen ominaisuus kuten lämpötila ilmaistaan verbillä 'estar'.",
+    "explanation_fi": "Tilapäinen olotila tai lämpötila ilmaistaan verbillä estar: está caliente.",
     "hint_fi": "Onko ominaisuus pysyvä vai tilapäinen?"
   },
   {
@@ -234,7 +234,7 @@
     "topic": "pronouns",
     "error_category": "agreement",
     "cefr": "B1",
-    "erroneous_sentence": "Nosotros hemos terminado el trabajo, ¿verdad?",
+    "erroneous_sentence": "Nosotros han terminado el trabajo, ¿verdad?",
     "correct_sentence": "Nosotros hemos terminado el trabajo, ¿verdad?",
     "errors": [
       {
@@ -243,7 +243,7 @@
         "correction": "hemos"
       }
     ],
-    "explanation_fi": "Verbi 'hemos' sopii subjektiin 'nosotros' — kongruenssi on oikein.",
+    "explanation_fi": "Subjekti nosotros vaatii monikon 1. persoonan apuverbin hemos, ei kolmannen persoonan han.",
     "hint_fi": "Tarkista, vastaako verbimuoto subjektia."
   },
   {
@@ -348,16 +348,21 @@
     "topic": "preterite_imperfect",
     "error_category": "tense",
     "cefr": "B1",
-    "erroneous_sentence": "Mientras estudiaba, mi madre llamó.",
+    "erroneous_sentence": "Mientras estudié, mi madre llamaba.",
     "correct_sentence": "Mientras estudiaba, mi madre llamó.",
     "errors": [
       {
         "token_index": 1,
-        "error_type": "imperfect_background_correct",
+        "error_type": "preterite_instead_of_imperfect",
         "correction": "estudiaba"
+      },
+      {
+        "token_index": 4,
+        "error_type": "imperfect_instead_of_preterite",
+        "correction": "llamó"
       }
     ],
-    "explanation_fi": "Taustalla jatkuva toiminta ilmaistaan imperfektillä ja keskeyttävä tapahtuma pretéritolla — tässä lauseessa molemmat ovat oikein.",
+    "explanation_fi": "Taustalla jatkuva toiminta imperfektissä (estudiaba) ja sen keskeyttävä tapahtuma pretéritossa (llamó).",
     "hint_fi": "Kumpi toiminta on tausta ja kumpi keskeyttää?"
   },
   {
@@ -424,16 +429,16 @@
     "topic": "preterite_imperfect",
     "error_category": "tense",
     "cefr": "B2",
-    "erroneous_sentence": "Siempre me gustaba el chocolate de niño.",
+    "erroneous_sentence": "Siempre me gustó el chocolate de niño.",
     "correct_sentence": "Siempre me gustaba el chocolate de niño.",
     "errors": [
       {
         "token_index": 2,
-        "error_type": "imperfect_habitual_correct",
+        "error_type": "preterite_instead_of_imperfect",
         "correction": "gustaba"
       }
     ],
-    "explanation_fi": "Toistuva tai pysyvä tila lapsuudessa ilmaistaan imperfektillä — muoto on oikein.",
+    "explanation_fi": "Toistuva tai pysyvä tila menneisyydessä (lapsuus) ilmaistaan imperfektillä: gustaba, ei pretéritolla gustó.",
     "hint_fi": "'Siempre' ja 'de niño' viittaavat tavanomaiseen menneisyyteen."
   },
   {
@@ -614,7 +619,7 @@
     "topic": "ser_estar",
     "error_category": "por_para",
     "cefr": "B1",
-    "erroneous_sentence": "Este regalo es para ti, con amor.",
+    "erroneous_sentence": "Este regalo es por ti, con amor.",
     "correct_sentence": "Este regalo es para ti, con amor.",
     "errors": [
       {
@@ -623,7 +628,7 @@
         "correction": "para"
       }
     ],
-    "explanation_fi": "'Para' ilmaisee vastaanottajaa — 'por' ei sovi tähän merkitykseen.",
+    "explanation_fi": "Vastaanottaja ilmaistaan prepositiolla para (para ti), ei por.",
     "hint_fi": "Kenelle lahja on tarkoitettu — 'por' vai 'para'?"
   },
   {
@@ -690,16 +695,16 @@
     "topic": "ser_estar",
     "error_category": "por_para",
     "cefr": "B2",
-    "erroneous_sentence": "Para ser tan joven, habla muy bien el español.",
+    "erroneous_sentence": "Por ser tan joven, habla muy bien el español.",
     "correct_sentence": "Para ser tan joven, habla muy bien el español.",
     "errors": [
       {
         "token_index": 0,
         "error_type": "por_instead_of_para_considering",
-        "correction": "para"
+        "correction": "Para"
       }
     ],
-    "explanation_fi": "'Para' ilmaisee kontrastia tai odotusta — 'niin nuorena, puhua niin hyvin'.",
+    "explanation_fi": "Odotuksen tai kontrastin ilmaisussa (ottaen huomioon että) käytetään preposiota para, ei por.",
     "hint_fi": "Ilmaistaan odottamatonta ominaisuutta — 'por' vai 'para'?"
   },
   {
@@ -728,16 +733,16 @@
     "topic": "pronouns",
     "error_category": "word_order",
     "cefr": "B1",
-    "erroneous_sentence": "Me lo puedes dar mañana, ¿verdad?",
+    "erroneous_sentence": "Lo me puedes dar mañana, ¿verdad?",
     "correct_sentence": "Me lo puedes dar mañana, ¿verdad?",
     "errors": [
       {
         "token_index": 0,
-        "error_type": "clitic_order_correct",
+        "error_type": "clitic_order_wrong",
         "correction": "Me lo"
       }
     ],
-    "explanation_fi": "Kliitiikkijärjestys 'me lo' (epäsuora + suora) on oikein tässä lauseessa.",
+    "explanation_fi": "Kliitiikkijärjestys: epäsuora (me) ennen suoraa (lo). Oikein: Me lo puedes dar.",
     "hint_fi": "Mikä on kliitiikkien oikea järjestys epäsuora + suora?"
   },
   {
@@ -766,16 +771,16 @@
     "topic": "pronouns",
     "error_category": "word_order",
     "cefr": "B2",
-    "erroneous_sentence": "Dímelo tú, por favor.",
+    "erroneous_sentence": "Me lo di tú, por favor.",
     "correct_sentence": "Dímelo tú, por favor.",
     "errors": [
       {
         "token_index": 0,
-        "error_type": "enclitic_imperative_correct",
+        "error_type": "enclitic_imperative_missing",
         "correction": "Dímelo"
       }
     ],
-    "explanation_fi": "Affirmatiivisessa imperatiivissa pronominit liitetään verbin perään — muoto on oikein.",
+    "explanation_fi": "Affirmatiivisessa imperatiivissa pronominit liitetään verbin perään: dímelo, ei me lo di.",
     "hint_fi": "Imperatiivissa pronominit — ennen vai jälkeen verbin?"
   },
   {
@@ -785,16 +790,16 @@
     "topic": "pronouns",
     "error_category": "word_order",
     "cefr": "B1",
-    "erroneous_sentence": "¿Por qué no me llamas tú?",
+    "erroneous_sentence": "¿Por qué no llamasme tú?",
     "correct_sentence": "¿Por qué no me llamas tú?",
     "errors": [
       {
         "token_index": 3,
-        "error_type": "clitic_position_correct",
+        "error_type": "enclitic_wrong_in_statement",
         "correction": "me llamas"
       }
     ],
-    "explanation_fi": "Kliitiikki ennen konjugoidun verbin — järjestys on oikein tässä kysymyksessä.",
+    "explanation_fi": "Konjugoidun verbin kanssa kliitiikki tulee ennen verbiä: no me llamas — ei llamasme.",
     "hint_fi": "Kliitiikki — ennen vai jälkeen finiittiverbin?"
   },
   {
@@ -823,16 +828,16 @@
     "topic": "pronouns",
     "error_category": "word_order",
     "cefr": "B1",
-    "erroneous_sentence": "No te preocupes, todo va a salir bien.",
+    "erroneous_sentence": "No preocúpate, todo va a salir bien.",
     "correct_sentence": "No te preocupes, todo va a salir bien.",
     "errors": [
       {
         "token_index": 1,
-        "error_type": "clitic_imperative_negation_correct",
+        "error_type": "enclitic_negative_imperative",
         "correction": "te preocupes"
       }
     ],
-    "explanation_fi": "Kielteisessä imperatiivissa kliitiikki tulee ennen verbiä — järjestys on oikein.",
+    "explanation_fi": "Kielteisessä imperatiivissa kliitiikki tulee ennen verbiä ja verbi on subjunktiivissa: no te preocupes.",
     "hint_fi": "Kielteinen imperatiivi — missä kliitiikki on?"
   },
   {

@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="fi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Puheo — Järjestelmän tila</title>
+  <style>
+    :root {
+      --bg: #0f1115; --fg: #e8ecf1; --muted: #8892a0;
+      --ok: #3dd68c; --warn: #f5a623; --fail: #ef4444;
+      --card: #1a1e26; --border: #2a2f3a;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg); color: var(--fg);
+      font: 14px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      padding: 24px; max-width: 720px; margin: 0 auto;
+    }
+    h1 { font-size: 20px; margin-bottom: 4px; }
+    .sub { color: var(--muted); margin-bottom: 24px; font-size: 13px; }
+    .overall { padding: 20px; border-radius: 10px; margin-bottom: 20px; font-weight: 600; font-size: 16px; text-align: center; }
+    .overall.ok   { background: rgba(61,214,140,0.12); color: var(--ok); }
+    .overall.fail { background: rgba(239,68,68,0.12); color: var(--fail); }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 14px; }
+    .card .k { color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; }
+    .card .v { font-size: 18px; font-weight: 600; margin-top: 4px; }
+    .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; vertical-align: middle; }
+    .dot.ok { background: var(--ok); } .dot.fail { background: var(--fail); }
+    .meta { color: var(--muted); font-size: 12px; margin-top: 2px; }
+    .footer { color: var(--muted); font-size: 12px; margin-top: 24px; text-align: center; }
+    @media (max-width: 520px) { .grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <h1>Puheo — Järjestelmän tila</h1>
+  <p class="sub" id="sub">Päivittyy automaattisesti 15 sekunnin välein.</p>
+
+  <div id="overall" class="overall">Ladataan…</div>
+
+  <div class="grid" id="grid"></div>
+
+  <p class="footer" id="footer"></p>
+
+  <script>
+    function fmtAgo(ms) {
+      if (ms == null) return "—";
+      const s = Math.floor(ms / 1000);
+      if (s < 60) return `${s}s sitten`;
+      if (s < 3600) return `${Math.floor(s/60)}min sitten`;
+      return `${Math.floor(s/3600)}h sitten`;
+    }
+
+    function render(d) {
+      const overall = document.getElementById("overall");
+      overall.className = "overall " + (d.ok ? "ok" : "fail");
+      overall.textContent = d.ok
+        ? "✓ Kaikki järjestelmät toiminnassa"
+        : "✗ Häiriö havaittu";
+
+      const grid = document.getElementById("grid");
+      const cells = [
+        { k: "Tietokanta",   v: `<span class="dot ${d.db.ok?'ok':'fail'}"></span>${d.db.ok?'OK':'FAIL'}`, meta: `${d.db.latencyMs}ms` },
+        { k: "OpenAI",       v: `<span class="dot ${d.openai.ok?'ok':'fail'}"></span>${d.openai.ok?'OK':'FAIL'}`, meta: d.openai.reason || `${d.openai.latencyMs ?? '—'}ms` },
+        { k: "Välimuisti",   v: `${d.cache.size} / ${d.cache.max}`, meta: "avaimet" },
+        { k: "Virheet 24h",  v: String(d.errors.count24h), meta: `viimeisin ${fmtAgo(d.errors.lastMsAgo)}` },
+        { k: "Käyntiaika",   v: `${Math.floor(d.uptimeSec/60)}min`, meta: d.build },
+        { k: "Koeviikkotila", v: d.examWeek ? "PÄÄLLÄ" : "pois", meta: d.env },
+      ];
+      grid.innerHTML = cells.map(c => `
+        <div class="card">
+          <div class="k">${c.k}</div>
+          <div class="v">${c.v}</div>
+          <div class="meta">${c.meta}</div>
+        </div>
+      `).join("");
+
+      document.getElementById("footer").textContent =
+        `Päivitetty ${new Date(d.ts).toLocaleTimeString("fi-FI")} · build ${d.build}`;
+    }
+
+    async function tick() {
+      try {
+        const res = await fetch("/api/status", { cache: "no-store" });
+        const data = await res.json();
+        render(data);
+      } catch {
+        document.getElementById("overall").className = "overall fail";
+        document.getElementById("overall").textContent = "✗ /api/status ei vastaa";
+      }
+    }
+
+    tick();
+    setInterval(tick, 15_000);
+  </script>
+</body>
+</html>

@@ -1,5 +1,5 @@
 import { $, show } from "../ui/nav.js";
-import { API, isLoggedIn, authHeader } from "../api.js";
+import { API, isLoggedIn, authHeader, retryable } from "../api.js";
 import { state } from "../state.js";
 import { showLoading, showLoadingError, showSkeleton, showFetchError } from "../ui/loading.js";
 import { GRAMMAR_TYPE_LABELS } from "./vocab.js";
@@ -43,7 +43,7 @@ export async function loadGrammarDrill() {
   show("screen-grammar");
 
   try {
-    const res = await fetch(`${API}/api/grammar-drill`, {
+    const res = await retryable(() => fetch(`${API}/api/grammar-drill`, {
       method: "POST",
       headers: { "Content-Type": "application/json", ...authHeader() },
       body: JSON.stringify({
@@ -52,7 +52,7 @@ export async function loadGrammarDrill() {
         count: 6,
         language: state.language,
       }),
-    });
+    }), { attempts: 3, baseDelayMs: 500 });
     const data = await res.json();
     if (!res.ok) throw new Error(data.error || "Harjoitusten luonti epäonnistui");
     if (!data.exercises?.length) throw new Error("No exercises");

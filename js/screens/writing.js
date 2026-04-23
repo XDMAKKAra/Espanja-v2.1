@@ -1,5 +1,5 @@
 import { $, show } from "../ui/nav.js";
-import { API, isLoggedIn, authHeader, apiFetch } from "../api.js";
+import { API, isLoggedIn, authHeader, apiFetch, retryable } from "../api.js";
 import { state } from "../state.js";
 import { CRITERIA_LABELS } from "../state.js";
 import { showLoading, showLoadingError, showSkeleton, showFetchError } from "../ui/loading.js";
@@ -364,17 +364,22 @@ $("btn-submit-writing").addEventListener("click", async () => {
 
   showLoading("Arvioidaan vastaustasi...");
 
+  // Persist textarea content so a grading-request failure never loses the
+  // student's writing (Pass 6 C16 recovery contract).
+  try { localStorage.setItem("puheo_writing_draft", JSON.stringify({ text, task: state.currentWritingTask, at: Date.now() })); } catch {}
+
   try {
-    const res = await fetch(`${API}/api/grade-writing`, {
+    const res = await retryable(() => fetch(`${API}/api/grade-writing`, {
       method: "POST",
       headers: { "Content-Type": "application/json", ...authHeader() },
       body: JSON.stringify({
         task: state.currentWritingTask,
         studentText: text,
       }),
-    });
+    }), { attempts: 3, baseDelayMs: 800 });
     const data = await res.json();
     if (!data.result) throw new Error("No result");
+    try { localStorage.removeItem("puheo_writing_draft"); } catch {}
 
     renderWritingFeedback(data.result);
     _deps.saveProgress({

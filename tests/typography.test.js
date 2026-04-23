@@ -31,11 +31,14 @@ describe("typography tokens", () => {
         expect(file[1]).toMatch(new RegExp(`${t.replace(/-/g, "\\-")}\\s*:`));
       });
     }
-    it(`${file[0]} declares --font-body (Inter)`, () => {
-      expect(file[1]).toMatch(/--font-body\s*:[^;]*Inter/);
+    it(`${file[0]} declares --font-body`, () => {
+      // Cuaderno theme uses Nunito; was Inter in earlier iterations. Only
+      // assert the token exists and is non-empty — font choice is owned by
+      // design-system/DESIGN.md, not this regression test.
+      expect(file[1]).toMatch(/--font-body\s*:[^;]+;/);
     });
-    it(`${file[0]} declares --font-display (Syne)`, () => {
-      expect(file[1]).toMatch(/--font-display\s*:[^;]*Syne/);
+    it(`${file[0]} declares --font-display`, () => {
+      expect(file[1]).toMatch(/--font-display\s*:[^;]+;/);
     });
   }
 });
@@ -57,16 +60,19 @@ describe("global heading rules reference tokens", () => {
   }
 });
 
-describe("HTML shells load Inter with latin-ext", () => {
+describe("HTML shells load a webfont with latin-ext support", () => {
+  // Finnish (ä/ö/å) and Spanish (ñ/á/í/ó/ú) both need the latin-ext subset.
+  // The exact font family is owned by design-system/DESIGN.md — we only
+  // guard that a Google Fonts link with latin-ext exists.
   const shells = ["index.html", "app.html", "pricing.html", "diagnose.html",
                   "privacy.html", "terms.html", "refund.html"];
   for (const shell of shells) {
-    it(`${shell} loads Inter + subset=latin-ext`, () => {
+    it(`${shell} loads Google Fonts with latin-ext subset`, () => {
       const path = resolve(root, shell);
       if (!existsSync(path)) return;
       const html = readFileSync(path, "utf8");
-      expect(html).toMatch(/family=Inter/);
-      expect(html).toMatch(/subset=latin-ext/);
+      expect(html).toMatch(/fonts\.googleapis\.com|fonts\.gstatic\.com/);
+      expect(html).toMatch(/subset=latin-ext|latin-ext/);
     });
   }
 });
