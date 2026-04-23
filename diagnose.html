@@ -20,7 +20,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Nunito:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap&subset=latin,latin-ext" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap&subset=latin,latin-ext" rel="stylesheet" />
 
   <style>
     :root {
@@ -36,9 +36,9 @@
       --correct: #2a7a40;
       --wrong: #b83030;
       --radius: 14px;
-      --font: 'Nunito', system-ui, sans-serif;
+      --font: 'Inter', system-ui, -apple-system, sans-serif;
       --mono: 'DM Mono', monospace;
-      --serif: 'Crimson Pro', Georgia, serif;
+      --serif: 'Inter', system-ui, -apple-system, sans-serif;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -1114,7 +1114,7 @@
     ctx.stroke();
 
     // "Puheo" logo
-    ctx.font = '700 20px Nunito, system-ui, sans-serif';
+    ctx.font = '700 20px Inter, system-ui, sans-serif';
     ctx.fillStyle = '#111827';
     ctx.textAlign = 'left';
     ctx.fillText('Puhe', 40, 50);
@@ -1122,13 +1122,13 @@
     ctx.fillText('o', 40 + ctx.measureText('Puhe').width, 50);
 
     // "Espanja-tasoni"
-    ctx.font = '600 16px Nunito, system-ui, sans-serif';
+    ctx.font = '600 16px Inter, system-ui, sans-serif';
     ctx.fillStyle = '#374151';
     ctx.textAlign = 'center';
     ctx.fillText('Espanjan YO-tasoni', w / 2, 130);
 
     // Grade
-    ctx.font = '700 120px "Crimson Pro", Georgia, serif';
+    ctx.font = '700 120px "Inter", system-ui, sans-serif';
     const gradient = ctx.createLinearGradient(w / 2 - 60, 160, w / 2 + 60, 280);
     gradient.addColorStop(0, '#e0a820');
     gradient.addColorStop(1, '#14B8A6');
@@ -1141,7 +1141,7 @@
     ctx.fillText(LEVEL_NAMES[level] || '', w / 2, 300);
 
     // CTA
-    ctx.font = '600 14px Nunito, system-ui, sans-serif';
+    ctx.font = '600 14px Inter, system-ui, sans-serif';
     ctx.fillStyle = '#111827';
     ctx.fillText('Testaa sinäkin: puheo.fi/diagnose', w / 2, 360);
 

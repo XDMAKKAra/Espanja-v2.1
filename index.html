@@ -90,11 +90,11 @@
   <link rel="manifest" href="/manifest.json" />
   <meta name="theme-color" content="#2DD4BF" />
 
-  <!-- Cuaderno fonts: Crimson Pro (display/serif), Nunito (body), DM Mono (mono)
+  <!-- Fonts: Inter (display + body) + DM Mono (data/countdown numerals).
        Latin Extended covers Finnish ä/ö/å + Spanish ñ/á/é/í/ó/ú. -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Nunito:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap&subset=latin,latin-ext" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap&subset=latin,latin-ext" rel="stylesheet" />
 
   <link rel="preload" as="style" href="landing.css" />
   <link rel="stylesheet" href="landing.css" />
@@ -365,8 +365,8 @@
       text-align: center;
     }
     .compare-quote blockquote {
-      font-family: var(--serif);
-      font-style: italic;
+      font-family: var(--font-body);
+      font-style: normal;
       font-size: clamp(18px, 2.5vw, 22px);
       line-height: 1.45;
       color: var(--text);
@@ -765,7 +765,7 @@
       <div class="hero-copy">
         <div class="hero-tag">Espanja &middot; Lyhyt oppim&auml;&auml;r&auml; &middot; YO-koe 2026</div>
 
-        <h1>Paranna espanjan YO-arvosanaa<br/><em>ennen 28.9.2026.</em></h1>
+        <h1>Paranna espanjan YO-arvosanaa<br/><span class="hero-accent">ennen 28.9.2026.</span></h1>
 
         <p class="hero-sub">
           Personoidut harjoitukset &middot; YTL-rubriikin mukainen AI-palaute &middot; t&auml;yskoe-simulaatio.

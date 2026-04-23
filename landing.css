@@ -90,15 +90,14 @@
   --ease-out:   cubic-bezier(0, 0, .2, 1);
   --ease-inout: cubic-bezier(.4, 0, .2, 1);
 
-  /* Fonts — Cuaderno: Crimson Pro display, Nunito body */
-  --font-display: 'Crimson Pro', Georgia, serif;
-  --font-body:    'Nunito', system-ui, sans-serif;
+  /* Fonts — Inter single-family for all text; DM Mono for data/countdown */
+  --font-display: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-body:    'Inter', system-ui, -apple-system, sans-serif;
   --font-mono:    'DM Mono', ui-monospace, monospace;
-  --font-serif:   'Crimson Pro', Georgia, serif;
 
-  /* Typography scale */
-  --fs-h1:      clamp(2rem, 4vw, 3rem);
-  --fs-h2:      clamp(1.5rem, 3vw, 2rem);
+  /* Typography scale (Inter single-family) */
+  --fs-h1:      clamp(2.5rem, 5vw, 3.5rem);
+  --fs-h2:      clamp(1.75rem, 3vw, 2.25rem);
   --fs-h3:      1.25rem;
   --fs-h4:      1rem;
   --fs-h5:      0.875rem;
@@ -115,9 +114,9 @@
   --correct:  var(--success);
   --wrong:    var(--error);
   --radius:   var(--r-lg);
-  --font:     var(--font-display);
+  --font:     var(--font-body);
   --mono:     var(--font-mono);
-  --serif:    var(--font-serif);
+  --serif:    var(--font-body);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -401,12 +400,19 @@ body::before {
 }
 
 .hero h1 {
-  font-size: clamp(2.2rem, 6vw, 4.5rem); font-weight: 600;
-  line-height: 1.08; letter-spacing: -0.025em;
-  max-width: 700px; margin-bottom: 20px;
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  max-width: 700px;
+  margin-bottom: 20px;
 }
-.hero h1 em {
-  font-style: italic;
+.hero h1 .hero-accent {
+  font-weight: 800;
+  color: var(--accent);
+  font-style: normal;
 }
 
 .hero-sub {
@@ -513,11 +519,18 @@ body::before {
   color: var(--text-muted); text-transform: uppercase; margin-bottom: 14px;
 }
 .section h2 {
-  font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 600;
-  letter-spacing: -0.02em; margin-bottom: 14px; line-height: 1.12;
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin-bottom: 14px;
+  line-height: 1.15;
+  color: var(--ink);
 }
 .section h2 em {
-  font-style: italic;
+  font-style: normal;
+  color: var(--accent-hover);
+  font-weight: 700;
 }
 .section-sub {
   font-size: 14px; color: var(--text-muted); max-width: 480px;
@@ -662,7 +675,7 @@ body::before {
   background: var(--surface); border: 1px solid var(--border);
   border-radius: var(--radius); padding: 24px;
 }
-.testimonial-quote { font-size: 14px; line-height: 1.6; margin-bottom: 14px; font-family: var(--serif); font-style: italic; }
+.testimonial-quote { font-size: 14px; line-height: 1.6; margin-bottom: 14px; font-family: var(--font-body); font-style: normal; }
 .testimonial-author { font-family: var(--mono); font-size: 11px; color: var(--text-muted); }
 
 .testimonial-placeholder {
@@ -975,7 +988,7 @@ footer {
   font-family: var(--mono); font-size: 13px; color: var(--text-muted);
   background: var(--surface2); border: 1px solid var(--border);
   border-radius: 10px; padding: 12px 16px; margin-bottom: 16px;
-  line-height: 1.6; font-style: italic;
+  line-height: 1.6;
 }
 .demo-context.hidden { display: none; }
 .demo-question { font-size: 17px; font-weight: 700; line-height: 1.4; margin-bottom: 20px; }
@@ -1278,8 +1291,9 @@ footer {
 
 .countdown-now {
   font-family: var(--font-display);
-  font-style: italic;
-  color: var(--brand-btn);
+  font-weight: 700;
+  font-style: normal;
+  color: var(--accent-hover);
   font-size: var(--fs-h3);
 }
 

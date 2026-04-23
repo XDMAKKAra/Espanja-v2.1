@@ -110,15 +110,14 @@
   --ease-out:   cubic-bezier(0, 0, .2, 1);
   --ease-inout: cubic-bezier(.4, 0, .2, 1);
 
-  /* Fonts — Cuaderno: Crimson Pro serif headlines + Nunito sans body */
-  --font-display: 'Crimson Pro', Georgia, serif;
-  --font-body:    'Nunito', system-ui, sans-serif;
+  /* Fonts — Inter single-family for all text; DM Mono for data/countdown */
+  --font-display: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-body:    'Inter', system-ui, -apple-system, sans-serif;
   --font-mono:    'DM Mono', ui-monospace, monospace;
-  --font-serif:   'Crimson Pro', Georgia, serif;
 
-  /* Typography scale (see DESIGN.md §2) */
-  --fs-h1:      clamp(2rem, 4vw, 3rem);
-  --fs-h2:      clamp(1.5rem, 3vw, 2rem);
+  /* Typography scale (Inter single-family) */
+  --fs-h1:      clamp(2.5rem, 5vw, 3.5rem);
+  --fs-h2:      clamp(1.75rem, 3vw, 2.25rem);
   --fs-h3:      1.25rem;
   --fs-h4:      1rem;
   --fs-h5:      0.875rem;
@@ -1473,7 +1472,7 @@ select option { background: var(--surface2); }
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 24px 28px;
-  font-family: var(--font-serif);
+  font-family: var(--font-body);
   font-size: 16px;
   line-height: 1.8;
   color: var(--text);

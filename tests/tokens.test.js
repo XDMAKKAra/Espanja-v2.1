@@ -42,16 +42,16 @@ const REQUIRED = [
   "--s-0", "--s-1", "--s-2", "--s-3", "--s-4", "--s-5", "--s-6", "--s-8", "--s-10",
   // §4 radius
   "--r-sm", "--r-md", "--r-lg", "--r-full",
-  // §5 shadow
-  "--sh-rest", "--sh-hover", "--sh-lift", "--sh-glow",
+  // §5 shadow (--sh-glow removed in mint+navy rebrand)
+  "--sh-rest", "--sh-hover", "--sh-lift",
   // §6 breakpoints + widths
   "--bp-tablet", "--bp-desktop", "--bp-wide",
   "--w-tablet", "--w-desktop", "--w-wide",
   // §7 motion
   "--dur-fast", "--dur-base", "--dur-slow",
   "--ease-in", "--ease-out", "--ease-inout",
-  // fonts (Commit 2 adds body; display + mono + serif here)
-  "--font-display", "--font-mono", "--font-serif",
+  // fonts (Inter single-family rebrand: --font-serif removed)
+  "--font-display", "--font-body", "--font-mono",
 ];
 
 function rootBlock(css) {

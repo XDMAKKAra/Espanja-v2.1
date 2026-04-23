@@ -32,9 +32,8 @@ describe("typography tokens", () => {
       });
     }
     it(`${file[0]} declares --font-body`, () => {
-      // Cuaderno theme uses Nunito; was Inter in earlier iterations. Only
-      // assert the token exists and is non-empty — font choice is owned by
-      // design-system/DESIGN.md, not this regression test.
+      // Mint+navy rebrand uses Inter single-family. Only assert token exists
+      // and is non-empty — font choice is owned by design-system/DESIGN.md.
       expect(file[1]).toMatch(/--font-body\s*:[^;]+;/);
     });
     it(`${file[0]} declares --font-display`, () => {
