@@ -14,22 +14,22 @@
 
 :root {
   /* Base + surfaces — Cuaderno: warm parchment light mode */
-  --bg:             #f5eedb;
-  --surface:        #ece5ce;
-  --surface-2:      #e0d8bf;
-  --border:         #c8bfa6;
-  --border-strong:  #a89f84;
+  --bg:             #F0FDF9;
+  --surface:        #FFFFFF;
+  --surface-2:      #ECFDF5;
+  --border:         #D1FAE5;
+  --border-strong:  #A7F3D0;
 
   /* Text */
-  --text:        #2a1f0e;
-  --text-muted:  #6b5940;
-  --text-faint:  #9c8c70;
+  --text:        #111827;
+  --text-muted:  #374151;
+  --text-faint:  #6B7280;
 
   /* Brand — warm ochre (deeper than mustard, WCAG AA on parchment) */
-  --brand:       #A87C3A;
-  --brand-btn:   #7A5A18;
-  --brand-light: #C8950A;
-  --brand-glow:  rgba(168, 124, 58, 0.15);
+  --brand:       #2DD4BF;
+  --brand-btn:   #14B8A6;
+  --brand-light: #2DD4BF;
+  --brand-glow:  rgba(45, 212, 191, 0.15);
 
   /* Feedback */
   --success: #2a7a40;
@@ -53,18 +53,18 @@
   --grade-l: #503898;
 
   /* Exercise badges */
-  --ex-monivalinta:  #A87C3A;
+  --ex-monivalinta:  #2DD4BF;
   --ex-yhdistaminen: #3a6898;
   --ex-taydennys:    #7840a0;
   --ex-jarjestely:   #1878a0;
-  --ex-kaannos:      #A87C3A;
+  --ex-kaannos:      #2DD4BF;
   --ex-luetun:       #286840;
 
   /* Gradients */
   --grad-pro:     linear-gradient(135deg, var(--brand-light), var(--brand));
   --grad-hero:    linear-gradient(130deg, var(--brand-light) 0%, var(--brand) 100%);
-  --grad-urgency: linear-gradient(90deg, #5e2408 0%, var(--brand-btn) 50%, #5e2408 100%);
-  --brand-ochre:  #A87C3A;
+  --grad-urgency: linear-gradient(90deg, #111827 0%, var(--brand-btn) 50%, #111827 100%);
+  --brand-ochre:  #2DD4BF;
   --grad-summer:  linear-gradient(135deg, var(--brand-light), var(--brand-ochre));
 
   /* Spacing */
@@ -75,10 +75,10 @@
   --r-sm: 6px; --r-md: 10px; --r-lg: 16px; --r-full: 9999px;
 
   /* Shadows — warm brown tones for light mode */
-  --sh-rest:  0 1px 3px rgba(42, 31, 14, 0.12);
-  --sh-hover: 0 4px 12px rgba(42, 31, 14, 0.16);
-  --sh-lift:  0 12px 32px rgba(42, 31, 14, 0.22);
-  --sh-glow:  0 0 32px rgba(168, 124, 58, 0.22);
+  --sh-rest:  0 1px 3px rgba(17, 24, 39, 0.12);
+  --sh-hover: 0 4px 12px rgba(17, 24, 39, 0.16);
+  --sh-lift:  0 12px 32px rgba(17, 24, 39, 0.22);
+  --sh-glow:  0 0 32px rgba(45, 212, 191, 0.22);
 
   /* Breakpoints + container widths */
   --bp-tablet: 768px; --bp-desktop: 1024px; --bp-wide: 1440px;
@@ -165,7 +165,7 @@ body::before {
   position: fixed;
   inset: 0;
   background:
-    radial-gradient(ellipse at 20% 70%, rgba(176, 126, 8, 0.08) 0%, transparent 55%);
+    radial-gradient(ellipse at 20% 70%, rgba(45, 212, 191, 0.08) 0%, transparent 55%);
   pointer-events: none;
   z-index: 0;
 }
@@ -987,7 +987,7 @@ footer {
   transition: all 0.15s ease; font-family: var(--font);
   color: var(--text); font-size: 14px; text-align: left; width: 100%;
 }
-.demo-option:hover:not(.disabled) { border-color: var(--brand); background: rgba(176, 126, 8, 0.06); }
+.demo-option:hover:not(.disabled) { border-color: var(--brand); background: rgba(45, 212, 191, 0.06); }
 .demo-option-letter {
   font-family: var(--mono); font-weight: 700; font-size: 13px;
   width: 28px; height: 28px; display: flex; align-items: center; justify-content: center;
