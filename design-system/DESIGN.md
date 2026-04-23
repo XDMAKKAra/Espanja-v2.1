@@ -4,153 +4,157 @@
 
 ## Aesthetic anchor
 
-**"Exam-serious, not bureaucratic."** Dark-mode-default (Finnish teens study at night), warm red primary that reads as focus/urgency not alarm, ochre-gold accent for progress and achievement. Typographic not illustrative — no mascots, no cartoon characters. Calm surfaces, sharp contrasts, generous whitespace.
+**"Quiet modern study tool."** A calm mint-and-navy surface with Inter typography — the visual register of a focused reference app, not a consumer marketing page. Navy ink carries the content; a single mint accent marks the one action or state that matters on each screen. Shadows appear only when something is being interacted with; gradients appear only inside the hero H1. Hierarchy comes from weight, colour, and whitespace — not borders, fills, or glow.
 
-Reference quality bar: Arc browser (layout), Anki (information density), Linear (motion restraint), Duolingo (reward feedback tone) — none of them copied.
+Reference quality bar: Linear (motion restraint), Arc (layout), Notion (content-first density), Anki (no visual reward loop) — none of them copied.
 
-Style peg (from `ui-ux-pro-max`): **minimalist + editorial** with a hint of **brutalist mono** in data blocks (exam timer, streak counter, exercise progress). Hierarchy through weight and size, not borders and fills.
+Style peg (from `ui-ux-pro-max`): **refined minimal** with **editorial** headline scale and a **brutalist mono** data register for countdown / timer / score numerals.
 
 ---
 
 ## 1. Colour tokens
 
-Every token has a **dark** (`-d`) and **light** (`-l`) value. Legacy single-value tokens in `style.css:1–46` map forward so the rename is a translation layer.
+Single light theme. Navy ink on cool mint neutrals; mint accent for
+one-per-screen action. Token source of truth: `style.css:19–136`.
 
 ### Base + surfaces
 
-| Token | Dark | Light | Use |
-|---|---|---|---|
-| `--bg` | `#0c0808` | `#faf6f2` | Page background |
-| `--surface` | `#180f0f` | `#ffffff` | Cards, panels |
-| `--surface-2` | `#201414` | `#f2ebe4` | Nested surfaces, sidebar |
-| `--border` | `#3d2020` | `#e6dcd0` | Hairlines |
-| `--border-strong` | `#5a3030` | `#c9b7a5` | Emphasised hairlines |
-
-### Text
-
-| Token | Dark | Light | Use |
-|---|---|---|---|
-| `--text` | `#f5e8e0` | `#1a0f0b` | Body, headings |
-| `--text-muted` | `#b8988e` | `#6b544a` | Secondary (raised from `#9e7a7a` to fix AA — see AUDIT §10) |
-| `--text-faint` | `#7c605a` | `#9a8275` | Tertiary, captions |
-
-### Brand
-
-| Token | Dark | Light | Use |
-|---|---|---|---|
-| `--brand` | `#e63946` | `#c62020` | Display, hero gradients |
-| `--brand-btn` | `#c62020` | `#a01818` | Buttons (5.80:1 on bg) |
-| `--brand-light` | `#f59e0b` | `#d97706` | Accent, highlights |
-
-### Feedback (4 required — covers onboarding toasts, grading banners)
-
-| Token | Dark | Light | Use |
-|---|---|---|---|
-| `--success` | `#22c55e` | `#15803d` | "oikein" |
-| `--warn` | `#f59e0b` | `#b45309` | "lähellä" |
-| `--error` | `#ef4444` | `#b91c1c` | "väärin", destructive |
-| `--info` | `#60a5fa` | `#1e40af` | Toasts, hints |
-
-### SR grading (spaced repetition — 4-button Anki scale)
-
-| Token | Dark | Light |
+| Token | Value | Use |
 |---|---|---|
-| `--sr-again` | `#ef4444` | `#b91c1c` |
-| `--sr-hard` | `#f59e0b` | `#b45309` |
-| `--sr-good` | `#22c55e` | `#15803d` |
-| `--sr-easy` | `#3b82f6` | `#1d4ed8` |
+| `--bg` | `#F0FDF9` | Page background |
+| `--surface` | `#FFFFFF` | Cards, panels, inputs |
+| `--surface-2` | `#ECFDF5` | Nested surfaces, sidebar, countdown block |
+| `--border` | `#D1FAE5` | Hairlines |
+| `--border-strong` | `#A7F3D0` | Hover / emphasised hairlines |
 
-### Grade scale (Finnish YO arvosanat I / A / B / C / M / E / L)
+### Ink (text)
 
-| Token | Dark | Light |
+| Token | Value | Use |
 |---|---|---|
-| `--grade-i` | `#7c605a` | `#6b544a` |
-| `--grade-a` | `#9e7070` | `#8a5a5a` |
-| `--grade-b` | `#7c9abc` | `#4a6e8a` |
-| `--grade-c` | `#5ba882` | `#3d8560` |
-| `--grade-m` | `#f59e0b` | `#b45309` |
-| `--grade-e` | `#e8d5b7` | `#8a6f50` |
-| `--grade-l` | `#c9b8ff` | `#5b4b8a` |
+| `--ink` | `#111827` | Body, headings |
+| `--ink-soft` | `#374151` | Secondary text, captions |
+| `--ink-faint` | `#6B7280` | Tertiary, placeholders, countdown labels |
 
-### Exercise-type badges
+Legacy aliases `--text` / `--text-muted` / `--text-faint` map onto the ink tokens and stay available for existing component rules.
 
-| Token | Dark | Light |
+### Accent (mint)
+
+| Token | Value | Use |
 |---|---|---|
-| `--ex-monivalinta` | `#f59e0b` | `#b45309` |
-| `--ex-yhdistaminen` | `#7dd3fc` | `#0369a1` |
-| `--ex-taydennys` | `#c084fc` | `#7e22ce` |
-| `--ex-jarjestely` | `#67e8f9` | `#0e7490` |
-| `--ex-kaannos` | `#fbbf24` | `#a16207` |
-| `--ex-luetun` | `#86efac` | `#15803d` |
+| `--accent` | `#2DD4BF` | Primary button fill, focus outlines, hero `.hero-accent` span |
+| `--accent-hover` | `#14B8A6` | Primary button hover, one-off accent-as-text on light surfaces |
+| `--accent-soft` | `#CCFBF1` | Sidebar-active background, quiet tint chips |
 
-### Gradients (named, not inlined)
+**Contrast lock:** `#2DD4BF` on `#FFFFFF` is 1.65:1 — mint **never** carries white text. `.btn--primary` always uses `color: var(--ink)`. Mint-as-text is only allowed on the navy `--ink` background.
+
+### Feedback
+
+| Token | Value | Use |
+|---|---|---|
+| `--success` | `#059669` | "oikein", positive diff |
+| `--warn` | `#D97706` | "lähellä" |
+| `--error` | `#DC2626` | "väärin", destructive, countdown `.is-urgent` |
+| `--info` | `#2563EB` | Toasts, hints |
+
+### SR grading (4-button Anki scale)
 
 | Token | Value |
 |---|---|
-| `--grad-pro` | `linear-gradient(135deg, var(--brand-light), var(--brand))` |
-| `--grad-hero` | `linear-gradient(130deg, var(--brand-light) 0%, var(--brand) 100%)` |
-| `--grad-urgency` | `linear-gradient(90deg, #a01818 0%, var(--brand-btn) 50%, #a01818 100%)` |
+| `--sr-again` | `#DC2626` |
+| `--sr-hard` | `#D97706` |
+| `--sr-good` | `#059669` |
+| `--sr-easy` | `#2563EB` |
 
-**Contrast targets (all verified manually against `--bg`):**
-- `--text` on `--bg`: dark 14.6:1, light 15.2:1 (AAA)
-- `--text-muted` on `--surface`: dark 4.7:1, light 4.9:1 (AA body)
-- `--brand-btn` on white text: dark 5.80:1, light 6.4:1 (AA)
+### YO grade scale (I → L, fail → top)
+
+| Token | Value |
+|---|---|
+| `--grade-i` | `#6B7280` |
+| `--grade-a` | `#9CA3AF` |
+| `--grade-b` | `#2563EB` |
+| `--grade-c` | `#0D9488` |
+| `--grade-m` | `#059669` |
+| `--grade-e` | `#047857` |
+| `--grade-l` | `#064E3B` |
+
+### Exercise-type badges (cool family, each AA on white)
+
+| Token | Value |
+|---|---|
+| `--ex-monivalinta` | `#0D9488` |
+| `--ex-yhdistaminen` | `#2563EB` |
+| `--ex-taydennys` | `#7C3AED` |
+| `--ex-jarjestely` | `#0891B2` |
+| `--ex-kaannos` | `#059669` |
+| `--ex-luetun` | `#6366F1` |
+
+Badges render as pill `--r-full`, 6×12 padding, Inter 600 12 px, background = colour @ 12% opacity, border = colour @ 25% opacity, text = full colour.
+
+### Gradients
+
+Only **one** gradient survives and it is masked into hero H1 text only:
+
+| Token | Value |
+|---|---|
+| `--grad-hero` | `linear-gradient(130deg, var(--accent) 0%, var(--accent-hover) 100%)` |
+| `--grad-pro` | aliases `--grad-hero` (kept for legacy callers) |
+
+`--grad-urgency` and `--sh-glow` were deleted in the mint+navy rebrand. Do not reintroduce surface gradients, conic animated gradients, or halo box-shadows.
+
+### Shadows (navy-based)
+
+| Token | Value | Where it's allowed |
+|---|---|---|
+| `--sh-rest` | `0 1px 3px rgba(17, 24, 39, 0.08)` | Button `:active`, card `:hover` |
+| `--sh-hover` | `0 4px 12px rgba(17, 24, 39, 0.10)` | Modals at rest |
+| `--sh-lift` | `0 12px 32px rgba(17, 24, 39, 0.14)` | Popovers, toasts |
+
+Default state on buttons, cards, inputs, and nav has **no** shadow.
 
 ---
 
 ## 2. Typography
 
-**Fonts:** Syne (display, static weights 400/600/700/800) + Inter (body, **variable**, Latin Extended subset) + DM Mono (500) + Lora (editorial, blog only).
+**Fonts:** Inter (single family, weights 400/500/600/700/800, Latin + Latin Extended) + DM Mono (400/500) for data/countdown numerals. No serif anywhere. No italic on headlines.
 
-Why Inter instead of Syne for body: Syne's body weight has low x-height and struggles with Finnish compound nouns at 14–16px. Inter handles ä/ö/å perfectly, pairs cleanly with Syne's angular display cut, and the variable font lets us drop the 4-file weight cascade.
+Why Inter everywhere: a single typeface renders H1, H2, H3 and body consistently across marketing + app; Latin Extended covers Finnish ä/ö/å and Spanish ñ/á/é/í/ó/ú; Inter is variable-weight-ready but we keep discrete weights for stable preload.
 
-**Load strategy (approved):**
+**Load strategy:**
 
 ```html
-<!-- In <head> of every HTML shell -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="font" type="font/woff2" crossorigin
-  href="https://fonts.gstatic.com/s/inter/[...]latin-ext.woff2">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=Syne:wght@400;600;700;800&family=DM+Mono:wght@500&display=swap&subset=latin-ext"
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap&subset=latin,latin-ext"
       rel="stylesheet">
 ```
 
-- Inter: variable axis, range 400–700, **Latin Extended subset** (required for Finnish ä/ö/å/é and Spanish ñ/á/í/ó/ú).
-- Preload the single body `.woff2` file (Inter 400 latin-ext) — blocks first paint less than waiting for CSSOM.
-- Lora is **not** loaded here — only included in blog shell (`blog/*.html`) per FINDINGS §10.
-- Syne stays as discrete weights — variable build isn't available on Google Fonts as of 2026-04.
-
-**Unified tokens** (replaces split `--font-display`/`--font` inconsistency):
+**Tokens:**
 
 ```css
---font-display: 'Syne', ui-sans-serif, system-ui, sans-serif;
---font-body:    'Inter', ui-sans-serif, system-ui, sans-serif;
+--font-display: 'Inter', system-ui, -apple-system, sans-serif;
+--font-body:    'Inter', system-ui, -apple-system, sans-serif;
 --font-mono:    'DM Mono', ui-monospace, monospace;
---font-serif:   'Lora', Georgia, serif;
+/* --font-serif removed in the mint+navy rebrand */
 ```
 
-**Scale** (`rem` at 16px base):
+**Scale:**
 
-| Token | Size | Line-height | Weight | Family |
+| Role | Size | Line-height | Weight | Notes |
 |---|---|---|---|---|
-| `--fs-h1` | `clamp(2rem, 4vw, 3rem)` | 1.1 | 800 | display |
-| `--fs-h2` | `clamp(1.5rem, 3vw, 2rem)` | 1.2 | 700 | display |
-| `--fs-h3` | `1.25rem` / 20px | 1.3 | 700 | display |
-| `--fs-h4` | `1rem` / 16px | 1.4 | 600 | display |
-| `--fs-h5` | `0.875rem` / 14px | 1.4 | 600 | display |
-| `--fs-body` | `1rem` / 16px | 1.6 | 400 | body |
-| `--fs-body-sm` | `0.875rem` / 14px | 1.6 | 400 | body |
-| `--fs-caption` | `0.75rem` / 12px | 1.4 | 500 | mono |
-| `--fs-mono` | `0.8125rem` / 13px | 1.5 | 500 | mono |
+| H1 (hero) | `clamp(2.5rem, 5vw, 3.5rem)` | 1.05 | 800 | `-0.02em`, `color: var(--ink)`; `.hero-accent` span inside = 800 on `--accent` |
+| H2 | `clamp(1.75rem, 3vw, 2.25rem)` | 1.15 | 700 | `-0.01em` |
+| H3 | `1.25rem` | 1.3 | 700 | `var(--ink)` |
+| Body | `1rem` | 1.55 | 400 | `var(--ink)`; secondary in `--ink-soft` |
+| Caption | `0.875rem` | 1.4 | 500 | `var(--ink-faint)`, often uppercased w/ 0.04em tracking |
+| Mono (numerals) | DM Mono `0.8125rem`+ | 1 | 500 | countdown, timer, scores — tabular-nums |
 
-Global rules (`style.css` root):
+Global rules (`style.css` + `landing.css`):
+
 ```css
-h1 { font: 800 var(--fs-h1)/1.1 var(--font-display); }
-h2 { font: 700 var(--fs-h2)/1.2 var(--font-display); }
-h3 { font: 700 var(--fs-h3)/1.3 var(--font-display); }
-h4 { font: 600 var(--fs-h4)/1.4 var(--font-display); }
-body { font: 400 var(--fs-body)/1.6 var(--font-body); color: var(--text); }
+h1 { font: 800 var(--fs-h1)/1.05 var(--font-display); color: var(--ink); }
+h2 { font: 700 var(--fs-h2)/1.15 var(--font-display); color: var(--ink); }
+h3 { font: 700 var(--fs-h3)/1.3  var(--font-display); color: var(--ink); }
+body { font: 400 var(--fs-body)/1.55 var(--font-body); color: var(--ink); }
 ```
 
 **Finnish text test cases** — every component must fit the longest real string, not a placeholder:

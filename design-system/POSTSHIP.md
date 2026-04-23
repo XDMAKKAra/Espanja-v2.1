@@ -46,7 +46,7 @@ Six screens widened from 600–800 px to `var(--w-desktop)` (1080 px). Closes th
 `tests/desktop-widths.test.js` enforces each selector uses the token.
 
 ### Gate E — Landing + marketing (3 commits)
-- `landing.css`: `.faq-list` widened from 640 → 800 px. Urgency-bar gradient tokenised to `--grad-urgency`. Added `--brand-ochre` + `--grad-summer` for the summer-package; all three call-sites migrated.
+- `landing.css`: `.faq-list` widened from 640 → 800 px. Urgency-bar originally tokenised to `--grad-urgency`; that token was later deleted in the mint+navy rebrand. Summer-package variants unified onto `--grad-hero` / `--accent`.
 - `.footer-link` utility added to `landing.css`. Replaces 12 inline `style="color:var(--text-muted)"` across pricing / privacy / terms / refund. Closes bulk of AUDIT §6 for those pages.
 - `blog/*.html` (6 files): body `font-family: 'Lora', …` → `var(--font-serif)`; pages now load Lora themselves via `<link>` with `subset=latin-ext`. `index.html`: removed the inlined Lora `@font-face` declarations (4) that were being downloaded on every landing-page visit. Saves ~40 kb on the hottest page — closes FINDINGS §10.
 

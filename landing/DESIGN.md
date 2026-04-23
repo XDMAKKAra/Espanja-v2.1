@@ -1,6 +1,6 @@
 # Landing Design Spec — Puheo Pass 3
 
-Design language inherits from the Cuaderno system (Crimson Pro display, Nunito body, DM Mono mono, parchment palette, ochre brand). No new tokens. All sections use existing component CSS.
+Design language inherits from the current design system (Inter for display + body, DM Mono for data numerals, mint + navy palette, `--accent` for the one action per screen). No new tokens. All sections use existing component CSS.
 
 ---
 
