@@ -25,10 +25,9 @@ const REQUIRED = [
   "--bg", "--surface", "--surface-2", "--border", "--border-strong",
   // §1 text
   "--text", "--text-muted", "--text-faint",
-  // §1 ink + accent (mint+navy rebrand; legacy --brand aliases kept too)
+  // §1 ink + accent (mint+navy rebrand)
   "--ink", "--ink-soft", "--ink-faint",
   "--accent", "--accent-hover", "--accent-soft",
-  "--brand", "--brand-btn", "--brand-light",
   // §1 feedback
   "--success", "--warn", "--error", "--info",
   // §1 SR grading

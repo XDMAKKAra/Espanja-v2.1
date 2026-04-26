@@ -25,11 +25,11 @@ describe("bottom-nav CSS contract", () => {
   it("items have min-height 44px", () => {
     expect(css).toMatch(/\.bottom-nav__item\s*\{[\s\S]*?min-height:\s*44px/);
   });
-  it("active state uses --brand-light", () => {
-    expect(css).toMatch(/\.bottom-nav__item\.is-active[\s\S]*?var\(--brand-light\)/);
+  it("active state uses --accent", () => {
+    expect(css).toMatch(/\.bottom-nav__item\.is-active[\s\S]*?var\(--accent\)/);
   });
   it("focus ring is visible", () => {
-    expect(css).toMatch(/:focus-visible[\s\S]*?var\(--brand-light\)/);
+    expect(css).toMatch(/:focus-visible[\s\S]*?var\(--accent\)/);
   });
   it("no raw hex", () => {
     expect(css).not.toMatch(/#[0-9a-fA-F]{3,8}\b/);
