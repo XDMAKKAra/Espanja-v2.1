@@ -290,16 +290,8 @@ function timeAgo(dateStr) {
 }
 
 function renderGoalRow(chartData) {
-  const row = $("dash-goal-row");
-  if (!row) return;
-
   const profile = window._userProfile;
-  if (!profile || !profile.onboarding_completed) {
-    row.classList.add("hidden");
-    return;
-  }
-
-  row.classList.remove("hidden");
+  if (!profile || !profile.onboarding_completed) return;
 
   // Exam countdown
   const countdownEl = $("dash-countdown-value");

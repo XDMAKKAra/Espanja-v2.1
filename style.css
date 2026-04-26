@@ -3932,7 +3932,7 @@ body:has(.app-countdown:not(.hidden)) #app-main { padding-top: 34px; }
 }
 .quickreview-kicker {
   font-family: var(--font-mono); font-size: 11px;
-  color: var(--gold, #C9A66B); letter-spacing: 0.1em;
+  color: var(--accent-hover); letter-spacing: 0.1em;
   text-transform: uppercase; margin-bottom: 6px;
 }
 .quickreview-title {
@@ -3946,7 +3946,7 @@ body:has(.app-countdown:not(.hidden)) #app-main { padding-top: 34px; }
 .quickreview-rule {
   font-size: 16px; line-height: 1.55;
   background: rgba(201, 166, 107, 0.08);
-  border-left: 3px solid var(--gold, #C9A66B);
+  border-left: 3px solid var(--accent-hover);
   padding: 14px 16px;
   border-radius: 0 8px 8px 0;
   margin-bottom: 20px;
@@ -4086,7 +4086,7 @@ body:has(.app-countdown:not(.hidden)) #app-main { padding-top: 34px; }
 }
 .vs-input:focus {
   outline: none;
-  border-color: var(--gold, #C9A66B);
+  border-color: var(--accent-hover);
 }
 .vs-input.is-correct { border-color: var(--success); }
 .vs-input.is-wrong { border-color: var(--error); }
@@ -4182,7 +4182,7 @@ body:has(.app-countdown:not(.hidden)) #app-main { padding-top: 34px; }
 }
 .paradigm-kicker {
   font-family: var(--font-mono); font-size: 11px;
-  color: var(--gold, #C9A66B); letter-spacing: 0.1em;
+  color: var(--accent-hover); letter-spacing: 0.1em;
   text-transform: uppercase; margin-bottom: 6px;
 }
 .paradigm-title {
@@ -4239,8 +4239,8 @@ body:has(.app-countdown:not(.hidden)) #app-main { padding-top: 34px; }
   transition: all 0.15s ease;
 }
 .verb-ref-btn:hover {
-  border-color: var(--gold, #C9A66B);
-  color: var(--gold, #C9A66B);
+  border-color: var(--accent-hover);
+  color: var(--accent-hover);
 }
 .verb-ref-btn-icon { font-size: 15px; line-height: 1; }
 
@@ -4301,7 +4301,7 @@ body:has(.app-countdown:not(.hidden)) #app-main { padding-top: 34px; }
 }
 .verbref-input:focus {
   outline: none;
-  border-color: var(--gold, #C9A66B);
+  border-color: var(--accent-hover);
 }
 .verbref-count {
   font-family: var(--font-mono); font-size: 11px;
@@ -4389,7 +4389,7 @@ body:has(.app-countdown:not(.hidden)) #app-main { padding-top: 34px; }
 }
 .verbref-tense-label {
   font-family: var(--font-mono); font-size: 11px;
-  color: var(--gold, #C9A66B); letter-spacing: 0.1em;
+  color: var(--accent-hover); letter-spacing: 0.1em;
   text-transform: uppercase; margin-bottom: 8px;
 }
 .verbref-table {
@@ -4467,7 +4467,7 @@ body:has(.app-countdown:not(.hidden)) #app-main { padding-top: 34px; }
 }
 .blog-cta-title {
   font-size: 15px; font-weight: 700;
-  color: var(--gold, #C9A66B);
+  color: var(--accent-hover);
 }
 }
 
@@ -4534,8 +4534,8 @@ body:has(.app-countdown:not(.hidden)) #app-main { padding-top: 34px; }
   transition: border-color 0.15s ease, color 0.15s ease;
 }
 .settings-row-edit:hover {
-  border-color: var(--gold, #C9A66B);
-  color: var(--gold, #C9A66B);
+  border-color: var(--accent-hover);
+  color: var(--accent-hover);
 }
 
 .settings-modal-overlay,
@@ -4610,9 +4610,9 @@ body:has(.app-countdown:not(.hidden)) #app-main { padding-top: 34px; }
   background: rgba(201, 166, 107, 0.04);
 }
 .settings-opt.selected {
-  border-color: var(--gold, #C9A66B);
+  border-color: var(--accent-hover);
   background: rgba(201, 166, 107, 0.12);
-  color: var(--gold, #C9A66B);
+  color: var(--accent-hover);
   font-weight: 700;
 }
 .settings-modal-error {
@@ -4664,7 +4664,7 @@ body:has(.app-countdown:not(.hidden)) #app-main { padding-top: 34px; }
   font-size: 22px; font-weight: 800;
 }
 .level-bump-current { color: var(--ink-soft); }
-.level-bump-new { color: var(--gold, #C9A66B); }
+.level-bump-new { color: var(--accent-hover); }
 .level-bump-arrow { color: var(--ink-soft); font-size: 18px; }
 .level-bump-actions {
   display: flex; flex-direction: column; gap: 8px;
@@ -4774,7 +4774,7 @@ body:has(.app-countdown:not(.hidden)) #app-main { padding-top: 34px; }
 /* ── Writing feedback: "Korjattu versio" block (Commit 6) ────────────────── */
 .feedback-corrected-text {
   background: rgba(34, 197, 94, 0.06);
-  border-left: 3px solid var(--correct, #22c55e);
+  border-left: 3px solid var(--success);
   border-radius: 4px;
   padding: 14px 18px;
   font-family: var(--font-display);
