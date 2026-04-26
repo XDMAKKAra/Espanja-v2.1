@@ -1,0 +1,147 @@
+/* Right rail blocks — used by dashboard (Spec 1). */
+
+.rail__group + .rail__group { margin-top: 28px; }
+
+.rail__h {
+  font-family: var(--font-display);
+  font-size: var(--fs-meta);
+  font-weight: 500;
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin: 0 0 10px;
+}
+
+.rail-stat {
+  padding: 14px 0;
+  border-top: 1px solid var(--border);
+}
+.rail-stat:first-of-type { border-top: 0; padding-top: 0; }
+
+.rail-stat__v {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-lg);
+  font-weight: 600;
+  line-height: 1;
+  color: var(--ink);
+  font-feature-settings: "tnum" 1;
+}
+.rail-stat__v small {
+  font-size: var(--fs-mono-sm);
+  font-weight: 500;
+  color: var(--ink-faint);
+  margin-left: 4px;
+}
+.rail-stat__l {
+  font-family: var(--font-display);
+  font-size: var(--fs-meta);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-top: 6px;
+}
+.rail-stat__delta {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-sm);
+  font-weight: 500;
+  color: var(--success);
+  margin-left: 8px;
+}
+.rail-stat__delta--down { color: var(--error); }
+
+.rail-countdown {
+  padding: 14px 0;
+  border-top: 1px solid var(--border);
+}
+.rail-countdown__big {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-lg);
+  font-weight: 600;
+  line-height: 1;
+  color: var(--ink);
+  font-feature-settings: "tnum" 1;
+}
+.rail-countdown.is-urgent .rail-countdown__big { color: var(--error); }
+.rail-countdown__lbl {
+  font-family: var(--font-display);
+  font-size: var(--fs-meta);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-top: 6px;
+}
+
+.rail-goal {
+  padding: 14px 0;
+  border-top: 1px solid var(--border);
+}
+.rail-goal__v {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-md);
+  font-weight: 600;
+  line-height: 1;
+  color: var(--ink);
+}
+.rail-goal__v small {
+  font-size: var(--fs-mono-sm);
+  font-weight: 500;
+  color: var(--ink-faint);
+}
+.rail-goal__bar {
+  height: 4px;
+  background: var(--surface-2);
+  border-radius: 2px;
+  margin-top: 10px;
+  overflow: hidden;
+}
+.rail-goal__bar i {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+  transition: width 200ms var(--ease-out);
+}
+.rail-goal__l {
+  font-family: var(--font-display);
+  font-size: var(--fs-body-sm);
+  color: var(--ink-faint);
+  margin-top: 8px;
+}
+
+.rail-footer {
+  margin-top: 32px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+  font-family: var(--font-display);
+  font-size: var(--fs-meta);
+  color: var(--ink-faint);
+}
+
+/* Horizontal strip mode (≤ 1179 px) — see app-shell.css */
+@media (max-width: 1179px) {
+  .app-rail {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  .app-rail .rail__h,
+  .app-rail .rail-footer { display: none; }
+  .rail-stat,
+  .rail-countdown,
+  .rail-goal {
+    border-top: 0;
+    padding: 0;
+  }
+  .rail-stat__v,
+  .rail-countdown__big {
+    font-size: var(--fs-mono-md);
+  }
+}
+@media (max-width: 767px) {
+  .app-rail {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+}
