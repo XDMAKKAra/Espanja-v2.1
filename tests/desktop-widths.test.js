@@ -21,6 +21,12 @@ import { dirname, resolve } from "node:path";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = resolve(__dirname, "..");
 const styleCss = readFileSync(resolve(root, "style.css"), "utf8");
+// T6: dashboard rules moved to css/components/dashboard.css — search both files
+const dashboardCss = readFileSync(
+  resolve(root, "css/components/dashboard.css"),
+  "utf8"
+);
+const allCss = styleCss + "\n" + dashboardCss;
 
 function cap(selector) {
   // Strip @media blocks first so we only see top-level rules.
@@ -28,7 +34,7 @@ function cap(selector) {
   let depth = 0;
   let inMedia = false;
   let clean = "";
-  const s = styleCss;
+  const s = allCss;
   for (let i = 0; i < s.length; i++) {
     const ch = s[i];
     if (!inMedia && ch === "@" && s.startsWith("@media", i)) {

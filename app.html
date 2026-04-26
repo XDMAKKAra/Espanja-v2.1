@@ -26,6 +26,7 @@
   <link rel="stylesheet" href="css/components/typography.css" />
   <link rel="stylesheet" href="css/components/app-shell.css" />
   <link rel="stylesheet" href="css/components/rail.css" />
+  <link rel="stylesheet" href="css/components/dashboard.css" />
 </head>
 <body>
 
@@ -64,6 +65,8 @@
     <span class="app-countdown-text"><span id="app-countdown-days">—</span> pv YO-kokeeseen</span>
     <button class="app-countdown-close" id="app-countdown-close" type="button" aria-label="Piilota päivälaskuri">×</button>
   </div>
+
+  <div class="app-shell" id="app-shell">
 
   <!-- SIDEBAR (desktop only) -->
   <aside class="app-sidebar" id="app-sidebar" role="navigation" aria-label="Päävalikko">
@@ -126,6 +129,7 @@
   </nav>
 
   <main class="app-main" id="app-main" role="main">
+    <div class="app-main-inner">
 
   <!-- SCREEN: Auth (login / register) -->
   <div id="screen-auth" class="screen active">
@@ -1588,7 +1592,12 @@
     </div>
   </div>
 
+    </div><!-- /app-main-inner -->
   </main><!-- /app-main -->
+
+  <aside class="app-rail" id="app-rail" hidden></aside>
+
+  </div><!-- /app-shell -->
 
   <script>
     // Analytics config (injected server-side or set manually)
