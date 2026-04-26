@@ -23,43 +23,39 @@
   text-align: center;
 }
 /* ── WEAK TOPICS ── */
-.dash-weak-topics {
-  margin-bottom: 16px;
-}
+.dash-weak-topics { margin-bottom: 32px; }
 .dash-weak-topics.hidden { display: none; }
-.dash-weak-list {
-  display: flex; flex-direction: column; gap: 8px;
+.dash-weak-list { border-top: 1px solid var(--border); }
+
+.dash-weak__row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: background 100ms var(--ease-out);
 }
-.dash-weak-item {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: var(--r-md); padding: 12px 16px;
-  cursor: pointer; transition: all 0.15s;
+.dash-weak__row:hover { background: var(--surface-2); }
+
+.dash-weak__n   { flex: 0 0 36px; color: var(--ink); }
+.dash-weak__name {
+  flex: 1;
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  font-weight: 500;
+  color: var(--ink);
 }
-.dash-weak-item:hover {
-  border-color: var(--accent-dark);
-  transform: translateX(2px);
+.dash-weak__blog {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-soft);
+  text-decoration: none;
+  white-space: nowrap;
 }
-.dash-weak-top {
-  display: flex; align-items: center; justify-content: space-between;
-  margin-bottom: 6px;
-}
-.dash-weak-label {
-  font-size: 14px; font-weight: 700;
-}
-.dash-weak-count {
-  font-family: var(--font-mono); font-size: 12px;
-  color: var(--error); font-weight: 600;
-}
-.dash-weak-bar {
-  height: 4px; background: var(--surface-2);
-  border-radius: 2px; overflow: hidden;
-}
-.dash-weak-bar-fill {
-  height: 100%;
-  background: linear-gradient(90deg, var(--error), var(--accent));
-  border-radius: 2px;
-  transition: width 0.8s ease;
-}
+.dash-weak__blog:hover { color: var(--ink); text-decoration: underline; }
+.dash-weak__err { color: var(--error); }
+.dash-weak__pct { flex: 0 0 50px; text-align: right; color: var(--ink-faint); }
 
 /* ── DASH LEVEL PROGRESS ── */
 .dash-level-progress {
@@ -191,10 +187,7 @@
 }
 .dash-mode-empty { color: var(--ink-soft); font-size: 11px; font-family: var(--font-mono); }
 
-.dash-section-label {
-  font-family: var(--font-mono); font-size: 10px; color: var(--ink-soft);
-  text-transform: uppercase; letter-spacing: 0.14em; margin-bottom: 10px;
-}
+/* .dash-section-label removed — replaced by .section-h <h3> from typography.css */
 .dash-recent-wrap { margin-bottom: 20px; }
 .dash-recent-item {
   display: flex; align-items: center; justify-content: space-between;
@@ -304,47 +297,10 @@
 .dash-hero-grade--tier-high .dash-hero-grade-circle { border-color: var(--accent-hover); color: var(--accent-hover); }
 
 
-/* ── DASHBOARD STATS ROW ── */
-.dash-stats-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 8px;
-  margin-bottom: 16px;
-}
-.dash-stat-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--r-md);
-  padding: 14px 10px;
-  text-align: center;
-}
-.dash-stat-icon {
-  font-size: 16px;
-  margin-bottom: 4px;
-}
-.dash-stat-label {
-  font-family: var(--font-mono);
-  font-size: 9px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--ink-soft);
-  margin-top: 4px;
-}
-.dash-stat-value {
-  font-size: 28px;
-  font-weight: 800;
-  line-height: 1;
-  color: var(--ink);
-  letter-spacing: -0.02em;
-}
-.dash-stat-grade { color: var(--accent); }
-.dash-stat-trend { color: var(--ink-soft); }
-.dash-stat-trend.trend-up   { color: var(--success); }
-.dash-stat-trend.trend-down { color: var(--error); }
-.dash-stat-trend.trend-same { color: var(--ink-soft); }
+/* ── DASHBOARD STATS ROW — removed in T9, re-added in T10 rail ── */
 
-/* ── ACTIVITY HEATMAP (GitHub-style: days vertical, weeks horizontal) ── */
-.dash-heatmap-section { margin-bottom: 16px; }
+/* ── ACTIVITY HEATMAP — single mint scale ── */
+.dash-heatmap-section { margin-bottom: 28px; }
 .dash-heatmap {
   display: grid;
   grid-template-rows: repeat(7, 1fr);
@@ -355,6 +311,7 @@
   position: relative;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
+  padding-top: 8px;
 }
 .heatmap-label {
   font-family: var(--font-mono);
@@ -366,18 +323,10 @@
   padding-right: 4px;
   user-select: none;
 }
-.heatmap-cell {
-  aspect-ratio: 1;
-  border-radius: 3px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  cursor: default;
-  transition: border-color 0.1s;
-}
-.heatmap-cell:hover { border-color: var(--ink-soft); }
-.heatmap-cell.lvl-2 { background: rgba(45, 212, 191,0.25); border-color: rgba(45, 212, 191,0.35); }
-.heatmap-cell.lvl-3 { background: rgba(45, 212, 191,0.55); border-color: rgba(45, 212, 191,0.65); }
-.heatmap-cell.lvl-4 { background: var(--accent); border-color: var(--accent-dark); }
+.heatmap-cell { aspect-ratio: 1; min-width: auto; border-radius: 2px; background: var(--surface-2); }
+.heatmap-cell.lvl-2 { background: #CCFBF1; }   /* matches --accent-soft */
+.heatmap-cell.lvl-3 { background: #5EEAD4; }
+.heatmap-cell.lvl-4 { background: var(--accent); }
 .heatmap-cell.future { opacity: 0.25; }
 .heatmap-tooltip {
   position: absolute;
@@ -397,13 +346,11 @@
 }
 .heatmap-tooltip.visible { opacity: 1; }
 
-
 @media (max-width: 760px) {
   .dash-heatmap {
     overflow-x: auto;
     padding-bottom: 4px;
   }
-  .heatmap-cell { min-width: 14px; }
 }
 
 /* ── RECOMMENDATIONS ── */
@@ -425,21 +372,21 @@
 .dash-rec-sub { font-family: var(--font-mono); font-size: 10px; color: var(--ink-soft); margin-top: 2px; }
 
 /* ── PROGRESS CHART ── */
-.dash-chart-section { margin-bottom: 20px; }
+.dash-chart-section { margin-bottom: 28px; }
 .dash-chart-container {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--r-md);
-  padding: 12px 8px 6px;
-  overflow: hidden;
+  height: 120px;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--border);
+  padding: 0;
 }
 .dash-chart-empty {
+  font-family: var(--font-display);
+  font-size: var(--fs-body-sm);
+  color: var(--ink-faint);
+  padding: 32px 0;
   text-align: center;
-  padding: 20px 16px;
-  color: var(--ink-soft);
-  font-family: var(--font-mono);
-  font-size: 11px;
-  line-height: 1.7;
+}
 
 /* ── DASHBOARD MODE CARDS: clickable ── */
 .dash-mode-card {
@@ -464,8 +411,7 @@
   flex-shrink: 0;
 }
 
-/* ── STATS ROW: streak fire color ── */
-.dash-stat-streak-active { color: #f97316; }
+/* .dash-stat-streak-active — removed in T9, re-added in T10 rail */
 
 
 .dash-full-exam-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:20px; display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:16px; }
@@ -512,52 +458,7 @@
   background: rgba(34,197,94,0.05);
 }
 
-/* Dashboard goal row */
-.dash-goal-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  margin-bottom: 16px;
-}
-@media (max-width: 500px) {
-  .dash-goal-row { grid-template-columns: 1fr; }
-}
-.dash-goal-card {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--r-md);
-  padding: 14px 16px;
-  position: relative;
-  overflow: hidden;
-}
-.dash-goal-icon { font-size: 1.5rem; }
-.dash-goal-value {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 1.1rem;
-}
-.dash-goal-label {
-  font-size: 0.8rem;
-  color: var(--ink-soft);
-}
-.dash-goal-bar {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: var(--surface-2);
-}
-.dash-goal-bar-fill {
-  height: 100%;
-  background: var(--accent);
-  border-radius: 0 3px 3px 0;
-  transition: width 0.5s ease;
-  width: 0%;
-}
+/* Dashboard goal row — removed in T9, re-added in T10 rail */
 
 /* Dashboard onboarding banner */
 .dash-onboarding-banner {
@@ -610,26 +511,16 @@
   border-color: var(--accent-dark);
   color: var(--ink);
 
-.dash-weak-blog-link {
-  display: inline-block;
-  margin-top: 6px;
-  font-size: 12px;
-  font-family: var(--font-mono);
-  color: var(--gold, #C9A66B);
-  text-decoration: none;
-  letter-spacing: 0.02em;
-}
-.dash-weak-blog-link:hover {
-  text-decoration: underline;
+/* .dash-weak-blog-link — replaced by .dash-weak__blog above */
 
 /* ── Cursor pointer on interactive cards ── */
 .dash-mode-card,
 .dash-rec-card,
 .dash-recent-item,
-.dash-weak-item { cursor: pointer; }
+.dash-weak__row { cursor: pointer; }
 
 /* ── Statement typography: oversized DM Mono numerals for hero stats ── */
-.dash-stat-value { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+/* .dash-stat-value — removed in T9, re-added in T10 rail */
 .dash-countdown-value { font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-weight: 700; }
 
 /* ── Writing progression bars (per-rubric-dimension trend) ── */

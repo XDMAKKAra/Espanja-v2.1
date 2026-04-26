@@ -988,37 +988,30 @@ async function loadWeakTopics() {
 
     const blogs = await Promise.all(topics.map(t => getBlogForTopic(t.topic)));
 
-    list.innerHTML = topics.map((t, i) => {
+    list.innerHTML = "";
+    topics.forEach((t, i) => {
       const blog = blogs[i];
-      const linkHtml = blog
-        ? `<a class="dash-weak-blog-link" href="${blog.url}" target="_blank" rel="noopener" data-topic-key="${blog.key}" data-topic-url="${blog.url}">Lue aiheesta →</a>`
-        : "";
-      return `
-        <div class="dash-weak-item" data-topic="${t.topic}">
-          <div class="dash-weak-top">
-            <span class="dash-weak-label">${t.label}</span>
-            <span class="dash-weak-count">${t.count} virhe${t.count > 1 ? "ttä" : ""}</span>
-          </div>
-          <div class="dash-weak-bar">
-            <div class="dash-weak-bar-fill" style="width: ${Math.round((t.count / maxCount) * 100)}%"></div>
-          </div>
-          ${linkHtml}
-        </div>
+      const row = document.createElement("div");
+      row.className = "dash-weak__row";
+      row.dataset.topic = t.topic;
+      row.innerHTML = `
+        <span class="dash-weak__n mono-num mono-num--md">${String(i + 1).padStart(2, "0")}</span>
+        <span class="dash-weak__name">${escapeHtml(t.label || t.topic || "")}</span>
+        ${blog ? `<a class="dash-weak__blog" href="${blog.url}" target="_blank" rel="noopener" data-topic-key="${blog.key}" data-topic-url="${blog.url}">Lue aiheesta →</a>` : ""}
+        <span class="dash-weak__err mono-num mono-num--sm">${t.count} virhettä</span>
+        <span class="dash-weak__pct mono-num mono-num--sm">${Math.round((t.count / maxCount) * 100)}%</span>
       `;
-    }).join("");
-
-    list.querySelectorAll(".dash-weak-blog-link").forEach(link => {
-      link.addEventListener("click", (e) => {
-        e.stopPropagation();
-        trackBlogClick("dashboard_weak_topic", link.dataset.topicKey, link.dataset.topicUrl);
+      if (blog) {
+        row.querySelector(".dash-weak__blog").addEventListener("click", (e) => {
+          e.stopPropagation();
+          trackBlogClick("dashboard_weak_topic", blog.key, blog.url);
+        });
+      }
+      row.addEventListener("click", (e) => {
+        if (e.target.closest(".dash-weak__blog")) return;
+        openMistakeModal(t.topic);
       });
-    });
-
-    list.querySelectorAll(".dash-weak-item").forEach(item => {
-      item.addEventListener("click", (e) => {
-        if (e.target.closest(".dash-weak-blog-link")) return;
-        openMistakeModal(item.dataset.topic);
-      });
+      list.appendChild(row);
     });
   } catch { /* silent */ }
 }

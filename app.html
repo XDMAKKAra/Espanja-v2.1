@@ -488,59 +488,24 @@
         <button class="btn-primary btn-sm hidden" id="btn-checkpoint">Tee checkpoint-testi &rarr;</button>
       </div>
 
-      <!-- Stats row -->
-      <div class="dash-stats-row">
-        <div class="dash-stat-card">
-          <div class="dash-stat-icon">🔥</div>
-          <div class="dash-stat-value" id="dash-streak">0</div>
-          <div class="dash-stat-label">Putki</div>
-        </div>
-        <div class="dash-stat-card">
-          <div class="dash-stat-icon">📝</div>
-          <div class="dash-stat-value" id="dash-total-sessions">0</div>
-          <div class="dash-stat-label">Harjoituksia</div>
-        </div>
-        <div class="dash-stat-card">
-          <div class="dash-stat-icon">📅</div>
-          <div class="dash-stat-value" id="dash-week-val">0<span class="week-trend-arrow same" id="dash-week-trend"></span></div>
-          <div class="dash-stat-label">Tällä viikolla</div>
-        </div>
-      </div>
-
-      <!-- Exam countdown + daily goal -->
-      <div class="dash-goal-row hidden" id="dash-goal-row">
-        <div class="dash-goal-card" id="dash-exam-countdown">
-          <span class="dash-goal-icon">📅</span>
-          <div class="dash-goal-text">
-            <div class="dash-goal-value" id="dash-countdown-value">—</div>
-            <div class="dash-goal-label">päivää kokeeseen</div>
-          </div>
-        </div>
-        <div class="dash-goal-card" id="dash-daily-goal">
-          <span class="dash-goal-icon">🎯</span>
-          <div class="dash-goal-text">
-            <div class="dash-goal-value"><span id="dash-today-minutes">0</span> / <span id="dash-goal-minutes">20</span> min</div>
-            <div class="dash-goal-label">tämän päivän tavoite</div>
-          </div>
-          <div class="dash-goal-bar"><div class="dash-goal-bar-fill" id="dash-goal-bar-fill"></div></div>
-        </div>
-      </div>
-
       <!-- Weak topics card -->
       <div class="dash-weak-topics hidden" id="dash-weak-topics">
-        <div class="dash-section-label">Heikot kohtasi &middot; 7 p&auml;iv&auml;&auml;</div>
+        <div class="section-h">
+          <h3>Heikot kohtasi &middot; 7 p&auml;iv&auml;&auml;</h3>
+          <a href="#progress">N&auml;yt&auml; kaikki</a>
+        </div>
         <div class="dash-weak-list" id="dash-weak-list"></div>
       </div>
 
       <!-- Activity heatmap + progress chart paired on desktop (Pass 1.5) -->
       <div class="dash-grid-row">
         <div class="dash-heatmap-section">
-          <div class="dash-section-label">Aktiivisuus · 30 päivää</div>
+          <div class="section-h"><h3>Aktiivisuus &middot; 30 p&auml;iv&auml;&auml;</h3></div>
           <div class="dash-heatmap" id="dash-heatmap"></div>
         </div>
 
         <div class="dash-chart-section">
-          <div class="dash-section-label">Kehitys ajan mittaan</div>
+          <div class="section-h"><h3>Kehitys ajan mittaan</h3></div>
           <div class="dash-chart-container" id="dash-chart">
             <div class="dash-chart-empty">Tee ensimmäinen harjoitus nähdäksesi kehityksesi!</div>
           </div>
@@ -552,7 +517,7 @@
 
       <!-- SR forecast chart -->
       <div class="dash-forecast-section hidden" id="dash-forecast-section">
-        <div class="dash-section-label">Tulevat kertaukset &middot; 30 p&auml;iv&auml;&auml;</div>
+        <div class="section-h"><h3>Tulevat kertaukset &middot; 30 p&auml;iv&auml;&auml;</h3></div>
         <div class="dash-forecast-chart" id="dash-forecast-chart"></div>
         <div class="dash-forecast-legend" id="dash-forecast-legend">
           <span>Yhteens&auml; <strong id="dash-forecast-total">0</strong> korttia &middot; suurin p&auml;iv&auml;kuorma: <strong id="dash-forecast-max">0</strong></span>
@@ -572,18 +537,18 @@
       <div class="dash-writing-progression hidden" id="dash-writing-progression" aria-live="polite"></div>
 
       <!-- Mode performance cards -->
-      <div class="dash-section-label">Osa-alueet</div>
+      <div class="section-h"><h3>Osa-alueet</h3></div>
       <div class="dash-modes" id="dash-modes"></div>
 
       <!-- Recommendations + recent activity paired on desktop (Pass 1.5) -->
       <div class="dash-grid-row">
         <div class="dash-recommendations hidden" id="dash-recommendations">
-          <div class="dash-section-label">Suositukset</div>
+          <div class="section-h"><h3>Suositukset</h3></div>
           <div id="dash-rec-list"></div>
         </div>
 
         <div id="dash-recent-wrap" class="hidden">
-          <div class="dash-section-label">Viimeisimmät harjoitukset</div>
+          <div class="section-h"><h3>Viimeisimm&auml;t harjoitukset</h3></div>
           <div id="dash-recent-list"></div>
         </div>
       </div>
@@ -594,7 +559,7 @@
       </div>
 
       <!-- Full exam section -->
-      <div class="dash-section-label" style="margin-top:24px">Yo-koesimulaatio</div>
+      <div class="section-h" style="margin-top:24px"><h3>Yo-koesimulaatio</h3></div>
       <div class="dash-full-exam-card" id="dash-full-exam-card">
         <div class="dash-full-exam-info">
           <div class="dash-full-exam-title">Tayskoe — 4 osaa, 199p</div>
