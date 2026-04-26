@@ -64,6 +64,9 @@
   font-feature-settings: "tnum" 1;
 }
 .rail-countdown.is-urgent .rail-countdown__big { color: var(--error); }
+
+/* Active-streak visual treatment when streak > 0 (preserves T9 behavior). */
+.rail-stat__v .mono-num.dash-stat-streak-active { color: var(--ink); }
 .rail-countdown__lbl {
   font-family: var(--font-display);
   font-size: var(--fs-meta);

@@ -1545,7 +1545,45 @@
     </div><!-- /app-main-inner -->
   </main><!-- /app-main -->
 
-  <aside class="app-rail" id="app-rail" hidden></aside>
+  <aside class="app-rail" id="app-rail" aria-label="Tilannekatsaus">
+
+  <section class="rail__group" aria-labelledby="rail-today-h">
+    <h2 class="rail__h" id="rail-today-h">Tänään</h2>
+    <div class="rail-stat">
+      <div class="rail-stat__v"><span class="mono-num" id="dash-streak">0</span><small>pv</small></div>
+      <div class="rail-stat__l">Putki</div>
+    </div>
+    <div class="rail-stat">
+      <div class="rail-stat__v"><span class="mono-num" id="dash-yo-readiness">—</span><small>%</small></div>
+      <div class="rail-stat__l">YO-valmius<span class="rail-stat__delta" id="dash-yo-delta"></span></div>
+    </div>
+    <div class="rail-stat">
+      <div class="rail-stat__v"><span class="mono-num" id="dash-total-sessions">0</span></div>
+      <div class="rail-stat__l">Harjoituksia</div>
+    </div>
+  </section>
+
+  <section class="rail__group" aria-labelledby="rail-exam-h">
+    <h2 class="rail__h" id="rail-exam-h">YO-koe</h2>
+    <div class="rail-countdown" id="dash-exam-countdown">
+      <div class="rail-countdown__big mono-num" id="dash-countdown-value">—</div>
+      <div class="rail-countdown__lbl">Päivää · 28.9.2026</div>
+    </div>
+  </section>
+
+  <section class="rail__group" aria-labelledby="rail-goal-h">
+    <h2 class="rail__h" id="rail-goal-h">Tämä viikko</h2>
+    <div class="rail-goal" id="dash-daily-goal">
+      <div class="rail-goal__v"><span class="mono-num" id="dash-today-minutes">0</span><small>/<span id="dash-goal-minutes">20</span> min</small></div>
+      <div class="rail-goal__bar"><i id="dash-goal-bar-fill"></i></div>
+      <div class="rail-goal__l">Tänään tavoitteesta</div>
+    </div>
+  </section>
+
+  <div class="rail-footer">
+    Puheo · synkattu <span id="dash-rail-sync">—</span>
+  </div>
+</aside>
 
   </div><!-- /app-shell -->
 

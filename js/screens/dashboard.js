@@ -136,6 +136,18 @@ function renderDashboard({
   const totalEl = $("dash-total-sessions");
   if (totalEl) totalEl.textContent = totalSessions;
 
+  // YO-readiness rail stat — filled async by loadAndRenderReadinessMap below;
+  // dash-yo-delta has no delta source yet (TODO: wire when API exposes it).
+  const deltaEl = document.getElementById("dash-yo-delta");
+  if (deltaEl) deltaEl.textContent = "";
+
+  // Sync footer — cosmetic timestamp showing when dashboard data was loaded.
+  const syncEl = document.getElementById("dash-rail-sync");
+  if (syncEl) {
+    const t = new Date();
+    syncEl.textContent = t.toLocaleTimeString("fi-FI", { hour: "2-digit", minute: "2-digit" });
+  }
+
   const weekValEl = $("dash-week-val");
   const weekTrendEl = $("dash-week-trend");
   if (weekValEl && weekTrendEl) {
@@ -298,6 +310,8 @@ function renderGoalRow(chartData) {
     if (daysLeft <= 30) countdownEl.style.color = "var(--error)";
     else if (daysLeft <= 90) countdownEl.style.color = "var(--accent)";
     else countdownEl.style.color = "";
+    const cd = $("dash-exam-countdown");
+    if (cd) cd.classList.toggle("is-urgent", daysLeft <= 30);
   } else {
     const card = $("dash-exam-countdown");
     if (card) card.classList.add("hidden");
@@ -1170,6 +1184,12 @@ async function loadAndRenderReadinessMap() {
   }
 
   wrap.classList.remove("hidden");
+
+  // Update rail YO-readiness stat with the computed value.
+  const railReadinessEl = document.getElementById("dash-yo-readiness");
+  if (railReadinessEl && map.totalCells > 0) {
+    railReadinessEl.textContent = map.readinessPct;
+  }
 
   const cellsHtml = map.cells.map(c =>
     `<div class="dash-readiness-cell lvl-${c.level}" data-tip="${escapeHtmlAttr(c.tooltip)}" title="${escapeHtmlAttr(c.tooltip)}"></div>`
