@@ -344,3 +344,61 @@ This pass ships dark-mode only. The tokens above are already named semantically 
 The light column in every table above is the committed future pairing. Keep the column populated even though nothing reads it this pass — it's the spec for whichever pass lights up the toggle.
 
 See `FINDINGS.md §13` for the deferral note.
+
+---
+
+## 11. Editorial system (Spec 1 primitives — applies to every screen)
+
+The dashboard rebuild (2026-04-26) introduced a layout + type system every other screen will adopt in Spec 2. Rules below are non-negotiable for new screen designs.
+
+**Spec:** `docs/superpowers/specs/2026-04-26-dashboard-editorial-redesign-design.md`
+**Plan:** `docs/superpowers/plans/2026-04-26-dashboard-editorial-redesign.md`
+
+### Shell
+
+- Use `app-shell.css` grid: `sidebar | main | rail`. Never set `max-width` on a screen container.
+- Content inside main is capped by `.app-main-inner { max-width: var(--app-main-max) }`.
+- A screen with no rail toggles `data-rail="off"` on `.app-shell`; the grid collapses to two columns.
+- Responsive collapse: rail folds below main at `--bp-rail` (1180 px); sidebar hides at 1024 px (top-nav takes over); rail folds to a 2x2 grid below 768 px.
+
+### Typography
+
+- Open every screen with three elements in this order: `eyebrow → display H1 → motivational sub`.
+- Use `.eyebrow` for the top-most metadata line (date, breadcrumb, count).
+- Use `.display` only for the screen's primary heading. Once per screen.
+- Use `<h2>` inside `.section-h` for section openers (with optional secondary link on the right).
+- Use `<h3>` inside cards or list-row titles.
+- Body copy at `var(--fs-body)` (15 px); secondary at `var(--fs-body-sm)` (13 px).
+
+### Mono numerals
+
+- DM Mono (`var(--font-mono)`) carries every quantity: score, count, percentage, time, countdown.
+- Body text never carries numbers. Wrap inline numbers in `<span class="mono-num">N</span>`.
+- Sizes: `.mono-num--lg` for rail / hero numerals, `.mono-num--md` for inline list rows, `.mono-num--sm` for tags + unit suffixes.
+- Tabular figures are enabled (`font-feature-settings: "tnum" 1`) inside `.mono-num`.
+
+### Lists vs. cards
+
+- Lists (`.dash-weak__row` style) when items are homogeneous (>3 of the same shape).
+- Cards (with hairline top + bottom borders, no fill) when an item is the singular "main thing" on the screen — e.g. the dashboard hero grade card.
+- Grids of cards are forbidden in the main column; only the rail uses a grid (and only when collapsed below 1180 px).
+
+### Colour
+
+- One mint accent (`var(--accent)` / `var(--accent-hover)`) per screen — for the primary CTA, the focus outline, or the accent-as-text move (e.g. the period in `Hei, Mona<span class="accent">.</span>`).
+- Body text uses `var(--ink)`; secondary `var(--ink-soft)`; tertiary `var(--ink-faint)`.
+- Hairlines use `var(--border)` (default) or `var(--border-strong)` (hover).
+- Feedback colours stay confined to their semantic role: `var(--success)` for correct, `var(--error)` for wrong / urgent, etc.
+
+### Chrome budget
+
+- No box-shadow at rest on cards, buttons, or rail blocks. Shadows only appear during interaction (`:active`, modals at rest).
+- No surface gradients. The single allowed gradient is `--grad-hero`, masked into hero H1 text only.
+- Border-bracketed pattern (top + bottom 1 px hairline, no fill) is the "this is the important thing" signal — replaces shadow.
+
+### Rail content
+
+- Rail is per-screen and optional. Declare it as a sibling `<aside class="app-rail">` or omit (set `data-rail="off"` on `.app-shell`).
+- Three-tier rhythm: `eyebrow header → mono value + label rows → rail-footer`.
+- Rail items are always read-only status, never primary actions.
+- The rail collapses to a 4-cell horizontal strip at 1180 px and to 2-cell at 768 px; rail headings hide in collapsed mode.
