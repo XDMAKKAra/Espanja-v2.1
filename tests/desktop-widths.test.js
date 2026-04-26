@@ -21,12 +21,11 @@ import { dirname, resolve } from "node:path";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = resolve(__dirname, "..");
 const styleCss = readFileSync(resolve(root, "style.css"), "utf8");
-// T6: dashboard rules moved to css/components/dashboard.css — search both files
-const dashboardCss = readFileSync(
-  resolve(root, "css/components/dashboard.css"),
+const appShellCss = readFileSync(
+  resolve(root, "css/components/app-shell.css"),
   "utf8"
 );
-const allCss = styleCss + "\n" + dashboardCss;
+const allCss = styleCss;
 
 function cap(selector) {
   // Strip @media blocks first so we only see top-level rules.
@@ -61,8 +60,11 @@ function cap(selector) {
 }
 
 describe("desktop content widths — Pass 0.5 Bug 3 acceptance", () => {
-  it(".dashboard-inner uses --w-desktop (≥1080px content)", () => {
-    expect(cap(".dashboard-inner")).toMatch(/var\(--w-desktop\)/);
+  it(".app-main-inner caps content width with --app-main-max (editorial redesign primitive)", () => {
+    const rule = appShellCss.match(/\.app-main-inner\s*\{[^}]*\}/);
+    expect(rule, ".app-main-inner rule not found").toBeTruthy();
+    expect(rule[0]).toContain("max-width");
+    expect(rule[0]).toContain("var(--app-main-max)");
   });
   it(".path-inner uses --w-desktop", () => {
     expect(cap(".path-inner")).toMatch(/var\(--w-desktop\)/);
