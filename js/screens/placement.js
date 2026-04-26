@@ -208,7 +208,7 @@ function renderQuestion() {
 async function submitAnswers() {
   $("placement-progress-fill").style.width = "100%";
   $("placement-question").textContent = "Lasketaan tuloksia...";
-  $("placement-options").innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-muted)">Analysoidaan vastauksia...</div>';
+  $("placement-options").innerHTML = '<div style="text-align:center;padding:20px;color:var(--ink-soft)">Analysoidaan vastauksia...</div>';
 
   // Persist answers to localStorage so a mid-submit network blip doesn't
   // lose the student's placement work (Pass 6 C16 recovery contract).

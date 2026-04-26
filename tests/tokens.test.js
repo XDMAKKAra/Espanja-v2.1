@@ -23,8 +23,6 @@ const landingCss = readFileSync(resolve(root, "landing.css"), "utf8");
 const REQUIRED = [
   // §1 base + surfaces
   "--bg", "--surface", "--surface-2", "--border", "--border-strong",
-  // §1 text
-  "--text", "--text-muted", "--text-faint",
   // §1 ink + accent (mint+navy rebrand)
   "--ink", "--ink-soft", "--ink-faint",
   "--accent", "--accent-hover", "--accent-soft",

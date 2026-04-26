@@ -55,7 +55,7 @@ export async function renderAdaptiveCard(mode = "vocab") {
           <span style="font-size:20px">🎯</span>
           <div>
             <div style="font-weight:600;font-size:14px">Valmis ${data.nextLevel}-tasolle?</div>
-            <div style="font-size:12px;color:var(--text-muted)">${data.reason}</div>
+            <div style="font-size:12px;color:var(--ink-soft)">${data.reason}</div>
           </div>
         </div>
         <div style="display:flex;gap:8px">
@@ -71,7 +71,7 @@ export async function renderAdaptiveCard(mode = "vocab") {
           <span style="font-size:18px">⏳</span>
           <div>
             <div style="font-weight:600;font-size:13px">Tasokoe</div>
-            <div style="font-size:12px;color:var(--text-muted)">${data.reason}</div>
+            <div style="font-size:12px;color:var(--ink-soft)">${data.reason}</div>
           </div>
         </div>`;
 
@@ -271,9 +271,9 @@ function renderMasteryResults({ passed, scorePct, higherLevelPct, newLevel }) {
       <div style="text-align:center;margin-bottom:24px">
         <div style="font-size:48px;margin-bottom:12px">🎉</div>
         <h2 style="color:var(--success);margin-bottom:8px">Onneksi olkoon!</h2>
-        <p style="font-size:15px;color:var(--text-muted)">Olet nyt tasolla <strong>${newLevel}</strong> (${LEVEL_NAMES[newLevel] || newLevel})</p>
+        <p style="font-size:15px;color:var(--ink-soft)">Olet nyt tasolla <strong>${newLevel}</strong> (${LEVEL_NAMES[newLevel] || newLevel})</p>
       </div>
-      <div style="background:var(--surface);border-radius:var(--radius);padding:16px;margin-bottom:16px">
+      <div style="background:var(--surface);border-radius:var(--r-md);padding:16px;margin-bottom:16px">
         <div style="display:flex;justify-content:space-between;margin-bottom:8px">
           <span>Kokonaistulos</span>
           <strong style="color:var(--success)">${scorePct}%</strong>
@@ -283,27 +283,27 @@ function renderMasteryResults({ passed, scorePct, higherLevelPct, newLevel }) {
           <strong style="color:var(--success)">${higherLevelPct}%</strong>
         </div>
       </div>
-      <p style="font-size:13px;color:var(--text-muted);text-align:center">Harjoitukset mukautuvat nyt uudelle tasolle.</p>`;
+      <p style="font-size:13px;color:var(--ink-soft);text-align:center">Harjoitukset mukautuvat nyt uudelle tasolle.</p>`;
   } else {
     content.innerHTML = `
       <div style="text-align:center;margin-bottom:24px">
         <div style="font-size:48px;margin-bottom:12px">💪</div>
         <h2 style="margin-bottom:8px">Ei mennyt läpi — vielä!</h2>
-        <p style="font-size:15px;color:var(--text-muted)">Jatka harjoittelua, pääset kyllä seuraavalle tasolle.</p>
+        <p style="font-size:15px;color:var(--ink-soft)">Jatka harjoittelua, pääset kyllä seuraavalle tasolle.</p>
       </div>
-      <div style="background:var(--surface);border-radius:var(--radius);padding:16px;margin-bottom:16px">
+      <div style="background:var(--surface);border-radius:var(--r-md);padding:16px;margin-bottom:16px">
         <div style="display:flex;justify-content:space-between;margin-bottom:8px">
           <span>Kokonaistulos</span>
           <strong>${scorePct}%</strong>
-          <span style="font-size:11px;color:var(--text-muted)">(vaaditaan 70%)</span>
+          <span style="font-size:11px;color:var(--ink-soft)">(vaaditaan 70%)</span>
         </div>
         <div style="display:flex;justify-content:space-between">
           <span>Ylemmän tason kysymykset</span>
           <strong>${higherLevelPct}%</strong>
-          <span style="font-size:11px;color:var(--text-muted)">(vaaditaan 60%)</span>
+          <span style="font-size:11px;color:var(--ink-soft)">(vaaditaan 60%)</span>
         </div>
       </div>
-      <p style="font-size:13px;color:var(--text-muted);text-align:center">Voit yrittää uudelleen 3 päivän päästä.</p>`;
+      <p style="font-size:13px;color:var(--ink-soft);text-align:center">Voit yrittää uudelleen 3 päivän päästä.</p>`;
   }
 }
 

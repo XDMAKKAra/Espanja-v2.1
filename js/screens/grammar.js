@@ -178,7 +178,7 @@ function showGrammarResults() {
   if (uniqueErrors.length > 0) {
     const label = document.createElement("p");
     label.style.cssText =
-      "font-family:var(--font-mono);font-size:11px;color:var(--text-muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px;";
+      "font-family:var(--font-mono);font-size:11px;color:var(--ink-soft);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px;";
     label.textContent = "Harjoittele lisää:";
     errSummary.appendChild(label);
     uniqueErrors.forEach((err) => {

@@ -744,7 +744,7 @@ function renderTranslateMini(ex) {
         <div class="translate-best">
           <strong>Paras käännös:</strong> ${data.bestTranslation}<br>
           ${data.feedback || ""}<br>
-          <span style="color:var(--text-muted)">${data.explanation || ""}</span>
+          <span style="color:var(--ink-soft)">${data.explanation || ""}</span>
         </div>
       `;
       feedback.classList.remove("hidden");

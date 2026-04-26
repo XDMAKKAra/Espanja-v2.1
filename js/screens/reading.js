@@ -167,7 +167,7 @@ function setupShortAnswer(q) {
 
     $("reading-explanation-text").innerHTML =
       `<strong>Mallivastaus:</strong> ${q.acceptedAnswers[0]}<br><br>` +
-      `<span style="color:var(--text-muted);font-size:12px">${q.explanation}</span>`;
+      `<span style="color:var(--ink-soft);font-size:12px">${q.explanation}</span>`;
     $("reading-explanation-block").classList.remove("hidden");
 
     const row = document.createElement("div");

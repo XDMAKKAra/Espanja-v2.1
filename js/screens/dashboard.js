@@ -547,7 +547,7 @@ async function loadExamHistory() {
       html += `<div class="dash-exam-history-item">
         <div>
           <span>${date}</span>
-          <span style="color:var(--text-muted);margin-left:8px">${ex.total_points}/${ex.max_points}p</span>
+          <span style="color:var(--ink-soft);margin-left:8px">${ex.total_points}/${ex.max_points}p</span>
         </div>
         <div class="dash-exam-history-grade">${ex.final_grade || "—"}</div>
       </div>`;
@@ -1012,7 +1012,7 @@ async function openMistakeModal(topic) {
         </div>
         ${m.explanation ? `<div class="mistake-modal-expl">${escapeHtml(m.explanation)}</div>` : ""}
       </div>
-    `).join("") : '<p style="color:var(--text-muted);font-family:var(--font-mono);font-size:13px">Ei virheitä tällä aikavälillä.</p>';
+    `).join("") : '<p style="color:var(--ink-soft);font-family:var(--font-mono);font-size:13px">Ei virheitä tällä aikavälillä.</p>';
 
     ctaBtn.onclick = () => startFocusSession(topic);
 

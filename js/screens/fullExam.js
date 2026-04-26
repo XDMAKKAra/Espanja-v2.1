@@ -239,7 +239,7 @@ function renderCurrentPart() {
 function renderReading(container) {
   const data = examState.partsData[0];
   if (!data || !data.texts) {
-    container.innerHTML = '<p style="color:var(--text-muted)">Osa 1 ei latautunut.</p>';
+    container.innerHTML = '<p style="color:var(--ink-soft)">Osa 1 ei latautunut.</p>';
     return;
   }
 
@@ -289,7 +289,7 @@ function renderReading(container) {
 function renderStructure(container) {
   const data = examState.partsData[1];
   if (!data || !data.exercises) {
-    container.innerHTML = '<p style="color:var(--text-muted)">Osa 2 ei latautunut.</p>';
+    container.innerHTML = '<p style="color:var(--ink-soft)">Osa 2 ei latautunut.</p>';
     return;
   }
 
@@ -298,7 +298,7 @@ function renderStructure(container) {
     const key = `2_${i}`;
     html += `<div class="reading-q-block" style="margin-bottom:16px">`;
     html += `<div class="reading-q-text">${i + 1}. ${q.instruction || "Valitse oikea vaihtoehto."}</div>`;
-    html += `<div class="gram-sentence" style="margin:6px 0;font-style:italic;color:var(--text-muted)">${q.sentence || ""}</div>`;
+    html += `<div class="gram-sentence" style="margin:6px 0;font-style:italic;color:var(--ink-soft)">${q.sentence || ""}</div>`;
 
     (q.options || []).forEach((opt) => {
       const letter = opt.trim()[0];
@@ -317,7 +317,7 @@ function renderStructure(container) {
 function renderWriting(container, partDataIdx, isShort) {
   const data = examState.partsData[partDataIdx];
   if (!data || !data.task) {
-    container.innerHTML = `<p style="color:var(--text-muted)">Osa ${examState.currentPart} ei latautunut.</p>`;
+    container.innerHTML = `<p style="color:var(--ink-soft)">Osa ${examState.currentPart} ei latautunut.</p>`;
     return;
   }
 
@@ -332,7 +332,7 @@ function renderWriting(container, partDataIdx, isShort) {
       <div class="writing-situation">${t.situation || ""}</div>
       <div class="writing-prompt" style="margin:8px 0;font-weight:600">${t.prompt || ""}</div>
       <ul class="writing-requirements">${(t.requirements || []).map((r) => `<li>${r}</li>`).join("")}</ul>
-      <div class="writing-meta" style="color:var(--text-muted);font-size:12px">${t.textType || ""} · ${t.charMin}–${t.charMax} merkkiä · ${t.points}p</div>
+      <div class="writing-meta" style="color:var(--ink-soft);font-size:12px">${t.textType || ""} · ${t.charMin}–${t.charMax} merkkiä · ${t.points}p</div>
     </div>
     <textarea class="exam-textarea" data-key="${key}" placeholder="Kirjoita vastauksesi tähän..." rows="${isShort ? 8 : 12}">${val}</textarea>
     <div class="exam-char-count" id="${countId}">${charCount} merkkiä</div>`;
@@ -372,7 +372,7 @@ function bindCharCount(container, task, countElId) {
     const el = $(countElId);
     if (!el) return;
     el.textContent = `${count} merkkiä`;
-    if (count < task.charMin) el.style.color = "var(--text-muted)";
+    if (count < task.charMin) el.style.color = "var(--ink-soft)";
     else if (count > task.charMax) el.style.color = "var(--error)";
     else el.style.color = "var(--success)";
   };
