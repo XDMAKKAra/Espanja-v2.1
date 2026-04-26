@@ -1,4 +1,4 @@
-const CACHE_VERSION = "puheo-v37";
+const CACHE_VERSION = "puheo-v38";
 const STATIC_ASSETS = [
   "/app.html",
   "/index.html",
@@ -28,6 +28,7 @@ const STATIC_ASSETS = [
   "/js/screens/exam.js",
   "/js/screens/fullExam.js",
   "/js/screens/adaptive.js",
+  "/js/screens/dash-cta.js",
 ];
 
 // ─── Install: precache static assets ────────────────────────────────────────

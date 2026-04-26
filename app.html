@@ -436,22 +436,6 @@
         <p class="dash-greeting__sub" id="dash-motivation"></p>
       </header>
 
-      <!-- Onboarding banner (shown if not completed) -->
-      <div class="dash-onboarding-banner hidden" id="dash-onboarding-banner">
-        <span class="dash-onboarding-banner-icon">✨</span>
-        <div class="dash-onboarding-banner-text">
-          <strong>Täydennä profiilisi</strong> 2 minuutissa — räätälöimme harjoittelun sinulle!
-        </div>
-        <span class="dash-onboarding-banner-arrow">→</span>
-      </div>
-
-      <!-- SR top bar -->
-      <div class="sr-top-bar hidden" id="sr-top-bar">
-        <span class="sr-top-icon">&#128257;</span>
-        <span class="sr-top-text" id="sr-top-text">12 korttia odottaa kertausta t&auml;n&auml;&auml;n</span>
-        <button class="sr-top-btn" id="sr-top-btn">Kertaa nyt &rarr;</button>
-      </div>
-
       <!-- Hero grade card (gated by data coverage) -->
       <button type="button" class="dash-hero-grade dash-hero-grade--tier-none" id="dash-hero-grade">
         <div class="dash-hero-left">
@@ -478,6 +462,15 @@
           <p class="grade-explainer-caveat">Tämä on arvio nykyisen harjoitteludatan perusteella, ei virallinen YTL-arvio.</p>
         </div>
       </div>
+
+      <!-- Day's drill CTA — unified onboarding / SR / drill action -->
+      <button type="button" class="btn--cta" id="dash-day-cta" data-target="vocab" data-kind="drill">
+        <div class="btn--cta__l">
+          <div class="btn--cta__title" data-cta-title>Aloita päivän treeni</div>
+          <div class="btn--cta__meta" data-cta-meta>20 SANAA · 5 MIN</div>
+        </div>
+        <span class="btn--cta__arrow" aria-hidden="true">→</span>
+      </button>
 
       <!-- Level progress + checkpoint -->
       <div class="dash-level-progress hidden" id="dash-level-progress">
@@ -554,11 +547,8 @@
         </div>
       </div>
 
-      <!-- SR review badge (legacy, hidden — moved to top bar) -->
-      <div class="dash-sr-review hidden" id="dash-sr-review">
-        <button class="btn-primary btn-sm" id="btn-start-review">Kertaa nyt &rarr;</button>
-      </div>
-      <span id="dash-sr-count" class="hidden">0</span>
+      <!-- btn-start-review: kept as hidden trigger for SR session; .dash-sr-review removed in T8 (unified into dash-day-cta) -->
+      <button type="button" id="btn-start-review" class="hidden" aria-hidden="true" tabindex="-1" style="display:none">Kertaa nyt</button>
 
       <!-- SR forecast chart -->
       <div class="dash-forecast-section hidden" id="dash-forecast-section">

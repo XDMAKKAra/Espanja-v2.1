@@ -8,6 +8,7 @@ import { getBlogForTopic, trackBlogClick } from "../features/topicBlogMap.js";
 import { icon, MODE_ICONS } from "../ui/icons.js";
 import { getRecentWritingDimensions, computeReadinessMap } from "../features/writingProgression.js";
 import { hideAppCountdown } from "./onboarding.js";
+import { renderDashboardCta } from "./dash-cta.js";
 
 let _deps = {};
 export function initDashboard({ loadGrammarDrill, loadReadingTask, loadWritingTask, startCheckout, openBillingPortal, startMockExam, showModePage, renderModePageStats, loadNextBatch, showProUpsell }) {
@@ -77,6 +78,30 @@ function renderDashboard({
     dateEl.setAttribute("datetime", now.toISOString().slice(0, 10));
   }
 
+  // Day's drill CTA — unified button (onboarding / SR / drill)
+  // SR count is fetched async in updateSrBadge; initial render uses profile + topics available at mount time.
+  // updateSrBadge (called below) will call updateDashCta once the async count resolves.
+  const ctaEl = document.getElementById("dash-day-cta");
+  if (ctaEl) {
+    renderDashboardCta(ctaEl, {
+      profileComplete: window._userProfile?.onboarding_completed === true,
+      srDueCount: 0, // updated async by updateSrBadge below
+      weakestTopic: null, // updated async by loadWeakTopics below
+    });
+    ctaEl.onclick = () => {
+      const target = ctaEl.dataset.target;
+      if (target === "onboarding") {
+        const { checkOnboarding: startOb } = window._onboardingRef || {};
+        if (startOb) startOb();
+        else show("screen-onboarding");
+      } else if (target === "sr-review") {
+        document.getElementById("btn-start-review")?.click();
+      } else {
+        document.getElementById("nav-vocab")?.click();
+      }
+    };
+  }
+
   const motivationEl = $("dash-motivation");
   if (motivationEl) {
     if (totalSessions === 0) {
@@ -92,20 +117,7 @@ function renderDashboard({
     }
   }
 
-  // Onboarding banner
-  const obBanner = $("dash-onboarding-banner");
-  if (obBanner) {
-    if (!window._userProfile || !window._userProfile.onboarding_completed) {
-      obBanner.classList.remove("hidden");
-      obBanner.onclick = () => {
-        const { checkOnboarding: startOb } = window._onboardingRef || {};
-        if (startOb) startOb();
-        else show("screen-onboarding");
-      };
-    } else {
-      obBanner.classList.add("hidden");
-    }
-  }
+  // TODO: removed in T8 (unified into dash-day-cta) — .dash-onboarding-banner deleted from app.html
 
   renderGradeWidget(gradeEstimate || { tier: "none", grade: null, confidence: 0, coverage: {}, total: totalSessions || 0 });
 
@@ -764,19 +776,17 @@ function closeGradeExplainer() {
 })();
 
 async function updateSrBadge() {
-  // Top bar
-  const topBar = $("sr-top-bar");
-  const topText = $("sr-top-text");
-  if (topBar) {
-    const count = await srDueCount("spanish");
-    if (count > 0) {
-      topText.textContent = `${count} kortti${count === 1 ? "" : "a"} odottaa kertausta tänään`;
-      topBar.classList.remove("hidden");
-    } else {
-      topBar.classList.add("hidden");
-    }
-    const countEl = $("dash-sr-count");
-    if (countEl) countEl.textContent = count;
+  // TODO: removed in T8 (unified into dash-day-cta) — .sr-top-bar and .dash-sr-review deleted from app.html
+  const count = await srDueCount("spanish");
+
+  // Update the unified CTA now that we have the async SR count
+  const ctaEl = document.getElementById("dash-day-cta");
+  if (ctaEl) {
+    renderDashboardCta(ctaEl, {
+      profileComplete: window._userProfile?.onboarding_completed === true,
+      srDueCount: count,
+      weakestTopic: ctaEl.dataset.weakestTopic || null,
+    });
   }
 
   // Forecast chart
@@ -956,6 +966,21 @@ async function loadWeakTopics() {
     if (topics.length === 0) {
       wrap.classList.add("hidden");
       return;
+    }
+
+    // Propagate weakest topic into the CTA dataset so updateSrBadge can use it on re-render
+    const weakestTopic = topics[0]?.topic || null;
+    const ctaEl = document.getElementById("dash-day-cta");
+    if (ctaEl) {
+      ctaEl.dataset.weakestTopic = weakestTopic || "";
+      // Re-render CTA only if it is currently showing the drill state (not overridden by SR/onboarding)
+      if (ctaEl.dataset.kind === "drill") {
+        renderDashboardCta(ctaEl, {
+          profileComplete: window._userProfile?.onboarding_completed === true,
+          srDueCount: 0,
+          weakestTopic,
+        });
+      }
     }
 
     wrap.classList.remove("hidden");
