@@ -287,10 +287,10 @@ body::before {
 
 /* ── MAIN CONTENT AREA ── */
 .app-main {
-  margin-left: 220px;
-  flex: 1;
+  /* margin-left: 220px removed — grid shell (app-shell.css) handles positioning */
+  /* flex: 1 removed — .app-main is a grid child, not a flex child */
   min-height: 100vh;
-  position: relative;
+  position: relative; /* still needed: .screen.active is position:absolute */
   z-index: 1;
 }
 
@@ -353,7 +353,7 @@ body::before {
 
 @media (max-width: 768px) {
   .app-sidebar { display: none; }
-  .app-main { margin-left: 0; padding-bottom: 70px; }
+  .app-main { padding-bottom: 70px; } /* margin-left was already 0; grid handles layout */
   .mobile-nav { display: flex; }
   .screen { padding: 16px; padding-bottom: 80px; }
   .start-inner { max-width: 100%; }

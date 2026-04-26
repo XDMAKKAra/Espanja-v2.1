@@ -7,6 +7,7 @@ import { renderAdaptiveCard } from "./adaptive.js";
 import { getBlogForTopic, trackBlogClick } from "../features/topicBlogMap.js";
 import { icon, MODE_ICONS } from "../ui/icons.js";
 import { getRecentWritingDimensions, computeReadinessMap } from "../features/writingProgression.js";
+import { hideAppCountdown } from "./onboarding.js";
 
 let _deps = {};
 export function initDashboard({ loadGrammarDrill, loadReadingTask, loadWritingTask, startCheckout, openBillingPortal, startMockExam, showModePage, renderModePageStats, loadNextBatch, showProUpsell }) {
@@ -31,6 +32,9 @@ export async function loadDashboard() {
     }
     const data = await res.json();
     renderDashboard(data);
+    // Hide the top-bar countdown on the dashboard — it overlaps the greeting
+    // and will be replaced by an in-rail countdown in Task 11.
+    hideAppCountdown();
     show("screen-dashboard");
   } catch {
     show("screen-start");
