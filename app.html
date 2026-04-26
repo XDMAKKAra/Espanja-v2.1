@@ -430,16 +430,11 @@
   <div id="screen-dashboard" class="screen">
     <div class="dashboard-inner">
 
-      <div class="dash-header">
-        <div>
-          <div class="dash-greeting">Hei, <span id="dash-username"></span>!</div>
-          <div class="dash-motivation" id="dash-motivation"></div>
-        </div>
-        <div class="dash-pro-area">
-          <span id="dash-pro-badge"></span>
-          <button class="btn-logout" id="btn-logout">Kirjaudu ulos</button>
-        </div>
-      </div>
+      <header class="dash-greeting">
+        <p class="eyebrow"><time id="dash-date">—</time></p>
+        <h1 class="display">Hei, <span id="dash-username"></span><span class="accent">.</span></h1>
+        <p class="dash-greeting__sub" id="dash-motivation"></p>
+      </header>
 
       <!-- Onboarding banner (shown if not completed) -->
       <div class="dash-onboarding-banner hidden" id="dash-onboarding-banner">

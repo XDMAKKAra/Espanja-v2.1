@@ -48,24 +48,34 @@ function renderDashboard({
   suggestedLevel = "B", modeDaysAgo = {}, pro = false,
   aiUsage = null,
 }) {
-  const proBadgeEl = $("dash-pro-badge");
-  if (proBadgeEl) {
-    if (pro) {
-      proBadgeEl.innerHTML = `<span class="pro-badge-active">PRO</span> <button class="btn-link btn-manage-sub" id="btn-manage-sub">Hallinnoi tilausta</button>`;
-      setTimeout(() => {
-        const manageBtn = $("btn-manage-sub");
-        if (manageBtn) manageBtn.addEventListener("click", () => _deps.openBillingPortal());
-      }, 0);
-    } else {
-      proBadgeEl.innerHTML = `<button class="btn-upgrade-small" id="btn-dash-upgrade">Päivitä Pro</button>`;
-      setTimeout(() => {
-        const upgradeBtn = $("btn-dash-upgrade");
-        if (upgradeBtn) upgradeBtn.addEventListener("click", () => _deps.startCheckout());
-      }, 0);
-    }
-  }
+  // TODO(T11): move pro badge into sidebar footer
+  // const proBadgeEl = $("dash-pro-badge");
+  // if (proBadgeEl) {
+  //   if (pro) {
+  //     proBadgeEl.innerHTML = `<span class="pro-badge-active">PRO</span> <button class="btn-link btn-manage-sub" id="btn-manage-sub">Hallinnoi tilausta</button>`;
+  //     setTimeout(() => {
+  //       const manageBtn = $("btn-manage-sub");
+  //       if (manageBtn) manageBtn.addEventListener("click", () => _deps.openBillingPortal());
+  //     }, 0);
+  //   } else {
+  //     proBadgeEl.innerHTML = `<button class="btn-upgrade-small" id="btn-dash-upgrade">Päivitä Pro</button>`;
+  //     setTimeout(() => {
+  //       const upgradeBtn = $("btn-dash-upgrade");
+  //       if (upgradeBtn) upgradeBtn.addEventListener("click", () => _deps.startCheckout());
+  //     }, 0);
+  //   }
+  // }
   const name = getAuthEmail() ? getAuthEmail().split("@")[0] : "sinä";
   $("dash-username").textContent = name;
+
+  const dateEl = document.getElementById("dash-date");
+  if (dateEl) {
+    const now = new Date();
+    const weekday = now.toLocaleDateString("fi-FI", { weekday: "long" });
+    const dm = now.toLocaleDateString("fi-FI", { day: "numeric", month: "numeric" });
+    dateEl.textContent = `${weekday.charAt(0).toUpperCase()}${weekday.slice(1)} · ${dm}`;
+    dateEl.setAttribute("datetime", now.toISOString().slice(0, 10));
+  }
 
   const motivationEl = $("dash-motivation");
   if (motivationEl) {
@@ -690,8 +700,8 @@ function renderGradeWidget(estimate) {
   const gIdx = GRADE_ORDER_LOCAL.indexOf(grade);
   scale.querySelectorAll("span").forEach((s) => {
     const idx = GRADE_ORDER_LOCAL.indexOf(s.dataset.g);
-    s.classList.remove("scale-active", "scale-passed");
-    if (idx === gIdx) s.classList.add("scale-active");
+    s.classList.remove("is-current", "scale-passed");
+    if (idx === gIdx) s.classList.add("is-current");
     else if (gIdx >= 0 && idx < gIdx) s.classList.add("scale-passed");
   });
 

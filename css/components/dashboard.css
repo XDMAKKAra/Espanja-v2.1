@@ -132,44 +132,27 @@
   }
   .dash-grid-row > .hidden { display: none; }
 }
-.dash-header {
-  display: flex; align-items: flex-start; justify-content: space-between;
-  margin-bottom: 28px; gap: 12px;
-}
-.dash-greeting {
-  font-size: 22px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 4px;
-}
 .dash-total {
   font-family: var(--font-mono); font-size: 12px; color: var(--ink-soft);
   letter-spacing: 0.06em;
 }
-.btn-logout {
-  flex-shrink: 0; padding: 8px 16px;
-  background: transparent; border: 1px solid var(--border);
-  border-radius: 8px; color: var(--ink-soft);
-  font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em;
-  cursor: pointer; transition: all 0.15s;
-}
-.btn-logout:hover { border-color: var(--error); color: var(--error); }
 
-.dash-pro-area { display: flex; align-items: center; gap: 10px; }
-.pro-badge-active {
-  background: var(--grad-pro);
-  color: #fff; font-family: var(--font-mono); font-size: 11px; font-weight: 700;
-  padding: 4px 10px; border-radius: 6px; letter-spacing: 0.1em;
+/* ── DASHBOARD GREETING (editorial redesign T7) ── */
+.dash-greeting {
+  margin-bottom: 32px;
 }
-.btn-manage-sub {
-  font-size: 11px; color: var(--ink-soft); background: none; border: none;
-  cursor: pointer; text-decoration: underline; font-family: var(--font-mono);
+.dash-greeting .display {
+  margin: 8px 0 12px;
+  max-width: 14ch;
 }
-.btn-manage-sub:hover { color: var(--ink); }
-.btn-upgrade-small {
-  background: var(--grad-pro);
-  color: #fff; border: none; padding: 6px 14px; border-radius: 8px;
-  font-family: var(--font-mono); font-size: 11px; font-weight: 600;
-  cursor: pointer; letter-spacing: 0.06em; transition: opacity 0.15s;
+.dash-greeting__sub {
+  font-family: var(--font-display);
+  font-size: var(--fs-body);
+  line-height: 1.5;
+  color: var(--ink-soft);
+  margin: 0;
+  max-width: 50ch;
 }
-.btn-upgrade-small:hover { opacity: 0.85; }
 
 /* Pro upsell screen */
 .pro-features-list { text-align: left; margin: 24px 0; }
@@ -230,136 +213,95 @@
   font-family: var(--font-mono); font-size: 13px; line-height: 1.8; margin-bottom: 16px;
 }
 
-/* ── DASHBOARD HERO GRADE ── */
+/* ── DASHBOARD HERO GRADE (editorial redesign T7) ── */
 .dash-hero-grade {
   display: flex;
+  gap: 28px;
   align-items: center;
-  gap: 20px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 20px 24px;
-  margin-bottom: 16px;
-  position: relative;
-  overflow: hidden;
-}
-.dash-hero-grade::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, var(--accent), var(--accent), var(--accent));
-}
-.dash-hero-grade-circle {
-  width: 72px;
-  height: 72px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, rgba(45, 212, 191,0.2), rgba(45, 212, 191,0.2));
-  border: 3px solid var(--accent);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 36px;
-  font-weight: 800;
-  color: var(--accent);
-  letter-spacing: -0.03em;
-  flex-shrink: 0;
-  /* glow removed — mint+navy rebrand */
-}
-.dash-hero-right { flex: 1; }
-.dash-hero-label {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--ink-soft);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  margin-bottom: 8px;
-}
-.dash-hero-scale {
-  display: flex;
-  gap: 4px;
-  margin-bottom: 8px;
-}
-.dash-hero-scale span {
-  width: 28px;
-  height: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 6px;
-  font-family: var(--font-mono);
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--ink-soft);
-  background: var(--surface-2);
-  border: 1px solid var(--border);
-  transition: all 0.2s;
-}
-.dash-hero-scale span.scale-active {
-  background: var(--accent);
-  color: #0c0808;
-  border-color: var(--accent);
-  /* glow removed — mint+navy rebrand */
-}
-.dash-hero-scale span.scale-passed {
-  background: rgba(45, 212, 191,0.15);
-  border-color: rgba(45, 212, 191,0.3);
-  color: var(--accent);
-}
-.dash-hero-sub {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--ink-soft);
-}
-
-/* ── GRADE WIDGET TIERS ── */
-button.dash-hero-grade {
+  padding: 22px 0 24px;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
+  margin-bottom: 32px;
   width: 100%;
   text-align: left;
-  font: inherit;
-  color: inherit;
   cursor: pointer;
+  font-family: inherit;
+  color: inherit;
+  border-left: 0;
+  border-right: 0;
 }
-button.dash-hero-grade:hover { border-color: var(--accent); }
+.dash-hero-grade:hover { background: transparent; }
+.dash-hero-grade:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
 
-.dash-hero-grade--tier-none .dash-hero-grade-circle,
-.dash-hero-grade--tier-preliminary .dash-hero-grade-circle {
-  background: var(--surface-2);
-  border-color: var(--border);
-  color: var(--ink-soft);
-  box-shadow: none;
-  font-size: 22px;
-}
-.dash-hero-grade--tier-none::before,
-.dash-hero-grade--tier-preliminary::before {
-  background: var(--border);
-}
-.dash-hero-grade--tier-none .dash-hero-sub,
-.dash-hero-grade--tier-preliminary .dash-hero-sub {
-  font-size: 12px;
-  line-height: 1.5;
-  white-space: normal;
-}
-
-.dash-hero-grade--tier-estimated .dash-hero-grade-circle {
-  font-size: 28px;
-  opacity: 0.9;
+.dash-hero-left { flex: 0 0 auto; }
+.dash-hero-grade-circle {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 2px solid var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: var(--fs-display);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--ink);
 }
 
-.dash-hero-confidence {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  color: var(--accent);
-  letter-spacing: 0.08em;
+.dash-hero-right { flex: 1; min-width: 0; }
+.dash-hero-label {
+  font-family: var(--font-display);
+  font-size: var(--fs-meta);
+  font-weight: 500;
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  color: var(--ink-faint);
   margin-bottom: 6px;
 }
-.dash-hero-caption {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  color: var(--ink-soft);
-  opacity: 0.7;
-  margin-top: 4px;
+.dash-hero-sub {
+  font-family: var(--font-display);
+  font-size: var(--fs-h2);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--ink);
+  margin: 0 0 8px;
 }
+.dash-hero-scale { display: flex; gap: 4px; margin-bottom: 8px; }
+.dash-hero-scale span {
+  width: 22px;
+  height: 22px;
+  border-radius: 4px;
+  background: var(--surface-2);
+  font-family: var(--font-display);
+  font-size: var(--fs-mono-sm);
+  font-weight: 600;
+  line-height: 22px;
+  text-align: center;
+  color: var(--ink-faint);
+}
+.dash-hero-scale span.is-current {
+  background: var(--ink);
+  color: var(--bg);
+}
+.dash-hero-caption {
+  font-family: var(--font-display);
+  font-size: var(--fs-body-sm);
+  color: var(--ink-faint);
+  max-width: 38ch;
+  margin: 0;
+}
+.dash-hero-confidence { display: none; }
+
+/* Tier modifiers — tone the circle border by tier (no fill) */
+.dash-hero-grade--tier-none .dash-hero-grade-circle { border-color: var(--border-strong); color: var(--ink-faint); }
+.dash-hero-grade--tier-low  .dash-hero-grade-circle { border-color: var(--ink-soft); }
+.dash-hero-grade--tier-mid  .dash-hero-grade-circle { border-color: var(--ink); }
+.dash-hero-grade--tier-high .dash-hero-grade-circle { border-color: var(--accent-hover); color: var(--accent-hover); }
 
 
 /* ── DASHBOARD STATS ROW ── */
@@ -525,14 +467,6 @@ button.dash-hero-grade:hover { border-color: var(--accent); }
 /* ── STATS ROW: streak fire color ── */
 .dash-stat-streak-active { color: #f97316; }
 
-/* ── DASHBOARD GREETING: motivational subtitle ── */
-.dash-motivation {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--ink-soft);
-  letter-spacing: 0.04em;
-  margin-top: 3px;
-}
 
 .dash-full-exam-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:20px; display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:16px; }
 .dash-full-exam-title { font-weight:700; font-size:15px; margin-bottom:4px; }
@@ -697,7 +631,6 @@ button.dash-hero-grade:hover { border-color: var(--accent); }
 /* ── Statement typography: oversized DM Mono numerals for hero stats ── */
 .dash-stat-value { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
 .dash-countdown-value { font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-weight: 700; }
-.dash-hero-grade-circle { font-family: var(--font-display); }
 
 /* ── Writing progression bars (per-rubric-dimension trend) ── */
 .dash-writing-progression {
@@ -824,6 +757,3 @@ button.dash-hero-grade:hover { border-color: var(--accent); }
 .dash-readiness-legend-dots span.lvl-3 { background: rgba(20, 184, 166, 0.62); }
 .dash-readiness-legend-dots span.lvl-4 { background: var(--accent-hover); }
 
-@media (max-width: 768px) {
-  .dash-header .dash-greeting { font-size: 18px; }
-}
