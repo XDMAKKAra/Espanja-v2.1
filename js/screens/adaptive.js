@@ -108,7 +108,7 @@ function progressRow(label, current, target, suffix = "") {
     <div class="adaptive-progress-row">
       <span>${label}: ${current}${suffix}/${target}${suffix}</span>
       <div class="adaptive-progress-bar">
-        <div class="adaptive-progress-fill" style="width:${pct}%;${done ? "background:var(--correct)" : ""}"></div>
+        <div class="adaptive-progress-fill" style="width:${pct}%;${done ? "background:var(--success)" : ""}"></div>
       </div>
     </div>`;
 }
@@ -270,17 +270,17 @@ function renderMasteryResults({ passed, scorePct, higherLevelPct, newLevel }) {
     content.innerHTML = `
       <div style="text-align:center;margin-bottom:24px">
         <div style="font-size:48px;margin-bottom:12px">🎉</div>
-        <h2 style="color:var(--correct);margin-bottom:8px">Onneksi olkoon!</h2>
+        <h2 style="color:var(--success);margin-bottom:8px">Onneksi olkoon!</h2>
         <p style="font-size:15px;color:var(--text-muted)">Olet nyt tasolla <strong>${newLevel}</strong> (${LEVEL_NAMES[newLevel] || newLevel})</p>
       </div>
       <div style="background:var(--surface);border-radius:var(--radius);padding:16px;margin-bottom:16px">
         <div style="display:flex;justify-content:space-between;margin-bottom:8px">
           <span>Kokonaistulos</span>
-          <strong style="color:var(--correct)">${scorePct}%</strong>
+          <strong style="color:var(--success)">${scorePct}%</strong>
         </div>
         <div style="display:flex;justify-content:space-between">
           <span>${newLevel}-tason kysymykset</span>
-          <strong style="color:var(--correct)">${higherLevelPct}%</strong>
+          <strong style="color:var(--success)">${higherLevelPct}%</strong>
         </div>
       </div>
       <p style="font-size:13px;color:var(--text-muted);text-align:center">Harjoitukset mukautuvat nyt uudelle tasolle.</p>`;

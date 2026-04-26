@@ -373,8 +373,8 @@ function bindCharCount(container, task, countElId) {
     if (!el) return;
     el.textContent = `${count} merkkiä`;
     if (count < task.charMin) el.style.color = "var(--text-muted)";
-    else if (count > task.charMax) el.style.color = "var(--wrong)";
-    else el.style.color = "var(--correct)";
+    else if (count > task.charMax) el.style.color = "var(--error)";
+    else el.style.color = "var(--success)";
   };
 
   ta.addEventListener("input", update);

@@ -269,8 +269,8 @@ function renderGoalRow(chartData) {
     const examDate = new Date(profile.exam_date);
     const daysLeft = Math.max(0, Math.ceil((examDate - new Date()) / (24 * 60 * 60 * 1000)));
     countdownEl.textContent = daysLeft;
-    if (daysLeft <= 30) countdownEl.style.color = "var(--wrong)";
-    else if (daysLeft <= 90) countdownEl.style.color = "var(--gold)";
+    if (daysLeft <= 30) countdownEl.style.color = "var(--error)";
+    else if (daysLeft <= 90) countdownEl.style.color = "var(--accent)";
     else countdownEl.style.color = "";
   } else {
     const card = $("dash-exam-countdown");
@@ -294,7 +294,7 @@ function renderGoalRow(chartData) {
   if (barFill) {
     const pct = Math.min(100, (todayMinutes / goalMinutes) * 100);
     barFill.style.width = `${pct}%`;
-    if (pct >= 100) barFill.style.background = "var(--correct)";
+    if (pct >= 100) barFill.style.background = "var(--success)";
   }
 }
 

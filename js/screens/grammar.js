@@ -96,9 +96,9 @@ function renderGrammarExercise() {
 
   const sentenceEl = $("gram-sentence");
   if (exType === "correction") {
-    sentenceEl.innerHTML = `<span style="text-decoration: underline wavy var(--wrong); text-underline-offset: 4px">${ex.sentence}</span>`;
+    sentenceEl.innerHTML = `<span style="text-decoration: underline wavy var(--error); text-underline-offset: 4px">${ex.sentence}</span>`;
   } else if (exType === "transform") {
-    sentenceEl.innerHTML = `<span style="color: var(--gold)">${ex.sentence}</span>`;
+    sentenceEl.innerHTML = `<span style="color: var(--accent)">${ex.sentence}</span>`;
   } else {
     sentenceEl.textContent = ex.sentence;
   }

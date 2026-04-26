@@ -237,20 +237,20 @@
       flex-shrink: 0;
     }
     .mini-diag-opt.is-correct {
-      border-color: var(--correct);
+      border-color: var(--success);
       background: rgba(34, 197, 94, 0.1);
     }
     .mini-diag-opt.is-correct .mini-diag-opt-key {
-      color: var(--correct);
-      border-color: var(--correct);
+      color: var(--success);
+      border-color: var(--success);
     }
     .mini-diag-opt.is-wrong {
-      border-color: var(--wrong);
+      border-color: var(--error);
       background: rgba(239, 68, 68, 0.1);
     }
     .mini-diag-opt.is-wrong .mini-diag-opt-key {
-      color: var(--wrong);
-      border-color: var(--wrong);
+      color: var(--error);
+      border-color: var(--error);
     }
     .mini-diag-feedback {
       border-top: 1px dashed var(--border);
@@ -264,8 +264,8 @@
       text-transform: uppercase;
       margin-bottom: 6px;
     }
-    .mini-diag-verdict.is-correct { color: var(--correct); }
-    .mini-diag-verdict.is-wrong { color: var(--wrong); }
+    .mini-diag-verdict.is-correct { color: var(--success); }
+    .mini-diag-verdict.is-wrong { color: var(--error); }
     .mini-diag-explain {
       font-family: var(--serif);
       font-size: 14px;
@@ -424,8 +424,8 @@
       font-weight: 700;
       margin-right: 4px;
     }
-    .mark.yes { color: var(--correct); }
-    .mark.no  { color: var(--wrong); }
+    .mark.yes { color: var(--success); }
+    .mark.no  { color: var(--error); }
     .mark.meh { color: var(--accent-dark); }
     .compare-intent {
       background: var(--surface);
@@ -591,7 +591,7 @@
       position: relative;
     }
     .hl-warn { border-color: var(--accent-dark); background: rgba(45, 212, 191, 0.08); }
-    .hl-err  { border-color: var(--wrong); background: rgba(239, 68, 68, 0.12); }
+    .hl-err  { border-color: var(--error); background: rgba(239, 68, 68, 0.12); }
     .hl-meh  { border-color: var(--text-muted); background: rgba(158, 122, 122, 0.1); }
     .hl-num {
       font-family: var(--mono);
@@ -601,7 +601,7 @@
       margin-right: 2px;
       vertical-align: super;
     }
-    .hl-err .hl-num { color: var(--wrong); }
+    .hl-err .hl-num { color: var(--error); }
     .hl-meh .hl-num { color: var(--text-muted); }
 
     /* Score bars */
@@ -695,7 +695,7 @@
       flex-shrink: 0;
     }
     .annot-warn .annot-num { background: rgba(45, 212, 191, 0.14); color: var(--accent-dark); }
-    .annot-err  .annot-num { background: rgba(239, 68, 68, 0.2); color: var(--wrong); }
+    .annot-err  .annot-num { background: rgba(239, 68, 68, 0.2); color: var(--error); }
     .annot-meh  .annot-num { background: rgba(158, 122, 122, 0.2); color: var(--text-muted); }
     .annot-body strong { color: var(--text); font-family: var(--font); }
     .annot-body em { color: var(--accent-dark); font-style: normal; font-weight: 600; }

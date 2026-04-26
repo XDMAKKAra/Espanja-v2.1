@@ -174,7 +174,7 @@ $("exam-btn-to-writing").addEventListener("click", () => {
   $("exam-char-count").textContent = "0 merkkiä";
   inp.addEventListener("input", () => {
     const count = inp.value.replace(/\s/g, "").length;
-    const color = count < t.charMin ? "var(--wrong)" : count > t.charMax ? "var(--wrong)" : "var(--correct)";
+    const color = count < t.charMin ? "var(--error)" : count > t.charMax ? "var(--error)" : "var(--success)";
     $("exam-char-count").textContent = `${count} merkkiä`;
     $("exam-char-count").style.color = color;
   });

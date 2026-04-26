@@ -108,10 +108,6 @@
 
   /* Legacy aliases — kept so old component rules keep working */
   --surface2:    var(--surface-2);
-  --accent2:     var(--accent-hover);
-  --gold:        var(--accent);
-  --correct:     var(--success);
-  --wrong:       var(--error);
   --radius:      var(--r-lg);
   --font:        var(--font-body);
   --mono:        var(--font-mono);
@@ -360,8 +356,8 @@ body::before {
   color: var(--text); margin: 0 0 16px;
 }
 .hero-proof-mark {
-  background: color-mix(in srgb, var(--correct) 22%, transparent);
-  border-bottom: 2px solid var(--correct);
+  background: color-mix(in srgb, var(--success) 22%, transparent);
+  border-bottom: 2px solid var(--success);
   padding: 0 2px; border-radius: 2px;
   color: inherit;
 }
@@ -885,14 +881,14 @@ body::before {
 .waitlist-submit:disabled { opacity: 0.5; cursor: default; }
 .waitlist-success {
   padding: 16px;
-  color: var(--correct);
+  color: var(--success);
   font-family: var(--mono);
   font-size: 14px;
   font-weight: 600;
 }
 .waitlist-error {
   margin-top: 10px;
-  color: var(--wrong);
+  color: var(--error);
   font-family: var(--mono);
   font-size: 12px;
 }
@@ -1013,10 +1009,10 @@ footer {
 }
 .demo-option-text { flex: 1; }
 .demo-option.disabled { cursor: default; opacity: 0.6; }
-.demo-option.correct { border-color: var(--correct); background: rgba(34, 197, 94, 0.1); opacity: 1; }
-.demo-option.correct .demo-option-letter { background: var(--correct); color: #fff; }
-.demo-option.wrong { border-color: var(--wrong); background: rgba(184, 48, 48, 0.1); opacity: 1; }
-.demo-option.wrong .demo-option-letter { background: var(--wrong); color: #fff; }
+.demo-option.correct { border-color: var(--success); background: rgba(34, 197, 94, 0.1); opacity: 1; }
+.demo-option.correct .demo-option-letter { background: var(--success); color: #fff; }
+.demo-option.wrong { border-color: var(--error); background: rgba(184, 48, 48, 0.1); opacity: 1; }
+.demo-option.wrong .demo-option-letter { background: var(--error); color: #fff; }
 .demo-explanation {
   margin-top: 16px; padding: 16px; background: var(--surface2);
   border: 1px solid var(--border); border-radius: 12px; animation: demoFadeIn 0.25s ease;
@@ -1027,8 +1023,8 @@ footer {
   to { opacity: 1; transform: translateY(0); }
 }
 .demo-explanation-icon { font-size: 24px; font-weight: 800; margin-bottom: 8px; }
-.demo-explanation-icon.correct { color: var(--correct); }
-.demo-explanation-icon.wrong { color: var(--wrong); }
+.demo-explanation-icon.correct { color: var(--success); }
+.demo-explanation-icon.wrong { color: var(--error); }
 .demo-explanation-text {
   font-size: 13px; line-height: 1.7; color: var(--text-muted);
   font-family: var(--mono); margin-bottom: 14px;
@@ -1051,8 +1047,8 @@ footer {
   background: var(--surface2); border-radius: 8px; font-size: 13px;
 }
 .demo-breakdown-icon { font-weight: 800; font-size: 16px; width: 24px; text-align: center; }
-.demo-breakdown-icon.correct { color: var(--correct); }
-.demo-breakdown-icon.wrong { color: var(--wrong); }
+.demo-breakdown-icon.correct { color: var(--success); }
+.demo-breakdown-icon.wrong { color: var(--error); }
 .demo-breakdown-label { flex: 1; text-align: left; }
 .demo-breakdown-level { font-family: var(--mono); font-size: 11px; color: var(--text-muted); }
 .demo-results-pitch { font-size: 14px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.6; }

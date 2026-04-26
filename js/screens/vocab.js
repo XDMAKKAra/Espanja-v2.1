@@ -466,11 +466,11 @@ function renderGapFill(ex) {
       state._lastCorrect = true;
       let msg = `✓ Oikein! ${ex.correctAnswer}`;
       if (isAccentError) msg += " (tarkista aksentit: " + ex.correctAnswer + ")";
-      feedback.innerHTML = `<span style="color:var(--correct)">${msg}</span><br>${ex.explanation}`;
+      feedback.innerHTML = `<span style="color:var(--success)">${msg}</span><br>${ex.explanation}`;
     } else {
       input.classList.add("wrong");
       state._lastCorrect = false;
-      feedback.innerHTML = `<span style="color:var(--wrong)">✗ ${ex.correctAnswer}</span><br>${ex.explanation}`;
+      feedback.innerHTML = `<span style="color:var(--error)">✗ ${ex.correctAnswer}</span><br>${ex.explanation}`;
       if (isLoggedIn()) logMistake(ex, answer);
     }
 
@@ -562,7 +562,7 @@ function renderMatching(ex) {
         state.totalAnswered++;
         recordItem(ex, true);
         state._lastCorrect = true;
-        statusEl.innerHTML = `<span style="color:var(--correct)">✓ Kaikki oikein!</span>`;
+        statusEl.innerHTML = `<span style="color:var(--success)">✓ Kaikki oikein!</span>`;
         $("explanation-block").classList.remove("hidden");
         $("explanation-text").textContent = "Kaikki parit yhdistetty oikein!";
       }
@@ -1027,12 +1027,12 @@ function renderLearningBlock(items) {
     const shown = rights.slice(0, 5);
     const overflow = rights.length - shown.length;
     const text = shown.join(", ") + (overflow > 0 ? ` (+ ${overflow} muuta)` : "");
-    parts.push(`<p class="results-learning-line ok"><span style="color:var(--correct)">✓</span> <strong>Vahvistit:</strong> ${text}</p>`);
+    parts.push(`<p class="results-learning-line ok"><span style="color:var(--success)">✓</span> <strong>Vahvistit:</strong> ${text}</p>`);
   }
 
   if (wrongs.length) {
     const bullets = wrongs.map((w) => `<li>${w}</li>`).join("");
-    parts.push(`<p class="results-learning-line bad"><span style="color:var(--wrong)">✗</span> <strong>Harjoittele vielä:</strong></p><ul>${bullets}</ul>`);
+    parts.push(`<p class="results-learning-line bad"><span style="color:var(--error)">✗</span> <strong>Harjoittele vielä:</strong></p><ul>${bullets}</ul>`);
   }
 
   body.innerHTML = parts.join("");

@@ -628,7 +628,7 @@ function renderWritingFeedback(result) {
     const c = result[key];
     if (!c) continue;
     const pct = Math.round((c.score / 5) * 100);
-    const barColor = pct >= 75 ? "var(--correct)" : pct >= 50 ? "var(--gold)" : "var(--wrong)";
+    const barColor = pct >= 75 ? "var(--success)" : pct >= 50 ? "var(--accent)" : "var(--error)";
     const block = document.createElement("div");
     block.className = "criteria-block";
     block.innerHTML = `

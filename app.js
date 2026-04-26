@@ -1891,9 +1891,9 @@ function renderGrammarExercise() {
   // For correction type, style the sentence differently (it has an error)
   const sentenceEl = $("gram-sentence");
   if (exType === "correction") {
-    sentenceEl.innerHTML = `<span style="text-decoration: underline wavy var(--wrong); text-underline-offset: 4px">${ex.sentence}</span>`;
+    sentenceEl.innerHTML = `<span style="text-decoration: underline wavy var(--error); text-underline-offset: 4px">${ex.sentence}</span>`;
   } else if (exType === "transform") {
-    sentenceEl.innerHTML = `<span style="color: var(--gold)">${ex.sentence}</span>`;
+    sentenceEl.innerHTML = `<span style="color: var(--accent)">${ex.sentence}</span>`;
   } else {
     sentenceEl.textContent = ex.sentence;
   }
@@ -2341,7 +2341,7 @@ $("exam-btn-to-writing").addEventListener("click", () => {
   $("exam-char-count").textContent = "0 merkkiä";
   inp.addEventListener("input", () => {
     const count = inp.value.replace(/\s/g, "").length;
-    const color = count < t.charMin ? "var(--wrong)" : count > t.charMax ? "var(--wrong)" : "var(--correct)";
+    const color = count < t.charMin ? "var(--error)" : count > t.charMax ? "var(--error)" : "var(--success)";
     $("exam-char-count").textContent = `${count} merkkiä`;
     $("exam-char-count").style.color = color;
   });
