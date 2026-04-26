@@ -53,7 +53,7 @@ function renderDashboard({
   const proSlot = document.getElementById("sidebar-pro-slot");
   if (proSlot) {
     if (pro) {
-      proSlot.innerHTML = `<span class="sidebar-pro-badge">PRO</span> <button class="btn-link btn-manage-sub" id="btn-manage-sub">Hallinnoi tilausta</button>`;
+      proSlot.innerHTML = `<span class="sidebar-pro-badge">PRO</span> <button class="btn-manage-sub" id="btn-manage-sub">Hallinnoi tilausta</button>`;
       setTimeout(() => {
         const manageBtn = document.getElementById("btn-manage-sub");
         if (manageBtn) manageBtn.addEventListener("click", () => _deps.openBillingPortal());

@@ -285,6 +285,42 @@ body::before {
   margin-left: 6px;
 }
 
+.sidebar-pro-slot {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 8px 16px;
+}
+.sidebar-pro-slot:empty { display: none; }
+
+.btn-upgrade-small {
+  background: var(--accent);
+  color: var(--ink);
+  border: none;
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  letter-spacing: 0.06em;
+  transition: opacity 0.15s;
+}
+.btn-upgrade-small:hover { opacity: 0.85; }
+
+.btn-manage-sub {
+  font-size: 11px;
+  color: var(--ink-soft);
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: underline;
+  font-family: var(--font-mono);
+  padding: 0;
+}
+.btn-manage-sub:hover { color: var(--ink); }
+
 /* ── MAIN CONTENT AREA ── */
 .app-main {
   /* margin-left: 220px removed — grid shell (app-shell.css) handles positioning */

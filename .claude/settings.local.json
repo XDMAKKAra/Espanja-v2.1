@@ -29,7 +29,15 @@
       "Bash(node --check js/screens/writing.js js/state.js)",
       "Bash(node --check js/screens/writing.js js/state.js lib/writingGrading.js)",
       "Bash(node *)",
-      "Bash(grep -E \"\\\\.js$\")"
+      "Bash(grep -E \"\\\\.js$\")",
+      "Bash(awk 'NR>=545 && NR<=700 && /res\\\\.json.*reading/' routes/exercises.js)",
+      "mcp__claude_ai_Supabase__get_advisors",
+      "mcp__claude_ai_Supabase__execute_sql",
+      "mcp__claude_ai_Supabase__apply_migration",
+      "Bash(grep -n \"apiFetch\\(\\\\`\\\\${API}/api/exercises/grade\\\\`\\\\|apiFetch\\(\\\\`\\\\${API}/api/writing/grade\\\\|apiFetch\\(\\\\`\\\\${API}/api/exercises/reading\\\\|apiFetch\\(\\\\`\\\\${API}/api/exercises/grammar\\\\|apiFetch\\(\\\\`\\\\${API}/api/adaptive\" js/screens/vocab.js js/screens/writing.js js/screens/reading.js js/screens/grammar.js js/screens/adaptive.js)",
+      "Bash(BASE_URL=http://localhost:3000 node ui-ux/screenshot.mjs ui-ux/ai-look-before)",
+      "Bash(mkdir -p /tmp/wa_imgs)",
+      "Bash(unzip -o \"/c/Users/marce/Downloads/WhatsApp Unknown 2026-04-26 at 18.27.23.zip\" -d /tmp/wa_imgs)"
     ]
   }
 }
