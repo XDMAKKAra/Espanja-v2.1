@@ -3,7 +3,7 @@ import { API, authHeader, apiFetch } from "../api.js";
 import { track } from "../analytics.js";
 import { state } from "../state.js";
 import { showPlacementIntro } from "./placement.js";
-import { deriveWeakness, gapSentence } from "../../lib/weakness.js";
+import { deriveWeakness } from "../../lib/weakness.js";
 
 // YO-koe 28.9.2026 klo 9:00 Helsinki (EEST = UTC+3)
 const EXAM_MS = Date.parse("2026-09-28T09:00:00+03:00");
@@ -80,30 +80,102 @@ function wireWelcome() {
   }
 }
 
-// ─── S3 Path ───────────────────────────────────────────────────────────────
+// ─── S2.5 Personalize (aurora orb) ─────────────────────────────────────────
+
+const PERSONALIZE_STATUSES = [
+  "Analysoidaan vastauksiasi",
+  "Tunnistetaan heikoin alue",
+  "Rakennetaan päivittäinen suunnitelma",
+  "Viimeistellään profiilia",
+];
+const PERSONALIZE_DURATION_MS = 3200;
 
 export function showPathFromPlacement(placementResult) {
+  // Theatrical "personalizing" moment first, then the profile-ready hero.
+  showPersonalize(placementResult);
+}
+
+function showPersonalize(placementResult) {
+  hideAppCountdown();
+  show("screen-ob-personalize");
+  track("onboarding_personalize_viewed", {});
+
+  const pctEl = $("ob-personalize-pct");
+  const statusEl = $("ob-personalize-status");
+  const reduce = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
+  const dur = reduce ? 1200 : PERSONALIZE_DURATION_MS;
+  const start = performance.now();
+  let lastStatusIdx = -1;
+
+  function tick(now) {
+    const t = Math.min(1, (now - start) / dur);
+    // ease-out for a satisfying settle
+    const eased = 1 - Math.pow(1 - t, 2.4);
+    const pct = Math.floor(eased * 100);
+    if (pctEl) pctEl.textContent = String(pct);
+
+    const idx = Math.min(PERSONALIZE_STATUSES.length - 1,
+      Math.floor(t * PERSONALIZE_STATUSES.length));
+    if (statusEl && idx !== lastStatusIdx) {
+      lastStatusIdx = idx;
+      statusEl.classList.add("fade");
+      setTimeout(() => {
+        statusEl.textContent = PERSONALIZE_STATUSES[idx];
+        statusEl.classList.remove("fade");
+      }, 180);
+    }
+
+    if (t < 1) {
+      requestAnimationFrame(tick);
+    } else {
+      setTimeout(() => renderProfileReady(placementResult), 380);
+    }
+  }
+  requestAnimationFrame(tick);
+}
+
+// ─── S3 Profile ready ──────────────────────────────────────────────────────
+
+function displayName() {
+  try {
+    const email = localStorage.getItem("puheo_email") || "";
+    const local = email.split("@")[0] || "";
+    if (!local) return "Tervetuloa";
+    // Strip dots/underscores, capitalize first chunk.
+    const first = local.split(/[._\-+]/)[0] || local;
+    return first.charAt(0).toUpperCase() + first.slice(1);
+  } catch {
+    return "Tervetuloa";
+  }
+}
+
+function renderProfileReady(placementResult) {
   const { sentence, category } = deriveWeakness(placementResult);
   const level = placementResult?.placementLevel || "B";
   const weeksLeft = Math.max(1, Math.ceil(daysToExam() / 7));
-
-  // Default plan: 15 min/day (user picks in S5). ~90s per exercise → rough
-  // weekly exercise count.
   const minPerDay = 15;
   const perWeek = Math.round((minPerDay * 7 * 60) / 90);
 
+  const name = displayName();
+  $("ob-ready-name").textContent = `${name},`;
+  const avatar = $("ob-ready-pill-avatar");
+  if (avatar) avatar.textContent = (name[0] || "P").toUpperCase();
+
   $("ob-path-level").textContent = level;
-  $("ob-path-gap").textContent = gapSentence(level, "M"); // target grade defaults to M until user picks
   $("ob-path-weakness").textContent = sentence;
   $("ob-path-plan-min").textContent = minPerDay;
   $("ob-path-plan-weeks").textContent = weeksLeft;
   $("ob-path-plan-per-week").textContent = perWeek;
+  // Short, headline-ready gap label (e.g. "2 arvosanaa") for the new hero.
+  // Falls back to the existing long sentence if level outside the YTL ladder.
+  const ORDER = ["A", "B", "C", "M", "E", "L"];
+  const gap = Math.max(1, ORDER.indexOf("E") - ORDER.indexOf(level));
+  $("ob-path-gap").textContent = gap === 1 ? "1 arvosana" : `${gap} arvosanaa`;
 
-  renderAppCountdown(); // S3 turns on the persistent countdown
+  renderAppCountdown();
   show("screen-ob-path");
   track("onboarding_path_viewed", { level, weakness_category: category });
 
-  // Remember result so S4 (next commit) can pick the right first exercise.
   window._obPath = { level, weaknessCategory: category };
 }
 

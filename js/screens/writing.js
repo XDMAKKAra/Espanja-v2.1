@@ -5,6 +5,7 @@ import { CRITERIA_LABELS } from "../state.js";
 import { showLoading, showLoadingError, showSkeleton, showFetchError } from "../ui/loading.js";
 import { trackCheckoutStarted, trackProUpsellShown, trackExerciseCompleted, track } from "../analytics.js";
 import { shouldFireUpsell, UPSELL_TRIGGERS, LAST_FIRED_KEY, SESSION_COUNT_KEY } from "../../lib/paywall.js";
+import { recordWritingResult, getRecentErrorCategories } from "../features/writingProgression.js";
 
 let _deps = {};
 export function initWriting({ loadDashboard, saveProgress }) {
@@ -268,6 +269,7 @@ export async function loadWritingTask() {
         taskType: state.writingTaskType,
         topic: state.writingTopic,
         language: state.language,
+        recentWeaknesses: getRecentErrorCategories(10),
       }),
     });
     if (res.status === 403) { showProUpsell(); return; }
@@ -323,6 +325,19 @@ function countChars(text) {
   return text.replace(/\s/g, "").length;
 }
 
+function countWords(text) {
+  const t = (text || "").trim();
+  if (!t) return 0;
+  return t.split(/\s+/).filter(Boolean).length;
+}
+
+// Approx: 1 Spanish word ≈ 5 chars + 1 space → 6 chars. Round to nearest 5.
+function approxWordTarget(charMin, charMax) {
+  const minWords = Math.max(1, Math.round(charMin / 6 / 5) * 5);
+  const maxWords = Math.max(minWords + 5, Math.round(charMax / 6 / 5) * 5);
+  return { minWords, maxWords };
+}
+
 function updateCharCounter() {
   const task = state.currentWritingTask;
   if (!task) return;
@@ -353,6 +368,20 @@ function updateCharCounter() {
   else if (count >= max * 0.8) fill.classList.add("bar-warn");
   else fill.classList.add("bar-ok");
 
+  // Word counter — pedagogical aid (YTL grades by words, not chars).
+  const words = countWords(text);
+  const wc = $("writing-word-count");
+  if (wc) wc.textContent = words;
+  const wcWrap = $("writing-word-counter");
+  const wt = $("writing-word-target");
+  if (wcWrap && wt) {
+    const { minWords, maxWords } = approxWordTarget(min, max);
+    wt.textContent = `/ ${minWords}–${maxWords}`;
+    wcWrap.classList.remove("is-met", "is-short");
+    if (words >= minWords) wcWrap.classList.add("is-met");
+    else if (words > 0) wcWrap.classList.add("is-short");
+  }
+
   $("btn-submit-writing").disabled = count < min;
 }
 
@@ -381,6 +410,7 @@ $("btn-submit-writing").addEventListener("click", async () => {
     if (!data.result) throw new Error("No result");
     try { localStorage.removeItem("puheo_writing_draft"); } catch {}
 
+    try { recordWritingResult(data.result); } catch {}
     renderWritingFeedback(data.result);
     _deps.saveProgress({
       mode: "writing",
@@ -467,7 +497,7 @@ function renderAnnotatedText(originalText, errors, annotations) {
     }
   }
 
-  // Build HTML with inline markers
+  // Build HTML with inline markers — keyboard-focusable for a11y.
   let html = "";
   let cursor = 0;
   for (const s of nonOverlapping) {
@@ -477,7 +507,8 @@ function renderAnnotatedText(originalText, errors, annotations) {
     const text = escapeHtml(originalText.slice(s.start, s.end));
     const dataAttr = encodeURIComponent(JSON.stringify(s.data));
     const klass = s.kind === "error" ? "annotation-error" : "annotation-positive";
-    html += `<span class="annotation-span ${klass}" data-kind="${s.kind}" data-annotation="${dataAttr}">${text}</span>`;
+    const aria = s.kind === "error" ? "Virhe — paina näyttääksesi selitys" : "Hyvin tehty — paina näyttääksesi selitys";
+    html += `<span class="annotation-span ${klass}" data-kind="${s.kind}" data-annotation="${dataAttr}" tabindex="0" role="button" aria-label="${aria}">${text}</span>`;
     cursor = s.end;
   }
   if (cursor < originalText.length) {
@@ -486,46 +517,78 @@ function renderAnnotatedText(originalText, errors, annotations) {
 
   container.innerHTML = html;
 
-  // Wire up hover tooltips
+  // Wire up tooltip — pointer + keyboard + touch (focus = keyboard, click = touch toggle).
   const tooltip = $("feedback-tooltip");
   if (!tooltip) return;
 
+  function showTooltipFor(span) {
+    const kind = span.dataset.kind;
+    let data;
+    try { data = JSON.parse(decodeURIComponent(span.dataset.annotation)); } catch { return; }
+
+    tooltip.className = "feedback-tooltip " + kind;
+    if (kind === "error") {
+      const catLabel = CATEGORY_LABELS[data.category] || data.category || "Virhe";
+      tooltip.innerHTML = `
+        <div class="feedback-tooltip-header">${escapeHtml(catLabel)}</div>
+        <div class="feedback-tooltip-diff">
+          <span class="feedback-tooltip-wrong">${escapeHtml(data.excerpt || "")}</span>
+          &rarr;
+          <span class="feedback-tooltip-correct">${escapeHtml(data.corrected || "")}</span>
+        </div>
+        <div class="feedback-tooltip-expl">${escapeHtml(data.explanation_fi || "")}</div>
+      `;
+    } else {
+      tooltip.innerHTML = `
+        <div class="feedback-tooltip-header">Hyvin tehty</div>
+        <div class="feedback-tooltip-expl">${escapeHtml(data.comment_fi || "")}</div>
+      `;
+    }
+
+    tooltip.classList.add("visible");
+
+    const rect = span.getBoundingClientRect();
+    tooltip.style.left = (rect.left + rect.width / 2) + "px";
+    tooltip.style.top = (rect.top - 10) + "px";
+    tooltip.style.transform = "translate(-50%, -100%)";
+  }
+
+  function hideTooltip() {
+    tooltip.classList.remove("visible");
+  }
+
   container.querySelectorAll(".annotation-span").forEach(span => {
-    span.addEventListener("mouseenter", (e) => {
-      const kind = span.dataset.kind;
-      let data;
-      try { data = JSON.parse(decodeURIComponent(span.dataset.annotation)); } catch { return; }
-
-      tooltip.className = "feedback-tooltip " + kind;
-      if (kind === "error") {
-        const catLabel = CATEGORY_LABELS[data.category] || data.category || "Virhe";
-        tooltip.innerHTML = `
-          <div class="feedback-tooltip-header">${escapeHtml(catLabel)}</div>
-          <div class="feedback-tooltip-diff">
-            <span class="feedback-tooltip-wrong">${escapeHtml(data.excerpt || "")}</span>
-            &rarr;
-            <span class="feedback-tooltip-correct">${escapeHtml(data.corrected || "")}</span>
-          </div>
-          <div class="feedback-tooltip-expl">${escapeHtml(data.explanation_fi || "")}</div>
-        `;
-      } else {
-        tooltip.innerHTML = `
-          <div class="feedback-tooltip-header">✓ Hyvin tehty</div>
-          <div class="feedback-tooltip-expl">${escapeHtml(data.comment_fi || "")}</div>
-        `;
+    span.addEventListener("mouseenter", () => showTooltipFor(span));
+    span.addEventListener("mouseleave", hideTooltip);
+    // Keyboard: focus opens, blur closes, Escape closes.
+    span.addEventListener("focus", () => showTooltipFor(span));
+    span.addEventListener("blur", hideTooltip);
+    span.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") { hideTooltip(); span.blur(); }
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        showTooltipFor(span);
       }
-
-      tooltip.classList.add("visible");
-
-      const rect = span.getBoundingClientRect();
-      tooltip.style.left = (rect.left + rect.width / 2) + "px";
-      tooltip.style.top = (rect.top - 10) + "px";
-      tooltip.style.transform = "translate(-50%, -100%)";
     });
-
-    span.addEventListener("mouseleave", () => {
-      tooltip.classList.remove("visible");
+    // Touch: tap-to-pin, second tap dismisses.
+    span.addEventListener("click", (e) => {
+      e.stopPropagation();
+      if (tooltip.classList.contains("visible") && tooltip.dataset.pinnedFor === span.dataset.annotation) {
+        hideTooltip();
+        delete tooltip.dataset.pinnedFor;
+      } else {
+        showTooltipFor(span);
+        tooltip.dataset.pinnedFor = span.dataset.annotation;
+      }
     });
+  });
+
+  // Click outside to dismiss pinned tooltip.
+  document.addEventListener("click", (e) => {
+    if (!tooltip.classList.contains("visible")) return;
+    if (e.target.closest(".annotation-span")) return;
+    hideTooltip();
+    delete tooltip.dataset.pinnedFor;
   });
 }
 
@@ -579,11 +642,16 @@ function renderWritingFeedback(result) {
     criteriaEl.appendChild(block);
   }
 
-  // Penalty notice
+  // Penalty notice — pedagogical version (replaces the silent score deduction).
   if (result.penalty > 0) {
     const notice = document.createElement("div");
-    notice.className = "penalty-notice";
-    notice.textContent = `⚠ Liian lyhyt teksti: −${result.penalty} pistettä`;
+    notice.className = "penalty-notice-pedagogical";
+    notice.setAttribute("role", "note");
+    notice.innerHTML = `
+      <strong>Vähimmäismitta jäi alle:</strong> tekstistäsi vähennettiin <strong>${result.penalty} pistettä</strong>.
+      YTL:n lyhyen oppimäärän kirjoituksessa viestinnällisyys jää vajaaksi, jos teksti ei täytä vaadittua pituutta —
+      vastaanottaja jää ilman kaikkia tietoja. Pidemmässä yrityksessä saat näytettyä rakenteita ja sanastoa monipuolisemmin.
+    `;
     criteriaEl.insertAdjacentElement("afterend", notice);
   }
 

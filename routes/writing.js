@@ -11,7 +11,7 @@ const router = Router();
 const VALID_TASK_TYPES = new Set(["short", "long"]);
 
 router.post("/writing-task", requireAuth, requirePro, aiStrictLimiter, checkMonthlyCostLimit, async (req, res) => {
-  const { taskType = "short", topic = "general", language = "spanish" } = req.body;
+  const { taskType = "short", topic = "general", language = "spanish", recentWeaknesses = [] } = req.body;
 
   if (!VALID_TASK_TYPES.has(taskType)) return res.status(400).json({ error: "Virheellinen tehtävätyyppi (short/long)" });
   if (!VALID_LANGUAGES.has(language)) return res.status(400).json({ error: "Virheellinen kieli" });
@@ -22,9 +22,28 @@ router.post("/writing-task", requireAuth, requirePro, aiStrictLimiter, checkMont
   const charRange = isShort ? "160–240" : "300–450";
   const profileCtx = await getUserProfileContext(req.user?.userId);
 
+  // Adaptive nudge — derive from recent error category counts so the next
+  // task gently forces the structures the student has been getting wrong.
+  // Categories: grammar | vocabulary | spelling | register
+  const CATEGORY_NUDGES = {
+    grammar:    "tense agreement and verb conjugation choices (preterite/imperfect contrast, ser/estar, subjunctive triggers)",
+    vocabulary: "topic-specific vocabulary and avoiding repetition / anglicisms",
+    spelling:   "accents, ñ vs n, and frequently miswritten words",
+    register:   "formality (tú vs usted), text-type conventions, greeting/closing forms",
+  };
+  let weaknessLine = "";
+  if (Array.isArray(recentWeaknesses) && recentWeaknesses.length > 0) {
+    const focuses = recentWeaknesses
+      .map(w => CATEGORY_NUDGES[w?.category])
+      .filter(Boolean);
+    if (focuses.length > 0) {
+      weaknessLine = `\nADAPTIVE FOCUS: This student has shown recent weakness in: ${focuses.join("; ")}. Pick a situation that NATURALLY requires these structures, but do NOT mention this to the student.\n`;
+    }
+  }
+
   const prompt = `Generate ONE realistic ${lang.name} yo-koe writing task for Finnish students (lyhyt oppimäärä, ${lang.yearsStudied} of ${lang.name}).
 ${profileCtx}
-
+${weaknessLine}
 Task type: ${isShort ? "SHORT task (lyhyt kirjoitelma)" : "LONG task (pitkä kirjoitelma)"}
 Character limit: ${charRange} characters (spaces and line breaks NOT counted)
 Max points: ${maxPoints}

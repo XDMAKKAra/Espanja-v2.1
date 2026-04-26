@@ -5,6 +5,8 @@ import { showLoading } from "../ui/loading.js";
 import { srDueCount } from "../features/spacedRepetition.js";
 import { renderAdaptiveCard } from "./adaptive.js";
 import { getBlogForTopic, trackBlogClick } from "../features/topicBlogMap.js";
+import { icon, MODE_ICONS } from "../ui/icons.js";
+import { getRecentWritingDimensions, computeReadinessMap } from "../features/writingProgression.js";
 
 let _deps = {};
 export function initDashboard({ loadGrammarDrill, loadReadingTask, loadWritingTask, startCheckout, openBillingPortal, startMockExam, showModePage, renderModePageStats, loadNextBatch, showProUpsell }) {
@@ -12,10 +14,10 @@ export function initDashboard({ loadGrammarDrill, loadReadingTask, loadWritingTa
 }
 
 export const MODE_META = {
-  vocab:   { icon: "📚", name: "Sanasto" },
-  grammar: { icon: "🔧", name: "Kielioppi" },
-  reading: { icon: "📖", name: "Luetun ymmärtäminen" },
-  writing: { icon: "✍️", name: "Kirjoittaminen" },
+  vocab:   { icon: MODE_ICONS.vocab,   name: "Sanasto" },
+  grammar: { icon: MODE_ICONS.grammar, name: "Kielioppi" },
+  reading: { icon: MODE_ICONS.reading, name: "Luetun ymmärtäminen" },
+  writing: { icon: MODE_ICONS.writing, name: "Kirjoittaminen" },
 };
 
 export async function loadDashboard() {
@@ -147,8 +149,9 @@ function renderDashboard({
   const streakBadge = $("start-streak-badge");
   if (streakBadge) {
     if (streak >= 1) {
-      const icon = streak >= 7 ? "🔥" : streak >= 3 ? "⚡" : "📅";
-      streakBadge.textContent = `${icon} ${streak} pv putki`;
+      streakBadge.innerHTML = `<span class="streak-badge-icon">${icon("flame", 14)}</span><span>${streak} pv putki</span>`;
+      streakBadge.classList.toggle("streak-badge-hot", streak >= 7);
+      streakBadge.classList.toggle("streak-badge-warm", streak >= 3 && streak < 7);
       streakBadge.classList.remove("hidden");
     } else {
       streakBadge.classList.add("hidden");
@@ -192,6 +195,8 @@ function renderDashboard({
   updateSrBadge();
   renderAdaptiveCard("vocab");
   renderAiUsage(aiUsage, pro);
+  renderWritingProgression();
+  loadAndRenderReadinessMap().catch(() => {});
 
   // Show retake placement button if user has completed onboarding
   const retakeEl = $("dash-placement-retake");
@@ -209,7 +214,7 @@ function renderDashboard({
     const listEl = $("dash-recent-list");
     listEl.innerHTML = "";
     for (const log of recent) {
-      const meta = MODE_META[log.mode] || { icon: "📝", name: log.mode };
+      const meta = MODE_META[log.mode] || { icon: icon("document"), name: log.mode };
       const scoreStr =
         log.scoreTotal > 0 ? `${log.scoreCorrect}/${log.scoreTotal}` : "";
       const gradeStr = log.ytlGrade || "";
@@ -492,24 +497,23 @@ function renderRecommendations(modeDaysAgo, modeStats, totalSessions) {
   const recs = [];
 
   const modeNames = { vocab: "Sanasto", grammar: "Kielioppi", reading: "Luetun ymmärtäminen", writing: "Kirjoittaminen" };
-  const modeIcons = { vocab: "📚", grammar: "🔧", reading: "📖", writing: "✍️" };
 
   for (const [mode, name] of Object.entries(modeNames)) {
     const daysAgo = modeDaysAgo[mode];
     if (daysAgo === null && totalSessions > 0) {
-      recs.push({ icon: modeIcons[mode], text: `Kokeile: ${name}`, sub: "Et ole vielä kokeillut tätä osa-aluetta", mode });
+      recs.push({ icon: MODE_ICONS[mode], text: `Kokeile: ${name}`, sub: "Et ole vielä kokeillut tätä osa-aluetta", mode });
     } else if (daysAgo >= 5) {
-      recs.push({ icon: modeIcons[mode], text: `Palaa harjoittelemaan: ${name}`, sub: `${daysAgo} päivää sitten viimeksi`, mode });
+      recs.push({ icon: MODE_ICONS[mode], text: `Palaa harjoittelemaan: ${name}`, sub: `${daysAgo} päivää sitten viimeksi`, mode });
     }
   }
 
   const gramStats = modeStats.grammar;
   if (gramStats && gramStats.avgPct != null && gramStats.avgPct < 60) {
-    recs.push({ icon: "⚠️", text: "Kielioppi kaipaa harjoittelua", sub: `Keskiarvo ${gramStats.avgPct}% — tavoite 70%+`, mode: "grammar" });
+    recs.push({ icon: icon("warn"), text: "Kielioppi kaipaa harjoittelua", sub: `Keskiarvo ${gramStats.avgPct}% — tavoite 70%+`, mode: "grammar" });
   }
 
   if (totalSessions >= 5 && totalSessions % 10 === 0) {
-    recs.push({ icon: "🎓", text: "Kokeile koeharjoitusta", sub: "Testaa taitosi simuloidussa kokeessa", mode: "exam" });
+    recs.push({ icon: icon("graduate"), text: "Kokeile koeharjoitusta", sub: "Testaa taitosi simuloidussa kokeessa", mode: "exam" });
   }
 
   if (recs.length === 0) {
@@ -1073,3 +1077,91 @@ async function startFocusSession(topic) {
     });
   }
 })();
+
+// ─── Writing per-dimension progression bars ────────────────────────────────
+
+function renderWritingProgression() {
+  const wrap = $("dash-writing-progression");
+  if (!wrap) return;
+
+  const dims = getRecentWritingDimensions(5);
+  if (!dims) {
+    wrap.classList.add("hidden");
+    return;
+  }
+
+  wrap.classList.remove("hidden");
+
+  const order = ["viestinnallisyys", "kielen_rakenteet", "sanasto", "kokonaisuus"];
+  let html = '<div class="dash-writing-progression-title">Kirjoittamisen osa-alueet — viim. 5 kertaa</div>';
+  for (const k of order) {
+    const d = dims[k];
+    if (!d) continue;
+    const pct = Math.round((d.avg / 5) * 100);
+    const cls = d.avg >= 3.5 ? "" : d.avg >= 2.5 ? "is-mid" : "is-weak";
+    const trendArrow = d.trend === "up" ? "↑" : d.trend === "down" ? "↓" : "→";
+    html += `
+      <div class="dash-wp-row">
+        <span class="dash-wp-label">${d.label}<span class="dash-wp-trend ${d.trend}">${trendArrow}</span></span>
+        <span class="dash-wp-score">${d.avg.toFixed(1)} / 5</span>
+        <div class="dash-wp-bar"><div class="dash-wp-bar-fill ${cls}" style="width:${pct}%"></div></div>
+      </div>
+    `;
+  }
+  wrap.innerHTML = html;
+}
+
+// ─── YO-koe readiness map ──────────────────────────────────────────────────
+
+async function loadAndRenderReadinessMap() {
+  const wrap = $("dash-readiness");
+  if (!wrap) return;
+  if (!isLoggedIn()) {
+    wrap.classList.add("hidden");
+    return;
+  }
+
+  let learningPath = [];
+  try {
+    const res = await apiFetch(`${API}/api/learning-path`, { headers: authHeader() });
+    if (res.ok) {
+      const data = await res.json();
+      learningPath = data.path || [];
+    }
+  } catch { /* network — show empty */ }
+
+  const writingDims = getRecentWritingDimensions(5);
+  const map = computeReadinessMap({ learningPath, writingDims });
+  if (map.totalCells === 0) {
+    wrap.classList.add("hidden");
+    return;
+  }
+
+  wrap.classList.remove("hidden");
+
+  const cellsHtml = map.cells.map(c =>
+    `<div class="dash-readiness-cell lvl-${c.level}" data-tip="${escapeHtmlAttr(c.tooltip)}" title="${escapeHtmlAttr(c.tooltip)}"></div>`
+  ).join("");
+
+  wrap.innerHTML = `
+    <div class="dash-readiness-title">YO-valmiuskartta</div>
+    <div class="dash-readiness-summary">
+      <strong>${map.masteredCells}</strong> / ${map.totalCells} osa-aluetta hallinnassa
+      &middot; <strong>${map.readinessPct}%</strong> valmius
+    </div>
+    <div class="dash-readiness-grid">${cellsHtml}</div>
+    <div class="dash-readiness-legend">
+      <span>vähän</span>
+      <span class="dash-readiness-legend-dots">
+        <span class="lvl-1"></span><span class="lvl-2"></span><span class="lvl-3"></span><span class="lvl-4"></span>
+      </span>
+      <span>hyvin</span>
+    </div>
+  `;
+}
+
+function escapeHtmlAttr(s) {
+  return String(s).replace(/[&<>"']/g, c => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+  }[c]));
+}

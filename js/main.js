@@ -72,9 +72,23 @@ function showModePage(mode) {
 
 function renderModePageStats(mode) {
   const statsEl = document.getElementById(`${mode}-page-stats`);
-  if (!statsEl || !window._dashModeStats) { if (statsEl) statsEl.innerHTML = ""; return; }
-  const s = window._dashModeStats[mode];
-  if (!s) { statsEl.innerHTML = ""; return; }
+  if (!statsEl) return;
+  const s = window._dashModeStats?.[mode];
+
+  const EMPTY_HINTS = {
+    vocab:   "Aloita ensimmäinen sanaharjoitus alta — tasosi mitataan automaattisesti.",
+    grammar: "Aloita ensimmäinen kielioppiharjoitus alta — keskitymme YTL:n kannalta tärkeimpiin rakenteisiin.",
+    reading: "Aloita ensimmäinen luetun ymmärtämisen tehtävä alta — saat heti palautteen.",
+    writing: "Aloita ensimmäinen kirjoitustehtävä alta — saat YTL:n neljään osa-alueeseen perustuvan arvion.",
+  };
+
+  if (!s || (!s.sessions && !s.bestGrade && s.avgPct == null)) {
+    const hint = EMPTY_HINTS[mode];
+    statsEl.innerHTML = hint
+      ? `<div class="mode-page-empty">${hint}</div>`
+      : "";
+    return;
+  }
 
   let html = "";
   if (s.sessions > 0) html += `<div class="mode-page-stat"><span class="mode-page-stat-value">${s.sessions}</span><span class="mode-page-stat-label">kertaa</span></div>`;
@@ -103,25 +117,54 @@ window._learningPathRef = { submitMasteryResult };
 window._onboardingRef = { checkOnboarding };
 window._placementRef = { checkPlacementNeeded, showPlacementIntro, startPlacementFromRetake };
 
-// ─── Sidebar navigation clicks ─────────────────────────────────────────────
+// ─── Sidebar navigation clicks + hash routing ──────────────────────────────
+
+const NAV_HASH = {
+  dashboard: "#/koti",
+  vocab: "#/sanasto",
+  grammar: "#/puheoppi",
+  reading: "#/luetun",
+  writing: "#/kirjoitus",
+  verbsprint: "#/verbisprintti",
+  path: "#/oppimispolku",
+  exam: "#/koeharjoitus",
+  settings: "#/asetukset",
+};
+const HASH_NAV = Object.fromEntries(Object.entries(NAV_HASH).map(([k, v]) => [v, k]));
+
+function navigateTo(nav, { updateHash = true } = {}) {
+  if (!nav) return;
+  document.querySelectorAll(".sidebar-item[data-nav]").forEach((b) => b.classList.toggle("active", b.dataset.nav === nav));
+  document.querySelectorAll(".mobile-nav-item[data-nav]").forEach((b) => b.classList.toggle("active", b.dataset.nav === nav));
+
+  if (updateHash && NAV_HASH[nav] && location.hash !== NAV_HASH[nav]) {
+    history.replaceState(null, "", NAV_HASH[nav]);
+  }
+
+  if (nav === "dashboard") loadDashboard();
+  else if (nav === "exam") startFullExam("demo");
+  else if (nav === "settings") showSettings();
+  else showModePage(nav);
+}
 
 document.querySelectorAll(".sidebar-item[data-nav], .mobile-nav-item[data-nav]").forEach((btn) => {
-  btn.addEventListener("click", () => {
-    const nav = btn.dataset.nav;
-    document.querySelectorAll(".sidebar-item[data-nav]").forEach((b) => b.classList.toggle("active", b.dataset.nav === nav));
-    document.querySelectorAll(".mobile-nav-item[data-nav]").forEach((b) => b.classList.toggle("active", b.dataset.nav === nav));
-
-    if (nav === "dashboard") {
-      loadDashboard();
-    } else if (nav === "exam") {
-      startFullExam("demo");
-    } else if (nav === "settings") {
-      showSettings();
-    } else {
-      showModePage(nav);
-    }
-  });
+  btn.addEventListener("click", () => navigateTo(btn.dataset.nav));
 });
+
+window.addEventListener("hashchange", () => {
+  if (!isLoggedIn()) return;
+  const nav = HASH_NAV[location.hash];
+  if (nav) navigateTo(nav, { updateHash: false });
+});
+
+// On boot, restore screen from hash (only if logged in — auth flow handles otherwise).
+window._restoreFromHash = function restoreFromHash() {
+  if (!isLoggedIn()) return false;
+  const nav = HASH_NAV[location.hash];
+  if (!nav) return false;
+  navigateTo(nav, { updateHash: false });
+  return true;
+};
 
 // ─── Topic card clicks (all mode pages) ────────────────────────────────────
 
@@ -567,15 +610,18 @@ if (!resetToken && isLoggedIn()) {
       showPlacementIntro();
       return;
     }
-    loadDashboard();
+    // Restore screen from URL hash if present, else load dashboard.
+    if (!window._restoreFromHash || !window._restoreFromHash()) {
+      loadDashboard();
+    }
   });
   initPushNotifications();
   initAnalytics(null, getAuthEmail());
 }
 
-// Handle manifest shortcuts (hash-based routing)
-const hash = window.location.hash.slice(1);
-if (hash && ["vocab", "grammar", "reading", "writing"].includes(hash)) {
-  window.location.hash = "";
-  setTimeout(() => showModePage(hash), 500);
+// Handle manifest shortcut hashes (legacy bare names — translate to new hash form)
+const legacyHash = window.location.hash.slice(1);
+const LEGACY_MAP = { vocab: "#/sanasto", grammar: "#/puheoppi", reading: "#/luetun", writing: "#/kirjoitus" };
+if (LEGACY_MAP[legacyHash]) {
+  history.replaceState(null, "", LEGACY_MAP[legacyHash]);
 }
