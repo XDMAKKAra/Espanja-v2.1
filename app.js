@@ -884,10 +884,6 @@ function loadLastSettings(forcedMode) {
   } catch {}
 }
 
-// TODO(T11): btn-logout removed from dash-header; sidebar-logout handles logout now (see below).
-// const _btnLogout = $("btn-logout");
-// if (_btnLogout) _btnLogout.addEventListener("click", () => { clearAuth(); updateSidebarState(); show("screen-auth"); });
-
 $("btn-dash-start").addEventListener("click", () => {
   $("btn-back-to-dash").classList.remove("hidden");
   loadLastSettings();

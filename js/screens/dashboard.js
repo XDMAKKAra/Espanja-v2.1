@@ -49,23 +49,23 @@ function renderDashboard({
   suggestedLevel = "B", modeDaysAgo = {}, pro = false,
   aiUsage = null,
 }) {
-  // TODO(T11): move pro badge into sidebar footer
-  // const proBadgeEl = $("dash-pro-badge");
-  // if (proBadgeEl) {
-  //   if (pro) {
-  //     proBadgeEl.innerHTML = `<span class="pro-badge-active">PRO</span> <button class="btn-link btn-manage-sub" id="btn-manage-sub">Hallinnoi tilausta</button>`;
-  //     setTimeout(() => {
-  //       const manageBtn = $("btn-manage-sub");
-  //       if (manageBtn) manageBtn.addEventListener("click", () => _deps.openBillingPortal());
-  //     }, 0);
-  //   } else {
-  //     proBadgeEl.innerHTML = `<button class="btn-upgrade-small" id="btn-dash-upgrade">Päivitä Pro</button>`;
-  //     setTimeout(() => {
-  //       const upgradeBtn = $("btn-dash-upgrade");
-  //       if (upgradeBtn) upgradeBtn.addEventListener("click", () => _deps.startCheckout());
-  //     }, 0);
-  //   }
-  // }
+  // Pro badge — moved from dashboard header to sidebar footer (T11)
+  const proSlot = document.getElementById("sidebar-pro-slot");
+  if (proSlot) {
+    if (pro) {
+      proSlot.innerHTML = `<span class="sidebar-pro-badge">PRO</span> <button class="btn-link btn-manage-sub" id="btn-manage-sub">Hallinnoi tilausta</button>`;
+      setTimeout(() => {
+        const manageBtn = document.getElementById("btn-manage-sub");
+        if (manageBtn) manageBtn.addEventListener("click", () => _deps.openBillingPortal());
+      }, 0);
+    } else {
+      proSlot.innerHTML = `<button class="btn-upgrade-small" id="btn-dash-upgrade">Päivitä Pro</button>`;
+      setTimeout(() => {
+        const upgradeBtn = document.getElementById("btn-dash-upgrade");
+        if (upgradeBtn) upgradeBtn.addEventListener("click", () => _deps.startCheckout());
+      }, 0);
+    }
+  }
   const name = getAuthEmail() ? getAuthEmail().split("@")[0] : "sinä";
   $("dash-username").textContent = name;
 
