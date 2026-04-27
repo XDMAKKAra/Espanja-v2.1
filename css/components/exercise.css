@@ -3,3 +3,147 @@
    Eyebrow row + 1px progress bar + display prompt + lettered option rows
    + feedback + mini CTA. Skeleton matches actual content shape so loading
    state never reads as empty. No new tokens. */
+
+/* §4 Drill view layout */
+.exercise { padding: 0; }
+.exercise__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.exercise__meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.exercise__sep {
+  color: var(--ink-faint);
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-sm);
+}
+.exercise__exit {
+  background: transparent;
+  border: 0;
+  color: var(--ink-faint);
+  font-size: 18px;
+  cursor: pointer;
+  padding: 4px 8px;
+  line-height: 1;
+}
+.exercise__exit:hover { color: var(--ink); }
+.exercise__exit:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.exercise__progress {
+  height: 1px;
+  background: var(--border);
+  margin-bottom: 32px;
+  overflow: hidden;
+}
+.exercise__progress i {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+  transition: width 200ms var(--ease-out);
+  width: 0;
+}
+
+.exercise .display { max-width: 32ch; margin: 0 0 12px; }
+.exercise__context {
+  font-family: var(--font-display);
+  font-size: var(--fs-body-sm);
+  font-style: italic;
+  color: var(--ink-soft);
+  margin: 0 0 28px;
+  max-width: 50ch;
+}
+.exercise__context:empty,
+.exercise__context.hidden { display: none; }
+
+.exercise__options {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border-top: 1px solid var(--border);
+  margin-bottom: 24px;
+}
+.ex-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 14px 16px;
+  border: 0;
+  border-bottom: 1px solid var(--border);
+  border-left: 3px solid transparent;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+  font-family: var(--font-display);
+  transition: background 100ms var(--ease-out);
+  width: 100%;
+}
+.ex-option:hover:not(.is-disabled) { background: var(--surface-2); }
+.ex-option:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.ex-option__l {
+  flex: 0 0 28px;
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-md);
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1;
+  padding-top: 2px;
+}
+.ex-option__t {
+  flex: 1;
+  font-size: var(--fs-h3);
+  color: var(--ink);
+  line-height: 1.4;
+}
+.ex-option.is-correct {
+  border-left-color: var(--success);
+  background: color-mix(in srgb, var(--success) 8%, transparent);
+}
+.ex-option.is-wrong {
+  border-left-color: var(--error);
+  background: color-mix(in srgb, var(--error) 8%, transparent);
+}
+.ex-option.is-disabled {
+  cursor: default;
+  opacity: 0.6;
+}
+
+.exercise__feedback {
+  border-top: 1px solid var(--border);
+  padding: 14px 0;
+  margin-bottom: 14px;
+}
+.exercise__feedback.hidden { display: none; }
+.exercise__feedback-status { color: var(--ink); }
+.exercise__feedback-status.is-correct { color: var(--success); }
+.exercise__feedback-status.is-wrong { color: var(--error); }
+.exercise__feedback-correct {
+  font-family: var(--font-display);
+  font-size: var(--fs-body);
+  color: var(--ink-soft);
+  margin-top: 4px;
+}
+
+.exercise__next.btn--cta--mini { margin-top: 4px; }
+
+/* §4.5 Skeleton state */
+.skeleton-row {
+  background: var(--surface-2);
+  border-radius: var(--r-sm);
+  height: 18px;
+  margin-bottom: 8px;
+}
+.skeleton-row--display { width: 60%; height: 28px; margin: 8px 0 28px; }
+.skeleton-row--option { width: 80%; height: 20px; margin-bottom: 14px; }
+.skeleton-row--option:nth-child(odd) { width: 70%; }
+.exercise__loading-caption {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-sm);
+  color: var(--ink-faint);
+  margin: 24px 0 0;
+}

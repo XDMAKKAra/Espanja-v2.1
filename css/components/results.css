@@ -2,3 +2,90 @@
    Universal results screen styling: eyebrow → big mono score → breakdown
    list → next-action CTAs. Replaces #screen-results, #screen-grammar-results,
    #screen-reading-results visual treatments. No new tokens. */
+
+/* §5 Results view */
+.results { padding: 0; }
+.results__score {
+  margin: 12px 0 4px;
+  font-family: var(--font-mono);
+  font-weight: 600;
+}
+.results__sub {
+  font-family: var(--font-display);
+  margin: 0 0 18px;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.results__sub small {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-sm);
+  color: var(--ink-faint);
+}
+.results__sub .exercise__sep {
+  color: var(--ink-faint);
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-sm);
+}
+.results__coach {
+  font-family: var(--font-display);
+  font-size: var(--fs-body);
+  color: var(--ink-soft);
+  margin: 0 0 32px;
+  max-width: 50ch;
+}
+.results__coach:empty { display: none; }
+
+.results__breakdown { margin: 0 0 32px; }
+.results__breakdown .eyebrow { margin: 0 0 8px; }
+.results__list { border-top: 1px solid var(--border); }
+.results__row {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+.results__row-n { flex: 0 0 36px; color: var(--ink); }
+.results__row-q {
+  flex: 1;
+  font-size: var(--fs-h3);
+  font-family: var(--font-display);
+  color: var(--ink);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.results__row-correct {
+  font-size: var(--fs-body-sm);
+  color: var(--success);
+  font-style: italic;
+}
+.results__row-mark {
+  flex: 0 0 24px;
+  text-align: right;
+  font-family: var(--font-mono);
+  font-weight: 600;
+}
+.results__row--correct .results__row-mark { color: var(--success); }
+.results__row--wrong .results__row-mark { color: var(--error); }
+
+.results__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 24px;
+}
+.results__back {
+  font-family: var(--font-display);
+  font-size: var(--fs-body);
+  color: var(--ink-soft);
+  text-decoration: underline;
+  text-align: center;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  padding: 8px;
+}
+.results__back:hover { color: var(--ink); }
