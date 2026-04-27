@@ -144,12 +144,23 @@ async function saveToBankBulk(mode, level, topic, language, exercises) {
 // ─── Vocab exercises ───────────────────────────────────────────────────────
 
 router.post("/generate", requireAuth, aiLimiter, checkMonthlyCostLimit, async (req, res) => {
-  const { level = "B", topic = "general vocabulary", count = 4, language = "spanish" } = req.body;
+  const { level = "B", topic = "general vocabulary", count = 4, language = "spanish", recentlyShown = [] } = req.body;
 
   if (!VALID_LEVELS.has(level)) return res.status(400).json({ error: "Virheellinen taso" });
   if (!VALID_VOCAB_TOPICS.has(topic)) return res.status(400).json({ error: "Virheellinen aihe" });
   if (!VALID_LANGUAGES.has(language)) return res.status(400).json({ error: "Virheellinen kieli" });
   const clampedCount = Math.max(1, Math.min(10, Number(count) || 4));
+
+  // Sanitize anti-repetition list: array of lowercase strings, ≤40 chars,
+  // ≤30 entries. Used only to nudge the model — bank exercises already
+  // de-dup via the seen_exercises table.
+  const recentList = Array.isArray(recentlyShown)
+    ? recentlyShown
+        .filter((s) => typeof s === "string")
+        .map((s) => s.toLowerCase().trim().slice(0, 40))
+        .filter(Boolean)
+        .slice(-30)
+    : [];
 
   try {
     // Try bank first
@@ -194,7 +205,7 @@ HARD REQUIREMENTS (enforced server-side):
 - EVERY item MUST include a non-empty "context" field: a realistic ${lang.name} sentence of at least 6 words that uses the target word/phrase. This applies to ALL four types, not just "context". For "translate" and "meaning" the context sentence models how the word is used; for "gap" the context is the full sentence with the blank filled in.
 - All four options A-D MUST share the same part of speech as the target word. If the target is a verb, all four options must be verbs in the same tense/mood. If the target is a noun, all four must be nouns (same singular/plural and, when relevant, the same gender). Mixing a verb with a noun, or a singular with a plural, is forbidden.
 - Within this batch of ${clampedCount} items, NO target headword (Spanish lemma) may repeat. Use distinct words for every item.
-
+${recentList.length ? `- ANTI-REPETITION: the student has already seen these target headwords this session — do NOT use any of them as a target word in this batch (variation in options is fine, but pick fresh target lemmas):\n  ${recentList.join(", ")}\n` : ""}
 Return ONLY a JSON array, no markdown:
 [
   {
@@ -432,12 +443,23 @@ router.get("/seed-counts", requireAuth, (_req, res) => {
 // ─── Grammar exercises ─────────────────────────────────────────────────────
 
 router.post("/grammar-drill", requireAuth, aiLimiter, checkMonthlyCostLimit, async (req, res) => {
-  const { topic = "mixed", level = "C", count = 6, language = "spanish" } = req.body;
+  const { topic = "mixed", level = "C", count = 6, language = "spanish", recentlyShown = [] } = req.body;
 
   if (!VALID_GRAMMAR_TOPICS.has(topic)) return res.status(400).json({ error: "Virheellinen kielioppiaihe" });
   if (!VALID_READING_LEVELS.has(level) && !VALID_LEVELS.has(level)) return res.status(400).json({ error: "Virheellinen taso" });
   if (!VALID_LANGUAGES.has(language)) return res.status(400).json({ error: "Virheellinen kieli" });
   const clampedCount = Math.max(1, Math.min(10, Number(count) || 6));
+
+  // Anti-repetition list of rule labels (e.g. "ser/estar", "imperfekti").
+  // Only meaningful for mixed topic — client already gates this — but we
+  // still sanitise defensively.
+  const recentRules = Array.isArray(recentlyShown)
+    ? recentlyShown
+        .filter((s) => typeof s === "string")
+        .map((s) => s.toLowerCase().trim().slice(0, 40))
+        .filter(Boolean)
+        .slice(-20)
+    : [];
 
   try {
     const userId = await getUserId(req);
@@ -481,7 +503,7 @@ YTL LYHYT OPPIMÄÄRÄ SCOPE — MANDATORY:
 - Stay inside B1 / lyhyt oppimäärä scope. Allowed structures: present, preterite, imperfect, present perfect, future (simple), conditional (simple), present subjunctive (ojalá/para que/querer que), ser vs estar, hay vs estar, relative pronouns (que/quien/donde), pronoun order.
 - DO NOT generate items that test: conditional perfect (habría hecho), past subjunctive / imperfect subjunctive (-ara/-iese forms), future subjunctive (-are/-iere), passive voice with ser + por. These are OUT OF SCOPE.
 - When topic=mixed, ensure the batch covers AT LEAST 3 distinct grammar rules (e.g. one ser/estar + one preterite/imperfect + one subjunctive) — not three of the same rule with different exercise formats.
-
+${topic === "mixed" && recentRules.length ? `- ANTI-REPETITION: the student has already drilled these grammar rules in earlier batches this session — strongly prefer DIFFERENT rules in this batch (variety builds confidence; revisiting the same rule batch-after-batch feels stale):\n  ${recentRules.join(", ")}\n` : ""}
 Return ONLY a JSON array (no markdown):
 [
   {
@@ -543,11 +565,22 @@ Return ONLY a JSON array (no markdown):
 // ─── Reading exercises ─────────────────────────────────────────────────────
 
 router.post("/reading-task", requireAuth, softReadingGate, aiStrictLimiter, checkMonthlyCostLimit, async (req, res) => {
-  const { level = "C", topic = "animals and nature", language = "spanish" } = req.body;
+  const { level = "C", topic = "animals and nature", language = "spanish", recentlyShown = [] } = req.body;
 
   if (!VALID_READING_LEVELS.has(level)) return res.status(400).json({ error: "Virheellinen taso" });
   if (!VALID_READING_TOPICS.has(topic)) return res.status(400).json({ error: "Virheellinen aihe" });
   if (!VALID_LANGUAGES.has(language)) return res.status(400).json({ error: "Virheellinen kieli" });
+
+  // Anti-repetition: list of recent text titles. Capped tighter than the
+  // vocab/grammar lists because each title is a much longer string and the
+  // reading-task prompt is already 100+ tokens.
+  const recentTitles = Array.isArray(recentlyShown)
+    ? recentlyShown
+        .filter((s) => typeof s === "string")
+        .map((s) => s.toLowerCase().trim().slice(0, 80))
+        .filter(Boolean)
+        .slice(-10)
+    : [];
 
   try {
     const userId = await getUserId(req);
@@ -568,6 +601,7 @@ Text level: ${level} — ${levelDesc}
 Topic: ${topicContext}
 
 Make the text feel like a REAL source: a blog post, news snippet, interview excerpt, or webpage. Give it a realistic title and source.
+${recentTitles.length ? `\nANTI-REPETITION: the student has already read texts with these titles in earlier sessions — choose a CLEARLY different angle, subject, and title (don't recycle the same scenarios or tropes):\n  ${recentTitles.join("; ")}\n` : ""}
 
 Generate EXACTLY 4 questions after the text:
 1. Multiple choice (monivalinta) — 4 options, 1 correct

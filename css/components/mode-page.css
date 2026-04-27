@@ -183,4 +183,37 @@
 }
 
 /* Outer mode-page wrapper consumes the existing .app-main-inner padding. */
-.mode-page { padding: 0; }
+.mode-page { padding: 0; position: relative; }
+
+/* Per-mode color identity — each mode-page gets a faint corner glow + accent
+   color override on the eyebrow and topic chevron. Same layout, different
+   feel, so vocab doesn't read identical to grammar. Stays within token scale. */
+.mode-page--vocab    { --mode-accent: #0F766E; --mode-glow: rgba(45,212,191,0.18); }
+.mode-page--grammar  { --mode-accent: #6D28D9; --mode-glow: rgba(167,139,250,0.18); }
+.mode-page--reading  { --mode-accent: #C2410C; --mode-glow: rgba(251,146,60,0.18); }
+.mode-page--writing  { --mode-accent: #1D4ED8; --mode-glow: rgba(96,165,250,0.18); }
+.mode-page--verbsprint { --mode-accent: #BE185D; --mode-glow: rgba(244,114,182,0.18); }
+
+.mode-page::before {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  top: -40px;
+  right: -80px;
+  width: 360px;
+  height: 360px;
+  background: radial-gradient(circle, var(--mode-glow, transparent), transparent 65%);
+  z-index: 0;
+}
+.mode-page > * { position: relative; z-index: 1; }
+
+.mode-page--vocab    .eyebrow,
+.mode-page--grammar  .eyebrow,
+.mode-page--reading  .eyebrow,
+.mode-page--writing  .eyebrow,
+.mode-page--verbsprint .eyebrow { color: var(--mode-accent, var(--ink-soft)); }
+.mode-page .mode-topic.is-current .mode-topic__chev { color: var(--mode-accent, var(--accent)); }
+.mode-page .mode-topic.is-current { border-color: var(--mode-accent, var(--accent)); }
+@media (prefers-reduced-motion: reduce) {
+  .mode-page::before { display: none; }
+}

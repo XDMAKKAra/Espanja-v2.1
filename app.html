@@ -30,8 +30,23 @@
   <link rel="stylesheet" href="css/components/mode-page.css" />
   <link rel="stylesheet" href="css/components/exercise.css" />
   <link rel="stylesheet" href="css/components/results.css" />
+  <link rel="stylesheet" href="css/components/profile.css" />
+  <link rel="stylesheet" href="css/components/meteors.css" />
 </head>
 <body>
+
+  <!-- Pre-paint shell-mode hint — toggle auth-mode on body BEFORE first paint
+       so the layout doesn't shift from 3-col grid → 1-col when JS detects no
+       auth token. Eliminates the dashboard CLS 0.163 root cause. -->
+  <script>
+    (function () {
+      try {
+        if (!localStorage.getItem("puheo_token")) {
+          document.body.classList.add("auth-mode");
+        }
+      } catch (e) {}
+    })();
+  </script>
 
   <!-- Skip to main content -->
   <a href="#app-main" class="skip-link">Siirry sisältöön</a>
@@ -102,7 +117,7 @@
       </button>
     </nav>
     <div class="sidebar-footer">
-      <div class="sidebar-user" id="sidebar-user"></div>
+      <button type="button" class="sidebar-user" id="sidebar-user" data-nav="profile" aria-label="Avaa oma sivu"></button>
       <div class="sidebar-pro-slot" id="sidebar-pro-slot"></div>
       <button class="sidebar-item" data-nav="settings" id="nav-settings">
         <span class="sidebar-item-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg></span> Asetukset
@@ -137,31 +152,56 @@
 
   <!-- SCREEN: Auth (login / register) -->
   <div id="screen-auth" class="screen active">
-    <div class="auth-inner">
-      <a href="index.html" class="logo">Puhe<span>o</span></a>
-      <h1 id="auth-title">Kirjaudu sisään</h1>
-      <p class="subtitle">Seuraa edistymistäsi ja jatka siitä mihin jäit.</p>
+    <!-- Sourced: Magic UI grid-pattern (apps/www/registry/magicui/grid-pattern.tsx)
+         — SVG <pattern> tile with a corner-piece path, masked by a radial
+         gradient so the grid fades out at the edges of the viewport. -->
+    <svg class="auth-bg-grid" aria-hidden="true">
+      <defs>
+        <pattern id="auth-grid" width="40" height="40" patternUnits="userSpaceOnUse" x="-1" y="-1">
+          <path d="M.5 40V.5H40" fill="none" stroke="currentColor" stroke-width="0.8"/>
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#auth-grid)"/>
+    </svg>
+    <div class="auth-shell">
+      <aside class="auth-aside" aria-label="Puheo">
+        <a href="index.html" class="auth-aside__logo" aria-label="Puheo etusivu">Puhe<span>o</span></a>
+        <p class="auth-aside__eyebrow">Espanjan yo-koe · lyhyt</p>
+        <h2 class="auth-aside__title">Adaptiivinen treeni 28.9.2026 saakka.</h2>
+        <p class="auth-aside__lead">AI-palaute, oma oppimispolku ja päivän putki — kaikki suomeksi.</p>
+        <ul class="auth-aside__benefits" role="list">
+          <li><svg class="auth-aside__check" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L20 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>60 sekunnin taitotaso-arvio</li>
+          <li><svg class="auth-aside__check" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L20 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Kirjoitelmat YTL-rubriikilla</li>
+          <li><svg class="auth-aside__check" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L20 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Kertaus ennen kuin unohdat</li>
+        </ul>
+        <p class="auth-aside__foot">Suomalainen tuote · Ei mainoksia · Voit perua koska tahansa</p>
+      </aside>
+      <div class="auth-inner">
+        <a href="index.html" class="logo auth-inner__logo">Puhe<span>o</span></a>
+        <h1 id="auth-title">Kirjaudu sisään</h1>
+        <p class="subtitle">Seuraa edistymistäsi ja jatka siitä mihin jäit.</p>
 
-      <div class="auth-tabs">
-        <button class="auth-tab active" id="tab-login">Kirjaudu</button>
-        <button class="auth-tab" id="tab-register">Rekisteröidy</button>
+        <div class="auth-tabs">
+          <button class="auth-tab active" id="tab-login">Kirjaudu</button>
+          <button class="auth-tab" id="tab-register">Rekisteröidy</button>
+        </div>
+
+        <div class="config-block">
+          <label>Sähköposti</label>
+          <input type="email" id="auth-email" class="auth-input" placeholder="sinä@esimerkki.fi" autocomplete="email" aria-label="Sähköposti" />
+        </div>
+        <div class="config-block">
+          <label>Salasana</label>
+          <input type="password" id="auth-password" class="auth-input" placeholder="••••••••" autocomplete="current-password" aria-label="Salasana" />
+        </div>
+
+        <div class="auth-error hidden" id="auth-error"></div>
+        <div class="auth-success hidden" id="auth-success"></div>
+        <button class="btn-primary" id="btn-auth-submit">Kirjaudu sisään →</button>
+
+        <button class="btn-link" id="btn-forgot">Unohditko salasanan?</button>
+        <button class="btn-ghost" id="btn-guest">Jatka ilman tiliä →</button>
       </div>
-
-      <div class="config-block">
-        <label>Sähköposti</label>
-        <input type="email" id="auth-email" class="auth-input" placeholder="sinä@esimerkki.fi" autocomplete="email" aria-label="Sähköposti" />
-      </div>
-      <div class="config-block">
-        <label>Salasana</label>
-        <input type="password" id="auth-password" class="auth-input" placeholder="••••••••" autocomplete="current-password" aria-label="Salasana" />
-      </div>
-
-      <div class="auth-error hidden" id="auth-error"></div>
-      <div class="auth-success hidden" id="auth-success"></div>
-      <button class="btn-primary" id="btn-auth-submit">Kirjaudu sisään →</button>
-
-      <button class="btn-link" id="btn-forgot">Unohditko salasanan?</button>
-      <button class="btn-ghost" id="btn-guest">Jatka ilman tiliä →</button>
     </div>
   </div>
 
@@ -206,7 +246,7 @@
       </div>
 
       <div class="placement-context hidden" id="placement-context"></div>
-      <h2 class="placement-question" id="placement-question"></h2>
+      <h2 class="placement-question loading-shimmer" id="placement-question" aria-live="polite">Valmistellaan kysymystä…</h2>
       <div class="placement-options" id="placement-options"></div>
 
       <div class="placement-explanation hidden" id="placement-explanation">
@@ -388,7 +428,7 @@
 
       <div class="path-mixed-review hidden" id="path-mixed-review">
         <div class="path-mixed-info">
-          <span class="path-mixed-icon">&#127913;</span>
+          <svg class="path-mixed-icon icon-lucide" viewBox="0 0 24 24" aria-hidden="true"><polyline points="16 3 21 3 21 8"/><line x1="4" x2="21" y1="20" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" x2="21" y1="15" y2="21"/><line x1="4" x2="9" y1="4" y2="9"/></svg>
           <div>
             <div class="path-mixed-title">Sekoitettu kertaus</div>
             <div class="path-mixed-sub" id="path-mixed-sub">Harjoittele kaikkia osaamiasi aiheita yhdess&auml; sessiossa</div>
@@ -402,7 +442,7 @@
   <!-- SCREEN: Mastery test start -->
   <div id="screen-mastery-intro" class="screen">
     <div class="mastery-intro-inner">
-      <div class="mastery-intro-icon">&#127919;</div>
+      <svg class="mastery-intro-icon icon-lucide" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
       <div class="mastery-intro-topic" id="mastery-intro-topic">Preteriti</div>
       <p class="mastery-intro-desc" id="mastery-intro-desc">Yksinkertainen mennyt aika: yksitt&auml;iset tapahtumat.</p>
       <div class="mastery-intro-rules">
@@ -435,8 +475,9 @@
     <div class="dashboard-inner">
 
       <header class="dash-greeting">
+        <div class="meteors-fx" id="dash-meteors" hidden></div>
         <p class="eyebrow"><time id="dash-date">—</time></p>
-        <h1 class="display">Hei, <span id="dash-username"></span><span class="accent">.</span></h1>
+        <h1 class="display"><span id="dash-greeting-prefix">Hei</span><span id="dash-greeting-comma" hidden>, </span><span id="dash-username"></span><span class="accent">.</span></h1>
         <p class="dash-greeting__sub" id="dash-motivation"></p>
       </header>
 
@@ -452,7 +493,7 @@
             <span data-g="C">C</span><span data-g="M">M</span><span data-g="E">E</span><span data-g="L">L</span>
           </div>
           <div class="dash-hero-confidence hidden" id="dash-hero-confidence" aria-hidden="true"></div>
-          <div class="dash-hero-sub" id="dash-hero-sub">Tee harjoituksia saadaksesi arvion</div>
+          <div class="dash-hero-sub" id="dash-hero-sub">Aloita yksi harjoitus, niin arvio piirtyy tähän.</div>
           <div class="dash-hero-caption hidden" id="dash-hero-caption"></div>
         </div>
       </button>
@@ -466,6 +507,9 @@
           <p class="grade-explainer-caveat">Tämä on arvio nykyisen harjoitteludatan perusteella, ei virallinen YTL-arvio.</p>
         </div>
       </div>
+
+      <!-- Daily challenge — rotating curated micro-mission -->
+      <div class="daily-challenge hidden" id="daily-challenge"></div>
 
       <!-- Day's drill CTA — unified onboarding / SR / drill action -->
       <button type="button" class="btn--cta" id="dash-day-cta" data-target="vocab" data-kind="drill">
@@ -495,7 +539,7 @@
       <!-- Weak topics card -->
       <div class="dash-weak-topics hidden" id="dash-weak-topics">
         <div class="section-h">
-          <h3>Heikot kohtasi &middot; 7 p&auml;iv&auml;&auml;</h3>
+          <h2>Heikot kohtasi &middot; 7 p&auml;iv&auml;&auml;</h2>
           <a href="#progress">N&auml;yt&auml; kaikki</a>
         </div>
         <div class="dash-weak-list" id="dash-weak-list"></div>
@@ -504,12 +548,12 @@
       <!-- Activity heatmap + progress chart paired on desktop (Pass 1.5) -->
       <div class="dash-grid-row">
         <div class="dash-heatmap-section">
-          <div class="section-h"><h3>Aktiivisuus &middot; 30 p&auml;iv&auml;&auml;</h3></div>
+          <div class="section-h"><h2>Aktiivisuus &middot; 30 p&auml;iv&auml;&auml;</h2></div>
           <div class="dash-heatmap" id="dash-heatmap"></div>
         </div>
 
         <div class="dash-chart-section">
-          <div class="section-h"><h3>Kehitys ajan mittaan</h3></div>
+          <div class="section-h"><h2>Kehitys ajan mittaan</h2></div>
           <div class="dash-chart-container" id="dash-chart">
             <div class="dash-chart-empty">Tee ensimmäinen harjoitus nähdäksesi kehityksesi!</div>
           </div>
@@ -521,7 +565,7 @@
 
       <!-- SR forecast chart -->
       <div class="dash-forecast-section hidden" id="dash-forecast-section">
-        <div class="section-h"><h3>Tulevat kertaukset &middot; 30 p&auml;iv&auml;&auml;</h3></div>
+        <div class="section-h"><h2>Tulevat kertaukset &middot; 30 p&auml;iv&auml;&auml;</h2></div>
         <div class="dash-forecast-chart" id="dash-forecast-chart"></div>
         <div class="dash-forecast-legend" id="dash-forecast-legend">
           <span>Yhteens&auml; <strong id="dash-forecast-total">0</strong> korttia &middot; suurin p&auml;iv&auml;kuorma: <strong id="dash-forecast-max">0</strong></span>
@@ -541,18 +585,18 @@
       <div class="dash-writing-progression hidden" id="dash-writing-progression" aria-live="polite"></div>
 
       <!-- Mode performance cards -->
-      <div class="section-h"><h3>Osa-alueet</h3></div>
+      <div class="section-h"><h2>Osa-alueet</h2></div>
       <div class="dash-modes" id="dash-modes"></div>
 
       <!-- Recommendations + recent activity paired on desktop (Pass 1.5) -->
       <div class="dash-grid-row">
         <div class="dash-recommendations hidden" id="dash-recommendations">
-          <div class="section-h"><h3>Suositukset</h3></div>
+          <div class="section-h"><h2>Suositukset</h2></div>
           <div id="dash-rec-list"></div>
         </div>
 
         <div id="dash-recent-wrap" class="hidden">
-          <div class="section-h"><h3>Viimeisimm&auml;t harjoitukset</h3></div>
+          <div class="section-h"><h2>Viimeisimm&auml;t harjoitukset</h2></div>
           <div id="dash-recent-list"></div>
         </div>
       </div>
@@ -563,7 +607,7 @@
       </div>
 
       <!-- Full exam section -->
-      <div class="section-h" style="margin-top:24px"><h3>Yo-koesimulaatio</h3></div>
+      <div class="section-h" style="margin-top:24px"><h2>Yo-koesimulaatio</h2></div>
       <div class="dash-full-exam-card" id="dash-full-exam-card">
         <div class="dash-full-exam-info">
           <div class="dash-full-exam-title">Tayskoe — 4 osaa, 199p</div>
@@ -1113,27 +1157,27 @@
         <label>Harjoittelutapa</label>
         <div class="mode-picker" id="mode-picker">
           <button class="mode-btn active" data-mode="vocab">
-            <span class="mode-icon">📚</span>
+            <svg class="mode-icon icon-lucide" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
             <span class="mode-title">Sanasto</span>
             <span class="mode-desc">Monivalinta · adaptiivinen</span>
           </button>
           <button class="mode-btn" data-mode="grammar">
-            <span class="mode-icon">🔧</span>
+            <svg class="mode-icon icon-lucide" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
             <span class="mode-title">Puheoppi</span>
             <span class="mode-desc">ser/estar · subj. · kondit.</span>
           </button>
           <button class="mode-btn" data-mode="reading">
-            <span class="mode-icon">📖</span>
+            <svg class="mode-icon icon-lucide" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20"/><path d="M8 7h6"/><path d="M8 11h8"/></svg>
             <span class="mode-title">Luetun ymmärtäminen</span>
             <span class="mode-desc">Teksti + kysymykset</span>
           </button>
           <button class="mode-btn" data-mode="writing">
-            <span class="mode-icon">✍️</span>
+            <svg class="mode-icon icon-lucide" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
             <span class="mode-title">Kirjoittaminen</span>
             <span class="mode-desc">Tehtävä + AI-palaute · 99 p</span>
           </button>
           <button class="mode-btn mode-btn-exam" data-mode="exam">
-            <span class="mode-icon">🎓</span>
+            <svg class="mode-icon icon-lucide" viewBox="0 0 24 24" aria-hidden="true"><path d="M21.42 10.92a1 1 0 0 0 0-1.83L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.83l8.57 3.91a2 2 0 0 0 1.66 0z"/><path d="M22 10v6"/><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/></svg>
             <span class="mode-title">Koeharjoitus</span>
             <span class="mode-desc">Luettu + kirjoitus · ajastettu</span>
           </button>
@@ -1255,7 +1299,7 @@
       <div class="exercise__progress"><i id="progress-fill"></i></div>
 
       <div class="scaffold-indicator hidden" id="scaffold-indicator">
-        <span class="scaffold-fire hidden" id="scaffold-fire">🔥</span>
+        <svg class="scaffold-fire icon-lucide hidden" id="scaffold-fire" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.07-2.14-.22-4.05 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.15.43-2.29 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
         <span class="scaffold-text" id="scaffold-text"></span>
         <button class="scaffold-help-btn hidden" id="scaffold-help-btn">Pyydä vihjettä</button>
       </div>
@@ -1264,7 +1308,7 @@
         <div class="ex-type-badge hidden" id="ex-type-badge"></div>
         <p class="exercise__context hidden" id="ex-context-sentence"></p>
         <p class="question-label" id="question-label">¿Qué significa?</p>
-        <h2 class="display" id="question-text">Loading…</h2>
+        <h2 class="display loading-shimmer" id="question-text" aria-live="polite">Etsitään tehtävää…</h2>
       </div>
 
       <div class="exercise-skeleton-slot hidden" id="exercise-skeleton-slot" aria-live="polite"></div>
@@ -1371,6 +1415,21 @@
       </p>
       <p class="results__coach" id="res-coach"></p>
 
+      <div class="results__stats" id="res-stats" hidden>
+        <div class="results__stat results__stat--ok">
+          <span class="results__stat-n mono-num mono-num--lg" id="res-stat-correct">0</span>
+          <span class="results__stat-l">Oikein</span>
+        </div>
+        <div class="results__stat results__stat--no">
+          <span class="results__stat-n mono-num mono-num--lg" id="res-stat-wrong">0</span>
+          <span class="results__stat-l">Väärin</span>
+        </div>
+        <div class="results__stat">
+          <span class="results__stat-n mono-num mono-num--lg" id="res-stat-time">—</span>
+          <span class="results__stat-l">Aika</span>
+        </div>
+      </div>
+
       <div class="results__breakdown">
         <p class="eyebrow">Yhteenveto</p>
         <div class="results__list" id="res-list"></div>
@@ -1385,7 +1444,9 @@
           <span class="btn--cta__arrow" aria-hidden="true">→</span>
         </button>
         <button class="results__back" id="btn-back-home" type="button">Takaisin valintaan</button>
-        <button class="btn-share" id="btn-share-vocab" hidden>📤 Jaa tulos</button>
+        <button class="results__back" id="btn-share-vocab" type="button"
+                aria-label="Tallenna tulos kuvana, jonka voit jakaa"
+                data-tooltip="Tallenna tulos PNG-kuvana">Jaa tulos &darr;</button>
       </div>
 
       <!-- Compatibility shim spans for legacy IDs still queried by old code paths.
@@ -1421,7 +1482,7 @@
 
       <div class="writing-prompt-block">
         <p class="writing-prompt-label">Tehtävä</p>
-        <p class="writing-prompt-text" id="writing-prompt-text">Loading...</p>
+        <p class="writing-prompt-text loading-shimmer" id="writing-prompt-text" aria-live="polite">Generoidaan tehtävää…</p>
       </div>
 
       <div class="writing-requirements" id="writing-requirements"></div>
@@ -1448,6 +1509,10 @@
           <div class="char-bar-min" id="char-bar-min"></div>
           <div class="char-bar-fill" id="char-bar-fill"></div>
         </div>
+      </div>
+
+      <div class="writing-meta-row">
+        <span class="writing-autosave-indicator is-hidden" id="writing-autosave-indicator" aria-live="polite"></span>
       </div>
 
       <button class="btn-primary" id="btn-submit-writing" disabled>Lähetä arvioitavaksi →</button>
@@ -1486,6 +1551,9 @@
         <div class="feedback-actions">
           <button class="btn-secondary" id="btn-try-again-with-corrections">Yrit&auml; uudestaan korjauksilla</button>
           <button class="btn-secondary" id="btn-try-again">Uusi teht&auml;v&auml;</button>
+          <button class="btn-secondary" id="btn-share-writing"
+                  aria-label="Tallenna arvio kuvana, jonka voit jakaa"
+                  data-tooltip="Tallenna arvio PNG-kuvana">Jaa tulos &darr;</button>
           <button class="btn-primary" id="btn-back-home">Etusivulle &rarr;</button>
         </div>
       </div>
@@ -1511,6 +1579,11 @@
         </div>
 
         <div class="feedback-overall" id="feedback-overall"></div>
+
+        <div class="feedback-next-action hidden" id="feedback-next-action-wrap">
+          <div class="feedback-next-action__label">Seuraava askel</div>
+          <p class="feedback-next-action__text" id="feedback-next-action"></p>
+        </div>
       </aside>
 
     </div>
@@ -1536,7 +1609,7 @@
 
       <div class="question-block" id="gram-question-block">
         <p class="question-label" id="gram-instruction">Täydennä aukko.</p>
-        <h2 class="display" id="gram-sentence">Loading…</h2>
+        <h2 class="display loading-shimmer" id="gram-sentence" aria-live="polite">Etsitään tehtävää…</h2>
       </div>
 
       <div class="exercise-skeleton-slot hidden" id="gram-skeleton-slot" aria-live="polite"></div>
@@ -1577,6 +1650,21 @@
       </p>
       <p class="results__coach" id="gram-res-coach"></p>
 
+      <div class="results__stats" id="gram-res-stats" hidden>
+        <div class="results__stat results__stat--ok">
+          <span class="results__stat-n mono-num mono-num--lg" id="gram-res-stat-correct">0</span>
+          <span class="results__stat-l">Oikein</span>
+        </div>
+        <div class="results__stat results__stat--no">
+          <span class="results__stat-n mono-num mono-num--lg" id="gram-res-stat-wrong">0</span>
+          <span class="results__stat-l">Väärin</span>
+        </div>
+        <div class="results__stat">
+          <span class="results__stat-n mono-num mono-num--lg" id="gram-res-stat-time">—</span>
+          <span class="results__stat-l">Aika</span>
+        </div>
+      </div>
+
       <div class="results__breakdown">
         <p class="eyebrow">Yhteenveto</p>
         <div class="results__list" id="gram-res-list"></div>
@@ -1598,6 +1686,9 @@
           </span>
           <span class="btn--cta__arrow" aria-hidden="true">→</span>
         </button>
+        <button class="results__back" id="btn-share-grammar" type="button"
+                aria-label="Tallenna tulos kuvana, jonka voit jakaa"
+                data-tooltip="Tallenna tulos PNG-kuvana">Jaa tulos &darr;</button>
       </div>
 
       <!-- Compat shim -->
@@ -1647,7 +1738,7 @@
         </details>
 
         <div class="question-block">
-          <h2 class="display" id="reading-question-text">Loading…</h2>
+          <h2 class="display loading-shimmer" id="reading-question-text" aria-live="polite">Etsitään tekstiä…</h2>
         </div>
 
         <div id="reading-options-container">
@@ -1699,6 +1790,21 @@
       </p>
       <p class="results__coach" id="reading-res-coach"></p>
 
+      <div class="results__stats" id="reading-res-stats" hidden>
+        <div class="results__stat results__stat--ok">
+          <span class="results__stat-n mono-num mono-num--lg" id="reading-res-stat-correct">0</span>
+          <span class="results__stat-l">Oikein</span>
+        </div>
+        <div class="results__stat results__stat--no">
+          <span class="results__stat-n mono-num mono-num--lg" id="reading-res-stat-wrong">0</span>
+          <span class="results__stat-l">Väärin</span>
+        </div>
+        <div class="results__stat">
+          <span class="results__stat-n mono-num mono-num--lg" id="reading-res-stat-time">—</span>
+          <span class="results__stat-l">Aika</span>
+        </div>
+      </div>
+
       <div class="results__breakdown">
         <p class="eyebrow">Yhteenveto</p>
         <div class="results__list" id="reading-res-list"></div>
@@ -1713,6 +1819,9 @@
           <span class="btn--cta__arrow" aria-hidden="true">→</span>
         </button>
         <button class="results__back" id="reading-btn-new" type="button">Uusi teksti</button>
+        <button class="results__back" id="btn-share-reading" type="button"
+                aria-label="Tallenna tulos kuvana, jonka voit jakaa"
+                data-tooltip="Tallenna tulos PNG-kuvana">Jaa tulos &darr;</button>
       </div>
 
       <!-- Compat shim -->
@@ -1732,7 +1841,7 @@
       <div class="progress-bar"><div class="progress-fill" id="mastery-progress-fill"></div></div>
       <div class="question-block">
         <p class="question-label" id="mastery-label">Kysymys</p>
-        <h2 id="mastery-question">Loading...</h2>
+        <h2 class="loading-shimmer" id="mastery-question" aria-live="polite">Valmistellaan kysymystä…</h2>
       </div>
       <div class="options-grid" id="mastery-options-grid"></div>
       <div class="explanation-block hidden" id="mastery-explanation-block">
@@ -1888,12 +1997,23 @@
 
   <section class="rail__group" aria-labelledby="rail-today-h">
     <h2 class="rail__h" id="rail-today-h">Tänään</h2>
-    <div class="rail-stat">
-      <div class="rail-stat__v"><span class="mono-num" id="dash-streak">0</span><small>pv</small></div>
+    <div class="rail-stat" id="dash-streak-stat">
+      <div class="rail-stat__v">
+        <svg class="streak-flame icon-lucide is-dim" id="dash-streak-flame" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.07-2.14-.22-4.05 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.15.43-2.29 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
+        <span class="mono-num" id="dash-streak">0</span><small>pv</small>
+      </div>
       <div class="rail-stat__l">Putki</div>
     </div>
-    <div class="rail-stat">
-      <div class="rail-stat__v"><span class="mono-num" id="dash-yo-readiness">—</span><small>%</small></div>
+    <div class="rail-stat rail-stat--readiness">
+      <div class="rail-readiness" aria-hidden="true">
+        <svg class="rail-readiness-ring" viewBox="0 0 80 80">
+          <circle class="rail-readiness-track" cx="40" cy="40" r="34"/>
+          <circle class="rail-readiness-fill"  cx="40" cy="40" r="34" id="dash-yo-readiness-ring"/>
+        </svg>
+        <div class="rail-readiness-num">
+          <span class="mono-num" id="dash-yo-readiness">—</span><small>%</small>
+        </div>
+      </div>
       <div class="rail-stat__l">YO-valmius<span class="rail-stat__delta" id="dash-yo-delta"></span></div>
     </div>
     <div class="rail-stat">
@@ -1919,6 +2039,11 @@
     </div>
   </section>
 
+  <section class="rail__group" aria-labelledby="rail-word-h">
+    <h2 class="rail__h" id="rail-word-h">Sana päivässä</h2>
+    <div class="word-of-day" id="word-of-day"></div>
+  </section>
+
   <div class="rail-footer">
     Puheo · synkattu <span id="dash-rail-sync">—</span>
   </div>
@@ -1936,6 +2061,66 @@
     window.__SENTRY_DSN = "https://7cb568cdf1a71bc8881775edab27ab86@o4511236850909184.ingest.de.sentry.io/4511236858511440";
   </script>
   <!-- SCREEN: Settings / profile editor -->
+  <div id="screen-profile" class="screen">
+    <div class="profile-inner">
+      <header class="profile-hero">
+        <div class="profile-avatar" id="profile-avatar" aria-hidden="true">—</div>
+        <div class="profile-hero-meta">
+          <h1 class="profile-name" id="profile-name">Käyttäjä</h1>
+          <p class="profile-handle" id="profile-handle">—</p>
+          <div class="profile-badges" id="profile-badges"></div>
+        </div>
+      </header>
+
+      <section class="profile-stats" aria-label="Tilastot">
+        <div class="profile-stat profile-stat--success">
+          <span class="profile-stat-label">Putki</span>
+          <span class="profile-stat-value" id="profile-stat-streak">0<span class="profile-stat-unit">päivää</span></span>
+          <span class="profile-stat-hint" id="profile-stat-streak-hint">Aloita uusi putki tänään.</span>
+        </div>
+        <div class="profile-stat">
+          <span class="profile-stat-label">Yhteensä</span>
+          <span class="profile-stat-value" id="profile-stat-total">0<span class="profile-stat-unit">harjoitusta</span></span>
+        </div>
+        <div class="profile-stat">
+          <span class="profile-stat-label">Tällä viikolla</span>
+          <span class="profile-stat-value" id="profile-stat-week">0<span class="profile-stat-unit">harjoitusta</span></span>
+        </div>
+        <div class="profile-stat profile-stat--accent">
+          <span class="profile-stat-label">Taso</span>
+          <span class="profile-stat-value" id="profile-stat-level">—</span>
+        </div>
+      </section>
+
+      <section class="profile-section">
+        <div class="profile-section-head">
+          <h2 class="profile-section-title">Harjoitukset osa-alueittain</h2>
+        </div>
+        <div class="profile-modes" id="profile-modes"></div>
+      </section>
+
+      <section class="profile-section">
+        <div class="profile-section-head">
+          <h2 class="profile-section-title">Saavutukset</h2>
+          <span class="profile-section-meta" id="profile-achievements-count">0 / 0</span>
+        </div>
+        <div class="profile-achievements" id="profile-achievements"></div>
+      </section>
+
+      <section class="profile-section">
+        <div class="profile-section-head">
+          <h2 class="profile-section-title">Viimeisimmät harjoitukset</h2>
+          <button type="button" class="profile-section-link" id="profile-link-settings">Asetukset →</button>
+        </div>
+        <div class="profile-activity" id="profile-activity"></div>
+        <div class="profile-empty hidden" id="profile-empty">
+          <p>Ei vielä harjoituksia tällä tilillä — tee ensimmäinen, niin se ilmestyy tähän.</p>
+          <button type="button" class="btn-primary" id="profile-empty-cta">Aloita harjoitus →</button>
+        </div>
+      </section>
+    </div>
+  </div>
+
   <div id="screen-settings" class="screen">
     <div class="settings-inner">
       <div class="settings-header">
@@ -1946,7 +2131,53 @@
       <section class="settings-section">
         <h2 class="settings-section-title">Opiskeluprofiili</h2>
         <div class="settings-rows" id="settings-profile-rows" aria-busy="true">
-          <p class="settings-loading">Ladataan profiilia…</p>
+          <div class="skel skel--text" style="height:18px; max-width:65%; margin:14px 0;"></div>
+          <div class="skel skel--text" style="height:18px; max-width:55%; margin:14px 0;"></div>
+          <div class="skel skel--text" style="height:18px; max-width:60%; margin:14px 0;"></div>
+          <span class="sr-only">Ladataan profiilia…</span>
+        </div>
+      </section>
+
+      <section class="settings-section">
+        <h2 class="settings-section-title">Ulkoasu</h2>
+        <div class="settings-rows">
+          <div class="settings-row" data-field="theme">
+            <div class="settings-row-main">
+              <div class="settings-row-label">Teema</div>
+              <div class="settings-row-value" id="settings-theme-value">Vaalea — seuraa järjestelmää</div>
+            </div>
+            <div class="settings-theme-toggle" role="radiogroup" aria-label="Teema">
+              <button type="button" class="settings-theme-btn is-current" data-theme="auto" role="radio" aria-checked="true">Auto</button>
+              <button type="button" class="settings-theme-btn" data-theme="light" role="radio" aria-checked="false">Vaalea</button>
+              <button type="button" class="settings-theme-btn" data-theme="dark" role="radio" aria-checked="false">Tumma</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="settings-section">
+        <h2 class="settings-section-title">Tili</h2>
+        <div class="settings-rows">
+          <div class="settings-row">
+            <div class="settings-row-main">
+              <div class="settings-row-label">Sähköposti</div>
+              <div class="settings-row-value" id="settings-account-email">—</div>
+            </div>
+          </div>
+          <div class="settings-row">
+            <div class="settings-row-main">
+              <div class="settings-row-label">Tilaus</div>
+              <div class="settings-row-value" id="settings-account-plan">Ilmainen</div>
+            </div>
+            <button type="button" class="settings-row-edit" id="settings-manage-billing" hidden>Hallitse</button>
+          </div>
+          <div class="settings-row settings-row--danger">
+            <div class="settings-row-main">
+              <div class="settings-row-label">Kirjaudu ulos</div>
+              <div class="settings-row-value">Voit kirjautua takaisin sisään koska tahansa.</div>
+            </div>
+            <button type="button" class="settings-row-edit" id="settings-signout">Kirjaudu ulos</button>
+          </div>
         </div>
       </section>
     </div>

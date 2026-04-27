@@ -156,19 +156,30 @@
   align-items: center;
   gap: 18px;
   width: 100%;
-  padding: 18px 20px;
+  padding: 20px 22px;
   background: var(--ink);
   color: var(--bg);
   border: 0;
-  border-radius: var(--r-md);
+  border-radius: var(--r-lg, 16px);
   cursor: pointer;
   text-align: left;
   font-family: var(--font-display);
   margin-bottom: 36px;
-  transition: background 120ms var(--ease-out);
+  /* Subtle elevation so the CTA looks lifted off the surface, not just a black
+     bar dropped on the page (P2-7 in BUGS.md). */
+  box-shadow: 0 1px 0 rgba(15, 23, 42, 0.04), 0 18px 32px -22px rgba(15, 23, 42, 0.45);
+  transition: background 150ms var(--ease-out), transform 150ms var(--ease-out), box-shadow 150ms var(--ease-out);
 }
-.btn--cta:hover { background: #1F2937; }
+.btn--cta:hover {
+  background: #1F2937;
+  transform: translateY(-1px);
+  box-shadow: 0 1px 0 rgba(15, 23, 42, 0.04), 0 22px 36px -22px rgba(15, 23, 42, 0.5);
+}
+.btn--cta:active { transform: translateY(0); }
 .btn--cta:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) {
+  .btn--cta, .btn--cta:hover { transform: none; }
+}
 
 .btn--cta__title {
   flex: 1;
@@ -184,7 +195,10 @@
   font-size: var(--fs-mono-sm);
   font-weight: 500;
   letter-spacing: 0.04em;
-  color: var(--ink-faint);
+  /* Was --ink-faint (#6B7280) on --ink (#111827) — failed WCAG ~3.4:1.
+     CCFBF1 (mint-20) on #111827 reads at ~13:1 and matches the brand. */
+  color: #CCFBF1;
+  opacity: 0.78;
 }
 .btn--cta__arrow {
   font-size: var(--fs-h3);

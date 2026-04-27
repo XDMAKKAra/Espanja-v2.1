@@ -6,6 +6,7 @@ import { showLoading, showLoadingError, showSkeleton, showFetchError } from "../
 import { trackCheckoutStarted, trackProUpsellShown, trackExerciseCompleted, track } from "../analytics.js";
 import { shouldFireUpsell, UPSELL_TRIGGERS, LAST_FIRED_KEY, SESSION_COUNT_KEY } from "../../lib/paywall.js";
 import { recordWritingResult, getRecentErrorCategories } from "../features/writingProgression.js";
+import { generateWritingShareCard } from "../features/shareCard.js";
 
 let _deps = {};
 export function initWriting({ loadDashboard, saveProgress }) {
@@ -315,10 +316,70 @@ function renderWritingTask(task) {
   // policy change, but a hard cap still protects us from 10× wallpaper paste).
   input.maxLength = Math.round(task.charMax * 1.5);
   $("char-max").textContent = task.charMax;
+
+  // Try to restore an in-progress draft for the same prompt (≤ 24 h old).
+  const restored = readWritingDraft(task);
+  const indicator = $("writing-autosave-indicator");
+  if (restored) {
+    input.value = restored.text;
+    if (indicator) {
+      indicator.textContent = `↩ Palautettu kesken jäänyt vastaus (tallennettu ${formatHHMM(restored.at)})`;
+      indicator.classList.remove("is-hidden");
+      indicator.classList.add("is-restored");
+    }
+  } else if (indicator) {
+    indicator.classList.add("is-hidden");
+    indicator.classList.remove("is-restored");
+    indicator.textContent = "";
+  }
+
   updateCharCounter();
 
   const minPct = (task.charMin / task.charMax) * 100;
   $("char-bar-min").style.left = `${minPct}%`;
+}
+
+const WRITING_DRAFT_KEY = "puheo_writing_draft";
+const WRITING_DRAFT_TTL_MS = 24 * 60 * 60 * 1000;
+let _writingAutosaveTimer = null;
+
+function readWritingDraft(forTask) {
+  try {
+    const raw = localStorage.getItem(WRITING_DRAFT_KEY);
+    if (!raw) return null;
+    const d = JSON.parse(raw);
+    if (!d || !d.text || !d.task) return null;
+    if (forTask && d.task.prompt !== forTask.prompt) return null;
+    if (d.at && Date.now() - d.at > WRITING_DRAFT_TTL_MS) return null;
+    return d;
+  } catch { return null; }
+}
+
+function formatHHMM(ts) {
+  const t = new Date(ts);
+  return `${String(t.getHours()).padStart(2, "0")}.${String(t.getMinutes()).padStart(2, "0")}`;
+}
+
+function autosaveWriting() {
+  const inputEl = $("writing-input");
+  if (!inputEl) return;
+  const text = inputEl.value;
+  const task = state.currentWritingTask;
+  if (!task || !text || !text.trim()) return;
+  const at = Date.now();
+  try {
+    localStorage.setItem(WRITING_DRAFT_KEY, JSON.stringify({ text, task, at }));
+  } catch { return; }
+  const ind = $("writing-autosave-indicator");
+  if (ind) {
+    ind.textContent = `Tallennettu klo ${formatHHMM(at)}`;
+    ind.classList.remove("is-hidden", "is-restored");
+  }
+}
+
+function queueWritingAutosave() {
+  if (_writingAutosaveTimer) clearTimeout(_writingAutosaveTimer);
+  _writingAutosaveTimer = setTimeout(autosaveWriting, 800);
 }
 
 function countChars(text) {
@@ -386,6 +447,7 @@ function updateCharCounter() {
 }
 
 $("writing-input").addEventListener("input", updateCharCounter);
+$("writing-input").addEventListener("input", queueWritingAutosave);
 
 $("btn-submit-writing").addEventListener("click", async () => {
   const text = $("writing-input").value.trim();
@@ -699,12 +761,43 @@ function renderWritingFeedback(result) {
   }
 
   $("feedback-overall").textContent = result.overall_feedback_fi || "";
+
+  const naWrap = $("feedback-next-action-wrap");
+  const naText = $("feedback-next-action");
+  if (naWrap && naText) {
+    if (result.next_action_fi && String(result.next_action_fi).trim()) {
+      naText.textContent = result.next_action_fi;
+      naWrap.classList.remove("hidden");
+    } else {
+      naWrap.classList.add("hidden");
+      naText.textContent = "";
+    }
+  }
 }
 
 $("btn-try-again").addEventListener("click", () => loadWritingTask());
 $("btn-back-home").addEventListener("click", () =>
   isLoggedIn() ? _deps.loadDashboard() : show("screen-start")
 );
+
+const shareBtn = $("btn-share-writing");
+if (shareBtn) {
+  shareBtn.addEventListener("click", async () => {
+    if (!_lastFeedback) return;
+    shareBtn.disabled = true;
+    const original = shareBtn.textContent;
+    shareBtn.textContent = "Luodaan kuvaa…";
+    try {
+      await generateWritingShareCard(_lastFeedback);
+      shareBtn.textContent = "Tallennettu ✓";
+      setTimeout(() => { shareBtn.textContent = original; shareBtn.disabled = false; }, 1800);
+    } catch (err) {
+      console.error("Share card generation failed:", err);
+      shareBtn.textContent = "Yritä uudelleen";
+      setTimeout(() => { shareBtn.textContent = original; shareBtn.disabled = false; }, 1800);
+    }
+  });
+}
 
 // Retry with corrections: prefill textarea with original text, stay on same task
 const retryBtn = $("btn-try-again-with-corrections");

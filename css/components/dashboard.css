@@ -135,7 +135,52 @@
 
 /* ── DASHBOARD GREETING (editorial redesign T7) ── */
 .dash-greeting {
+  position: relative;
+  isolation: isolate;
   margin-bottom: 32px;
+  /* Floor so the meteors-fx (position:absolute; inset:0) has something to clip. */
+  min-height: 96px;
+}
+.dash-greeting > .eyebrow,
+.dash-greeting > .display,
+.dash-greeting > .dash-greeting__sub { position: relative; z-index: 1; }
+
+/* Blur-fade arrival (sourced: Magic UI blur-fade.tsx — opacity + Y-offset
+   + filter:blur on entry). Pure CSS; the .dash-greeting--in modifier is
+   added by dashboard.js via rAF after renderDashboard so the initial
+   styles commit before the transition kicks in. */
+.dash-greeting > .eyebrow,
+.dash-greeting > .display,
+.dash-greeting > .dash-greeting__sub {
+  opacity: 0;
+  transform: translateY(6px);
+  filter: blur(6px);
+  transition:
+    opacity 480ms cubic-bezier(0.22, 0.61, 0.36, 1),
+    transform 520ms cubic-bezier(0.22, 0.61, 0.36, 1),
+    filter 520ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  transition-delay: var(--bf-delay, 0ms);
+  will-change: opacity, transform, filter;
+}
+.dash-greeting--in > .eyebrow,
+.dash-greeting--in > .display,
+.dash-greeting--in > .dash-greeting__sub {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+.dash-greeting > .eyebrow            { --bf-delay: 0ms; }
+.dash-greeting > .display            { --bf-delay: 80ms; }
+.dash-greeting > .dash-greeting__sub { --bf-delay: 160ms; }
+@media (prefers-reduced-motion: reduce) {
+  .dash-greeting > .eyebrow,
+  .dash-greeting > .display,
+  .dash-greeting > .dash-greeting__sub {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    transition: none;
+  }
 }
 .dash-greeting .display {
   margin: 8px 0 12px;
@@ -185,7 +230,17 @@
 .dash-mode-pct {
   font-family: var(--font-mono); font-size: 14px; font-weight: 700; color: var(--success);
 }
-.dash-mode-empty { color: var(--ink-soft); font-size: 11px; font-family: var(--font-mono); }
+.dash-mode-empty {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.2;
+}
+.dash-mode-empty__label { color: var(--ink-faint); letter-spacing: 0.04em; text-transform: uppercase; }
+.dash-mode-empty__cta { color: var(--accent); font-weight: 600; }
 
 /* .dash-section-label removed — replaced by .section-h <h3> from typography.css */
 .dash-recent-wrap { margin-bottom: 20px; }
@@ -291,7 +346,13 @@
 .dash-hero-confidence { display: none; }
 
 /* Tier modifiers — tone the circle border by tier (no fill) */
-.dash-hero-grade--tier-none .dash-hero-grade-circle { border-color: var(--border-strong); color: var(--ink-faint); }
+.dash-hero-grade--tier-none .dash-hero-grade-circle {
+  /* Dashed "to be filled in" signal — much more deliberate than a dim solid ring. */
+  border-color: var(--border-strong);
+  color: var(--ink-faint);
+  border-style: dashed;
+  border-width: 2px;
+}
 .dash-hero-grade--tier-low  .dash-hero-grade-circle { border-color: var(--ink-soft); }
 .dash-hero-grade--tier-mid  .dash-hero-grade-circle { border-color: var(--ink); }
 .dash-hero-grade--tier-high .dash-hero-grade-circle { border-color: var(--accent-hover); color: var(--accent-hover); }
@@ -301,6 +362,14 @@
 
 /* ── ACTIVITY HEATMAP — single mint scale ── */
 .dash-heatmap-section { margin-bottom: 28px; }
+.dash-heatmap-empty {
+  margin: 12px 0 0;
+  font-family: var(--font-display);
+  font-size: var(--fs-body-sm, 13px);
+  color: var(--ink-faint);
+  text-align: center;
+  letter-spacing: 0.01em;
+}
 .dash-heatmap {
   display: grid;
   grid-template-rows: repeat(7, 1fr);
@@ -382,10 +451,31 @@
 }
 .dash-chart-empty {
   font-family: var(--font-display);
-  font-size: var(--fs-body-sm);
   color: var(--ink-faint);
-  padding: 32px 0;
+  padding: 24px 16px;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+.dash-chart-empty__art {
+  width: 100px;
+  height: 50px;
+  color: var(--accent);
+  opacity: 0.6;
+}
+.dash-chart-empty__title {
+  font-size: var(--fs-body, 16px);
+  color: var(--ink-soft);
+  font-weight: 600;
+  margin: 4px 0 0;
+}
+.dash-chart-empty__sub {
+  font-size: var(--fs-body-sm, 13px);
+  color: var(--ink-faint);
+  margin: 0;
+  max-width: 28ch;
 }
 
 /* ── DASHBOARD MODE CARDS: clickable ── */
@@ -413,6 +503,95 @@
 
 /* .dash-stat-streak-active — removed in T9, re-added in T10 rail */
 
+/* Daily challenge — rotating micro-mission card on the dashboard. */
+.daily-challenge {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent-hover);
+  border-radius: var(--r-md);
+  padding: 18px 20px;
+  margin: 0 0 16px;
+}
+.daily-challenge.hidden { display: none; }
+.daily-challenge__head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.daily-challenge__kicker {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-hover);
+}
+.daily-challenge__mode {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--ink-faint);
+}
+.daily-challenge__mode::before { content: "·"; margin-right: 6px; color: var(--ink-faint); }
+.daily-challenge__title {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--ink);
+  margin: 0 0 4px;
+}
+.daily-challenge__desc {
+  font-size: 14px;
+  color: var(--ink-soft);
+  line-height: 1.5;
+  margin: 0 0 14px;
+}
+.daily-challenge__actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.daily-challenge__skip {
+  background: transparent;
+  border: 0;
+  color: var(--ink-faint);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  padding: 6px 0;
+}
+.daily-challenge__skip:hover { color: var(--ink); }
+
+.daily-challenge--done {
+  border-left-color: var(--success, #22c55e);
+  background: color-mix(in srgb, var(--success, #22c55e) 6%, var(--surface));
+}
+.daily-challenge--done .daily-challenge__kicker { color: var(--success, #22c55e); }
+.daily-challenge__desc--done {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  color: var(--ink);
+}
+.daily-challenge__check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  background: var(--success, #22c55e);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
 
 .dash-full-exam-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:20px; display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:16px; }
 .dash-full-exam-title { font-weight:700; font-size:15px; margin-bottom:4px; }

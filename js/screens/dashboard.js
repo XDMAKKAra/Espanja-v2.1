@@ -9,10 +9,70 @@ import { icon, MODE_ICONS } from "../ui/icons.js";
 import { getRecentWritingDimensions, computeReadinessMap } from "../features/writingProgression.js";
 import { hideAppCountdown } from "./onboarding.js";
 import { renderDashboardCta } from "./dash-cta.js";
+import { renderWordOfDayInto } from "../features/wordOfDay.js";
+import { renderDailyChallengeInto, markModeCompletedToday } from "../features/dailyChallenge.js";
+import { celebrateStreakMilestone } from "../features/celebrate.js";
+import { countUp } from "./mode-page.js";
+import { mountMeteors, unmountMeteors } from "../features/meteors.js";
 
 let _deps = {};
 export function initDashboard({ loadGrammarDrill, loadReadingTask, loadWritingTask, startCheckout, openBillingPortal, startMockExam, showModePage, loadNextBatch, showProUpsell }) {
   _deps = { loadGrammarDrill, loadReadingTask, loadWritingTask, startCheckout, openBillingPortal, startMockExam, showModePage, loadNextBatch, showProUpsell };
+}
+
+// ── Motivation copy ─────────────────────────────────────────────────────────
+// Variable, context-aware Finnish motivation. Rotates daily so the dashboard
+// doesn't repeat the same line for a week of practice.
+const MOTIVATION = {
+  zero: [
+    "Aloita ensimmäinen harjoitus — pieni alku riittää.",
+    "Yksi harjoitus tänään, ja olet käynnissä.",
+    "Pieni alku tänään → suurempi ote ensi viikolla.",
+  ],
+  zeroStreak: [
+    "Jatka harjoittelua tänään — pieni rutiini riittää.",
+    "Tänään paras päivä aloittaa uusi putki.",
+    "10 minuuttia espanjaa — ja tilanne paranee.",
+  ],
+  ones: [
+    "Hyvä alku — tee yksi harjoitus jatkaaksesi.",
+    "Putki kasvaa askel kerrallaan.",
+    "Yksi harjoitus pitää sinut mukana.",
+  ],
+  threes: [
+    "Vauhti päällä — harjoittele tänään ja pidä putki.",
+    "Tämä alkaa kuulostamaan rutiinilta. Hyvä!",
+    "Kolme päivää — aivot oppivat parhaiten kertauksesta.",
+    "Jatka niin — pieni päivittäinen toisto kantaa pitkälle.",
+  ],
+  weeks: [
+    "🔥 Viikon putki — espanjasi kiittää sinua.",
+    "🔥 Seitsemän päivää! YO-rutiini alkaa rakentua.",
+    "🔥 Viikko espanjaa peräkkäin — ei pieni juttu.",
+  ],
+  months: [
+    "🔥 Yli viikko mennyt — tämä on jo tapa.",
+    "🔥 Putki kasvaa — pidä kiinni.",
+    "🔥 Sinnikkyys palkitaan YTL-rubriikissa.",
+  ],
+  marathon: [
+    "🔥 Kuukauden putki — tämä on todellista omistautumista.",
+    "🔥 Kuukausi! Espanja on osa arkeasi.",
+    "🔥 Yli 30 päivää — vauhti vie kokeeseen asti.",
+  ],
+};
+
+function pickMotivation(streak = 0, totalSessions = 0) {
+  let bucket;
+  if (totalSessions === 0) bucket = MOTIVATION.zero;
+  else if (streak === 0) bucket = MOTIVATION.zeroStreak;
+  else if (streak >= 30) bucket = MOTIVATION.marathon;
+  else if (streak >= 7) bucket = streak >= 14 ? MOTIVATION.months : MOTIVATION.weeks;
+  else if (streak >= 3) bucket = MOTIVATION.threes;
+  else bucket = MOTIVATION.ones;
+  // Rotate by UTC day so the same line doesn't repeat day-after-day.
+  const day = Math.floor(Date.now() / 86400000);
+  return bucket[((day % bucket.length) + bucket.length) % bucket.length];
 }
 
 export const MODE_META = {
@@ -66,8 +126,23 @@ function renderDashboard({
       }, 0);
     }
   }
-  const name = getAuthEmail() ? getAuthEmail().split("@")[0] : "sinä";
+  const rawEmail = getAuthEmail();
+  const name = rawEmail ? rawEmail.split("@")[0] : "";
   $("dash-username").textContent = name;
+  // Hide the connecting comma when there's no name — renders as plain "Hei." rather than "Hei, ."
+  const comma = document.getElementById("dash-greeting-comma");
+  if (comma) comma.hidden = !name;
+
+  // Time-aware Finnish greeting — defaults to "Hei" outside the four named windows.
+  const greetEl = document.getElementById("dash-greeting-prefix");
+  if (greetEl) {
+    const h = new Date().getHours();
+    let g = "Hei";
+    if (h >= 5 && h < 11) g = "Huomenta";
+    else if (h >= 11 && h < 17) g = "Päivää";
+    else if (h >= 17 && h < 23) g = "Iltaa";
+    greetEl.textContent = g;
+  }
 
   const dateEl = document.getElementById("dash-date");
   if (dateEl) {
@@ -104,17 +179,19 @@ function renderDashboard({
 
   const motivationEl = $("dash-motivation");
   if (motivationEl) {
-    if (totalSessions === 0) {
-      motivationEl.textContent = "Aloita ensimmäinen harjoitus!";
-    } else if (streak >= 7) {
-      motivationEl.textContent = `🔥 Viikon putki — fantastista!`;
-    } else if (streak >= 3) {
-      motivationEl.textContent = `⚡ ${streak} päivän putki — jatka niin!`;
-    } else if (streak === 0) {
-      motivationEl.textContent = "Jatka harjoittelua tänään!";
-    } else {
-      motivationEl.textContent = `${totalSessions} harjoitusta tehty — hienoa työtä!`;
-    }
+    motivationEl.textContent = pickMotivation(streak, totalSessions);
+  }
+
+  // Blur-fade arrival on the hero header (sourced: Magic UI blur-fade).
+  // Defer one frame so the initial-state styles commit, then add the
+  // `--in` modifier to drive the staggered transition. Idempotent — the
+  // class is harmless to re-add.
+  const heroHeader = document.querySelector("#screen-dashboard .dash-greeting");
+  if (heroHeader) {
+    heroHeader.classList.remove("dash-greeting--in");
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      heroHeader.classList.add("dash-greeting--in");
+    }));
   }
 
   // TODO: removed in T8 (unified into dash-day-cta) — .dash-onboarding-banner deleted from app.html
@@ -129,12 +206,36 @@ function renderDashboard({
 
   const streakEl = $("dash-streak");
   if (streakEl) {
-    streakEl.textContent = streak;
-    streakEl.className = streak >= 3 ? "dash-stat-value dash-stat-streak-active" : "dash-stat-value";
+    streakEl.className = streak >= 3 ? "mono-num dash-stat-streak-active" : "mono-num";
+    countUp(streakEl, streak, streak >= 30 ? 1600 : 1100);
+  }
+  // Once-per-crossing milestone confetti (3 / 7 / 30 days). Cheap call: gated
+  // by localStorage and prefers-reduced-motion in the helper itself.
+  celebrateStreakMilestone(streak).catch(() => {});
+
+  // Premium decoration: meteors fall behind the dashboard hero once the
+  // user is on a "hot" streak (≥ 7 days). Mount idempotently — re-renders of
+  // the dashboard won't re-stack meteors. Unmount when the streak breaks.
+  const meteorsEl = document.getElementById("dash-meteors");
+  if (meteorsEl) {
+    if (streak >= 7) mountMeteors(meteorsEl, { count: streak >= 30 ? 24 : 16 });
+    else unmountMeteors(meteorsEl);
+  }
+  renderWordOfDayInto(document.getElementById("word-of-day"));
+  renderDailyChallengeInto(document.getElementById("daily-challenge"), {
+    onAccept: (c) => { try { navigateToMode(c.mode); } catch { /* fallback: stay on dashboard */ } },
+  });
+
+  const flameEl = document.getElementById("dash-streak-flame");
+  if (flameEl) {
+    flameEl.classList.toggle("is-dim", streak < 1);
+    flameEl.classList.toggle("streak-flame--warm", streak >= 1 && streak < 7);
+    flameEl.classList.toggle("streak-flame--hot", streak >= 7);
+    flameEl.classList.toggle("streak-flame--inferno", streak >= 30);
   }
 
   const totalEl = $("dash-total-sessions");
-  if (totalEl) totalEl.textContent = totalSessions;
+  if (totalEl) countUp(totalEl, totalSessions, 1300);
 
   // YO-readiness rail stat — filled async by loadAndRenderReadinessMap below;
   // dash-yo-delta has no delta source yet (TODO: wire when API exposes it).
@@ -211,7 +312,7 @@ function renderDashboard({
           : s.avgPct != null
           ? `<div class="dash-mode-stat-label">Keskim.</div><div class="dash-mode-pct">${s.avgPct}%</div>`
           : "")
-      : `<div class="dash-mode-empty">—</div>`;
+      : `<div class="dash-mode-empty"><span class="dash-mode-empty__label">Ei vielä</span><span class="dash-mode-empty__cta">Aloita →</span></div>`;
     card.innerHTML = `
       <div class="dash-mode-left">
         <span class="dash-mode-icon">${meta.icon}</span>
@@ -367,7 +468,19 @@ function renderProgressChart(chartData) {
   const pts = chartData.map(logToGradeIdx).filter((g) => g !== null);
 
   if (pts.length === 0) {
-    el.innerHTML = `<div class="dash-chart-empty">Tee ensimmäinen harjoitus nähdäksesi kehityksesi!</div>`;
+    el.innerHTML = `
+      <div class="dash-chart-empty">
+        <svg class="dash-chart-empty__art" viewBox="0 0 120 60" aria-hidden="true">
+          <defs><linearGradient id="emptySpark" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="currentColor" stop-opacity="0"/>
+            <stop offset="50%" stop-color="currentColor" stop-opacity="0.55"/>
+            <stop offset="100%" stop-color="currentColor" stop-opacity="0"/>
+          </linearGradient></defs>
+          <path d="M2 50 Q 30 50 36 36 T 60 30 T 90 18 T 118 12" fill="none" stroke="url(#emptySpark)" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="3 3"/>
+        </svg>
+        <p class="dash-chart-empty__title">Käyrä alkaa täältä.</p>
+        <p class="dash-chart-empty__sub">Tee yksi harjoitus, niin näet ensimmäisen pisteen.</p>
+      </div>`;
     return;
   }
 
@@ -382,41 +495,56 @@ function renderProgressChart(chartData) {
 
   let s = [];
 
+  // Horizontal-only grid + axis labels (sourced: shadcn line chart aesthetic
+  // — CartesianGrid vertical={false}, no axis lines, only labels). Tokens
+  // pulled via currentColor so we can drive both via the SVG's parent
+  // `style="color: var(--ink-faint)"`.
   GRADES.forEach((g, i) => {
     const yy = cy(i).toFixed(1);
-    s.push(`<line x1="${PL}" y1="${yy}" x2="${VW - PR}" y2="${yy}" stroke="rgba(245,232,224,0.05)" stroke-width="0.6"/>`);
-    s.push(`<text x="${PL - 4}" y="${(cy(i) + 3.5).toFixed(1)}" text-anchor="end" font-size="7.5" fill="rgba(245,232,224,0.28)" font-family="DM Mono,monospace">${g}</text>`);
+    s.push(`<line x1="${PL}" y1="${yy}" x2="${VW - PR}" y2="${yy}" stroke="currentColor" stroke-opacity="0.10" stroke-width="0.6"/>`);
+    s.push(`<text x="${PL - 4}" y="${(cy(i) + 3.5).toFixed(1)}" text-anchor="end" font-size="7.5" fill="currentColor" fill-opacity="0.55" font-family="DM Mono,monospace">${g}</text>`);
   });
 
   if (n > 1) {
-    const firstX = cx(0).toFixed(1);
-    const lastX = cx(n - 1).toFixed(1);
-    const bottom = (VH - PB).toFixed(1);
-    const lineStr = pts.map((g, i) => `${cx(i).toFixed(1)} ${cy(g).toFixed(1)}`).join(" L ");
-    s.push(`<defs><linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#e63946" stop-opacity="0.22"/><stop offset="100%" stop-color="#e63946" stop-opacity="0"/></linearGradient></defs>`);
-    s.push(`<path d="M ${firstX} ${bottom} L ${lineStr} L ${lastX} ${bottom} Z" fill="url(#areaGrad)"/>`);
+    // Catmull-Rom → cubic-Bezier (sourced: shadcn `<Line type="natural">`
+    // produces a natural cubic spline — Recharts uses Catmull-Rom under the
+    // hood; ported by hand here so we stay vanilla SVG).
+    const xs = pts.map((_, i) => cx(i));
+    const ys = pts.map((g) => cy(g));
+    let pathD = `M ${xs[0].toFixed(1)} ${ys[0].toFixed(1)}`;
+    for (let i = 0; i < n - 1; i++) {
+      const p0x = xs[Math.max(0, i - 1)],     p0y = ys[Math.max(0, i - 1)];
+      const p1x = xs[i],                       p1y = ys[i];
+      const p2x = xs[i + 1],                   p2y = ys[i + 1];
+      const p3x = xs[Math.min(n - 1, i + 2)], p3y = ys[Math.min(n - 1, i + 2)];
+      const c1x = p1x + (p2x - p0x) / 6;
+      const c1y = p1y + (p2y - p0y) / 6;
+      const c2x = p2x - (p3x - p1x) / 6;
+      const c2y = p2y - (p3y - p1y) / 6;
+      pathD += ` C ${c1x.toFixed(1)} ${c1y.toFixed(1)}, ${c2x.toFixed(1)} ${c2y.toFixed(1)}, ${p2x.toFixed(1)} ${p2y.toFixed(1)}`;
+    }
 
-    const polyPts = pts.map((g, i) => `${cx(i).toFixed(1)},${cy(g).toFixed(1)}`).join(" ");
-    s.push(`<polyline points="${polyPts}" fill="none" stroke="#e63946" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>`);
+    const firstX = xs[0].toFixed(1);
+    const lastX  = xs[n - 1].toFixed(1);
+    const bottom = (VH - PB).toFixed(1);
+    // Area under the curve uses the same Catmull-Rom path, then closes
+    // along the bottom — gradient pulls from --accent so dark mode flips.
+    s.push(`<defs><linearGradient id="dashChartGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="var(--accent)" stop-opacity="0.22"/><stop offset="100%" stop-color="var(--accent)" stop-opacity="0"/></linearGradient></defs>`);
+    s.push(`<path d="${pathD} L ${lastX} ${bottom} L ${firstX} ${bottom} Z" fill="url(#dashChartGrad)"/>`);
+    s.push(`<path d="${pathD}" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>`);
   }
 
-  const todayX = cx(n - 1).toFixed(1);
-  s.push(`<line x1="${todayX}" y1="${PT}" x2="${todayX}" y2="${VH - PB}" stroke="#f59e0b" stroke-width="1" stroke-dasharray="3,2" opacity="0.55"/>`);
-  s.push(`<text x="${todayX}" y="${VH - 4}" text-anchor="middle" font-size="7" fill="rgba(245,158,11,0.6)" font-family="DM Mono,monospace">tänään</text>`);
+  // Endpoint dot only (shadcn style: `dot={false}` on the line itself; we
+  // keep just the most recent point so the user sees where they are now).
+  if (n >= 1) {
+    const px = cx(n - 1).toFixed(1);
+    const py = cy(pts[n - 1]).toFixed(1);
+    s.push(`<circle cx="${px}" cy="${py}" r="6" fill="var(--accent)" opacity="0.18"/>`);
+    s.push(`<circle cx="${px}" cy="${py}" r="3.5" fill="var(--accent)"/>`);
+    s.push(`<circle cx="${px}" cy="${py}" r="1.4" fill="var(--surface)"/>`);
+  }
 
-  pts.forEach((g, i) => {
-    const px = cx(i).toFixed(1);
-    const py = cy(g).toFixed(1);
-    const isLast = i === n - 1;
-    if (isLast) {
-      s.push(`<circle cx="${px}" cy="${py}" r="6" fill="#f59e0b" opacity="0.18"/>`);
-      s.push(`<circle cx="${px}" cy="${py}" r="3.5" fill="#f59e0b"/>`);
-    } else if (n <= 25) {
-      s.push(`<circle cx="${px}" cy="${py}" r="2" fill="#e63946" opacity="0.7"/>`);
-    }
-  });
-
-  el.innerHTML = `<svg viewBox="0 0 ${VW} ${VH}" style="width:100%;height:130px;display:block">${s.join("")}</svg>`;
+  el.innerHTML = `<svg viewBox="0 0 ${VW} ${VH}" style="width:100%;height:130px;display:block;color:var(--ink-faint)">${s.join("")}</svg>`;
 }
 
 function renderHeatmap(chartData) {
@@ -495,6 +623,24 @@ function renderHeatmap(chartData) {
 
   el.style.setProperty("--heatmap-cols", numWeeks + 1); // +1 for label col
   el.innerHTML = html;
+
+  // Empty-state caption — render a friendly Finnish nudge when no day in
+  // the 30-day window has activity yet. Lives in the section, not over the grid.
+  const section = el.closest(".dash-heatmap-section");
+  if (section) {
+    let cap = section.querySelector(".dash-heatmap-empty");
+    const totalDaysWithActivity = Object.values(dayStats).filter((s) => s.count > 0).length;
+    if (totalDaysWithActivity === 0) {
+      if (!cap) {
+        cap = document.createElement("p");
+        cap.className = "dash-heatmap-empty";
+        section.appendChild(cap);
+      }
+      cap.textContent = "Tee ensimmäinen harjoitus, niin sytytät tästä päivän.";
+    } else if (cap) {
+      cap.remove();
+    }
+  }
 
   // Tooltip on hover
   el.addEventListener("pointerenter", (e) => {
@@ -662,6 +808,10 @@ export function loadLastSettings(forcedMode) {
 }
 
 export async function saveProgress({ mode, level, scoreCorrect, scoreTotal, ytlGrade }) {
+  // Mark the daily-challenge done flag locally even when offline / not
+  // logged in — the user did the work, the dashboard should show the
+  // celebratory state.
+  markModeCompletedToday(mode);
   if (!isLoggedIn()) return;
   try {
     await apiFetch(`${API}/api/progress`, {
@@ -1180,11 +1330,23 @@ async function loadAndRenderReadinessMap() {
   // Update rail YO-readiness stat with the computed value.
   const railReadinessEl = document.getElementById("dash-yo-readiness");
   if (railReadinessEl && map.totalCells > 0) {
-    railReadinessEl.textContent = map.readinessPct;
+    countUp(railReadinessEl, Math.round(map.readinessPct), 1300);
+  }
+  // Drive the surrounding progress ring (sourced: Magic UI
+  // animated-circular-progress-bar — stroke-dashoffset transition technique).
+  const ringEl = document.getElementById("dash-yo-readiness-ring");
+  if (ringEl && map.totalCells > 0) {
+    const C = 213.628; // 2π × r (r=34)
+    const pct = Math.max(0, Math.min(100, Math.round(map.readinessPct)));
+    // Defer one frame so the browser registers the initial offset before
+    // applying the new one — guarantees the CSS transition fires.
+    requestAnimationFrame(() => {
+      ringEl.style.strokeDashoffset = String(C - (pct / 100) * C);
+    });
   }
 
   const cellsHtml = map.cells.map(c =>
-    `<div class="dash-readiness-cell lvl-${c.level}" data-tip="${escapeHtmlAttr(c.tooltip)}" title="${escapeHtmlAttr(c.tooltip)}"></div>`
+    `<div class="dash-readiness-cell lvl-${c.level}" data-tip="${escapeHtmlAttr(c.tooltip)}" data-tooltip="${escapeHtmlAttr(c.tooltip)}"></div>`
   ).join("");
 
   wrap.innerHTML = `

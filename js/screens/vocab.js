@@ -16,8 +16,35 @@ import { renderLauseenMuodostus } from "../renderers/lauseenMuodostus.js";
 import { renderCorrection }       from "../renderers/correction.js";
 import { reportMcAdvisory } from "../features/mcAdvisory.js";
 import { generateCoachLine, topicLabel, countUp } from "./mode-page.js";
+import { celebrateScore } from "../features/celebrate.js";
+import { generateExerciseShareCard } from "../features/shareCard.js";
+
+function fmtElapsed(ms) {
+  if (!Number.isFinite(ms) || ms <= 0) return "—";
+  const s = Math.round(ms / 1000);
+  if (s < 60) return `${s} s`;
+  const m = Math.floor(s / 60);
+  const r = s % 60;
+  return r ? `${m}:${String(r).padStart(2, "0")}` : `${m} min`;
+}
 
 const OPTION_LETTERS = ["A", "B", "C", "D", "E", "F"];
+
+// Mirror of routes/exercises.js extractHeadwordKey — derive a Spanish lemma
+// from the correct option so we can ask the next /generate call to avoid it.
+function extractClientHeadwordKey(ex) {
+  try {
+    if (!ex?.correct || !Array.isArray(ex.options)) return null;
+    const idx = "ABCDEFGH".indexOf(String(ex.correct).trim().toUpperCase());
+    if (idx < 0 || idx >= ex.options.length) return null;
+    const raw = String(ex.options[idx] || "")
+      .replace(/^[A-H]\)\s*/, "")
+      .replace(/^(el|la|los|las|un|una|unos|unas)\s+/i, "")
+      .toLowerCase()
+      .trim();
+    return raw || null;
+  } catch { return null; }
+}
 
 function escapeHtml(s) {
   return String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -267,11 +294,22 @@ export async function loadNextBatch() {
     const res = await fetch(`${API}/api/generate`, {
       method: "POST",
       headers: { "Content-Type": "application/json", ...authHeader() },
-      body: JSON.stringify({ level: state.level, topic: state.topic, count: mcCount, language: state.language }),
+      body: JSON.stringify({
+        level: state.level,
+        topic: state.topic,
+        count: mcCount,
+        language: state.language,
+        recentlyShown: state.recentVocabHeadwords || [],
+      }),
     });
     const data = await res.json();
     if (!res.ok) throw new Error(data.error || "Tehtävien luonti epäonnistui");
     if (!data.exercises?.length) throw new Error("No exercises");
+
+    // Track headwords from this batch so the next /generate call can ask
+    // the model to avoid repeating them. Cap at 30 to keep prompt cheap.
+    const newKeys = data.exercises.map(extractClientHeadwordKey).filter(Boolean);
+    state.recentVocabHeadwords = [...(state.recentVocabHeadwords || []), ...newKeys].slice(-30);
 
     state.exercises = [...srItems, ...data.exercises, ...mixedExercises];
     state.bankId = data.bankId || null;
@@ -1066,6 +1104,18 @@ function showVocabResults() {
   const againMeta = $("res-again-meta");
   if (againMeta) againMeta.textContent = `SAMALLA AIHEELLA · ${topicLbl}`;
   $("res-coach").textContent = generateCoachLine({ scorePct: pct, sessionWeakestLabel: null });
+
+  // Quick-glance stats strip
+  const wrong = Math.max(0, total - correct);
+  const elapsed = state.sessionStartTime ? Date.now() - state.sessionStartTime : 0;
+  const statsEl = $("res-stats");
+  if (statsEl) {
+    countUp($("res-stat-correct"), correct);
+    countUp($("res-stat-wrong"), wrong);
+    $("res-stat-time").textContent = fmtElapsed(elapsed);
+    statsEl.hidden = total === 0;
+  }
+
   // Breakdown list — derived from state.sessionItems.
   const resList = $("res-list");
   if (resList) {
@@ -1127,6 +1177,8 @@ function showVocabResults() {
   // Celebration is an overlay — fire-and-forget so the result screen
   // renders underneath and is already visible when the overlay dismisses.
   maybeShowFirstCelebration();
+  // Confetti for ≥80% — gated by reduced-motion inside the helper.
+  if (total > 0) celebrateScore(pct);
 
   // Daily-cap nudge banner for free users at #15+ (Commit 10).
   renderCapBanner();
@@ -1152,6 +1204,7 @@ $("btn-restart").addEventListener("click", () => {
   state.startLevel = state.level;
   state.peakLevel = state.level;
   state.sessionStartTime = Date.now();
+  state.recentVocabHeadwords = [];
   loadNextBatch();
 });
 
@@ -1162,7 +1215,28 @@ if (btnBackHome) {
   );
 }
 
-$("btn-share-vocab").addEventListener("click", () => {
-  const score = $("results-score").textContent;
-  _deps.shareResult(`Harjoittelin espanjan yo-koetta Puheossa 📚\nTulos: ${score}\nhttps://puheo.fi`);
-});
+const shareVocabBtn = $("btn-share-vocab");
+if (shareVocabBtn) {
+  shareVocabBtn.addEventListener("click", async () => {
+    shareVocabBtn.disabled = true;
+    const original = shareVocabBtn.textContent;
+    shareVocabBtn.textContent = "Luodaan kuvaa…";
+    try {
+      const elapsed = state.sessionStartTime ? Date.now() - state.sessionStartTime : 0;
+      await generateExerciseShareCard({
+        kind: "vocab",
+        correct: state.totalCorrect || 0,
+        total: state.totalAnswered || 0,
+        topicLabel: topicLabel(state.topic || "general vocabulary"),
+        level: state.level || "",
+        elapsedMs: elapsed,
+      });
+      shareVocabBtn.textContent = "Tallennettu ✓";
+      setTimeout(() => { shareVocabBtn.textContent = original; shareVocabBtn.disabled = false; }, 1800);
+    } catch (err) {
+      console.error("Share card generation failed:", err);
+      shareVocabBtn.textContent = "Yritä uudelleen";
+      setTimeout(() => { shareVocabBtn.textContent = original; shareVocabBtn.disabled = false; }, 1800);
+    }
+  });
+}

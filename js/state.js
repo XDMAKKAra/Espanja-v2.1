@@ -33,6 +33,7 @@ export let state = {
   peakLevel: "B",
   topic: "general vocabulary",
   bankId: null,
+  recentVocabHeadwords: [],
 
   // Writing mode
   writingTaskType: "short",
@@ -49,11 +50,13 @@ export let state = {
   grammarErrors: [],
   quickReviewStreak: 0,
   quickReviewAutoTriggered: false,
+  recentGrammarRules: [],
 
   // Reading mode
   readingTopic: "animals and nature",
   readingLevel: "C",
   readingBankId: null,
+  recentReadingTitles: [],
   currentReading: null,
   readingQIndex: 0,
   readingScore: 0,

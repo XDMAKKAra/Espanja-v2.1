@@ -1,7 +1,57 @@
 import { $, show } from "../ui/nav.js";
-import { API, authHeader, apiFetch } from "../api.js";
+import { API, authHeader, apiFetch, getAuthEmail, clearAuth } from "../api.js";
 import { track } from "../analytics.js";
 import { computeStartingLevel, YTL_LEVELS } from "../features/startingLevel.js";
+
+const THEME_LABELS = {
+  auto:  "Vaalea — seuraa järjestelmää",
+  light: "Vaalea",
+  dark:  "Tumma",
+};
+function applyThemeChoice(value) {
+  const v = ["auto", "light", "dark"].includes(value) ? value : "auto";
+  try { localStorage.setItem("puheo_theme", v); } catch {}
+  // Real theme tokens land in a future loop. For now: visible state on the toggle
+  // + a data attribute so future CSS can hook in without a re-wire.
+  document.documentElement.setAttribute("data-theme", v);
+  const buttons = document.querySelectorAll(".settings-theme-btn");
+  buttons.forEach((b) => {
+    const on = b.dataset.theme === v;
+    b.classList.toggle("is-current", on);
+    b.setAttribute("aria-checked", on ? "true" : "false");
+  });
+  const valueEl = document.getElementById("settings-theme-value");
+  if (valueEl) valueEl.textContent = THEME_LABELS[v];
+}
+function wireThemeToggle() {
+  document.querySelectorAll(".settings-theme-btn").forEach((b) => {
+    b.addEventListener("click", () => applyThemeChoice(b.dataset.theme));
+  });
+  // Initial state from localStorage if set.
+  try {
+    const saved = localStorage.getItem("puheo_theme");
+    if (saved) applyThemeChoice(saved);
+  } catch {}
+}
+function wireAccountSection() {
+  const emailEl = document.getElementById("settings-account-email");
+  if (emailEl) emailEl.textContent = getAuthEmail() || "—";
+  const planEl = document.getElementById("settings-account-plan");
+  if (planEl) planEl.textContent = window._isPro ? "Pro" : "Ilmainen";
+  const billingBtn = document.getElementById("settings-manage-billing");
+  if (billingBtn && window._isPro) billingBtn.hidden = false;
+  const signOutBtn = document.getElementById("settings-signout");
+  if (signOutBtn && !signOutBtn.dataset.wired) {
+    signOutBtn.dataset.wired = "1";
+    signOutBtn.addEventListener("click", () => {
+      clearAuth();
+      // updateSidebarState lives in main.js — fall back to a hard reload that
+      // re-enters the auth screen via the bootstrap path.
+      try { document.querySelector(".app-sidebar")?.style && (document.querySelector(".app-sidebar").style.display = "none"); } catch {}
+      show("screen-auth");
+    });
+  }
+}
 
 let _deps = {};
 let _profile = null;
@@ -201,6 +251,9 @@ function stripEmoji(s) {
 
 export async function showSettings() {
   show("screen-settings");
+  // Wire the theme toggle + account section once per session — idempotent.
+  wireThemeToggle();
+  wireAccountSection();
   const rowsEl = $("settings-profile-rows");
   rowsEl.setAttribute("aria-busy", "true");
   rowsEl.innerHTML = `<p class="settings-loading">Ladataan profiilia…</p>`;

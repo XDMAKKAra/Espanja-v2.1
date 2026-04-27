@@ -178,22 +178,34 @@ body {
 
 /* Background texture — single warm amber wash for parchment atmosphere */
 body::before {
+  /* Two-orb mint atmosphere — top-right warm, bottom-left soft. Stronger than
+     the previous 6% single-pass which was so faint it read as a render glitch.
+     Now intentional brand layer; bottom orb anchors the eye on long pages. */
   content: '';
   position: fixed;
   inset: 0;
   background:
-    radial-gradient(ellipse at 85% 10%, rgba(45, 212, 191, 0.06) 0%, transparent 50%);
+    radial-gradient(ellipse 600px 480px at 88% 8%, rgba(45, 212, 191, 0.11) 0%, transparent 60%),
+    radial-gradient(ellipse 720px 520px at 8% 92%, rgba(20, 184, 166, 0.07) 0%, transparent 60%);
   pointer-events: none;
   z-index: 0;
 }
 
-/* Restraint pass: hide decorative emoji chrome inside the app.
-   Content-level emoji (celebration 🎉, unlock 🔓) stays untouched. */
+/* Editorial pass: decorative emoji chrome converted to inline Lucide SVG.
+   The .icon-lucide base picks up font-size and currentColor from its slot. */
+.icon-lucide {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.125em;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex-shrink: 0;
+}
 .mode-page-icon,
-.mode-icon,
-.path-mixed-icon,
-.mastery-intro-icon,
-.scaffold-fire,
 .sr-top-icon,
 .topic-card-icon,
 .ob-option-icon:empty { display: none; }
@@ -639,7 +651,7 @@ select option { background: var(--surface-2); }
   color: var(--ink-soft); min-height: 20px;
 }
 .scaffold-indicator.hidden { display: none; }
-.scaffold-fire { font-size: 14px; }
+.scaffold-fire { font-size: 16px; color: var(--warn); }
 .scaffold-fire.hidden { display: none; }
 .scaffold-text { flex: 1; }
 .scaffold-help-btn {
@@ -933,8 +945,20 @@ select option { background: var(--surface-2); }
   outline: none; transition: border-color 0.15s;
 }
 .gap-fill-input:focus { border-color: var(--accent-dark); }
-.gap-fill-input.correct { border-color: var(--success); background: rgba(34,197,94,0.08); }
-.gap-fill-input.wrong { border-color: var(--error); background: rgba(184,48,48,0.08); }
+.gap-fill-input.correct {
+  border-color: var(--success);
+  background: rgba(34,197,94,0.08);
+  animation: exOptionCorrect 420ms cubic-bezier(0.34, 1.56, 0.64, 1) 1;
+}
+.gap-fill-input.wrong {
+  border-color: var(--error);
+  background: rgba(184,48,48,0.08);
+  animation: exOptionWrong 360ms cubic-bezier(0.36, 0.07, 0.19, 0.97) 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .gap-fill-input.correct,
+  .gap-fill-input.wrong { animation: none !important; }
+}
 .gap-fill-feedback { font-family: var(--font-mono); font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
 .gap-fill-feedback.hidden { display: none; }
 
@@ -1286,16 +1310,52 @@ select option { background: var(--surface-2); }
 .start-inner { max-height: calc(100vh - 32px); overflow-y: auto; }
 
 /* ── MODE PICKER ── */
-.mode-picker { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.mode-picker {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  /* Sourced: Aceternity 3D card-effect — perspective on the parent so child
+     transforms apply in 3D space relative to a shared vanishing point. */
+  perspective: 1200px;
+}
 .mode-btn {
+  position: relative;
   display: flex; flex-direction: column; align-items: flex-start; gap: 3px;
   padding: 12px 14px; background: var(--surface); border: 1px solid var(--border);
   border-radius: var(--r-md); color: var(--ink-soft); cursor: pointer;
-  transition: all 0.15s; text-align: left;
+  text-align: left;
+  /* JS writes --tilt-rx / --tilt-ry / --tilt-scale on pointermove. */
+  transform: rotateX(var(--tilt-rx, 0deg)) rotateY(var(--tilt-ry, 0deg)) scale(var(--tilt-scale, 1));
+  transform-style: preserve-3d;
+  transition:
+    transform 220ms cubic-bezier(0.22, 0.61, 0.36, 1),
+    border-color 160ms ease,
+    color 160ms ease,
+    background-color 160ms ease;
+  overflow: hidden;
 }
+/* Cursor-tracked glare (sourced: Magic UI magic-card radial-spotlight). */
+.mode-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    180px circle at var(--tilt-mx, 50%) var(--tilt-my, 50%),
+    color-mix(in srgb, var(--accent) 22%, transparent),
+    transparent 70%
+  );
+  opacity: var(--tilt-glare-opacity, 0);
+  transition: opacity 200ms ease;
+  pointer-events: none;
+  z-index: 1;
+}
+.mode-btn > * { position: relative; z-index: 2; }
 .mode-btn:hover { border-color: var(--accent-dark); color: var(--ink); }
 .mode-btn.active { border-color: var(--accent-hover); background: rgba(45, 212, 191,0.14); color: var(--ink); }
-.mode-icon { font-size: 16px; line-height: 1; }
+.mode-icon { font-size: 20px; line-height: 1; color: var(--accent-hover); margin-bottom: 2px; }
+.mode-btn:hover .mode-icon { color: var(--accent-hover); }
+.mode-btn.active .mode-icon { color: var(--accent-hover); }
 .mode-title { font-size: 13px; font-weight: 700; }
 .mode-desc { font-size: 10px; color: var(--ink-soft); font-family: var(--font-mono); }
 
@@ -1362,7 +1422,31 @@ select option { background: var(--surface-2); }
 .char-bar-fill.bar-warn { background: #f59e0b; }
 .char-bar-fill.bar-over { background: var(--error); }
 .char-bar-min { position: absolute; top: -2px; width: 2px; height: 12px; background: var(--accent); border-radius: 1px; }
-.btn-primary:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+.btn-primary:disabled {
+  background: var(--surface-2, #f1f5f9);
+  color: var(--ink-faint, #64748b);
+  cursor: not-allowed;
+  transform: none;
+  opacity: 1;
+}
+.btn-primary:disabled:hover { background: var(--surface-2, #f1f5f9); color: var(--ink-faint, #64748b); }
+
+/* Writing autosave indicator — quiet status line above the submit button. */
+.writing-meta-row {
+  display: flex;
+  justify-content: flex-end;
+  min-height: 18px;
+  margin: 4px 0 12px;
+}
+.writing-autosave-indicator {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: var(--ink-faint);
+  transition: opacity 0.2s ease;
+}
+.writing-autosave-indicator.is-hidden { opacity: 0; visibility: hidden; }
+.writing-autosave-indicator.is-restored { color: var(--accent-hover); }
 
 /* ── WRITING FEEDBACK (visual split layout) ── */
 .feedback-split {
@@ -1569,7 +1653,32 @@ select option { background: var(--surface-2); }
 .feedback-overall {
   background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--r-md);
   padding: 14px 16px; font-size: 13px; color: var(--ink-soft); line-height: 1.6;
-  font-family: var(--font-mono); margin-bottom: 24px;
+  font-family: var(--font-mono); margin-bottom: 16px;
+}
+.feedback-next-action {
+  background: var(--surface);
+  border: 1px solid var(--accent-hover);
+  border-left: 3px solid var(--accent-hover);
+  border-radius: var(--r-md);
+  padding: 14px 16px;
+  margin-bottom: 24px;
+}
+.feedback-next-action.hidden { display: none; }
+.feedback-next-action__label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-hover);
+  margin-bottom: 6px;
+}
+.feedback-next-action__text {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink);
+  line-height: 1.5;
+  margin: 0;
 }
 .feedback-actions { display: flex; gap: 10px; }
 .btn-secondary {
@@ -1650,9 +1759,158 @@ select option { background: var(--surface-2); }
 .reading-self-wrong   { background: rgba(248,113,113,0.1); border: 1px solid var(--error);   color: var(--error); }
 
 /* ── AUTH SCREEN ── */
+
+/* Make screen-auth its own positioning context so the absolute grid
+   backdrop anchors there, not against the body. */
+#screen-auth { position: relative; isolation: isolate; }
+
+/* Grid pattern backdrop (sourced: Magic UI grid-pattern). currentColor
+   pulls the stroke from the screen's text color so dark mode flips for
+   free; mask-image fades the grid to nothing at the edges so it doesn't
+   compete with the auth card or the gradient aside. */
+.auth-bg-grid {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+  color: var(--ink);
+  opacity: 0.10;
+  -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 85%);
+          mask-image: radial-gradient(ellipse at center, black 30%, transparent 85%);
+}
+@media (prefers-reduced-motion: no-preference) {
+  /* Subtle 12s drift so the pattern doesn't feel inert. Keeps the
+     parallax shift well under 4px to avoid distraction. */
+  .auth-bg-grid {
+    animation: authGridDrift 18s ease-in-out infinite alternate;
+  }
+}
+@keyframes authGridDrift {
+  0%   { transform: translate(0, 0); }
+  100% { transform: translate(-12px, -8px); }
+}
+
+.auth-shell {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  width: 100%;
+  max-width: 1080px;
+  margin: 0 auto;
+  align-items: center;
+  gap: 0;
+  position: relative;
+  z-index: 1;
+}
+@media (min-width: 960px) {
+  .auth-shell {
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    gap: 56px;
+    padding: 32px 32px;
+  }
+}
+.auth-aside { display: none; }
+@media (min-width: 960px) {
+  .auth-aside {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 40px 36px;
+    background: linear-gradient(160deg, #0F766E 0%, #134E4A 60%, #0B3A36 100%);
+    color: #ECFEFA;
+    border-radius: var(--r-xl, 24px);
+    box-shadow: 0 12px 40px -24px rgba(15, 118, 110, 0.45);
+    min-height: 480px;
+    position: relative;
+    overflow: hidden;
+  }
+  .auth-aside::after {
+    content: "";
+    position: absolute;
+    inset: -40% -20% auto auto;
+    width: 320px; height: 320px;
+    background: radial-gradient(circle, rgba(45, 212, 191, 0.45), transparent 70%);
+    pointer-events: none;
+  }
+  .auth-aside > * { position: relative; z-index: 1; }
+}
+.auth-aside__logo {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 700;
+  color: #ffffff;
+  text-decoration: none;
+  letter-spacing: -0.02em;
+  margin-bottom: 4px;
+}
+.auth-aside__logo span { color: var(--accent, #2DD4BF); }
+.auth-aside__eyebrow {
+  font-family: var(--font-mono, monospace);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(204, 251, 241, 0.78);
+  margin: 0;
+}
+.auth-aside__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 2.6vw, 2.1rem);
+  line-height: 1.1;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.015em;
+  margin: 4px 0 6px;
+  max-width: 18ch;
+}
+.auth-aside__lead {
+  font-family: var(--font-display);
+  font-size: 15px;
+  line-height: 1.5;
+  color: rgba(204, 251, 241, 0.92);
+  margin: 0 0 14px;
+  max-width: 36ch;
+}
+.auth-aside__benefits {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.auth-aside__benefits li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 14px;
+  color: rgba(236, 254, 250, 0.95);
+  line-height: 1.4;
+}
+.auth-aside__check {
+  width: 18px; height: 18px;
+  flex-shrink: 0;
+  color: var(--accent, #2DD4BF);
+  margin-top: 2px;
+}
+.auth-aside__foot {
+  font-family: var(--font-mono, monospace);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: rgba(204, 251, 241, 0.55);
+  margin: 24px 0 0;
+}
+
 .auth-inner {
-  max-width: 400px; width: 100%;
+  max-width: 420px; width: 100%;
+  margin: 0 auto;
   animation: fadeUp 0.5s ease both;
+}
+.auth-inner__logo { display: block; }
+@media (min-width: 960px) {
+  /* Aside carries the brand on desktop — hide the inline form logo */
+  .auth-inner__logo { display: none; }
 }
 .auth-tabs {
   display: flex; gap: 4px;
@@ -1875,6 +2133,41 @@ select option { background: var(--surface-2); }
 }
 .exam-timer-warn { color: var(--error) !important; animation: pulse 1s ease-in-out infinite; }
 @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.5; } }
+
+/* Loading shimmer — applied to placeholder text while async content fetches.
+   Per puheo-screen-template: animate opacity only, gate behind reduced-motion. */
+.loading-shimmer { color: var(--ink-faint); animation: loadingShimmer 1.4s ease-in-out infinite; }
+@keyframes loadingShimmer { 0%,100% { opacity: 0.55; } 50% { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) {
+  .loading-shimmer { animation: none; opacity: 0.7; }
+}
+
+/* Skeleton utility — placeholder bar that matches eventual content layout.
+   Use as `<div class="skel" data-h="120"></div>` or set inline height. */
+.skel {
+  display: block;
+  background: linear-gradient(
+    90deg,
+    var(--surface-2, #f1f5f9) 0%,
+    rgba(255, 255, 255, 0.7) 50%,
+    var(--surface-2, #f1f5f9) 100%
+  );
+  background-size: 200% 100%;
+  background-position: 100% 0;
+  border-radius: var(--r-md, 12px);
+  animation: skelShine 1600ms ease-in-out infinite;
+  width: 100%;
+}
+.skel--text { height: 14px; border-radius: 4px; }
+.skel--card { min-height: 96px; border-radius: var(--r-lg, 16px); }
+.skel--circle { border-radius: 50%; aspect-ratio: 1; height: auto; }
+@keyframes skelShine {
+  0%   { background-position: 100% 0; }
+  100% { background-position: -100% 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .skel { animation: none; background: var(--surface-2, #f1f5f9); }
+}
 .exam-progress-bar {
   height: 3px; background: var(--border); border-radius: 2px; margin-bottom: 24px;
 }
@@ -3401,7 +3694,9 @@ body:has(.app-countdown:not(.hidden)) #app-main { padding-top: 34px; }
   padding: 4px 12px;
   border-radius: 20px;
   border: 1px solid var(--accent);
-  color: var(--accent);
+  /* --accent text on light bg failed WCAG (~2.4:1). teal-700 reads cleanly
+     against the mint page background; the accent border still carries brand. */
+  color: #0F766E;
   letter-spacing: 0.04em;
 }
 .placement-test-counter {
@@ -3801,7 +4096,7 @@ body:has(.app-countdown:not(.hidden)) #app-main { padding-top: 34px; }
 }
 .path-mixed-review.hidden { display: none; }
 .path-mixed-info { display: flex; align-items: center; gap: 12px; flex: 1; }
-.path-mixed-icon { font-size: 24px; }
+.path-mixed-icon { font-size: 22px; color: var(--accent-hover); }
 .path-mixed-title { font-size: 14px; font-weight: 700; }
 .path-mixed-sub {
   font-family: var(--font-mono); font-size: 11px;
@@ -3816,8 +4111,9 @@ body:has(.app-countdown:not(.hidden)) #app-main { padding-top: 34px; }
   padding: 24px;
 }
 .mastery-intro-icon, .mastery-result-icon {
-  font-size: 54px; margin-bottom: 16px;
+  font-size: 48px; margin-bottom: 16px; color: var(--accent-hover);
 }
+.mastery-intro-icon { stroke-width: 1.5; }
 .mastery-intro-topic, .mastery-result-pct {
   font-size: 28px; font-weight: 800;
   letter-spacing: -0.02em; margin-bottom: 8px;
@@ -4538,6 +4834,49 @@ body:has(.app-countdown:not(.hidden)) #app-main { padding-top: 34px; }
   color: var(--accent-hover);
 }
 
+/* Danger row (sign-out, delete account) — same shape, red accent on the action. */
+.settings-row--danger .settings-row-edit {
+  border-color: rgba(220, 38, 38, 0.35);
+  color: #B91C1C;
+}
+.settings-row--danger .settings-row-edit:hover {
+  border-color: #B91C1C;
+  color: #991B1B;
+}
+
+/* Theme toggle (Auto / Vaalea / Tumma) — segmented pill control. */
+.settings-theme-toggle {
+  display: inline-flex;
+  gap: 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 3px;
+  flex-shrink: 0;
+}
+.settings-theme-btn {
+  background: transparent;
+  border: 0;
+  padding: 7px 14px;
+  border-radius: 999px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  cursor: pointer;
+  min-height: 32px;
+  transition: background 150ms var(--ease-out), color 150ms var(--ease-out);
+}
+.settings-theme-btn:hover { color: var(--ink); }
+.settings-theme-btn.is-current {
+  background: var(--ink, #111827);
+  color: var(--bg, #ffffff);
+}
+.settings-theme-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
 .settings-modal-overlay,
 .level-bump-overlay {
   position: fixed; inset: 0; z-index: 520;
@@ -4990,4 +5329,57 @@ body:has(.app-countdown:not(.hidden)) #app-main { padding-top: 34px; }
   line-height: 1.6;
   color: var(--ink-soft);
   margin-bottom: 12px;
+}
+
+/* ── Global tooltip (sourced: shadcn/ui Tooltip — Radix Tooltip primitive
+     visual language: dark popover, small arrow, fade-in on hover). The
+     module js/features/tooltip.js owns visibility; this stylesheet owns
+     paint. ─────────────────────────────────────────────────────────── */
+.tt-popover {
+  position: absolute;
+  z-index: 9999;
+  pointer-events: none;
+  max-width: 280px;
+  padding: 6px 10px;
+  background: var(--ink);
+  color: var(--surface);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1px;
+  line-height: 1.45;
+  border-radius: 6px;
+  box-shadow:
+    0 8px 24px -10px rgba(0, 0, 0, 0.40),
+    0 2px 4px rgba(0, 0, 0, 0.08);
+  opacity: 0;
+  transform: translateY(2px);
+  transition: opacity 140ms ease, transform 140ms ease;
+  white-space: pre-wrap;
+}
+.tt-popover.tt-popover--in {
+  opacity: 1;
+  transform: translateY(0);
+}
+.tt-popover.tt-popover--out {
+  opacity: 0;
+  transform: translateY(2px);
+}
+/* Arrow — single rotated square, positioned bottom-centre for top placement
+   (default) and top-centre when the tooltip flipped below the target. */
+.tt-popover::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  background: inherit;
+  transform: translateX(-50%) rotate(45deg);
+  pointer-events: none;
+}
+.tt-popover[data-placement="top"]::after    { bottom: -3px; }
+.tt-popover[data-placement="bottom"]::after { top: -3px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .tt-popover { transition: none; }
 }

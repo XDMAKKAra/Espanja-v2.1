@@ -95,7 +95,12 @@ router.post("/grade-writing", requireAuth, requirePro, aiStrictLimiter, checkMon
   const prompt = buildGradingPrompt(task, studentText, isShort);
 
   try {
-    const aiResult = await callOpenAI(prompt, 2500);
+    // Per puheo-ai-prompt skill: graders use temp 0.2 for determinism + force
+    // JSON object response so we don't have to regex strip markdown fences.
+    const aiResult = await callOpenAI(prompt, 2500, {
+      temperature: 0.2,
+      responseFormat: { type: "json_object" },
+    });
     logAiUsage(req.user?.userId, "grade-writing", aiResult._usage).catch(() => {});
     delete aiResult._usage;
     const result = processGradingResult(aiResult, charCount, task.charMin, isShort, studentText);

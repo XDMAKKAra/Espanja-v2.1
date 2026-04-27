@@ -1,4 +1,4 @@
-const CACHE_VERSION = "puheo-v48";
+const CACHE_VERSION = "puheo-v85";
 const STATIC_ASSETS = [
   "/app.html",
   "/index.html",
@@ -11,6 +11,8 @@ const STATIC_ASSETS = [
   "/css/components/mode-page.css",
   "/css/components/exercise.css",
   "/css/components/results.css",
+  "/css/components/profile.css",
+  "/css/components/meteors.css",
   "/manifest.json",
   "/offline.html",
   "/js/diagnostic.js",
@@ -22,6 +24,14 @@ const STATIC_ASSETS = [
   "/js/ui/icons.js",
   "/js/features/spacedRepetition.js",
   "/js/features/writingProgression.js",
+  "/js/features/wordOfDay.js",
+  "/js/features/dailyChallenge.js",
+  "/js/features/celebrate.js",
+  "/js/features/shareCard.js",
+  "/js/features/achievements.js",
+  "/js/features/meteors.js",
+  "/js/features/cardTilt.js",
+  "/js/features/tooltip.js",
   "/js/screens/auth.js",
   "/js/screens/dashboard.js",
   "/js/screens/vocab.js",
@@ -33,6 +43,7 @@ const STATIC_ASSETS = [
   "/js/screens/adaptive.js",
   "/js/screens/dash-cta.js",
   "/js/screens/mode-page.js",
+  "/js/screens/profile.js",
 ];
 
 // ─── Install: precache static assets ────────────────────────────────────────

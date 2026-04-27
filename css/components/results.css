@@ -37,6 +37,47 @@
 }
 .results__coach:empty { display: none; }
 
+/* Stats strip — three quick-glance numbers below the score hero. */
+.results__stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin: 8px 0 28px;
+  padding: 16px 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.results__stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 6px;
+  text-align: center;
+}
+.results__stat-n {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  line-height: 1.05;
+  color: var(--ink);
+}
+.results__stat-l {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-sm, 11px);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.results__stat--ok .results__stat-n { color: var(--success); }
+.results__stat--no .results__stat-n { color: var(--ink-soft); }
+.results__stat--no:has(.results__stat-n:not(:empty)) .results__stat-n[data-zero="0"] {
+  color: var(--ink-faint);
+}
+@media (max-width: 480px) {
+  .results__stats { gap: 6px; padding: 14px 0; }
+  .results__stat { padding: 2px; }
+}
+
 .results__breakdown { margin: 0 0 32px; }
 .results__breakdown .eyebrow { margin: 0 0 8px; }
 .results__list { border-top: 1px solid var(--border); }

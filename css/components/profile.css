@@ -1,0 +1,603 @@
+/* Profile screen — destination "oma sivu" with stats grid + activity timeline.
+   Tokens only (no hardcoded colour) so dark mode flips for free. */
+
+.profile-inner {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 32px 24px 96px;
+}
+
+/* ── HERO ──────────────────────────────────────────────────────────── */
+
+.profile-hero {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  padding: 26px 22px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  margin-bottom: 26px;
+}
+
+.profile-avatar {
+  flex: 0 0 auto;
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-display);
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #fff;
+  background: linear-gradient(135deg, var(--accent), color-mix(in srgb, var(--accent) 60%, #1e3a8a));
+  box-shadow: 0 8px 28px -12px color-mix(in srgb, var(--accent) 65%, transparent);
+}
+
+.profile-hero-meta {
+  flex: 1;
+  min-width: 0;
+}
+
+.profile-name {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 1.15;
+  color: var(--ink);
+  margin: 0 0 4px;
+  word-break: break-word;
+}
+
+.profile-handle {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--ink-soft);
+  margin: 0 0 10px;
+  word-break: break-all;
+}
+
+.profile-badges {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.profile-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--ink-soft);
+}
+
+.profile-badge--pro {
+  background: color-mix(in srgb, var(--accent) 12%, var(--surface));
+  border-color: color-mix(in srgb, var(--accent) 35%, var(--border));
+  color: var(--accent);
+}
+
+.profile-badge--streak {
+  background: color-mix(in srgb, var(--success) 10%, var(--surface));
+  border-color: color-mix(in srgb, var(--success) 35%, var(--border));
+  color: var(--success);
+}
+
+/* ── STATS GRID ────────────────────────────────────────────────────── */
+
+.profile-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.profile-stat {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: 18px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.profile-stat-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.profile-stat-value {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 1.1;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.profile-stat-unit {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink-soft);
+  text-transform: lowercase;
+}
+
+.profile-stat-hint {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-faint);
+  margin-top: 2px;
+}
+
+.profile-stat--accent .profile-stat-value { color: var(--accent); }
+.profile-stat--success .profile-stat-value { color: var(--success); }
+
+/* ── SECTIONS ──────────────────────────────────────────────────────── */
+
+.profile-section {
+  margin-bottom: 32px;
+}
+
+.profile-section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.profile-section-title {
+  font-family: var(--font-display);
+  font-size: var(--fs-h3, 20px);
+  font-weight: 600;
+  margin: 0;
+  color: var(--ink);
+}
+
+.profile-section-link {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ink-soft);
+  text-decoration: none;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+.profile-section-link:hover { color: var(--ink); text-decoration: underline; }
+
+/* ── MODE BREAKDOWN ────────────────────────────────────────────────── */
+
+.profile-modes {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.profile-mode-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+}
+
+.profile-mode-icon {
+  width: 32px;
+  height: 32px;
+  flex: 0 0 32px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  background: var(--surface-2);
+  color: var(--ink-soft);
+}
+.profile-mode-icon svg { width: 18px; height: 18px; }
+
+.profile-mode-name {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--ink);
+  flex: 1;
+  min-width: 0;
+}
+
+.profile-mode-count {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.profile-mode-count--zero { color: var(--ink-faint); }
+
+/* ── ACHIEVEMENTS ──────────────────────────────────────────────────── */
+
+.profile-section-meta {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+
+.profile-achievements {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.profile-badge-card {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  min-width: 0;
+  transition:
+    transform 160ms var(--ease-out),
+    border-color 160ms var(--ease-out),
+    box-shadow 200ms var(--ease-out);
+}
+
+.profile-badge-card-icon {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  flex: 0 0 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  background: var(--surface-2);
+  color: var(--ink-faint);
+  transition: transform 200ms var(--ease-out);
+}
+.profile-badge-card-icon svg { width: 20px; height: 20px; }
+
+.profile-badge-card-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.profile-badge-card-title {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.25;
+}
+
+.profile-badge-card-desc {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-faint);
+  margin-top: 2px;
+  line-height: 1.4;
+}
+
+/* ── Unlocked: foil-shine border (sourced: Magic UI shine-border —
+     mask-composite: exclude technique with a 300%×300% radial
+     gradient swept via background-position) ────────────────────── */
+.profile-badge-card--unlocked {
+  border-color: color-mix(in srgb, var(--accent) 30%, var(--border));
+}
+.profile-badge-card--unlocked .profile-badge-card-icon {
+  background: color-mix(in srgb, var(--accent) 14%, var(--surface));
+  color: var(--accent);
+  box-shadow: 0 6px 18px -10px color-mix(in srgb, var(--accent) 70%, transparent);
+}
+.profile-badge-card--unlocked::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background-image: radial-gradient(
+    circle at center,
+    transparent 0%,
+    transparent 35%,
+    color-mix(in srgb, var(--accent) 90%, transparent) 50%,
+    transparent 65%,
+    transparent 100%
+  );
+  background-size: 300% 300%;
+  background-position: 0% 0%;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+          mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
+  animation: profileBadgeShine 14s linear infinite;
+  z-index: 0;
+}
+
+@keyframes profileBadgeShine {
+  0%   { background-position:  0%   0%; }
+  50%  { background-position: 100% 100%; }
+  100% { background-position:  0%   0%; }
+}
+
+/* Soft hover lift on unlocked cards (sourced: standard editorial
+     card-hover pattern; gentle tilt + accent glow). */
+.profile-badge-card--unlocked:hover {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--accent) 55%, var(--border));
+  box-shadow:
+    0 10px 28px -16px color-mix(in srgb, var(--accent) 60%, transparent),
+    0 1px 0 color-mix(in srgb, var(--accent) 12%, transparent) inset;
+}
+.profile-badge-card--unlocked:hover .profile-badge-card-icon {
+  transform: scale(1.06);
+}
+
+/* Newly-unlocked: brief 3-step attention pulse on first sight. The
+     `--new` modifier is set by achievements.js when it spots an id not
+     yet in localStorage `puheo_seen_badges`. */
+.profile-badge-card--new {
+  animation: profileBadgePop 540ms var(--ease-out) both;
+}
+.profile-badge-card--new::after {
+  content: "Uusi";
+  position: absolute;
+  top: -8px;
+  right: 12px;
+  padding: 2px 8px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--surface);
+  background: var(--accent);
+  border-radius: 999px;
+  box-shadow: 0 4px 10px -4px color-mix(in srgb, var(--accent) 70%, transparent);
+  animation: profileBadgeNewPulse 1.6s var(--ease-out) 2;
+  pointer-events: none;
+  z-index: 2;
+}
+
+@keyframes profileBadgePop {
+  0%   { transform: scale(0.96); opacity: 0; }
+  60%  { transform: scale(1.02); opacity: 1; }
+  100% { transform: scale(1);    opacity: 1; }
+}
+@keyframes profileBadgeNewPulse {
+  0%, 100% { transform: scale(1);    box-shadow: 0 4px 10px -4px color-mix(in srgb, var(--accent) 70%, transparent); }
+  50%      { transform: scale(1.08); box-shadow: 0 6px 16px -4px color-mix(in srgb, var(--accent) 90%, transparent); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .profile-badge-card--unlocked::before { animation: none; background-position: 50% 50%; }
+  .profile-badge-card--new,
+  .profile-badge-card--new::after { animation: none; }
+}
+
+.profile-badge-card--locked {
+  opacity: 0.55;
+}
+.profile-badge-card--locked .profile-badge-card-title {
+  color: var(--ink-soft);
+}
+.profile-badge-card--locked .profile-badge-card-icon {
+  filter: grayscale(0.8);
+}
+
+/* ── ACTIVITY TIMELINE ─────────────────────────────────────────────── */
+
+.profile-activity {
+  border-top: 1px solid var(--border);
+}
+
+/* Profile hero blur-fade arrival (sourced: Magic UI blur-fade — same
+   technique as the dashboard hero in L35; here applied to avatar +
+   name + handle + badges with a 4-step stagger). */
+.profile-hero > .profile-avatar,
+.profile-hero > .profile-hero-meta > .profile-name,
+.profile-hero > .profile-hero-meta > .profile-handle,
+.profile-hero > .profile-hero-meta > .profile-badges {
+  opacity: 0;
+  transform: translateY(6px);
+  filter: blur(6px);
+  transition:
+    opacity 480ms cubic-bezier(0.22, 0.61, 0.36, 1),
+    transform 520ms cubic-bezier(0.22, 0.61, 0.36, 1),
+    filter 520ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  transition-delay: var(--bf-delay, 0ms);
+  will-change: opacity, transform, filter;
+}
+.profile-hero > .profile-avatar                            { --bf-delay: 0ms;  }
+.profile-hero > .profile-hero-meta > .profile-name         { --bf-delay: 80ms; }
+.profile-hero > .profile-hero-meta > .profile-handle       { --bf-delay: 140ms; }
+.profile-hero > .profile-hero-meta > .profile-badges       { --bf-delay: 200ms; }
+.profile-hero--in > .profile-avatar,
+.profile-hero--in > .profile-hero-meta > .profile-name,
+.profile-hero--in > .profile-hero-meta > .profile-handle,
+.profile-hero--in > .profile-hero-meta > .profile-badges {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .profile-hero > .profile-avatar,
+  .profile-hero > .profile-hero-meta > .profile-name,
+  .profile-hero > .profile-hero-meta > .profile-handle,
+  .profile-hero > .profile-hero-meta > .profile-badges {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    transition: none;
+  }
+}
+
+.profile-activity-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 4px;
+  border-bottom: 1px solid var(--border);
+  /* Stagger reveal — sourced from Magic UI animated-list (scale + opacity
+     spring, one item at a time). Items render in opacity:0 + translateY +
+     subtle scale, then a JS pass adds `--enter` with a per-row delay so
+     the list appears to "land" top-down. */
+  opacity: 0;
+  transform: translateY(8px) scale(0.985);
+  transition:
+    opacity 380ms cubic-bezier(0.22, 0.61, 0.36, 1),
+    transform 480ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  transition-delay: var(--enter-delay, 0ms);
+}
+.profile-activity-row.profile-activity-row--enter {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+@media (prefers-reduced-motion: reduce) {
+  .profile-activity-row {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.profile-activity-icon {
+  width: 28px;
+  height: 28px;
+  flex: 0 0 28px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--surface-2);
+  color: var(--ink-soft);
+}
+.profile-activity-icon svg { width: 14px; height: 14px; }
+
+.profile-activity-main {
+  flex: 1;
+  min-width: 0;
+}
+.profile-activity-mode {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--ink);
+}
+.profile-activity-time {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-faint);
+  margin-top: 2px;
+}
+
+.profile-activity-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.profile-activity-score {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.profile-activity-grade {
+  display: inline-grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--accent) 12%, var(--surface));
+  color: var(--accent);
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+  border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--border));
+}
+
+.profile-empty {
+  padding: 26px 18px;
+  text-align: center;
+  background: var(--surface);
+  border: 1px dashed var(--border);
+  border-radius: var(--r-md);
+  color: var(--ink-soft);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.55;
+}
+.profile-empty p { margin: 0 0 12px; }
+.profile-empty .btn-primary { display: inline-block; }
+
+/* ── SIDEBAR USER BUTTON (made clickable for profile nav) ───────────── */
+
+.sidebar-user {
+  /* override .sidebar-user div → button */
+  background: none;
+  border: 0;
+  text-align: left;
+  cursor: pointer;
+  width: 100%;
+  font: inherit;
+  color: inherit;
+  display: block;
+}
+.sidebar-user:hover { color: var(--ink); }
+.sidebar-user:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* ── MOBILE ────────────────────────────────────────────────────────── */
+
+@media (max-width: 640px) {
+  .profile-inner { padding: 22px 16px 80px; }
+
+  .profile-hero {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 22px 18px;
+  }
+  .profile-avatar { width: 64px; height: 64px; font-size: 26px; }
+  .profile-name { font-size: 24px; }
+
+  .profile-stats { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .profile-stat { padding: 14px 14px; }
+  .profile-stat-value { font-size: 26px; }
+
+  .profile-modes { grid-template-columns: 1fr; }
+  .profile-achievements { grid-template-columns: 1fr; }
+}

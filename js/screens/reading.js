@@ -4,6 +4,17 @@ import { API, isLoggedIn, authHeader, retryable } from "../api.js";
 import { state } from "../state.js";
 import { showLoading, showLoadingError } from "../ui/loading.js";
 import { generateCoachLine, countUp } from "./mode-page.js";
+import { celebrateScore } from "../features/celebrate.js";
+import { generateExerciseShareCard } from "../features/shareCard.js";
+
+function fmtElapsedRd(ms) {
+  if (!Number.isFinite(ms) || ms <= 0) return "—";
+  const s = Math.round(ms / 1000);
+  if (s < 60) return `${s} s`;
+  const m = Math.floor(s / 60);
+  const r = s % 60;
+  return r ? `${m}:${String(r).padStart(2, "0")}` : `${m} min`;
+}
 
 function escapeHtmlRd(s) {
   return String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -25,6 +36,7 @@ export async function loadReadingTask() {
         level: state.readingLevel,
         topic: state.readingTopic,
         language: state.language,
+        recentlyShown: state.recentReadingTitles || [],
       }),
     }), { attempts: 3, baseDelayMs: 500 });
     if (res.status === 403) { _deps.showProUpsell(); return; }
@@ -36,6 +48,16 @@ export async function loadReadingTask() {
     state.readingBankId = data.bankId || null;
     state.readingQIndex = 0;
     state.readingScore = 0;
+
+    // Track titles so the next generate call can ask the model for a
+    // genuinely different text. Cap at 10 most-recent — a smaller universe
+    // than vocab lemmas, and prompt budget is tight on the reading route.
+    if (data.reading.title) {
+      state.recentReadingTitles = [
+        ...(state.recentReadingTitles || []),
+        String(data.reading.title).toLowerCase().trim(),
+      ].slice(-10);
+    }
 
     renderReadingText();
     show("screen-reading");
@@ -245,6 +267,18 @@ function showReadingResults() {
   countUp($("reading-res-pct"), rdPct);
   $("reading-res-time").textContent = new Date().toLocaleTimeString("fi-FI", { hour: "2-digit", minute: "2-digit" });
   $("reading-res-coach").textContent = generateCoachLine({ scorePct: rdPct, sessionWeakestLabel: null });
+
+  // Stats strip
+  const rdWrong = Math.max(0, total - state.readingScore);
+  const rdElapsed = state.sessionStartTime ? Date.now() - state.sessionStartTime : 0;
+  const rdStatsEl = $("reading-res-stats");
+  if (rdStatsEl) {
+    countUp($("reading-res-stat-correct"), state.readingScore);
+    countUp($("reading-res-stat-wrong"), rdWrong);
+    $("reading-res-stat-time").textContent = fmtElapsedRd(rdElapsed);
+    rdStatsEl.hidden = total === 0;
+  }
+
   const rdList = $("reading-res-list");
   if (rdList) {
     rdList.innerHTML = "";
@@ -265,9 +299,37 @@ function showReadingResults() {
   }
 
   show("screen-reading-results");
+  if (total > 0) celebrateScore(rdPct);
 }
 
 $("reading-btn-new").addEventListener("click", () => loadReadingTask());
 $("reading-btn-home").addEventListener("click", () =>
   isLoggedIn() ? _deps.loadDashboard() : show("screen-start")
 );
+
+const shareReadingBtn = $("btn-share-reading");
+if (shareReadingBtn) {
+  shareReadingBtn.addEventListener("click", async () => {
+    shareReadingBtn.disabled = true;
+    const original = shareReadingBtn.textContent;
+    shareReadingBtn.textContent = "Luodaan kuvaa…";
+    try {
+      const total = (state.currentReading?.questions || []).length;
+      const elapsed = state.sessionStartTime ? Date.now() - state.sessionStartTime : 0;
+      await generateExerciseShareCard({
+        kind: "reading",
+        correct: state.readingScore || 0,
+        total,
+        topicLabel: state.currentReading?.title || state.readingTopic || "",
+        level: state.readingLevel || "",
+        elapsedMs: elapsed,
+      });
+      shareReadingBtn.textContent = "Tallennettu ✓";
+      setTimeout(() => { shareReadingBtn.textContent = original; shareReadingBtn.disabled = false; }, 1800);
+    } catch (err) {
+      console.error("Share card generation failed:", err);
+      shareReadingBtn.textContent = "Yritä uudelleen";
+      setTimeout(() => { shareReadingBtn.textContent = original; shareReadingBtn.disabled = false; }, 1800);
+    }
+  });
+}

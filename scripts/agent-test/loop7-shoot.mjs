@@ -1,0 +1,18 @@
+import { chromium } from "playwright";
+import path from "node:path";
+const browser = await chromium.launch();
+const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } });
+const page = await ctx.newPage();
+await page.goto("http://localhost:3000/", { waitUntil: "domcontentloaded" });
+await page.waitForTimeout(800);
+const totalH = await page.evaluate(() => document.documentElement.scrollHeight);
+console.log("total page height:", totalH, "px");
+await page.screenshot({ path: path.resolve("scripts/agent-test/screenshots/loop-7-landing-1440.png"), fullPage: true });
+const ctxM = await browser.newContext({ viewport: { width: 375, height: 812 } });
+const pM = await ctxM.newPage();
+await pM.goto("http://localhost:3000/", { waitUntil: "domcontentloaded" });
+await pM.waitForTimeout(800);
+const totalHm = await pM.evaluate(() => document.documentElement.scrollHeight);
+console.log("mobile page height:", totalHm, "px");
+await pM.screenshot({ path: path.resolve("scripts/agent-test/screenshots/loop-7-landing-375.png"), fullPage: true });
+await browser.close();

@@ -10,6 +10,17 @@ import { shouldShowCapBanner, CAP_BANNER_COPY } from "../../lib/dailyCap.js";
 import { toUnified } from "../../lib/exerciseTypes.js";
 import { reportMcAdvisory } from "../features/mcAdvisory.js";
 import { generateCoachLine, topicLabel, countUp } from "./mode-page.js";
+import { celebrateScore } from "../features/celebrate.js";
+import { generateExerciseShareCard } from "../features/shareCard.js";
+
+function fmtElapsedGr(ms) {
+  if (!Number.isFinite(ms) || ms <= 0) return "—";
+  const s = Math.round(ms / 1000);
+  if (s < 60) return `${s} s`;
+  const m = Math.floor(s / 60);
+  const r = s % 60;
+  return r ? `${m}:${String(r).padStart(2, "0")}` : `${m} min`;
+}
 
 const OPTION_LETTERS = ["A", "B", "C", "D", "E", "F"];
 
@@ -56,11 +67,22 @@ export async function loadGrammarDrill() {
         level: state.grammarLevel,
         count: 6,
         language: state.language,
+        // Anti-repetition only applies to mixed-topic drills — when the
+        // student explicitly picked a rule (e.g. "ser/estar") we WANT
+        // every batch to keep drilling that rule.
+        recentlyShown: state.grammarTopic === "mixed" ? (state.recentGrammarRules || []) : [],
       }),
     }), { attempts: 3, baseDelayMs: 500 });
     const data = await res.json();
     if (!res.ok) throw new Error(data.error || "Harjoitusten luonti epäonnistui");
     if (!data.exercises?.length) throw new Error("No exercises");
+
+    if (state.grammarTopic === "mixed") {
+      const newRules = data.exercises
+        .map((ex) => (typeof ex?.rule === "string" ? ex.rule.toLowerCase().trim() : null))
+        .filter(Boolean);
+      state.recentGrammarRules = [...(state.recentGrammarRules || []), ...newRules].slice(-20);
+    }
 
     state.grammarExercises = data.exercises;
     state.grammarBankId = data.bankId || null;
@@ -215,6 +237,18 @@ function showGrammarResults() {
   const sortedErrors = Object.entries(errorCounts).sort((a, b) => b[1] - a[1]);
   if (sortedErrors.length > 0) sessionWeakest = sortedErrors[0][0];
   $("gram-res-coach").textContent = generateCoachLine({ scorePct: grPct, sessionWeakestLabel: sessionWeakest });
+
+  // Stats strip
+  const grWrong = Math.max(0, total - state.grammarCorrect);
+  const grElapsed = state.sessionStartTime ? Date.now() - state.sessionStartTime : 0;
+  const grStatsEl = $("gram-res-stats");
+  if (grStatsEl) {
+    countUp($("gram-res-stat-correct"), state.grammarCorrect);
+    countUp($("gram-res-stat-wrong"), grWrong);
+    $("gram-res-stat-time").textContent = fmtElapsedGr(grElapsed);
+    grStatsEl.hidden = total === 0;
+  }
+
   const grList = $("gram-res-list");
   if (grList) {
     grList.innerHTML = "";
@@ -243,6 +277,7 @@ function showGrammarResults() {
   renderBlogCta(state.grammarTopic);
   show("screen-grammar-results");
   renderGramCapBanner();
+  if (total > 0) celebrateScore(grPct);
 }
 
 function renderGramCapBanner() {
@@ -275,3 +310,30 @@ async function renderBlogCta(topicKey) {
 $("gram-btn-restart").addEventListener("click", () =>
   isLoggedIn() ? _deps.loadDashboard() : show("screen-start")
 );
+
+const shareGrammarBtn = $("btn-share-grammar");
+if (shareGrammarBtn) {
+  shareGrammarBtn.addEventListener("click", async () => {
+    shareGrammarBtn.disabled = true;
+    const original = shareGrammarBtn.textContent;
+    shareGrammarBtn.textContent = "Luodaan kuvaa…";
+    try {
+      const total = (state.grammarExercises || []).length;
+      const elapsed = state.sessionStartTime ? Date.now() - state.sessionStartTime : 0;
+      await generateExerciseShareCard({
+        kind: "grammar",
+        correct: state.grammarCorrect || 0,
+        total,
+        topicLabel: topicLabel(state.grammarTopic || "mixed"),
+        level: state.grammarLevel || "",
+        elapsedMs: elapsed,
+      });
+      shareGrammarBtn.textContent = "Tallennettu ✓";
+      setTimeout(() => { shareGrammarBtn.textContent = original; shareGrammarBtn.disabled = false; }, 1800);
+    } catch (err) {
+      console.error("Share card generation failed:", err);
+      shareGrammarBtn.textContent = "Yritä uudelleen";
+      setTimeout(() => { shareGrammarBtn.textContent = original; shareGrammarBtn.disabled = false; }, 1800);
+    }
+  });
+}

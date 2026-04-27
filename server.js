@@ -53,7 +53,14 @@ app.use(helmet({
         "https://api.lemonsqueezy.com",
         "https://api.openai.com",
         "https://eu.i.posthog.com",
+        "https://eu-assets.i.posthog.com",
         "https://*.ingest.sentry.io",
+        // Some browsers route the Google Fonts CSS fetch through connect-src
+        // even when style-src explicitly allows the host. Without this, every
+        // page logs ~9 console errors on first paint. Future loop should
+        // self-host Inter + DM Mono and drop both entries.
+        "https://fonts.googleapis.com",
+        "https://fonts.gstatic.com",
       ],
       frameSrc: ["https://*.lemonsqueezy.com"],
     },

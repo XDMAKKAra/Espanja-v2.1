@@ -298,12 +298,12 @@ body::before {
 /* ── HERO ── */
 .hero {
   position: relative; z-index: 1;
-  min-height: 100vh; min-height: 100dvh;
+  /* Was min-height: 100vh — caused gigantic empty space below the hero on
+     short content. Let the hero sit at its natural content height. */
   display: flex; flex-direction: column;
   align-items: center; justify-content: flex-start;
   text-align: center;
-  padding: 0 24px 48px;
-  padding-top: max(80px, 12vh);
+  padding: max(56px, 9vh) 24px 64px;
 }
 .hero-inner {
   width: 100%;
@@ -339,7 +339,7 @@ body::before {
 }
 .hero-proof-kicker {
   font-size: 11px; letter-spacing: 0.14em;
-  text-transform: uppercase; color: var(--accent);
+  text-transform: uppercase; color: #0F766E;
 }
 .hero-proof-score {
   font-family: var(--font); font-weight: 700;
@@ -496,13 +496,18 @@ body::before {
 }
 .hc-opt.correct {
   border-color: var(--success); background: rgba(42, 122, 64, 0.08);
-  color: var(--success); font-weight: 600;
+  /* Use ink — not the success tint — so contrast against the very pale green
+     fill clears WCAG 4.5:1. The green border + check glyph carry the meaning. */
+  color: var(--ink); font-weight: 600;
 }
 
 /* ── SECTIONS ── */
 .section {
   position: relative; z-index: 1;
-  max-width: 960px; margin: 0 auto; padding: 80px 20px;
+  max-width: 960px; margin: 0 auto; padding: 56px 20px;
+}
+@media (min-width: 960px) {
+  .section { padding: 64px 20px; }
 }
 .section-tag {
   font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em;
@@ -750,11 +755,13 @@ body::before {
 .price-amount .price-period { font-size: 14px; font-weight: 500; color: var(--ink-soft); }
 .price-amount.summer-price { color: var(--ink); }
 .price-compare {
-  font-family: var(--font-body); font-size: 12px; color: var(--ink-faint);
+  /* 12px body text — bumped from --ink-faint to --ink-soft to clear WCAG 4.5:1 in the
+     summer-pricing card. The strikethrough already reads as "old price" without opacity. */
+  font-family: var(--font-body); font-size: 12px; color: var(--ink-soft);
   margin-top: 4px; margin-bottom: 2px;
 }
-.price-compare s { opacity: 0.6; }
-.price-compare strong { color: var(--success); font-weight: 600; }
+.price-compare s { color: var(--ink-faint); }
+.price-compare strong { color: #047857; font-weight: 700; }
 .price-per-month {
   font-family: var(--font-body); font-size: 11px; font-weight: 500;
   color: var(--ink-soft); margin-bottom: 8px;

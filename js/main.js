@@ -26,11 +26,31 @@ import { initQuickReview } from "./screens/quickReview.js";
 import { initVerbSprint } from "./screens/verbSprint.js";
 import { initVerbReference } from "./screens/verbReference.js";
 import { initSettings, showSettings } from "./screens/settings.js";
+import { initProfile, loadProfile } from "./screens/profile.js";
 import { wireTopicPicker, topicLabel, loadBriefing } from "./screens/mode-page.js";
 import { initAnalytics, trackError } from "./analytics.js";
 
 // ─── Inject show into api.js (avoids circular dep) ─────────────────────────
 setShowFn(show);
+
+// ─── Loading-shimmer auto-clear ────────────────────────────────────────────
+// Strip `.loading-shimmer` from placeholder elements as soon as JS replaces
+// their text, so real exercise content doesn't keep pulsing.
+(function watchShimmerPlaceholders() {
+  if (typeof MutationObserver === "undefined") return;
+  const ids = ["question-text", "writing-prompt-text", "gram-sentence", "reading-question-text", "mastery-question", "placement-question"];
+  const obs = new MutationObserver((muts) => {
+    for (const m of muts) {
+      const el = m.target;
+      if (!(el instanceof Element)) continue;
+      if (el.classList.contains("loading-shimmer")) el.classList.remove("loading-shimmer");
+    }
+  });
+  for (const id of ids) {
+    const el = document.getElementById(id);
+    if (el) obs.observe(el, { childList: true, characterData: true, subtree: true });
+  }
+})();
 
 // ─── Sidebar + mobile nav ──────────────────────────────────────────────────
 
@@ -104,6 +124,7 @@ const NAV_HASH = {
   path: "#/oppimispolku",
   exam: "#/koeharjoitus",
   settings: "#/asetukset",
+  profile: "#/oma-sivu",
 };
 const HASH_NAV = Object.fromEntries(Object.entries(NAV_HASH).map(([k, v]) => [v, k]));
 
@@ -119,10 +140,11 @@ function navigateTo(nav, { updateHash = true } = {}) {
   if (nav === "dashboard") loadDashboard();
   else if (nav === "exam") startFullExam("demo");
   else if (nav === "settings") showSettings();
+  else if (nav === "profile") loadProfile();
   else showModePage(nav);
 }
 
-document.querySelectorAll(".sidebar-item[data-nav], .mobile-nav-item[data-nav]").forEach((btn) => {
+document.querySelectorAll(".sidebar-item[data-nav], .mobile-nav-item[data-nav], .sidebar-user[data-nav]").forEach((btn) => {
   btn.addEventListener("click", () => navigateTo(btn.dataset.nav));
 });
 
@@ -218,6 +240,7 @@ initQuickReview({ startGrammarDrill });
 initVerbSprint({ saveProgress });
 initVerbReference();
 initSettings({ loadDashboard });
+initProfile();
 
 if ($("btn-start-reading")) $("btn-start-reading").addEventListener("click", async () => {
   state.mode = "reading";
@@ -368,6 +391,18 @@ $("btn-upsell-back").addEventListener("click", () => show("screen-start"));
 
 // ─── Mode picker (old start screen) ───────────────────────────────────────
 
+// 3D tilt + cursor-tracked glare (sourced: Aceternity 3d-card-effect +
+// Magic UI magic-card). Only attaches on fine-pointer devices that don't
+// have prefers-reduced-motion set; the helper is a no-op otherwise.
+import("./features/cardTilt.js").then((m) => {
+  m.enableCardTilt(".mode-picker .mode-btn:not(.mode-locked)");
+}).catch(() => { /* tilt is non-critical decoration */ });
+
+// Global shadcn-style tooltip (sourced: shadcn/ui Tooltip — Radix primitive).
+// Targets any element with `data-tooltip="..."` and replaces native title=
+// for the duration of the hover. Idempotent.
+import("./features/tooltip.js").then((m) => m.installTooltip()).catch(() => {});
+
 document.querySelectorAll(".mode-btn").forEach((btn) => {
   btn.addEventListener("click", () => {
     document.querySelectorAll(".mode-btn").forEach((b) => b.classList.remove("active"));
@@ -503,19 +538,23 @@ $("btn-start").addEventListener("click", async () => {
 
 // ─── Dashboard nav buttons ─────────────────────────────────────────────────
 
-$("btn-logout").addEventListener("click", () => {
+const btnLogout = $("btn-logout");
+if (btnLogout) btnLogout.addEventListener("click", () => {
   clearAuth();
   updateSidebarState();
   show("screen-auth");
 });
 
-$("btn-dash-start").addEventListener("click", () => {
-  $("btn-back-to-dash").classList.remove("hidden");
+const btnDashStart = $("btn-dash-start");
+if (btnDashStart) btnDashStart.addEventListener("click", () => {
+  const back = $("btn-back-to-dash");
+  if (back) back.classList.remove("hidden");
   loadLastSettings();
   show("screen-start");
 });
 
-$("btn-back-to-dash").addEventListener("click", () => loadDashboard());
+const btnBackToDash = $("btn-back-to-dash");
+if (btnBackToDash) btnBackToDash.addEventListener("click", () => loadDashboard());
 
 // ─── Report exercise ───────────────────────────────────────────────────────
 

@@ -51,6 +51,87 @@
 }
 .rail-stat__delta--down { color: var(--error); }
 
+/* Dashboard streak flame — quiet by default, lights up with the streak. */
+.streak-flame {
+  font-size: 1em;
+  width: 0.85em;
+  height: 0.85em;
+  margin-right: 6px;
+  vertical-align: -0.1em;
+  color: var(--ink-faint);
+  transition: color var(--dur-base, 200ms) var(--ease-out, ease);
+  transform-origin: 50% 80%;
+  will-change: transform, opacity;
+}
+.streak-flame.is-dim { color: var(--ink-faint); opacity: 0.45; }
+.streak-flame--warm { color: var(--warn); animation: streakFlicker 1.8s ease-in-out infinite; }
+.streak-flame--hot { color: var(--error); animation: streakFlicker 1.2s ease-in-out infinite; }
+.streak-flame--inferno {
+  color: var(--error);
+  filter: drop-shadow(0 0 6px rgba(220, 38, 38, 0.45));
+  animation: streakFlicker 0.9s ease-in-out infinite;
+}
+@keyframes streakFlicker {
+  0%, 100% { opacity: 1; transform: scale(1) rotate(0deg); }
+  25% { opacity: 0.92; transform: scale(1.04) rotate(-1deg); }
+  50% { opacity: 0.85; transform: scale(1.07) rotate(0deg); }
+  75% { opacity: 0.94; transform: scale(1.03) rotate(1deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .streak-flame { animation: none !important; }
+}
+
+/* Word of the day — small editorial card in the rail. */
+.word-of-day {
+  padding: 14px 0;
+  font-family: var(--font-body);
+}
+.word-of-day__head {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 4px;
+}
+.word-of-day__es {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.005em;
+}
+.word-of-day__pos {
+  font-family: var(--font-mono);
+  font-size: var(--fs-meta, 0.7rem);
+  font-weight: 500;
+  color: var(--ink-faint);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.word-of-day__fi {
+  font-size: var(--fs-mono-sm, 0.78rem);
+  color: var(--ink-soft);
+  margin-bottom: 10px;
+}
+.word-of-day__ex {
+  border-top: 1px solid var(--border);
+  padding-top: 10px;
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+.word-of-day__ex-es {
+  margin: 0 0 4px;
+  color: var(--ink);
+  font-style: italic;
+}
+.word-of-day__ex-es::before { content: "“"; color: var(--ink-faint); }
+.word-of-day__ex-es::after { content: "”"; color: var(--ink-faint); }
+.word-of-day__ex-fi {
+  margin: 0;
+  color: var(--ink-faint);
+  font-size: 0.78rem;
+}
+
 .rail-countdown {
   padding: 14px 0;
   border-top: 1px solid var(--border);
@@ -147,4 +228,68 @@
     grid-template-columns: repeat(2, 1fr);
     gap: 12px;
   }
+}
+
+/* ── YO-valmius readiness ring (sourced: Magic UI animated-circular-progress-bar
+     — apps/www/registry/magicui/animated-circular-progress-bar.tsx — adapted
+     to a single accent ring with a track behind it; the original's two-arc
+     gap aesthetic is too detailed for our 80 px footprint). ──────────── */
+.rail-stat--readiness { padding-top: 16px; }
+.rail-readiness {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  margin-bottom: 4px;
+}
+.rail-readiness-ring {
+  width: 100%;
+  height: 100%;
+  /* Rotate so 0% starts at 12 o'clock and fills clockwise. */
+  transform: rotate(-90deg);
+  display: block;
+}
+.rail-readiness-track,
+.rail-readiness-fill {
+  fill: none;
+  stroke-width: 6;
+  stroke-linecap: round;
+}
+.rail-readiness-track {
+  stroke: var(--surface-2);
+}
+.rail-readiness-fill {
+  stroke: var(--accent);
+  /* Circumference = 2π × r (r=34) = 213.628; we round to a literal so
+     the ring snaps cleanly without sub-pixel float jitter. */
+  stroke-dasharray: 213.628;
+  stroke-dashoffset: 213.628;
+  transition: stroke-dashoffset 1.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+  filter: drop-shadow(0 0 4px color-mix(in srgb, var(--accent) 40%, transparent));
+}
+.rail-readiness-num {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 2px;
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.rail-readiness-num small {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--ink-soft);
+  /* Pull the percent sigil up toward the cap height of the digit so the
+     two read as one composed unit rather than two separately-sized pieces. */
+  position: relative;
+  top: -1px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rail-readiness-fill { transition: none; }
 }

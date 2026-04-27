@@ -832,7 +832,7 @@
 
       <div data-view="cta" class="mini-diag-cta">
         <div class="mini-diag-kicker">Adaptiivinen arvio</div>
-        <h3 class="mini-diag-title">Miss&auml; tasolla olet nyt?</h3>
+        <h2 class="mini-diag-title">Miss&auml; tasolla olet nyt?</h2>
         <p class="mini-diag-lede">60 sekunnin taitotaso-arvio &mdash; 3 kysymyst&auml;, palaute heti.</p>
         <button type="button" id="mini-diag-start" class="btn-hero mini-diag-start">Aloita arvio &rarr;</button>
         <p class="mini-diag-microcopy">Ei vaadi kirjautumista. Vastauksesi tallennetaan vain selaimeesi.</p>
@@ -876,7 +876,7 @@
   </section>
 
   <!-- Floating exercise card mockup (below fold) -->
-  <div class="hero-card-below" style="display:flex;justify-content:center;padding:0 20px 60px;position:relative;z-index:1;">
+  <div class="hero-card-below" style="display:flex;justify-content:center;padding:0 20px 32px;position:relative;z-index:1;">
     <div class="hero-card-wrap">
       <div class="hc">
         <div class="hc-meta">
@@ -927,7 +927,7 @@
     <div class="section-tag">Ratkaisu</div>
     <h2>Puheo ratkaisee kaikki kolme.<br/>Teko&auml;lyll&auml;.</h2>
 
-    <div class="features-grid" id="features-grid">
+    <div class="features-grid" id="features-grid" tabindex="0" role="region" aria-label="Ominaisuudet — selaa">
       <div class="feature-card reveal">
         <span class="feature-icon" aria-hidden="true">
           <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
@@ -962,7 +962,7 @@
         <div class="feature-desc">J&auml;rjestelm&auml; palauttaa sanat ja s&auml;&auml;nn&ouml;t kertaukseen juuri ennen kuin unohtaisit ne. Ei turhaa p&auml;nttäämist&auml;.</div>
       </div>
     </div>
-    <div class="feature-dots" id="feature-dots" role="tablist" aria-label="Ominaisuudet">
+    <div class="feature-dots" id="feature-dots" role="group" aria-label="Ominaisuudet — selaa">
       <button type="button" class="feature-dot active" data-idx="0" aria-label="N&auml;yt&auml; ominaisuus 1"></button>
       <button type="button" class="feature-dot" data-idx="1" aria-label="N&auml;yt&auml; ominaisuus 2"></button>
       <button type="button" class="feature-dot" data-idx="2" aria-label="N&auml;yt&auml; ominaisuus 3"></button>
@@ -1542,13 +1542,13 @@
       </div>
     </div>
   </footer>
-  <div class="footer-links">
+  <nav class="footer-links" aria-label="Lis&auml;tietoja ja s&auml;hk&ouml;posti">
     <a href="/blog/">Blogi</a>
     <a href="/privacy.html">Tietosuoja</a>
     <a href="/terms.html">K&auml;ytt&ouml;ehdot</a>
     <a href="/refund.html">Palautukset</a>
     <a href="mailto:tuki@puheo.fi">tuki@puheo.fi</a>
-  </div>
+  </nav>
 
   <script>
     // ── PostHog (EU host, public project key, autocapture off) ──
@@ -1560,7 +1560,7 @@
       window.track = function(event, props) { window.__PH_QUEUE.push([event, props || {}]); };
 
       function load() {
-        import('https://cdn.jsdelivr.net/npm/posthog-js@1/dist/module.full.no-external.mjs')
+        import('https://cdn.jsdelivr.net/npm/posthog-js@1/dist/module.full.no-external.js')
           .then(function(mod) {
             var ph = mod.default;
             ph.init(PH_KEY, {
@@ -1933,7 +1933,6 @@
     })();
   </script>
 
-  <script type="module" src="js/demo.js"></script>
   <script defer src="js/diagnostic.js"></script>
 </body>
 </html>
