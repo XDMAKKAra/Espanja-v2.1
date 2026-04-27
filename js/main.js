@@ -240,6 +240,10 @@ const btnExitExercise = $("btn-exit-exercise");
 if (btnExitExercise) btnExitExercise.addEventListener("click", () => show("screen-dashboard"));
 const btnExitGram = $("btn-exit-gram");
 if (btnExitGram) btnExitGram.addEventListener("click", () => show("screen-dashboard"));
+const btnExitReading = $("btn-exit-reading");
+if (btnExitReading) btnExitReading.addEventListener("click", () => show("screen-dashboard"));
+const btnExitReadingText = $("btn-exit-reading-text");
+if (btnExitReadingText) btnExitReadingText.addEventListener("click", () => show("screen-dashboard"));
 
 // Pro upgrade buttons on mode pages
 if ($("reading-upgrade-btn")) $("reading-upgrade-btn").addEventListener("click", () => startCheckout());

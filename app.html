@@ -1564,26 +1564,37 @@
 
   <!-- SCREEN: Reading comprehension -->
   <div id="screen-reading" class="screen">
-    <div class="reading-inner">
+    <div class="exercise reading-inner" id="reading-exercise-root">
 
       <div id="reading-sub-text">
-        <div class="reading-header-bar">
-          <span class="reading-source-tag" id="reading-source-tag">Texto</span>
-          <span class="reading-level-badge" id="reading-level-badge">C</span>
-        </div>
-        <h3 class="reading-title" id="reading-title">Título</h3>
+        <header class="exercise__top">
+          <div class="exercise__meta">
+            <span class="eyebrow" id="reading-source-tag">TEXTO · LUETUN YMM.</span>
+            <span class="exercise__sep">·</span>
+            <span class="ex-level-badge mono-num mono-num--sm" id="reading-level-badge">C</span>
+          </div>
+          <button class="exercise__exit" id="btn-exit-reading-text" type="button" aria-label="Poistu">×</button>
+        </header>
+        <div class="exercise__progress"><i style="width:0%"></i></div>
+
+        <h1 class="display reading-title" id="reading-title">Título</h1>
         <div class="reading-text-body" id="reading-text-body"></div>
-        <button class="btn-primary" id="btn-start-questions">Aloita kysymykset →</button>
+        <button class="btn--cta btn--cta--mini" id="btn-start-questions">
+          <span class="btn--cta__title">Aloita kysymykset</span>
+          <span class="btn--cta__arrow" aria-hidden="true">→</span>
+        </button>
       </div>
 
       <div id="reading-sub-questions" class="hidden">
-        <div class="ex-header">
-          <div class="ex-meta">
-            <span id="reading-q-counter">K 1 / 4</span>
-            <span class="reading-q-type-badge" id="reading-q-type">Monivalinta</span>
+        <header class="exercise__top">
+          <div class="exercise__meta">
+            <span class="mono-num mono-num--sm" id="reading-q-counter">1 / 4</span>
+            <span class="exercise__sep">·</span>
+            <span class="eyebrow" id="reading-q-type">MONIVALINTA</span>
           </div>
-          <div class="progress-bar"><div class="progress-fill" id="reading-progress-fill"></div></div>
-        </div>
+          <button class="exercise__exit" id="btn-exit-reading" type="button" aria-label="Poistu">×</button>
+        </header>
+        <div class="exercise__progress"><i id="reading-progress-fill"></i></div>
 
         <details class="reading-text-ref">
           <summary>Näytä teksti ▾</summary>
@@ -1591,11 +1602,11 @@
         </details>
 
         <div class="question-block">
-          <h2 id="reading-question-text" class="reading-question-h2">Loading...</h2>
+          <h2 class="display" id="reading-question-text">Loading…</h2>
         </div>
 
         <div id="reading-options-container">
-          <div class="options-grid" id="reading-options-grid" role="group" aria-label="Vastausvaihtoehdot"></div>
+          <div class="exercise__options" id="reading-options-grid" role="radiogroup" aria-label="Vastausvaihtoehdot"></div>
         </div>
         <div id="reading-tf-container" class="hidden">
           <div class="tf-buttons">
@@ -1609,14 +1620,20 @@
           </div>
         </div>
         <div id="reading-short-container" class="hidden">
-          <textarea id="reading-short-input" class="reading-short-textarea" placeholder="Kirjoita vastauksesi suomeksi..."></textarea>
-          <button class="btn-primary" id="reading-short-submit">Tarkista →</button>
+          <textarea id="reading-short-input" class="reading-short-textarea" placeholder="Kirjoita vastauksesi suomeksi…"></textarea>
+          <button class="btn--cta btn--cta--mini" id="reading-short-submit">
+            <span class="btn--cta__title">Tarkista</span>
+            <span class="btn--cta__arrow" aria-hidden="true">→</span>
+          </button>
         </div>
 
-        <div class="explanation-block hidden" id="reading-explanation-block">
-          <p id="reading-explanation-text"></p>
+        <div class="exercise__feedback explanation-block hidden" id="reading-explanation-block">
+          <p class="exercise__feedback-correct" id="reading-explanation-text"></p>
           <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-            <button class="btn-next" id="reading-btn-next">Seuraava →</button>
+            <button class="btn--cta btn--cta--mini" id="reading-btn-next">
+              <span class="btn--cta__title">Seuraava</span>
+              <span class="btn--cta__arrow" aria-hidden="true">→</span>
+            </button>
             <button class="btn-report hidden" id="btn-report-reading" title="Raportoi virheellinen tehtävä">⚠ Virhe tehtävässä</button>
           </div>
         </div>

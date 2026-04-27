@@ -61,7 +61,7 @@ function renderReadingQuestion() {
   const q = state.currentReading.questions[state.readingQIndex];
   const total = state.currentReading.questions.length;
 
-  $("reading-q-counter").textContent = `K ${state.readingQIndex + 1} / ${total}`;
+  $("reading-q-counter").textContent = `${state.readingQIndex + 1} / ${total}`;
   $("reading-progress-fill").style.width = `${(state.readingQIndex / total) * 100}%`;
   $("reading-explanation-block").classList.add("hidden");
   $("reading-btn-next").style.display = "";
@@ -103,21 +103,37 @@ function renderReadingOptions(q) {
   grid.innerHTML = "";
   q.options.forEach((opt) => {
     const letter = opt.trim()[0];
+    const text = opt.replace(/^[A-D]\)\s*/, "").trim();
     const btn = document.createElement("button");
-    btn.className = "option-btn";
-    btn.textContent = opt;
+    btn.type = "button";
+    btn.className = "ex-option";
+    btn.setAttribute("role", "radio");
+    btn.setAttribute("aria-checked", "false");
+
+    const lSpan = document.createElement("span");
+    lSpan.className = "ex-option__l";
+    lSpan.textContent = letter;
+    const tSpan = document.createElement("span");
+    tSpan.className = "ex-option__t";
+    tSpan.textContent = text;
+    btn.append(lSpan, tSpan);
+
     btn.addEventListener("click", () => {
       const isCorrect = letter === q.correct;
       if (isCorrect) {
-        btn.classList.add("correct");
+        btn.classList.add("is-correct");
         state.readingScore++;
       } else {
-        btn.classList.add("wrong");
-        grid.querySelectorAll(".option-btn").forEach((b) => {
-          if (b.textContent.trim()[0] === q.correct) b.classList.add("correct");
+        btn.classList.add("is-wrong");
+        grid.querySelectorAll(".ex-option").forEach((b) => {
+          const bLetter = b.querySelector(".ex-option__l")?.textContent;
+          if (bLetter === q.correct) b.classList.add("is-correct");
         });
       }
-      grid.querySelectorAll(".option-btn").forEach((b) => (b.disabled = true));
+      grid.querySelectorAll(".ex-option").forEach((b) => {
+        b.disabled = true;
+        b.classList.add("is-disabled");
+      });
       $("reading-explanation-text").textContent = q.explanation;
       $("reading-explanation-block").classList.remove("hidden");
     });
