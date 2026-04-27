@@ -26,7 +26,7 @@ import { initQuickReview } from "./screens/quickReview.js";
 import { initVerbSprint } from "./screens/verbSprint.js";
 import { initVerbReference } from "./screens/verbReference.js";
 import { initSettings, showSettings } from "./screens/settings.js";
-import { wireTopicPicker, topicLabel } from "./screens/mode-page.js";
+import { wireTopicPicker, topicLabel, loadBriefing } from "./screens/mode-page.js";
 import { initAnalytics, trackError } from "./analytics.js";
 
 // ─── Inject show into api.js (avoids circular dep) ─────────────────────────
@@ -58,7 +58,8 @@ function showModePage(mode) {
   const screenEl = document.getElementById(screenId);
   if (!screenEl) { navigateToMode(mode); return; }
 
-  renderModePageStats(mode);
+  // Spec 2 §3.3 — populate the briefing card for this mode.
+  loadBriefing(mode);
 
   if ((mode === "reading" || mode === "writing") && isLoggedIn() && !window._isPro) {
     const note = document.getElementById(`${mode}-pro-note`);
@@ -71,37 +72,10 @@ function showModePage(mode) {
   show(screenId);
 }
 
-function renderModePageStats(mode) {
-  const statsEl = document.getElementById(`${mode}-page-stats`);
-  if (!statsEl) return;
-  const s = window._dashModeStats?.[mode];
-
-  const EMPTY_HINTS = {
-    vocab:   "Aloita ensimmäinen sanaharjoitus alta — tasosi mitataan automaattisesti.",
-    grammar: "Aloita ensimmäinen kielioppiharjoitus alta — keskitymme YTL:n kannalta tärkeimpiin rakenteisiin.",
-    reading: "Aloita ensimmäinen luetun ymmärtämisen tehtävä alta — saat heti palautteen.",
-    writing: "Aloita ensimmäinen kirjoitustehtävä alta — saat YTL:n neljään osa-alueeseen perustuvan arvion.",
-  };
-
-  if (!s || (!s.sessions && !s.bestGrade && s.avgPct == null)) {
-    const hint = EMPTY_HINTS[mode];
-    statsEl.innerHTML = hint
-      ? `<div class="mode-page-empty">${hint}</div>`
-      : "";
-    return;
-  }
-
-  let html = "";
-  if (s.sessions > 0) html += `<div class="mode-page-stat"><span class="mode-page-stat-value">${s.sessions}</span><span class="mode-page-stat-label">kertaa</span></div>`;
-  if (s.bestGrade) html += `<div class="mode-page-stat"><span class="mode-page-stat-value">${s.bestGrade}</span><span class="mode-page-stat-label">paras</span></div>`;
-  if (s.avgPct != null) html += `<div class="mode-page-stat"><span class="mode-page-stat-value">${s.avgPct}%</span><span class="mode-page-stat-label">keskim.</span></div>`;
-  statsEl.innerHTML = html;
-}
-
 // ─── Wire up module dependencies ───────────────────────────────────────────
 
 initAuth({ updateSidebarState, loadDashboard });
-initDashboard({ loadGrammarDrill, loadReadingTask, loadWritingTask, startCheckout, openBillingPortal, startMockExam, showModePage, renderModePageStats, loadNextBatch, showProUpsell });
+initDashboard({ loadGrammarDrill, loadReadingTask, loadWritingTask, startCheckout, openBillingPortal, startMockExam, showModePage, loadNextBatch, showProUpsell });
 initVocab({ loadDashboard, shareResult, saveProgress });
 initGrammar({ loadDashboard, saveProgress });
 initReading({ loadDashboard, saveProgress, showProUpsell });
@@ -169,12 +143,17 @@ window._restoreFromHash = function restoreFromHash() {
 
 // ─── Topic card clicks (all mode pages) ────────────────────────────────────
 
-document.querySelectorAll(".topic-cards").forEach((grid) => {
-  grid.addEventListener("click", (e) => {
-    const card = e.target.closest(".topic-card");
-    if (!card) return;
-    grid.querySelectorAll(".topic-card").forEach((c) => c.classList.remove("active"));
-    card.classList.add("active");
+// Spec 2 §3.4 — wire the new .mode-topics radio-group rows.
+document.querySelectorAll(".mode-topics").forEach((container) => {
+  const modePage = container.closest(".mode-page");
+  const ctaEl = modePage?.querySelector(".btn--cta");
+  wireTopicPicker(container, {
+    ctaEl,
+    ctaMetaTemplate: (id) => {
+      const label = topicLabel(id).toUpperCase();
+      const tmpl = ctaEl?.dataset.ctaMeta || "{TOPIC}";
+      return tmpl.replace("{TOPIC}", label);
+    },
   });
 });
 
@@ -213,7 +192,7 @@ async function showLevelForMode(displayId, mode, topic) {
 
 if ($("btn-start-vocab")) $("btn-start-vocab").addEventListener("click", async () => {
   state.mode = "vocab";
-  state.topic = document.querySelector("#vocab-topic-cards .topic-card.active")?.dataset.topic || "general vocabulary";
+  state.topic = document.querySelector('#screen-mode-vocab .mode-topic[aria-checked="true"]')?.dataset.topic || "general vocabulary";
   state.level = await fetchUserLevel("vocab", state.topic);
   state.startLevel = state.level;
   state.peakLevel = state.level;

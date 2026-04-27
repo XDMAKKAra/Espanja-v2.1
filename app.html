@@ -584,40 +584,77 @@
 
   <!-- SCREEN: Mode — Sanasto -->
   <div id="screen-mode-vocab" class="screen">
-    <div class="mode-page">
-      <div class="mode-page-header">
-        <span class="mode-page-icon">📚</span>
-        <div>
-          <h1 class="mode-page-title">Sanasto</h1>
-          <p class="mode-page-sub">Adaptiivinen sanastoharjoittelu yo-kokeeseen</p>
-        </div>
-      </div>
-      <div class="mode-page-stats" id="vocab-page-stats"></div>
+    <div class="mode-page mode-page--vocab">
+      <p class="eyebrow">SANASTO · YO LYHYT</p>
+      <h1 class="display">Sanasto</h1>
+      <p class="mode-page__sub">Adaptiivinen sanastoharjoittelu yo-kokeeseen</p>
 
-      <div class="mode-page-section">
-        <label class="mode-page-label">Aihe</label>
-        <div class="topic-cards" id="vocab-topic-cards">
-          <button class="topic-card active" data-topic="general vocabulary"><span class="topic-card-icon">🌍</span><span class="topic-card-name">Yleinen sanasto</span></button>
-          <button class="topic-card" data-topic="society and politics"><span class="topic-card-icon">🏛️</span><span class="topic-card-name">Yhteiskunta</span></button>
-          <button class="topic-card" data-topic="environment and nature"><span class="topic-card-icon">🌿</span><span class="topic-card-name">Ympäristö</span></button>
-          <button class="topic-card" data-topic="health and body"><span class="topic-card-icon">🏥</span><span class="topic-card-name">Terveys</span></button>
-          <button class="topic-card" data-topic="travel and transport"><span class="topic-card-icon">✈️</span><span class="topic-card-name">Matkailu</span></button>
-          <button class="topic-card" data-topic="culture and arts"><span class="topic-card-icon">🎭</span><span class="topic-card-name">Kulttuuri</span></button>
-          <button class="topic-card" data-topic="work and economy"><span class="topic-card-icon">💼</span><span class="topic-card-name">Työ & talous</span></button>
-        </div>
-      </div>
-
-      <div class="mode-page-section">
-        <!-- Pass 0.6: manual taso-picker removed. Level now comes from
-             user_level_progress / diagnostic_results via GET /api/user-level.
-             Kokeile vaikeampaa affordance will land inside the exercise
-             screen in a later pass. -->
-        <div class="user-level-display" id="vocab-page-level-display" hidden>
-          Tasosi: <strong data-level>—</strong>
+      <div class="mode-briefing" id="vocab-briefing">
+        <p class="eyebrow">VIIMEKSI · —</p>
+        <div class="mode-briefing__stats">
+          <div class="mode-briefing__stat">
+            <span><span class="mono-num mono-num--lg" id="vocab-last-acc">—</span><small>%</small></span>
+            <span class="mode-briefing__stat-l">Tarkkuus</span>
+          </div>
+          <div class="mode-briefing__stat">
+            <span class="mono-num mono-num--lg" id="vocab-week-sessions">—</span>
+            <span class="mode-briefing__stat-l">Sessiota</span>
+          </div>
+          <div class="mode-briefing__stat">
+            <span><span class="mono-num mono-num--lg" id="vocab-streak">—</span><small>pv</small></span>
+            <span class="mode-briefing__stat-l">Putki</span>
+          </div>
         </div>
       </div>
 
-      <button class="btn-primary" id="btn-start-vocab">Aloita sanastoharjoittelu →</button>
+      <div class="mode-topics" role="radiogroup" aria-labelledby="vocab-topics-label">
+        <p class="eyebrow" id="vocab-topics-label">Aihe</p>
+        <button class="mode-topic is-current" data-topic="general vocabulary" role="radio" aria-checked="true">
+          <span class="mode-topic__n mono-num mono-num--md">01</span>
+          <span class="mode-topic__name">Yleinen sanasto</span>
+          <span class="mode-topic__chev" aria-hidden="true">→</span>
+        </button>
+        <button class="mode-topic" data-topic="society and politics" role="radio" aria-checked="false">
+          <span class="mode-topic__n mono-num mono-num--md">02</span>
+          <span class="mode-topic__name">Yhteiskunta</span>
+          <span class="mode-topic__chev" aria-hidden="true">→</span>
+        </button>
+        <button class="mode-topic" data-topic="environment and nature" role="radio" aria-checked="false">
+          <span class="mode-topic__n mono-num mono-num--md">03</span>
+          <span class="mode-topic__name">Ympäristö</span>
+          <span class="mode-topic__chev" aria-hidden="true">→</span>
+        </button>
+        <button class="mode-topic" data-topic="health and body" role="radio" aria-checked="false">
+          <span class="mode-topic__n mono-num mono-num--md">04</span>
+          <span class="mode-topic__name">Terveys</span>
+          <span class="mode-topic__chev" aria-hidden="true">→</span>
+        </button>
+        <button class="mode-topic" data-topic="travel and transport" role="radio" aria-checked="false">
+          <span class="mode-topic__n mono-num mono-num--md">05</span>
+          <span class="mode-topic__name">Matkailu</span>
+          <span class="mode-topic__chev" aria-hidden="true">→</span>
+        </button>
+        <button class="mode-topic" data-topic="culture and arts" role="radio" aria-checked="false">
+          <span class="mode-topic__n mono-num mono-num--md">06</span>
+          <span class="mode-topic__name">Kulttuuri</span>
+          <span class="mode-topic__chev" aria-hidden="true">→</span>
+        </button>
+        <button class="mode-topic" data-topic="work and economy" role="radio" aria-checked="false">
+          <span class="mode-topic__n mono-num mono-num--md">07</span>
+          <span class="mode-topic__name">Työ &amp; talous</span>
+          <span class="mode-topic__chev" aria-hidden="true">→</span>
+        </button>
+      </div>
+
+      <div class="mode-page__cta-row">
+        <button class="btn--cta" id="btn-start-vocab" data-target="vocab" data-cta-meta="~5 MIN · {TOPIC}">
+          <span class="btn--cta__l">
+            <span class="btn--cta__title">Aloita sanastoharjoittelu</span>
+            <span class="btn--cta__meta">~5 MIN · YLEINEN SANASTO</span>
+          </span>
+          <span class="btn--cta__arrow" aria-hidden="true">→</span>
+        </button>
+      </div>
     </div>
   </div>
 
