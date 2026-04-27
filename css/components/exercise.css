@@ -87,12 +87,25 @@
 .ex-option:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
 .ex-option__l {
   flex: 0 0 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   font-family: var(--font-mono);
   font-size: var(--fs-mono-md);
   font-weight: 600;
   color: var(--ink);
   line-height: 1;
-  padding-top: 2px;
+  border-radius: var(--r-sm);
+  transition: background 120ms var(--ease-out), color 120ms var(--ease-out);
+}
+.ex-option.is-correct .ex-option__l {
+  background: var(--success);
+  color: var(--bg);
+}
+.ex-option.is-wrong .ex-option__l {
+  background: var(--error);
+  color: var(--bg);
 }
 .ex-option__t {
   flex: 1;
