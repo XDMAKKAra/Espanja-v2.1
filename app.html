@@ -660,39 +660,98 @@
 
   <!-- SCREEN: Mode — Puheoppi -->
   <div id="screen-mode-grammar" class="screen">
-    <div class="mode-page">
-      <div class="mode-page-header">
-        <span class="mode-page-icon">🔧</span>
-        <div>
-          <h1 class="mode-page-title">Puheoppi</h1>
-          <p class="mode-page-sub">Kohdennetut harjoitukset YO-kokeen yleisimpiin virheisiin</p>
-        </div>
-      </div>
-      <div class="mode-page-stats" id="grammar-page-stats"></div>
+    <div class="mode-page mode-page--grammar">
+      <p class="eyebrow">PUHEOPPI · YO LYHYT</p>
+      <h1 class="display">Puheoppi</h1>
+      <p class="mode-page__sub">Kohdennetut harjoitukset YO-kokeen yleisimpiin virheisiin</p>
 
-      <div class="mode-page-section">
-        <label class="mode-page-label">Puheoppiaihe</label>
-        <div class="topic-cards" id="grammar-topic-cards">
-          <button class="topic-card active" data-topic="mixed"><span class="topic-card-icon">🎲</span><span class="topic-card-name">Sekaisin</span><span class="topic-card-desc">Kaikki aiheet</span></button>
-          <button class="topic-card" data-topic="ser_estar"><span class="topic-card-icon">🔄</span><span class="topic-card-name">Ser vs. Estar</span><span class="topic-card-desc">Pysyvä vs. tilapäinen</span></button>
-          <button class="topic-card" data-topic="hay_estar"><span class="topic-card-icon">📍</span><span class="topic-card-name">Hay vs. Estar</span><span class="topic-card-desc">Olemassaolo vs. sijainti</span></button>
-          <button class="topic-card" data-topic="subjunctive"><span class="topic-card-icon">🌀</span><span class="topic-card-name">Subjunktiivi</span><span class="topic-card-desc">Ojalá, para que...</span></button>
-          <button class="topic-card" data-topic="conditional"><span class="topic-card-icon">💭</span><span class="topic-card-name">Konditionaali</span><span class="topic-card-desc">Me gustaría...</span></button>
-          <button class="topic-card" data-topic="preterite_imperfect"><span class="topic-card-icon">⏳</span><span class="topic-card-name">Pret. vs. Imperf.</span><span class="topic-card-desc">Yksittäinen vs. toistuva</span></button>
-          <button class="topic-card" data-topic="pronouns"><span class="topic-card-icon">👉</span><span class="topic-card-name">Pronominit</span><span class="topic-card-desc">Que, quien, donde...</span></button>
-        </div>
-      </div>
-
-      <div class="mode-page-section">
-        <!-- Pass 0.6: level comes from /api/user-level. -->
-        <div class="user-level-display" id="grammar-page-level-display" hidden>
-          Tasosi: <strong data-level>—</strong>
+      <div class="mode-briefing" id="grammar-briefing">
+        <p class="eyebrow">VIIMEKSI · —</p>
+        <div class="mode-briefing__stats">
+          <div class="mode-briefing__stat">
+            <span><span class="mono-num mono-num--lg" id="grammar-last-acc">—</span><small>%</small></span>
+            <span class="mode-briefing__stat-l">Tarkkuus</span>
+          </div>
+          <div class="mode-briefing__stat">
+            <span class="mono-num mono-num--lg" id="grammar-week-sessions">—</span>
+            <span class="mode-briefing__stat-l">Sessiota</span>
+          </div>
+          <div class="mode-briefing__stat">
+            <span><span class="mono-num mono-num--lg" id="grammar-streak">—</span><small>pv</small></span>
+            <span class="mode-briefing__stat-l">Putki</span>
+          </div>
         </div>
       </div>
 
-      <div class="grammar-start-row">
-        <button class="btn-secondary btn-quickreview" id="btn-show-quickreview" hidden>📖 Näytä kertaus ensin</button>
-        <button class="btn-primary" id="btn-start-grammar">Aloita kielioppiharjoittelu →</button>
+      <div class="mode-topics" role="radiogroup" aria-labelledby="grammar-topics-label">
+        <p class="eyebrow" id="grammar-topics-label">Puheoppiaihe</p>
+        <button class="mode-topic is-current" data-topic="mixed" role="radio" aria-checked="true">
+          <span class="mode-topic__n mono-num mono-num--md">01</span>
+          <span class="mode-topic__body">
+            <span class="mode-topic__name">Sekaisin</span>
+            <span class="mode-topic__desc">Kaikki aiheet</span>
+          </span>
+          <span class="mode-topic__chev" aria-hidden="true">→</span>
+        </button>
+        <button class="mode-topic" data-topic="ser_estar" role="radio" aria-checked="false">
+          <span class="mode-topic__n mono-num mono-num--md">02</span>
+          <span class="mode-topic__body">
+            <span class="mode-topic__name">Ser vs. Estar</span>
+            <span class="mode-topic__desc">Pysyvä vs. tilapäinen</span>
+          </span>
+          <span class="mode-topic__chev" aria-hidden="true">→</span>
+        </button>
+        <button class="mode-topic" data-topic="hay_estar" role="radio" aria-checked="false">
+          <span class="mode-topic__n mono-num mono-num--md">03</span>
+          <span class="mode-topic__body">
+            <span class="mode-topic__name">Hay vs. Estar</span>
+            <span class="mode-topic__desc">Olemassaolo vs. sijainti</span>
+          </span>
+          <span class="mode-topic__chev" aria-hidden="true">→</span>
+        </button>
+        <button class="mode-topic" data-topic="subjunctive" role="radio" aria-checked="false">
+          <span class="mode-topic__n mono-num mono-num--md">04</span>
+          <span class="mode-topic__body">
+            <span class="mode-topic__name">Subjunktiivi</span>
+            <span class="mode-topic__desc">Ojalá, para que…</span>
+          </span>
+          <span class="mode-topic__chev" aria-hidden="true">→</span>
+        </button>
+        <button class="mode-topic" data-topic="conditional" role="radio" aria-checked="false">
+          <span class="mode-topic__n mono-num mono-num--md">05</span>
+          <span class="mode-topic__body">
+            <span class="mode-topic__name">Konditionaali</span>
+            <span class="mode-topic__desc">Me gustaría…</span>
+          </span>
+          <span class="mode-topic__chev" aria-hidden="true">→</span>
+        </button>
+        <button class="mode-topic" data-topic="preterite_imperfect" role="radio" aria-checked="false">
+          <span class="mode-topic__n mono-num mono-num--md">06</span>
+          <span class="mode-topic__body">
+            <span class="mode-topic__name">Pret. vs. Imperf.</span>
+            <span class="mode-topic__desc">Yksittäinen vs. toistuva</span>
+          </span>
+          <span class="mode-topic__chev" aria-hidden="true">→</span>
+        </button>
+        <button class="mode-topic" data-topic="pronouns" role="radio" aria-checked="false">
+          <span class="mode-topic__n mono-num mono-num--md">07</span>
+          <span class="mode-topic__body">
+            <span class="mode-topic__name">Pronominit</span>
+            <span class="mode-topic__desc">Que, quien, donde…</span>
+          </span>
+          <span class="mode-topic__chev" aria-hidden="true">→</span>
+        </button>
+      </div>
+
+      <div class="mode-page__cta-row">
+        <button class="btn--outline" id="btn-show-quickreview" hidden>Näytä kertaus ensin</button>
+        <button class="btn--cta" id="btn-start-grammar" data-target="grammar" data-cta-meta="~6 MIN · {TOPIC}">
+          <span class="btn--cta__l">
+            <span class="btn--cta__title">Aloita kielioppiharjoittelu</span>
+            <span class="btn--cta__meta">~6 MIN · SEKAISIN</span>
+          </span>
+          <span class="btn--cta__arrow" aria-hidden="true">→</span>
+        </button>
       </div>
     </div>
   </div>

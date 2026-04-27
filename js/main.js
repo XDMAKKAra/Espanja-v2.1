@@ -206,8 +206,8 @@ if ($("btn-start-vocab")) $("btn-start-vocab").addEventListener("click", async (
 
 async function startGrammarDrill() {
   state.mode = "grammar";
-  state.grammarTopic = document.querySelector("#grammar-topic-cards .topic-card.active")?.dataset.topic || "mixed";
-  state.grammarLevel = await fetchUserLevel("grammar", state.grammarTopic);
+  state.grammarTopic = document.querySelector('#screen-mode-grammar .mode-topic[aria-checked="true"]')?.dataset.topic || "mixed";
+  state.grammarLevel = "C";  // server-driven default; matches old fallback
   state.sessionStartTime = Date.now();
   loadGrammarDrill();
 }
