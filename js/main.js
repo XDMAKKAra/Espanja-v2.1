@@ -26,6 +26,7 @@ import { initQuickReview } from "./screens/quickReview.js";
 import { initVerbSprint } from "./screens/verbSprint.js";
 import { initVerbReference } from "./screens/verbReference.js";
 import { initSettings, showSettings } from "./screens/settings.js";
+import { wireTopicPicker, topicLabel } from "./screens/mode-page.js";
 import { initAnalytics, trackError } from "./analytics.js";
 
 // ─── Inject show into api.js (avoids circular dep) ─────────────────────────
