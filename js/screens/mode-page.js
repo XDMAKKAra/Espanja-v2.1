@@ -78,3 +78,61 @@ function updateCtaMeta(ctaEl, row, template) {
 export function topicLabel(topicId) {
   return TOPIC_LABELS[topicId] || topicId;
 }
+
+/**
+ * Populate the briefing-card slots for `modeId` from cached dashboard state.
+ *
+ * Reads from `window._dashModeStats[modeId]`, `window._dashStreak`,
+ * `window._dashModeDaysAgo[modeId]`. If any field is missing, that row
+ * shows "—". If `modeStats[modeId].sessions === 0` (or the entire entry
+ * is missing), the briefing collapses to its empty-state variant.
+ *
+ * @param {string} modeId — "vocab" | "grammar" | "reading" | "writing" | "verbsprint"
+ */
+export function loadBriefing(modeId) {
+  const briefing = document.getElementById(`${modeId}-briefing`);
+  if (!briefing) return;
+
+  const stats = (typeof window !== "undefined" && window._dashModeStats?.[modeId]) || null;
+  const streak = (typeof window !== "undefined") ? window._dashStreak : 0;
+  const daysAgo = (typeof window !== "undefined" && window._dashModeDaysAgo?.[modeId]);
+
+  // Empty-state branch — first-time visitor or no data for this mode.
+  if (!stats || !stats.sessions || stats.sessions === 0) {
+    briefing.classList.add("mode-briefing--empty");
+    const eyebrow = briefing.querySelector(".eyebrow");
+    if (eyebrow) eyebrow.textContent = "ENSIMMÄINEN KERTA";
+    let intro = briefing.querySelector(".mode-briefing__intro");
+    if (!intro) {
+      intro = document.createElement("p");
+      intro.className = "mode-briefing__intro";
+      intro.textContent = "Aloita Sekaisin-aiheella nähdäksesi, mihin aiheeseen sinun kannattaa keskittyä.";
+      briefing.appendChild(intro);
+    }
+    return;
+  }
+
+  // Populated branch.
+  briefing.classList.remove("mode-briefing--empty");
+
+  const eyebrow = briefing.querySelector(".eyebrow");
+  if (eyebrow) {
+    eyebrow.textContent = formatLastEyebrow(daysAgo);
+  }
+
+  const accEl = briefing.querySelector(`#${modeId}-last-acc`);
+  if (accEl) accEl.textContent = stats.avgPct == null ? "—" : String(stats.avgPct);
+
+  const sessEl = briefing.querySelector(`#${modeId}-week-sessions`);
+  if (sessEl) sessEl.textContent = stats.sessions == null ? "—" : String(stats.sessions);
+
+  const streakEl = briefing.querySelector(`#${modeId}-streak`);
+  if (streakEl) streakEl.textContent = streak == null ? "—" : String(streak);
+}
+
+function formatLastEyebrow(daysAgo) {
+  if (daysAgo == null) return "VIIMEKSI · —";
+  if (daysAgo === 0) return "VIIMEKSI · TÄNÄÄN";
+  if (daysAgo === 1) return "VIIMEKSI · EILEN";
+  return `VIIMEKSI · ${daysAgo} PV SITTEN`;
+}
