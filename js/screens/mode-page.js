@@ -136,3 +136,24 @@ function formatLastEyebrow(daysAgo) {
   if (daysAgo === 1) return "VIIMEKSI · EILEN";
   return `VIIMEKSI · ${daysAgo} PV SITTEN`;
 }
+
+/**
+ * Generate the short Finnish coaching line shown above the breakdown list.
+ *
+ * @param {{ scorePct: number, sessionWeakestLabel?: string|null }} params
+ * @returns {string}
+ */
+export function generateCoachLine({ scorePct, sessionWeakestLabel }) {
+  if (scorePct >= 90) return "Loistavaa. Pidä vauhtia yllä.";
+  if (scorePct >= 70) {
+    return sessionWeakestLabel
+      ? `Hyvä. Paranna ${sessionWeakestLabel}-aihetta.`
+      : "Hyvä. Pidä taso yllä.";
+  }
+  if (scorePct >= 50) {
+    return sessionWeakestLabel
+      ? `Tasolla. ${sessionWeakestLabel} kaipaa toistoa.`
+      : "Tasolla. Kertaa kaikki aiheet.";
+  }
+  return "Tämä jäi vielä. Yritä helpompaa tasoa tai lyhyempää sarjaa.";
+}

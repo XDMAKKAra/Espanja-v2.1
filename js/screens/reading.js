@@ -3,6 +3,11 @@ import { $, show } from "../ui/nav.js";
 import { API, isLoggedIn, authHeader, retryable } from "../api.js";
 import { state } from "../state.js";
 import { showLoading, showLoadingError } from "../ui/loading.js";
+import { generateCoachLine } from "./mode-page.js";
+
+function escapeHtmlRd(s) {
+  return String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+}
 
 let _deps = {};
 export function initReading({ loadDashboard, saveProgress, showProUpsell }) {
@@ -232,6 +237,33 @@ function showReadingResults() {
     scoreTotal: state.currentReading.questions.length,
     ytlGrade: null,
   });
+
+  // Spec 2 §5 — populate new editorial result IDs.
+  const rdPct = total > 0 ? Math.round((state.readingScore / total) * 100) : 0;
+  $("reading-res-num").textContent = String(state.readingScore);
+  $("reading-res-tot").textContent = String(total);
+  $("reading-res-pct").textContent = String(rdPct);
+  $("reading-res-time").textContent = new Date().toLocaleTimeString("fi-FI", { hour: "2-digit", minute: "2-digit" });
+  $("reading-res-coach").textContent = generateCoachLine({ scorePct: rdPct, sessionWeakestLabel: null });
+  const rdList = $("reading-res-list");
+  if (rdList) {
+    rdList.innerHTML = "";
+    const questions = state.currentReading?.questions || [];
+    questions.forEach((q, idx) => {
+      // Reading questions don't track per-question correct/wrong in state today;
+      // ship the breakdown empty rather than guessing. Spec 2 §7 acknowledges this.
+      const row = document.createElement("div");
+      row.className = "results__row";
+      const n = String(idx + 1).padStart(2, "0");
+      row.innerHTML = `
+        <span class="mono-num mono-num--md results__row-n">${n}</span>
+        <span class="results__row-q"><span>${escapeHtmlRd(q.question || "")}</span></span>
+        <span class="results__row-mark"></span>
+      `;
+      rdList.appendChild(row);
+    });
+  }
+
   show("screen-reading-results");
 }
 

@@ -9,8 +9,13 @@ import { renderExercise } from "./exerciseRenderer.js";
 import { shouldShowCapBanner, CAP_BANNER_COPY } from "../../lib/dailyCap.js";
 import { toUnified } from "../../lib/exerciseTypes.js";
 import { reportMcAdvisory } from "../features/mcAdvisory.js";
+import { generateCoachLine, topicLabel } from "./mode-page.js";
 
 const OPTION_LETTERS = ["A", "B", "C", "D", "E", "F"];
+
+function escapeHtmlGr(s) {
+  return String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+}
 
 let _deps = {};
 export function initGrammar({ loadDashboard, saveProgress }) {
@@ -196,13 +201,52 @@ function showGrammarResults() {
     ytlGrade: null,
   });
 
+  // Spec 2 §5 — populate new editorial result IDs.
+  const grPct = total > 0 ? Math.round((state.grammarCorrect / total) * 100) : 0;
+  $("gram-res-num").textContent = String(state.grammarCorrect);
+  $("gram-res-tot").textContent = String(total);
+  $("gram-res-pct").textContent = String(grPct);
+  $("gram-res-time").textContent = new Date().toLocaleTimeString("fi-FI", { hour: "2-digit", minute: "2-digit" });
+  $("gram-res-topic").textContent = topicLabel(state.grammarTopic || "mixed").toUpperCase();
+  // Session-weakest = topic with most errors in this session (state.grammarErrors).
+  let sessionWeakest = null;
+  const errorCounts = {};
+  for (const e of state.grammarErrors || []) errorCounts[e] = (errorCounts[e] || 0) + 1;
+  const sortedErrors = Object.entries(errorCounts).sort((a, b) => b[1] - a[1]);
+  if (sortedErrors.length > 0) sessionWeakest = sortedErrors[0][0];
+  $("gram-res-coach").textContent = generateCoachLine({ scorePct: grPct, sessionWeakestLabel: sessionWeakest });
+  const grList = $("gram-res-list");
+  if (grList) {
+    grList.innerHTML = "";
+    const exercises = state.grammarExercises || [];
+    const userAnswers = state.grammarUserAnswers || [];
+    exercises.forEach((ex, idx) => {
+      const ua = userAnswers[idx];
+      const isCorrect = ua?.isCorrect === true;
+      const row = document.createElement("div");
+      row.className = `results__row results__row--${isCorrect ? "correct" : "wrong"}`;
+      const n = String(idx + 1).padStart(2, "0");
+      const sentence = (ex.sentence || ex.prompt || "").replace(/_+/g, "___");
+      const correctAnswer = ex.correct ? `${ex.correct}) ${(ex.options || []).find((o) => o.startsWith?.(ex.correct + ")")) || ex.correct}` : "";
+      row.innerHTML = `
+        <span class="mono-num mono-num--md results__row-n">${n}</span>
+        <span class="results__row-q">
+          <span>${escapeHtmlGr(sentence)}</span>
+          ${isCorrect || !correctAnswer ? "" : `<span class="results__row-correct">${escapeHtmlGr(correctAnswer)}</span>`}
+        </span>
+        <span class="results__row-mark" aria-label="${isCorrect ? "Oikein" : "Väärin"}">${isCorrect ? "✓" : "✗"}</span>
+      `;
+      grList.appendChild(row);
+    });
+  }
+
   renderBlogCta(state.grammarTopic);
   show("screen-grammar-results");
   renderGramCapBanner();
 }
 
 function renderGramCapBanner() {
-  const host = document.querySelector("#screen-grammar-results .results-inner");
+  const host = document.querySelector("#screen-grammar-results .results");
   if (!host) return;
   host.querySelector(".results-cap-banner")?.remove();
   if (!shouldShowCapBanner()) return;

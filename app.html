@@ -1357,25 +1357,42 @@
 
   <!-- SCREEN: Results (vocab mode) -->
   <div id="screen-results" class="screen">
-    <div class="results-inner">
-      <div class="results-score" id="results-score">0 / 0 oikein</div>
-      <div class="results-timer hidden" id="results-timer"></div>
+    <div class="results">
+      <p class="eyebrow"><span id="res-mode-label">VALMIS · SANASTO</span> · <span class="mono-num mono-num--sm" id="res-time">—</span></p>
+      <h1 class="display results__score">
+        <span class="mono-num" id="res-score-num">0</span> / <span class="mono-num" id="res-score-tot">0</span>
+      </h1>
+      <p class="results__sub">
+        <span class="mono-num mono-num--md" id="res-pct">0</span><small>%</small>
+        <span class="exercise__sep">·</span>
+        <span class="eyebrow" id="res-topic-label">—</span>
+      </p>
+      <p class="results__coach" id="res-coach"></p>
 
-      <div class="results-divider"></div>
+      <div class="results__breakdown">
+        <p class="eyebrow">Yhteenveto</p>
+        <div class="results__list" id="res-list"></div>
+      </div>
 
-      <section class="results-section hidden" id="results-learning">
-        <p class="results-eyebrow">Mitä opit tässä harjoituksessa</p>
-        <div class="results-learning-body" id="results-learning-body"></div>
-      </section>
+      <div class="results__actions">
+        <button class="btn--cta" id="btn-restart" data-cta-meta="SAMALLA AIHEELLA">
+          <span class="btn--cta__l">
+            <span class="btn--cta__title">Uusi sarja</span>
+            <span class="btn--cta__meta" id="res-again-meta">SAMALLA AIHEELLA</span>
+          </span>
+          <span class="btn--cta__arrow" aria-hidden="true">→</span>
+        </button>
+        <button class="results__back" id="btn-back-home" type="button">Takaisin valintaan</button>
+        <button class="btn-share" id="btn-share-vocab" hidden>📤 Jaa tulos</button>
+      </div>
 
-      <section class="results-section">
-        <p class="results-eyebrow">Seuraavaksi</p>
-        <div class="results-actions" id="results-actions">
-          <button class="btn-primary" id="btn-restart">Uusi samanlainen harjoitus →</button>
-          <button class="btn-share" id="btn-share-vocab">📤 Jaa tulos</button>
-          <button class="btn-link" id="btn-back-home" type="button">Takaisin etusivulle</button>
-        </div>
-      </section>
+      <!-- Compatibility shim spans for legacy IDs still queried by old code paths.
+           They render nothing visually; they prevent crashes if a stale code path
+           still does $("results-score").textContent = "…". -->
+      <span id="results-score" hidden></span>
+      <span id="results-timer" hidden></span>
+      <div id="results-learning" hidden></div>
+      <div id="results-learning-body" hidden></div>
     </div>
   </div>
 
@@ -1546,11 +1563,23 @@
 
   <!-- SCREEN: Grammar results -->
   <div id="screen-grammar-results" class="screen">
-    <div class="results-inner">
-      <p class="results-label">Puheoppiharjoitus valmis</p>
-      <div class="grade-display" id="gram-score-display">5/6</div>
-      <div class="score-row"><span id="gram-score-text">5 / 6 oikein</span></div>
-      <div class="gram-error-summary" id="gram-error-summary"></div>
+    <div class="results">
+      <p class="eyebrow">VALMIS · PUHEOPPI · <span class="mono-num mono-num--sm" id="gram-res-time">—</span></p>
+      <h1 class="display results__score">
+        <span class="mono-num" id="gram-res-num">0</span> / <span class="mono-num" id="gram-res-tot">0</span>
+      </h1>
+      <p class="results__sub">
+        <span class="mono-num mono-num--md" id="gram-res-pct">0</span><small>%</small>
+        <span class="exercise__sep">·</span>
+        <span class="eyebrow" id="gram-res-topic">—</span>
+      </p>
+      <p class="results__coach" id="gram-res-coach"></p>
+
+      <div class="results__breakdown">
+        <p class="eyebrow">Yhteenveto</p>
+        <div class="results__list" id="gram-res-list"></div>
+      </div>
+
       <a class="blog-cta-banner hidden" id="gram-blog-cta" href="#" target="_blank" rel="noopener">
         <span class="blog-cta-icon" aria-hidden="true">📖</span>
         <span class="blog-cta-text">
@@ -1558,7 +1587,21 @@
           <span class="blog-cta-title" id="gram-blog-cta-title">Lue artikkeli →</span>
         </span>
       </a>
-      <button class="btn-primary" id="gram-btn-restart">Uusi harjoitus →</button>
+
+      <div class="results__actions">
+        <button class="btn--cta" id="gram-btn-restart">
+          <span class="btn--cta__l">
+            <span class="btn--cta__title">Uusi harjoitus</span>
+            <span class="btn--cta__meta">SAMALLA AIHEELLA</span>
+          </span>
+          <span class="btn--cta__arrow" aria-hidden="true">→</span>
+        </button>
+      </div>
+
+      <!-- Compat shim -->
+      <span id="gram-score-display" hidden></span>
+      <span id="gram-score-text" hidden></span>
+      <div id="gram-error-summary" hidden></div>
     </div>
   </div>
 
@@ -1644,15 +1687,36 @@
 
   <!-- SCREEN: Reading results -->
   <div id="screen-reading-results" class="screen">
-    <div class="results-inner">
-      <p class="results-label">Luetun ymmärtäminen</p>
-      <div class="grade-display" id="reading-score-display">3/4</div>
-      <div class="score-row"><span id="reading-score-text">3 / 4 oikein</span></div>
-      <div class="feedback-overall" id="reading-overall-feedback" style="margin-bottom:32px;text-align:left"></div>
-      <div style="display:flex;gap:10px">
-        <button class="btn-secondary" id="reading-btn-new">Uusi teksti</button>
-        <button class="btn-primary" id="reading-btn-home">Etusivulle →</button>
+    <div class="results">
+      <p class="eyebrow">VALMIS · LUETUN YMM. · <span class="mono-num mono-num--sm" id="reading-res-time">—</span></p>
+      <h1 class="display results__score">
+        <span class="mono-num" id="reading-res-num">0</span> / <span class="mono-num" id="reading-res-tot">0</span>
+      </h1>
+      <p class="results__sub">
+        <span class="mono-num mono-num--md" id="reading-res-pct">0</span><small>%</small>
+      </p>
+      <p class="results__coach" id="reading-res-coach"></p>
+
+      <div class="results__breakdown">
+        <p class="eyebrow">Yhteenveto</p>
+        <div class="results__list" id="reading-res-list"></div>
       </div>
+
+      <div class="results__actions">
+        <button class="btn--cta" id="reading-btn-home">
+          <span class="btn--cta__l">
+            <span class="btn--cta__title">Etusivulle</span>
+            <span class="btn--cta__meta">DASHBOARD</span>
+          </span>
+          <span class="btn--cta__arrow" aria-hidden="true">→</span>
+        </button>
+        <button class="results__back" id="reading-btn-new" type="button">Uusi teksti</button>
+      </div>
+
+      <!-- Compat shim -->
+      <span id="reading-score-display" hidden></span>
+      <span id="reading-score-text" hidden></span>
+      <div id="reading-overall-feedback" hidden></div>
     </div>
   </div>
 

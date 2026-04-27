@@ -15,8 +15,13 @@ import { renderKaannos }          from "../renderers/kaannos.js";
 import { renderLauseenMuodostus } from "../renderers/lauseenMuodostus.js";
 import { renderCorrection }       from "../renderers/correction.js";
 import { reportMcAdvisory } from "../features/mcAdvisory.js";
+import { generateCoachLine, topicLabel } from "./mode-page.js";
 
 const OPTION_LETTERS = ["A", "B", "C", "D", "E", "F"];
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+}
 
 let _deps = {};
 let _scaffoldMeta = null; // { level, scaffoldLevel, scaffold, type, topic }
@@ -1049,6 +1054,42 @@ function showVocabResults() {
 
   $("results-score").textContent = `${correct} / ${total} oikein`;
 
+  // Spec 2 §5 — populate new editorial result IDs.
+  const pct = total > 0 ? Math.round((correct / total) * 100) : 0;
+  $("res-score-num").textContent = String(correct);
+  $("res-score-tot").textContent = String(total);
+  $("res-pct").textContent = String(pct);
+  $("res-mode-label").textContent = "VALMIS · SANASTO";
+  $("res-time").textContent = new Date().toLocaleTimeString("fi-FI", { hour: "2-digit", minute: "2-digit" });
+  const topicLbl = topicLabel(state.topic || "general vocabulary").toUpperCase();
+  $("res-topic-label").textContent = topicLbl;
+  const againMeta = $("res-again-meta");
+  if (againMeta) againMeta.textContent = `SAMALLA AIHEELLA · ${topicLbl}`;
+  $("res-coach").textContent = generateCoachLine({ scorePct: pct, sessionWeakestLabel: null });
+  // Breakdown list — derived from state.sessionItems.
+  const resList = $("res-list");
+  if (resList) {
+    resList.innerHTML = "";
+    const items = state.sessionItems || [];
+    items.forEach((it, idx) => {
+      const row = document.createElement("div");
+      const isCorrect = it.isCorrect ?? it.correct ?? false;
+      row.className = `results__row results__row--${isCorrect ? "correct" : "wrong"}`;
+      const n = String(idx + 1).padStart(2, "0");
+      const q = (it.question || it.prompt || it.word || "").toString();
+      const ans = (it.correctAnswer || it.answer || "").toString();
+      row.innerHTML = `
+        <span class="mono-num mono-num--md results__row-n">${n}</span>
+        <span class="results__row-q">
+          <span>${escapeHtml(q)}</span>
+          ${isCorrect || !ans ? "" : `<span class="results__row-correct">${escapeHtml(ans)}</span>`}
+        </span>
+        <span class="results__row-mark" aria-label="${isCorrect ? "Oikein" : "Väärin"}">${isCorrect ? "✓" : "✗"}</span>
+      `;
+      resList.appendChild(row);
+    });
+  }
+
   const timerEl = $("results-timer");
   if (timerEl) {
     if (state.sessionStartTime) {
@@ -1092,7 +1133,7 @@ function showVocabResults() {
 }
 
 function renderCapBanner() {
-  const host = document.querySelector("#screen-results .results-inner");
+  const host = document.querySelector("#screen-results .results");
   if (!host) return;
   // Remove any prior banner so we don't duplicate on restarts.
   host.querySelector(".results-cap-banner")?.remove();
