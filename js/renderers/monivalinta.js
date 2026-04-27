@@ -40,10 +40,20 @@ export function renderMonivalinta(ex, container, { onAnswer } = {}) {
   mc.options.forEach((text, idx) => {
     const btn = document.createElement('button');
     btn.type = 'button';
-    btn.className = 'option-btn';
+    btn.className = 'ex-option';
     btn.dataset.idx = String(idx);
+    btn.setAttribute('role', 'radio');
+    btn.setAttribute('aria-checked', 'false');
+
     const letter = OPTION_LETTERS[idx] || String(idx + 1);
-    btn.textContent = `${letter}) ${text}`;
+    const lSpan = document.createElement('span');
+    lSpan.className = 'ex-option__l';
+    lSpan.textContent = letter;
+    const tSpan = document.createElement('span');
+    tSpan.className = 'ex-option__t';
+    tSpan.textContent = text;
+    btn.append(lSpan, tSpan);
+
     btn.addEventListener('click', () => {
       onAnswer?.({
         chosenIndex: idx,

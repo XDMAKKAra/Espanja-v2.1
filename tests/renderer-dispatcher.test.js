@@ -57,21 +57,24 @@ describe('renderMonivalinta — paint', () => {
     expect(container.querySelector('.stale')).toBeNull();
   });
 
-  it('paints one .option-btn per option', () => {
+  it('paints one .ex-option per option', () => {
     renderMonivalinta(toUnified(legacy), container, { onAnswer: () => {} });
-    const buttons = container.querySelectorAll('.option-btn');
+    const buttons = container.querySelectorAll('.ex-option');
     expect(buttons.length).toBe(4);
   });
 
-  it('prefixes each option with A) / B) / C) / D)', () => {
+  it('paints letter + text in separate __l and __t spans', () => {
     renderMonivalinta(toUnified(legacy), container, { onAnswer: () => {} });
-    const texts = [...container.querySelectorAll('.option-btn')].map((b) => b.textContent);
-    expect(texts).toEqual(['A) ser', 'B) estar', 'C) haber', 'D) tener']);
+    const buttons = [...container.querySelectorAll('.ex-option')];
+    const letters = buttons.map((b) => b.querySelector('.ex-option__l').textContent);
+    const texts = buttons.map((b) => b.querySelector('.ex-option__t').textContent);
+    expect(letters).toEqual(['A', 'B', 'C', 'D']);
+    expect(texts).toEqual(['ser', 'estar', 'haber', 'tener']);
   });
 
   it('sets data-idx to zero-based index', () => {
     renderMonivalinta(toUnified(legacy), container, { onAnswer: () => {} });
-    const indices = [...container.querySelectorAll('.option-btn')].map((b) => b.dataset.idx);
+    const indices = [...container.querySelectorAll('.ex-option')].map((b) => b.dataset.idx);
     expect(indices).toEqual(['0', '1', '2', '3']);
   });
 });
@@ -92,7 +95,7 @@ describe('renderMonivalinta — click behavior', () => {
   it('invokes onAnswer with {chosenIndex, correctIndex, isCorrect, button} on click', () => {
     const onAnswer = vi.fn();
     renderMonivalinta(toUnified(legacy), container, { onAnswer });
-    const btns = container.querySelectorAll('.option-btn');
+    const btns = container.querySelectorAll('.ex-option');
     btns[2].click(); // "C) c" — wrong
     expect(onAnswer).toHaveBeenCalledOnce();
     const arg = onAnswer.mock.calls[0][0];
@@ -105,15 +108,17 @@ describe('renderMonivalinta — click behavior', () => {
   it('reports isCorrect=true when the correct option is clicked', () => {
     const onAnswer = vi.fn();
     renderMonivalinta(toUnified(legacy), container, { onAnswer });
-    container.querySelectorAll('.option-btn')[1].click(); // "B) b" — correct
+    container.querySelectorAll('.ex-option')[1].click(); // "B) b" — correct
     expect(onAnswer.mock.calls[0][0].isCorrect).toBe(true);
   });
 
   it('does not apply .correct / .wrong classes — caller owns visual state', () => {
     renderMonivalinta(toUnified(legacy), container, { onAnswer: () => {} });
-    const btns = container.querySelectorAll('.option-btn');
+    const btns = container.querySelectorAll('.ex-option');
     btns[2].click();
     btns.forEach((b) => {
+      expect(b.classList.contains('is-correct')).toBe(false);
+      expect(b.classList.contains('is-wrong')).toBe(false);
       expect(b.classList.contains('correct')).toBe(false);
       expect(b.classList.contains('wrong')).toBe(false);
     });
@@ -121,7 +126,7 @@ describe('renderMonivalinta — click behavior', () => {
 
   it('does not disable buttons after click — caller owns that', () => {
     renderMonivalinta(toUnified(legacy), container, { onAnswer: () => {} });
-    const btns = container.querySelectorAll('.option-btn');
+    const btns = container.querySelectorAll('.ex-option');
     btns[0].click();
     btns.forEach((b) => expect(b.disabled).toBe(false));
   });
@@ -129,7 +134,7 @@ describe('renderMonivalinta — click behavior', () => {
   it('survives multiple clicks without crashing (caller is responsible for guarding)', () => {
     const onAnswer = vi.fn();
     renderMonivalinta(toUnified(legacy), container, { onAnswer });
-    const btn = container.querySelectorAll('.option-btn')[0];
+    const btn = container.querySelectorAll('.ex-option')[0];
     btn.click();
     btn.click();
     btn.click();

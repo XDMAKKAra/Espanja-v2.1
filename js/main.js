@@ -235,6 +235,12 @@ if ($("btn-start-writing")) $("btn-start-writing").addEventListener("click", () 
   loadWritingTask();
 });
 
+// Spec 2 §4.1 — drill exit returns to dashboard.
+const btnExitExercise = $("btn-exit-exercise");
+if (btnExitExercise) btnExitExercise.addEventListener("click", () => show("screen-dashboard"));
+const btnExitGram = $("btn-exit-gram");
+if (btnExitGram) btnExitGram.addEventListener("click", () => show("screen-dashboard"));
+
 // Pro upgrade buttons on mode pages
 if ($("reading-upgrade-btn")) $("reading-upgrade-btn").addEventListener("click", () => startCheckout());
 if ($("writing-upgrade-btn")) $("writing-upgrade-btn").addEventListener("click", () => startCheckout());
@@ -402,8 +408,8 @@ document.addEventListener("keydown", (e) => {
   // Vocab exercise screen
   if ($("screen-exercise").classList.contains("active")) {
     if (["A", "B", "C", "D"].includes(resolvedKey)) {
-      const btn = [...document.querySelectorAll("#options-grid .option-btn:not(:disabled)")]
-        .find((b) => b.textContent.trim()[0].toUpperCase() === resolvedKey);
+      const btn = [...document.querySelectorAll("#options-grid .ex-option:not(:disabled)")]
+        .find((b) => b.querySelector(".ex-option__l")?.textContent.toUpperCase() === resolvedKey);
       if (btn) btn.click();
     } else if ((e.key === "Enter" || e.key === " ") &&
                !$("explanation-block").classList.contains("hidden")) {
@@ -416,8 +422,8 @@ document.addEventListener("keydown", (e) => {
   // Grammar screen
   if ($("screen-grammar").classList.contains("active")) {
     if (["A", "B", "C", "D"].includes(resolvedKey)) {
-      const btn = [...document.querySelectorAll("#gram-options-grid .option-btn:not(:disabled)")]
-        .find((b) => b.textContent.trim()[0].toUpperCase() === resolvedKey);
+      const btn = [...document.querySelectorAll("#gram-options-grid .ex-option:not(:disabled)")]
+        .find((b) => b.querySelector(".ex-option__l")?.textContent.toUpperCase() === resolvedKey);
       if (btn) btn.click();
     } else if ((e.key === "Enter" || e.key === " ") &&
                !$("gram-explanation-block").classList.contains("hidden")) {

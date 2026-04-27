@@ -1239,46 +1239,47 @@
 
   <!-- SCREEN: Exercise (vocab mode) -->
   <div id="screen-exercise" class="screen">
-    <div class="exercise-inner">
-      <div class="ex-header">
-        <div class="ex-meta">
-          <span id="ex-counter">Q 1 / 12</span>
-          <span id="ex-round" class="ex-round-badge">Round 1/3</span>
-          <span class="ex-level-badge" id="ex-level-badge">B</span>
+    <div class="exercise" id="exercise-root">
+      <header class="exercise__top">
+        <div class="exercise__meta">
+          <span class="mono-num mono-num--sm" id="ex-counter">1 / 12</span>
+          <span class="exercise__sep">·</span>
+          <span class="eyebrow" id="ex-topic">SANASTO</span>
+          <span class="exercise__sep">·</span>
+          <span class="ex-level-badge mono-num mono-num--sm" id="ex-level-badge">B</span>
         </div>
-        <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
-        <div class="scaffold-indicator hidden" id="scaffold-indicator">
-          <span class="scaffold-fire hidden" id="scaffold-fire">&#128293;</span>
-          <span class="scaffold-text" id="scaffold-text"></span>
-          <button class="scaffold-help-btn hidden" id="scaffold-help-btn">Pyyd&auml; vihjett&auml;</button>
-        </div>
+        <button class="exercise__exit" id="btn-exit-exercise" type="button" aria-label="Poistu harjoituksesta">×</button>
+      </header>
+      <div class="exercise__progress"><i id="progress-fill"></i></div>
+
+      <div class="scaffold-indicator hidden" id="scaffold-indicator">
+        <span class="scaffold-fire hidden" id="scaffold-fire">🔥</span>
+        <span class="scaffold-text" id="scaffold-text"></span>
+        <button class="scaffold-help-btn hidden" id="scaffold-help-btn">Pyydä vihjettä</button>
       </div>
 
       <div class="question-block" id="exercise-question-block">
         <div class="ex-type-badge hidden" id="ex-type-badge"></div>
-        <div class="ex-context-sentence hidden" id="ex-context-sentence"></div>
+        <p class="exercise__context hidden" id="ex-context-sentence"></p>
         <p class="question-label" id="question-label">¿Qué significa?</p>
-        <h2 id="question-text">Loading...</h2>
+        <h2 class="display" id="question-text">Loading…</h2>
       </div>
 
-      <!-- Skeleton / fetch-error slot (Commit 9). Hidden while an exercise is visible. -->
       <div class="exercise-skeleton-slot hidden" id="exercise-skeleton-slot" aria-live="polite"></div>
 
-      <div class="options-grid" id="options-grid" role="group" aria-label="Vastausvaihtoehdot"></div>
+      <div class="exercise__options" id="options-grid" role="radiogroup" aria-label="Vastausvaihtoehdot"></div>
 
-      <!-- Gap-fill: text input -->
       <div class="gap-fill-area hidden" id="gap-fill-area">
         <div class="gap-fill-sentence" id="gap-fill-sentence"></div>
         <div class="gap-fill-hint hidden" id="gap-fill-hint"></div>
         <button class="btn-hint hidden" id="gap-fill-hint-btn">Vihje</button>
         <div class="gap-fill-input-row">
-          <input type="text" id="gap-fill-input" class="gap-fill-input" placeholder="Kirjoita puuttuva sana..." autocomplete="off" spellcheck="false" />
+          <input type="text" id="gap-fill-input" class="gap-fill-input" placeholder="Kirjoita puuttuva sana…" autocomplete="off" spellcheck="false" />
           <button class="btn-primary btn-sm" id="gap-fill-submit">Tarkista</button>
         </div>
         <div class="gap-fill-feedback hidden" id="gap-fill-feedback"></div>
       </div>
 
-      <!-- Matching: two columns -->
       <div class="matching-area hidden" id="matching-area">
         <div class="matching-cols">
           <div class="matching-col" id="matching-left"></div>
@@ -1289,12 +1290,11 @@
         <div class="matching-status" id="matching-status"></div>
       </div>
 
-      <!-- Reorder: draggable chips -->
       <div class="reorder-area hidden" id="reorder-area">
         <div class="reorder-hint" id="reorder-hint"></div>
         <div class="reorder-chips" id="reorder-chips"></div>
         <div class="reorder-target" id="reorder-target">
-          <span class="reorder-placeholder">Klikkaa sanoja oikeaan j&auml;rjestykseen</span>
+          <span class="reorder-placeholder">Klikkaa sanoja oikeaan järjestykseen</span>
         </div>
         <div class="reorder-actions">
           <button class="btn-secondary btn-sm" id="reorder-undo">Kumoa</button>
@@ -1303,18 +1303,18 @@
         <div class="reorder-feedback hidden" id="reorder-feedback"></div>
       </div>
 
-      <!-- Translate-mini / kaannos / lauseen-muodostus / correction: text input + AI grade -->
       <div class="translate-area hidden" id="translate-area">
         <div class="translate-source" id="translate-source"></div>
         <div class="translate-hint hidden" id="translate-hint"></div>
         <button class="btn-hint hidden" id="translate-hint-btn">Vihje</button>
-        <textarea id="translate-input" class="translate-input" placeholder="Kirjoita k&auml;&auml;nn&ouml;s espanjaksi..." rows="2" spellcheck="false"></textarea>
-        <button class="btn-primary" id="translate-submit">L&auml;het&auml; arvioitavaksi &rarr;</button>
+        <textarea id="translate-input" class="translate-input" placeholder="Kirjoita käännös espanjaksi…" rows="2" spellcheck="false"></textarea>
+        <button class="btn-primary" id="translate-submit">Lähetä arvioitavaksi →</button>
         <div class="translate-feedback hidden" id="translate-feedback"></div>
       </div>
 
-      <div class="explanation-block hidden" id="explanation-block">
-        <p id="explanation-text"></p>
+      <div class="exercise__feedback explanation-block hidden" id="explanation-block">
+        <div class="exercise__feedback-status mono-num mono-num--md hidden" id="ex-feedback-status"></div>
+        <p class="exercise__feedback-correct" id="explanation-text"></p>
         <div class="sr-grade-row hidden" id="sr-grade-row">
           <span class="sr-grade-label">Kuinka hyvin muistit?</span>
           <div class="sr-grade-buttons">
@@ -1325,7 +1325,10 @@
           </div>
         </div>
         <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-          <button class="btn-next" id="btn-next">Seuraava →</button>
+          <button class="btn--cta btn--cta--mini" id="btn-next">
+            <span class="btn--cta__title">Seuraava</span>
+            <span class="btn--cta__arrow" aria-hidden="true">→</span>
+          </button>
           <button class="btn-report hidden" id="btn-report-vocab" title="Raportoi virheellinen tehtävä">⚠ Virhe tehtävässä</button>
         </div>
       </div>
@@ -1499,29 +1502,40 @@
 
   <!-- SCREEN: Grammar drill -->
   <div id="screen-grammar" class="screen">
-    <div class="exercise-inner">
-      <div class="ex-header">
-        <div class="ex-meta">
-          <span id="gram-counter">1 / 6</span>
-          <span class="ex-round-badge" id="gram-topic-badge"></span>
-          <span class="ex-level-badge" id="gram-level-badge">C</span>
+    <div class="exercise" id="grammar-exercise-root">
+      <header class="exercise__top">
+        <div class="exercise__meta">
+          <span class="mono-num mono-num--sm" id="gram-counter">1 / 6</span>
+          <span class="exercise__sep">·</span>
+          <span class="eyebrow" id="gram-topic-badge">PUHEOPPI</span>
+          <span class="exercise__sep">·</span>
+          <span class="ex-level-badge mono-num mono-num--sm" id="gram-level-badge">C</span>
         </div>
-        <div class="progress-bar"><div class="progress-fill" id="gram-progress-fill"></div></div>
-      </div>
+        <button class="exercise__exit" id="btn-exit-gram" type="button" aria-label="Poistu harjoituksesta">×</button>
+      </header>
+      <div class="exercise__progress"><i id="gram-progress-fill"></i></div>
+
       <div class="question-block" id="gram-question-block">
         <p class="question-label" id="gram-instruction">Täydennä aukko.</p>
-        <h2 id="gram-sentence" class="gram-sentence">Loading...</h2>
+        <h2 class="display" id="gram-sentence">Loading…</h2>
       </div>
+
       <div class="exercise-skeleton-slot hidden" id="gram-skeleton-slot" aria-live="polite"></div>
-      <div class="options-grid" id="gram-options-grid" role="group" aria-label="Vastausvaihtoehdot"></div>
-      <div class="explanation-block hidden" id="gram-explanation-block">
-        <div class="gram-rule-tag" id="gram-rule-tag"></div>
-        <p id="gram-explanation-text"></p>
+
+      <div class="exercise__options" id="gram-options-grid" role="radiogroup" aria-label="Vastausvaihtoehdot"></div>
+
+      <div class="exercise__feedback explanation-block hidden" id="gram-explanation-block">
+        <div class="gram-rule-tag mono-num mono-num--sm" id="gram-rule-tag"></div>
+        <p class="exercise__feedback-correct" id="gram-explanation-text"></p>
         <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-          <button class="btn-next" id="gram-btn-next">Seuraava →</button>
+          <button class="btn--cta btn--cta--mini" id="gram-btn-next">
+            <span class="btn--cta__title">Seuraava</span>
+            <span class="btn--cta__arrow" aria-hidden="true">→</span>
+          </button>
           <button class="btn-report hidden" id="btn-report-gram" title="Raportoi virheellinen tehtävä">⚠ Virhe tehtävässä</button>
         </div>
       </div>
+
       <div class="kbd-hint">
         <span class="kbd-key">A</span><span class="kbd-key">B</span><span class="kbd-key">C</span><span class="kbd-key">D</span>
         <span class="kbd-sep">·</span>

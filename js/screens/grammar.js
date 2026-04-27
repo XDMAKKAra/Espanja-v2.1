@@ -107,11 +107,6 @@ function renderGrammarExercise() {
   $("gram-explanation-block").classList.add("hidden");
 
   const grid = $("gram-options-grid");
-  if (exType === "transform" || exType === "pick_rule") {
-    grid.style.gridTemplateColumns = "1fr";
-  } else {
-    grid.style.gridTemplateColumns = "1fr 1fr";
-  }
 
   renderExercise(
     toUnified(ex, { topic: state.grammarTopic || "grammar", skill_bucket: "grammar" }),
@@ -129,12 +124,13 @@ function handleGrammarAnswer(chosen, clickedBtn, ex) {
   const isCorrect = chosen === ex.correct;
 
   if (isCorrect) {
-    clickedBtn.classList.add("correct");
+    clickedBtn.classList.add("is-correct");
     state.grammarCorrect++;
   } else {
-    clickedBtn.classList.add("wrong");
-    document.querySelectorAll("#gram-options-grid .option-btn").forEach((b) => {
-      if (b.textContent.trim()[0] === ex.correct) b.classList.add("correct");
+    clickedBtn.classList.add("is-wrong");
+    document.querySelectorAll("#gram-options-grid .ex-option").forEach((b) => {
+      const letter = b.querySelector(".ex-option__l")?.textContent;
+      if (letter === ex.correct) b.classList.add("is-correct");
     });
     state.grammarErrors.push(ex.rule || "kielioppi");
   }
@@ -143,7 +139,10 @@ function handleGrammarAnswer(chosen, clickedBtn, ex) {
     recordAnswerForAutoTrigger(isCorrect, state.grammarTopic);
   }
 
-  document.querySelectorAll("#gram-options-grid .option-btn").forEach((b) => (b.disabled = true));
+  document.querySelectorAll("#gram-options-grid .ex-option").forEach((b) => {
+    b.disabled = true;
+    b.classList.add("is-disabled");
+  });
   $("gram-rule-tag").textContent = ex.rule || "";
   $("gram-explanation-text").textContent = ex.explanation;
   $("gram-explanation-block").classList.remove("hidden");

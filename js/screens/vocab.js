@@ -798,18 +798,22 @@ function handleAnswer(chosen, clickedBtn) {
   if (isCorrect) {
     state.totalCorrect++;
     state.batchCorrect++;
-    clickedBtn.classList.add("correct");
+    clickedBtn.classList.add("is-correct");
   } else {
-    clickedBtn.classList.add("wrong");
-    document.querySelectorAll(".option-btn").forEach((btn) => {
-      if (btn.textContent.trim()[0] === ex.correct) btn.classList.add("correct");
+    clickedBtn.classList.add("is-wrong");
+    document.querySelectorAll(".ex-option").forEach((btn) => {
+      const letter = btn.querySelector(".ex-option__l")?.textContent;
+      if (letter === ex.correct) btn.classList.add("is-correct");
     });
   }
 
   state.totalAnswered++;
   recordItem(ex, isCorrect);
   state._lastCorrect = isCorrect;
-  document.querySelectorAll(".option-btn").forEach((b) => (b.disabled = true));
+  document.querySelectorAll(".ex-option").forEach((b) => {
+    b.disabled = true;
+    b.classList.add("is-disabled");
+  });
   $("explanation-text").textContent = ex.explanation;
   $("explanation-block").classList.remove("hidden");
 
