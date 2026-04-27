@@ -25,23 +25,17 @@ function wireEvents() {
   const startBtn = $("btn-start-verbsprint");
   if (startBtn) startBtn.addEventListener("click", startSprint);
 
-  const tenseCards = $("verbsprint-tense-cards");
-  if (tenseCards) {
-    tenseCards.addEventListener("click", (e) => {
-      const card = e.target.closest(".topic-card");
-      if (!card) return;
-      tenseCards.querySelectorAll(".topic-card").forEach((c) => c.classList.remove("active"));
-      card.classList.add("active");
-    });
-  }
-
   const durationPicker = $("verbsprint-duration-picker");
   if (durationPicker) {
     durationPicker.addEventListener("click", (e) => {
-      const btn = e.target.closest(".lvl-btn");
-      if (!btn) return;
-      durationPicker.querySelectorAll(".lvl-btn").forEach((b) => b.classList.remove("active"));
-      btn.classList.add("active");
+      const pill = e.target.closest(".mode-page__duration-pill");
+      if (!pill) return;
+      durationPicker.querySelectorAll(".mode-page__duration-pill").forEach((p) => {
+        p.classList.remove("is-current");
+        p.setAttribute("aria-checked", "false");
+      });
+      pill.classList.add("is-current");
+      pill.setAttribute("aria-checked", "true");
     });
   }
 
@@ -128,9 +122,9 @@ function shuffle(arr) {
 }
 
 async function startSprint() {
-  const tense = document.querySelector("#verbsprint-tense-cards .topic-card.active")?.dataset.tense || "preterite";
+  const tense = document.querySelector('#verbsprint-tense-cards .mode-topic[aria-checked="true"]')?.dataset.tense || "preterite";
   const duration = parseInt(
-    document.querySelector("#verbsprint-duration-picker .lvl-btn.active")?.dataset.duration || "10",
+    document.querySelector('#verbsprint-duration-picker .mode-page__duration-pill.is-current')?.dataset.duration || "10",
     10,
   );
   await startSprintWith(tense, duration);

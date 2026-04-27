@@ -758,37 +758,88 @@
 
   <!-- SCREEN: Mode — Verbisprintti -->
   <div id="screen-mode-verbsprint" class="screen">
-    <div class="mode-page">
-      <div class="mode-page-header">
-        <span class="mode-page-icon">⚡</span>
-        <div>
-          <h1 class="mode-page-title">Verbisprintti</h1>
-          <p class="mode-page-sub">Nopea taivutusharjoitus — 40 yleisintä verbiä YO-tasolla</p>
+    <div class="mode-page mode-page--verbsprint">
+      <p class="eyebrow">VERBISPRINTTI · YO LYHYT</p>
+      <h1 class="display">Verbisprintti</h1>
+      <p class="mode-page__sub">Nopea taivutusharjoitus — 40 yleisintä verbiä YO-tasolla</p>
+
+      <div class="mode-briefing" id="verbsprint-briefing">
+        <p class="eyebrow">VIIMEKSI · —</p>
+        <div class="mode-briefing__stats">
+          <div class="mode-briefing__stat">
+            <span><span class="mono-num mono-num--lg" id="verbsprint-last-acc">—</span><small>%</small></span>
+            <span class="mode-briefing__stat-l">Tarkkuus</span>
+          </div>
+          <div class="mode-briefing__stat">
+            <span class="mono-num mono-num--lg" id="verbsprint-week-sessions">—</span>
+            <span class="mode-briefing__stat-l">Sprinttiä</span>
+          </div>
+          <div class="mode-briefing__stat">
+            <span><span class="mono-num mono-num--lg" id="verbsprint-streak">—</span><small>pv</small></span>
+            <span class="mode-briefing__stat-l">Putki</span>
+          </div>
         </div>
       </div>
-      <div class="mode-page-stats" id="verbsprint-page-stats"></div>
 
-      <div class="mode-page-section">
-        <label class="mode-page-label">Aikamuoto</label>
-        <div class="topic-cards" id="verbsprint-tense-cards">
-          <button class="topic-card active" data-tense="preterite"><span class="topic-card-icon">⏮</span><span class="topic-card-name">Preteriti</span><span class="topic-card-desc">Hablé, tuve, fui...</span></button>
-          <button class="topic-card" data-tense="imperfect"><span class="topic-card-icon">⏳</span><span class="topic-card-name">Imperfekti</span><span class="topic-card-desc">Hablaba, tenía...</span></button>
-          <button class="topic-card" data-tense="subjunctive_present"><span class="topic-card-icon">🌀</span><span class="topic-card-name">Subj. preesens</span><span class="topic-card-desc">Ojalá hable, tenga...</span></button>
-          <button class="topic-card" data-tense="conditional"><span class="topic-card-icon">💭</span><span class="topic-card-name">Konditionaali</span><span class="topic-card-desc">Hablaría, tendría...</span></button>
-          <button class="topic-card" data-tense="imperative"><span class="topic-card-icon">❗</span><span class="topic-card-name">Imperatiivi</span><span class="topic-card-desc">¡Habla! ¡Ten!</span></button>
-        </div>
+      <div class="mode-topics" role="radiogroup" aria-labelledby="verbsprint-topics-label" id="verbsprint-tense-cards">
+        <p class="eyebrow" id="verbsprint-topics-label">Aikamuoto</p>
+        <button class="mode-topic is-current" data-tense="preterite" role="radio" aria-checked="true">
+          <span class="mode-topic__n mono-num mono-num--md">01</span>
+          <span class="mode-topic__body">
+            <span class="mode-topic__name">Preteriti</span>
+            <span class="mode-topic__desc">Hablé, tuve, fui…</span>
+          </span>
+          <span class="mode-topic__chev" aria-hidden="true">→</span>
+        </button>
+        <button class="mode-topic" data-tense="imperfect" role="radio" aria-checked="false">
+          <span class="mode-topic__n mono-num mono-num--md">02</span>
+          <span class="mode-topic__body">
+            <span class="mode-topic__name">Imperfekti</span>
+            <span class="mode-topic__desc">Hablaba, tenía…</span>
+          </span>
+          <span class="mode-topic__chev" aria-hidden="true">→</span>
+        </button>
+        <button class="mode-topic" data-tense="subjunctive_present" role="radio" aria-checked="false">
+          <span class="mode-topic__n mono-num mono-num--md">03</span>
+          <span class="mode-topic__body">
+            <span class="mode-topic__name">Subj. preesens</span>
+            <span class="mode-topic__desc">Ojalá hable, tenga…</span>
+          </span>
+          <span class="mode-topic__chev" aria-hidden="true">→</span>
+        </button>
+        <button class="mode-topic" data-tense="conditional" role="radio" aria-checked="false">
+          <span class="mode-topic__n mono-num mono-num--md">04</span>
+          <span class="mode-topic__body">
+            <span class="mode-topic__name">Konditionaali</span>
+            <span class="mode-topic__desc">Hablaría, tendría…</span>
+          </span>
+          <span class="mode-topic__chev" aria-hidden="true">→</span>
+        </button>
+        <button class="mode-topic" data-tense="imperative" role="radio" aria-checked="false">
+          <span class="mode-topic__n mono-num mono-num--md">05</span>
+          <span class="mode-topic__body">
+            <span class="mode-topic__name">Imperatiivi</span>
+            <span class="mode-topic__desc">¡Habla! ¡Ten!</span>
+          </span>
+          <span class="mode-topic__chev" aria-hidden="true">→</span>
+        </button>
       </div>
 
-      <div class="mode-page-section">
-        <label class="mode-page-label">Kesto</label>
-        <div class="level-picker" id="verbsprint-duration-picker">
-          <button class="lvl-btn active" data-duration="10">10</button>
-          <button class="lvl-btn" data-duration="20">20</button>
-        </div>
-        <p class="mode-page-hint">Taivutusta per sprintti</p>
+      <div class="mode-page__duration" role="radiogroup" aria-label="Sprintin kesto" id="verbsprint-duration-picker">
+        <button class="mode-page__duration-pill is-current" data-duration="10" role="radio" aria-checked="true">10</button>
+        <button class="mode-page__duration-pill" data-duration="20" role="radio" aria-checked="false">20</button>
+        <span class="mode-page__duration-hint">taivutusta per sprintti</span>
       </div>
 
-      <button class="btn-primary" id="btn-start-verbsprint">Aloita sprintti →</button>
+      <div class="mode-page__cta-row">
+        <button class="btn--cta" id="btn-start-verbsprint" data-target="verbsprint" data-cta-meta="{TOPIC} · 10 TAIVUTUSTA">
+          <span class="btn--cta__l">
+            <span class="btn--cta__title">Aloita sprintti</span>
+            <span class="btn--cta__meta">PRETERITI · 10 TAIVUTUSTA</span>
+          </span>
+          <span class="btn--cta__arrow" aria-hidden="true">→</span>
+        </button>
+      </div>
     </div>
   </div>
 
