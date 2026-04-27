@@ -9,7 +9,7 @@ import { renderExercise } from "./exerciseRenderer.js";
 import { shouldShowCapBanner, CAP_BANNER_COPY } from "../../lib/dailyCap.js";
 import { toUnified } from "../../lib/exerciseTypes.js";
 import { reportMcAdvisory } from "../features/mcAdvisory.js";
-import { generateCoachLine, topicLabel } from "./mode-page.js";
+import { generateCoachLine, topicLabel, countUp } from "./mode-page.js";
 
 const OPTION_LETTERS = ["A", "B", "C", "D", "E", "F"];
 
@@ -203,9 +203,9 @@ function showGrammarResults() {
 
   // Spec 2 §5 — populate new editorial result IDs.
   const grPct = total > 0 ? Math.round((state.grammarCorrect / total) * 100) : 0;
-  $("gram-res-num").textContent = String(state.grammarCorrect);
   $("gram-res-tot").textContent = String(total);
-  $("gram-res-pct").textContent = String(grPct);
+  countUp($("gram-res-num"), state.grammarCorrect);
+  countUp($("gram-res-pct"), grPct);
   $("gram-res-time").textContent = new Date().toLocaleTimeString("fi-FI", { hour: "2-digit", minute: "2-digit" });
   $("gram-res-topic").textContent = topicLabel(state.grammarTopic || "mixed").toUpperCase();
   // Session-weakest = topic with most errors in this session (state.grammarErrors).

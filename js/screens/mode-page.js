@@ -157,3 +157,35 @@ export function generateCoachLine({ scorePct, sessionWeakestLabel }) {
   }
   return "Tämä jäi vielä. Yritä helpompaa tasoa tai lyhyempää sarjaa.";
 }
+
+/**
+ * Animate an element's textContent from 0 up to `target` over `duration` ms.
+ * Eases out cubic. Respects prefers-reduced-motion (writes target immediately).
+ *
+ * @param {HTMLElement|null} el
+ * @param {number} target — final integer to land on
+ * @param {number} [duration=1200]
+ */
+export function countUp(el, target, duration = 1200) {
+  if (!el) return;
+  if (typeof target !== "number" || !Number.isFinite(target)) {
+    el.textContent = String(target);
+    return;
+  }
+  const reduced =
+    typeof window !== "undefined" &&
+    typeof window.matchMedia === "function" &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduced || duration <= 0 || typeof requestAnimationFrame !== "function") {
+    el.textContent = String(target);
+    return;
+  }
+  const start = performance.now();
+  const tick = (now) => {
+    const t = Math.min(1, (now - start) / duration);
+    const eased = 1 - Math.pow(1 - t, 3);
+    el.textContent = String(Math.round(target * eased));
+    if (t < 1) requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+}

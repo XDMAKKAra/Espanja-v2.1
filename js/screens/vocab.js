@@ -15,7 +15,7 @@ import { renderKaannos }          from "../renderers/kaannos.js";
 import { renderLauseenMuodostus } from "../renderers/lauseenMuodostus.js";
 import { renderCorrection }       from "../renderers/correction.js";
 import { reportMcAdvisory } from "../features/mcAdvisory.js";
-import { generateCoachLine, topicLabel } from "./mode-page.js";
+import { generateCoachLine, topicLabel, countUp } from "./mode-page.js";
 
 const OPTION_LETTERS = ["A", "B", "C", "D", "E", "F"];
 
@@ -1056,9 +1056,9 @@ function showVocabResults() {
 
   // Spec 2 §5 — populate new editorial result IDs.
   const pct = total > 0 ? Math.round((correct / total) * 100) : 0;
-  $("res-score-num").textContent = String(correct);
   $("res-score-tot").textContent = String(total);
-  $("res-pct").textContent = String(pct);
+  countUp($("res-score-num"), correct);
+  countUp($("res-pct"), pct);
   $("res-mode-label").textContent = "VALMIS · SANASTO";
   $("res-time").textContent = new Date().toLocaleTimeString("fi-FI", { hour: "2-digit", minute: "2-digit" });
   const topicLbl = topicLabel(state.topic || "general vocabulary").toUpperCase();

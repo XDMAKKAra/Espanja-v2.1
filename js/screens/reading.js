@@ -3,7 +3,7 @@ import { $, show } from "../ui/nav.js";
 import { API, isLoggedIn, authHeader, retryable } from "../api.js";
 import { state } from "../state.js";
 import { showLoading, showLoadingError } from "../ui/loading.js";
-import { generateCoachLine } from "./mode-page.js";
+import { generateCoachLine, countUp } from "./mode-page.js";
 
 function escapeHtmlRd(s) {
   return String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -240,9 +240,9 @@ function showReadingResults() {
 
   // Spec 2 §5 — populate new editorial result IDs.
   const rdPct = total > 0 ? Math.round((state.readingScore / total) * 100) : 0;
-  $("reading-res-num").textContent = String(state.readingScore);
   $("reading-res-tot").textContent = String(total);
-  $("reading-res-pct").textContent = String(rdPct);
+  countUp($("reading-res-num"), state.readingScore);
+  countUp($("reading-res-pct"), rdPct);
   $("reading-res-time").textContent = new Date().toLocaleTimeString("fi-FI", { hour: "2-digit", minute: "2-digit" });
   $("reading-res-coach").textContent = generateCoachLine({ scorePct: rdPct, sessionWeakestLabel: null });
   const rdList = $("reading-res-list");
