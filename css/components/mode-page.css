@@ -3,3 +3,63 @@
    Consumes Spec 1 tokens (--ink, --ink-soft, --ink-faint, --border, --accent,
    --font-display, --font-mono, --fs-h1/h3/body/body-sm/meta, --ls-eyebrow,
    --r-sm, --r-md, --ease-out). No new tokens introduced. */
+
+/* §3.3 Briefing card — eyebrow + 3 mono stats + suggest line.
+   Border-bracketed, sits below the display H1. */
+.mode-briefing {
+  padding: 22px 0 24px;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  margin: 0 0 32px;
+}
+.mode-briefing .eyebrow { margin: 0 0 14px; }
+.mode-briefing__stats {
+  display: flex;
+  gap: 48px;
+  margin: 0 0 18px;
+  flex-wrap: wrap;
+}
+.mode-briefing__stat {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.mode-briefing__stat small {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-sm);
+  color: var(--ink-faint);
+  margin-left: 2px;
+}
+.mode-briefing__stat-l {
+  display: block;
+  font-family: var(--font-display);
+  font-size: var(--fs-meta);
+  font-weight: 500;
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-top: 6px;
+}
+.mode-briefing__suggest {
+  font-family: var(--font-display);
+  font-size: var(--fs-body);
+  color: var(--ink-soft);
+  margin: 0;
+}
+.mode-briefing__suggest strong {
+  font-weight: 600;
+  color: var(--ink);
+}
+.mode-briefing__intro {
+  font-family: var(--font-display);
+  font-size: var(--fs-body);
+  color: var(--ink-soft);
+  margin: 0;
+  max-width: 50ch;
+}
+.mode-briefing--empty .mode-briefing__stats,
+.mode-briefing--empty .mode-briefing__suggest {
+  display: none;
+}
