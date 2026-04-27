@@ -221,8 +221,8 @@ initSettings({ loadDashboard });
 
 if ($("btn-start-reading")) $("btn-start-reading").addEventListener("click", async () => {
   state.mode = "reading";
-  state.readingTopic = document.querySelector("#reading-topic-cards .topic-card.active")?.dataset.topic || "animals and nature";
-  state.readingLevel = await fetchUserLevel("reading", state.readingTopic);
+  state.readingTopic = document.querySelector('#screen-mode-reading .mode-topic[aria-checked="true"]')?.dataset.topic || "animals and nature";
+  state.readingLevel = "C";
   state.sessionStartTime = Date.now();
   loadReadingTask();
 });
