@@ -229,8 +229,8 @@ if ($("btn-start-reading")) $("btn-start-reading").addEventListener("click", asy
 
 if ($("btn-start-writing")) $("btn-start-writing").addEventListener("click", () => {
   state.mode = "writing";
-  state.writingTaskType = document.querySelector("#writing-type-cards .topic-card.active")?.dataset.type || "short";
-  state.writingTopic = document.querySelector("#writing-topic-cards .topic-card.active")?.dataset.topic || "general";
+  state.writingTaskType = document.querySelector('#writing-type-cards .mode-topic[aria-checked="true"]')?.dataset.type || "short";
+  state.writingTopic = document.querySelector('#writing-topic-cards .mode-topic[aria-checked="true"]')?.dataset.topic || "general";
   state.sessionStartTime = Date.now();
   loadWritingTask();
 });
