@@ -1,4 +1,4 @@
-const CACHE_VERSION = "puheo-v93";
+const CACHE_VERSION = "puheo-v94";
 const STATIC_ASSETS = [
   "/app.html",
   "/index.html",
@@ -90,6 +90,24 @@ self.addEventListener("fetch", (e) => {
           headers: { "Content-Type": "application/json" },
         })
       )
+    );
+    return;
+  }
+
+  // Navigation requests (HTML documents): network-first so marketing copy
+  // and SPA shell are always fresh. Falls back to cache only when offline.
+  // Prevents the stale-landing-after-rebuild class of bugs.
+  if (e.request.mode === "navigate") {
+    e.respondWith(
+      fetch(e.request)
+        .then((res) => {
+          if (res.ok) {
+            const clone = res.clone();
+            caches.open(CACHE_VERSION).then((c) => c.put(e.request, clone));
+          }
+          return res;
+        })
+        .catch(() => caches.match(e.request).then((c) => c || caches.match("/offline.html")))
     );
     return;
   }
