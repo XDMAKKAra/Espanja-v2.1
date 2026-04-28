@@ -351,7 +351,12 @@ body::before {
   padding: 24px;
   overflow-y: auto;
 }
-.screen.active { display: flex; }
+/* isolation:isolate + z-index force the active screen to its own stacking
+   layer above .app-main-inner's in-flow content. Without this, real-mouse
+   clicks on positioned descendants (e.g. settings-row Muokkaa buttons)
+   hit-test through to <main id="app-main"> and the click never reaches
+   the button — observed via document.elementFromPoint at (916, 52). */
+.screen.active { display: flex; z-index: 1; isolation: isolate; }
 
 /* Custom scrollbar */
 ::-webkit-scrollbar { width: 6px; }

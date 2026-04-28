@@ -122,7 +122,11 @@ export function computeReadinessMap({ learningPath = [], writingDims = null } = 
     let lvl = 0;
     if (t.status === "mastered") lvl = 4;
     else if (t.status === "in_progress" || t.status === "available") {
-      const pct = Math.round((t.bestPct || 0) * 100) / 100;
+      // bestPct from /api/learning-path is a 0–1 fraction (see
+      // lib/learningPath.js:142). Earlier rev divided by 100 again before
+      // comparing to the 60/30/10 thresholds, so pct sat in 0..1 and never
+      // crossed any threshold — every in-progress topic read as level 0.
+      const pct = Math.round((t.bestPct || 0) * 100);
       if (pct >= 60) lvl = 3;
       else if (pct >= 30) lvl = 2;
       else if (pct >= 10) lvl = 1;
@@ -166,7 +170,16 @@ export function computeReadinessMap({ learningPath = [], writingDims = null } = 
 
   const totalCells = cells.length;
   const masteredCells = cells.filter(c => c.level >= 3).length;
-  const readinessPct = totalCells > 0 ? Math.round((masteredCells / totalCells) * 100) : 0;
+  // Weighted partial-credit readiness: each cell contributes level/4 of full
+  // credit so partial progress on many topics is visible. The earlier
+  // mastered/total ratio penalised users who'd touched eight topics with
+  // 30–50 % best scores by reading them as 0 % — produced "8 harjoitusta =
+  // 14 %" which reads as "I've done nothing" when in fact every topic has
+  // been started.
+  const weightedSum = cells.reduce((s, c) => s + c.level, 0);
+  const readinessPct = totalCells > 0
+    ? Math.round((weightedSum / (totalCells * 4)) * 100)
+    : 0;
 
   return { cells, totalCells, masteredCells, readinessPct };
 }

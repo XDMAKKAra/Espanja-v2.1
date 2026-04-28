@@ -249,6 +249,24 @@ function stripEmoji(s) {
 
 // ─── Page rendering ────────────────────────────────────────────────────────
 
+// Public helper used by the profile-screen chips. Ensures the profile is
+// loaded into module state, opens the modal for the requested field, and
+// dispatches `puheo:profile-updated` after a successful save so the
+// caller can re-render its values without doing its own /api/profile fetch.
+export async function openSettingsEditor(fieldKey) {
+  if (!_profile) {
+    try {
+      const res = await apiFetch(`${API}/api/profile`, { headers: authHeader() });
+      if (res.ok) {
+        const { profile } = await res.json();
+        _profile = profile || {};
+        window._userProfile = _profile;
+      }
+    } catch { /* fall through — openEditor will still work with empty state */ }
+  }
+  openEditor(fieldKey);
+}
+
 export async function showSettings() {
   show("screen-settings");
   // Wire the theme toggle + account section once per session — idempotent.
@@ -426,6 +444,12 @@ async function saveEditor() {
 
     closeEditor();
     renderRows();
+
+    // Notify any other screen (profile chips, dashboard) that the profile
+    // changed so they can re-render their values without re-fetching.
+    document.dispatchEvent(new CustomEvent("puheo:profile-updated", {
+      detail: { field: field.key, profile: _profile },
+    }));
 
     // Follow-up: if grade avg went up, offer to bump starting level.
     if (field.key === "spanish_grade_average") {

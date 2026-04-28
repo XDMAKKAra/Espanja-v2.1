@@ -2,61 +2,103 @@
    Tokens only (no hardcoded colour) so dark mode flips for free. */
 
 .profile-inner {
-  max-width: 880px;
+  max-width: 1120px;
   margin: 0 auto;
-  padding: 32px 24px 96px;
+  padding: 20px 28px 36px;
 }
 
-/* ── HERO ──────────────────────────────────────────────────────────── */
+/* ── HERO STRIP ────────────────────────────────────────────────────── */
 
 .profile-hero {
   display: flex;
   align-items: center;
-  gap: 22px;
-  padding: 26px 22px;
+  gap: 18px;
+  padding: 18px 20px;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--r-md);
-  margin-bottom: 26px;
+  margin-bottom: 14px;
 }
 
 .profile-avatar {
   flex: 0 0 auto;
-  width: 76px;
-  height: 76px;
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
   display: grid;
   place-items: center;
   font-family: var(--font-display);
-  font-size: 30px;
+  font-size: 22px;
   font-weight: 700;
   letter-spacing: 0.5px;
   color: #fff;
   background: linear-gradient(135deg, var(--accent), color-mix(in srgb, var(--accent) 60%, #1e3a8a));
-  box-shadow: 0 8px 28px -12px color-mix(in srgb, var(--accent) 65%, transparent);
+  box-shadow: 0 6px 20px -10px color-mix(in srgb, var(--accent) 65%, transparent);
 }
 
 .profile-hero-meta {
   flex: 1;
   min-width: 0;
+  display: grid;
+  gap: 2px;
 }
 
 .profile-name {
   font-family: var(--font-display);
-  font-size: 28px;
+  font-size: 22px;
   font-weight: 600;
   line-height: 1.15;
   color: var(--ink);
-  margin: 0 0 4px;
+  margin: 0;
   word-break: break-word;
 }
 
 .profile-handle {
   font-family: var(--font-mono);
-  font-size: 13px;
+  font-size: 12px;
   color: var(--ink-soft);
-  margin: 0 0 10px;
+  margin: 0;
   word-break: break-all;
+}
+
+.profile-badges { margin-top: 4px; }
+
+/* Compact YO-koe countdown anchored at the hero's right edge — Linear-
+   style metadata chip (label above, big tabular number, unit). */
+.profile-hero-countdown {
+  flex: 0 0 auto;
+  display: grid;
+  grid-template-columns: auto auto;
+  align-items: baseline;
+  column-gap: 6px;
+  row-gap: 0;
+  padding: 8px 14px;
+  background: color-mix(in srgb, var(--accent) 8%, var(--surface));
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, var(--border));
+  border-radius: var(--r-md);
+  text-align: right;
+}
+.profile-hero-countdown-label {
+  grid-column: 1 / -1;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.profile-hero-countdown-num {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+.profile-hero-countdown-unit {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ink-soft);
 }
 
 .profile-badges {
@@ -98,15 +140,15 @@
 .profile-stats {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
-  margin-bottom: 32px;
+  gap: 10px;
+  margin-bottom: 14px;
 }
 
 .profile-stat {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--r-md);
-  padding: 18px 16px;
+  padding: 14px 16px;
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -115,7 +157,7 @@
 
 .profile-stat-label {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 600;
   letter-spacing: 0.6px;
   text-transform: uppercase;
@@ -124,19 +166,19 @@
 
 .profile-stat-value {
   font-family: var(--font-display);
-  font-size: 32px;
+  font-size: 26px;
   font-weight: 600;
   line-height: 1.1;
   color: var(--ink);
   font-variant-numeric: tabular-nums;
   display: flex;
   align-items: baseline;
-  gap: 6px;
+  gap: 4px;
 }
 
 .profile-stat-unit {
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 500;
   color: var(--ink-soft);
   text-transform: lowercase;
@@ -155,28 +197,32 @@
 /* ── SECTIONS ──────────────────────────────────────────────────────── */
 
 .profile-section {
-  margin-bottom: 32px;
+  margin-bottom: 14px;
 }
+.profile-section--modes { margin-bottom: 14px; }
 
 .profile-section-head {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
   gap: 12px;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
 }
 
 .profile-section-title {
-  font-family: var(--font-display);
-  font-size: var(--fs-h3, 20px);
+  font-family: var(--font-mono);
+  font-size: 11px;
   font-weight: 600;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
   margin: 0;
-  color: var(--ink);
+  color: var(--ink-soft);
 }
 
 .profile-section-link {
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 11px;
+  letter-spacing: 0.4px;
   color: var(--ink-soft);
   text-decoration: none;
   background: none;
@@ -186,54 +232,134 @@
 }
 .profile-section-link:hover { color: var(--ink); text-decoration: underline; }
 
-/* ── MODE BREAKDOWN ────────────────────────────────────────────────── */
+/* ── TWO-COLUMN GRID (recent activity | settings chips) ───────────── */
+
+.profile-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 14px;
+  align-items: start;
+}
+.profile-col {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: 14px 16px 12px;
+  min-width: 0;
+}
+
+/* ── MODE BREAKDOWN — 4-up single number ───────────────────────────── */
 
 .profile-modes {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 10px;
 }
 
 .profile-mode-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 14px 16px;
+  display: grid;
+  grid-template-rows: auto auto auto;
+  row-gap: 6px;
+  padding: 14px 14px 12px;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--r-md);
 }
 
 .profile-mode-icon {
-  width: 32px;
-  height: 32px;
-  flex: 0 0 32px;
+  width: 22px;
+  height: 22px;
   display: grid;
   place-items: center;
-  border-radius: 8px;
-  background: var(--surface-2);
   color: var(--ink-soft);
 }
-.profile-mode-icon svg { width: 18px; height: 18px; }
+.profile-mode-icon svg { width: 16px; height: 16px; }
 
 .profile-mode-name {
-  font-family: var(--font-display);
-  font-size: 15px;
-  font-weight: 500;
-  color: var(--ink);
-  flex: 1;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: var(--ink-soft);
   min-width: 0;
 }
 
 .profile-mode-count {
-  font-family: var(--font-mono);
-  font-size: 14px;
-  font-weight: 600;
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 700;
   color: var(--ink);
   font-variant-numeric: tabular-nums;
+  line-height: 1;
 }
 
 .profile-mode-count--zero { color: var(--ink-faint); }
+
+/* ── PROFILE CHIPS (Astra-style inline editable rows) ─────────────── */
+
+.profile-chips {
+  display: grid;
+  gap: 8px;
+}
+.profile-chip {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 12px;
+  padding: 9px 12px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  min-width: 0;
+}
+.profile-chip-main {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  min-width: 0;
+  overflow: hidden;
+}
+.profile-chip-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  flex: 0 0 auto;
+}
+.profile-chip-value {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+.profile-chip-value.is-empty { color: var(--ink-faint); font-style: italic; }
+.profile-chip-edit {
+  flex: 0 0 auto;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--ink-soft);
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  cursor: pointer;
+  transition: border-color 150ms var(--ease-out), color 150ms var(--ease-out);
+}
+.profile-chip-edit:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.profile-chip-edit:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
 
 /* ── ACHIEVEMENTS ──────────────────────────────────────────────────── */
 
@@ -465,8 +591,8 @@
 .profile-activity-row {
   display: flex;
   align-items: center;
-  gap: 14px;
-  padding: 14px 4px;
+  gap: 12px;
+  padding: 10px 2px;
   border-bottom: 1px solid var(--border);
   /* Stagger reveal — sourced from Magic UI animated-list (scale + opacity
      spring, one item at a time). Items render in opacity:0 + translateY +
@@ -509,16 +635,22 @@
 }
 .profile-activity-mode {
   font-family: var(--font-display);
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 500;
   color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .profile-activity-time {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   color: var(--ink-faint);
-  margin-top: 2px;
+  margin-top: 1px;
 }
+.profile-activity-row:last-child { border-bottom: 0; }
+.profile-activity { border-top: 0; }
+.profile-col--activity .profile-activity-row:first-of-type { padding-top: 4px; }
 
 .profile-activity-right {
   display: flex;
@@ -583,21 +715,22 @@
 /* ── MOBILE ────────────────────────────────────────────────────────── */
 
 @media (max-width: 640px) {
-  .profile-inner { padding: 22px 16px 80px; }
+  .profile-inner { padding: 16px 14px 24px; }
 
   .profile-hero {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 16px;
-    padding: 22px 18px;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 14px;
   }
-  .profile-avatar { width: 64px; height: 64px; font-size: 26px; }
-  .profile-name { font-size: 24px; }
+  .profile-avatar { width: 48px; height: 48px; font-size: 18px; }
+  .profile-name { font-size: 18px; }
+  .profile-hero-countdown { width: 100%; text-align: left; }
 
-  .profile-stats { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-  .profile-stat { padding: 14px 14px; }
-  .profile-stat-value { font-size: 26px; }
+  .profile-stats { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .profile-stat-value { font-size: 22px; }
 
-  .profile-modes { grid-template-columns: 1fr; }
+  .profile-modes { grid-template-columns: repeat(2, 1fr); }
+
+  .profile-grid { grid-template-columns: 1fr; }
   .profile-achievements { grid-template-columns: 1fr; }
 }

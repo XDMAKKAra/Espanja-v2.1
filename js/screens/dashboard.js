@@ -13,6 +13,7 @@ import { renderWordOfDayInto } from "../features/wordOfDay.js";
 import { renderDailyChallengeInto, markModeCompletedToday } from "../features/dailyChallenge.js";
 import { celebrateStreakMilestone } from "../features/celebrate.js";
 import { countUp } from "./mode-page.js";
+import { timeAgo } from "../ui/timeAgo.js";
 import { mountMeteors, unmountMeteors } from "../features/meteors.js";
 
 let _deps = {};
@@ -272,6 +273,8 @@ function renderDashboard({
   window._isPro = pro ?? false;
   window._dashModeStats = modeStats;
 
+  renderRail({ pro: window._isPro, streak });
+
   document.querySelectorAll(".mode-btn[data-mode='reading'], .mode-btn[data-mode='writing']").forEach((btn) => {
     const locked = isLoggedIn() && !pro;
     btn.classList.toggle("mode-locked", locked);
@@ -377,17 +380,6 @@ function renderDashboard({
     $("dash-recent-wrap").classList.add("hidden");
     $("dash-empty").classList.remove("hidden");
   }
-}
-
-function timeAgo(dateStr) {
-  const diff = Date.now() - new Date(dateStr + "Z").getTime();
-  const mins = Math.floor(diff / 60000);
-  if (mins < 2)  return "juuri äsken";
-  if (mins < 60) return `${mins} min sitten`;
-  const hrs = Math.floor(mins / 60);
-  if (hrs < 24)  return `${hrs} t sitten`;
-  const days = Math.floor(hrs / 24);
-  return `${days} pv sitten`;
 }
 
 function renderGoalRow(chartData) {
@@ -1297,6 +1289,63 @@ function renderWritingProgression() {
     `;
   }
   wrap.innerHTML = html;
+}
+
+// ─── Right rail (top user card + Pro upsell or daily peek) ───────────────
+
+function railInitials(email) {
+  if (!email) return "—";
+  const handle = email.split("@")[0] || "";
+  const parts = handle.split(/[._\-+]+/).filter(Boolean);
+  if (parts.length === 0) return handle.slice(0, 2).toUpperCase() || "—";
+  if (parts.length === 1) {
+    const p = parts[0];
+    return (p.length >= 2 ? p.slice(0, 2) : p[0]).toUpperCase();
+  }
+  return (parts[0][0] + parts[1][0]).toUpperCase();
+}
+
+let _railWired = false;
+function renderRail({ pro, streak }) {
+  // User card identity
+  const email = getAuthEmail() || "";
+  const handle = email ? email.split("@")[0] : "Käyttäjä";
+  const av = document.getElementById("rail-user-avatar");
+  if (av) av.textContent = railInitials(email);
+  const nm = document.getElementById("rail-user-name");
+  if (nm) nm.textContent = handle || "Käyttäjä";
+  const stNum = document.getElementById("rail-user-streak-num");
+  if (stNum) stNum.textContent = String(streak ?? 0);
+  const stChip = document.getElementById("rail-user-streak");
+  if (stChip) stChip.classList.toggle("is-active", (streak ?? 0) >= 3);
+
+  // Toggle the panel below: free → upsell, pro → daily peek
+  const proPanel = document.getElementById("rail-panel-pro");
+  const dailyPanel = document.getElementById("rail-panel-daily");
+  if (proPanel && dailyPanel) {
+    proPanel.hidden = !!pro;
+    dailyPanel.hidden = !pro;
+  }
+
+  if (_railWired) return;
+  _railWired = true;
+
+  // Click on user card → open profile (same target as the sidebar user button).
+  const card = document.getElementById("rail-user-card");
+  if (card) {
+    card.addEventListener("click", () => {
+      const profileBtn = document.querySelector('.sidebar-item[data-nav="profile"], .sidebar-user[data-nav="profile"]');
+      if (profileBtn) profileBtn.click();
+    });
+  }
+
+  // Pro upsell CTA → start checkout (delegates to dependency injected at boot).
+  const cta = document.getElementById("rail-upsell-cta");
+  if (cta) {
+    cta.addEventListener("click", () => {
+      if (typeof _deps?.startCheckout === "function") _deps.startCheckout();
+    });
+  }
 }
 
 // ─── YO-koe readiness map ──────────────────────────────────────────────────

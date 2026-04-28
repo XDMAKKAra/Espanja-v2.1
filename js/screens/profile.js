@@ -1,17 +1,21 @@
-// Profile screen — destination "Oma sivu" with avatar, stats grid, and recent activity.
-// Reuses the /api/dashboard payload (no new endpoint).
+// Profile screen — single-viewport "Oma sivu" with hero strip, 4 stats,
+// 4-up mode breakdown, recent activity (3 rows), and inline editable
+// settings chips. Reuses /api/dashboard for stats + /api/learning-path
+// for readiness%. Chips drive the existing settings modal via the
+// `openSettingsEditor` helper exported from settings.js.
 
 import { $, show } from "../ui/nav.js";
 import { API, isLoggedIn, clearAuth, authHeader, apiFetch, getAuthEmail } from "../api.js";
 import { showLoading } from "../ui/loading.js";
 import { MODE_ICONS } from "../ui/icons.js";
-import { renderAchievementsInto } from "../features/achievements.js";
+import { timeAgo } from "../ui/timeAgo.js";
+import { computeReadinessMap, getRecentWritingDimensions } from "../features/writingProgression.js";
+import { openSettingsEditor } from "./settings.js";
 
 let _deps = {};
 export function initProfile(deps = {}) {
   _deps = deps;
 
-  // The "Asetukset →" link inside the profile screen footer.
   const settingsLink = document.getElementById("profile-link-settings");
   if (settingsLink) {
     settingsLink.addEventListener("click", (e) => {
@@ -21,7 +25,6 @@ export function initProfile(deps = {}) {
     });
   }
 
-  // CTA inside the empty-state when there's no recent activity yet.
   const emptyCta = document.getElementById("profile-empty-cta");
   if (emptyCta) {
     emptyCta.addEventListener("click", () => {
@@ -29,34 +32,48 @@ export function initProfile(deps = {}) {
       if (dashBtn) dashBtn.click();
     });
   }
+
+  // Re-render chips whenever the settings modal saves a field.
+  document.addEventListener("puheo:profile-updated", (e) => {
+    const profile = e.detail?.profile || window._userProfile;
+    renderChips(profile || {});
+  });
 }
 
 const MODE_NAMES = {
   vocab:   "Sanasto",
   grammar: "Kielioppi",
-  reading: "Luetun ymmärtäminen",
+  reading: "Lukeminen",
   writing: "Kirjoittaminen",
 };
 
-function timeAgo(dateStr) {
-  if (!dateStr) return "";
-  const diff = Date.now() - new Date(dateStr + "Z").getTime();
-  if (Number.isNaN(diff)) return "";
-  const mins = Math.floor(diff / 60000);
-  if (mins < 2)  return "juuri äsken";
-  if (mins < 60) return `${mins} min sitten`;
-  const hrs = Math.floor(mins / 60);
-  if (hrs < 24)  return `${hrs} t sitten`;
-  const days = Math.floor(hrs / 24);
-  if (days < 30) return `${days} pv sitten`;
-  const months = Math.floor(days / 30);
-  return `${months} kk sitten`;
-}
+const TARGET_GRADE_LABELS = {
+  B: "B · Hyväksytty",
+  C: "C · Tyydyttävä",
+  M: "M · Hyvä",
+  E: "E · Erinomainen",
+  L: "L · Huippu",
+};
+
+const STUDY_BG_LABELS = {
+  lukio: "Lukio",
+  ylakoulu_lukio: "Yläkoulu+lukio",
+  alakoulu: "Alakoulusta",
+  asunut: "Asunut Esp.-maassa",
+  kotikieli: "Kotikieli",
+};
+
+const MONTH_LABELS = {
+  "2026-03": "Kevät 2026",
+  "2026-09": "Syksy 2026",
+  "2027-03": "Kevät 2027",
+  "2027-09": "Syksy 2027",
+  "2028-03": "Kevät 2028",
+};
 
 function initials(email) {
   if (!email) return "—";
   const handle = email.split("@")[0] || "";
-  // Split on common separators (._-+) and take first letter of each segment.
   const parts = handle.split(/[._\-+]+/).filter(Boolean);
   if (parts.length === 0) return handle.slice(0, 2).toUpperCase() || "—";
   if (parts.length === 1) {
@@ -67,31 +84,60 @@ function initials(email) {
 }
 
 function escapeHtml(s) {
-  return String(s).replace(/[&<>"']/g, (c) => ({
+  return String(s ?? "").replace(/[&<>"']/g, (c) => ({
     "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
   }[c]));
 }
 
+function daysUntilExam(examDate) {
+  if (!examDate) return null;
+  const t = Date.parse(examDate);
+  if (!Number.isFinite(t)) return null;
+  const days = Math.ceil((t - Date.now()) / 86400000);
+  return days < 0 ? null : days;
+}
+
+function formatExamDate(val) {
+  if (!val) return null;
+  const ym = String(val).slice(0, 7);
+  return MONTH_LABELS[ym] || ym;
+}
+
 export async function loadProfile() {
   showLoading("Ladataan profiilia…");
+  let dashboardData = {};
+  let learningPath = [];
   try {
-    const res = await apiFetch(`${API}/api/dashboard`, { headers: authHeader() });
-    if (res.status === 401) {
+    const profilePromise = window._userProfile
+      ? Promise.resolve(null)
+      : apiFetch(`${API}/api/profile`, { headers: authHeader() }).catch(() => null);
+    const [dashRes, pathRes, profRes] = await Promise.all([
+      apiFetch(`${API}/api/dashboard`, { headers: authHeader() }),
+      apiFetch(`${API}/api/learning-path`, { headers: authHeader() }).catch(() => null),
+      profilePromise,
+    ]);
+    if (dashRes.status === 401) {
       clearAuth();
       show("screen-auth");
       return;
     }
-    const data = await res.json();
-    renderProfile(data);
-    show("screen-profile");
+    dashboardData = await dashRes.json().catch(() => ({}));
+    if (pathRes && pathRes.ok) {
+      const pathJson = await pathRes.json().catch(() => ({}));
+      learningPath = pathJson.path || [];
+    }
+    if (profRes && profRes.ok) {
+      const profJson = await profRes.json().catch(() => ({}));
+      if (profJson.profile) window._userProfile = profJson.profile;
+    }
   } catch {
-    // Render an empty-state version so the user lands on something sensible.
-    renderProfile({});
-    show("screen-profile");
+    /* fall through to render empty state */
   }
+  renderProfile(dashboardData, learningPath);
+  show("screen-profile");
 }
 
-function renderProfile(data = {}) {
+function renderProfile(data = {}, learningPath = []) {
   const {
     totalSessions = 0,
     modeStats = {},
@@ -102,22 +148,32 @@ function renderProfile(data = {}) {
     pro = false,
   } = data;
 
+  const profile = window._userProfile || {};
   const email = getAuthEmail() || "";
   const handle = email ? email.split("@")[0] : "Käyttäjä";
 
-  // Hero
+  // Hero — avatar / name / handle
   const avatarEl = document.getElementById("profile-avatar");
   if (avatarEl) avatarEl.textContent = initials(email);
-
   const nameEl = document.getElementById("profile-name");
   if (nameEl) nameEl.textContent = handle || "Käyttäjä";
-
   const handleEl = document.getElementById("profile-handle");
   if (handleEl) handleEl.textContent = email || "—";
 
-  // Blur-fade arrival on the profile hero (sourced: Magic UI blur-fade —
-  // same technique used on the dashboard greeting in L35). Idempotent:
-  // remove + double-rAF re-add so a fresh transition fires per profile load.
+  // Hero countdown
+  const cdWrap = document.getElementById("profile-hero-countdown");
+  const cdNum = document.getElementById("profile-hero-countdown-num");
+  if (cdWrap && cdNum) {
+    const days = daysUntilExam(profile.exam_date);
+    if (days != null) {
+      cdNum.textContent = String(days);
+      cdWrap.hidden = false;
+    } else {
+      cdWrap.hidden = true;
+    }
+  }
+
+  // Blur-fade on hero (sourced L36 — Magic UI blur-fade pattern).
   const heroEl = document.querySelector("#screen-profile .profile-hero");
   if (heroEl) {
     heroEl.classList.remove("profile-hero--in");
@@ -130,37 +186,29 @@ function renderProfile(data = {}) {
   const badgesEl = document.getElementById("profile-badges");
   if (badgesEl) {
     const chips = [];
-    if (pro) {
-      chips.push(`<span class="profile-badge profile-badge--pro">Pro</span>`);
-    }
-    if (streak >= 1) {
-      chips.push(`<span class="profile-badge profile-badge--streak">🔥 ${streak} pv putki</span>`);
-    }
-    const levelChip = estLevel || (window._userProfile?.starting_level) || null;
-    if (levelChip) {
-      chips.push(`<span class="profile-badge">Taso ${escapeHtml(levelChip)}</span>`);
-    }
+    if (pro) chips.push(`<span class="profile-badge profile-badge--pro">Pro</span>`);
+    if (streak >= 1) chips.push(`<span class="profile-badge profile-badge--streak">🔥 ${streak} pv</span>`);
+    const levelChip = estLevel || profile.starting_level || profile.current_grade;
+    if (levelChip) chips.push(`<span class="profile-badge">Taso ${escapeHtml(levelChip)}</span>`);
     badgesEl.innerHTML = chips.join("");
   }
 
-  // Stats
-  setStat("profile-stat-streak", streak, streak === 1 ? "päivä" : "päivää");
-  setStat("profile-stat-total", totalSessions, totalSessions === 1 ? "harjoitus" : "harjoitusta");
-  setStat("profile-stat-week", weekSessions, weekSessions === 1 ? "harjoitus" : "harjoitusta");
-  const levelText = estLevel || (window._userProfile?.starting_level) || "—";
-  setStat("profile-stat-level", levelText, "");
+  // Readiness % derived from learning-path + writing dims (same formula
+  // as the dashboard rail, after L38 fix).
+  let readinessPct = 0;
+  try {
+    const writingDims = getRecentWritingDimensions(5);
+    const map = computeReadinessMap({ learningPath, writingDims });
+    readinessPct = map.readinessPct || 0;
+  } catch { /* keep 0 */ }
 
-  // Streak hint
-  const streakHint = document.getElementById("profile-stat-streak-hint");
-  if (streakHint) {
-    if (streak === 0) streakHint.textContent = "Aloita uusi putki tänään.";
-    else if (streak < 3) streakHint.textContent = "Pidä pieni rutiini.";
-    else if (streak < 7) streakHint.textContent = "Putki rakentuu hyvin.";
-    else if (streak < 30) streakHint.textContent = "Tämä on jo tapa.";
-    else streakHint.textContent = "Vakuuttava sinnikkyys.";
-  }
+  // Stats row
+  setStat("profile-stat-streak", streak, "pv");
+  setStat("profile-stat-total", totalSessions, "");
+  setStat("profile-stat-week", weekSessions, "");
+  setStat("profile-stat-readiness", readinessPct, "%");
 
-  // Mode breakdown
+  // Mode breakdown — 4 cells
   const modesEl = document.getElementById("profile-modes");
   if (modesEl) {
     const modes = ["vocab", "grammar", "reading", "writing"];
@@ -176,20 +224,17 @@ function renderProfile(data = {}) {
     }).join("");
   }
 
-  // Achievements (client-side, derived from this same payload)
-  renderAchievementsInto(document.getElementById("profile-achievements"), data);
-
-  // Recent activity
+  // Recent activity — capped at 3 rows for the single-viewport budget.
   const activityEl = document.getElementById("profile-activity");
   const emptyEl = document.getElementById("profile-empty");
   if (activityEl && emptyEl) {
     if (recent.length > 0) {
       activityEl.classList.remove("hidden");
       emptyEl.classList.add("hidden");
-      const visible = recent.slice(0, 8);
+      const visible = recent.slice(0, 3);
       activityEl.innerHTML = visible.map((log, i) => {
         const name = MODE_NAMES[log.mode] || log.mode;
-        const lvl = log.level ? ` · taso ${escapeHtml(log.level)}` : "";
+        const lvl = log.level ? ` · ${escapeHtml(log.level)}` : "";
         const ic  = MODE_ICONS[log.mode] || "";
         const score = (log.scoreTotal > 0)
           ? `<span class="profile-activity-score">${log.scoreCorrect}/${log.scoreTotal}</span>`
@@ -197,9 +242,6 @@ function renderProfile(data = {}) {
         const grade = log.ytlGrade
           ? `<span class="profile-activity-grade">${escapeHtml(log.ytlGrade)}</span>`
           : "";
-        // Per-row stagger (sourced: Magic UI animated-list reveal). 55ms per
-        // row caps the cascade at ~440ms total for the full 8-item slice —
-        // long enough to read as intentional, short enough to never block.
         return `
           <div class="profile-activity-row" style="--enter-delay:${i * 55}ms">
             <span class="profile-activity-icon" aria-hidden="true">${ic}</span>
@@ -210,8 +252,6 @@ function renderProfile(data = {}) {
             <div class="profile-activity-right">${score}${grade}</div>
           </div>`;
       }).join("");
-      // Trigger the reveal on the next frame so the initial-state styles
-      // commit before the transition starts.
       requestAnimationFrame(() => {
         activityEl.querySelectorAll(".profile-activity-row").forEach((r) => {
           r.classList.add("profile-activity-row--enter");
@@ -222,6 +262,45 @@ function renderProfile(data = {}) {
       emptyEl.classList.remove("hidden");
     }
   }
+
+  // Settings chips — 5 most-used fields with current value + Edit button.
+  renderChips(profile);
+}
+
+const CHIP_FIELDS = [
+  { key: "exam_date",                 label: "Kokeen päivä",
+    render: (p) => formatExamDate(p.exam_date) || "—" },
+  { key: "preferred_session_length",  label: "Päivätavoite",
+    render: (p) => p.preferred_session_length ? `${p.preferred_session_length} min` : "—" },
+  { key: "target_grade",              label: "Tavoite",
+    render: (p) => TARGET_GRADE_LABELS[p.target_grade] || "—" },
+  { key: "spanish_grade_average",     label: "Keskiarvo",
+    render: (p) => p.spanish_grade_average == null ? "—" : String(p.spanish_grade_average) },
+  { key: "study_background",          label: "Tausta",
+    render: (p) => STUDY_BG_LABELS[p.study_background] || "—" },
+];
+
+function renderChips(profile) {
+  const wrap = document.getElementById("profile-chips");
+  if (!wrap) return;
+  wrap.innerHTML = CHIP_FIELDS.map((f) => {
+    const val = f.render(profile || {});
+    const empty = !val || val === "—";
+    return `
+      <div class="profile-chip" data-field="${f.key}">
+        <div class="profile-chip-main">
+          <span class="profile-chip-label">${escapeHtml(f.label)}</span>
+          <span class="profile-chip-value${empty ? " is-empty" : ""}">${escapeHtml(empty ? "ei asetettu" : val)}</span>
+        </div>
+        <button type="button" class="profile-chip-edit" data-field="${f.key}" aria-label="Muokkaa ${escapeHtml(f.label)}">Muokkaa</button>
+      </div>`;
+  }).join("");
+  wrap.querySelectorAll(".profile-chip-edit").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const field = btn.dataset.field;
+      openSettingsEditor(field).catch(() => {});
+    });
+  });
 }
 
 function setStat(id, value, unit) {
