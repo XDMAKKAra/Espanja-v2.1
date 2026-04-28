@@ -1,0 +1,156 @@
+/* ============================================================
+   Puheo Landing Tokens — restrained Linear/Vercel/Stripe register.
+   Scoped to the .landing class so they don't leak into app.html
+   (which keeps the existing light Cuaderno tokens in style.css).
+
+   Sourced from `docs/superpowers/specs/2026-04-28-landing-rebuild-design.md`
+   §"Design tokens" — see that doc + LANDING_PLAN.md before editing.
+
+   Brand-color discipline: --accent / --accent-hover are the SAME
+   values as the app's mint accent (style.css :root). Landing differs
+   only in surface theme (dark) and type pairing (Geist vs Inter).
+   ============================================================ */
+
+@font-face {
+  font-family: "Geist Fallback";
+  src: local("Inter"), local("system-ui");
+  size-adjust: 100%;
+}
+
+.landing {
+  /* ─── Surfaces — deep near-black with subtle radial gradient ──── */
+  --bg:            #0a0a0a;
+  --bg-elevated:   #141414;
+  --bg-gradient:   radial-gradient(ellipse at top, #1a1a2e 0%, #0a0a0a 60%);
+  --surface:       rgba(255, 255, 255, 0.04);
+  --surface-hover: rgba(255, 255, 255, 0.06);
+  --border:        rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.14);
+
+  /* ─── Text ─────────────────────────────────────────────────── */
+  --text:          #fafafa;
+  --text-muted:    #a1a1aa;
+  --text-subtle:   #71717a;
+
+  /* ─── Accent — same teal as the app for landing→app continuity ── */
+  --accent:        #2DD4BF;
+  --accent-hover:  #14B8A6;
+  --accent-soft:   rgba(45, 212, 191, 0.12);
+  --accent-glow:   rgba(45, 212, 191, 0.20);
+
+  /* ─── Type ─────────────────────────────────────────────────── */
+  --font-display:  "Geist", "Geist Fallback", "Inter", system-ui, -apple-system, sans-serif;
+  --font-body:     "Geist", "Geist Fallback", "Inter", system-ui, -apple-system, sans-serif;
+  --font-mono:     "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  /* Type scale (px): 14 16 18 24 32 48 72 96 */
+  --fs-xs:  14px;
+  --fs-sm:  16px;
+  --fs-md:  18px;
+  --fs-lg:  24px;
+  --fs-xl:  32px;
+  --fs-2xl: 48px;
+  --fs-3xl: 72px;
+  --fs-4xl: 96px;
+
+  /* Tracking — display copy uses tight; body uses normal; eyebrow labels uppercase+wide */
+  --tracking-tight: -0.04em;
+  --tracking-snug:  -0.02em;
+  --tracking-normal: 0;
+  --tracking-wide:   0.10em;
+
+  /* Line height */
+  --lh-tight: 1.05;
+  --lh-snug:  1.25;
+  --lh-body:  1.55;
+
+  /* ─── Spacing — 8px base ──────────────────────────────────── */
+  --sp-1:  8px;
+  --sp-2:  16px;
+  --sp-3:  24px;
+  --sp-4:  32px;
+  --sp-6:  48px;
+  --sp-8:  64px;
+  --sp-12: 96px;
+  --sp-16: 128px;
+
+  /* Section vertical padding (LANDING_PLAN.md §B) */
+  --section-pad-y: 96px;
+  --section-pad-y-mobile: 64px;
+  --content-max:  1200px;
+
+  /* ─── Radius — thin discipline ─────────────────────────────── */
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 16px;
+  --r-xl: 24px;
+  --r-pill: 999px;
+
+  /* ─── Borders — thin, 1px, low-opacity white over dark ────── */
+  --border-width: 1px;
+
+  /* ─── Motion — 150-300ms ease-out, no bouncing ────────────── */
+  --t-fast: 150ms ease-out;
+  --t-mid:  220ms ease-out;
+  --t-slow: 320ms ease-out;
+
+  /* ─── Shadow — used very sparingly; mostly the browser frame ── */
+  --shadow-frame: 0 40px 80px -20px rgba(0, 0, 0, 0.5);
+  --shadow-card:  0 24px 48px -24px rgba(0, 0, 0, 0.4);
+  --shadow-glow:  0 40px 80px -20px var(--accent-glow);
+
+  /* ─── Exam date — single source of truth (28.9.2026) ──────── */
+  /* JS reads this via getComputedStyle(...).getPropertyValue('--exam-date-iso')
+     so all countdown logic lands on the right date. Use new Date('2026-09-28'). */
+  --exam-date-iso: "2026-09-28";
+}
+
+/* Reset + base on the landing root.
+   Do NOT apply to <body> globally — only when .landing class is present,
+   which keeps app.html unaffected. */
+.landing {
+  background: var(--bg);
+  background-image: var(--bg-gradient);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  line-height: var(--lh-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+.landing *,
+.landing *::before,
+.landing *::after {
+  box-sizing: border-box;
+}
+
+/* Display-class hook for headlines */
+.landing .display {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--lh-tight);
+}
+
+/* Eyebrow-class hook for the uppercase labels above big headlines */
+.landing .eyebrow {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  color: var(--text-subtle);
+  font-weight: 500;
+}
+
+/* Reduced-motion respect — collapse all transitions */
+@media (prefers-reduced-motion: reduce) {
+  .landing *,
+  .landing *::before,
+  .landing *::after {
+    animation-duration: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0ms !important;
+    scroll-behavior: auto !important;
+  }
+}

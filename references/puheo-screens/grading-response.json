@@ -1,0 +1,99 @@
+{
+  "_placeholder": true,
+  "_note": "Hand-crafted fixture matching the real /api/grade-writing response shape. Replace with real captured output by running scripts/agent-test/loop42-capture-grading.mjs once Pro test creds are in .env. All Finnish copy here is realistic but not from the live model — L45 should treat this as structurally faithful but not authoritative until the placeholder flag is removed. Removed by L45's first run if creds-ran is done; otherwise L45 ships against this fixture and the user can re-shoot in a later loop.",
+  "capturedAt": "PLACEHOLDER",
+  "task": {
+    "taskType": "short",
+    "title": "Sähköposti ystävälle",
+    "prompt_fi": "Olet järjestämässä syntymäpäiväjuhlia. Kirjoita espanjankielinen sähköposti espanjalaiselle ystävällesi: kerro koska ja missä juhlat ovat, mitä siellä syödään ja juodaan, ja pyydä vastausta tiettyyn päivämäärään mennessä. Kirjoita 160–240 merkkiä.",
+    "charMin": 160,
+    "charMax": 240,
+    "points": 33
+  },
+  "studentText": "Hola Marta,\n\nEstoy escribiendo para invitarte a mi cumpleaños. Va a ser el viernes próximo en mi casa. Mi madre cocina mucha comida y tendrémos también música. Espero que vienes con tu hermano. La fiesta empieza a las siete. La semana pasada estaba en Madrid con mi clase y era muy divertido. Vimos el museo del Prado y comimos en un restaurante muy bueno. Si tienes preguntas, llámame. Es importante que me dices si puedes venir antes del miércoles.\n\n¡Hasta pronto!\nSaludos,\nAino",
+  "result": {
+    "rawScore": 13,
+    "penalty": 0,
+    "finalScore": 13,
+    "maxScore": 20,
+    "ytlGrade": "E",
+    "viestinnallisyys": {
+      "score": 4,
+      "feedback_fi": "Vastasit kaikkiin tehtävänannon kohtiin: aika, paikka, ruoka ja vastauspyyntö. Sävy on luonteva ja ystävällinen."
+    },
+    "kielen_rakenteet": {
+      "score": 2,
+      "feedback_fi": "Kielirakenteissa on toistuvia virheitä subjunktiivissa ('espero que vienes', 'es importante que me dices') ja kongruenssissa. Aikamuotojen vaihtelu on osittain järkevää, mutta 'estaba en Madrid' kaipaisi preteritiä."
+    },
+    "sanasto": {
+      "score": 4,
+      "feedback_fi": "Sanasto on B1-B2-tasoa ja sopiva tehtävän rekisteriin. Yksikkö-/monikko-asiat hallinnassa pieniä poikkeuksia lukuun ottamatta."
+    },
+    "kokonaisuus": {
+      "score": 3,
+      "feedback_fi": "Tervehdys ja lopetus paikallaan, mutta sidosanoja on vähän — teksti on lähinnä peräkkäisten lauseiden ketju. Ei taukoa ajatuksissa, mutta rakenteet voisivat sitoa kappaletta tiukemmin."
+    },
+    "corrected_text": "Hola Marta,\n\nEstoy escribiendo para invitarte a mi cumpleaños. Va a ser el viernes próximo en mi casa. Mi madre cocina mucha comida y tendremos también música. Espero que vengas con tu hermano. La fiesta empieza a las siete. La semana pasada estuve en Madrid con mi clase y fue muy divertido. Vimos el Museo del Prado y comimos en un restaurante muy bueno. Si tienes preguntas, llámame. Es importante que me digas si puedes venir antes del miércoles.\n\n¡Hasta pronto!\nSaludos,\nAino",
+    "errors": [
+      {
+        "excerpt": "tendrémos",
+        "corrected": "tendremos",
+        "category": "spelling",
+        "explanation_fi": "Painollinen tavu on toiseksi viimeinen, joten 'tendremos' kirjoitetaan ilman aksenttia. Vain paroksitonit, jotka päättyvät konsonanttiin (ei -n eikä -s), saavat aksentin."
+      },
+      {
+        "excerpt": "Espero que vienes",
+        "corrected": "Espero que vengas",
+        "category": "grammar",
+        "explanation_fi": "Subjunktiivi pakollinen 'esperar que' jälkeen, kun toivotaan jonkun tekevän jotakin: 'venir' → 'vengas'."
+      },
+      {
+        "excerpt": "estaba en Madrid",
+        "corrected": "estuve en Madrid",
+        "category": "grammar",
+        "explanation_fi": "Loppuun saatettu, ajallisesti rajattu matka → preteriti ('estuve'), ei imperfekti. Imperfekti kuvaisi taustaa tai toistuvaa toimintaa."
+      },
+      {
+        "excerpt": "era muy divertido",
+        "corrected": "fue muy divertido",
+        "category": "grammar",
+        "explanation_fi": "Kokonaisarvio päätyneestä tapahtumasta → preteriti 'fue'. 'Era' kuvaisi kestävää tilaa tai toistoa."
+      },
+      {
+        "excerpt": "Es importante que me dices",
+        "corrected": "Es importante que me digas",
+        "category": "grammar",
+        "explanation_fi": "Subjunktiivi pakollinen 'es importante que' jälkeen — kyse on toivomuksesta tai vaatimuksesta, ei toteamuksesta."
+      },
+      {
+        "excerpt": "el museo del Prado",
+        "corrected": "el Museo del Prado",
+        "category": "spelling",
+        "explanation_fi": "Erisnimet ja viralliset paikannimet kirjoitetaan isolla alkukirjaimella espanjassa: 'Museo del Prado'."
+      }
+    ],
+    "annotations": [
+      {
+        "excerpt": "Estoy escribiendo para invitarte",
+        "comment_fi": "Selkeä tehtävän aloitus — heti tehtävän tarkoitus näkyvissä, sopiva rekisteri.",
+        "type": "positive"
+      },
+      {
+        "excerpt": "Si tienes preguntas, llámame",
+        "comment_fi": "Hyvä ehtolauseen käyttö — reaaliehto presens + imperatiivi, juuri lyhyen tehtävän odotettu rakenne.",
+        "type": "positive"
+      },
+      {
+        "excerpt": "Vimos el museo del Prado y comimos en un restaurante",
+        "comment_fi": "Sujuva preteritirivi — kaksi peräkkäistä päätökseen vietyä toimintaa, juuri oikein.",
+        "type": "positive"
+      }
+    ],
+    "overall_feedback_fi": "Hyvä kokonaisuus B-tasolla — tehtävän kaikki kohdat täyttyvät ja sanasto on rekisterin mukaista. Painopiste seuraavaan harjoittelukertaan: subjunktiivi 'esperar que' / 'es importante que' jälkeen on YO-kokeessa toistuva ansa. Toinen kohta: erottele preteriti (loppuun saatettu) ja imperfekti (tausta) selkeämmin.",
+    "next_action_fi": "Harjoittele subjunktiivin pakottavat liipaisimet — 'esperar que', 'querer que', 'es importante que' — kymmenellä lauseparilla.",
+    "_meta": {
+      "truncatedErrors": false,
+      "truncatedCorrectedText": false
+    }
+  }
+}

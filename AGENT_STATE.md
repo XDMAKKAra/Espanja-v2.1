@@ -1,10 +1,31 @@
 # Puheo Agent State
 
-**Last updated:** 2026-04-28T22:50:00Z
-**Last completed loop:** 36
-**Next loop:** 37
+**Last updated:** 2026-04-28T20:30:00Z
+**Last completed loop:** 42 (Section A of the landing rebuild — Setup)
+**Next loop:** 43 (LANDING_PLAN.md Section B + C 1–2 — sticky nav + hero with browser-frame + floating streak chip + radial gradient). Read `LANDING_PLAN.md`, `docs/superpowers/specs/2026-04-28-landing-rebuild-design.md`, and the appendix in that spec listing what survived from `landing/`. The browser-frame + floating-card content live in `references/puheo-screens/` (4 screens × 2 widths) and `references/landing/` (5 reference sites — Linear is the primary aesthetic target, Duolingo confirmed as the loud counter-example).
+**Active roadmap:** `PLAN.md` — user-directed P0 items (4 bug fixes + 3 redesigns; redesign 7 = 8-loop landing rebuild, L42 ✓ → L49). Items 1–7 run BEFORE any new feature work.
 
 ## What I just did
+Loop 42 — **LANDING_PLAN.md Section A (Setup) — six sub-deliverables.** (a) Skimmed `landing/` (DESIGN.md, AUDIT.md, RESEARCH.md, PLAN.md) and folded a 5-bullet survivors block into the spec doc as an appendix — exam date pinned at **28.9.2026**, Y-tunnus / live-payment constraint flagged (LANDING_PLAN.md's free-signup-only CTA rule sidesteps it), 2 080+ exercises as the round-number "2 000+ harjoitustehtävää" claim, tone-of-voice rules from RESEARCH.md (calm + direct; "YTL:n mukainen" = highest-trust signal), 6 FAQ answers reusable verbatim. Discards listed. (b) Captured Linear / Vercel / Stripe / Cron (cal.com) / Duolingo at 1440×900 hero + below-fold via `scripts/agent-test/loop42-refs-capture.mjs` → 10 PNGs in `references/landing/<site>/`. Verified Linear's restrained-dark aesthetic is on-target; Duolingo confirmed as the kid-friendly counter-example we're not. (c) Wrote `css/landing-tokens.css` (162 lines) — scoped to `.landing` so it doesn't leak into app.html — dark surface palette, Geist + Inter fallback (with size-adjust for FOUT), 8/16/24/32/48/72/96 type scale, --tracking-tight for displays, motion 150-300ms ease-out, prefers-reduced-motion collapse, exam-date custom property. Reuses the app's `--accent: #2DD4BF` for landing→app brand continuity. (d) Built `scripts/agent-test/loop42-puheo-screens.mjs` — Playwright with `serviceWorkers: "block"`, 17 explicit `/api/*` mocks plus a `**/api/**` catch-all, registered in REVERSE-priority order (Playwright matches most-recently-added first — discovered the hard way after my first run rendered the placement-test fallback). Captured 8 screenshots: dashboard / profile / mode-vocab / writing × {1440, 375}. Real Puheo content visible: "Iltaa, ronja", 12-day streak, 47 sessions, daily challenge, SR review card, charts, settings chips. (e) Built `scripts/agent-test/loop42-capture-grading.mjs` (logs in with Pro test creds, fetches a writing-task, posts a deliberately-flawed B1/B2 student answer, saves the JSON). No creds in `.env` yet, so I shipped a hand-crafted placeholder fixture at `references/puheo-screens/grading-response.json` with the `_placeholder: true` marker — matches the real response shape exactly so L45's showcase markup ships either way. User can replace with real output any time before L45. (f) Extended `js/screens/auth.js` to honour `#rekisteroidy` / `#kirjaudu` URL hashes alongside the existing `?mode=register` query-param so landing CTAs can deep-link. Parse-checked.
+
+No SW bump (landing files are not in `STATIC_ASSETS` per the spec — landing stays out of the cache for always-fresh marketing).
+
+## Previously
+Loop 41 — **PLAN item 6: right sidebar rebuilt to 2-panel.** Top: compact user-identity card (36px gradient avatar + monospace name + 🔥 streak chip + hover arrow) → click navigates to profile (Linear top-right user menu pattern). Below: mutually exclusive panels — free user gets Pro upsell card adapted from Astra Buy+ (Puheo+ wordmark + "+" badge, "Pääse YO-kokeesta läpi paremmin arvosanoin." tagline, 3 +-bullet features, accent CTA "Kokeile Pro 7 pv ilmaiseksi +" wired to existing startCheckout/LemonSqueezy); Pro user gets daily peek (today's minutes goal + word of day). Removed duplicated stats (streak/readiness/total/countdown — they live on the dashboard greeting and the rebuilt profile now). Verified both states via `loop41-rail-rebuild.mjs`. SW v90 → v91. Sources: Linear (top-right user menu), Astra Buy+ card (`references/astra/Screenshot 2026-04-27 221631.png` — wordmark + "+" badge + single CTA pattern).
+
+## Previously
+Loop 40 — **PLAN item 5: profile rebuilt to ONE viewport (1440×900).** Replaced 8-section scrollable profile with: compact hero strip (avatar + name + handle + badges + YO-koe countdown chip Astra-style), 4-cell stats row (streak / total / week / YO-valmius% — readiness derived from L38's fixed formula), 4-up mode breakdown (uppercase mono label + 24px display number, was 2-up list rows), two-column footer (3 recent activities | 5 inline-editable settings chips with Muokkaa pill). Achievements section dropped from profile (still on dashboard rail). New `openSettingsEditor(fieldKey)` exported from settings.js + a `puheo:profile-updated` CustomEvent dispatched on save so chips re-render without re-fetching. Verified: 1440×900 fits with 106px breathing room; chip click opens modal correctly; all 8 settings fields still work; blur-fade hero from L36 still works. SW v89 → v90. Sources: Linear/Vercel/Cron/Raycast desktop profile aesthetic; Astra Buy+ chip pattern (references/astra/Screenshot 2026-04-27 221631.png + 221659.png).
+
+## Previously
+Loop 39 — **PLAN items 3 + 4 bundled: NaN pv sitten + right-rail overflow.** (3) New shared `js/ui/timeAgo.js` defensive helper — accepts ISO/epoch/Date, falls back to "äskettäin" on bad input, never emits NaN. Both `dashboard.js` and `profile.js` now import it. (4) Couldn't reproduce overflow at any of 1180/1280/1440/1920 (probe = scrollWidth > clientWidth on every rail descendant). Applied belt-and-braces defensive guard anyway: `.app-rail, .app-rail * { min-width: 0 }` + `overflow-wrap: anywhere; word-break: break-word` on rail content. SW v87 → v89 (also added `settings.js`, `learningPath.js` to STATIC_ASSETS — silently missing despite being part of the SPA). All 4 P0 bugs from the user's brief now closed.
+
+## Previously
+Loop 38 — **PLAN item 2: YO-readiness math fixed.** Two compounding bugs in `js/features/writingProgression.js computeReadinessMap`: (A) path-node `bestPct` is a 0..1 fraction but `pct = Math.round((bestPct||0) * 100) / 100` divided by 100 again, so the 60/30/10 thresholds never fired — every in-progress topic stayed at level 0; (B) `readinessPct = mastered/total` treated partial progress as zero. Fixed both: scale (drop the second `/100`) + weighted partial credit (`sum(level) / (totalCells * 4) * 100`). 8 sessions in a representative payload now read 36 % (was 14 %). SW v86 → v87.
+
+## Previously
+Loop 37 — **PLAN item 1: Settings Muokkaa buttons fixed.** Real-browser click at the button center hit-tested through to `<main id="app-main">` instead of the button — verified via `document.elementFromPoint()` and `page.mouse.click(x,y)`. Root cause: `.app-main` (z-index:1, position:relative) creates stacking context A; `.screen.active` (position:absolute, z-index:auto) is layer-6 inside A but doesn't establish its own context; descendants share resolution with `<main>` and hit-testing resolves to the parent. **Fix:** added `z-index: 1; isolation: isolate;` to `.screen.active` (style.css:354). All 8 settings fields verified (`loop37f-all-fields.mjs`); profile screen regression-checked via `loop36-profile-blur-fade.mjs`. SW v85 → v86.
+
+## Previously
 Loop 36 — **Profile hero blur-fade arrival** — extends L35's pattern to a second screen surface. Avatar / name / handle / badges with 0 / 80 / 140 / 200 ms stagger. Trigger via double-rAF + `profile-hero--in` class in `loadProfile`. Reduced-motion short-circuits. SW v84 → v85. Verified — 160 ms readback shows avatar 58% opacity, name 21%, handle/badges still pre-start.
 
 ## Previously
@@ -46,12 +67,14 @@ Loop 28 — **Meteors decoration behind dashboard hero, mounts when streak ≥ 7
 - **Cumulative SW bump:** v73 (start of session) → v85 (now).
 
 ## What I'm doing next
-Loop 37 — **continue under curator model**. Top candidates:
-- (a) **shadcn/ui `command` palette** (cmd-K) for jump-to-anywhere from sidebar — premium "your app is fast" cue. Largest blast radius but adds a navigation primitive every premium app has.
-- (b) **shadcn/ui `dialog`** primitives — replace `alert()` calls in main.js (password reset, email verify) with token-styled modals.
-- (c) **HyperUI / Tailwind UI free** auth tabs redesign — fix the awkwardly-wrapping aside text at desktop.
-- (d) **Magic UI `marquee`** for a "writing prompts students wrote about this week" footer band on the auth screen (would need real data — defer until backend).
-Lean (a) — biggest "this app feels modern" cue per loop; entirely additive new surface.
+**Loop 43 = LANDING_PLAN.md Section B + C 1–2 — sticky nav + hero.** Read the survivors appendix at the bottom of `docs/superpowers/specs/2026-04-28-landing-rebuild-design.md` first (5 bullets — exam-date 28.9.2026, Y-tunnus constraint, 2 000+ harjoituksia claim, tone-of-voice rules, FAQ reusables). Then look at `references/landing/linear/hero-1440.png` and `references/landing/vercel/hero-1440.png` for layout instinct (Linear is the primary aesthetic target). Then build:
+1. Section refactor of `index.html` head — keep SEO/JSON-LD scaffolding, swap the body's `<link rel="stylesheet" href="landing.css">` to `css/landing-tokens.css` (and start a fresh `css/landing.css` as the new component sheet). Add `class="landing"` to `<html>` so the tokens take effect.
+2. Sticky 64 px nav: Puheo wordmark left + "Tuote / Hinnoittelu / FAQ" anchor links + "Kirjaudu" ghost button + "Aloita ilmaiseksi" filled accent → `/app.html#rekisteroidy`. Transparent → `rgba(10,10,10,0.8)` + backdrop-blur on scroll.
+3. Hero 60/40 desktop, stacked mobile. Eyebrow `ESPANJAN YO-KOE • LYHYT OPPIMÄÄRÄ`, H1 72 px tracking-tight, sub 20 px text-muted, two buttons (primary "Aloita ilmaiseksi →" + ghost "Katso miten se toimii" smooth-scrolling to #miten). 14 px trust strip "Ei luottokorttia • Suomen kielellä • Toimii selaimessa".
+4. Browser-frame component (~40 lines vanilla CSS) embedding `references/puheo-screens/dashboard-1440.png`, rotated -3deg, accent shadow lift.
+5. Floating Puheo card behind it — isolate the streak chip from `dashboard-1440.png` (or hand-build a minimal version), float at -3deg with `box-shadow: 0 24px 64px -32px var(--accent-glow)`.
+6. Subtle radial gradient blob behind everything as glow.
+7. Verify via `scripts/agent-test/loop43-nav-hero.mjs` at 1440 + 375; axe-core zero new violations; one IMPROVEMENTS line citing the Linear hero source. PLAN.md polish queue (cmd-K palette, dialog primitive, marquee, auth tabs redesign) is now L50+.
 
 ## Working context
 - Dev server still on :3000.

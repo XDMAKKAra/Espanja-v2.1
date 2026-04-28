@@ -44,13 +44,18 @@ let authMode = "login"; // "login" | "register"
 
 // Honour ?mode=login / ?mode=register from landing pages so returning users
 // land on the login tab when they click "Kirjaudu sisään" in the nav.
+// Also honour #rekisteroidy / #kirjaudu hash so landing CTAs can deep-link
+// without triggering NAV_HASH screen routing (which uses /-prefixed slugs).
 try {
   const params = new URLSearchParams(window.location.search);
   const requested = params.get("mode");
-  if (requested === "register") {
+  const hash = (window.location.hash || "").replace(/^#/, "");
+  const wantRegister = requested === "register" || hash === "rekisteroidy";
+  const wantLogin = requested === "login" || hash === "kirjaudu";
+  if (wantRegister) {
     // Defer click until DOM is ready — these element handlers register synchronously.
     queueMicrotask(() => $("tab-register") && $("tab-register").click());
-  } else if (requested === "login") {
+  } else if (wantLogin) {
     queueMicrotask(() => $("tab-login") && $("tab-login").click());
   }
 } catch { /* ignore */ }
