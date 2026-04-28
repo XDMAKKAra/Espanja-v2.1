@@ -8,12 +8,20 @@ const THEME_LABELS = {
   light: "Vaalea",
   dark:  "Tumma",
 };
+function resolveEffectiveTheme(choice) {
+  if (choice === "auto") {
+    const m = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)");
+    return m && m.matches ? "dark" : "light";
+  }
+  return choice;
+}
 function applyThemeChoice(value) {
   const v = ["auto", "light", "dark"].includes(value) ? value : "auto";
   try { localStorage.setItem("puheo_theme", v); } catch {}
-  // Real theme tokens land in a future loop. For now: visible state on the toggle
-  // + a data attribute so future CSS can hook in without a re-wire.
-  document.documentElement.setAttribute("data-theme", v);
+  // Auto resolves to light/dark via prefers-color-scheme — write the
+  // effective value to data-theme so the CSS [data-theme="dark"] block
+  // matches whether the user chose Dark explicitly or Auto-on-dark-OS.
+  document.documentElement.setAttribute("data-theme", resolveEffectiveTheme(v));
   const buttons = document.querySelectorAll(".settings-theme-btn");
   buttons.forEach((b) => {
     const on = b.dataset.theme === v;
@@ -23,6 +31,7 @@ function applyThemeChoice(value) {
   const valueEl = document.getElementById("settings-theme-value");
   if (valueEl) valueEl.textContent = THEME_LABELS[v];
 }
+let _themeMqlBound = false;
 function wireThemeToggle() {
   document.querySelectorAll(".settings-theme-btn").forEach((b) => {
     b.addEventListener("click", () => applyThemeChoice(b.dataset.theme));
@@ -32,6 +41,20 @@ function wireThemeToggle() {
     const saved = localStorage.getItem("puheo_theme");
     if (saved) applyThemeChoice(saved);
   } catch {}
+
+  // Re-apply when the OS-level scheme flips, but only when the user
+  // is on Auto. Explicit Light/Dark choices win.
+  if (!_themeMqlBound && window.matchMedia) {
+    _themeMqlBound = true;
+    const mql = window.matchMedia("(prefers-color-scheme: dark)");
+    const onChange = () => {
+      let saved = "auto";
+      try { saved = localStorage.getItem("puheo_theme") || "auto"; } catch {}
+      if (saved === "auto") applyThemeChoice("auto");
+    };
+    if (mql.addEventListener) mql.addEventListener("change", onChange);
+    else if (mql.addListener) mql.addListener(onChange);
+  }
 }
 function wireAccountSection() {
   const emailEl = document.getElementById("settings-account-email");

@@ -79,14 +79,21 @@ body.auth-mode .app-shell {
 body.auth-mode .app-main {
   grid-column: 1 / -1;
   padding: 32px 24px;
+  min-width: 0;
 }
 body.auth-mode .app-main-inner {
-  max-width: 480px;
+  /* Auth uses a 2-col aside+form layout up to 1080px — the inner cap
+     must allow the full shell width, not 480px. The form column inside
+     `.auth-inner` keeps its own 420px cap. */
+  max-width: min(1120px, 100%);
   margin: 0 auto;
   min-height: calc(100vh - 64px);
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+@media (max-width: 767px) {
+  body.auth-mode .app-main { padding: 24px 16px; }
 }
 
 /* Top-bar countdown irrelevant before auth */

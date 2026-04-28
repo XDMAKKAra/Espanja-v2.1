@@ -85,10 +85,7 @@
   <!-- ─── NAV ─────────────────────────────────────────────── -->
   <header class="nav" id="nav" data-scrolled="false">
     <div class="nav__inner">
-      <a class="nav__brand" href="/" aria-label="Puheo etusivu">
-        <span class="nav__brand-dot" aria-hidden="true"></span>
-        Puheo
-      </a>
+      <a class="nav__brand" href="/" aria-label="Puheo etusivu">Puhe<span class="nav__brand-o" aria-hidden="true">o</span></a>
 
       <nav class="nav__links" aria-label="Sivun osiot">
         <a class="nav__link" href="#tuote">Tuote</a>
@@ -96,9 +93,13 @@
         <a class="nav__link" href="#faq">FAQ</a>
       </nav>
 
-      <div class="nav__cta">
-        <a class="btn btn--quiet" href="/app.html#kirjaudu">Kirjaudu</a>
-        <a class="btn btn--primary" href="/app.html#rekisteroidy">Aloita ilmaiseksi</a>
+      <div class="nav__cta" id="nav-cta">
+        <a class="btn btn--quiet" id="nav-login" href="/app.html#kirjaudu">Kirjaudu</a>
+        <a class="btn btn--primary" id="nav-signup" href="/app.html#rekisteroidy">Aloita ilmaiseksi</a>
+        <a class="btn btn--primary nav__chip" id="nav-chip" href="/app.html" hidden>
+          Jatka harjoittelua
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
       </div>
     </div>
   </header>
@@ -710,21 +711,36 @@ Aino</p>
     </div>
   </footer>
 
-  <!-- ─── Inline JS: nav scroll-state (no library) ─────────────── -->
+  <!-- ─── Inline JS: nav scroll-state + logged-in chip swap ─────── -->
   <script>
     (function () {
       const nav = document.getElementById('nav');
-      if (!nav) return;
-      let last = false;
-      const update = () => {
-        const scrolled = window.scrollY > 8;
-        if (scrolled !== last) {
-          nav.setAttribute('data-scrolled', scrolled ? 'true' : 'false');
-          last = scrolled;
+      if (nav) {
+        let last = false;
+        const update = () => {
+          const scrolled = window.scrollY > 8;
+          if (scrolled !== last) {
+            nav.setAttribute('data-scrolled', scrolled ? 'true' : 'false');
+            last = scrolled;
+          }
+        };
+        update();
+        window.addEventListener('scroll', update, { passive: true });
+      }
+
+      // Logged-in nav state — token presence only, no API call.
+      // Same key the app reads in js/api.js (localStorage.puheo_token).
+      try {
+        const token = localStorage.getItem('puheo_token');
+        const login = document.getElementById('nav-login');
+        const signup = document.getElementById('nav-signup');
+        const chip = document.getElementById('nav-chip');
+        if (token && login && signup && chip) {
+          login.hidden = true;
+          signup.hidden = true;
+          chip.hidden = false;
         }
-      };
-      update();
-      window.addEventListener('scroll', update, { passive: true });
+      } catch (_) { /* localStorage blocked — fall back to logged-out CTAs */ }
     })();
   </script>
 </body>

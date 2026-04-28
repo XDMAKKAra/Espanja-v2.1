@@ -32,18 +32,28 @@
   <link rel="stylesheet" href="css/components/results.css" />
   <link rel="stylesheet" href="css/components/profile.css" />
   <link rel="stylesheet" href="css/components/meteors.css" />
+  <link rel="stylesheet" href="css/components/pro-popup.css" />
 </head>
 <body>
 
   <!-- Pre-paint shell-mode hint — toggle auth-mode on body BEFORE first paint
        so the layout doesn't shift from 3-col grid → 1-col when JS detects no
-       auth token. Eliminates the dashboard CLS 0.163 root cause. -->
+       auth token. Eliminates the dashboard CLS 0.163 root cause.
+       Also resolves the saved theme so the dark palette paints on first
+       frame instead of flashing the light surface. -->
   <script>
     (function () {
       try {
         if (!localStorage.getItem("puheo_token")) {
           document.body.classList.add("auth-mode");
         }
+        var saved = localStorage.getItem("puheo_theme") || "auto";
+        var effective = saved;
+        if (saved === "auto") {
+          var m = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)");
+          effective = (m && m.matches) ? "dark" : "light";
+        }
+        document.documentElement.setAttribute("data-theme", effective);
       } catch (e) {}
     })();
   </script>
@@ -2005,30 +2015,9 @@
     <span class="rail-user-arrow" aria-hidden="true">→</span>
   </button>
 
-  <!-- BELOW: Pro upsell (free) — Astra Buy+ pattern adapted to Puheo's
-       Finnish, exam-outcome voice. Source: references/astra/Screenshot
-       2026-04-27 221631.png (logo + tagline + single accent CTA). -->
-  <div class="rail-panel rail-panel--upsell" id="rail-panel-pro" hidden>
-    <div class="rail-upsell">
-      <div class="rail-upsell-head">
-        <span class="rail-upsell-mark">Puheo</span>
-        <span class="rail-upsell-plus" aria-hidden="true">+</span>
-      </div>
-      <h3 class="rail-upsell-title">Pääse YO-kokeesta läpi paremmin arvosanoin.</h3>
-      <ul class="rail-upsell-feats" aria-label="Pron edut">
-        <li>Adaptiivinen oppimispolku</li>
-        <li>Kirjoitusten AI-tarkistus</li>
-        <li>Rajaton lukutehtävien selitys</li>
-      </ul>
-      <button type="button" class="rail-upsell-cta" id="rail-upsell-cta">
-        Kokeile Pro 7 pv ilmaiseksi <span class="rail-upsell-cta-mark" aria-hidden="true">+</span>
-      </button>
-      <p class="rail-upsell-foot">Peruuta milloin tahansa.</p>
-    </div>
-  </div>
-
-  <!-- BELOW: daily peek (Pro) — week minutes + word of day. -->
-  <div class="rail-panel rail-panel--daily" id="rail-panel-daily" hidden>
+  <!-- BELOW: daily peek — same content for free + Pro users (L48-hotfix).
+       Pro upsell is now a dismissible bottom-right popup, not a rail card. -->
+  <div class="rail-panel rail-panel--daily" id="rail-panel-daily">
     <section class="rail__group" aria-labelledby="rail-goal-h">
       <h2 class="rail__h" id="rail-goal-h">Tänään</h2>
       <div class="rail-goal" id="dash-daily-goal">
@@ -2044,9 +2033,37 @@
     </section>
   </div>
 
+  <!-- Pro-only: small status badge near the rail footer. No upsell here. -->
+  <div class="rail-pro-badge" id="rail-pro-badge" hidden>
+    <span class="rail-pro-badge-dot" aria-hidden="true"></span>
+    <span class="rail-pro-badge-label">Pro aktiivinen</span>
+  </div>
+
   <div class="rail-footer">
     Puheo · synkattu <span id="dash-rail-sync">—</span>
   </div>
+</aside>
+
+<!-- Pro upsell popup — bottom-right, dismissible, free users only.
+     Triggered 5s after page load. 7-day suppress on dismiss. -->
+<aside class="pro-popup" id="pro-popup" role="complementary" aria-label="Puheo Pro" aria-live="polite" hidden>
+  <button type="button" class="pro-popup__close" id="pro-popup-close" aria-label="Sulje">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+  </button>
+  <div class="pro-popup__head">
+    <span class="pro-popup__mark">Puheo</span>
+    <span class="pro-popup__plus" aria-hidden="true">+</span>
+  </div>
+  <p class="pro-popup__lede">Pääse YO-kokeesta läpi paremmin arvosanoin.</p>
+  <ul class="pro-popup__feats" role="list">
+    <li><span class="pro-popup__feat-mark" aria-hidden="true">+</span>Adaptiivinen oppimispolku</li>
+    <li><span class="pro-popup__feat-mark" aria-hidden="true">+</span>Kirjoitusten AI-tarkistus</li>
+    <li><span class="pro-popup__feat-mark" aria-hidden="true">+</span>Rajaton lukutehtävien selitys</li>
+  </ul>
+  <button type="button" class="pro-popup__cta" id="pro-popup-cta">
+    Kokeile Pro 7 pv ilmaiseksi
+    <span class="pro-popup__cta-mark" aria-hidden="true">+</span>
+  </button>
 </aside>
 
   </div><!-- /app-shell -->

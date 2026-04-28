@@ -127,21 +127,17 @@
 }
 .landing .nav__brand {
   display: inline-flex;
-  align-items: center;
-  gap: 8px;
+  align-items: baseline;
   font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 20px;
-  letter-spacing: var(--tracking-snug);
+  font-weight: 800;
+  font-size: 22px;
+  letter-spacing: -0.03em;
   color: var(--text);
   text-decoration: none;
 }
 .landing .nav__brand:hover { color: var(--text); }
-.landing .nav__brand-dot {
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 0 4px var(--accent-soft);
+.landing .nav__brand-o {
+  color: var(--accent);
 }
 .landing .nav__links {
   display: flex;
@@ -162,6 +158,14 @@
   gap: var(--sp-1);
   justify-self: end;
 }
+.landing .nav__cta [hidden] { display: none !important; }
+
+/* Logged-in chip — same .btn--primary base, with arrow inline */
+.landing .nav__chip {
+  /* relies on .btn + .btn--primary styles for color + radius */
+  gap: 6px;
+}
+.landing .nav__chip svg { display: block; }
 
 @media (max-width: 720px) {
   .landing .nav__inner { padding: 0 var(--sp-2); }

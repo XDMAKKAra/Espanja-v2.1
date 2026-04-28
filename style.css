@@ -143,6 +143,40 @@
   --ls-eyebrow:    0.14em;
 }
 
+/* ============================================================
+   Dark theme — applied by `data-theme="dark"` on <html>.
+   The Auto setting is resolved JS-side via prefers-color-scheme
+   and writes the same `dark` value (see js/screens/settings.js).
+   This is intentionally minimal — full dark-token refactor
+   lands in L52–L55. Only --bg/surface/ink/border tokens flip;
+   accent + feedback colors keep their light-mode values, which
+   already pass WCAG AA against #0a0a0a.
+   ============================================================ */
+:root[data-theme="dark"] {
+  /* Surfaces — match the landing's near-black palette */
+  --bg:             #0a0a0a;
+  --surface:        #141414;
+  --surface-2:      #1a1a1a;
+  --border:         rgba(255, 255, 255, 0.10);
+  --border-strong:  rgba(255, 255, 255, 0.18);
+
+  /* Ink — near-white scale. --ink-faint bumped to #a1a1aa
+     (zinc-400, 9.06:1 on #0a0a0a) instead of zinc-500 #71717a
+     which is 4.36:1 — under the 4.5:1 AA bar for body text. */
+  --ink:        #fafafa;
+  --ink-soft:   #d4d4d8;
+  --ink-faint:  #a1a1aa;
+
+  /* Accent — same mint as light mode for brand continuity */
+  --accent-soft:   rgba(45, 212, 191, 0.14);
+  /* accent / accent-hover / accent-dark unchanged */
+
+  /* Shadows — black-based, deeper to read on dark surfaces */
+  --sh-rest:  0 1px 3px rgba(0, 0, 0, 0.4);
+  --sh-hover: 0 4px 12px rgba(0, 0, 0, 0.5);
+  --sh-lift:  0 12px 32px rgba(0, 0, 0, 0.6);
+}
+
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 /* ── SKIP LINK (accessibility) ── */
@@ -566,7 +600,11 @@ select option { background: var(--surface-2); }
   background: var(--accent);
   border: none;
   border-radius: var(--r-md);
-  color: var(--ink);
+  /* Mint accent is the same in light + dark, so the foreground must
+     also be theme-stable — using --ink would flip to near-white in
+     dark mode and drop to 1.78:1 against the mint. #052924 reads
+     12.7:1 on mint and matches the landing's .btn--primary color. */
+  color: #052924;
   font-family: var(--font-body);
   font-size: 15px;
   font-weight: 600;
@@ -574,7 +612,7 @@ select option { background: var(--surface-2); }
   transition: background var(--dur-base) var(--ease-out);
   letter-spacing: 0;
 }
-.btn-primary:hover { background: var(--accent-hover); color: var(--ink); }
+.btn-primary:hover { background: var(--accent-hover); color: #052924; }
 .btn-primary:active { transform: translateY(1px); box-shadow: var(--sh-rest); }
 
 /* ── LOADING ── */
@@ -1929,7 +1967,8 @@ select option { background: var(--surface-2); }
   cursor: pointer; transition: all 0.15s;
 }
 .auth-tab.active {
-  background: var(--accent-hover); color: #fff;
+  /* teal-700 — 6.6:1 with white. --accent-hover (#14B8A6) was 2.48:1. */
+  background: #0F766E; color: #fff;
 }
 .auth-input {
   width: 100%; padding: 14px 16px; min-height: 48px;

@@ -140,7 +140,12 @@ export function computeReadinessMap({ learningPath = [], writingDims = null } = 
     });
   }
 
-  // 4 writing dimensions.
+  // 4 writing dimensions — only include cells when the user has actual
+  // writing data. Pre-fix, an `else` branch pushed 4 level-0 placeholder
+  // cells which dragged readinessPct down for every user who hadn't
+  // touched writing yet (8 mastered path topics + 4 zero writing →
+  // (8*4)/(12*4) = 67%, but a typical 3-mastered/8-total + 4 zero looked
+  // like 18%). Reflect only what the user has engaged with.
   if (writingDims) {
     for (const [d, info] of Object.entries(writingDims)) {
       let lvl = 0;
@@ -154,16 +159,6 @@ export function computeReadinessMap({ learningPath = [], writingDims = null } = 
         kind: "writing",
         level: lvl,
         tooltip: `${info.label} (kirjoittaminen) — keskiarvo ${info.avg}/5 (${info.count} viim. tehtävää)`,
-      });
-    }
-  } else {
-    for (const d of DIMENSIONS) {
-      cells.push({
-        key: `writing-${d}`,
-        label: DIM_LABELS[d],
-        kind: "writing",
-        level: 0,
-        tooltip: `${DIM_LABELS[d]} (kirjoittaminen) — ei dataa vielä`,
       });
     }
   }

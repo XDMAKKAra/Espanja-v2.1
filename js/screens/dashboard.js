@@ -1319,13 +1319,10 @@ function renderRail({ pro, streak }) {
   const stChip = document.getElementById("rail-user-streak");
   if (stChip) stChip.classList.toggle("is-active", (streak ?? 0) >= 3);
 
-  // Toggle the panel below: free → upsell, pro → daily peek
-  const proPanel = document.getElementById("rail-panel-pro");
-  const dailyPanel = document.getElementById("rail-panel-daily");
-  if (proPanel && dailyPanel) {
-    proPanel.hidden = !!pro;
-    dailyPanel.hidden = !pro;
-  }
+  // L48-hotfix: daily peek shows for free + Pro alike. Small "Pro aktiivinen"
+  // badge replaces the old big upsell card; the upsell is now a popup.
+  const proBadge = document.getElementById("rail-pro-badge");
+  if (proBadge) proBadge.hidden = !pro;
 
   if (_railWired) return;
   _railWired = true;
@@ -1339,13 +1336,46 @@ function renderRail({ pro, streak }) {
     });
   }
 
-  // Pro upsell CTA → start checkout (delegates to dependency injected at boot).
-  const cta = document.getElementById("rail-upsell-cta");
-  if (cta) {
-    cta.addEventListener("click", () => {
-      if (typeof _deps?.startCheckout === "function") _deps.startCheckout();
-    });
-  }
+  // Pro upsell popup — bottom-right, free users only, 5s delay, 7-day suppress.
+  if (!pro) wireProPopup();
+}
+
+let _proPopupWired = false;
+function wireProPopup() {
+  if (_proPopupWired) return;
+  _proPopupWired = true;
+
+  const popup = document.getElementById("pro-popup");
+  const closeBtn = document.getElementById("pro-popup-close");
+  const ctaBtn = document.getElementById("pro-popup-cta");
+  if (!popup || !closeBtn || !ctaBtn) return;
+
+  const KEY = "puheo_pro_popup_dismissed";
+  const SUPPRESS_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
+
+  let dismissedAt = 0;
+  try { dismissedAt = parseInt(localStorage.getItem(KEY), 10) || 0; } catch (_) { /* ignore */ }
+  if (Date.now() - dismissedAt < SUPPRESS_MS) return;
+
+  const reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  setTimeout(() => {
+    if (window._isPro) return;
+    popup.hidden = false;
+    if (!reduceMotion) requestAnimationFrame(() => popup.classList.add("is-visible"));
+    else popup.classList.add("is-visible");
+  }, 5000);
+
+  const dismiss = () => {
+    popup.classList.remove("is-visible");
+    try { localStorage.setItem(KEY, String(Date.now())); } catch (_) { /* ignore */ }
+    setTimeout(() => { popup.hidden = true; }, reduceMotion ? 0 : 320);
+  };
+
+  closeBtn.addEventListener("click", dismiss);
+  ctaBtn.addEventListener("click", () => {
+    if (typeof _deps?.startCheckout === "function") _deps.startCheckout();
+  });
 }
 
 // ─── YO-koe readiness map ──────────────────────────────────────────────────
@@ -1398,11 +1428,14 @@ async function loadAndRenderReadinessMap() {
     `<div class="dash-readiness-cell lvl-${c.level}" data-tip="${escapeHtmlAttr(c.tooltip)}" data-tooltip="${escapeHtmlAttr(c.tooltip)}"></div>`
   ).join("");
 
+  const qual = readinessQualitative(map.readinessPct, map.totalCells);
+
   wrap.innerHTML = `
     <div class="dash-readiness-title">YO-valmiuskartta</div>
     <div class="dash-readiness-summary">
       <strong>${map.masteredCells}</strong> / ${map.totalCells} osa-aluetta hallinnassa
       &middot; <strong>${map.readinessPct}%</strong> valmius
+      ${qual ? ` &middot; <span class="dash-readiness-qual">${qual}</span>` : ""}
     </div>
     <div class="dash-readiness-grid">${cellsHtml}</div>
     <div class="dash-readiness-legend">
@@ -1413,6 +1446,17 @@ async function loadAndRenderReadinessMap() {
       <span>hyvin</span>
     </div>
   `;
+}
+
+// L48-hotfix Update 3 — qualitative readiness label.
+// Thresholds: <25 alkuvaiheessa, 25–49 hyvässä vauhdissa,
+// 50–74 hyvin hallussa, ≥75 erinomaisesti. Empty cells → no label.
+function readinessQualitative(pct, total) {
+  if (!total) return "";
+  if (pct >= 75) return "erinomaisesti";
+  if (pct >= 50) return "hyvin hallussa";
+  if (pct >= 25) return "hyvässä vauhdissa";
+  return "alkuvaiheessa";
 }
 
 function escapeHtmlAttr(s) {
