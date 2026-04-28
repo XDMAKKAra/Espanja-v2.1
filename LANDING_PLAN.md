@@ -253,13 +253,16 @@ Per-loop verification: Playwright screenshot at desktop and mobile, read screens
 | Need | Source |
 |---|---|
 | Layout instinct | Linear, Vercel, Stripe |
+| **Pricing / FAQ / footer / CTA / feature grids** | **21st.dev (primary, added 2026-04-28)** — visit `21st.dev/s/<section>` via Playwright, screenshot 2-3 candidates to `references/landing/21stdev/<section>/`, pick best, port React+Tailwind → vanilla matching `css/landing.css`, cite exact component URL in IMPROVEMENTS.md. Structure from 21st.dev, copy from Puheo (Finnish, never generic SaaS). |
 | Typography pairing | Geist or Inter via Google Fonts |
 | Icons | Lucide (inline SVG, no React) |
 | Browser-frame mockup | CodePen "css browser mockup vanilla" — pick smallest one |
 | Floating UI cards in hero | Real Puheo screenshots, cropped, isolated |
 | Section rhythm / padding | Linear (96px vertical between sections) |
-| Pricing card layout | Linear / Vercel / Cron pricing pages |
-| FAQ pattern | `<details>` element, custom styled, no library |
+| Pricing card layout | **21st.dev /s/pricing** primary; Linear / Vercel / Cron pricing as cross-reference |
+| FAQ pattern | **21st.dev /s/faq** primary (must use `<details>` under the hood for a11y); fall back to vanilla `<details>` if no good port |
+| Final CTA + footer | **21st.dev** primary (minimal patterns) |
+| Mobile motion / marquees | Default to NO extra motion; 21st.dev marquee/scroll only if it earns its place |
 | Subtle gradient | CSS radial-gradient, no SVG/Lottie needed |
 | Loud counter-example to AVOID | Duolingo, Babbel, Astra |
 

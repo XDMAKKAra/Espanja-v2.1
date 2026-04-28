@@ -104,10 +104,10 @@ opens profile. Pattern: Linear's top-right user menu.
 | 43 | B + C 1–2 | Sticky nav (transparent → blurred-solid) + Hero (60/40 desktop, browser frame component, floating streak chip, radial accent gradient). |
 | 44 | C 3–4 | Problem statement section + 3 product pillars (Sanasto / Kielioppi / Kirjoittaminen) with Lucide inline SVG + tight thumbnails. |
 | 45 | C 5–6 | How It Works (3 numbered steps + connector line) + AI Grading Showcase using **real** captured JSON in idealised custom layout. |
-| 46 | C 7–8 | Pricing (Free vs Pro side-by-side, both → `/app.html#rekisteroidy`) + FAQ (`<details>`, 5–7 honest entries). |
-| 47 | C 9–10 + scroll | Final CTA + minimal 3-column footer + nav scroll-state JS + responsive pass at 768 / 1024. |
-| 48 | Polish | Scroll-reveal fade-up, hover/focus states, micro-animations, Finnish copy polish via `puheo-finnish-voice` skill. |
-| 49 | A11y + perf | axe-core across the page, `npm run audit:lighthouse:landing`, fix anything < 95, retire old `landing.css`, append final summary block to IMPROVEMENTS.md. |
+| 46 | C 7 — Pricing | 2-card layout (Free + Pro) sourced from **21st.dev /s/pricing**. Restrained dark, both CTAs → `/app.html#rekisteroidy` per Y-tunnus constraint. Cite exact 21st.dev component URL. |
+| 47 | C 8 — FAQ | 5–7 `<details>` items, smooth accordion sourced from **21st.dev /s/faq**. Must use `<details>` under the hood for a11y. 6 honest answers from spec appendix #5. |
+| 48 | C 9–10 — Final CTA + Footer | One big centred CTA card + minimal 3-column footer. Both sourced from **21st.dev**. |
+| 49 | Mobile + polish + a11y/perf | Responsive pass 375 / 768 / 1024; default to NO extra motion (21st.dev marquee/scroll only if it earns its place); axe-core across full page; `npm run audit:lighthouse:landing` with ≥95/95/95 gate; retire old `landing.css`; append final summary block to IMPROVEMENTS.md. |
 
 **Per-loop verification gate:** Playwright at 1440 + 375, agent reads its own screenshots and fixes ugliness, axe-core zero new violations, one IMPROVEMENTS.md ledger line citing every external source URL. Final loop: Lighthouse ≥ 95 / 95 / 95.
 
@@ -131,9 +131,18 @@ IMPROVEMENTS.md ledger line. From-scratch requires written justification.
 **Curation > origination.**
 
 Concrete sources still on the toolbox: Linear, Vercel, Stripe, Cron,
-Raycast, shadcn, Magic UI, Aceternity, 21st.dev, Tailwind UI, Heroicons,
-Lucide, Tabler, `references/astra/`. **Banned for landing:** unDraw,
-Storyset, DrawKit, Lottiefiles (incompatible with restrained aesthetic).
+Raycast, shadcn, Magic UI, Aceternity, **21st.dev (now primary for L46–L49
+and the post-L49 popup)**, Tailwind UI, Heroicons, Lucide, Tabler,
+`references/astra/`. **Banned for landing:** unDraw, Storyset, DrawKit,
+Lottiefiles (incompatible with restrained aesthetic).
+
+**21st.dev workflow** (added 2026-04-28):
+1. Visit 21st.dev via Playwright (e.g. `21st.dev/s/pricing`, `21st.dev/s/faq`).
+2. Pick 2–3 candidates, screenshot to `references/landing/21stdev/<section>/`.
+3. Pick best fit for Puheo's restrained Linear-tier aesthetic (avoid loud / over-animated).
+4. Components are React + Tailwind — extract structural HTML, port styling to vanilla matching `css/landing.css` patterns.
+5. Cite the exact 21st.dev component URL in IMPROVEMENTS.md.
+**Rule:** Structure from 21st.dev, content from Puheo. Copy is always Finnish-Puheo-specific, never generic SaaS copy.
 
 ## Loop order (estimate)
 
@@ -151,11 +160,16 @@ Storyset, DrawKit, Lottiefiles (incompatible with restrained aesthetic).
 | 46 | Item 7 / Section C7–8 — pricing + FAQ | |
 | 47 | Item 7 / Section C9–10 + scroll | final CTA + footer + nav scroll-state + responsive |
 | 48 | Item 7 / polish | scroll-reveal, hover/focus, copy polish |
-| 49 | Item 7 / a11y + perf audit | axe + Lighthouse + retire `landing.css` |
+| 49 | Item 7 / mobile + polish + a11y/perf | responsive 375/768/1024 + axe + Lighthouse + retire `landing.css` |
+| 50 | Item 8 / right rail panel rewrite | Remove the large Pro upsell card from the rail (kept the small top-right user chip from L41 — already correct). Rail body becomes daily-progress + word-of-day stack shown to ALL users (not just Pro). |
+| 51 | Item 9 / Pro upsell popup | Dismissible bottom-right toast/popup, ~320 px, fixed bottom-right ~24 px from edges, slide-up + fade-in 300 ms ease-out, only after 5 s on the page. localStorage `puheo_pro_popup_dismissed` ISO date, 7-day suppress. Free users only; Pro users never see it. Source pattern from Magic UI / Aceternity / **21st.dev** / shadcn sonner — pick one, port to vanilla, cite URL. |
+| 52 | Item 10 / dark theme — audit + tokens-shared.css | (a) Audit existing app theme system (Auto/Vaalea/Tumma toggle in settings — find where preference is stored, where current dark CSS vars live if any). (b) Move all shared design tokens (palette, type scale, spacing, radius, motion) into NEW `css/tokens-shared.css` consumed by both `.landing` (index.html) AND app.html — single source of truth. (c) Keep `css/landing-tokens.css` for landing-only overrides (gradient hero bg, very-large display sizes). |
+| 53 | Item 10 / dark theme — app screen sweep part 1 | Make existing Auto/Vaalea/Tumma toggle still work. "Tumma" gives the new dark palette (matching landing). "Vaalea" gives the original mint/light. "Auto" follows system. Test dashboard, profile, settings via Playwright at 1440 + 375 in BOTH themes. Screenshot each. axe across each. Fix every contrast violation + every "this color was hardcoded" instance. |
+| 54 | Item 10 / dark theme — app screen sweep part 2 | Same sweep across all 4 exercise modes (vocab/grammar/reading/writing), achievements, learning path, exam-day countdown widget. Default theme stays "Auto" — do NOT force users into dark. |
+| 55 | Item 10 / dark theme — final polish + retire | Final pass at 1440 + 375 in BOTH themes for any screens missed. axe-core 0 violations across all screens both themes. SW bump for tokens-shared.css + any screen CSS touched. Append summary block to IMPROVEMENTS.md. |
 
-After L49 ships, all 7 items from this PLAN.md are done — resume the
-curator-mode polish queue from AGENT_STATE.md (cmd-K palette, dialog
-primitive, marquee, auth tabs).
+After L55 ships, items 1–10 are done — resume the curator-mode polish queue
+from AGENT_STATE.md (cmd-K palette, dialog primitive, marquee, auth tabs).
 
 ## Process
 

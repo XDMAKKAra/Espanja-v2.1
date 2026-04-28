@@ -1,26 +1,22 @@
-<<!DOCTYPE html>
-<html lang="fi">
+<!DOCTYPE html>
+<html lang="fi" class="landing">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>Puheo — Espanjan YO-koe harjoittelu tekoälyllä | Lyhyt oppimäärä 2026</title>
-  <meta name="description" content="Paranna espanjan YO-arvosanaasi tekoälyllä. YTL-rubriikin mukainen kirjoitelma-arviointi, personoidut harjoitukset, täyskoe-simulaatio. Lyhyt oppimäärä, syksy 2026. Aloita ilmaiseksi." />
+  <meta name="description" content="Pärjää espanjan YO-kokeessa ilman kalliita kursseja. Tekoälyvalmentaja, joka tuntee YTL:n rubriikin. Aloita ilmaiseksi." />
   <meta name="keywords" content="espanja YO-koe, espanjan lyhyt oppimäärä, espanja kirjoitukset 2026, ojalá subjunktiivi, preteriti imperfekti, ylioppilaskirjoitukset espanja" />
   <meta name="author" content="Puheo" />
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
   <meta name="google-site-verification" content="ZdvxnGbBDKI5J3Zl2GmJt_fRfFQ3CdoIo-K00QvZnk4" />
 
-  <!-- Google Search Console verification -->
-  <meta name="google-site-verification" content="ZdvxnGbBDKI5J3Zl2GmJt_fRfFQ3CdoIo-K00QvZnk4" />
-
-  <!-- Canonical: vercel-alias nyt, päivitä domainin oston jälkeen (puheo.fi) -->
   <link rel="canonical" href="https://espanja-v2-1.vercel.app/" />
 
   <!-- Open Graph -->
   <meta property="og:site_name" content="Puheo" />
   <meta property="og:title" content="Puheo — Espanjan YO-koe harjoittelu tekoälyllä" />
-  <meta property="og:description" content="YTL-rubriikin mukainen AI-arviointi, personoidut harjoitukset. Kesäpaketti 29€ — valmistaudu syksyn kirjoituksiin 28.9.2026." />
+  <meta property="og:description" content="YTL-rubriikin mukainen AI-arviointi, personoidut harjoitukset. Valmistaudu syksyn kirjoituksiin 28.9.2026." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://espanja-v2-1.vercel.app/" />
   <meta property="og:image" content="https://espanja-v2-1.vercel.app/og-image.png" />
@@ -45,26 +41,8 @@
     "operatingSystem": "Web, PWA (iOS, Android)",
     "inLanguage": "fi",
     "offers": [
-      {
-        "@type": "Offer",
-        "name": "Free",
-        "price": "0",
-        "priceCurrency": "EUR"
-      },
-      {
-        "@type": "Offer",
-        "name": "Pro",
-        "price": "9.99",
-        "priceCurrency": "EUR",
-        "billingDuration": "P1M"
-      },
-      {
-        "@type": "Offer",
-        "name": "Kesäpaketti 2026",
-        "price": "29",
-        "priceCurrency": "EUR",
-        "description": "Kertamaksu — pääsy 1.6.–30.9.2026"
-      }
+      { "@type": "Offer", "name": "Free", "price": "0", "priceCurrency": "EUR" },
+      { "@type": "Offer", "name": "Pro",  "price": "9.99", "priceCurrency": "EUR", "billingDuration": "P1M" }
     ],
     "audience": {
       "@type": "EducationalAudience",
@@ -88,1851 +66,666 @@
   </script>
 
   <link rel="manifest" href="/manifest.json" />
-  <meta name="theme-color" content="#2DD4BF" />
+  <meta name="theme-color" content="#0a0a0a" />
 
-  <!-- Fonts: Inter (display + body) + DM Mono (data/countdown numerals).
+  <!-- Geist via Google Fonts (Inter as fallback per landing-tokens.css).
        Latin Extended covers Finnish ä/ö/å + Spanish ñ/á/é/í/ó/ú. -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap&subset=latin,latin-ext" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&family=Inter:wght@400;500;600;700&display=swap&subset=latin,latin-ext" rel="stylesheet" />
 
-  <link rel="preload" as="style" href="landing.css" />
-  <link rel="stylesheet" href="landing.css" />
-
-  <style>
-    /* ── Mini-diagnostic (hero CTA) ── */
-    .mini-diag {
-      max-width: 640px;
-      margin: 0 auto;
-      padding: 0 24px 40px;
-    }
-    .mini-diag-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--r-lg);
-      padding: 28px 24px 26px;
-      position: relative;
-      overflow: hidden;
-    }
-    .mini-diag-card::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse at 0% 0%, rgba(45, 212, 191, 0.06), transparent 55%);
-      pointer-events: none;
-    }
-    .mini-diag-card > * { position: relative; }
-    .mini-diag-kicker {
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--accent-dark);
-      margin-bottom: 12px;
-      text-align: center;
-    }
-    .mini-diag-title {
-      font-family: var(--font);
-      font-weight: 800;
-      font-size: 26px;
-      letter-spacing: -0.01em;
-      text-align: center;
-      margin-bottom: 10px;
-    }
-    .mini-diag-lede {
-      font-family: var(--serif);
-      font-size: 15px;
-      color: var(--ink-soft);
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    .mini-diag-start {
-      display: inline-block;
-      margin: 0 auto;
-    }
-    .mini-diag-cta { text-align: center; }
-    .mini-diag-microcopy {
-      font-family: var(--mono);
-      font-size: 11px;
-      color: var(--ink-soft);
-      margin-top: 14px;
-    }
-    /* Question state */
-    .mini-diag-progress {
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.08em;
-      color: var(--ink-soft);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 14px;
-    }
-    .mini-diag-progress-bar {
-      flex: 1;
-      height: 3px;
-      background: var(--surface-2);
-      border-radius: 2px;
-      overflow: hidden;
-    }
-    .mini-diag-progress-fill {
-      height: 100%;
-      background: var(--accent);
-      width: 0;
-      transition: width 0.35s ease;
-    }
-    .mini-diag-level-tag {
-      display: inline-block;
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--accent-dark);
-      border: 1px solid var(--border);
-      padding: 3px 10px;
-      border-radius: 999px;
-      margin-bottom: 12px;
-    }
-    .mini-diag-stem {
-      font-family: var(--serif);
-      font-size: 20px;
-      line-height: 1.4;
-      color: var(--ink);
-      margin-bottom: 16px;
-    }
-    .mini-diag-options {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-bottom: 14px;
-    }
-    .mini-diag-opt {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 14px;
-      min-height: 48px;
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      color: var(--ink);
-      font-family: var(--font);
-      font-size: 16px;
-      text-align: left;
-      cursor: pointer;
-      transition: border-color 0.15s, background 0.15s, transform 0.1s;
-    }
-    .mini-diag-opt:hover:not(:disabled) {
-      border-color: var(--accent-dark);
-      background: #261818;
-    }
-    .mini-diag-opt:disabled { cursor: default; }
-    .mini-diag-opt-key {
-      font-family: var(--mono);
-      font-size: 11px;
-      color: var(--ink-soft);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 2px 7px;
-      flex-shrink: 0;
-    }
-    .mini-diag-opt.is-correct {
-      border-color: var(--success);
-      background: rgba(34, 197, 94, 0.1);
-    }
-    .mini-diag-opt.is-correct .mini-diag-opt-key {
-      color: var(--success);
-      border-color: var(--success);
-    }
-    .mini-diag-opt.is-wrong {
-      border-color: var(--error);
-      background: rgba(239, 68, 68, 0.1);
-    }
-    .mini-diag-opt.is-wrong .mini-diag-opt-key {
-      color: var(--error);
-      border-color: var(--error);
-    }
-    .mini-diag-feedback {
-      border-top: 1px dashed var(--border);
-      padding-top: 14px;
-      margin-top: 4px;
-    }
-    .mini-diag-verdict {
-      font-family: var(--mono);
-      font-size: 12px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      margin-bottom: 6px;
-    }
-    .mini-diag-verdict.is-correct { color: var(--success); }
-    .mini-diag-verdict.is-wrong { color: var(--error); }
-    .mini-diag-explain {
-      font-family: var(--serif);
-      font-size: 14px;
-      line-height: 1.55;
-      color: var(--ink);
-      margin-bottom: 14px;
-    }
-    .mini-diag-next {
-      background: var(--accent-hover);
-      color: #fff;
-      border: none;
-      border-radius: 10px;
-      padding: 14px 22px;
-      min-height: 44px;
-      font-family: var(--font);
-      font-weight: 700;
-      font-size: 15px;
-      cursor: pointer;
-      transition: background 0.15s;
-    }
-    .mini-diag-next:hover { background: #a01818; }
-    /* Result state */
-    .mini-diag-result { text-align: center; }
-    .mini-diag-result-level {
-      font-family: var(--font);
-      font-size: 17px;
-      color: var(--ink-soft);
-      margin-bottom: 16px;
-    }
-    .mini-diag-result-level strong {
-      display: inline-block;
-      font-size: 44px;
-      font-weight: 800;
-      color: var(--accent);
-      padding: 0 6px;
-      vertical-align: middle;
-      line-height: 1;
-      margin-left: 6px;
-    }
-    .mini-diag-result-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 14px;
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      margin-bottom: 8px;
-      font-size: 13px;
-    }
-    .mini-diag-result-label {
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--ink-soft);
-    }
-    .mini-diag-result-val {
-      font-family: var(--font);
-      font-weight: 600;
-      color: var(--ink);
-      text-align: right;
-    }
-    .mini-diag-cta-register {
-      display: inline-block;
-      margin-top: 18px;
-    }
-    .mini-diag-disclaimer {
-      font-family: var(--mono);
-      font-size: 10.5px;
-      line-height: 1.5;
-      color: var(--ink-soft);
-      margin-top: 14px;
-      max-width: 440px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    @media (max-width: 520px) {
-      .mini-diag-options { grid-template-columns: 1fr; }
-      .mini-diag-stem { font-size: 17px; }
-      .mini-diag-title { font-size: 22px; }
-      .mini-diag-result-level strong { font-size: 36px; }
-    }
-
-    /* ── Comparison: Puheo vs. Abitreenit ── */
-    .visually-hidden {
-      position: absolute; width: 1px; height: 1px;
-      padding: 0; margin: -1px; overflow: hidden;
-      clip: rect(0 0 0 0); white-space: nowrap; border: 0;
-    }
-    .compare-quote {
-      margin: 0 0 36px;
-      text-align: center;
-    }
-    .compare-quote blockquote {
-      font-family: var(--font-body);
-      font-style: normal;
-      font-size: clamp(18px, 2.5vw, 22px);
-      line-height: 1.45;
-      color: var(--ink);
-      max-width: 560px;
-      margin: 0 auto;
-      padding: 0 16px;
-      border-left: 3px solid var(--accent);
-      padding-left: 18px;
-      text-align: left;
-    }
-    .compare-wrap {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--r-lg);
-      overflow: hidden;
-      margin-bottom: 32px;
-    }
-    .compare-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-family: var(--font);
-      font-size: 14px;
-    }
-    .compare-table th,
-    .compare-table td {
-      padding: 14px 18px;
-      text-align: left;
-      border-bottom: 1px solid var(--border);
-      vertical-align: middle;
-    }
-    .compare-table thead th {
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--ink-soft);
-      background: var(--surface-2);
-      font-weight: 600;
-    }
-    .compare-table thead th.is-ours {
-      color: var(--accent-dark);
-      background: var(--surface-2);
-    }
-    .compare-table tbody tr:last-child th,
-    .compare-table tbody tr:last-child td { border-bottom: none; }
-    .compare-table tbody th[scope="row"] {
-      font-weight: 600;
-      color: var(--ink);
-      width: 36%;
-    }
-    .compare-table td { color: var(--ink-soft); }
-    .compare-table td.is-ours {
-      color: var(--ink);
-      background: rgba(45, 212, 191, 0.03);
-    }
-    .compare-table .mark {
-      display: inline-block;
-      width: 18px;
-      font-weight: 700;
-      margin-right: 4px;
-    }
-    .mark.yes { color: var(--success); }
-    .mark.no  { color: var(--error); }
-    .mark.meh { color: var(--accent-dark); }
-    .compare-intent {
-      background: var(--surface);
-      border: 1px solid var(--accent);
-      border-radius: var(--r-lg);
-      padding: 20px 22px;
-      font-family: var(--serif);
-      font-size: 15px;
-      line-height: 1.6;
-      color: var(--ink);
-      max-width: 640px;
-      margin: 0 auto;
-    }
-    .compare-intent strong {
-      display: block;
-      font-family: var(--font);
-      font-weight: 700;
-      font-size: 15px;
-      color: var(--accent-dark);
-      margin-bottom: 4px;
-    }
-    /* Table → cards on mobile */
-    @media (max-width: 640px) {
-      .compare-table thead { display: none; }
-      .compare-table,
-      .compare-table tbody,
-      .compare-table tr,
-      .compare-table th,
-      .compare-table td { display: block; width: 100%; }
-      .compare-table tbody tr {
-        padding: 14px 16px;
-        border-bottom: 1px solid var(--border);
-      }
-      .compare-table tbody tr:last-child { border-bottom: none; }
-      .compare-table tbody th[scope="row"] {
-        font-family: var(--mono);
-        font-size: 11px;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-        color: var(--ink-soft);
-        padding: 0 0 10px;
-        border: none;
-        width: auto;
-      }
-      .compare-table tbody td {
-        border: none;
-        padding: 6px 0;
-        font-size: 14px;
-      }
-      .compare-table tbody td::before {
-        content: attr(data-label);
-        display: inline-block;
-        width: 88px;
-        font-family: var(--mono);
-        font-size: 10px;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        color: var(--ink-soft);
-        margin-right: 8px;
-      }
-      .compare-table tbody td.is-ours::before { color: var(--accent-dark); }
-      .compare-table tbody td.is-ours { background: transparent; }
-    }
-
-    /* ── Rubric grid ── */
-    .rubric-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      margin-bottom: 32px;
-    }
-    .rubric-item {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--r-lg);
-      padding: 18px 18px 20px;
-    }
-    .rubric-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      gap: 10px;
-      margin-bottom: 8px;
-    }
-    .rubric-name {
-      font-family: var(--font);
-      font-weight: 700;
-      font-size: 14px;
-      color: var(--ink);
-    }
-    .rubric-max {
-      font-family: var(--mono);
-      font-size: 11px;
-      color: var(--accent-dark);
-      white-space: nowrap;
-    }
-    .rubric-desc {
-      font-family: var(--mono);
-      font-size: 12px;
-      line-height: 1.6;
-      color: var(--ink-soft);
-    }
-    @media (max-width: 720px) {
-      .rubric-grid { grid-template-columns: 1fr; }
-    }
-
-    /* ── Essay demo (side-by-side) ── */
-    .essay-demo {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--r-lg);
-      padding: 24px;
-      margin-bottom: 20px;
-    }
-    .essay-task {
-      padding: 14px 16px;
-      background: var(--surface-2);
-      border-left: 3px solid var(--accent);
-      border-radius: 6px;
-      margin-bottom: 20px;
-    }
-    .essay-task-label {
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--accent-dark);
-      margin-bottom: 4px;
-    }
-    .essay-task-text {
-      font-family: var(--serif);
-      font-size: 14px;
-      line-height: 1.55;
-      color: var(--ink);
-    }
-    .essay-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-    }
-    .essay-label {
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--ink-soft);
-      margin-bottom: 10px;
-    }
-    .essay-col.is-feedback .essay-label { color: var(--accent-dark); }
-    .essay-raw {
-      font-family: var(--serif);
-      font-size: 14px;
-      line-height: 1.65;
-      color: var(--ink);
-    }
-    .essay-raw p { margin: 0 0 10px; }
-    .essay-raw p:last-child { margin-bottom: 0; }
-    .hl {
-      background: transparent;
-      border-bottom: 2px solid;
-      padding: 1px 2px;
-      color: inherit;
-      position: relative;
-    }
-    .hl-warn { border-color: var(--accent-dark); background: rgba(45, 212, 191, 0.08); }
-    .hl-err  { border-color: var(--error); background: rgba(239, 68, 68, 0.12); }
-    .hl-meh  { border-color: var(--ink-soft); background: rgba(158, 122, 122, 0.1); }
-    .hl-num {
-      font-family: var(--mono);
-      font-size: 9px;
-      font-weight: 700;
-      color: var(--accent-dark);
-      margin-right: 2px;
-      vertical-align: super;
-    }
-    .hl-err .hl-num { color: var(--error); }
-    .hl-meh .hl-num { color: var(--ink-soft); }
-
-    /* Score bars */
-    .score-grid {
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 14px 16px;
-      margin-bottom: 16px;
-    }
-    .score-row {
-      display: grid;
-      grid-template-columns: 90px 1fr 60px;
-      align-items: center;
-      gap: 10px;
-      padding: 6px 0;
-      font-family: var(--mono);
-      font-size: 12px;
-    }
-    .score-row .score-label { color: var(--ink-soft); }
-    .score-row .score-val {
-      text-align: right;
-      color: var(--ink);
-      font-weight: 600;
-    }
-    .score-bar {
-      height: 6px;
-      background: var(--bg);
-      border-radius: 3px;
-      overflow: hidden;
-    }
-    .score-fill {
-      height: 100%;
-      background: var(--accent);
-    }
-    .score-total {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      margin-top: 12px;
-      padding-top: 12px;
-      border-top: 1px dashed var(--border);
-    }
-    .score-total-num {
-      font-family: var(--font);
-      font-weight: 800;
-      font-size: 22px;
-      color: var(--ink);
-      letter-spacing: -0.01em;
-    }
-    .score-total-grade {
-      font-family: var(--mono);
-      font-size: 11px;
-      color: var(--ink-soft);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-    .score-total-grade strong {
-      color: var(--accent-dark);
-      font-size: 16px;
-      margin-left: 4px;
-    }
-
-    /* Annotations list */
-    .annot-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-    .annot-item {
-      display: grid;
-      grid-template-columns: 24px 1fr;
-      gap: 10px;
-      padding: 10px 0;
-      border-top: 1px dashed var(--border);
-      font-family: var(--serif);
-      font-size: 13px;
-      line-height: 1.55;
-      color: var(--ink);
-    }
-    .annot-item:first-child { border-top: none; }
-    .annot-num {
-      width: 22px; height: 22px;
-      border-radius: 50%;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-family: var(--mono);
-      font-size: 11px;
-      font-weight: 700;
-      flex-shrink: 0;
-    }
-    .annot-warn .annot-num { background: rgba(45, 212, 191, 0.14); color: var(--accent-dark); }
-    .annot-err  .annot-num { background: rgba(239, 68, 68, 0.2); color: var(--error); }
-    .annot-meh  .annot-num { background: rgba(158, 122, 122, 0.2); color: var(--ink-soft); }
-    .annot-body strong { color: var(--ink); font-family: var(--font); }
-    .annot-body em { color: var(--accent-dark); font-style: normal; font-weight: 600; }
-
-    @media (max-width: 720px) {
-      .essay-grid { grid-template-columns: 1fr; gap: 24px; }
-      .essay-demo { padding: 18px; }
-      .score-row { grid-template-columns: 80px 1fr 54px; }
-    }
-
-    .rubric-link {
-      display: inline-block;
-      font-family: var(--mono);
-      font-size: 12px;
-      letter-spacing: 0.08em;
-      color: var(--accent-dark);
-      text-decoration: none;
-      border-bottom: 1px solid rgba(45, 212, 191, 0.28);
-      padding-bottom: 2px;
-    }
-    .rubric-link:hover { color: var(--ink); border-color: var(--ink); }
-  </style>
+  <!-- Landing tokens (palette + type scale, scoped to .landing) + components -->
+  <link rel="stylesheet" href="css/landing-tokens.css" />
+  <link rel="stylesheet" href="css/landing.css" />
 </head>
+
 <body>
+  <a href="#hero" class="skip-link">Siirry sisältöön</a>
 
-  <!-- 0) URGENCY BAR (flat parchment strip with compact countdown) -->
-  <div class="urgency-bar hidden" id="urgency-bar">
-    <a href="#mini-diag" class="urgency-bar-inner" data-cta="urgency-bar">
-      <span class="urgency-bar-text">
-        YO-koe 28.9.2026 &middot;
-        <span
-          class="countdown countdown--compact"
-          data-countdown="yo-koe"
-          data-variant="compact"
-          aria-live="off"
-        >&mdash;</span>
-        &middot; j&auml;ljell&auml;
-      </span>
-    </a>
-    <button class="urgency-bar-close" id="urgency-bar-close" aria-label="Sulje">&times;</button>
-  </div>
+  <!-- ─── NAV ─────────────────────────────────────────────── -->
+  <header class="nav" id="nav" data-scrolled="false">
+    <div class="nav__inner">
+      <a class="nav__brand" href="/" aria-label="Puheo etusivu">
+        <span class="nav__brand-dot" aria-hidden="true"></span>
+        Puheo
+      </a>
 
-  <!-- NAV -->
-  <nav class="nav" id="nav">
-    <a href="/" class="nav-logo">Puhe<span>o</span></a>
-    <div class="nav-links">
-      <a href="diagnose.html" data-cta="nav-diagnose">Testaa tasosi</a>
-      <a href="#how">Miten toimii</a>
-      <a href="#pricing">Hinnoittelu</a>
-      <a href="#faq">UKK</a>
-    </div>
-    <div class="nav-right">
-      <a href="app.html?mode=login" class="nav-login" data-cta="nav-login">Kirjaudu sisään</a>
-      <a href="app.html" class="nav-cta" data-cta="nav-signup">Aloita ilmaiseksi</a>
-    </div>
-  </nav>
+      <nav class="nav__links" aria-label="Sivun osiot">
+        <a class="nav__link" href="#tuote">Tuote</a>
+        <a class="nav__link" href="#hinnoittelu">Hinnoittelu</a>
+        <a class="nav__link" href="#faq">FAQ</a>
+      </nav>
 
-  <main id="main">
-
-  <!-- 1) HERO -->
-  <section class="hero">
-    <div class="hero-inner">
-      <div class="hero-copy">
-        <div class="hero-tag">Espanja &middot; Lyhyt oppim&auml;&auml;r&auml; &middot; YO-koe 2026</div>
-
-        <h1>Paranna espanjan YO-arvosanaa<br/><span class="hero-accent">ennen 28.9.2026.</span></h1>
-
-        <p class="hero-sub">
-          Personoidut harjoitukset &middot; YTL-rubriikin mukainen AI-palaute &middot; t&auml;yskoe-simulaatio.
-        </p>
-
-        <div class="hero-actions">
-          <a href="#mini-diag" class="btn-hero" data-cta="hero-primary">Testaa tasosi &mdash; 60 sekuntia &rarr;</a>
-          <a href="app.html" class="btn-hero-secondary" data-cta="hero-secondary">
-            Aloita harjoittelu ilmaiseksi &rarr;
-          </a>
-        </div>
-
-        <!-- Live countdown (hero data block) -->
-        <div
-          class="countdown countdown--full"
-          data-countdown="yo-koe"
-          data-variant="full"
-          aria-live="off"
-        >
-          <div class="countdown__seg"><span class="countdown__num" data-unit="d">&mdash;</span><span class="countdown__lbl">p&auml;iv&auml;&auml;</span></div>
-          <span class="countdown__sep">:</span>
-          <div class="countdown__seg"><span class="countdown__num" data-unit="h">&mdash;</span><span class="countdown__lbl">tuntia</span></div>
-          <span class="countdown__sep">:</span>
-          <div class="countdown__seg"><span class="countdown__num" data-unit="m">&mdash;</span><span class="countdown__lbl">min</span></div>
-          <span class="countdown__sep">:</span>
-          <div class="countdown__seg"><span class="countdown__num" data-unit="s">&mdash;</span><span class="countdown__lbl">sek</span></div>
-        </div>
-        <span class="sr-only">YO-koe alkaa 28.9.2026 klo 9.00</span>
-
-        <!-- Trust strip: risk-reversal under the countdown -->
-        <ul class="hero-trust-strip" aria-label="Luottamussignaalit">
-          <li class="hero-trust-item">
-            <svg class="hero-trust-icon" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M2 10h20"/></svg>
-            Ei luottokorttia
-          </li>
-          <li class="hero-trust-item">
-            <svg class="hero-trust-icon" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.5 9 8 11 4.5-2 8-6 8-11V5l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>
-            14 pv rahat takaisin
-          </li>
-        </ul>
+      <div class="nav__cta">
+        <a class="btn btn--quiet" href="/app.html#kirjaudu">Kirjaudu</a>
+        <a class="btn btn--primary" href="/app.html#rekisteroidy">Aloita ilmaiseksi</a>
       </div>
+    </div>
+  </header>
 
-      <!-- Visual proof: miniature annotation card (desktop only) -->
-      <aside class="hero-proof" aria-hidden="true">
-        <div class="hero-proof-card">
-          <div class="hero-proof-head">
-            <span class="hero-proof-kicker">YTL-palaute</span>
-            <span class="hero-proof-score">82 / 99</span>
-          </div>
-          <p class="hero-proof-text">
-            Me <mark class="hero-proof-mark" data-tip="preteriti">fuimos</mark> a Madrid el verano pasado.
-            El viaje <mark class="hero-proof-mark hero-proof-mark--warn" data-tip="subj.">era</mark> fant&aacute;stico,
-            aunque <mark class="hero-proof-mark hero-proof-mark--err" data-tip="acc.">hacia</mark> mucho calor.
+  <main>
+    <!-- ─── HERO ───────────────────────────────────────────── -->
+    <section class="hero" id="hero">
+      <div class="hero__glow" aria-hidden="true"></div>
+
+      <div class="hero__inner">
+        <div class="hero__copy">
+          <p class="hero__eyebrow">Espanjan YO-koe • Lyhyt oppimäärä</p>
+
+          <h1 class="hero__title">
+            <span class="hero__title-accent">Pärjää espanjan YO-kokeessa.</span>
+            <br />Ilman kalliita kursseja.
+          </h1>
+
+          <p class="hero__sub">
+            Puheo on tekoälyvalmentaja, joka tuntee YO-rubriikin. Kymmenen
+            minuuttia päivässä — ja kirjoituksesi, sanastosi ja kielioppisi
+            tuntuvat eri tasolta kokeessa.
           </p>
-          <ul class="hero-proof-criteria">
-            <li><span>Sis&auml;lt&ouml;</span><em>29/33</em></li>
-            <li><span>Rakenne</span><em>27/33</em></li>
-            <li><span>Kielen laatu</span><em>26/33</em></li>
-          </ul>
-        </div>
-      </aside>
-    </div>
-  </section>
 
-  <!-- Mini-diagnostic (adaptive level check) -->
-  <section class="mini-diag" id="mini-diag" aria-label="Taitotaso-arvio">
-    <div class="mini-diag-card" id="mini-diag-card" data-state="cta">
-
-      <div data-view="cta" class="mini-diag-cta">
-        <div class="mini-diag-kicker">Adaptiivinen arvio</div>
-        <h2 class="mini-diag-title">Miss&auml; tasolla olet nyt?</h2>
-        <p class="mini-diag-lede">60 sekunnin taitotaso-arvio &mdash; 3 kysymyst&auml;, palaute heti.</p>
-        <button type="button" id="mini-diag-start" class="btn-hero mini-diag-start">Aloita arvio &rarr;</button>
-        <p class="mini-diag-microcopy">Ei vaadi kirjautumista. Vastauksesi tallennetaan vain selaimeesi.</p>
-      </div>
-
-      <div data-view="question" class="mini-diag-q hidden">
-        <div class="mini-diag-progress">
-          <span><span id="mini-diag-progress-num">1</span> / 3</span>
-          <div class="mini-diag-progress-bar"><div class="mini-diag-progress-fill" id="mini-diag-progress-fill"></div></div>
-        </div>
-        <div class="mini-diag-level-tag" id="mini-diag-level-tag">&mdash;</div>
-        <div class="mini-diag-stem" id="mini-diag-stem"></div>
-        <div class="mini-diag-options" id="mini-diag-options" role="radiogroup"></div>
-        <div class="mini-diag-feedback hidden" id="mini-diag-feedback">
-          <div class="mini-diag-verdict" id="mini-diag-verdict"></div>
-          <div class="mini-diag-explain" id="mini-diag-explain"></div>
-          <button type="button" id="mini-diag-next" class="mini-diag-next">Seuraava &rarr;</button>
-        </div>
-      </div>
-
-      <div data-view="result" class="mini-diag-result hidden">
-        <div class="mini-diag-kicker">Arvio valmis</div>
-        <div class="mini-diag-result-level">
-          Nykyinen tasosi: <strong id="mini-diag-grade">C</strong>
-        </div>
-        <div class="mini-diag-result-row">
-          <span class="mini-diag-result-label">Heikoin alue</span>
-          <span class="mini-diag-result-val" id="mini-diag-weakest">&mdash;</span>
-        </div>
-        <div class="mini-diag-result-row">
-          <span class="mini-diag-result-label">Tavoite M-tasolle</span>
-          <span class="mini-diag-result-val" id="mini-diag-eta">&mdash;</span>
-        </div>
-        <a id="mini-diag-register" href="app.html" class="btn-hero mini-diag-cta-register">Tee henkil&ouml;kohtainen suunnitelma &rarr;</a>
-        <p class="mini-diag-disclaimer">
-          Karkea arvio 3 kysymyksest&auml; &mdash; tarkka taso m&auml;&auml;r&auml;ytyy ensimm&auml;isen viikon aikana.
-        </p>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- Floating exercise card mockup (below fold) -->
-  <div class="hero-card-below" style="display:flex;justify-content:center;padding:0 20px 32px;position:relative;z-index:1;">
-    <div class="hero-card-wrap">
-      <div class="hc">
-        <div class="hc-meta">
-          <span class="hc-badge mode"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-2px;margin-right:4px"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>Sanasto</span>
-          <span class="hc-badge level">Taso M</span>
-        </div>
-        <div class="hc-question">&iquest;Qu&eacute; significa 'el ayuntamiento'?</div>
-        <div class="hc-options">
-          <div class="hc-opt correct">&#10003; kaupungintalo</div>
-          <div class="hc-opt">sairaala</div>
-          <div class="hc-opt">koulu</div>
-          <div class="hc-opt">yliopisto</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 2) PROBLEM -->
-  <section class="section" id="problem">
-    <div class="section-tag">Ongelma</div>
-    <h2>Espanja YO on vaikea koe.<br/>Kurssikirjat eiv&auml;t riit&auml;.</h2>
-    <p class="section-sub">Suurin osa opiskelijoista ei saa tarpeeksi harjoitusta eik&auml; palautetta.</p>
-
-    <div class="problem-bullets">
-      <div class="problem-bullet">
-        <div>
-          <strong>Ei tarpeeksi harjoituksia</strong>
-          <p>Kurssikirjoissa on muutama harjoitus per aihe. Yo-kokeessa tulee yll&auml;tyksi&auml;.</p>
-        </div>
-      </div>
-      <div class="problem-bullet">
-        <div>
-          <strong>Kielioppi j&auml;&auml; jumiin</strong>
-          <p>Subjunktiivi, ser/estar, preteriti &mdash; vaikeimmat aiheet j&auml;&auml;v&auml;t usein puolitiehen.</p>
-        </div>
-      </div>
-      <div class="problem-bullet">
-        <div>
-          <strong>Kirjoitelmaan ei saa palautetta</strong>
-          <p>Opettaja ehtii lukea kirjoitelmasi ehk&auml; kerran kaudessa. Kokeessa tarvitset enemm&auml;n.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 3) SOLUTION -->
-  <section class="section" id="solution">
-    <div class="section-tag">Ratkaisu</div>
-    <h2>Puheo ratkaisee kaikki kolme.<br/>Teko&auml;lyll&auml;.</h2>
-
-    <div class="features-grid" id="features-grid" tabindex="0" role="region" aria-label="Ominaisuudet — selaa">
-      <div class="feature-card reveal">
-        <span class="feature-icon" aria-hidden="true">
-          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
-            <path d="m12 3-1.9 5.8a2 2 0 0 1-1.287 1.288L3 12l5.8 1.9a2 2 0 0 1 1.288 1.287L12 21l1.9-5.8a2 2 0 0 1 1.287-1.288L21 12l-5.8-1.9a2 2 0 0 1-1.288-1.287Z"/>
-            <path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/>
-          </svg>
-        </span>
-        <div class="feature-title">Personoitu AI-opettaja</div>
-        <div class="feature-desc">J&auml;rjestelm&auml; oppii heikkoutesi ja luo harjoituksia juuri sinulle. Taso sopeutuu suoritukseesi.</div>
-      </div>
-      <div class="feature-card reveal">
-        <span class="feature-icon" aria-hidden="true">
-          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
-            <rect width="8" height="4" x="8" y="2" rx="1" ry="1"/>
-            <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/>
-            <path d="m9 14 2 2 4-4"/>
-          </svg>
-        </span>
-        <div class="feature-title">YTL-rubriikin mukainen arviointi</div>
-        <div class="feature-desc">Kirjoitelmasi arvioidaan oikealla pisteytysrubriikilla. N&auml;et tarkalleen miss&auml; menet&auml;t pisteita.</div>
-      </div>
-      <div class="feature-card reveal">
-        <span class="feature-icon" aria-hidden="true">
-          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/>
-            <path d="M21 3v5h-5"/>
-            <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/>
-            <path d="M8 16H3v5"/>
-          </svg>
-        </span>
-        <div class="feature-title">Muistiin j&auml;&auml;v&auml; kertaus</div>
-        <div class="feature-desc">J&auml;rjestelm&auml; palauttaa sanat ja s&auml;&auml;nn&ouml;t kertaukseen juuri ennen kuin unohtaisit ne. Ei turhaa p&auml;nttäämist&auml;.</div>
-      </div>
-    </div>
-    <div class="feature-dots" id="feature-dots" role="group" aria-label="Ominaisuudet — selaa">
-      <button type="button" class="feature-dot active" data-idx="0" aria-label="N&auml;yt&auml; ominaisuus 1"></button>
-      <button type="button" class="feature-dot" data-idx="1" aria-label="N&auml;yt&auml; ominaisuus 2"></button>
-      <button type="button" class="feature-dot" data-idx="2" aria-label="N&auml;yt&auml; ominaisuus 3"></button>
-    </div>
-  </section>
-
-  <!-- 4) HOW IT WORKS -->
-  <section id="how" class="section">
-    <div class="section-tag">Miten se toimii</div>
-    <h2>Nelj&auml; askelta.<br/>Parempi arvosana.</h2>
-    <p class="section-sub">Ei asennusta. Avaa selain ja aloita.</p>
-
-    <div class="steps">
-      <div class="step">
-        <div class="step-num">1</div>
-        <div class="step-title">Vastaa 7 kysymykseen itsest&auml;si</div>
-        <div class="step-desc">2 minuuttia. J&auml;rjestelm&auml; r&auml;&auml;t&auml;l&ouml;i harjoittelun sinulle.</div>
-      </div>
-      <div class="step">
-        <div class="step-num">2</div>
-        <div class="step-title">AI luo sinun tasoosi sopivat harjoitukset</div>
-        <div class="step-desc">Sanasto, kielioppi, lukeminen ja kirjoittaminen &mdash; kaikki osa-alueet.</div>
-      </div>
-      <div class="step">
-        <div class="step-num">3</div>
-        <div class="step-title">Kirjoita kirjoitelma &mdash; saat tarkan palautteen</div>
-        <div class="step-desc">AI arvioi YTL:n rubriikilla. N&auml;et pisteet, virheet ja korjausehdotukset.</div>
-      </div>
-      <div class="step">
-        <div class="step-num">4</div>
-        <div class="step-title">Simuloi t&auml;yskoe kellonvalvonnassa</div>
-        <div class="step-desc">4-osainen koe YTL:n rakenteella. Tied&auml;t miss&auml; olet ennen koep&auml;iv&auml;&auml;.</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 4b) HOW PUHEO TEACHES — vertical timeline -->
-  <section class="section" id="teaching">
-    <div class="section-tag">Kuinka Puheo opettaa</div>
-    <h2>Adaptiivinen oppimispolku.<br/>Joka kerta fiksumpi.</h2>
-    <p class="section-sub">Puheo ei anna kaikille samoja teht&auml;vi&auml;. Se oppii sinun heikkoutesi.</p>
-
-    <div class="timeline">
-      <div class="timeline-item">
-        <div class="timeline-dot">1</div>
-        <div class="timeline-title">Arvioi taitotasosi</div>
-        <div class="timeline-desc">Diagnostinen testi tunnistaa tasosi 2 minuutissa &mdash; sanasto, kielioppi ja luetun ymm&auml;rt&auml;minen. Aloitat juuri oikealta tasolta.</div>
-      </div>
-      <div class="timeline-item">
-        <div class="timeline-dot">2</div>
-        <div class="timeline-title">Generoi personoituja teht&auml;vi&auml;</div>
-        <div class="timeline-desc">AI luo teht&auml;v&auml;t sinun tasoosi ja heikkouksiisi perustuen. Aukkoteht&auml;vi&auml;, yhdist&auml;mist&auml;, k&auml;&auml;nn&ouml;ksi&auml;, sanaj&auml;rjestyst&auml; &mdash; monipuolisesti.</div>
-      </div>
-      <div class="timeline-item">
-        <div class="timeline-dot">3</div>
-        <div class="timeline-title">Virheesi kertautuvat &auml;lykk&auml;&auml;sti</div>
-        <div class="timeline-desc">Jokainen v&auml;&auml;r&auml; vastaus palaa kertaukseen juuri ennen kuin unohtaisit sen. Virheiden m&auml;&auml;r&auml; laskee viikko viikolta ilman ett&auml; sinun tarvitsee suunnitella kertausta.</div>
-      </div>
-      <div class="timeline-item">
-        <div class="timeline-dot">4</div>
-        <div class="timeline-title">Simuloi YO-koe</div>
-        <div class="timeline-desc">T&auml;yskoe YTL:n rakenteella ja aikarajalla: luetun ymm., rakenteet, lyhyt ja pitk&auml; kirjoitelma. Tiedat tarkalleen miss&auml; olet ennen koep&auml;iv&auml;&auml;.</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 5) SCREENSHOTS carousel -->
-  <section class="section screenshots-section" id="screenshots">
-    <div class="section-tag">N&auml;in se n&auml;ytt&auml;&auml;</div>
-    <h2>Puheo k&auml;yt&auml;nn&ouml;ss&auml;</h2>
-
-    <div class="screenshot-carousel" id="screenshot-carousel">
-      <div class="screenshot-track" id="screenshot-track">
-        <div class="screenshot-slide active" data-idx="0">
-          <img src="/public/screenshots/dashboard.png" alt="Puheo dashboard &mdash; edistyminen ja suositukset" loading="lazy" width="1600" height="1000" />
-          <div class="screenshot-caption">Dashboard &mdash; edistyminen ja suositukset</div>
-        </div>
-        <div class="screenshot-slide" data-idx="1">
-          <img src="/public/screenshots/vocab.png" alt="Sanastoharjoitus &mdash; adaptiivinen monivalinta" loading="lazy" width="1600" height="1000" />
-          <div class="screenshot-caption">Sanastoharjoitus &mdash; adaptiivinen monivalinta</div>
-        </div>
-        <div class="screenshot-slide" data-idx="2">
-          <img src="/public/screenshots/writing.png" alt="Kirjoitusteht&auml;v&auml; &mdash; espanjankielinen kirjoitelma" loading="lazy" width="1600" height="1000" />
-          <div class="screenshot-caption">Kirjoitusteht&auml;v&auml; &mdash; kirjoita espanjaksi, saat AI-palautteen</div>
-        </div>
-        <div class="screenshot-slide" data-idx="3">
-          <img src="/public/screenshots/feedback.png" alt="Kirjoitelman palaute &mdash; YTL-pisteytys ja virhekohdat" loading="lazy" width="1600" height="1000" />
-          <div class="screenshot-caption">AI-palaute &mdash; YTL-pisteytys, virheanalyysi ja arvosana</div>
-        </div>
-      </div>
-      <div class="screenshot-dots" id="screenshot-dots">
-        <button class="screenshot-dot active" data-idx="0" aria-label="Kuva 1"></button>
-        <button class="screenshot-dot" data-idx="1" aria-label="Kuva 2"></button>
-        <button class="screenshot-dot" data-idx="2" aria-label="Kuva 3"></button>
-        <button class="screenshot-dot" data-idx="3" aria-label="Kuva 4"></button>
-      </div>
-    </div>
-  </section>
-
-  <!-- 5b) AUTHORITY SIGNALS - "Miksi Puheo toimii" -->
-  <section class="section authority-section" id="why-works">
-    <div class="section-tag">Miksi Puheo toimii</div>
-    <h2>Rakennettu <em>YTL:n rubriikin</em> mukaan.</h2>
-    <p class="section-sub">Jokainen harjoitus ja arviointi perustuu YO-kokeen viralliseen rakenteeseen ja arviointiohjeisiin.</p>
-
-    <div class="authority-grid">
-
-      <!-- 1. YTL rubric -->
-      <div class="authority-card">
-        <div class="authority-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/><path d="M9 4V2.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 .5.5V4"/><path d="M9 10h6M9 14h6M9 18h3"/></svg></div>
-        <h3 class="authority-title">YTL:n virallinen rubriikki</h3>
-        <p class="authority-desc">
-          Kirjoitelmasi arvioidaan samoilla kolmella kriteerill&auml; kuin oikeassa YO-kokeessa:
-          sis&auml;lt&ouml; ja ymm&auml;rrett&auml;vyys, kielellinen laajuus, kielellinen oikeellisuus.
-        </p>
-        <a href="https://www.ylioppilastutkinto.fi/images/sivuston_tiedostot/Ohjeet/Koekohtaiset/fi_ruotsi_lyhyt.pdf" target="_blank" rel="noopener" class="authority-link">
-          Katso YTL:n arviointiohjeet &rarr;
-        </a>
-      </div>
-
-      <!-- 2. 10-year archive -->
-      <div class="authority-card">
-        <div class="authority-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
-        <h3 class="authority-title">10 vuoden YO-arkisto pohjana</h3>
-        <p class="authority-desc">
-          Harjoitukset heijastelevat todellisia koetehtavia: sanasto todellisista yo-teksteist&auml;,
-          kielioppi samoista rakenteista kuin kokeissa &mdash; ei kurssikirjan k&auml;&auml;nn&ouml;smekaniikkaa.
-        </p>
-        <a href="https://yle.fi/aihe/abitreenit/espanja" target="_blank" rel="noopener" class="authority-link">
-          Katso YLE Abitreenit-arkisto &rarr;
-        </a>
-      </div>
-
-      <!-- 3. Exam structure -->
-      <div class="authority-card">
-        <div class="authority-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
-        <h3 class="authority-title">Kokeen rakenne &mdash; kaikki osa-alueet</h3>
-        <p class="authority-desc">
-          Espanjan lyhyen oppim&auml;&auml;r&auml;n YO-koe koostuu kuullun ja luetun ymm&auml;rt&auml;misest&auml;,
-          rakenteista ja sanastosta sek&auml; lyhyest&auml; ja pitk&auml;st&auml; kirjoitelmasta. Puheo harjoittaa kaikkia.
-        </p>
-        <a href="https://www.ylioppilastutkinto.fi/ylioppilastutkinto/koe-ja-tehtavatyypit/kielikokeet" target="_blank" rel="noopener" class="authority-link">
-          YTL: vieraan kielen kokeet &rarr;
-        </a>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- 6) CREDIBILITY STRIP (replaces empty testimonials until real quotes exist) -->
-  <section class="section" id="credibility" aria-label="Luotettavuus">
-    <ul class="credibility-strip">
-      <li class="credibility-item">
-        <svg class="credibility-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/></svg>
-        YTL-rubriikin mukainen arviointi
-      </li>
-      <li class="credibility-item">
-        <svg class="credibility-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg>
-        10 vuoden YO-arkisto pohjana
-      </li>
-      <li class="credibility-item">
-        <svg class="credibility-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
-        Lukion OPS 2021 &middot; lyhyt oppim&auml;&auml;r&auml;
-      </li>
-      <li class="credibility-item">
-        <svg class="credibility-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20"/><path d="M12 2a15 15 0 0 0 0 20"/></svg>
-        Tehty Suomessa
-      </li>
-    </ul>
-  </section>
-
-  <!-- COMPARISON: Why Puheo, not Abitreenit -->
-  <section class="section" id="compare">
-    <div class="section-tag">Vertailu</div>
-    <h2>Miksi Puheo eik&auml; <em>Abitreenit</em>?</h2>
-    <p class="section-sub">
-      Abitreenit on hyv&auml; ilmainen resurssi &mdash; k&auml;yt&auml; sit&auml;. Puheo on seuraava askel,
-      kun haluat personoituja harjoituksia ja aitoa palautetta.
-    </p>
-
-    <figure class="compare-quote">
-      <blockquote>&ldquo;Abitreenit on kuin oppikirja. Puheo on kuin yksityisopettaja.&rdquo;</blockquote>
-    </figure>
-
-    <div class="compare-wrap">
-      <table class="compare-table" aria-label="Abitreenit vs. Puheo">
-        <thead>
-          <tr>
-            <th scope="col" class="compare-feat"><span class="visually-hidden">Ominaisuus</span></th>
-            <th scope="col">Abitreenit</th>
-            <th scope="col" class="is-ours">Puheo</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th scope="row" data-label="Ominaisuus">Hinta</th>
-            <td data-label="Abitreenit">Ilmainen</td>
-            <td class="is-ours" data-label="Puheo">9,99&euro;/kk tai 29&euro; kes&auml;paketti</td>
-          </tr>
-          <tr>
-            <th scope="row" data-label="Ominaisuus">YO-koearkisto</th>
-            <td data-label="Abitreenit"><span class="mark yes">&#10003;</span> Kaikki viralliset</td>
-            <td class="is-ours" data-label="Puheo"><span class="mark yes">&#10003;</span> Kaikki + t&auml;yskoe-simulaatio</td>
-          </tr>
-          <tr>
-            <th scope="row" data-label="Ominaisuus">Adaptaatio tasoon</th>
-            <td data-label="Abitreenit"><span class="mark no">&#10007;</span> Ei</td>
-            <td class="is-ours" data-label="Puheo"><span class="mark yes">&#10003;</span> Tunnistaa heikot alueet</td>
-          </tr>
-          <tr>
-            <th scope="row" data-label="Ominaisuus">AI-arvio kirjoitelmaan</th>
-            <td data-label="Abitreenit"><span class="mark no">&#10007;</span> Mallivastauksia</td>
-            <td class="is-ours" data-label="Puheo"><span class="mark yes">&#10003;</span> YTL-rubriikin mukaan</td>
-          </tr>
-          <tr>
-            <th scope="row" data-label="Ominaisuus">&Auml;lyk&auml;s kertaus</th>
-            <td data-label="Abitreenit"><span class="mark no">&#10007;</span> Ei</td>
-            <td class="is-ours" data-label="Puheo"><span class="mark yes">&#10003;</span> Virheet palautuvat automaattisesti</td>
-          </tr>
-          <tr>
-            <th scope="row" data-label="Ominaisuus">Mobiili UX</th>
-            <td data-label="Abitreenit"><span class="mark meh">&#9651;</span> PDF-pohjainen</td>
-            <td class="is-ours" data-label="Puheo"><span class="mark yes">&#10003;</span> Mobile-first app</td>
-          </tr>
-          <tr>
-            <th scope="row" data-label="Ominaisuus">P&auml;ivitykset</th>
-            <td data-label="Abitreenit">Vuosittain</td>
-            <td class="is-ours" data-label="Puheo"><span class="mark yes">&#10003;</span> Viikoittain</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="compare-intent">
-      <strong>Tehnyt jo Abitreenit-kokeet?</strong>
-      Puheo analysoi heikot kohtasi ja tarjoaa juuri niiden harjoitusta &mdash;
-      sit&auml; Abitreenit ei tee.
-    </div>
-  </section>
-
-  <!-- GRADING: How Puheo evaluates writing -->
-  <section class="section" id="grading">
-    <div class="section-tag">N&auml;in arvioimme</div>
-    <h2>YTL-rubriikki, <em>rivi rivilt&auml;</em>.</h2>
-    <p class="section-sub">
-      Sama arviointiperuste kuin oikeassa YO-kokeessa. Lyhyt kirjoitelma:
-      35 pistett&auml;, kolme kriteeri&auml;.
-    </p>
-
-    <div class="rubric-grid">
-      <div class="rubric-item">
-        <div class="rubric-head">
-          <span class="rubric-name">Sis&auml;lt&ouml; ja ymm&auml;rrett&auml;vyys</span>
-          <span class="rubric-max">0&ndash;15 p</span>
-        </div>
-        <div class="rubric-desc">Teht&auml;v&auml;nannon noudattaminen, johdonmukaisuus, viestin selkeys ja kattavuus.</div>
-      </div>
-      <div class="rubric-item">
-        <div class="rubric-head">
-          <span class="rubric-name">Kielellinen laajuus</span>
-          <span class="rubric-max">0&ndash;10 p</span>
-        </div>
-        <div class="rubric-desc">Sanaston rikkaus, rakenteiden monipuolisuus, idiomit.</div>
-      </div>
-      <div class="rubric-item">
-        <div class="rubric-head">
-          <span class="rubric-name">Kielellinen oikeellisuus</span>
-          <span class="rubric-max">0&ndash;10 p</span>
-        </div>
-        <div class="rubric-desc">Kielioppi, oikeinkirjoitus, kongruenssit, aikamuodot.</div>
-      </div>
-    </div>
-
-    <div class="essay-demo">
-      <div class="essay-task">
-        <div class="essay-task-label">Teht&auml;v&auml;</div>
-        <div class="essay-task-text">
-          Kirjoita s&auml;hk&ouml;posti espanjalaiselle yst&auml;v&auml;llesi kes&auml;lomastasi.
-          Kerro mihin menet, mit&auml; aiot tehd&auml; ja milloin palaat. 50&ndash;70 sanaa.
-        </div>
-      </div>
-
-      <div class="essay-grid">
-        <div class="essay-col">
-          <div class="essay-label">Opiskelijan kirjoitelma</div>
-          <div class="essay-raw">
-            <p>&iexcl;Hola Marcos!</p>
-            <p>Este verano voy a Espa&ntilde;a con mi familia. Salimos el 15 de junio. Estaremos en Barcelona dos semanas. Vamos a ver la playa y <mark class="hl hl-warn"><sup class="hl-num">1</sup>comemos</mark> mucha paella. Mi madre dice que es importante que <mark class="hl hl-err"><sup class="hl-num">2</sup>yo hablo</mark> con espa&ntilde;oles. <mark class="hl hl-meh"><sup class="hl-num">3</sup>Yo quer&iacute;a</mark> aprender espa&ntilde;ol mejor. Volveremos el 30 de junio. &iexcl;Te veo pronto!</p>
-            <p>Saludos, Liisa</p>
+          <div class="hero__ctas">
+            <a class="btn btn--primary btn--lg" href="/app.html#rekisteroidy">
+              Aloita ilmaiseksi
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </a>
+            <a class="btn btn--ghost btn--lg" href="#miten">Katso miten se toimii</a>
           </div>
+
+          <p class="hero__trust">
+            Ei luottokorttia
+            <span class="hero__trust-sep" aria-hidden="true">•</span>
+            Suomen kielellä
+            <span class="hero__trust-sep" aria-hidden="true">•</span>
+            Toimii selaimessa
+          </p>
         </div>
 
-        <div class="essay-col is-feedback">
-          <div class="essay-label">Puheon palaute</div>
-
-          <div class="score-grid">
-            <div class="score-row">
-              <div class="score-label">Sis&auml;lt&ouml;</div>
-              <div class="score-bar"><div class="score-fill" style="width:80%"></div></div>
-              <div class="score-val">12 / 15</div>
+        <div class="hero__visual" aria-hidden="true">
+          <div class="browser-frame">
+            <div class="browser-frame__bar">
+              <div class="browser-frame__dots">
+                <span></span><span></span><span></span>
+              </div>
+              <div class="browser-frame__url">puheo.fi/oma-sivu</div>
             </div>
-            <div class="score-row">
-              <div class="score-label">Laajuus</div>
-              <div class="score-bar"><div class="score-fill" style="width:70%"></div></div>
-              <div class="score-val">7 / 10</div>
-            </div>
-            <div class="score-row">
-              <div class="score-label">Oikeellisuus</div>
-              <div class="score-bar"><div class="score-fill" style="width:60%"></div></div>
-              <div class="score-val">6 / 10</div>
-            </div>
-            <div class="score-total">
-              <div class="score-total-num">25 / 35</div>
-              <div class="score-total-grade">Arvosana <strong>M</strong></div>
+            <div class="browser-frame__viewport">
+              <img
+                src="references/puheo-screens/dashboard-1440.png"
+                alt=""
+                loading="eager"
+                decoding="async"
+                width="1440" height="900"
+              />
             </div>
           </div>
 
-          <ul class="annot-list">
-            <li class="annot-item annot-warn">
-              <span class="annot-num">1</span>
-              <div class="annot-body">
-                <strong>&ldquo;comemos&rdquo;</strong> &mdash; aikamuoto poikkeaa muusta tekstist&auml;.
-                Tekstiss&auml; k&auml;ytet&auml;&auml;n futuuria (&ldquo;estaremos&rdquo;, &ldquo;vamos a ver&rdquo;).
-                Sopii paremmin <em>&ldquo;comeremos&rdquo;</em>.
-              </div>
+          <!-- Floating product fragment — Puheo streak chip -->
+          <div class="floating-card" role="img" aria-label="Esimerkki: 12 päivän putki">
+            <span class="floating-card__avatar">ro</span>
+            <span class="floating-card__meta">
+              <span class="floating-card__name">ronja</span>
+              <span class="floating-card__streak">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2s4 4 4 9a4 4 0 0 1-8 0c0-2 1-3 1-3s-1 4 1 4 2-2 2-4-1-4-1-4 1 2 1-2zm0 12a3 3 0 0 0-3 3c0 2 2 5 3 5s3-3 3-5a3 3 0 0 0-3-3z"/></svg>
+                12 pv
+              </span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── PROBLEM ────────────────────────────────────────── -->
+    <section class="landing-section problem" id="ongelma" aria-labelledby="ongelma-otsikko">
+      <div class="landing-section__inner problem__inner">
+        <h2 class="problem__lede" id="ongelma-otsikko">
+          YO-koe palkitsee toistuvaa harjoittelua. Eivät kaikki opiskelijat ehdi tai jaksa.
+        </h2>
+        <p class="problem__sub">
+          Puheo automatisoi kertaamisen, korjaa virheet samalla logiikalla
+          kuin oikea YTL-arvioija ja muistaa tarkalleen mitä sinun pitää
+          harjoitella seuraavaksi.
+        </p>
+      </div>
+    </section>
+
+    <!-- ─── PRODUCT — 3 PILLARS ───────────────────────────── -->
+    <section class="landing-section pillars" id="tuote" aria-labelledby="tuote-otsikko">
+      <div class="landing-section__inner">
+        <div class="pillars__head">
+          <p class="pillars__eyebrow">Mitä Puheo tekee</p>
+          <h2 class="pillars__title" id="tuote-otsikko">
+            Kolme aluetta. Sama YO-rubriikki.
+          </h2>
+        </div>
+
+        <div class="pillars__grid">
+          <!-- Sanasto -->
+          <article class="pillar pillar--vocab">
+            <span class="pillar__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+            </span>
+            <h3 class="pillar__title">Sanasto</h3>
+            <p class="pillar__body">
+              Yli 2 000 sanaa B1–B2-tasolla, ryhmiteltynä YO-aiheisiin.
+              Toistoväli kasvaa kun muistat — joka päivä näet tarkalleen
+              sen, mitä on aika kerrata.
+            </p>
+            <p class="pillar__metric"><strong>2 000+</strong> sanaa · 8 aihetta</p>
+            <div class="pillar__thumb">
+              <img
+                src="references/puheo-screens/mode-vocab-1440.png"
+                alt="Puheon sanastoharjoitus, jossa espanjankielinen sana ja monivalintavaihtoehdot suomeksi."
+                loading="lazy" decoding="async"
+                width="1440" height="900"
+              />
+            </div>
+          </article>
+
+          <!-- Kielioppi -->
+          <article class="pillar pillar--grammar">
+            <span class="pillar__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.5L19 10l-5.1 1.5L12 17l-1.9-5.5L5 10l5.1-1.5z"/><path d="M19 4v4M21 6h-4M5 18v3M6.5 19.5h-3"/></svg>
+            </span>
+            <h3 class="pillar__title">Kielioppi</h3>
+            <p class="pillar__body">
+              Subjunktiivi, ser/estar, preteriti vs. imperfekti.
+              Kaikki YO-kokeen avainrakenteet harjoituksina, joissa
+              et koskaan näe samaa lausetta kahdesti.
+            </p>
+            <p class="pillar__metric"><strong>1 200+</strong> aukkotehtävää · adaptiivinen</p>
+            <div class="pillar__thumb">
+              <img
+                src="references/puheo-screens/profile-1440.png"
+                alt="Puheon edistymisnäkymä, jossa näkyy oppilaan kielioppi-osa-alueiden valmiusprosentit."
+                loading="lazy" decoding="async"
+                width="1440" height="900"
+              />
+            </div>
+          </article>
+
+          <!-- Kirjoittaminen -->
+          <article class="pillar pillar--writing">
+            <span class="pillar__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>
+            </span>
+            <h3 class="pillar__title">Kirjoittaminen</h3>
+            <p class="pillar__body">
+              Tekoäly arvioi kirjoituksesi YTL:n rubriikin mukaisesti:
+              viestinnällisyys, rakenteet, sanasto, kokonaisuus.
+              Saat tarkan suomenkielisen selityksen jokaisesta virheestä.
+            </p>
+            <p class="pillar__metric"><strong>YTL</strong>-rubriikin mukainen palaute</p>
+            <div class="pillar__thumb">
+              <img
+                src="references/puheo-screens/writing-1440.png"
+                alt="Puheon kirjoitustehtävä, jossa oppilas kirjoittaa espanjankielistä tekstiä ja saa AI-palautetta."
+                loading="lazy" decoding="async"
+                width="1440" height="900"
+              />
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── HOW IT WORKS ──────────────────────────────────── -->
+    <section class="landing-section steps" id="miten" aria-labelledby="miten-otsikko">
+      <div class="landing-section__inner">
+        <div class="steps__head">
+          <p class="steps__eyebrow">Näin se etenee</p>
+          <h2 class="steps__title" id="miten-otsikko">
+            Kolme askelta. Kymmenen minuuttia päivässä.
+          </h2>
+        </div>
+
+        <ol class="steps__grid">
+          <li class="step">
+            <span class="step__num" aria-hidden="true">01</span>
+            <h3 class="step__title">Kerro tavoitteesi</h3>
+            <p class="step__body">
+              Aseta YO-päivä, tavoitearvosana ja heikkoudet. Puheo
+              rakentaa kertausjonon, joka osuu tarkasti niihin kohtiin
+              joista kokeessa eniten putoaa pisteitä.
+            </p>
+          </li>
+
+          <li class="step">
+            <span class="step__num" aria-hidden="true">02</span>
+            <h3 class="step__title">Harjoittele päivittäin</h3>
+            <p class="step__body">
+              Lyhyitä kymmenen minuutin sessioita. Sanasto, kielioppi,
+              luetun ymmärtäminen ja kirjoitus vuorottelevat — sama
+              jakauma kuin oikeassa kokeessa.
+            </p>
+          </li>
+
+          <li class="step">
+            <span class="step__num" aria-hidden="true">03</span>
+            <h3 class="step__title">Näe kehityksesi</h3>
+            <p class="step__body">
+              Päivittäinen YO-valmius-prosentti, heikkojen kohtien
+              kartta ja kertausjono. Et arvaile enää, missä mennään —
+              näet sen numerona.
+            </p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ─── AI GRADING SHOWCASE ───────────────────────────── -->
+    <section class="landing-section grader" id="arviointi" aria-labelledby="arviointi-otsikko">
+      <div class="landing-section__inner grader__inner">
+
+        <!-- LEFT: recreated grader output (real fixture: references/puheo-screens/grading-response.json) -->
+        <div class="grader-card" role="figure" aria-label="Esimerkki Puheon arviointinäkymästä — opiskelijan sähköposti, virheet alleviivattuna ja YTL-rubriikin pisteet.">
+          <div class="grader-card__head">
+            <p class="grader-card__title">Sähköposti ystävälle · 160–240 merkkiä</p>
+            <span class="grader-card__badge">YTL · 13 / 20</span>
+          </div>
+
+          <p class="grader-prose">Hola Marta,
+
+Estoy escribiendo para invitarte a mi cumpleaños. Va a ser el viernes próximo en mi casa. Mi madre cocina mucha comida y <span class="ge" data-cat="spelling" tabindex="0">tendrémos<span class="ge-tip"><strong>Oikein: tendremos</strong>Painollinen tavu on toiseksi viimeinen, joten 'tendremos' kirjoitetaan ilman aksenttia.</span></span> también música. <span class="ge" data-cat="grammar" tabindex="0">Espero que vienes<span class="ge-tip"><strong>Oikein: Espero que vengas</strong>Subjunktiivi pakollinen 'esperar que' jälkeen, kun toivotaan jonkun tekevän jotakin: 'venir' → 'vengas'.</span></span> con tu hermano. La fiesta empieza a las siete. La semana pasada <span class="ge" data-cat="grammar" tabindex="0">estaba en Madrid<span class="ge-tip"><strong>Oikein: estuve en Madrid</strong>Loppuun saatettu, ajallisesti rajattu matka → preteriti ('estuve'), ei imperfekti.</span></span> con mi clase y <span class="ge" data-cat="grammar" tabindex="0">era muy divertido<span class="ge-tip"><strong>Oikein: fue muy divertido</strong>Kokonaisarvio päätyneestä tapahtumasta → preteriti 'fue'. 'Era' kuvaisi kestävää tilaa.</span></span>. <span class="ge" data-cat="grammar" tabindex="0">Es importante que me dices<span class="ge-tip"><strong>Oikein: que me digas</strong>Subjunktiivi pakollinen 'es importante que' jälkeen — kyse on toivomuksesta, ei toteamuksesta.</span></span> si puedes venir antes del miércoles.
+
+¡Hasta pronto!
+Saludos,
+Aino</p>
+
+          <div class="rubric">
+            <div class="rubric-row">
+              <span class="rubric-row__name">Viestinnällisyys</span>
+              <span class="rubric-row__score">4 / 5</span>
+              <span class="rubric-row__fb">Vastasit kaikkiin tehtävänannon kohtiin: aika, paikka, ruoka ja vastauspyyntö.</span>
+            </div>
+            <div class="rubric-row">
+              <span class="rubric-row__name">Kielen rakenteet</span>
+              <span class="rubric-row__score">2 / 5</span>
+              <span class="rubric-row__fb">Toistuvia virheitä subjunktiivissa ('que vienes', 'que dices') ja aikamuodoissa.</span>
+            </div>
+            <div class="rubric-row">
+              <span class="rubric-row__name">Sanasto</span>
+              <span class="rubric-row__score">4 / 5</span>
+              <span class="rubric-row__fb">Sanasto on B1–B2-tasoa ja sopiva tehtävän rekisteriin.</span>
+            </div>
+            <div class="rubric-row">
+              <span class="rubric-row__name">Kokonaisuus</span>
+              <span class="rubric-row__score">3 / 5</span>
+              <span class="rubric-row__fb">Tervehdys ja lopetus paikallaan, mutta sidosanoja vähän.</span>
+            </div>
+            <div class="rubric-total">
+              <span class="rubric-total__label">YO-arvioivuus</span>
+              <span class="rubric-total__score">13 / 20</span>
+              <span class="rubric-total__grade">Arvosana E</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: copy -->
+        <div class="grader-copy">
+          <h2 class="grader-copy__title" id="arviointi-otsikko">
+            Tekoäly, joka korjaa kuten YTL-arvioija.
+          </h2>
+          <p class="grader-copy__body">
+            Puheo arvioi kirjoituksesi täsmälleen YO-kokeen rubriikin
+            mukaan. Et saa pelkkää numeroa — saat tarkan selityksen
+            jokaisesta virheestä, ja ehdotuksen siitä, mitä harjoitella
+            seuraavaksi.
+          </p>
+          <ul class="grader-copy__list">
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+              Suomenkieliset selitykset jokaisesta virheestä
             </li>
-            <li class="annot-item annot-err">
-              <span class="annot-num">2</span>
-              <div class="annot-body">
-                <strong>&ldquo;yo hablo&rdquo;</strong> &mdash; &ldquo;es importante que&rdquo; vaatii subjunktiivin.
-                Oikein: <em>&ldquo;que yo hable&rdquo;</em>. Klassinen YO-kokeen virhe.
-              </div>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+              YTL-rubriikin mukainen pisteytys (4 osa-aluetta)
             </li>
-            <li class="annot-item annot-meh">
-              <span class="annot-num">3</span>
-              <div class="annot-body">
-                <strong>&ldquo;Yo quer&iacute;a&rdquo;</strong> &mdash; imperfekti tuntuu oudolta nykyhetken aikomuksesta.
-                Luontevampi: <em>&ldquo;quiero&rdquo;</em> tai <em>&ldquo;voy a aprender&rdquo;</em>.
-              </div>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+              Henkilökohtainen kertausjono virheidesi pohjalta
             </li>
           </ul>
         </div>
+
       </div>
-    </div>
+    </section>
 
-    <a href="https://www.ylioppilastutkinto.fi/" target="_blank" rel="noopener" class="rubric-link">
-      Lue YTL:n virallinen arviointiperuste &rarr;
-    </a>
-  </section>
+    <!-- ─── Pricing — LANDING_PLAN.md §C7 ─────────────────────────
+         Sourced from 21st.dev/community/components/efferd/pricing/default
+         (restrained dark "Plans that Scale with You" pattern).
+         Both CTAs → /app.html#rekisteroidy per Y-tunnus / live-payment
+         constraint (spec appendix #2). Pro upsell happens inside the
+         dashboard, never on landing.
+    -->
+    <section id="hinnoittelu" class="landing-section landing-section--pricing">
+      <div class="landing-section__inner">
+        <header class="pricing__head">
+          <p class="pricing__eyebrow">Hinnoittelu</p>
+          <h2 class="pricing__title">Aloita ilmaiseksi. Kasva Pron mukana, kun YO-koe lähestyy.</h2>
+          <p class="pricing__sub">Ei luottokorttia rekisteröityessä. Pro-kokeilun voit aktivoida sisäänkirjautumisen jälkeen — ja peruuttaa milloin tahansa.</p>
+        </header>
 
-  <!-- 7) PRICING -->
-  <section class="section" id="pricing">
-    <div class="section-tag">Hinnoittelu</div>
-    <h2>Valitse sinulle sopiva</h2>
-    <p class="section-sub">14 p&auml;iv&auml;n rahat takaisin -takuu, ei kysymyksi&auml;.</p>
+        <div class="pricing__grid">
+          <!-- ── Free card ───────────────────────────────── -->
+          <article class="pricing-card">
+            <header class="pricing-card__head">
+              <h3 class="pricing-card__name">Ilmainen</h3>
+              <p class="pricing-card__lede">Aloita harjoittelu heti — ilman sitoutumista.</p>
+            </header>
+            <div class="pricing-card__price">
+              <span class="pricing-card__price-num">0&nbsp;€</span>
+              <span class="pricing-card__price-cycle">ikuisesti</span>
+            </div>
+            <ul class="pricing-card__features" aria-label="Ilmaisen ominaisuudet">
+              <li class="pricing-card__feature pricing-card__feature--yes">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                Päivittäinen sanasto- ja kielioppiharjoitus
+              </li>
+              <li class="pricing-card__feature pricing-card__feature--yes">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                Kolme kirjoitustehtävän AI-arviointia kuukaudessa
+              </li>
+              <li class="pricing-card__feature pricing-card__feature--yes">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                Päivän haaste ja sana päivässä
+              </li>
+              <li class="pricing-card__feature pricing-card__feature--no">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                Adaptiivinen kertausjono virheidesi pohjalta
+              </li>
+              <li class="pricing-card__feature pricing-card__feature--no">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                Rajaton kirjoitusarviointi YTL-rubriikilla
+              </li>
+              <li class="pricing-card__feature pricing-card__feature--no">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                Henkilökohtainen YO-valmius-mittari
+              </li>
+            </ul>
+            <a class="btn btn--ghost btn--full pricing-card__cta" href="/app.html#rekisteroidy">Aloita ilmaiseksi</a>
+          </article>
 
-    <div class="pricing-grid" id="pricing-grid">
+          <!-- ── Pro card (accent border + Suosituin chip) ── -->
+          <article class="pricing-card pricing-card--pro" data-popular="true">
+            <span class="pricing-card__chip">Suosituin</span>
+            <header class="pricing-card__head">
+              <h3 class="pricing-card__name">Pro</h3>
+              <p class="pricing-card__lede">Käytä jokainen päivä — kunnes YO-koe on takana.</p>
+            </header>
+            <div class="pricing-card__price">
+              <span class="pricing-card__price-num">9,99&nbsp;€</span>
+              <span class="pricing-card__price-cycle">/ kk</span>
+            </div>
+            <ul class="pricing-card__features" aria-label="Pron ominaisuudet">
+              <li class="pricing-card__feature pricing-card__feature--yes">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                Kaikki Ilmaisen ominaisuudet
+              </li>
+              <li class="pricing-card__feature pricing-card__feature--yes">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                Adaptiivinen kertausjono virheidesi pohjalta
+              </li>
+              <li class="pricing-card__feature pricing-card__feature--yes">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                Rajaton kirjoitusarviointi YTL-rubriikilla
+              </li>
+              <li class="pricing-card__feature pricing-card__feature--yes">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                Kaikki YO-aiheet ja vaikeustasot B1–B2
+              </li>
+              <li class="pricing-card__feature pricing-card__feature--yes">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                Henkilökohtainen YO-valmius-mittari
+              </li>
+              <li class="pricing-card__feature pricing-card__feature--yes">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                Peruuta milloin tahansa, 14 päivän rahat takaisin
+              </li>
+            </ul>
+            <a class="btn btn--primary btn--full pricing-card__cta" href="/app.html#rekisteroidy">Kokeile Pro 7 pv ilmaiseksi</a>
+          </article>
+        </div>
 
-      <!-- CARD 1: Free -->
-      <div class="price-card" id="price-free">
-        <div class="price-name">Free</div>
-        <div class="price-amount">0&euro;</div>
-        <div class="price-tagline">Riitt&auml;&auml; kokeilemiseen</div>
-        <ul class="price-features">
-          <li>5 harjoitusta / p&auml;iv&auml;</li>
-          <li>1 t&auml;yskoe yhteens&auml;</li>
-          <li>Perussanasto</li>
-        </ul>
-        <a href="app.html" class="price-btn" data-cta="pricing-free">Aloita Free</a>
+        <p class="pricing__fineprint">
+          Hinnat sisältävät arvonlisäveron. Voit peruuttaa Pro-tilauksen sisäänkirjautuneena milloin tahansa.
+        </p>
       </div>
+    </section>
 
-      <!-- CARD 2: Pro -->
-      <div class="price-card" id="price-pro">
-        <div class="price-badge hidden" id="pro-badge">Suosituin</div>
-        <div class="price-name">Pro</div>
-        <div class="price-amount">9,99&euro;<span class="price-period"> / kk</span></div>
-        <div class="price-tagline">Vakavalle YO-kokeeseen valmistautujalle</div>
-        <ul class="price-features">
-          <li>Rajaton harjoitusm&auml;&auml;r&auml;</li>
-          <li>Rajattomat t&auml;yskoesimulaatiot</li>
-          <li>Kirjoitelmien AI-palaute</li>
-          <li>Adaptiivinen vaikeustaso + mastery testit</li>
-          <li>Peruta milloin tahansa</li>
-        </ul>
-        <a href="#" class="price-btn primary" id="pro-cta" data-waitlist data-cta="pricing-pro">Hanki Pro &rarr;</a>
+    <!-- ─── FAQ — LANDING_PLAN.md §C8 ─────────────────────────
+         Sourced from 21st.dev/community/components/tailark/faq/faq-accordion-with-title
+         (50/50 left-title + right-accordion pattern). Ported from
+         Radix/shadcn Accordion → native <details> for built-in a11y
+         (no aria-expanded JS, keyboard + screen-reader free).
+         Smooth reveal via interpolate-size with grid-template-rows
+         0fr→1fr fallback so older Chromiums still animate.
+         6 honest answers from spec appendix #5 (verbatim from
+         landing/DESIGN.md §10 — YTL-endorsement honesty matters).
+    -->
+    <section id="faq" class="landing-section landing-section--faq" aria-labelledby="faq-otsikko">
+      <div class="landing-section__inner faq__inner">
+        <header class="faq__head">
+          <p class="faq__eyebrow">UKK</p>
+          <h2 class="faq__title" id="faq-otsikko">
+            Usein kysyttyä Puheosta.
+          </h2>
+          <p class="faq__sub">
+            Et löytänyt etsimääsi? Lähetä kysymys osoitteeseen
+            <a class="faq__mail" href="mailto:tuki@puheo.fi">tuki@puheo.fi</a> —
+            vastaamme yleensä saman päivän aikana.
+          </p>
+        </header>
+
+        <div class="faq__list">
+          <details class="faq-item" name="puheo-faq">
+            <summary class="faq-item__q">
+              <span class="faq-item__q-text">Onko Puheo YTL:n virallisesti hyväksymä?</span>
+              <svg class="faq-item__chev" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 6 15 12 9 18"/></svg>
+            </summary>
+            <div class="faq-item__a">
+              <p>
+                Ei. YTL ei myönnä yksittäisille palveluille hyväksyntöjä, eikä
+                Puheo ole YTL:n tuottama tai vahvistama. Sen sijaan kirjoitusten
+                arviointi on rakennettu suoraan YTL:n julkaiseman vieraan kielen
+                lyhyen oppimäärän rubriikin päälle: viestinnällisyys, kielen
+                rakenteet, sanasto ja kokonaisuus pisteytetään samoilla
+                kriteereillä kuin oikeassa kokeessa.
+              </p>
+            </div>
+          </details>
+
+          <details class="faq-item" name="puheo-faq">
+            <summary class="faq-item__q">
+              <span class="faq-item__q-text">Mitä jos YO-kokeen formaatti muuttuu?</span>
+              <svg class="faq-item__chev" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 6 15 12 9 18"/></svg>
+            </summary>
+            <div class="faq-item__a">
+              <p>
+                Seuraamme YTL:n ohjeistusta ja päivitämme harjoitukset, rubriikin
+                ja tehtävätyypit jokaisen julkaistun muutoksen jälkeen. Puheon
+                Pro-tilaajat saavat päivitykset automaattisesti — uusia versioita
+                ei tarvitse asentaa erikseen.
+              </p>
+            </div>
+          </details>
+
+          <details class="faq-item" name="puheo-faq">
+            <summary class="faq-item__q">
+              <span class="faq-item__q-text">Mitä tietoja keräätte ja missä ne säilytetään?</span>
+              <svg class="faq-item__chev" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 6 15 12 9 18"/></svg>
+            </summary>
+            <div class="faq-item__a">
+              <p>
+                Vain rekisteröitymiseen tarvittavat tiedot ja harjoitusdata
+                (vastaukset, edistyminen) — ei kolmansille osapuolille,
+                ei mainostajille. Palvelu on GDPR-yhteensopiva ja kaikki
+                data säilytetään EU-alueella sijaitsevilla palvelimilla.
+                Voit pyytää tietojesi poistamisen milloin tahansa.
+              </p>
+            </div>
+          </details>
+
+          <details class="faq-item" name="puheo-faq">
+            <summary class="faq-item__q">
+              <span class="faq-item__q-text">Voinko käyttää Puheoa puhelimella?</span>
+              <svg class="faq-item__chev" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 6 15 12 9 18"/></svg>
+            </summary>
+            <div class="faq-item__a">
+              <p>
+                Kyllä. Puheo on selainpohjainen ja toimii sellaisenaan iOS:n
+                ja Androidin kosketusnäytöillä. Voit halutessasi lisätä
+                Puheon kotinäytölle PWA:na (progressive web app) — silloin
+                se aukeaa kuin sovellus, ilman erillistä asennusta.
+              </p>
+            </div>
+          </details>
+
+          <details class="faq-item" name="puheo-faq">
+            <summary class="faq-item__q">
+              <span class="faq-item__q-text">Voiko tekoäly korvata oikean opettajan?</span>
+              <svg class="faq-item__chev" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 6 15 12 9 18"/></svg>
+            </summary>
+            <div class="faq-item__a">
+              <p>
+                Kolme asiaa, joita tekoäly tekee paremmin kuin yksin
+                opiskelu kirjan kanssa: arvioi kirjoituksesi 30 sekunnissa,
+                muistaa tarkalleen mitkä sanat ja rakenteet sinun on aika
+                kerrata, ja on käytettävissä silloin kun harjoittelet —
+                klo 22:30 tai sunnuntai-iltapäivänä. Hyvä opettaja antaa
+                muuta arvokasta — Puheo on harjoittelukumppani niiden
+                tuntien välissä, ei opettajan korvaaja.
+              </p>
+            </div>
+          </details>
+
+          <details class="faq-item" name="puheo-faq">
+            <summary class="faq-item__q">
+              <span class="faq-item__q-text">Voinko peruuttaa Pro-tilauksen milloin tahansa?</span>
+              <svg class="faq-item__chev" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 6 15 12 9 18"/></svg>
+            </summary>
+            <div class="faq-item__a">
+              <p>
+                Kyllä. Voit peruuttaa Pro-tilauksen sisäänkirjautuneena
+                yhdellä klikkauksella, ja tilaus päättyy kuluvan
+                laskutusjakson loppuun. Kertaostoille (esim. kesäpaketti)
+                myönnämme 14 päivän rahat-takaisin-takuun ilman erillistä
+                perustelua.
+              </p>
+            </div>
+          </details>
+        </div>
       </div>
+    </section>
 
-      <!-- CARD 3: Kes&auml;paketti -->
-      <div class="price-card summer" id="price-summer">
-        <div class="price-badge summer-badge hidden" id="summer-badge">Suosituin</div>
-        <div class="price-name">Kes&auml;paketti 2026</div>
-        <div class="price-amount summer-price">29&euro;</div>
-        <div class="price-compare"><s>39,96&euro;</s> &rarr; 29&euro; &middot; <strong>S&auml;&auml;st&auml; 10,96&euro;</strong></div>
-        <div class="price-per-month">Vain 7,25&euro; / kk &mdash; kertamaksu</div>
-        <div class="price-tagline">Valmistaudu syksyn YO-kirjoituksiin ilman seurantaa</div>
-        <ul class="price-features">
-          <li class="highlight">Kaikki mit&auml; Pro:ssa &mdash; ja lis&auml;&auml;</li>
-          <li>4kk t&auml;ysi p&auml;&auml;sy: 1.6.&ndash;30.9.2026</li>
-          <li>Ei automaattista uusimista &mdash; 0 peruutushuolta</li>
-          <li class="bonus">BONUS: Viikkosuunnitelma syksyn YO-kirjoituksiin</li>
-          <li class="bonus">BONUS: Prioriteettituki (vastaus 12h sis&auml;ll&auml;)</li>
-          <li class="bonus">BONUS: 1 henkil&ouml;kohtainen kirjoitelmapalaute minulta</li>
-        </ul>
-        <a href="#" class="price-btn primary summer-btn" id="summer-cta" data-waitlist data-cta="pricing-summer">Osta kes&auml;paketti 29&euro; &rarr;</a>
-        <div class="price-footer-note">Kertamaksu &mdash; ei kuukausilaskutusta &middot; P&auml;&auml;sy p&auml;&auml;ttyy 30.9.2026</div>
+    <!-- ─── FINAL CTA — LANDING_PLAN.md §C9 ───────────────────
+         Sourced from 21st.dev/community/components/dhiluxui/spotlight-cta/default
+         — restrained centred-card pattern. Adopted §C9's vertical
+         layout (title + body above the button) instead of the source's
+         horizontal split, because the final CTA is a closer, not a
+         feature-grid. Cursor-spotlight effect deliberately skipped:
+         restraint > novelty for the closing surface.
+    -->
+    <section id="rekisteroidy-cta" class="landing-section landing-section--cta" aria-labelledby="cta-otsikko">
+      <div class="landing-section__inner">
+        <div class="cta-card">
+          <div class="cta-card__glow" aria-hidden="true"></div>
+          <h2 class="cta-card__title" id="cta-otsikko">
+            Espanjan YO-koe on lähempänä kuin luulet.
+          </h2>
+          <p class="cta-card__body">
+            Aloita ilmaiseksi tänään. Ei luottokorttia, ei sitoutumista.
+            Tee 10 minuutin harjoitus ja katso miten Puheo arvioi sinut.
+          </p>
+          <a class="btn btn--primary btn--lg cta-card__btn" href="/app.html#rekisteroidy">
+            Aloita ilmaiseksi
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+          <p class="cta-card__fineprint">
+            Tehty Suomessa
+            <span class="cta-card__sep" aria-hidden="true">•</span>
+            Toimii selaimessa
+            <span class="cta-card__sep" aria-hidden="true">•</span>
+            Sisältö päivittyy YO-vaatimusten mukana
+          </p>
+        </div>
       </div>
-
-    </div>
-  </section>
-
-  <!-- Waitlist modal -->
-  <div class="waitlist-overlay hidden" id="waitlist-overlay">
-    <div class="waitlist-modal">
-      <button class="waitlist-close" id="waitlist-close">&times;</button>
-      <div class="waitlist-icon">&#9993;&#65039;</div>
-      <h3>Maksullinen tilaus avautuu pian &mdash; ilmoita s&auml;hk&ouml;postisi</h3>
-      <p>Otamme yhteytt&auml; heti kun tilaus on ostettavissa. Arvioimme avauksen kes&auml;kuussa 2026.</p>
-      <form id="waitlist-form" class="waitlist-form">
-        <input type="email" id="waitlist-email" placeholder="email@esimerkki.fi" required autocomplete="email" />
-        <button type="submit" class="waitlist-submit" id="waitlist-submit">Ilmoita minulle &rarr;</button>
-      </form>
-      <div class="waitlist-success hidden" id="waitlist-success">
-        &#10003; Kiitos! Ilmoitamme heti kun tilaus on ostettavissa.
-      </div>
-      <div class="waitlist-error hidden" id="waitlist-error"></div>
-    </div>
-  </div>
-
-  <!-- CTA -->
-  <div class="cta-section">
-    <h2>Aloita nyt. Ilmaiseksi.</h2>
-    <p>Ei luottokorttia. 5 harjoitusta p&auml;iv&auml;ss&auml; ilmaiseksi.</p>
-    <a href="app.html" class="btn-hero" data-cta="cta-section">Aloita harjoittelu &rarr;</a>
-  </div>
-
-  <!-- 8) FAQ -->
-  <section class="section" id="faq">
-    <div class="section-tag">Usein kysytty&auml;</div>
-    <h2>Kysymyksi&auml; ja vastauksia</h2>
-
-    <!-- JSON-LD: FAQPage (rich snippets Google-tuloksissa) -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "Mitä kesäpaketti sisältää ja milloin se on saatavilla?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Kesäpaketti antaa täyden Pro-pääsyn 1.6.–30.9.2026 (4 kuukautta) yhdellä 29€ kertamaksulla. Sisältää kaikki Pro-ominaisuudet + henkilökohtaisen viikkosuunnitelman, prioriteettituen ja yhden henkilökohtaisen kirjoitelmapalautteen. Paketti on ostettavissa 1.6.–31.8.2026."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Mitä tapahtuu syyskuun jälkeen jos ostan kesäpaketin?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Pääsy päättyy automaattisesti 30.9.2026 — voit tilata Pro:n 9,99€/kk jatkaaksesi. Espanjan kirjoitukset ovat syyskuussa, joten tarve yleensä loppuu silloin."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Paljonko säästän kesäpaketilla vs. kuukausitilauksella?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "4 kuukautta Pro:ta kuukausimaksuna = 39,96€. Kesäpaketti = 29€. Säästät 10,96€ eli noin 27%."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Tarvitseeko rekisteröityä?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Ei pakollista. Voit harjoitella ilman tiliä. Rekisteröitymällä edistymisesi tallentuu ja saat käyttöösi dashboardin sekä älykkään kertausjärjestelmän, joka palauttaa virheesi ennen kuin unohdat ne."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Miten AI-arviointi eroaa opettajan palautteesta?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Puheon tekoäly arvioi kirjoitelmasi YTL:n virallisella pisteytysrubriikilla. Saat pisteet kriteereittäin ja tarkan listan virheistä korjausehdotuksineen. Opettaja antaa samanlaista palautetta, mutta Puheo on käytettävissä 24/7."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Sopiiko tämä myös pitkän oppimäärän opiskelijoille?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Tällä hetkellä Puheo on suunniteltu lyhyen oppimäärän YO-kokeeseen. Pitkän oppimäärän tuki on suunnitteilla."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Voinko peruuttaa Pro-tilauksen?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Kyllä, milloin tahansa. Kuukausitilaus peruuntuu heti. Kesäpaketista saat rahat takaisin 14 päivän sisällä ilman kysymyksiä."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Toimiiko puhelimella?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Kyllä. Puheo on suunniteltu mobile-first. Toimii kaikissa selaimissa, ei vaadi asennusta. Voit myös asentaa sen kotinäytölle (PWA)."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Miten Puheo eroaa Abitreeneistä?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Abitreenit on hyvä harjoituspankki, mutta Puheo vie pidemmälle: adaptiivinen taso, YTL-rubriikin mukainen kirjoitelma-arviointi, täyskoe-simulaatio, älykäs kertaus ja personoidut AI-harjoitukset heikkouksiesi mukaan."
-          }
-        }
-      ]
-    }
-    </script>
-
-    <div class="faq-list">
-      <details class="faq-item">
-        <summary>Mit&auml; kes&auml;paketti sis&auml;lt&auml;&auml; ja milloin se on saatavilla?</summary>
-        <p>Kes&auml;paketti antaa t&auml;yden Pro-p&auml;&auml;syn 1.6.&ndash;30.9.2026 (4 kuukautta) yhdell&auml; 29&euro; kertamaksulla. Sis&auml;lt&auml;&auml; kaikki Pro-ominaisuudet + henkil&ouml;kohtaisen viikkosuunnitelman, prioriteettituen ja yhden henkil&ouml;kohtaisen kirjoitelmapalautteen. Paketti on ostettavissa 1.6.&ndash;31.8.2026.</p>
-      </details>
-      <details class="faq-item">
-        <summary>Mit&auml; tapahtuu syyskuun j&auml;lkeen jos ostan kes&auml;paketin?</summary>
-        <p>P&auml;&auml;sy p&auml;&auml;ttyy automaattisesti 30.9.2026 &mdash; voit tilata Pro:n 9,99&euro;/kk jatkaaksesi. Espanjan kirjoitukset ovat syyskuussa, joten tarve yleens&auml; loppuu silloin.</p>
-      </details>
-      <details class="faq-item">
-        <summary>Paljonko s&auml;&auml;st&auml;n kes&auml;paketilla vs. kuukausitilauksella?</summary>
-        <p>4 kuukautta Pro:ta kuukausimaksuna = 39,96&euro;. Kes&auml;paketti = 29&euro;. S&auml;&auml;st&auml;t 10,96&euro; eli noin 27%.</p>
-      </details>
-      <details class="faq-item">
-        <summary>Tarvitseeko rekister&ouml;ity&auml;?</summary>
-        <p>Ei pakollista. Voit harjoitella ilman tili&auml;. Rekister&ouml;itym&auml;ll&auml; edistymisesi tallentuu ja saat k&auml;ytt&ouml;&ouml;si dashboardin sek&auml; &auml;lykk&auml;&auml;n kertausj&auml;rjestelm&auml;n, joka palauttaa virheesi ennen kuin unohdat ne.</p>
-      </details>
-      <details class="faq-item">
-        <summary>Miten AI-arviointi eroaa opettajan palautteesta?</summary>
-        <p>Puheon teko&auml;ly arvioi kirjoitelmasi YTL:n virallisella pisteytysrubriikilla. Saat pisteet kriteereitt&auml;in ja tarkan listan virheist&auml; korjausehdotuksineen. Opettaja antaa samanlaista palautetta, mutta Puheo on k&auml;ytett&auml;viss&auml; 24/7.</p>
-      </details>
-      <details class="faq-item">
-        <summary>Sopiiko t&auml;m&auml; my&ouml;s pitk&auml;n oppim&auml;&auml;r&auml;n opiskelijoille?</summary>
-        <p>T&auml;ll&auml; hetkell&auml; Puheo on suunniteltu lyhyen oppim&auml;&auml;r&auml;n yo-kokeeseen. Pitk&auml;n oppim&auml;&auml;r&auml;n tuki on suunnitteilla.</p>
-      </details>
-      <details class="faq-item">
-        <summary>Voinko peruuttaa Pro-tilauksen?</summary>
-        <p>Kyll&auml;, milloin tahansa. Kuukausitilaus peruuntuu heti. Kes&auml;paketista saat rahat takaisin 14 p&auml;iv&auml;n sis&auml;ll&auml; ilman kysymyksi&auml;.</p>
-      </details>
-      <details class="faq-item">
-        <summary>Toimiiko puhelimella?</summary>
-        <p>Kyll&auml;. Puheo on suunniteltu mobile-first. Toimii kaikissa selaimissa, ei vaadi asennusta. Voit my&ouml;s asentaa sen kotin&auml;yt&ouml;lle (PWA).</p>
-      </details>
-      <details class="faq-item">
-        <summary>Miten Puheo eroaa Abitreeneist&auml;?</summary>
-        <p>Abitreenit on hyv&auml; harjoituspankki, mutta Puheo vie pidemm&auml;lle: adaptiivinen taso, YTL-rubriikin mukainen kirjoitelma-arviointi, t&auml;yskoe-simulaatio, &auml;lyk&auml;s kertaus ja personoidut AI-harjoitukset heikkouksiesi mukaan.</p>
-      </details>
-    </div>
-  </section>
-
+    </section>
   </main>
 
-  <!-- 9) FOOTER -->
-  <footer>
-    <div class="footer-inner">
-      <div class="footer-left">
-        <div class="footer-logo">Puhe<span>o</span></div>
-        <div class="footer-text">
-          Teko&auml;lypohjainen harjoitteluymp&auml;rist&ouml;<br/>
-          espanjan ylioppilaskirjoituksiin
-        </div>
+  <!-- ─── FOOTER — LANDING_PLAN.md §C10 ───────────────────────
+       Sourced from 21st.dev/community/components/shadcnblockscom/footer-7/default
+       — minimal pattern: wordmark + tagline + social row at top,
+       3 columns of links below, bottom row with © + legal.
+       Skipped social icons (Puheo doesn't have public socials yet,
+       per the no-invented-social-proof rule from LANDING_PLAN.md).
+  -->
+  <footer class="landing-footer" role="contentinfo">
+    <div class="landing-footer__inner">
+
+      <div class="landing-footer__brand">
+        <a class="landing-footer__brandmark" href="/" aria-label="Puheo etusivu">
+          <span class="landing-footer__brand-dot" aria-hidden="true"></span>
+          Puheo
+        </a>
+        <p class="landing-footer__tagline">
+          Espanjan YO-koe lyhyen oppimäärän opiskelijoille.
+          Tekoälyvalmentaja, joka tuntee YTL:n rubriikin.
+        </p>
       </div>
-      <div class="footer-right">
-        <div class="footer-copy">&copy; <span id="copy-year"></span> Puheo</div>
+
+      <div class="landing-footer__cols">
+        <nav class="landing-footer__col" aria-label="Tuote">
+          <h3 class="landing-footer__col-title">Tuote</h3>
+          <ul class="landing-footer__links">
+            <li><a href="#tuote">Ominaisuudet</a></li>
+            <li><a href="#miten">Näin se toimii</a></li>
+            <li><a href="#hinnoittelu">Hinnoittelu</a></li>
+            <li><a href="#faq">UKK</a></li>
+          </ul>
+        </nav>
+
+        <nav class="landing-footer__col" aria-label="Tili">
+          <h3 class="landing-footer__col-title">Tili</h3>
+          <ul class="landing-footer__links">
+            <li><a href="/app.html#kirjaudu">Kirjaudu</a></li>
+            <li><a href="/app.html#rekisteroidy">Aloita ilmaiseksi</a></li>
+          </ul>
+        </nav>
+
+        <nav class="landing-footer__col" aria-label="Tieto">
+          <h3 class="landing-footer__col-title">Tieto</h3>
+          <ul class="landing-footer__links">
+            <li><a href="/privacy.html">Tietosuoja</a></li>
+            <li><a href="/terms.html">Käyttöehdot</a></li>
+            <li><a href="/refund.html">Rahat takaisin</a></li>
+            <li><a href="mailto:tuki@puheo.fi">Ota yhteyttä</a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <div class="landing-footer__bottom">
+        <p class="landing-footer__copy">© 2026 Puheo · Tehty Suomessa</p>
+        <p class="landing-footer__exam">YO-koe lyhyt espanja: <time datetime="2026-09-28">28.9.2026</time></p>
       </div>
     </div>
   </footer>
-  <nav class="footer-links" aria-label="Lis&auml;tietoja ja s&auml;hk&ouml;posti">
-    <a href="/blog/">Blogi</a>
-    <a href="/privacy.html">Tietosuoja</a>
-    <a href="/terms.html">K&auml;ytt&ouml;ehdot</a>
-    <a href="/refund.html">Palautukset</a>
-    <a href="mailto:tuki@puheo.fi">tuki@puheo.fi</a>
-  </nav>
 
+  <!-- ─── Inline JS: nav scroll-state (no library) ─────────────── -->
   <script>
-    // ── PostHog (EU host, public project key, autocapture off) ──
-    // Funnel events: landing_view, landing_cta_click, diagnostic_started,
-    // diagnostic_completed, diagnostic_email_captured, pricing_viewed, signup_from_landing.
-    (function() {
-      var PH_KEY = 'phc_pDqvRspyx5eukF7fHFz2P3oKWmNAwJXChBBCPAUsfpwE';
-      window.__PH_QUEUE = [];
-      window.track = function(event, props) { window.__PH_QUEUE.push([event, props || {}]); };
-
-      function load() {
-        import('https://cdn.jsdelivr.net/npm/posthog-js@1/dist/module.full.no-external.js')
-          .then(function(mod) {
-            var ph = mod.default;
-            ph.init(PH_KEY, {
-              api_host: 'https://eu.i.posthog.com',
-              persistence: 'localStorage',
-              autocapture: false,
-              capture_pageview: false
-            });
-            ph.capture('landing_view', { path: location.pathname });
-            window.track = function(event, props) { ph.capture(event, props || {}); };
-            (window.__PH_QUEUE || []).forEach(function(e) { ph.capture(e[0], e[1]); });
-            window.__PH_QUEUE = null;
-          })
-          .catch(function() { /* silent: PostHog must never block landing */ });
-      }
-      if (window.requestIdleCallback) { requestIdleCallback(load, { timeout: 2000 }); }
-      else { setTimeout(load, 1); }
-
-      // Delegated CTA click tracking — every [data-cta] element fires landing_cta_click.
-      document.addEventListener('click', function(e) {
-        var el = e.target.closest('[data-cta]');
-        if (!el) return;
-        window.track('landing_cta_click', {
-          cta: el.getAttribute('data-cta'),
-          href: el.getAttribute('href') || null,
-          text: (el.textContent || '').trim().slice(0, 80)
-        });
-      });
-
-      // Pricing section in-view → pricing_viewed (once per session).
-      var pricing = document.getElementById('pricing');
-      if (pricing && 'IntersectionObserver' in window) {
-        var seen = false;
-        new IntersectionObserver(function(entries) {
-          if (entries[0].isIntersecting && !seen) {
-            seen = true;
-            window.track('pricing_viewed', {});
-          }
-        }, { threshold: 0.3 }).observe(pricing);
-      }
-    })();
-
-    // Unified YO-koe countdown — renders into every [data-countdown="yo-koe"]
-    (function() {
-      var TARGET = Date.parse('2026-09-28T09:00:00+03:00');
-      var URGENT_THRESHOLD_MS = 7 * 24 * 60 * 60 * 1000;
-      function pad(n) { return String(n).padStart(2, '0'); }
-
-      var nodes = document.querySelectorAll('[data-countdown="yo-koe"]');
-      if (!nodes.length) return;
-
-      var timer = null;
-      var done = false;
-
-      function render() {
-        var diff = TARGET - Date.now();
-        if (diff <= 0) {
-          stop();
-          nodes.forEach(function(n) {
-            n.innerHTML = '<span class="countdown-now">T&auml;n&auml;&auml;n.</span>';
-          });
-          done = true;
-          return;
+    (function () {
+      const nav = document.getElementById('nav');
+      if (!nav) return;
+      let last = false;
+      const update = () => {
+        const scrolled = window.scrollY > 8;
+        if (scrolled !== last) {
+          nav.setAttribute('data-scrolled', scrolled ? 'true' : 'false');
+          last = scrolled;
         }
-
-        var d = Math.floor(diff / 86400000);
-        var h = Math.floor((diff % 86400000) / 3600000);
-        var m = Math.floor((diff % 3600000) / 60000);
-        var s = Math.floor((diff % 60000) / 1000);
-        var urgent = diff < URGENT_THRESHOLD_MS;
-
-        nodes.forEach(function(n) {
-          n.classList.toggle('is-urgent', urgent);
-          if (n.dataset.variant === 'compact') {
-            n.textContent = d + 'd ' + pad(h) + ':' + pad(m) + ':' + pad(s);
-          } else {
-            var dEl = n.querySelector('[data-unit="d"]');
-            var hEl = n.querySelector('[data-unit="h"]');
-            var mEl = n.querySelector('[data-unit="m"]');
-            var sEl = n.querySelector('[data-unit="s"]');
-            if (dEl) dEl.textContent = String(d);
-            if (hEl) hEl.textContent = pad(h);
-            if (mEl) mEl.textContent = pad(m);
-            if (sEl) sEl.textContent = pad(s);
-          }
-        });
-      }
-
-      function start() {
-        if (done || timer) return;
-        render();
-        timer = setInterval(render, 1000);
-      }
-      function stop() {
-        if (timer) { clearInterval(timer); timer = null; }
-      }
-
-      document.addEventListener('visibilitychange', function() {
-        if (document.hidden) stop(); else start();
-      });
-
-      // Urgency-bar visibility + dismissal
-      var bar = document.getElementById('urgency-bar');
-      var closeBtn = document.getElementById('urgency-bar-close');
-      if (bar) {
-        if (TARGET - Date.now() > 0 && sessionStorage.getItem('urgency-dismissed') !== '1') {
-          bar.classList.remove('hidden');
-        }
-      }
-      if (closeBtn && bar) {
-        closeBtn.addEventListener('click', function(e) {
-          e.stopPropagation();
-          bar.classList.add('hidden');
-          sessionStorage.setItem('urgency-dismissed', '1');
-        });
-      }
-
-      start();
-    })();
-
-    // Pricing card order + summer package state machine
-    (function() {
-      var month = new Date().getMonth();
-      var grid = document.getElementById('pricing-grid');
-      var free = document.getElementById('price-free');
-      var pro = document.getElementById('price-pro');
-      var summer = document.getElementById('price-summer');
-      var proBadge = document.getElementById('pro-badge');
-      var summerBadge = document.getElementById('summer-badge');
-      var summerCta = document.getElementById('summer-cta');
-
-      if (month >= 5 && month <= 7) {
-        // June–Aug: summer on sale, featured
-        grid.innerHTML = '';
-        grid.appendChild(free);
-        grid.appendChild(summer);
-        grid.appendChild(pro);
-        summer.classList.add('popular');
-        summer.classList.remove('teaser');
-        pro.classList.remove('popular');
-        summerBadge.classList.remove('hidden');
-        proBadge.classList.add('hidden');
-      } else if (month === 4) {
-        // May: preorder
-        grid.innerHTML = '';
-        grid.appendChild(free);
-        grid.appendChild(summer);
-        grid.appendChild(pro);
-        summer.classList.add('teaser');
-        summer.classList.add('popular');
-        pro.classList.remove('popular');
-        summerBadge.textContent = 'Tulossa 1.6.';
-        summerBadge.classList.remove('hidden');
-        proBadge.classList.add('hidden');
-        summerCta.textContent = 'Ilmoita kun saatavilla';
-      } else if (month >= 0 && month <= 3) {
-        // Jan–Apr: waitlist teaser
-        grid.innerHTML = '';
-        grid.appendChild(free);
-        grid.appendChild(pro);
-        grid.appendChild(summer);
-        summer.classList.add('teaser');
-        pro.classList.add('popular');
-        proBadge.classList.remove('hidden');
-        summerBadge.textContent = 'Tulossa 1.6.2026';
-        summerBadge.classList.remove('hidden');
-        summerCta.textContent = 'Ilmoita kun saatavilla';
-      } else {
-        // Sep–Dec: hide (exam is over)
-        grid.innerHTML = '';
-        grid.appendChild(free);
-        grid.appendChild(pro);
-        grid.appendChild(summer);
-        summer.style.display = 'none';
-        pro.classList.add('popular');
-        proBadge.classList.remove('hidden');
-        summerBadge.classList.add('hidden');
-      }
-
-      // Waitlist modal logic
-      var overlay = document.getElementById('waitlist-overlay');
-      var waitlistClose = document.getElementById('waitlist-close');
-      var waitlistForm = document.getElementById('waitlist-form');
-      if (waitlistClose && overlay) {
-        waitlistClose.addEventListener('click', function() {
-          overlay.classList.add('hidden');
-        });
-      }
-      if (overlay) {
-        overlay.addEventListener('click', function(e) {
-          if (e.target === overlay) overlay.classList.add('hidden');
-        });
-      }
-
-      // Delegated: any [data-waitlist] element opens the modal.
-      var lastWaitlistSource = 'pricing';
-      document.addEventListener('click', function(e) {
-        var trigger = e.target.closest('[data-waitlist]');
-        if (!trigger) return;
-        e.preventDefault();
-        lastWaitlistSource = trigger.getAttribute('data-cta') || 'pricing';
-        var o = document.getElementById('waitlist-overlay');
-        if (o) o.classList.remove('hidden');
-      });
-
-      if (waitlistForm) waitlistForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        var email = document.getElementById('waitlist-email').value.trim();
-        var btn = document.getElementById('waitlist-submit');
-        var errEl = document.getElementById('waitlist-error');
-        errEl.classList.add('hidden');
-        btn.disabled = true;
-        btn.textContent = 'Lähetetään...';
-
-        fetch('/api/waitlist', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email: email, product: lastWaitlistSource })
-        })
-        .then(function(r) { return r.json().then(function(d) { return { ok: r.ok, data: d }; }); })
-        .then(function(res) {
-          if (res.ok) {
-            document.getElementById('waitlist-form').classList.add('hidden');
-            document.getElementById('waitlist-success').classList.remove('hidden');
-          } else {
-            errEl.textContent = res.data.error || 'Jokin meni pieleen';
-            errEl.classList.remove('hidden');
-          }
-        })
-        .catch(function() {
-          errEl.textContent = 'Ei yhteyttä palvelimeen';
-          errEl.classList.remove('hidden');
-        })
-        .finally(function() {
-          btn.disabled = false;
-          btn.textContent = 'Ilmoita minulle →';
-        });
-      });
-    })();
-
-    // Dynamic copyright year
-    document.getElementById('copy-year').textContent = new Date().getFullYear();
-
-    // Screenshot carousel
-    (function() {
-      var current = 0;
-      var slides = document.querySelectorAll('.screenshot-slide');
-      var dots = document.querySelectorAll('.screenshot-dot');
-      var total = slides.length;
-
-      function goTo(idx) {
-        current = idx;
-        slides.forEach(function(s, i) { s.classList.toggle('active', i === idx); });
-        dots.forEach(function(d, i) { d.classList.toggle('active', i === idx); });
-      }
-
-      dots.forEach(function(dot) {
-        dot.addEventListener('click', function() {
-          goTo(parseInt(dot.dataset.idx));
-        });
-      });
-
-      setInterval(function() { goTo((current + 1) % total); }, 5000);
-    })();
-
-    // Smooth scroll for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(function(a) {
-      a.addEventListener('click', function(e) {
-        var target = document.querySelector(a.getAttribute('href'));
-        if (target) {
-          e.preventDefault();
-          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-      });
-    });
-
-    // Nav shadow on scroll
-    window.addEventListener('scroll', function() {
-      document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 20);
-    });
-
-    // ── IntersectionObserver: scroll-triggered reveal ──
-    (function() {
-      var observer = new IntersectionObserver(function(entries) {
-        entries.forEach(function(entry) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-          }
-        });
-      }, { threshold: 0.15 });
-
-      // Timeline items
-      document.querySelectorAll('.timeline-item').forEach(function(el, i) {
-        el.style.transitionDelay = (i * 0.15) + 's';
-        observer.observe(el);
-      });
-
-      // Reveal elements
-      document.querySelectorAll('.reveal').forEach(function(el, i) {
-        el.style.transitionDelay = (i * 0.1) + 's';
-        observer.observe(el);
-      });
-    })();
-
-    // ── Price card tilt on mouse ──
-    // Skip on touch/coarse pointers: useless on mobile and the mousemove+getBoundingClientRect
-    // per frame triggers forced reflow on budget Androids.
-    (function() {
-      if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
-
-      document.querySelectorAll('.price-card').forEach(function(card) {
-        var rect = null;
-        var pending = null;
-
-        card.addEventListener('mouseenter', function() {
-          rect = card.getBoundingClientRect(); // cache once per hover
-        });
-        card.addEventListener('mousemove', function(e) {
-          if (!rect) rect = card.getBoundingClientRect();
-          if (pending) return;
-          var clientX = e.clientX, clientY = e.clientY;
-          pending = requestAnimationFrame(function() {
-            var x = (clientX - rect.left) / rect.width - 0.5;
-            var y = (clientY - rect.top) / rect.height - 0.5;
-            card.style.transform = 'perspective(600px) rotateY(' + (x * 6) + 'deg) rotateX(' + (-y * 6) + 'deg) translateY(-2px)';
-            pending = null;
-          });
-        });
-        card.addEventListener('mouseleave', function() {
-          rect = null;
-          card.style.transform = '';
-        });
-      });
-    })();
-
-    // ── Feature dots (mobile snap carousel) ──
-    // Cache cardWidth; avoid forced reflow per scroll tick on budget Androids.
-    (function() {
-      var grid = document.getElementById('features-grid');
-      var dots = document.querySelectorAll('.feature-dot');
-      if (!grid || !dots.length) return;
-
-      var cardWidth = 0;
-      var rafPending = false;
-
-      function measure() {
-        var card = grid.querySelector('.feature-card');
-        cardWidth = card ? card.offsetWidth + 12 : 0;
-      }
-      measure();
-      window.addEventListener('resize', measure, { passive: true });
-
-      grid.addEventListener('scroll', function() {
-        if (rafPending || !cardWidth) return;
-        rafPending = true;
-        requestAnimationFrame(function() {
-          var idx = Math.round(grid.scrollLeft / cardWidth);
-          dots.forEach(function(d, i) { d.classList.toggle('active', i === idx); });
-          rafPending = false;
-        });
-      }, { passive: true });
-
-      dots.forEach(function(dot) {
-        dot.addEventListener('click', function() {
-          if (!cardWidth) measure();
-          var idx = parseInt(dot.dataset.idx);
-          grid.scrollTo({ left: idx * cardWidth, behavior: 'smooth' });
-        });
-      });
+      };
+      update();
+      window.addEventListener('scroll', update, { passive: true });
     })();
   </script>
-
-  <script defer src="js/diagnostic.js"></script>
 </body>
 </html>
