@@ -59,20 +59,24 @@ export async function loadGrammarDrill() {
   show("screen-grammar");
 
   try {
-    const lessonCtx = (await import("../lib/lessonContext.js")).getLessonContext();
+    const lessonModule = await import("../lib/lessonContext.js");
+    const lessonCtx = lessonModule.getLessonContext();
+    const deepen = !!(lessonCtx && lessonModule.isDeepenRun());
     const res = await retryable(() => fetch(`${API}/api/grammar-drill`, {
       method: "POST",
       headers: { "Content-Type": "application/json", ...authHeader() },
       body: JSON.stringify({
         topic: state.grammarTopic,
         level: state.grammarLevel,
-        count: 6,
+        // L-PLAN-6 — deepen overrides count to 4 (L follow-up).
+        count: deepen ? 4 : 6,
         language: state.language,
         // Anti-repetition only applies to mixed-topic drills — when the
         // student explicitly picked a rule (e.g. "ser/estar") we WANT
         // every batch to keep drilling that rule.
         recentlyShown: state.grammarTopic === "mixed" ? (state.recentGrammarRules || []) : [],
         ...(lessonCtx ? { lesson: lessonCtx } : {}),
+        ...(deepen ? { mode: "deepen" } : {}),
       }),
     }), { attempts: 3, baseDelayMs: 500 });
     const data = await res.json();

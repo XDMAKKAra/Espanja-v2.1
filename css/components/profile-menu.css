@@ -1,0 +1,198 @@
+/* Profile menu — L-PLAN-4 UPDATE 4.
+
+   Replaces the right rail. A 40-px gradient avatar button floats top-right of
+   the viewport; clicking opens a 260-px dropdown anchored under it.
+
+   Token-only, restrained dark register matching the rest of the app. The
+   avatar button itself stays mounted across screens (auth-mode hides it via
+   .auth-mode override at the bottom). */
+
+.profile-menu-wrap {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 100;
+}
+
+/* When the fixed app-countdown bar is visible, slide the button below it so
+   it doesn't sit on top of the countdown text. */
+body:has(.app-countdown:not(.hidden)) .profile-menu-wrap { top: 50px; }
+
+.profile-menu-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition:
+    transform 160ms var(--ease-out, ease),
+    border-color 160ms var(--ease-out, ease),
+    box-shadow 160ms var(--ease-out, ease);
+}
+.profile-menu-btn:hover {
+  transform: scale(1.04);
+  border-color: color-mix(in srgb, var(--accent) 40%, var(--border));
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 12%, transparent);
+}
+.profile-menu-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.profile-menu-avatar,
+.profile-menu__avatar-lg {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(135deg, var(--accent), color-mix(in srgb, var(--accent) 60%, #1e3a8a));
+  letter-spacing: 0.02em;
+}
+.profile-menu__avatar-lg {
+  width: 44px;
+  height: 44px;
+  font-size: 16px;
+}
+
+/* Dropdown — sourced layout pattern: shadcn/ui DropdownMenu (Radix primitive)
+   adapted to vanilla CSS + token system. Single column, no animation other
+   than a 100 ms fade so prefers-reduced-motion is a no-cost change. */
+.profile-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 260px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.06),
+    0 12px 32px rgba(0, 0, 0, 0.18);
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity 120ms var(--ease-out, ease), transform 120ms var(--ease-out, ease);
+  pointer-events: none;
+}
+.profile-menu[hidden] {
+  display: none;
+}
+.profile-menu.is-open {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+@media (prefers-reduced-motion: reduce) {
+  .profile-menu { transition: none; }
+}
+
+.profile-menu__header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 10px 12px;
+}
+.profile-menu__identity {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+.profile-menu__name {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.profile-menu__email {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-faint);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.profile-menu__divider {
+  height: 1px;
+  background: var(--border);
+  margin: 4px 0;
+}
+
+.profile-menu__item {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 9px 10px;
+  border-radius: 8px;
+  font-family: var(--font-display);
+  font-size: 14px;
+  color: var(--ink-soft);
+  text-align: left;
+  cursor: pointer;
+  min-height: 40px;
+  transition: background 120ms var(--ease-out, ease), color 120ms var(--ease-out, ease);
+}
+.profile-menu__item:hover,
+.profile-menu__item:focus-visible {
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
+  color: var(--ink);
+  outline: none;
+}
+.profile-menu__item:focus-visible {
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 50%, transparent);
+}
+.profile-menu__item:active { background: color-mix(in srgb, var(--accent) 14%, transparent); }
+.profile-menu__icon { color: var(--ink-faint); flex: 0 0 auto; }
+.profile-menu__item:hover .profile-menu__icon,
+.profile-menu__item:focus-visible .profile-menu__icon {
+  color: var(--accent);
+}
+
+.profile-menu__item--accent {
+  color: var(--accent);
+}
+.profile-menu__item--accent .profile-menu__icon { color: var(--accent); }
+
+.profile-menu__item--danger {
+  color: var(--ink-soft);
+}
+.profile-menu__item--danger:hover,
+.profile-menu__item--danger:focus-visible {
+  background: color-mix(in srgb, var(--err, #ef4444) 10%, transparent);
+  color: var(--err, #ef4444);
+}
+.profile-menu__item--danger:hover .profile-menu__icon,
+.profile-menu__item--danger:focus-visible .profile-menu__icon {
+  color: var(--err, #ef4444);
+}
+
+/* Hide on auth screens (no profile yet) and on the onboarding flows. */
+body.auth-mode .profile-menu-wrap { display: none; }
+
+/* Mobile: keep the avatar pinned top-right but pull the dropdown to align
+   with the viewport so it never overflows. */
+@media (max-width: 480px) {
+  .profile-menu-wrap { top: 12px; right: 12px; }
+  .profile-menu {
+    width: min(280px, calc(100vw - 24px));
+  }
+}

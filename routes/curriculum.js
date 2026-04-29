@@ -9,6 +9,11 @@ import {
   lessonsForKurssi,
   findKurssi,
 } from "../lib/curriculumData.js";
+import {
+  applyTargetMultiplier,
+  passThresholdFor,
+  VALID_TARGET_GRADES,
+} from "../lib/lessonContext.js";
 
 const router = Router();
 
@@ -26,6 +31,22 @@ async function optionalAuth(req, _res, next) {
 }
 
 const PASS_THRESHOLD = 0.80;
+
+// L-PLAN-6 — fetch the user's target_grade for multiplier + threshold logic.
+// Falls back to "B" when the column is missing or the row has no value.
+async function fetchTargetGrade(userId) {
+  if (!userId) return "B";
+  try {
+    const { data, error } = await supabase
+      .from("user_profile")
+      .select("target_grade")
+      .eq("user_id", userId)
+      .maybeSingle();
+    if (error) return "B";
+    const t = data?.target_grade;
+    return (typeof t === "string" && VALID_TARGET_GRADES.includes(t)) ? t : "B";
+  } catch { return "B"; }
+}
 
 // Treat "table doesn't exist" as a soft fallback — pre-migration the API
 // still serves the JS-mirror so the UI can render. PGRST205 = table not in
@@ -228,32 +249,101 @@ router.get("/:kurssiKey", optionalAuth, async (req, res) => {
   }
 });
 
-// Build a teaching-page Markdown via OpenAI for a grammar/mixed lesson.
+// L-PLAN-5 UPDATE 1 — build a teaching-page Markdown via OpenAI for any
+// supported lesson type (grammar, mixed, vocab, reading, writing).
 // Cached in `teaching_pages` keyed by `${kurssiKey}_lesson_${sortOrder}`.
-async function getOrGenerateTeachingPage(kurssiKey, sortOrder, lesson) {
-  if (!lesson || !["grammar", "mixed"].includes(lesson.type)) return null;
-  const topicKey = `${kurssiKey}_lesson_${sortOrder}`;
+function buildTeachingPrompt(lesson, kurssiKey) {
+  const kurssiName = KURSSI_META[kurssiKey]?.name || kurssiKey;
+  const focus = lesson.focus;
 
-  // Check cache
-  try {
-    const { data, error } = await supabase
-      .from("teaching_pages")
-      .select("content_md")
-      .eq("topic_key", topicKey)
-      .maybeSingle();
-    if (!error && data?.content_md) return { contentMd: data.content_md, cached: true };
-  } catch { /* table missing or other — fall through to generation */ }
+  if (lesson.type === "vocab") {
+    return [
+      "Olet Puheo, suomalainen AI-tutori, joka opettaa lukiolaista YO-koetta varten",
+      "espanjan lyhyestä oppimäärästä. Selitykset ovat suomeksi, lyhyitä, konkreettisia.",
+      "Älä mainitse abstrakteja tasoja (A/B/C/M/E/L). Älä käytä bullet-listoja paitsi taulukoissa.",
+      "Käytä sinä-muotoa.",
+      "",
+      `Aihe: ${focus}`,
+      `Konteksti: ${kurssiName}.`,
+      "",
+      "Kirjoita opetussivu Markdownina. Rakenne TARKASTI:",
+      "# [Otsikko — sanastoaihe lyhyesti]",
+      "[1 kappale (max 80 sanaa) selkokielistä suomea — kerro mistä sanastosta on kyse, miksi se on tärkeä, ja miten YO-koe testaa sitä.]",
+      "## Tärkeimmät sanat",
+      "| Suomeksi | Espanjaksi | Esimerkki |",
+      "|----------|-----------|-----------|",
+      "[Listaa 8–12 ydinsanaa tästä aiheesta. Esimerkkisarakkeessa lyhyt lause espanjaksi.]",
+      "## Muista nämä",
+      "[2–3 lausetta yleisimmistä sudenkuopista. Esim. ääntämys, kirjoitusasu tai sukumuoto.]",
+      "## YO-vinkki 💡",
+      "[1–2 lausetta YO-kokeen näkökulmasta. Mitä testataan, mitä kannattaa hallita.]",
+      "",
+      'Palauta JSON: { "contentMd": "..." }',
+    ].join("\n");
+  }
 
-  // Generate
-  const prompt = [
+  if (lesson.type === "reading") {
+    return [
+      "Olet Puheo, suomalainen AI-tutori, joka opettaa lukiolaista YO-koetta varten",
+      "espanjan lyhyestä oppimäärästä. Selitykset ovat suomeksi, lyhyitä, konkreettisia.",
+      "Älä käytä bullet-listoja paitsi vinkkien kohdalla.",
+      "Käytä sinä-muotoa.",
+      "",
+      `Aihe: ${focus}`,
+      `Konteksti: ${kurssiName}.`,
+      "",
+      "Kirjoita lyhyt valmistautumissivu ENNEN luetun ymmärtämistehtävää. Rakenne TARKASTI:",
+      "# [Otsikko — luetun ymmärtäminen aiheesta]",
+      "[1 kappale (max 70 sanaa) selkokielistä suomea: rauhoita lukijaa, muistuta että koko tekstiä ei tarvitse ymmärtää sana sanalta. Mainitse mitä sanastoa kannattaa odottaa.]",
+      "## Lukustrategia",
+      "[2–3 lyhyttä bullet-pointtia: silmäile ensin, etsi avainsanoja, vasta sitten yksityiskohdat.]",
+      "## YO-vinkki 💡",
+      "[1–2 lausetta YO-luetun ymmärtämisen näkökulmasta — mitä monivalinnoissa testataan.]",
+      "",
+      'Palauta JSON: { "contentMd": "..." }',
+    ].join("\n");
+  }
+
+  if (lesson.type === "writing") {
+    return [
+      "Olet Puheo, suomalainen AI-tutori, joka opettaa lukiolaista YO-koetta varten",
+      "espanjan lyhyestä oppimäärästä. Selitykset ovat suomeksi, lyhyitä, konkreettisia.",
+      "Käytä sinä-muotoa. Bullet-listoja saa käyttää rakenne-osassa.",
+      "",
+      `Aihe: ${focus}`,
+      `Konteksti: ${kurssiName}.`,
+      "",
+      "Kirjoita opetussivu kirjoitustehtävälle. Rakenne TARKASTI:",
+      "# [Tehtävän otsikko, esim. \"Kirjoita itsestäsi\"]",
+      "[1 kappale (max 70 sanaa): mistä kirjoitat, mitkä aikamuodot oletettavasti tarvitset, mistä saat pisteitä.]",
+      "## Vinkki rakenteeseen",
+      "- [Aloitus: 1 lyhyt lause]",
+      "- [Keskikohta: 1 lyhyt lause]",
+      "- [Lopetus: 1 lyhyt lause]",
+      "## Mistä saat pisteitä",
+      "| Osa-alue | Mitä testataan |",
+      "|----------|----------------|",
+      "| Viestinnällisyys | [...] |",
+      "| Kielen rakenteet | [...] |",
+      "| Sanasto | [...] |",
+      "| Kokonaisuus | [...] |",
+      "## Esimerkkilause",
+      "> [yksi malli-lause espanjaksi + suomennos suluissa]",
+      "",
+      'Palauta JSON: { "contentMd": "..." }',
+    ].join("\n");
+  }
+
+  // grammar / mixed (default)
+  return [
     "Olet Puheo, suomalainen AI-tutori, joka opettaa lukiolaista YO-koetta varten",
     "espanjan lyhyestä oppimäärästä. Selitykset ovat suomeksi, lyhyitä, konkreettisia.",
     "Älä mainitse abstrakteja tasoja (A/B/C/M/E/L). Älä käytä bullet-listoja paitsi taulukoissa.",
     "Älä kirjoita ylimääräisiä otsikoita. Käytä TARKASTI alla olevaa rakennetta.",
     "",
-    `Aihe: ${lesson.focus}`,
+    `Aihe: ${focus}`,
     `Oppituntityyppi: ${lesson.type === "mixed" ? "yhdistelmä (kielioppi + sanasto)" : "kielioppi"}`,
-    `Konteksti: Tämä on Kurssi (${KURSSI_META[kurssiKey]?.name || kurssiKey}).`,
+    `Konteksti: ${kurssiName}.`,
     "",
     "Kirjoita opetussivu Markdownina. Rakenne TARKASTI:",
     "# [Otsikko — lyhyt ja konkreettinen, ei aikamuotojen latinaa]",
@@ -267,10 +357,117 @@ async function getOrGenerateTeachingPage(kurssiKey, sortOrder, lesson) {
     "",
     'Palauta JSON: { "contentMd": "..." }',
   ].join("\n");
+}
+
+function buildTeachingFallback(lesson) {
+  const focus = lesson.focus;
+  const snippet = lesson.teaching_snippet || "";
+
+  if (lesson.type === "vocab") {
+    return [
+      `# ${focus}`,
+      "",
+      snippet || `Tämä oppitunti käsittelee aihetta "${focus}". Opit ydinsanaston ennen harjoittelua.`,
+      "",
+      "## Tärkeimmät sanat",
+      "",
+      "| Suomeksi | Espanjaksi | Esimerkki |",
+      "|----------|-----------|-----------|",
+      "| (sanasto avautuu harjoittelun aikana) | — | — |",
+      "",
+      "## Muista nämä",
+      "",
+      "Kiinnitä huomiota oikeinkirjoitukseen ja sanan sukuun (el / la). Pieni ero kirjaimissa muuttaa merkityksen.",
+      "",
+      "## YO-vinkki 💡",
+      "",
+      "Sanasto-osiossa testataan sekä tunnistus (espanja → suomi) että tuotanto (suomi → espanja). Kannattaa hallita molemmat.",
+    ].join("\n");
+  }
+
+  if (lesson.type === "reading") {
+    return [
+      `# ${focus}`,
+      "",
+      snippet || "Tämä on luetun ymmärtämisen tehtävä. Lue rauhassa — sinun ei tarvitse ymmärtää joka sanaa.",
+      "",
+      "## Lukustrategia",
+      "",
+      "- Silmäile teksti ensin nopeasti läpi.",
+      "- Etsi avainsanoja jotka liittyvät kysymyksiin.",
+      "- Lue sen jälkeen tarkemmin vain ne kohdat joissa vastaus on.",
+      "",
+      "## YO-vinkki 💡",
+      "",
+      "YO-luetun ymmärtämisessä monivalinnat testaavat usein synonyymejä — älä etsi tekstistä täsmälleen samoja sanoja kuin kysymyksessä.",
+    ].join("\n");
+  }
+
+  if (lesson.type === "writing") {
+    return [
+      `# ${focus}`,
+      "",
+      snippet || `Tässä kirjoitustehtävässä harjoittelet aihetta "${focus}". Lue ohje rauhassa ennen kuin aloitat.`,
+      "",
+      "## Vinkki rakenteeseen",
+      "",
+      "- Aloita lyhyellä esittelyllä.",
+      "- Kerro keskellä ydintieto tai tarina.",
+      "- Päätä yhteenvetoon tai tunnelmaan.",
+      "",
+      "## Mistä saat pisteitä",
+      "",
+      "| Osa-alue | Mitä testataan |",
+      "|----------|----------------|",
+      "| Viestinnällisyys | Saatko viestin perille? |",
+      "| Kielen rakenteet | Aikamuodot, sanajärjestys, sukumuoto. |",
+      "| Sanasto | Aiheeseen sopiva sanavalinta. |",
+      "| Kokonaisuus | Onko teksti sidottu yhteen? |",
+      "",
+      "## Esimerkkilause",
+      "",
+      "> Me llamo Anna y tengo diecisiete años. (Nimeni on Anna ja olen 17-vuotias.)",
+    ].join("\n");
+  }
+
+  // grammar / mixed (default)
+  return [
+    `# ${focus}`,
+    "",
+    snippet || "Tämä aihe sisältää kielioppirakenteen, jota harjoitellaan tässä oppitunnissa.",
+    "",
+    "## Esimerkki",
+    "",
+    "> Harjoittelu alkaa heti — ratkaiset 8 lyhyttä tehtävää.",
+    "",
+    "## YO-vinkki 💡",
+    "",
+    "Tämä rakenne esiintyy YO-kokeen rakenteet-osiossa lähes joka vuosi.",
+  ].join("\n");
+}
+
+const TEACHING_TYPES = new Set(["grammar", "mixed", "vocab", "reading", "writing"]);
+
+async function getOrGenerateTeachingPage(kurssiKey, sortOrder, lesson) {
+  if (!lesson || !TEACHING_TYPES.has(lesson.type)) return null;
+  const topicKey = `${kurssiKey}_lesson_${sortOrder}`;
+
+  // Check cache
+  try {
+    const { data, error } = await supabase
+      .from("teaching_pages")
+      .select("content_md")
+      .eq("topic_key", topicKey)
+      .maybeSingle();
+    if (!error && data?.content_md) return { contentMd: data.content_md, cached: true };
+  } catch { /* table missing or other — fall through to generation */ }
+
+  const prompt = buildTeachingPrompt(lesson, kurssiKey);
+  const maxTok = lesson.type === "writing" ? 450 : (lesson.type === "vocab" ? 600 : 400);
 
   let contentMd = null;
   try {
-    const ai = await callOpenAI(prompt, 400, { temperature: 0.3 });
+    const ai = await callOpenAI(prompt, maxTok, { temperature: 0.3 });
     if (ai?.contentMd && typeof ai.contentMd === "string" && ai.contentMd.length > 50) {
       contentMd = ai.contentMd.trim();
     }
@@ -279,19 +476,7 @@ async function getOrGenerateTeachingPage(kurssiKey, sortOrder, lesson) {
   }
 
   if (!contentMd) {
-    contentMd = [
-      `# ${lesson.focus}`,
-      "",
-      lesson.teaching_snippet || "Tämä aihe sisältää kielioppirakenteen, jota harjoitellaan tässä oppitunnissa.",
-      "",
-      "## Esimerkki",
-      "",
-      "> Harjoittelu alkaa heti — ratkaiset 8 lyhyttä tehtävää.",
-      "",
-      "## YO-vinkki 💡",
-      "",
-      "Tämä rakenne esiintyy YO-kokeen rakenteet-osiossa lähes joka vuosi.",
-    ].join("\n");
+    contentMd = buildTeachingFallback(lesson);
   }
 
   // Cache it (best-effort)
@@ -334,6 +519,13 @@ router.get("/:kurssiKey/lesson/:lessonIndex", optionalAuth, async (req, res) => 
       console.warn("teaching-page generate failed:", err.message);
     }
 
+    // L-PLAN-6 — adjust the exposed exerciseCount by the user's target_grade.
+    // Anonymous (no user) sees the baseline so the public preview is honest;
+    // logged-in users see their own pacing.
+    const targetGrade = req.user?.userId ? await fetchTargetGrade(req.user.userId) : "B";
+    const baselineCount = Number(lesson.exercise_count) || 8;
+    const adjustedCount = applyTargetMultiplier(baselineCount, targetGrade);
+
     res.json({
       lesson: {
         id: lesson.id ?? lesson.sort_order,
@@ -341,9 +533,13 @@ router.get("/:kurssiKey/lesson/:lessonIndex", optionalAuth, async (req, res) => 
         sortOrder: lesson.sort_order,
         type: lesson.type,
         focus: lesson.focus,
-        exerciseCount: lesson.exercise_count,
+        // L-PLAN-6 — `exerciseCount` stays the baseline so the existing
+        // contract is unchanged. `lessonContext.exerciseCount` exposes
+        // the target-grade-adjusted count the UI prefers when present.
+        exerciseCount: baselineCount,
         teachingSnippet: lesson.teaching_snippet,
       },
+      lessonContext: { targetGrade, exerciseCount: adjustedCount, baselineExerciseCount: baselineCount },
       teachingPage,
     });
   } catch (err) {
@@ -365,6 +561,30 @@ function sanitiseWrongAnswers(arr) {
       correctAnswer: String(a.correctAnswer || "").slice(0, 200),
       topic_key: String(a.topic_key || "").slice(0, 60) || null,
     }));
+}
+
+// L-PLAN-6 — tone descriptor per target_grade. Same Finnish, different
+// register. Applied via puheo-finnish-voice + education/intelligent-
+// tutoring-dialogue-designer + education/self-efficacy-builder-sequence:
+// I/A keep the warmth and forbid shame; M/E/L raise the bar without
+// keventely. Frame: tavoite mahdollistaa, ei vaadi.
+const TONE_DESCRIPTORS = {
+  I: "Erittäin kannustava, kärsivällinen, juhli pieniä voittoja, älä koskaan moittele virheistä. Käytä lämmin sävy.",
+  A: "Lämmin, kärsivällinen, nimeä konkreettinen onnistuminen, vihjaa seuraavaan askeleeseen pehmeästi.",
+  B: "Suora ja lämmin, nimeä mitä meni hyvin ja mitä parannetaan, ehdota seuraava askel.",
+  C: "Suora, nimeä rakenne joka oli vahva, mainitse yksi spesifi parannuskohde.",
+  M: "Suora ja vaativa mutta lämmin, oletuksena että oppilas haluaa parantua, käytä ammattikielen termiä jos relevantti.",
+  E: "Vaativa, suora, oletuksena täydellinen hallinta tavoitteena, älä keventele virheitä.",
+  L: "Erittäin vaativa, oleta täydellinen kontrolli, nosta esille hienoja vivahde-eroja, vaadi lisätyötä jos jokin oli horjuva.",
+};
+function toneBlock(targetGrade) {
+  const t = TONE_DESCRIPTORS[targetGrade] || TONE_DESCRIPTORS.B;
+  return [
+    "TYYLI:",
+    `- Tavoite ${targetGrade || "B"}: ${t}`,
+    "- Aina sinä-muoto, suomeksi, max 2 lausetta.",
+    "- Ei \"Hyvää työtä!\" -geneerisyyksiä.",
+  ].join("\n");
 }
 
 // Pick a fallback metacognitive prompt based on score band. The AI is the
@@ -429,10 +649,43 @@ router.post("/:kurssiKey/lesson/:lessonIndex/complete", requireAuth, async (req,
       console.warn("progress upsert:", err.message);
     }
 
+    // L-PLAN-4 UPDATE 5 — streak bridge. The dashboard streak counter (and
+    // every per-mode dashboard.js stat) reads from `exercise_logs`, not from
+    // `user_curriculum_progress`. Without this row the curriculum loop would
+    // not register as activity for the streak / weekly counters. Map lesson
+    // type to the existing VALID_MODES set in routes/progress.js so the row
+    // is shaped identically to free-practice writes.
+    try {
+      const STREAK_MODE = ({
+        vocab: "vocab",
+        grammar: "grammar",
+        mixed: "grammar",
+        reading: "reading",
+        writing: "writing",
+        test: "exam",
+      })[lesson.type] || "vocab";
+      await supabase.from("exercise_logs").insert({
+        user_id: req.user.userId,
+        mode: STREAK_MODE,
+        level: null,
+        score_correct: scoreCorrect,
+        score_total: scoreTotal,
+        ytl_grade: null,
+      });
+    } catch (err) {
+      // Never fail the endpoint over the bridge — streak is convenience.
+      console.warn("[curriculum/complete] exercise_logs insert failed:", err.message);
+    }
+
     // Determine kurssi-complete status
+    // L-PLAN-6 — pass-threshold is now target_grade-dependent (I/A 0.7,
+    // B/C 0.8, M 0.85, E/L 0.9). The default PASS_THRESHOLD constant
+    // remains as the B/C baseline for any non-curriculum callers.
+    const targetGrade = await fetchTargetGrade(req.user.userId);
+    const targetThreshold = passThresholdFor(targetGrade);
     const isKertaustesti = lesson.type === "test" && lessonIndex === lessons.length;
     const passPct = scoreTotal > 0 ? (scoreCorrect / scoreTotal) : 0;
-    const kurssiComplete = isKertaustesti && passPct >= PASS_THRESHOLD;
+    const kurssiComplete = isKertaustesti && passPct >= targetThreshold;
 
     // Find next kurssi
     const all = CURRICULUM_KURSSIT;
@@ -451,11 +704,13 @@ router.post("/:kurssiKey/lesson/:lessonIndex/complete", requireAuth, async (req,
             .map((w, i) => `  ${i + 1}. opiskelija kirjoitti "${w.studentAnswer}", oikea vastaus "${w.correctAnswer}"${w.topic_key ? ` (aihe: ${w.topic_key})` : ""}`)
             .join("\n")
         : "  (ei virheitä — kaikki oikein)";
-      const passLabel = passPct >= 0.80 ? "hyvä" : "tarvitsee lisäharjoittelua";
+      const passLabel = passPct >= targetThreshold ? "hyvä" : "tarvitsee lisäharjoittelua";
       const aiPrompt = [
         "Olet Puheo, suomalainen AI-tutori (lukio, espanjan YO-koe).",
         "Vastaa AINA suomeksi, sinä-muodossa, lämpimästi mutta täsmällisesti.",
         "Älä käytä bullet-listoja. Älä mainitse pistemääriä numeroin.",
+        "",
+        toneBlock(targetGrade),
         "",
         `Konteksti:`,
         `- Oppilas suoritti oppitunnin aiheesta "${lesson.focus}".`,
@@ -629,6 +884,8 @@ async function _tutorMessageHandler(req, res) {
       "espanjan lyhyestä oppimäärästä. Puhut suoraan oppilaalle (sinä-muoto), suomeksi.",
       "Tyyli: lyhyt, konkreettinen, lämmin. Ei yleisiä rohkaisuja, ei abstraktia tasopuhetta.",
       "Älä käytä bullet-listoja. Älä mainitse pistemääriä numeroin.",
+      "",
+      toneBlock(profile?.target_grade),
       "",
       `Oppilaan tilanne:`,
       `- Nykyinen kurssi: ${kurssiTitle || "ei vielä määritetty"}`,

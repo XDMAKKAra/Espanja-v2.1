@@ -1,7 +1,7 @@
 import { Router } from "express";
 import supabase from "../supabase.js";
 import {
-  callOpenAI, getUserProfileContext,
+  callOpenAI, coerceArrayResponse, getUserProfileContext,
   LEVEL_DESCRIPTIONS, TOPIC_CONTEXT, LANGUAGE_META,
   GRAMMAR_TOPIC_DESCS, READING_LEVEL_DESCS, READING_TOPIC_CONTEXTS,
   GRADES, GRADE_ORDER,
@@ -31,9 +31,16 @@ import {
 // L-PLAN-3 — when the client sends `{ lesson: { kurssiKey, lessonIndex } }`
 // in the request body, route the exercise generation through curriculum
 // context: focus, level, count come from the lesson definition.
-async function applyLessonContext(reqBody, defaults, kind) {
+//
+// L-PLAN-6 — count is now `adjusted_exercise_count` (baseline ×
+// target-grade multiplier). resolveLessonContext loads the user's
+// `target_grade` from `user_profile` and exposes the adjusted count +
+// levelDirective on the returned ctx.
+async function applyLessonContext(reqBody, defaults, kind, userId = null) {
   if (!reqBody?.lesson) return { ctx: null, ...defaults };
-  const ctx = await resolveLessonContext(reqBody.lesson);
+  const lessonPayload = { ...reqBody.lesson };
+  if (reqBody.mode === "deepen") lessonPayload.mode = "deepen";
+  const ctx = await resolveLessonContext(lessonPayload, userId);
   if (!ctx) return { ctx: null, ...defaults };
   const out = { ctx, ...defaults };
   // Level override — kurssi.level is one of A/B/C/M/E. Reading endpoint can
@@ -44,8 +51,10 @@ async function applyLessonContext(reqBody, defaults, kind) {
   else out.level = ctx.kurssi.level;
   // Vocab topic override — kurssi.vocab_theme is already a VALID_VOCAB_TOPIC key.
   if (kind === "vocab" && ctx.kurssi.vocab_theme) out.topic = ctx.kurssi.vocab_theme;
-  // Count override — for kertaustesti always use lesson.exercise_count (15).
-  out.count = ctx.lesson.exercise_count || defaults.count;
+  // Count override — for kertaustesti use the adjusted count (baseline 15
+  // ramped per target_grade); for deepen it's a fixed 4; otherwise the
+  // lesson's adjusted count.
+  out.count = ctx.lesson.adjusted_exercise_count || ctx.lesson.exercise_count || defaults.count;
   return out;
 }
 
@@ -177,10 +186,12 @@ router.post("/generate", requireAuth, aiLimiter, checkMonthlyCostLimit, async (r
   const recentlyShown = req.body?.recentlyShown ?? [];
 
   // L-PLAN-3 — curriculum lesson context overrides level/topic/count when set.
+  // L-PLAN-6 — userId threaded through so target_grade-aware multiplier applies.
   const applied = await applyLessonContext(
     req.body,
     { level: reqLevel, topic: reqTopic, count: reqCount },
     "vocab",
+    req.user?.userId || null,
   );
   const { ctx: lessonCtx, level, topic, count } = applied;
 
@@ -218,11 +229,16 @@ router.post("/generate", requireAuth, aiLimiter, checkMonthlyCostLimit, async (r
     const levelDesc = LEVEL_DESCRIPTIONS[level];
     const topicContext = TOPIC_CONTEXT[topic];
     const profileCtx = await getUserProfileContext(userId);
-    const lessonBlock = lessonCtx
+    const baseLessonBlock = lessonCtx
       ? (lessonCtx.isKertaustesti ? curriculumTestInstruction(lessonCtx) : curriculumFocusInstruction(lessonCtx))
       : "";
 
-    const prompt = `You are generating vocabulary exercises for Finnish high school students taking the ${lang.name} "lyhyt oppimäärä" yo-koe (matriculation exam). Students have studied ${lang.name} for about ${lang.yearsStudied}.
+    // Hotfix L-PLAN5: callOpenAI defaults to response_format=json_object, so a
+    // top-level JSON array prompt comes back wrapped (e.g. {"exercises":[...]})
+    // and validateVocabBatch then rejects it as malformed. Ask explicitly for
+    // the wrapper shape and unwrap with coerceArrayResponse so older cached
+    // bare-array responses still work.
+    const buildPrompt = (lessonBlock) => `You are generating vocabulary exercises for Finnish high school students taking the ${lang.name} "lyhyt oppimäärä" yo-koe (matriculation exam). Students have studied ${lang.name} for about ${lang.yearsStudied}.
 ${profileCtx}${lessonBlock}
 TARGET LEVEL: ${level} = ${levelDesc}
 
@@ -252,8 +268,8 @@ HARD REQUIREMENTS (enforced server-side):
 - All four options A-D MUST share the same part of speech as the target word. If the target is a verb, all four options must be verbs in the same tense/mood. If the target is a noun, all four must be nouns (same singular/plural and, when relevant, the same gender). Mixing a verb with a noun, or a singular with a plural, is forbidden.
 - Within this batch of ${clampedCount} items, NO target headword (Spanish lemma) may repeat. Use distinct words for every item.
 ${recentList.length ? `- ANTI-REPETITION: the student has already seen these target headwords this session — do NOT use any of them as a target word in this batch (variation in options is fine, but pick fresh target lemmas):\n  ${recentList.join(", ")}\n` : ""}
-Return ONLY a JSON array, no markdown:
-[
+Return ONLY a JSON object with shape {"exercises":[ ... ]}, no markdown. Example:
+{"exercises":[
   {
     "id": 1,
     "type": "context",
@@ -271,12 +287,40 @@ Return ONLY a JSON array, no markdown:
     "correct": "A",
     "explanation": "el medio ambiente = ympäristö (environment). el paisaje = maisema, el desarrollo = kehitys."
   }
-]`;
+]}`;
 
     const warnings = [];
-    const exercises = await callOpenAI(prompt, 2000);
-    logAiUsage(userId, "generate", exercises._usage).catch(() => {});
-    delete exercises._usage;
+
+    async function generateOnce(lessonBlock) {
+      const raw = await callOpenAI(buildPrompt(lessonBlock), 2000);
+      const usage = raw && raw._usage;
+      logAiUsage(userId, "generate", usage).catch(() => {});
+      const arr = coerceArrayResponse(raw);
+      return Array.isArray(arr) ? arr : null;
+    }
+
+    let exercises = await generateOnce(baseLessonBlock);
+
+    // L-PLAN5 fallback: if the lesson-constrained generation came back empty
+    // or malformed, retry once without the curriculum focus block so the
+    // student still gets a usable batch on the lesson's vocab theme. The
+    // retry's exercises are tagged so logs / future filters can see they
+    // skipped the lesson-specific constraint.
+    if (lessonCtx && (!exercises || exercises.length === 0)) {
+      console.warn(`/api/generate lesson fallback activated — kurssi=${lessonCtx.kurssi.key} lesson=${lessonCtx.lesson.sort_order} focus="${lessonCtx.lesson.focus}" reason=empty-or-malformed-AI-response`);
+      warnings.push("lesson-fallback-generic");
+      exercises = await generateOnce("");
+    }
+
+    if (!exercises || exercises.length === 0) {
+      // Both the primary and (when applicable) fallback came back empty —
+      // surface a 502 so the client retries instead of silently rendering an
+      // empty list. The frontend skeleton + retry button handles this.
+      return res.status(502).json({
+        error: "AI ei pystynyt luomaan tehtäviä juuri nyt. Yritä hetken päästä uudelleen.",
+        warnings,
+      });
+    }
 
     // Single validation pass. Prior code retried on failure (doubled latency
     // + cost) but most validation issues are heuristic false-positives
@@ -502,10 +546,12 @@ router.post("/grammar-drill", requireAuth, aiLimiter, checkMonthlyCostLimit, asy
   // grammar_focus[] keys (preterite / subjunctive_present / …) belong to
   // a different vocabulary than VALID_GRAMMAR_TOPICS, but the lesson focus
   // we inject into the prompt is the real scope constraint.
+  // L-PLAN-6 — userId threaded through so target_grade-aware multiplier applies.
   const applied = await applyLessonContext(
     req.body,
     { level: reqLevel, topic: reqTopic, count: reqCount },
     "grammar",
+    req.user?.userId || null,
   );
   const { ctx: lessonCtx, level, count } = applied;
   const topic = reqTopic;
@@ -575,8 +621,8 @@ YTL LYHYT OPPIMÄÄRÄ SCOPE — MANDATORY:
 - DO NOT generate items that test: conditional perfect (habría hecho), past subjunctive / imperfect subjunctive (-ara/-iese forms), future subjunctive (-are/-iere), passive voice with ser + por. These are OUT OF SCOPE.
 - When topic=mixed, ensure the batch covers AT LEAST 3 distinct grammar rules (e.g. one ser/estar + one preterite/imperfect + one subjunctive) — not three of the same rule with different exercise formats.
 ${topic === "mixed" && recentRules.length ? `- ANTI-REPETITION: the student has already drilled these grammar rules in earlier batches this session — strongly prefer DIFFERENT rules in this batch (variety builds confidence; revisiting the same rule batch-after-batch feels stale):\n  ${recentRules.join(", ")}\n` : ""}
-Return ONLY a JSON array (no markdown):
-[
+Return ONLY a JSON object with shape {"exercises":[ ... ]} (no markdown):
+{"exercises":[
   {
     "id": 1,
     "type": "gap",
@@ -607,12 +653,14 @@ Return ONLY a JSON array (no markdown):
     "rule": "konditionaali",
     "explanation": "Querría = konditionaali (haluaisin). Quise = preteriti, Quería = imperfekti, Quiera = subjunktiivi."
   }
-]`;
+]}`;
 
     const warnings = [];
-    let exercises = await callOpenAI(prompt, 2500);
-    logAiUsage(userId, "grammar-drill", exercises._usage).catch(() => {});
-    delete exercises._usage;
+    const raw = await callOpenAI(prompt, 2500);
+    logAiUsage(userId, "grammar-drill", raw && raw._usage).catch(() => {});
+    // Hotfix L-PLAN5: callOpenAI now defaults to JSON-object response_format
+    // so a top-level array prompt comes back wrapped (e.g. {"exercises":[...]}).
+    let exercises = coerceArrayResponse(raw) || [];
 
     // Single validation pass (prior code retried; doubled latency + spend).
     // When validation fails we still keep the in-scope items so the user gets
@@ -644,10 +692,12 @@ router.post("/reading-task", requireAuth, softReadingGate, aiStrictLimiter, chec
   // L-PLAN-3 — curriculum lesson context overrides level when set. The
   // reading topic stays as whatever the client picked; the lesson focus
   // we inject into the prompt narrows the angle further.
+  // L-PLAN-6 — userId threaded through so target_grade-aware level directive applies.
   const applied = await applyLessonContext(
     req.body,
     { level: reqLevel, topic: reqTopic, count: 0 },
     "reading",
+    req.user?.userId || null,
   );
   const { ctx: lessonCtx, level } = applied;
   const topic = reqTopic;

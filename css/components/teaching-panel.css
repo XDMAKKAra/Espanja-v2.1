@@ -1,0 +1,419 @@
+/* L-PLAN-5 UPDATE 4 — re-readable teaching page (side-panel desktop / modal mobile).
+   Sourced layout: 21st.dev /s/side-panel + /s/sheet — restrained dark with a
+   single-stroke close button and a Markdown article body. Ported to vanilla
+   CSS matching Puheo's token system. */
+
+/* ── Trigger button ─────────────────────────────────────────────────────── */
+
+.teaching-panel-trigger {
+  /* Floats to the LEFT of the L-PLAN-4 profile-menu avatar (top-right).
+     Avatar is 40 px @ right: 16 px (z-index 100) — leave 8 px gap. */
+  position: fixed;
+  top: 16px;
+  right: 72px;
+  z-index: 99;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  height: 40px;
+  background: var(--surface, #161618);
+  color: var(--ink, #fafafa);
+  border: 1px solid var(--border, #2a2a2e);
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 140ms ease, border-color 140ms ease, color 140ms ease;
+}
+.teaching-panel-trigger:hover {
+  background: color-mix(in srgb, var(--accent, #2DD4BF) 8%, var(--surface, #161618));
+  border-color: color-mix(in srgb, var(--accent, #2DD4BF) 35%, var(--border, #2a2a2e));
+  color: var(--accent, #2DD4BF);
+}
+.teaching-panel-trigger:focus-visible {
+  outline: 2px solid var(--accent, #2DD4BF);
+  outline-offset: 2px;
+}
+.teaching-panel-trigger__icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+.teaching-panel-trigger__label {
+  white-space: nowrap;
+}
+/* Slide below the countdown bar like the profile-menu does. */
+body:has(.app-countdown:not(.hidden)) .teaching-panel-trigger { top: 50px; }
+
+@media (max-width: 640px) {
+  .teaching-panel-trigger {
+    padding: 8px 10px;
+    gap: 0;
+    right: 64px;
+  }
+  .teaching-panel-trigger__label {
+    /* Icon-only on mobile to leave room for the avatar */
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+}
+
+/* ── Panel root + backdrop ──────────────────────────────────────────────── */
+
+.teaching-panel-root {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: flex-end;
+  pointer-events: auto;
+}
+.teaching-panel-root[hidden] { display: none; }
+
+.teaching-panel__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  opacity: 0;
+  transition: opacity 240ms ease-out;
+}
+.teaching-panel-root.is-open .teaching-panel__backdrop {
+  opacity: 1;
+}
+
+/* ── Panel ───────────────────────────────────────────────────────────────── */
+
+.teaching-panel {
+  position: relative;
+  width: 480px;
+  max-width: 100%;
+  height: 100vh;
+  background: var(--surface-elevated, var(--surface, #161618));
+  border-left: 1px solid var(--border, #2a2a2e);
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 240ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  overflow: hidden;
+}
+.teaching-panel-root.is-open .teaching-panel {
+  transform: translateX(0);
+}
+
+.teaching-panel__head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px 12px;
+  border-bottom: 1px solid var(--border, #2a2a2e);
+  flex-shrink: 0;
+}
+.teaching-panel__close {
+  background: transparent;
+  border: 0;
+  color: var(--ink-soft, var(--text-muted, #a1a1aa));
+  font-size: 14px;
+  cursor: pointer;
+  padding: 6px 8px;
+  border-radius: 6px;
+  transition: color 140ms ease, background 140ms ease;
+}
+.teaching-panel__close:hover {
+  color: var(--ink, #fafafa);
+  background: color-mix(in srgb, var(--ink-faint, #71717a) 10%, transparent);
+}
+.teaching-panel__close:focus-visible {
+  outline: 2px solid var(--accent, #2DD4BF);
+  outline-offset: 2px;
+}
+.teaching-panel__title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink, var(--text, #fafafa));
+  letter-spacing: -0.01em;
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.teaching-panel__body {
+  padding: 24px 20px 40px;
+  overflow-y: auto;
+  flex: 1 1 auto;
+  -webkit-overflow-scrolling: touch;
+}
+.teaching-panel__body:focus-visible {
+  outline: 2px solid var(--accent, #2DD4BF);
+  outline-offset: -2px;
+}
+
+.teaching-panel__article {
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--ink, var(--text, #fafafa));
+}
+.teaching-panel__article h1 {
+  font-size: 22px;
+  margin: 0 0 12px;
+  line-height: 1.2;
+}
+.teaching-panel__article h2 {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 20px 0 8px;
+  color: var(--ink-soft, var(--text-muted, #a1a1aa));
+  text-transform: none;
+  letter-spacing: 0;
+}
+.teaching-panel__article h3 {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 16px 0 6px;
+  color: var(--ink, var(--text, #fafafa));
+}
+.teaching-panel__article p { margin: 0 0 12px; }
+.teaching-panel__article ul {
+  margin: 0 0 12px;
+  padding-left: 20px;
+}
+.teaching-panel__article li { margin-bottom: 4px; }
+.teaching-panel__article blockquote {
+  margin: 12px 0;
+  padding: 12px 14px;
+  border-left: 3px solid var(--accent, #2DD4BF);
+  background: color-mix(in srgb, var(--accent, #2DD4BF) 6%, transparent);
+  border-radius: 0 8px 8px 0;
+  color: var(--ink, var(--text, #fafafa));
+}
+.teaching-panel__article table {
+  border-collapse: collapse;
+  margin: 12px 0;
+  font-size: 14px;
+  width: 100%;
+}
+.teaching-panel__article th,
+.teaching-panel__article td {
+  border: 1px solid var(--border, #2a2a2e);
+  padding: 6px 10px;
+  text-align: left;
+}
+.teaching-panel__article th {
+  background: color-mix(in srgb, var(--ink-faint, #71717a) 14%, transparent);
+}
+.teaching-panel__article code {
+  font-family: var(--font-mono, monospace);
+  background: color-mix(in srgb, var(--ink-faint, #71717a) 14%, transparent);
+  padding: 1px 5px;
+  border-radius: 4px;
+  font-size: 0.92em;
+}
+
+.teaching-panel__empty {
+  margin: 20px 0;
+  padding: 16px;
+  border: 1px dashed var(--border, #2a2a2e);
+  border-radius: 8px;
+  color: var(--ink-soft, var(--text-muted, #a1a1aa));
+  font-size: 14px;
+  text-align: center;
+}
+
+/* ── Mobile (< 880 px) — full-screen modal ──────────────────────────────── */
+@media (max-width: 880px) {
+  .teaching-panel-root {
+    justify-content: stretch;
+  }
+  .teaching-panel {
+    width: 100%;
+    height: 100%;
+    border-left: 0;
+    transform: translateY(100%);
+  }
+  .teaching-panel-root.is-open .teaching-panel {
+    transform: translateY(0);
+  }
+  .teaching-panel__backdrop {
+    /* Full-screen modal — backdrop barely matters but keep it for contrast */
+    background: rgba(0, 0, 0, 0.7);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .teaching-panel,
+  .teaching-panel__backdrop {
+    transition: none;
+  }
+}
+
+/* ── L-PLAN-5 UPDATE 3 — confirm-dialog (Puheo-styled) ──────────────────── */
+
+.confirm-dialog-root {
+  position: fixed;
+  inset: 0;
+  z-index: 110;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  pointer-events: auto;
+}
+.confirm-dialog-root[hidden] { display: none; }
+
+.confirm-dialog__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  opacity: 0;
+  transition: opacity 200ms ease-out;
+}
+.confirm-dialog-root.is-open .confirm-dialog__backdrop {
+  opacity: 1;
+}
+
+.confirm-dialog {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  background: var(--surface-elevated, var(--surface, #161618));
+  border: 1px solid var(--border, #2a2a2e);
+  border-radius: 14px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  transform: translateY(8px);
+  opacity: 0;
+  transition: transform 200ms cubic-bezier(0.22, 0.61, 0.36, 1), opacity 200ms ease-out;
+}
+.confirm-dialog-root.is-open .confirm-dialog {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.confirm-dialog__title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--ink, var(--text, #fafafa));
+  line-height: 1.3;
+  text-wrap: balance;
+}
+
+.confirm-dialog__body {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--ink-soft, var(--text-muted, #a1a1aa));
+}
+
+.confirm-dialog__actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 4px;
+}
+
+.confirm-dialog__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 140ms ease, color 140ms ease, border-color 140ms ease;
+}
+.confirm-dialog__btn--secondary {
+  background: transparent;
+  color: var(--ink-soft, var(--text-muted, #a1a1aa));
+  border: 1px solid var(--border, #2a2a2e);
+}
+.confirm-dialog__btn--secondary:hover {
+  border-color: color-mix(in srgb, var(--ink, #fafafa) 20%, var(--border, #2a2a2e));
+  color: var(--ink, var(--text, #fafafa));
+}
+.confirm-dialog__btn--primary {
+  background: var(--accent, #2DD4BF);
+  /* Theme-stable foreground — matches global .btn-primary / curriculum CTA
+     (#052924 reads ~12.7:1 against the mint accent in both themes). */
+  color: #052924;
+  border: 1px solid var(--accent, #2DD4BF);
+}
+.confirm-dialog__btn--primary:hover { filter: brightness(1.05); }
+.confirm-dialog__btn:focus-visible {
+  outline: 2px solid var(--accent, #2DD4BF);
+  outline-offset: 2px;
+}
+
+@media (max-width: 480px) {
+  .confirm-dialog__actions { flex-direction: column-reverse; }
+  .confirm-dialog__btn { width: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .confirm-dialog,
+  .confirm-dialog__backdrop {
+    transition: none;
+  }
+}
+
+/* ── L-PLAN-5 UPDATE 3 — lesson-mode badge in exercise top bar ──────────── */
+
+.lesson-mode-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  /* In light mode the mint accent on transparent doesn't have enough
+     contrast for the label; use a stronger surface fill so the contrast
+     ratio holds in both themes. */
+  background: color-mix(in srgb, var(--accent, #2DD4BF) 20%, var(--surface, #fff));
+  border: 1px solid color-mix(in srgb, var(--accent, #2DD4BF) 45%, var(--border, #2a2a2e));
+  color: var(--ink, #111827);
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  max-width: min(60vw, 360px);
+}
+.lesson-mode-badge__label {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.lesson-mode-badge__exit {
+  background: transparent;
+  border: 0;
+  color: inherit;
+  padding: 0;
+  margin-left: 6px;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  border-radius: 4px;
+  width: 18px;
+  height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.lesson-mode-badge__exit:hover {
+  background: color-mix(in srgb, var(--accent, #2DD4BF) 25%, transparent);
+}
+.lesson-mode-badge__exit:focus-visible {
+  outline: 2px solid var(--accent, #2DD4BF);
+  outline-offset: 1px;
+}

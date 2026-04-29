@@ -132,6 +132,10 @@
   --app-gutter-x:   56px;
   --app-gutter-y:   56px;
   --bp-rail:        1180px;
+  /* Used by scroll-padding on <html> + scroll-margin on screen headers so any
+     #anchor jump or scrollIntoView lands below the fixed top-bar countdown
+     (34px) plus a small visual buffer. L-PLAN-4 UPDATE 2. */
+  --header-height:  72px;
 
   /* Editorial type scale */
   --fs-display:    clamp(2.5rem, 4.2vw, 3.5rem);
@@ -178,6 +182,18 @@
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* L-PLAN-4 UPDATE 2 — global scroll fix.
+   `scroll-padding-top` makes any #hash jump or `scrollIntoView()` land below
+   the fixed app-countdown / sticky top affordances rather than tucked under.
+   `scroll-margin-top` on screen headings is the per-element fallback for the
+   same purpose (e.g. when scrollIntoView is called with a sub-element). */
+html { scroll-padding-top: var(--header-height); }
+.screen h1,
+.screen h2,
+.screen [data-scroll-anchor] {
+  scroll-margin-top: var(--header-height);
+}
 
 /* ── SKIP LINK (accessibility) ── */
 .skip-link {
@@ -4997,6 +5013,13 @@ body:has(.app-countdown:not(.hidden)) #app-main { padding-top: 34px; }
   background: rgba(201, 166, 107, 0.12);
   color: var(--accent-hover);
   font-weight: 700;
+}
+/* L-PLAN-6 — accent-hover (teal-500) on the soft mocha background fails
+   AA in light mode (~3.6:1). teal-700 keeps the brand vibe and clears 4.5:1. */
+:root:not([data-theme="dark"]) .settings-opt.selected,
+[data-theme="light"] .settings-opt.selected {
+  color: var(--accent-dark, #0F766E);
+  border-color: var(--accent-dark, #0F766E);
 }
 .settings-modal-error {
   margin: 0 28px;

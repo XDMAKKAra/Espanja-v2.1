@@ -117,6 +117,33 @@
   color: var(--ink);
 }
 
+/* L-PLAN-6 — dynamic per-target description shown under the OB-1 picker.
+   Restrained card: surface bg, accent left-border, no glow. */
+.ob1-target-detail {
+  margin-top: 12px;
+  padding: 14px 16px;
+  background: color-mix(in srgb, var(--accent) 6%, var(--surface));
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: 8px;
+  display: grid;
+  gap: 4px;
+}
+.ob1-target-detail[hidden] { display: none; }
+.ob1-target-detail__title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+}
+.ob1-target-detail__pace,
+.ob1-target-detail__fit {
+  margin: 0;
+  font-size: 13px;
+  color: var(--ink-soft);
+  line-height: 1.5;
+}
+
 /* ── CTA ───────────────────────────────────────────── */
 .ob2-actions {
   margin-top: 8px;

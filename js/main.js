@@ -31,6 +31,10 @@ import { initSettings, showSettings } from "./screens/settings.js";
 import { initProfile, loadProfile } from "./screens/profile.js";
 import { wireTopicPicker, topicLabel, loadBriefing } from "./screens/mode-page.js";
 import { initAnalytics, trackError } from "./analytics.js";
+// L-PLAN-4 UPDATE 4 — floating profile button (replaces the right rail).
+import { initProfileMenu, syncProfileMenu } from "./features/profileMenu.js";
+// L-PLAN-5 UPDATE 4 — re-readable teaching page (side-panel desktop / modal mobile).
+import { initTeachingPanel } from "./features/teachingPanel.js";
 
 // ─── Inject show into api.js (avoids circular dep) ─────────────────────────
 setShowFn(show);
@@ -154,8 +158,48 @@ function navigateTo(nav, { updateHash = true } = {}) {
   else showModePage(nav);
 }
 
+// L-PLAN-5 UPDATE 3 — when an active curriculum lesson exists and the
+// student clicks a main-nav target OUTSIDE the lesson flow, prompt before
+// dropping the lesson context. "Continue" stays on the exercise screen,
+// "Lopeta" clears the lesson and navigates as requested.
+async function maybeConfirmNavAway(targetNav) {
+  try {
+    const { getLessonContext, clearLessonContext } = await import("./lib/lessonContext.js");
+    const ctx = getLessonContext();
+    if (!ctx) return true;
+    const activeScreen = document.querySelector(".screen.active");
+    const screenId = activeScreen?.id || "";
+    // Only prompt while the student is inside an exercise/lesson screen.
+    const lessonScreens = new Set(["screen-exercise", "screen-grammar", "screen-reading", "screen-writing", "screen-lesson"]);
+    if (!lessonScreens.has(screenId)) return true;
+    // path → student is going back to the curriculum overview, allowed
+    // without confirmation (it's the natural "exit" route).
+    if (targetNav === "path") {
+      clearLessonContext();
+      try { sessionStorage.removeItem("currentLessonTeachingMd"); } catch { /* ignore */ }
+      return true;
+    }
+    const { confirmDialog } = await import("./features/confirmDialog.js");
+    const ok = await confirmDialog({
+      title: "Lopetetaanko oppitunti?",
+      body: `Sinulla on käynnissä oppitunti "${ctx.lessonFocus || "harjoitus"}". Haluatko lopettaa harjoittelun nyt?`,
+      confirmLabel: "Lopeta",
+      cancelLabel: "Jatka oppituntia",
+    });
+    if (!ok) return false;
+    clearLessonContext();
+    try { sessionStorage.removeItem("currentLessonTeachingMd"); } catch { /* ignore */ }
+    return true;
+  } catch {
+    return true;
+  }
+}
+
 document.querySelectorAll(".sidebar-item[data-nav], .mobile-nav-item[data-nav], .sidebar-user[data-nav]").forEach((btn) => {
-  btn.addEventListener("click", () => navigateTo(btn.dataset.nav));
+  btn.addEventListener("click", async () => {
+    const ok = await maybeConfirmNavAway(btn.dataset.nav);
+    if (ok) navigateTo(btn.dataset.nav);
+  });
 });
 
 window.addEventListener("hashchange", () => {
@@ -251,6 +295,12 @@ initVerbSprint({ saveProgress });
 initVerbReference();
 initSettings({ loadDashboard });
 initProfile();
+// Profile menu wires globally — its DOM is mounted once in app.html and
+// survives screen changes. Pass the deps it needs to drive checkout + sidebar.
+initProfileMenu({ startCheckout, updateSidebarState });
+window._profileMenuRef = { syncProfileMenu };
+// Teaching panel — mounted once at boot, syncs visibility with screen + lesson.
+initTeachingPanel();
 
 if ($("btn-start-reading")) $("btn-start-reading").addEventListener("click", async () => {
   state.mode = "reading";

@@ -195,6 +195,40 @@
   max-width: 50ch;
 }
 
+/* L-PLAN-4 UPDATE 4 — streak chip lives in the hero greeting (was previously
+   hidden in the right rail). Pill, mono number, faint flame, accent on hot. */
+.dash-greeting__streak {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 14px 0 0;
+  padding: 6px 12px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent) 6%, var(--surface));
+  font-family: var(--font-display);
+  font-size: var(--fs-body-sm, 0.875rem);
+  color: var(--ink-soft);
+  position: relative;
+  z-index: 1;
+}
+.dash-greeting__streak[hidden] { display: none; }
+.dash-greeting__streak-num {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-md, 1.125rem);
+  font-weight: 700;
+  color: var(--ink);
+  font-feature-settings: "tnum" 1;
+  line-height: 1;
+}
+.dash-greeting__streak-label {
+  font-size: var(--fs-meta, 0.7rem);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.dash-greeting__streak .streak-flame { width: 14px; height: 14px; color: var(--accent); }
+
 /* Pro upsell screen */
 .pro-features-list { text-align: left; margin: 24px 0; }
 .pro-feature {

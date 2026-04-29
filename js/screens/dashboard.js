@@ -230,6 +230,16 @@ function renderDashboard({
     motivationEl.textContent = pickMotivation(streak, totalSessions);
   }
 
+  // L-PLAN-4 UPDATE 4 — streak surfaces in the hero greeting now that the
+  // right rail is gone. Reveal the chip only once we know there's a streak
+  // worth celebrating; zero-day users keep the cleaner hero.
+  const streakRow = document.getElementById("dash-greeting-streak");
+  const streakNumHero = document.getElementById("dash-greeting-streak-num");
+  if (streakRow && streakNumHero) {
+    streakNumHero.textContent = String(streak ?? 0);
+    streakRow.hidden = !((streak ?? 0) >= 1);
+  }
+
   // Blur-fade arrival on the hero header (sourced: Magic UI blur-fade).
   // Defer one frame so the initial-state styles commit, then add the
   // `--in` modifier to drive the staggered transition. Idempotent — the
@@ -1050,67 +1060,9 @@ export function shareResult(text) {
   }
 }
 
-// ─── Adaptive level progress ──────────────────────────────────────────────
-
-async function loadAdaptiveState() {
-  if (!isLoggedIn()) return;
-  const progressEl = $("dash-level-progress");
-  if (!progressEl) return;
-
-  try {
-    const res = await apiFetch(`${API}/api/adaptive-state`, {
-      headers: authHeader(),
-    });
-    if (!res.ok) return;
-    const data = await res.json();
-
-    progressEl.classList.remove("hidden");
-
-    const currentEl = $("dash-level-current");
-    const nextEl = $("dash-level-next");
-    const fillEl = $("dash-level-fill");
-    const detailEl = $("dash-level-detail");
-    const checkBtn = $("btn-checkpoint");
-
-    if (currentEl) currentEl.textContent = data.level;
-    if (nextEl) nextEl.textContent = data.nextLevel || "MAX";
-
-    // Animate progress bar
-    if (fillEl) {
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          fillEl.style.width = data.progressToNext + "%";
-        });
-      });
-    }
-
-    if (detailEl) {
-      detailEl.textContent = `30 päivän tarkkuus: ${data.rollingAccuracy}% · ${data.rollingSessions} harjoitusta`;
-    }
-
-    // Checkpoint button
-    if (checkBtn) {
-      if (data.canCheckpoint) {
-        checkBtn.classList.remove("hidden");
-        checkBtn.textContent = `Tee ${data.nextLevel}-tason checkpoint →`;
-        checkBtn.onclick = () => {
-          if (confirm(`Haluatko yrittää ${data.nextLevel}-tason checkpointia?\n\n20 kysymystä ilman vihjeitä.\n80% oikein nostaa tasosi.`)) {
-            startCheckpoint();
-          }
-        };
-      } else {
-        checkBtn.classList.add("hidden");
-      }
-    }
-
-    // Update grade circle to use persistent level
-    const gradeCircle = $("dash-grade-circle");
-    if (gradeCircle && data.level) {
-      gradeCircle.textContent = data.level;
-    }
-
-  } catch { /* silent */ }
-}
+// ─── Adaptive level progress (removed — bar deleted from UI) ──────────────
+// loadAdaptiveState() no-op kept so any lingering call sites don't throw
+async function loadAdaptiveState() {}
 
 async function startCheckpoint() {
   showLoading("Luodaan checkpoint-testiä...");
@@ -1352,35 +1304,12 @@ function railInitials(email) {
   return (parts[0][0] + parts[1][0]).toUpperCase();
 }
 
-let _railWired = false;
 function renderRail({ pro, streak }) {
-  // User card identity
-  const email = getAuthEmail() || "";
-  const handle = email ? email.split("@")[0] : "Käyttäjä";
-  const av = document.getElementById("rail-user-avatar");
-  if (av) av.textContent = railInitials(email);
-  const nm = document.getElementById("rail-user-name");
-  if (nm) nm.textContent = handle || "Käyttäjä";
-  const stNum = document.getElementById("rail-user-streak-num");
-  if (stNum) stNum.textContent = String(streak ?? 0);
-  const stChip = document.getElementById("rail-user-streak");
-  if (stChip) stChip.classList.toggle("is-active", (streak ?? 0) >= 3);
-
-  // L48-hotfix: daily peek shows for free + Pro alike. Small "Pro aktiivinen"
-  // badge replaces the old big upsell card; the upsell is now a popup.
-  const proBadge = document.getElementById("rail-pro-badge");
-  if (proBadge) proBadge.hidden = !pro;
-
-  if (_railWired) return;
-  _railWired = true;
-
-  // Click on user card → open profile (same target as the sidebar user button).
-  const card = document.getElementById("rail-user-card");
-  if (card) {
-    card.addEventListener("click", () => {
-      const profileBtn = document.querySelector('.sidebar-item[data-nav="profile"], .sidebar-user[data-nav="profile"]');
-      if (profileBtn) profileBtn.click();
-    });
+  // L-PLAN-4 UPDATE 4 — the right rail is gone. The avatar / Pro badge that
+  // used to live here now belongs to the floating profile button (top-right).
+  // We forward the Pro flag to it so the upgrade item shows / hides correctly.
+  if (window._profileMenuRef?.syncProfileMenu) {
+    try { window._profileMenuRef.syncProfileMenu({ pro: !!pro }); } catch { /* noop */ }
   }
 
   // Pro upsell popup — bottom-right, free users only, 5s delay, 7-day suppress.

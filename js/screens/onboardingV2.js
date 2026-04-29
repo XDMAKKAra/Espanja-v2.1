@@ -63,6 +63,63 @@ function reset() {
     .forEach((b) => b.setAttribute("aria-pressed", "false"));
   const cta = $("ob1-next");
   if (cta) cta.disabled = true;
+  // L-PLAN-6 — clear the dynamic target-detail card on re-entry.
+  const detail = document.getElementById("ob1-target-detail");
+  if (detail) detail.hidden = true;
+}
+
+// L-PLAN-6 — per-target description shown under the OB-1 picker.
+// Frame: "tavoite mahdollistaa, ei vaadi" (self-efficacy-builder-sequence).
+const TARGET_DESCRIPTIONS = {
+  I: {
+    title: "Tavoite I",
+    pace: "Hidas tahti · 0,7× tehtäviä per oppitunti · paljon toistoa",
+    fit: "Sopii sinulle, jos olet vasta aloittamassa espanjaa ja haluat rauhallisen alun.",
+  },
+  A: {
+    title: "Tavoite A",
+    pace: "Hidas-normaali tahti · 0,85× tehtäviä · selkeitä esimerkkejä",
+    fit: "Sopii sinulle, jos olet kielen alkutaipaleella ja haluat varmistaa perusteet.",
+  },
+  B: {
+    title: "Tavoite B",
+    pace: "Normaali tahti · baseline tehtävämäärä",
+    fit: "Sopii useimmille — etenet kurssit järjestyksessä omaan tahtiin.",
+  },
+  C: {
+    title: "Tavoite C",
+    pace: "Normaali tahti · baseline tehtävämäärä · hieman haastavammat tehtävät",
+    fit: "Sopii sinulle, jos hallitset perusteet ja haluat tasaisesti haastaa itseäsi.",
+  },
+  M: {
+    title: "Tavoite M",
+    pace: "Nopea tahti · 1,15× tehtäviä · vaativammat distraktorit",
+    fit: "Sopii sinulle, jos olet hyvin osaava ja haluat pitää tahdin tiukkana.",
+  },
+  E: {
+    title: "Tavoite E",
+    pace: "Nopea tahti · 1,3× tehtäviä · vivahde-erot tärkeitä",
+    fit: "Sopii sinulle, jos tähtäät erinomaiseen ja olet valmis hiomaan yksityiskohtia.",
+  },
+  L: {
+    title: "Tavoite L",
+    pace: "Erittäin nopea tahti · 1,5× tehtäviä · syventäviä lisätehtäviä",
+    fit: "Sopii sinulle, jos haluat täydellisen hallinnan ja tähtäät korkeimpaan arvosanaan.",
+  },
+};
+
+function renderTargetDetail(grade) {
+  const wrap = document.getElementById("ob1-target-detail");
+  const titleEl = document.getElementById("ob1-target-detail-title");
+  const paceEl = document.getElementById("ob1-target-detail-pace");
+  const fitEl = document.getElementById("ob1-target-detail-fit");
+  if (!wrap || !titleEl || !paceEl || !fitEl) return;
+  const info = TARGET_DESCRIPTIONS[grade];
+  if (!info) { wrap.hidden = true; return; }
+  titleEl.textContent = info.title;
+  paceEl.textContent = info.pace;
+  fitEl.textContent = info.fit;
+  wrap.hidden = false;
 }
 
 // ── OB-1: profile ────────────────────────────────────────────────────────
@@ -82,7 +139,10 @@ function wireOB1() {
       );
       const value = btn.dataset.value;
       if (field === "schoolGrade") v2.schoolGrade = value;
-      if (field === "targetGrade") v2.targetGrade = value;
+      if (field === "targetGrade") {
+        v2.targetGrade = value;
+        renderTargetDetail(value);
+      }
       if (field === "dailyGoalMinutes") v2.dailyGoalMinutes = Number(value);
 
       // Pre-select target one notch above school grade on first interaction.
@@ -98,6 +158,7 @@ function wireOB1() {
               b.setAttribute("aria-checked", String(b === match)),
             );
             v2.targetGrade = presumed;
+            renderTargetDetail(presumed);
           }
         }
       }

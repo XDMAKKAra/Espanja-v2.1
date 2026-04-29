@@ -27,6 +27,14 @@ export const show = (id) => {
   document.querySelectorAll(".screen").forEach((s) => s.classList.remove("active"));
   $(id).classList.add("active");
   applyShellMode(id);
+  // L-PLAN-4 UPDATE 2 — reset scroll on every screen change so the new screen's
+  // H1 lands at the top instead of inheriting the previous screen's scroll
+  // position (which made e.g. "Aloita →" jumps look like the heading vanished).
+  // `scroll-padding-top` on <html> keeps any subsequent in-screen anchor jumps
+  // below the fixed top-bar.
+  if (typeof window !== "undefined") {
+    try { window.scrollTo({ top: 0, left: 0, behavior: "auto" }); } catch { /* noop */ }
+  }
 };
 
 // Sync shell mode on initial load — the default-active screen is set by HTML,

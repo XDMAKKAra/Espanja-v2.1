@@ -1,18 +1,19 @@
-/* App shell grid — sidebar + main + rail
-   See spec §2.1 + §3.4 for breakpoints. */
+/* App shell grid — sidebar + main
+   L-PLAN-4 UPDATE 4 — right rail removed; the floating profile button is
+   the only thing that lives top-right now. Grid is permanently 2-column. */
 
 .app-shell {
   min-height: 100vh;
   display: grid;
   grid-template-columns:
     var(--app-sidebar)
-    minmax(var(--app-main-min), 1fr)
-    var(--app-rail);
+    minmax(var(--app-main-min), 1fr);
   background: var(--bg);
 }
 
-/* When a screen has no rail, app-shell becomes 2-column.
-   Toggle via [data-rail="off"] on .app-shell. */
+/* `.app-shell[data-rail="off"]` was the explicit two-column form for non-
+   dashboard screens. Both forms now collapse to the same shape; the
+   selector is kept so existing JS (ui/nav.js applyShellMode) is a no-op. */
 .app-shell[data-rail="off"] {
   grid-template-columns: var(--app-sidebar) 1fr;
 }
@@ -20,6 +21,10 @@
 .app-main {
   grid-column: 2 / 3;
   padding: var(--app-gutter-y) var(--app-gutter-x);
+  /* Reserve room top-right for the floating profile button (40 px circle,
+     16 px gutter) so the avatar never overlays headings or the close-X on
+     setup screens. The button itself is fixed-position to the viewport. */
+  padding-right: max(var(--app-gutter-x), 88px);
   min-width: 0; /* prevent grid blowout */
 }
 
@@ -28,28 +33,17 @@
   margin: 0;
 }
 
-.app-rail {
-  grid-column: 3 / 4;
-  background: var(--surface);
-  border-left: 1px solid var(--border);
-  padding: var(--app-gutter-y) 28px 32px;
-  min-width: 0;
-}
+/* Defensive: if any markup still ships the legacy aside (older deploy of
+   app.html cached client-side), hide it rather than letting it occupy a
+   third column that no longer exists in the grid. */
+.app-rail { display: none !important; }
 
-/* === 1024–1179 px: rail moves below main as horizontal strip === */
+/* === 1024–1179 px === */
 @media (max-width: 1179px) {
   .app-shell {
     grid-template-columns: var(--app-sidebar) 1fr;
-    grid-template-rows: 1fr auto;
   }
-  .app-main { grid-column: 2 / 3; grid-row: 1 / 2; padding: 40px; }
-  .app-rail {
-    grid-column: 2 / 3;
-    grid-row: 2 / 3;
-    border-left: 0;
-    border-top: 1px solid var(--border);
-    padding: 24px 40px;
-  }
+  .app-main { grid-column: 2 / 3; padding: 40px; padding-right: max(40px, 80px); }
 }
 
 /* === 768–1023 px: sidebar collapses (existing top-nav takes over) === */
@@ -58,15 +52,13 @@
     grid-template-columns: 1fr;
     grid-template-rows: auto 1fr auto;
   }
-  .app-main  { grid-column: 1 / -1; padding: 24px; }
-  .app-rail  { grid-column: 1 / -1; padding: 16px 24px; }
+  .app-main  { grid-column: 1 / -1; padding: 24px; padding-right: 72px; }
   .app-sidebar { display: none; }
 }
 
-/* === < 768 px: rail folds into a 2x2 stat strip === */
+/* === < 768 px === */
 @media (max-width: 767px) {
-  .app-main { padding: 16px; }
-  .app-rail { padding: 12px 16px; }
+  .app-main { padding: 16px; padding-right: 64px; }
 }
 
 /* === Auth-family screens: full-width, no shell columns === */

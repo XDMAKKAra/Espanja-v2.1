@@ -90,9 +90,17 @@ describe("POST /api/profile — validation", () => {
   });
 
   it("rejects an invalid target_grade", async () => {
-    const res = await request(app).post("/api/profile").send({ target_grade: "A" });
+    // L-PLAN-6 — A and I joined the valid I..L ladder, so use a value
+    // outside the ladder ("Z") to assert the validator still rejects.
+    const res = await request(app).post("/api/profile").send({ target_grade: "Z" });
     expect(res.status).toBe(400);
     expect(res.body.error).toMatch(/tavoitearvosana/);
+  });
+
+  it("accepts target_grade = A (within the L-PLAN-6 ladder)", async () => {
+    state.upsertResult = { data: { user_id: "test-user", target_grade: "A" }, error: null };
+    const res = await request(app).post("/api/profile").send({ target_grade: "A" });
+    expect(res.status).toBe(200);
   });
 
   it("rejects spanish_courses_completed outside 1–8", async () => {

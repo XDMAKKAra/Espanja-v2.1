@@ -2,6 +2,7 @@ import { $, show } from "../ui/nav.js";
 import { API, authHeader, apiFetch, getAuthEmail, clearAuth } from "../api.js";
 import { track } from "../analytics.js";
 import { computeStartingLevel, YTL_LEVELS } from "../features/startingLevel.js";
+import { toast } from "../ui/toast.js";
 
 const THEME_LABELS = {
   auto:  "Vaalea — seuraa järjestelmää",
@@ -147,12 +148,26 @@ const STUDY_BG_LABELS = {
   kotikieli: "Puhun espanjaa kotona / suvun kanssa",
 };
 
+// L-PLAN-6 — full I..L ladder. The pace + multiplier + tutor tone all
+// adapt per pick (CURRICULUM_SPEC §2; lib/lessonContext.js mirrors the
+// thresholds). Order matches the picker pill row in onboarding OB-1.
 const TARGET_GRADE_LABELS = {
+  I: "I · Improbatur",
+  A: "A · Approbatur",
   B: "B · Hyväksytty",
   C: "C · Tyydyttävä",
   M: "M · Hyvä",
   E: "E · Erinomainen",
   L: "L · Huippu",
+};
+const TARGET_GRADE_PACE_HINTS = {
+  I: "hidas tahti, paljon toistoa",
+  A: "hidas-normaali tahti",
+  B: "normaali tahti, baseline",
+  C: "normaali tahti",
+  M: "nopea tahti, vaativammat tehtävät",
+  E: "nopea tahti, vivahde-erot",
+  L: "erittäin nopea, syventävät lisätehtävät",
 };
 
 const FIELDS = [
@@ -252,11 +267,17 @@ const FIELDS = [
   {
     key: "target_grade",
     label: "Tavoitearvosana",
+    hint: "Tavoitteesi YO-kokeessa määrittää harjoituksen määrää ja vaikeutta. Voit muuttaa sitä koska tahansa — suoritetut oppitunnit säilyvät.",
     editor: "single",
     options: () =>
       Object.entries(TARGET_GRADE_LABELS).map(([value, label]) => ({ value, label })),
-    render: (p) => TARGET_GRADE_LABELS[p.target_grade] || "Ei asetettu",
-    readProfile: (p) => p.target_grade || "M",
+    render: (p) => {
+      const grade = p.target_grade;
+      if (!grade || !TARGET_GRADE_LABELS[grade]) return "Ei asetettu";
+      const pace = TARGET_GRADE_PACE_HINTS[grade];
+      return pace ? `${TARGET_GRADE_LABELS[grade]} · ${pace}` : TARGET_GRADE_LABELS[grade];
+    },
+    readProfile: (p) => p.target_grade || "B",
     toPayload: (v) => v,
   },
 ];
@@ -467,6 +488,16 @@ async function saveEditor() {
 
     closeEditor();
     renderRows();
+
+    // L-PLAN-6 — target_grade-specific toast confirms the adaptive shift
+    // and reassures that completed lessons survive. Other fields stay
+    // toast-less so the modal close itself signals success.
+    if (field.key === "target_grade" && newVal && TARGET_GRADE_LABELS[newVal]) {
+      const pace = TARGET_GRADE_PACE_HINTS[newVal] || "";
+      toast.success(
+        `Tavoite päivitetty: ${newVal}. Seuraavat oppitunnit ovat ${pace || "tavoitteen mukaisia"} — suoritetut säilyvät ennallaan.`,
+      );
+    }
 
     // Notify any other screen (profile chips, dashboard) that the profile
     // changed so they can re-render their values without re-fetching.

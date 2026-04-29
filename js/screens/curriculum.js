@@ -8,6 +8,11 @@
  */
 import { $, show } from "../ui/nav.js";
 import { API, isLoggedIn, authHeader, apiFetch } from "../api.js";
+import { state } from "../state.js";
+import { loadNextBatch } from "./vocab.js";
+import { loadGrammarDrill } from "./grammar.js";
+import { loadReadingTask } from "./reading.js";
+import { loadWritingTask } from "./writing.js";
 
 const PATH_INNER_ID = "curr-root";
 const LESSON_INNER_ID = "curr-lesson-root";
@@ -41,19 +46,29 @@ function escapeHtml(s) {
 
 // Minimal Markdown renderer — h1, h2, blockquote, paragraphs, bold, code,
 // 4-col tables (pipe-delimited). Sanitised by escaping all input first.
-function renderMarkdown(md) {
+// Exported so the teaching-panel side panel can reuse the same renderer.
+export function renderMarkdown(md) {
   if (!md) return "";
   const lines = md.split(/\r?\n/);
   const out = [];
   let para = [];
   let inTable = false;
   let tableRows = [];
+  let inList = false;
+  let listItems = [];
 
   const flushPara = () => {
     if (para.length === 0) return;
     const html = inlineFmt(para.join(" "));
     out.push(`<p>${html}</p>`);
     para = [];
+  };
+  const flushList = () => {
+    if (!inList) return;
+    if (listItems.length === 0) { inList = false; return; }
+    out.push("<ul>" + listItems.map((it) => `<li>${inlineFmt(it)}</li>`).join("") + "</ul>");
+    inList = false;
+    listItems = [];
   };
   const flushTable = () => {
     if (!inTable) return;
@@ -73,37 +88,42 @@ function renderMarkdown(md) {
     inTable = false;
     tableRows = [];
   };
+  const flushAll = () => { flushPara(); flushTable(); flushList(); };
 
   function inlineFmt(s) {
     let t = escapeHtml(s);
     t = t.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+    t = t.replace(/\*([^*]+)\*/g, "<em>$1</em>");
     t = t.replace(/`([^`]+)`/g, "<code>$1</code>");
     return t;
   }
 
   for (const raw of lines) {
     const line = raw.replace(/\s+$/, "");
-    if (/^#{1,2}\s/.test(line)) {
-      flushPara(); flushTable();
-      const level = line.startsWith("## ") ? 2 : 1;
-      const text = line.replace(/^#{1,2}\s+/, "");
+    if (/^#{1,3}\s/.test(line)) {
+      flushAll();
+      const level = line.startsWith("### ") ? 3 : (line.startsWith("## ") ? 2 : 1);
+      const text = line.replace(/^#{1,3}\s+/, "");
       out.push(`<h${level}>${inlineFmt(text)}</h${level}>`);
     } else if (/^>\s/.test(line)) {
-      flushPara(); flushTable();
+      flushAll();
       out.push(`<blockquote>${inlineFmt(line.replace(/^>\s+/, ""))}</blockquote>`);
     } else if (/^\|/.test(line)) {
-      flushPara();
+      flushPara(); flushList();
       inTable = true;
       tableRows.push(line);
-    } else if (/^\s*$/.test(line)) {
+    } else if (/^\s*[-*]\s+/.test(line)) {
       flushPara(); flushTable();
+      inList = true;
+      listItems.push(line.replace(/^\s*[-*]\s+/, ""));
+    } else if (/^\s*$/.test(line)) {
+      flushAll();
     } else {
-      flushTable();
+      flushTable(); flushList();
       para.push(line);
     }
   }
-  flushPara();
-  flushTable();
+  flushAll();
   return out.join("\n");
 }
 
@@ -357,13 +377,28 @@ export async function openLesson(kurssiKey, lessonIndex) {
     const data = await res.json();
     // Enrich currentLesson with focus + type so the post-session lesson
     // results card can render them without a second fetch.
+    // L-PLAN-5 UPDATE 5 — lessonExerciseCount drives single-batch sizing
+    // in vocab.js loadNextBatch.
+    // L-PLAN-6 — prefer the target-grade-adjusted count from lessonContext
+    // when present; fall back to baseline lesson.exerciseCount otherwise.
+    const adjustedCount = Number(data?.lessonContext?.exerciseCount)
+      || Number(data?.lesson?.exerciseCount) || null;
+    const targetGrade = String(data?.lessonContext?.targetGrade || "B");
     try {
       sessionStorage.setItem("currentLesson", JSON.stringify({
         kurssiKey,
         lessonIndex,
         lessonFocus: data?.lesson?.focus || "",
         lessonType: data?.lesson?.type || "",
+        lessonExerciseCount: adjustedCount,
+        targetGrade,
       }));
+      // L-PLAN-5 UPDATE 4 — cache the teaching Markdown for the re-read
+      // side-panel so the student can review it mid-exercise without an
+      // extra network round-trip.
+      const md = data?.teachingPage?.contentMd || "";
+      if (md) sessionStorage.setItem("currentLessonTeachingMd", md);
+      else sessionStorage.removeItem("currentLessonTeachingMd");
     } catch { /* private mode — ignore */ }
     renderLessonPage(root, kurssiKey, data);
   } catch (err) {
@@ -393,13 +428,48 @@ function ensureLessonRoot() {
   }
 }
 
+// L-PLAN-5 UPDATE 2 — rebuilt lesson screen layout. Eyebrow shows kurssi
+// number + lesson number, H1 is the lesson focus (display 40px), Markdown
+// teaching card is the body, CTA shows exercise count + estimated duration.
+function formatDurationMin(exerciseCount) {
+  // 90s per exercise (recognition + production mix); rounded to nearest min.
+  const seconds = (exerciseCount || 1) * 90;
+  return Math.max(1, Math.round(seconds / 60));
+}
+
+function ctaLabel(lesson, lessonContext) {
+  // L-PLAN-6 — prefer the target-grade-adjusted count from lessonContext,
+  // fall back to baseline. Anonymous users (no profile) still see the
+  // baseline B count so the public preview is honest.
+  const n = Number(lessonContext?.exerciseCount) || lesson.exerciseCount || 8;
+  const min = formatDurationMin(n);
+  if (lesson.type === "test") {
+    return `Aloita kertaustesti (${n} kysymystä, ~${min} min) →`;
+  }
+  if (lesson.type === "reading") {
+    return `Aloita luetun ymmärtäminen (~${min} min) →`;
+  }
+  if (lesson.type === "writing") {
+    return `Aloita kirjoittaminen (~${min} min) →`;
+  }
+  return `Aloita harjoittelu (${n} tehtävää, ~${min} min) →`;
+}
+
+function kurssiNumberFromKey(kurssiKey) {
+  const m = /^kurssi_(\d+)$/.exec(String(kurssiKey || ""));
+  return m ? Number(m[1]) : null;
+}
+
 function renderLessonPage(root, kurssiKey, data) {
-  const { lesson, teachingPage } = data;
+  const { lesson, teachingPage, lessonContext } = data;
   const teaching = teachingPage?.contentMd ? renderMarkdown(teachingPage.contentMd) : null;
-  const typeLabel = TYPE_LABEL[lesson.type] || "Oppitunti";
+  const kurssiNum = kurssiNumberFromKey(kurssiKey);
+  const eyebrow = kurssiNum != null
+    ? `Kurssi ${kurssiNum} · Oppitunti ${lesson.sortOrder}`
+    : `Oppitunti ${lesson.sortOrder}`;
 
   const teachingHtml = teaching
-    ? `<article class="curr-teaching" id="curr-teaching">${teaching}</article>`
+    ? `<article class="curr-teaching" id="curr-teaching" aria-label="Opetussivu">${teaching}</article>`
     : (lesson.teachingSnippet
         ? `<p class="curr-snippet">${escapeHtml(lesson.teachingSnippet)}</p>`
         : "");
@@ -408,12 +478,13 @@ function renderLessonPage(root, kurssiKey, data) {
     <div class="curr-lesson-page">
       <button type="button" class="curr-back" id="curr-lesson-back">← Oppimispolku</button>
       <header class="curr-lesson-hero">
-        <p class="curr-eyebrow">${escapeHtml(typeLabel)} · oppitunti ${lesson.sortOrder}</p>
+        <p class="curr-eyebrow">${escapeHtml(eyebrow)}</p>
         <h1>${escapeHtml(lesson.focus)}</h1>
       </header>
       ${teachingHtml}
       <div class="curr-actions">
-        <button type="button" class="btn btn-primary" id="curr-start">Aloita harjoittelu →</button>
+        <button type="button" class="btn btn-primary" id="curr-start">${escapeHtml(ctaLabel(lesson, lessonContext))}</button>
+        <p class="curr-actions-hint">Voit aina palata tähän opetussivuun harjoituksen aikana.</p>
       </div>
     </div>`;
   document.getElementById("curr-lesson-back")?.addEventListener("click", goBack);
@@ -421,20 +492,62 @@ function renderLessonPage(root, kurssiKey, data) {
 }
 
 function startExercises(kurssiKey, lesson) {
-  // L-PLAN-3 will read sessionStorage.currentLesson and pass scores back.
-  // For this loop we only navigate to the appropriate existing screen.
+  // L-PLAN-5 UPDATE 2 — when the student taps "Aloita harjoittelu →" we
+  // bypass the topic-picker mode page (lesson context already pins the
+  // topic + level + count via routes/exercises.js applyLessonContext) and
+  // go straight to the exercise loader. The hash is updated so the browser
+  // back-button works and the sidebar nav highlights correctly.
   const { type } = lesson;
-  if (type === "vocab" || type === "mixed") {
-    location.hash = "#/sanasto";
-  } else if (type === "grammar") {
-    location.hash = "#/puheoppi";
-  } else if (type === "reading") {
-    location.hash = "#/luetun";
-  } else if (type === "writing") {
-    location.hash = "#/kirjoitus";
-  } else if (type === "test") {
-    location.hash = "#/sanasto"; // kertaustesti — sanasto for now until L-PLAN-3
+  state.sessionStartTime = Date.now();
+  state.language = "spanish";
+
+  if (type === "vocab") {
+    state.mode = "vocab";
+    state.topic = "general vocabulary"; // server overrides via lessonContext
+    state.level = "B";
+    state.startLevel = "B";
+    state.peakLevel = "B";
+    state.batchNumber = 0;
+    state.totalCorrect = 0;
+    state.totalAnswered = 0;
+    state.recentVocabHeadwords = [];
+    history.replaceState(null, "", "#/sanasto");
+    loadNextBatch();
+    return;
   }
+  if (type === "grammar" || type === "mixed" || type === "test") {
+    state.mode = "grammar";
+    state.grammarTopic = "mixed";
+    state.grammarLevel = "C";
+    history.replaceState(null, "", "#/puheoppi");
+    loadGrammarDrill();
+    return;
+  }
+  if (type === "reading") {
+    state.mode = "reading";
+    state.readingTopic = "animals and nature";
+    state.readingLevel = "C";
+    history.replaceState(null, "", "#/luetun");
+    loadReadingTask();
+    return;
+  }
+  if (type === "writing") {
+    state.mode = "writing";
+    state.writingTaskType = "short";
+    state.writingTopic = "general";
+    history.replaceState(null, "", "#/kirjoitus");
+    loadWritingTask();
+    return;
+  }
+  // Unknown type — fallback to vocab.
+  state.mode = "vocab";
+  state.topic = "general vocabulary";
+  state.level = "B";
+  state.batchNumber = 0;
+  state.totalCorrect = 0;
+  state.totalAnswered = 0;
+  history.replaceState(null, "", "#/sanasto");
+  loadNextBatch();
 }
 
 function goBack() {

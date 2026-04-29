@@ -339,12 +339,23 @@
   margin: 0;
 }
 .curr-lesson-hero h1 {
-  font-size: clamp(24px, 3.2vw, 30px);
+  /* L-PLAN-5 UPDATE 2 — display 40px desktop, scales down on mobile */
+  font-size: clamp(28px, 4.6vw, 40px);
   font-weight: 700;
   letter-spacing: -0.02em;
   margin: 0;
   color: var(--ink, var(--text, #fafafa));
-  line-height: 1.2;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+
+/* L-PLAN-5 UPDATE 2 — hint line under the CTA */
+.curr-actions-hint {
+  margin: 0;
+  text-align: center;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--ink-soft, var(--text-muted, #a1a1aa));
 }
 
 .curr-teaching {
@@ -413,7 +424,9 @@
 }
 .curr-actions .btn-primary {
   background: var(--accent, #2DD4BF);
-  color: var(--bg, #0a0a0a);
+  /* Theme-stable foreground — same dark teal-black the global .btn-primary
+     uses; reads ~12.7:1 against the mint accent in both themes. */
+  color: #052924;
   border: 1px solid var(--accent, #2DD4BF);
 }
 .curr-actions .btn-primary:hover { filter: brightness(1.05); }
@@ -524,6 +537,12 @@
 .lr-score--good .lr-score-num { color: var(--accent, #2DD4BF); }
 .lr-score--warn .lr-score-num { color: var(--warn, #f59e0b); }
 .lr-score--low  .lr-score-num { color: var(--err, #ef4444); }
+/* L-PLAN-6 — mint accent fails WCAG against the light surface (~2.4:1).
+   teal-700 (--accent-dark) keeps the brand vibe and passes AA-large. */
+:root:not([data-theme="dark"]) .lr-score--good .lr-score-num,
+[data-theme="light"] .lr-score--good .lr-score-num {
+  color: var(--accent-dark, #0F766E);
+}
 .lr-score-divider { color: var(--ink-soft, #a1a1aa); font-weight: 400; }
 .lr-score-total { color: var(--ink-soft, #a1a1aa); font-weight: 400; }
 .lr-score-label {
@@ -579,25 +598,46 @@
   100% { background-position: -100% 0; }
 }
 
+/* L-PLAN-4 UPDATE 6 — fast-leveling callout. Single-stroke accent border on
+   the leading edge (Linear-tier restraint), warm bolt icon, single-line copy.
+   Stacks on narrow viewports per spec. */
 .lr-fasttrack {
   background: color-mix(in srgb, var(--accent, #2DD4BF) 6%, var(--surface, #0a0a0a));
-  border: 1px solid color-mix(in srgb, var(--accent, #2DD4BF) 35%, var(--border, #2a2a2a));
+  border: 1px solid color-mix(in srgb, var(--accent, #2DD4BF) 24%, var(--border, #2a2a2a));
+  border-left: 3px solid var(--accent, #2DD4BF);
   border-radius: 12px;
-  padding: 14px 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+  padding: 16px;
+  display: grid;
+  grid-template-columns: 24px 1fr;
+  column-gap: 12px;
+  row-gap: 12px;
+  align-items: start;
 }
+.lr-fasttrack-icon {
+  font-size: 24px;
+  line-height: 1;
+  color: var(--accent, #2DD4BF);
+  grid-row: 1;
+}
+.lr-fasttrack-text,
 .lr-fasttrack-q {
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.5;
   margin: 0;
   color: var(--ink, var(--text, #fafafa));
+  grid-column: 2;
 }
 .lr-fasttrack-row {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
+  grid-column: 1 / -1;
+}
+@media (max-width: 480px) {
+  .lr-fasttrack-row .btn { flex: 1 1 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lr-fasttrack { transition: none; }
 }
 
 .lr-actions {
@@ -607,6 +647,49 @@
   margin-top: 4px;
 }
 .lr-actions .btn { width: 100%; }
+
+/* L-PLAN-6 — Syvennä callout for L target. Restrained accent card,
+   single-stroke border, no glow. Sits above the primary CTA stack. */
+.lr-deepen {
+  background: color-mix(in srgb, var(--accent, #2DD4BF) 7%, var(--surface, #0a0a0a));
+  border: 1px solid color-mix(in srgb, var(--accent, #2DD4BF) 28%, var(--border, #2a2a2a));
+  border-left: 3px solid var(--accent, #2DD4BF);
+  border-radius: 12px;
+  padding: 16px;
+  display: grid;
+  gap: 10px;
+}
+.lr-deepen__title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ink, var(--text, #fafafa));
+}
+.lr-deepen__body {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--ink-soft, var(--text-soft, #c8c8c8));
+}
+.lr-deepen__row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.lr-deepen__row .btn { flex: 1 1 auto; }
+@media (max-width: 480px) {
+  .lr-deepen__row .btn { flex: 1 1 100%; }
+}
+
+/* Deepen-mode results card — eyebrow accent so the bonus run feels
+   distinct from the regular completion card. */
+.lr-card--deepen .lr-eyebrow { color: var(--accent, #2DD4BF); }
+/* Light-theme accent is too soft on white (~2.4:1) — fall back to
+   teal-700 like the score number above. */
+:root:not([data-theme="dark"]) .lr-card--deepen .lr-eyebrow,
+[data-theme="light"] .lr-card--deepen .lr-eyebrow {
+  color: var(--accent-dark, #0F766E);
+}
 
 @media (prefers-reduced-motion: reduce) {
   .lr-bar-fill { transition: none; }

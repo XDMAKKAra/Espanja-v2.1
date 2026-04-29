@@ -18,7 +18,7 @@ import { reportMcAdvisory } from "../features/mcAdvisory.js";
 import { generateCoachLine, topicLabel, countUp } from "./mode-page.js";
 import { celebrateScore } from "../features/celebrate.js";
 import { generateExerciseShareCard } from "../features/shareCard.js";
-import { getLessonContext } from "../lib/lessonContext.js";
+import { getLessonContext, isDeepenRun } from "../lib/lessonContext.js";
 
 function fmtElapsed(ms) {
   if (!Number.isFinite(ms) || ms <= 0) return "—";
@@ -241,14 +241,21 @@ export async function loadNextBatch() {
   showSkeletonIntoExercise();
   show("screen-exercise");
 
+  // L-PLAN-5 UPDATE 5 — when a curriculum lesson is active, fetch all
+  // exercises in one batch (lesson.exercise_count) and skip SR injection +
+  // mixed-type rotation. Topic is locked to the lesson focus, count comes
+  // from the curriculum lesson row, and the session ends after this batch.
+  const lessonCtxEarly = getLessonContext();
+
   try {
-    const srItems = state.batchNumber === 1 ? srPop(2) : [];
+    const srItems = (state.batchNumber === 1 && !lessonCtxEarly) ? srPop(2) : [];
 
     const freshCount = BATCH_SIZE - srItems.length;
 
-    // Mix in a new exercise type every other batch
+    // Mix in a new exercise type every other batch — disabled in lesson mode
+    // so the focus stays on the curriculum topic.
     let mixedExercises = [];
-    if (state.batchNumber >= 2 && state.batchNumber % 2 === 0) {
+    if (!lessonCtxEarly && state.batchNumber >= 2 && state.batchNumber % 2 === 0) {
       try {
         const legacyTypes = ["gap-fill", "reorder", "matching"];
         const seedTypes   = ["aukkotehtava", "yhdistaminen"];
@@ -295,22 +302,27 @@ export async function loadNextBatch() {
     // L-PLAN-3 — when a curriculum lesson is active, server overrides
     // level/topic/count from the lesson and injects a focus constraint
     // into the prompt. We just forward { kurssiKey, lessonIndex }.
-    const lessonCtx = getLessonContext();
+    const lessonCtx = lessonCtxEarly;
+    const deepen = !!(lessonCtx && isDeepenRun());
     const res = await fetch(`${API}/api/generate`, {
       method: "POST",
       headers: { "Content-Type": "application/json", ...authHeader() },
       body: JSON.stringify({
         level: state.level,
         topic: state.topic,
-        count: mcCount,
+        // L-PLAN-5 UPDATE 5 — lesson mode requests the full lesson size in
+        // one batch; free practice still requests BATCH_SIZE (4) per round.
+        // L-PLAN-6 — deepen runs are a fixed 4-item harder follow-up for L.
+        count: deepen ? 4 : (lessonCtx ? (lessonCtx.lessonExerciseCount || mcCount) : mcCount),
         language: state.language,
         recentlyShown: state.recentVocabHeadwords || [],
         ...(lessonCtx ? { lesson: lessonCtx } : {}),
+        ...(deepen ? { mode: "deepen" } : {}),
       }),
     });
     const data = await res.json();
     if (!res.ok) throw new Error(data.error || "Tehtävien luonti epäonnistui");
-    if (!data.exercises?.length) throw new Error("No exercises");
+    if (!data.exercises?.length) throw new Error("Tehtäviä ei voitu generoida tällä hetkellä — yritä hetken päästä uudelleen.");
 
     // Track headwords from this batch so the next /generate call can ask
     // the model to avoid repeating them. Cap at 30 to keep prompt cheap.
@@ -992,6 +1004,14 @@ function endBatch() {
     }
     state._masteryMode = false;
     state._masteryTopicKey = null;
+    return;
+  }
+
+  // L-PLAN-5 UPDATE 5 — curriculum lesson is bound to a single batch.
+  // After this batch the session ends and the post-session lesson results
+  // card takes over (showVocabResults handles the lessonCtx hand-off).
+  if (getLessonContext()) {
+    showVocabResults();
     return;
   }
 
