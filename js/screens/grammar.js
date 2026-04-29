@@ -59,6 +59,7 @@ export async function loadGrammarDrill() {
   show("screen-grammar");
 
   try {
+    const lessonCtx = (await import("../lib/lessonContext.js")).getLessonContext();
     const res = await retryable(() => fetch(`${API}/api/grammar-drill`, {
       method: "POST",
       headers: { "Content-Type": "application/json", ...authHeader() },
@@ -71,6 +72,7 @@ export async function loadGrammarDrill() {
         // student explicitly picked a rule (e.g. "ser/estar") we WANT
         // every batch to keep drilling that rule.
         recentlyShown: state.grammarTopic === "mixed" ? (state.recentGrammarRules || []) : [],
+        ...(lessonCtx ? { lesson: lessonCtx } : {}),
       }),
     }), { attempts: 3, baseDelayMs: 500 });
     const data = await res.json();
@@ -195,6 +197,56 @@ $("gram-btn-next").addEventListener("click", () => {
 
 function showGrammarResults() {
   const total = state.grammarExercises.length;
+
+  // L-PLAN-3 — curriculum lesson active? Hand off to lessonResults card.
+  import("../lib/lessonContext.js").then(({ getLessonContext }) => {
+    const lessonCtx = getLessonContext();
+    if (!lessonCtx) {
+      // legacy free-practice path runs synchronously below; nothing to do.
+      return;
+    }
+    const exercises = state.grammarExercises || [];
+    const userAnswers = state.grammarUserAnswers || [];
+    const wrongAnswers = exercises
+      .map((ex, idx) => ({ ex, ua: userAnswers[idx] }))
+      .filter(({ ua }) => ua && ua.isCorrect === false)
+      .slice(0, 20)
+      .map(({ ex, ua }) => {
+        const correctOpt = (ex.options || []).find((o) => o.startsWith?.(ex.correct + ")")) || ex.correct;
+        return {
+          question: String(ex.sentence || ex.prompt || "").slice(0, 200),
+          correctAnswer: String(correctOpt || "").slice(0, 200),
+          studentAnswer: String(ua.chosen || "").slice(0, 200),
+          topic_key: ex.topic_key || ex.rule || null,
+        };
+      });
+    try {
+      _deps.saveProgress({
+        mode: "grammar",
+        level: state.grammarLevel,
+        scoreCorrect: state.grammarCorrect,
+        scoreTotal: state.grammarExercises.length,
+        ytlGrade: null,
+      });
+    } catch { /* tracked downstream */ }
+    import("./lessonResults.js").then((m) => m.showLessonResults({
+      kurssiKey: lessonCtx.kurssiKey,
+      lessonIndex: lessonCtx.lessonIndex,
+      lessonFocus: lessonCtx.lessonFocus,
+      lessonType: lessonCtx.lessonType,
+      scoreCorrect: state.grammarCorrect,
+      scoreTotal: total,
+      wrongAnswers,
+    })).catch(() => { /* fall through */ });
+  });
+  // Branch — when curriculum context active, return early so the legacy
+  // free-practice results screen doesn't briefly flash before the lesson
+  // results card mounts.
+  try {
+    const raw = sessionStorage.getItem("currentLesson");
+    if (raw) return;
+  } catch { /* noop */ }
+
   $("gram-score-display").textContent = `${state.grammarCorrect}/${total}`;
   $("gram-score-text").textContent = `${state.grammarCorrect} / ${total} oikein`;
 

@@ -20,8 +20,10 @@ import { initExam, startMockExam } from "./screens/exam.js";
 import { initFullExam, startFullExam } from "./screens/fullExam.js";
 import { initAdaptive, masteryNext, masteryDone } from "./screens/adaptive.js";
 import { initOnboarding, checkOnboarding } from "./screens/onboarding.js";
+import { initOnboardingV2, showOnboardingV2 } from "./screens/onboardingV2.js";
 import { initPlacement, checkPlacementNeeded, showPlacementIntro, startPlacementFromRetake } from "./screens/placement.js";
 import { initLearningPath, loadPath, submitMasteryResult } from "./screens/learningPath.js";
+import { loadCurriculum } from "./screens/curriculum.js";
 import { initQuickReview } from "./screens/quickReview.js";
 import { initVerbSprint } from "./screens/verbSprint.js";
 import { initVerbReference } from "./screens/verbReference.js";
@@ -106,6 +108,13 @@ initExam({ loadDashboard, saveProgress, shareResult });
 initFullExam({ loadDashboard, saveProgress, shareResult });
 initAdaptive({ loadDashboard });
 initOnboarding({ loadDashboard, loadNextBatch });
+initOnboardingV2({ loadDashboard });
+window._onboardingV2 = { show: showOnboardingV2 };
+// Hash entry: visiting /app.html#/aloitus enters the L-PLAN-1 V2 onboarding.
+if (location.hash === "#/aloitus") {
+  // Defer to next tick so the rest of init runs (auth checks etc.) first.
+  setTimeout(() => showOnboardingV2(), 0);
+}
 initPlacement({ loadDashboard });
 initLearningPath({ loadDashboard });
 window._learningPathRef = { submitMasteryResult };
@@ -141,6 +150,7 @@ function navigateTo(nav, { updateHash = true } = {}) {
   else if (nav === "exam") startFullExam("demo");
   else if (nav === "settings") showSettings();
   else if (nav === "profile") loadProfile();
+  else if (nav === "path") loadCurriculum();
   else showModePage(nav);
 }
 

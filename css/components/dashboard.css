@@ -827,3 +827,45 @@
 .dash-readiness-legend-dots span.lvl-3 { background: rgba(20, 184, 166, 0.62); }
 .dash-readiness-legend-dots span.lvl-4 { background: var(--accent-hover); }
 
+/* L-PLAN-3 — daily AI tutor greeting card. Sits above all other dashboard
+   content. Restrained: dark surface, no avatar, no icon — just the words. */
+.dash-tutor {
+  max-width: 640px;
+  margin: 12px auto 24px;
+  padding: 16px 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: 12px;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
+}
+.dash-tutor__msg {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--ink);
+}
+.dash-tutor--skeleton {
+  background: var(--surface);
+  border-left-color: var(--border);
+}
+.dash-tutor__skeleton-line {
+  height: 14px;
+  border-radius: 4px;
+  background: linear-gradient(90deg,
+    var(--surface-2) 0%,
+    color-mix(in srgb, var(--surface-2) 60%, var(--ink) 8%) 50%,
+    var(--surface-2) 100%);
+  background-size: 200% 100%;
+  animation: dash-tutor-shimmer 1400ms ease-in-out infinite;
+}
+.dash-tutor__skeleton-line + .dash-tutor__skeleton-line { margin-top: 8px; }
+.dash-tutor__skeleton-line--short { width: 70%; }
+@keyframes dash-tutor-shimmer {
+  0%   { background-position: 100% 0; }
+  100% { background-position: -100% 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dash-tutor__skeleton-line { animation: none; }
+}
+

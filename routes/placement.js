@@ -2,9 +2,33 @@ import { Router } from "express";
 import supabase from "../supabase.js";
 import { requireAuth } from "../middleware/auth.js";
 import { selectDiagnosticQuestions } from "../lib/placementQuestions.js";
-import { scorePlacementTest } from "../lib/placement.js";
+import {
+  scorePlacementTest,
+  placementConfidence,
+  suggestStartingKurssi,
+} from "../lib/placement.js";
+import {
+  generateFirstWeekPlan,
+  fallbackTutorAssessment,
+  KURSSI_META,
+} from "../lib/curriculum.js";
+import { callOpenAI } from "../lib/openai.js";
 
 const router = Router();
+
+// Optional-auth helper: populates req.user when a valid token is sent,
+// otherwise lets the request continue. Used by /onboarding so guests
+// can complete the diagnostic before signing up.
+async function optionalAuth(req, _res, next) {
+  const auth = req.headers.authorization;
+  if (auth?.startsWith("Bearer ")) {
+    try {
+      const { data: { user } } = await supabase.auth.getUser(auth.slice(7));
+      if (user) req.user = { userId: user.id, email: user.email };
+    } catch { /* anonymous fall-through */ }
+  }
+  next();
+}
 
 // GET /api/placement/questions — get diagnostic test questions
 router.get("/questions", requireAuth, async (req, res) => {
@@ -243,6 +267,145 @@ router.get("/status", requireAuth, async (req, res) => {
     });
   } catch (err) {
     console.error("Placement status error:", err.message);
+    res.status(500).json({ error: "Palvelinvirhe" });
+  }
+});
+
+// ─── L-PLAN-1: New onboarding flow ──────────────────────────────────────────
+//
+// GET  /api/placement/onboarding-questions — returns the 8 core questions
+//   plus 2 M_hard anchor candidates. Includes correct answers + explanations
+//   because the OB-2 screen renders inline feedback per question. This is
+//   only the placement test; nothing here is gradeable in production.
+router.get("/onboarding-questions", optionalAuth, async (req, res) => {
+  try {
+    const { selectOnboardingQuestions } = await import(
+      "../lib/placementQuestions.js"
+    );
+    const reportedGrade = String(req.query.selfReportedGrade || "").trim() || null;
+    const { core, mHardCandidates } = selectOnboardingQuestions(reportedGrade, 8);
+    res.json({ core, mHardCandidates });
+  } catch (err) {
+    console.error("Onboarding questions error:", err.message);
+    res.status(500).json({ error: "Palvelinvirhe" });
+  }
+});
+
+// POST /api/placement/onboarding — score + persist + plan
+router.post("/onboarding", optionalAuth, async (req, res) => {
+  try {
+    const {
+      answers,
+      selfReportedGrade,
+      targetGrade,
+      weakAreas,
+      dailyGoalMinutes,
+    } = req.body || {};
+
+    if (!Array.isArray(answers) || answers.length === 0) {
+      return res.status(400).json({ error: "Vastaukset puuttuvat" });
+    }
+
+    // 1) Score
+    const result = scorePlacementTest(answers);
+
+    // 2) Confidence from response timings
+    const { confidence, medianMs } = placementConfidence(answers);
+
+    // 3) Suggested starting kurssi
+    const suggestedKurssi = suggestStartingKurssi(
+      result.placementLevel,
+      confidence,
+    );
+
+    // 4) Tutor assessment via OpenAI (with template fallback)
+    let tutorAssessment = "";
+    const weakAreasFi = Array.isArray(weakAreas) && weakAreas.length
+      ? weakAreas.join(", ")
+      : "ei mainittuja";
+    const aiPrompt = [
+      "Olet Puheo, suomalainen AI-tutori, joka valmistaa lukiolaista",
+      "ylioppilastutkinnon espanjan lyhyen oppimäärän kokeeseen.",
+      "Selitykset ovat suomeksi, lyhyitä ja konkreettisia.",
+      "",
+      "Oppilas on juuri tehnyt sijoitustestin. Tulokset:",
+      `- Pisteet tasoittain: ${JSON.stringify(result.scoreByLevel)}`,
+      `- Koulun viimeisin arvosana: ${selfReportedGrade || "ei kerrottu"}`,
+      `- Tavoitearvosana: ${targetGrade || "ei kerrottu"}`,
+      `- Itse mainitut vaikeat aiheet: ${weakAreasFi}`,
+      `- Aloituskurssi: ${KURSSI_META[suggestedKurssi]?.name || suggestedKurssi}`,
+      "",
+      "Kirjoita 2–3 lausetta suomeksi tutori-äänellä:",
+      "missä oppilas on nyt ja mitä harjoitellaan ensin.",
+      "Ole konkreettinen — mainitse tarkka aihe, ei abstrakti taso.",
+      "Älä mainitse numeroita tai teknisiä termejä kuten 'placementLevel'.",
+      "Puhu suoraan oppilaalle (sinä-muoto). Älä kirjoita listaa.",
+      "",
+      'Palauta JSON: { "tutorAssessment": "..." }',
+    ].join("\n");
+
+    try {
+      const aiRes = await callOpenAI(aiPrompt, 160, { temperature: 0.5 });
+      const text = String(aiRes?.tutorAssessment || "").trim();
+      // Sanity: at least 30 chars and no bullet leaders.
+      if (text.length >= 30 && !/^[\s\-•*]/.test(text)) {
+        tutorAssessment = text;
+      }
+    } catch (err) {
+      console.warn("Tutor assessment AI failed:", err.message);
+    }
+    if (!tutorAssessment) {
+      tutorAssessment = fallbackTutorAssessment(
+        result.placementLevel,
+        suggestedKurssi,
+        confidence,
+      );
+    }
+
+    // 5) Deterministic first-week plan
+    const firstWeekPlan = generateFirstWeekPlan(
+      suggestedKurssi,
+      Number(dailyGoalMinutes) || 20,
+    );
+
+    // 6) Persist if authenticated
+    if (req.user?.userId) {
+      try {
+        await supabase
+          .from("user_profile")
+          .upsert(
+            {
+              user_id: req.user.userId,
+              self_reported_grade: selfReportedGrade || null,
+              target_grade: targetGrade || null,
+              weak_areas: Array.isArray(weakAreas) ? weakAreas : null,
+              daily_goal_minutes: Number(dailyGoalMinutes) || null,
+              placement_confidence: confidence,
+              placement_kurssi: suggestedKurssi,
+              tutor_assessment: tutorAssessment,
+              current_grade: result.placementLevel,
+              updated_at: new Date().toISOString(),
+            },
+            { onConflict: "user_id" },
+          );
+      } catch (err) {
+        // Persisting is best-effort — the plan is the user-facing payload.
+        console.warn("Onboarding profile persist failed:", err.message);
+      }
+    }
+
+    res.json({
+      placementLevel: result.placementLevel,
+      placementConfidence: confidence,
+      medianResponseMs: medianMs,
+      suggestedKurssi,
+      suggestedKurssiName: KURSSI_META[suggestedKurssi]?.name || suggestedKurssi,
+      scoreByLevel: result.scoreByLevel,
+      tutorAssessment,
+      firstWeekPlan,
+    });
+  } catch (err) {
+    console.error("Onboarding submit error:", err.message);
     res.status(500).json({ error: "Palvelinvirhe" });
   }
 });

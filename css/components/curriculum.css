@@ -1,0 +1,614 @@
+/* L-PLAN-2: Oppimispolku (8-kurssi vertical timeline) + lesson screen.
+   Sourced layout: 21st.dev /s/timeline + /s/steps — restrained dark, vertical
+   numbered nodes with connector. Ported to vanilla matching app's token system. */
+
+#screen-path .curr {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: clamp(20px, 4vw, 40px) clamp(16px, 4vw, 24px) 64px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.curr-head { display: flex; flex-direction: column; gap: 8px; }
+.curr-head h2 {
+  font-size: clamp(24px, 3.4vw, 32px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0;
+  color: var(--ink, var(--text, #fafafa));
+  text-wrap: balance;
+}
+.curr-head .curr-sub {
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--ink-soft, var(--text-muted, #a1a1aa));
+  margin: 0;
+}
+
+/* ── Kurssi list ─────────────────────────────────────────────────────────── */
+
+.curr-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+}
+
+.curr-list::before {
+  /* vertical connector running through step circles */
+  content: "";
+  position: absolute;
+  left: 23px;
+  top: 24px;
+  bottom: 24px;
+  width: 1px;
+  background: linear-gradient(180deg,
+    color-mix(in srgb, var(--border, #2a2a2e) 60%, transparent),
+    color-mix(in srgb, var(--border, #2a2a2e) 30%, transparent));
+  pointer-events: none;
+  z-index: 0;
+}
+
+.curr-card {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 48px 1fr auto;
+  align-items: center;
+  gap: 16px;
+  min-height: 80px;
+  padding: 16px 20px 16px 16px;
+  background: var(--surface, #161618);
+  border: 1px solid var(--border, #2a2a2e);
+  border-radius: 14px;
+  transition: border-color 160ms ease, transform 160ms ease, background 160ms ease;
+}
+
+.curr-card.is-current {
+  border-left: 3px solid var(--accent, #2DD4BF);
+  padding-left: 14px;
+}
+.curr-card.is-locked {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.curr-card.is-clickable { cursor: pointer; }
+.curr-card.is-clickable:hover {
+  border-color: color-mix(in srgb, var(--accent, #2DD4BF) 35%, var(--border, #2a2a2e));
+}
+.curr-card.is-clickable:focus-visible {
+  outline: 2px solid var(--accent, #2DD4BF);
+  outline-offset: 2px;
+}
+
+.curr-step {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-display, inherit);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--ink-soft, var(--text-muted, #a1a1aa));
+  background: color-mix(in srgb, var(--ink-faint, #71717a) 14%, transparent);
+  border: 1px solid var(--border, #2a2a2e);
+  flex-shrink: 0;
+}
+.curr-card.is-done .curr-step {
+  background: color-mix(in srgb, var(--accent, #2DD4BF) 28%, transparent);
+  border-color: color-mix(in srgb, var(--accent, #2DD4BF) 60%, transparent);
+  color: var(--accent, #2DD4BF);
+}
+.curr-card.is-current .curr-step {
+  background: color-mix(in srgb, var(--accent, #2DD4BF) 22%, transparent);
+  border-color: color-mix(in srgb, var(--accent, #2DD4BF) 70%, transparent);
+  color: var(--accent, #2DD4BF);
+}
+
+.curr-step svg { width: 20px; height: 20px; }
+
+.curr-body { min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+.curr-title-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.curr-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ink, var(--text, #fafafa));
+  margin: 0;
+  line-height: 1.3;
+}
+.curr-chip {
+  display: inline-block;
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent, #2DD4BF) 14%, transparent);
+  color: var(--accent, #2DD4BF);
+  border: 1px solid color-mix(in srgb, var(--accent, #2DD4BF) 30%, transparent);
+}
+
+.curr-progress {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--ink-soft, var(--text-muted, #a1a1aa));
+}
+.curr-progress-bar {
+  position: relative;
+  flex: 1;
+  height: 4px;
+  max-width: 220px;
+  background: color-mix(in srgb, var(--ink-faint, #71717a) 20%, transparent);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.curr-progress-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  background: var(--accent, #2DD4BF);
+  border-radius: inherit;
+  transition: width 320ms ease;
+}
+
+.curr-status {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink-soft, var(--text-muted, #a1a1aa));
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.curr-card.is-done .curr-status { color: var(--accent, #2DD4BF); }
+.curr-card.is-current .curr-status { color: var(--accent, #2DD4BF); }
+.curr-card.is-locked .curr-status { color: var(--ink-faint, var(--text-subtle, #71717a)); }
+
+/* ── Lesson list (inline expansion) ──────────────────────────────────────── */
+
+.curr-lessons {
+  list-style: none;
+  margin: 0;
+  padding: 4px 0 8px;
+  border-top: 1px solid var(--border, #2a2a2e);
+  display: flex;
+  flex-direction: column;
+}
+.curr-lessons[hidden] { display: none; }
+
+.curr-lesson {
+  display: grid;
+  grid-template-columns: 28px 1fr auto;
+  align-items: center;
+  gap: 12px;
+  min-height: 48px;
+  padding: 8px 4px 8px 4px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background 140ms ease;
+}
+.curr-lesson:not([disabled]):hover {
+  background: color-mix(in srgb, var(--ink-faint, #71717a) 10%, transparent);
+}
+.curr-lesson:focus-visible {
+  outline: 2px solid var(--accent, #2DD4BF);
+  outline-offset: 2px;
+}
+.curr-lesson[disabled] { cursor: default; opacity: 0.6; }
+
+.curr-lesson-icon {
+  width: 20px;
+  height: 20px;
+  color: var(--ink-soft, var(--text-muted, #a1a1aa));
+  flex-shrink: 0;
+}
+.curr-lesson-focus {
+  font-size: 14px;
+  color: var(--ink, var(--text, #fafafa));
+  line-height: 1.4;
+}
+.curr-lesson-num {
+  font-family: var(--font-mono, monospace);
+  font-size: 11px;
+  color: var(--ink-faint, var(--text-subtle, #71717a));
+  margin-right: 6px;
+}
+.curr-lesson-cta {
+  font-size: 12px;
+  color: var(--accent, #2DD4BF);
+  font-weight: 500;
+  white-space: nowrap;
+}
+.curr-lesson.is-done .curr-lesson-cta { color: var(--ink-faint, #71717a); }
+.curr-lesson.is-done .curr-lesson-icon { color: var(--accent, #2DD4BF); }
+
+/* expanded card layout — flow body content under the row */
+.curr-card.is-expanded {
+  grid-template-columns: 48px 1fr auto;
+  grid-template-areas:
+    "step body status"
+    "lessons lessons lessons";
+}
+.curr-card.is-expanded .curr-step    { grid-area: step; }
+.curr-card.is-expanded .curr-body    { grid-area: body; }
+.curr-card.is-expanded .curr-status  { grid-area: status; }
+.curr-card.is-expanded .curr-lessons { grid-area: lessons; margin-top: 8px; }
+
+/* ── States ──────────────────────────────────────────────────────────────── */
+
+.curr-skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.curr-skeleton-card {
+  height: 80px;
+  border-radius: 14px;
+  background: linear-gradient(90deg,
+    color-mix(in srgb, var(--ink-faint, #71717a) 8%, transparent) 0%,
+    color-mix(in srgb, var(--ink-faint, #71717a) 18%, transparent) 50%,
+    color-mix(in srgb, var(--ink-faint, #71717a) 8%, transparent) 100%);
+  background-size: 200% 100%;
+  animation: curr-shimmer 1400ms linear infinite;
+  border: 1px solid var(--border, #2a2a2e);
+}
+@keyframes curr-shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.curr-empty,
+.curr-error {
+  padding: 24px;
+  border-radius: 14px;
+  background: var(--surface, #161618);
+  border: 1px solid var(--border, #2a2a2e);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+}
+.curr-empty p, .curr-error p {
+  margin: 0;
+  color: var(--ink-soft, var(--text-muted, #a1a1aa));
+  font-size: 14px;
+  line-height: 1.5;
+}
+.curr-empty .btn-primary, .curr-error .btn-primary { min-width: 200px; }
+
+/* ── #screen-lesson ──────────────────────────────────────────────────────── */
+
+#screen-lesson .curr-lesson-page {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: clamp(20px, 4vw, 40px) clamp(16px, 4vw, 24px) 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.curr-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: 0;
+  padding: 8px 0;
+  color: var(--ink-soft, var(--text-muted, #a1a1aa));
+  font-size: 14px;
+  cursor: pointer;
+  align-self: flex-start;
+}
+.curr-back:hover { color: var(--ink, var(--text, #fafafa)); }
+.curr-back:focus-visible {
+  outline: 2px solid var(--accent, #2DD4BF);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.curr-lesson-hero {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.curr-lesson-hero .curr-eyebrow {
+  font-family: var(--font-display, inherit);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-faint, var(--text-subtle, #71717a));
+  margin: 0;
+}
+.curr-lesson-hero h1 {
+  font-size: clamp(24px, 3.2vw, 30px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0;
+  color: var(--ink, var(--text, #fafafa));
+  line-height: 1.2;
+}
+
+.curr-teaching {
+  background: var(--surface, #161618);
+  border: 1px solid var(--border, #2a2a2e);
+  border-radius: 14px;
+  padding: clamp(20px, 4vw, 32px);
+  color: var(--ink, var(--text, #fafafa));
+  font-size: 15px;
+  line-height: 1.65;
+}
+.curr-teaching h1 { font-size: 22px; margin: 0 0 12px; line-height: 1.2; }
+.curr-teaching h2 { font-size: 15px; font-weight: 600; margin: 20px 0 8px; color: var(--ink-soft, var(--text-muted, #a1a1aa)); }
+.curr-teaching p { margin: 0 0 12px; }
+.curr-teaching blockquote {
+  margin: 12px 0;
+  padding: 12px 16px;
+  border-left: 3px solid var(--accent, #2DD4BF);
+  background: color-mix(in srgb, var(--accent, #2DD4BF) 6%, transparent);
+  border-radius: 0 8px 8px 0;
+  font-style: normal;
+  color: var(--ink, var(--text, #fafafa));
+}
+.curr-teaching table { border-collapse: collapse; margin: 12px 0; font-size: 14px; }
+.curr-teaching th, .curr-teaching td {
+  border: 1px solid var(--border, #2a2a2e);
+  padding: 6px 10px;
+  text-align: left;
+}
+.curr-teaching th { background: color-mix(in srgb, var(--ink-faint, #71717a) 14%, transparent); }
+.curr-teaching code {
+  font-family: var(--font-mono, monospace);
+  background: color-mix(in srgb, var(--ink-faint, #71717a) 14%, transparent);
+  padding: 1px 5px;
+  border-radius: 4px;
+  font-size: 0.92em;
+}
+
+.curr-snippet {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--ink-soft, var(--text-muted, #a1a1aa));
+  padding: 14px 16px;
+  background: color-mix(in srgb, var(--ink-faint, #71717a) 10%, transparent);
+  border: 1px solid var(--border, #2a2a2e);
+  border-radius: 12px;
+}
+
+.curr-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.curr-actions .btn {
+  width: 100%;
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 160ms ease, color 160ms ease, border-color 160ms ease;
+}
+.curr-actions .btn-primary {
+  background: var(--accent, #2DD4BF);
+  color: var(--bg, #0a0a0a);
+  border: 1px solid var(--accent, #2DD4BF);
+}
+.curr-actions .btn-primary:hover { filter: brightness(1.05); }
+.curr-actions .btn-secondary {
+  background: transparent;
+  color: var(--ink-soft, var(--text-muted, #a1a1aa));
+  border: 1px solid var(--border, #2a2a2e);
+}
+.curr-actions .btn-secondary:hover {
+  border-color: color-mix(in srgb, var(--accent, #2DD4BF) 35%, var(--border, #2a2a2e));
+  color: var(--ink, var(--text, #fafafa));
+}
+
+/* ── Tutor message banner (kertaustesti completion) ──────────────────────── */
+.curr-tutor-banner {
+  padding: 14px 18px;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--accent, #2DD4BF) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent, #2DD4BF) 35%, transparent);
+  color: var(--ink, var(--text, #fafafa));
+  font-size: 14px;
+  line-height: 1.5;
+}
+.curr-tutor-banner[hidden] { display: none; }
+
+/* ── Mobile (≤640) ───────────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .curr-list::before { left: 15px; }
+  .curr-card {
+    grid-template-columns: 32px 1fr;
+    gap: 12px;
+    padding: 14px 14px 14px 12px;
+  }
+  .curr-card.is-current { padding-left: 9px; }
+  .curr-step { width: 32px; height: 32px; font-size: 14px; }
+  .curr-step svg { width: 16px; height: 16px; }
+  .curr-status {
+    grid-column: 2 / -1;
+    grid-row: 2;
+    align-self: start;
+    margin-top: 4px;
+    font-size: 12px;
+  }
+  .curr-card.is-expanded {
+    grid-template-areas:
+      "step body"
+      "step status"
+      "lessons lessons";
+  }
+  .curr-progress-bar { max-width: none; }
+  .curr-title { font-size: 15px; }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .curr-skeleton-card { animation: none; }
+  .curr-progress-fill, .curr-card, .curr-lesson { transition: none; }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────── */
+/* L-PLAN-3 — post-session lesson results card.
+   Sourced pattern: 21st.dev /s/results + /s/score-card (restrained dark
+   single-column with mono score + accuracy bar + tutor copy stack). */
+#screen-lesson-results { padding: clamp(20px, 4vw, 40px) clamp(16px, 4vw, 24px) 64px; }
+#screen-lesson-results .lr-card {
+  max-width: 640px;
+  margin: 0 auto;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: clamp(20px, 4vw, 32px);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.lr-head { display: flex; flex-direction: column; gap: 6px; }
+.lr-eyebrow {
+  font-family: var(--font-mono, monospace);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-soft, var(--text-muted, #a1a1aa));
+  margin: 0;
+}
+.lr-focus {
+  font-size: clamp(20px, 3vw, 26px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0;
+  color: var(--ink, var(--text, #fafafa));
+  text-wrap: balance;
+}
+.lr-score {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.lr-score-num {
+  font-family: var(--font-mono, monospace);
+  font-size: clamp(40px, 7vw, 56px);
+  font-weight: 600;
+  line-height: 1.05;
+  color: var(--ink, var(--text, #fafafa));
+}
+.lr-score--good .lr-score-num { color: var(--accent, #2DD4BF); }
+.lr-score--warn .lr-score-num { color: var(--warn, #f59e0b); }
+.lr-score--low  .lr-score-num { color: var(--err, #ef4444); }
+.lr-score-divider { color: var(--ink-soft, #a1a1aa); font-weight: 400; }
+.lr-score-total { color: var(--ink-soft, #a1a1aa); font-weight: 400; }
+.lr-score-label {
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-soft, #a1a1aa);
+}
+.lr-bar {
+  height: 6px;
+  background: var(--surface-2, rgba(255,255,255,0.05));
+  border-radius: 3px;
+  overflow: hidden;
+}
+.lr-bar-fill {
+  height: 100%;
+  background: var(--accent, #2DD4BF);
+  border-radius: 3px;
+  transition: width 600ms cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+.lr-score--warn .lr-bar-fill { background: var(--warn, #f59e0b); }
+.lr-score--low  .lr-bar-fill { background: var(--err, #ef4444); }
+
+.lr-meta-prompt {
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--ink-soft, var(--text-muted, #a1a1aa));
+  font-style: italic;
+  margin: 0;
+}
+.lr-tutor-msg {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--ink, var(--text, #fafafa));
+  margin: 0;
+}
+.lr-tutor-msg--err { color: var(--err, #ef4444); }
+
+.lr-skeleton-line {
+  height: 14px;
+  border-radius: 4px;
+  background: linear-gradient(90deg,
+    var(--surface-2, rgba(255,255,255,0.05)) 0%,
+    color-mix(in srgb, var(--surface-2, rgba(255,255,255,0.05)) 60%, var(--ink, #fafafa) 8%) 50%,
+    var(--surface-2, rgba(255,255,255,0.05)) 100%);
+  background-size: 200% 100%;
+  animation: lr-shimmer 1400ms ease-in-out infinite;
+}
+.lr-skeleton-line + .lr-skeleton-line { margin-top: 8px; }
+.lr-skeleton-line--short { width: 70%; }
+@keyframes lr-shimmer {
+  0%   { background-position: 100% 0; }
+  100% { background-position: -100% 0; }
+}
+
+.lr-fasttrack {
+  background: color-mix(in srgb, var(--accent, #2DD4BF) 6%, var(--surface, #0a0a0a));
+  border: 1px solid color-mix(in srgb, var(--accent, #2DD4BF) 35%, var(--border, #2a2a2a));
+  border-radius: 12px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.lr-fasttrack-q {
+  font-size: 15px;
+  line-height: 1.5;
+  margin: 0;
+  color: var(--ink, var(--text, #fafafa));
+}
+.lr-fasttrack-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.lr-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 4px;
+}
+.lr-actions .btn { width: 100%; }
+
+@media (prefers-reduced-motion: reduce) {
+  .lr-bar-fill { transition: none; }
+  .lr-skeleton-line { animation: none; }
+}

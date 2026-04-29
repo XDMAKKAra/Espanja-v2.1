@@ -18,6 +18,7 @@ import { reportMcAdvisory } from "../features/mcAdvisory.js";
 import { generateCoachLine, topicLabel, countUp } from "./mode-page.js";
 import { celebrateScore } from "../features/celebrate.js";
 import { generateExerciseShareCard } from "../features/shareCard.js";
+import { getLessonContext } from "../lib/lessonContext.js";
 
 function fmtElapsed(ms) {
   if (!Number.isFinite(ms) || ms <= 0) return "—";
@@ -291,6 +292,10 @@ export async function loadNextBatch() {
     }
 
     const mcCount = Math.max(1, freshCount - mixedExercises.length);
+    // L-PLAN-3 — when a curriculum lesson is active, server overrides
+    // level/topic/count from the lesson and injects a focus constraint
+    // into the prompt. We just forward { kurssiKey, lessonIndex }.
+    const lessonCtx = getLessonContext();
     const res = await fetch(`${API}/api/generate`, {
       method: "POST",
       headers: { "Content-Type": "application/json", ...authHeader() },
@@ -300,6 +305,7 @@ export async function loadNextBatch() {
         count: mcCount,
         language: state.language,
         recentlyShown: state.recentVocabHeadwords || [],
+        ...(lessonCtx ? { lesson: lessonCtx } : {}),
       }),
     });
     const data = await res.json();
@@ -1089,6 +1095,42 @@ function renderLearningBlock(items) {
 function showVocabResults() {
   const correct = state.totalCorrect;
   const total = state.totalAnswered;
+
+  // L-PLAN-3 — when this session was launched from a curriculum lesson,
+  // hand off to the dedicated post-session results card and skip the
+  // free-practice results screen entirely. The card POSTs to /complete and
+  // renders the AI tutorMessage + metacognitive prompt.
+  const lessonCtx = getLessonContext();
+  if (lessonCtx) {
+    const items = state.sessionItems || [];
+    const wrongAnswers = items
+      .filter((i) => !(i.isCorrect ?? i.correct))
+      .slice(0, 20)
+      .map((i) => ({
+        question: String(i.question || i.prompt || "").slice(0, 200),
+        correctAnswer: String(i.correctAnswer || i.answer || i.label || "").slice(0, 200),
+        studentAnswer: String(i.studentAnswer || "").slice(0, 200),
+        topic_key: i.topic_key || null,
+      }));
+    try {
+      _deps.saveProgress({
+        mode: "vocab",
+        level: state.peakLevel,
+        scoreCorrect: correct,
+        scoreTotal: total,
+      });
+    } catch { /* tracked downstream */ }
+    import("./lessonResults.js").then((m) => m.showLessonResults({
+      kurssiKey: lessonCtx.kurssiKey,
+      lessonIndex: lessonCtx.lessonIndex,
+      lessonFocus: lessonCtx.lessonFocus,
+      lessonType: lessonCtx.lessonType,
+      scoreCorrect: correct,
+      scoreTotal: total,
+      wrongAnswers,
+    })).catch(() => { /* fall through to legacy screen if module fails */ });
+    return;
+  }
 
   $("results-score").textContent = `${correct} / ${total} oikein`;
 

@@ -18,6 +18,8 @@
   <meta name="twitter:description" content="Harjoittele espanjan YO-koetta (lyhyt oppimäärä) tekoälyn avulla." />
   <meta name="twitter:image" content="https://puheo.fi/og-image.png" />
   <link rel="manifest" href="/manifest.json" />
+  <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
+  <link rel="apple-touch-icon" href="/icon-192.png" />
   <meta name="theme-color" content="#2DD4BF" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -33,6 +35,8 @@
   <link rel="stylesheet" href="css/components/profile.css" />
   <link rel="stylesheet" href="css/components/meteors.css" />
   <link rel="stylesheet" href="css/components/pro-popup.css" />
+  <link rel="stylesheet" href="css/components/onboarding-v2.css" />
+  <link rel="stylesheet" href="css/components/curriculum.css" />
 </head>
 <body>
 
@@ -411,6 +415,163 @@
     </div>
   </div>
 
+  <!-- ─── L-PLAN-1 onboarding V2 (4 screens) ─────────────────────────────── -->
+
+  <!-- OB-1: Profile (school grade, target grade, weak areas, daily minutes) -->
+  <div id="screen-ob1-profile" class="screen ob2">
+    <div class="ob2-shell">
+      <header class="ob2-head">
+        <p class="ob2-eyebrow">Vaihe 1 / 4</p>
+        <h1 class="ob2-title">Kerrotaan ensin perustiedot</h1>
+        <p class="ob2-sub">Tämän pohjalta rakennamme sinulle henkilökohtaisen polun yo-kokeeseen.</p>
+      </header>
+
+      <fieldset class="ob2-field">
+        <legend class="ob2-field__label">Mikä on viimeisin espanjan arvosanasi koulun kokeessa?</legend>
+        <div class="ob2-pillrow" data-field="schoolGrade" role="radiogroup" aria-label="Koulun viimeisin arvosana">
+          <button type="button" class="ob2-pill" data-value="none" role="radio" aria-checked="false">En ole saanut</button>
+          <button type="button" class="ob2-pill" data-value="I" role="radio" aria-checked="false">I</button>
+          <button type="button" class="ob2-pill" data-value="A" role="radio" aria-checked="false">A</button>
+          <button type="button" class="ob2-pill" data-value="B" role="radio" aria-checked="false">B</button>
+          <button type="button" class="ob2-pill" data-value="C" role="radio" aria-checked="false">C</button>
+          <button type="button" class="ob2-pill" data-value="M" role="radio" aria-checked="false">M</button>
+          <button type="button" class="ob2-pill" data-value="E" role="radio" aria-checked="false">E</button>
+          <button type="button" class="ob2-pill" data-value="L" role="radio" aria-checked="false">L</button>
+        </div>
+      </fieldset>
+
+      <fieldset class="ob2-field">
+        <legend class="ob2-field__label">Mikä on tavoitearvosanasi yo-kokeessa?</legend>
+        <div class="ob2-pillrow" data-field="targetGrade" role="radiogroup" aria-label="Tavoitearvosana">
+          <button type="button" class="ob2-pill" data-value="I" role="radio" aria-checked="false">I</button>
+          <button type="button" class="ob2-pill" data-value="A" role="radio" aria-checked="false">A</button>
+          <button type="button" class="ob2-pill" data-value="B" role="radio" aria-checked="false">B</button>
+          <button type="button" class="ob2-pill" data-value="C" role="radio" aria-checked="false">C</button>
+          <button type="button" class="ob2-pill" data-value="M" role="radio" aria-checked="false">M</button>
+          <button type="button" class="ob2-pill" data-value="E" role="radio" aria-checked="false">E</button>
+          <button type="button" class="ob2-pill" data-value="L" role="radio" aria-checked="false">L</button>
+        </div>
+      </fieldset>
+
+      <fieldset class="ob2-field">
+        <legend class="ob2-field__label">Mikä tuntuu vaikeimmalta?</legend>
+        <p class="ob2-field__hint">Voit valita useita.</p>
+        <div class="ob2-chiprow" data-field="weakAreas" role="group" aria-label="Vaikeimmat aiheet">
+          <button type="button" class="ob2-chip" data-value="verbien_taivutus" aria-pressed="false">Verbien taivutus</button>
+          <button type="button" class="ob2-chip" data-value="aikamuodot" aria-pressed="false">Aikamuodot</button>
+          <button type="button" class="ob2-chip" data-value="ser_estar" aria-pressed="false">Ser vs estar</button>
+          <button type="button" class="ob2-chip" data-value="subjunktiivi" aria-pressed="false">Subjunktiivi</button>
+          <button type="button" class="ob2-chip" data-value="sanasto" aria-pressed="false">Sanasto</button>
+          <button type="button" class="ob2-chip" data-value="kirjoittaminen" aria-pressed="false">Kirjoittaminen</button>
+          <button type="button" class="ob2-chip" data-value="luetun" aria-pressed="false">Luetun ymmärtäminen</button>
+          <button type="button" class="ob2-chip" data-value="en_tieda" aria-pressed="false">En tiedä vielä</button>
+        </div>
+      </fieldset>
+
+      <fieldset class="ob2-field">
+        <legend class="ob2-field__label">Kuinka kauan voit harjoitella päivässä?</legend>
+        <div class="ob2-pillrow" data-field="dailyGoalMinutes" role="radiogroup" aria-label="Päivittäinen harjoitteluaika">
+          <button type="button" class="ob2-pill" data-value="10" role="radio" aria-checked="false">10 min</button>
+          <button type="button" class="ob2-pill" data-value="20" role="radio" aria-checked="false">20 min</button>
+          <button type="button" class="ob2-pill" data-value="30" role="radio" aria-checked="false">30 min</button>
+          <button type="button" class="ob2-pill" data-value="45" role="radio" aria-checked="false">45 min+</button>
+        </div>
+      </fieldset>
+
+      <div class="ob2-actions">
+        <button type="button" class="ob2-cta" id="ob1-next" disabled>Seuraava →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- OB-2: Placement test with timing + per-question feedback -->
+  <div id="screen-ob2-test" class="screen ob2">
+    <div class="ob2-shell">
+      <header class="ob2-head ob2-head--test">
+        <p class="ob2-eyebrow">Vaihe 2 / 4 · 8 kysymystä · noin 3 minuuttia</p>
+        <h1 class="ob2-title ob2-title--sm">Nyt testataan missä olet</h1>
+        <p class="ob2-sub">Älä arvaile — arvaaminen hidastaa sinua. Vastaa rehellisesti.</p>
+      </header>
+
+      <div class="ob2-progress" aria-hidden="true">
+        <div class="ob2-progress__bar" id="ob2-progress-bar"></div>
+      </div>
+      <p class="ob2-progress__label">Kysymys <span id="ob2-q-num">1</span> / <span id="ob2-q-total">8</span></p>
+
+      <p class="ob2-question" id="ob2-question" aria-live="polite">…</p>
+
+      <div class="ob2-options" id="ob2-options" role="radiogroup" aria-label="Vastausvaihtoehdot"></div>
+
+      <div class="ob2-feedback hidden" id="ob2-feedback" role="status">
+        <p class="ob2-feedback__verdict" id="ob2-feedback-verdict"></p>
+        <p class="ob2-feedback__explain" id="ob2-feedback-explain"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- OB-3: Tutor assessment + score bars + suggested kurssi -->
+  <div id="screen-ob3-assessment" class="screen ob2">
+    <div class="ob2-shell">
+      <header class="ob2-head">
+        <p class="ob2-eyebrow">Vaihe 3 / 4</p>
+        <h1 class="ob2-title">Tässä sinun tilanteesi</h1>
+      </header>
+
+      <!-- Skeleton during AI call -->
+      <div class="ob2-skeleton" id="ob3-skeleton">
+        <div class="ob2-skeleton__bar ob2-skeleton__bar--lg"></div>
+        <div class="ob2-skeleton__bar"></div>
+        <div class="ob2-skeleton__bar ob2-skeleton__bar--mid"></div>
+        <p class="ob2-skeleton__caption">Mietin suunnitelmaasi…</p>
+      </div>
+
+      <div class="ob2-result hidden" id="ob3-result">
+        <p class="ob2-tutor" id="ob3-tutor"></p>
+
+        <ul class="ob2-bars" aria-label="Pisteet osa-alueittain">
+          <li class="ob2-bar"><span class="ob2-bar__name">Sanasto</span>
+            <span class="ob2-bar__track"><span class="ob2-bar__fill" id="ob3-bar-vocab"></span></span>
+            <span class="ob2-bar__value mono-num" id="ob3-bar-vocab-val">0%</span></li>
+          <li class="ob2-bar"><span class="ob2-bar__name">Kielioppi</span>
+            <span class="ob2-bar__track"><span class="ob2-bar__fill" id="ob3-bar-grammar"></span></span>
+            <span class="ob2-bar__value mono-num" id="ob3-bar-grammar-val">0%</span></li>
+          <li class="ob2-bar"><span class="ob2-bar__name">Vaativa taso</span>
+            <span class="ob2-bar__track"><span class="ob2-bar__fill" id="ob3-bar-advanced"></span></span>
+            <span class="ob2-bar__value mono-num" id="ob3-bar-advanced-val">0%</span></li>
+          <li class="ob2-bar"><span class="ob2-bar__name">Kokonaisuus</span>
+            <span class="ob2-bar__track"><span class="ob2-bar__fill" id="ob3-bar-overall"></span></span>
+            <span class="ob2-bar__value mono-num" id="ob3-bar-overall-val">0%</span></li>
+        </ul>
+
+        <p class="ob2-startpoint">Aloitamme <span class="ob2-startpoint__name" id="ob3-kurssi">…</span>.</p>
+        <p class="ob2-confidence-note hidden" id="ob3-confidence-note">Vastasit nopeasti — aloitetaan rauhallisemmin varmistuksen vuoksi.</p>
+
+        <div class="ob2-actions">
+          <button type="button" class="ob2-cta" id="ob3-next">Aloitetaan! →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OB-4: First-week plan preview -->
+  <div id="screen-ob4-plan" class="screen ob2">
+    <div class="ob2-shell">
+      <header class="ob2-head">
+        <p class="ob2-eyebrow">Vaihe 4 / 4</p>
+        <h1 class="ob2-title">Sinun ensimmäinen viikkosi</h1>
+        <p class="ob2-sub">Päivä kerrallaan. Voit aina muokata vauhtia.</p>
+      </header>
+
+      <ul class="ob2-week" id="ob4-week" aria-label="Ensimmäinen viikko"></ul>
+
+      <p class="ob2-aside">Voit aina tehdä vapaita harjoituksia vasemman valikon kautta.</p>
+
+      <div class="ob2-actions">
+        <button type="button" class="ob2-cta" id="ob4-finish">Aloita harjoittelu →</button>
+      </div>
+    </div>
+  </div>
+
   <!-- SCREEN: Dashboard -->
   <!-- SCREEN: Learning path -->
   <div id="screen-path" class="screen">
@@ -447,6 +608,16 @@
         <button class="btn-primary btn-sm" id="btn-mixed-review">Aloita &rarr;</button>
       </div>
     </div>
+  </div>
+
+  <!-- SCREEN: Single lesson (L-PLAN-2) -->
+  <div id="screen-lesson" class="screen">
+    <div id="curr-lesson-root"></div>
+  </div>
+
+  <!-- SCREEN: Post-session lesson results (L-PLAN-3) — content rendered by js/screens/lessonResults.js -->
+  <div id="screen-lesson-results" class="screen">
+    <div id="lesson-results-root"></div>
   </div>
 
   <!-- SCREEN: Mastery test start -->
@@ -490,6 +661,17 @@
         <h1 class="display"><span id="dash-greeting-prefix">Hei</span><span id="dash-greeting-comma" hidden>, </span><span id="dash-username"></span><span class="accent">.</span></h1>
         <p class="dash-greeting__sub" id="dash-motivation"></p>
       </header>
+
+      <!-- L-PLAN-3 — daily AI tutor greeting (CURRICULUM_SPEC §7).
+           Fetched once per dashboard load via /api/curriculum/tutor-message;
+           hidden when anonymous, skeleton until first response. -->
+      <section class="dash-tutor" id="dash-tutor" hidden aria-live="polite">
+        <p class="dash-tutor__msg" id="dash-tutor-msg"></p>
+      </section>
+      <section class="dash-tutor dash-tutor--skeleton" id="dash-tutor-skeleton" hidden aria-hidden="true">
+        <div class="dash-tutor__skeleton-line"></div>
+        <div class="dash-tutor__skeleton-line dash-tutor__skeleton-line--short"></div>
+      </section>
 
       <!-- Hero grade card (gated by data coverage) -->
       <button type="button" class="dash-hero-grade dash-hero-grade--tier-none" id="dash-hero-grade">

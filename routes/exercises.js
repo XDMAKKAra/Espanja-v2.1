@@ -22,6 +22,32 @@ import { pickFromSeed, seedCounts } from "../lib/seedBank.js";
 import { topicLabel, VALID_TOPICS } from "../lib/mistakeTaxonomy.js";
 import { getUserPath, recordMasteryAttempt, getTopicByKey, getMasteredTopics, LEARNING_PATH, MASTERY_TEST_SIZE } from "../lib/learningPath.js";
 import { composeSession } from "../lib/sessionComposer.js";
+import {
+  resolveLessonContext,
+  curriculumFocusInstruction,
+  curriculumTestInstruction,
+} from "../lib/lessonContext.js";
+
+// L-PLAN-3 — when the client sends `{ lesson: { kurssiKey, lessonIndex } }`
+// in the request body, route the exercise generation through curriculum
+// context: focus, level, count come from the lesson definition.
+async function applyLessonContext(reqBody, defaults, kind) {
+  if (!reqBody?.lesson) return { ctx: null, ...defaults };
+  const ctx = await resolveLessonContext(reqBody.lesson);
+  if (!ctx) return { ctx: null, ...defaults };
+  const out = { ctx, ...defaults };
+  // Level override — kurssi.level is one of A/B/C/M/E. Reading endpoint can
+  // only handle B/C/M/E/L so an A-level reading is not requested by the
+  // curriculum (kurssi 1/2 have no reading lessons until later in the kurssi
+  // and they are still B-level for reading purposes).
+  if (kind === "reading" && ctx.kurssi.level === "A") out.level = "B";
+  else out.level = ctx.kurssi.level;
+  // Vocab topic override — kurssi.vocab_theme is already a VALID_VOCAB_TOPIC key.
+  if (kind === "vocab" && ctx.kurssi.vocab_theme) out.topic = ctx.kurssi.vocab_theme;
+  // Count override — for kertaustesti always use lesson.exercise_count (15).
+  out.count = ctx.lesson.exercise_count || defaults.count;
+  return out;
+}
 
 const router = Router();
 
@@ -144,12 +170,26 @@ async function saveToBankBulk(mode, level, topic, language, exercises) {
 // ─── Vocab exercises ───────────────────────────────────────────────────────
 
 router.post("/generate", requireAuth, aiLimiter, checkMonthlyCostLimit, async (req, res) => {
-  const { level = "B", topic = "general vocabulary", count = 4, language = "spanish", recentlyShown = [] } = req.body;
+  const reqLevel = req.body?.level ?? "B";
+  const reqTopic = req.body?.topic ?? "general vocabulary";
+  const reqCount = req.body?.count ?? 4;
+  const language = req.body?.language ?? "spanish";
+  const recentlyShown = req.body?.recentlyShown ?? [];
+
+  // L-PLAN-3 — curriculum lesson context overrides level/topic/count when set.
+  const applied = await applyLessonContext(
+    req.body,
+    { level: reqLevel, topic: reqTopic, count: reqCount },
+    "vocab",
+  );
+  const { ctx: lessonCtx, level, topic, count } = applied;
 
   if (!VALID_LEVELS.has(level)) return res.status(400).json({ error: "Virheellinen taso" });
   if (!VALID_VOCAB_TOPICS.has(topic)) return res.status(400).json({ error: "Virheellinen aihe" });
   if (!VALID_LANGUAGES.has(language)) return res.status(400).json({ error: "Virheellinen kieli" });
-  const clampedCount = Math.max(1, Math.min(10, Number(count) || 4));
+  // Curriculum lessons can request up to 20 (kertaustesti = 15, mixed = 10).
+  const maxCount = lessonCtx ? 20 : 10;
+  const clampedCount = Math.max(1, Math.min(maxCount, Number(count) || 4));
 
   // Sanitize anti-repetition list: array of lowercase strings, ≤40 chars,
   // ≤30 entries. Used only to nudge the model — bank exercises already
@@ -163,11 +203,14 @@ router.post("/generate", requireAuth, aiLimiter, checkMonthlyCostLimit, async (r
     : [];
 
   try {
-    // Try bank first
+    // Try bank first — skip when curriculum context is active so the AI can
+    // honour the lesson focus rather than serve a generic banked batch.
     const userId = await getUserId(req);
-    const banked = await tryBankExercise("vocab", level, topic, language, userId);
-    if (banked) {
-      return res.json({ exercises: banked.payload, bankId: banked.bankId });
+    if (!lessonCtx) {
+      const banked = await tryBankExercise("vocab", level, topic, language, userId);
+      if (banked) {
+        return res.json({ exercises: banked.payload, bankId: banked.bankId });
+      }
     }
 
     // Generate with AI
@@ -175,9 +218,12 @@ router.post("/generate", requireAuth, aiLimiter, checkMonthlyCostLimit, async (r
     const levelDesc = LEVEL_DESCRIPTIONS[level];
     const topicContext = TOPIC_CONTEXT[topic];
     const profileCtx = await getUserProfileContext(userId);
+    const lessonBlock = lessonCtx
+      ? (lessonCtx.isKertaustesti ? curriculumTestInstruction(lessonCtx) : curriculumFocusInstruction(lessonCtx))
+      : "";
 
     const prompt = `You are generating vocabulary exercises for Finnish high school students taking the ${lang.name} "lyhyt oppimäärä" yo-koe (matriculation exam). Students have studied ${lang.name} for about ${lang.yearsStudied}.
-${profileCtx}
+${profileCtx}${lessonBlock}
 TARGET LEVEL: ${level} = ${levelDesc}
 
 TOPIC: ${topicContext}
@@ -239,8 +285,10 @@ Return ONLY a JSON array, no markdown:
     const validation = validateVocabBatch(exercises);
     if (!validation.ok) warnings.push(...validation.issues);
 
-    // Save to bank (fire-and-forget) — only for fully-valid batches
-    if (validation.ok) saveToBankBulk("vocab", level, topic, language, exercises).catch(() => {});
+    // Save to bank (fire-and-forget) — only for fully-valid batches AND only
+    // when not in curriculum context (curriculum batches are focus-specific
+    // and would skew bank serving for generic free-practice users).
+    if (validation.ok && !lessonCtx) saveToBankBulk("vocab", level, topic, language, exercises).catch(() => {});
 
     res.json({ exercises, ...(warnings.length ? { warnings } : {}) });
   } catch (err) {
@@ -443,12 +491,30 @@ router.get("/seed-counts", requireAuth, (_req, res) => {
 // ─── Grammar exercises ─────────────────────────────────────────────────────
 
 router.post("/grammar-drill", requireAuth, aiLimiter, checkMonthlyCostLimit, async (req, res) => {
-  const { topic = "mixed", level = "C", count = 6, language = "spanish", recentlyShown = [] } = req.body;
+  const reqTopic = req.body?.topic ?? "mixed";
+  const reqLevel = req.body?.level ?? "C";
+  const reqCount = req.body?.count ?? 6;
+  const language = req.body?.language ?? "spanish";
+  const recentlyShown = req.body?.recentlyShown ?? [];
+
+  // L-PLAN-3 — curriculum lesson context overrides level + count when set.
+  // Topic stays as whatever the client sent (default "mixed") — kurssi
+  // grammar_focus[] keys (preterite / subjunctive_present / …) belong to
+  // a different vocabulary than VALID_GRAMMAR_TOPICS, but the lesson focus
+  // we inject into the prompt is the real scope constraint.
+  const applied = await applyLessonContext(
+    req.body,
+    { level: reqLevel, topic: reqTopic, count: reqCount },
+    "grammar",
+  );
+  const { ctx: lessonCtx, level, count } = applied;
+  const topic = reqTopic;
 
   if (!VALID_GRAMMAR_TOPICS.has(topic)) return res.status(400).json({ error: "Virheellinen kielioppiaihe" });
   if (!VALID_READING_LEVELS.has(level) && !VALID_LEVELS.has(level)) return res.status(400).json({ error: "Virheellinen taso" });
   if (!VALID_LANGUAGES.has(language)) return res.status(400).json({ error: "Virheellinen kieli" });
-  const clampedCount = Math.max(1, Math.min(10, Number(count) || 6));
+  const maxCount = lessonCtx ? 20 : 10;
+  const clampedCount = Math.max(1, Math.min(maxCount, Number(count) || 6));
 
   // Anti-repetition list of rule labels (e.g. "ser/estar", "imperfekti").
   // Only meaningful for mixed topic — client already gates this — but we
@@ -463,17 +529,22 @@ router.post("/grammar-drill", requireAuth, aiLimiter, checkMonthlyCostLimit, asy
 
   try {
     const userId = await getUserId(req);
-    const banked = await tryBankExercise("grammar", level, topic, language, userId);
-    if (banked) {
-      return res.json({ exercises: banked.payload, bankId: banked.bankId });
+    if (!lessonCtx) {
+      const banked = await tryBankExercise("grammar", level, topic, language, userId);
+      if (banked) {
+        return res.json({ exercises: banked.payload, bankId: banked.bankId });
+      }
     }
 
     const lang = LANGUAGE_META[language];
     const topicDesc = GRAMMAR_TOPIC_DESCS[topic];
     const profileCtx = await getUserProfileContext(userId);
+    const lessonBlock = lessonCtx
+      ? (lessonCtx.isKertaustesti ? curriculumTestInstruction(lessonCtx) : curriculumFocusInstruction(lessonCtx))
+      : "";
 
     const prompt = `You are generating ${lang.name} grammar exercises for Finnish high school students (yo-koe, lyhyt oppimäärä, ${lang.yearsStudied} of ${lang.name}).
-${profileCtx}
+${profileCtx}${lessonBlock}
 GRAMMAR FOCUS: ${topicDesc}
 LEVEL: ${level} — appropriate difficulty for this yo-koe level
 COUNT: ${clampedCount} exercises
@@ -554,7 +625,7 @@ Return ONLY a JSON array (no markdown):
       warnings.push(...validation.issues);
     }
 
-    if (validation.ok) saveToBankBulk("grammar", level, topic, language, exercises).catch(() => {});
+    if (validation.ok && !lessonCtx) saveToBankBulk("grammar", level, topic, language, exercises).catch(() => {});
     res.json({ exercises, ...(warnings.length ? { warnings } : {}) });
   } catch (err) {
     console.error("Grammar drill error:", err.message);
@@ -565,7 +636,21 @@ Return ONLY a JSON array (no markdown):
 // ─── Reading exercises ─────────────────────────────────────────────────────
 
 router.post("/reading-task", requireAuth, softReadingGate, aiStrictLimiter, checkMonthlyCostLimit, async (req, res) => {
-  const { level = "C", topic = "animals and nature", language = "spanish", recentlyShown = [] } = req.body;
+  const reqLevel = req.body?.level ?? "C";
+  const reqTopic = req.body?.topic ?? "animals and nature";
+  const language = req.body?.language ?? "spanish";
+  const recentlyShown = req.body?.recentlyShown ?? [];
+
+  // L-PLAN-3 — curriculum lesson context overrides level when set. The
+  // reading topic stays as whatever the client picked; the lesson focus
+  // we inject into the prompt narrows the angle further.
+  const applied = await applyLessonContext(
+    req.body,
+    { level: reqLevel, topic: reqTopic, count: 0 },
+    "reading",
+  );
+  const { ctx: lessonCtx, level } = applied;
+  const topic = reqTopic;
 
   if (!VALID_READING_LEVELS.has(level)) return res.status(400).json({ error: "Virheellinen taso" });
   if (!VALID_READING_TOPICS.has(topic)) return res.status(400).json({ error: "Virheellinen aihe" });
@@ -584,19 +669,22 @@ router.post("/reading-task", requireAuth, softReadingGate, aiStrictLimiter, chec
 
   try {
     const userId = await getUserId(req);
-    const banked = await tryBankExercise("reading", level, topic, language, userId);
-    if (banked) {
-      if (!req.isPro) await incrementReadingPieces(userId);
-      return res.json({ reading: banked.payload, bankId: banked.bankId });
+    if (!lessonCtx) {
+      const banked = await tryBankExercise("reading", level, topic, language, userId);
+      if (banked) {
+        if (!req.isPro) await incrementReadingPieces(userId);
+        return res.json({ reading: banked.payload, bankId: banked.bankId });
+      }
     }
 
     const lang = LANGUAGE_META[language];
     const levelDesc = READING_LEVEL_DESCS[level];
     const topicContext = READING_TOPIC_CONTEXTS[topic];
     const profileCtx = await getUserProfileContext(userId);
+    const lessonBlock = lessonCtx ? curriculumFocusInstruction(lessonCtx) : "";
 
     const prompt = `Generate a reading comprehension exercise for Finnish students taking the ${lang.name} yo-koe (lyhyt oppimäärä, ${lang.yearsStudied} of ${lang.name}).
-${profileCtx}
+${profileCtx}${lessonBlock}
 Text level: ${level} — ${levelDesc}
 Topic: ${topicContext}
 
@@ -652,7 +740,7 @@ Return ONLY this JSON (no markdown):
     const reading = await callOpenAI(prompt, 3000);
     logAiUsage(userId, "reading-task", reading._usage).catch(() => {});
     delete reading._usage;
-    saveToBankBulk("reading", level, topic, language, reading).catch(() => {});
+    if (!lessonCtx) saveToBankBulk("reading", level, topic, language, reading).catch(() => {});
     if (!req.isPro) await incrementReadingPieces(userId);
     res.json({ reading });
   } catch (err) {

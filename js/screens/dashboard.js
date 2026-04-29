@@ -103,6 +103,50 @@ export async function loadDashboard() {
   }
 }
 
+// L-PLAN-3 — daily AI tutor greeting card. Fetched once per session; the
+// server caches the AI generation per user for 24h.
+async function loadTutorMessage() {
+  const card = document.getElementById("dash-tutor");
+  const msgEl = document.getElementById("dash-tutor-msg");
+  const skeleton = document.getElementById("dash-tutor-skeleton");
+  if (!card || !msgEl) return;
+  if (!isLoggedIn()) {
+    card.hidden = true;
+    if (skeleton) skeleton.hidden = true;
+    return;
+  }
+
+  // Session cache — avoid re-fetching on every dashboard render in the same tab.
+  const cached = (() => {
+    try { return sessionStorage.getItem("dashTutorMsg") || null; } catch { return null; }
+  })();
+  if (cached) {
+    msgEl.textContent = cached;
+    card.hidden = false;
+    if (skeleton) skeleton.hidden = true;
+    return;
+  }
+
+  if (skeleton) skeleton.hidden = false;
+  card.hidden = true;
+  try {
+    const res = await apiFetch(`${API}/api/curriculum/tutor-message`, { headers: authHeader() });
+    if (!res.ok) throw new Error("tutor-message failed");
+    const data = await res.json();
+    if (skeleton) skeleton.hidden = true;
+    if (data?.message) {
+      msgEl.textContent = data.message;
+      card.hidden = false;
+      try { sessionStorage.setItem("dashTutorMsg", data.message); } catch { /* private mode */ }
+    } else {
+      card.hidden = true;
+    }
+  } catch {
+    if (skeleton) skeleton.hidden = true;
+    card.hidden = true;
+  }
+}
+
 function renderDashboard({
   totalSessions, modeStats, recent, chartData = [], estLevel = null,
   gradeEstimate = null,
@@ -110,6 +154,9 @@ function renderDashboard({
   suggestedLevel = "B", modeDaysAgo = {}, pro = false,
   aiUsage = null,
 }) {
+  // Kick off the tutor-message fetch in parallel — the rest of the dashboard
+  // doesn't block on it. The card stays hidden until a message arrives.
+  loadTutorMessage().catch(() => {});
   // Pro badge — moved from dashboard header to sidebar footer (T11)
   const proSlot = document.getElementById("sidebar-pro-slot");
   if (proSlot) {

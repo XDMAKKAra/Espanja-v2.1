@@ -6,6 +6,7 @@ import { showLoading, showLoadingError } from "../ui/loading.js";
 import { generateCoachLine, countUp } from "./mode-page.js";
 import { celebrateScore } from "../features/celebrate.js";
 import { generateExerciseShareCard } from "../features/shareCard.js";
+import { getLessonContext } from "../lib/lessonContext.js";
 
 function fmtElapsedRd(ms) {
   if (!Number.isFinite(ms) || ms <= 0) return "—";
@@ -29,6 +30,7 @@ export async function loadReadingTask() {
   showLoading("Luodaan luetun ymmärtämistehtävää...");
 
   try {
+    const lessonCtx = getLessonContext();
     const res = await retryable(() => fetch(`${API}/api/reading-task`, {
       method: "POST",
       headers: { "Content-Type": "application/json", ...authHeader() },
@@ -37,6 +39,7 @@ export async function loadReadingTask() {
         topic: state.readingTopic,
         language: state.language,
         recentlyShown: state.recentReadingTitles || [],
+        ...(lessonCtx ? { lesson: lessonCtx } : {}),
       }),
     }), { attempts: 3, baseDelayMs: 500 });
     if (res.status === 403) { _deps.showProUpsell(); return; }
@@ -241,6 +244,34 @@ $("reading-btn-next").addEventListener("click", () => {
 
 function showReadingResults() {
   const total = state.currentReading.questions.length;
+
+  // L-PLAN-3 — curriculum lesson active → hand off to lessonResults.
+  const lessonCtx = getLessonContext();
+  if (lessonCtx) {
+    // Reading mode tracks a single aggregate score (state.readingScore) — we
+    // don't have per-question student/correct strings, so we send an empty
+    // wrongAnswers list and let the AI work from score alone.
+    try {
+      _deps.saveProgress({
+        mode: "reading",
+        level: state.readingLevel,
+        scoreCorrect: state.readingScore,
+        scoreTotal: total,
+        ytlGrade: null,
+      });
+    } catch { /* tracked downstream */ }
+    import("./lessonResults.js").then((m) => m.showLessonResults({
+      kurssiKey: lessonCtx.kurssiKey,
+      lessonIndex: lessonCtx.lessonIndex,
+      lessonFocus: lessonCtx.lessonFocus,
+      lessonType: lessonCtx.lessonType,
+      scoreCorrect: state.readingScore,
+      scoreTotal: total,
+      wrongAnswers: [],
+    })).catch(() => { /* fall through */ });
+    return;
+  }
+
   $("reading-score-display").textContent = `${state.readingScore}/${total}`;
   $("reading-score-text").textContent = `${state.readingScore} / ${total} oikein`;
 
