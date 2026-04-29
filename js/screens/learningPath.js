@@ -29,11 +29,10 @@ export function initLearningPath({ loadDashboard }) {
   const mixedBtn = $("btn-mixed-review");
   if (mixedBtn) mixedBtn.addEventListener("click", startMixedReview);
 
-  const navBtn = $("nav-path");
-  if (navBtn) navBtn.addEventListener("click", () => {
-    show("screen-path");
-    loadPath();
-  });
+  // Note: the #nav-path sidebar button is handled by the central router in
+  // js/main.js (navigateTo("path") → loadCurriculum). Do NOT attach a second
+  // listener here — it caused a race where both screen-curriculum and
+  // screen-path tried to show on the same click.
 }
 
 export async function loadPath() {

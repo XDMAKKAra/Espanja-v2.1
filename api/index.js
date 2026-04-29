@@ -16,6 +16,7 @@ try {
   const { default: pushRoutes } = await import("../routes/push.js");
   const { default: profileRoutes } = await import("../routes/profile.js");
   const { default: placementRoutes } = await import("../routes/placement.js");
+  const { default: curriculumRoutes } = await import("../routes/curriculum.js");
 
   app = express();
 
@@ -45,6 +46,7 @@ try {
   app.use("/api/push", pushRoutes);
   app.use("/api", profileRoutes);
   app.use("/api/placement", placementRoutes);
+  app.use("/api/curriculum", curriculumRoutes);
 
 } catch (e) {
   const { default: express } = await import("express");
