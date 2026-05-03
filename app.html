@@ -32,21 +32,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap&subset=latin,latin-ext" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="css/components/typography.css" />
-  <link rel="stylesheet" href="css/components/app-shell.css" />
-  <link rel="stylesheet" href="css/components/rail.css" />
-  <link rel="stylesheet" href="css/components/profile-menu.css" />
-  <link rel="stylesheet" href="css/components/dashboard.css" />
-  <link rel="stylesheet" href="css/components/mode-page.css" />
-  <link rel="stylesheet" href="css/components/exercise.css" />
-  <link rel="stylesheet" href="css/components/results.css" />
-  <link rel="stylesheet" href="css/components/profile.css" />
-  <link rel="stylesheet" href="css/components/meteors.css" />
-  <link rel="stylesheet" href="css/components/pro-popup.css" />
-  <link rel="stylesheet" href="css/components/onboarding-v2.css" />
-  <link rel="stylesheet" href="css/components/curriculum.css" />
-  <link rel="stylesheet" href="css/components/teaching-panel.css" />
+  <!-- L-LIVE-AUDIT-P2 UPDATE 1 — single bundle replaces 16 separate CSS requests.
+       Source files remain in repo; bundle produced by `npm run build`. -->
+  <link rel="stylesheet" href="/app.bundle.css" />
 </head>
 <body>
 
@@ -2472,7 +2460,8 @@
     </div>
   </div>
 
-  <script type="module" src="js/main.js"></script>
+  <!-- L-LIVE-AUDIT-P2 UPDATE 2 — bundled module replaces js/main.js + 27 transitive imports. -->
+  <script type="module" src="/app.bundle.js"></script>
   <!-- SW registration — extracted to /js/sw-register.js in L-SECURITY-3. -->
   <script src="/js/sw-register.js"></script>
 </body>

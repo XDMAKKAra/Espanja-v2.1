@@ -1,0 +1,19 @@
+/* Bundle entry — order MUST match app.html <link> tag order so cascade is preserved.
+   style.css is first because it owns design tokens + @imports the legacy primitives
+   (button.css, input.css, card.css, skeleton.css, feedback.css, modal.css, top-nav.css,
+   bottom-nav.css, side-panel.css). esbuild resolves all @imports recursively. */
+@import url('../style.css');
+@import url('../css/components/typography.css');
+@import url('../css/components/app-shell.css');
+@import url('../css/components/rail.css');
+@import url('../css/components/profile-menu.css');
+@import url('../css/components/dashboard.css');
+@import url('../css/components/mode-page.css');
+@import url('../css/components/exercise.css');
+@import url('../css/components/results.css');
+@import url('../css/components/profile.css');
+@import url('../css/components/meteors.css');
+@import url('../css/components/pro-popup.css');
+@import url('../css/components/onboarding-v2.css');
+@import url('../css/components/curriculum.css');
+@import url('../css/components/teaching-panel.css');
