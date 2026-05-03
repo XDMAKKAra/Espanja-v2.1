@@ -1385,7 +1385,7 @@ router.post("/checkpoint/start", requireAuth, aiLimiter, checkMonthlyCostLimit, 
       exercises.push(...(Array.isArray(batch) ? batch : [batch]));
     }
 
-    console.log(`[checkpoint] user=${userId} level=${nextLevel} items=${exercises.length} tokens=in:${tokensBefore.input}/out:${tokensBefore.output}`);
+    console.info(`[checkpoint] user=${userId} level=${nextLevel} items=${exercises.length} tokens=in:${tokensBefore.input}/out:${tokensBefore.output}`);
 
     res.json({
       exercises: exercises.slice(0, 20),

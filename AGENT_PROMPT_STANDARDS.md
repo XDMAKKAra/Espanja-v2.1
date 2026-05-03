@@ -118,12 +118,34 @@ Joka loop päättyy nämä tehden:
 
 ## 6. Loop-tiedostot
 
-- `AGENT_PROMPT_LPLAN1.md` — Onboarding redesign + placement upgrade ✓ shipped
-- `AGENT_PROMPT_LPLAN2.md` — Curriculum structure + Oppimispolku ✓ shipped
-- `AGENT_PROMPT_LPLAN3.md` — Exercise loop wired + tutor voice on dashboard ✓ shipped
-- `AGENT_PROMPT_LPLAN4.md` — UI-fix + DB-migration + V2-onboarding default + streak-silta + fast-leveling UI
-- `AGENT_PROMPT_LPLAN5.md` — Lesson screen rebuild: teaching content + topic-locked exercises
-- `AGENT_PROMPT_LPLAN6.md` — Tavoitepohjainen vaikeustaso (target_grade ohjaa tehtävämäärää + level)
-- `AGENT_PROMPT_LPLAN7.md` — Kumulatiivinen kertaus (oppitunti N kertaa myös 1..N-1)
+**Aktiiviset (juuressa):**
+- `AGENT_PROMPT_STANDARDS.md` — tämä tiedosto
+- `AGENT_PROMPT_LIVE_AUDIT_P0.md` — viimeisin shipattu (L-LIVE-AUDIT-P0)
+- `AGENT_PROMPT_LIVE_AUDIT_P1.md` — viimeisin shipattu (L-LIVE-AUDIT-P1)
+- `AGENT_PROMPT_LIVE_AUDIT_P2.md` — viimeisin shipattu (L-LIVE-AUDIT-P2)
 
-Aja yksi looppi kerrallaan järjestyksessä. `/clear` looppien välissä — uudessa istunnossa tämä STANDARDS-tiedosto + AGENT_STATE.md riittää contextiksi.
+**Arkistoidut (`docs/archive/agent-prompts/`):**
+- `AGENT_PROMPT_LPLAN1.md` ... `AGENT_PROMPT_LPLAN8.md`
+- `AGENT_PROMPT_HOTFIX_PRICING.md`, `AGENT_PROMPT_HOTFIX_PRICING2.md`
+- `AGENT_PROMPT_SECURITY1.md`, `AGENT_PROMPT_SECURITY2.md`
+
+Aja yksi looppi kerrallaan järjestyksessä. `/clear` looppien välissä — uudessa istunnossa tämä STANDARDS-tiedosto + `AGENT_STATE.md` riittää contextiksi.
+
+---
+
+## 7. Dokumentaation kokorajoitukset (kontekstin säästäminen)
+
+Koska Claude Code lukee `AGENT_STATE.md` + `IMPROVEMENTS.md` + tämän STANDARDS-tiedoston joka istunnon alussa, ne pidetään pieninä:
+
+- **`AGENT_STATE.md` max 50 riviä.** Jos loopin lisäys ylittäisi rajan, vanhin "Recent loops"-merkintä siirretään `docs/archive/AGENT_STATE_HISTORY.md`:hen.
+- **`IMPROVEMENTS.md` max 100 riviä.** Sama logiikka — vanhimmat loopit `docs/archive/IMPROVEMENTS_PRE_AUDIT.md`:hen tai uusiin per-vuosi-archive-tiedostoihin.
+- **Loop-merkintä `AGENT_STATE.md`:hen on max 7 riviä.** Formaatti: scope, files, SW-bumppi, tests, pending. Kaikki tarkka toteutus on git-historiassa + commit-viesteissä.
+- **Loop-merkintä `IMPROVEMENTS.md`:hen on max 3 riviä per UPDATE.** Linkkaa commit-hashiin jos tarvitsee viitata yksityiskohtiin.
+
+Loop:n päättyessä, lopuksi:
+1. Lisää uusi merkintä `AGENT_STATE.md`:hen ja `IMPROVEMENTS.md`:hen
+2. Tarkista rivimäärät (`wc -l`)
+3. Jos ylittyvät, siirrä vanhimmat archiveen
+4. Commit yksinkertaisella viestillä: `chore(docs): rotate state archive after L-XXX`
+
+`docs/archive/`-kansiota ei lueta Claude Codessa oletuksena. Loop-prompin "Lue ensin"-osio voi pyytää sitä eksplisiittisesti jos historia on relevanttia (esim. "Lue `docs/archive/IMPROVEMENTS_PRE_AUDIT.md` rivit jotka mainitsevat target_grade").

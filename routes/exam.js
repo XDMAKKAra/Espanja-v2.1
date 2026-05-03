@@ -35,7 +35,7 @@ const POOLS = {
   longWriting: loadPool("longWriting"),
 };
 
-console.log(
+console.info(
   `[exam] Pools loaded — reading: ${POOLS.reading.length}, structure: ${POOLS.structure.length}, ` +
     `shortWriting: ${POOLS.shortWriting.length}, longWriting: ${POOLS.longWriting.length}`
 );

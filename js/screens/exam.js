@@ -1,7 +1,5 @@
-// TODO(loading): adopt showSkeleton / showFetchError from js/ui/loading.js (Commit 9 follow-up)
 import { $, show } from "../ui/nav.js";
 import { API, isLoggedIn, authHeader } from "../api.js";
-import { state } from "../state.js";
 import { showLoading, showLoadingError } from "../ui/loading.js";
 import { createExamTimer, clearPersisted as clearTimerPersisted } from "../features/examTimer.js";
 

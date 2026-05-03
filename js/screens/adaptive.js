@@ -1,14 +1,10 @@
-// TODO(loading): adopt showSkeleton / showFetchError from js/ui/loading.js (Commit 9 follow-up)
 // ─── Adaptive level system — frontend ────────────────────────────────────────
 import { $, show } from "../ui/nav.js";
 import { API, authHeader, apiFetch, retryable } from "../api.js";
-import { state } from "../state.js";
 import { showLoading, showLoadingError } from "../ui/loading.js";
 import { renderExercise } from "./exerciseRenderer.js";
 import { toUnified } from "../../lib/exerciseTypes.js";
 import { reportMcAdvisory } from "../features/mcAdvisory.js";
-
-const OPTION_LETTERS = ["A", "B", "C", "D", "E", "F"];
 
 let _deps = {};
 export function initAdaptive({ loadDashboard }) {

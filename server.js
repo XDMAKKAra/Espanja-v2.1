@@ -53,7 +53,6 @@ app.use(helmet({
       connectSrc: [
         "'self'",
         "https://*.supabase.co",
-        "https://api.lemonsqueezy.com",
         "https://api.openai.com",
         "https://eu.i.posthog.com",
         "https://eu-assets.i.posthog.com",
@@ -65,7 +64,6 @@ app.use(helmet({
         "https://fonts.googleapis.com",
         "https://fonts.gstatic.com",
       ],
-      frameSrc: ["https://*.lemonsqueezy.com"],
     },
   },
 }));
@@ -80,7 +78,8 @@ app.use(cors(allowedOrigins.length ? {
   credentials: true,
 } : undefined));
 
-// LemonSqueezy webhook needs raw body — must come BEFORE express.json()
+// Payment webhook needs raw body — must come BEFORE express.json().
+// Currently a placeholder that returns 410 until Stripe is wired (L-STRIPE-1).
 app.post("/api/payments/webhook", express.raw({ type: "application/json" }), handleWebhook);
 
 app.use(express.json());

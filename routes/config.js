@@ -12,7 +12,7 @@ const router = express.Router();
 // whether the Pro-flip dev button should render.
 router.get("/public", requireAuth, (req, res) => {
   res.json({
-    // Flip to false when live LemonSqueezy checkout is wired after y-tunnus.
+    // Stays true until a payment provider (Stripe — L-STRIPE-1) is wired.
     waitlist_mode: true,
     // Only true for TEST_PRO_EMAILS accounts; the [Flip to Pro (dev)]
     // button reads this to decide whether to render.

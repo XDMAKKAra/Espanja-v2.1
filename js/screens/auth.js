@@ -1,6 +1,5 @@
 import { $, show } from "../ui/nav.js";
-import { API, setAuth, clearAuth } from "../api.js";
-import { state } from "../state.js";
+import { API, setAuth } from "../api.js";
 import { checkOnboarding } from "./onboarding.js";
 import { checkPlacementNeeded, showPlacementIntro } from "./placement.js";
 
