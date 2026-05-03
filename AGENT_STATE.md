@@ -1,11 +1,15 @@
 # Puheo Agent State
 
 **Last updated:** 2026-05-03
-**Current state:** L-CLEANUP-1 shipped — context-preload now ~10k tokens (was ~40k).
+**Current state:** L-CAT-COLORS-1 shipped (L-LIVE-AUDIT-P1 UPDATE 8 follow-up — kategoriavärit tokenoitu, dark-theme overridet).
 
 ---
 
 ## Recent loops (last 5)
+
+### L-CAT-COLORS-1 — 2026-05-03 ✓ shipped
+**Scope:** L-LIVE-AUDIT-P1 UPDATE 8 follow-up — `--cat-*` tokenit `:root`-tasolle (vocab/grammar/reading/writing/verbsprint), dark-theme override `[data-theme="dark"]`-blokkiin (-700 → -400 shadet AA-kontrastilla #0a0a0a:lla), `mode-page.css` raw-hex → token-referenssi.
+**Files:** 3 (`style.css`, `css/components/mode-page.css`, `sw.js`) + bundles. **SW:** v115→v116. **Tests:** 1064/1064 ✓.
 
 ### L-CLEANUP-1 — 2026-05-03 ✓ shipped
 **Scope:** Documentation siivous (state archive split) + dead-code removal (LemonSqueezy + console.logs + unused imports + stale TODOs).
@@ -29,17 +33,13 @@
 **Scope:** Critical bugs — exam confirm modal + discard endpoint, heatmap empty-state, quick-review contrast, exit-active-exercise nav, /api/config/public 404.
 **Files:** 5. **SW:** v110→v111. **Tests:** 1067/1067 ✓.
 
-### L-PLAN-8 (+ hotfix) — 2026-04-XX ✓ shipped
-**Scope:** Landing-polish + dashboard empty-state + a11y. **SW:** v103→v106.
-
 ---
 
 ## Next loop
 
 **Recommended:** Käyttäjän päätös. Vaihtoehdot: L-STRIPE-1 (Stripe-migraatio), L-LIVE-AUDIT-P1 UPDATE 8 (kategoriavärit), uusi feature.
 
-**Pending decisions (käyttäjältä):**
-- L-LIVE-AUDIT-P1 UPDATE 8 — kategoriaväri-strategia
+**Pending decisions (käyttäjältä):** —
 
 **Recurring blockers:**
 - Playwright E2E gated since d3f5ca5 (workflow_dispatch + secrets-puute)
