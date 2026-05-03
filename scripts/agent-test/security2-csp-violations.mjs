@@ -72,6 +72,15 @@ await ctx.addInitScript(() => {
 
 const page = await ctx.newPage();
 
+// Informational CSP messages that are not actionable violations:
+//   • "directive 'X' is ignored when delivered in a report-only policy"
+//     — fires for upgrade-insecure-requests / sandbox in Report-Only.
+//     Disappears the moment Report-Only flips to enforcing.
+const CSP_NOISE = [
+  /ignored when delivered in a report-only/i,
+  /ignored when delivered via/i,
+];
+
 page.on("console", (msg) => {
   const txt = msg.text();
   // Our SecurityPolicyViolationEvent re-emit
@@ -83,6 +92,7 @@ page.on("console", (msg) => {
   // Some browsers also log a native message before the event fires; capture
   // anything that mentions CSP so we don't miss edge cases.
   if (msg.type() === "error" && /Content Security Policy|Content-Security-Policy|violates the .* directive/i.test(txt)) {
+    if (CSP_NOISE.some((re) => re.test(txt))) return;
     recordViolation({ raw: txt.slice(0, 400), via: "console", url: msg.location()?.url || null });
   }
 });
