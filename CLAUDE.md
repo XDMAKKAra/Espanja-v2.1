@@ -8,7 +8,7 @@ AI-powered adaptive Spanish language learning platform for Finnish high school s
 - **Database:** Supabase (PostgreSQL)
 - **AI:** OpenAI API (gpt-4o-mini)
 - **Email:** Resend.io
-- **Payments:** LemonSqueezy
+- **Payments:** Stripe
 - **Frontend:** Vanilla JS + CSS (no framework)
 
 ## Key Commands

@@ -49,7 +49,7 @@ Live-audit (`AUDIT_LIVE_DASHBOARD.md`) mittasi:
 **Käyttäjän vahvistettu lopputavoite:**
 > "Sivunavaus tuntuu välittömältä. Tehtäväsivu avautuu max. 1.5s klikkauksesta. Pro-maksava käyttäjä ei odota viiveitä joita ei tapahdu Duolingossa tai Babbelissa."
 
-**Tämä on iso loop.** ÄLÄ yritä tehdä kaikkia 7 UPDATEa samassa istunnossa. Tee yksi UPDATE → deployaa → mittaa tuotannosta Lighthousella → vasta sitten seuraava. Suosittelen järjestystä:
+**Tämä on iso loop.** ÄLÄ yritä tehdä kaikkia 8 UPDATEa samassa istunnossa. Tee yksi UPDATE → deployaa → mittaa tuotannosta Lighthousella → vasta sitten seuraava. Suosittelen järjestystä:
 
 1. UPDATE 1 (CSS-bundle) + UPDATE 2 (JS-bundle) yhdessä — sama build-step
 2. Mittaa
@@ -58,7 +58,8 @@ Live-audit (`AUDIT_LIVE_DASHBOARD.md`) mittasi:
 5. Mittaa
 6. UPDATE 5 (vocab pre-gen) + UPDATE 6 (adaptive/status-optimointi) — voit tehdä samassa istunnossa
 7. Mittaa
-8. UPDATE 7 (fontit lokaaliksi) viimeisenä
+8. UPDATE 8 (fontit lokaaliksi)
+9. UPDATE 7 (theme-toggle-animaatio) viimeisenä — tämä on polish, ei perf, ja istuu loop:n loppuun bonus-featureena
 
 ---
 
@@ -68,7 +69,7 @@ Live-audit (`AUDIT_LIVE_DASHBOARD.md`) mittasi:
 
 - `puheo-screen-template` — performance-osio (jos olemassa) — varmista että UPDATE 5 (vocab pre-gen) ei riko empty/loading/error-state-pattern
 - `puheo-ai-prompt` — UPDATE 5 + UPDATE 6 — kaikki OpenAI-kutsut, cost guards, JSON schema
-- `ui-ux-pro-max` — performance-rules: lazy loading, defer / async, font-display: swap
+- `ui-ux-pro-max` — performance-rules: lazy loading, defer / async, font-display: swap. UPDATE 7: motion (View Transitions), `prefers-reduced-motion`, focus-state painikkeessa
 
 Education-skillit:
 - `education/cognitive-load-analyser` — UPDATE 5 — pre-gen ei saa ladata niin paljon että muistia / API-kustannuksia tuhlautuu yhden istunnon aikana
@@ -78,7 +79,15 @@ Design plugins:
 - `design:accessibility-review` — KAIKKI UPDATEt joissa lisäät loading/skeleton-tilaa — varmista screen-reader-announcement
 - `design:design-critique` — UPDATE 1+2 jälkeen — onko visuaalinen jitter pienentynyt cold loadissa? Playwright video-recording, ei pelkkä screenshot
 
-**Ei 21st.dev-sourcingia tähän looppiin** — kaikki on infraa, ei uusia komponentteja. Poikkeus: jos UPDATE 5:n pre-gen-loading-tila tarvitsee uutta skeletonia, sourcaa siihen.
+**21st.dev / Magic UI sourcing — pakollinen UPDATE 7:lle:**
+
+| UPDATE | Komponentti | Hakusanat |
+|---|---|---|
+| 7 | Animoitu theme toggler (View Transitions API + clip-path) | `21st.dev/s/theme-toggler`, `21st.dev/s/animated-theme-toggle`, `magicui.design/docs/components/animated-theme-toggler` (referenssi, ei asenneta) |
+
+Cite EXACT URL IMPROVEMENTS.md-rivissä. Magic UI:n React-komponentti on vain referenssi — Puheo on vanilla, joten porttaaminen on pakollinen.
+
+Muuten: ei sourcingia tähän looppiin — kaikki muu on infraa, ei uusia komponentteja. Poikkeus: jos UPDATE 5:n pre-gen-loading-tila tarvitsee uutta skeletonia, sourcaa siihen.
 
 ---
 
@@ -387,7 +396,101 @@ Jos endpoint laskee `last_5_sessions`, `accuracy`, `streak`, jne. — tee yksi a
 
 ---
 
-## UPDATE 7 — Self-host Inter + DM Mono (Google Fonts pois)
+## UPDATE 7 — Asetukset-sivun theme toggle: animoitu siirtymä (Magic UI port)
+
+**Mitä tehdään:** Asetukset-sivulla on jo theme switch (Light / Dark / Auto, kts. `js/screens/settings.js` + `style.css`-tokenit). Toggle toimii toiminnallisesti, mutta vaihto on tyly — ruutu välähtää uuteen teemaan.
+
+Käyttäjä haluaa Magic UI:n [Animated Theme Toggler](https://magicui.design/docs/components/animated-theme-toggler) -kuvion: View Transitions API + clip-path joka levenee klikkauspisteestä. **Tämä on portattava vanilla CSS+JS:ksi** — Magic UI on React+Tailwind+shadcn, Puheo ei ole.
+
+**Lähde:**
+- Magic UI komponentti: `npx shadcn@latest add @magicui/animated-theme-toggler` antaa TSX-tiedoston referenssiksi (älä asenna repon — käytä referenssinä)
+- Selain-API-pohja: `document.startViewTransition()` + `::view-transition-new(root)` clip-path-animaatio
+- View Transitions API ei ole tuettu Firefox vanhoissa versioissa eikä Safari < 18; tee feature-detect ja fallback nykyiseen instant-vaihtoon
+
+**Toteutus:**
+
+### A. JS: View Transitions -wrapperi
+
+`js/screens/settings.js` (tai uusi `js/features/themeToggle.js`):
+
+```js
+export function setThemeWithTransition(newTheme, originX, originY) {
+  // Fallback ilman View Transitions API:a
+  if (!document.startViewTransition || matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.documentElement.dataset.theme = newTheme;
+    persistThemeChoice(newTheme);
+    return;
+  }
+
+  // CSS-muuttujat clip-pathille
+  document.documentElement.style.setProperty('--vt-origin-x', `${originX}px`);
+  document.documentElement.style.setProperty('--vt-origin-y', `${originY}px`);
+
+  const transition = document.startViewTransition(() => {
+    document.documentElement.dataset.theme = newTheme;
+  });
+
+  transition.ready.then(() => {
+    persistThemeChoice(newTheme);
+  });
+}
+```
+
+Kun käyttäjä klikkaa Light/Dark-painiketta, tallenna `event.clientX` + `event.clientY` ja anna ne `setThemeWithTransition`:lle.
+
+### B. CSS: View Transition-säännöt
+
+`style.css` tai `css/components/settings.css`:
+
+```css
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+  z-index: 1;
+}
+
+::view-transition-new(root) {
+  z-index: 2;
+  animation: vt-clip-expand 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes vt-clip-expand {
+  from {
+    clip-path: circle(0% at var(--vt-origin-x) var(--vt-origin-y));
+  }
+  to {
+    clip-path: circle(150% at var(--vt-origin-x) var(--vt-origin-y));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-new(root) {
+    animation: none;
+  }
+}
+```
+
+### C. 21st.dev / Magic UI sourcing
+
+Run `21st.dev/s/theme-toggler` ja `21st.dev/s/animated-theme-toggle` ensin — ehkä siellä on vanilla-versio jota voi käyttää suoraan. Jos ei, käytä Magic UI:n React-komponenttia referenssinä. Cite Magic UI:n URL IMPROVEMENTS.md:ssä.
+
+**Älä:** asenna shadcn/ui-rakennetta repon. Älä yritä saada `@magicui/animated-theme-toggler` -pakettia toimimaan vanilla-projektissa.
+
+**Verify:**
+- Asetukset-sivu → klikkaa Light → Dark: clip-path levenee klikkauspisteestä smooth, ei tyly välähdys
+- Klikkaa eri kohdista painiketta → animaatio lähtee oikeasta pisteestä
+- Firefox / Safari < 18: feature-detect kytkee fallbackin päälle, ruutu vaihtuu instant ilman virhettä
+- `prefers-reduced-motion: reduce` → animaatio pois, instant-vaihto
+- `design:accessibility-review` — focus-ringi, aria-label "Vaihda teemaa", touch target ≥ 44px
+- Jos käyttäjä käyttää keyboardia (ei hiirtä), origin = painikkeen keskipiste
+
+---
+
+## UPDATE 8 — Self-host Inter + DM Mono (Google Fonts pois)
 
 **Nykytila:** `<link href="https://fonts.googleapis.com/css2?family=Inter...DM+Mono...">` — kaksi external-pyyntöä Google Fonts CDN:lle. Lisäksi CSP-näkökulmasta `fonts.googleapis.com` + `fonts.gstatic.com` ovat sallittuja `style-src` ja `font-src` -direktiiveissä.
 
@@ -459,7 +562,7 @@ Jos endpoint laskee `last_5_sessions`, `accuracy`, `streak`, jne. — tee yksi a
 
 ## Mitä EI saa tehdä tässä loopissa
 
-- ÄLÄ yritä tehdä kaikkia 7 UPDATEa samassa istunnossa — käyttäjän suosittelu järjestys yllä
+- ÄLÄ yritä tehdä kaikkia 8 UPDATEa samassa istunnossa — käyttäjän suosittelu järjestys yllä
 - ÄLÄ poista vanhoja endpointteja UPDATE 3:n jälkeen — ne ovat käytössä muualla; siivous erillinen loop
 - ÄLÄ aja Supabase-migraatioita itse (UPDATE 6 indeksit) — ACTION REQUIRED IMPROVEMENTS.md:hen
 - ÄLÄ keksi uusia CSP-sääntöjä — käytä L-SECURITY-2:n pohjaa
@@ -481,7 +584,8 @@ Yksi commit per UPDATE, mahdollisesti useampia jos UPDATE on iso:
 - `perf(vocab): preload next question batch when user is 2/3 through current set [L-LIVE-AUDIT-P2 UPDATE 5a]`
 - `perf(vocab): add LRU cache for hot topic batches [L-LIVE-AUDIT-P2 UPDATE 5b]`
 - `perf(adaptive): cache /api/adaptive/status for 30s + index user_progress [L-LIVE-AUDIT-P2 UPDATE 6]`
-- `perf(fonts): self-host Inter and DM Mono, drop Google Fonts CDN [L-LIVE-AUDIT-P2 UPDATE 7]`
+- `feat(settings): animated theme toggle with View Transitions API + clip-path [L-LIVE-AUDIT-P2 UPDATE 7]`
+- `perf(fonts): self-host Inter and DM Mono, drop Google Fonts CDN [L-LIVE-AUDIT-P2 UPDATE 8]`
 
 Push → Vercel deploy → mittaus tuotannossa → IMPROVEMENTS.md (mittauspareineen) + AGENT_STATE.md.
 
