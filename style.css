@@ -64,6 +64,21 @@
   --ex-kaannos:      #047857;
   --ex-luetun:       #4338CA;
 
+  /* Mode/category accents — orientation cue per mode-page (sanasto/puheoppi/
+     luetun-ymmärtäminen/kirjoittaminen/verbisprintti). Each value is the
+     -700 Tailwind shade, all AA on light surfaces. Dark-theme overrides
+     below switch to -400 shades so they stay AA on #0a0a0a. */
+  --cat-vocab:        #0F766E;
+  --cat-grammar:      #6D28D9;
+  --cat-reading:      #C2410C;
+  --cat-writing:      #1D4ED8;
+  --cat-verbsprint:   #BE185D;
+  --cat-vocab-glow:      rgba(45,212,191,0.18);
+  --cat-grammar-glow:    rgba(167,139,250,0.18);
+  --cat-reading-glow:    rgba(251,146,60,0.18);
+  --cat-writing-glow:    rgba(96,165,250,0.18);
+  --cat-verbsprint-glow: rgba(244,114,182,0.18);
+
   /* Named gradients — only --grad-hero survives, masked into hero H1 text */
   --grad-hero:    linear-gradient(130deg, var(--accent) 0%, var(--accent-hover) 100%);
   --grad-pro:     var(--grad-hero);
@@ -174,6 +189,19 @@
   /* Accent — same mint as light mode for brand continuity */
   --accent-soft:   rgba(45, 212, 191, 0.14);
   /* accent / accent-hover / accent-dark unchanged */
+
+  /* Mode/category accents — bumped to -400 shades so each stays AA on
+     #0a0a0a. Glows get slightly higher alpha for visibility. */
+  --cat-vocab:        #2DD4BF;
+  --cat-grammar:      #A78BFA;
+  --cat-reading:      #FB923C;
+  --cat-writing:      #60A5FA;
+  --cat-verbsprint:   #F472B6;
+  --cat-vocab-glow:      rgba(45,212,191,0.22);
+  --cat-grammar-glow:    rgba(167,139,250,0.22);
+  --cat-reading-glow:    rgba(251,146,60,0.22);
+  --cat-writing-glow:    rgba(96,165,250,0.22);
+  --cat-verbsprint-glow: rgba(244,114,182,0.22);
 
   /* Shadows — black-based, deeper to read on dark surfaces */
   --sh-rest:  0 1px 3px rgba(0, 0, 0, 0.4);

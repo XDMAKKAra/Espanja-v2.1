@@ -198,12 +198,14 @@
 
 /* Per-mode color identity — each mode-page gets a faint corner glow + accent
    color override on the eyebrow and topic chevron. Same layout, different
-   feel, so vocab doesn't read identical to grammar. Stays within token scale. */
-.mode-page--vocab    { --mode-accent: #0F766E; --mode-glow: rgba(45,212,191,0.18); }
-.mode-page--grammar  { --mode-accent: #6D28D9; --mode-glow: rgba(167,139,250,0.18); }
-.mode-page--reading  { --mode-accent: #C2410C; --mode-glow: rgba(251,146,60,0.18); }
-.mode-page--writing  { --mode-accent: #1D4ED8; --mode-glow: rgba(96,165,250,0.18); }
-.mode-page--verbsprint { --mode-accent: #BE185D; --mode-glow: rgba(244,114,182,0.18); }
+   feel, so vocab doesn't read identical to grammar. Tokens defined in
+   `style.css :root`/`[data-theme="dark"]` so dark-theme variants land in one
+   place. */
+.mode-page--vocab      { --mode-accent: var(--cat-vocab);      --mode-glow: var(--cat-vocab-glow); }
+.mode-page--grammar    { --mode-accent: var(--cat-grammar);    --mode-glow: var(--cat-grammar-glow); }
+.mode-page--reading    { --mode-accent: var(--cat-reading);    --mode-glow: var(--cat-reading-glow); }
+.mode-page--writing    { --mode-accent: var(--cat-writing);    --mode-glow: var(--cat-writing-glow); }
+.mode-page--verbsprint { --mode-accent: var(--cat-verbsprint); --mode-glow: var(--cat-verbsprint-glow); }
 
 .mode-page::before {
   content: "";
