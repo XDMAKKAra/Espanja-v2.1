@@ -1160,10 +1160,21 @@
   margin-top: 2px;
 }
 .landing .pricing-card__feature--yes svg { color: var(--accent); }
-.landing .pricing-card__feature--no {
+.landing .pricing-card__feature--no,
+.landing .pricing-card__feature[aria-disabled="true"] {
   color: var(--text-subtle);
 }
-.landing .pricing-card__feature--no svg { color: var(--text-subtle); }
+.landing .pricing-card__feature--no svg,
+.landing .pricing-card__feature[aria-disabled="true"] svg { color: var(--text-subtle); }
+.landing .sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
 
 .landing .btn--full {
   width: 100%;
