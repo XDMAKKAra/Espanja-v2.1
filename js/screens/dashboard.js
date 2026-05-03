@@ -1272,17 +1272,23 @@ function renderWritingProgression() {
   wrap.classList.remove("hidden");
 
   const order = ["viestinnallisyys", "kielen_rakenteet", "sanasto", "kokonaisuus"];
-  let html = '<div class="dash-writing-progression-title">Kirjoittamisen osa-alueet — viim. 5 kertaa</div>';
+  let html = '<div class="dash-writing-progression-title">Kirjoittamisen osa-alueet · viimeiset 5 kertaa</div>';
   for (const k of order) {
     const d = dims[k];
     if (!d) continue;
     const pct = Math.round((d.avg / 5) * 100);
     const cls = d.avg >= 3.5 ? "" : d.avg >= 2.5 ? "is-mid" : "is-weak";
-    const trendArrow = d.trend === "up" ? "↑" : d.trend === "down" ? "↓" : "→";
+    // Suomalainen desimaalipilkku — "3,5/5" eikä "3.5 / 5".
+    const score = `${d.avg.toFixed(1).replace(".", ",")}/5`;
+    // Vain merkityksellinen suunta näkyy — flat-merkki näyttää keskeneräiseltä
+    // markdownilta vieressä olevan etiketin kanssa.
+    const trendMarkup = (d.trend === "up" || d.trend === "down")
+      ? ` <span class="dash-wp-trend ${d.trend}" aria-label="${d.trend === "up" ? "noussut" : "laskenut"}">${d.trend === "up" ? "↑" : "↓"}</span>`
+      : "";
     html += `
       <div class="dash-wp-row">
-        <span class="dash-wp-label">${d.label}<span class="dash-wp-trend ${d.trend}">${trendArrow}</span></span>
-        <span class="dash-wp-score">${d.avg.toFixed(1)} / 5</span>
+        <span class="dash-wp-label">${d.label}${trendMarkup}</span>
+        <span class="dash-wp-score">${score}</span>
         <div class="dash-wp-bar"><div class="dash-wp-bar-fill ${cls}" style="width:${pct}%"></div></div>
       </div>
     `;
@@ -1406,21 +1412,24 @@ async function loadAndRenderReadinessMap() {
 
   const qual = readinessQualitative(map.readinessPct, map.totalCells);
 
+  // L-LIVE-AUDIT-P1 UPDATE 3 — clearer hierarchy: eyebrow + dominant % + bar,
+  // count + qualitative joined into a single sub-line. Legend "vähän hyvin"
+  // dropped per audit (read as raw status fragments without context).
   wrap.innerHTML = `
-    <div class="dash-readiness-title">YO-valmiuskartta</div>
+    <div class="dash-readiness-title">YO-valmius</div>
+    <div class="dash-readiness-headline">
+      <span class="dash-readiness-pct">${map.readinessPct}%</span>
+      <span class="dash-readiness-pct-label">valmius</span>
+    </div>
+    <div class="dash-readiness-track" role="progressbar"
+         aria-valuenow="${map.readinessPct}" aria-valuemin="0" aria-valuemax="100"
+         aria-label="YO-valmius">
+      <div class="dash-readiness-track__fill" style="width:${Math.max(0, Math.min(100, map.readinessPct))}%"></div>
+    </div>
     <div class="dash-readiness-summary">
-      <strong>${map.masteredCells}</strong> / ${map.totalCells} osa-aluetta hallinnassa
-      &middot; <strong>${map.readinessPct}%</strong> valmius
-      ${qual ? ` &middot; <span class="dash-readiness-qual">${qual}</span>` : ""}
+      <strong>${map.masteredCells}</strong> / ${map.totalCells} osa-aluetta hallinnassa${qual ? ` · <span class="dash-readiness-qual">${qual}</span>` : ""}
     </div>
     <div class="dash-readiness-grid">${cellsHtml}</div>
-    <div class="dash-readiness-legend">
-      <span>vähän</span>
-      <span class="dash-readiness-legend-dots">
-        <span class="lvl-1"></span><span class="lvl-2"></span><span class="lvl-3"></span><span class="lvl-4"></span>
-      </span>
-      <span>hyvin</span>
-    </div>
   `;
 }
 

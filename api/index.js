@@ -15,8 +15,12 @@ try {
   const { default: adaptiveRoutes } = await import("../routes/adaptive.js");
   const { default: pushRoutes } = await import("../routes/push.js");
   const { default: profileRoutes } = await import("../routes/profile.js");
+  const { default: configRoutes } = await import("../routes/config.js");
   const { default: placementRoutes } = await import("../routes/placement.js");
   const { default: curriculumRoutes } = await import("../routes/curriculum.js");
+  const { default: statusRoutes } = await import("../routes/status.js");
+  const { waitlistLimiter } = await import("../middleware/rateLimit.js");
+  const { default: supabase } = await import("../supabase.js");
 
   app = express();
 
@@ -47,6 +51,26 @@ try {
   app.use("/api", profileRoutes);
   app.use("/api/placement", placementRoutes);
   app.use("/api/curriculum", curriculumRoutes);
+  app.use("/api/config", configRoutes);
+  app.use("/api/dev", configRoutes);
+  app.use("/api/status", statusRoutes);
+
+  app.post("/api/waitlist", waitlistLimiter, async (req, res) => {
+    const { email, product } = req.body;
+    if (!email || !product) return res.status(400).json({ error: "Email ja tuote vaaditaan" });
+    const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRe.test(email)) return res.status(400).json({ error: "Tarkista sähköpostiosoite" });
+    try {
+      const { error } = await supabase
+        .from("waitlist")
+        .upsert({ email: email.toLowerCase().trim(), product }, { onConflict: "email,product" });
+      if (error) throw error;
+      res.json({ ok: true });
+    } catch (err) {
+      console.error("Waitlist error:", err);
+      res.status(500).json({ error: "Jokin meni pieleen" });
+    }
+  });
 
 } catch (e) {
   const { default: express } = await import("express");

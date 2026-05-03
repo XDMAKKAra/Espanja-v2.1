@@ -158,37 +158,61 @@ function navigateTo(nav, { updateHash = true } = {}) {
   else showModePage(nav);
 }
 
-// L-PLAN-5 UPDATE 3 — when an active curriculum lesson exists and the
-// student clicks a main-nav target OUTSIDE the lesson flow, prompt before
-// dropping the lesson context. "Continue" stays on the exercise screen,
-// "Lopeta" clears the lesson and navigates as requested.
+// Map exercise screens → mode page ids, for both the nav-confirm prompt
+// and for the x-button exit flow (L-LIVE-AUDIT-P0 UPDATE 4).
+const EXERCISE_SCREENS = new Set([
+  "screen-exercise",      // vocab
+  "screen-grammar",
+  "screen-reading",
+  "screen-writing",
+  "screen-lesson",
+]);
+const EXERCISE_TO_MODE_PAGE = {
+  "screen-exercise": "screen-mode-vocab",
+  "screen-grammar": "screen-mode-grammar",
+  "screen-reading": "screen-mode-reading",
+  "screen-writing": "screen-mode-writing",
+};
+
+// L-PLAN-5 UPDATE 3 + L-LIVE-AUDIT-P0 UPDATE 4 — prompt before dropping an
+// active exercise/lesson when the student clicks main-nav. Originally only
+// fired when a curriculum lesson context was present; the live audit found
+// that a standalone vocab/grammar/reading session would silently swap the
+// hash without changing the screen, leaving the student confused. Now the
+// prompt fires for *any* exercise screen regardless of lesson context, and
+// path → still skips the prompt (natural exit route for lessons).
 async function maybeConfirmNavAway(targetNav) {
   try {
-    const { getLessonContext, clearLessonContext } = await import("./lib/lessonContext.js");
-    const ctx = getLessonContext();
-    if (!ctx) return true;
     const activeScreen = document.querySelector(".screen.active");
     const screenId = activeScreen?.id || "";
-    // Only prompt while the student is inside an exercise/lesson screen.
-    const lessonScreens = new Set(["screen-exercise", "screen-grammar", "screen-reading", "screen-writing", "screen-lesson"]);
-    if (!lessonScreens.has(screenId)) return true;
-    // path → student is going back to the curriculum overview, allowed
-    // without confirmation (it's the natural "exit" route).
-    if (targetNav === "path") {
+    if (!EXERCISE_SCREENS.has(screenId)) return true;
+
+    const { getLessonContext, clearLessonContext } = await import("./lib/lessonContext.js");
+    const ctx = getLessonContext();
+
+    // Curriculum lessons: the natural exit route is the path overview, no
+    // prompt needed there. Standalone exercises don't have this shortcut.
+    if (ctx && targetNav === "path") {
       clearLessonContext();
       try { sessionStorage.removeItem("currentLessonTeachingMd"); } catch { /* ignore */ }
       return true;
     }
+
     const { confirmDialog } = await import("./features/confirmDialog.js");
+    const isLesson = !!ctx;
     const ok = await confirmDialog({
-      title: "Lopetetaanko oppitunti?",
-      body: `Sinulla on käynnissä oppitunti "${ctx.lessonFocus || "harjoitus"}". Haluatko lopettaa harjoittelun nyt?`,
-      confirmLabel: "Lopeta",
-      cancelLabel: "Jatka oppituntia",
+      title: isLesson ? "Lopetetaanko oppitunti?" : "Lopetetaanko harjoitus?",
+      body: isLesson
+        ? `Sinulla on käynnissä oppitunti "${ctx.lessonFocus || "harjoitus"}". Haluatko lopettaa harjoittelun nyt?`
+        : "Vastauksesi tähän asti tallentuvat, mutta keskeneräistä sessiota ei voi jatkaa myöhemmin.",
+      confirmLabel: isLesson ? "Lopeta" : "Lopeta ja siirry",
+      cancelLabel: isLesson ? "Jatka oppituntia" : "Jatka harjoitusta",
     });
     if (!ok) return false;
-    clearLessonContext();
-    try { sessionStorage.removeItem("currentLessonTeachingMd"); } catch { /* ignore */ }
+    if (ctx) {
+      clearLessonContext();
+      try { sessionStorage.removeItem("currentLessonTeachingMd"); } catch { /* ignore */ }
+    }
     return true;
   } catch {
     return true;
@@ -318,15 +342,32 @@ if ($("btn-start-writing")) $("btn-start-writing").addEventListener("click", () 
   loadWritingTask();
 });
 
-// Spec 2 §4.1 — drill exit returns to dashboard.
+// Spec 2 §4.1 + L-LIVE-AUDIT-P0 UPDATE 4 — drill exit returns to the mode
+// page the student came from (Sanasto / Puheoppi / Luetun / Kirjoittaminen),
+// not silently to the dashboard. If the session is a curriculum lesson
+// (lessonContext active), the natural exit is the dashboard so the lesson
+// state isn't dangling on a mode page that doesn't know about it.
+async function exitToSource(fallbackMode) {
+  try {
+    const { getLessonContext } = await import("./lib/lessonContext.js");
+    if (getLessonContext()) { show("screen-dashboard"); return; }
+  } catch { /* fall through to mode page */ }
+  const target = `screen-mode-${state.mode || fallbackMode}`;
+  if (document.getElementById(target)) {
+    navigateTo(state.mode || fallbackMode);
+  } else {
+    show("screen-dashboard");
+  }
+}
+
 const btnExitExercise = $("btn-exit-exercise");
-if (btnExitExercise) btnExitExercise.addEventListener("click", () => show("screen-dashboard"));
+if (btnExitExercise) btnExitExercise.addEventListener("click", () => exitToSource("vocab"));
 const btnExitGram = $("btn-exit-gram");
-if (btnExitGram) btnExitGram.addEventListener("click", () => show("screen-dashboard"));
+if (btnExitGram) btnExitGram.addEventListener("click", () => exitToSource("grammar"));
 const btnExitReading = $("btn-exit-reading");
-if (btnExitReading) btnExitReading.addEventListener("click", () => show("screen-dashboard"));
+if (btnExitReading) btnExitReading.addEventListener("click", () => exitToSource("reading"));
 const btnExitReadingText = $("btn-exit-reading-text");
-if (btnExitReadingText) btnExitReadingText.addEventListener("click", () => show("screen-dashboard"));
+if (btnExitReadingText) btnExitReadingText.addEventListener("click", () => exitToSource("reading"));
 
 // Pro upgrade buttons on mode pages
 if ($("reading-upgrade-btn")) $("reading-upgrade-btn").addEventListener("click", () => startCheckout());

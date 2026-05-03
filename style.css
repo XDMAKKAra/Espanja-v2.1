@@ -975,12 +975,16 @@ select option { background: var(--surface-2); }
   margin-top: 4px;
 }
 .explanation-block.hidden { display: none; }
+/* L-LIVE-AUDIT-P1 UPDATE 4 — explanation panel switched DM Mono → Inter
+   (font-display) so multi-sentence pedagogical content reads as prose, not
+   as a terminal log. Body lifted to --ink for AA contrast against
+   --surface-2; mono is reserved for code/timestamps elsewhere. */
 #explanation-text {
-  font-size: 14px;
-  color: var(--ink-soft);
+  font-size: 15px;
+  color: var(--ink);
   line-height: 1.6;
   margin-bottom: 14px;
-  font-family: var(--font-mono);
+  font-family: var(--font-display);
 }
 
 /* ── GAP-FILL ── */
@@ -1198,16 +1202,38 @@ select option { background: var(--surface-2); }
     min-height: 48px;
   }
 }
-.sr-grade-btn:hover { border-color: var(--ink); color: var(--ink); }
+/* L-LIVE-AUDIT-P1 UPDATE 6 — SR rating buttons read as disabled in audit
+   screenshots because the dark background pushed the colored outline + text
+   into "muted ghost" territory. Now: text matches outline at full saturation,
+   hover paints a hint of the same hue so the button gives clear affordance,
+   focus-visible carries an accessible ring. Touch target stays 48 px.
+   Sourcing: 21st.dev/s/rating-buttons (segmented quality-rating port). */
+.sr-grade-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .sr-grade-btn.active { border-width: 2px; }
-.sr-again { color: var(--error); border-color: var(--error); }
-.sr-again.active { background: rgba(184,48,48,0.15); color: var(--error); border-color: var(--error); }
-.sr-hard { color: #f59e0b; border-color: #f59e0b; }
-.sr-hard.active { background: rgba(45, 212, 191,0.15); color: #f59e0b; border-color: #f59e0b; }
-.sr-good { color: #22c55e; border-color: #22c55e; }
-.sr-good.active { background: rgba(34,197,94,0.15); color: #22c55e; border-color: #22c55e; }
-.sr-easy { color: #3b82f6; border-color: #3b82f6; }
-.sr-easy.active { background: rgba(59,130,246,0.15); color: #3b82f6; border-color: #3b82f6; }
+.sr-again {
+  color: var(--sr-again, #DC2626);
+  border-color: var(--sr-again, #DC2626);
+}
+.sr-again:hover { background: color-mix(in srgb, var(--sr-again, #DC2626) 10%, transparent); }
+.sr-again.active { background: color-mix(in srgb, var(--sr-again, #DC2626) 18%, transparent); color: var(--sr-again, #DC2626); border-color: var(--sr-again, #DC2626); }
+.sr-hard {
+  color: var(--sr-hard, #D97706);
+  border-color: var(--sr-hard, #D97706);
+}
+.sr-hard:hover { background: color-mix(in srgb, var(--sr-hard, #D97706) 10%, transparent); }
+.sr-hard.active { background: color-mix(in srgb, var(--sr-hard, #D97706) 18%, transparent); color: var(--sr-hard, #D97706); border-color: var(--sr-hard, #D97706); }
+.sr-good {
+  color: var(--sr-good, #059669);
+  border-color: var(--sr-good, #059669);
+}
+.sr-good:hover { background: color-mix(in srgb, var(--sr-good, #059669) 10%, transparent); }
+.sr-good.active { background: color-mix(in srgb, var(--sr-good, #059669) 18%, transparent); color: var(--sr-good, #059669); border-color: var(--sr-good, #059669); }
+.sr-easy {
+  color: var(--sr-easy, #2563EB);
+  border-color: var(--sr-easy, #2563EB);
+}
+.sr-easy:hover { background: color-mix(in srgb, var(--sr-easy, #2563EB) 10%, transparent); }
+.sr-easy.active { background: color-mix(in srgb, var(--sr-easy, #2563EB) 18%, transparent); color: var(--sr-easy, #2563EB); border-color: var(--sr-easy, #2563EB); }
 .btn-sm { padding: 8px 16px; font-size: 12px; min-height: 44px; display: inline-flex; align-items: center; justify-content: center; }
 .btn-report {
   background: none;
@@ -2235,10 +2261,15 @@ select option { background: var(--surface-2); }
   height: 100%; background: var(--accent-hover); border-radius: 2px;
   transition: width 0.6s ease;
 }
+/* L-LIVE-AUDIT-P1 UPDATE 5 — exam reading passage was rendering 200+ Spanish
+   words in DM Mono; switched to Inter (font-display) with reading-grade
+   line-height. Mono is reserved for code/timestamps elsewhere. */
 .exam-text {
   background: var(--surface); border: 1px solid var(--border);
-  border-radius: var(--r-md); padding: 20px; font-size: 14px;
-  line-height: 1.75; margin-bottom: 24px; font-family: var(--font-mono);
+  border-radius: var(--r-md); padding: 20px; font-size: 16px;
+  line-height: 1.7; margin-bottom: 24px;
+  font-family: var(--font-display);
+  color: var(--ink);
   max-height: 280px; overflow-y: auto;
 }
 .reading-q-block { margin-bottom: 20px; }
@@ -2407,8 +2438,19 @@ select option { background: var(--surface-2); }
   margin-bottom: 12px;
   border: 1px solid transparent;
 }
-/* --ex-yhdistaminen #1D4ED8 */
-.ex-type-badge.type-context   { color: #1D4ED8; background: rgba(29, 78, 216, 0.12); border-color: rgba(29, 78, 216, 0.25); }
+/* L-LIVE-AUDIT-P1 UPDATE 7 — Konteksti badge moved from cool blue to brand
+   mint so "tämä on kontekstuaalista lisätietoa" reads as part of Puheo's
+   accent system instead of clashing as a stray category color. */
+.ex-type-badge.type-context   {
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
+  border-color: color-mix(in srgb, var(--accent) 30%, transparent);
+}
+[data-theme="light"] .ex-type-badge.type-context {
+  color: var(--accent-dark, #0F766E);
+  background: color-mix(in srgb, var(--accent-dark, #0F766E) 12%, transparent);
+  border-color: color-mix(in srgb, var(--accent-dark, #0F766E) 28%, transparent);
+}
 /* --ex-kaannos #047857 */
 .ex-type-badge.type-translate { color: #047857; background: rgba(4, 120, 87, 0.12); border-color: rgba(4, 120, 87, 0.25); }
 /* --ex-taydennys #6D28D9 */

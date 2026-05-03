@@ -195,10 +195,12 @@
   font-size: var(--fs-mono-sm);
   font-weight: 500;
   letter-spacing: 0.04em;
-  /* Was --ink-faint (#6B7280) on --ink (#111827) — failed WCAG ~3.4:1.
-     CCFBF1 (mint-20) on #111827 reads at ~13:1 and matches the brand. */
+  /* L-LIVE-AUDIT-P0 UPDATE 3 — live audit flagged the meta line as nearly
+     unreadable in the SR "Kertaa nyt — N korttia" CTA on the dashboard.
+     Root cause was opacity:0.78 compositing the mint to ~7:1, which still
+     passes AA but reads as washed-out next to the off-white title. Drop
+     the opacity so the full mint-20 hits its native ~13:1 against navy. */
   color: #CCFBF1;
-  opacity: 0.78;
 }
 .btn--cta__arrow {
   font-size: var(--fs-h3);

@@ -4,6 +4,7 @@ import { API, isLoggedIn, authHeader, apiFetch } from "../api.js";
 import { state } from "../state.js";
 import { showLoading, showLoadingError } from "../ui/loading.js";
 import { createExamTimer, clearPersisted as clearTimerPersisted } from "../features/examTimer.js";
+import { confirmDialog } from "../features/confirmDialog.js";
 
 let _deps = {};
 export function initFullExam({ loadDashboard, saveProgress, shareResult }) {
@@ -127,6 +128,78 @@ async function saveExamProgress() {
 
 // ─── Start / Resume ─────────────────────────────────────────────────────────
 
+// L-LIVE-AUDIT-P0 UPDATE 1 — replaces window.confirm() for the resume prompt.
+// Native confirm + the "Cancel → start new → 409 active_session" loop
+// stranded Pro users on a black error screen. The branded modal offers three
+// outcomes:
+//   "resume"  → primary, jatka kesken olevaa
+//   "discard" → secondary, hylkää vanha + aloita uusi
+//   "dismiss" → Escape / backdrop / X, palaa dashboardiin (ei umpikujaan)
+// Fokus-trap, role=dialog, aria-modal kommt confirm-dialog.css:stä.
+function showExamResumeDialog() {
+  return new Promise((resolve) => {
+    let root = document.getElementById("exam-resume-dialog-root");
+    if (!root) {
+      root = document.createElement("div");
+      root.id = "exam-resume-dialog-root";
+      root.className = "confirm-dialog-root";
+      document.body.appendChild(root);
+    }
+    const lastFocus = document.activeElement;
+
+    function close(result) {
+      root.classList.remove("is-open");
+      document.removeEventListener("keydown", onKeydown);
+      setTimeout(() => {
+        if (!root.classList.contains("is-open")) {
+          root.hidden = true;
+          root.innerHTML = "";
+        }
+      }, 200);
+      if (lastFocus && typeof lastFocus.focus === "function") lastFocus.focus();
+      resolve(result);
+    }
+
+    function onKeydown(e) {
+      if (e.key === "Escape") { e.preventDefault(); close("dismiss"); return; }
+      if (e.key === "Tab") {
+        const focusables = root.querySelectorAll("button");
+        if (!focusables.length) return;
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+    }
+
+    root.innerHTML = `
+      <div class="confirm-dialog__backdrop" data-close="1" aria-hidden="true"></div>
+      <div class="confirm-dialog" role="dialog" aria-modal="true" aria-labelledby="exam-resume-title" aria-describedby="exam-resume-body">
+        <button type="button" class="confirm-dialog__btn confirm-dialog__btn--secondary" id="exam-resume-dismiss" aria-label="Sulje" style="position:absolute;top:8px;right:8px;min-width:44px;min-height:44px;width:44px;padding:0;border:0;background:transparent">×</button>
+        <h2 class="confirm-dialog__title" id="exam-resume-title">Sinulla on keskeneräinen Yo-koe</h2>
+        <p class="confirm-dialog__body" id="exam-resume-body">Voit jatkaa siitä mihin jäit, tai aloittaa uuden kokeen alusta. Vanhan kokeen edistyminen ei tallennu, jos aloitat uuden.</p>
+        <div class="confirm-dialog__actions">
+          <button type="button" class="confirm-dialog__btn confirm-dialog__btn--secondary" id="exam-resume-discard">Aloita uusi koe</button>
+          <button type="button" class="confirm-dialog__btn confirm-dialog__btn--primary" id="exam-resume-confirm">Jatka kesken olevaa</button>
+        </div>
+      </div>
+    `;
+    root.hidden = false;
+    // eslint-disable-next-line no-unused-expressions
+    root.offsetHeight;
+    root.classList.add("is-open");
+
+    root.querySelector(".confirm-dialog__backdrop").addEventListener("click", () => close("dismiss"));
+    root.querySelector("#exam-resume-dismiss").addEventListener("click", () => close("dismiss"));
+    root.querySelector("#exam-resume-discard").addEventListener("click", () => close("discard"));
+    root.querySelector("#exam-resume-confirm").addEventListener("click", () => close("resume"));
+
+    document.addEventListener("keydown", onKeydown);
+    // Focus on the primary action — most users want to resume.
+    root.querySelector("#exam-resume-confirm").focus();
+  });
+}
+
 export async function startFullExam(durationMode = "demo") {
   showLoading("Tarkistetaan aktiivista koetta...");
 
@@ -138,8 +211,8 @@ export async function startFullExam(durationMode = "demo") {
     const resumeData = await resumeRes.json();
 
     if (resumeData.active) {
-      const resume = confirm("Sinulla on keskeneräinen koe. Haluatko jatkaa sitä?");
-      if (resume) {
+      const choice = await showExamResumeDialog();
+      if (choice === "resume") {
         examState.sessionId = resumeData.sessionId;
         examState.partsData = resumeData.partsData;
         examState.answers = resumeData.answers || {};
@@ -148,6 +221,21 @@ export async function startFullExam(durationMode = "demo") {
         examState.durationMode = resumeData.durationMode || "demo";
         enterExam();
         return;
+      }
+      if (choice === "dismiss") {
+        // Palaa dashboardiin — ei umpikujaan.
+        if (isLoggedIn()) _deps.loadDashboard(); else show("screen-start");
+        return;
+      }
+      // choice === "discard" → hylkää vanha ja jatka start-flowiin alla.
+      try {
+        await apiFetch(`${API}/api/exam/discard-active`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", ...authHeader() },
+        });
+      } catch {
+        // Discard endpoint failure is recoverable — start will throw if the
+        // session is still active and the brand error path takes over.
       }
     }
 

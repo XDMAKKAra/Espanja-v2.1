@@ -376,6 +376,32 @@ router.post("/submit", requireAuth, async (req, res) => {
   }
 });
 
+// ─── POST /api/exam/discard-active ─────────────────────────────────────────
+// L-LIVE-AUDIT-P0 UPDATE 1 — Pro user with an in-progress session previously
+// got blocked by `409 active_session` when they tried to start a fresh exam.
+// The brief replaces the native window.confirm() umpikuja with a branded
+// modal that offers "Jatka kesken olevaa" or "Aloita uusi koe"; this endpoint
+// is what the secondary action calls. Idempotent: returns 200 even when no
+// active session exists. The row stays in the DB with status='abandoned' so
+// history remains audit-accurate.
+router.post("/discard-active", requireAuth, async (req, res) => {
+  const userId = req.user.userId;
+  try {
+    const { data, error } = await supabase
+      .from("exam_sessions")
+      .update({ status: "abandoned", ended_at: new Date().toISOString() })
+      .eq("user_id", userId)
+      .eq("status", "in_progress")
+      .select("id");
+
+    if (error) throw error;
+    res.json({ ok: true, abandoned: data?.length || 0 });
+  } catch (err) {
+    console.error("Exam discard error:", err.message);
+    res.status(500).json({ error: err.message || "Kokeen hylkäys epäonnistui" });
+  }
+});
+
 // ─── GET /api/exam/history ─────────────────────────────────────────────────
 
 router.get("/history", requireAuth, async (req, res) => {
