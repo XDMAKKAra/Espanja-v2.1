@@ -26,6 +26,16 @@ function ensurePopover() {
   popover.className = "tt-popover";
   popover.setAttribute("role", "tooltip");
   popover.hidden = true;
+  // Interactive mode (HTML tooltips with clickable CTAs) needs the popover
+  // itself to keep the tooltip open when the pointer crosses from the
+  // target into the floating popover. Cancel any pending close timer.
+  popover.addEventListener("pointerenter", () => {
+    if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
+  });
+  popover.addEventListener("pointerleave", () => {
+    if (closeTimer) clearTimeout(closeTimer);
+    closeTimer = setTimeout(hide, CLOSE_DELAY_MS);
+  });
   document.body.appendChild(popover);
   return popover;
 }
@@ -69,7 +79,16 @@ function show(target) {
     target.setAttribute("title", "");
   }
   const pop = ensurePopover();
-  pop.textContent = text;
+  // Interactive HTML mode (used by Free-card missing rows that embed a
+  // clickable trial CTA). Author-controlled content only — never user input.
+  const isHtml = target.getAttribute("data-tooltip-html") === "true";
+  if (isHtml) {
+    pop.innerHTML = text;
+    pop.classList.add("tt-popover--interactive");
+  } else {
+    pop.textContent = text;
+    pop.classList.remove("tt-popover--interactive");
+  }
   pop.classList.remove("tt-popover--out");
   position(target);
   // Force layout, then trigger the in-class for the fade keyframe.
@@ -140,10 +159,12 @@ export function installTooltip() {
     const el = asElement(e.target); if (!el) return;
     if (el.closest("[data-tooltip]")) hide();
   });
-  // Touch dismiss: tap anywhere outside the active target hides.
+  // Touch dismiss: tap anywhere outside the active target (and outside the
+  // popover itself, so users can click an interactive CTA inside it) hides.
   document.addEventListener("pointerdown", (e) => {
     if (!activeTarget) return;
     const el = asElement(e.target); if (!el) return;
+    if (el.closest(".tt-popover")) return;
     if (el.closest("[data-tooltip]") !== activeTarget) hide();
   });
   window.addEventListener("scroll", hide, { passive: true });

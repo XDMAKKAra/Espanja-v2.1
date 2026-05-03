@@ -1167,42 +1167,37 @@
 .landing .pricing-card__feature--no svg,
 .landing .pricing-card__feature[aria-disabled="true"] svg { color: var(--text-subtle); }
 
-/* L-PLAN-8 UPDATE 4 — Pro-houkutus on Free-cardin x-riveillä.
-   Each missing-feature row becomes a focusable anchor that scrolls to the
-   Pro card and surfaces a tooltip explaining what the trial unlocks. The
-   row stays visually subdued (aria-hidden ✗ icon + muted text) but the
-   "→" tail + hover/focus state communicate the CTA affordance. */
-.landing .pricing-card__feature-no-link {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  width: 100%;
-  color: inherit;
-  text-decoration: none;
+/* L-PLAN-8 UPDATE 4A (HOTFIX-PRICING2) — Pro-houkutus on Free-cardin
+   x-riveillä. Each missing-feature row is a static <li> (NOT a link) that
+   surfaces a hover/tap tooltip carrying the trial CTA. The row stays
+   visually subdued; the tooltip carries the colour + click affordance. */
+.landing .pricing-card__feature[data-tooltip] {
+  cursor: help;
   border-radius: 6px;
   padding: 2px 4px;
   margin: -2px -4px;
-  transition: color 140ms ease, background-color 140ms ease;
+  transition: background-color 140ms ease, color 140ms ease;
 }
-.landing .pricing-card__feature-no-link:hover,
-.landing .pricing-card__feature-no-link:focus-visible {
+.landing .pricing-card__feature[data-tooltip]:hover,
+.landing .pricing-card__feature[data-tooltip]:focus-visible {
   color: var(--text);
   background-color: color-mix(in srgb, var(--accent) 6%, transparent);
+  outline: none;
 }
-.landing .pricing-card__feature-no-link:focus-visible {
+.landing .pricing-card__feature[data-tooltip]:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
-.landing .pricing-card__feature-no-tail {
-  margin-left: auto;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.4px;
-  text-transform: uppercase;
-  color: var(--accent);
-  flex: 0 0 auto;
-  white-space: nowrap;
-  align-self: center;
+
+/* Defense in depth — even if a link ever ends up inside a feature row,
+   the browser-default :visited purple + underline must NEVER show. */
+.landing .pricing-card__feature a,
+.landing .pricing-card__feature a:visited,
+.landing .pricing-card__feature a:hover,
+.landing .pricing-card__feature a:focus,
+.landing .pricing-card__feature a:active {
+  color: inherit;
+  text-decoration: none;
 }
 .landing .sr-only {
   position: absolute;
