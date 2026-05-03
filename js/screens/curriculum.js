@@ -221,21 +221,44 @@ function renderCard(k, stepNumber) {
       ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>'
       : String(stepNumber);
 
+  // L-PLAN-8 UPDATE 6C — locked-card hover tooltip explaining the prereq.
+  // Stays visually subdued, but on hover/focus a tooltip names the course
+  // the student has to clear first (kertaustesti ≥ 80 %). Tooltip is owned
+  // by the global js/features/tooltip.js primitive (already installed in
+  // app.js boot path); we only need data-tooltip + a focusable target.
+  const lockedTooltip = !k.isUnlocked && stepNumber > 1
+    ? `Suorita ensin Kurssi ${stepNumber - 1} (kertaustestissä ≥ 80 %).`
+    : "";
+  const tooltipAttr = lockedTooltip ? ` data-tooltip="${escapeHtml(lockedTooltip)}"` : "";
+  // Locked cards still receive tabindex="0" so keyboard users can land on
+  // them and read the tooltip. role="button" stays off (the click is a
+  // no-op) but aria-disabled communicates the inactive state to AT.
+  const lockedFocusAttr = !k.isUnlocked ? ' tabindex="0"' : "";
+
+  // L-PLAN-8 UPDATE 8 — accessibility fixes:
+  //  * Drop `role="button"` from the <li>. axe flags <ol> children whose
+  //    role is not `listitem` (the role override breaks list semantics).
+  //    `tabindex="0"` + the existing keydown(Enter/Space) handler keep the
+  //    card keyboard-operable; aria-expanded still announces the toggle.
+  //  * Add aria-label to the inner [role="progressbar"] so it has its own
+  //    accessible name (the wrapping div's aria-label doesn't propagate).
+  const progressLabel = `${completed} / ${total} oppituntia`;
+
   return `
     <li class="${classifyCard(k)}${isExpanded ? " is-expanded" : ""}"
-        data-kurssi="${escapeHtml(k.key)}"
-        ${k.isUnlocked ? 'tabindex="0" role="button" aria-expanded="' + (isExpanded ? "true" : "false") + '"' : 'aria-disabled="true"'}>
+        data-kurssi="${escapeHtml(k.key)}"${tooltipAttr}
+        ${k.isUnlocked ? 'tabindex="0" aria-expanded="' + (isExpanded ? "true" : "false") + '"' : 'aria-disabled="true"' + lockedFocusAttr}>
       <div class="curr-step" aria-hidden="true">${stepInner}</div>
       <div class="curr-body">
         <div class="curr-title-row">
           <h3 class="curr-title">${escapeHtml(k.title)}</h3>
           <span class="curr-chip" aria-label="${escapeHtml("Taso " + k.level)}">${escapeHtml(k.level)}</span>
         </div>
-        <div class="curr-progress" aria-label="${escapeHtml(`${completed} / ${total} oppituntia`)}">
-          <div class="curr-progress-bar" role="progressbar" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100">
+        <div class="curr-progress">
+          <div class="curr-progress-bar" role="progressbar" aria-label="${escapeHtml(progressLabel)}" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100">
             <div class="curr-progress-fill" style="width:${pct}%"></div>
           </div>
-          <span>${completed} / ${total} oppituntia</span>
+          <span>${escapeHtml(progressLabel)}</span>
         </div>
       </div>
       <div class="curr-status">${escapeHtml(status.label)}</div>

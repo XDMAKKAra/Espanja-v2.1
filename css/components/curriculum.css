@@ -74,7 +74,12 @@
   padding-left: 14px;
 }
 .curr-card.is-locked {
-  opacity: 0.45;
+  /* L-PLAN-8 UPDATE 6B — bump from 0.45 → 0.55 so the composited text
+     hits ~5.7:1 contrast against the page background (was ~4.6:1, on the
+     borderline). The locked affordance is preserved — the card still
+     reads as dimmed compared to active siblings — but the course name
+     and prerequisite copy stay AA-legible. */
+  opacity: 0.55;
   cursor: not-allowed;
 }
 .curr-card.is-clickable { cursor: pointer; }
@@ -175,6 +180,15 @@
 .curr-card.is-done .curr-status { color: var(--accent, #2DD4BF); }
 .curr-card.is-current .curr-status { color: var(--accent, #2DD4BF); }
 .curr-card.is-locked .curr-status { color: var(--ink-faint, var(--text-subtle, #71717a)); }
+/* L-PLAN-8 UPDATE 8 — light-theme contrast fix.
+   `--accent` (#2DD4BF) reads at ~1.86:1 against #ffffff — fails AA. The
+   project already ships an explicitly-AA mint-as-text token (--accent-dark
+   #0F766E, 5.47:1 on white). Use it for status copy in light theme; dark
+   theme keeps the brighter `--accent` since it sits on dark surfaces. */
+[data-theme="light"] .curr-card.is-done .curr-status,
+[data-theme="light"] .curr-card.is-current .curr-status {
+  color: var(--accent-dark, #0F766E);
+}
 
 /* ── Lesson list (inline expansion) ──────────────────────────────────────── */
 

@@ -110,8 +110,17 @@
    for now; two-column stats/activity grid is a follow-up once we've confirmed
    the wider container doesn't break the existing content. */
 .dashboard-inner {
-  width: 100%; max-height: calc(100vh - 48px);
-  overflow-y: auto; animation: fadeUp 0.4s ease both; padding-bottom: 24px;
+  width: 100%; max-width: 100%; max-height: calc(100vh - 48px);
+  overflow-y: auto; overflow-x: clip; animation: fadeUp 0.4s ease both; padding-bottom: 24px;
+}
+/* L-PLAN-8 UPDATE 5C — defensive clip on the screen root.
+   User screenshot showed the right edge of the Aktiivisuus + Kehitys panels
+   nudging past the viewport on narrower laptops. Adding overflow-x: clip on
+   the screen root caps any single misbehaving child without introducing a
+   scroll container (clip vs hidden preserves position:sticky descendants). */
+#screen-dashboard {
+  overflow-x: clip;
+  max-width: 100vw;
 }
 
 /* Pass 1.5 — pair dashboard sections on desktop so the 1440 px laptop doesn't
