@@ -2,7 +2,22 @@ import { Resend } from "resend";
 import dotenv from "dotenv";
 dotenv.config();
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Lazy Resend client — instantiated on first send() call so the module can
+// be imported in test/CI environments that don't have RESEND_API_KEY set.
+// Importing this file no longer crashes when the env var is missing.
+let _resend = null;
+const resend = {
+  get emails() {
+    if (!_resend) {
+      const key = process.env.RESEND_API_KEY;
+      if (!key) {
+        throw new Error("RESEND_API_KEY is not set — cannot send email.");
+      }
+      _resend = new Resend(key);
+    }
+    return _resend.emails;
+  },
+};
 
 const FROM = process.env.EMAIL_FROM || "Puheo <noreply@puheo.fi>";
 const APP_URL = process.env.APP_URL || "https://puheo.fi";
@@ -282,6 +297,15 @@ export async function sendStreakReminderEmail(email, stats) {
       <p>Hei ${displayName}!</p>
       <div style="text-align:center;margin:24px 0">
         <div style="font-size:48px">🔥</div>
+        <div style="color:#fff;font-size:32px;font-weight:700;margin-top:8px">${streak} päivää</div>
+        <div style="color:#888;font-size:14px">Älä anna putken katketa!</div>
+      </div>
+      <p>Et ole vielä harjoitellut tänään. Yksi nopea harjoitus riittää pitämään putken yllä!</p>
+      ${btn("Harjoittele nyt →", APP_URL + "/app.html")}
+      <p style="color:#555;font-size:12px">Voit poistaa muistutukset tiliasetuksistasi.</p>
+    `),
+  });
+}
         <div style="color:#fff;font-size:32px;font-weight:700;margin-top:8px">${streak} päivää</div>
         <div style="color:#888;font-size:14px">Älä anna putken katketa!</div>
       </div>
