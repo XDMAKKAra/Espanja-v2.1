@@ -6,7 +6,7 @@
  *   page + start-exercises CTA. Stores currentLesson in sessionStorage so
  *   L-PLAN-3 can wire the existing exercise screens to it.
  */
-import { $, show } from "../ui/nav.js";
+import { show } from "../ui/nav.js";
 import { API, isLoggedIn, authHeader, apiFetch } from "../api.js";
 import { state } from "../state.js";
 import { loadNextBatch } from "./vocab.js";
@@ -27,15 +27,6 @@ const TYPE_ICONS = {
   writing: '<path d="M21 14H3"/><path d="M12 17v4"/><path d="M7 17v4"/><path d="M17 17v4"/><path d="M2 7l10-5 10 5"/>', // PenLine simplified — fall through to a pencil
   mixed:   '<path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>', // BookText
   test:    '<path d="m9 12 2 2 4-4"/><path d="M21 8v13H3V8"/><path d="M1 3h22v5H1z"/>', // CheckSquare-ish
-};
-
-const TYPE_LABEL = {
-  vocab: "Sanasto",
-  grammar: "Kielioppi",
-  reading: "Luetun ymmärtäminen",
-  writing: "Kirjoittaminen",
-  mixed: "Sekamuoto",
-  test: "Kertaustesti",
 };
 
 function escapeHtml(s) {

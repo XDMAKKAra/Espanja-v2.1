@@ -272,8 +272,6 @@ function renderDashboard({
     }));
   }
 
-  // TODO: removed in T8 (unified into dash-day-cta) — .dash-onboarding-banner deleted from app.html
-
   renderGradeWidget(gradeEstimate || { tier: "none", grade: null, confidence: 0, coverage: {}, total: totalSessions || 0 });
 
   // ── Adaptive level progress bar ──
@@ -315,8 +313,8 @@ function renderDashboard({
   const totalEl = $("dash-total-sessions");
   if (totalEl) countUp(totalEl, totalSessions, 1300);
 
-  // YO-readiness rail stat — filled async by loadAndRenderReadinessMap below;
-  // dash-yo-delta has no delta source yet (TODO: wire when API exposes it).
+  // YO-readiness rail stat — filled async by loadAndRenderReadinessMap below.
+  // dash-yo-delta stays blank until the API exposes a delta source.
   const deltaEl = document.getElementById("dash-yo-delta");
   if (deltaEl) deltaEl.textContent = "";
 
@@ -1008,7 +1006,6 @@ function closeGradeExplainer() {
 })();
 
 async function updateSrBadge() {
-  // TODO: removed in T8 (unified into dash-day-cta) — .sr-top-bar and .dash-sr-review deleted from app.html
   const count = await srDueCount("spanish");
 
   // Update the unified CTA now that we have the async SR count

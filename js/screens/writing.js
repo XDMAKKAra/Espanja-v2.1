@@ -3,7 +3,7 @@ import { API, isLoggedIn, authHeader, apiFetch, retryable } from "../api.js";
 import { state } from "../state.js";
 import { CRITERIA_LABELS } from "../state.js";
 import { showLoading, showLoadingError, showSkeleton, showFetchError } from "../ui/loading.js";
-import { trackCheckoutStarted, trackProUpsellShown, trackExerciseCompleted, track } from "../analytics.js";
+import { trackCheckoutStarted, trackProUpsellShown, track } from "../analytics.js";
 import { shouldFireUpsell, UPSELL_TRIGGERS, LAST_FIRED_KEY, SESSION_COUNT_KEY } from "../../lib/paywall.js";
 import { recordWritingResult, getRecentErrorCategories } from "../features/writingProgression.js";
 import { generateWritingShareCard } from "../features/shareCard.js";

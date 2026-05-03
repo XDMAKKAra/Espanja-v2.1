@@ -1,7 +1,7 @@
 import { $, show } from "../ui/nav.js";
 import { API, isLoggedIn, authHeader, retryable } from "../api.js";
 import { state } from "../state.js";
-import { showLoading, showLoadingError, showSkeleton, showFetchError } from "../ui/loading.js";
+import { showSkeleton, showFetchError } from "../ui/loading.js";
 import { GRAMMAR_TYPE_LABELS } from "./vocab.js";
 import { resetAutoTriggerTracking, recordAnswerForAutoTrigger } from "./quickReview.js";
 import { getBlogForTopic, trackBlogClick } from "../features/topicBlogMap.js";

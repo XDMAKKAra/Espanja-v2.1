@@ -1,10 +1,9 @@
 // ─── Entry point ────────────────────────────────────────────────────────────
 // Imports all modules and wires them together
 
-import { API, isLoggedIn, getAuthEmail, authHeader, setAuth, clearAuth, apiFetch, setShowFn } from "./api.js";
-import { state, LEVELS } from "./state.js";
+import { API, isLoggedIn, getAuthEmail, authHeader, clearAuth, apiFetch, setShowFn } from "./api.js";
+import { state } from "./state.js";
 import { $, show } from "./ui/nav.js";
-import { showLoading, showLoadingError } from "./ui/loading.js";
 import { applyFeatureFlags } from "./features/flags.js";
 
 // Never let a feature-flag wiring error block the rest of the app from loading.
@@ -22,7 +21,7 @@ import { initAdaptive, masteryNext, masteryDone } from "./screens/adaptive.js";
 import { initOnboarding, checkOnboarding } from "./screens/onboarding.js";
 import { initOnboardingV2, showOnboardingV2 } from "./screens/onboardingV2.js";
 import { initPlacement, checkPlacementNeeded, showPlacementIntro, startPlacementFromRetake } from "./screens/placement.js";
-import { initLearningPath, loadPath, submitMasteryResult } from "./screens/learningPath.js";
+import { initLearningPath, submitMasteryResult } from "./screens/learningPath.js";
 import { loadCurriculum } from "./screens/curriculum.js";
 import { initQuickReview } from "./screens/quickReview.js";
 import { initVerbSprint } from "./screens/verbSprint.js";
@@ -30,7 +29,7 @@ import { initVerbReference } from "./screens/verbReference.js";
 import { initSettings, showSettings } from "./screens/settings.js";
 import { initProfile, loadProfile } from "./screens/profile.js";
 import { wireTopicPicker, topicLabel, loadBriefing } from "./screens/mode-page.js";
-import { initAnalytics, trackError } from "./analytics.js";
+import { initAnalytics } from "./analytics.js";
 // L-PLAN-4 UPDATE 4 — floating profile button (replaces the right rail).
 import { initProfileMenu, syncProfileMenu } from "./features/profileMenu.js";
 // L-PLAN-5 UPDATE 4 — re-readable teaching page (side-panel desktop / modal mobile).
