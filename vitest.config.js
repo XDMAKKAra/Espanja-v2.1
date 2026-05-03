@@ -13,6 +13,10 @@ export default defineConfig({
       include: ['lib/**/*.js', 'middleware/**/*.js'],
       exclude: [
         'lib/openai.js',           // thin OpenAI wrapper; covered by fixtures, not worth threshold
+        'lib/dailyCap.js',         // browser-side module that uses window/localStorage; covered by e2e
+        'lib/curriculumData.js',   // pure data file (no logic to test)
+        'lib/placementQuestions.js', // pure data file (no logic to test)
+        'middleware/basicAuth.js', // pre-launch HTTP Basic gate; env-driven, covered by manual + integration
         '**/*.test.js',
       ],
       thresholds: {
