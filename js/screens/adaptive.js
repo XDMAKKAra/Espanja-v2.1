@@ -77,14 +77,18 @@ export async function renderAdaptiveCard(mode = "vocab") {
 
     } else if (data.status === "pending" && data.progress) {
       const p = data.progress;
+      card.classList.add("level-progress-card");
       card.innerHTML = `
-        <div style="font-weight:600;font-size:13px;margin-bottom:8px">
-          ${data.currentLevel} → ${data.nextLevel}
+        <p class="lpc-eyebrow">Tasosi edistyminen</p>
+        <h3 class="lpc-title">Matka tasolle ${data.nextLevel}</h3>
+        <p class="lpc-hint">Kun täytät kaikki neljä tavoitetta, sinut päivitetään ${data.nextLevel}-tasolle.</p>
+        <div class="lpc-grid">
+          ${progressRow("Kysymyksiä", p.questionsDone, p.questionsNeeded)}
+          ${progressRow("Sessioita", p.sessionsDone, p.sessionsNeeded)}
+          ${progressRow("Päiviä tasolla", p.daysAtLevel, p.daysNeeded)}
+          ${progressRow("Keskiarvo", p.avgPct, p.avgPctNeeded, "%")}
         </div>
-        ${progressRow("Kysymyksiä", p.questionsDone, p.questionsNeeded)}
-        ${progressRow("Sessioita", p.sessionsDone, p.sessionsNeeded)}
-        ${progressRow("Päiviä tasolla", p.daysAtLevel, p.daysNeeded)}
-        ${progressRow("Keskiarvo", p.avgPct, p.avgPctNeeded, "%")}`;
+        <span class="lpc-badge" aria-hidden="true">${data.currentLevel} → ${data.nextLevel}</span>`;
 
     } else if (data.status === "stable" && data.currentLevel === "L") {
       card.innerHTML = `
@@ -105,10 +109,13 @@ function progressRow(label, current, target, suffix = "") {
   const pct = target > 0 ? Math.min(100, Math.round((current / target) * 100)) : 0;
   const done = current >= target;
   return `
-    <div class="adaptive-progress-row">
-      <span>${label}: ${current}${suffix}/${target}${suffix}</span>
-      <div class="adaptive-progress-bar">
-        <div class="adaptive-progress-fill" style="width:${pct}%;${done ? "background:var(--success)" : ""}"></div>
+    <div class="lpc-metric${done ? " is-done" : ""}">
+      <div class="lpc-metric__row">
+        <span class="lpc-metric__label">${label}</span>
+        <span class="lpc-metric__num">${current}${suffix}/${target}${suffix}</span>
+      </div>
+      <div class="lpc-bar" role="progressbar" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100" aria-label="${label}">
+        <div class="lpc-bar__fill" style="width:${pct}%"></div>
       </div>
     </div>`;
 }
