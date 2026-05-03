@@ -35,6 +35,7 @@ import configRoutes from "./routes/config.js";
 import placementRoutes from "./routes/placement.js";
 import curriculumRoutes from "./routes/curriculum.js";
 import statusRoutes from "./routes/status.js";
+import dashboardV2Routes from "./routes/dashboardV2.js";
 import { waitlistLimiter } from "./middleware/rateLimit.js";
 import supabase from "./supabase.js";
 
@@ -142,6 +143,8 @@ app.use("/api/curriculum", curriculumRoutes);
 app.use("/api/config", configRoutes);
 app.use("/api/dev", configRoutes);
 app.use("/api/status", statusRoutes);
+// L-LIVE-AUDIT-P2 UPDATE 3 — batched dashboard endpoint at /api/dashboard/v2.
+app.use("/api", dashboardV2Routes);
 
 // ─── Waitlist (public, no auth) ─────────────────────────────────────────────
 app.post("/api/waitlist", waitlistLimiter, async (req, res) => {

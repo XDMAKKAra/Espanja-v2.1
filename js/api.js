@@ -30,6 +30,10 @@ export function clearAuth() {
   localStorage.removeItem("puheo_token");
   localStorage.removeItem("puheo_refresh_token");
   localStorage.removeItem("puheo_email");
+  // L-LIVE-AUDIT-P2 UPDATE 3+4 — drop cached profile + batched payload on logout
+  _profileCache = null;
+  _profileCacheTime = 0;
+  _dashboardV2 = null;
 }
 
 // Auto-refresh: if any authed request gets 401, try refreshing once then retry
@@ -63,6 +67,42 @@ export async function apiFetch(url, opts = {}) {
   const newOpts = { ...opts, headers: { ...opts.headers, Authorization: `Bearer ${authToken}` } };
   return fetch(url, newOpts);
 }
+
+// ─── L-LIVE-AUDIT-P2 UPDATE 4 — in-memory profile cache ────────────────────
+// /api/profile measured 902 ms in the live audit and is fetched on every
+// screen mount (settings, dashboard, profile, onboarding, several modals).
+// 5-minute TTL keeps the live feel without dragging the cold-load timeline.
+// Settings-screen save flows MUST call invalidateProfileCache() to force a
+// refresh on the next read.
+let _profileCache = null;
+let _profileCacheTime = 0;
+const PROFILE_CACHE_MS = 5 * 60 * 1000;
+
+export async function getProfile({ force = false } = {}) {
+  const now = Date.now();
+  if (!force && _profileCache && now - _profileCacheTime < PROFILE_CACHE_MS) {
+    return _profileCache;
+  }
+  const r = await apiFetch(`${API}/api/profile`, { headers: authHeader() });
+  if (!r.ok) throw new Error(`profile_fetch_${r.status}`);
+  _profileCache = await r.json();
+  _profileCacheTime = now;
+  return _profileCache;
+}
+
+export function invalidateProfileCache() {
+  _profileCache = null;
+  _profileCacheTime = 0;
+}
+
+// L-LIVE-AUDIT-P2 UPDATE 3 — single batched payload from /api/dashboard/v2.
+// Stash the full response so per-section helpers (loadAdaptiveState,
+// loadWeakTopics, loadAndRenderReadinessMap, loadLearningPath) can consume
+// from cache instead of re-fetching their endpoint. Cleared on auth change.
+let _dashboardV2 = null;
+export function setDashboardV2(payload) { _dashboardV2 = payload || null; }
+export function getDashboardV2Section(key) { return _dashboardV2?.[key] ?? null; }
+export function clearDashboardV2() { _dashboardV2 = null; }
 
 // ─── retryable — Pass 6 C16 ────────────────────────────────────────────────
 // Wraps a fetch-returning async fn with bounded retries + backoff. Retries
