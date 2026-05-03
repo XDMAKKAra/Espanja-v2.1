@@ -98,33 +98,10 @@ function showSoftUpsellBanner(message) {
 
 export async function startCheckout() {
   trackCheckoutStarted();
-  // Pass 4 Commit 9 — until y-tunnus lands, route Pro CTAs to the waitlist
-  // modal instead of live LemonSqueezy checkout. Flag hydrated on app boot
-  // from /api/config/public.
-  if (window.__WAITLIST_MODE) {
-    track("waitlist_opened_from_upsell", { trigger: "startCheckout" });
-    openAppWaitlist();
-    return;
-  }
-  $("btn-upgrade-pro").disabled = true;
-  $("btn-upgrade-pro").textContent = "Ohjataan maksuun...";
-  try {
-    const res = await apiFetch(`${API}/api/payments/create-checkout-session`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json", ...authHeader() },
-    });
-    const data = await res.json();
-    if (data.url) {
-      window.location.href = data.url;
-    } else {
-      alert("Maksun avaaminen epäonnistui");
-    }
-  } catch {
-    alert("Yhteysvirhe");
-  } finally {
-    $("btn-upgrade-pro").disabled = false;
-    $("btn-upgrade-pro").textContent = "Päivitä Pro →";
-  }
+  // Pro-tilaus tulossa pian — tällä hetkellä kaikki upsell-CTAt ohjaavat
+  // jonotuslista-modaaliin. Maksuintegraatio (Stripe) lisätään L-STRIPE-1:ssä.
+  track("waitlist_opened_from_upsell", { trigger: "startCheckout" });
+  openAppWaitlist();
 }
 
 // ─── Waitlist modal (Y-tunnus placeholder) ─────────────────────────────────
@@ -217,16 +194,8 @@ export async function hydrateConfig() {
 }
 
 export async function openBillingPortal() {
-  try {
-    const res = await apiFetch(`${API}/api/payments/portal-session`, {
-      method: "GET",
-      headers: authHeader(),
-    });
-    const data = await res.json();
-    if (data.url) window.location.href = data.url;
-  } catch {
-    alert("Yhteysvirhe");
-  }
+  // Hallintasivu palaa kun Stripe-integraatio on käytössä (L-STRIPE-1).
+  showSoftUpsellBanner("Hallintasivu tulossa pian — pidämme sinut ajan tasalla.");
 }
 
 function showWritingSkeleton() {

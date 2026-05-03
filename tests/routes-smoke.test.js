@@ -1,15 +1,13 @@
-// Smoke + security tests for routes not yet covered: writing, stripe (webhook),
-// exercises, progress, exam, email. Focus:
+// Smoke + security tests for routes not yet covered: writing, exercises,
+// progress, exam, email, payment placeholder. Focus:
 //   1. Routes that require auth actually reject requests without a Bearer token.
 //   2. Basic request-shape validation returns 400 for obviously-bad payloads.
-//   3. LemonSqueezy webhook signature verification is authoritative.
 //
 // Deep happy-path coverage for AI-generation endpoints is out of scope for
 // this commit — they require extensive OpenAI + Supabase orchestration mocks
 // and belong in a dedicated integration suite.
 
 import { describe, it, expect, beforeEach, vi } from "vitest";
-import crypto from "crypto";
 
 // ── Mocks ─────────────────────────────────────────────────────────────────
 
@@ -42,13 +40,6 @@ vi.mock("../middleware/rateLimit.js", () => {
 
 vi.mock("../middleware/costLimit.js", () => ({
   checkMonthlyCostLimit: (_req, _res, next) => next(),
-}));
-
-vi.mock("@lemonsqueezy/lemonsqueezy.js", () => ({
-  lemonSqueezySetup: vi.fn(),
-  createCheckout: vi.fn(async () => ({ data: null, error: { message: "mock" } })),
-  getSubscription: vi.fn(),
-  getCustomer: vi.fn(),
 }));
 
 // ── App bootstrap ─────────────────────────────────────────────────────────
@@ -145,77 +136,16 @@ describe("POST /api/exercises/grade/advisory — auth-gated", () => {
   });
 });
 
-// ── LemonSqueezy webhook signature verification (security-critical) ───────
+// ── Payment webhook placeholder (LemonSqueezy removed L-CLEANUP-1) ────────
+// Stripe replacement lands in a future L-STRIPE-1 loop; until then the
+// handler returns 410 unconditionally.
 
-describe("handleWebhook signature verification", () => {
-  const SECRET = "test-webhook-secret";
-  const originalSecret = process.env.LEMONSQUEEZY_WEBHOOK_SECRET;
-
-  beforeEach(() => {
-    process.env.LEMONSQUEEZY_WEBHOOK_SECRET = SECRET;
-  });
-
-  function makeApp(handler) {
+describe("handleWebhook placeholder", () => {
+  it("returns 410 Gone (no signature verification while disabled)", async () => {
+    const { handleWebhook } = await import("../routes/stripe.js");
     const app = express();
-    app.post("/webhook", express.raw({ type: "application/json" }), handler);
-    return app;
-  }
-
-  it("rejects when x-signature header missing", async () => {
-    const { handleWebhook } = await import("../routes/stripe.js");
-    const app = makeApp(handleWebhook);
-    const res = await request(app)
-      .post("/webhook")
-      .set("Content-Type", "application/json")
-      .send(Buffer.from(JSON.stringify({ meta: { event_name: "x" }, data: {} })));
-    expect(res.status).toBe(401);
-    expect(res.body.error).toMatch(/signature/i);
-  });
-
-  it("rejects when signature does not match body HMAC", async () => {
-    const { handleWebhook } = await import("../routes/stripe.js");
-    const app = makeApp(handleWebhook);
-    const body = Buffer.from(JSON.stringify({ meta: { event_name: "x" }, data: {} }));
-    const res = await request(app)
-      .post("/webhook")
-      .set("Content-Type", "application/json")
-      .set("x-signature", "deadbeef")
-      .send(body);
-    expect(res.status).toBe(401);
-    expect(res.body.error).toMatch(/Invalid signature/);
-  });
-
-  it("accepts when signature is correct SHA-256 HMAC of body", async () => {
-    // Call handleWebhook directly with a synthetic req/res to avoid supertest
-    // re-encoding the raw Buffer body in transit.
-    const { handleWebhook } = await import("../routes/stripe.js");
-    const payload = JSON.stringify({
-      meta: { event_name: "unknown_event", custom_data: {} },
-      data: { id: "1", attributes: {} },
-    });
-    const body = Buffer.from(payload);
-    const sig = crypto.createHmac("sha256", SECRET).update(body).digest("hex");
-
-    const req = { headers: { "x-signature": sig }, body };
-    let status = 200, json;
-    const res = {
-      status(code) { status = code; return this; },
-      json(x) { json = x; return this; },
-    };
-    await handleWebhook(req, res);
-    expect(status).toBe(200);
-    expect(json).toEqual({ received: true });
-  });
-
-  it("rejects when secret is missing from env", async () => {
-    delete process.env.LEMONSQUEEZY_WEBHOOK_SECRET;
-    const { handleWebhook } = await import("../routes/stripe.js");
-    const app = makeApp(handleWebhook);
-    const res = await request(app)
-      .post("/webhook")
-      .set("x-signature", "anything")
-      .send(Buffer.from("{}"));
-    expect(res.status).toBe(401);
-    process.env.LEMONSQUEEZY_WEBHOOK_SECRET = originalSecret;
+    app.post("/webhook", express.raw({ type: "application/json" }), handleWebhook);
+    const res = await request(app).post("/webhook").send(Buffer.from("{}"));
+    expect(res.status).toBe(410);
   });
 });
