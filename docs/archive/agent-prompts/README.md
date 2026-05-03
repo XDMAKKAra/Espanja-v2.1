@@ -16,5 +16,6 @@ Historiallinen referenssi. Näitä ei lueta Claude Codessa oletuksena.
 | L-PLAN-8 hotfix | AGENT_PROMPT_HOTFIX_PRICING2.md | 2026-05-03 (Purppurat link-spam-rivit pois) |
 | L-SECURITY-1 | AGENT_PROMPT_SECURITY1.md | 2026-05-03 (Hardcoded secrets sweep + .env hygiene) |
 | L-SECURITY-2 | AGENT_PROMPT_SECURITY2.md | 2026-05-03 (Security headers, CSP enforced) |
+| L-CLEANUP-1 | AGENT_PROMPT_CLEANUP_1.md | 2026-05-03 (Doc-state archive split + LemonSqueezy + console.logs + unused imports) |
 
 Tarkat shippauspäivät: katso `docs/archive/IMPROVEMENTS_PRE_AUDIT.md`.
