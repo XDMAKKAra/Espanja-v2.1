@@ -306,12 +306,3 @@ export async function sendStreakReminderEmail(email, stats) {
     `),
   });
 }
-        <div style="color:#fff;font-size:32px;font-weight:700;margin-top:8px">${streak} päivää</div>
-        <div style="color:#888;font-size:14px">Älä anna putken katketa!</div>
-      </div>
-      <p>Et ole vielä harjoitellut tänään. Yksi nopea harjoitus riittää pitämään putken yllä!</p>
-      ${btn("Harjoittele nyt →", APP_URL + "/app.html")}
-      <p style="color:#555;font-size:12px">Voit poistaa muistutukset tiliasetuksistasi.</p>
-    `),
-  });
-}
