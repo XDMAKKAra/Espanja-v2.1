@@ -49,7 +49,7 @@ router.post("/weekly-progress", requireAuth, async (req, res) => {
   const estLevel = calculateEstLevel(logs);
 
   const modeMap = {};
-  for (const log of logs.filter((l) => nowMs - new Date(l.created_at).getTime() < weekMs)) {
+  for (const log of logs.filter((l) => nowMs - new Date(l.created_at).getTime() < WEEK_MS)) {
     if (!modeMap[log.mode]) modeMap[log.mode] = { pcts: [] };
     if (log.score_total > 0) modeMap[log.mode].pcts.push(Math.round((log.score_correct / log.score_total) * 100));
   }
