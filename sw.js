@@ -1,4 +1,4 @@
-const CACHE_VERSION = "puheo-v102";
+const CACHE_VERSION = "puheo-v104";
 const STATIC_ASSETS = [
   "/app.html",
   "/index.html",
@@ -30,6 +30,8 @@ const STATIC_ASSETS = [
   "/css/components/teaching-panel.css",
   "/js/features/teachingPanel.js",
   "/js/features/confirmDialog.js",
+  "/js/features/reviewBadge.js",
+  "/js/lib/lessonLabels.js",
   "/manifest.json",
   "/offline.html",
   "/js/diagnostic.js",
@@ -50,6 +52,8 @@ const STATIC_ASSETS = [
   "/js/features/meteors.js",
   "/js/features/cardTilt.js",
   "/js/features/tooltip.js",
+  "/js/features/landingHero.js",
+  "/js/features/scrollReveal.js",
   "/js/screens/auth.js",
   "/js/screens/dashboard.js",
   "/js/screens/vocab.js",

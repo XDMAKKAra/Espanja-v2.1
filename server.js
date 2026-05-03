@@ -35,6 +35,7 @@ import configRoutes from "./routes/config.js";
 import placementRoutes from "./routes/placement.js";
 import curriculumRoutes from "./routes/curriculum.js";
 import statusRoutes from "./routes/status.js";
+import { waitlistLimiter } from "./middleware/rateLimit.js";
 import supabase from "./supabase.js";
 
 const app = express();
@@ -143,7 +144,7 @@ app.use("/api/dev", configRoutes);
 app.use("/api/status", statusRoutes);
 
 // ─── Waitlist (public, no auth) ─────────────────────────────────────────────
-app.post("/api/waitlist", async (req, res) => {
+app.post("/api/waitlist", waitlistLimiter, async (req, res) => {
   const { email, product } = req.body;
   if (!email || !product) {
     return res.status(400).json({ error: "Email ja tuote vaaditaan" });

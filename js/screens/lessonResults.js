@@ -92,6 +92,10 @@ export async function showLessonResults(ctx) {
           scoreCorrect,
           scoreTotal,
           wrongAnswers: ctx.wrongAnswers || [],
+          // L-PLAN-7 — pass the review items so the server can build the
+          // "Kertasit myös tätä" summary and tutorMessage that mentions
+          // the cumulative review by name.
+          reviewItems: ctx.reviewItems || [],
           lessonType: ctx.lessonType,
         }),
       },
@@ -166,6 +170,11 @@ function renderResolved(root, ctx, resp) {
 
   meta.innerHTML = `<p class="lr-meta-prompt">${escapeHtml(resp.metacognitivePrompt || "")}</p>`;
   tutor.innerHTML = `<p class="lr-tutor-msg">${escapeHtml(resp.tutorMessage || "")}</p>`;
+
+  // L-PLAN-7 — "Kertasit myös tätä" -osio. Backend reviewSummary is an
+  // array of `{topic_key, label, correct, total, headline}` keyed by the
+  // distinct review topics that appeared in this session.
+  renderReviewSummary(tutor, resp.reviewSummary);
 
   // L-PLAN-6 — Syvennä-callout for the L target.
   // Trigger: target_grade === 'L' AND score/total ≥ 0.85 AND not a deepen
@@ -285,6 +294,35 @@ async function jumpToKertaustesti(kurssiKey) {
     try { await mod.openLesson(kurssiKey, lastIndex); return; } catch { /* fall through */ }
   }
   await mod.loadCurriculum();
+}
+
+// L-PLAN-7 — render the "Kertasit myös tätä" section. Inserted as a
+// sibling block after the tutor message so the visual hierarchy reads
+// score → meta → tutor → review. design:ux-copy verifies the per-band
+// headlines: Vahvistui (2/2), Pieni muistutus (1/2), Tämä kaipaa vielä
+// huomiota (0/2). Never shamea — language is descriptive, not judgmental.
+function renderReviewSummary(tutorEl, reviewSummary) {
+  if (!Array.isArray(reviewSummary) || reviewSummary.length === 0) return;
+  const block = document.createElement("section");
+  block.className = "lr-review-summary";
+  block.setAttribute("role", "region");
+  block.setAttribute("aria-label", "Kertaus tässä sessiossa");
+  const items = reviewSummary
+    .slice(0, 3)
+    .map((row) => {
+      const score = `${row.correct}/${row.total}`;
+      return `
+        <li class="lr-review-summary__row">
+          <span class="lr-review-summary__headline">${escapeHtml(row.headline || "")}</span>
+          <span class="lr-review-summary__label">${escapeHtml(row.label || row.topic_key || "")}</span>
+          <span class="lr-review-summary__score" aria-label="${row.correct} oikein, ${row.total} yhteensä">${escapeHtml(score)}</span>
+        </li>`;
+    }).join("");
+  block.innerHTML = `
+    <h3 class="lr-review-summary__title">Kertasit myös tätä</h3>
+    <ul class="lr-review-summary__list">${items}</ul>
+  `;
+  tutorEl.parentNode?.insertBefore(block, tutorEl.nextSibling);
 }
 
 function renderUnauthenticated(root, ctx) {

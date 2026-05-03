@@ -160,3 +160,13 @@ export const reportLimiter = createLimiter({
   keyGenerator: (req) => req.user?.userId || req.ip,
   message: { error: "Liian monta raporttia. Yritä myöhemmin." },
 });
+
+// Per-IP limiter for unauthenticated public POSTs that accept email
+// (waitlist signups). Scoped wider than auth limits because many users may
+// legitimately submit from a shared NAT, but tight enough to make spam
+// scripted abuse unattractive.
+export const waitlistLimiter = createLimiter({
+  windowMs: 60 * 60 * 1000,
+  max: 20,
+  message: { error: "Liian monta pyyntöä. Yritä hetken kuluttua uudelleen." },
+});

@@ -124,22 +124,24 @@ describe("auth enforcement on protected endpoints", () => {
   });
 });
 
-// ── Public endpoints that enforce request shape ───────────────────────────
+// ── /grade/advisory now requires auth (L-SECURITY-2) ──────────────────────
+// Previously this endpoint was public; anonymous callers could submit
+// arbitrary `exerciseId` values and use the dispatcher response to
+// enumerate seed-bank answers. Auth-gated since L-SECURITY-2.
 
-describe("POST /api/exercises/grade/advisory — public shape validation", () => {
-  it("returns 400 when payload is missing type", async () => {
+describe("POST /api/exercises/grade/advisory — auth-gated", () => {
+  it("returns 401 without a Bearer token", async () => {
     const app = await mount("/api/exercises", "../routes/exercises.js");
     const res = await request(app).post("/api/exercises/grade/advisory").send({});
-    expect([400, 422]).toContain(res.status);
+    expect(res.status).toBe(401);
   });
 
-  it("returns ok=false JSON when id is missing for aukkotehtava", async () => {
+  it("returns 401 even with a well-formed payload, when no token is sent", async () => {
     const app = await mount("/api/exercises", "../routes/exercises.js");
     const res = await request(app)
       .post("/api/exercises/grade/advisory")
       .send({ type: "aukkotehtava", studentAnswer: "hola" });
-    // Either 400 or a structured error body — asserting it does not 500/200
-    expect(res.status).not.toBe(500);
+    expect(res.status).toBe(401);
   });
 });
 

@@ -691,6 +691,75 @@
   color: var(--accent-dark, #0F766E);
 }
 
+/* L-PLAN-7 — "Kertasit myös tätä" post-results summary.
+   Restrained list section under the tutor message. Each row: headline pill
+   + label (suomeksi) + score. Single-stroke top border separates it from
+   the tutor block above. Skill applied: design:design-system (token-only,
+   no new accent shades) + ui-ux-pro-max (44 px touch-clear gap on rows). */
+.lr-review-summary {
+  display: grid;
+  gap: 8px;
+  padding: 14px 0 4px;
+  border-top: 1px solid var(--border, #2a2a2a);
+  margin-top: 4px;
+}
+.lr-review-summary__title {
+  margin: 0;
+  font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-soft, var(--text-soft, #c8c8c8));
+}
+.lr-review-summary__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+}
+.lr-review-summary__row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: baseline;
+  gap: 10px;
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--ink, var(--text, #fafafa));
+}
+.lr-review-summary__headline {
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--accent, #2DD4BF);
+  white-space: nowrap;
+}
+.lr-review-summary__label {
+  color: var(--ink-soft, var(--text-soft, #c8c8c8));
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.lr-review-summary__score {
+  font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
+  font-size: 13px;
+  color: var(--ink-soft, var(--text-soft, #c8c8c8));
+  white-space: nowrap;
+}
+:root:not([data-theme="dark"]) .lr-review-summary__headline,
+[data-theme="light"] .lr-review-summary__headline {
+  color: var(--accent-dark, #0F766E);
+}
+@media (max-width: 480px) {
+  .lr-review-summary__row {
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "head score"
+      "label label";
+  }
+  .lr-review-summary__headline { grid-area: head; }
+  .lr-review-summary__score { grid-area: score; }
+  .lr-review-summary__label { grid-area: label; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .lr-bar-fill { transition: none; }
   .lr-skeleton-line { animation: none; }

@@ -155,13 +155,15 @@
               Aloita ilmaiseksi
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
             </a>
-            <a class="btn btn--ghost btn--lg" href="#miten">Katso miten se toimii</a>
+            <a class="btn btn--ghost btn--lg" href="#arviointi">Näe esimerkkiarviointi →</a>
           </div>
 
           <p class="hero__trust">
             Ei luottokorttia
             <span class="hero__trust-sep" aria-hidden="true">•</span>
             Suomen kielellä
+            <span class="hero__trust-sep" aria-hidden="true">•</span>
+            8 kurssia, 90 oppituntia
             <span class="hero__trust-sep" aria-hidden="true">•</span>
             Toimii selaimessa
           </p>
@@ -227,7 +229,7 @@
 
         <div class="pillars__grid">
           <!-- Sanasto -->
-          <article class="pillar pillar--vocab">
+          <article class="pillar pillar--vocab" data-reveal>
             <span class="pillar__icon" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
             </span>
@@ -250,7 +252,7 @@
           </article>
 
           <!-- Kielioppi -->
-          <article class="pillar pillar--grammar">
+          <article class="pillar pillar--grammar" data-reveal data-reveal-delay="100">
             <span class="pillar__icon" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.5L19 10l-5.1 1.5L12 17l-1.9-5.5L5 10l5.1-1.5z"/><path d="M19 4v4M21 6h-4M5 18v3M6.5 19.5h-3"/></svg>
             </span>
@@ -276,7 +278,7 @@
           </article>
 
           <!-- Kirjoittaminen -->
-          <article class="pillar pillar--writing">
+          <article class="pillar pillar--writing" data-reveal data-reveal-delay="200">
             <span class="pillar__icon" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>
             </span>
@@ -286,7 +288,7 @@
               viestinnällisyys, rakenteet, sanasto, kokonaisuus.
               Saat tarkan suomenkielisen selityksen jokaisesta virheestä.
             </p>
-            <p class="pillar__metric"><strong>YTL</strong>-rubriikin mukainen palaute</p>
+            <p class="pillar__metric"><strong>~30&nbsp;s</strong> arviointi · 4 osa-aluetta</p>
             <div class="pillar__demo" aria-hidden="true">
               <p class="pillar__demo-label">YTL-palaute</p>
               <p class="pillar__demo-excerpt">
@@ -320,7 +322,7 @@
             <h3 class="step__title">Kerro tavoitteesi</h3>
             <p class="step__body">
               Aseta YO-päivä, tavoitearvosana ja heikkoudet. Puheo
-              rakentaa kertausjonon, joka osuu tarkasti niihin kohtiin
+              rakentaa harjoituslistan, joka osuu tarkasti niihin kohtiin
               joista kokeessa eniten putoaa pisteitä.
             </p>
           </li>
@@ -353,7 +355,7 @@
       <div class="landing-section__inner grader__inner">
 
         <!-- LEFT: recreated grader output (real fixture: references/puheo-screens/grading-response.json) -->
-        <div class="grader-card" role="figure" aria-label="Esimerkki Puheon arviointinäkymästä — opiskelijan sähköposti, virheet alleviivattuna ja YTL-rubriikin pisteet.">
+        <div class="grader-card" data-reveal role="figure" aria-label="Esimerkki Puheon arviointinäkymästä — opiskelijan sähköposti, virheet alleviivattuna ja YTL-rubriikin pisteet.">
           <div class="grader-card__head">
             <p class="grader-card__title">Sähköposti ystävälle · 160–240 merkkiä</p>
             <span class="grader-card__badge">YTL · 13 / 20</span>
@@ -397,7 +399,7 @@ Aino</p>
         </div>
 
         <!-- RIGHT: copy -->
-        <div class="grader-copy">
+        <div class="grader-copy" data-reveal data-reveal-delay="150">
           <h2 class="grader-copy__title" id="arviointi-otsikko">
             Tekoäly, joka korjaa kuten YTL-arvioija.
           </h2>
@@ -745,6 +747,16 @@ Aino</p>
       </div>
     </div>
   </footer>
+
+  <!-- ─── L-PLAN-8: live hero + scroll-reveal modules ──────────────
+       Loaded as type=module so they parse async and don't block the
+       initial paint. Both are idempotent + reduced-motion-safe. -->
+  <script type="module">
+    import { initLandingHero } from "/js/features/landingHero.js";
+    import { initScrollReveal } from "/js/features/scrollReveal.js";
+    initLandingHero();
+    initScrollReveal();
+  </script>
 
   <!-- ─── Inline JS: nav scroll-state + logged-in chip swap ─────── -->
   <script>

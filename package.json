@@ -15,6 +15,7 @@
     "test:visual": "VISUAL_BASELINE=1 playwright test tests/e2e-visual.spec.js",
     "test:visual:update": "VISUAL_BASELINE=1 playwright test tests/e2e-visual.spec.js --update-snapshots",
     "check:sw": "node scripts/check-sw-cache-version.js",
+    "security:scan": "node scripts/security-scan.mjs",
     "lint": "eslint . --ext .js,.mjs",
     "audit:a11y": "pa11y-ci --config exercises/baselines/pa11y-ci.config.json --json > exercises/baselines/pa11y.json",
     "audit:lighthouse": "lighthouse http://localhost:3000/app.html --only-categories=performance,accessibility,best-practices --preset=desktop --output=json --output-path=exercises/baselines/lighthouse-app.json --chrome-flags=--headless --quiet",

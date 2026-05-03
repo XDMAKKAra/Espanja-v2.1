@@ -14,6 +14,7 @@ import {
   passThresholdFor,
   VALID_TARGET_GRADES,
 } from "../lib/lessonContext.js";
+import { getLessonLabel } from "../lib/lessonLabels.js";
 
 const router = Router();
 
@@ -548,6 +549,54 @@ router.get("/:kurssiKey/lesson/:lessonIndex", optionalAuth, async (req, res) => 
   }
 });
 
+// L-PLAN-7 — compute the "Kertasit myös tätä" summary from per-item
+// reviewItems[] sent by the client. Bins by (review_source, topic_key)
+// and emits one row per distinct review topic with a non-shaming
+// headline matched to the band: 100% → "Vahvistui", >0% → "Pieni
+// muistutus", 0% → "Tämä kaipaa vielä huomiota". Skill applied:
+// design:ux-copy + education/self-efficacy-builder-sequence.
+function sanitiseReviewItems(arr) {
+  if (!Array.isArray(arr)) return [];
+  return arr
+    .filter((r) => r && typeof r === "object")
+    .slice(0, 12)
+    .map((r) => ({
+      topic_key: String(r.topic_key || "").slice(0, 80) || null,
+      review_source: String(r.review_source || "").slice(0, 80) || null,
+      review_source_label: String(r.review_source_label || "").slice(0, 200) || null,
+      correct: !!r.correct,
+    }));
+}
+
+function buildReviewSummary(reviewItems) {
+  if (!Array.isArray(reviewItems) || reviewItems.length === 0) return [];
+  const bins = new Map();
+  for (const r of reviewItems) {
+    const key = r.review_source || r.topic_key || "unknown";
+    if (!bins.has(key)) {
+      bins.set(key, {
+        topic_key: r.topic_key || null,
+        review_source: r.review_source || null,
+        label: r.review_source_label || (r.review_source ? getLessonLabel(r.review_source) : (r.topic_key || "")),
+        correct: 0,
+        total: 0,
+      });
+    }
+    const row = bins.get(key);
+    row.total += 1;
+    if (r.correct) row.correct += 1;
+  }
+  const out = [];
+  for (const row of bins.values()) {
+    let headline;
+    if (row.total > 0 && row.correct === row.total) headline = "Vahvistui";
+    else if (row.correct > 0) headline = "Pieni muistutus";
+    else headline = "Tämä kaipaa vielä huomiota";
+    out.push({ ...row, headline });
+  }
+  return out;
+}
+
 // Sanitise wrongAnswers[] from the client. We trust nothing — every field is
 // clamped to a string ≤200 chars, list capped at 20 entries.
 function sanitiseWrongAnswers(arr) {
@@ -628,6 +677,9 @@ router.post("/:kurssiKey/lesson/:lessonIndex/complete", requireAuth, async (req,
     const scoreCorrect = Number(req.body?.scoreCorrect ?? 0);
     const scoreTotal = Number(req.body?.scoreTotal ?? 0);
     const wrongAnswers = sanitiseWrongAnswers(req.body?.wrongAnswers);
+    // L-PLAN-7 — review item array drives the post-results summary.
+    const reviewItems = sanitiseReviewItems(req.body?.reviewItems);
+    const reviewSummary = buildReviewSummary(reviewItems);
 
     if (!findKurssi(kurssiKey)) return res.status(404).json({ error: "Kurssia ei löydy" });
 
@@ -704,6 +756,14 @@ router.post("/:kurssiKey/lesson/:lessonIndex/complete", requireAuth, async (req,
             .map((w, i) => `  ${i + 1}. opiskelija kirjoitti "${w.studentAnswer}", oikea vastaus "${w.correctAnswer}"${w.topic_key ? ` (aihe: ${w.topic_key})` : ""}`)
             .join("\n")
         : "  (ei virheitä — kaikki oikein)";
+      // L-PLAN-7 — describe what the student also reviewed so the
+      // tutorMessage can reference the cumulative review explicitly,
+      // e.g. "kertasit myös -ar verbejä — niissä menee nyt paremmin".
+      const reviewLine = reviewSummary.length
+        ? "Tässä sessiossa kertasit myös:\n" + reviewSummary
+            .map((r) => `  - ${r.label} → ${r.correct}/${r.total} oikein (${r.headline.toLowerCase()})`)
+            .join("\n")
+        : "";
       const passLabel = passPct >= targetThreshold ? "hyvä" : "tarvitsee lisäharjoittelua";
       const aiPrompt = [
         "Olet Puheo, suomalainen AI-tutori (lukio, espanjan YO-koe).",
@@ -718,6 +778,7 @@ router.post("/:kurssiKey/lesson/:lessonIndex/complete", requireAuth, async (req,
         `- Tulos: ${scoreCorrect}/${scoreTotal} (${passLabel})${isKertaustesti ? " — KERTAUSTESTI" : ""}.`,
         `- Väärät vastaukset:`,
         wrongList,
+        reviewLine,
         "",
         "Tehtäväsi: kirjoita kaksi kenttää JSON-objektiin:",
         "1) tutorMessage: 2–3 lausetta. Jos virheitä on: mainitse juuri se rakenne tai sanaryhmä jossa virheet keskittyivät, selitä lyhyt sääntö, kerro seuraava askel. Jos kaikki oikein: mainitse mitä konkreettisesti hallitset nyt, vihjaa seuraavaan aiheeseen. " + (isKertaustesti
@@ -764,6 +825,9 @@ router.post("/:kurssiKey/lesson/:lessonIndex/complete", requireAuth, async (req,
       nextKurssiTitle: nextKurssi?.title || null,
       tutorMessage,
       metacognitivePrompt,
+      // L-PLAN-7 — surface the review summary so the lesson-results card
+      // can render the "Kertasit myös tätä" -osio.
+      reviewSummary,
       fastTrack,
       isKertaustesti,
       passed: !isKertaustesti || kurssiComplete,

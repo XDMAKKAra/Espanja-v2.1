@@ -320,6 +320,13 @@ export async function loadCurriculum() {
   const root = document.getElementById(PATH_INNER_ID);
   if (!root) return;
   show("screen-path");
+  // L-PLAN-8 UPDATE 6A — make sure the floating Opetussivu trigger from a
+  // prior lesson session is hidden the moment we land back on the path
+  // overview. The MutationObserver in teachingPanel.js handles this on its
+  // own, but a direct refresh removes the (possibly visible) flicker.
+  import("../features/teachingPanel.js")
+    .then((m) => m.refreshTeachingPanel?.())
+    .catch(() => { /* feature optional; ignore if not loaded */ });
   renderSkeleton(root);
 
   try {

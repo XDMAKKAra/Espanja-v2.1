@@ -19,6 +19,7 @@ import { generateCoachLine, topicLabel, countUp } from "./mode-page.js";
 import { celebrateScore } from "../features/celebrate.js";
 import { generateExerciseShareCard } from "../features/shareCard.js";
 import { getLessonContext, isDeepenRun } from "../lib/lessonContext.js";
+import { setReviewBadge } from "../features/reviewBadge.js";
 
 function fmtElapsed(ms) {
   if (!Number.isFinite(ms) || ms <= 0) return "—";
@@ -153,7 +154,16 @@ function recordItem(ex, isCorrect) {
     label = ex.correct.join(" ");
   }
   if (!label) label = "kysymys";
-  state.sessionItems.push({ label: String(label).trim(), correct: !!isCorrect });
+  // L-PLAN-7 — capture review metadata so showVocabResults can hand off
+  // a reviewItems[] array to /complete for the post-results summary.
+  state.sessionItems.push({
+    label: String(label).trim(),
+    correct: !!isCorrect,
+    topic_key: ex?.topic_key || null,
+    is_review: !!ex?.is_review,
+    review_source: ex?.review_source || null,
+    review_source_label: ex?.review_source_label || null,
+  });
 }
 
 async function reportAdaptiveAnswer(topic, isCorrect) {
@@ -417,6 +427,9 @@ function renderVocabQuestion() {
 
   $("ex-level-badge").textContent = state.level;
   $("progress-fill").style.width = `${((questionNum - 1) / totalQuestions) * 100}%`;
+
+  // L-PLAN-7 — kertaus-badge if this item is part of cumulative review.
+  setReviewBadge(ex, "#screen-exercise .exercise__meta");
 
   const exType = ex.type || "meaning";
   const typeBadge = $("ex-type-badge");
@@ -1132,6 +1145,17 @@ function showVocabResults() {
         studentAnswer: String(i.studentAnswer || "").slice(0, 200),
         topic_key: i.topic_key || null,
       }));
+    // L-PLAN-7 — full review-item array for the post-results "Kertasit
+    // myös tätä" summary. Only items tagged is_review by the backend.
+    const reviewItems = items
+      .filter((i) => !!i.is_review)
+      .slice(0, 12)
+      .map((i) => ({
+        topic_key: i.topic_key || null,
+        review_source: i.review_source || null,
+        review_source_label: i.review_source_label || null,
+        correct: !!(i.isCorrect ?? i.correct),
+      }));
     try {
       _deps.saveProgress({
         mode: "vocab",
@@ -1148,6 +1172,7 @@ function showVocabResults() {
       scoreCorrect: correct,
       scoreTotal: total,
       wrongAnswers,
+      reviewItems,
     })).catch(() => { /* fall through to legacy screen if module fails */ });
     return;
   }

@@ -27,6 +27,47 @@ import {
   curriculumFocusInstruction,
   curriculumTestInstruction,
 } from "../lib/lessonContext.js";
+import { getLessonLabel } from "../lib/lessonLabels.js";
+
+// L-PLAN-7 — tag exercises with is_review / review_source /
+// review_source_label based on topic_key. The AI sets topic_key per the
+// curriculumFocusInstruction prompt; we map it to the resolved review
+// topic, falling back to the main focus on miss. Idempotent: safe to
+// call when ctx.reviewTopics is empty (returns the array unchanged).
+function annotateReviewTags(exercises, ctx) {
+  if (!Array.isArray(exercises)) return exercises;
+  const reviews = (ctx?.reviewTopics || []);
+  if (reviews.length === 0) {
+    // No review topics — clear any AI-emitted is_review noise so the UI
+    // never renders a stray badge on a non-curriculum-or-non-review run.
+    return exercises.map((ex) => {
+      if (!ex || typeof ex !== "object") return ex;
+      const { is_review: _ir, review_source: _rs, review_source_label: _rl, topic_key, ...rest } = ex;
+      return topic_key ? { ...rest, topic_key } : rest;
+    });
+  }
+  const mainFocus = ctx?.lesson?.focus || "";
+  return exercises.map((ex) => {
+    if (!ex || typeof ex !== "object") return ex;
+    const tk = String(ex.topic_key || "").trim();
+    const match = reviews.find((r) => r.focus && tk && r.focus === tk);
+    if (match) {
+      return {
+        ...ex,
+        topic_key: match.focus,
+        is_review: true,
+        review_source: match.source,
+        review_source_label: match.label || getLessonLabel(match.source),
+      };
+    }
+    // No match → main focus item.
+    return {
+      ...ex,
+      topic_key: tk || mainFocus,
+      is_review: false,
+    };
+  });
+}
 
 // L-PLAN-3 — when the client sends `{ lesson: { kurssiKey, lessonIndex } }`
 // in the request body, route the exercise generation through curriculum
@@ -54,7 +95,12 @@ async function applyLessonContext(reqBody, defaults, kind, userId = null) {
   // Count override — for kertaustesti use the adjusted count (baseline 15
   // ramped per target_grade); for deepen it's a fixed 4; otherwise the
   // lesson's adjusted count.
-  out.count = ctx.lesson.adjusted_exercise_count || ctx.lesson.exercise_count || defaults.count;
+  let baseCount = ctx.lesson.adjusted_exercise_count || ctx.lesson.exercise_count || defaults.count;
+  // L-PLAN-7 — SR personal review adds one tail item to the lesson.
+  // Internal + crossKurssi reuse existing slots in the prompt, no count
+  // bump there.
+  if ((ctx.reviewTopics || []).some((t) => t.slot === "sr")) baseCount += 1;
+  out.count = baseCount;
   return out;
 }
 
@@ -334,6 +380,10 @@ Return ONLY a JSON object with shape {"exercises":[ ... ]}, no markdown. Example
     // and would skew bank serving for generic free-practice users).
     if (validation.ok && !lessonCtx) saveToBankBulk("vocab", level, topic, language, exercises).catch(() => {});
 
+    // L-PLAN-7 — tag review items so the frontend can render the badge
+    // and the post-results "Kertasit myös tätä" -osio.
+    exercises = annotateReviewTags(exercises, lessonCtx);
+
     res.json({ exercises, ...(warnings.length ? { warnings } : {}) });
   } catch (err) {
     console.error("Generate exercises error:", err.message);
@@ -408,7 +458,7 @@ router.post("/grade", async (req, res) => {
 //   monivalinta   — advisory (indices supplied by client; no server-stored answer)
 //   aukkotehtava  — authoritative (looks up answer from seed bank by ID)
 //   yhdistaminen  — authoritative (looks up correct pairs from seed bank by IDs)
-router.post("/grade/advisory", (req, res) => {
+router.post("/grade/advisory", requireAuth, (req, res) => {
   const { type, exerciseId, payload } = req.body || {};
   if (typeof type !== "string" || !type) {
     return res.status(400).json({ error: "Virheellinen tyyppi" });
@@ -674,6 +724,10 @@ Return ONLY a JSON object with shape {"exercises":[ ... ]} (no markdown):
     }
 
     if (validation.ok && !lessonCtx) saveToBankBulk("grammar", level, topic, language, exercises).catch(() => {});
+
+    // L-PLAN-7 — tag review items.
+    exercises = annotateReviewTags(exercises, lessonCtx);
+
     res.json({ exercises, ...(warnings.length ? { warnings } : {}) });
   } catch (err) {
     console.error("Grammar drill error:", err.message);

@@ -212,3 +212,67 @@
   margin: 24px 0 0;
 }
 
+/* L-PLAN-7 — Kertaus-badge.
+   Renders inside .exercise__meta as a flex item alongside Q-counter,
+   eyebrow, level badge. Soft accent pill — never glow-loud. Hidden by
+   default via .hidden class on the JS path. Text uses --ink so contrast
+   is locked to the body text token (always WCAG AA against --surface);
+   only the icon carries the accent so the visual register stays subtle. */
+.ex-review-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent) 12%, var(--surface, #ffffff));
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  color: var(--ink, var(--text, #0a0a0a));
+  font-family: var(--font-sans);
+  font-size: 12px;
+  line-height: 1.3;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  max-width: min(240px, 60vw);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  animation: ex-review-badge-fade 200ms ease-out;
+}
+.ex-review-badge.hidden { display: none; }
+.ex-review-badge__icon {
+  font-size: 13px;
+  line-height: 1;
+  display: inline-block;
+  color: var(--accent);
+}
+.ex-review-badge__text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+/* Light theme — use --accent-dark for the icon so it clears AA on the
+   pale fill. Body text stays --ink which is already AA-compliant. */
+:root:not([data-theme="dark"]) .ex-review-badge__icon,
+[data-theme="light"] .ex-review-badge__icon {
+  color: var(--accent-dark, #0F766E);
+}
+:root:not([data-theme="dark"]) .ex-review-badge,
+[data-theme="light"] .ex-review-badge {
+  background: color-mix(in srgb, var(--accent-dark, #0F766E) 10%, var(--surface, #ffffff));
+  border-color: color-mix(in srgb, var(--accent-dark, #0F766E) 28%, transparent);
+}
+@keyframes ex-review-badge-fade {
+  from { opacity: 0; transform: translateY(-2px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ex-review-badge { animation: none; }
+}
+@media (max-width: 480px) {
+  .ex-review-badge {
+    font-size: 11px;
+    padding: 3px 8px;
+    max-width: 50%;
+  }
+}
+

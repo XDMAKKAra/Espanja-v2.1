@@ -898,7 +898,7 @@ function renderGradeWidget(estimate) {
 
   if (tier === "none") {
     label.textContent = "Arvioitu yo-taso";
-    sub.textContent = "Tee vähintään 10 harjoitusta 3 eri osa-alueesta, jotta voimme arvioida YO-tasoasi.";
+    sub.textContent = "Tee 10 harjoitusta 3 osa-alueesta — sitten arvio.";
     return;
   }
 

@@ -119,6 +119,11 @@ function renderGrammarExercise() {
   $("gram-counter").textContent = `${state.grammarCurrent + 1} / ${total}`;
   $("gram-level-badge").textContent = state.grammarLevel;
 
+  // L-PLAN-7 — kertaus-badge if this item is part of cumulative review.
+  import("../features/reviewBadge.js").then(({ setReviewBadge }) => {
+    setReviewBadge(ex, "#screen-grammar .exercise__meta");
+  });
+
   const exType = ex.type || "gap";
   const typeLabel = GRAMMAR_TYPE_LABELS[exType] || "Kielioppi";
   $("gram-topic-badge").textContent = typeLabel;
@@ -224,6 +229,18 @@ function showGrammarResults() {
           topic_key: ex.topic_key || ex.rule || null,
         };
       });
+    // L-PLAN-7 — review item array for the post-results "Kertasit myös
+    // tätä" summary. Items the backend tagged is_review during /generate.
+    const reviewItems = exercises
+      .map((ex, idx) => ({ ex, ua: userAnswers[idx] }))
+      .filter(({ ex }) => !!ex?.is_review)
+      .slice(0, 12)
+      .map(({ ex, ua }) => ({
+        topic_key: ex.topic_key || null,
+        review_source: ex.review_source || null,
+        review_source_label: ex.review_source_label || null,
+        correct: !!(ua && ua.isCorrect === true),
+      }));
     try {
       _deps.saveProgress({
         mode: "grammar",
@@ -241,6 +258,7 @@ function showGrammarResults() {
       scoreCorrect: state.grammarCorrect,
       scoreTotal: total,
       wrongAnswers,
+      reviewItems,
     })).catch(() => { /* fall through */ });
   });
   // Branch — when curriculum context active, return early so the legacy
