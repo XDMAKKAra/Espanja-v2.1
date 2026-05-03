@@ -5447,6 +5447,40 @@ body:has(.app-countdown:not(.hidden)) #app-main { padding-top: 34px; }
 .tt-popover[data-placement="top"]::after    { bottom: -3px; }
 .tt-popover[data-placement="bottom"]::after { top: -3px; }
 
+/* Interactive HTML tooltip — Free-card missing rows surface a Pro-trial CTA
+   inside the popover. Wider padding + system font so body copy reads as
+   prose, not micro-mono. Pointer-events become clickable so the embedded
+   anchor fires; the JS module also keeps the popover open while the
+   pointer is over it. */
+.tt-popover.tt-popover--interactive {
+  pointer-events: auto;
+  max-width: 300px;
+  padding: 12px 14px;
+  font-family: var(--font-sans, inherit);
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.1px;
+  line-height: 1.5;
+  white-space: normal;
+}
+.tt-popover__cta {
+  display: inline-block;
+  margin-top: 6px;
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
+}
+.tt-popover__cta:hover,
+.tt-popover__cta:focus-visible {
+  color: var(--accent);
+  text-decoration-thickness: 2px;
+}
+.tt-popover__cta:visited {
+  color: var(--accent);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .tt-popover { transition: none; }
 }
