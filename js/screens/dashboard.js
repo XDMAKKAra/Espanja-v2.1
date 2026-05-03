@@ -1,5 +1,5 @@
 import { $, show } from "../ui/nav.js";
-import { API, isLoggedIn, clearAuth, authHeader, apiFetch, getAuthEmail } from "../api.js";
+import { API, isLoggedIn, clearAuth, authHeader, apiFetch, getAuthEmail, setDashboardV2, getDashboardV2Section } from "../api.js";
 import { state } from "../state.js";
 import { showLoading } from "../ui/loading.js";
 import { srDueCount } from "../features/spacedRepetition.js";
@@ -86,16 +86,36 @@ export const MODE_META = {
 export async function loadDashboard() {
   showLoading("Ladataan...");
   try {
-    const res = await apiFetch(`${API}/api/dashboard`, { headers: authHeader() });
+    // L-LIVE-AUDIT-P2 UPDATE 3 — single batched request replaces 9 sequential
+    // dashboard fetches. Each section may be `null` if its server query failed;
+    // helper functions (loadAdaptiveState, loadWeakTopics, ...) check the
+    // cached payload first via getDashboardV2Section() and only fall back to
+    // their legacy single-endpoint fetch on cache miss.
+    const res = await apiFetch(`${API}/api/dashboard/v2`, { headers: authHeader() });
     if (res.status === 401) {
       clearAuth();
       show("screen-auth");
       return;
     }
-    const data = await res.json();
-    renderDashboard(data);
-    // Hide the top-bar countdown on the dashboard — it overlaps the greeting
-    // and will be replaced by an in-rail countdown in Task 11.
+    let dashboardCore;
+    if (res.ok) {
+      const v2 = await res.json();
+      setDashboardV2(v2);
+      dashboardCore = v2.dashboard;
+      // L-LIVE-AUDIT-P2 UPDATE 4 — seed the global profile so the CTA renderer
+      // and other readers don't need to re-fetch /api/profile separately.
+      if (v2.profile?.profile && !window._userProfile) {
+        window._userProfile = v2.profile.profile;
+      }
+    }
+    // Fallback to legacy single endpoint if v2 unavailable / not yet deployed.
+    if (!dashboardCore) {
+      setDashboardV2(null);
+      const legacy = await apiFetch(`${API}/api/dashboard`, { headers: authHeader() });
+      if (legacy.status === 401) { clearAuth(); show("screen-auth"); return; }
+      dashboardCore = await legacy.json();
+    }
+    renderDashboard(dashboardCore);
     hideAppCountdown();
     show("screen-dashboard");
   } catch {
@@ -763,9 +783,16 @@ async function loadExamHistory() {
   const el = $("dash-exam-history");
   if (!el) return;
   try {
-    const res = await apiFetch(`${API}/api/exam/history`, { headers: authHeader() });
-    if (!res.ok) { el.innerHTML = ""; return; }
-    const { exams } = await res.json();
+    // L-LIVE-AUDIT-P2 UPDATE 3 — read from batched v2 payload first.
+    let exams;
+    const cached = getDashboardV2Section("examHistory");
+    if (cached?.exams) {
+      exams = cached.exams;
+    } else {
+      const res = await apiFetch(`${API}/api/exam/history`, { headers: authHeader() });
+      if (!res.ok) { el.innerHTML = ""; return; }
+      ({ exams } = await res.json());
+    }
     if (!exams || exams.length === 0) { el.innerHTML = ""; return; }
 
     let html = '<div class="dash-section-label" style="margin-top:8px">Aiemmat kokeet</div>';
@@ -1005,11 +1032,13 @@ async function renderSrForecast() {
   if (!section || !chart) return;
 
   try {
-    const res = await apiFetch(`${API}/api/sr/forecast?days=30`, {
-      headers: authHeader(),
-    });
-    if (!res.ok) return;
-    const data = await res.json();
+    // L-LIVE-AUDIT-P2 UPDATE 3 — read from batched v2 payload first.
+    let data = getDashboardV2Section("srForecast");
+    if (!data) {
+      const res = await apiFetch(`${API}/api/sr/forecast?days=30`, { headers: authHeader() });
+      if (!res.ok) return;
+      data = await res.json();
+    }
 
     if (!data.totalCards) {
       section.classList.add("hidden");
@@ -1103,11 +1132,13 @@ async function loadWeakTopics() {
   if (!wrap || !list) return;
 
   try {
-    const res = await apiFetch(`${API}/api/weak-topics?days=7`, {
-      headers: authHeader(),
-    });
-    if (!res.ok) return;
-    const data = await res.json();
+    // L-LIVE-AUDIT-P2 UPDATE 3 — read from batched v2 payload first.
+    let data = getDashboardV2Section("weakTopics");
+    if (!data) {
+      const res = await apiFetch(`${API}/api/weak-topics?days=7`, { headers: authHeader() });
+      if (!res.ok) return;
+      data = await res.json();
+    }
     const topics = data.topics || [];
 
     if (topics.length === 0) {
@@ -1372,10 +1403,16 @@ async function loadAndRenderReadinessMap() {
 
   let learningPath = [];
   try {
-    const res = await apiFetch(`${API}/api/learning-path`, { headers: authHeader() });
-    if (res.ok) {
-      const data = await res.json();
-      learningPath = data.path || [];
+    // L-LIVE-AUDIT-P2 UPDATE 3 — read from batched v2 payload first.
+    const cached = getDashboardV2Section("learningPath");
+    if (cached?.path) {
+      learningPath = cached.path;
+    } else {
+      const res = await apiFetch(`${API}/api/learning-path`, { headers: authHeader() });
+      if (res.ok) {
+        const data = await res.json();
+        learningPath = data.path || [];
+      }
     }
   } catch { /* network — show empty */ }
 

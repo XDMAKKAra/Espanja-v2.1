@@ -1,5 +1,5 @@
 import { $, show } from "../ui/nav.js";
-import { API, authHeader, apiFetch, getAuthEmail, clearAuth } from "../api.js";
+import { API, authHeader, apiFetch, getAuthEmail, clearAuth, invalidateProfileCache } from "../api.js";
 import { track } from "../analytics.js";
 import { computeStartingLevel, YTL_LEVELS } from "../features/startingLevel.js";
 import { toast } from "../ui/toast.js";
@@ -483,6 +483,9 @@ async function saveEditor() {
     const { profile } = await res.json();
     _profile = profile || { ..._profile, ...payload };
     window._userProfile = _profile;
+    // L-LIVE-AUDIT-P2 UPDATE 4 — drop the in-memory profile cache so the next
+    // getProfile() call returns the fresh row instead of a stale 5-min copy.
+    invalidateProfileCache();
 
     track("profile_updated", { field: field.key });
 
@@ -591,6 +594,7 @@ async function applyLevelBump() {
       const { profile } = await res.json();
       _profile = profile || { ..._profile, current_grade: suggested };
       window._userProfile = _profile;
+      invalidateProfileCache();
       track("profile_level_bump", { action: "apply", suggested });
       track("profile_updated", { field: "current_grade" });
       renderRows();

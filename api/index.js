@@ -19,6 +19,7 @@ try {
   const { default: placementRoutes } = await import("../routes/placement.js");
   const { default: curriculumRoutes } = await import("../routes/curriculum.js");
   const { default: statusRoutes } = await import("../routes/status.js");
+  const { default: dashboardV2Routes } = await import("../routes/dashboardV2.js");
   const { waitlistLimiter } = await import("../middleware/rateLimit.js");
   const { default: supabase } = await import("../supabase.js");
 
@@ -54,6 +55,8 @@ try {
   app.use("/api/config", configRoutes);
   app.use("/api/dev", configRoutes);
   app.use("/api/status", statusRoutes);
+  // L-LIVE-AUDIT-P2 UPDATE 3 — batched dashboard endpoint at /api/dashboard/v2.
+  app.use("/api", dashboardV2Routes);
 
   app.post("/api/waitlist", waitlistLimiter, async (req, res) => {
     const { email, product } = req.body;
