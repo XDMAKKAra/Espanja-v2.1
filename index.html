@@ -4,28 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- ─── Pre-launch password gate ──────────────────────────────────────────
-       Simple client-side lock so casual visitors can't see the site while
-       it's pre-launch. NOT real security — anyone who opens DevTools can
-       read the password below. Real secrets (API keys) live on the server,
-       never in this file. Remove this block once the site is launched. -->
-  <script>
-    (function () {
-      var KEY = "puheo_gate_ok_v1";
-      var PASSWORD = "Espanjamarcel123";
-      try {
-        if (localStorage.getItem(KEY) === "1") return;
-      } catch (e) { /* localStorage may be unavailable; fall through */ }
-      var input = window.prompt("Salasana:");
-      if (input === PASSWORD) {
-        try { localStorage.setItem(KEY, "1"); } catch (e) { /* ignore */ }
-        return;
-      }
-      document.documentElement.innerHTML = "<body style=\"background:#000;color:#fff;font-family:sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;\">V&auml;&auml;r&auml; salasana.</body>";
-      // Stop further script execution on this page.
-      throw new Error("gate");
-    })();
-  </script>
+  <!-- Pre-launch password gate — extracted to /js/pre-launch-gate.js
+       so a strict CSP (script-src without 'unsafe-inline') can ship.
+       Sync, no defer/async — must run before subsequent <script> tags
+       so the prompt + DOM-replace happens before any other code. -->
+  <script src="/js/pre-launch-gate.js"></script>
 
 
   <title>Puheo — Espanjan YO-koe harjoittelu tekoälyllä | Lyhyt oppimäärä 2026</title>
