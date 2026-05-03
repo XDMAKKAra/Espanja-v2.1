@@ -47,27 +47,9 @@
 </head>
 <body>
 
-  <!-- Pre-paint shell-mode hint — toggle auth-mode on body BEFORE first paint
-       so the layout doesn't shift from 3-col grid → 1-col when JS detects no
-       auth token. Eliminates the dashboard CLS 0.163 root cause.
-       Also resolves the saved theme so the dark palette paints on first
-       frame instead of flashing the light surface. -->
-  <script>
-    (function () {
-      try {
-        if (!localStorage.getItem("puheo_token")) {
-          document.body.classList.add("auth-mode");
-        }
-        var saved = localStorage.getItem("puheo_theme") || "auto";
-        var effective = saved;
-        if (saved === "auto") {
-          var m = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)");
-          effective = (m && m.matches) ? "dark" : "light";
-        }
-        document.documentElement.setAttribute("data-theme", effective);
-      } catch (e) {}
-    })();
-  </script>
+  <!-- Pre-paint shell-mode + theme hint — extracted to /js/app-prepaint.js
+       in L-SECURITY-3 so a strict CSP can ship. Sync, no defer/async. -->
+  <script src="/js/app-prepaint.js"></script>
 
   <!-- Skip to main content -->
   <a href="#app-main" class="skip-link">Siirry sisältöön</a>
@@ -2255,15 +2237,10 @@
 
   </div><!-- /app-shell -->
 
-  <script>
-    // Analytics config (injected server-side or set manually)
-    window.__POSTHOG_KEY = "phc_pDqvRspyx5eukF7fHFz2P3oKWmNAwJXChBBCPAUsfpwE";
-    // Pass 4 Commit 9 — default to waitlist mode until /api/config/public
-    // hydrates. Fail-safe: never hit live checkout before y-tunnus.
-    window.__WAITLIST_MODE = true;
-    window.__DEV_PRO_ENABLED = false;
-    window.__SENTRY_DSN = "https://7cb568cdf1a71bc8881775edab27ab86@o4511236850909184.ingest.de.sentry.io/4511236858511440";
-  </script>
+  <!-- Analytics + feature-flag globals — extracted to /js/app-config.js
+       in L-SECURITY-3 for strict CSP. Must precede the type=module
+       main.js below so the globals are set before analytics.js boots. -->
+  <script src="/js/app-config.js"></script>
   <!-- SCREEN: Settings / profile editor -->
   <div id="screen-profile" class="screen">
     <div class="profile-inner">
@@ -2493,10 +2470,7 @@
   </div>
 
   <script type="module" src="js/main.js"></script>
-  <script>
-    if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.register("/sw.js").catch(() => {});
-    }
-  </script>
+  <!-- SW registration — extracted to /js/sw-register.js in L-SECURITY-3. -->
+  <script src="/js/sw-register.js"></script>
 </body>
 </html>

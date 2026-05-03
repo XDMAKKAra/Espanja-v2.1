@@ -1,8 +1,13 @@
-const CACHE_VERSION = "puheo-v108";
+const CACHE_VERSION = "puheo-v109";
 const STATIC_ASSETS = [
   "/app.html",
   "/index.html",
   "/js/pre-launch-gate.js",
+  "/js/landing-init.js",
+  "/js/landing-nav.js",
+  "/js/app-prepaint.js",
+  "/js/app-config.js",
+  "/js/sw-register.js",
   "/style.css",
   "/landing.css",
   "/favicon-32.png",
