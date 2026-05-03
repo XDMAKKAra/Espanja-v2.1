@@ -32,10 +32,42 @@ function applyThemeChoice(value) {
   const valueEl = document.getElementById("settings-theme-value");
   if (valueEl) valueEl.textContent = THEME_LABELS[v];
 }
+
+// L-LIVE-AUDIT-P2 UPDATE 7 — Magic UI animated-theme-toggler ported to vanilla.
+// View Transitions API expands a clip-path circle from the click point so the
+// new theme reveals as a wipe instead of a hard flash. Falls back to instant
+// when the browser lacks the API or the user prefers reduced motion.
+function applyThemeChoiceWithTransition(value, evt) {
+  const reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (!document.startViewTransition || reduced) {
+    applyThemeChoice(value);
+    return;
+  }
+  let originX, originY;
+  if (evt && Number.isFinite(evt.clientX) && evt.clientX > 0) {
+    originX = evt.clientX;
+    originY = evt.clientY;
+  } else {
+    // Keyboard / programmatic click — origin from the active element's centre.
+    const target = (evt?.currentTarget) || document.activeElement;
+    if (target?.getBoundingClientRect) {
+      const r = target.getBoundingClientRect();
+      originX = r.left + r.width / 2;
+      originY = r.top + r.height / 2;
+    } else {
+      originX = window.innerWidth / 2;
+      originY = window.innerHeight / 2;
+    }
+  }
+  document.documentElement.style.setProperty("--vt-origin-x", `${originX}px`);
+  document.documentElement.style.setProperty("--vt-origin-y", `${originY}px`);
+  document.startViewTransition(() => applyThemeChoice(value));
+}
+
 let _themeMqlBound = false;
 function wireThemeToggle() {
   document.querySelectorAll(".settings-theme-btn").forEach((b) => {
-    b.addEventListener("click", () => applyThemeChoice(b.dataset.theme));
+    b.addEventListener("click", (evt) => applyThemeChoiceWithTransition(b.dataset.theme, evt));
   });
   // Initial state from localStorage if set.
   try {

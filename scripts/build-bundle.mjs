@@ -15,6 +15,9 @@ await build({
   entryPoints: ["scripts/bundle-entry.css"],
   outfile: "app.bundle.css",
   loader: { ".css": "css" },
+  // L-LIVE-AUDIT-P2 UPDATE 8 — leave /fonts/*.woff2 url() references alone;
+  // they are absolute URLs served by Vercel from /fonts/, not bundleable.
+  external: ["/fonts/*"],
 });
 
 await build({

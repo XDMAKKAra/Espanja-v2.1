@@ -21,6 +21,81 @@ import { generateExerciseShareCard } from "../features/shareCard.js";
 import { getLessonContext, isDeepenRun } from "../lib/lessonContext.js";
 import { setReviewBadge } from "../features/reviewBadge.js";
 
+// L-LIVE-AUDIT-P2 UPDATE 5 — Pre-generate the next vocab batch in the
+// background once the student is 2/3 through the current set. The audit
+// measured a 4 164 ms gap between "Aloita uusi" click and Q1 of the next
+// batch; pre-genning hides ~80% of that on free-practice loops.
+//
+// Conditions:
+//  - free practice only (no curriculum lessonContext, no deepen, no mastery)
+//  - current batch is the standard 4-MC batch (state.exercises.length >= 3)
+//  - we don't already have a preload in flight or a fresh result waiting
+//
+// On loadNextBatch entry, the AI-generate fetch is replaced with a thenable
+// that resolves to the preloaded payload (when present); otherwise the
+// regular fetch fires.
+let _preloadedBatchPromise = null;
+let _preloadedBatchKey = null;
+
+function vocabPreloadKey() {
+  return [state.level, state.topic, state.language, (state.recentVocabHeadwords || []).slice(-30).join("|")].join("::");
+}
+
+function shouldTriggerVocabPreload() {
+  if (_preloadedBatchPromise) return false;
+  if (typeof getLessonContext === "function" && getLessonContext()) return false;
+  if (typeof isDeepenRun === "function" && isDeepenRun()) return false;
+  if (state._masteryTotal) return false;
+  if (state._reviewMode) return false;
+  if (state.mode && state.mode !== "vocab") return false;
+  if (!Array.isArray(state.exercises) || state.exercises.length < 3) return false;
+  // Trigger when student crosses the 2/3 threshold of the current batch.
+  const threshold = Math.floor(state.exercises.length * 0.66);
+  return state.current >= threshold && state.current < state.exercises.length - 1;
+}
+
+function triggerVocabPreload() {
+  if (!shouldTriggerVocabPreload()) return;
+  const key = vocabPreloadKey();
+  _preloadedBatchKey = key;
+  _preloadedBatchPromise = (async () => {
+    try {
+      const res = await fetch(`${API}/api/generate`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", ...authHeader() },
+        body: JSON.stringify({
+          level: state.level,
+          topic: state.topic,
+          count: BATCH_SIZE,
+          language: state.language,
+          recentlyShown: state.recentVocabHeadwords || [],
+        }),
+      });
+      if (!res.ok) return null;
+      const data = await res.json();
+      if (!data?.exercises?.length) return null;
+      return data;
+    } catch {
+      return null;
+    }
+  })();
+}
+
+function consumePreloadedBatch() {
+  if (!_preloadedBatchPromise) return null;
+  // Stale-key check: if the user-state shifted between preload and consume
+  // (e.g. switched topic), drop the preload and fall back to a fresh fetch.
+  if (_preloadedBatchKey !== vocabPreloadKey()) {
+    _preloadedBatchPromise = null;
+    _preloadedBatchKey = null;
+    return null;
+  }
+  const p = _preloadedBatchPromise;
+  _preloadedBatchPromise = null;
+  _preloadedBatchKey = null;
+  return p;
+}
+
 function fmtElapsed(ms) {
   if (!Number.isFinite(ms) || ms <= 0) return "—";
   const s = Math.round(ms / 1000);
@@ -314,24 +389,34 @@ export async function loadNextBatch() {
     // into the prompt. We just forward { kurssiKey, lessonIndex }.
     const lessonCtx = lessonCtxEarly;
     const deepen = !!(lessonCtx && isDeepenRun());
-    const res = await fetch(`${API}/api/generate`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json", ...authHeader() },
-      body: JSON.stringify({
-        level: state.level,
-        topic: state.topic,
-        // L-PLAN-5 UPDATE 5 — lesson mode requests the full lesson size in
-        // one batch; free practice still requests BATCH_SIZE (4) per round.
-        // L-PLAN-6 — deepen runs are a fixed 4-item harder follow-up for L.
-        count: deepen ? 4 : (lessonCtx ? (lessonCtx.lessonExerciseCount || mcCount) : mcCount),
-        language: state.language,
-        recentlyShown: state.recentVocabHeadwords || [],
-        ...(lessonCtx ? { lesson: lessonCtx } : {}),
-        ...(deepen ? { mode: "deepen" } : {}),
-      }),
-    });
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.error || "Tehtävien luonti epäonnistui");
+
+    // L-LIVE-AUDIT-P2 UPDATE 5 — free-practice may have a pre-generated batch
+    // already in flight from the previous question's 2/3-mark trigger. Consume
+    // it instead of hitting /api/generate again. Lesson + deepen paths bypass
+    // the cache because their prompts are context-specific.
+    let data;
+    let res;
+    const preloaded = (!lessonCtx && !deepen) ? consumePreloadedBatch() : null;
+    if (preloaded) {
+      data = await preloaded;
+    }
+    if (!data) {
+      res = await fetch(`${API}/api/generate`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", ...authHeader() },
+        body: JSON.stringify({
+          level: state.level,
+          topic: state.topic,
+          count: deepen ? 4 : (lessonCtx ? (lessonCtx.lessonExerciseCount || mcCount) : mcCount),
+          language: state.language,
+          recentlyShown: state.recentVocabHeadwords || [],
+          ...(lessonCtx ? { lesson: lessonCtx } : {}),
+          ...(deepen ? { mode: "deepen" } : {}),
+        }),
+      });
+      data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Tehtävien luonti epäonnistui");
+    }
     if (!data.exercises?.length) throw new Error("Tehtäviä ei voitu generoida tällä hetkellä — yritä hetken päästä uudelleen.");
 
     // Track headwords from this batch so the next /generate call can ask
@@ -948,6 +1033,8 @@ $("btn-next").addEventListener("click", async () => {
   removeSrAnimation();
 
   state.current++;
+  // L-LIVE-AUDIT-P2 UPDATE 5 — opportunistic pre-gen of the next AI batch.
+  triggerVocabPreload();
   if (state.current >= state.exercises.length) {
     endBatch();
   } else {
