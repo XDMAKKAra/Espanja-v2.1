@@ -1,7 +1,11 @@
-const CACHE_VERSION = "puheo-v112";
+const CACHE_VERSION = "puheo-v113";
 const STATIC_ASSETS = [
   "/app.html",
   "/index.html",
+  // L-LIVE-AUDIT-P2 UPDATE 1+2 — bundled CSS+JS replace 16 CSS links + 28 JS modules
+  // on app.html cold load. Source files stay in repo + cached below for offline robustness.
+  "/app.bundle.css",
+  "/app.bundle.js",
   "/js/pre-launch-gate.js",
   "/js/landing-init.js",
   "/js/landing-nav.js",

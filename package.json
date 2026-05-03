@@ -5,7 +5,8 @@
   "scripts": {
     "start": "node server.js",
     "dev": "node --watch server.js",
-    "build": "echo 'No build step required'",
+    "build": "node scripts/build-bundle.mjs",
+    "build:bundle": "node scripts/build-bundle.mjs",
     "test": "vitest run",
     "test:unit": "vitest run",
     "test:coverage": "vitest run --coverage",
@@ -46,6 +47,7 @@
     "@vitest/coverage-v8": "^4.1.5",
     "@vitest/ui": "^4.1.4",
     "axe-core": "^4.11.3",
+    "esbuild": "^0.28.0",
     "eslint": "^10.2.0",
     "eslint-config-prettier": "^10.1.8",
     "happy-dom": "^20.9.0",
