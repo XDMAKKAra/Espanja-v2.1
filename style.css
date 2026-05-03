@@ -5526,3 +5526,43 @@ body:has(.app-countdown:not(.hidden)) #app-main { padding-top: 34px; }
 @media (prefers-reduced-motion: reduce) {
   .tt-popover { transition: none; }
 }
+
+/* ============================================================
+   L-LIVE-AUDIT-P2 UPDATE 8 — self-hosted Inter + DM Mono.
+   Replaces fonts.googleapis.com / fonts.gstatic.com requests on app.html
+   cold load. Both subsets ship: latin and latin-ext (Finnish needs ext).
+   font-display: swap keeps the app shell paintable while the font loads.
+   ============================================================ */
+@font-face { font-family: 'Inter'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/inter-latin-400-normal.woff2') format('woff2'), url('/fonts/inter-latin-ext-400-normal.woff2') format('woff2'); unicode-range: U+0000-024F, U+1E00-1EFF, U+2000-206F, U+20A0-20CF; }
+@font-face { font-family: 'Inter'; font-style: normal; font-weight: 500; font-display: swap; src: url('/fonts/inter-latin-500-normal.woff2') format('woff2'), url('/fonts/inter-latin-ext-500-normal.woff2') format('woff2'); unicode-range: U+0000-024F, U+1E00-1EFF, U+2000-206F, U+20A0-20CF; }
+@font-face { font-family: 'Inter'; font-style: normal; font-weight: 600; font-display: swap; src: url('/fonts/inter-latin-600-normal.woff2') format('woff2'), url('/fonts/inter-latin-ext-600-normal.woff2') format('woff2'); unicode-range: U+0000-024F, U+1E00-1EFF, U+2000-206F, U+20A0-20CF; }
+@font-face { font-family: 'Inter'; font-style: normal; font-weight: 700; font-display: swap; src: url('/fonts/inter-latin-700-normal.woff2') format('woff2'), url('/fonts/inter-latin-ext-700-normal.woff2') format('woff2'); unicode-range: U+0000-024F, U+1E00-1EFF, U+2000-206F, U+20A0-20CF; }
+@font-face { font-family: 'Inter'; font-style: normal; font-weight: 800; font-display: swap; src: url('/fonts/inter-latin-800-normal.woff2') format('woff2'), url('/fonts/inter-latin-ext-800-normal.woff2') format('woff2'); unicode-range: U+0000-024F, U+1E00-1EFF, U+2000-206F, U+20A0-20CF; }
+@font-face { font-family: 'DM Mono'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/dm-mono-latin-400-normal.woff2') format('woff2'), url('/fonts/dm-mono-latin-ext-400-normal.woff2') format('woff2'); unicode-range: U+0000-024F, U+1E00-1EFF, U+2000-206F, U+20A0-20CF; }
+@font-face { font-family: 'DM Mono'; font-style: normal; font-weight: 500; font-display: swap; src: url('/fonts/dm-mono-latin-500-normal.woff2') format('woff2'), url('/fonts/dm-mono-latin-ext-500-normal.woff2') format('woff2'); unicode-range: U+0000-024F, U+1E00-1EFF, U+2000-206F, U+20A0-20CF; }
+
+/* ============================================================
+   L-LIVE-AUDIT-P2 UPDATE 7 — Animated theme toggler (Magic UI port).
+   View Transitions API + clip-path: a circle expands from the click point
+   so the new theme reveals as a wipe instead of a hard flash. CSS variables
+   --vt-origin-x / --vt-origin-y are set by js/screens/settings.js before
+   document.startViewTransition() fires. Reduced-motion + unsupported
+   browsers fall back to the JS-side instant-swap path.
+   ============================================================ */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-old(root) { z-index: 1; }
+::view-transition-new(root) {
+  z-index: 2;
+  animation: vt-clip-expand 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+@keyframes vt-clip-expand {
+  from { clip-path: circle(0% at var(--vt-origin-x, 50%) var(--vt-origin-y, 50%)); }
+  to   { clip-path: circle(150% at var(--vt-origin-x, 50%) var(--vt-origin-y, 50%)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-new(root) { animation: none; }
+}

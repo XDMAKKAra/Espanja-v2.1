@@ -62,16 +62,23 @@ describe("global heading rules reference tokens", () => {
 describe("HTML shells load a webfont with latin-ext support", () => {
   // Finnish (ä/ö/å) and Spanish (ñ/á/í/ó/ú) both need the latin-ext subset.
   // The exact font family is owned by design-system/DESIGN.md — we only
-  // guard that a Google Fonts link with latin-ext exists.
+  // guard that a webfont with latin-ext exists, either via Google Fonts CDN
+  // or via self-hosted @font-face declarations in style.css (L-LIVE-AUDIT-P2
+  // UPDATE 8 moved app.html to self-hosted Inter + DM Mono).
   const shells = ["index.html", "app.html", "pricing.html", "diagnose.html",
                   "privacy.html", "terms.html", "refund.html"];
   for (const shell of shells) {
-    it(`${shell} loads Google Fonts with latin-ext subset`, () => {
+    it(`${shell} loads a webfont with latin-ext subset`, () => {
       const path = resolve(root, shell);
       if (!existsSync(path)) return;
       const html = readFileSync(path, "utf8");
-      expect(html).toMatch(/fonts\.googleapis\.com|fonts\.gstatic\.com/);
-      expect(html).toMatch(/subset=latin-ext|latin-ext/);
+      const usesGoogleFonts = /fonts\.googleapis\.com|fonts\.gstatic\.com/.test(html)
+        && /subset=latin-ext|latin-ext/.test(html);
+      // Self-hosted path: the shell preloads /fonts/* AND style.css ships
+      // latin-ext @font-face declarations.
+      const usesSelfHosted = /\/fonts\/[^"'\s]+latin[^"'\s]*\.woff2/.test(html)
+        && /latin-ext-\d+-normal\.woff2/.test(styleCss);
+      expect(usesGoogleFonts || usesSelfHosted).toBe(true);
     });
   }
 });

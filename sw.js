@@ -1,4 +1,4 @@
-const CACHE_VERSION = "puheo-v114";
+const CACHE_VERSION = "puheo-v115";
 const STATIC_ASSETS = [
   "/app.html",
   "/index.html",
@@ -6,6 +6,14 @@ const STATIC_ASSETS = [
   // on app.html cold load. Source files stay in repo + cached below for offline robustness.
   "/app.bundle.css",
   "/app.bundle.js",
+  // L-LIVE-AUDIT-P2 UPDATE 8 — self-hosted fonts (Inter + DM Mono).
+  "/fonts/inter-latin-400-normal.woff2",
+  "/fonts/inter-latin-500-normal.woff2",
+  "/fonts/inter-latin-600-normal.woff2",
+  "/fonts/inter-latin-700-normal.woff2",
+  "/fonts/inter-latin-800-normal.woff2",
+  "/fonts/dm-mono-latin-400-normal.woff2",
+  "/fonts/dm-mono-latin-500-normal.woff2",
   "/js/pre-launch-gate.js",
   "/js/landing-init.js",
   "/js/landing-nav.js",
