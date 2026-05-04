@@ -146,13 +146,13 @@
 .dash-greeting {
   position: relative;
   isolation: isolate;
-  /* L-HOME-HOTFIX-3 — tighten top of #screen-path: drop the 96px floor and
-     halve the bottom margin so Oppimispolku-otsikko + Kurssi 1 fit in the
-     1080-tall viewport without scrolling. The meteors-fx still has clip
-     bounds via the eyebrow + display block content. */
-  margin-bottom: 16px;
+  /* L-HOME-HOTFIX-3-P3 — flush against the top of #screen-path. No
+     min-height floor, no top padding, tight bottom margin. */
+  margin: 0 0 12px;
+  padding-top: 12px;
   min-height: auto;
 }
+.dash-greeting .display { margin: 4px 0 6px; }
 .dash-greeting > .eyebrow,
 .dash-greeting > .display,
 .dash-greeting > .dash-greeting__sub { position: relative; z-index: 1; }

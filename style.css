@@ -4068,15 +4068,19 @@ body:has(.app-countdown:not(.hidden)) #app-main { padding-top: 34px; }
 
 
 /* ── LEARNING PATH ── */
+/* Trim .screen's default 24px frame on the path screen — the path-inner
+   handles its own gutters. Without this, content sits inside two stacked
+   24px paddings. */
+#screen-path.screen { padding: 0; }
+
 .path-inner {
-  /* L-HOME-HOTFIX-2 — widen to match .curr (1320px) and centre horizontally.
-     L-HOME-HOTFIX-3 — top padding 24px (was 0) lifts content under the nav
-     without leaving a void; bottom 48px stays for breathing space. */
-  max-width: 1320px; width: 100%;
+  /* L-HOME-HOTFIX-3-P3 — fill wide screens (1500 max), drop the inner
+     scroll container so the page scrolls naturally with the rail flowing
+     alongside, and zero the top padding so the greeting sits flush under
+     the nav without a dead band. */
+  max-width: 1500px; width: 100%;
   margin-inline: auto;
-  max-height: calc(100vh - 48px);
-  overflow-y: auto;
-  padding: 24px 16px 48px;
+  padding: 16px 24px 64px;
   animation: fadeUp 0.4s ease both;
 }
 .path-inner > .dash-greeting,
@@ -4105,11 +4109,24 @@ body:has(.app-countdown:not(.hidden)) #app-main { padding-top: 34px; }
 @media (min-width: 1024px) {
   .path-grid {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 380px;
-    gap: 32px;
+    grid-template-columns: minmax(0, 1fr) 440px;
+    gap: 40px;
     align-items: start;
   }
   .path-rail { margin-top: 0; }
+}
+@media (min-width: 1600px) {
+  .path-grid { grid-template-columns: minmax(0, 1fr) 480px; }
+}
+/* Course list inside .path-main no longer needs its own max-width or
+   top-padding — .path-inner caps width and the dash-greeting above
+   provides the breathing zone. Without these overrides the curr block
+   double-paddings the top and re-centres at 1320 inside an already
+   centred 1500 container, leaving fat empty bands on wide screens. */
+#screen-path .path-main .curr {
+  max-width: none;
+  padding: 0 0 32px;
+  margin: 0;
 }
 .path-header { margin-bottom: 24px; text-align: center; }
 .path-title {
