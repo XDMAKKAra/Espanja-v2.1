@@ -16,11 +16,16 @@
     "test:visual": "VISUAL_BASELINE=1 playwright test tests/e2e-visual.spec.js",
     "test:visual:update": "VISUAL_BASELINE=1 playwright test tests/e2e-visual.spec.js --update-snapshots",
     "check:sw": "node scripts/check-sw-cache-version.js",
+    "validate:lessons": "node scripts/validate-lessons.mjs",
     "security:scan": "node scripts/security-scan.mjs",
     "lint": "eslint . --ext .js,.mjs",
     "audit:a11y": "pa11y-ci --config exercises/baselines/pa11y-ci.config.json --json > exercises/baselines/pa11y.json",
     "audit:lighthouse": "lighthouse http://localhost:3000/app.html --only-categories=performance,accessibility,best-practices --preset=desktop --output=json --output-path=exercises/baselines/lighthouse-app.json --chrome-flags=--headless --quiet",
-    "audit:lighthouse:landing": "lighthouse http://localhost:3000/ --only-categories=performance,accessibility,best-practices --preset=desktop --output=json --output-path=exercises/baselines/lighthouse-landing.json --chrome-flags=--headless --quiet"
+    "audit:lighthouse:landing": "lighthouse http://localhost:3000/ --only-categories=performance,accessibility,best-practices --preset=desktop --output=json --output-path=exercises/baselines/lighthouse-landing.json --chrome-flags=--headless --quiet",
+    "preview:capture": "node marketing/preview/scripts/capture.mjs",
+    "preview:analyze-audio": "node marketing/preview/scripts/analyze-audio.mjs",
+    "preview:studio": "cd marketing/preview && npm run dev",
+    "preview:render": "cd marketing/preview && npm run build"
   },
   "dependencies": {
     "@sentry/node": "^10.49.0",
@@ -46,6 +51,7 @@
     "@playwright/test": "^1.59.1",
     "@rolldown/binding-linux-x64-gnu": "^1.0.0-rc.18",
     "@vitest/coverage-v8": "^4.1.5",
+    "ajv": "^6.14.0",
     "@vitest/ui": "^4.1.4",
     "axe-core": "^4.11.3",
     "esbuild": "^0.28.0",
