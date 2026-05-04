@@ -1,11 +1,16 @@
 # Puheo Agent State
 
 **Last updated:** 2026-05-04
-**Current state:** L-HOME-HOTFIX-2 shipped (etusivun layout, YO-valmius kurssidatalla, Opetussivu→Miten Puheo toimii etusivulla, hierarkia kurssikortit ensin).
+**Current state:** L-HOME-HOTFIX-3 shipped (kahden palstan grid desktopilla, aktiivinen kurssi auto-aukeaa, accent-CTA #screen-pathilla, top tightening).
 
 ---
 
 ## Recent loops (last 5)
+
+### L-HOME-HOTFIX-3 — 2026-05-04 ✓ shipped
+**Scope:** `app.html#screen-path` käärittyy `path-grid`-divaan jossa `path-main` (kurssipolku) + sticky `path-rail` (day-CTA + YO-valmius). Desktop ≥1024 px = 2 sarakkeen grid `minmax(0,1fr) 360px / gap 32`; mobile pysyy stackattuna. `dash-day-cta` käyttää uutta `.btn--cta--accent` -modifieria (turkoosi pohjalla, tumma teksti — ~13:1 kontrasti) joka on määritelty `css/components/button.css`:ssä — alkuperäinen `.btn--cta` (oppituntien sisällä) säilyy ennallaan. `js/screens/curriculum.js loadCurriculum()` auto-expandaa ensimmäisen unlocked + ei-vielä-mastered-kurssin (advance kun edellinen kertausPassed). `style.css .path-inner` padding `0 16px 48px`→`24 16 48` (tightens top); `.dash-greeting` `min-height 96`→`auto`, `margin-bottom 32`→`16`.
+**Files:** 5 (`app.html`, `style.css`, `css/components/dashboard.css`, `css/components/button.css`, `js/screens/curriculum.js`) + sw + bundles. **SW:** v122→v123. **Tests:** 1064/1064 ✓. **Build:** clean.
+**Pending:** 21st.dev sourcing-pass lesson-list/sticky-rail komponenteille deferattu (käytettiin olemassa olevia `.curr-lessons` ja flex-stack-patterneja). Per-lesson-status-endpoint säilyy ennallaan: `/api/curriculum/:k` palauttaa jo `lessons[].completed`-flagin; `current/locked`-statusta ei tarvittu sillä lukitut oppitunnit eivät näy listalla erikseen (renderCard avaa vain aktiivisen kurssin lessonit). Playwright + axe-sweep + design:design-critique workflow_dispatch-gated, käyttäjän tehtävä Vercel-deployn jälkeen.
 
 ### L-HOME-HOTFIX-2 — 2026-05-04 ✓ shipped
 **Scope:** `.path-inner` 1080→1320px + margin-inline:auto + tasapainoinen padding (oikean kolmanneksen tyhjyys 1456px viewportilla katoaa). YO-valmius vaihdettu `/api/curriculum`-dataan: pct = completedLessons/totalLessons, masteredCells = kertausPassed-summa, totalCells = 8 (oli 14, oli SR-mastery). `dash-readiness-grid` 8-sarakkeinen. teachingPanel.js syncTrigger lisätty `screen-path`-haara joka renderöi "Miten Puheo toimii" -napin (data-mode=tutorial); open() näyttää 6-stepin staattisen `HOME_TUTORIAL_MD`-sisällön; oppitunnin sisällä nappi säilyy ennallaan. `app.html screen-path` järjestys: greeting → path-courses → btn--cta--mini → readiness → footer-grid (kurssipolku visuaalisesti dominoi).
@@ -26,18 +31,11 @@
 **Scope:** L-LIVE-AUDIT-P1 UPDATE 8 follow-up — `--cat-*` tokenit `:root`-tasolle (vocab/grammar/reading/writing/verbsprint), dark-theme override `[data-theme="dark"]`-blokkiin (-700 → -400 shadet AA-kontrastilla #0a0a0a:lla), `mode-page.css` raw-hex → token-referenssi.
 **Files:** 3 (`style.css`, `css/components/mode-page.css`, `sw.js`) + bundles. **SW:** v115→v116. **Tests:** 1064/1064 ✓.
 
-### L-CLEANUP-1 — 2026-05-03 ✓ shipped
-**Scope:** Documentation siivous (state archive split) + dead-code removal (LemonSqueezy + console.logs + unused imports + stale TODOs).
-**Files moved to archive:** 12 agent-prompts + IMPROVEMENTS pre-audit history + AGENT_STATE history.
-**Code removed:** routes/stripe.js LemonSqueezy logic + refs in 5 active files + `@lemonsqueezy/lemonsqueezy.js` dep.
-**Tokens saved:** ~30k per session (40k → 10k context preload).
-**Tests:** 1064/1064 ✓ (was 1067; 3 LemonSqueezy webhook signature tests dropped).
-
 ---
 
 ## Next loop
 
-**Recommended:** L-HOME-HOTFIX-2-P2 — 21st.dev step-tutorial-komponentti `HOME_TUTORIAL_MD`-sisällölle (nykyinen markdown-list riittää MVP:nä), axe + design:design-critique screen-pathille. Sen jälkeen L-COURSE-2 (Batch 1 generointi).
+**Recommended:** L-COURSE-2 (Batch 1 generointi) tai L-HOME-HOTFIX-3-P2 — 21st.dev sourcing-pass lesson-list/sticky-rail-komponenteille + Playwright/axe-sweep neljällä viewportilla. Sen jälkeen step-tutoriaali-pass `HOME_TUTORIAL_MD`-sisällölle.
 
 **Recurring blockers:** Playwright E2E gated since d3f5ca5; manual prod verify on käyttäjän tehtävä.
 

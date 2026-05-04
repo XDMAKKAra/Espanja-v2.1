@@ -334,10 +334,11 @@ export async function loadCurriculum() {
   const root = document.getElementById(PATH_INNER_ID);
   if (!root) return;
   show("screen-path");
-  // hotfix bug 2 — clear any stale expanded state so we don't render a card
-  // with the "Ladataan oppitunteja…" placeholder that nobody refreshes.
-  // Tab will re-expand on demand via toggleKurssi.
-  _state.expanded = null;
+  // L-HOME-HOTFIX-3 — keep the active course expanded across renders so the
+  // student lands on the lesson list directly. Cleared on first ever render
+  // (no kurssit yet); set after fetch via firstActiveKurssiKey().
+  // (was: hardcoded null — Tab re-expand only.)
+  // _state.expanded preserved here.
   // L-PLAN-8 UPDATE 6A — make sure the floating Opetussivu trigger from a
   // prior lesson session is hidden the moment we land back on the path
   // overview. The MutationObserver in teachingPanel.js handles this on its
@@ -354,7 +355,23 @@ export async function loadCurriculum() {
     if (!res.ok) throw new Error("Polun lataus epäonnistui");
     const data = await res.json();
     _state.kurssit = data.kurssit || [];
+    // L-HOME-HOTFIX-3 — auto-expand the first active (unlocked, not yet
+    // mastered) course so users see the lesson list without an extra click.
+    // If the previously expanded course is now mastered/locked, advance.
+    const prev = _state.expanded
+      ? _state.kurssit.find((k) => k.key === _state.expanded)
+      : null;
+    if (!prev || !prev.isUnlocked || prev.kertausPassed) {
+      const active = _state.kurssit.find((k) => k.isUnlocked && !k.kertausPassed)
+        || _state.kurssit.find((k) => k.isUnlocked);
+      _state.expanded = active ? active.key : null;
+    }
     renderKurssitList(root);
+    if (_state.expanded) {
+      // Fire-and-forget: lesson list is rendered as "Ladataan…" by renderCard
+      // and then replaced by fetchAndRenderLessons.
+      fetchAndRenderLessons(_state.expanded);
+    }
   } catch (err) {
     renderError(root, err.message || "Jokin meni pieleen", () => loadCurriculum());
   }

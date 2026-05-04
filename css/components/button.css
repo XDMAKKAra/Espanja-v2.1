@@ -220,6 +220,23 @@
 .btn--cta--mini .btn--cta__title { font-size: var(--fs-body); }
 .btn--cta--mini .btn--cta__arrow { font-size: var(--fs-body); }
 
+/* L-HOME-HOTFIX-3 — accent variant for #screen-path day-CTA. The default
+   navy .btn--cta reads as disabled on the path screen's dark surface; the
+   accent (turquoise) variant lifts the CTA visually while keeping the same
+   layout, padding and motion. Dark text on accent gives ~13:1 contrast. */
+.btn--cta--accent {
+  background: var(--accent);
+  color: var(--ink);
+  box-shadow: 0 1px 0 rgba(13, 148, 136, 0.18), 0 18px 32px -22px rgba(13, 148, 136, 0.45);
+}
+.btn--cta--accent:hover {
+  background: color-mix(in oklab, var(--accent) 92%, var(--ink) 8%);
+  box-shadow: 0 1px 0 rgba(13, 148, 136, 0.22), 0 22px 36px -22px rgba(13, 148, 136, 0.5);
+}
+.btn--cta--accent .btn--cta__title { color: var(--ink); }
+.btn--cta--accent .btn--cta__meta { color: rgba(15, 23, 42, 0.78); }
+.btn--cta--accent .btn--cta__arrow { color: var(--ink); }
+
 /* Outline button — secondary action that lives next to .btn--cta.
    Border-only, transparent fill. No icon-coloured arrow. */
 .btn--outline {

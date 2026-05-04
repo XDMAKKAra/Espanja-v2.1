@@ -580,30 +580,29 @@
         </p>
       </header>
 
-      <!-- Course path — dominant section. curriculum.js renders into the
-           inner root. The wrapper section + header live in markup so they
-           survive curriculum.js's render passes.
-           L-HOME-HOTFIX-2: moved ABOVE the day-CTA so the course path is the
-           visual anchor of the screen. -->
-      <section class="path-courses">
-        <div id="path-courses-root"></div>
-      </section>
-
-      <!-- Single secondary CTA — Jatka tästä. dash-cta.js prioritises:
-           lesson-in-progress → SR-due → unstarted course → todays repeat.
-           L-HOME-HOTFIX-2: rendered as the ".btn--cta--mini" variant so it
-           sits visually under the dominant course cards instead of competing
-           with them. -->
-      <button type="button" class="btn--cta btn--cta--mini" id="dash-day-cta" data-target="vocab" data-kind="drill">
-        <div class="btn--cta__l">
-          <div class="btn--cta__title" data-cta-title>Aloita päivän treeni</div>
-          <div class="btn--cta__meta" data-cta-meta>20 SANAA · 5 MIN</div>
-        </div>
-        <span class="btn--cta__arrow" aria-hidden="true">→</span>
-      </button>
-
-      <!-- YO-koe readiness card — populated by dashboard.js. -->
-      <div class="dash-readiness hidden" id="dash-readiness" aria-live="polite"></div>
+      <!-- L-HOME-HOTFIX-3: two-column grid on desktop ≥1024px. Left rail =
+           course list (dominant); right rail = day-CTA, YO-readiness, weak
+           topics. Stacks on mobile via CSS (display:block default). -->
+      <div class="path-grid">
+        <main class="path-main">
+          <section class="path-courses">
+            <div id="path-courses-root"></div>
+          </section>
+        </main>
+        <aside class="path-rail" aria-label="Pikatoiminnot ja edistyminen">
+          <!-- Day-CTA — accent variant in the path context (turquoise on dark
+               surface) so it doesn't read as disabled. -->
+          <button type="button" class="btn--cta btn--cta--accent" id="dash-day-cta" data-target="vocab" data-kind="drill">
+            <div class="btn--cta__l">
+              <div class="btn--cta__title" data-cta-title>Aloita päivän treeni</div>
+              <div class="btn--cta__meta" data-cta-meta>20 SANAA · 5 MIN</div>
+            </div>
+            <span class="btn--cta__arrow" aria-hidden="true">→</span>
+          </button>
+          <!-- YO-koe readiness card — populated by dashboard.js. -->
+          <div class="dash-readiness hidden" id="dash-readiness" aria-live="polite"></div>
+        </aside>
+      </div>
 
       <!-- Footer grid: recent activity + progress chart, side-by-side desktop, stacked mobile. -->
       <div class="dash-grid-row path-footer-grid">
