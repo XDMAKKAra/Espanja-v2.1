@@ -988,8 +988,10 @@
 [data-theme="light"] .dash-readiness-track__fill { background: var(--accent-dark, #0F766E); }
 .dash-readiness-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(28px, 1fr));
-  gap: 4px;
+  /* L-HOME-HOTFIX-2 — 8 cells (one per kurssi) instead of 14 sub-areas;
+     widen each cell so the row reads as a course progression, not a heatmap. */
+  grid-template-columns: repeat(8, 1fr);
+  gap: 6px;
 }
 .dash-readiness-cell {
   position: relative;
