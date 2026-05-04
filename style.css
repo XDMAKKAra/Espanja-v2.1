@@ -4106,6 +4106,38 @@ body:has(.app-countdown:not(.hidden)) #app-main { padding-top: 34px; }
 .path-rail #dash-recent-wrap,
 .path-rail .dash-chart-section { width: 100%; }
 .path-rail .dash-chart-container { min-height: 180px; }
+
+/* L-HOME-HOTFIX-3-P4 — bento-style rail per design-taste-frontend.
+   Unify CTA + readiness + recent + chart into a single visual column:
+   matched 20px radius, generous padding, 1px border, diffusion shadow.
+   No neon glows, no oversaturated accents — just calm depth. */
+.path-rail > #dash-recent-wrap,
+.path-rail > .dash-chart-section,
+.path-rail > #dash-readiness {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 24px;
+  margin: 0;
+  box-shadow: 0 20px 40px -28px rgba(2, 6, 23, 0.45);
+}
+.path-rail > .btn--cta { border-radius: 20px; }
+.path-rail .section-h h2 {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 0 0 12px;
+  color: var(--ink);
+}
+.path-rail .section-h { margin: 0 0 12px; }
+
+/* Tracking-tight on display headers — anti-AI-slop typography rule.
+   Inter is the project-locked font; we tighten it instead of swapping. */
+#screen-path .dash-greeting .display,
+#screen-path .curr-head h2 {
+  letter-spacing: -0.025em;
+  font-weight: 700;
+}
 @media (min-width: 1024px) {
   .path-grid {
     display: grid;
