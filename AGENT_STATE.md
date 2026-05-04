@@ -1,11 +1,16 @@
 # Puheo Agent State
 
 **Last updated:** 2026-05-04
-**Current state:** L-HOME-HOTFIX-3 shipped (kahden palstan grid desktopilla, aktiivinen kurssi auto-aukeaa, accent-CTA #screen-pathilla, top tightening).
+**Current state:** L-CI-SW-CHECK shipped (PR-only spam tukittu — SW-check ajaa nyt myös push-eventissä HEAD~1-diffillä; npm run bump:sw autofix).
 
 ---
 
 ## Recent loops (last 5)
+
+### L-CI-SW-CHECK — 2026-05-04 ✓ shipped
+**Scope:** Käyttäjä sai PR-CI-failispostia jokaisesta auto/* PR:stä vaikka main pysyi vihreänä. Brief AGENT_PROMPT_LINT_CLEANUP.md väitti 10 ESLint-erroria — virheellinen, lint = 0 errors / 106 warnings. Oikea juurisyy: `scripts/check-sw-cache-version.js` käytti `origin/main`-baseä myös push-eventissä → main-pushissa diff oli aina tyhjä → check oli no-op mainissa, mutta PR-runeilla välillä failasi race-conditionissa (PR bumpasi v125→v126, mutta jossain hetkessä origin/main oli jo v126 ennen mergeä). Korjaus: skripti tunnistaa `GITHUB_EVENT_NAME=push` → diff vs `HEAD~1`. Lisätty `--fix`-flagi + `npm run bump:sw` autofix. CI-ymliin checkki ajetaan nyt molemmissa eventeissä.
+**Files:** 3 (`scripts/check-sw-cache-version.js`, `package.json`, `.github/workflows/ci.yml`). **SW:** ei bumppia (STATIC_ASSETS ei muuttunut). **Tests:** 1064/1064 ✓. **CI on main:** vihreä (run 25335135098).
+**Pending:** 106 lint-warningia siivoamatta (ei kaada CI:tä). Brief AGENT_PROMPT_LINT_CLEANUP.md voi arkistoida — sen oletukset olivat vanhentuneet.
 
 ### L-HOME-HOTFIX-3 — 2026-05-04 ✓ shipped
 **Scope:** `app.html#screen-path` käärittyy `path-grid`-divaan jossa `path-main` (kurssipolku) + sticky `path-rail` (day-CTA + YO-valmius). Desktop ≥1024 px = 2 sarakkeen grid `minmax(0,1fr) 360px / gap 32`; mobile pysyy stackattuna. `dash-day-cta` käyttää uutta `.btn--cta--accent` -modifieria (turkoosi pohjalla, tumma teksti — ~13:1 kontrasti) joka on määritelty `css/components/button.css`:ssä — alkuperäinen `.btn--cta` (oppituntien sisällä) säilyy ennallaan. `js/screens/curriculum.js loadCurriculum()` auto-expandaa ensimmäisen unlocked + ei-vielä-mastered-kurssin (advance kun edellinen kertausPassed). `style.css .path-inner` padding `0 16px 48px`→`24 16 48` (tightens top); `.dash-greeting` `min-height 96`→`auto`, `margin-bottom 32`→`16`.
