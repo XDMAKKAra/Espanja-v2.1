@@ -32,6 +32,12 @@ const EXERCISE_SCREENS = new Set([
   "screen-grammar",
   "screen-reading",
   "screen-writing",
+  // L-COURSE-1 hotfix — the new pregenerated lesson runner stays on
+  // screen-lesson while the student answers items, so the re-read
+  // Opetussivu trigger needs to surface there too. Without this entry the
+  // floating button either never shows, or shows briefly and clicking it
+  // does nothing (no teaching md cached for the runner's screen-id).
+  "screen-lesson",
 ]);
 
 // Map exercise screen IDs to the natural top-bar element where the lesson

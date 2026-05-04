@@ -2,10 +2,22 @@
    Sourced layout: 21st.dev /s/timeline + /s/steps — restrained dark, vertical
    numbered nodes with connector. Ported to vanilla matching app's token system. */
 
+/* Hotfix — override .screen{align-items:center;justify-content:center} for
+   tall scrollable curriculum content. Centered + tall = top inaccessible
+   (classic flex+overflow trap). Anchor to top so the kurssi list head stays
+   reachable, and stretch horizontally so .curr fills the main column. */
+#screen-path.screen.active,
+#screen-lesson.screen.active,
+#screen-lesson-results.screen.active {
+  align-items: flex-start;
+  justify-content: stretch;
+}
+
 #screen-path .curr {
   /* hotfix bug 1 — widen oppimispolku to fill the viewport at 100% zoom.
      Desktop ≥1440 caps at 1320px (Linear-tier reading width); 1024-1439 fills
      available space; ≤1023 stacks with comfortable gutters. */
+  width: 100%;
   max-width: min(1320px, 100%);
   margin: 0 auto;
   padding: clamp(24px, 4vw, 48px) clamp(16px, 4vw, 32px) 80px;
@@ -345,12 +357,19 @@
 /* ── #screen-lesson ──────────────────────────────────────────────────────── */
 
 #screen-lesson .curr-lesson-page {
+  width: 100%;
   max-width: 720px;
   margin: 0 auto;
   padding: clamp(20px, 4vw, 40px) clamp(16px, 4vw, 24px) 80px;
   display: flex;
   flex-direction: column;
   gap: 24px;
+}
+/* Lesson runner shell needs to fill the main column at top alignment too —
+   without width: 100% the flex parent shrinks it to content width. */
+#screen-lesson #lesson-runner-root,
+#screen-lesson .lr-shell {
+  width: 100%;
 }
 
 .curr-back {
