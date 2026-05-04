@@ -161,6 +161,10 @@ function renderPhase(root, state) {
   root.innerHTML = `
     <div class="lr-shell lr-shell--exercise">
       <div class="lr-topbar">
+        <button type="button" class="lr-exit-btn" id="lr-exit-lesson" aria-label="Takaisin oppimispolulle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+          <span>Oppimispolku</span>
+        </button>
         <div class="lr-topbar-progress">
           <span class="lr-step-label">Vaihe ${state.currentPhaseIdx + 1} / ${totalPhases}</span>
           ${stepper}
@@ -311,6 +315,19 @@ function renderReadingMC(item) {
 function wireExerciseHandlers(root, state, item) {
   document.getElementById("lr-help-toggle")?.addEventListener("click", () => toggleSidePanel(root, state));
   document.getElementById("lr-skip")?.addEventListener("click", () => onSkipPhase(root, state));
+  document.getElementById("lr-exit-lesson")?.addEventListener("click", async () => {
+    const { confirmDialog } = await import("../features/confirmDialog.js");
+    const ok = await confirmDialog({
+      title: "Lopetetaanko oppitunti?",
+      body: "Edistyminen tällä oppitunnilla ei tallennu jos lähdet nyt. Voit aloittaa tunnin alusta uudelleen myöhemmin.",
+      confirmLabel: "Lähde takaisin",
+      cancelLabel: "Jatka oppituntia",
+    });
+    if (ok) {
+      const m = await import("./curriculum.js");
+      m.loadCurriculum();
+    }
+  });
   root.querySelector("[data-lr-skip-item]")?.addEventListener("click", () => advanceItem(root, state, true));
 
   if (item.item_type === "mc") {

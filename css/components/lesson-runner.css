@@ -126,6 +126,32 @@
 .lr-step--done { color: var(--success, var(--accent)); }
 
 .lr-topbar-actions { display: flex; gap: 8px; }
+
+/* Exit-to-curriculum pill, mirrors .lr-help-btn restraint. Sourced pattern:
+   21st.dev /s/back-button — chevron + label, subtle ring on hover. */
+.lr-exit-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: 1px solid var(--surface-2);
+  color: var(--ink-soft);
+  padding: 8px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 13px;
+  min-height: 36px;
+  transition: color 140ms ease, border-color 140ms ease, background 140ms ease;
+}
+.lr-exit-btn svg { width: 14px; height: 14px; flex-shrink: 0; }
+.lr-exit-btn:hover {
+  color: var(--ink);
+  border-color: var(--ink-soft);
+  background: color-mix(in srgb, var(--ink-faint, #71717a) 8%, transparent);
+}
+.lr-exit-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
 .lr-help-btn,
 .lr-skip-btn {
   background: transparent;
