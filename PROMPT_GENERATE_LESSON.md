@@ -112,28 +112,161 @@ Tämä on batch-generointi — käyttäjä ei reviewaa yksittäisiä tiedostoja.
 - Älä käytä englanninkielisiä termejä suomenkielisessä tekstissä
 - Älä shame, älä superlativisoi, ole konkreettinen
 
-## Vaihe-rakenne — education-skillit määräävät
+## Vaihe-rakenne — education-skillit määräävät TYYPIT, tämä prompti määrittää MÄÄRÄT
 
-`lesson_type` (vocab / grammar / reading / writing / mixed / test) on **lähtökohta**, ei resepti. Education-skillit kertovat:
-- Kuinka monta vaihetta per lesson_type
-- Vaiheiden järjestys (recognition → recall → application → synthesis)
-- Kuinka monta tehtävää per vaihe
-- `skip_for_targets`-päätös — mitkä target_grade-tasot ohittavat mitkä vaiheet
-- Mastery-kynnyksen suhde target_gradeen ja YO-pisterajoihin
+`lesson_type` (vocab / grammar / reading / writing / mixed / test) on **lähtökohta**, ei resepti. Education-skillit kertovat **vaiheiden tyypit ja järjestyksen**. Tämä prompti määrittää **kuinka monta vaihetta ja tehtävää** target_grade-skaalauksen mukaan.
 
-**Yleisperiaate:** I-tavoite tunnistaa, L-tavoite tuottaa ja syntetisoi.
+**Tärkeä päivitys (Batch 1 -palaute):** Batch 1:n testaus paljasti että vaiheita ja tehtäviä oli aivan liian vähän L-tason oppilaille — vain ~21 tehtävää per oppitunti, kun L-tavoite vaatii ~90-120. Skaalaus on nyt **pakollinen**.
 
-**Test-oppitunnit (per kurssin loppu):** kertaava sekoitus aiempien oppituntien sisällöstä. Lue ensin saman kurssin muut oppitunnit ja kerää sieltä sanasto + rakenteet.
+### Vaiheiden määrä per oppitunti, per target_grade
+
+| Lesson type | I | A | B | C | M | E | L |
+|---|---|---|---|---|---|---|---|
+| vocab    | 3 | 4 | 5 | 6 | 7 | 8 | **9-10** |
+| grammar  | 3 | 4 | 5 | 6 | 7 | 8 | **9-10** |
+| reading  | 1 | 1 | 1 | 1 | 2 | 2 | 2 |
+| writing  | 1 | 1 | 1 | 1 | 1 | 1 | 1 |
+| mixed    | 4 | 5 | 6 | 7 | 8 | 9 | **10-11** |
+| test     | 1 | 1 | 1 | 1 | 1 | 1 | 1 (kysymys-määrä skaalautuu, ei vaihe) |
+
+JSON-tiedostossa on **L-tason maksimimäärä vaiheita** (esim. 9-10 vocab-oppituntiin), ja `skip_for_targets`-arvot määräävät että I tekee 3, A tekee 4 jne. Esimerkki vocab-oppitunnin vaihejärjestyksestä:
+
+- Vaihe 1 (recognition_mc): `skip_for_targets: []` — kaikki tekevät
+- Vaihe 2 (recognition_match): `skip_for_targets: ["I"]`
+- Vaihe 3 (recall_typed_es_to_fi): `skip_for_targets: ["I"]`
+- Vaihe 4 (recall_typed_fi_to_es): `skip_for_targets: ["I", "A"]`
+- Vaihe 5 (application_gap_fill helppo): `skip_for_targets: ["I", "A"]`
+- Vaihe 6 (application_gap_fill vaativampi): `skip_for_targets: ["I", "A", "B"]`
+- Vaihe 7 (application_sentence_build): `skip_for_targets: ["I", "A", "B", "C"]`
+- Vaihe 8 (synthesis_translate): `skip_for_targets: ["I", "A", "B", "C"]`
+- Vaihe 9 (synthesis_short_writing): `skip_for_targets: ["I", "A", "B", "C", "M"]`
+- Vaihe 10 (cumulative review): `skip_for_targets: ["I", "A", "B"]` — vain C+ tasoilla
+
+### Tehtävien määrä per vaihe, per target_grade
+
+JSON-tiedostossa joka vaihe sisältää **L-tason enimmäismäärän** tehtäviä `items[]`-array:ssa. Frontend skaalaa per käyttäjä — adaptiivinen järjestelmä karsii listan target_graden mukaan runtime:ssa.
+
+| Vaihe-tyyppi | I | A | B | C | M | E | L (JSON:in items-määrä) |
+|---|---|---|---|---|---|---|---|
+| recognition_mc | 6 | 7 | 8 | 9 | 10 | 12 | **12-15** |
+| recognition_match | 6 | 7 | 8 | 9 | 10 | 12 | **12-15** |
+| recall_typed_es_to_fi | - | 5 | 6 | 7 | 8 | 9 | **10-12** |
+| recall_typed_fi_to_es | - | - | 6 | 7 | 8 | 9 | **10-12** |
+| application_gap_fill | 4 | 5 | 6 | 7 | 8 | 9 | **10-12** |
+| application_sentence_build | - | - | - | 4 | 5 | 6 | **8** |
+| synthesis_translate | - | - | - | - | 3 | 5 | **6-8** |
+| synthesis_short_writing | - | - | - | - | - | 2 | **3-4** |
+| reading_mc (kysymyksiä) | 3 | 4 | 5 | 5 | 5 | 6 | 6-7 |
+| writing_long | 1 | 1 | 1 | 1 | 1 | 1 | 1 |
+
+### L-tason vocab-oppitunnin yhteenveto
+
+- 9-10 vaihetta
+- ~10-12 tehtävää keskimäärin per vaihe
+- = **90-120 tehtäväyksikköä** per oppitunti L-tasolle
+- Batch 1:n nykytila ~21 per oppitunti = **5x liian vähän**
+
+Verrokki: yhtä YO-koevalmennus-oppitunti (Otavan, Edukustannus, OnLearning) sisältää L-tasolle 60-100 tehtävää per oppitunti. Tämä prompti tähtää siihen tasoon.
+
+### Kognitiivinen kuorma vs. tehtävämäärä
+
+`cognitive-load-analyser` -skilli rajoittaa että yhdessä vaiheessa esitetään **käyttöliittymässä kerralla** max 4-7 elementtiä (esim. monivalintakortti yhdellä kerralla). Tämä on **UI-rajoitus**, ei tehtävämäärä-rajoitus. 12 monivalintaa vaiheessa ovat 12 erillistä kysymystä jotka tulevat yksi kerrallaan — käyttäjän kognitiivinen kuorma ei kasva tehtävämäärästä, vaan yhdellä hetkellä näkyvistä elementeistä.
+
+### Yleisperiaate
+
+**I-tavoite tunnistaa, L-tavoite tuottaa ja syntetisoi.** I tekee 3 vaihetta × 4-6 tehtävää = ~15-18 tehtävää oppituntiin. L tekee 9-10 vaihetta × 10-12 tehtävää = 90-120 tehtävää. Tämä ero heijastaa YO-pisterajojen (I 25%, L 95%) eroa.
+
+**Test-oppitunnit (per kurssin loppu):** kertaava sekoitus aiempien oppituntien sisällöstä. Lue ensin saman kurssin muut oppitunnit ja kerää sieltä sanasto + rakenteet. **Test-oppitunnin kysymys-määrä target_graden mukaan**: I=10, A=12, B=15, C=18, M=22, E=26, **L=30-35**.
 
 ## Distractor-laatu
 
 `error-analysis-protocol` + `puheo-ai-prompt` määräävät säännöt. `distractor_difficulty`-kenttä ("easy" / "medium" / "hard") schemassa skaalautuu target_grade-kontekstiin.
 
-## Sanasto-listan koko
+## Sanasto-listan koko — skaalautuu target_grade-keskiarvon mukaan
 
-Yleisohje: vocab 10-15, grammar 6-10, reading 5-8 (uudet avainsanat), writing 5-10, mixed 8-12. `cognitive-load-analyser`-skilli voi tarkentaa.
+**Tärkeä päivitys:** sanasto-listan koko ei ole sama kaikille käyttäjille. L-tavoite-oppilas tarvitsee paljon enemmän sanoja kuin I-tavoite, koska YO-pisterajat vaativat sitä.
 
-Jokaiseen sanaan: `es`, `fi`, `example_es` + `example_fi` (paitsi numerot tms.), `gender` substantiiveille.
+Generoi `vocab[]`-listaan **L-tason oppilaan vaatima täysi sanasto**. Frontend ei näytä kaikille sama listaa — adaptiivinen järjestelmä karsii sen target_grade-mukaan. Mutta JSON-tiedostossa on **ylälaita**.
+
+Per `lesson_type`:
+
+| Tyyppi | Sanasto-listan koko (täysi) | Pe rusteltu |
+|---|---|---|
+| vocab | **25-35** sanaa | YO-koe testaa laajaa sanavarastoa lyhyestä espanjasta |
+| grammar | **12-18** sanaa | Sanasto on tukea rakenteelle, ei pääaihe |
+| reading | **8-15** uutta avainsanaa | Tekstistä otetut keskeisimmät, ei kaikkia uudet |
+| writing | **15-25** sanaa | Ehdotus mitä oppilas voi käyttää tehtävässä |
+| mixed | **18-25** sanaa | Yhdistetty fokus |
+
+Frontend skaalaa lessonStaten kautta target_graden mukaan miten paljon sanoja oppilas tehtävissä näkee:
+
+- **L (laudatur):** koko `vocab[]`-lista käytössä tehtävissä + side-panelissa
+- **E (eximia):** ~80% sanoista
+- **M (magna):** ~70%
+- **B/C (cum laude):** ~55%
+- **A (approbatur):** ~40%
+- **I (improbatur):** ~30%, vain ydinsanat
+
+**Side-panelin Sanasto-tabi näyttää AINA koko `vocab[]`-listan**, riippumatta target_gradesta — käyttäjä saa apua kaikilla tasoilla. Skaalaaminen koskee vain mitä tehtävissä testataan.
+
+Esimerkki Kurssi 1 Oppitunti 1 (vocab, "Perhe ja kansallisuudet"):
+
+**Perhe — laaja (L-tasolle):**
+- madre/padre, hermano/hermana, abuelo/abuela, hijo/hija, primo/prima
+- tío/tía, sobrino/sobrina, nieto/nieta
+- suegro/suegra, cuñado/cuñada, padrastro/madrastra
+- gemelo/gemela
+- pareja, novio/novia
+- familia, familia política
+
+**Kansallisuudet — laaja (L-tasolle):**
+- finlandés/finlandesa, español/española, francés/francesa, alemán/alemana
+- inglés/inglesa, italiano/italiana, portugués/portuguesa
+- ruso/rusa, sueco/sueca, noruego/noruega, danés/danesa
+- holandés/holandesa, polaco/polaca
+- japonés/japonesa, chino/china
+- mexicano/mexicana, argentino/argentina, brasileño/brasileña
+- estadounidense, latinoamericano/latinoamericana, europeo/europea, asiático/asiática, africano/africana
+
+Yhteensä noin 30-35 sana-paria → tämä on **L-tason vaatima** sanasto.
+
+`cognitive-load-analyser` voi tarkentaa jakoa vaiheisiin (esim. älä testaa kaikkia 35 sanaa yhdessä vaiheessa — jaa ne 8-10:n erin).
+
+Jokaiseen sanaan:
+- `es` ja `fi` pakollisia
+- `example_es` + `example_fi` lähes aina (paitsi numerot tms.)
+- `gender` substantiiveille ("m" / "f")
+- Kun sana on adjektiivi joka taipuu (suku/luku), listaa molemmat muodot esim. `finlandés/finlandesa` → kaksi erillistä sana-entryä tai yksi entry jossa `es: "finlandés/finlandesa"` ja `fi: "suomalainen"`
+
+## Side-panelin Sanasto-tabi
+
+`side_panel.tabs[]`-objektin `vocab`-tabi `content_md`-kenttä pitää koko sanaston, ryhmiteltynä loogisesti (esim. "Perhe", "Kansallisuudet", "Lähisukulaiset", "Etäsukulaiset"). Käyttäjä näkee koko listan auki, riippumatta target_gradesta.
+
+Esimerkki muotoilu:
+
+```markdown
+## Perhe — ydin
+
+- **madre / padre** — äiti / isä
+- **hermano / hermana** — veli / sisko
+- ...
+
+## Perhe — laajempi suku
+
+- **tío / tía** — setä, eno / täti
+- **suegro / suegra** — appi / anoppi
+- ...
+
+## Kansallisuudet — yleiset
+
+- **finlandés / finlandesa** — suomalainen
+- ...
+
+## Kansallisuudet — laajemmin
+
+- **estadounidense** — yhdysvaltalainen (sama maskuliinissa ja feminiinissä)
+- ...
+```
 
 ## Side-panel-tabit
 
