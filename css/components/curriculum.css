@@ -121,13 +121,24 @@
 }
 .curr-card.is-locked {
   /* L-PLAN-8 UPDATE 6B — bump from 0.45 → 0.55 so the composited text
-     hits ~5.7:1 contrast against the page background (was ~4.6:1, on the
-     borderline). The locked affordance is preserved — the card still
-     reads as dimmed compared to active siblings — but the course name
-     and prerequisite copy stay AA-legible. */
+     hits ~5.7:1 contrast against the page background. */
   opacity: 0.55;
   cursor: not-allowed;
+  /* L-HOME-HOTFIX-3-P2 — compact locked rows so the active course +
+     lesson list dominate the viewport. Previously each locked card was
+     ~96px tall; 7 of them pushed the footer-grid below the fold. */
+  min-height: 48px;
+  padding: 8px 16px;
+  gap: 12px;
 }
+.curr-card.is-locked .curr-step {
+  width: 32px;
+  height: 32px;
+  font-size: 14px;
+}
+.curr-card.is-locked .curr-step svg { width: 14px; height: 14px; }
+.curr-card.is-locked .curr-progress { display: none; }
+.curr-card.is-locked .curr-status { font-size: 12px; }
 .curr-card.is-clickable { cursor: pointer; }
 .curr-card.is-clickable:hover {
   border-color: color-mix(in srgb, var(--accent, #2DD4BF) 35%, var(--border, #2a2a2e));
