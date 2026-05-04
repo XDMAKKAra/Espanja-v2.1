@@ -40,6 +40,35 @@ const EXERCISE_SCREENS = new Set([
   "screen-lesson",
 ]);
 
+// L-HOME-HOTFIX-2 — on the home screen the button changes role: instead of
+// re-opening a lesson teaching page (no lesson context exists there), it
+// opens a static "Miten Puheo toimii" tutorial.
+const HOME_TUTORIAL_SCREENS = new Set(["screen-path"]);
+
+const HOME_TUTORIAL_MD = [
+  "# Miten Puheo toimii",
+  "",
+  "Lyhyt katsaus siihen, miten YO-koevalmistautuminen etenee.",
+  "",
+  "## 1. Kurssipolku on ydin",
+  "Kahdeksan kurssia rakentavat YO-koevalmiuden vaihe vaiheelta. Etene omassa tahdissasi — kurssi 1 on auki heti, seuraavat avautuvat kun edellinen on hallinnassa.",
+  "",
+  "## 2. Oppitunnin neljä vaihetta",
+  "Jokainen oppitunti kulkee saman kaaren: tunnista uudet sanat, palauta mieleen, sovella lauseissa ja yhdistä omaan puheeseen. Vaiheet rakentuvat edellisen päälle, joten kannattaa edetä järjestyksessä.",
+  "",
+  "## 3. Mastery on signaali, ei lukko",
+  "Voit aina jatkaa eteenpäin. Järjestelmä merkitsee mitkä aiheet hallitset ja mitä kannattaa kerrata, mutta ei pidätä sinua pakon takia.",
+  "",
+  "## 4. Kertaukset perustuvat tieteeseen",
+  "Spaced repetition tuo aiheen takaisin juuri ennen kuin unohtaisit sen. Kun kortteja odottaa, valitse Kertaa-toiminto — viiden minuutin kertaus tuottaa enemmän kuin tunnin pänttäys.",
+  "",
+  "## 5. YO-valmius näyttää missä olet",
+  "Prosentti perustuu suoraan kurssien edistymiseen. Kun kahdeksan kurssia on tehty, olet kokeen mittakaavassa valmis.",
+  "",
+  "## 6. Täyskoesimulaatio",
+  "Koeharjoitus-välilehdellä voit tehdä oikean YO-kokeen pituisen harjoituksen — sama aikapaine, sama muoto, sama arvostelu. Käytä sitä viimeisenä kertauksena ennen koetta.",
+].join("\n");
+
 // Map exercise screen IDs to the natural top-bar element where the lesson
 // badge can be appended without disturbing existing layout.
 const SCREEN_BADGE_HOSTS = {
@@ -109,16 +138,22 @@ function buildDom() {
 
 function open() {
   if (!_refs || _isOpen) return;
+  const isHome = _refs.btn.dataset.mode === "tutorial";
   const ctx = getLessonContext();
-  const md = (() => {
-    try { return sessionStorage.getItem("currentLessonTeachingMd") || ""; }
-    catch { return ""; }
-  })();
-  const focus = ctx?.lessonFocus || "Opetussivu";
+  const md = isHome
+    ? HOME_TUTORIAL_MD
+    : (() => {
+        try { return sessionStorage.getItem("currentLessonTeachingMd") || ""; }
+        catch { return ""; }
+      })();
+  const focus = isHome ? "Miten Puheo toimii" : (ctx?.lessonFocus || "Opetussivu");
   _refs.title.textContent = focus;
   _refs.body.innerHTML = md
     ? `<article class="teaching-panel__article curr-teaching">${renderMarkdown(md)}</article>`
     : `<p class="teaching-panel__empty">Tämän oppitunnin opetussivu ei ole vielä saatavilla. Voit jatkaa tehtävää.</p>`;
+  if (isHome) {
+    try { localStorage.setItem("puheoTutorialSeen", "1"); } catch { /* ignore */ }
+  }
   _refs.btn.setAttribute("aria-expanded", "true");
   _refs.root.hidden = false;
   // Force reflow so the transition kicks in.
@@ -221,10 +256,23 @@ function syncTrigger() {
   const ctx = getLessonContext();
   const activeScreen = document.querySelector(".screen.active");
   const screenId = activeScreen?.id || "";
-  const shouldShow = !!ctx && EXERCISE_SCREENS.has(screenId);
+  const isLessonContext = !!ctx && EXERCISE_SCREENS.has(screenId);
+  const isHomeTutorial = !isLessonContext && HOME_TUTORIAL_SCREENS.has(screenId);
+  const shouldShow = isLessonContext || isHomeTutorial;
   _refs.btn.hidden = !shouldShow;
+  if (shouldShow) {
+    _refs.btn.dataset.mode = isHomeTutorial ? "tutorial" : "lesson";
+    const labelEl = _refs.btn.querySelector(".teaching-panel-trigger__label");
+    if (labelEl) {
+      labelEl.textContent = isHomeTutorial ? "Miten Puheo toimii" : "Opetussivu";
+    }
+    _refs.btn.setAttribute(
+      "aria-label",
+      isHomeTutorial ? "Avaa opastus: Miten Puheo toimii" : "Avaa opetussivu"
+    );
+  }
   if (!shouldShow && _isOpen) close();
-  syncBadge(ctx, screenId);
+  syncBadge(isLessonContext ? ctx : null, screenId);
 }
 
 export function initTeachingPanel() {

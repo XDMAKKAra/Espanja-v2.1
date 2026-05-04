@@ -4069,13 +4069,21 @@ body:has(.app-countdown:not(.hidden)) #app-main { padding-top: 34px; }
 
 /* ── LEARNING PATH ── */
 .path-inner {
-  /* Gate D: widen from 640px to --w-desktop (Pass 0.5 Bug 3). */
-  max-width: var(--w-desktop); width: 100%;
+  /* L-HOME-HOTFIX-2 — widen to match .curr (1320px) and centre horizontally
+     so screen-path content does not sit in the left third on 1440 px+ . */
+  max-width: 1320px; width: 100%;
+  margin-inline: auto;
   max-height: calc(100vh - 48px);
   overflow-y: auto;
-  padding: 0 8px 48px 0;
+  padding: 0 16px 48px;
   animation: fadeUp 0.4s ease both;
 }
+.path-inner > .dash-greeting,
+.path-inner > .btn--cta,
+.path-inner > .path-courses,
+.path-inner > .dash-readiness,
+.path-inner > .path-footer-grid,
+.path-inner > .dash-day-cta { width: 100%; }
 .path-header { margin-bottom: 24px; text-align: center; }
 .path-title {
   font-size: 28px; font-weight: 800;

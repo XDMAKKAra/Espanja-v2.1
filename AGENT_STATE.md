@@ -1,11 +1,16 @@
 # Puheo Agent State
 
 **Last updated:** 2026-05-04
-**Current state:** L-MERGE-DASH-PATH shipped (Oma sivu + Oppimispolku yhdistetty yhdeksi etusivuksi).
+**Current state:** L-HOME-HOTFIX-2 shipped (etusivun layout, YO-valmius kurssidatalla, Opetussivu→Miten Puheo toimii etusivulla, hierarkia kurssikortit ensin).
 
 ---
 
 ## Recent loops (last 5)
+
+### L-HOME-HOTFIX-2 — 2026-05-04 ✓ shipped
+**Scope:** `.path-inner` 1080→1320px + margin-inline:auto + tasapainoinen padding (oikean kolmanneksen tyhjyys 1456px viewportilla katoaa). YO-valmius vaihdettu `/api/curriculum`-dataan: pct = completedLessons/totalLessons, masteredCells = kertausPassed-summa, totalCells = 8 (oli 14, oli SR-mastery). `dash-readiness-grid` 8-sarakkeinen. teachingPanel.js syncTrigger lisätty `screen-path`-haara joka renderöi "Miten Puheo toimii" -napin (data-mode=tutorial); open() näyttää 6-stepin staattisen `HOME_TUTORIAL_MD`-sisällön; oppitunnin sisällä nappi säilyy ennallaan. `app.html screen-path` järjestys: greeting → path-courses → btn--cta--mini → readiness → footer-grid (kurssipolku visuaalisesti dominoi).
+**Files:** 5 (`app.html`, `style.css`, `css/components/dashboard.css`, `js/screens/dashboard.js`, `js/features/teachingPanel.js`) + sw + bundles + 1 testi. **SW:** v121→v122. **Tests:** 1064/1064 ✓. **Build:** clean.
+**Pending:** 21st.dev sourcing-pass step-tutoriaali-komponentille deferattu (markdown-renderöinti riittää MVP:nä). Tutoriaali-copyn pedagoginen viilaus käyttäjän tehtävä `HOME_TUTORIAL_MD`-vakiossa.
 
 ### L-MERGE-DASH-PATH — 2026-05-04 ✓ shipped
 **Scope:** Dashboard + path merged into single home. greeting/dash-day-cta/dash-readiness/dash-recent/dash-chart MOVED into #screen-path; legacy dashboard sub-cards (tutor, hero-grade, daily-challenge, weak-topics, heatmap, forecast, adaptive, ai-usage, writing-prog, modes, recommendations, full-exam, btn-dash-start, retake) kept as inert hidden DOM behind `<div hidden>`. curriculum.js renders into #path-courses-root; navigateTo("dashboard")→"path"; sidebar Oma sivu poistui, Oppimispolku ensimmäisenä; mobile Koti → data-nav="path"; loadDashboard() now show("screen-path") + dynamic-imports loadCurriculum.
@@ -28,17 +33,11 @@
 **Tokens saved:** ~30k per session (40k → 10k context preload).
 **Tests:** 1064/1064 ✓ (was 1067; 3 LemonSqueezy webhook signature tests dropped).
 
-### L-LIVE-AUDIT-P2 — 2026-05-03 ✓ shipped
-**Scope:** Performance — bundling, batch APIs, vocab pre-gen, theme-toggle View Transitions, self-host fonts.
-**Files:** 14 changed across 3 PRs (#10, #11, #12). **SW:** v112→v115.
-**Tests:** 1067/1067 ✓.
-**Pending:** Lighthouse cold-load mittaus tuotannossa, Supabase index ACTION REQUIRED (`user_progress(user_id, mode)` + `attempts(user_id, created_at DESC)`).
-
 ---
 
 ## Next loop
 
-**Recommended:** L-MERGE-DASH-PATH-P2 — YO-readiness-kortin uusi muotoilu (21st.dev sourcing) + alarivi mini-chart-uudistus + axe + design:design-critique sweep yhdistettyyn etusivuun. Sen jälkeen L-COURSE-2 (Batch 1 generointi).
+**Recommended:** L-HOME-HOTFIX-2-P2 — 21st.dev step-tutorial-komponentti `HOME_TUTORIAL_MD`-sisällölle (nykyinen markdown-list riittää MVP:nä), axe + design:design-critique screen-pathille. Sen jälkeen L-COURSE-2 (Batch 1 generointi).
 
 **Recurring blockers:** Playwright E2E gated since d3f5ca5; manual prod verify on käyttäjän tehtävä.
 

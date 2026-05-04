@@ -6,7 +6,7 @@ import { srDueCount } from "../features/spacedRepetition.js";
 import { renderAdaptiveCard } from "./adaptive.js";
 import { getBlogForTopic, trackBlogClick } from "../features/topicBlogMap.js";
 import { icon, MODE_ICONS } from "../ui/icons.js";
-import { getRecentWritingDimensions, computeReadinessMap } from "../features/writingProgression.js";
+import { getRecentWritingDimensions } from "../features/writingProgression.js";
 import { hideAppCountdown } from "./onboarding.js";
 import { renderDashboardCta } from "./dash-cta.js";
 import { renderWordOfDayInto } from "../features/wordOfDay.js";
@@ -1403,70 +1403,80 @@ async function loadAndRenderReadinessMap() {
     return;
   }
 
-  let learningPath = [];
+  // L-HOME-HOTFIX-2 — readiness now mirrors curriculum progress (lessons
+  // completed across the 8 courses). The old SR-mastery map showed 20 % when
+  // the student had completed 1 / 86 lessons (data was inherited from the
+  // pre-curriculum vocab/grammar drills) which contradicted the course cards.
+  let kurssit = [];
   try {
-    // L-LIVE-AUDIT-P2 UPDATE 3 — read from batched v2 payload first.
-    const cached = getDashboardV2Section("learningPath");
-    if (cached?.path) {
-      learningPath = cached.path;
-    } else {
-      const res = await apiFetch(`${API}/api/learning-path`, { headers: authHeader() });
-      if (res.ok) {
-        const data = await res.json();
-        learningPath = data.path || [];
-      }
+    const res = await apiFetch(`${API}/api/curriculum`, { headers: authHeader() });
+    if (res.ok) {
+      const data = await res.json();
+      kurssit = Array.isArray(data?.kurssit) ? data.kurssit : [];
     }
   } catch { /* network — show empty */ }
 
-  const writingDims = getRecentWritingDimensions(5);
-  const map = computeReadinessMap({ learningPath, writingDims });
-  if (map.totalCells === 0) {
+  const totalCells = kurssit.length;
+  if (totalCells === 0) {
     wrap.classList.add("hidden");
     return;
   }
 
+  let totalLessons = 0;
+  let completedLessons = 0;
+  let masteredCells = 0;
+  const cells = kurssit.map((k) => {
+    const total = Number(k.lessonCount) || 0;
+    const done = Math.min(Number(k.lessonsCompleted) || 0, total);
+    totalLessons += total;
+    completedLessons += done;
+    const isMastered = !!k.kertausPassed;
+    if (isMastered) masteredCells += 1;
+    let level = 0;
+    if (isMastered) level = 4;
+    else if (total > 0 && done / total >= 0.5) level = 3;
+    else if (done > 0) level = 2;
+    else if (k.isUnlocked) level = 1;
+    const tip = `${k.title}: ${done} / ${total} oppituntia${isMastered ? " · suoritettu" : ""}`;
+    return { level, tooltip: tip };
+  });
+  const readinessPct = totalLessons > 0
+    ? Math.round((completedLessons / totalLessons) * 100)
+    : 0;
+
   wrap.classList.remove("hidden");
 
-  // Update rail YO-readiness stat with the computed value.
   const railReadinessEl = document.getElementById("dash-yo-readiness");
-  if (railReadinessEl && map.totalCells > 0) {
-    countUp(railReadinessEl, Math.round(map.readinessPct), 1300);
-  }
-  // Drive the surrounding progress ring (sourced: Magic UI
-  // animated-circular-progress-bar — stroke-dashoffset transition technique).
+  if (railReadinessEl) countUp(railReadinessEl, readinessPct, 1300);
+
   const ringEl = document.getElementById("dash-yo-readiness-ring");
-  if (ringEl && map.totalCells > 0) {
-    const C = 213.628; // 2π × r (r=34)
-    const pct = Math.max(0, Math.min(100, Math.round(map.readinessPct)));
-    // Defer one frame so the browser registers the initial offset before
-    // applying the new one — guarantees the CSS transition fires.
+  if (ringEl) {
+    const C = 213.628;
+    const pct = Math.max(0, Math.min(100, readinessPct));
     requestAnimationFrame(() => {
       ringEl.style.strokeDashoffset = String(C - (pct / 100) * C);
     });
   }
 
-  const cellsHtml = map.cells.map(c =>
+  const cellsHtml = cells.map(c =>
     `<div class="dash-readiness-cell lvl-${c.level}" data-tip="${escapeHtmlAttr(c.tooltip)}" data-tooltip="${escapeHtmlAttr(c.tooltip)}"></div>`
   ).join("");
 
-  const qual = readinessQualitative(map.readinessPct, map.totalCells);
+  const qual = readinessQualitative(readinessPct, totalCells);
 
-  // L-LIVE-AUDIT-P1 UPDATE 3 — clearer hierarchy: eyebrow + dominant % + bar,
-  // count + qualitative joined into a single sub-line. Legend "vähän hyvin"
-  // dropped per audit (read as raw status fragments without context).
   wrap.innerHTML = `
     <div class="dash-readiness-title">YO-valmius</div>
     <div class="dash-readiness-headline">
-      <span class="dash-readiness-pct">${map.readinessPct}%</span>
+      <span class="dash-readiness-pct">${readinessPct}%</span>
       <span class="dash-readiness-pct-label">valmius</span>
     </div>
     <div class="dash-readiness-track" role="progressbar"
-         aria-valuenow="${map.readinessPct}" aria-valuemin="0" aria-valuemax="100"
+         aria-valuenow="${readinessPct}" aria-valuemin="0" aria-valuemax="100"
          aria-label="YO-valmius">
-      <div class="dash-readiness-track__fill" style="width:${Math.max(0, Math.min(100, map.readinessPct))}%"></div>
+      <div class="dash-readiness-track__fill" style="width:${Math.max(0, Math.min(100, readinessPct))}%"></div>
     </div>
     <div class="dash-readiness-summary">
-      <strong>${map.masteredCells}</strong> / ${map.totalCells} osa-aluetta hallinnassa${qual ? ` · <span class="dash-readiness-qual">${qual}</span>` : ""}
+      <strong>${masteredCells}</strong> / ${totalCells} kurssia hallinnassa · <strong>${completedLessons}</strong> / ${totalLessons} oppituntia${qual ? ` · <span class="dash-readiness-qual">${qual}</span>` : ""}
     </div>
     <div class="dash-readiness-grid">${cellsHtml}</div>
   `;
