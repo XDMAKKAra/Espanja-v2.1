@@ -615,6 +615,10 @@ function toggleSidePanel(root, state) {
   }
   const panel = root.querySelector("#lr-side-panel");
   const btn = root.querySelector("#lr-help-toggle");
+  // hotfix bug 3 — toggle has-panel-open on the exercise shell so the desktop
+  // grid expands from 1-col task → 2-col task+panel split.
+  const shell = root.querySelector(".lr-shell--exercise");
+  if (shell) shell.classList.toggle("has-panel-open", state.sidePanelOpen);
   if (panel) {
     panel.classList.toggle("is-open", state.sidePanelOpen);
     panel.setAttribute("aria-hidden", state.sidePanelOpen ? "false" : "true");
