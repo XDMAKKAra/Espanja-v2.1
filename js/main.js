@@ -127,6 +127,10 @@ window._placementRef = { checkPlacementNeeded, showPlacementIntro, startPlacemen
 // ─── Sidebar navigation clicks + hash routing ──────────────────────────────
 
 const NAV_HASH = {
+  // L-MERGE-DASH-PATH — both legacy "Oma sivu" hash and new "Oppimispolku"
+  // hash resolve to the same merged-home nav target. Lookup is by-key, so the
+  // path entry wins for outbound `history.replaceState` calls below; the
+  // dashboard hash is kept here only for the inbound HASH_NAV reverse map.
   dashboard: "#/koti",
   vocab: "#/sanasto",
   grammar: "#/puheoppi",
@@ -142,6 +146,9 @@ const HASH_NAV = Object.fromEntries(Object.entries(NAV_HASH).map(([k, v]) => [v,
 
 function navigateTo(nav, { updateHash = true } = {}) {
   if (!nav) return;
+  // L-MERGE-DASH-PATH — "dashboard" nav redirects to merged home (path).
+  // Done first so active-class + hash assignment land on the right target.
+  if (nav === "dashboard") nav = "path";
   document.querySelectorAll(".sidebar-item[data-nav]").forEach((b) => b.classList.toggle("active", b.dataset.nav === nav));
   document.querySelectorAll(".mobile-nav-item[data-nav]").forEach((b) => b.classList.toggle("active", b.dataset.nav === nav));
 
@@ -149,11 +156,15 @@ function navigateTo(nav, { updateHash = true } = {}) {
     history.replaceState(null, "", NAV_HASH[nav]);
   }
 
-  if (nav === "dashboard") loadDashboard();
-  else if (nav === "exam") startFullExam("demo");
+  if (nav === "exam") startFullExam("demo");
   else if (nav === "settings") showSettings();
   else if (nav === "profile") loadProfile();
-  else if (nav === "path") loadCurriculum();
+  else if (nav === "path") {
+    // Merged home: loadDashboard now also kicks off loadCurriculum after
+    // rendering, so a single call populates greeting + day-CTA + readiness +
+    // recent + chart AND the course list inside #path-courses-root.
+    loadDashboard();
+  }
   else showModePage(nav);
 }
 

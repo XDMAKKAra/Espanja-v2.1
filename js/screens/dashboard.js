@@ -117,7 +117,12 @@ export async function loadDashboard() {
     }
     renderDashboard(dashboardCore);
     hideAppCountdown();
-    show("screen-dashboard");
+    show("screen-path"); // L-MERGE-DASH-PATH — dashboard merged into path screen
+    // L-MERGE-DASH-PATH — also render the course list (the merged-home "main"
+    // section). Dynamic import avoids a circular dep with curriculum.js.
+    import("./curriculum.js")
+      .then((m) => m.loadCurriculum?.())
+      .catch(() => { /* curriculum optional; ignore */ });
   } catch {
     show("screen-start");
   }
