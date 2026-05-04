@@ -120,14 +120,9 @@ Joka loop päättyy nämä tehden:
 
 **Aktiiviset (juuressa):**
 - `AGENT_PROMPT_STANDARDS.md` — tämä tiedosto
-- `AGENT_PROMPT_LIVE_AUDIT_P0.md` — viimeisin shipattu (L-LIVE-AUDIT-P0)
-- `AGENT_PROMPT_LIVE_AUDIT_P1.md` — viimeisin shipattu (L-LIVE-AUDIT-P1)
-- `AGENT_PROMPT_LIVE_AUDIT_P2.md` — viimeisin shipattu (L-LIVE-AUDIT-P2)
+- `AGENT_PROMPT_LIVE_AUDIT_P2.md` — viimeisin shipattu referenssi (säilytetään juuressa esimerkkinä formaatista)
 
-**Arkistoidut (`docs/archive/agent-prompts/`):**
-- `AGENT_PROMPT_LPLAN1.md` ... `AGENT_PROMPT_LPLAN8.md`
-- `AGENT_PROMPT_HOTFIX_PRICING.md`, `AGENT_PROMPT_HOTFIX_PRICING2.md`
-- `AGENT_PROMPT_SECURITY1.md`, `AGENT_PROMPT_SECURITY2.md`
+**Arkistoidut (`docs/archive/agent-prompts/`):** kaikki shipatut briefit, ml. LPLAN1-8, LIVE_AUDIT_P0/P1, HOME_HOTFIX_2/3, MERGE_DASH_PATH, COURSE_1, HOTFIX_LESSON_RUNNER, HOTFIX_PRICING1/2, SECURITY1/2, LINT_CLEANUP.
 
 Aja yksi looppi kerrallaan järjestyksessä. `/clear` looppien välissä — uudessa istunnossa tämä STANDARDS-tiedosto + `AGENT_STATE.md` riittää contextiksi.
 
