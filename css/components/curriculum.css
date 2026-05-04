@@ -3,12 +3,18 @@
    numbered nodes with connector. Ported to vanilla matching app's token system. */
 
 #screen-path .curr {
-  max-width: 880px;
+  /* hotfix bug 1 — widen oppimispolku to fill the viewport at 100% zoom.
+     Desktop ≥1440 caps at 1320px (Linear-tier reading width); 1024-1439 fills
+     available space; ≤1023 stacks with comfortable gutters. */
+  max-width: min(1320px, 100%);
   margin: 0 auto;
-  padding: clamp(20px, 4vw, 40px) clamp(16px, 4vw, 24px) 64px;
+  padding: clamp(24px, 4vw, 48px) clamp(16px, 4vw, 32px) 80px;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 28px;
+}
+@media (min-width: 1024px) {
+  #screen-path .curr { max-width: 1320px; }
 }
 
 .curr-head { display: flex; flex-direction: column; gap: 8px; }
@@ -70,8 +76,36 @@
 }
 
 .curr-card.is-current {
-  border-left: 3px solid var(--accent, #2DD4BF);
+  border-left: 4px solid var(--accent, #2DD4BF);
   padding-left: 14px;
+  /* hotfix bug 1 — active course dominates: bigger card, larger title, soft
+     accent glow so the eye lands on it first vs locked siblings. */
+  background: color-mix(in srgb, var(--accent, #2DD4BF) 4%, var(--surface, #161618));
+  box-shadow: 0 1px 0 0 color-mix(in srgb, var(--accent, #2DD4BF) 18%, transparent);
+  min-height: 120px;
+  padding-top: 22px;
+  padding-bottom: 22px;
+}
+.curr-card.is-current .curr-title {
+  font-size: clamp(18px, 2vw, 22px);
+}
+.curr-card.is-current .curr-step {
+  width: 56px;
+  height: 56px;
+  font-size: 22px;
+}
+@media (min-width: 1024px) {
+  .curr-card.is-current {
+    min-height: 140px;
+    padding-top: 28px;
+    padding-bottom: 28px;
+  }
+  .curr-card.is-current .curr-title { font-size: 24px; }
+  .curr-card.is-current .curr-step {
+    width: 64px;
+    height: 64px;
+    font-size: 26px;
+  }
 }
 .curr-card.is-locked {
   /* L-PLAN-8 UPDATE 6B — bump from 0.45 → 0.55 so the composited text

@@ -1,15 +1,68 @@
 /* L-COURSE-1 UPDATE 4-6 — phase-based lesson runner styles.
-   Tokens reused from style.css; no raw hex except in :focus-visible outlines. */
+   hotfix bug 3+4+5 — side-panel sits inside an in-flow split layout (not a
+   fixed overlay over the profile button), tabs live inside the panel, and
+   the exercise card dominates the viewport like Duolingo/Babbel desktop.
+   Sourced inspiration: 21st.dev /s/split-pane + /s/quiz-card. Tokens reused
+   from style.css; no raw hex except in :focus-visible outlines. */
 
 .lr-shell {
-  max-width: 720px;
+  max-width: 880px;
   margin: 0 auto;
-  padding: 24px 16px 64px;
+  padding: 32px 16px 80px;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 28px;
 }
-.lr-shell--exercise { max-width: 1080px; position: relative; }
+@media (min-width: 1024px) {
+  .lr-shell { max-width: 960px; padding: 56px 24px 96px; }
+}
+
+/* hotfix bug 5 — exercise mode uses the full viewport width with a left/right
+   split: task on the left, side-panel docked on the right when open. The task
+   card itself stays tightly constrained (max ~960px) but we let the shell go
+   wide so the side-panel has room to live in-flow without overlapping the
+   floating profile button (88px reserved by .app-main padding-right). */
+.lr-shell--exercise {
+  max-width: min(1440px, 100%);
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas:
+    "topbar"
+    "phase"
+    "item"
+    "panel";
+  gap: 24px;
+  padding: 32px 16px 96px;
+}
+@media (min-width: 1024px) {
+  .lr-shell--exercise {
+    padding: 48px 24px 96px;
+    /* When closed: full width to task. When open: 70/30 split. */
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "topbar"
+      "phase"
+      "item";
+  }
+  .lr-shell--exercise.has-panel-open {
+    grid-template-columns: minmax(0, 1fr) 360px;
+    grid-template-areas:
+      "topbar topbar"
+      "phase  panel"
+      "item   panel";
+    column-gap: 32px;
+  }
+}
+@media (min-width: 1440px) {
+  .lr-shell--exercise.has-panel-open {
+    grid-template-columns: minmax(0, 1fr) 420px;
+  }
+}
+.lr-shell--exercise > .lr-topbar { grid-area: topbar; }
+.lr-shell--exercise > .lr-phase-head { grid-area: phase; }
+.lr-shell--exercise > .lr-item { grid-area: item; }
+.lr-shell--exercise > .lr-side-panel { grid-area: panel; }
 
 .lr-back {
   align-self: flex-start;
@@ -90,44 +143,78 @@
 .lr-help-btn:focus-visible,
 .lr-skip-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
-/* Phase head */
-.lr-phase-head { display: flex; flex-direction: column; gap: 8px; }
-.lr-phase-title { font-size: 22px; margin: 0; }
-.lr-phase-instr { color: var(--ink-soft); margin: 0; }
+/* Phase head — hotfix bug 5: dominant title, larger metadata caps */
+.lr-phase-head {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: clamp(16px, 4vw, 48px);
+}
+.lr-phase-title {
+  font-size: clamp(22px, 3.2vw, 32px);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+.lr-phase-instr {
+  color: var(--ink-soft);
+  margin: 0;
+  font-size: clamp(15px, 1.4vw, 18px);
+  line-height: 1.55;
+}
 .lr-item-counter {
   font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.08em;
+  font-size: 12px;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--ink-soft);
   margin: 0;
 }
-
-/* Item area */
-.lr-item {
-  background: var(--surface-2);
-  padding: 24px;
-  border-radius: var(--r-lg, 16px);
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  min-height: 200px;
+@media (min-width: 1024px) {
+  .lr-item-counter { font-size: 13px; }
 }
 
-/* MC */
-.lr-mc-context { color: var(--ink-soft); font-style: italic; margin: 0; }
-.lr-mc-stem { font-size: 18px; margin: 0; }
-.lr-mc-choices { display: grid; gap: 8px; }
+/* Item area — hotfix bug 5: dominant exercise card. Wide padding, tall
+   min-height, big typography. The card matches Duolingo/Babbel desktop. */
+.lr-item {
+  background: var(--surface-2);
+  padding: clamp(24px, 4vw, 56px);
+  border-radius: var(--r-lg, 20px);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-height: clamp(320px, 50vh, 540px);
+  border: 1px solid color-mix(in srgb, var(--ink-faint, #71717a) 10%, transparent);
+}
+@media (min-width: 1440px) {
+  .lr-item {
+    padding: 64px;
+    min-height: 540px;
+    margin-top: 16px;
+  }
+}
+
+/* MC — hotfix bug 5: dominant question text */
+.lr-mc { display: flex; flex-direction: column; gap: 20px; }
+.lr-mc-context { color: var(--ink-soft); font-style: italic; margin: 0; font-size: clamp(15px, 1.4vw, 17px); }
+.lr-mc-stem {
+  font-size: clamp(20px, 2.4vw, 26px);
+  line-height: 1.3;
+  margin: 0;
+  font-weight: 500;
+}
+.lr-mc-choices { display: grid; gap: 12px; }
 .lr-mc-choice {
   background: var(--surface);
   border: 1px solid var(--surface-2);
   color: var(--ink);
-  padding: 14px 16px;
-  border-radius: 12px;
+  padding: 16px 20px;
+  border-radius: 14px;
   cursor: pointer;
   font: inherit;
+  font-size: clamp(15px, 1.4vw, 17px);
   text-align: left;
-  min-height: 48px;
+  min-height: 56px;
 }
 .lr-mc-choice:hover:not(:disabled) { border-color: var(--accent); }
 .lr-mc-choice:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
@@ -151,19 +238,24 @@
   text-transform: uppercase;
   color: var(--ink-soft);
 }
-.lr-typed-prompt { font-size: 18px; }
-.lr-typed-hint { font-size: 13px; color: var(--ink-soft); }
+.lr-typed-prompt {
+  font-size: clamp(22px, 2.6vw, 30px);
+  font-weight: 500;
+  line-height: 1.25;
+}
+.lr-typed-hint { font-size: 14px; color: var(--ink-soft); }
 .lr-typed-input,
 .lr-gap-input,
 .lr-writing-input {
   background: var(--surface);
   border: 1px solid var(--surface-2);
   color: var(--ink);
-  padding: 12px 14px;
-  border-radius: 10px;
+  padding: 14px 16px;
+  border-radius: 12px;
   font: inherit;
+  font-size: clamp(16px, 1.6vw, 20px);
   width: 100%;
-  min-height: 44px;
+  min-height: 52px;
 }
 .lr-typed-input:focus,
 .lr-gap-input:focus,
@@ -191,7 +283,7 @@
 @keyframes lr-shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-4px); } 75% { transform: translateX(4px); } }
 
 /* Gap fill */
-.lr-gap-sentence { font-size: 18px; line-height: 1.8; }
+.lr-gap-sentence { font-size: clamp(20px, 2.2vw, 24px); line-height: 1.8; }
 .lr-gap-input { display: inline-block; width: 120px; min-height: 36px; padding: 4px 8px; }
 .lr-gap-bank { display: flex; flex-wrap: wrap; gap: 8px; }
 .lr-gap-chip {
@@ -310,58 +402,94 @@
 .lr-result-skipped { opacity: 0.7; }
 .lr-result-status { color: var(--ink-soft); font-size: 14px; white-space: nowrap; }
 
-/* Side panel */
+/* Side panel — hotfix bug 3+4: in-flow on desktop, bottom-sheet on mobile.
+   Tabs (Sanasto / YO-vinkki / Opetussivu) live INSIDE the panel, not the
+   topbar. Z-index stays below the floating profile button (.profile-btn
+   uses z-index ~60–80; we cap at 40 on mobile sheet, 0 in-flow on desktop).
+   Sourced inspiration: 21st.dev /s/side-panel + /s/tabs. */
 .lr-side-panel {
-  position: fixed;
-  top: 0;
-  right: 0;
-  width: min(360px, 100vw);
-  height: 100vh;
+  display: none;
   background: var(--surface);
-  border-left: 1px solid var(--surface-2);
-  transform: translateX(100%);
-  transition: transform 240ms cubic-bezier(0.4, 0, 0.2, 1);
-  z-index: 50;
-  overflow-y: auto;
+  border: 1px solid var(--surface-2);
+  border-radius: var(--r-lg, 16px);
   padding: 24px 20px;
-  display: flex;
   flex-direction: column;
   gap: 16px;
+  overflow-y: auto;
 }
-.lr-side-panel.is-open { transform: translateX(0); box-shadow: -8px 0 24px rgba(0,0,0,0.2); }
-.lr-side-tabs { display: flex; gap: 4px; flex-wrap: wrap; }
-.lr-tab {
-  background: transparent;
-  border: 1px solid var(--surface-2);
-  color: var(--ink-soft);
-  padding: 6px 12px;
-  border-radius: 999px;
-  cursor: pointer;
-  font: inherit;
-  font-size: 13px;
-  min-height: 32px;
-}
-.lr-tab.is-active { background: var(--accent); color: var(--bg); border-color: var(--accent); }
-.lr-tab-pane { display: none; line-height: 1.6; font-size: 14px; }
-.lr-tab-pane.is-active { display: block; }
-.lr-tab-pane h1, .lr-tab-pane h2 { font-size: 16px; margin: 16px 0 6px; }
-.lr-tab-pane p { margin: 6px 0; }
+.lr-side-panel.is-open { display: flex; }
 
-@media (max-width: 768px) {
+@media (min-width: 1024px) {
   .lr-side-panel {
-    top: auto;
-    bottom: 0;
+    /* In-flow inside the .lr-shell--exercise grid panel column. */
+    position: sticky;
+    top: 32px;
+    max-height: calc(100vh - 64px);
+    align-self: start;
+  }
+}
+
+@media (max-width: 1023px) {
+  /* Mobile + tablet — bottom sheet that does NOT cover the profile button.
+     The profile button is fixed top-right (~40px circle, 16px gutter); the
+     sheet enters from bottom and never reaches into the top 80px. */
+  .lr-side-panel {
+    position: fixed;
+    left: 0;
     right: 0;
-    width: 100vw;
-    height: min(70vh, 540px);
-    border-left: 0;
+    bottom: 0;
+    top: auto;
+    width: 100%;
+    max-height: min(72vh, 560px);
+    border-radius: 20px 20px 0 0;
     border-top: 1px solid var(--surface-2);
-    border-radius: 16px 16px 0 0;
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 0;
+    /* Below profile button (z-index 80+) but above content. */
+    z-index: 40;
+    box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.32);
     transform: translateY(100%);
+    transition: transform 240ms cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
   }
   .lr-side-panel.is-open { transform: translateY(0); }
   .lr-match-cols { grid-template-columns: 1fr; }
 }
+
+.lr-side-tabs {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--surface-2);
+}
+.lr-tab {
+  background: transparent;
+  border: 1px solid var(--surface-2);
+  color: var(--ink-soft);
+  padding: 8px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 13px;
+  min-height: 36px;
+}
+.lr-tab.is-active { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+.lr-tab:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.lr-side-panes { flex: 1; min-height: 0; overflow-y: auto; }
+.lr-tab-pane { display: none; line-height: 1.65; font-size: 14px; }
+.lr-tab-pane.is-active { display: block; }
+.lr-tab-pane h1, .lr-tab-pane h2 { font-size: 16px; margin: 16px 0 8px; }
+.lr-tab-pane h1:first-child, .lr-tab-pane h2:first-child { margin-top: 0; }
+.lr-tab-pane p { margin: 8px 0; }
+.lr-tab-pane ul { padding-left: 20px; margin: 8px 0; }
+.lr-tab-pane li { margin: 4px 0; }
+
+/* Topbar layout — hotfix bug 4: profile button is fixed top-right; reserve
+   gap by capping topbar inline-end padding so Apua button never visually
+   collides with profile (≥16px gap is enforced by .app-main padding). */
+.lr-topbar { padding-right: 8px; }
 
 @media (prefers-reduced-motion: reduce) {
   .lr-side-panel { transition: none; }

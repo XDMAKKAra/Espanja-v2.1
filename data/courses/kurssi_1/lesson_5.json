@@ -1,0 +1,264 @@
+{
+  "meta": {
+    "course_key": "kurssi_1",
+    "lesson_index": 5,
+    "lesson_type": "mixed",
+    "level": "A",
+    "title": "Ser vs estar — perusteet",
+    "description": "Espanjan kaksi 'olla'-verbiä. Ser kertoo identiteetin, alkuperän ja pysyvät ominaisuudet; estar kertoo tilan, sijainnin ja tunteen. Tämä yhden oppitunnin valinta vaikuttaa koko espanjan tulkintaan.",
+    "yo_relevance": "Ser/estar-valinta toistuu YO-kokeen kuullun, luetun ja kirjoittamisen jokaisessa tehtävässä. Yleisin virhe: 'Estoy finlandés' (väärin) → 'Soy finlandés'. Identiteetti = ser. Hetkellinen tila tai sijainti = estar.",
+    "estimated_minutes_median": 16
+  },
+  "teaching": {
+    "intro_md": "# Ser vs estar — kaksi 'olla'-verbiä\n\nEspanjassa on kaksi olla-verbiä. Niillä on eri merkitys.\n\n## Ser (pysyvä, identiteetti)\n\n| Persoona | Muoto |\n|---|---|\n| yo | **soy** |\n| tú | **eres** |\n| él / ella / usted | **es** |\n| nosotros | **somos** |\n| vosotros | **sois** |\n| ellos / ellas | **son** |\n\n## Estar (tila, sijainti)\n\n| Persoona | Muoto |\n|---|---|\n| yo | **estoy** |\n| tú | **estás** |\n| él / ella | **está** |\n| nosotros | **estamos** |\n| vosotros | **estáis** |\n| ellos / ellas | **están** |\n\n## Käytä SER:\n- Identiteetti, ammatti: *Soy alumna*. *Es profesor*.\n- Alkuperä, kansallisuus: *Soy finlandés*. *Es de Madrid*.\n- Pysyvä ominaisuus: *Es alto*. *Son simpáticos*.\n- Aika, päivä: *Es la una*. *Hoy es lunes*.\n- Materiaali: *La mesa es de madera*.\n\n## Käytä ESTAR:\n- Tila, mieliala: *Estoy cansado*. *Está triste*.\n- Sijainti: *La mochila está en la mesa*. *Madrid está en España*.\n- Hetkellinen tila: *El café está frío*.\n- Käynnissä oleva toiminta: *Estoy estudiando*.\n\n## Ratkaiseva ero\n\n> **Es** simpático. (Hän on luonteeltaan mukava — pysyvä.)\n>\n> **Está** simpático hoy. (Hän on tänään mukava — hetkellinen.)",
+    "key_points": [
+      "Ser = identiteetti, alkuperä, ammatti, pysyvät ominaisuudet, aika.",
+      "Estar = sijainti, tila, mieliala, hetkellinen ominaisuus.",
+      "Sama adjektiivi voi vaihtaa merkitystä riippuen siitä, käytetäänkö serä vai estaria.",
+      "Sijainti aina estar — vaikka kaupungista olisi vaikea muuttaa pois."
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1-recognition-ser-vs-estar",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista — ser vai estar?",
+      "instruction": "Mikä verbi sopii lauseeseen?",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.7, "C": 0.75, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "mc", "stem": "Mi padre _____ médico.", "choices": ["es", "está", "son", "están"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "Ammatti = ser. Es médico." },
+        { "item_type": "mc", "stem": "Madrid _____ en España.", "choices": ["es", "está", "son", "están"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Sijainti = aina estar. Está en España." },
+        { "item_type": "mc", "stem": "Yo _____ finlandés.", "choices": ["estoy", "soy", "es", "estás"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Kansallisuus = ser. Soy finlandés." },
+        { "item_type": "mc", "stem": "Estamos cansados después del examen.", "choices": ["se sopii", "ei sovi — pitäisi olla somos", "ei sovi — pitäisi olla son", "väärä persoona"], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "Cansado = hetkellinen tila → estar. Estamos cansados ✓." },
+        { "item_type": "mc", "stem": "La mochila _____ en el aula.", "choices": ["es", "está", "son", "están"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "Sijainti = estar." },
+        { "item_type": "mc", "stem": "Mi hermana _____ alta.", "choices": ["es", "está", "son", "están"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "Pysyvä ominaisuus (pituus) = ser." },
+        { "item_type": "mc", "stem": "El café _____ frío.", "choices": ["es", "está", "son", "están"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "Hetkellinen tila (kahvi jäähtyi) = estar." },
+        { "item_type": "mc", "stem": "Hoy _____ martes.", "choices": ["es", "está", "son", "están"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "Päivä, aika = ser. Hoy es martes." },
+        { "item_type": "mc", "stem": "_____ las tres de la tarde.", "choices": ["Es", "Está", "Son", "Están"], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "Klo > 1: monikko son las... Es la una mutta son las dos." },
+        { "item_type": "mc", "stem": "Mis padres _____ en Helsinki ahora.", "choices": ["son", "están", "es", "está"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Sijainti tällä hetkellä = estar (he ovat Helsingissä juuri nyt)." },
+        { "item_type": "mc", "stem": "El libro _____ de mi hermano.", "choices": ["es", "está", "son", "están"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "Omistus (kirja kuuluu) = ser. Es de mi hermano." },
+        { "item_type": "mc", "stem": "_____ contento porque he sacado un nueve.", "choices": ["Soy", "Estoy", "Es", "Está"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "Mieliala = estar. Estoy contento (olen tällä hetkellä iloinen)." }
+      ]
+    },
+    {
+      "phase_id": "p2-recognition-translate",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista — käännös",
+      "instruction": "Valitse oikea käännös suomeksi.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.7, "C": 0.75, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "mc", "stem": "Soy estudiante.", "choices": ["Olen oppilas.", "Olen iloinen.", "Hän on oppilas.", "Olemme oppilaita."], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "Soy = (minä) olen. Estudiante = oppilas." },
+        { "item_type": "mc", "stem": "Estoy en casa.", "choices": ["Olen kotona.", "Olen kotoisin.", "Tunnen oloni kotoisaksi.", "Hän on kotona."], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "Estoy en casa = (minä) olen kotona (sijainti)." },
+        { "item_type": "mc", "stem": "Mi madre es de Sevilla.", "choices": ["Äitini on Sevillassa.", "Äitini on Sevillasta.", "Äitini menee Sevillaan.", "Äitini tuntee Sevillan."], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "Es de = on kotoisin (alkuperä → ser)." },
+        { "item_type": "mc", "stem": "Estamos cansados.", "choices": ["Olemme oppilaita.", "Olemme uupuneita.", "He ovat uupuneita.", "Olen uupunut."], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Estamos cansados = (me) olemme uupuneet/väsyneet." },
+        { "item_type": "mc", "stem": "Helsinki está en Finlandia.", "choices": ["Helsinki on suomalainen.", "Helsinki on Suomessa.", "Helsinki on iso kaupunki.", "Helsinki kuuluu Suomeen (es)."], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Sijainti = estar." },
+        { "item_type": "mc", "stem": "El libro es interesante.", "choices": ["Kirja on minulle mielenkiintoinen.", "Kirja on mielenkiintoinen.", "Kirja on luokassa.", "Kirja kuuluu minulle."], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Pysyvä ominaisuus (kirja on aina mielenkiintoinen) = ser." },
+        { "item_type": "mc", "stem": "Estoy contenta hoy.", "choices": ["Olen aina iloinen.", "Olen iloinen tänään.", "Hän on tänään iloinen.", "He ovat tänään iloisia."], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Mieliala tänään = estar (hetkellinen)." },
+        { "item_type": "mc", "stem": "Son las cinco.", "choices": ["He ovat viisi.", "On kello viisi.", "Hän on viisi.", "Viisi henkilöä."], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Son las... = kello on... Aika monikossa." },
+        { "item_type": "mc", "stem": "¿De dónde eres?", "choices": ["Mistä olet?", "Missä olet?", "Mistä otit sen?", "Mihin menet?"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "Eres = olet (ser). De dónde = mistä (alkuperä)." },
+        { "item_type": "mc", "stem": "El café está caliente.", "choices": ["Kahvi on aina kuumaa.", "Kahvi on kuumaa nyt.", "Kahvi on kuumaa, koska se on espanjalaista.", "Kahvi tarkoittaa kuumuutta."], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "Hetkellinen tila = estar. Kahvi on juuri nyt kuumaa." },
+        { "item_type": "mc", "stem": "Mis amigos son simpáticos.", "choices": ["Ystäväni ovat tänään mukavia.", "Ystäväni ovat luonteeltaan mukavia.", "Ystäväni ovat sympatisia.", "Olen mukava."], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Pysyvä luonteenpiirre = ser." },
+        { "item_type": "mc", "stem": "Estás muy guapo hoy.", "choices": ["Olet aina komea.", "Olet tänään tosi komean näköinen.", "Olen tänään komea.", "Hän on komea."], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "Hetkellinen vaikutelma (tänään) = estar." }
+      ]
+    },
+    {
+      "phase_id": "p3-recall-typed-fi-es",
+      "phase_type": "recall_typed_fi_to_es",
+      "title": "Tuota — verbinmuoto",
+      "instruction": "Kirjoita oikea ser- tai estar-muoto.",
+      "mastery_threshold": { "I": 0.5, "A": 0.55, "B": 0.7, "C": 0.75, "M": 0.8, "E": 0.85, "L": 0.92 },
+      "skip_for_targets": ["I"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "ser — yo", "accept": ["soy"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "ser — tú", "accept": ["eres"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "ser — él/ella", "accept": ["es"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "ser — nosotros", "accept": ["somos"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "ser — ellos", "accept": ["son"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "estar — yo", "accept": ["estoy"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "estar — tú", "accept": ["estás", "estas"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "estar — él/ella", "accept": ["está", "esta"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "estar — nosotros", "accept": ["estamos"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "estar — vosotros", "accept": ["estáis", "estais"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "estar — ellos", "accept": ["están", "estan"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "ser — vosotros", "accept": ["sois"] }
+      ]
+    },
+    {
+      "phase_id": "p4-application-gap-helppo",
+      "phase_type": "application_gap_fill",
+      "title": "Lauseen täydennys — perustaso",
+      "instruction": "Valitse ser tai estar oikeassa muodossa.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.75, "C": 0.8, "M": 0.85, "E": 0.9, "L": 0.92 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Yo {1} finlandés.", "answers": [["soy"]], "word_bank": ["soy", "estoy", "es"] },
+        { "item_type": "gap_fill", "sentence_template": "Helsinki {1} en Finlandia.", "answers": [["está", "esta"]], "word_bank": ["es", "está", "son"] },
+        { "item_type": "gap_fill", "sentence_template": "Mi madre {1} de Sevilla.", "answers": [["es"]], "word_bank": ["es", "está", "son"] },
+        { "item_type": "gap_fill", "sentence_template": "Mis amigos {1} simpáticos.", "answers": [["son"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Yo {1} cansado hoy.", "answers": [["estoy"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "El libro {1} en la mesa.", "answers": [["está", "esta"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Tú {1} muy alta.", "answers": [["eres"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Nosotros {1} contentos.", "answers": [["estamos"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Hoy {1} lunes.", "answers": [["es"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "{1} las dos de la tarde.", "answers": [["son"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p5-application-gap-vaativa",
+      "phase_type": "application_gap_fill",
+      "title": "Lauseen täydennys — vaativa",
+      "instruction": "Päätä ser/estar kontekstista.",
+      "mastery_threshold": { "I": 0.5, "A": 0.55, "B": 0.65, "C": 0.75, "M": 0.85, "E": 0.9, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Mi profesor {1} español, pero ahora {2} en Finlandia.", "answers": [["es"], ["está", "esta"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Las llaves {1} en mi mochila.", "answers": [["están", "estan"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "El examen {1} difícil pero los alumnos {2} preparados.", "answers": [["es"], ["están", "estan"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "¿{1} (sinä) cansada o triste?", "answers": [["estás", "estas"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Mi hermano {1} médico y {2} en el hospital ahora.", "answers": [["es"], ["está", "esta"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "El café {1} delicioso, pero ya {2} frío.", "answers": [["es"], ["está", "esta"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Madrid {1} la capital de España. {2} en el centro del país.", "answers": [["es"], ["está", "esta"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Yo {1} finlandés y {2} muy contento aquí.", "answers": [["soy"], ["estoy"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p6-application-sentence-build",
+      "phase_type": "application_sentence_build",
+      "title": "Lauseen rakentelua",
+      "instruction": "Käännä koko lause espanjaksi.",
+      "mastery_threshold": { "I": 0.5, "A": 0.55, "B": 0.6, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.92 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Olen suomalainen.", "accept": ["soy finlandés", "soy finlandes", "soy finlandesa"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Olemme luokassa.", "accept": ["estamos en el aula", "estamos en clase", "estamos en la clase"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Madrid sijaitsee Espanjassa.", "accept": ["madrid está en españa", "madrid esta en espana"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Hän on opettaja.", "accept": ["es profesor", "es profesora", "él es profesor", "ella es profesora"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Tänään on tiistai.", "accept": ["hoy es martes", "hoy es martes."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Veljeni on väsynyt.", "accept": ["mi hermano está cansado", "mi hermano esta cansado"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Reppu on tuolilla.", "accept": ["la mochila está en la silla", "la mochila esta en la silla"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Olen iloinen tänään.", "accept": ["estoy contento hoy", "estoy contenta hoy", "hoy estoy contento", "hoy estoy contenta"] }
+      ]
+    },
+    {
+      "phase_id": "p7-recall-typed-es-fi",
+      "phase_type": "recall_typed_es_to_fi",
+      "title": "Käännä suomeksi",
+      "instruction": "Käännä lause suomeksi.",
+      "mastery_threshold": { "I": 0.5, "A": 0.55, "B": 0.7, "C": 0.75, "M": 0.8, "E": 0.85, "L": 0.92 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Soy alumna.", "accept": ["olen oppilas", "olen oppilas."] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Estás en casa.", "accept": ["olet kotona", "olet kotona."] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Es de Madrid.", "accept": ["hän on madridista", "hän on kotoisin madridista", "se on madridista"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Estoy bien.", "accept": ["voin hyvin", "olen kunnossa", "olen ok"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Son las cuatro.", "accept": ["kello on neljä", "on kello neljä"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Está enfermo.", "accept": ["hän on sairas", "hän on sairaana"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Mi mochila es nueva.", "accept": ["reppuni on uusi", "minun reppuni on uusi"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Estamos en el instituto.", "accept": ["olemme lukiossa", "olemme koulussa"] }
+      ]
+    },
+    {
+      "phase_id": "p8-synthesis-translate",
+      "phase_type": "synthesis_translate",
+      "title": "YO-tason käännös",
+      "instruction": "Käännä koko lause espanjaksi.",
+      "mastery_threshold": { "I": 0.5, "A": 0.55, "B": 0.6, "C": 0.65, "M": 0.75, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Äitini on espanjalainen, mutta hän asuu nyt Helsingissä ja on hyvin onnellinen siellä.", "accept": ["mi madre es española, pero ahora vive en helsinki y está muy contenta allí", "mi madre es española pero ahora vive en helsinki y está muy contenta allí", "mi madre es espanola pero ahora vive en helsinki y esta muy contenta alli"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Madrid on Espanjan pääkaupunki ja se sijaitsee maan keskellä.", "accept": ["madrid es la capital de españa y está en el centro del país", "madrid es la capital de españa y está situada en el centro del país"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Olen tänään tosi väsynyt, koska minulla oli vaikea koe.", "accept": ["estoy muy cansado hoy porque tuve un examen difícil", "estoy muy cansada hoy porque tuve un examen difícil", "hoy estoy muy cansado porque tuve un examen difícil"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Veljeni on lääkäri ja hän on töissä sairaalassa juuri nyt.", "accept": ["mi hermano es médico y está trabajando en el hospital ahora mismo", "mi hermano es médico y ahora está en el hospital trabajando"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Mistä olet kotoisin? Olen Suomesta.", "accept": ["¿de dónde eres? soy de finlandia", "de dónde eres soy de finlandia", "¿de dónde eres? soy de finlandia."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Kahvi on yleensä hyvää, mutta tänään se on liian kylmää.", "accept": ["el café normalmente es bueno, pero hoy está demasiado frío", "el café suele ser bueno pero hoy está demasiado frío"] }
+      ]
+    },
+    {
+      "phase_id": "p9-recognition-mc-final",
+      "phase_type": "recognition_mc",
+      "title": "Yhteenveto — sekoitettu kertaus",
+      "instruction": "Sekoitettu kertaus aiemmista vaiheista.",
+      "mastery_threshold": { "I": 0.6, "A": 0.65, "B": 0.75, "C": 0.8, "M": 0.85, "E": 0.9, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "mc", "stem": "Mi tía _____ profesora.", "choices": ["es", "está", "son", "están"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "Ammatti = ser." },
+        { "item_type": "mc", "stem": "El bolígrafo _____ en la mochila.", "choices": ["es", "está", "son", "están"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "Sijainti = estar." },
+        { "item_type": "mc", "stem": "Mis hermanas _____ rubias.", "choices": ["son", "están", "es", "está"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "Pysyvä piirre (hiusten väri) = ser." },
+        { "item_type": "mc", "stem": "Yo _____ aburrido en clase.", "choices": ["soy", "estoy", "es", "están"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "Mieliala = estar. Estoy aburrido = minulla on tylsää nyt." },
+        { "item_type": "mc", "stem": "La sopa _____ caliente.", "choices": ["es", "está", "son", "están"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "Hetkellinen tila (lämpötila) = estar." },
+        { "item_type": "mc", "stem": "Hoy _____ jueves.", "choices": ["es", "está", "son", "están"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "Päivä = ser." },
+        { "item_type": "mc", "stem": "Madrid y Barcelona _____ en España.", "choices": ["son", "están", "es", "está"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Sijainti monikossa = están." },
+        { "item_type": "mc", "stem": "Mi novio _____ alemán.", "choices": ["es", "está", "son", "están"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "Kansallisuus = ser." }
+      ]
+    },
+    {
+      "phase_id": "p10-synthesis-short-writing",
+      "phase_type": "synthesis_short_writing",
+      "title": "Lyhyt kirjoitus",
+      "instruction": "Käytä sekä ser että estar.",
+      "mastery_threshold": { "I": 0.5, "A": 0.55, "B": 0.6, "C": 0.65, "M": 0.7, "E": 0.8, "L": 0.9 },
+      "skip_for_targets": ["I", "A", "B", "C", "M"],
+      "items": [
+        { "item_type": "writing", "prompt": "Esittele itsesi: kuka olet (ser), mistä kotoisin (ser), missä olet juuri nyt (estar), mitä olet (mielialaltaan, estar). 5–7 lausetta. Käytä kummatkin verbit selvästi.", "min_words": 45, "max_words": 100, "rubric_focus": ["communication", "structure", "vocab"] },
+        { "item_type": "writing", "prompt": "Kuvaile yhtä perheenjäsentä: mikä hän on (ammatti, kansallisuus — ser) ja missä hän on juuri nyt + mikä hänen mielialansa on (estar). 5–7 lausetta.", "min_words": 45, "max_words": 100, "rubric_focus": ["communication", "structure"] },
+        { "item_type": "writing", "prompt": "Kerro lukiosi sijainnista (estar), sen koosta ja maineesta (ser), ja siitä miltä siellä tuntuu olla tänään (estar). 5–7 lausetta.", "min_words": 45, "max_words": 100, "rubric_focus": ["communication", "vocab"] }
+      ]
+    },
+    {
+      "phase_id": "p11-translate-cumulative",
+      "phase_type": "synthesis_translate",
+      "title": "Kertaus — perheen ja koulun sanasto + ser/estar",
+      "instruction": "Yhdistä K1L1–K1L4 sanasto + ser/estar.",
+      "mastery_threshold": { "I": 0.5, "A": 0.55, "B": 0.6, "C": 0.65, "M": 0.75, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C", "M"],
+      "items": [
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Sisareni on lukiossa ja hän on tänään tosi iloinen, koska hän sai hyvän arvosanan.", "accept": ["mi hermana está en el instituto y hoy está muy contenta porque sacó una buena nota", "mi hermana está en el instituto y está muy contenta hoy porque ha sacado una buena nota"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Setäni on saksalainen ja hän työskentelee nyt Espanjassa.", "accept": ["mi tío es alemán y ahora trabaja en españa", "mi tío es alemán y está trabajando en españa ahora"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Reppuni on punainen ja se on luokassa.", "accept": ["mi mochila es roja y está en el aula", "mi mochila es roja y está en clase"] }
+      ]
+    }
+  ],
+  "vocab": [
+    { "es": "ser", "fi": "olla (pysyvä, identiteetti)", "example_es": "Soy alumna.", "example_fi": "Olen oppilas.", "gender": null },
+    { "es": "estar", "fi": "olla (tila, sijainti)", "example_es": "Estoy en casa.", "example_fi": "Olen kotona.", "gender": null },
+    { "es": "soy", "fi": "olen (ser)", "example_es": "Soy finlandés.", "example_fi": "Olen suomalainen.", "gender": null },
+    { "es": "eres", "fi": "olet (ser)", "example_es": "Eres alta.", "example_fi": "Olet pitkä.", "gender": null },
+    { "es": "es", "fi": "on (ser)", "example_es": "Es médico.", "example_fi": "Hän on lääkäri.", "gender": null },
+    { "es": "somos", "fi": "olemme (ser)", "example_es": "Somos amigos.", "example_fi": "Olemme ystäviä.", "gender": null },
+    { "es": "son", "fi": "ovat (ser)", "example_es": "Son simpáticos.", "example_fi": "He ovat mukavia.", "gender": null },
+    { "es": "estoy", "fi": "olen (estar)", "example_es": "Estoy cansado.", "example_fi": "Olen väsynyt.", "gender": null },
+    { "es": "estás", "fi": "olet (estar)", "example_es": "¿Cómo estás?", "example_fi": "Mitä kuuluu?", "gender": null },
+    { "es": "está", "fi": "on (estar)", "example_es": "Madrid está en España.", "example_fi": "Madrid sijaitsee Espanjassa.", "gender": null },
+    { "es": "estamos", "fi": "olemme (estar)", "example_es": "Estamos contentos.", "example_fi": "Olemme iloisia.", "gender": null },
+    { "es": "están", "fi": "ovat (estar)", "example_es": "Están en clase.", "example_fi": "He ovat luokassa.", "gender": null },
+    { "es": "cansado", "fi": "väsynyt", "example_es": "Estoy muy cansado.", "example_fi": "Olen tosi väsynyt.", "gender": "m" },
+    { "es": "contento", "fi": "iloinen, tyytyväinen", "example_es": "Estoy contento hoy.", "example_fi": "Olen tänään iloinen.", "gender": "m" },
+    { "es": "triste", "fi": "surullinen", "example_es": "Está triste hoy.", "example_fi": "Hän on tänään surullinen.", "gender": null },
+    { "es": "alto", "fi": "pitkä (ihminen)", "example_es": "Mi padre es alto.", "example_fi": "Isäni on pitkä.", "gender": "m" },
+    { "es": "bajo", "fi": "lyhyt", "example_es": "Mi hermana es baja.", "example_fi": "Sisareni on lyhyt.", "gender": "m" },
+    { "es": "simpático", "fi": "mukava, sympaattinen", "example_es": "El profesor es simpático.", "example_fi": "Opettaja on mukava.", "gender": "m" },
+    { "es": "guapo", "fi": "komea, kaunis", "example_es": "Es muy guapo.", "example_fi": "Hän on tosi komea.", "gender": "m" },
+    { "es": "enfermo", "fi": "sairas", "example_es": "Está enfermo.", "example_fi": "Hän on sairas.", "gender": "m" }
+  ],
+  "side_panel": {
+    "tabs": [
+      {
+        "id": "grammar",
+        "title": "Opetussivu",
+        "content_md": "## Ser ja estar — taulukko\n\n| Persoona | ser | estar |\n|---|---|---|\n| yo | **soy** | **estoy** |\n| tú | **eres** | **estás** |\n| él/ella | **es** | **está** |\n| nosotros | **somos** | **estamos** |\n| vosotros | **sois** | **estáis** |\n| ellos/ellas | **son** | **están** |\n\n## Käytä SER:\n\n- **Identiteetti, ammatti**: Soy alumna. Es médico.\n- **Alkuperä, kansallisuus**: Soy finlandés. Es de Madrid.\n- **Pysyvä ominaisuus**: Es alto. Son simpáticos.\n- **Aika, päivä**: Es la una. Hoy es lunes.\n- **Materiaali, omistus**: La mesa es de madera. El libro es de Ana.\n\n## Käytä ESTAR:\n\n- **Sijainti**: Madrid está en España. La mochila está aquí.\n- **Mieliala, tila**: Estoy cansado. Está triste.\n- **Hetkellinen ominaisuus**: El café está frío.\n- **Käynnissä**: Estoy estudiando.\n\n## Sama adjektiivi, eri merkitys\n\n- **es aburrido** = (hän on) tylsä luonteeltaan\n- **está aburrido** = (hänellä on) tylsää nyt\n- **es bueno** = (hän on) hyvä ihminen\n- **está bueno** = (se on) hyvänmakuista, tai (hän on) hyvännäköinen"
+      },
+      {
+        "id": "vocab",
+        "title": "Sanasto",
+        "content_md": "## Ser- ja estar-muodot\n\n- **soy / estoy** — olen\n- **eres / estás** — olet\n- **es / está** — on\n- **somos / estamos** — olemme\n- **sois / estáis** — olette\n- **son / están** — ovat\n\n## Yleisiä adjektiiveja\n\n- **alto / alta** — pitkä\n- **bajo / baja** — lyhyt\n- **guapo / guapa** — komea, kaunis\n- **simpático / simpática** — mukava\n- **cansado / cansada** — väsynyt (estar)\n- **contento / contenta** — iloinen (estar)\n- **triste** — surullinen (estar)\n- **enfermo / enferma** — sairas (estar)"
+      },
+      {
+        "id": "tips",
+        "title": "YO-vinkki",
+        "content_md": "## YO-koe — yleisin virhe\n\n**Estoy finlandés** ❌ — kansallisuus on ser → **Soy finlandés** ✓.\n\n## Ratkaiseva nyrkkisääntö\n\n- Pysyvä → ser\n- Hetkellinen tai sijainti → estar\n\n## Sijainti\n\nVaikka Madrid ei muuta mihinkään, sijainti on aina estar:\n- Madrid **está** en España.\n- Helsinki **está** en Finlandia.\n\n## Aika\n\nKello: **es la una** (klo 1), mutta **son las dos / tres / cuatro…** (kaikissa muissa).\n\n## Kirjoituksessa\n\nYO-koearvioija näkee yhdellä silmäyksellä, hallitsetko ser/estar-eron. Yksi virhe ei pudota arvosanaa, mutta jatkuva virhe vaikuttaa rakennepisteisiin merkittävästi."
+      }
+    ]
+  }
+}

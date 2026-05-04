@@ -334,6 +334,10 @@ export async function loadCurriculum() {
   const root = document.getElementById(PATH_INNER_ID);
   if (!root) return;
   show("screen-path");
+  // hotfix bug 2 — clear any stale expanded state so we don't render a card
+  // with the "Ladataan oppitunteja…" placeholder that nobody refreshes.
+  // Tab will re-expand on demand via toggleKurssi.
+  _state.expanded = null;
   // L-PLAN-8 UPDATE 6A — make sure the floating Opetussivu trigger from a
   // prior lesson session is hidden the moment we land back on the path
   // overview. The MutationObserver in teachingPanel.js handles this on its

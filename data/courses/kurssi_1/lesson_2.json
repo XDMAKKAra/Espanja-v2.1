@@ -1,0 +1,269 @@
+{
+  "meta": {
+    "course_key": "kurssi_1",
+    "lesson_index": 2,
+    "lesson_type": "grammar",
+    "level": "A",
+    "title": "-ar-verbit preesensissä",
+    "description": "Opettelet 1. taivutusryhmän verbit (hablar, estudiar, trabajar, escuchar…) ja niiden 6 persoonamuotoa preesensissä. -ar-verbit ovat espanjan yleisin verbiryhmä — YO-kokeessa lähes joka kuullun ja luetun tehtävässä.",
+    "yo_relevance": "-ar-verbit muodostavat yli puolet espanjan kaikista verbeistä. YO-kokeen kuullun ymmärtäminen testaa erityisesti hablo/habla, estudio/estudia ja trabajamos-muotojen tunnistusta — yhden kirjaimen ero ratkaisee subjektin.",
+    "estimated_minutes_median": 14
+  },
+  "teaching": {
+    "intro_md": "# -ar-verbit preesensissä\n\nKaikki -ar-verbit (hablar, estudiar, trabajar…) taivutetaan samalla kaavalla preesensissä. Pudotetaan **-ar**-pääte ja lisätään persoonan mukaan päätteet.\n\n## Esimerkki: hablar (puhua)\n\n| Persoona | Muoto |\n|---|---|\n| yo | habl**o** |\n| tú | habl**as** |\n| él / ella / usted | habl**a** |\n| nosotros | habl**amos** |\n| vosotros | habl**áis** |\n| ellos / ellas / ustedes | habl**an** |\n\n## Käyttöesimerkkejä\n\n> **Hablo** español. (Puhun espanjaa.)\n>\n> ¿**Hablas** inglés? (Puhutko englantia?)\n>\n> **Estudiamos** en el instituto. (Opiskelemme lukiossa.)\n\n## Tärkeää\n\n- Subjekti (yo, tú, él…) jätetään yleensä pois — verbi kertoo persoonan.\n- **Yo**-muoto loppuu aina **-o**:han, **tú** **-as**, **nosotros** **-amos**, **ellos** **-an**.\n- Erot tú-as ja él-a ovat YO-kokeen yleisin ansa.",
+    "key_points": [
+      "-ar-verbi taipuu pudottamalla -ar ja lisäämällä persoonapääte: o, as, a, amos, áis, an.",
+      "Subjektipronominit yleensä pois — verbi paljastaa persoonan.",
+      "él- ja tú-muotojen ero on yksi kirjain (-a vs -as).",
+      "Vosotros-muotoa käytetään Espanjassa, ei Latinalaisessa Amerikassa."
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1-recognition-paatteet",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista — verbin persoona",
+      "instruction": "Mikä persoona puhuu?",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.7, "C": 0.75, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "mc", "stem": "Hablo español.", "choices": ["yo", "tú", "él", "nosotros"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "-o → yo. Hablo = (minä) puhun." },
+        { "item_type": "mc", "stem": "Estudias inglés.", "choices": ["yo", "tú", "él/ella", "ellos"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "-as → tú. Estudias = (sinä) opiskelet." },
+        { "item_type": "mc", "stem": "Trabaja en Helsinki.", "choices": ["yo", "tú", "él/ella/usted", "vosotros"], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "-a → él/ella/usted. Trabaja = hän työskentelee." },
+        { "item_type": "mc", "stem": "Escuchamos música.", "choices": ["yo", "ellos", "nosotros", "ella"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "-amos → nosotros. Escuchamos = (me) kuuntelemme." },
+        { "item_type": "mc", "stem": "Cantáis bien.", "choices": ["nosotros", "tú", "vosotros", "ellos"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "-áis → vosotros (Espanjan te-muoto)." },
+        { "item_type": "mc", "stem": "Bailan salsa.", "choices": ["yo", "tú", "nosotros", "ellos/ellas/ustedes"], "correct_index": 3, "distractor_difficulty": "medium", "explanation": "-an → ellos/ellas/ustedes. Bailan = he tanssivat." },
+        { "item_type": "mc", "stem": "Tomo café.", "choices": ["yo", "él", "tú", "ellos"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "-o → yo. Tomo = (minä) otan/juon." },
+        { "item_type": "mc", "stem": "Compras pan.", "choices": ["nosotros", "tú", "él", "vosotros"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "-as → tú. Compras = (sinä) ostat." },
+        { "item_type": "mc", "stem": "Llevamos los libros.", "choices": ["nosotros", "vosotros", "ellos", "yo"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "-amos → nosotros. Llevamos = (me) viemme." },
+        { "item_type": "mc", "stem": "Practica español.", "choices": ["yo", "tú", "él/ella", "ellos"], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "-a → él/ella/usted. Practica español = hän harjoittelee espanjaa." },
+        { "item_type": "mc", "stem": "Visitan Madrid.", "choices": ["nosotros", "ellos/ellas/ustedes", "tú", "yo"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "-an → he/te (kohteliaasti)." },
+        { "item_type": "mc", "stem": "Llamo por teléfono.", "choices": ["yo", "tú", "él", "nosotros"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "-o → yo. Llamo = (minä) soitan." }
+      ]
+    },
+    {
+      "phase_id": "p2-recognition-translate",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista — käännös",
+      "instruction": "Valitse oikea käännös suomeksi.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.7, "C": 0.75, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "mc", "stem": "Hablamos finés.", "choices": ["Puhun suomea.", "Puhumme suomea.", "Puhutte suomea.", "He puhuvat suomea."], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "hablamos = (me) puhumme." },
+        { "item_type": "mc", "stem": "Estudia matemáticas.", "choices": ["Opiskelen matematiikkaa.", "Opiskelet matematiikkaa.", "Hän opiskelee matematiikkaa.", "He opiskelevat matematiikkaa."], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "estudia = hän opiskelee (3. yksikkö)." },
+        { "item_type": "mc", "stem": "¿Trabajas mucho?", "choices": ["Työskenteletkö paljon?", "Työskenteleekö hän paljon?", "Työskentelenkö paljon?", "Työskentelettekö paljon?"], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "trabajas = sinä työskentelet." },
+        { "item_type": "mc", "stem": "Compro fruta los sábados.", "choices": ["Hän ostaa hedelmiä.", "He ostavat hedelmiä.", "Ostan hedelmiä lauantaisin.", "Ostamme hedelmiä lauantaisin."], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "compro = (minä) ostan." },
+        { "item_type": "mc", "stem": "Cantan en el coro.", "choices": ["Laulan kuorossa.", "He laulavat kuorossa.", "Laulamme kuorossa.", "Laulat kuorossa."], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "cantan = he laulavat." },
+        { "item_type": "mc", "stem": "Llamáis por la noche.", "choices": ["Soitan illalla.", "Soitamme illalla.", "(Te) soitatte illalla.", "He soittavat illalla."], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "-áis → vosotros = te (monikko, Espanjan käytössä)." },
+        { "item_type": "mc", "stem": "Escucho la radio.", "choices": ["Kuuntelen radiota.", "Kuuntelet radiota.", "Hän kuuntelee radiota.", "Kuuntelemme radiota."], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "escucho = (minä) kuuntelen." },
+        { "item_type": "mc", "stem": "Bailas tango.", "choices": ["Tanssin tangoa.", "Tanssit tangoa.", "Tanssimme tangoa.", "He tanssivat tangoa."], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "bailas = (sinä) tanssit." },
+        { "item_type": "mc", "stem": "Visitamos a la abuela.", "choices": ["Vierailen mummon luona.", "Vierailemme mummon luona.", "Vierailet mummon luona.", "He vierailevat mummon luona."], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "visitamos = (me) vierailemme." },
+        { "item_type": "mc", "stem": "Practica todos los días.", "choices": ["Harjoittelen joka päivä.", "Hän harjoittelee joka päivä.", "He harjoittelevat joka päivä.", "Harjoittelemme joka päivä."], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "practica = hän harjoittelee." },
+        { "item_type": "mc", "stem": "Tomas el autobús.", "choices": ["Otan bussin.", "Otat bussin.", "Hän ottaa bussin.", "Otamme bussin."], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "tomas = (sinä) otat." },
+        { "item_type": "mc", "stem": "Llegan tarde.", "choices": ["Saavun myöhään.", "(Sinä) saavut myöhään.", "He/Te saapuvat myöhään.", "Saavumme myöhään."], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "llegan = he/te (kohteliaasti) saapuvat." }
+      ]
+    },
+    {
+      "phase_id": "p3-recognition-match",
+      "phase_type": "recognition_match",
+      "title": "Yhdistä — pronomini ja muoto",
+      "instruction": "Yhdistä subjekti ja oikea hablar-muoto.",
+      "mastery_threshold": { "I": 0.6, "A": 0.65, "B": 0.75, "C": 0.8, "M": 0.85, "E": 0.9, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        {
+          "item_type": "match",
+          "left_label": "Subjekti",
+          "right_label": "Hablar-muoto",
+          "pairs": [
+            { "left": "yo", "right": "hablo" },
+            { "left": "tú", "right": "hablas" },
+            { "left": "él / ella", "right": "habla" },
+            { "left": "nosotros", "right": "hablamos" },
+            { "left": "vosotros", "right": "habláis" },
+            { "left": "ellos / ellas", "right": "hablan" }
+          ]
+        },
+        {
+          "item_type": "match",
+          "left_label": "Subjekti",
+          "right_label": "Estudiar-muoto",
+          "pairs": [
+            { "left": "yo", "right": "estudio" },
+            { "left": "tú", "right": "estudias" },
+            { "left": "ella", "right": "estudia" },
+            { "left": "nosotros", "right": "estudiamos" },
+            { "left": "ellos", "right": "estudian" }
+          ]
+        },
+        {
+          "item_type": "match",
+          "left_label": "Subjekti",
+          "right_label": "Trabajar-muoto",
+          "pairs": [
+            { "left": "yo", "right": "trabajo" },
+            { "left": "tú", "right": "trabajas" },
+            { "left": "él", "right": "trabaja" },
+            { "left": "nosotros", "right": "trabajamos" },
+            { "left": "ellos", "right": "trabajan" }
+          ]
+        }
+      ]
+    },
+    {
+      "phase_id": "p4-recall-typed-fi-es",
+      "phase_type": "recall_typed_fi_to_es",
+      "title": "Tuota — verbinmuoto",
+      "instruction": "Kirjoita oikea -ar-verbi annetussa persoonassa.",
+      "mastery_threshold": { "I": 0.5, "A": 0.55, "B": 0.7, "C": 0.75, "M": 0.8, "E": 0.85, "L": 0.92 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "hablar — yo", "accept": ["hablo"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "hablar — tú", "accept": ["hablas"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "hablar — nosotros", "accept": ["hablamos"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "estudiar — ella", "accept": ["estudia"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "estudiar — vosotros", "accept": ["estudiáis", "estudiais"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "trabajar — yo", "accept": ["trabajo"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "trabajar — ellos", "accept": ["trabajan"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "escuchar — tú", "accept": ["escuchas"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "escuchar — nosotros", "accept": ["escuchamos"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "comprar — yo", "accept": ["compro"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "tomar — él", "accept": ["toma"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "cantar — ellos", "accept": ["cantan"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "bailar — yo", "accept": ["bailo"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "llamar — nosotros", "accept": ["llamamos"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "visitar — vosotros", "accept": ["visitáis", "visitais"] }
+      ]
+    },
+    {
+      "phase_id": "p5-application-gap-helppo",
+      "phase_type": "application_gap_fill",
+      "title": "Lauseen täydennys — perustaso",
+      "instruction": "Täydennä oikealla -ar-verbin muodolla.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.75, "C": 0.8, "M": 0.85, "E": 0.9, "L": 0.92 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Yo {1} español. (hablar)", "answers": [["hablo"]], "word_bank": ["hablo", "hablas", "habla"] },
+        { "item_type": "gap_fill", "sentence_template": "Mi hermana {1} en Madrid. (estudiar)", "answers": [["estudia"]], "word_bank": ["estudia", "estudio", "estudian"] },
+        { "item_type": "gap_fill", "sentence_template": "Mis padres {1} en una empresa. (trabajar)", "answers": [["trabajan"]], "word_bank": ["trabajan", "trabajamos", "trabaja"] },
+        { "item_type": "gap_fill", "sentence_template": "Nosotros {1} música. (escuchar)", "answers": [["escuchamos"]], "word_bank": ["escuchamos", "escuchan", "escucho"] },
+        { "item_type": "gap_fill", "sentence_template": "¿Tú {1} café? (tomar)", "answers": [["tomas"]], "word_bank": ["tomas", "tomamos", "toma"] },
+        { "item_type": "gap_fill", "sentence_template": "Vosotros {1} muy bien. (cantar)", "answers": [["cantáis", "cantais"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Ella {1} en el supermercado. (comprar)", "answers": [["compra"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Mis amigos {1} salsa. (bailar)", "answers": [["bailan"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Yo {1} a mi abuela los domingos. (visitar)", "answers": [["visito"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "El profesor {1} la lección. (explicar)", "answers": [["explica"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Yo {1} ayuda con los deberes. (necesitar)", "answers": [["necesito"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Los domingos nosotros {1}. (descansar)", "answers": [["descansamos"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p6-application-gap-vaativa",
+      "phase_type": "application_gap_fill",
+      "title": "Lauseen täydennys — vaativa",
+      "instruction": "Valitse oikea persoona kontekstista. Ei sanapankkia.",
+      "mastery_threshold": { "I": 0.5, "A": 0.55, "B": 0.65, "C": 0.75, "M": 0.85, "E": 0.9, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Mi hermano y yo {1} en el mismo instituto. (estudiar)", "answers": [["estudiamos"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "¿Vosotros {1} español o francés? (hablar)", "answers": [["habláis", "hablais"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Los chicos {1} música los viernes. (escuchar)", "answers": [["escuchan"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Mi padre {1} en una clínica. (trabajar)", "answers": [["trabaja"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Ana y María {1} pan en la panadería. (comprar)", "answers": [["compran"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Yo no {1} muy bien. (cantar)", "answers": [["canto"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Tú siempre {1} tarde a clase. (llegar)", "answers": [["llegas"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Nosotros {1} a casa por la noche. (regresar)", "answers": [["regresamos"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Mi madre {1} la cena. (preparar)", "answers": [["prepara"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "¿Tú {1} mucho durante el examen? (necesitar)", "answers": [["necesitas"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p7-application-sentence-build",
+      "phase_type": "application_sentence_build",
+      "title": "Lauseen rakentelua",
+      "instruction": "Käännä koko lause espanjaksi. Käytä oikeaa -ar-verbin muotoa.",
+      "mastery_threshold": { "I": 0.5, "A": 0.55, "B": 0.6, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.92 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "(Minä) puhun espanjaa.", "accept": ["hablo español", "yo hablo español", "hablo espanol"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Sisareni opiskelee Helsingissä.", "accept": ["mi hermana estudia en helsinki", "mi hermana estudia en helsinki."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Vanhempani työskentelevät pankissa.", "accept": ["mis padres trabajan en un banco", "mis padres trabajan en el banco"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Kuuntelemme musiikkia joka päivä.", "accept": ["escuchamos música todos los días", "escuchamos musica todos los dias", "escuchamos música todos los días."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Otatko sokeria kahviin?", "accept": ["tomas azúcar en el café", "tomas azucar en el cafe", "¿tomas azúcar en el café?"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "He vierailevat usein Madridissa.", "accept": ["visitan madrid a menudo", "visitan madrid frecuentemente"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Ostan leipää aamulla.", "accept": ["compro pan por la mañana", "compro pan por la manana"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Soitan äidilleni illalla.", "accept": ["llamo a mi madre por la noche", "llamo a mi madre por la noche."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Tarvitsen apua.", "accept": ["necesito ayuda", "necesito ayuda."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Lepäämme sunnuntaisin.", "accept": ["descansamos los domingos", "descansamos los domingos."] }
+      ]
+    },
+    {
+      "phase_id": "p8-synthesis-translate",
+      "phase_type": "synthesis_translate",
+      "title": "YO-tason käännös",
+      "instruction": "Käännä koko lause espanjaksi.",
+      "mastery_threshold": { "I": 0.5, "A": 0.55, "B": 0.6, "C": 0.65, "M": 0.75, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Veljeni opiskelee espanjaa lukiossa ja puhuu sitä jo melko hyvin.", "accept": ["mi hermano estudia español en el instituto y ya lo habla bastante bien", "mi hermano estudia espanol en el instituto y ya lo habla bastante bien"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Vanhempani työskentelevät kaupungissa, mutta minä opiskelen kotona.", "accept": ["mis padres trabajan en la ciudad, pero yo estudio en casa", "mis padres trabajan en la ciudad pero yo estudio en casa"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Sisareni ja minä kuuntelemme musiikkia ja tanssimme paljon.", "accept": ["mi hermana y yo escuchamos música y bailamos mucho", "mi hermana y yo escuchamos musica y bailamos mucho"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Onko teillä tapana ostaa hedelmiä torilta?", "accept": ["¿soléis comprar fruta en el mercado?", "soléis comprar fruta en el mercado", "soleis comprar fruta en el mercado", "compráis fruta en el mercado normalmente"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Käymme tätini luona joka kesä.", "accept": ["visitamos a mi tía cada verano", "visitamos a mi tia cada verano", "visitamos a nuestra tía cada verano"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Soitan ystävälleni illalla, koska puhumme aina pitkään.", "accept": ["llamo a mi amigo por la noche porque siempre hablamos mucho tiempo", "llamo a mi amiga por la noche porque siempre hablamos mucho tiempo"] }
+      ]
+    },
+    {
+      "phase_id": "p9-synthesis-short-writing",
+      "phase_type": "synthesis_short_writing",
+      "title": "Lyhyt kirjoitus",
+      "instruction": "Kirjoita lyhyt teksti -ar-verbeillä.",
+      "mastery_threshold": { "I": 0.5, "A": 0.55, "B": 0.6, "C": 0.65, "M": 0.7, "E": 0.8, "L": 0.9 },
+      "skip_for_targets": ["I", "A", "B", "C", "M"],
+      "items": [
+        { "item_type": "writing", "prompt": "Kirjoita 5–7 lausetta päivästäsi: mitä opiskelet, työskenteletkö, mitä kuuntelet, mitä ostat, kenelle soitat. Käytä vähintään 6 eri -ar-verbiä.", "min_words": 40, "max_words": 90, "rubric_focus": ["communication", "structure", "vocab"] },
+        { "item_type": "writing", "prompt": "Kerro perheestäsi: mitä kukin tekee päivisin (käytä trabajar, estudiar, escuchar, hablar). 5–7 lausetta.", "min_words": 40, "max_words": 90, "rubric_focus": ["communication", "vocab"] },
+        { "item_type": "writing", "prompt": "Vertaa viikonloppuasi ja arkipäivää: mitä eroa tekemisissä on (cantar, bailar, visitar, comprar, descansar). 5–7 lausetta.", "min_words": 40, "max_words": 90, "rubric_focus": ["communication", "structure"] }
+      ]
+    }
+  ],
+  "vocab": [
+    { "es": "hablar", "fi": "puhua", "example_es": "Hablo español.", "example_fi": "Puhun espanjaa.", "gender": null },
+    { "es": "estudiar", "fi": "opiskella", "example_es": "Estudio inglés.", "example_fi": "Opiskelen englantia.", "gender": null },
+    { "es": "trabajar", "fi": "tehdä työtä", "example_es": "Mi padre trabaja en Helsinki.", "example_fi": "Isäni työskentelee Helsingissä.", "gender": null },
+    { "es": "escuchar", "fi": "kuunnella", "example_es": "Escuchamos música.", "example_fi": "Kuuntelemme musiikkia.", "gender": null },
+    { "es": "tomar", "fi": "ottaa, juoda", "example_es": "Tomo café por la mañana.", "example_fi": "Juon kahvia aamulla.", "gender": null },
+    { "es": "comprar", "fi": "ostaa", "example_es": "Compro pan los sábados.", "example_fi": "Ostan leipää lauantaisin.", "gender": null },
+    { "es": "cantar", "fi": "laulaa", "example_es": "Cantáis muy bien.", "example_fi": "Te laulatte hienosti.", "gender": null },
+    { "es": "bailar", "fi": "tanssia", "example_es": "Bailan salsa.", "example_fi": "He tanssivat salsaa.", "gender": null },
+    { "es": "llamar", "fi": "soittaa, kutsua", "example_es": "Llamo a mi abuela.", "example_fi": "Soitan isoäidilleni.", "gender": null },
+    { "es": "visitar", "fi": "vierailla", "example_es": "Visitamos Madrid en verano.", "example_fi": "Vierailemme Madridissa kesällä.", "gender": null },
+    { "es": "practicar", "fi": "harjoitella", "example_es": "Practica todos los días.", "example_fi": "Hän harjoittelee joka päivä.", "gender": null },
+    { "es": "explicar", "fi": "selittää", "example_es": "El profesor explica la lección.", "example_fi": "Opettaja selittää oppitunnin.", "gender": null },
+    { "es": "regresar", "fi": "palata", "example_es": "Regresamos a casa por la noche.", "example_fi": "Palaamme kotiin illalla.", "gender": null },
+    { "es": "llegar", "fi": "saapua", "example_es": "Llegan tarde.", "example_fi": "He saapuvat myöhään.", "gender": null },
+    { "es": "descansar", "fi": "levätä", "example_es": "Los domingos descansamos.", "example_fi": "Sunnuntaisin lepäämme.", "gender": null },
+    { "es": "preparar", "fi": "valmistaa", "example_es": "Preparo la cena.", "example_fi": "Valmistan illallisen.", "gender": null },
+    { "es": "necesitar", "fi": "tarvita", "example_es": "Necesito ayuda.", "example_fi": "Tarvitsen apua.", "gender": null },
+    { "es": "buscar", "fi": "etsiä", "example_es": "Busco mis llaves.", "example_fi": "Etsin avaimiani.", "gender": null }
+  ],
+  "side_panel": {
+    "tabs": [
+      {
+        "id": "grammar",
+        "title": "Opetussivu",
+        "content_md": "## -ar-verbit preesensissä\n\n| Persoona | hablar | estudiar | trabajar |\n|---|---|---|---|\n| yo | habl**o** | estudi**o** | trabaj**o** |\n| tú | habl**as** | estudi**as** | trabaj**as** |\n| él/ella | habl**a** | estudi**a** | trabaj**a** |\n| nosotros | habl**amos** | estudi**amos** | trabaj**amos** |\n| vosotros | habl**áis** | estudi**áis** | trabaj**áis** |\n| ellos/ellas | habl**an** | estudi**an** | trabaj**an** |\n\n## Säännöllisten -ar-verbien päätteet\n\n- **-o** (yo)\n- **-as** (tú)\n- **-a** (él, ella, usted)\n- **-amos** (nosotros)\n- **-áis** (vosotros)\n- **-an** (ellos, ellas, ustedes)\n\n## Yleisimmät -ar-verbit\n\n- **hablar** — puhua\n- **estudiar** — opiskella\n- **trabajar** — työskennellä\n- **escuchar** — kuunnella\n- **tomar** — ottaa, juoda\n- **comprar** — ostaa\n- **cantar** — laulaa\n- **bailar** — tanssia\n- **llamar** — soittaa\n- **visitar** — vierailla"
+      },
+      {
+        "id": "vocab",
+        "title": "Sanasto",
+        "content_md": "## -ar-verbit (infinitiivi → suomi)\n\n- **hablar** — puhua\n- **estudiar** — opiskella\n- **trabajar** — tehdä työtä\n- **escuchar** — kuunnella\n- **tomar** — ottaa, juoda\n- **comprar** — ostaa\n- **cantar** — laulaa\n- **bailar** — tanssia\n- **llamar** — soittaa, kutsua\n- **visitar** — vierailla\n- **practicar** — harjoitella\n- **explicar** — selittää\n- **regresar** — palata\n- **llegar** — saapua\n- **descansar** — levätä\n- **preparar** — valmistaa\n- **necesitar** — tarvita\n- **buscar** — etsiä"
+      },
+      {
+        "id": "tips",
+        "title": "YO-vinkki",
+        "content_md": "## YO-koe — kuullun ymmärtäminen\n\n-ar-verbit ovat YO-kokeen joka tehtävässä. Yleisin ansa: **hablo** (yo) vs **habla** (él) vs **hablas** (tú) — ero on viimeinen tavu.\n\n## Kuuntele tarkasti\n\n- **-o** loppu → minä\n- **-as** loppu → sinä\n- **-a** loppu → hän\n- **-amos** loppu → me\n- **-an** loppu → he\n\n## Yleisin virhe\n\nSekoita el (artikkeli) ja él (hän). Jos lauseessa on subjekti, se kertoo persoonan. Jos ei, verbi paljastaa.\n\n## Kirjoituksessa\n\nÄlä jätä subjektipronominia kirjoitukseen ellei tarvita selkeyttä. *Hablo español* riittää, ei *Yo hablo español*."
+      }
+    ]
+  }
+}

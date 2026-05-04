@@ -1,0 +1,291 @@
+{
+  "meta": {
+    "course_key": "kurssi_1",
+    "lesson_index": 4,
+    "lesson_type": "vocab",
+    "level": "A",
+    "title": "Koulu ja värit",
+    "description": "Opettelet lukioarjen sanaston (instituto, asignatura, profesor, libro, examen…) ja 14 väriä. Sekä koulu- että värisanat ovat YO-kokeen kuullun ja luetun perussanastoa.",
+    "yo_relevance": "Kouluympäristö ja värit toistuvat YO-kokeen luetun ymmärtämisessä — erityisesti tekstit lukioelämästä, opiskelusta ja kuvauksista. Yleinen ansa: värin sukupuolitaivutus (rojo/roja, blanco/blanca).",
+    "estimated_minutes_median": 12
+  },
+  "teaching": {
+    "intro_md": "# Koulu ja värit\n\nLukioon liittyvä sanasto (kouluaineet, opettajat, oppimateriaalit) sekä värisanat ovat YO-kokeen joka tehtävässä.\n\n## Esimerkki\n\n> En el instituto estudio español, matemáticas e historia. Mi profesor de español es muy bueno. (Lukiossa opiskelen espanjaa, matematiikkaa ja historiaa. Espanjan-opettajani on tosi hyvä.)\n>\n> Mi mochila es **roja** y mis libros son **azules**. (Reppuni on punainen ja kirjani sinisiä.)\n\n## Värin taivutus\n\nVärit ovat adjektiiveja → mukautuvat sanan sukupuoleen ja lukuun.\n\n- la mochila roja, las mochilas rojas\n- el coche rojo, los coches rojos\n- una bicicleta verde / azul (verde ja azul: yksi muoto, mutta -es monikossa)",
+    "key_points": [
+      "Koulusanasto pohjustaa YO-kokeen yleisimpiä tekstityyppejä.",
+      "-o/-a päätteet värissä mukautuvat sukupuoleen.",
+      "Verde, azul, marrón ovat yksi muoto, mutta saavat -s monikkoon."
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1-recognition-koulu",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista — kouluympäristö",
+      "instruction": "Valitse oikea käännös.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.7, "C": 0.75, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "mc", "stem": "instituto", "choices": ["yliopisto", "lukio", "alakoulu", "luokkahuone"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "instituto = lukio (Espanjassa)." },
+        { "item_type": "mc", "stem": "asignatura", "choices": ["luokka", "kouluaine", "tutkinto", "läksy"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "asignatura = kouluaine (matikka, espanja…)." },
+        { "item_type": "mc", "stem": "profesor", "choices": ["oppilas", "rehtori", "opettaja", "kirja"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "profesor = (mies)opettaja. Profesora = naisopettaja." },
+        { "item_type": "mc", "stem": "alumno", "choices": ["oppilas", "opettaja", "rehtori", "luokkakaveri"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "alumno = oppilas (mies). Alumna = oppilas (nainen)." },
+        { "item_type": "mc", "stem": "examen", "choices": ["läksy", "koe", "kirja", "luokka"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "examen = koe." },
+        { "item_type": "mc", "stem": "deberes", "choices": ["kotityöt", "läksyt", "kokeet", "muistiinpanot"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "deberes = läksyt (koulu)." },
+        { "item_type": "mc", "stem": "mochila", "choices": ["reppu", "kirja", "kynä", "kassi"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "mochila = reppu." },
+        { "item_type": "mc", "stem": "libro", "choices": ["lehti", "kirja", "vihko", "kynä"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "libro = kirja." },
+        { "item_type": "mc", "stem": "cuaderno", "choices": ["kirja", "kynä", "vihko", "muistilappu"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "cuaderno = vihko." },
+        { "item_type": "mc", "stem": "bolígrafo", "choices": ["kynä, kuulakärkikynä", "lyijykynä", "vihko", "kirja"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "bolígrafo = (kuulakärki)kynä. Lapiz = lyijykynä." },
+        { "item_type": "mc", "stem": "aula", "choices": ["käytävä", "luokkahuone", "ruokala", "salisto"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "aula = luokkahuone." },
+        { "item_type": "mc", "stem": "nota", "choices": ["arvosana", "muistiinpano", "merkki", "viesti"], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "nota = arvosana (myös 'muistiinpano' kontekstista)." }
+      ]
+    },
+    {
+      "phase_id": "p2-recognition-aineet-varit",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista — kouluaineet ja värit",
+      "instruction": "Valitse oikea käännös.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.7, "C": 0.75, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "mc", "stem": "matemáticas", "choices": ["historia", "matematiikka", "biologia", "kemia"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "matemáticas = matematiikka." },
+        { "item_type": "mc", "stem": "historia", "choices": ["maantieto", "matematiikka", "historia", "tarina"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "historia = sekä historia (oppiaine) että tarina." },
+        { "item_type": "mc", "stem": "geografía", "choices": ["maantieto", "biologia", "fysiikka", "filosofia"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "geografía = maantieto." },
+        { "item_type": "mc", "stem": "biología", "choices": ["maantieto", "kemia", "biologia", "fysiikka"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "biología = biologia." },
+        { "item_type": "mc", "stem": "rojo", "choices": ["punainen", "vihreä", "keltainen", "ruskea"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "rojo = punainen (mies)." },
+        { "item_type": "mc", "stem": "azul", "choices": ["sininen", "musta", "vihreä", "valkoinen"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "azul = sininen (sama mies/nainen)." },
+        { "item_type": "mc", "stem": "verde", "choices": ["punainen", "harmaa", "vihreä", "ruskea"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "verde = vihreä (sama mies/nainen)." },
+        { "item_type": "mc", "stem": "amarillo", "choices": ["sininen", "keltainen", "punainen", "violetti"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "amarillo = keltainen." },
+        { "item_type": "mc", "stem": "negro", "choices": ["valkoinen", "musta", "harmaa", "ruskea"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "negro = musta." },
+        { "item_type": "mc", "stem": "blanco", "choices": ["valkoinen", "harmaa", "vaalea", "musta"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "blanco = valkoinen." },
+        { "item_type": "mc", "stem": "marrón", "choices": ["harmaa", "ruskea", "punainen", "vaalea"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "marrón = ruskea (sama mies/nainen)." },
+        { "item_type": "mc", "stem": "naranja", "choices": ["oranssi", "keltainen", "punainen", "vaaleanpunainen"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "naranja = oranssi (myös 'appelsiini')." }
+      ]
+    },
+    {
+      "phase_id": "p3-recognition-match",
+      "phase_type": "recognition_match",
+      "title": "Yhdistä parit",
+      "instruction": "Yhdistä espanja ja suomi.",
+      "mastery_threshold": { "I": 0.6, "A": 0.65, "B": 0.75, "C": 0.8, "M": 0.85, "E": 0.9, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        {
+          "item_type": "match",
+          "left_label": "Espanja",
+          "right_label": "Suomi",
+          "pairs": [
+            { "left": "instituto", "right": "lukio" },
+            { "left": "profesor", "right": "opettaja (mies)" },
+            { "left": "alumna", "right": "oppilas (nainen)" },
+            { "left": "examen", "right": "koe" },
+            { "left": "deberes", "right": "läksyt" },
+            { "left": "mochila", "right": "reppu" }
+          ]
+        },
+        {
+          "item_type": "match",
+          "left_label": "Espanja",
+          "right_label": "Suomi",
+          "pairs": [
+            { "left": "rojo", "right": "punainen" },
+            { "left": "azul", "right": "sininen" },
+            { "left": "verde", "right": "vihreä" },
+            { "left": "amarillo", "right": "keltainen" },
+            { "left": "negro", "right": "musta" },
+            { "left": "blanco", "right": "valkoinen" }
+          ]
+        },
+        {
+          "item_type": "match",
+          "left_label": "Espanja",
+          "right_label": "Suomi",
+          "pairs": [
+            { "left": "matemáticas", "right": "matematiikka" },
+            { "left": "historia", "right": "historia" },
+            { "left": "geografía", "right": "maantieto" },
+            { "left": "biología", "right": "biologia" },
+            { "left": "química", "right": "kemia" }
+          ]
+        }
+      ]
+    },
+    {
+      "phase_id": "p4-recall-typed-es-fi",
+      "phase_type": "recall_typed_es_to_fi",
+      "title": "Käännä suomeksi",
+      "instruction": "Kirjoita suomenkielinen käännös.",
+      "mastery_threshold": { "I": 0.5, "A": 0.55, "B": 0.7, "C": 0.75, "M": 0.8, "E": 0.85, "L": 0.92 },
+      "skip_for_targets": ["I"],
+      "items": [
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "instituto", "accept": ["lukio"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "asignatura", "accept": ["kouluaine", "oppiaine"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "profesor", "accept": ["opettaja"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "examen", "accept": ["koe"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "deberes", "accept": ["läksyt", "läksy", "kotitehtävät"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "mochila", "accept": ["reppu"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "rojo", "accept": ["punainen"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "verde", "accept": ["vihreä", "vihrea"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "amarillo", "accept": ["keltainen"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "negro", "accept": ["musta"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "marrón", "accept": ["ruskea"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "naranja", "accept": ["oranssi"] }
+      ]
+    },
+    {
+      "phase_id": "p5-recall-typed-fi-es",
+      "phase_type": "recall_typed_fi_to_es",
+      "title": "Käännä espanjaksi",
+      "instruction": "Kirjoita espanjankielinen käännös.",
+      "mastery_threshold": { "I": 0.5, "A": 0.55, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "lukio", "accept": ["instituto"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "opettaja (mies)", "accept": ["profesor"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "oppilas (nainen)", "accept": ["alumna"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "koe", "accept": ["examen"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "kirja", "accept": ["libro"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "vihko", "accept": ["cuaderno"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "punainen (mies)", "accept": ["rojo"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "valkoinen (nainen)", "accept": ["blanca"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "vihreä", "accept": ["verde"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "harmaa", "accept": ["gris"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "violetti, lila", "accept": ["morado", "violeta", "lila"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "vaaleanpunainen", "accept": ["rosa"] }
+      ]
+    },
+    {
+      "phase_id": "p6-application-gap-helppo",
+      "phase_type": "application_gap_fill",
+      "title": "Lauseen täydennys — perustaso",
+      "instruction": "Täydennä oikealla sanalla. Huomioi sukupuoli/luku.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.75, "C": 0.8, "M": 0.85, "E": 0.9, "L": 0.92 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Estudio en el {1}.", "answers": [["instituto"]], "word_bank": ["instituto", "examen", "libro"] },
+        { "item_type": "gap_fill", "sentence_template": "Mañana tengo un {1} de español.", "answers": [["examen"]], "word_bank": ["examen", "deberes", "alumno"] },
+        { "item_type": "gap_fill", "sentence_template": "Mi {1} se llama Carlos. Es muy simpático.", "answers": [["profesor"]], "word_bank": ["profesor", "alumno", "instituto"] },
+        { "item_type": "gap_fill", "sentence_template": "Llevo los libros en la {1}.", "answers": [["mochila"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Mi color favorito es el {1}, como el cielo.", "answers": [["azul"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "El coche de mi padre es {1}, como la nieve.", "answers": [["blanco"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "La mochila de Ana es {1} (punainen).", "answers": [["roja"]], "word_bank": ["rojo", "roja", "rojos"] },
+        { "item_type": "gap_fill", "sentence_template": "Las hojas son {1} (vihreitä).", "answers": [["verdes"]], "word_bank": ["verde", "verdes", "verdas"] },
+        { "item_type": "gap_fill", "sentence_template": "Hago los {1} todas las tardes.", "answers": [["deberes"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Tengo seis {1} este año: español, inglés, matemáticas…", "answers": [["asignaturas"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p7-application-gap-vaativa",
+      "phase_type": "application_gap_fill",
+      "title": "Lauseen täydennys — vaativa",
+      "instruction": "Ei sanapankkia. Mieti sukupuoli ja luku.",
+      "mastery_threshold": { "I": 0.5, "A": 0.55, "B": 0.65, "C": 0.75, "M": 0.85, "E": 0.9, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Mis cuadernos son {1} (sininen, monikko).", "answers": [["azules"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "El sol es {1} (keltainen).", "answers": [["amarillo"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "La nota más alta es un diez. Saqué un {1} (yhdeksän) en el examen.", "answers": [["nueve"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "El {1} (opettaja) explica la lección bien.", "answers": [["profesor"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Las paredes del aula son {1} (valkoinen, monikko).", "answers": [["blancas"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Tengo dos {1} (kynä).", "answers": [["bolígrafos"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Mi {1} (kouluaine) favorita es la historia.", "answers": [["asignatura"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Mi camiseta es {1} (musta) y los pantalones son {2} (sinisiä).", "answers": [["negra"], ["azules"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p8-application-sentence-build",
+      "phase_type": "application_sentence_build",
+      "title": "Lauseen rakentelua",
+      "instruction": "Käännä koko lause espanjaksi.",
+      "mastery_threshold": { "I": 0.5, "A": 0.55, "B": 0.6, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.92 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Opiskelen lukiossa.", "accept": ["estudio en el instituto", "estudio en el instituto."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Espanja on suosikkiaineeni.", "accept": ["el español es mi asignatura favorita", "el español es mi asignatura favorita.", "español es mi asignatura favorita"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Reppuni on punainen.", "accept": ["mi mochila es roja", "mi mochila es roja."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Kirjat ovat sinisiä.", "accept": ["los libros son azules", "los libros son azules."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Minulla on koe huomenna.", "accept": ["tengo un examen mañana", "tengo un examen mañana.", "tengo un examen manana"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Opettaja on saksalainen.", "accept": ["el profesor es alemán", "el profesor es alemán.", "la profesora es alemana"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Teen läksyt iltaisin.", "accept": ["hago los deberes por la tarde", "hago los deberes por la tarde."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Vihkoni on vihreä.", "accept": ["mi cuaderno es verde", "mi cuaderno es verde."] }
+      ]
+    },
+    {
+      "phase_id": "p9-synthesis-translate",
+      "phase_type": "synthesis_translate",
+      "title": "YO-tason käännös",
+      "instruction": "Käännä koko lause espanjaksi.",
+      "mastery_threshold": { "I": 0.5, "A": 0.55, "B": 0.6, "C": 0.65, "M": 0.75, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Lukiossani on viisisataa oppilasta ja noin neljäkymmentä opettajaa.", "accept": ["en mi instituto hay quinientos alumnos y unos cuarenta profesores", "mi instituto tiene quinientos alumnos y unos cuarenta profesores"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Suosikkikouluaineeni on historia, koska opettaja kertoo tarinoita.", "accept": ["mi asignatura favorita es la historia porque el profesor cuenta historias", "mi asignatura preferida es la historia porque el profesor cuenta historias"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Reppuni on musta ja siinä on punaisia ja sinisiä raitoja.", "accept": ["mi mochila es negra y tiene rayas rojas y azules", "mi mochila es negra y tiene franjas rojas y azules"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Tämän vuoden koe on vaikeampi kuin viime vuonna.", "accept": ["el examen de este año es más difícil que el del año pasado", "el examen de este año es más difícil que el del año pasado."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Sain hyvän arvosanan matematiikan kokeesta.", "accept": ["saqué una buena nota en el examen de matemáticas", "obtuve una buena nota en el examen de matemáticas"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Luokkahuoneen seinät ovat valkoiset ja katto on harmaa.", "accept": ["las paredes del aula son blancas y el techo es gris", "las paredes del aula son blancas y el techo es gris."] }
+      ]
+    },
+    {
+      "phase_id": "p10-synthesis-short-writing",
+      "phase_type": "synthesis_short_writing",
+      "title": "Lyhyt kirjoitus",
+      "instruction": "Käytä kouluaiheista sanastoa ja värejä.",
+      "mastery_threshold": { "I": 0.5, "A": 0.55, "B": 0.6, "C": 0.65, "M": 0.7, "E": 0.8, "L": 0.9 },
+      "skip_for_targets": ["I", "A", "B", "C", "M"],
+      "items": [
+        { "item_type": "writing", "prompt": "Esittele lukiosi: kuinka iso, mitä aineita opiskelet, mitä mieltä olet opettajista. 5–7 lausetta.", "min_words": 40, "max_words": 90, "rubric_focus": ["communication", "structure", "vocab"] },
+        { "item_type": "writing", "prompt": "Kuvaile yhtä päivääsi koulussa: läksyt, kokeet, ystävät. Käytä vähintään 8 sanaa tästä oppitunnista. 5–7 lausetta.", "min_words": 40, "max_words": 90, "rubric_focus": ["communication", "vocab"] },
+        { "item_type": "writing", "prompt": "Kuvaile reppuasi ja koulutarvikkeitasi väreillä (3 eri väriä). 5–7 lausetta.", "min_words": 40, "max_words": 90, "rubric_focus": ["vocab", "structure"] }
+      ]
+    }
+  ],
+  "vocab": [
+    { "es": "instituto", "fi": "lukio", "example_es": "Estudio en el instituto.", "example_fi": "Opiskelen lukiossa.", "gender": "m" },
+    { "es": "asignatura", "fi": "kouluaine", "example_es": "Mi asignatura favorita es la historia.", "example_fi": "Suosikkiaineeni on historia.", "gender": "f" },
+    { "es": "profesor", "fi": "opettaja (mies)", "example_es": "Mi profesor es muy bueno.", "example_fi": "Opettajani on tosi hyvä.", "gender": "m" },
+    { "es": "profesora", "fi": "opettaja (nainen)", "example_es": "La profesora explica bien.", "example_fi": "Opettaja selittää hyvin.", "gender": "f" },
+    { "es": "alumno", "fi": "oppilas (mies)", "example_es": "Soy alumno del instituto.", "example_fi": "Olen lukion oppilas.", "gender": "m" },
+    { "es": "alumna", "fi": "oppilas (nainen)", "example_es": "Marta es una alumna excelente.", "example_fi": "Marta on erinomainen oppilas.", "gender": "f" },
+    { "es": "examen", "fi": "koe", "example_es": "Mañana tengo un examen.", "example_fi": "Minulla on huomenna koe.", "gender": "m" },
+    { "es": "deberes", "fi": "läksyt", "example_es": "Hago los deberes por la tarde.", "example_fi": "Teen läksyt iltapäivisin.", "gender": "m" },
+    { "es": "mochila", "fi": "reppu", "example_es": "Mi mochila es nueva.", "example_fi": "Reppuni on uusi.", "gender": "f" },
+    { "es": "libro", "fi": "kirja", "example_es": "El libro de español es interesante.", "example_fi": "Espanjan kirja on mielenkiintoinen.", "gender": "m" },
+    { "es": "cuaderno", "fi": "vihko", "example_es": "Escribo en mi cuaderno.", "example_fi": "Kirjoitan vihkooni.", "gender": "m" },
+    { "es": "bolígrafo", "fi": "kuulakärkikynä", "example_es": "Tengo un bolígrafo azul.", "example_fi": "Minulla on sininen kynä.", "gender": "m" },
+    { "es": "lápiz", "fi": "lyijykynä", "example_es": "Necesito un lápiz.", "example_fi": "Tarvitsen lyijykynän.", "gender": "m" },
+    { "es": "aula", "fi": "luokkahuone", "example_es": "El aula está cerrada.", "example_fi": "Luokkahuone on suljettu.", "gender": "f" },
+    { "es": "nota", "fi": "arvosana", "example_es": "Saqué una buena nota.", "example_fi": "Sain hyvän arvosanan.", "gender": "f" },
+    { "es": "matemáticas", "fi": "matematiikka", "example_es": "Estudio matemáticas.", "example_fi": "Opiskelen matematiikkaa.", "gender": "f" },
+    { "es": "historia", "fi": "historia", "example_es": "La historia es mi asignatura favorita.", "example_fi": "Historia on suosikkini.", "gender": "f" },
+    { "es": "geografía", "fi": "maantieto", "example_es": "La geografía es interesante.", "example_fi": "Maantieto on mielenkiintoista.", "gender": "f" },
+    { "es": "biología", "fi": "biologia", "example_es": "Hoy tenemos biología.", "example_fi": "Tänään meillä on biologiaa.", "gender": "f" },
+    { "es": "química", "fi": "kemia", "example_es": "La química es difícil.", "example_fi": "Kemia on vaikeaa.", "gender": "f" },
+    { "es": "rojo", "fi": "punainen (mies)", "example_es": "Un coche rojo.", "example_fi": "Punainen auto.", "gender": "m" },
+    { "es": "roja", "fi": "punainen (nainen)", "example_es": "Una mochila roja.", "example_fi": "Punainen reppu.", "gender": "f" },
+    { "es": "azul", "fi": "sininen", "example_es": "El cielo es azul.", "example_fi": "Taivas on sininen.", "gender": null },
+    { "es": "verde", "fi": "vihreä", "example_es": "Las hojas son verdes.", "example_fi": "Lehdet ovat vihreitä.", "gender": null },
+    { "es": "amarillo", "fi": "keltainen", "example_es": "El sol es amarillo.", "example_fi": "Aurinko on keltainen.", "gender": "m" },
+    { "es": "negro", "fi": "musta", "example_es": "Un gato negro.", "example_fi": "Musta kissa.", "gender": "m" },
+    { "es": "blanco", "fi": "valkoinen", "example_es": "La nieve es blanca.", "example_fi": "Lumi on valkoista.", "gender": "m" },
+    { "es": "gris", "fi": "harmaa", "example_es": "El cielo está gris hoy.", "example_fi": "Taivas on harmaa tänään.", "gender": null },
+    { "es": "marrón", "fi": "ruskea", "example_es": "Una mesa marrón.", "example_fi": "Ruskea pöytä.", "gender": null },
+    { "es": "naranja", "fi": "oranssi", "example_es": "Una camiseta naranja.", "example_fi": "Oranssi t-paita.", "gender": null },
+    { "es": "rosa", "fi": "vaaleanpunainen", "example_es": "Una flor rosa.", "example_fi": "Vaaleanpunainen kukka.", "gender": null },
+    { "es": "morado", "fi": "violetti", "example_es": "Un vestido morado.", "example_fi": "Violetti mekko.", "gender": "m" }
+  ],
+  "side_panel": {
+    "tabs": [
+      {
+        "id": "vocab",
+        "title": "Sanasto",
+        "content_md": "## Lukioarki\n\n- **instituto** — lukio\n- **asignatura** — kouluaine\n- **profesor / profesora** — opettaja\n- **alumno / alumna** — oppilas\n- **examen** — koe\n- **deberes** — läksyt\n- **nota** — arvosana\n- **aula** — luokkahuone\n\n## Koulutarvikkeet\n\n- **mochila** — reppu\n- **libro** — kirja\n- **cuaderno** — vihko\n- **bolígrafo** — kuulakärkikynä\n- **lápiz** — lyijykynä\n\n## Kouluaineet\n\n- **matemáticas** — matematiikka\n- **historia** — historia\n- **geografía** — maantieto\n- **biología** — biologia\n- **química** — kemia\n\n## Värit — perusvärit\n\n- **rojo / roja** — punainen\n- **azul** — sininen (sama mies/nainen)\n- **verde** — vihreä (sama)\n- **amarillo / amarilla** — keltainen\n- **negro / negra** — musta\n- **blanco / blanca** — valkoinen\n\n## Värit — laajemmin\n\n- **gris** — harmaa\n- **marrón** — ruskea\n- **naranja** — oranssi\n- **rosa** — vaaleanpunainen\n- **morado / morada** — violetti"
+      },
+      {
+        "id": "tips",
+        "title": "YO-vinkki",
+        "content_md": "## YO-koe — kuullun ymmärtäminen\n\nLukioteksti on YO-kokeen yleisin tekstityyppi. Kuulet **profesor**, **examen**, **asignatura**, **alumno** lähes joka vuosi.\n\n## Värin sukupuolitaivutus\n\nVärit jotka loppuvat -o:han taipuvat:\n- el coche **rojo** → la mochila **roja**\n- los libros **rojos** → las mochilas **rojas**\n\nVärit jotka loppuvat -e tai konsonanttiin (verde, azul, marrón) eivät taivu sukupuoleen:\n- el coche **azul** → la mochila **azul**\n- los coches **azules** → las mochilas **azules**\n\n## Yleisin ansa\n\n- **rosa** ja **naranja** ovat substantiiveja jotka toimivat värejä — eivät taivu: las flores rosa, las camisetas naranja.\n- **marrón** saa monikossa -es: marrones."
+      }
+    ]
+  }
+}

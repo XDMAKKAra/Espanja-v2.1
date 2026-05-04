@@ -1,0 +1,266 @@
+{
+  "meta": {
+    "course_key": "kurssi_1",
+    "lesson_index": 3,
+    "lesson_type": "grammar",
+    "level": "A",
+    "title": "-er- ja -ir-verbit preesensissä",
+    "description": "Toinen ja kolmas verbiryhmä: comer, beber, leer (-er) ja vivir, escribir, abrir (-ir). Yhdessä -ar-ryhmän kanssa nämä ovat espanjan koko säännöllinen preesens. YO-kokeessa lähes joka tehtävässä.",
+    "yo_relevance": "-er- ja -ir-verbien päätteet ovat 5/6:ssa muodossa identtiset (-o, -es, -e, -emos/-imos, -en). Ainoa ero on me-muoto: -emos vs -imos. YO-kokeen ansa: comemos vs vivimos.",
+    "estimated_minutes_median": 14
+  },
+  "teaching": {
+    "intro_md": "# -er- ja -ir-verbit preesensissä\n\n-er-verbit (comer, beber, leer) ja -ir-verbit (vivir, escribir, abrir) jakavat lähes samat päätteet. Pudotetaan -er tai -ir, lisätään pääte.\n\n## Esimerkki: comer (syödä) ja vivir (asua)\n\n| Persoona | comer | vivir |\n|---|---|---|\n| yo | com**o** | viv**o** |\n| tú | com**es** | viv**es** |\n| él / ella | com**e** | viv**e** |\n| nosotros | com**emos** | viv**imos** |\n| vosotros | com**éis** | viv**ís** |\n| ellos / ellas | com**en** | viv**en** |\n\n## Käyttöesimerkkejä\n\n> **Vivo** en Tampere. (Asun Tampereella.)\n>\n> ¿**Lees** mucho? (Luetko paljon?)\n>\n> **Escribimos** correos en español. (Kirjoitamme sähköposteja espanjaksi.)\n\n## Tärkeää\n\n- yo, tú, él, ellos -muodot ovat IDENTTISET -er- ja -ir-verbeille.\n- Ero on vain me- ja te-muodoissa: -emos / -éis (er) vs -imos / -ís (ir).",
+    "key_points": [
+      "-er ja -ir taipuvat 4/6 muodossa täsmälleen samalla tavalla.",
+      "Ainoa ero: nosotros -emos vs -imos, vosotros -éis vs -ís.",
+      "Yo-muoto loppuu -o:han kuten -ar-verbeissäkin.",
+      "Tunnistus YO-kokeessa: comemos (er) ↔ vivimos (ir)."
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1-recognition-paatteet-er-ir",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista — verbin persoona (-er/-ir)",
+      "instruction": "Mikä persoona puhuu?",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.7, "C": 0.75, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "mc", "stem": "Como pasta.", "choices": ["yo", "tú", "él", "nosotros"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "-o → yo. Como = (minä) syön." },
+        { "item_type": "mc", "stem": "Vives en Madrid.", "choices": ["yo", "tú", "él/ella", "ellos"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "-es → tú. Vives = (sinä) asut." },
+        { "item_type": "mc", "stem": "Lee el periódico.", "choices": ["yo", "tú", "él/ella/usted", "vosotros"], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "-e → él/ella. Lee = hän lukee." },
+        { "item_type": "mc", "stem": "Comemos juntos.", "choices": ["yo", "ellos", "nosotros", "ella"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "-emos → nosotros (er-verbi)." },
+        { "item_type": "mc", "stem": "Vivimos en Helsinki.", "choices": ["nosotros", "vosotros", "ellos", "yo"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "-imos → nosotros (ir-verbi). Vivir → vivimos." },
+        { "item_type": "mc", "stem": "Beben café.", "choices": ["yo", "tú", "nosotros", "ellos/ellas/ustedes"], "correct_index": 3, "distractor_difficulty": "medium", "explanation": "-en → he/te. Beber = juoda." },
+        { "item_type": "mc", "stem": "Escribo cartas.", "choices": ["yo", "él", "tú", "ellos"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "-o → yo. Escribo = (minä) kirjoitan." },
+        { "item_type": "mc", "stem": "Aprendes rápido.", "choices": ["nosotros", "tú", "él", "vosotros"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "-es → tú. Aprender = oppia." },
+        { "item_type": "mc", "stem": "Abrimos la puerta.", "choices": ["nosotros (-ir)", "vosotros", "ellos", "yo"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "Abrir → abrimos (ir-verbi, -imos)." },
+        { "item_type": "mc", "stem": "Vendéis pan.", "choices": ["nosotros", "tú", "vosotros (-er)", "ellos"], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "-éis → vosotros (er-verbi)." },
+        { "item_type": "mc", "stem": "Reciben regalos.", "choices": ["nosotros", "ellos/ellas/ustedes", "tú", "yo"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "-en → he. Recibir = saada, vastaanottaa." },
+        { "item_type": "mc", "stem": "Decido ahora.", "choices": ["yo", "tú", "él", "nosotros"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "-o → yo. Decidir = päättää." }
+      ]
+    },
+    {
+      "phase_id": "p2-recognition-translate",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista — käännös",
+      "instruction": "Valitse oikea käännös suomeksi.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.7, "C": 0.75, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "mc", "stem": "Comemos pizza los viernes.", "choices": ["Syön pizzaa.", "Syömme pizzaa perjantaisin.", "He syövät pizzaa.", "Syöt pizzaa."], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "comemos = (me) syömme." },
+        { "item_type": "mc", "stem": "Vivo en Tampere.", "choices": ["Asun Tampereella.", "(Sinä) asut.", "Hän asuu.", "Asumme."], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "vivo = (minä) asun." },
+        { "item_type": "mc", "stem": "Lee muchos libros.", "choices": ["Luen kirjoja.", "Hän lukee paljon kirjoja.", "He lukevat kirjoja.", "Luet kirjoja."], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "lee = hän lukee." },
+        { "item_type": "mc", "stem": "Bebes agua.", "choices": ["Juon vettä.", "Juot vettä.", "Hän juo vettä.", "Juomme vettä."], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "bebes = (sinä) juot." },
+        { "item_type": "mc", "stem": "Escriben en español.", "choices": ["Kirjoitan espanjaksi.", "Kirjoitamme.", "He kirjoittavat espanjaksi.", "(Sinä) kirjoitat."], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "escriben = he kirjoittavat." },
+        { "item_type": "mc", "stem": "Vivimos cerca del mar.", "choices": ["Asun meren lähellä.", "(Te) asutte meren lähellä.", "Asumme meren lähellä.", "He asuvat meren lähellä."], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "vivimos = (me) asumme (-ir → -imos)." },
+        { "item_type": "mc", "stem": "Aprende rápido.", "choices": ["Hän oppii nopeasti.", "Opin nopeasti.", "He oppivat nopeasti.", "Opimme nopeasti."], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "aprende = hän oppii." },
+        { "item_type": "mc", "stem": "Recibo un mensaje.", "choices": ["(Minä) saan viestin.", "Saamme viestin.", "Hän saa viestin.", "He saavat viestin."], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "recibo = (minä) saan." },
+        { "item_type": "mc", "stem": "Abren la tienda a las nueve.", "choices": ["Avaan kaupan.", "He avaavat kaupan klo 9.", "Avaamme kaupan.", "(Sinä) avaat."], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "abren = he avaavat." },
+        { "item_type": "mc", "stem": "Decidimos viajar.", "choices": ["Päätän matkustaa.", "Päätämme matkustaa.", "He päättävät matkustaa.", "Päättää matkustaa."], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "decidimos = (me) päätämme." },
+        { "item_type": "mc", "stem": "Vendes tu coche.", "choices": ["Myyn autoni.", "(Sinä) myyt autosi.", "Hän myy autonsa.", "Myymme automme."], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "vendes = (sinä) myyt." },
+        { "item_type": "mc", "stem": "Comprenden la pregunta.", "choices": ["Ymmärrän kysymyksen.", "Ymmärrämme kysymyksen.", "He ymmärtävät kysymyksen.", "(Sinä) ymmärrät."], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "comprenden = he ymmärtävät." }
+      ]
+    },
+    {
+      "phase_id": "p3-recognition-match",
+      "phase_type": "recognition_match",
+      "title": "Yhdistä — pronomini ja muoto",
+      "instruction": "Yhdistä subjekti ja oikea muoto.",
+      "mastery_threshold": { "I": 0.6, "A": 0.65, "B": 0.75, "C": 0.8, "M": 0.85, "E": 0.9, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        {
+          "item_type": "match",
+          "left_label": "Subjekti",
+          "right_label": "Comer-muoto",
+          "pairs": [
+            { "left": "yo", "right": "como" },
+            { "left": "tú", "right": "comes" },
+            { "left": "él / ella", "right": "come" },
+            { "left": "nosotros", "right": "comemos" },
+            { "left": "vosotros", "right": "coméis" },
+            { "left": "ellos / ellas", "right": "comen" }
+          ]
+        },
+        {
+          "item_type": "match",
+          "left_label": "Subjekti",
+          "right_label": "Vivir-muoto",
+          "pairs": [
+            { "left": "yo", "right": "vivo" },
+            { "left": "tú", "right": "vives" },
+            { "left": "ella", "right": "vive" },
+            { "left": "nosotros", "right": "vivimos" },
+            { "left": "vosotros", "right": "vivís" },
+            { "left": "ellos", "right": "viven" }
+          ]
+        },
+        {
+          "item_type": "match",
+          "left_label": "Subjekti",
+          "right_label": "Escribir-muoto",
+          "pairs": [
+            { "left": "yo", "right": "escribo" },
+            { "left": "tú", "right": "escribes" },
+            { "left": "él", "right": "escribe" },
+            { "left": "nosotros", "right": "escribimos" },
+            { "left": "ellos", "right": "escriben" }
+          ]
+        }
+      ]
+    },
+    {
+      "phase_id": "p4-recall-typed-fi-es",
+      "phase_type": "recall_typed_fi_to_es",
+      "title": "Tuota — verbinmuoto",
+      "instruction": "Kirjoita oikea verbi annetussa persoonassa.",
+      "mastery_threshold": { "I": 0.5, "A": 0.55, "B": 0.7, "C": 0.75, "M": 0.8, "E": 0.85, "L": 0.92 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "comer — yo", "accept": ["como"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "comer — nosotros", "accept": ["comemos"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "vivir — yo", "accept": ["vivo"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "vivir — nosotros", "accept": ["vivimos"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "vivir — vosotros", "accept": ["vivís", "vivis"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "leer — él", "accept": ["lee"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "beber — tú", "accept": ["bebes"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "escribir — yo", "accept": ["escribo"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "escribir — ellos", "accept": ["escriben"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "abrir — nosotros", "accept": ["abrimos"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "aprender — ella", "accept": ["aprende"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "recibir — yo", "accept": ["recibo"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "decidir — nosotros", "accept": ["decidimos"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "comprender — vosotros", "accept": ["comprendéis", "comprendeis"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "vender — yo", "accept": ["vendo"] }
+      ]
+    },
+    {
+      "phase_id": "p5-application-gap-helppo",
+      "phase_type": "application_gap_fill",
+      "title": "Lauseen täydennys — perustaso",
+      "instruction": "Täydennä oikealla muodolla.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.75, "C": 0.8, "M": 0.85, "E": 0.9, "L": 0.92 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Yo {1} en Tampere. (vivir)", "answers": [["vivo"]], "word_bank": ["vivo", "vives", "vive"] },
+        { "item_type": "gap_fill", "sentence_template": "Mi hermano {1} mucho. (leer)", "answers": [["lee"]], "word_bank": ["lee", "leo", "leemos"] },
+        { "item_type": "gap_fill", "sentence_template": "Nosotros {1} pasta los lunes. (comer)", "answers": [["comemos"]], "word_bank": ["comemos", "comen", "como"] },
+        { "item_type": "gap_fill", "sentence_template": "¿Tú {1} café o té? (beber)", "answers": [["bebes"]], "word_bank": ["bebes", "bebemos", "bebe"] },
+        { "item_type": "gap_fill", "sentence_template": "Mis amigos {1} en Madrid. (vivir)", "answers": [["viven"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Yo {1} un mensaje a mi madre. (escribir)", "answers": [["escribo"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "El profesor {1} la lección. (comprender)", "answers": [["comprende"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Nosotros {1} la puerta a las ocho. (abrir)", "answers": [["abrimos"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Ellas {1} español rápido. (aprender)", "answers": [["aprenden"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Vosotros {1} muchos correos. (recibir)", "answers": [["recibís", "recibis"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Nosotros {1} viajar a Sevilla. (decidir)", "answers": [["decidimos"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Mi madre {1} el coche viejo. (vender)", "answers": [["vende"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p6-application-gap-vaativa",
+      "phase_type": "application_gap_fill",
+      "title": "Lauseen täydennys — vaativa",
+      "instruction": "Ei sanapankkia. Päätä persoona kontekstista.",
+      "mastery_threshold": { "I": 0.5, "A": 0.55, "B": 0.65, "C": 0.75, "M": 0.85, "E": 0.9, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Mi hermana y yo {1} cerca del centro. (vivir)", "answers": [["vivimos"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "¿Vosotros {1} carne o sois vegetarianos? (comer)", "answers": [["coméis", "comeis"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Mis padres {1} dos periódicos cada día. (leer)", "answers": [["leen"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Yo no {1} alcohol. (beber)", "answers": [["bebo"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Tú {1} muy bien. (escribir)", "answers": [["escribes"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Nosotros {1} la verdad. (comprender)", "answers": [["comprendemos"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "El supermercado {1} a las nueve. (abrir)", "answers": [["abre"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Ana {1} a sus abuelos los domingos. (visitar)", "answers": [["visita"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Yo {1} al autobús cada mañana. (subir)", "answers": [["subo"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Los amigos {1} sobre la película. (discutir)", "answers": [["discuten"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p7-application-sentence-build",
+      "phase_type": "application_sentence_build",
+      "title": "Lauseen rakentelua",
+      "instruction": "Käännä koko lause espanjaksi.",
+      "mastery_threshold": { "I": 0.5, "A": 0.55, "B": 0.6, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.92 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Asun Helsingissä.", "accept": ["vivo en helsinki", "vivo en helsinki."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Veljeni juo paljon kahvia.", "accept": ["mi hermano bebe mucho café", "mi hermano bebe mucho cafe", "mi hermano toma mucho café"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Kirjoitamme aineen huomenna.", "accept": ["escribimos la redacción mañana", "escribimos la redaccion manana", "escribimos la redacción mañana."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Luetko espanjaksi joka päivä?", "accept": ["lees en español todos los días", "¿lees en español todos los días?", "lees en espanol todos los dias"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "He oppivat nopeasti.", "accept": ["aprenden rápido", "aprenden rápidamente", "ellos aprenden rápido"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Ymmärrän kysymyksen.", "accept": ["comprendo la pregunta", "entiendo la pregunta"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Avaamme oven yhdeksältä.", "accept": ["abrimos la puerta a las nueve", "abrimos la puerta a las nueve."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Saan kirjeen joka kuukausi.", "accept": ["recibo una carta cada mes", "recibo una carta todos los meses"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Päätän opiskella tänään.", "accept": ["decido estudiar hoy", "hoy decido estudiar", "decido estudiar hoy."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Myyn vanhan pyöräni.", "accept": ["vendo mi bici vieja", "vendo mi bicicleta vieja", "vendo mi vieja bici"] }
+      ]
+    },
+    {
+      "phase_id": "p8-synthesis-translate",
+      "phase_type": "synthesis_translate",
+      "title": "YO-tason käännös",
+      "instruction": "Käännä koko lause espanjaksi.",
+      "mastery_threshold": { "I": 0.5, "A": 0.55, "B": 0.6, "C": 0.65, "M": 0.75, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Asumme isossa kaupungissa, mutta vanhempani asuvat maaseudulla.", "accept": ["vivimos en una ciudad grande, pero mis padres viven en el campo", "vivimos en una ciudad grande pero mis padres viven en el campo"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Veljeni lukee paljon ja kirjoittaa runoja vapaa-ajalla.", "accept": ["mi hermano lee mucho y escribe poemas en su tiempo libre", "mi hermano lee mucho y escribe poesía en su tiempo libre"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Syömme yhdessä joka sunnuntai isovanhempien luona.", "accept": ["comemos juntos cada domingo en casa de los abuelos", "comemos juntos todos los domingos en casa de los abuelos"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Opin uutta sanastoa joka päivä.", "accept": ["aprendo vocabulario nuevo todos los días", "aprendo vocabulario nuevo cada día", "aprendo vocabulario nuevo todos los dias"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "He saavat sähköpostia opettajalta joka viikko.", "accept": ["reciben un correo del profesor cada semana", "reciben un correo electrónico del profesor cada semana", "reciben correos del profesor todas las semanas"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Ymmärrättekö, mitä opettaja sanoo?", "accept": ["¿comprendéis lo que dice el profesor?", "comprendéis lo que dice el profesor", "¿entendéis lo que dice el profesor?"] }
+      ]
+    },
+    {
+      "phase_id": "p9-synthesis-short-writing",
+      "phase_type": "synthesis_short_writing",
+      "title": "Lyhyt kirjoitus",
+      "instruction": "Käytä -er- ja -ir-verbejä.",
+      "mastery_threshold": { "I": 0.5, "A": 0.55, "B": 0.6, "C": 0.65, "M": 0.7, "E": 0.8, "L": 0.9 },
+      "skip_for_targets": ["I", "A", "B", "C", "M"],
+      "items": [
+        { "item_type": "writing", "prompt": "Kirjoita 5–7 lausetta arjestasi: missä asut, mitä syöt ja juot, mitä luet/kirjoitat. Käytä vähintään 5 eri -er- tai -ir-verbiä.", "min_words": 40, "max_words": 90, "rubric_focus": ["communication", "structure", "vocab"] },
+        { "item_type": "writing", "prompt": "Kerro perheesi tavoista (comer, beber, leer, vivir, aprender). 5–7 lausetta.", "min_words": 40, "max_words": 90, "rubric_focus": ["communication", "vocab"] },
+        { "item_type": "writing", "prompt": "Vertaa itseäsi yhteen ystävääsi: mitä eroa siinä mitä syötte, missä asutte, mitä luette. 5–7 lausetta.", "min_words": 40, "max_words": 90, "rubric_focus": ["communication", "structure"] }
+      ]
+    }
+  ],
+  "vocab": [
+    { "es": "comer", "fi": "syödä", "example_es": "Comemos pasta.", "example_fi": "Syömme pastaa.", "gender": null },
+    { "es": "beber", "fi": "juoda", "example_es": "Bebo agua.", "example_fi": "Juon vettä.", "gender": null },
+    { "es": "leer", "fi": "lukea", "example_es": "Leo el periódico.", "example_fi": "Luen sanomalehteä.", "gender": null },
+    { "es": "aprender", "fi": "oppia", "example_es": "Aprendemos español.", "example_fi": "Opimme espanjaa.", "gender": null },
+    { "es": "comprender", "fi": "ymmärtää", "example_es": "Comprendo la pregunta.", "example_fi": "Ymmärrän kysymyksen.", "gender": null },
+    { "es": "vender", "fi": "myydä", "example_es": "Vendo mi bici.", "example_fi": "Myyn pyöräni.", "gender": null },
+    { "es": "responder", "fi": "vastata", "example_es": "Responde rápido.", "example_fi": "Hän vastaa nopeasti.", "gender": null },
+    { "es": "vivir", "fi": "asua, elää", "example_es": "Vivimos en Helsinki.", "example_fi": "Asumme Helsingissä.", "gender": null },
+    { "es": "escribir", "fi": "kirjoittaa", "example_es": "Escribo una carta.", "example_fi": "Kirjoitan kirjettä.", "gender": null },
+    { "es": "abrir", "fi": "avata", "example_es": "Abrimos la puerta.", "example_fi": "Avaamme oven.", "gender": null },
+    { "es": "recibir", "fi": "saada, vastaanottaa", "example_es": "Recibo un mensaje.", "example_fi": "Saan viestin.", "gender": null },
+    { "es": "decidir", "fi": "päättää", "example_es": "Decidimos viajar.", "example_fi": "Päätämme matkustaa.", "gender": null },
+    { "es": "subir", "fi": "nousta", "example_es": "Subo al autobús.", "example_fi": "Nousen bussiin.", "gender": null },
+    { "es": "discutir", "fi": "keskustella, kiistellä", "example_es": "Discutimos el tema.", "example_fi": "Keskustelemme aiheesta.", "gender": null }
+  ],
+  "side_panel": {
+    "tabs": [
+      {
+        "id": "grammar",
+        "title": "Opetussivu",
+        "content_md": "## -er- ja -ir-verbit preesensissä\n\n| Persoona | comer | vivir |\n|---|---|---|\n| yo | com**o** | viv**o** |\n| tú | com**es** | viv**es** |\n| él/ella | com**e** | viv**e** |\n| nosotros | com**emos** | viv**imos** |\n| vosotros | com**éis** | viv**ís** |\n| ellos/ellas | com**en** | viv**en** |\n\n## Päätteet vertailuna\n\n| Persoona | -ar | -er | -ir |\n|---|---|---|---|\n| yo | -o | -o | -o |\n| tú | -as | -es | -es |\n| él | -a | -e | -e |\n| nosotros | -amos | -emos | -imos |\n| vosotros | -áis | -éis | -ís |\n| ellos | -an | -en | -en |\n\n## Yleiset -er-verbit\n\ncomer, beber, leer, aprender, comprender, vender, responder\n\n## Yleiset -ir-verbit\n\nvivir, escribir, abrir, recibir, decidir, subir, discutir"
+      },
+      {
+        "id": "vocab",
+        "title": "Sanasto",
+        "content_md": "## -er-verbit\n\n- **comer** — syödä\n- **beber** — juoda\n- **leer** — lukea\n- **aprender** — oppia\n- **comprender** — ymmärtää\n- **vender** — myydä\n- **responder** — vastata\n\n## -ir-verbit\n\n- **vivir** — asua, elää\n- **escribir** — kirjoittaa\n- **abrir** — avata\n- **recibir** — saada\n- **decidir** — päättää\n- **subir** — nousta\n- **discutir** — keskustella, kiistellä"
+      },
+      {
+        "id": "tips",
+        "title": "YO-vinkki",
+        "content_md": "## YO-koe — kuullun ymmärtäminen\n\n-er- ja -ir-verbien ainoa ero on me- ja te-muodoissa: **comemos** (er) vs **vivimos** (ir).\n\n## Yleisin ansa\n\nKuullun ymmärtämisessä **comemos** ja **comen** voi kuulostaa samalta. Yksi tavu lisää (-mos) ratkaisee.\n\n## Kirjoituksessa\n\nÄlä sekoita -emos ja -imos. *Comemos pasta* (syömme pastaa), *Vivimos en Madrid* (asumme Madridissa).\n\n## Yhteenveto kaikista preesenseistä\n\nKun olet osannut -ar-, -er- ja -ir-verbit, sinulla on koko espanjan säännöllinen preesens. ~80 % YO-kokeen verbeistä on näistä ryhmistä."
+      }
+    ]
+  }
+}
