@@ -80,6 +80,19 @@ export function runPregeneratedLesson(payload, kurssiKey, lessonIndex, targetGra
       targetGrade: state.targetGrade,
       isPregenerated: true,
     }));
+    // Hotfix — make the floating "📖 Opetussivu" panel show real content
+    // while the student is inside the lesson runner. Compose the panel
+    // body from the authored teaching block (intro + key points) so it
+    // mirrors what they saw on the teaching step.
+    const teaching = lesson.teaching || {};
+    const intro = String(teaching.intro_md || "").trim();
+    const kp = Array.isArray(teaching.key_points) ? teaching.key_points : [];
+    const md = [
+      intro,
+      kp.length ? "## Avainkohdat\n" + kp.map((k) => `- ${k}`).join("\n") : "",
+    ].filter(Boolean).join("\n\n");
+    if (md) sessionStorage.setItem("currentLessonTeachingMd", md);
+    else sessionStorage.removeItem("currentLessonTeachingMd");
   } catch { /* private mode */ }
   renderTeaching(root, state);
 }
