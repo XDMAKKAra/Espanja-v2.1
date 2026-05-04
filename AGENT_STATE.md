@@ -1,11 +1,16 @@
 # Puheo Agent State
 
 **Last updated:** 2026-05-04
-**Current state:** L-COURSE-1 shipped (kurssin sisältö pre-generated → Git:iin, infrastruktuuri-loop).
+**Current state:** L-MERGE-DASH-PATH shipped (Oma sivu + Oppimispolku yhdistetty yhdeksi etusivuksi).
 
 ---
 
 ## Recent loops (last 5)
+
+### L-MERGE-DASH-PATH — 2026-05-04 ✓ shipped
+**Scope:** Dashboard + path merged into single home. greeting/dash-day-cta/dash-readiness/dash-recent/dash-chart MOVED into #screen-path; legacy dashboard sub-cards (tutor, hero-grade, daily-challenge, weak-topics, heatmap, forecast, adaptive, ai-usage, writing-prog, modes, recommendations, full-exam, btn-dash-start, retake) kept as inert hidden DOM behind `<div hidden>`. curriculum.js renders into #path-courses-root; navigateTo("dashboard")→"path"; sidebar Oma sivu poistui, Oppimispolku ensimmäisenä; mobile Koti → data-nav="path"; loadDashboard() now show("screen-path") + dynamic-imports loadCurriculum.
+**Files:** 4 (`app.html`, `js/main.js`, `js/screens/dashboard.js`, `js/screens/curriculum.js`) + bundles + sw. **SW:** v120→v121. **Tests:** 1064/1064 ✓. **Build:** clean.
+**Pending:** YO-readiness-kortin uusi 21st.dev-pohjainen muotoilu (UPDATE 4 spec) + alarivi mini-chart-uudistus + 21st.dev sourcing-pass deferattu seuraavaan looppiin (L-MERGE-DASH-PATH-P2). Pre-existing `dash-readiness` markup käytössä toistaiseksi. Playwright + axe sweep odottaa workflow_dispatch-aukenemista.
 
 ### L-COURSE-1 — 2026-05-04 ✓ shipped
 **Scope:** Infra — `schemas/lesson.json` + `scripts/validate-lessons.mjs` + `npm run validate:lessons`; `data/courses/kurssi_{1..8}/lesson_1.json` placeholderit; `routes/curriculum.js` `readPregeneratedLesson()` + `USE_PREGENERATED_LESSONS` env-flag; `js/screens/lessonRunner.js` vaihe-pohjainen runner (mastery-banneri, skip-link, side-panel, lesson-results YO-kokeessa-callout); `js/lib/lessonAdapter.js`; `css/components/lesson-runner.css`. Käyttäjän pre-written `PROMPT_GENERATE_LESSON.md` säilyy juuressa.
@@ -29,16 +34,11 @@
 **Tests:** 1067/1067 ✓.
 **Pending:** Lighthouse cold-load mittaus tuotannossa, Supabase index ACTION REQUIRED (`user_progress(user_id, mode)` + `attempts(user_id, created_at DESC)`).
 
-### L-LIVE-AUDIT-P1 — 2026-05-03 ✓ shipped
-**Scope:** Visual polish — dash-tutor card, level-progress, skill bars, Inter font, SR-rating buttons, Konteksti badge mint.
-**Files:** 8. **SW:** v111→v112. **Tests:** 1067/1067 ✓.
-**Pending decision (käyttäjältä):** UPDATE 8 category color strategy (token / mint / neutral). Suositus: token-cleanup.
-
 ---
 
 ## Next loop
 
-**Recommended:** Käyttäjä generoi `PROMPT_GENERATE_LESSON.md`-promptilla Batch 1 (Kurssi 1 oppitunnit 1–5). Sen jälkeen L-STRIPE-1 tai L-COURSE-2 (riippuen Batch 1:n havainnoista).
+**Recommended:** L-MERGE-DASH-PATH-P2 — YO-readiness-kortin uusi muotoilu (21st.dev sourcing) + alarivi mini-chart-uudistus + axe + design:design-critique sweep yhdistettyyn etusivuun. Sen jälkeen L-COURSE-2 (Batch 1 generointi).
 
 **Recurring blockers:** Playwright E2E gated since d3f5ca5; manual prod verify on käyttäjän tehtävä.
 

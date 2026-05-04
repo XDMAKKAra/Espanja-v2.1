@@ -361,12 +361,14 @@ export async function loadCurriculum() {
 }
 
 function ensurePathRoot() {
-  const screen = document.getElementById("screen-path");
-  if (!screen) return;
+  // L-MERGE-DASH-PATH — screen-path now hosts the merged home (greeting, day-CTA,
+  // YO-readiness, recent + chart) around the course list. We render the cards
+  // into #path-courses-root inside that wrapper, NOT into the whole screen,
+  // so the surrounding sections survive each render pass.
+  const host = document.getElementById("path-courses-root");
+  if (!host) return;
   if (!document.getElementById(PATH_INNER_ID)) {
-    // Replace legacy path-inner contents on first entry so old learningPath.js
-    // markup doesn't mix with the new view.
-    screen.innerHTML = `<div id="${PATH_INNER_ID}"></div>`;
+    host.innerHTML = `<div id="${PATH_INNER_ID}"></div>`;
   }
 }
 
