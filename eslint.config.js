@@ -109,19 +109,15 @@ export default [
     rules: {
       "no-unused-vars": ["warn", { argsIgnorePattern: "^_", varsIgnorePattern: "^_" }],
       "no-console": "off",
-      // Empty catch blocks are an idiomatic "best-effort" pattern in this codebase
-      // (e.g. `try { localStorage.setItem(...) } catch {}` for private-mode browsers).
       "no-empty": ["error", { allowEmptyCatch: true }],
     },
   },
 
-  // Browser-shipped frontend code (extends both .js and .mjs to cover vendored libs)
   {
     files: ["js/**/*.{js,mjs}", "app.js", "lib/dailyCap.js"],
     languageOptions: { globals: browserGlobals },
   },
 
-  // Vendored third-party libs may legitimately re-declare polyfilled globals
   {
     files: ["js/vendor/**/*"],
     rules: {
@@ -130,13 +126,11 @@ export default [
     },
   },
 
-  // Service worker
   {
     files: ["sw.js", "sw/**/*.js"],
     languageOptions: { globals: serviceWorkerGlobals },
   },
 
-  // Vitest unit tests — Node + browser globals + vitest helpers
   {
     files: ["tests/**/*.{js,mjs}"],
     languageOptions: {
@@ -144,19 +138,16 @@ export default [
     },
   },
 
-  // Playwright agent-test scripts that drive a real browser via page.evaluate
   {
     files: ["scripts/agent-test/**/*.{js,mjs}", "training/**/*.{js,mjs}", "ui-ux/**/*.{js,mjs}"],
     languageOptions: {
       globals: { ...browserGlobals, ...nodeGlobals },
     },
     rules: {
-      // These are throwaway debug scripts — irregular whitespace from copy-paste is OK.
       "no-irregular-whitespace": "off",
     },
   },
 
-  // Testing harness env shims
   {
     files: ["testing/**/*.{js,mjs}"],
     languageOptions: { globals: { __ENV: "readonly" } },
@@ -172,6 +163,11 @@ export default [
       "coverage/",
       "playwright-report/",
       "test-results/",
+      "app.bundle.js",
+      "*.bundle.js",
+      "dist/",
+      "build/",
+      "marketing/preview/",
     ],
   },
 ];
