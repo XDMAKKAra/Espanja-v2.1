@@ -31,9 +31,10 @@ jobs:
       - name: Unit tests with coverage
         run: npm run test:coverage
       - name: Service-worker cache-version check
-        if: github.event_name == 'pull_request'
         env:
-          CI_BASE_REF: origin/${{ github.base_ref }}
+          # On PR: diff vs the PR base. On push to main: diff vs previous commit
+          # (script auto-resolves HEAD~1 from GITHUB_EVENT_NAME=push).
+          CI_BASE_REF: ${{ github.event_name == 'pull_request' && format('origin/{0}', github.base_ref) || '' }}
         run: npm run check:sw
       - name: Upload coverage summary
         if: always()

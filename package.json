@@ -16,6 +16,7 @@
     "test:visual": "VISUAL_BASELINE=1 playwright test tests/e2e-visual.spec.js",
     "test:visual:update": "VISUAL_BASELINE=1 playwright test tests/e2e-visual.spec.js --update-snapshots",
     "check:sw": "node scripts/check-sw-cache-version.js",
+    "bump:sw": "node scripts/check-sw-cache-version.js --fix",
     "validate:lessons": "node scripts/validate-lessons.mjs",
     "security:scan": "node scripts/security-scan.mjs",
     "lint": "eslint . --ext .js,.mjs",
