@@ -4,96 +4,269 @@
     "lesson_index": 1,
     "lesson_type": "vocab",
     "level": "A",
-    "title": "Perhe ja kansallisuudet — perussanasto",
-    "description": "PLACEHOLDER — sisältö generoidaan myöhemmin PROMPT_GENERATE_LESSON.md:llä",
-    "yo_relevance": "PLACEHOLDER",
+    "title": "Perhe ja kansallisuudet",
+    "description": "Opettelet 30 perheenjäsen- ja kansallisuussanaa. YO-kokeen kuullun ymmärtämisessä nämä toistuvat lähes joka vuosi — testataan tunnistus, tuotanto ja soveltava käyttö.",
+    "yo_relevance": "Perhe- ja kansallisuussanasto näkyy YO-kokeen kuullun ymmärtämisessä yleensä 6–10 sanan verran. Tarkimmat distraktorit ovat hermano/hermana ja primo/prima — sukupuolen ero on yksi kirjain.",
     "estimated_minutes_median": 12
   },
   "teaching": {
-    "intro_md": "PLACEHOLDER — opetussisältö generoidaan myöhemmin",
+    "intro_md": "# Perhe ja kansallisuudet\n\nAloitamme sanoista joita käytät joka päivä. Espanjassa perhesanat erottuvat sukupuolen mukaan: **hermano** = veli, **hermana** = sisko. Sama logiikka serkuilla: **primo** / **prima**, sedillä ja tädeillä: **tío** / **tía**.\n\n## Esimerkki\n\n> Mi madre se llama Ana y mi padre es finlandés. Mi hermano mayor estudia en Madrid. (Äitini on nimeltään Ana ja isäni on suomalainen. Isoveljeni opiskelee Madridissa.)\n\n## Muista nämä\n\n- Sukupuoli muuttaa sanan loppua: **-o** maskuliini, **-a** feminiini.\n- Kansallisuudet kirjoitetaan pienellä alkukirjaimella: **finlandés**, **español**.\n- Naismuoto kansallisuuksissa: lisätään **-a** tai **-és → -esa**.\n- Yksi muoto molemmille: **estadounidense** (yhdysvaltalainen), **canadiense** (kanadalainen).",
     "key_points": [
-      "PLACEHOLDER"
+      "Perheenjäsen-pari erottuu yleensä viimeisestä kirjaimesta.",
+      "Kansallisuuksissa on yleensä kaksi muotoa: maskuliini ja feminiini.",
+      "Kansallisuudet pienellä alkukirjaimella espanjassa.",
+      "Päätteet -ense ovat samat molemmilla sukupuolilla."
     ]
   },
   "phases": [
     {
-      "phase_id": "p1-placeholder",
+      "phase_id": "p1-recognition-perhe-ydin",
       "phase_type": "recognition_mc",
-      "title": "PLACEHOLDER",
-      "instruction": "PLACEHOLDER",
-      "mastery_threshold": {
-        "I": 0.5,
-        "A": 0.6,
-        "B": 0.65,
-        "C": 0.7,
-        "M": 0.75,
-        "E": 0.85,
-        "L": 0.9
-      },
+      "title": "Tunnista — perhesanat (ydin)",
+      "instruction": "Valitse oikea käännös.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.7, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": [],
       "items": [
-        {
-          "item_type": "mc",
-          "stem": "PLACEHOLDER",
-          "choices": [
-            "a",
-            "b",
-            "c",
-            "d"
-          ],
-          "correct_index": 0,
-          "explanation": "PLACEHOLDER"
-        },
-        {
-          "item_type": "mc",
-          "stem": "PLACEHOLDER",
-          "choices": [
-            "a",
-            "b",
-            "c",
-            "d"
-          ],
-          "correct_index": 0,
-          "explanation": "PLACEHOLDER"
-        },
-        {
-          "item_type": "mc",
-          "stem": "PLACEHOLDER",
-          "choices": [
-            "a",
-            "b",
-            "c",
-            "d"
-          ],
-          "correct_index": 0,
-          "explanation": "PLACEHOLDER"
-        },
-        {
-          "item_type": "mc",
-          "stem": "PLACEHOLDER",
-          "choices": [
-            "a",
-            "b",
-            "c",
-            "d"
-          ],
-          "correct_index": 0,
-          "explanation": "PLACEHOLDER"
-        }
+        { "item_type": "mc", "stem": "madre", "choices": ["isä", "äiti", "sisko", "isoäiti"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "madre = äiti. Padre = isä." },
+        { "item_type": "mc", "stem": "padre", "choices": ["isä", "veli", "isoisä", "serkku"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "padre = isä. Älä sekoita: abuelo (isoisä), hermano (veli)." },
+        { "item_type": "mc", "stem": "hermana", "choices": ["veli", "tytär", "sisko", "äiti"], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "hermana = sisko (-a-pääte). Hermano = veli." },
+        { "item_type": "mc", "stem": "hermano", "choices": ["veli", "sisko", "serkku (mies)", "poika"], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "hermano = veli (-o-pääte)." },
+        { "item_type": "mc", "stem": "abuela", "choices": ["täti", "isoäiti", "äiti", "sisko"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "abuela = isoäiti. Abuelo = isoisä." },
+        { "item_type": "mc", "stem": "abuelo", "choices": ["isä", "isoisä", "setä", "serkku"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "abuelo = isoisä." },
+        { "item_type": "mc", "stem": "hija", "choices": ["sisko", "tytär", "tyttöystävä", "serkku"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "hija = tytär. Hijo = poika (lapsi)." },
+        { "item_type": "mc", "stem": "hijo", "choices": ["poika (lapsi)", "veli", "serkku", "isä"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "hijo = poika omasta perheestä; el hijo de mi tía = serkkuni." },
+        { "item_type": "mc", "stem": "prima", "choices": ["sisko", "täti", "serkku (nainen)", "ystävä"], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "prima = naispuolinen serkku. Primo = miespuolinen." },
+        { "item_type": "mc", "stem": "primo", "choices": ["serkku (mies)", "veli", "ystävä", "poika"], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "primo = miespuolinen serkku." },
+        { "item_type": "mc", "stem": "tío", "choices": ["isoisä", "setä, eno", "serkku", "veli"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "tío = setä tai eno (vanhemman veli). Älä sekoita: abuelo." },
+        { "item_type": "mc", "stem": "tía", "choices": ["sisko", "isoäiti", "täti", "äidin äiti"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "tía = täti." }
+      ]
+    },
+    {
+      "phase_id": "p2-recognition-perhe-laajempi",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista — laajempi suku ja pari",
+      "instruction": "Valitse oikea käännös.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.7, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I"],
+      "items": [
+        { "item_type": "mc", "stem": "sobrino", "choices": ["sisarenpoika tai veljenpoika", "serkku", "lapsenlapsi", "lanko"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "sobrino = sisarenpoika tai veljenpoika." },
+        { "item_type": "mc", "stem": "sobrina", "choices": ["serkku (nainen)", "sisarentytär tai veljentytär", "anoppi", "tytärpuoli"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "sobrina = sisarentytär tai veljentytär." },
+        { "item_type": "mc", "stem": "nieto", "choices": ["serkku", "lapsenlapsi (poika)", "veljenpoika", "poikapuoli"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "nieto = lapsenlapsi (poika). Nieta = lapsenlapsi (tyttö)." },
+        { "item_type": "mc", "stem": "nieta", "choices": ["lapsenlapsi (tyttö)", "tytär", "tätipuoli", "tyttöystävä"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "nieta = lapsenlapsi tyttö." },
+        { "item_type": "mc", "stem": "suegro", "choices": ["isäpuoli", "appi", "isoisä", "lanko"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "suegro = appi (puolison isä). Padrastro = isäpuoli." },
+        { "item_type": "mc", "stem": "suegra", "choices": ["isoäiti", "anoppi", "äitipuoli", "kummiäiti"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "suegra = anoppi." },
+        { "item_type": "mc", "stem": "cuñado", "choices": ["lanko", "appi", "veljenpoika", "isäpuoli"], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "cuñado = lanko (puolison veli tai sisaren mies)." },
+        { "item_type": "mc", "stem": "cuñada", "choices": ["käly", "anoppi", "kummitäti", "veljen tytär"], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "cuñada = käly." },
+        { "item_type": "mc", "stem": "pareja", "choices": ["pari, kumppani", "perhe", "vanhempi", "kaveri"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "pareja = pari, kumppani — sukupuolineutraali." },
+        { "item_type": "mc", "stem": "novio", "choices": ["poikaystävä, sulhanen", "lanko", "serkku", "appi"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "novio = poikaystävä tai sulhanen. Novia = tyttöystävä, morsian." },
+        { "item_type": "mc", "stem": "padrastro", "choices": ["isäpuoli", "appi", "kummi-isä", "isoisä"], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "padrastro = isäpuoli (äidin uusi mies). Suegro = appi." },
+        { "item_type": "mc", "stem": "gemelos", "choices": ["serkukset", "kaksoset", "lapsenlapset", "veljekset"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "gemelos = kaksoset (identtiset)." }
+      ]
+    },
+    {
+      "phase_id": "p3-recognition-kansallisuudet",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista — kansallisuudet",
+      "instruction": "Valitse oikea käännös.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.7, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "mc", "stem": "finlandés", "choices": ["ranskalainen", "suomalainen (mies)", "suomalainen (nainen)", "espanjalainen"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "finlandés = suomalainen (mies). Naismuoto: finlandesa." },
+        { "item_type": "mc", "stem": "finlandesa", "choices": ["suomalainen (nainen)", "suomalainen (mies)", "ranskalainen (nainen)", "ruotsalainen"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "finlandesa = suomalainen nainen." },
+        { "item_type": "mc", "stem": "española", "choices": ["espanjalainen (mies)", "ranskalainen", "espanjalainen (nainen)", "italialainen"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "española = espanjalainen nainen. Mies: español." },
+        { "item_type": "mc", "stem": "español", "choices": ["espanjalainen (mies)", "espanjan kieli", "molemmat — sekä että", "ranskalainen"], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "español tarkoittaa sekä kieltä että miesespanjalaista — kontekstista päätellään." },
+        { "item_type": "mc", "stem": "francesa", "choices": ["ranskalainen (mies)", "ranskalainen (nainen)", "saksalainen", "italialainen"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "francesa = ranskalainen nainen. Mies: francés." },
+        { "item_type": "mc", "stem": "alemán", "choices": ["amerikkalainen", "saksalainen", "italialainen", "ruotsalainen"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "alemán = saksalainen. Älä sekoita: americano." },
+        { "item_type": "mc", "stem": "alemana", "choices": ["saksalainen (nainen)", "amerikkalainen", "italialainen", "australialainen"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "alemana = saksalainen nainen." },
+        { "item_type": "mc", "stem": "inglés", "choices": ["irlantilainen", "englantilainen", "skotlantilainen", "amerikkalainen"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "inglés = englantilainen tai englannin kieli." },
+        { "item_type": "mc", "stem": "italiano", "choices": ["espanjalainen", "italialainen", "kreikkalainen", "intialainen"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "italiano = italialainen." },
+        { "item_type": "mc", "stem": "sueco", "choices": ["sveitsiläinen", "ruotsalainen (mies)", "norjalainen", "tanskalainen"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "sueco = ruotsalainen (mies). Sveitsiläinen = suizo." },
+        { "item_type": "mc", "stem": "ruso", "choices": ["romanialainen", "venäläinen (mies)", "ruotsalainen", "puolalainen"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "ruso = venäläinen mies. Rusa = venäläinen nainen." },
+        { "item_type": "mc", "stem": "estadounidense", "choices": ["yhdysvaltalainen", "amerikkalainen yleisesti", "meksikolainen", "argentiinalainen"], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "estadounidense = yhdysvaltalainen — sama muoto naisille ja miehille." }
+      ]
+    },
+    {
+      "phase_id": "p4-recall-typed-es-fi",
+      "phase_type": "recall_typed_es_to_fi",
+      "title": "Käännä suomeksi",
+      "instruction": "Kirjoita käännös suomeksi (pienellä).",
+      "mastery_threshold": { "I": 0.5, "A": 0.55, "B": 0.7, "C": 0.75, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I"],
+      "items": [
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "madre", "accept": ["äiti"], "hint": "tärkein perheenjäsen" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "padre", "accept": ["isä"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "hermano", "accept": ["veli"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "hermana", "accept": ["sisko", "sisar"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "abuelo", "accept": ["isoisä"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "tío", "accept": ["setä", "eno"], "hint": "yksi yleisistä käännöksistä riittää" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "primo", "accept": ["serkku"], "hint": "miesserkku — myös pelkkä \"serkku\" käy" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "sobrina", "accept": ["sisarentytär", "veljentytär", "tytärpuoli"], "hint": "sisaren tai veljen lapsi" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "finlandés", "accept": ["suomalainen"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "alemán", "accept": ["saksalainen"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "inglesa", "accept": ["englantilainen"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "estadounidense", "accept": ["yhdysvaltalainen"] }
+      ]
+    },
+    {
+      "phase_id": "p5-recall-typed-fi-es",
+      "phase_type": "recall_typed_fi_to_es",
+      "title": "Käännä espanjaksi",
+      "instruction": "Kirjoita käännös espanjaksi (pienellä, ilman aksentteja jos hankalia — järjestelmä hyväksyy ne).",
+      "mastery_threshold": { "I": 0.5, "A": 0.55, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "äiti", "accept": ["madre"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "isä", "accept": ["padre"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "veli", "accept": ["hermano"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "sisko", "accept": ["hermana"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "isoäiti", "accept": ["abuela"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "tytär", "accept": ["hija"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "naispuolinen serkku", "accept": ["prima"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "täti", "accept": ["tía", "tia"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "appi", "accept": ["suegro"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "lanko", "accept": ["cuñado", "cunado"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "suomalainen mies", "accept": ["finlandés", "finlandes"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "ranskalainen nainen", "accept": ["francesa"] }
+      ]
+    },
+    {
+      "phase_id": "p6-application-gap-helppo",
+      "phase_type": "application_gap_fill",
+      "title": "Lauseen täydennys — perustaso",
+      "instruction": "Täydennä lause oikealla sanalla.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.75, "C": 0.8, "M": 0.85, "E": 0.9, "L": 0.92 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Mi {1} se llama Ana — es la madre de mi padre.", "answers": [["abuela"]], "word_bank": ["abuela", "abuelo", "hermana"] },
+        { "item_type": "gap_fill", "sentence_template": "Tengo dos {1}: un chico y una chica.", "answers": [["hermanos"]], "word_bank": ["hermanos", "hermanas", "primos"] },
+        { "item_type": "gap_fill", "sentence_template": "Mi padre es {1} y mi madre es española.", "answers": [["finlandés", "finlandes"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "La {1} de mi tío es mi prima.", "answers": [["hija"]], "word_bank": ["hija", "hijo", "hermana"] },
+        { "item_type": "gap_fill", "sentence_template": "Mi {1} es el hermano de mi madre.", "answers": [["tío", "tio"]], "word_bank": ["tío", "primo", "abuelo"] },
+        { "item_type": "gap_fill", "sentence_template": "El padre de mi padre es mi {1}.", "answers": [["abuelo"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "La hija de mi hermana es mi {1}.", "answers": [["sobrina"]], "word_bank": ["sobrina", "prima", "nieta"] },
+        { "item_type": "gap_fill", "sentence_template": "Soy de Helsinki, soy {1}.", "answers": [["finlandés", "finlandesa", "finlandes"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Mi {1} y yo nos casamos el año pasado.", "answers": [["pareja", "novio", "novia"]], "word_bank": ["pareja", "primo", "tío"] },
+        { "item_type": "gap_fill", "sentence_template": "Tengo dos {1}: nacieron el mismo día.", "answers": [["gemelos"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p7-application-gap-vaativa",
+      "phase_type": "application_gap_fill",
+      "title": "Lauseen täydennys — vaativa",
+      "instruction": "Täydennä ilman sanapankkia. Kirjoita oikea muoto.",
+      "mastery_threshold": { "I": 0.5, "A": 0.55, "B": 0.65, "C": 0.75, "M": 0.85, "E": 0.9, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "La madre de mi padre es mi {1}.", "answers": [["abuela"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Mi madre tiene una hermana — es mi {1}.", "answers": [["tía", "tia"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Yo tengo dos hijos — su abuela es mi {1}.", "answers": [["madre", "suegra"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "El marido de mi hermana es mi {1}.", "answers": [["cuñado", "cunado"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Mi tía vive en Berlín — es {1}.", "answers": [["alemana"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Vienen de Nueva York — son {1}.", "answers": [["estadounidenses"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Mi novia es de París — ella es {1}.", "answers": [["francesa"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Los hijos de mi hijo son mis {1}.", "answers": [["nietos"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p8-application-sentence-build",
+      "phase_type": "application_sentence_build",
+      "title": "Lauseiden rakentelua",
+      "instruction": "Käännä koko lause espanjaksi.",
+      "mastery_threshold": { "I": 0.5, "A": 0.55, "B": 0.6, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.92 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Äitini on suomalainen.", "accept": ["mi madre es finlandesa", "mi madre es finlandesa."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Veljeni asuu Madridissa.", "accept": ["mi hermano vive en madrid", "mi hermano vive en madrid."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Onko sinulla sisaruksia?", "accept": ["tienes hermanos", "¿tienes hermanos?", "tienes hermanos?"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Hänen isänsä on espanjalainen.", "accept": ["su padre es español", "su padre es espanol", "su padre es español."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Isoäitini asuu Sevillassa.", "accept": ["mi abuela vive en sevilla", "mi abuela vive en sevilla."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Setäni on saksalainen.", "accept": ["mi tío es alemán", "mi tio es aleman", "mi tío es alemán."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Olemme yhdysvaltalaisia.", "accept": ["somos estadounidenses", "somos estadounidenses."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Serkkuni opiskelee Helsingissä.", "accept": ["mi primo estudia en helsinki", "mi prima estudia en helsinki", "mi primo estudia en helsinki."] }
+      ]
+    },
+    {
+      "phase_id": "p9-synthesis-translate",
+      "phase_type": "synthesis_translate",
+      "title": "YO-tyylinen käännös",
+      "instruction": "Käännä koko lause espanjaksi YO-tasolla.",
+      "mastery_threshold": { "I": 0.5, "A": 0.55, "B": 0.6, "C": 0.65, "M": 0.75, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Perheessäni on viisi henkilöä: vanhempani, kaksi sisarustani ja minä.", "accept": ["en mi familia somos cinco: mis padres, mis dos hermanos y yo", "en mi familia hay cinco personas: mis padres, mis dos hermanos y yo"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Isoäitini on kotoisin Argentiinasta mutta asuu nyt Espanjassa.", "accept": ["mi abuela es de argentina pero ahora vive en españa", "mi abuela es argentina pero ahora vive en españa"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Serkkuni ja minä opiskelemme samassa lukiossa.", "accept": ["mi primo y yo estudiamos en el mismo instituto", "mi prima y yo estudiamos en el mismo instituto"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Tätini ja setäni ovat kotoisin Saksasta.", "accept": ["mi tía y mi tío son de alemania", "mi tia y mi tio son de alemania"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Veljeni on kaksi vuotta minua nuorempi.", "accept": ["mi hermano es dos años menor que yo", "mi hermano tiene dos años menos que yo"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Lankoni työskentelee opettajana Madridissa.", "accept": ["mi cuñado trabaja como profesor en madrid", "mi cuñado es profesor en madrid"] }
+      ]
+    },
+    {
+      "phase_id": "p10-synthesis-short-writing",
+      "phase_type": "synthesis_short_writing",
+      "title": "Lyhyt kirjoitus",
+      "instruction": "Kirjoita lyhyt esittely perheestäsi.",
+      "mastery_threshold": { "I": 0.5, "A": 0.55, "B": 0.6, "C": 0.65, "M": 0.7, "E": 0.8, "L": 0.9 },
+      "skip_for_targets": ["I", "A", "B", "C", "M"],
+      "items": [
+        { "item_type": "writing", "prompt": "Kirjoita 4–6 lausetta perheestäsi: ketä siihen kuuluu, mistä he ovat kotoisin ja mitä he tekevät. Käytä oppimiasi sanoja (madre, padre, hermano/-a, finlandés/-esa).", "min_words": 35, "max_words": 80, "rubric_focus": ["communication", "vocab", "structure"] },
+        { "item_type": "writing", "prompt": "Esittele yksi sukulainen tarkemmin (esim. setä, isovanhempi, serkku): kuka hän on, mistä kotoisin, mitä tekee. 4–6 lausetta.", "min_words": 35, "max_words": 80, "rubric_focus": ["communication", "vocab"] },
+        { "item_type": "writing", "prompt": "Vertaa perheesi kahta jäsentä: mitä yhteistä, mitä eroa. 4–6 lausetta.", "min_words": 35, "max_words": 80, "rubric_focus": ["communication", "structure"] }
       ]
     }
   ],
   "vocab": [
-    {
-      "es": "PLACEHOLDER",
-      "fi": "PLACEHOLDER"
-    }
+    { "es": "madre", "fi": "äiti", "example_es": "Mi madre es profesora.", "example_fi": "Äitini on opettaja.", "gender": "f" },
+    { "es": "padre", "fi": "isä", "example_es": "Mi padre trabaja en Helsinki.", "example_fi": "Isäni työskentelee Helsingissä.", "gender": "m" },
+    { "es": "hermano", "fi": "veli", "example_es": "Tengo un hermano mayor.", "example_fi": "Minulla on isoveli.", "gender": "m" },
+    { "es": "hermana", "fi": "sisko", "example_es": "Mi hermana estudia inglés.", "example_fi": "Siskoni opiskelee englantia.", "gender": "f" },
+    { "es": "abuelo", "fi": "isoisä", "example_es": "Mi abuelo tiene ochenta años.", "example_fi": "Isoisäni on 80-vuotias.", "gender": "m" },
+    { "es": "abuela", "fi": "isoäiti", "example_es": "Mi abuela vive en Sevilla.", "example_fi": "Isoäitini asuu Sevillassa.", "gender": "f" },
+    { "es": "hijo", "fi": "poika (lapsi)", "example_es": "El hijo de mi tía es mi primo.", "example_fi": "Tätini poika on serkkuni.", "gender": "m" },
+    { "es": "hija", "fi": "tytär", "example_es": "Su hija se llama Lucía.", "example_fi": "Hänen tyttärensä on Lucía.", "gender": "f" },
+    { "es": "primo", "fi": "serkku (mies)", "example_es": "Mi primo vive en Madrid.", "example_fi": "Serkkuni asuu Madridissa.", "gender": "m" },
+    { "es": "prima", "fi": "serkku (nainen)", "example_es": "Tengo una prima en Barcelona.", "example_fi": "Minulla on serkku Barcelonassa.", "gender": "f" },
+    { "es": "tío", "fi": "setä, eno", "example_es": "Mi tío es médico.", "example_fi": "Setäni on lääkäri.", "gender": "m" },
+    { "es": "tía", "fi": "täti", "example_es": "Mi tía vive en Argentina.", "example_fi": "Tätini asuu Argentiinassa.", "gender": "f" },
+    { "es": "sobrino", "fi": "veljen-/sisarenpoika", "example_es": "Mi sobrino tiene cinco años.", "example_fi": "Veljenpoikani on 5-vuotias.", "gender": "m" },
+    { "es": "sobrina", "fi": "veljen-/sisarentytär", "example_es": "Visito a mi sobrina los domingos.", "example_fi": "Käyn siskontyttäreni luona sunnuntaisin.", "gender": "f" },
+    { "es": "nieto", "fi": "lapsenlapsi (poika)", "example_es": "Mi abuela tiene tres nietos.", "example_fi": "Isoäidilläni on kolme lapsenlasta.", "gender": "m" },
+    { "es": "nieta", "fi": "lapsenlapsi (tyttö)", "example_es": "Su nieta estudia música.", "example_fi": "Hänen lapsenlapsensa opiskelee musiikkia.", "gender": "f" },
+    { "es": "suegro", "fi": "appi", "example_es": "Mi suegro es de Madrid.", "example_fi": "Appiukkoni on Madridista.", "gender": "m" },
+    { "es": "suegra", "fi": "anoppi", "example_es": "Mi suegra cocina muy bien.", "example_fi": "Anoppini kokkaa hyvin.", "gender": "f" },
+    { "es": "cuñado", "fi": "lanko", "example_es": "Mi cuñado trabaja con ordenadores.", "example_fi": "Lankoni työskentelee tietokoneiden parissa.", "gender": "m" },
+    { "es": "cuñada", "fi": "käly", "example_es": "Mi cuñada vive cerca.", "example_fi": "Kälyni asuu lähellä.", "gender": "f" },
+    { "es": "padrastro", "fi": "isäpuoli", "example_es": "Mi padrastro es muy amable.", "example_fi": "Isäpuoleni on ystävällinen.", "gender": "m" },
+    { "es": "gemelos", "fi": "kaksoset", "example_es": "Tengo gemelos: dos niñas.", "example_fi": "Minulla on kaksostytöt.", "gender": "m" },
+    { "es": "pareja", "fi": "pari, kumppani", "example_es": "Voy con mi pareja al cine.", "example_fi": "Menen kumppanini kanssa elokuviin.", "gender": "f" },
+    { "es": "novio", "fi": "poikaystävä, sulhanen", "example_es": "Mi novio es español.", "example_fi": "Poikaystäväni on espanjalainen.", "gender": "m" },
+    { "es": "novia", "fi": "tyttöystävä, morsian", "example_es": "Su novia se llama Marta.", "example_fi": "Hänen tyttöystävänsä on Marta.", "gender": "f" },
+    { "es": "finlandés", "fi": "suomalainen (mies)", "example_es": "Soy finlandés.", "example_fi": "Olen suomalainen.", "gender": "m" },
+    { "es": "finlandesa", "fi": "suomalainen (nainen)", "example_es": "Mi madre es finlandesa.", "example_fi": "Äitini on suomalainen.", "gender": "f" },
+    { "es": "español", "fi": "espanjalainen (mies); espanjan kieli", "example_es": "Mi novio es español.", "example_fi": "Poikaystäväni on espanjalainen.", "gender": "m" },
+    { "es": "española", "fi": "espanjalainen (nainen)", "example_es": "Es una española de Valencia.", "example_fi": "Hän on espanjalainen Valenciasta.", "gender": "f" },
+    { "es": "francés", "fi": "ranskalainen (mies); ranskan kieli", "example_es": "El profesor es francés.", "example_fi": "Opettaja on ranskalainen.", "gender": "m" },
+    { "es": "francesa", "fi": "ranskalainen (nainen)", "example_es": "Mi vecina es francesa.", "example_fi": "Naapurini on ranskalainen.", "gender": "f" },
+    { "es": "alemán", "fi": "saksalainen (mies); saksan kieli", "example_es": "Mi compañero es alemán.", "example_fi": "Luokkakaverini on saksalainen.", "gender": "m" },
+    { "es": "alemana", "fi": "saksalainen (nainen)", "example_es": "Su madre es alemana.", "example_fi": "Hänen äitinsä on saksalainen.", "gender": "f" },
+    { "es": "inglés", "fi": "englantilainen (mies); englannin kieli", "example_es": "Estudio inglés en el instituto.", "example_fi": "Opiskelen englantia lukiossa.", "gender": "m" },
+    { "es": "inglesa", "fi": "englantilainen (nainen)", "example_es": "Mi profesora es inglesa.", "example_fi": "Opettajani on englantilainen.", "gender": "f" },
+    { "es": "italiano", "fi": "italialainen (mies)", "example_es": "Mi amigo italiano vive en Roma.", "example_fi": "Italialainen ystäväni asuu Roomassa.", "gender": "m" },
+    { "es": "sueco", "fi": "ruotsalainen (mies)", "example_es": "Mi vecino es sueco.", "example_fi": "Naapurini on ruotsalainen.", "gender": "m" },
+    { "es": "ruso", "fi": "venäläinen (mies)", "example_es": "Mi compañero ruso habla finés.", "example_fi": "Venäläinen luokkakaverini puhuu suomea.", "gender": "m" },
+    { "es": "estadounidense", "fi": "yhdysvaltalainen", "example_es": "Mi prima es estadounidense.", "example_fi": "Serkkuni on yhdysvaltalainen.", "gender": null }
   ],
   "side_panel": {
     "tabs": [
       {
         "id": "vocab",
         "title": "Sanasto",
-        "content_md": "PLACEHOLDER"
+        "content_md": "## Perhe — ydin\n\n- **madre** / **padre** — äiti / isä\n- **hermano** / **hermana** — veli / sisko\n- **abuelo** / **abuela** — isoisä / isoäiti\n- **hijo** / **hija** — poika / tytär\n- **primo** / **prima** — serkku\n- **tío** / **tía** — setä, eno / täti\n\n## Perhe — laajempi suku\n\n- **sobrino** / **sobrina** — sisaren-/veljenpoika tai -tytär\n- **nieto** / **nieta** — lapsenlapsi\n- **suegro** / **suegra** — appi / anoppi\n- **cuñado** / **cuñada** — lanko / käly\n- **padrastro** — isäpuoli\n- **gemelos** — kaksoset\n\n## Pari ja kumppani\n\n- **pareja** — pari, kumppani (sukupuolineutraali)\n- **novio** / **novia** — poika-/tyttöystävä, sulhanen, morsian\n\n## Kansallisuudet — yleiset\n\n- **finlandés** / **finlandesa** — suomalainen\n- **español** / **española** — espanjalainen\n- **francés** / **francesa** — ranskalainen\n- **alemán** / **alemana** — saksalainen\n- **inglés** / **inglesa** — englantilainen\n- **italiano** / **italiana** — italialainen\n\n## Kansallisuudet — laajemmin\n\n- **sueco** / **sueca** — ruotsalainen\n- **ruso** / **rusa** — venäläinen\n- **estadounidense** — yhdysvaltalainen (sama mies/nainen)"
+      },
+      {
+        "id": "tips",
+        "title": "YO-vinkki",
+        "content_md": "## YO-koe — kuullun ymmärtäminen\n\nPerhe- ja kansallisuussanat tulevat YO-kokeessa joka vuosi. Yleisin ansa: kuulet **hermano** ja monivalinnassa on sekä \"veli\" että \"sisko\" — pieni -o/-a-ero ratkaisee.\n\n**Kuuntele tarkkaan viimeinen tavu:**\n- *-o* loppu → maskuliini\n- *-a* loppu → feminiini\n- *-ense* → sama molemmilla (estadounidense, canadiense)\n\n## Yleiset hämäykset\n\n- **suegro** (appi) ≠ **abuelo** (isoisä)\n- **cuñado** (lanko) ≠ **sobrino** (sisarenpoika)\n- **alemán** (saksalainen) ≠ **americano** (amerikkalainen yleisesti)\n- **estadounidense** = nimenomaan USA:sta\n\n## Kirjoitustehtävässä\n\nPerhesanasto näkyy lyhyessä kirjoituksessa lähes aina. Käytä konkreetteja muotoja: *mi padre trabaja como ingeniero*, *mi hermana mayor estudia medicina*."
       }
     ]
   }
