@@ -2,6 +2,12 @@
 
 Vain viimeisten ~5 loopin tiivistelmät. Vanhempi historia: `docs/archive/IMPROVEMENTS_PRE_AUDIT.md`.
 
+## L-CI-SW-CHECK — sw-checkin push-mode + autobump (2026-05-04)
+
+- **[2026-05-04 L-CI-SW-CHECK] Push-mode HEAD~1-diffillä.** `scripts/check-sw-cache-version.js` valitsee BASE-refin: `$CI_BASE_REF` → `HEAD~1` (jos `GITHUB_EVENT_NAME=push`) → `origin/main`. Aiemmin push-eventissä main-pushilla diff oli aina tyhjä (BASE=HEAD), joten checkki oli no-op mainissa mutta failasi PR-runeilla race-condissa. `.github/workflows/ci.yml` ajaa checkin nyt molemmissa eventeissä.
+- **[2026-05-04 L-CI-SW-CHECK] `npm run bump:sw` autofix.** Skripti tukee `--fix`-flagia: parsii `CACHE_VERSION`-numerokomponentin, inkrementoi (`puheo-v126` → `puheo-v127`) ja kirjoittaa `sw.js`:n. No-op kun STATIC_ASSETS ei muuttunut → safe ajaa joka loopissa pre-commit-stepiksi. Memory `feedback_sw_cache_bump.md` päivitetty.
+- **[2026-05-04 L-CI-SW-CHECK] verification.** `npm run lint` 0 errors / 106 warnings; `npm test` 1064/1064 ✓; `GITHUB_EVENT_NAME=push npm run check:sw` raportoi oikein `puheo-v125 → puheo-v126`; PR #26 CI vihreä; main run 25335135098 vihreä post-merge. **PENDING:** AGENT_PROMPT_LINT_CLEANUP.md voi arkistoida (sen oletukset 10 lint-erroriksi olivat virheelliset, todellinen ongelma oli sw-check). 106 lint-warningia siivoamatta erilliseen looppiin.
+
 ## L-HOME-HOTFIX-3 — kahden palstan layout + accent-CTA + tightening (2026-05-04)
 
 - **[2026-05-04 L-HOME-HOTFIX-3] UPDATE 1+4 — Two-column grid + tightened top.** `app.html#screen-path`: kurssipolku ja sivurail käärityt `path-grid`-divaan; `path-main` sisältää `.path-courses`, `path-rail` sisältää day-CTA:n + YO-valmiuden. `style.css`: `.path-grid` block-default, `@media (min-width:1024px)` → `display:grid; grid-template-columns: minmax(0,1fr) 360px; gap:32px`; `.path-rail` sticky `top:24px` desktopilla, mobilella flex-stack `gap:24`. `.path-inner` padding `0 16 48`→`24 16 48`. `css/components/dashboard.css .dash-greeting`: `min-height 96`→`auto`, `margin-bottom 32`→`16`. Skill: `puheo-screen-template`, `ui-ux-pro-max`, `education/cognitive-load-analyser`.
