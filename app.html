@@ -601,21 +601,20 @@
           </button>
           <!-- YO-koe readiness card — populated by dashboard.js. -->
           <div class="dash-readiness hidden" id="dash-readiness" aria-live="polite"></div>
-        </aside>
-      </div>
-
-      <!-- Footer grid: recent activity + progress chart, side-by-side desktop, stacked mobile. -->
-      <div class="dash-grid-row path-footer-grid">
-        <div id="dash-recent-wrap" class="hidden">
-          <div class="section-h"><h2>Viimeisimm&auml;t harjoitukset</h2></div>
-          <div id="dash-recent-list"></div>
-        </div>
-        <div class="dash-chart-section">
-          <div class="section-h"><h2>Kehitys ajan mittaan</h2></div>
-          <div class="dash-chart-container" id="dash-chart">
-            <div class="dash-chart-empty">Tee ensimmäinen harjoitus nähdäksesi kehityksesi!</div>
+          <!-- L-HOME-HOTFIX-3-P2: recent + chart moved INTO the rail so the
+               right column doesn't sit empty next to scroll-heavy course
+               list. Stacks vertically; chart container scales to rail width. -->
+          <div id="dash-recent-wrap" class="hidden">
+            <div class="section-h"><h2>Viimeisimm&auml;t harjoitukset</h2></div>
+            <div id="dash-recent-list"></div>
           </div>
-        </div>
+          <div class="dash-chart-section">
+            <div class="section-h"><h2>Kehitys ajan mittaan</h2></div>
+            <div class="dash-chart-container" id="dash-chart">
+              <div class="dash-chart-empty">Tee ensimm&auml;inen harjoitus n&auml;hd&auml;ksesi kehityksesi!</div>
+            </div>
+          </div>
+        </aside>
       </div>
 
       <!-- Hidden trigger for SR session (used by dash-day-cta sr-review target). -->

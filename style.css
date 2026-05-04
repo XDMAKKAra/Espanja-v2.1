@@ -4088,7 +4088,9 @@ body:has(.app-countdown:not(.hidden)) #app-main { padding-top: 34px; }
 .path-inner > .dash-day-cta { width: 100%; }
 
 /* L-HOME-HOTFIX-3 — two-column layout on desktop. Default block stacking
-   keeps mobile/tablet behaviour intact. */
+   keeps mobile/tablet behaviour intact. Rail holds CTA + readiness + recent
+   + chart; on desktop it flows alongside the course list (NOT sticky) so
+   the empty right-side area gets filled with relevant content. */
 .path-grid { display: block; }
 .path-rail {
   display: flex;
@@ -4096,21 +4098,18 @@ body:has(.app-countdown:not(.hidden)) #app-main { padding-top: 34px; }
   gap: 24px;
   margin-top: 24px;
 }
+.path-rail > .btn--cta { margin-bottom: 0; }
+.path-rail #dash-recent-wrap,
+.path-rail .dash-chart-section { width: 100%; }
+.path-rail .dash-chart-container { min-height: 180px; }
 @media (min-width: 1024px) {
   .path-grid {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 360px;
+    grid-template-columns: minmax(0, 1fr) 380px;
     gap: 32px;
     align-items: start;
   }
-  .path-rail {
-    margin-top: 0;
-    position: sticky;
-    top: 24px;
-    max-height: calc(100vh - 48px);
-    overflow-y: auto;
-  }
-  .path-rail > .btn--cta { margin-bottom: 0; }
+  .path-rail { margin-top: 0; }
 }
 .path-header { margin-bottom: 24px; text-align: center; }
 .path-title {
