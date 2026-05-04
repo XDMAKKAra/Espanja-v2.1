@@ -1,4 +1,6 @@
 import { Router } from "express";
+import { readFile } from "node:fs/promises";
+import path from "node:path";
 import supabase from "../supabase.js";
 import { requireAuth } from "../middleware/auth.js";
 import { callOpenAI } from "../lib/openai.js";
@@ -492,6 +494,27 @@ async function getOrGenerateTeachingPage(kurssiKey, sortOrder, lesson) {
   return { contentMd, cached: false };
 }
 
+// L-COURSE-1 UPDATE 3 — pre-generated lesson reader. When USE_PREGENERATED_LESSONS
+// is "true", attempt to read data/courses/{courseKey}/lesson_{index}.json. If
+// the file is a placeholder (description starts "PLACEHOLDER") or missing, we
+// fall through to runtime OpenAI generation. Returning the parsed JSON shape
+// directly is intentional — js/lib/lessonAdapter.js normalises it.
+async function readPregeneratedLesson(courseKey, lessonIndex) {
+  if (process.env.USE_PREGENERATED_LESSONS !== "true") return null;
+  try {
+    const filePath = path.join(process.cwd(), "data", "courses", courseKey, `lesson_${lessonIndex}.json`);
+    const raw = await readFile(filePath, "utf8");
+    const lesson = JSON.parse(raw);
+    if (typeof lesson?.meta?.description === "string" && lesson.meta.description.startsWith("PLACEHOLDER")) {
+      return null;
+    }
+    return lesson;
+  } catch (err) {
+    if (err.code !== "ENOENT") console.error("readPregeneratedLesson error:", err.message);
+    return null;
+  }
+}
+
 // ─── GET /api/curriculum/:kurssiKey/lesson/:lessonIndex ─────────────────────
 router.get("/:kurssiKey/lesson/:lessonIndex", optionalAuth, async (req, res) => {
   try {
@@ -502,6 +525,15 @@ router.get("/:kurssiKey/lesson/:lessonIndex", optionalAuth, async (req, res) => 
     }
     if (!findKurssi(kurssiKey)) {
       return res.status(404).json({ error: "Kurssia ei löydy" });
+    }
+
+    // L-COURSE-1 UPDATE 3 — pre-generated short-circuit. Returns the full
+    // schema-shaped object plus lessonContext (target_grade) so the runner
+    // can pick mastery thresholds + skip_for_targets correctly.
+    const pregenerated = await readPregeneratedLesson(kurssiKey, lessonIndex);
+    if (pregenerated) {
+      const tg = req.user?.userId ? await fetchTargetGrade(req.user.userId) : "B";
+      return res.json({ pregenerated, lessonContext: { targetGrade: tg } });
     }
 
     let lessons = null;

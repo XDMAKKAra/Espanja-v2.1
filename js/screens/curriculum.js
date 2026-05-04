@@ -396,6 +396,15 @@ export async function openLesson(kurssiKey, lessonIndex) {
     });
     if (!res.ok) throw new Error("Oppitunnin lataus epäonnistui");
     const data = await res.json();
+    // L-COURSE-1 UPDATE 3 — pre-generated lesson short-circuit. The new
+    // backend returns `{ pregenerated: <full schemas/lesson.json> }` for
+    // any data/courses/*.json that exists + isn't a placeholder.
+    if (data && data.pregenerated && Array.isArray(data.pregenerated.phases)) {
+      const tg = String(data.lessonContext?.targetGrade || "B");
+      const m = await import("./lessonRunner.js");
+      m.runPregeneratedLesson(data, kurssiKey, lessonIndex, tg);
+      return;
+    }
     // Enrich currentLesson with focus + type so the post-session lesson
     // results card can render them without a second fetch.
     // L-PLAN-5 UPDATE 5 — lessonExerciseCount drives single-batch sizing

@@ -1,0 +1,234 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Puheo Lesson",
+  "type": "object",
+  "required": ["meta", "teaching", "phases", "vocab", "side_panel"],
+  "properties": {
+    "meta": {
+      "type": "object",
+      "required": ["course_key", "lesson_index", "lesson_type", "level", "title"],
+      "properties": {
+        "course_key": { "type": "string", "pattern": "^kurssi_[1-8]$" },
+        "lesson_index": { "type": "integer", "minimum": 1, "maximum": 15 },
+        "lesson_type": { "enum": ["vocab", "grammar", "reading", "writing", "mixed", "test"] },
+        "level": { "enum": ["I", "A", "B", "C", "M", "E", "L"], "description": "YO-arvosana, EI CEFR" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "yo_relevance": { "type": "string", "description": "Lyhyt selitys: miten tämä oppitunti näkyy YO-kokeessa" },
+        "estimated_minutes_median": { "type": "integer", "minimum": 3, "maximum": 30 }
+      }
+    },
+    "teaching": {
+      "type": "object",
+      "required": ["intro_md"],
+      "properties": {
+        "intro_md": { "type": "string" },
+        "key_points": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "phases": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 12,
+      "items": {
+        "type": "object",
+        "required": ["phase_id", "phase_type", "title", "items", "mastery_threshold"],
+        "properties": {
+          "phase_id": { "type": "string" },
+          "phase_type": {
+            "enum": [
+              "recognition_mc",
+              "recognition_match",
+              "recall_typed_es_to_fi",
+              "recall_typed_fi_to_es",
+              "application_gap_fill",
+              "application_sentence_build",
+              "synthesis_translate",
+              "synthesis_short_writing",
+              "reading_mc",
+              "writing_long"
+            ]
+          },
+          "title": { "type": "string" },
+          "instruction": { "type": "string" },
+          "mastery_threshold": {
+            "type": "object",
+            "properties": {
+              "I": { "type": "number", "minimum": 0.3, "maximum": 1.0 },
+              "A": { "type": "number", "minimum": 0.3, "maximum": 1.0 },
+              "B": { "type": "number", "minimum": 0.3, "maximum": 1.0 },
+              "C": { "type": "number", "minimum": 0.3, "maximum": 1.0 },
+              "M": { "type": "number", "minimum": 0.3, "maximum": 1.0 },
+              "E": { "type": "number", "minimum": 0.3, "maximum": 1.0 },
+              "L": { "type": "number", "minimum": 0.3, "maximum": 1.0 }
+            }
+          },
+          "skip_for_targets": {
+            "type": "array",
+            "items": { "enum": ["I", "A", "B", "C", "M", "E", "L"] }
+          },
+          "items": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 30,
+            "items": { "$ref": "#/definitions/exercise_item" }
+          }
+        }
+      }
+    },
+    "vocab": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["es", "fi"],
+        "properties": {
+          "es": { "type": "string" },
+          "fi": { "type": "string" },
+          "example_es": { "type": "string" },
+          "example_fi": { "type": "string" },
+          "gender": { "enum": ["m", "f", null] },
+          "audio_id": { "type": ["string", "null"] }
+        }
+      }
+    },
+    "side_panel": {
+      "type": "object",
+      "required": ["tabs"],
+      "properties": {
+        "tabs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "title", "content_md"],
+            "properties": {
+              "id": { "enum": ["vocab", "grammar", "examples", "tips"] },
+              "title": { "type": "string" },
+              "content_md": { "type": "string" }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "exercise_item": {
+      "type": "object",
+      "oneOf": [
+        { "$ref": "#/definitions/item_mc" },
+        { "$ref": "#/definitions/item_match" },
+        { "$ref": "#/definitions/item_typed" },
+        { "$ref": "#/definitions/item_gap_fill" },
+        { "$ref": "#/definitions/item_translate" },
+        { "$ref": "#/definitions/item_writing" },
+        { "$ref": "#/definitions/item_reading_mc" }
+      ]
+    },
+    "item_mc": {
+      "type": "object",
+      "required": ["item_type", "stem", "choices", "correct_index", "explanation"],
+      "properties": {
+        "item_type": { "const": "mc" },
+        "stem": { "type": "string" },
+        "context": { "type": ["string", "null"] },
+        "choices": { "type": "array", "minItems": 2, "maxItems": 5, "items": { "type": "string" } },
+        "correct_index": { "type": "integer", "minimum": 0 },
+        "distractor_difficulty": { "enum": ["easy", "medium", "hard"] },
+        "explanation": { "type": "string" }
+      }
+    },
+    "item_match": {
+      "type": "object",
+      "required": ["item_type", "pairs"],
+      "properties": {
+        "item_type": { "const": "match" },
+        "left_label": { "type": "string" },
+        "right_label": { "type": "string" },
+        "pairs": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 12,
+          "items": {
+            "type": "object",
+            "required": ["left", "right"],
+            "properties": {
+              "left": { "type": "string" },
+              "right": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "item_typed": {
+      "type": "object",
+      "required": ["item_type", "prompt", "accept"],
+      "properties": {
+        "item_type": { "const": "typed" },
+        "direction": { "enum": ["es_to_fi", "fi_to_es"] },
+        "prompt": { "type": "string" },
+        "accept": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "hint": { "type": ["string", "null"] }
+      }
+    },
+    "item_gap_fill": {
+      "type": "object",
+      "required": ["item_type", "sentence_template", "answers"],
+      "properties": {
+        "item_type": { "const": "gap_fill" },
+        "sentence_template": { "type": "string" },
+        "answers": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "array", "items": { "type": "string" } }
+        },
+        "word_bank": { "type": ["array", "null"], "items": { "type": "string" } }
+      }
+    },
+    "item_translate": {
+      "type": "object",
+      "required": ["item_type", "source", "direction", "accept"],
+      "properties": {
+        "item_type": { "const": "translate" },
+        "direction": { "enum": ["es_to_fi", "fi_to_es"] },
+        "source": { "type": "string" },
+        "accept": { "type": "array", "minItems": 1, "items": { "type": "string" } }
+      }
+    },
+    "item_writing": {
+      "type": "object",
+      "required": ["item_type", "prompt", "min_words", "max_words", "rubric_focus"],
+      "properties": {
+        "item_type": { "const": "writing" },
+        "prompt": { "type": "string" },
+        "min_words": { "type": "integer" },
+        "max_words": { "type": "integer" },
+        "rubric_focus": {
+          "type": "array",
+          "items": { "enum": ["communication", "structure", "vocab", "overall"] }
+        }
+      }
+    },
+    "item_reading_mc": {
+      "type": "object",
+      "required": ["item_type", "passage", "questions"],
+      "properties": {
+        "item_type": { "const": "reading_mc" },
+        "passage": { "type": "string" },
+        "questions": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 8,
+          "items": {
+            "type": "object",
+            "required": ["question_fi", "choices", "correct_index"],
+            "properties": {
+              "question_fi": { "type": "string" },
+              "choices": { "type": "array", "minItems": 2, "maxItems": 5, "items": { "type": "string" } },
+              "correct_index": { "type": "integer", "minimum": 0 },
+              "explanation_fi": { "type": "string" }
+            }
+          }
+        }
+      }
+    }
+  }
+}
