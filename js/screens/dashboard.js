@@ -84,7 +84,7 @@ export const MODE_META = {
 };
 
 export async function loadDashboard() {
-  showLoading("Ladataan...");
+  showLoading("Ladataan…");
   try {
     // L-LIVE-AUDIT-P2 UPDATE 3 — single batched request replaces 9 sequential
     // dashboard fetches. Each section may be `null` if its server query failed;
@@ -200,11 +200,13 @@ function renderDashboard({
     }
   }
   const rawEmail = getAuthEmail();
-  const name = rawEmail ? rawEmail.split("@")[0] : "";
+  const name = (rawEmail && rawEmail.includes("@")) ? rawEmail.split("@")[0] : "";
   $("dash-username").textContent = name;
-  // Hide the connecting comma when there's no name — renders as plain "Hei." rather than "Hei, ."
+  // P0-3: hide comma + change punctuation when no name → "Hei!" not "Hei, ."
   const comma = document.getElementById("dash-greeting-comma");
   if (comma) comma.hidden = !name;
+  const punct = document.getElementById("dash-greeting-punct");
+  if (punct) punct.textContent = name ? "." : "!";
 
   // Time-aware Finnish greeting — defaults to "Hei" outside the four named windows.
   const greetEl = document.getElementById("dash-greeting-prefix");

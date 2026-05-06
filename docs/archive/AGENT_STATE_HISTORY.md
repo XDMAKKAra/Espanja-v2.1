@@ -1,5 +1,19 @@
 # Puheo Agent State
 
+### L-CI-SW-CHECK — 2026-05-04 ✓ shipped
+**Scope:** SW-check fix: `GITHUB_EVENT_NAME=push` → diff vs `HEAD~1`. `npm run bump:sw --fix` autofix. CI vihreä.
+**Files:** 3. **SW:** ei bumppia. **Tests:** 1064/1064 ✓.
+
+### L-LESSON-BATCH-5 — 2026-05-05 ✓ shipped
+**Scope:** K5 L1-11 + K6 L1-6. 2 Sonnet-workeria rinnakkain. Review: P0=4, P1=12, P2=8. Kaikki P0+P1 korjattu.
+**Files:** 17 generated. **Validate:** 62/62 ✓.
+
+### L-LESSON-BATCH-6 — 2026-05-06 ✓ shipped
+**Scope:** K6 L7-12 + K7 L1-12. Review-Sonnet: P0=5, P1=10, P2=2. Kaikki korjattu.
+**Files:** 18 generated. **Validate:** 79/79 ✓.
+
+---
+
 **Last updated:** 2026-05-03T20:45:00Z
 **Last completed loop:** L-LIVE-AUDIT-P2 (full loop, all 8 UPDATEs shipped across 3 commits / PRs in one session per user-request "just continue idc"). UPDATE 1+2 (CSS+JS bundle, PR #10), UPDATE 3+4+6 (`/api/dashboard/v2` Promise.all batch + frontend profile cache + adaptive/status 30s LRU, PR #11), UPDATE 5+7+8 (vocab pre-gen on 2/3-mark + Magic UI animated theme toggler with View Transitions + clip-path + self-hosted Inter+DM Mono on app.html, this PR). Hotfix: `css/components/dashboard.css:851` `.dash-retake-btn:hover` unclosed brace surfaced by esbuild's strict parser. SW v112 → v115 (one bump per PR). Bundle artifacts: `app.bundle.css 232 KB` + `app.bundle.js 318 KB` committed at repo root. 14 woff2 files at `/fonts/`. New devDeps: `esbuild@0.28.0`, `@fontsource/inter@^5`, `@fontsource/dm-mono@^5`. Tests: `npm test` 1 067/1 067 PASS each commit; `node --check` clean. **Pending user manual verification on Vercel:** cold-load `/app.html` Lighthouse vs `AUDIT_LIVE_DASHBOARD.md` baseline (1 339 ms DOM-ready / 18 CSS / 28 JS / 4 164 ms vocab Q1 / 1 094 ms adaptive/status). Brief-expected savings: ~700–1 400 ms (bundle), ~500–1 000 ms (batch+cache), ~3 500 ms (vocab pre-gen), 150–300 ms (fonts) — nominal cold load drops below 2 s, vocab Q1 below 1 s. Theme toggle visual: Asetukset → click Light/Dark, expect circle wipe from click point. Landing (`index.html`) intentionally untouched — UPDATE 8 only migrates app.html, landing keeps Geist + Geist Mono + Inter via Google Fonts so CSP retains `fonts.googleapis.com` / `fonts.gstatic.com` directives. **DEFERRED (carry to next loop):** Playwright axe-sweep + design:design-critique + e2e specs (`dashboard-v2.spec.js`, `vocab-pre-gen.spec.js`, `theme-toggle-vt.spec.js`) — workflow_dispatch-gated, same as P0/P1. ACTION REQUIRED Supabase indexes for `user_progress(user_id, mode)` + `attempts(user_id, created_at DESC)` — exact column names need schema verification before user runs in SQL editor.
 

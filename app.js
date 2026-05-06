@@ -1955,31 +1955,81 @@ $("gram-btn-next").addEventListener("click", () => {
 
 function showGrammarResults() {
   const total = state.grammarExercises.length;
-  $("gram-score-display").textContent = `${state.grammarCorrect}/${total}`;
-  $("gram-score-text").textContent = `${state.grammarCorrect} / ${total} oikein`;
+  const correct = state.grammarCorrect;
+  const pct = total > 0 ? Math.round((correct / total) * 100) : 0;
 
+  // Legacy compat shims (still referenced by share-card etc.)
+  $("gram-score-display").textContent = `${correct}/${total}`;
+  $("gram-score-text").textContent = `${correct} / ${total} oikein`;
+
+  // P1-3: Populate hero score + stats strip (these IDs exist in HTML but were
+  // never wired up). Uses textContent (no countUp import in app.js legacy bundle).
+  const resNum = $("gram-res-num");
+  const resTot = $("gram-res-tot");
+  const resPct = $("gram-res-pct");
+  if (resNum) resNum.textContent = String(correct);
+  if (resTot) resTot.textContent = String(total);
+  if (resPct) resPct.textContent = String(pct);
+
+  // Set tone class on score hero for ≥80% celebration
+  const scoreEl = document.querySelector("#screen-grammar-results .results__score");
+  if (scoreEl) {
+    scoreEl.classList.toggle("results__score--good", pct >= 80);
+    scoreEl.classList.toggle("results__score--warn", pct >= 60 && pct < 80);
+    scoreEl.classList.toggle("results__score--low", pct < 60);
+  }
+
+  const statsEl = $("gram-res-stats");
+  if (statsEl && total > 0) {
+    const wrong = Math.max(0, total - correct);
+    const elapsedMs = state.sessionStartTime ? Date.now() - state.sessionStartTime : 0;
+    const elapsed = Math.round(elapsedMs / 1000);
+    const mins = Math.floor(elapsed / 60);
+    const secs = elapsed % 60;
+    const timeStr = elapsedMs > 0 ? (mins > 0 ? `${mins} min ${secs} s` : `${secs} s`) : "—";
+    const statCorrectEl = $("gram-res-stat-correct");
+    const statWrongEl = $("gram-res-stat-wrong");
+    const statTimeEl = $("gram-res-stat-time");
+    if (statCorrectEl) statCorrectEl.textContent = String(correct);
+    if (statWrongEl) statWrongEl.textContent = String(wrong);
+    if (statTimeEl) statTimeEl.textContent = timeStr;
+    statsEl.hidden = false;
+  }
+
+  // Coach line: pct-based encouraging copy (puheo-finnish-voice)
+  const coachEl = $("gram-res-coach");
+  if (coachEl) {
+    if (pct === 100) coachEl.textContent = "Täydellinen kierros. Juuri näin.";
+    else if (pct >= 80) coachEl.textContent = "Hyvin meni — kielioppi on hallinnassa.";
+    else if (pct >= 60) coachEl.textContent = "Hyvä yritys. Tarkista merkityt kohdat.";
+    else coachEl.textContent = "Harjoittele lisää — palaa näihin sääntöihin uudelleen.";
+  }
+
+  // Breakdown list: use grammar rule tags as a review summary
   const errSummary = $("gram-error-summary");
-  errSummary.innerHTML = "";
-  const uniqueErrors = [...new Set(state.grammarErrors)];
-  if (uniqueErrors.length > 0) {
-    const label = document.createElement("p");
-    label.style.cssText =
-      "font-family:var(--font-mono);font-size:11px;color:var(--ink-soft);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px;";
-    label.textContent = "Harjoittele lisää:";
-    errSummary.appendChild(label);
-    uniqueErrors.forEach((err) => {
-      const tag = document.createElement("span");
-      tag.className = "gram-error-tag";
-      tag.textContent = err;
-      errSummary.appendChild(tag);
-    });
+  if (errSummary) {
+    errSummary.innerHTML = "";
+    const uniqueErrors = [...new Set(state.grammarErrors)];
+    if (uniqueErrors.length > 0) {
+      const label = document.createElement("p");
+      label.style.cssText =
+        "font-family:var(--font-mono);font-size:11px;color:var(--ink-soft);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px;";
+      label.textContent = "Harjoittele lisää:";
+      errSummary.appendChild(label);
+      uniqueErrors.forEach((err) => {
+        const tag = document.createElement("span");
+        tag.className = "gram-error-tag";
+        tag.textContent = err;
+        errSummary.appendChild(tag);
+      });
+    }
   }
 
   saveProgress({
     mode: "grammar",
     level: state.grammarLevel,
-    scoreCorrect: state.grammarCorrect,
-    scoreTotal: state.grammarExercises.length,
+    scoreCorrect: correct,
+    scoreTotal: total,
     ytlGrade: null,
   });
   show("screen-grammar-results");
@@ -2184,22 +2234,69 @@ $("reading-btn-next").addEventListener("click", () => {
 
 function showReadingResults() {
   const total = state.currentReading.questions.length;
-  $("reading-score-display").textContent = `${state.readingScore}/${total}`;
-  $("reading-score-text").textContent = `${state.readingScore} / ${total} oikein`;
+  const correct = state.readingScore;
+  const pctFrac = total > 0 ? correct / total : 0;
+  const pct = Math.round(pctFrac * 100);
 
-  const pct = state.readingScore / total;
+  // Legacy compat shims
+  $("reading-score-display").textContent = `${correct}/${total}`;
+  $("reading-score-text").textContent = `${correct} / ${total} oikein`;
+
+  // Coach text in legacy shim (kept for back-compat)
   let fb;
-  if (pct === 1)      fb = "Erinomainen! Kaikki oikein.";
-  else if (pct >= 0.75) fb = "Hyvä suoritus! Pieni hiominen riittää.";
-  else if (pct >= 0.5)  fb = "Kohtalainen. Lue teksti uudelleen tarkemmin.";
-  else                  fb = "Harjoittele lisää. Kiinnitä huomiota tekstin yksityiskohtiin.";
+  if (pctFrac === 1)        fb = "Erinomainen! Kaikki oikein.";
+  else if (pctFrac >= 0.75) fb = "Hyvä suoritus! Pieni hiominen riittää.";
+  else if (pctFrac >= 0.5)  fb = "Kohtalainen. Lue teksti uudelleen tarkemmin.";
+  else                      fb = "Harjoittele lisää. Kiinnitä huomiota tekstin yksityiskohtiin.";
   $("reading-overall-feedback").textContent = fb;
+
+  // P1-3: Populate hero score + stats strip
+  const resNum = $("reading-res-num");
+  const resTot = $("reading-res-tot");
+  const resPct = $("reading-res-pct");
+  if (resNum) resNum.textContent = String(correct);
+  if (resTot) resTot.textContent = String(total);
+  if (resPct) resPct.textContent = String(pct);
+
+  // Set tone class on score hero for ≥80% celebration
+  const scoreEl = document.querySelector("#screen-reading-results .results__score");
+  if (scoreEl) {
+    scoreEl.classList.toggle("results__score--good", pct >= 80);
+    scoreEl.classList.toggle("results__score--warn", pct >= 60 && pct < 80);
+    scoreEl.classList.toggle("results__score--low", pct < 60);
+  }
+
+  const statsEl = $("reading-res-stats");
+  if (statsEl && total > 0) {
+    const wrong = Math.max(0, total - correct);
+    const elapsedMs = state.sessionStartTime ? Date.now() - state.sessionStartTime : 0;
+    const elapsed = Math.round(elapsedMs / 1000);
+    const mins = Math.floor(elapsed / 60);
+    const secs = elapsed % 60;
+    const timeStr = elapsedMs > 0 ? (mins > 0 ? `${mins} min ${secs} s` : `${secs} s`) : "—";
+    const statCorrectEl = $("reading-res-stat-correct");
+    const statWrongEl = $("reading-res-stat-wrong");
+    const statTimeEl = $("reading-res-stat-time");
+    if (statCorrectEl) statCorrectEl.textContent = String(correct);
+    if (statWrongEl) statWrongEl.textContent = String(wrong);
+    if (statTimeEl) statTimeEl.textContent = timeStr;
+    statsEl.hidden = false;
+  }
+
+  // Coach line (puheo-finnish-voice, agentic copy)
+  const coachEl = $("reading-res-coach");
+  if (coachEl) {
+    if (pct === 100) coachEl.textContent = "Täydellinen luku. Loistava!";
+    else if (pct >= 80) coachEl.textContent = "Hyvin meni — luetun ymmärtäminen sujuu.";
+    else if (pct >= 60) coachEl.textContent = "Hyvä yritys. Lue teksti uudelleen tarkemmin.";
+    else coachEl.textContent = "Kiinnitä huomio tekstin yksityiskohtiin — harjoitellaan lisää.";
+  }
 
   saveProgress({
     mode: "reading",
     level: state.readingLevel,
-    scoreCorrect: state.readingScore,
-    scoreTotal: state.currentReading.questions.length,
+    scoreCorrect: correct,
+    scoreTotal: total,
     ytlGrade: null,
   });
   show("screen-reading-results");

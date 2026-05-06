@@ -648,6 +648,191 @@
   font-weight: 600;
 }
 
+/* ─── Courses section — L-HOME-COURSE-VISIBILITY (L-RUFLO-LOOP-3) ──
+   Pattern: trivial extension of .pillars__grid (STANDARDS §3 exception).
+   8 compact cards in a 4-col desktop grid. YO-level badges tinted per
+   arvosana (A=subtle, E=accent). No sourcing pass required per brief §4
+   ("existing .pillars__grid pattern, extend 3→8").
+   Skill: design:taste-frontend + ui-ux-pro-max.
+   ──────────────────────────────────────────────────────────────────── */
+.landing .courses {
+  border-top: 1px solid var(--border);
+}
+.landing .courses__head {
+  text-align: center;
+  margin-bottom: var(--sp-8);
+}
+.landing .courses__eyebrow {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  color: var(--accent);
+  margin: 0 0 var(--sp-2);
+}
+.landing .courses__title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(28px, 4vw, 40px);
+  line-height: 1.1;
+  letter-spacing: var(--tracking-tight);
+  color: var(--text);
+  margin: 0 0 var(--sp-3);
+  text-wrap: balance;
+}
+.landing .courses__sub {
+  font-size: var(--fs-md);
+  line-height: 1.55;
+  color: var(--text-muted);
+  margin: 0 auto;
+  max-width: 680px;
+  text-wrap: pretty;
+}
+
+/* ─── 8-card grid: 4-col desktop → 2-col tablet → 1-col mobile ── */
+.landing .courses__grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--sp-2);
+  list-style: none;
+  padding: 0;
+  margin: 0 0 var(--sp-6);
+}
+@media (max-width: 1080px) {
+  .landing .courses__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 580px) {
+  .landing .courses__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ─── Individual course card ─────────────────────────────────── */
+.landing .course-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: var(--sp-3);
+  transition: background var(--t-fast), border-color var(--t-fast),
+              transform var(--t-fast);
+}
+.landing .course-card:hover {
+  background: var(--surface-hover);
+  border-color: var(--border-strong);
+  transform: translateY(-2px);
+}
+
+/* Finale card (K8) gets a subtle accent left-border */
+.landing .course-card--finale {
+  border-color: color-mix(in srgb, var(--accent) 30%, var(--border));
+}
+.landing .course-card--finale:hover {
+  border-color: color-mix(in srgb, var(--accent) 50%, var(--border));
+}
+
+/* ─── Card header: number + badge ────────────────────────────── */
+.landing .course-card__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--sp-2);
+}
+.landing .course-card__num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: var(--tracking-wide);
+  color: var(--text-subtle);
+}
+
+/* YO-level badge — same pill shape as existing pricing chip */
+.landing .course-card__badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--r-pill);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: var(--tracking-snug);
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+/* Level-specific badge tints — restrained, single-accent palette */
+.landing .course-card__badge--a {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text-muted);
+  border: 1px solid var(--border-strong);
+}
+.landing .course-card__badge--b {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text);
+  border: 1px solid var(--border-strong);
+}
+.landing .course-card__badge--c {
+  background: rgba(45, 212, 191, 0.08);
+  color: var(--accent);
+  border: 1px solid rgba(45, 212, 191, 0.2);
+}
+.landing .course-card__badge--m {
+  background: rgba(45, 212, 191, 0.12);
+  color: var(--accent);
+  border: 1px solid rgba(45, 212, 191, 0.28);
+}
+.landing .course-card__badge--e {
+  background: var(--accent);
+  color: #052924;
+  border: 1px solid transparent;
+}
+
+/* ─── Card body copy ─────────────────────────────────────────── */
+.landing .course-card__title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--fs-sm);
+  letter-spacing: var(--tracking-snug);
+  color: var(--text);
+  margin: 0 0 var(--sp-1);
+  line-height: 1.25;
+}
+.landing .course-card__body {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text-muted);
+  margin: 0 0 var(--sp-2);
+  flex: 1 1 auto;
+}
+.landing .course-card__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-1);
+  margin: 0;
+  margin-top: auto;
+  padding-top: var(--sp-2);
+  border-top: 1px solid var(--border);
+}
+.landing .course-card__count {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--text-subtle);
+}
+
+/* ─── Bottom CTA row ─────────────────────────────────────────── */
+.landing .courses__cta {
+  display: flex;
+  justify-content: center;
+}
+
 /* ─── How it works (3 numbered steps) ───────────────────────── */
 .landing .steps {
   border-top: 1px solid var(--border);

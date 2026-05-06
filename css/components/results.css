@@ -130,3 +130,25 @@
   padding: 8px;
 }
 .results__back:hover { color: var(--ink); }
+
+/* P1-3 — Score hero tone states. Applied by JS when pct is known.
+   --good  (≥80%): accent glow signals a strong result without confetti.
+   --warn  (60–79%): neutral, no accent.
+   --low   (<60%):  de-emphasized ink-soft. */
+.results__score--good .mono-num {
+  color: var(--accent);
+}
+[data-theme="light"] .results__score--good .mono-num {
+  /* accent-dark on light bg for ≥4.5:1 */
+  color: var(--accent-dark, #0F766E);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .results__score--good {
+    animation: resScoreGood 500ms var(--ease-spring, cubic-bezier(.34,1.56,.64,1)) 1;
+  }
+}
+@keyframes resScoreGood {
+  0%   { opacity: 0; transform: scale(0.9); }
+  100% { opacity: 1; transform: scale(1); }
+}
+.results__score--low .mono-num { color: var(--ink-soft); }
