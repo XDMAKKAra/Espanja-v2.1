@@ -1,0 +1,300 @@
+{
+  "meta": {
+    "course_key": "kurssi_3",
+    "lesson_index": 4,
+    "lesson_type": "vocab",
+    "level": "B",
+    "title": "Hotelli ja majoitus",
+    "description": "Opit hotellisanaston: huonetyypit, varauksen, sisäänkirjautumisen ja yleisimmät palvelut. Sanasto kattaa noin 30 entryä — riittää YO-kuullun hotellitilanteen ymmärtämiseen ja loma-aiheiseen kirjeeseen.",
+    "yo_relevance": "Hotellitilanteet ovat YO-kuullun klassikko: varauksen vahvistus, sisäänkirjautuminen, valitukset (huone ei ole kunnossa, hissi ei toimi). Kirjoituksessa hotellisanasto näkyy lomakirjeessä — kerrot missä yövyit, mitä palveluita oli ja mitä pidit.",
+    "estimated_minutes_median": 12
+  },
+  "teaching": {
+    "intro_md": "# Hotelli ja majoitus\n\nMatkan tärkein asia tilausjärjestelmän jälkeen on majoitus. Espanjassa on monenlaisia vaihtoehtoja **el hotel** (hotelli), **la pensión** (täysihoitola, edullinen perhehotelli) ja **el albergue juvenil** (retkeilymaja).\n\n## Vastaanotossa\n\n> — Buenos días, **tengo una reserva** a nombre de Virtanen.\n>\n> — Sí, una **habitación doble** para tres noches, ¿verdad? Aquí tiene la **llave**.\n>\n> — ¿**El desayuno está incluido**?\n>\n> — Sí, de ocho a diez en la planta baja.\n\n## Ydinsanasto\n\n| Espanjaksi | Suomeksi |\n|---|---|\n| **el hotel** | hotelli |\n| **la habitación individual / doble** | yhden / kahden hengen huone |\n| **reservar / la reserva** | varata / varaus |\n| **la llave** | avain |\n| **la recepción** | vastaanotto |\n| **registrarse** | kirjautua sisään |\n| **el desayuno incluido** | aamiainen sisältyy |\n| **media pensión / pensión completa** | puolihoito / täysihoito |\n| **la salida / la llegada** | check-out / saapuminen |\n| **completo / libre** | täynnä / vapaa |\n\n## Tärkeitä fraaseja\n\n- *¿Tienen habitaciones libres?* — Onko vapaita huoneita?\n- *Tengo una reserva a nombre de...* — Minulla on varaus nimellä...\n- *¿El desayuno está incluido?* — Sisältyykö aamiainen?\n- *Quisiera anular mi reserva.* — Haluaisin perua varaukseni.\n- *La habitación tiene baño y ducha.* — Huoneessa on kylpyhuone ja suihku.",
+    "key_points": [
+      "habitación individual = yhden hengen, doble = kahden hengen — älä sekoita doble (kaksinkertainen) ja dos (kaksi).",
+      "Pensión Espanjassa tarkoittaa edullista perhehotellia, EI eläkettä (sekin merkitys on, mutta hotellikontekstissa se on majoitus).",
+      "media pensión = aamiainen + yksi ateria, pensión completa = aamiainen + lounas + illallinen.",
+      "completo varaustaulukossa = täynnä, ei sama kuin pensión completa (täysihoito).",
+      "la salida hotellissa = uloskirjautuminen (check-out), yleensä klo 12 mennessä."
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1-recognition-hotelli-perus",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista — hotellisanasto",
+      "instruction": "Valitse oikea käännös.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.7, "C": 0.75, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "mc", "stem": "el hotel", "choices": ["asema", "hotelli", "ravintola", "asunto"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "el hotel = hotelli." },
+        { "item_type": "mc", "stem": "la habitación", "choices": ["keittiö", "huone", "tuoli", "pöytä"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "la habitación = huone (hotellissa). Älä sekoita: cocina (keittiö), silla (tuoli)." },
+        { "item_type": "mc", "stem": "la reserva", "choices": ["lasku", "varaus", "lippu", "matka"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "la reserva = varaus. Älä sekoita: billete (lippu), cuenta (lasku)." },
+        { "item_type": "mc", "stem": "la llave", "choices": ["ovi", "avain", "ikkuna", "lukko"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "la llave = avain." },
+        { "item_type": "mc", "stem": "la recepción", "choices": ["vastaanotto", "ravintola", "huone", "aula"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "la recepción = vastaanotto. Recepcionista = vastaanottovirkailija." },
+        { "item_type": "mc", "stem": "individual", "choices": ["kahden hengen", "yhden hengen", "perheelle", "kolmen hengen"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "habitación individual = yhden hengen huone." },
+        { "item_type": "mc", "stem": "doble", "choices": ["yhden hengen", "kahden hengen", "neljän hengen", "perhe-"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "habitación doble = kahden hengen huone (parisänky tai kaksi sänkyä)." },
+        { "item_type": "mc", "stem": "reservar", "choices": ["maksaa", "varata", "peruuttaa", "tilata"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "reservar = varata. Älä sekoita: anular (peruuttaa)." },
+        { "item_type": "mc", "stem": "anular", "choices": ["varata", "vahvistaa", "peruuttaa", "maksaa"], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "anular = peruuttaa, mitätöidä. Synonyymi: cancelar." },
+        { "item_type": "mc", "stem": "confirmar", "choices": ["peruuttaa", "vahvistaa", "muuttaa", "viivästyttää"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "confirmar = vahvistaa varaus." },
+        { "item_type": "mc", "stem": "completo", "choices": ["vapaa", "täynnä", "halpa", "kallis"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "completo = täynnä (hotellissa). Älä sekoita: pensión completa = täysihoito." },
+        { "item_type": "mc", "stem": "libre", "choices": ["vapaa", "varattu", "siisti", "rikki"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "libre = vapaa. ¿Hay habitaciones libres? = onko vapaita huoneita?" }
+      ]
+    },
+    {
+      "phase_id": "p2-recognition-match",
+      "phase_type": "recognition_match",
+      "title": "Yhdistä — huone, palvelut, matkasanat",
+      "instruction": "Yhdistä espanja oikeaan suomeen.",
+      "mastery_threshold": { "I": 0.6, "A": 0.65, "B": 0.75, "C": 0.8, "M": 0.85, "E": 0.9, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        {
+          "item_type": "match",
+          "left_label": "Huone",
+          "right_label": "Suomeksi",
+          "pairs": [
+            { "left": "la cama", "right": "sänky" },
+            { "left": "las sábanas", "right": "lakanat" },
+            { "left": "la toalla", "right": "pyyhe" },
+            { "left": "el baño", "right": "kylpyhuone" },
+            { "left": "la ducha", "right": "suihku" },
+            { "left": "la habitación individual", "right": "yhden hengen huone" },
+            { "left": "la habitación doble", "right": "kahden hengen huone" }
+          ]
+        },
+        {
+          "item_type": "match",
+          "left_label": "Hotellin palvelut",
+          "right_label": "Suomeksi",
+          "pairs": [
+            { "left": "el ascensor", "right": "hissi" },
+            { "left": "la planta", "right": "kerros" },
+            { "left": "el desayuno incluido", "right": "aamiainen sisältyy" },
+            { "left": "media pensión", "right": "puolihoito" },
+            { "left": "pensión completa", "right": "täysihoito" },
+            { "left": "la recepción", "right": "vastaanotto" },
+            { "left": "el recepcionista", "right": "vastaanottovirkailija" }
+          ]
+        },
+        {
+          "item_type": "match",
+          "left_label": "Matkustus ja varaus",
+          "right_label": "Suomeksi",
+          "pairs": [
+            { "left": "la maleta", "right": "matkalaukku" },
+            { "left": "el equipaje", "right": "matkatavarat" },
+            { "left": "la llegada", "right": "saapuminen" },
+            { "left": "la salida", "right": "lähtö, uloskirjautuminen" },
+            { "left": "alojarse", "right": "majoittua" },
+            { "left": "el alojamiento", "right": "majoitus" },
+            { "left": "el albergue juvenil", "right": "retkeilymaja" }
+          ]
+        }
+      ]
+    },
+    {
+      "phase_id": "p3-recognition-mc-laajennus",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista — laajemmin",
+      "instruction": "Valitse oikea käännös.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.7, "C": 0.75, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I"],
+      "items": [
+        { "item_type": "mc", "stem": "la cama", "choices": ["sohva", "tuoli", "sänky", "pöytä"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "la cama = sänky. Älä sekoita: silla (tuoli), mesa (pöytä)." },
+        { "item_type": "mc", "stem": "las sábanas", "choices": ["pyyhkeet", "lakanat", "tyynyt", "verhot"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "las sábanas = lakanat. Toallas = pyyhkeet." },
+        { "item_type": "mc", "stem": "la toalla", "choices": ["pyyhe", "lakana", "tyyny", "matto"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "la toalla = pyyhe." },
+        { "item_type": "mc", "stem": "el baño", "choices": ["keittiö", "kylpyhuone", "olohuone", "parveke"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "el baño = kylpyhuone, vessa. Älä sekoita: cocina (keittiö)." },
+        { "item_type": "mc", "stem": "la ducha", "choices": ["amme", "suihku", "hana", "pesuallas"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "la ducha = suihku. Ducharse = käydä suihkussa." },
+        { "item_type": "mc", "stem": "el ascensor", "choices": ["portaat", "hissi", "ovi", "käytävä"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "el ascensor = hissi. Latinalaisessa Amerikassa myös: el elevador." },
+        { "item_type": "mc", "stem": "la planta baja", "choices": ["kellari", "ensimmäinen kerros (katutaso)", "ylin kerros", "parveke"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "la planta baja = katutaso (Suomen 1. kerros). Espanjassa primera planta on toinen kerros." },
+        { "item_type": "mc", "stem": "la maleta", "choices": ["lippu", "juna", "matkalaukku", "passi"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "la maleta = matkalaukku. Älä sekoita: billete (lippu), tren (juna) — nämä ovat K3L1 matkasanoja." },
+        { "item_type": "mc", "stem": "el equipaje", "choices": ["matkatavarat", "matkalippu", "passi", "kartta"], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "el equipaje = matkatavarat (kollektiivi). Yksittäinen laukku = la maleta." },
+        { "item_type": "mc", "stem": "registrarse", "choices": ["lähteä", "kirjautua sisään", "varata", "maksaa"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "registrarse = kirjautua sisään (hotelliin). Refleksiiviverbi." },
+        { "item_type": "mc", "stem": "alojarse", "choices": ["matkustaa", "majoittua", "lähteä", "varata"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "alojarse = majoittua (jossakin). Me alojo en un hotel = majoitun hotellissa." },
+        { "item_type": "mc", "stem": "la pensión", "choices": ["ravintola", "edullinen perhehotelli", "leirintäalue", "huoltoasema"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "la pensión hotellikontekstissa = edullinen perhehotelli. Sana tarkoittaa myös eläkettä — konteksti ratkaisee." }
+      ]
+    },
+    {
+      "phase_id": "p4-recall-typed-es-fi",
+      "phase_type": "recall_typed_es_to_fi",
+      "title": "Käännä suomeksi",
+      "instruction": "Kirjoita käännös suomeksi (pienellä).",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.7, "C": 0.75, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "el hotel", "accept": ["hotelli"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "la habitación", "accept": ["huone"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "la reserva", "accept": ["varaus"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "la llave", "accept": ["avain"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "la recepción", "accept": ["vastaanotto"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "la cama", "accept": ["sänky"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "la toalla", "accept": ["pyyhe"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "el ascensor", "accept": ["hissi"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "la maleta", "accept": ["matkalaukku"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "completo", "accept": ["täynnä"], "hint": "hotellin tilanne kun ei ole vapaita huoneita" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "libre", "accept": ["vapaa"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "anular", "accept": ["peruuttaa", "perua"] }
+      ]
+    },
+    {
+      "phase_id": "p5-recall-typed-fi-es",
+      "phase_type": "recall_typed_fi_to_es",
+      "title": "Käännä espanjaksi",
+      "instruction": "Kirjoita käännös espanjaksi (pienellä, aksentit hyväksytään ilman).",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "hotelli", "accept": ["el hotel", "hotel"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "huone", "accept": ["la habitación", "habitación", "la habitacion", "habitacion"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "varaus", "accept": ["la reserva", "reserva"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "avain", "accept": ["la llave", "llave"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "varata", "accept": ["reservar"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "kahden hengen huone", "accept": ["la habitación doble", "habitación doble", "la habitacion doble", "habitacion doble", "una habitación doble", "una habitacion doble"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "yhden hengen huone", "accept": ["la habitación individual", "habitación individual", "la habitacion individual", "habitacion individual", "una habitación individual", "una habitacion individual"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "suihku", "accept": ["la ducha", "ducha"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "hissi", "accept": ["el ascensor", "ascensor"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "matkalaukku", "accept": ["la maleta", "maleta"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "majoittua", "accept": ["alojarse"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "peruuttaa varaus", "accept": ["anular la reserva", "cancelar la reserva", "anular una reserva"] }
+      ]
+    },
+    {
+      "phase_id": "p6-application-gap-helppo",
+      "phase_type": "application_gap_fill",
+      "title": "Lauseen täydennys — perustaso",
+      "instruction": "Täydennä oikealla sanalla.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.75, "C": 0.8, "M": 0.85, "E": 0.9, "L": 0.92 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Buenos días, tengo una {1} a nombre de Virtanen.", "answers": [["reserva"]], "word_bank": ["reserva", "llave", "maleta"] },
+        { "item_type": "gap_fill", "sentence_template": "¿Tienen habitaciones {1} para esta noche?", "answers": [["libres"]], "word_bank": ["libres", "completas", "incluidas"] },
+        { "item_type": "gap_fill", "sentence_template": "Quisiera una habitación {1} para una persona.", "answers": [["individual"]], "word_bank": ["individual", "doble", "completa"] },
+        { "item_type": "gap_fill", "sentence_template": "Aquí tiene la {1} de su habitación, número 305.", "answers": [["llave"]], "word_bank": ["llave", "maleta", "toalla"] },
+        { "item_type": "gap_fill", "sentence_template": "El {1} está incluido en el precio.", "answers": [["desayuno"]], "word_bank": ["desayuno", "ascensor", "baño"] },
+        { "item_type": "gap_fill", "sentence_template": "El {1} está al fondo del pasillo, a la derecha.", "answers": [["ascensor", "baño"]], "word_bank": ["ascensor", "baño", "tren"] },
+        { "item_type": "gap_fill", "sentence_template": "Lo siento, el hotel está {1} esta semana.", "answers": [["completo"]], "word_bank": ["completo", "libre", "incluido"] },
+        { "item_type": "gap_fill", "sentence_template": "La habitación está en la tercera {1}.", "answers": [["planta"]], "word_bank": ["planta", "cama", "salida"] },
+        { "item_type": "gap_fill", "sentence_template": "Necesito otra {1} para la ducha, por favor.", "answers": [["toalla"]], "word_bank": ["toalla", "llave", "cama"] },
+        { "item_type": "gap_fill", "sentence_template": "La {1} es a las doce del mediodía.", "answers": [["salida"]], "word_bank": ["salida", "llegada", "reserva"] }
+      ]
+    },
+    {
+      "phase_id": "p7-application-gap-vaativa",
+      "phase_type": "application_gap_fill",
+      "title": "Lauseen täydennys — vaativa",
+      "instruction": "Täydennä ilman sanapankkia.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.65, "C": 0.75, "M": 0.85, "E": 0.9, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Quisiera {1} mi reserva para la próxima semana.", "answers": [["confirmar", "anular", "cancelar"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Voy a {1} en un albergue juvenil porque es más barato.", "answers": [["alojarme"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "El recepcionista me pide el pasaporte para {1}.", "answers": [["registrarme"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Las {1} de la cama están sucias, ¿pueden cambiarlas?", "answers": [["sábanas", "sabanas"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Reservamos media {1}: desayuno y cena incluidos.", "answers": [["pensión", "pension"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Mi {1} no llegó al aeropuerto, falta una maleta.", "answers": [["equipaje"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "La {1} al hotel es a partir de las dos de la tarde.", "answers": [["llegada"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "El ascensor no funciona, hay que subir por las {1}.", "answers": [["escaleras"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "La {1} doble cuesta noventa euros por noche.", "answers": [["habitación", "habitacion"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Para los estudiantes, el {1} juvenil es una buena opción.", "answers": [["albergue"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p8-application-sentence-build",
+      "phase_type": "application_sentence_build",
+      "title": "Lauseiden rakentelua",
+      "instruction": "Käännä koko lause espanjaksi.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.6, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.92 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Onko teillä vapaita huoneita?", "accept": ["¿tienen habitaciones libres?", "tienen habitaciones libres", "tienen habitaciones libres?", "¿hay habitaciones libres?", "hay habitaciones libres"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Minulla on varaus nimellä Virtanen.", "accept": ["tengo una reserva a nombre de virtanen", "tengo una reserva a nombre de virtanen.", "tengo reserva a nombre de virtanen"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Sisältyykö aamiainen hintaan?", "accept": ["¿el desayuno está incluido?", "el desayuno está incluido", "el desayuno esta incluido", "¿está incluido el desayuno?", "esta incluido el desayuno"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Haluaisin kahden hengen huoneen kahdeksi yöksi.", "accept": ["quisiera una habitación doble para dos noches", "quisiera una habitacion doble para dos noches", "quería una habitación doble para dos noches", "queria una habitacion doble para dos noches"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Hissi ei toimi.", "accept": ["el ascensor no funciona", "el ascensor no funciona.", "no funciona el ascensor"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Haluan perua varaukseni.", "accept": ["quiero anular mi reserva", "quiero cancelar mi reserva", "quisiera anular mi reserva", "quisiera cancelar mi reserva"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Huone on kolmannessa kerroksessa.", "accept": ["la habitación está en la tercera planta", "la habitacion esta en la tercera planta", "la habitación está en el tercer piso", "la habitacion esta en el tercer piso"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Voitteko vahvistaa varaukseni?", "accept": ["¿pueden confirmar mi reserva?", "pueden confirmar mi reserva", "¿puede confirmar mi reserva?", "puede confirmar mi reserva"] }
+      ]
+    },
+    {
+      "phase_id": "p9-synthesis-translate",
+      "phase_type": "synthesis_translate",
+      "title": "YO-tyylinen käännös",
+      "instruction": "Käännä koko lause espanjaksi YO-tasolla.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.6, "C": 0.65, "M": 0.75, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Olen varannut kahden hengen huoneen kolmeksi yöksi täysihoidolla.", "accept": ["he reservado una habitación doble para tres noches con pensión completa", "he reservado una habitacion doble para tres noches con pension completa", "tengo una reserva de habitación doble para tres noches con pensión completa"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Hotelli on täynnä, mutta läheinen retkeilymaja on vielä vapaa.", "accept": ["el hotel está completo, pero el albergue juvenil de al lado todavía está libre", "el hotel esta completo pero el albergue juvenil cercano todavía está libre", "el hotel está completo pero el albergue juvenil cercano todavia esta libre"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Vastaanottovirkailija pyytää passia ja antaa avaimen.", "accept": ["el recepcionista pide el pasaporte y da la llave", "la recepcionista pide el pasaporte y da la llave", "el recepcionista me pide el pasaporte y me da la llave"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Suihku ei toimi ja pyyhkeet ovat likaisia.", "accept": ["la ducha no funciona y las toallas están sucias", "la ducha no funciona y las toallas estan sucias"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Saavumme hotelliin keskiviikkona ja lähdemme sunnuntaina.", "accept": ["llegamos al hotel el miércoles y salimos el domingo", "llegamos al hotel el miercoles y salimos el domingo", "la llegada al hotel es el miércoles y la salida el domingo"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Haluaisin perua varaukseni, koska matka on peruuntunut.", "accept": ["quisiera anular mi reserva porque el viaje se ha cancelado", "quisiera cancelar mi reserva porque el viaje se ha cancelado", "quería anular mi reserva porque el viaje se ha cancelado"] }
+      ]
+    },
+    {
+      "phase_id": "p10-synthesis-short-writing",
+      "phase_type": "synthesis_short_writing",
+      "title": "Lyhyt kirjoitus",
+      "instruction": "Kirjoita lyhyt teksti hotelliaiheesta.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.6, "C": 0.65, "M": 0.7, "E": 0.8, "L": 0.9 },
+      "skip_for_targets": ["I", "A", "B", "C", "M"],
+      "items": [
+        { "item_type": "writing", "prompt": "Kirjoita sähköposti hotelliin: varaa kahden hengen huone kolmeksi yöksi, kysy aamiaisesta ja hinnasta. 5–7 lausetta.", "min_words": 45, "max_words": 95, "rubric_focus": ["communication", "vocab", "structure"] },
+        { "item_type": "writing", "prompt": "Kirjoita kuvitteellinen vastaanotto-keskustelu (4–6 vuoroa): saavut hotelliin, sinulla on varaus, kysyt aamiaisesta ja huoneen sijainnista, saat avaimen.", "min_words": 50, "max_words": 100, "rubric_focus": ["communication", "vocab"] },
+        { "item_type": "writing", "prompt": "Kerro lomakirjeessä missä yövyit Espanjassa: hotellin tyyppi, huone, palvelut, mikä oli hyvää tai huonoa. 5–7 lausetta.", "min_words": 45, "max_words": 95, "rubric_focus": ["communication", "structure"] }
+      ]
+    }
+  ],
+  "vocab": [
+    { "es": "el hotel", "fi": "hotelli", "example_es": "El hotel está en el centro.", "example_fi": "Hotelli on keskustassa.", "gender": "m" },
+    { "es": "la habitación", "fi": "huone", "example_es": "La habitación tiene vistas al mar.", "example_fi": "Huoneesta on merinäköala.", "gender": "f" },
+    { "es": "la habitación individual", "fi": "yhden hengen huone", "example_es": "Quisiera una habitación individual.", "example_fi": "Haluaisin yhden hengen huoneen.", "gender": "f" },
+    { "es": "la habitación doble", "fi": "kahden hengen huone", "example_es": "Reservamos una habitación doble.", "example_fi": "Varasimme kahden hengen huoneen.", "gender": "f" },
+    { "es": "reservar", "fi": "varata", "example_es": "Quiero reservar para tres noches.", "example_fi": "Haluan varata kolmeksi yöksi.", "gender": null },
+    { "es": "la reserva", "fi": "varaus", "example_es": "Tengo una reserva a nombre de López.", "example_fi": "Minulla on varaus nimellä López.", "gender": "f" },
+    { "es": "anular", "fi": "peruuttaa", "example_es": "Tengo que anular la reserva.", "example_fi": "Minun täytyy peruuttaa varaus.", "gender": null },
+    { "es": "confirmar", "fi": "vahvistaa", "example_es": "El hotel confirma la reserva por correo.", "example_fi": "Hotelli vahvistaa varauksen sähköpostitse.", "gender": null },
+    { "es": "la llave", "fi": "avain", "example_es": "Aquí tiene la llave de su habitación.", "example_fi": "Tässä on huoneenne avain.", "gender": "f" },
+    { "es": "la recepción", "fi": "vastaanotto", "example_es": "La recepción está en la planta baja.", "example_fi": "Vastaanotto on katutasossa.", "gender": "f" },
+    { "es": "el recepcionista", "fi": "vastaanottovirkailija", "example_es": "El recepcionista habla inglés.", "example_fi": "Vastaanottovirkailija puhuu englantia.", "gender": "m" },
+    { "es": "registrarse", "fi": "kirjautua sisään", "example_es": "Hay que registrarse antes de las diez.", "example_fi": "Sisäänkirjautuminen on tehtävä ennen kymmentä.", "gender": null },
+    { "es": "alojarse", "fi": "majoittua", "example_es": "Nos alojamos en una pensión.", "example_fi": "Majoitumme perhehotellissa.", "gender": null },
+    { "es": "el alojamiento", "fi": "majoitus", "example_es": "El alojamiento incluye desayuno.", "example_fi": "Majoitukseen sisältyy aamiainen.", "gender": "m" },
+    { "es": "la pensión", "fi": "perhehotelli, täysihoitola", "example_es": "Una pensión es más barata que un hotel.", "example_fi": "Perhehotelli on halvempi kuin hotelli.", "gender": "f" },
+    { "es": "el albergue juvenil", "fi": "retkeilymaja", "example_es": "Los estudiantes duermen en el albergue juvenil.", "example_fi": "Opiskelijat nukkuvat retkeilymajassa.", "gender": "m" },
+    { "es": "la cama", "fi": "sänky", "example_es": "La cama es muy cómoda.", "example_fi": "Sänky on tosi mukava.", "gender": "f" },
+    { "es": "las sábanas", "fi": "lakanat", "example_es": "Cambian las sábanas cada día.", "example_fi": "Lakanat vaihdetaan joka päivä.", "gender": "f" },
+    { "es": "la toalla", "fi": "pyyhe", "example_es": "Necesito otra toalla.", "example_fi": "Tarvitsen toisen pyyhkeen.", "gender": "f" },
+    { "es": "el baño", "fi": "kylpyhuone", "example_es": "La habitación tiene baño privado.", "example_fi": "Huoneessa on oma kylpyhuone.", "gender": "m" },
+    { "es": "la ducha", "fi": "suihku", "example_es": "La ducha no funciona bien.", "example_fi": "Suihku ei toimi kunnolla.", "gender": "f" },
+    { "es": "el ascensor", "fi": "hissi", "example_es": "El ascensor está al fondo.", "example_fi": "Hissi on perällä.", "gender": "m" },
+    { "es": "la planta", "fi": "kerros", "example_es": "Mi habitación está en la tercera planta.", "example_fi": "Huoneeni on kolmannessa kerroksessa.", "gender": "f" },
+    { "es": "el piso", "fi": "kerros, asunto", "example_es": "Vivo en el quinto piso.", "example_fi": "Asun viidennessä kerroksessa.", "gender": "m" },
+    { "es": "el desayuno incluido", "fi": "aamiainen sisältyy", "example_es": "Reservé con desayuno incluido.", "example_fi": "Varasin aamiainen sisältyen.", "gender": "m" },
+    { "es": "media pensión", "fi": "puolihoito", "example_es": "Tomamos media pensión: desayuno y cena.", "example_fi": "Otamme puolihoidon: aamiainen ja illallinen.", "gender": "f" },
+    { "es": "pensión completa", "fi": "täysihoito", "example_es": "Pensión completa cuesta más.", "example_fi": "Täysihoito maksaa enemmän.", "gender": "f" },
+    { "es": "la maleta", "fi": "matkalaukku", "example_es": "Mi maleta es muy pesada.", "example_fi": "Matkalaukkuni on tosi raskas.", "gender": "f" },
+    { "es": "el equipaje", "fi": "matkatavarat", "example_es": "Dejo el equipaje en la recepción.", "example_fi": "Jätän matkatavarat vastaanottoon.", "gender": "m" },
+    { "es": "la llegada", "fi": "saapuminen", "example_es": "La llegada al hotel es a las dos.", "example_fi": "Saapuminen hotelliin on kahdelta.", "gender": "f" },
+    { "es": "la salida", "fi": "lähtö, uloskirjautuminen", "example_es": "La salida es antes de las doce.", "example_fi": "Uloskirjautuminen on ennen kahtatoista.", "gender": "f" },
+    { "es": "completo", "fi": "täynnä (hotelli)", "example_es": "El hotel está completo este fin de semana.", "example_fi": "Hotelli on täynnä tänä viikonloppuna.", "gender": null },
+    { "es": "libre", "fi": "vapaa", "example_es": "¿Hay habitaciones libres?", "example_fi": "Onko vapaita huoneita?", "gender": null }
+  ],
+  "side_panel": {
+    "tabs": [
+      {
+        "id": "vocab",
+        "title": "Sanasto",
+        "content_md": "## Hotelli ja huone\n\n- **el hotel** — hotelli\n- **la habitación** — huone\n- **la habitación individual** — yhden hengen huone\n- **la habitación doble** — kahden hengen huone\n- **la pensión** — perhehotelli, täysihoitola\n- **el albergue juvenil** — retkeilymaja\n- **el alojamiento** — majoitus\n\n## Varaus\n\n- **reservar** — varata\n- **la reserva** — varaus\n- **anular / cancelar** — peruuttaa\n- **confirmar** — vahvistaa\n- **completo** — täynnä\n- **libre** — vapaa\n\n## Vastaanotto\n\n- **la recepción** — vastaanotto\n- **el / la recepcionista** — vastaanottovirkailija\n- **registrarse** — kirjautua sisään\n- **alojarse** — majoittua\n- **la llave** — avain\n- **la llegada** — saapuminen\n- **la salida** — uloskirjautuminen, lähtö\n\n## Huoneessa\n\n- **la cama** — sänky\n- **las sábanas** — lakanat\n- **la toalla** — pyyhe\n- **el baño** — kylpyhuone\n- **la ducha** — suihku\n- **el ascensor** — hissi\n- **la planta / el piso** — kerros\n\n## Palvelut\n\n- **el desayuno incluido** — aamiainen sisältyy\n- **media pensión** — puolihoito (aamiainen + 1 ateria)\n- **pensión completa** — täysihoito (kaikki ateriat)\n\n## Matkatavarat\n\n- **la maleta** — matkalaukku\n- **el equipaje** — matkatavarat"
+      },
+      {
+        "id": "tips",
+        "title": "YO-vinkki",
+        "content_md": "## YO-koe — kuullun ymmärtäminen\n\nHotellitilanne on YO-kuullun klassikko. Yleisimmät kysymykset:\n- **Huoneen tyyppi** — individual vai doble? Monelleko hengelle?\n- **Hinta ja maksu** — sisältyykö aamiainen, media pensión vai pensión completa?\n- **Palvelut** — onko ascensor, baño privado, ducha?\n- **Ongelmat** — la ducha no funciona, las sábanas están sucias, la habitación es ruidosa\n\n## Yleisimmät ansat\n\n- **completo** = täynnä, MUTTA **pensión completa** = täysihoito — sama sana, eri merkitys kontekstissa\n- **planta baja** = katutaso (Suomen 1. krs), **primera planta** = toinen kerros\n- **la pensión** hotellikontekstissa = perhehotelli, ei eläke\n- **la salida** hotellissa = uloskirjautuminen, ei sama kuin asema-/junaympäristössä (lähtö)\n- **la maleta** (yksi laukku) vs **el equipaje** (kaikki matkatavarat)\n\n## Kirjoitustehtävässä — lomakirje\n\nKun kerrot lomastasi, hotellisanasto tuo konkretiaa:\n\n> *Nos alojamos en un hotel pequeño en el centro. Reservamos una habitación doble con media pensión. La habitación tenía baño privado y vistas al mar. El desayuno estaba incluido y era muy bueno.*\n\n## Kohtelias kieli vastaanotossa\n\n- *Quisiera reservar...* — Haluaisin varata...\n- *¿Tienen habitaciones libres?* — Onko vapaita huoneita?\n- *¿El desayuno está incluido?* — Sisältyykö aamiainen?\n- *¿Me podría dar la llave?* — Saisinko avaimen?\n- *¿A qué hora es la salida?* — Mihin aikaan on uloskirjautuminen?"
+      }
+    ]
+  }
+}

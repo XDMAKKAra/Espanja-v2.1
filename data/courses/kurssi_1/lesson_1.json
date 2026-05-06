@@ -90,7 +90,7 @@
       "phase_type": "recall_typed_es_to_fi",
       "title": "Käännä suomeksi",
       "instruction": "Kirjoita käännös suomeksi (pienellä).",
-      "mastery_threshold": { "I": 0.5, "A": 0.55, "B": 0.7, "C": 0.75, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.7, "C": 0.75, "M": 0.8, "E": 0.85, "L": 0.9 },
       "skip_for_targets": ["I"],
       "items": [
         { "item_type": "typed", "direction": "es_to_fi", "prompt": "madre", "accept": ["äiti"], "hint": "tärkein perheenjäsen" },
@@ -112,7 +112,7 @@
       "phase_type": "recall_typed_fi_to_es",
       "title": "Käännä espanjaksi",
       "instruction": "Kirjoita käännös espanjaksi (pienellä, ilman aksentteja jos hankalia — järjestelmä hyväksyy ne).",
-      "mastery_threshold": { "I": 0.5, "A": 0.55, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
       "skip_for_targets": ["I", "A"],
       "items": [
         { "item_type": "typed", "direction": "fi_to_es", "prompt": "äiti", "accept": ["madre"] },
@@ -154,7 +154,7 @@
       "phase_type": "application_gap_fill",
       "title": "Lauseen täydennys — vaativa",
       "instruction": "Täydennä ilman sanapankkia. Kirjoita oikea muoto.",
-      "mastery_threshold": { "I": 0.5, "A": 0.55, "B": 0.65, "C": 0.75, "M": 0.85, "E": 0.9, "L": 0.95 },
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.65, "C": 0.75, "M": 0.85, "E": 0.9, "L": 0.95 },
       "skip_for_targets": ["I", "A", "B"],
       "items": [
         { "item_type": "gap_fill", "sentence_template": "La madre de mi padre es mi {1}.", "answers": [["abuela"]], "word_bank": null },
@@ -172,7 +172,7 @@
       "phase_type": "application_sentence_build",
       "title": "Lauseiden rakentelua",
       "instruction": "Käännä koko lause espanjaksi.",
-      "mastery_threshold": { "I": 0.5, "A": 0.55, "B": 0.6, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.92 },
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.6, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.92 },
       "skip_for_targets": ["I", "A", "B", "C"],
       "items": [
         { "item_type": "typed", "direction": "fi_to_es", "prompt": "Äitini on suomalainen.", "accept": ["mi madre es finlandesa", "mi madre es finlandesa."] },
@@ -190,7 +190,7 @@
       "phase_type": "synthesis_translate",
       "title": "YO-tyylinen käännös",
       "instruction": "Käännä koko lause espanjaksi YO-tasolla.",
-      "mastery_threshold": { "I": 0.5, "A": 0.55, "B": 0.6, "C": 0.65, "M": 0.75, "E": 0.85, "L": 0.95 },
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.6, "C": 0.65, "M": 0.75, "E": 0.85, "L": 0.95 },
       "skip_for_targets": ["I", "A", "B", "C"],
       "items": [
         { "item_type": "translate", "direction": "fi_to_es", "source": "Perheessäni on viisi henkilöä: vanhempani, kaksi sisarustani ja minä.", "accept": ["en mi familia somos cinco: mis padres, mis dos hermanos y yo", "en mi familia hay cinco personas: mis padres, mis dos hermanos y yo"] },
@@ -206,7 +206,7 @@
       "phase_type": "synthesis_short_writing",
       "title": "Lyhyt kirjoitus",
       "instruction": "Kirjoita lyhyt esittely perheestäsi.",
-      "mastery_threshold": { "I": 0.5, "A": 0.55, "B": 0.6, "C": 0.65, "M": 0.7, "E": 0.8, "L": 0.9 },
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.6, "C": 0.65, "M": 0.7, "E": 0.8, "L": 0.9 },
       "skip_for_targets": ["I", "A", "B", "C", "M"],
       "items": [
         { "item_type": "writing", "prompt": "Kirjoita 4–6 lausetta perheestäsi: ketä siihen kuuluu, mistä he ovat kotoisin ja mitä he tekevät. Käytä oppimiasi sanoja (madre, padre, hermano/-a, finlandés/-esa).", "min_words": 35, "max_words": 80, "rubric_focus": ["communication", "vocab", "structure"] },

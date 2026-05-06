@@ -5,95 +5,580 @@
     "lesson_type": "vocab",
     "level": "C",
     "title": "Työ ja ammatit",
-    "description": "PLACEHOLDER — sisältö generoidaan myöhemmin PROMPT_GENERATE_LESSON.md:llä",
-    "yo_relevance": "PLACEHOLDER",
+    "description": "Opiskelet keskeistä työelämäsanastoa: ammatit, toimipaikat, työsuhde ja palkkatyöhön liittyvät käsitteet. Tämä sanasto on YO-kokeen kirjoitustehtävien ja luetun ymmärtämisen perusaines.",
+    "yo_relevance": "Työ ja ammatit on YO-lyhyen espanjan vakioaiheita. Kirjoitustehtävissä saatetaan pyytää kuvailemaan tulevaisuudensuunnitelmia tai haaveammattia — tämän oppitunnin sanat ovat silloin välttämättömiä.",
     "estimated_minutes_median": 12
   },
   "teaching": {
-    "intro_md": "PLACEHOLDER — opetussisältö generoidaan myöhemmin",
+    "intro_md": "# Työ ja ammatit\n\nTässä oppitunnissa opit keskeistä **työelämäsanastoa** — sekä ammattinimikkeitä että työhön liittyviä käsitteitä. YO-kokeessa kirjoitustehtävä saattaa pyytää kuvailemaan omia tulevaisuudensuunnitelmia, harjoittelupaikkaa tai haaveammattia.\n\n## Ammatit — yleisimmät\n\nEspanjassa ammattinimikkeet taipuvat sukupuolen mukaan:\n\n| Ammatti | Maskuliini | Feminiini |\n|---|---|---|\n| lääkäri | **médico** | **médica** |\n| opettaja | **profesor** | **profesora** |\n| insinööri | **ingeniero** | **ingeniera** |\n| lakimies | **abogado** | **abogada** |\n| kokki | **cocinero** | **cocinera** |\n\n## Tärkeimmät käsitteet\n\n- **el trabajo** — työ, työpaikka\n- **el sueldo** — palkka\n- **la empresa** — yritys\n- **el jefe / la jefa** — pomo, esimies\n- **el empleado / la empleada** — työntekijä\n- **el contrato** — työsopimus\n- **la experiencia** — kokemus\n- **la entrevista** — haastattelu\n\n## Hyödyllisiä ilmaisuja\n\n> *Quiero **trabajar** en una empresa internacional.* — Haluan työskennellä kansainvälisessä yrityksessä.\n\n> *Busco un **empleo** de jornada completa.* — Etsin kokopäivätyötä.\n\n> *Tiene mucha **experiencia** en el sector.* — Hänellä on paljon kokemusta alalta.",
     "key_points": [
-      "PLACEHOLDER"
+      "Ammattinimikkeet taipuvat: médico/médica, profesor/profesora, ingeniero/ingeniera.",
+      "el trabajo = työ (yleinen), el empleo = toimenkuva/toimi, el oficio = käsityöammatti.",
+      "el sueldo = palkka, la empresa = yritys, el jefe = pomo — YO:n perusnäyttöjä.",
+      "Verbit: trabajar (tehdä töitä), solicitar (hakea), contratar (palkata), despedir (irtisanoa).",
+      "el contrato = työsopimus, la experiencia = kokemus, la entrevista = haastattelu."
     ]
   },
   "phases": [
     {
-      "phase_id": "p1-placeholder",
+      "phase_id": "p1-recognition-mc",
       "phase_type": "recognition_mc",
-      "title": "PLACEHOLDER",
-      "instruction": "PLACEHOLDER",
+      "title": "Tunnista — mikä ammatti tai käsite?",
+      "instruction": "Valitse oikea suomennos.",
       "mastery_threshold": {
-        "I": 0.5,
-        "A": 0.6,
-        "B": 0.65,
-        "C": 0.7,
-        "M": 0.75,
-        "E": 0.85,
-        "L": 0.9
+        "I": 0.55, "A": 0.6, "B": 0.7, "C": 0.75, "M": 0.8, "E": 0.85, "L": 0.9
       },
+      "skip_for_targets": [],
       "items": [
         {
           "item_type": "mc",
-          "stem": "PLACEHOLDER",
-          "choices": [
-            "a",
-            "b",
-            "c",
-            "d"
-          ],
-          "correct_index": 0,
-          "explanation": "PLACEHOLDER"
+          "stem": "el médico",
+          "choices": ["opettaja", "lääkäri", "lakimies", "insinööri"],
+          "correct_index": 1,
+          "distractor_difficulty": "easy",
+          "explanation": "El médico = lääkäri. El profesor = opettaja, el abogado = lakimies, el ingeniero = insinööri."
         },
         {
           "item_type": "mc",
-          "stem": "PLACEHOLDER",
-          "choices": [
-            "a",
-            "b",
-            "c",
-            "d"
-          ],
-          "correct_index": 0,
-          "explanation": "PLACEHOLDER"
+          "stem": "el sueldo",
+          "choices": ["työsopimus", "palkka", "kokemus", "haastattelu"],
+          "correct_index": 1,
+          "distractor_difficulty": "medium",
+          "explanation": "El sueldo = palkka. El contrato = työsopimus, la experiencia = kokemus, la entrevista = haastattelu."
         },
         {
           "item_type": "mc",
-          "stem": "PLACEHOLDER",
-          "choices": [
-            "a",
-            "b",
-            "c",
-            "d"
-          ],
-          "correct_index": 0,
-          "explanation": "PLACEHOLDER"
+          "stem": "la empresa",
+          "choices": ["pomo", "yritys", "ammatti", "toimisto"],
+          "correct_index": 1,
+          "distractor_difficulty": "medium",
+          "explanation": "La empresa = yritys. El jefe = pomo, el oficio = ammatti, la oficina = toimisto."
         },
         {
           "item_type": "mc",
-          "stem": "PLACEHOLDER",
-          "choices": [
-            "a",
-            "b",
-            "c",
-            "d"
-          ],
+          "stem": "el jefe",
+          "choices": ["työntekijä", "johtaja, pomo", "työnhakija", "harjoittelija"],
+          "correct_index": 1,
+          "distractor_difficulty": "easy",
+          "explanation": "El jefe = johtaja, pomo, esimies. El empleado = työntekijä."
+        },
+        {
+          "item_type": "mc",
+          "stem": "el contrato",
+          "choices": ["hakemus", "haastattelu", "työsopimus", "palkkio"],
+          "correct_index": 2,
+          "distractor_difficulty": "medium",
+          "explanation": "El contrato = työsopimus. La solicitud = hakemus, la entrevista = haastattelu."
+        },
+        {
+          "item_type": "mc",
+          "stem": "trabajar",
+          "choices": ["matkustaa", "opiskella", "tehdä töitä", "harjoitella"],
+          "correct_index": 2,
+          "distractor_difficulty": "easy",
+          "explanation": "Trabajar = tehdä töitä. Viajar = matkustaa, estudiar = opiskella, practicar = harjoitella."
+        },
+        {
+          "item_type": "mc",
+          "stem": "la experiencia",
+          "choices": ["kokemus", "pätevyys", "koulutus", "palkka"],
           "correct_index": 0,
-          "explanation": "PLACEHOLDER"
+          "distractor_difficulty": "hard",
+          "explanation": "La experiencia = kokemus. La cualificación = pätevyys, la formación = koulutus, el sueldo = palkka."
+        },
+        {
+          "item_type": "mc",
+          "stem": "el empleado",
+          "choices": ["työnantaja", "harjoittelija", "pomo", "työntekijä"],
+          "correct_index": 3,
+          "distractor_difficulty": "medium",
+          "explanation": "El empleado = työntekijä. El empresario = työnantaja, el jefe = pomo."
+        },
+        {
+          "item_type": "mc",
+          "stem": "la entrevista",
+          "choices": ["ansioluettelo", "työsopimus", "haastattelu", "hakemus"],
+          "correct_index": 2,
+          "distractor_difficulty": "medium",
+          "explanation": "La entrevista = haastattelu. El currículum = ansioluettelo, el contrato = työsopimus."
+        },
+        {
+          "item_type": "mc",
+          "stem": "el horario",
+          "choices": ["palkka", "virka-aika, aikataulu", "loma", "työvuoro"],
+          "correct_index": 1,
+          "distractor_difficulty": "medium",
+          "explanation": "El horario = aikataulu, virka-aika. El sueldo = palkka, las vacaciones = loma."
+        },
+        {
+          "item_type": "mc",
+          "stem": "el desempleo",
+          "choices": ["kokopäivätyö", "eläke", "työttömyys", "lomautus"],
+          "correct_index": 2,
+          "distractor_difficulty": "hard",
+          "explanation": "El desempleo = työttömyys. El trabajo a tiempo completo = kokopäivätyö, la jubilación = eläke."
+        },
+        {
+          "item_type": "mc",
+          "stem": "solicitar",
+          "choices": ["irtisanoutua", "hakea (työtä)", "palkata", "kouluttaa"],
+          "correct_index": 1,
+          "distractor_difficulty": "medium",
+          "explanation": "Solicitar = hakea (työtä/virkaa). Dimitir = irtisanoutua, contratar = palkata."
+        },
+        {
+          "item_type": "mc",
+          "stem": "la jornada completa",
+          "choices": ["osa-aikatyö", "vuorotyö", "kokopäivätyö", "etätyö"],
+          "correct_index": 2,
+          "distractor_difficulty": "medium",
+          "explanation": "La jornada completa = kokopäivätyö. La jornada parcial = osa-aikatyö."
+        },
+        {
+          "item_type": "mc",
+          "stem": "cobrar",
+          "choices": ["maksaa (jollekin)", "saada palkkaa, periä", "lainata", "säästää"],
+          "correct_index": 1,
+          "distractor_difficulty": "hard",
+          "explanation": "Cobrar = saada palkkaa, periä maksu. Pagar = maksaa, ahorrar = säästää."
+        },
+        {
+          "item_type": "mc",
+          "stem": "el oficio",
+          "choices": ["ammatti (käsityö)", "toimisto", "yritys", "sopimus"],
+          "correct_index": 0,
+          "distractor_difficulty": "hard",
+          "explanation": "El oficio = käsityöammatti. La oficina = toimisto, la empresa = yritys."
+        }
+      ]
+    },
+    {
+      "phase_id": "p2-recognition-match",
+      "phase_type": "recognition_match",
+      "title": "Yhdistä — sana ja merkitys",
+      "instruction": "Yhdistä espanjalainen sana suomenkieliseen vastineeseen.",
+      "mastery_threshold": {
+        "I": 0.6, "A": 0.65, "B": 0.75, "C": 0.8, "M": 0.85, "E": 0.9, "L": 0.95
+      },
+      "skip_for_targets": ["I"],
+      "items": [
+        {
+          "item_type": "match",
+          "left_label": "Ammatti",
+          "right_label": "Suomi",
+          "pairs": [
+            {"left": "el médico", "right": "lääkäri"},
+            {"left": "el abogado", "right": "lakimies"},
+            {"left": "el ingeniero", "right": "insinööri"},
+            {"left": "el cocinero", "right": "kokki"},
+            {"left": "el bombero", "right": "palomies"},
+            {"left": "el agricultor", "right": "maanviljelijä"},
+            {"left": "el periodista", "right": "toimittaja"}
+          ]
+        },
+        {
+          "item_type": "match",
+          "left_label": "Käsite",
+          "right_label": "Suomi",
+          "pairs": [
+            {"left": "el sueldo", "right": "palkka"},
+            {"left": "la empresa", "right": "yritys"},
+            {"left": "el contrato", "right": "työsopimus"},
+            {"left": "la entrevista", "right": "haastattelu"},
+            {"left": "el desempleo", "right": "työttömyys"},
+            {"left": "la jornada completa", "right": "kokopäivätyö"},
+            {"left": "el horario", "right": "aikataulu, virka-aika"}
+          ]
+        },
+        {
+          "item_type": "match",
+          "left_label": "Verbi",
+          "right_label": "Suomi",
+          "pairs": [
+            {"left": "trabajar", "right": "tehdä töitä"},
+            {"left": "solicitar", "right": "hakea (työtä)"},
+            {"left": "contratar", "right": "palkata"},
+            {"left": "cobrar", "right": "saada palkkaa"},
+            {"left": "despedir", "right": "irtisanoa"},
+            {"left": "jubilarse", "right": "jäädä eläkkeelle"}
+          ]
+        }
+      ]
+    },
+    {
+      "phase_id": "p3-recall-es-fi",
+      "phase_type": "recall_typed_es_to_fi",
+      "title": "Käännä suomeksi",
+      "instruction": "Kirjoita sanan tai ilmaisun suomennos.",
+      "mastery_threshold": {
+        "I": 0.55, "A": 0.55, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9
+      },
+      "skip_for_targets": ["I"],
+      "items": [
+        {"item_type": "typed", "direction": "es_to_fi", "prompt": "el trabajo", "accept": ["työ", "työpaikka"], "hint": null},
+        {"item_type": "typed", "direction": "es_to_fi", "prompt": "el sueldo", "accept": ["palkka"], "hint": null},
+        {"item_type": "typed", "direction": "es_to_fi", "prompt": "la empresa", "accept": ["yritys"], "hint": null},
+        {"item_type": "typed", "direction": "es_to_fi", "prompt": "el jefe", "accept": ["pomo", "johtaja", "esimies"], "hint": null},
+        {"item_type": "typed", "direction": "es_to_fi", "prompt": "el empleado", "accept": ["työntekijä"], "hint": null},
+        {"item_type": "typed", "direction": "es_to_fi", "prompt": "la entrevista", "accept": ["haastattelu"], "hint": null},
+        {"item_type": "typed", "direction": "es_to_fi", "prompt": "el contrato", "accept": ["työsopimus", "sopimus"], "hint": null},
+        {"item_type": "typed", "direction": "es_to_fi", "prompt": "la experiencia", "accept": ["kokemus"], "hint": null},
+        {"item_type": "typed", "direction": "es_to_fi", "prompt": "el desempleo", "accept": ["työttömyys"], "hint": null},
+        {"item_type": "typed", "direction": "es_to_fi", "prompt": "cobrar el sueldo", "accept": ["saada palkkaa", "nostaa palkkaa"], "hint": null},
+        {"item_type": "typed", "direction": "es_to_fi", "prompt": "Busca un empleo de jornada completa.", "accept": ["hän hakee kokopäivätyötä", "hän etsii kokopäivätyötä"], "hint": null}
+      ]
+    },
+    {
+      "phase_id": "p4-recall-fi-es",
+      "phase_type": "recall_typed_fi_to_es",
+      "title": "Käännä espanjaksi",
+      "instruction": "Kirjoita sanan espanjankielinen vastine.",
+      "mastery_threshold": {
+        "I": 0.55, "A": 0.55, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9
+      },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        {"item_type": "typed", "direction": "fi_to_es", "prompt": "palkka", "accept": ["el sueldo", "sueldo"], "hint": null},
+        {"item_type": "typed", "direction": "fi_to_es", "prompt": "yritys", "accept": ["la empresa", "empresa"], "hint": null},
+        {"item_type": "typed", "direction": "fi_to_es", "prompt": "haastattelu", "accept": ["la entrevista", "entrevista"], "hint": null},
+        {"item_type": "typed", "direction": "fi_to_es", "prompt": "työsopimus", "accept": ["el contrato", "contrato"], "hint": null},
+        {"item_type": "typed", "direction": "fi_to_es", "prompt": "lääkäri (m.)", "accept": ["el médico", "médico"], "hint": null},
+        {"item_type": "typed", "direction": "fi_to_es", "prompt": "lakimies (m.)", "accept": ["el abogado", "abogado"], "hint": null},
+        {"item_type": "typed", "direction": "fi_to_es", "prompt": "tehdä töitä", "accept": ["trabajar"], "hint": null},
+        {"item_type": "typed", "direction": "fi_to_es", "prompt": "hakea työtä", "accept": ["buscar trabajo", "solicitar empleo", "buscar empleo"], "hint": null},
+        {"item_type": "typed", "direction": "fi_to_es", "prompt": "kokopäivätyö", "accept": ["la jornada completa", "jornada completa", "trabajo a tiempo completo"], "hint": null},
+        {"item_type": "typed", "direction": "fi_to_es", "prompt": "työttömyys", "accept": ["el desempleo", "desempleo", "el paro", "paro"], "hint": null},
+        {"item_type": "typed", "direction": "fi_to_es", "prompt": "irtisanoa", "accept": ["despedir"], "hint": null}
+      ]
+    },
+    {
+      "phase_id": "p5-gap-helppo",
+      "phase_type": "application_gap_fill",
+      "title": "Lauseen täydennys — perustaso",
+      "instruction": "Täydennä oikea sana lauseeseen. Sanapankki auttaa.",
+      "mastery_threshold": {
+        "I": 0.55, "A": 0.6, "B": 0.75, "C": 0.8, "M": 0.85, "E": 0.9, "L": 0.92
+      },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "Mi hermana trabaja en una gran {1} de tecnología.",
+          "answers": [["empresa"]],
+          "word_bank": ["empresa", "entrevista", "contrato"]
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "El {1} de este trabajo es muy bajo para las horas que trabajo.",
+          "answers": [["sueldo"]],
+          "word_bank": ["sueldo", "horario", "empleo"]
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "Mañana tengo una {1} de trabajo en el banco.",
+          "answers": [["entrevista"]],
+          "word_bank": ["entrevista", "contrato", "solicitud"]
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "El {1} firmó el {2} de trabajo ayer.",
+          "answers": [["empleado"], ["contrato"]],
+          "word_bank": ["empleado", "jefe", "contrato", "sueldo"]
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "Quiero {1} en una empresa internacional el próximo año.",
+          "answers": [["trabajar"]],
+          "word_bank": ["trabajar", "contratar", "despedir"]
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "Necesito más {1} para solicitar este puesto de trabajo.",
+          "answers": [["experiencia"]],
+          "word_bank": null
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "Los médicos {1} un buen sueldo en este país.",
+          "answers": [["cobran"]],
+          "word_bank": null
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "Mi {1} es muy exigente pero también justo.",
+          "answers": [["jefe"]],
+          "word_bank": null
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "Prefiero el trabajo a {1} completa porque me gusta tener un horario fijo.",
+          "answers": [["jornada"]],
+          "word_bank": null
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "El {1} juvenil es un problema grave en muchos países.",
+          "answers": [["desempleo", "paro"]],
+          "word_bank": null
+        }
+      ]
+    },
+    {
+      "phase_id": "p6-gap-vaativa",
+      "phase_type": "application_gap_fill",
+      "title": "Lauseen täydennys — vaativa",
+      "instruction": "Täydennä ilman sanapankkia. Käytä kontekstia apuna.",
+      "mastery_threshold": {
+        "I": 0.55, "A": 0.55, "B": 0.65, "C": 0.75, "M": 0.85, "E": 0.9, "L": 0.95
+      },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "Para conseguir ese trabajo, necesitas un buen {1} con tus datos y experiencia.",
+          "answers": [["currículum", "curriculum"]],
+          "word_bank": null
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "La empresa va a {1} a diez nuevos ingenieros este mes.",
+          "answers": [["contratar"]],
+          "word_bank": null
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "El {1} es muy flexible: podemos trabajar desde casa tres días a la semana.",
+          "answers": [["horario"]],
+          "word_bank": null
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "Después de 40 años trabajando, mi abuelo se va a {1} el mes que viene.",
+          "answers": [["jubilar"]],
+          "word_bank": null
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "La carpintería es un {1} muy honrado pero poco valorado.",
+          "answers": [["oficio"]],
+          "word_bank": null
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "Para ser {1} hay que estudiar medicina varios años y hacer prácticas en un hospital.",
+          "answers": [["médico", "médica"]],
+          "word_bank": null
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "Enviaron la {1} de trabajo por correo electrónico antes del plazo.",
+          "answers": [["solicitud"]],
+          "word_bank": null
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "Cuando el {1} es bajo, los trabajadores no pueden ahorrar para el futuro.",
+          "answers": [["sueldo"]],
+          "word_bank": null
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "El director decidió {1} a tres empleados por problemas económicos.",
+          "answers": [["despedir"]],
+          "word_bank": null
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "Los trabajadores tienen derecho a un {1} digno y a condiciones laborales justas.",
+          "answers": [["sueldo", "salario"]],
+          "word_bank": null
+        }
+      ]
+    },
+    {
+      "phase_id": "p7-sentence-build",
+      "phase_type": "application_sentence_build",
+      "title": "Lauseiden rakentelua",
+      "instruction": "Käännä lause espanjaksi käyttäen oppitunnin sanastoa.",
+      "mastery_threshold": {
+        "I": 0.55, "A": 0.55, "B": 0.6, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.92
+      },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        {
+          "item_type": "typed",
+          "direction": "fi_to_es",
+          "prompt": "Haluan työskennellä kansainvälisessä yrityksessä.",
+          "accept": ["quiero trabajar en una empresa internacional", "me gustaría trabajar en una empresa internacional"]
+        },
+        {
+          "item_type": "typed",
+          "direction": "fi_to_es",
+          "prompt": "Palkka on tärkeä mutta ei ainoa asia.",
+          "accept": ["el sueldo es importante pero no es lo único", "el sueldo importa pero no es lo único"]
+        },
+        {
+          "item_type": "typed",
+          "direction": "fi_to_es",
+          "prompt": "Minulla on haastattelu huomenna.",
+          "accept": ["mañana tengo una entrevista", "tengo una entrevista mañana"]
+        },
+        {
+          "item_type": "typed",
+          "direction": "fi_to_es",
+          "prompt": "Hän allekirjoitti työsopimuksen viime viikolla.",
+          "accept": ["firmó el contrato la semana pasada", "ella firmó el contrato de trabajo la semana pasada"]
+        },
+        {
+          "item_type": "typed",
+          "direction": "fi_to_es",
+          "prompt": "Tarvitsen enemmän kokemusta tätä virkaa varten.",
+          "accept": ["necesito más experiencia para este puesto", "me falta experiencia para este trabajo"]
+        },
+        {
+          "item_type": "typed",
+          "direction": "fi_to_es",
+          "prompt": "Yritys palkkaa kaksi uutta insinööriä.",
+          "accept": ["la empresa contrata a dos ingenieros nuevos", "la empresa va a contratar dos ingenieros"]
+        },
+        {
+          "item_type": "typed",
+          "direction": "fi_to_es",
+          "prompt": "Etsin kokopäivätyötä teknologia-alalta.",
+          "accept": ["busco un trabajo a jornada completa en el sector tecnológico", "busco empleo a tiempo completo en tecnología"]
+        },
+        {
+          "item_type": "typed",
+          "direction": "fi_to_es",
+          "prompt": "Pomo on vaativa mutta reilu.",
+          "accept": ["el jefe es exigente pero justo", "mi jefe es exigente pero justo"]
+        }
+      ]
+    },
+    {
+      "phase_id": "p8-translate",
+      "phase_type": "synthesis_translate",
+      "title": "YO-tason käännös",
+      "instruction": "Käännä lause espanjaksi mahdollisimman luontevasti.",
+      "mastery_threshold": {
+        "I": 0.55, "A": 0.55, "B": 0.6, "C": 0.65, "M": 0.75, "E": 0.85, "L": 0.95
+      },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        {
+          "item_type": "translate",
+          "direction": "fi_to_es",
+          "source": "Haluaisin tulevaisuudessa työskennellä lääkärinä suuressa sairaalassa.",
+          "accept": ["me gustaría trabajar de médico en un hospital grande en el futuro", "en el futuro me gustaría ser médico en un gran hospital"]
+        },
+        {
+          "item_type": "translate",
+          "direction": "fi_to_es",
+          "source": "Kokopäiväinen työ on vaikea löytää, jos ei ole kokemusta.",
+          "accept": ["es difícil encontrar un trabajo a jornada completa si no tienes experiencia", "encontrar trabajo a tiempo completo es difícil sin experiencia"]
+        },
+        {
+          "item_type": "translate",
+          "direction": "fi_to_es",
+          "source": "Yritys irtisanoi kymmenen työntekijää viime kuussa.",
+          "accept": ["la empresa despidió a diez empleados el mes pasado", "el mes pasado la empresa despidió a diez trabajadores"]
+        },
+        {
+          "item_type": "translate",
+          "direction": "fi_to_es",
+          "source": "Minun täytyy parantaa ansioluetteloani ennen haastattelua.",
+          "accept": ["tengo que mejorar mi currículum antes de la entrevista", "debo mejorar mi currículum antes de la entrevista"]
+        },
+        {
+          "item_type": "translate",
+          "direction": "fi_to_es",
+          "source": "Työttömyys on suuri ongelma monissa Euroopan maissa.",
+          "accept": ["el desempleo es un gran problema en muchos países de Europa", "el paro es un gran problema en varios países europeos"]
+        },
+        {
+          "item_type": "translate",
+          "direction": "fi_to_es",
+          "source": "Hän saa hyvää palkkaa mutta tekee todella pitkiä päiviä.",
+          "accept": ["cobra un buen sueldo pero trabaja muchas horas", "gana bien pero tiene jornadas muy largas"]
+        }
+      ]
+    },
+    {
+      "phase_id": "p9-short-writing",
+      "phase_type": "synthesis_short_writing",
+      "title": "Lyhyt kirjoitus — tulevaisuuden ammatti",
+      "instruction": "Kirjoita lyhyt teksti espanjaksi käyttäen oppitunnin sanastoa.",
+      "mastery_threshold": {
+        "I": 0.55, "A": 0.55, "B": 0.6, "C": 0.65, "M": 0.7, "E": 0.8, "L": 0.9
+      },
+      "skip_for_targets": ["I", "A", "B", "C", "M"],
+      "items": [
+        {
+          "item_type": "writing",
+          "prompt": "Kerro haaveammatistasi: mikä ammatti se on, miksi haluat tehdä sitä, mitä koulutusta tarvitaan ja millaisessa yrityksessä haluaisit työskennellä. 5–7 lausetta espanjaksi.",
+          "min_words": 50,
+          "max_words": 100,
+          "rubric_focus": ["communication", "vocab", "structure"]
+        },
+        {
+          "item_type": "writing",
+          "prompt": "Kuvaile ihanteellista työpaikkaa: millainen palkka, millainen esimies, kokopäiväinen vai osa-aikainen työ, etätyömahdollisuus. 5–7 lausetta espanjaksi.",
+          "min_words": 50,
+          "max_words": 100,
+          "rubric_focus": ["communication", "vocab"]
+        },
+        {
+          "item_type": "writing",
+          "prompt": "Kuvittele että haet töitä: mitä kokemusta sinulla on, millaiseen yritykseen haet, ja mitä kysyisit haastattelussa. 5–7 lausetta espanjaksi.",
+          "min_words": 50,
+          "max_words": 100,
+          "rubric_focus": ["communication", "structure"]
         }
       ]
     }
   ],
   "vocab": [
-    {
-      "es": "PLACEHOLDER",
-      "fi": "PLACEHOLDER"
-    }
+    {"es": "el trabajo", "fi": "työ, työpaikka", "example_es": "Busco un trabajo nuevo.", "example_fi": "Etsin uutta työtä.", "gender": "m"},
+    {"es": "el empleo", "fi": "toimi, työpaikka", "example_es": "El empleo en este sector ha crecido.", "example_fi": "Työllistyminen alalla on kasvanut.", "gender": "m"},
+    {"es": "el sueldo", "fi": "palkka", "example_es": "Su sueldo es bastante alto.", "example_fi": "Hänen palkkansa on melko korkea.", "gender": "m"},
+    {"es": "la empresa", "fi": "yritys", "example_es": "Trabaja en una empresa de tecnología.", "example_fi": "Hän työskentelee teknologiayrityksessä.", "gender": "f"},
+    {"es": "el jefe / la jefa", "fi": "pomo, esimies", "example_es": "Mi jefe es muy exigente.", "example_fi": "Pomoni on hyvin vaativa.", "gender": "m"},
+    {"es": "el empleado / la empleada", "fi": "työntekijä", "example_es": "Los empleados trabajan ocho horas al día.", "example_fi": "Työntekijät tekevät töitä kahdeksan tuntia päivässä.", "gender": "m"},
+    {"es": "el contrato", "fi": "työsopimus, sopimus", "example_es": "Firmó el contrato ayer.", "example_fi": "Hän allekirjoitti sopimuksen eilen.", "gender": "m"},
+    {"es": "la experiencia", "fi": "kokemus", "example_es": "Tiene mucha experiencia en el sector.", "example_fi": "Hänellä on paljon kokemusta alalta.", "gender": "f"},
+    {"es": "la entrevista", "fi": "haastattelu", "example_es": "Mañana tengo una entrevista de trabajo.", "example_fi": "Huomenna minulla on työhaastattelu.", "gender": "f"},
+    {"es": "el horario", "fi": "aikataulu, virka-aika", "example_es": "El horario es de nueve a cinco.", "example_fi": "Virka-aika on yhdeksästä viiteen.", "gender": "m"},
+    {"es": "el desempleo / el paro", "fi": "työttömyys", "example_es": "El desempleo juvenil es un problema grave.", "example_fi": "Nuorisotyöttömyys on vakava ongelma.", "gender": "m"},
+    {"es": "la jornada completa", "fi": "kokopäivätyö", "example_es": "Prefiero la jornada completa.", "example_fi": "Pidän parempana kokopäivätyötä.", "gender": "f"},
+    {"es": "la jornada parcial", "fi": "osa-aikatyö", "example_es": "Trabaja a jornada parcial para estudiar.", "example_fi": "Hän tekee osa-aikatyötä opiskelua varten.", "gender": "f"},
+    {"es": "el oficio", "fi": "ammatti (käsityöammatti)", "example_es": "La carpintería es un oficio muy honrado.", "example_fi": "Puusepäntyö on hyvin arvostettu ammatti.", "gender": "m"},
+    {"es": "el currículum", "fi": "ansioluettelo", "example_es": "Envió el currículum por correo.", "example_fi": "Hän lähetti ansioluettelon postitse.", "gender": "m"},
+    {"es": "la solicitud", "fi": "hakemus", "example_es": "Presentó su solicitud de trabajo.", "example_fi": "Hän jätti työnhakemuksensa.", "gender": "f"},
+    {"es": "trabajar", "fi": "tehdä töitä, työskennellä", "example_es": "Trabaja en un banco.", "example_fi": "Hän työskentelee pankissa.", "gender": null},
+    {"es": "solicitar", "fi": "hakea (työtä/virkaa)", "example_es": "Voy a solicitar ese puesto.", "example_fi": "Aion hakea sitä virkaa.", "gender": null},
+    {"es": "contratar", "fi": "palkata", "example_es": "La empresa va a contratar más personal.", "example_fi": "Yritys aikoo palkata lisää henkilöstöä.", "gender": null},
+    {"es": "despedir", "fi": "irtisanoa", "example_es": "Lo despidieron por llegar siempre tarde.", "example_fi": "Hänet irtisanottiin myöhästelystä.", "gender": null},
+    {"es": "cobrar", "fi": "saada palkkaa, periä maksu", "example_es": "Cobra dos mil euros al mes.", "example_fi": "Hän saa kahden tuhannen euron kuukausipalkan.", "gender": null},
+    {"es": "jubilarse", "fi": "jäädä eläkkeelle", "example_es": "Mi abuelo se jubila el año que viene.", "example_fi": "Isoisäni jää eläkkeelle ensi vuonna.", "gender": null},
+    {"es": "el médico / la médica", "fi": "lääkäri", "example_es": "Quiere ser médico.", "example_fi": "Hän haluaa olla lääkäri.", "gender": "m"},
+    {"es": "el abogado / la abogada", "fi": "lakimies", "example_es": "Necesito un buen abogado.", "example_fi": "Tarvitsen hyvän lakimiehen.", "gender": "m"},
+    {"es": "el ingeniero / la ingeniera", "fi": "insinööri", "example_es": "Es ingeniera de software.", "example_fi": "Hän on ohjelmistoinsinööri.", "gender": "m"},
+    {"es": "el cocinero / la cocinera", "fi": "kokki", "example_es": "El cocinero del restaurante es famoso.", "example_fi": "Ravintolan kokki on kuuluisa.", "gender": "m"},
+    {"es": "el periodista", "fi": "toimittaja", "example_es": "Es periodista en un canal de televisión.", "example_fi": "Hän on toimittaja televisiokanavalla.", "gender": "m"},
+    {"es": "el agricultor / la agricultora", "fi": "maanviljelijä", "example_es": "Los agricultores trabajan mucho en verano.", "example_fi": "Maanviljelijät työskentelevät paljon kesällä.", "gender": "m"},
+    {"es": "el bombero / la bombera", "fi": "palomies", "example_es": "Los bomberos apagaron el incendio rápidamente.", "example_fi": "Palomiehet sammuttivat tulipalon nopeasti.", "gender": "m"}
   ],
   "side_panel": {
     "tabs": [
       {
         "id": "vocab",
         "title": "Sanasto",
-        "content_md": "PLACEHOLDER"
+        "content_md": "## Ammatit\n\n- **el médico / la médica** — lääkäri\n- **el abogado / la abogada** — lakimies\n- **el ingeniero / la ingeniera** — insinööri\n- **el cocinero / la cocinera** — kokki\n- **el periodista** — toimittaja\n- **el agricultor / la agricultora** — maanviljelijä\n- **el bombero / la bombera** — palomies\n\n## Työelämän peruskäsitteet\n\n- **el trabajo** — työ, työpaikka\n- **el empleo** — toimi, työ\n- **el sueldo** — palkka\n- **la empresa** — yritys\n- **el jefe / la jefa** — pomo, esimies\n- **el empleado / la empleada** — työntekijä\n- **el contrato** — työsopimus\n- **la experiencia** — kokemus\n- **la entrevista** — haastattelu\n- **el horario** — aikataulu, virka-aika\n- **el desempleo / el paro** — työttömyys\n- **la jornada completa** — kokopäivätyö\n- **la jornada parcial** — osa-aikatyö\n- **el oficio** — käsityöammatti\n- **el currículum** — ansioluettelo\n- **la solicitud** — hakemus\n\n## Verbit\n\n- **trabajar** — tehdä töitä\n- **solicitar** — hakea (työtä)\n- **contratar** — palkata\n- **despedir** — irtisanoa\n- **cobrar** — saada palkkaa\n- **jubilarse** — jäädä eläkkeelle"
+      },
+      {
+        "id": "tips",
+        "title": "YO-vinkki",
+        "content_md": "## Työsanasto YO-kokeessa\n\nTyö ja tulevaisuus on YO-lyhyen espanjan vakioaihe. Kirjoitustehtävässä saatetaan pyytää kuvailemaan haaveammattia, harjoittelujaksoa tai kommentoimaan nuorisotyöttömyyttä.\n\n## Hyödyllisiä lauseita kirjoitustehtävään\n\n> *En el futuro me gustaría trabajar como...* — Tulevaisuudessa haluaisin työskennellä...\n\n> *Busco un trabajo con un buen sueldo y horario flexible.* — Etsin työtä hyvällä palkalla ja joustavalla aikataululla.\n\n> *La experiencia laboral es muy importante.* — Työkokemus on erittäin tärkeä.\n\n## Ammattinimikkeet sukukaavalla\n\nUseimmat ammattinimikkeet taipuvat: **médico → médica**, **cocinero → cocinera**. Poikkeus: **periodista** on sama molemmille sukupuolille."
       }
     ]
   }

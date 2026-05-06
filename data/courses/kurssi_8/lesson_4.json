@@ -1,0 +1,275 @@
+{
+  "meta": {
+    "course_key": "kurssi_8",
+    "lesson_index": 4,
+    "lesson_type": "grammar",
+    "level": "E",
+    "title": "Aikamuotojen kertaus — sekalaiset lauseet",
+    "description": "E-tason kielioppioppitunti: kaikkien aikamuotojen ja moodien kertaus sekalaisissa lauseissa. Preesens, preteriti, imperfekti, futuuri, konditionaali, subjunktiivin preesens ja imperfekti, pluskvamperfekti sekä perfekti. YO-koetyyppinen aikamuotokoe.",
+    "yo_relevance": "YO-kokeen aukkotehtävässä on tyypillisesti 8–12 aukkoa jotka vaativat eri aikamuotoja sekaisin. E-tason oppilaan on osattava valita oikea aikamuoto kontekstin perusteella — ei mekaanisesti vaan ymmärtämällä lauseen merkitys.",
+    "estimated_minutes_median": 14
+  },
+  "teaching": {
+    "intro_md": "# Aikamuotojen kertaus — kaikki muodot sekaisin\n\n## Aikajana — kaikki muodot\n\n| Aikamuoto | Muoto (hablar, yo) | Käyttö |\n|---|---|---|\n| **Preesens** | hablo | nykyhetki, tottumukset |\n| **Preteriti** | hablé | yksittäinen menneisyys |\n| **Imperfekti** | hablaba | toistuva/kuvaileva menneisyys |\n| **Perfekti** | he hablado | juuri tapahtunut (Espanja), kokemus |\n| **Pluskvamperfekti** | había hablado | menneen menneisyys |\n| **Futuuri** | hablaré | tuleva tapahtuma |\n| **Konditionaali** | hablaría | ehto, epätodellinen |\n| **Subj. preesens** | hable | toive, käsky, epävarmuus (nyt) |\n| **Subj. imperfekti** | hablara | toive/ehto menneessä, si-lause |\n\n## Valintasäännöt — konteksti ratkaisee\n\n### Preteriti vs imperfekti\n- **Preteriti:** tapahtui kerran, selkeä alku/loppu: *ayer fui, el año pasado viajé*\n- **Imperfekti:** toistui tai jatkui: *siempre comía, cuando era niño...*\n\n### Futuuri vs konditionaali\n- **Futuuri:** todellinen tulevaisuus: *mañana iré al cine*\n- **Konditionaali:** epätodellinen / si-lause / kehotus: *si tuviera, iría...*\n\n### Subj. preesens vs subj. imperfekti\n- **Subj. preesens:** pääverbi preesensissä: *quiero que **venga***\n- **Subj. imperfekti:** pääverbi menneessä tai si-lause: *quería que **viniera** / si **tuviera**...*\n\n## I do — We do — You do\n\n**Opettaja:** *Ayer fui al mercado y compré fruta. Cuando era pequeño, siempre jugaba en el parque. Mañana iré a la universidad. Si tuviera más tiempo, leería más libros.*\n\n**Yhdessä:** analysoidaan konteksti: ayer = preteriti, cuando era niño = imperfekti, mañana = futuuri, si tuviera = si + subj. imperfekti\n\n**Sinä:** valitse oikea muoto lauseyhteydessä",
+    "key_points": [
+      "Preteriti: kertaluonteinen menneisyys (ayer, el lunes, en 2015). Imperfekti: toistuva/kuvaileva (siempre, cuando era niño, todos los días).",
+      "Futuuri (hablaré) = todellinen tuleva. Konditionaali (hablaría) = epätodellinen tai si-lauseen pääosa.",
+      "Subj. preesens: pääverbi preesensissä (quiero que venga). Subj. imperfekti: pääverbi menneessä (quería que viniera) tai si-lause (si tuviera).",
+      "Pluskvamperfekti (había + partisiippi): tapahtui ennen toista menneisyyden tapahtumaa. Cuando llegué, ya se había ido.",
+      "Perfekti (he + partisiippi): Espanjassa 'juuri tapahtunut' tai 'tänä vuonna'. Suomi-kontekstissa harvemmin, preteriti yleisempi."
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1-recognition-mc",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista — oikea aikamuoto",
+      "instruction": "Valitse oikea muoto kontekstin perusteella.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "mc", "stem": "Cuando era niño, _______ al parque todos los sábados. (ir)", "choices": ["fui", "iba", "iré", "voy"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "iba = imperfekti. 'cuando era niño' + 'todos los sábados' = toistuva menneisyys → imperfekti. fui = preteriti (kertaluonteinen)." },
+        { "item_type": "mc", "stem": "Ayer _______ al dentista y me _______ tres muelas. (ir / sacar)", "choices": ["iba / sacaba", "fui / sacó", "voy / saca", "fuera / sacara"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "fui / sacó = preteriti. Ayer + yksittäinen tapahtuma → preteriti. 'sacó' = sacar, preteriti él-muoto (potilaalle tehtiin)." },
+        { "item_type": "mc", "stem": "Si _______ más dinero, lo donaría a causas benéficas. (tener — yo)", "choices": ["tengo", "tuviera", "tendría", "tenga"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "tuviera = subj. imperfekti. Si-lause tyyppi 2: si + subj. imperfekti + konditionaali. tendría = konditionaali — EI si:n jälkeen." },
+        { "item_type": "mc", "stem": "Cuando llegué a casa, mi madre ya _______ la cena. (preparar)", "choices": ["preparó", "preparaba", "había preparado", "ha preparado"], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "había preparado = pluskvamperfekti. Äiti oli valmistanut ruoan ENNEN kuin minä saavuin. Pluskvamperfekti = menneen menneisyys." },
+        { "item_type": "mc", "stem": "Mañana _______ al médico a las diez. (ir — yo)", "choices": ["fui", "iba", "iré", "vaya"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "iré = futuuri. Mañana = huomenna → tuleva tapahtuma → futuuri. fui = menneisyys, vaya = subjunktiivi." },
+        { "item_type": "mc", "stem": "Es necesario que todos los ciudadanos _______ a las elecciones. (ir)", "choices": ["van", "fueron", "vayan", "irán"], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "vayan = ir, subj. preesens (ellos). 'es necesario que' laukaisee subjunktiivin preesensin. Pääverbi es (preesens) → subj. preesens." },
+        { "item_type": "mc", "stem": "En los años 80, la gente _______ mucho más en comunidad, sin teléfonos móviles. (vivir)", "choices": ["vivió", "vivía", "vivirá", "viva"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "vivía = imperfekti. 'en los años 80' = aikakauden kuvailu → imperfekti. vivió = yksittäinen kertaluonteinen tapahtuma." },
+        { "item_type": "mc", "stem": "Si hubiera sabido la verdad antes, _______ de otra manera. (actuar — yo)", "choices": ["actúo", "actuara", "actuaría", "habría actuado"], "correct_index": 3, "distractor_difficulty": "hard", "explanation": "habría actuado = konditionaalin perfekti. Si hubiera sabido (tyyppi 3: pluskvamperfekti subj.) + habría actuado (konditionaalin perfekti)." },
+        { "item_type": "mc", "stem": "Me dijo que _______ al día siguiente. (volver — él)", "choices": ["vuelve", "volvería", "volverá", "volviera"], "correct_index": 3, "distractor_difficulty": "hard", "explanation": "volviera = subj. imperfekti. Epäsuora kerronta: dijo (menneessä) que + subj. imperfekti. volvería = konditionaali, myös mahdollinen tulkinnan mukaan." },
+        { "item_type": "mc", "stem": "¿Cuánto tiempo _______ español? (estudiar — tú, perfekti)", "choices": ["estudias", "estudiaste", "has estudiado", "habrás estudiado"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "has estudiado = perfekti. Kokeneisuus-kysymys ('kuinka kauan olet opiskellut') → perfekti espanjassa." },
+        { "item_type": "mc", "stem": "Cuando tenía quince años, _______ a los Beatles por primera vez. (escuchar — yo)", "choices": ["escuchaba", "escuché", "escucho", "habré escuchado"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "escuché = preteriti. 'por primera vez' = ensimmäistä kertaa → selkeä kertaluonteinen tapahtuma → preteriti." },
+        { "item_type": "mc", "stem": "Ojalá _______ buen tiempo este fin de semana para poder salir al campo.", "choices": ["hace", "haga", "hará", "haría"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "haga = hacer, subj. preesens. Ojalá + subjunktiivi = toivo. Ojalá + subj. preesens = vielä mahdollinen toivo." },
+        { "item_type": "mc", "stem": "En el futuro, los robots _______ muchos trabajos que ahora hacen los humanos. (realizar)", "choices": ["realizan", "realizaban", "realizarán", "realizaran"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "realizarán = futuuri. 'en el futuro' = tulevaisuudessa → futuuri. realizaran = subj. imperfekti — väärä konteksti." }
+      ]
+    },
+    {
+      "phase_id": "p2-recognition-match",
+      "phase_type": "recognition_match",
+      "title": "Yhdistä — aikamuoto ja käyttötilanne",
+      "instruction": "Yhdistä aikamuoto ja sen käyttötilanne tai esimerkkilause.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        {
+          "item_type": "match",
+          "left_label": "Laukaisija",
+          "right_label": "Aikamuoto",
+          "pairs": [
+            { "left": "ayer, el lunes pasado, en 2010", "right": "preteriti" },
+            { "left": "siempre, todos los días, cuando era niño", "right": "imperfekti" },
+            { "left": "mañana, la semana que viene", "right": "futuuri" },
+            { "left": "si + epätodellinen nykyehto", "right": "subj. imperfekti (si-osa)" },
+            { "left": "ya había..., antes de que llegara", "right": "pluskvamperfekti" },
+            { "left": "es necesario que, quiero que", "right": "subj. preesens" }
+          ]
+        },
+        {
+          "item_type": "match",
+          "left_label": "Esimerkkilause",
+          "right_label": "Aikamuoto",
+          "pairs": [
+            { "left": "Si tuviera dinero, viajaría.", "right": "subj. imperfekti + konditionaali" },
+            { "left": "Cuando llegué, él ya se había ido.", "right": "preteriti + pluskvamperfekti" },
+            { "left": "Me pidió que viniera.", "right": "preteriti + subj. imperfekti (epäsuora)" },
+            { "left": "Ojalá haga buen tiempo.", "right": "subj. preesens" },
+            { "left": "Habría ido si hubiera podido.", "right": "konditionaalin perfekti + pluskvamperfekti subj." }
+          ]
+        },
+        {
+          "item_type": "match",
+          "left_label": "Verbi (yo)",
+          "right_label": "Oikea aikamuoto merkityksellä",
+          "pairs": [
+            { "left": "hablé (hablar)", "right": "preteriti — puhuin (kerran)" },
+            { "left": "hablaba (hablar)", "right": "imperfekti — puhuin (yleensä)" },
+            { "left": "hablaré (hablar)", "right": "futuuri — puhuisin (huomenna)" },
+            { "left": "hablaría (hablar)", "right": "konditionaali — puhuisin (jos...)" },
+            { "left": "hablara (hablar)", "right": "subj. imperfekti — (että puhuisin, si puhuisin)" },
+            { "left": "había hablado (hablar)", "right": "pluskvamperfekti — olin puhunut" }
+          ]
+        }
+      ]
+    },
+    {
+      "phase_id": "p3-recall-es-fi",
+      "phase_type": "recall_typed_es_to_fi",
+      "title": "Kirjoita — tunnista aikamuoto",
+      "instruction": "Kirjoita mikä aikamuoto on kyseessä (esim. 'preteriti', 'imperfekti', 'subj. imperfekti').",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "'habría hablado' — mikä aikamuoto? (kirjoita suomeksi)", "accept": ["konditionaalin perfekti"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "'habíamos estudiado' — mikä aikamuoto?", "accept": ["pluskvamperfekti"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "'tuviera' — mikä aikamuoto?", "accept": ["subjunktiivin imperfekti", "subj. imperfekti", "imperfekto de subjuntivo"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "'estudiarán' — mikä aikamuoto?", "accept": ["futuuri"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "'comía' — mikä aikamuoto?", "accept": ["imperfekti"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "'he llegado' — mikä aikamuoto?", "accept": ["perfekti"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "'viajarías' — mikä aikamuoto?", "accept": ["konditionaali"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "'llegó' — mikä aikamuoto?", "accept": ["preteriti"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "'hayan llegado' — mikä aikamuoto?", "accept": ["perfekti subjunktiivi", "subjunktiivin perfekti", "perfecto de subjuntivo"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "'vengan' — mikä aikamuoto?", "accept": ["subjunktiivin preesens", "subj. preesens", "presente de subjuntivo"] }
+      ]
+    },
+    {
+      "phase_id": "p4-recall-fi-es",
+      "phase_type": "recall_typed_fi_to_es",
+      "title": "Kirjoita oikea muoto",
+      "instruction": "Kirjoita oikea aikamuoto ohjeen mukaan.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "tener, yo, subj. imperfekti", "accept": ["tuviera"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "ir, ellos, preteriti", "accept": ["fueron"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "hablar, nosotros, pluskvamperfekti", "accept": ["habíamos hablado"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "hacer, yo, konditionaali", "accept": ["haría"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "ser, ella, imperfekti", "accept": ["era"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "poder, nosotros, futuuri", "accept": ["podremos"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "venir, tú, subj. preesens", "accept": ["vengas"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "hacer, yo, konditionaalin perfekti", "accept": ["habría hecho"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "estudiar, yo, perfekti", "accept": ["he estudiado"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "tener, nosotros, subj. pluskvamperfekti", "accept": ["hubiéramos tenido", "hubieramos tenido"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "decir, yo, preteriti", "accept": ["dije"] }
+      ]
+    },
+    {
+      "phase_id": "p5-application-gap-helppo",
+      "phase_type": "application_gap_fill",
+      "title": "Aukkotehtävä — helpompi, sanapankki",
+      "instruction": "Täydennä oikea muoto. Sanapankki auttaa.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Ayer {1} al mercado y {2} mucha fruta fresca. (ir yo / comprar yo)", "answers": [["fui"], ["compré"]], "word_bank": ["fui", "iba", "compraba", "compré"] },
+        { "item_type": "gap_fill", "sentence_template": "Cuando era pequeña, {1} mucho con mis amigas en el barrio. (jugar)", "answers": [["jugaba"]], "word_bank": ["jugué", "jugaba", "jugaré"] },
+        { "item_type": "gap_fill", "sentence_template": "Si {1} tiempo libre, {2} al campo a descansar. (tener yo / ir yo)", "answers": [["tuviera"], ["iría"]], "word_bank": ["tuviera", "tenga", "tendría", "iría", "fui", "voy"] },
+        { "item_type": "gap_fill", "sentence_template": "Cuando llegamos a la estación, el tren ya {1}. (salir)", "answers": [["había salido"]], "word_bank": ["salió", "salía", "había salido"] },
+        { "item_type": "gap_fill", "sentence_template": "Es importante que los alumnos {1} todos los días para el examen. (estudiar)", "answers": [["estudien"]], "word_bank": ["estudian", "estudien", "estudiaran"] },
+        { "item_type": "gap_fill", "sentence_template": "El año que viene {1} a estudiar a la universidad. (ir — yo)", "answers": [["iré"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "El profesor nos {1} que {2} el libro antes del examen. (pedir / leer — nosotros)", "answers": [["pidió"], ["leyéramos", "leyeramos"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Si el gobierno {1} más en educación, los resultados {2}. (invertir / mejorar)", "answers": [["invirtiera"], ["mejorarían"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Antes de que {1} (ellos) la solución, yo ya la {2}. (encontrar / descubrir)", "answers": [["encontraran", "encontrasen"], ["había descubierto"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Me {1} mucho que no {2} (tú) a la fiesta. (sorprender / venir — subj.)", "answers": [["sorprendió"], ["vinieras"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p6-application-gap-vaativa",
+      "phase_type": "application_gap_fill",
+      "title": "YO-tyyppinen aukkotehtävä — teksti useilla aukoilla",
+      "instruction": "Täydennä teksti. Kaikki aikamuodot sekalaisessa järjestyksessä, ilman sanapankkia.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Cuando {1} joven, siempre {2} que algún día {3} por toda Latinoamérica. (ser — yo / soñar — yo / viajar — yo futuuri)", "answers": [["era"], ["soñaba"], ["viajaría"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Si las empresas {1} más responsables con el medioambiente, la situación climática no {2} tan grave ahora. (ser / estar)", "answers": [["fueran", "hubiesen sido"], ["estaría", "habría estado"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "El director nos {1} que {2} el proyecto antes del viernes y que {3} una presentación. (pedir / terminar — nosotros / preparar — nosotros)", "answers": [["pidió"], ["termináramos", "terminasemos"], ["preparáramos", "preparasemos"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Cuando {1} (nosotros) al aeropuerto, el avión ya {2}. Por suerte, {3} otro vuelo dos horas después. (llegar / despegar / haber)", "answers": [["llegamos"], ["había despegado"], ["había"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Es fundamental que los ciudadanos {1} en las elecciones y que {2} su voz. (participar / hacer escuchar — subj. preesens)", "answers": [["participen"], ["hagan escuchar"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Si {1} (yo) en tu lugar, {2} esa oportunidad sin dudarlo, porque no siempre {3} dos veces. (estar / aprovechar / llegar)", "answers": [["estuviera"], ["aprovecharía"], ["llega", "llegan"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Ojalá el gobierno {1} una solución al problema del desempleo antes de que la crisis {2} peor. (encontrar / hacerse — subj.)", "answers": [["encuentre"], ["se haga"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Cuando {1} (yo) en la escuela secundaria, {2} que el español {3} tan difícil. No me {4} que tendría tanto vocabulario. (estar / pensar / ser / imaginar)", "answers": [["estaba"], ["pensaba"], ["era", "sería"], ["imaginaba"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Si los científicos {1} antes sobre el peligro de los plásticos, {2} (nosotros) leyes más estrictas mucho antes y el problema {3} menor. (advertir — tyyppi 3 / aprobar / ser)", "answers": [["hubieran advertido"], ["habríamos aprobado"], ["sería", "habría sido"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "El turismo {1} mucho en la última década, pero también {2} nuevos problemas para las ciudades históricas que no {3} para ello. (crecer / traer / estar preparadas)", "answers": [["ha crecido", "creció"], ["ha traído", "trajo"], ["estaban preparadas"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p7-application-sentence-build",
+      "phase_type": "application_sentence_build",
+      "title": "Lauseiden rakentaminen — oikea aikamuoto vapaasti",
+      "instruction": "Käännä lause espanjaksi. Valitse itse oikea aikamuoto.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.60, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.92 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Kun saavuin kotiin, äitini oli jo valmistanut päivällisen.", "accept": ["cuando llegué a casa mi madre ya había preparado la cena", "cuando llegué a casa la cena ya estaba lista y mi madre la había preparado"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Lapsena asuin Madridissa ja kävin koulua lähellä kaupungin keskustaa.", "accept": ["cuando era niño vivía en Madrid e iba al colegio cerca del centro de la ciudad", "de niño vivía en Madrid y asistía a la escuela cerca del centro"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Jos hallitus investoisi enemmän julkiseen liikennettoon, ihmiset käyttäisivät vähemmän autoja.", "accept": ["si el gobierno invirtiera más en transporte público la gente usaría menos el coche", "si el gobierno invirtiera más en el transporte público los ciudadanos utilizarían menos el automóvil"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Opettaja sanoi, että meidän pitäisi lukea kirja ennen ensi viikkoa.", "accept": ["el profesor dijo que deberíamos leer el libro antes de la semana que viene", "el profesor dijo que leyéramos el libro antes de la semana siguiente"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "On tärkeää, että kaikki kansalaiset käyttävät äänioikeuttaan vaaleissa.", "accept": ["es importante que todos los ciudadanos ejerzan su derecho al voto en las elecciones", "es fundamental que todos los ciudadanos voten en las elecciones"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Jos olisin opiskellut enemmän, olisin läpäissyt kokeen helpommin.", "accept": ["si hubiera estudiado más habría aprobado el examen más fácilmente", "si hubiese estudiado más habría pasado el examen con más facilidad"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Huomenna lähdän matkalle — olen varannut lennon ja majoituksen jo viime viikolla.", "accept": ["mañana me voy de viaje — ya reservé el vuelo y el alojamiento la semana pasada", "mañana salgo de viaje — la semana pasada ya hice la reserva del vuelo y del hotel"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Toivottavasti hän tulee ajoissa, koska emme voi odottaa kauan.", "accept": ["ojalá llegue a tiempo porque no podemos esperar mucho", "espero que llegue puntual ya que no podemos esperar demasiado"] }
+      ]
+    },
+    {
+      "phase_id": "p8-synthesis-translate",
+      "phase_type": "synthesis_translate",
+      "title": "YO-tason käännös — pitkät lauseet, useita aikamuotoja",
+      "instruction": "Käännä koko virke espanjaksi. Lauseessa on useita aikamuotoja.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.60, "C": 0.65, "M": 0.75, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Kun olin nuori, ajattelin että teknologia ratkaisisi kaikki maailman ongelmat, mutta nyt tiedän, että se vaatii myös poliittista tahtoa ja yhteistyötä.", "accept": ["cuando era joven pensaba que la tecnología resolvería todos los problemas del mundo pero ahora sé que también requiere voluntad política y cooperación", "cuando era joven creía que la tecnología solucionaría todos los problemas del mundo pero hoy sé que también se necesita voluntad política y colaboración"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Jos hallitukset olisivat alkaneet toimia ilmastonmuutosta vastaan jo 1990-luvulla, tilanne olisi nyt paljon parempi eikä meillä olisi niin kiire.", "accept": ["si los gobiernos hubieran empezado a actuar contra el cambio climático ya en los años noventa la situación sería mucho mejor ahora y no tendríamos tanta prisa", "si los gobiernos hubieran actuado contra el cambio climático desde los noventa la situación actual sería mucho mejor y no estaríamos tan urgidos"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Opettaja pyysi oppilaitaan, että he lukisivat tekstin huolellisesti, ymmärtäisivät pääajatuksen ja kirjoittaisivat lyhyen tiivistelmän.", "accept": ["el profesor pidió a sus alumnos que leyeran el texto con cuidado que comprendieran la idea principal y que escribieran un breve resumen", "el profesor les pidió que leyeran el texto cuidadosamente entendieran la idea principal y escribieran un pequeño resumen"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "On välttämätöntä, että nuoret ymmärtävät ympäristön merkityksen, jotta tulevaisuuden sukupolvet voivat nauttia puhtaasta ilmasta ja luonnosta.", "accept": ["es imprescindible que los jóvenes entiendan la importancia del medioambiente para que las generaciones futuras puedan disfrutar de aire limpio y naturaleza", "es necesario que los jóvenes comprendan la importancia del medioambiente para que las futuras generaciones puedan disfrutar de un aire puro y de la naturaleza"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Ennen kuin saavuin kaupunkiin, olin varmistanut, että kaikki hotellivaraukset olivat kunnossa ja että tiesin reitin museoon.", "accept": ["antes de llegar a la ciudad me había asegurado de que todas las reservas del hotel estaban en orden y de que sabía el camino al museo", "antes de llegar a la ciudad ya había confirmado las reservas del hotel y me había asegurado de conocer la ruta al museo"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Vaikka hänellä olisi kaikki resurssit maailmassa, hän ei pystyisi ratkaisemaan ongelmaa yksin ilman muiden yhteistyötä.", "accept": ["aunque tuviera todos los recursos del mundo no podría resolver el problema solo sin la cooperación de los demás", "aunque dispusiera de todos los recursos del mundo no sería capaz de resolver el problema sin la colaboración de los otros"] }
+      ]
+    },
+    {
+      "phase_id": "p9-synthesis-short-writing",
+      "phase_type": "synthesis_short_writing",
+      "title": "Lyhyt kirjoitus — useita aikamuotoja",
+      "instruction": "Kirjoita lyhyt teksti espanjaksi. Käytä vähintään neljää eri aikamuotoa.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.60, "C": 0.65, "M": 0.70, "E": 0.80, "L": 0.90 },
+      "skip_for_targets": ["I", "A", "B", "C", "M"],
+      "items": [
+        { "item_type": "writing", "prompt": "Kirjoita 7–9 lausetta: kuvaile matka jonka teit tai haluaisit tehdä. Käytä: (1) imperfektiä tai preteritia menneen kuvailuun, (2) futuuripresusta tai konditionaalia tulevaisuuteen, (3) yksi si-lause (tyyppi 2 tai 3), (4) yksi subjunktiivilause (ojalá tai es importante que).", "min_words": 60, "max_words": 120, "rubric_focus": ["communication", "structure", "vocab"] },
+        { "item_type": "writing", "prompt": "YO-tyylinen vastaus: '¿Cómo ha cambiado la tecnología la vida cotidiana en las últimas décadas?' Kirjoita 8–10 lausetta. Käytä: (1) imperfektiä kuvailemaan entistä elämää, (2) preteritia konkreettisiin muutoksiin, (3) perfektiä nykytilanteeseen, (4) futuuripresusta tai konditionaalia tulevaisuuteen. Lisää yksi si-lause.", "min_words": 70, "max_words": 130, "rubric_focus": ["communication", "structure", "vocab", "overall"] },
+        { "item_type": "writing", "prompt": "Kirjoita 7–9 lausetta: kuvaile millainen olisi ihanteellinen yhteiskunta. Käytä: preesens (nykyinen tilanne), konditionaali (hypoteettinen), si-lause (tyyppi 2), subjunktiivin preesens (es necesario que / es importante que). Vähintään 4 eri aikamuotoa.", "min_words": 65, "max_words": 125, "rubric_focus": ["communication", "vocab", "structure"] }
+      ]
+    },
+    {
+      "phase_id": "p10-cumulative-review",
+      "phase_type": "recognition_mc",
+      "title": "Kertaus — YO-tyyppinen sekatehtävä",
+      "instruction": "Valitse oikea muoto. Konteksti ratkaisee — lue huolellisesti.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "mc", "stem": "El año pasado _______ a visitar a mis abuelos en el pueblo. (ir — yo)", "choices": ["voy", "iba", "fui", "iré"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "fui = preteriti. El año pasado = viime vuonna → selkeä menneisyyden hetki → preteriti." },
+        { "item_type": "mc", "stem": "Siempre que tenía un problema, _______ a mi madre. (llamar — yo)", "choices": ["llamé", "llamaba", "llamaré", "llamara"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "llamaba = imperfekti. 'siempre que' + toistuva toiminta menneessä = imperfekti. llamé = preteriti (kertaluonteinen)." },
+        { "item_type": "mc", "stem": "Espero que _______ buen tiempo para nuestra excursión de mañana. (hacer)", "choices": ["hace", "hiciera", "haga", "haría"], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "haga = subj. preesens. Esperar que + preesensissä + subj. preesens (toivo tulevaisuudesta). hiciera = subj. imperfekti (pääverbi pitäisi olla menneessä)." },
+        { "item_type": "mc", "stem": "Si _______ en tu lugar, buscaría otro trabajo inmediatamente. (estar — yo)", "choices": ["estoy", "estuviera", "estaré", "esté"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "estuviera = estar, subj. imperfekti. Klassinen si-lause tyyppi 2. 'si estuviera en tu lugar' = jos olisin sinun paikallasi." },
+        { "item_type": "mc", "stem": "Cuando _______ (nosotros) al aeropuerto, el avión ya había despegado.", "choices": ["llegamos", "llegábamos", "llegaremos", "lleguemos"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "llegamos = preteriti. Saavuminen = kertaluonteinen tapahtuma → preteriti. Pluskvamperfekti 'había despegado' kuvaa mitä tapahtui ennen." },
+        { "item_type": "mc", "stem": "Es imprescindible que los estudiantes _______ el vocabulario antes del examen. (repasar)", "choices": ["repasarán", "repasan", "repasaran", "repasen"], "correct_index": 3, "distractor_difficulty": "hard", "explanation": "repasen = repaso, subj. preesens. 'es imprescindible que' + subj. preesens. repasaran = subj. imperfekti — tarvitaan pääverbi menneessä." },
+        { "item_type": "mc", "stem": "Si el proyecto _______ (ellos) a tiempo, habrían recibido la financiación completa.", "choices": ["entregaran", "hubieran entregado", "entregarían", "entreguen"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "hubieran entregado = tyyppi 3. Pääosa 'habrían recibido' = konditionaalin perfekti → si-osa on pluskvamperfekti subj." },
+        { "item_type": "mc", "stem": "Ojalá _______ encontrado las llaves antes de salir. (haber — yo)", "choices": ["haya", "hubiera", "había", "habrá"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "hubiera (encontrado) = pluskvamperfekti subj. Ojalá + pluskvamperfekti subj. = menneisyyteen liittyvä toivo, joka ei toteutunut. haya = perfekti subj." },
+        { "item_type": "mc", "stem": "La semana que viene _______ los resultados del examen nacional. (publicar — ellos)", "choices": ["publicaron", "publican", "publicarán", "publiquen"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "publicarán = futuuri. 'La semana que viene' = ensi viikolla → tulevaisuus → futuuri." },
+        { "item_type": "mc", "stem": "Me _______ que no _______ al examen sin preparación. (sorprender / presentar — subj.)", "choices": ["sorprendería / presentaras", "sorprendió / presentaras", "sorprende / presentarás", "sorprendió / presentaría"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "sorprendió / presentaras = preteriti + subj. imperfekti. Pääverbi sorprendió (menneessä) → epäsuora tunne-ilmaus → subj. imperfekti." }
+      ]
+    }
+  ],
+  "vocab": [
+    { "es": "el pretérito indefinido", "fi": "preteriti (kertaluonteinen menneisyys)", "example_es": "Ayer fui al cine. — El pretérito indefinido describe una acción puntual en el pasado.", "example_fi": "Eilen menin elokuviin. — Preteriti kuvaa yksittäistä menneisyyden tapahtumaa.", "gender": "m" },
+    { "es": "el imperfecto", "fi": "imperfekti (toistuva/kuvaileva menneisyys)", "example_es": "Cuando era niño, siempre comía con mi familia.", "example_fi": "Lapsena söin aina perheen kanssa.", "gender": "m" },
+    { "es": "el futuro simple", "fi": "futuuri", "example_es": "Mañana estudiaré para el examen.", "example_fi": "Huomenna opiskelen kokeeseen.", "gender": "m" },
+    { "es": "el condicional", "fi": "konditionaali", "example_es": "Si tuviera dinero, viajaría por el mundo.", "example_fi": "Jos minulla olisi rahaa, matkustaisin maailmassa.", "gender": "m" },
+    { "es": "el subjuntivo presente", "fi": "subjunktiivin preesens", "example_es": "Es importante que estudies cada día.", "example_fi": "On tärkeää, että opiskelet joka päivä.", "gender": "m" },
+    { "es": "el subjuntivo imperfecto", "fi": "subjunktiivin imperfekti", "example_es": "Si tuviera tiempo, leería más.", "example_fi": "Jos minulla olisi aikaa, lukisin enemmän.", "gender": "m" },
+    { "es": "el pluscuamperfecto", "fi": "pluskvamperfekti", "example_es": "Cuando llegué, ya habían comido.", "example_fi": "Kun saavuin, he olivat jo syöneet.", "gender": "m" },
+    { "es": "el condicional perfecto", "fi": "konditionaalin perfekti", "example_es": "Si hubiera sabido, habría venido.", "example_fi": "Jos olisin tiennyt, olisin tullut.", "gender": "m" },
+    { "es": "el pretérito perfecto", "fi": "perfekti", "example_es": "He estudiado mucho este año.", "example_fi": "Olen opiskellut paljon tänä vuonna.", "gender": "m" },
+    { "es": "el contexto", "fi": "konteksti, asiayhteys", "example_es": "El tiempo verbal correcto depende del contexto de la oración.", "example_fi": "Oikea aikamuoto riippuu lauseen kontekstista.", "gender": "m" },
+    { "es": "la acción puntual", "fi": "kertaluonteinen toiminta", "example_es": "Fui al médico ayer. — Una acción puntual en el pasado.", "example_fi": "Menin lääkäriin eilen. — Kertaluonteinen menneisyyden toiminta.", "gender": "f" },
+    { "es": "la acción habitual", "fi": "toistuva/tavanomainen toiminta", "example_es": "De pequeño, jugaba al fútbol todos los fines de semana.", "example_fi": "Pienenä pelasin jalkapalloa joka viikonloppu.", "gender": "f" },
+    { "es": "el estilo indirecto", "fi": "epäsuora kerronta", "example_es": "Me dijo que viniera. → El estilo indirecto cambia los tiempos verbales.", "example_fi": "Hän käski minun tulla. → Epäsuorassa kerronnassa aikamuodot muuttuvat.", "gender": "m" },
+    { "es": "la cláusula condicional", "fi": "ehtolause (si-lause)", "example_es": "Si hubiera llegado antes, habría conocido al autor.", "example_fi": "Jos olisin saapunut aiemmin, olisin tavannut kirjailijan.", "gender": "f" },
+    { "es": "el lanzador del subjuntivo", "fi": "subjunktiivin laukaisija", "example_es": "Es necesario que, quiero que, ojalá — estas expresiones lanzan el subjuntivo.", "example_fi": "Es necesario que, quiero que, ojalá — nämä laukaisevat subjunktiivin.", "gender": "m" },
+    { "es": "la concordancia temporal", "fi": "aikamuotojen kongruenssi", "example_es": "Quiero que venga (preesens). / Quería que viniera (menneisyys).", "example_fi": "Haluan että hän tulee. / Halusin että hän tulisi.", "gender": "f" }
+  ],
+  "side_panel": {
+    "tabs": [
+      {
+        "id": "grammar",
+        "title": "Aikamuodot",
+        "content_md": "## Kaikki aikamuodot — pikaviite\n\n| Muoto (yo, hablar) | Käyttö |\n|---|---|\n| **hablo** | nykyhetki, tottumukset |\n| **hablé** | kertaluonteinen menneisyys |\n| **hablaba** | toistuva/kuvaileva menneisyys |\n| **he hablado** | juuri tapahtunut, kokemus |\n| **había hablado** | menneen menneisyys |\n| **hablaré** | tuleva tapahtuma |\n| **hablaría** | ehto, si-lause pääosa |\n| **hable** | subj. preesens (es importante que...) |\n| **hablara** | subj. imperfekti (si-lause, pääverbi menneessä) |\n| **hubiera hablado** | subj. pluskvamperfekti (tyyppi 3 si-osa) |\n| **habría hablado** | konditionaalin perfekti (tyyppi 3 pääosa) |\n\n## Laukaisijat\n\n- **Ayer / el lunes** → preteriti\n- **Siempre / de niño** → imperfekti\n- **Mañana / el año que viene** → futuuri\n- **Si + nykyepätodellinen** → subj. imperfekti + konditionaali\n- **Si + menneisyysepätodellinen** → subj. pluskvamperfekti + kond. perfekti\n- **Es importante/necesario que** → subj. preesens\n- **Cuando llegué, ya había...** → preteriti + pluskvamperfekti"
+      },
+      {
+        "id": "tips",
+        "title": "YO-vinkki",
+        "content_md": "## Aikamuodot YO-kokeessa\n\n### Aukkotehtävä — strategia\n\n1. **Lue koko virke ensin** — tunnista konteksti\n2. **Etsi laukaisijasanat**: ayer, siempre, si, cuando, mañana, ojalá, es necesario que\n3. **Tarkista pääverbi** — onko se menneessä vai preesensissä? (vaikuttaa subjunktiivin valintaan)\n4. **Tarkista lausetyyppi**: si-lause tyyppi 2 vai 3?\n\n### Yleisimmät virheet\n\n✗ *Si **sería**...* → konditionaali EI si:n jälkeen\n✓ *Si **tuviera**...* → subj. imperfekti\n\n✗ *Es importante que todos **van**...* → indikatiiivi EI\n✓ *Es importante que todos **vayan**...* → subj. preesens\n\n✗ *Cuando era niño, **fui** al parque todos los días* → preteriti EI toistuva\n✓ *Cuando era niño, **iba** al parque todos los días* → imperfekti\n\n### Arvosanataulukko\n\n- M-taso: preteriti/imperfekti ero, futuuri, konditionaali\n- E-taso: + subj. imperfekti si-lauseissa, epäsuora kerronta\n- L-taso: + pluskvamperfekti subj. (tyyppi 3), sekoitetut tyypit"
+      }
+    ]
+  }
+}

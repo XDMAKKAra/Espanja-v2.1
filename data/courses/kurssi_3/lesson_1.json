@@ -5,95 +5,299 @@
     "lesson_type": "vocab",
     "level": "B",
     "title": "Matkustaminen ja kulkuvälineet",
-    "description": "PLACEHOLDER — sisältö generoidaan myöhemmin PROMPT_GENERATE_LESSON.md:llä",
-    "yo_relevance": "PLACEHOLDER",
+    "description": "Opit matkustamisen ydinsanaston: kulkuvälineet (tren, avión, autobús, metro), lentokenttä- ja asematermit (billete, andén, equipaje, retraso) sekä matkaverbit (viajar, perder, llegar). Sanasto kattaa noin 30 entryä — riittää YO-kokeen kuullun lentokenttäkuulutuksen ymmärtämiseen ja oman lomamatkan kuvaamiseen kirjoituksessa.",
+    "yo_relevance": "Matka-aihe on YO-kokeen vakioteema: kuullun ymmärtämisessä juna- ja lentokenttäkuulutukset (retraso, andén, puerta de embarque), lukutehtävissä matkablogit ja varoitukset (huelga, aduana) ja kirjoituksessa lähes joka vuosi pyydetty lomamatkan kuvaus. Tarkimmat ansat ovat ir EN tren / ir A pie ja perder el avión (myöhästyä lennolta — ei kadottaa).",
     "estimated_minutes_median": 12
   },
   "teaching": {
-    "intro_md": "PLACEHOLDER — opetussisältö generoidaan myöhemmin",
+    "intro_md": "# Matkustaminen ja kulkuvälineet\n\nMatkustamisen sanasto on YO-kokeen vakioteema. Tärkein kielioppi on prepositio **en** kulkuvälineen kanssa — paitsi kun mennään jalan.\n\n## Kulkuvälineet ja prepositiot\n\n| Suomeksi | Espanjaksi | Esimerkki |\n|---|---|---|\n| junalla | **en tren** | Voy a Madrid en tren. |\n| autolla | **en coche** | Vamos en coche a la playa. |\n| lentokoneella | **en avión** | Llego en avión a las ocho. |\n| bussilla | **en autobús** | Voy al instituto en autobús. |\n| metrolla | **en metro** | Cojo el metro hasta el centro. |\n| polkupyörällä | **en bicicleta** / **en bici** | Voy en bici al trabajo. |\n| jalan | **a pie** | Vamos a pie, está cerca. |\n\nHuom: Sanotaan **a pie** (ei *en pie*) — jalan kulkeminen on poikkeus.\n\n## Lentokenttä ja asema\n\n> En el aeropuerto **facturo** la **maleta**, paso el **control de seguridad** y voy a la **puerta de embarque**. (Lentokentällä kirjaan matkalaukun, käyn turvatarkastuksessa ja menen porttiin.)\n\n- **el billete** = lippu (Espanjassa); **el boleto** = lippu (Lat. Am.)\n- **la llegada / la salida** = saapuminen / lähtö\n- **el retraso** = viivästys (*El tren lleva veinte minutos de retraso* — juna on 20 min myöhässä)\n- **el andén** = laituri (juna-asemalla)\n- **la puerta de embarque** = lähtöportti (lentokentällä)\n\n## Idiomeja\n\n- **perder el tren / el avión** = myöhästyä junasta / lennolta — EI tarkoita kadottaa\n- **hacer un viaje** = tehdä matka (ei *hacer una viaje*)\n- **hacer la maleta** = pakata laukku\n- **ir de vacaciones** = lähteä lomalle",
     "key_points": [
-      "PLACEHOLDER"
+      "Kulkuvälineen kanssa käytetään prepositiota en (en tren, en avión, en bici) — paitsi a pie (jalan).",
+      "perder el avión = myöhästyä lennolta, ei kadottaa lentokonetta.",
+      "billete (Espanja) ja boleto (Lat. Am.) tarkoittavat samaa lippua.",
+      "hacer un viaje on kollokaatio: ei sanota tener un viaje.",
+      "retraso (myöhästyminen) on YO-kuullun klassikkosana asema- ja kenttäkuulutuksissa."
     ]
   },
   "phases": [
     {
-      "phase_id": "p1-placeholder",
+      "phase_id": "p1-recognition-kulkuvalineet",
       "phase_type": "recognition_mc",
-      "title": "PLACEHOLDER",
-      "instruction": "PLACEHOLDER",
-      "mastery_threshold": {
-        "I": 0.5,
-        "A": 0.6,
-        "B": 0.65,
-        "C": 0.7,
-        "M": 0.75,
-        "E": 0.85,
-        "L": 0.9
-      },
+      "title": "Tunnista — kulkuvälineet ja matkasanat",
+      "instruction": "Valitse oikea käännös.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.7, "C": 0.75, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "mc", "stem": "el tren", "choices": ["bussi", "juna", "raitiovaunu", "metro"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "el tren = juna. Älä sekoita: el metro = metro, el autobús = bussi." },
+        { "item_type": "mc", "stem": "el avión", "choices": ["lentokone", "laiva", "helikopteri", "raketti"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "el avión = lentokone. Verbi volar = lentää." },
+        { "item_type": "mc", "stem": "el autobús", "choices": ["taksi", "bussi", "auto", "kuorma-auto"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "el autobús = bussi. Latinalaisessa Amerikassa myös el bus, el camión (Meksiko), la guagua (Karibia)." },
+        { "item_type": "mc", "stem": "el coche", "choices": ["polkupyörä", "moottoripyörä", "auto", "vaunu"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "el coche = auto (Espanjassa). Lat. Am. el carro tai el auto." },
+        { "item_type": "mc", "stem": "el barco", "choices": ["laiva, vene", "lentokone", "matkalaukku", "satama"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "el barco = laiva tai vene. Älä sekoita: el puerto = satama." },
+        { "item_type": "mc", "stem": "la bicicleta", "choices": ["mopo", "polkupyörä", "skootteri", "rullaluistimet"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "la bicicleta = polkupyörä. Lyhennetty muoto: la bici." },
+        { "item_type": "mc", "stem": "el metro", "choices": ["mittari", "metro (kulkuväline)", "molemmat — sekä että", "raitiovaunu"], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "el metro tarkoittaa sekä kulkuvälinettä että mittayksikköä — konteksti ratkaisee." },
+        { "item_type": "mc", "stem": "el taxi", "choices": ["taksi", "bussi", "vuokra-auto", "kuljetuspalvelu"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "el taxi = taksi. Coger un taxi = ottaa taksi." },
+        { "item_type": "mc", "stem": "el billete", "choices": ["lasku", "lippu (matkalippu)", "passi", "kortti"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "el billete = matkalippu Espanjassa. Älä sekoita: la cuenta = lasku, el pasaporte = passi." },
+        { "item_type": "mc", "stem": "la maleta", "choices": ["matkalaukku", "reppu", "kassi", "laatikko"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "la maleta = matkalaukku. Hacer la maleta = pakata laukku." },
+        { "item_type": "mc", "stem": "el viaje", "choices": ["loma", "matka", "retki", "vierailu"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "el viaje = matka. Hacer un viaje = tehdä matka. Älä sekoita: la visita = vierailu." },
+        { "item_type": "mc", "stem": "la estación", "choices": ["asema", "satama", "vuodenaika", "molemmat — asema ja vuodenaika"], "correct_index": 3, "distractor_difficulty": "hard", "explanation": "la estación = sekä juna-/bussiasema että vuodenaika — konteksti ratkaisee." }
+      ]
+    },
+    {
+      "phase_id": "p2-recognition-match",
+      "phase_type": "recognition_match",
+      "title": "Yhdistä — matkasanasto",
+      "instruction": "Yhdistä espanjan sana ja suomennos.",
+      "mastery_threshold": { "I": 0.6, "A": 0.65, "B": 0.75, "C": 0.8, "M": 0.85, "E": 0.9, "L": 0.95 },
+      "skip_for_targets": ["I"],
       "items": [
         {
-          "item_type": "mc",
-          "stem": "PLACEHOLDER",
-          "choices": [
-            "a",
-            "b",
-            "c",
-            "d"
-          ],
-          "correct_index": 0,
-          "explanation": "PLACEHOLDER"
+          "item_type": "match",
+          "left_label": "Lentokenttä",
+          "right_label": "Suomeksi",
+          "pairs": [
+            { "left": "el aeropuerto", "right": "lentokenttä" },
+            { "left": "el avión", "right": "lentokone" },
+            { "left": "la puerta de embarque", "right": "lähtöportti" },
+            { "left": "el equipaje", "right": "matkatavara" },
+            { "left": "el control de seguridad", "right": "turvatarkastus" },
+            { "left": "la aduana", "right": "tulli" },
+            { "left": "el pasaporte", "right": "passi" },
+            { "left": "el vuelo", "right": "lento" }
+          ]
         },
         {
-          "item_type": "mc",
-          "stem": "PLACEHOLDER",
-          "choices": [
-            "a",
-            "b",
-            "c",
-            "d"
-          ],
-          "correct_index": 0,
-          "explanation": "PLACEHOLDER"
+          "item_type": "match",
+          "left_label": "Asema ja juna",
+          "right_label": "Suomeksi",
+          "pairs": [
+            { "left": "la estación", "right": "asema" },
+            { "left": "el tren", "right": "juna" },
+            { "left": "el andén", "right": "laituri" },
+            { "left": "el billete", "right": "matkalippu" },
+            { "left": "la llegada", "right": "saapuminen" },
+            { "left": "la salida", "right": "lähtö" },
+            { "left": "el retraso", "right": "myöhästyminen" },
+            { "left": "el horario", "right": "aikataulu" }
+          ]
         },
         {
-          "item_type": "mc",
-          "stem": "PLACEHOLDER",
-          "choices": [
-            "a",
-            "b",
-            "c",
-            "d"
-          ],
-          "correct_index": 0,
-          "explanation": "PLACEHOLDER"
-        },
-        {
-          "item_type": "mc",
-          "stem": "PLACEHOLDER",
-          "choices": [
-            "a",
-            "b",
-            "c",
-            "d"
-          ],
-          "correct_index": 0,
-          "explanation": "PLACEHOLDER"
+          "item_type": "match",
+          "left_label": "Yleistä matkasanastoa",
+          "right_label": "Suomeksi",
+          "pairs": [
+            { "left": "el viaje", "right": "matka" },
+            { "left": "el viajero", "right": "matkustaja" },
+            { "left": "las vacaciones", "right": "loma" },
+            { "left": "la maleta", "right": "matkalaukku" },
+            { "left": "la frontera", "right": "raja" },
+            { "left": "el puerto", "right": "satama" },
+            { "left": "el destino", "right": "määränpää" },
+            { "left": "el hotel", "right": "hotelli" }
+          ]
         }
+      ]
+    },
+    {
+      "phase_id": "p3-recognition-laajennus",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista — laajemmin",
+      "instruction": "Valitse oikea käännös.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.7, "C": 0.75, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I"],
+      "items": [
+        { "item_type": "mc", "stem": "el aeropuerto", "choices": ["satama", "asema", "lentokenttä", "terminaali"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "el aeropuerto = lentokenttä. Älä sekoita: el puerto = satama." },
+        { "item_type": "mc", "stem": "el equipaje", "choices": ["matkatavara", "miehistö", "tiimi", "rahti"], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "el equipaje = matkatavara. Älä sekoita: el equipo = tiimi tai varustus." },
+        { "item_type": "mc", "stem": "el retraso", "choices": ["aikataulu", "myöhästyminen, viivästys", "lähtöaika", "peruutus"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "el retraso = myöhästyminen. El tren lleva diez minutos de retraso = juna on 10 min myöhässä." },
+        { "item_type": "mc", "stem": "el andén", "choices": ["laituri (asemalla)", "lähtöportti (kentällä)", "kioski", "odotushuone"], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "el andén = laituri juna-asemalla. Lentokentällä lähtöportti on la puerta de embarque." },
+        { "item_type": "mc", "stem": "la aduana", "choices": ["raja", "tulli", "passintarkastus", "matkatoimisto"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "la aduana = tulli. Pasar por la aduana = käydä tullissa. Frontera = raja (maan)." },
+        { "item_type": "mc", "stem": "la frontera", "choices": ["satama", "raja", "tulli", "terminaali"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "la frontera = raja kahden maan välillä. Cruzar la frontera = ylittää raja." },
+        { "item_type": "mc", "stem": "el pasajero", "choices": ["matkustaja", "kuljettaja", "tarkastaja", "matkaopas"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "el pasajero = matkustaja (lentokoneessa, bussissa). Synonyymi viajero." },
+        { "item_type": "mc", "stem": "el horario", "choices": ["lippu", "aikataulu", "kellonaika", "vuoro"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "el horario = aikataulu. La hora = kellonaika." },
+        { "item_type": "mc", "stem": "el vuelo", "choices": ["lento", "matka", "loma", "lähtö"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "el vuelo = lento. Verbi volar = lentää." },
+        { "item_type": "mc", "stem": "las vacaciones", "choices": ["loma", "matkat", "viikonloput", "lomakausi"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "las vacaciones = loma (aina monikossa). Estar de vacaciones = olla lomalla." },
+        { "item_type": "mc", "stem": "el destino", "choices": ["lähtö", "matka", "määränpää, kohde", "reitti"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "el destino = määränpää, matkakohde. Tarkoittaa myös kohtaloa." },
+        { "item_type": "mc", "stem": "el puerto", "choices": ["satama", "lentokenttä", "asema", "tulli"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "el puerto = satama. Älä sekoita: la puerta = ovi, el aeropuerto = lentokenttä." }
+      ]
+    },
+    {
+      "phase_id": "p4-recall-typed-es-fi",
+      "phase_type": "recall_typed_es_to_fi",
+      "title": "Käännä suomeksi",
+      "instruction": "Kirjoita käännös suomeksi (pienellä).",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.7, "C": 0.75, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "el tren", "accept": ["juna"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "el avión", "accept": ["lentokone"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "el coche", "accept": ["auto"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "el billete", "accept": ["lippu", "matkalippu"], "hint": "ostat tämän asemalla" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "la maleta", "accept": ["matkalaukku", "laukku"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "el viaje", "accept": ["matka"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "el aeropuerto", "accept": ["lentokenttä"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "la estación", "accept": ["asema", "vuodenaika"], "hint": "kaksi mahdollista käännöstä" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "el retraso", "accept": ["myöhästyminen", "viivästys"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "la aduana", "accept": ["tulli"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "el equipaje", "accept": ["matkatavara", "matkatavarat"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "viajar", "accept": ["matkustaa"] }
+      ]
+    },
+    {
+      "phase_id": "p5-recall-typed-fi-es",
+      "phase_type": "recall_typed_fi_to_es",
+      "title": "Käännä espanjaksi",
+      "instruction": "Kirjoita käännös espanjaksi (pienellä, aksentit hyväksytään ilman).",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "juna", "accept": ["el tren", "tren"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "lentokone", "accept": ["el avión", "avión", "el avion", "avion"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "bussi", "accept": ["el autobús", "autobús", "el autobus", "autobus", "el bus", "bus"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "auto", "accept": ["el coche", "coche", "el carro", "carro", "el auto", "auto"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "polkupyörä", "accept": ["la bicicleta", "bicicleta", "la bici", "bici"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "matkalippu", "accept": ["el billete", "billete", "el boleto", "boleto"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "matkalaukku", "accept": ["la maleta", "maleta"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "matka", "accept": ["el viaje", "viaje"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "lentokenttä", "accept": ["el aeropuerto", "aeropuerto"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "asema", "accept": ["la estación", "estación", "la estacion", "estacion"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "myöhästyminen", "accept": ["el retraso", "retraso"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "matkustaa", "accept": ["viajar"] }
+      ]
+    },
+    {
+      "phase_id": "p6-application-gap-helppo",
+      "phase_type": "application_gap_fill",
+      "title": "Lauseen täydennys — perustaso",
+      "instruction": "Täydennä lause oikealla sanalla.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.75, "C": 0.8, "M": 0.85, "E": 0.9, "L": 0.92 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Voy a Madrid en {1}.", "answers": [["tren", "avión", "avion", "coche", "autobús", "autobus"]], "word_bank": ["tren", "avión", "coche", "autobús"] },
+        { "item_type": "gap_fill", "sentence_template": "Compro un {1} de ida y vuelta a Barcelona.", "answers": [["billete", "boleto"]], "word_bank": ["billete", "viaje", "vuelo"] },
+        { "item_type": "gap_fill", "sentence_template": "Antes del viaje hago la {1}.", "answers": [["maleta"]], "word_bank": ["maleta", "estación", "frontera"] },
+        { "item_type": "gap_fill", "sentence_template": "El avión sale del {1} a las ocho.", "answers": [["aeropuerto"]], "word_bank": ["aeropuerto", "puerto", "andén"] },
+        { "item_type": "gap_fill", "sentence_template": "El tren tiene veinte minutos de {1}.", "answers": [["retraso"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "En verano vamos de {1} a la playa.", "answers": [["vacaciones", "viaje"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Voy al instituto en {1} porque está lejos.", "answers": [["autobús", "autobus", "metro", "bici", "bicicleta", "coche"]], "word_bank": ["autobús", "metro", "bici"] },
+        { "item_type": "gap_fill", "sentence_template": "El barco sale del {1} a las cinco.", "answers": [["puerto"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Mi destino favorito es {1} — me encanta el sol.", "answers": [["españa", "méxico", "mexico", "italia", "barcelona", "madrid"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "El tren sale del {1} número tres.", "answers": [["andén", "anden"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p7-application-gap-vaativa",
+      "phase_type": "application_gap_fill",
+      "title": "Lauseen täydennys — vaativa",
+      "instruction": "Täydennä ilman sanapankkia.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.65, "C": 0.75, "M": 0.85, "E": 0.9, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Si no llegamos a tiempo, vamos a {1} el avión. (myöhästyä)", "answers": [["perder"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Los pasajeros tienen que pasar por la {1} antes de salir del país.", "answers": [["aduana"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "El {1} a Roma sale a las seis y media de la mañana.", "answers": [["vuelo", "tren", "avión", "avion"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Para entrar en otro país necesito el {1}.", "answers": [["pasaporte"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Hay muchos {1} esperando en la puerta de embarque.", "answers": [["pasajeros", "viajeros"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Cruzamos la {1} entre Francia y España en coche.", "answers": [["frontera"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Mi {1} es Roma — quiero ver el Coliseo.", "answers": [["destino"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "El {1} de trenes está en la entrada de la estación.", "answers": [["horario"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Antes de subir al avión paso por el control de {1}.", "answers": [["seguridad"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Mis padres {1} a Italia el mes que viene. (matkustaa, viajar)", "answers": [["viajan"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p8-application-sentence-build",
+      "phase_type": "application_sentence_build",
+      "title": "Lauseiden rakentelua",
+      "instruction": "Käännä koko lause espanjaksi.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.6, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.92 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Menen Madridiin junalla.", "accept": ["voy a madrid en tren", "voy a madrid en tren."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Ostan menolipun.", "accept": ["compro un billete de ida", "compro un boleto de ida", "compro un billete de ida."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Lentokone on myöhässä.", "accept": ["el avión lleva retraso", "el avion lleva retraso", "el avión tiene retraso", "el avion tiene retraso"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Pakkaan matkalaukun.", "accept": ["hago la maleta", "hago la maleta."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Kesällä matkustamme Espanjaan.", "accept": ["en verano viajamos a españa", "en verano viajamos a espana", "viajamos a españa en verano"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Myöhästyimme junasta.", "accept": ["perdimos el tren", "perdimos el tren.", "hemos perdido el tren"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Lento lähtee porttiin neljä.", "accept": ["el vuelo sale por la puerta cuatro", "el vuelo sale de la puerta cuatro", "el vuelo sale por la puerta de embarque cuatro"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Menen kouluun polkupyörällä.", "accept": ["voy al instituto en bicicleta", "voy al instituto en bici", "voy al colegio en bicicleta", "voy al instituto en bicicleta."] }
+      ]
+    },
+    {
+      "phase_id": "p9-synthesis-translate",
+      "phase_type": "synthesis_translate",
+      "title": "YO-tyylinen käännös",
+      "instruction": "Käännä koko lause espanjaksi YO-tasolla.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.6, "C": 0.65, "M": 0.75, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Lentokoneemme Barcelonaan on tunnin myöhässä huonon sään takia.", "accept": ["nuestro avión a barcelona lleva una hora de retraso por el mal tiempo", "nuestro avion a barcelona lleva una hora de retraso por el mal tiempo", "nuestro vuelo a barcelona tiene una hora de retraso debido al mal tiempo"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Kun saavun lentokentälle, kirjaan matkalaukun ja menen turvatarkastukseen.", "accept": ["cuando llego al aeropuerto, facturo la maleta y paso al control de seguridad", "cuando llego al aeropuerto facturo la maleta y voy al control de seguridad", "al llegar al aeropuerto facturo la maleta y paso por el control de seguridad"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Aiomme tehdä kuukauden matkan Etelä-Amerikkaan ensi kesänä.", "accept": ["vamos a hacer un viaje de un mes por sudamérica el próximo verano", "vamos a hacer un viaje de un mes por sudamerica el proximo verano", "queremos hacer un viaje de un mes a sudamérica el próximo verano"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Jos myöhästyt junasta, voit ottaa seuraavan tunnin kuluttua.", "accept": ["si pierdes el tren, puedes coger el siguiente en una hora", "si pierdes el tren puedes tomar el siguiente dentro de una hora", "si pierdes el tren, puedes coger el próximo dentro de una hora"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Matkustaminen junalla on edullisempaa kuin lentäminen.", "accept": ["viajar en tren es más barato que en avión", "viajar en tren es mas barato que en avion", "viajar en tren resulta más barato que viajar en avión"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Matkustajien on käytävä tullissa ennen maasta poistumista.", "accept": ["los pasajeros tienen que pasar por la aduana antes de salir del país", "los viajeros tienen que pasar por la aduana antes de salir del pais", "los pasajeros deben pasar por la aduana antes de salir del país"] }
+      ]
+    },
+    {
+      "phase_id": "p10-synthesis-short-writing",
+      "phase_type": "synthesis_short_writing",
+      "title": "Lyhyt kirjoitus",
+      "instruction": "Kirjoita lyhyt teksti matkustamisesta.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.6, "C": 0.65, "M": 0.7, "E": 0.8, "L": 0.9 },
+      "skip_for_targets": ["I", "A", "B", "C", "M"],
+      "items": [
+        { "item_type": "writing", "prompt": "Kuvaile viimeisin lomamatkasi: minne menit, millä kulkuvälineellä, mitä teit. 5–7 lausetta. Käytä verbejä viajar, ir, hacer ja vähintään kolmea matkasanaa.", "min_words": 45, "max_words": 95, "rubric_focus": ["communication", "vocab", "structure"] },
+        { "item_type": "writing", "prompt": "Kirjoita unelmamatkastasi: minne haluaisit mennä, miksi, millä kulkuvälineellä ja kenen kanssa. 5–7 lausetta.", "min_words": 45, "max_words": 95, "rubric_focus": ["communication", "vocab"] },
+        { "item_type": "writing", "prompt": "Kirjoita lyhyt dialogi (4–6 vuoroa) lipunmyyjän kanssa: ostat menolipun Madridiin, kysyt lähtöajan ja laiturin.", "min_words": 50, "max_words": 100, "rubric_focus": ["communication", "vocab"] }
       ]
     }
   ],
   "vocab": [
-    {
-      "es": "PLACEHOLDER",
-      "fi": "PLACEHOLDER"
-    }
+    { "es": "el tren", "fi": "juna", "example_es": "Voy a Madrid en tren.", "example_fi": "Menen Madridiin junalla.", "gender": "m" },
+    { "es": "el avión", "fi": "lentokone", "example_es": "El avión sale a las ocho.", "example_fi": "Lentokone lähtee kahdeksalta.", "gender": "m" },
+    { "es": "el autobús", "fi": "bussi", "example_es": "Cojo el autobús al instituto.", "example_fi": "Otan bussin lukioon.", "gender": "m" },
+    { "es": "el coche", "fi": "auto (Espanjassa)", "example_es": "Vamos en coche a la playa.", "example_fi": "Menemme autolla rannalle.", "gender": "m" },
+    { "es": "el carro", "fi": "auto (Lat. Am.)", "example_es": "Mi padre tiene un carro nuevo.", "example_fi": "Isälläni on uusi auto.", "gender": "m" },
+    { "es": "el metro", "fi": "metro", "example_es": "Cojo el metro hasta el centro.", "example_fi": "Otan metron keskustaan.", "gender": "m" },
+    { "es": "el taxi", "fi": "taksi", "example_es": "Llamo un taxi al aeropuerto.", "example_fi": "Tilaan taksin lentokentälle.", "gender": "m" },
+    { "es": "la bicicleta", "fi": "polkupyörä", "example_es": "Voy en bicicleta al trabajo.", "example_fi": "Menen polkupyörällä töihin.", "gender": "f" },
+    { "es": "la bici", "fi": "fillari (lyhenne)", "example_es": "Mi bici es nueva.", "example_fi": "Fillarini on uusi.", "gender": "f" },
+    { "es": "el barco", "fi": "laiva, vene", "example_es": "El barco llega al puerto.", "example_fi": "Laiva saapuu satamaan.", "gender": "m" },
+    { "es": "el billete", "fi": "matkalippu (Espanja)", "example_es": "Compro un billete de ida y vuelta.", "example_fi": "Ostan meno-paluulipun.", "gender": "m" },
+    { "es": "el boleto", "fi": "matkalippu (Lat. Am.)", "example_es": "El boleto cuesta diez pesos.", "example_fi": "Lippu maksaa 10 pesoa.", "gender": "m" },
+    { "es": "la maleta", "fi": "matkalaukku", "example_es": "Hago la maleta antes del viaje.", "example_fi": "Pakkaan laukun ennen matkaa.", "gender": "f" },
+    { "es": "el equipaje", "fi": "matkatavara", "example_es": "Facturo el equipaje en el aeropuerto.", "example_fi": "Kirjaan matkatavarat lentokentällä.", "gender": "m" },
+    { "es": "el viaje", "fi": "matka", "example_es": "Hacemos un viaje a Italia.", "example_fi": "Teemme matkan Italiaan.", "gender": "m" },
+    { "es": "el viajero", "fi": "matkustaja, matkailija", "example_es": "El viajero pierde el tren.", "example_fi": "Matkustaja myöhästyy junasta.", "gender": "m" },
+    { "es": "el pasajero", "fi": "matkustaja (kulkuneuvossa)", "example_es": "Los pasajeros suben al avión.", "example_fi": "Matkustajat nousevat koneeseen.", "gender": "m" },
+    { "es": "las vacaciones", "fi": "loma", "example_es": "Estamos de vacaciones en agosto.", "example_fi": "Olemme lomalla elokuussa.", "gender": "f" },
+    { "es": "la estación", "fi": "asema; vuodenaika", "example_es": "La estación de tren está cerca.", "example_fi": "Juna-asema on lähellä.", "gender": "f" },
+    { "es": "el aeropuerto", "fi": "lentokenttä", "example_es": "El aeropuerto de Barajas es grande.", "example_fi": "Barajasin lentokenttä on iso.", "gender": "m" },
+    { "es": "el puerto", "fi": "satama", "example_es": "El barco sale del puerto.", "example_fi": "Laiva lähtee satamasta.", "gender": "m" },
+    { "es": "el andén", "fi": "laituri", "example_es": "El tren llega al andén tres.", "example_fi": "Juna saapuu laiturille kolme.", "gender": "m" },
+    { "es": "la puerta de embarque", "fi": "lähtöportti", "example_es": "Vamos a la puerta de embarque B12.", "example_fi": "Menemme porttiin B12.", "gender": "f" },
+    { "es": "el vuelo", "fi": "lento", "example_es": "Mi vuelo a Roma es directo.", "example_fi": "Lentoni Roomaan on suora.", "gender": "m" },
+    { "es": "la llegada", "fi": "saapuminen", "example_es": "La llegada del tren es a las diez.", "example_fi": "Junan saapumisaika on kymmenen.", "gender": "f" },
+    { "es": "la salida", "fi": "lähtö, uloskäynti", "example_es": "La salida del avión es a las seis.", "example_fi": "Lentokoneen lähtö on kuudelta.", "gender": "f" },
+    { "es": "el retraso", "fi": "myöhästyminen, viivästys", "example_es": "El tren lleva veinte minutos de retraso.", "example_fi": "Juna on 20 minuuttia myöhässä.", "gender": "m" },
+    { "es": "el horario", "fi": "aikataulu", "example_es": "Miro el horario de trenes.", "example_fi": "Katson junien aikataulua.", "gender": "m" },
+    { "es": "el destino", "fi": "määränpää, kohde", "example_es": "Mi destino es Sevilla.", "example_fi": "Määränpääni on Sevilla.", "gender": "m" },
+    { "es": "la aduana", "fi": "tulli", "example_es": "Pasamos por la aduana.", "example_fi": "Menemme tullin läpi.", "gender": "f" },
+    { "es": "la frontera", "fi": "raja (maan)", "example_es": "Cruzamos la frontera en coche.", "example_fi": "Ylitämme rajan autolla.", "gender": "f" },
+    { "es": "el pasaporte", "fi": "passi", "example_es": "Necesito el pasaporte para viajar.", "example_fi": "Tarvitsen passin matkustaakseni.", "gender": "m" },
+    { "es": "viajar", "fi": "matkustaa", "example_es": "Me gusta viajar en tren.", "example_fi": "Pidän junalla matkustamisesta.", "gender": null },
+    { "es": "perder", "fi": "kadottaa; myöhästyä (kulkuneuvosta)", "example_es": "Perdí el avión por el tráfico.", "example_fi": "Myöhästyin lennolta liikenteen takia.", "gender": null }
   ],
   "side_panel": {
     "tabs": [
       {
         "id": "vocab",
         "title": "Sanasto",
-        "content_md": "PLACEHOLDER"
+        "content_md": "## Kulkuvälineet\n\n- **el tren** — juna\n- **el avión** — lentokone\n- **el autobús** / **el bus** — bussi\n- **el coche** (Espanja) / **el carro** (Lat. Am.) — auto\n- **el metro** — metro\n- **el taxi** — taksi\n- **la bicicleta** / **la bici** — polkupyörä\n- **el barco** — laiva, vene\n\n## Lentokenttä\n\n- **el aeropuerto** — lentokenttä\n- **el vuelo** — lento\n- **la puerta de embarque** — lähtöportti\n- **el equipaje** — matkatavara\n- **el control de seguridad** — turvatarkastus\n- **la aduana** — tulli\n- **el pasaporte** — passi\n\n## Asema ja juna\n\n- **la estación** — asema (myös vuodenaika)\n- **el andén** — laituri\n- **el billete** (Esp.) / **el boleto** (Lat. Am.) — matkalippu\n- **la llegada** — saapuminen\n- **la salida** — lähtö\n- **el retraso** — myöhästyminen\n- **el horario** — aikataulu\n\n## Matkustamisen yleissanat\n\n- **el viaje** — matka\n- **el viajero / el pasajero** — matkustaja\n- **las vacaciones** — loma (aina monikossa)\n- **la maleta** — matkalaukku\n- **el destino** — määränpää\n- **la frontera** — raja\n- **el puerto** — satama\n\n## Verbit\n\n- **viajar** — matkustaa\n- **ir en tren / coche / avión** — mennä junalla / autolla / koneella\n- **ir a pie** — mennä jalan\n- **perder** (el tren) — myöhästyä (junasta)\n- **coger / tomar** (el autobús) — ottaa (bussi)\n- **hacer un viaje** — tehdä matka\n- **hacer la maleta** — pakata laukku\n- **facturar** — kirjata matkatavarat"
+      },
+      {
+        "id": "tips",
+        "title": "YO-vinkki",
+        "content_md": "## YO-koe — kuullun ymmärtäminen\n\nLentokenttä- ja asemakuulutukset ovat YO-kuullun klassikko. Yleisimmät kysymykset:\n- Mille laiturille / portille juna tai kone saapuu?\n- Onko kulkuneuvo myöhässä? Kuinka paljon?\n- Mistä matkustaja löytää matkatavaransa / lipun?\n\n## Avainkollokaatiot\n\n- **hacer un viaje** — tehdä matka (EI tener un viaje)\n- **ir en tren / coche / avión / bici** — preposito **en** + kulkuväline\n- **ir a pie** — jalan (poikkeus: a, ei en)\n- **perder el tren / el avión** — myöhästyä (ei kadottaa)\n- **coger / tomar el autobús** — ottaa bussi (Espanjassa coger, Lat. Am. tomar — coger on Lat. Amerikassa karkea sana, käytä tomar)\n- **estar de vacaciones** — olla lomalla\n- **hacer la maleta** — pakata laukku\n\n## Yleisimmät ansat\n\n- **billete** (Esp.) ja **boleto** (Lat. Am.) tarkoittavat samaa\n- **estación** voi olla asema TAI vuodenaika — konteksti ratkaisee\n- **puerto** = satama, **puerta** = ovi, **aeropuerto** = lentokenttä — älä sekoita\n- **andén** (laituri, asemalla) ≠ **puerta de embarque** (portti, kentällä)\n- **el equipaje** (matkatavara) ≠ **el equipo** (tiimi, varustus)\n\n## Kirjoituksessa — lomamatkan kuvaus\n\nLähes joka YO-vuonna pyydetään kuvaamaan lomamatka. Käytä konkreettisia ilmauksia:\n\n> *El verano pasado hice un viaje a Sevilla con mi familia. Fuimos en avión y nos quedamos en un hotel cerca del centro. Visitamos la catedral, comimos tapas y volvimos en tren a Madrid.*\n\n## Käteviä lauseaihioita\n\n- *Un billete de ida y vuelta a..., por favor.* — Meno-paluulippu..., kiitos.\n- *¿A qué hora sale el próximo tren?* — Mihin aikaan seuraava juna lähtee?\n- *¿De qué andén sale?* — Miltä laiturilta lähtee?\n- *El vuelo lleva una hora de retraso.* — Lento on tunnin myöhässä."
       }
     ]
   }

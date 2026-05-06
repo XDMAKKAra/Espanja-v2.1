@@ -1,11 +1,26 @@
 # Puheo Agent State
 
-**Last updated:** 2026-05-04
-**Current state:** L-CI-SW-CHECK shipped (PR-only spam tukittu — SW-check ajaa nyt myös push-eventissä HEAD~1-diffillä; npm run bump:sw autofix).
+**Last updated:** 2026-05-06
+**Current state:** L-LESSON-BATCH-7 shipped — kaikki 90 oppituntia 8 kurssissa generoitu, validoitu, review-tarkistettu. Batch 6 (K6 L7-12 + K7 L1-12, 18 lessonia) ja Batch 7 (K8 L1-12, 12 lessonia) generoitu Sonnet-workereilla rinnakkain canonical-promptilla, review-Sonnet löysi yhteensä P0=6, P1=17, P2=4 — kaikki P0+P1 korjattu Edit-toolilla. Kriittiset löydökset: K6L8 gap_fill "captura al carbono" (ei vakiintunut), K6L9 "dependeriamos" aksenttivirhe, K6L10 "hadistella" (ei suomea), K7L1 "mestariteen" sijamuotovirhe, K7L3 choices-duplikaatti, K8L3 gap_fill väärä accept-lista (diversidad ≠ kulttuuriperintö), K8L1 si-tyyppi-3 saliéramos (vaatii pluskvamperfekti subj.), K8L9 gap_fill template `{1}...{1}` ei rendautuisi. Iso-K8-worker stallasi 600s yhdellä 12-lessonin pyynnöllä → splitti 1+6+5 toimi puhtaasti. Validate exit 0 (90 tiedostoa).
 
 ---
 
 ## Recent loops (last 5)
+
+### L-LESSON-BATCH-7 — 2026-05-06 ✓ shipped
+**Scope:** K8 L1-12 (E-taso, Eximia cum laude — YO-koevalmiiksi). Iso 12-lessonin Sonnet-worker stallasi 600s ennen yhden tiedoston (L1) generointia → splitti 2 pienempään workeriin rinnakkain (L2-L7 + L8-L12). Curriculum K8 (lib/curriculumData.js): subjunktiivin imperfektin muodostus + si-lauseet tyyppi 2/3 + YO-sanasto (kaikki teemat) + aikamuotojen kertaus + pitkä mixed-aukkotehtävä + 2 reading + 2 writing + 2 test (täyssimulaatio + koko polun loppukoe). Review-Sonnet: P0=1, P1=7, P2=2. Kaikki P0+P1 korjattu: K8L3 gap_fill väärä accept (diversidad→patrimonio), K8L1 si-3 saliéramos→hubiéramos salido, K8L2 dependería mos→dependeríamos, K8L4 viajaré poistettu, K8L8 vocab englanti hyperconnectivity→yliyhdistyneisyys, K8L9 template {1}+{1}→{1}+{2}, K8L9 epätodelline→epätodellinen, K8L12 tinha (portugalia)→había.
+**Files:** 12 generated. **Validate:** 90/90 ✓ 0 failures. **Tests:** ei ajettu (lesson-data ei vaikuta vitestiin).
+**Pending:** Käyttäjän tehtävät: USE_PREGENERATED_LESSONS=true Vercel-dashiin → trigger redeploy → manuaalinen testi K1L1 (A), K3L1 (B), K5L1 (C), K7L1 (M), K8L1 (E). BUGS.md:hen ei lisätty uusia havaintoja — tunnetut UI-bugit (lesson-runner side-panel sijainti, skeleton-loader leveys, K1L7 OpenAI-fallback) ovat aiempien looppien tehtäviä.
+
+### L-LESSON-BATCH-6 — 2026-05-06 ✓ shipped
+**Scope:** K6 L7-12 (subjunktiivin imperfekti + si-lauseet) + K7 L1-12 (kulttuuri/historia/media/argumentointi, M-taso). 2 Sonnet-workeria rinnakkain. Review-Sonnet: P0=5, P1=10, P2=2. Kaikki P0+P1 korjattu Edit-toolilla. Kriittisin: K6L8 gap_fill "captura al carbono" (ei vakiintunut espanjalainen ilmaus, oikein "captura de carbono") → "tasa/fiscalidad". K6 systeeminen suomi-virhe "ruoapula"/"sulattuminen" korjattu node-skriptillä L8 ja L12 tiedostoissa. K7L3 MC-distractoreissa duplikaatti "trabaje" kahdesti → korjattu "trabajaría":ksi.
+**Files:** 18 generated. **Validate:** 79/79 ✓.
+**Pending:** Batch 7 (K8) — käynnistettiin tämän jälkeen, ks. L-LESSON-BATCH-7.
+
+### L-LESSON-BATCH-5 — 2026-05-05 ✓ shipped
+**Scope:** K5 L1-11 (futuuri+konditionaali) + K6 L1-6 (subjunktiivin preesens). 2 Sonnet-workeria rinnakkain → 17 lesson-tiedostoa. Review-Sonnet täydellä skill-setillä (puheo + 11 education-skilliä + ui-ux-pro-max + frontend-design + lessonRunner.js/lessonAdapter.js/lesson-runner.css). Löydökset: P0=4, P1=12, P2=8. Kaikki P0+kriittiset P1 korjattu Edit-toolilla. Brief päivitetty pysyvästi: pakollinen 16-skill-set, adaptiivisen vaikeuden vaiheittaiset taulukot (L≠vain enemmän, vaan vaikeampaa), frontend-renderöinti-tarkistus, REVIEW-PROMPTI-CANONICAL + WORKER-PROMPTI-CANONICAL.
+**Files:** 17 generated + 1 brief modified. **Validate:** 62 lessons / 0 failures. **Tests:** ei ajettu (lesson-data ei vaikuta vitestiin).
+**Pending:** Batch 6 (K6 L7-12 + K7 L1-12) ja Batch 7 (K8) — orchestrator voi käynnistää canonical-prompteilla. Manual frontend-testaus K5/K6-oppitunneilla USE_PREGENERATED_LESSONS=true ympäristössä.
 
 ### L-CI-SW-CHECK — 2026-05-04 ✓ shipped
 **Scope:** Käyttäjä sai PR-CI-failispostia jokaisesta auto/* PR:stä vaikka main pysyi vihreänä. Brief AGENT_PROMPT_LINT_CLEANUP.md väitti 10 ESLint-erroria — virheellinen, lint = 0 errors / 106 warnings. Oikea juurisyy: `scripts/check-sw-cache-version.js` käytti `origin/main`-baseä myös push-eventissä → main-pushissa diff oli aina tyhjä → check oli no-op mainissa, mutta PR-runeilla välillä failasi race-conditionissa (PR bumpasi v125→v126, mutta jossain hetkessä origin/main oli jo v126 ennen mergeä). Korjaus: skripti tunnistaa `GITHUB_EVENT_NAME=push` → diff vs `HEAD~1`. Lisätty `--fix`-flagi + `npm run bump:sw` autofix. CI-ymliin checkki ajetaan nyt molemmissa eventeissä.

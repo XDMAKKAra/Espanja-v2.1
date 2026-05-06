@@ -5,95 +5,287 @@
     "lesson_type": "vocab",
     "level": "M",
     "title": "Kulttuuri ja taide",
-    "description": "PLACEHOLDER — sisältö generoidaan myöhemmin PROMPT_GENERATE_LESSON.md:llä",
-    "yo_relevance": "PLACEHOLDER",
+    "description": "M-tason kulttuurisanasto: taiteenlajit, kulttuurilaitokset ja taiteeseen liittyvät verbit. Sanasto kattaa 30 entryä — juuri se mitä tarvitaan K7:n kulttuuri- ja kirjoitustehtävissä.",
+    "yo_relevance": "Kulttuuriaihe on YO-kirjoitustehtävässä vakioteema. Tämän oppitunnin sanasto (la pintura, el escritor, la exposición, la herencia cultural) on välttämätön kirjoitettaessa kulttuurista tai taiteesta M-tasolla. Ekspositorinen taidekirjoitus esiintyy joka vuosi YO-kokeessa.",
     "estimated_minutes_median": 12
   },
   "teaching": {
-    "intro_md": "PLACEHOLDER — opetussisältö generoidaan myöhemmin",
+    "intro_md": "# Kulttuuri ja taide\n\nM-tason YO-kokeessa kulttuuri- ja taideaihe on yksi vakiokirjoitusaiheista. Tällä oppitunnilla opit sanaston, jolla kuvaat taidetta, kulttuurilaitoksia ja kulttuuriperintöä — subjunktiivin ja pluskvamperfektin kanssa (tulossa K7 L2–L7!).\n\n## Taiteenlajit\n\n| Espanjaksi | Suomeksi |\n|---|---|\n| **la pintura** | maalaus, maalaaminen |\n| **la escultura** | kuvanveisto, veistos |\n| **la arquitectura** | arkkitehtuuri |\n| **la literatura** | kirjallisuus |\n| **la música** | musiikki |\n| **el cine** | elokuva, elokuvateollisuus |\n| **el teatro** | teatteri |\n| **la danza** | tanssi |\n\n## Kulttuurilaitokset ja paikat\n\n| Espanjaksi | Suomeksi |\n|---|---|\n| **el museo** | museo |\n| **la galería de arte** | taidegalleria |\n| **la exposición** | näyttely |\n| **el patrimonio cultural** | kulttuuriperintö |\n| **la herencia cultural** | kulttuuriperintö (perinnöksi saatu) |\n| **la biblioteca** | kirjasto |\n| **el auditorio** | auditorio, konserttisali |\n\n## Taiteilijat ja teokset\n\n| Espanjaksi | Suomeksi |\n|---|---|\n| **el artista / la artista** | taiteilija |\n| **el escritor / la escritora** | kirjailija |\n| **el pintor / la pintora** | maalari |\n| **el escultor / la escultora** | kuvanveistäjä |\n| **la obra** | teos |\n| **la obra maestra** | mestariteos |\n| **el cuadro** | maalaus, taulu |\n\n## Verbit ja ilmaisut\n\n| Espanjaksi | Suomeksi |\n|---|---|\n| **crear** | luoda |\n| **exponer** | esittää, pitää näyttely |\n| **apreciar** | arvostaa, arvioida |\n| **representar** | edustaa, kuvata |\n| **interpretar** | tulkita, esittää |\n| **influir en** | vaikuttaa johonkin |\n| **inspirarse en** | saada inspiraatiota jostakin |\n\n## Esimerkkejä\n\n> *El Museo del Prado expone la obra maestra de Velázquez, 'Las Meninas'.* — Pradon museo esittää Velázquezin mestariteen 'Las Meninas'.\n>\n> *La herencia cultural española es una de las más ricas del mundo.* — Espanjalainen kulttuuriperintö on yksi maailman rikkaimmista.\n>\n> *Gaudí se inspiró en la naturaleza para crear la Sagrada Familia.* — Gaudí sai inspiraation luonnosta Sagrada Familian luomiseen.",
     "key_points": [
-      "PLACEHOLDER"
+      "la pintura = maalaus tai maalaaminen; el cuadro = konkreettinen maalaus/taulu; la escultura = veistos",
+      "el patrimonio cultural ja la herencia cultural ovat lähisynonyymejä — molemmat tarkoittavat kulttuuriperintöä",
+      "el artista on yleistermi; el pintor, el escritor, el escultor ovat spesifisiä lajikohtaisia nimityksiä",
+      "influir en + substantiivi: 'El renacimiento influyó en toda la cultura europea.' — Renessanssi vaikutti koko eurooppalaiseen kulttuuriin.",
+      "la obra maestra = mestariteos — tärkeä termi YO-tason kulttuuriteksteissä"
     ]
   },
   "phases": [
     {
-      "phase_id": "p1-placeholder",
+      "phase_id": "p1-recognition-mc",
       "phase_type": "recognition_mc",
-      "title": "PLACEHOLDER",
-      "instruction": "PLACEHOLDER",
-      "mastery_threshold": {
-        "I": 0.5,
-        "A": 0.6,
-        "B": 0.65,
-        "C": 0.7,
-        "M": 0.75,
-        "E": 0.85,
-        "L": 0.9
-      },
+      "title": "Tunnista — kulttuurisanasto",
+      "instruction": "Valitse oikea suomennos.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "mc", "stem": "la pintura", "choices": ["veistos", "maalaus / maalaaminen", "kirjallisuus", "arkkitehtuuri"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "la pintura = maalaus tai maalaaminen. la escultura = veistos, la literatura = kirjallisuus, la arquitectura = arkkitehtuuri." },
+        { "item_type": "mc", "stem": "la exposición", "choices": ["teos", "galleria", "näyttely", "museo"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "la exposición = näyttely. la obra = teos, la galería = galleria, el museo = museo." },
+        { "item_type": "mc", "stem": "el escritor", "choices": ["näyttelijä", "kuvanveistäjä", "maalari", "kirjailija"], "correct_index": 3, "distractor_difficulty": "easy", "explanation": "el escritor = kirjailija. el actor = näyttelijä, el escultor = kuvanveistäjä, el pintor = maalari." },
+        { "item_type": "mc", "stem": "la herencia cultural", "choices": ["kulttuurikeskus", "kulttuuriperintö", "kulttuurivaihto", "kulttuuritapahtuma"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "la herencia cultural = kulttuuriperintö (perinnöksi saatu). el patrimonio cultural on synonyymi." },
+        { "item_type": "mc", "stem": "la obra maestra", "choices": ["harjoitelma", "taidenäyttely", "mestariteos", "maalaus"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "la obra maestra = mestariteos. el cuadro = maalaus, la exposición = näyttely." },
+        { "item_type": "mc", "stem": "apreciar", "choices": ["luoda", "esittää", "arvostaa / arvioida", "vaikuttaa"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "apreciar = arvostaa tai arvioida. crear = luoda, exponer = esittää/pitää näyttely, influir = vaikuttaa." },
+        { "item_type": "mc", "stem": "el patrimonio cultural", "choices": ["kulttuuritalo", "kulttuuriministeriö", "kulttuuriohjelma", "kulttuuriperintö"], "correct_index": 3, "distractor_difficulty": "medium", "explanation": "el patrimonio cultural = kulttuuriperintö. Synonyymi: la herencia cultural." },
+        { "item_type": "mc", "stem": "representar", "choices": ["myydä", "edustaa / kuvata", "rakentaa", "rahoittaa"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "representar = edustaa tai kuvata. Esim. 'Esta obra representa la vida rural española.' = Tämä teos kuvaa espanjalaista maaseutuelämää." },
+        { "item_type": "mc", "stem": "el auditorio", "choices": ["näyttelytila", "taidegalleria", "konserttisali / auditorio", "teatteri"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "el auditorio = auditorio tai konserttisali. el teatro = teatteri, la galería = galleria." },
+        { "item_type": "mc", "stem": "influir en", "choices": ["innoittaa jostakin", "vaikuttaa johonkin", "esittää teoksessa", "luoda jostakin"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "influir en = vaikuttaa johonkin. inspirarse en = saada inspiraatiota jostakin — ne ovat eri verbit!" },
+        { "item_type": "mc", "stem": "la danza", "choices": ["draama", "tanssi", "laulu", "kuvataide"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "la danza = tanssi. el drama = draama, el canto = laulu." },
+        { "item_type": "mc", "stem": "crear", "choices": ["kritisoida", "kerätä", "luoda", "näyttää"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "crear = luoda. Yleinen taidekontekstissa: 'El artista crea una obra única.' = Taiteilija luo ainutlaatuisen teoksen." },
+        { "item_type": "mc", "stem": "interpretar", "choices": ["kääntää kirjallisesti", "tulkita / esittää", "kritisoida julkisesti", "rahoittaa taiteilijoita"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "interpretar = tulkita tai esittää. Esim. 'El pianista interpretó la sonata de Beethoven.' = Pianisti esitti Beethovenin sonaatin." },
+        { "item_type": "mc", "stem": "la galería de arte", "choices": ["taidekoulu", "taidegalleria", "taidemuseo", "taidehallinto"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "la galería de arte = taidegalleria. el museo de arte = taidemuseo. Galleria on yleensä pienempi yksityinen tila." }
+      ]
+    },
+    {
+      "phase_id": "p2-recognition-match",
+      "phase_type": "recognition_match",
+      "title": "Yhdistä — taide ja kulttuuri",
+      "instruction": "Yhdistä espanja ja suomi.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I"],
       "items": [
         {
-          "item_type": "mc",
-          "stem": "PLACEHOLDER",
-          "choices": [
-            "a",
-            "b",
-            "c",
-            "d"
-          ],
-          "correct_index": 0,
-          "explanation": "PLACEHOLDER"
+          "item_type": "match",
+          "left_label": "Taiteenlajit",
+          "right_label": "Suomeksi",
+          "pairs": [
+            { "left": "la pintura", "right": "maalaus" },
+            { "left": "la escultura", "right": "veistos / kuvanveisto" },
+            { "left": "la arquitectura", "right": "arkkitehtuuri" },
+            { "left": "la literatura", "right": "kirjallisuus" },
+            { "left": "la danza", "right": "tanssi" },
+            { "left": "el cine", "right": "elokuva" }
+          ]
         },
         {
-          "item_type": "mc",
-          "stem": "PLACEHOLDER",
-          "choices": [
-            "a",
-            "b",
-            "c",
-            "d"
-          ],
-          "correct_index": 0,
-          "explanation": "PLACEHOLDER"
+          "item_type": "match",
+          "left_label": "Taiteilijat",
+          "right_label": "Suomeksi",
+          "pairs": [
+            { "left": "el artista", "right": "taiteilija" },
+            { "left": "el escritor", "right": "kirjailija" },
+            { "left": "el pintor", "right": "maalari" },
+            { "left": "el escultor", "right": "kuvanveistäjä" },
+            { "left": "la obra maestra", "right": "mestariteos" },
+            { "left": "el cuadro", "right": "maalaus, taulu" }
+          ]
         },
         {
-          "item_type": "mc",
-          "stem": "PLACEHOLDER",
-          "choices": [
-            "a",
-            "b",
-            "c",
-            "d"
-          ],
-          "correct_index": 0,
-          "explanation": "PLACEHOLDER"
-        },
-        {
-          "item_type": "mc",
-          "stem": "PLACEHOLDER",
-          "choices": [
-            "a",
-            "b",
-            "c",
-            "d"
-          ],
-          "correct_index": 0,
-          "explanation": "PLACEHOLDER"
+          "item_type": "match",
+          "left_label": "Verbit",
+          "right_label": "Suomeksi",
+          "pairs": [
+            { "left": "crear", "right": "luoda" },
+            { "left": "exponer", "right": "esittää, pitää näyttely" },
+            { "left": "apreciar", "right": "arvostaa" },
+            { "left": "representar", "right": "edustaa, kuvata" },
+            { "left": "influir en", "right": "vaikuttaa johonkin" },
+            { "left": "inspirarse en", "right": "saada inspiraatiota jostakin" }
+          ]
         }
+      ]
+    },
+    {
+      "phase_id": "p3-recall-es-fi",
+      "phase_type": "recall_typed_es_to_fi",
+      "title": "Käännä suomeksi",
+      "instruction": "Kirjoita suomennos pienellä.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "la pintura", "accept": ["maalaus", "maalaaminen"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "la exposición", "accept": ["näyttely"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "el escritor", "accept": ["kirjailija"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "la herencia cultural", "accept": ["kulttuuriperintö"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "la obra maestra", "accept": ["mestariteos"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "apreciar", "accept": ["arvostaa", "arvioida"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "representar", "accept": ["edustaa", "kuvata"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "el patrimonio cultural", "accept": ["kulttuuriperintö"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "crear", "accept": ["luoda"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "la escultura", "accept": ["kuvanveisto", "veistos"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "influir en", "accept": ["vaikuttaa johonkin"] }
+      ]
+    },
+    {
+      "phase_id": "p4-recall-fi-es",
+      "phase_type": "recall_typed_fi_to_es",
+      "title": "Käännä espanjaksi",
+      "instruction": "Kirjoita espanjankielinen vastine.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "kulttuuriperintö", "accept": ["la herencia cultural", "herencia cultural", "el patrimonio cultural", "patrimonio cultural"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "mestariteos", "accept": ["la obra maestra", "obra maestra"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "kirjailija", "accept": ["el escritor", "escritor", "la escritora", "escritora"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "näyttely", "accept": ["la exposición", "exposición"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "maalari", "accept": ["el pintor", "pintor", "la pintora", "pintora"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "luoda", "accept": ["crear"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "arvostaa", "accept": ["apreciar"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "kirjallisuus", "accept": ["la literatura", "literatura"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "taidegalleria", "accept": ["la galería de arte", "galería de arte"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "tulkita / esittää", "accept": ["interpretar"] }
+      ]
+    },
+    {
+      "phase_id": "p5-application-gap-helppo",
+      "phase_type": "application_gap_fill",
+      "title": "Lauseen täydennys — perustaso",
+      "instruction": "Täydennä lause. Sanapankki auttaa.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "El Museo del Prado tiene una gran colección de {1} del siglo XVII.", "answers": [["pintura", "pinturas"]], "word_bank": ["pintura", "escultura", "arquitectura"] },
+        { "item_type": "gap_fill", "sentence_template": "Gaudí fue un gran {1} catalán del siglo XIX.", "answers": [["artista", "arquitecto"]], "word_bank": ["artista", "escritor", "pintor"] },
+        { "item_type": "gap_fill", "sentence_template": "La {1} cultural española es reconocida en todo el mundo.", "answers": [["herencia"]], "word_bank": ["herencia", "obra", "exposición"] },
+        { "item_type": "gap_fill", "sentence_template": "Esta semana el museo abre una nueva {1} de arte contemporáneo.", "answers": [["exposición"]], "word_bank": ["exposición", "galería", "obra"] },
+        { "item_type": "gap_fill", "sentence_template": "Las Meninas de Velázquez es considerada una {1} de la pintura española.", "answers": [["obra maestra"]], "word_bank": ["obra maestra", "galería", "escultura"] },
+        { "item_type": "gap_fill", "sentence_template": "El artista se {1} en los paisajes de Andalucía para crear sus cuadros.", "answers": [["inspiró"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "El Renacimiento {1} en toda la cultura europea durante siglos.", "answers": [["influyó"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "La pianista {1} la sonata de Beethoven con gran emoción.", "answers": [["interpretó"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Es importante {1} la riqueza del patrimonio cultural de nuestro país.", "answers": [["apreciar"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "El escritor {1} novelas que representan la vida en la España rural.", "answers": [["crea", "creó"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p6-application-gap-vaativa",
+      "phase_type": "application_gap_fill",
+      "title": "Lauseen täydennys — vaativa",
+      "instruction": "Täydennä ilman sanapankkia. Lauseet pidentyvät ja vaativat tarkkuutta.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "La {1} de arte más famosa de España se encuentra en Madrid y se llama el Prado.", "answers": [["galería", "pinacoteca"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "El movimiento surrealista {1} profundamente en la obra de Salvador Dalí.", "answers": [["influyó"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Para {1} verdaderamente el flamenco hay que entender su contexto histórico y cultural.", "answers": [["apreciar"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "La {1} española es muy rica: desde Cervantes hasta García Lorca, pasando por Machado.", "answers": [["literatura"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Es necesario que los gobiernos {1} el patrimonio cultural para las generaciones futuras.", "answers": [["preserven", "protejan"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "La Sagrada Familia {1} la visión artística y espiritual de su creador, Antoni Gaudí.", "answers": [["representa"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Velázquez se {1} en la corte española para pintar sus retratos más conocidos.", "answers": [["inspiró"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "El {1} contemporáneo español ha producido directores de fama internacional como Pedro Almodóvar.", "answers": [["cine"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "La {1} de la Alhambra refleja la influencia árabe en la arquitectura española medieval.", "answers": [["arquitectura"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "El pianista {1} obras de Chopin y Falla en el auditorio de Madrid.", "answers": [["interpretó"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p7-application-sentence-build",
+      "phase_type": "application_sentence_build",
+      "title": "Lauseiden rakentelua",
+      "instruction": "Käännä koko lause espanjaksi. Käytä kulttuurisanastoa.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.60, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.92 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Espanjalainen kulttuuriperintö on yksi maailman rikkaimmista.", "accept": ["la herencia cultural española es una de las más ricas del mundo", "el patrimonio cultural español es uno de los más ricos del mundo"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Gaudí sai inspiraation luonnosta Sagrada Familian luomiseen.", "accept": ["gaudí se inspiró en la naturaleza para crear la sagrada familia"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Renessanssi vaikutti koko eurooppalaiseen taiteeseen.", "accept": ["el renacimiento influyó en todo el arte europeo", "el renacimiento influyó en toda la cultura europea"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Tämä maalari esitti teoksensa kuuluisassa madridilaisessa galleriassa.", "accept": ["este pintor expuso sus obras en una famosa galería de madrid", "el pintor expuso su obra en una famosa galería madrileña"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "On tärkeää arvostaa eri kulttuurien taiteellista perintöä.", "accept": ["es importante apreciar el patrimonio artístico de las diferentes culturas", "es importante apreciar la herencia artística de distintas culturas"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Kirjailija loi teoksen joka kuvaa 1900-luvun espanjalaista yhteiskuntaa.", "accept": ["el escritor creó una obra que representa la sociedad española del siglo xx", "la escritora creó una obra que representa la sociedad española del siglo veinte"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Museo järjestää uuden näyttelyn surrealistisesta taiteesta.", "accept": ["el museo organiza una nueva exposición de arte surrealista", "el museo abre una nueva exposición de arte surrealista"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Kuvanveistäjä tulkitsi teoksen omalla ainutlaatuisella tavallaan.", "accept": ["el escultor interpretó la obra a su manera única", "la escultora interpretó la obra de manera única"] }
+      ]
+    },
+    {
+      "phase_id": "p8-synthesis-translate",
+      "phase_type": "synthesis_translate",
+      "title": "YO-tason käännös",
+      "instruction": "Käännä koko lause espanjaksi. Pidemmät lauseet, ei vihjeitä.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.60, "C": 0.65, "M": 0.75, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Espanjalainen kulttuuriperintö on ainutlaatuinen: arkkitehtuuri, kirjallisuus, maalaus ja musiikki heijastavat monisäikeistä historiaa.", "accept": ["el patrimonio cultural español es único: la arquitectura, la literatura, la pintura y la música reflejan una historia compleja", "la herencia cultural española es única ya que la arquitectura, la literatura y el arte reflejan siglos de historia"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Velázquezin mestariteen 'Las Meninas' on yksi tunnetuimmista maalauksista maailmassa, ja se edustaa espanjalaisen barokin huippua.", "accept": ["la obra maestra de velázquez las meninas es una de las pinturas más conocidas del mundo y representa la cúspide del barroco español", "las meninas de velázquez es una de las pinturas más famosas del mundo y representa el apogeo del barroco español"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "On tärkeää, että nuoret arvostavat kulttuuriperintöä, joka on vaikuttanut heidän identiteettiinsä vuosisatojen ajan.", "accept": ["es importante que los jóvenes aprecien el patrimonio cultural que ha influido en su identidad durante siglos", "es fundamental que la juventud aprecie la herencia cultural que ha influido en su identidad a lo largo de los siglos"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Dalí sai inspiraation surrealismista ja loi teoksia, jotka tulkitsevat alitajuntaa visuaalisella tavalla.", "accept": ["dalí se inspiró en el surrealismo y creó obras que interpretan el subconsciente de manera visual", "dalí se inspiró en el movimiento surrealista y creó obras que representan el subconsciente visualmente"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Kulttuurilaitosten, kuten museoiden ja kirjastojen, rooli on säilyttää ja esitellä teoksia jotka edustavat yhteistä muistiamme.", "accept": ["el papel de las instituciones culturales como museos y bibliotecas es preservar y exponer obras que representan nuestra memoria colectiva", "la función de instituciones culturales como los museos es conservar obras que representan la memoria colectiva"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Flamenco edustaa andalusialaista kulttuuria: se on tanssia, musiikkia ja runoutta yhdistettynä.", "accept": ["el flamenco representa la cultura andaluza: es una combinación de danza, música y poesía", "el flamenco es la expresión cultural de andalucía que combina danza, música y poesía"] }
+      ]
+    },
+    {
+      "phase_id": "p9-synthesis-short-writing",
+      "phase_type": "synthesis_short_writing",
+      "title": "Lyhyt kirjoitus — kulttuuri ja taide",
+      "instruction": "Kirjoita lyhyt teksti espanjaksi. Ei sanavihjeitä.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.60, "C": 0.65, "M": 0.70, "E": 0.80, "L": 0.90 },
+      "skip_for_targets": ["I", "A", "B", "C", "M"],
+      "items": [
+        { "item_type": "writing", "prompt": "Kirjoita 6–8 lausetta espanjalaisen taiteen tärkeydestä. Käytä sanoja la pintura, la herencia cultural, representar, apreciar, la obra maestra. Perustele näkemyksesi.", "min_words": 55, "max_words": 110, "rubric_focus": ["communication", "vocab", "structure"] },
+        { "item_type": "writing", "prompt": "Valitse yksi espanjalainen taiteilija tai teos (esim. Velázquez, Gaudí, Picasso, García Lorca) ja kirjoita 6–8 lausetta: kuka hän on, mitä hän loi, miksi hän on tärkeä kulttuurille. Käytä influir en ja inspirarse en.", "min_words": 55, "max_words": 110, "rubric_focus": ["communication", "vocab", "structure"] },
+        { "item_type": "writing", "prompt": "Kirjoita YO-tyylinen vastaus kysymykseen: '¿Qué importancia tiene el patrimonio cultural para la sociedad actual?' Käytä vähintään 4 oppitunnin sanaa ja 6–8 lausetta. Käytä subjunktiivia vähintään kerran (esim. 'es importante que...').", "min_words": 60, "max_words": 115, "rubric_focus": ["communication", "structure", "vocab", "overall"] }
+      ]
+    },
+    {
+      "phase_id": "p10-cumulative-review",
+      "phase_type": "recognition_mc",
+      "title": "Kertaus — kulttuuri, sanasto + K6:n rakenteet",
+      "instruction": "Valitse oikea vaihtoehto. Tehtävissä esiintyy myös K6:n subjunktiivirakenteita.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "mc", "stem": "Es importante que los museos _______ el patrimonio cultural para las generaciones futuras. (preservar)", "choices": ["preservan", "preserven", "preservaban", "preservarán"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "preserven = preservar, subjunktiivi. 'Es importante que' vaatii subjunktiivin." },
+        { "item_type": "mc", "stem": "¿Qué representa Las Meninas de Velázquez?", "choices": ["la herencia árabe", "el Renacimiento italiano", "la obra maestra del barroco español", "la literatura contemporánea"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "Las Meninas edustaa espanjalaisen barokin mestariteosta. Velázquez maalasi sen 1600-luvulla." },
+        { "item_type": "mc", "stem": "El movimiento surrealista _______ profundamente en la obra de Dalí. (influir)", "choices": ["influye", "influyó", "influirá", "influyera"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "influyó = influir, preteriti (menneisyys, yksittäinen tapahtuma). 'El movimiento surrealista influyó...' = historiallinenn fakta." },
+        { "item_type": "mc", "stem": "La _______ española ha producido figuras como Cervantes, Lorca y Machado.", "choices": ["pintura", "arquitectura", "danza", "literatura"], "correct_index": 3, "distractor_difficulty": "medium", "explanation": "la literatura = kirjallisuus. Cervantes, García Lorca ja Machado ovat kirjailijoita." },
+        { "item_type": "mc", "stem": "Ojalá que más jóvenes _______ el teatro y la ópera.", "choices": ["aprecian", "apreció", "aprecien", "apreciarán"], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "aprecien = apreciar, subjunktiivi. Ojalá vaatii aina subjunktiivin." },
+        { "item_type": "mc", "stem": "Gaudí _______ en la naturaleza para diseñar la Sagrada Familia.", "choices": ["se influyó", "se inspiró", "se expuso", "se interpretó"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "se inspiró en = sai inspiraation jostakin. 'Inspirarse en' on oikea kollokaatio." },
+        { "item_type": "mc", "stem": "¿Cuál es la diferencia entre 'el patrimonio cultural' y 'la herencia cultural'?", "choices": ["patrimonio = rakennettu, herencia = immateriaalinen", "patrimonio = julkinen, herencia = yksityinen", "molemmat tarkoittavat kulttuuriperintöä", "patrimonio = vanha, herencia = uusi"], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "Molemmat tarkoittavat kulttuuriperintöä — ne ovat pitkälti synonyymejä käytössä." },
+        { "item_type": "mc", "stem": "El flamenco _______ la cultura andaluza: es música, danza y poesía.", "choices": ["influye", "representa", "aprecian", "expone"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "representa = edustaa, kuvaa. Oikea verbi: flamenco edustaa tai kuvaa kulttuuria." },
+        { "item_type": "mc", "stem": "El pianista _______ obras de Chopin en el auditorio nacional.", "choices": ["expuso", "creó", "interpretó", "influyó"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "interpretó = tulkitsi, esitti. Pianisti esittää teoksia — interpretó on oikea verbi." },
+        { "item_type": "mc", "stem": "Es necesario que el gobierno _______ fondos para la cultura. (destinar)", "choices": ["destina", "destinó", "destine", "destinaría"], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "destine = destinar, subjunktiivi. 'Es necesario que' vaatii subjunktiivin." },
+        { "item_type": "mc", "stem": "Una _______ es un espacio más pequeño que un museo donde se exponen obras de arte.", "choices": ["biblioteca", "galería de arte", "auditorio", "obra"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "la galería de arte = taidegalleria, yleensä pienempi tila kuin museo." }
       ]
     }
   ],
   "vocab": [
-    {
-      "es": "PLACEHOLDER",
-      "fi": "PLACEHOLDER"
-    }
+    { "es": "la pintura", "fi": "maalaus, maalaaminen", "example_es": "El Prado tiene una gran colección de pintura del siglo de oro.", "example_fi": "Pradon museossa on suuri kulta-ajan maalauskokoelma.", "gender": "f" },
+    { "es": "la escultura", "fi": "kuvanveisto, veistos", "example_es": "Las esculturas romanas son parte del patrimonio cultural europeo.", "example_fi": "Roomalaiset veistokset ovat osa eurooppalaista kulttuuriperintöä.", "gender": "f" },
+    { "es": "la arquitectura", "fi": "arkkitehtuuri", "example_es": "La arquitectura de Gaudí es única en el mundo.", "example_fi": "Gaudín arkkitehtuuri on ainutlaatuinen maailmassa.", "gender": "f" },
+    { "es": "la literatura", "fi": "kirjallisuus", "example_es": "La literatura española es una de las más ricas de Europa.", "example_fi": "Espanjalainen kirjallisuus on yksi Euroopan rikkaimmista.", "gender": "f" },
+    { "es": "la música", "fi": "musiikki", "example_es": "El flamenco es la música más representativa de Andalucía.", "example_fi": "Flamenco on Andalusian edustavin musiikkimuoto.", "gender": "f" },
+    { "es": "el cine", "fi": "elokuva, elokuvateollisuus", "example_es": "El cine español ha producido directores de fama mundial.", "example_fi": "Espanjalainen elokuva on tuottanut maailmankuuluja ohjaajia.", "gender": "m" },
+    { "es": "el teatro", "fi": "teatteri", "example_es": "El teatro de Lorca es poético y dramático a la vez.", "example_fi": "Lorcan teatteri on samaan aikaan runollinen ja dramaattinen.", "gender": "m" },
+    { "es": "la danza", "fi": "tanssi", "example_es": "La danza flamenca es reconocida como patrimonio mundial.", "example_fi": "Flamencotanssi on tunnustettu maailmanperinnöksi.", "gender": "f" },
+    { "es": "el museo", "fi": "museo", "example_es": "El Museo del Prado es el más visitado de España.", "example_fi": "Pradon museo on Espanjan eniten vierailtu museo.", "gender": "m" },
+    { "es": "la galería de arte", "fi": "taidegalleria", "example_es": "La galería expone obras de artistas contemporáneos.", "example_fi": "Galleria esittää nykytaiteilijoiden teoksia.", "gender": "f" },
+    { "es": "la exposición", "fi": "näyttely", "example_es": "La exposición de Picasso atrajo a miles de visitantes.", "example_fi": "Picasson näyttely houkutteli tuhansia vierailijoita.", "gender": "f" },
+    { "es": "el patrimonio cultural", "fi": "kulttuuriperintö", "example_es": "La Alhambra forma parte del patrimonio cultural de la humanidad.", "example_fi": "Alhambra on osa ihmiskunnan kulttuuriperintöä.", "gender": "m" },
+    { "es": "la herencia cultural", "fi": "kulttuuriperintö (perinnöksi saatu)", "example_es": "La herencia cultural española es una de las más ricas del mundo.", "example_fi": "Espanjalainen kulttuuriperintö on yksi maailman rikkaimmista.", "gender": "f" },
+    { "es": "la biblioteca", "fi": "kirjasto", "example_es": "La biblioteca nacional conserva manuscritos medievales.", "example_fi": "Kansalliskirjasto säilyttää keskiaikaisia käsikirjoituksia.", "gender": "f" },
+    { "es": "el auditorio", "fi": "auditorio, konserttisali", "example_es": "El concierto se celebró en el auditorio nacional.", "example_fi": "Konsertti pidettiin kansallisessa konserttisalissa.", "gender": "m" },
+    { "es": "el artista / la artista", "fi": "taiteilija", "example_es": "El artista expuso su obra en varias galerías europeas.", "example_fi": "Taiteilija esitti teoksensa useissa eurooppalaisissa gallerioissa.", "gender": "m" },
+    { "es": "el escritor / la escritora", "fi": "kirjailija", "example_es": "García Lorca fue uno de los escritores más importantes del siglo XX.", "example_fi": "García Lorca oli yksi 1900-luvun tärkeimmistä kirjailijoista.", "gender": "m" },
+    { "es": "el pintor / la pintora", "fi": "maalari", "example_es": "Velázquez fue el pintor más importante del barroco español.", "example_fi": "Velázquez oli espanjalaisen barokin tärkein maalari.", "gender": "m" },
+    { "es": "el escultor / la escultora", "fi": "kuvanveistäjä", "example_es": "El escultor trabajó el mármol durante años para terminar su obra.", "example_fi": "Kuvanveistäjä työskenteli marmorilla vuosia teoksensa valmiiksi saamiseksi.", "gender": "m" },
+    { "es": "la obra", "fi": "teos", "example_es": "Su obra tardía es la más interesante de su carrera.", "example_fi": "Hänen myöhäistuotantonsa on uransa mielenkiintoisin.", "gender": "f" },
+    { "es": "la obra maestra", "fi": "mestariteos", "example_es": "Las Meninas es considerada la obra maestra de Velázquez.", "example_fi": "Las Meninasia pidetään Velázquezin mestariteoksena.", "gender": "f" },
+    { "es": "el cuadro", "fi": "maalaus, taulu", "example_es": "El cuadro cuelga en la sala principal del museo.", "example_fi": "Maalaus roikkuu museon pääsalissa.", "gender": "m" },
+    { "es": "crear", "fi": "luoda", "example_es": "El artista creó obras que influyeron en generaciones enteras.", "example_fi": "Taiteilija loi teoksia, jotka vaikuttivat kokonaisiin sukupolviin.", "gender": null },
+    { "es": "exponer", "fi": "esittää, pitää näyttely", "example_es": "El museo expone obras de artistas del siglo XX.", "example_fi": "Museo esittää 1900-luvun taiteilijoiden teoksia.", "gender": null },
+    { "es": "apreciar", "fi": "arvostaa, arvioida", "example_es": "Es difícil apreciar el arte sin conocer su contexto.", "example_fi": "On vaikeaa arvostaa taidetta tuntematta sen kontekstia.", "gender": null },
+    { "es": "representar", "fi": "edustaa, kuvata", "example_es": "Esta obra representa la vida cotidiana del siglo XIX.", "example_fi": "Tämä teos kuvaa 1800-luvun jokapäiväistä elämää.", "gender": null },
+    { "es": "interpretar", "fi": "tulkita, esittää", "example_es": "Cada generación interpreta la misma obra de manera diferente.", "example_fi": "Jokainen sukupolvi tulkitsee samaa teosta eri tavalla.", "gender": null },
+    { "es": "influir en", "fi": "vaikuttaa johonkin", "example_es": "La cultura árabe influyó enormemente en el arte andaluz.", "example_fi": "Arabikulttuuri vaikutti suuresti andalusialaiseen taiteeseen.", "gender": null },
+    { "es": "inspirarse en", "fi": "saada inspiraatiota jostakin", "example_es": "Muchos artistas se han inspirado en la naturaleza de España.", "example_fi": "Monet taiteilijat ovat saaneet inspiraation Espanjan luonnosta.", "gender": null },
+    { "es": "el movimiento artístico", "fi": "taideliike", "example_es": "El impresionismo fue un movimiento artístico revolucionario.", "example_fi": "Impressionismi oli vallankumouksellinen taideliike.", "gender": "m" }
   ],
   "side_panel": {
     "tabs": [
       {
         "id": "vocab",
         "title": "Sanasto",
-        "content_md": "PLACEHOLDER"
+        "content_md": "## Taiteenlajit\n\n- **la pintura** — maalaus, maalaaminen\n- **la escultura** — kuvanveisto, veistos\n- **la arquitectura** — arkkitehtuuri\n- **la literatura** — kirjallisuus\n- **la música** — musiikki\n- **el cine** — elokuva\n- **el teatro** — teatteri\n- **la danza** — tanssi\n\n## Kulttuurilaitokset\n\n- **el museo** — museo\n- **la galería de arte** — taidegalleria\n- **la exposición** — näyttely\n- **la biblioteca** — kirjasto\n- **el auditorio** — auditorio, konserttisali\n\n## Perintö ja teokset\n\n- **el patrimonio cultural** — kulttuuriperintö\n- **la herencia cultural** — kulttuuriperintö (perinnöksi saatu)\n- **la obra** — teos\n- **la obra maestra** — mestariteos\n- **el cuadro** — maalaus, taulu\n- **el movimiento artístico** — taideliike\n\n## Taiteilijat\n\n- **el artista / la artista** — taiteilija\n- **el escritor / la escritora** — kirjailija\n- **el pintor / la pintora** — maalari\n- **el escultor / la escultora** — kuvanveistäjä\n\n## Verbit\n\n- **crear** — luoda\n- **exponer** — esittää, pitää näyttely\n- **apreciar** — arvostaa\n- **representar** — edustaa, kuvata\n- **interpretar** — tulkita, esittää\n- **influir en** — vaikuttaa johonkin\n- **inspirarse en** — saada inspiraatiota jostakin"
+      },
+      {
+        "id": "tips",
+        "title": "YO-vinkki",
+        "content_md": "## Kulttuuri ja taide YO-kokeessa\n\nKulttuuriaihe esiintyy YO-kokeessa kirjoitustehtävässä useasti:\n- **'¿Qué importancia tiene el arte en la sociedad?'**\n- **'Describe una obra de arte o un artista español.'**\n- **'¿Cómo influye la cultura en la identidad?'**\n\n## Tärkeimmät rakenteet kirjoitukseen\n\n```\nel arte / la cultura representa...  — taide / kulttuuri edustaa...\ninfluyó en...                        — vaikutti...\nse inspiró en...                     — sai inspiraation...\nes importante apreciar...            — on tärkeää arvostaa...\nla herencia cultural                 — kulttuuriperintö\n```\n\n## Hyödyllisiä taideilijoita ja teoksia\n\n- **Velázquez** — Las Meninas (barokki)\n- **Gaudí** — Sagrada Familia (modernismo)\n- **Dalí** — surrealismo\n- **García Lorca** — kirjallisuus ja teatteri\n- **Almodóvar** — cine contemporáneo\n\n## M-tason vinkki\n\nKäytä subjunktiivia kulttuurikirjoituksessa:\n> *Es necesario que los gobiernos protejan el patrimonio cultural.*\n> *Es importante que los jóvenes aprecien el arte.*"
       }
     ]
   }

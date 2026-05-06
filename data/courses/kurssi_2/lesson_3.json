@@ -1,0 +1,321 @@
+{
+  "meta": {
+    "course_key": "kurssi_2",
+    "lesson_index": 3,
+    "lesson_type": "vocab",
+    "level": "A",
+    "title": "Ruoka ja ateriat",
+    "description": "Opit aterioiden nimet (desayuno, almuerzo, cena), tärkeimmät ruoat ja juomat sekä ravintolafraasit. Sanasto kattaa noin 30 entryä — riittää YO-kokeen kuullun ravintolakeskustelun ymmärtämiseen ja oman päivän kuvaamiseen kirjoituksessa.",
+    "yo_relevance": "Ruoka-aihe näkyy YO-kokeessa joka vuosi: kuullussa ravintolakeskustelut (camarero–asiakas, tilaus, lasku) ja kirjoituksessa oman päivän kuvaus (mitä syöt aamiaiseksi, lounaaksi). Yleisin ansa: tomar — espanjalainen sanoo \"tomar un café\" (juoda kahvia), ei beber.",
+    "estimated_minutes_median": 12
+  },
+  "teaching": {
+    "intro_md": "# Ruoka ja ateriat\n\nEspanjalainen päivä jakautuu aterioihin, joiden nimet ja ajat eroavat suomalaisesta rytmistä.\n\n## Päivän ateriat\n\n| Ateria | Espanjaksi | Aika |\n|---|---|---|\n| aamiainen | **el desayuno** | 7–9 |\n| välipala | **el almuerzo** | 11 |\n| lounas | **la comida** | 14–15 |\n| iltapala | **la merienda** | 17–18 |\n| illallinen | **la cena** | 21–22 |\n\nHuom: Espanjassa **la comida** on tärkein ateria, ei cena. Latinalaisessa Amerikassa **almuerzo** voi tarkoittaa lounasta.\n\n## Esimerkki\n\n> Para desayunar **tomo** café con leche y una tostada. Al mediodía **como** una ensalada y por la noche **ceno** algo ligero. (Aamiaiseksi otan kahvia maidolla ja paahtoleipää. Päivällä syön salaattia ja illalla syön illallisen jotain kevyttä.)\n\n## Verbit\n\n- **desayunar** — syödä aamiainen\n- **almorzar** — syödä välipala/lounas\n- **comer** — syödä, syödä lounas\n- **cenar** — syödä illallinen\n- **tomar** — ottaa, juoda (yleisin juomisesta puhuttaessa)\n- **beber** — juoda (vähemmän käytetty arjessa)\n- **probar** — maistaa\n\n## Ravintolassa\n\n> *Camarero, la cuenta, por favor.* (Tarjoilija, lasku, kiitos.)\n>\n> *De primero quiero la sopa, de segundo el pollo.* (Alkuruoaksi haluan keiton, pääruoaksi kanaa.)",
+    "key_points": [
+      "Espanjalainen sanoo tomar (eikä beber) kun juo kahvia, vettä tai viiniä — tomar un café on luontevampi.",
+      "La comida (lounas) on Espanjan päivän tärkein ateria — Suomessa vastaa illallista painoarvoltaan.",
+      "Aterioiden verbit muodostuvat substantiivista: desayuno → desayunar, cena → cenar.",
+      "Ravintolassa de primero / de segundo / de postre on klassinen tilausjärjestys."
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1-recognition-ateriat-juomat",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista — ateriat ja juomat",
+      "instruction": "Valitse oikea käännös.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.7, "C": 0.75, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "mc", "stem": "el desayuno", "choices": ["lounas", "aamiainen", "illallinen", "välipala"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "el desayuno = aamiainen. Almuerzo = välipala/lounas, cena = illallinen." },
+        { "item_type": "mc", "stem": "la cena", "choices": ["illallinen", "lounas", "aamiainen", "jälkiruoka"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "la cena = illallinen. Cenar = syödä illallinen." },
+        { "item_type": "mc", "stem": "la comida", "choices": ["aamiainen", "lounas (Espanjassa)", "iltapala", "alkuruoka"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "la comida tarkoittaa Espanjassa lounasta — päivän tärkein ateria. Sana voi yleisesti tarkoittaa myös ruokaa." },
+        { "item_type": "mc", "stem": "el almuerzo", "choices": ["jälkiruoka", "alkuruoka", "välipala / lounas", "illallinen"], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "el almuerzo = aamupäivän välipala Espanjassa, mutta Latinalaisessa Amerikassa lounas." },
+        { "item_type": "mc", "stem": "la merienda", "choices": ["iltapala", "lounas", "alkupala", "viinipullo"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "la merienda = iltapala (n. 17–18). Lapset ottavat sen koulun jälkeen." },
+        { "item_type": "mc", "stem": "el postre", "choices": ["alkuruoka", "jälkiruoka", "välipala", "leivos"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "el postre = jälkiruoka. Älä sekoita: aperitivo (alkupala), pastel (kakku, leivos)." },
+        { "item_type": "mc", "stem": "el aperitivo", "choices": ["jälkiruoka", "alkupala, aperitiivi", "lounas", "lasku"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "el aperitivo = alkupala tai aperitiivi (juoma + naposteltavaa ennen ateriaa). Sekoita ei postreen." },
+        { "item_type": "mc", "stem": "el agua", "choices": ["mehu", "viini", "vesi", "olut"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "el agua = vesi. Maskuliininen artikkeli vaikka feminiini sana — el agua, mutta esim. agua fría." },
+        { "item_type": "mc", "stem": "el zumo", "choices": ["maito", "kahvi", "tee", "mehu"], "correct_index": 3, "distractor_difficulty": "medium", "explanation": "el zumo = mehu (Espanjassa). Latinalaisessa Amerikassa: el jugo." },
+        { "item_type": "mc", "stem": "la leche", "choices": ["maito", "olut", "vesi", "viini"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "la leche = maito. Café con leche = maitokahvi." },
+        { "item_type": "mc", "stem": "el vino", "choices": ["mehu", "olut", "viini", "vesi"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "el vino = viini. Vino tinto = punaviini, vino blanco = valkoviini." },
+        { "item_type": "mc", "stem": "la cerveza", "choices": ["kahvi", "olut", "mehu", "tee"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "la cerveza = olut." }
+      ]
+    },
+    {
+      "phase_id": "p2-recognition-ruoat",
+      "phase_type": "recognition_match",
+      "title": "Yhdistä — ruoat",
+      "instruction": "Yhdistä espanjankielinen ruoka oikeaan suomenkieliseen.",
+      "mastery_threshold": { "I": 0.6, "A": 0.65, "B": 0.75, "C": 0.8, "M": 0.85, "E": 0.9, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        {
+          "item_type": "match",
+          "left_label": "Espanjaksi",
+          "right_label": "Suomeksi",
+          "pairs": [
+            { "left": "el pan", "right": "leipä" },
+            { "left": "el queso", "right": "juusto" },
+            { "left": "el jamón", "right": "kinkku" },
+            { "left": "los huevos", "right": "kananmunat" },
+            { "left": "la tortilla", "right": "munakas (espanjalainen)" },
+            { "left": "la ensalada", "right": "salaatti" },
+            { "left": "la sopa", "right": "keitto" },
+            { "left": "el arroz", "right": "riisi" },
+            { "left": "la pasta", "right": "pasta" },
+            { "left": "el pollo", "right": "kana" },
+            { "left": "el pescado", "right": "kala" },
+            { "left": "la carne", "right": "liha" }
+          ]
+        },
+        {
+          "item_type": "match",
+          "left_label": "Hedelmä / juures",
+          "right_label": "Suomeksi",
+          "pairs": [
+            { "left": "la manzana", "right": "omena" },
+            { "left": "el plátano", "right": "banaani" },
+            { "left": "la naranja", "right": "appelsiini" },
+            { "left": "el tomate", "right": "tomaatti" },
+            { "left": "la patata", "right": "peruna (Espanjassa)" },
+            { "left": "la papa", "right": "peruna (Latinalaisessa Amerikassa)" },
+            { "left": "la verdura", "right": "vihannes" },
+            { "left": "la fruta", "right": "hedelmä" }
+          ]
+        },
+        {
+          "item_type": "match",
+          "left_label": "Ravintola",
+          "right_label": "Suomeksi",
+          "pairs": [
+            { "left": "el camarero", "right": "tarjoilija (mies)" },
+            { "left": "la camarera", "right": "tarjoilija (nainen)" },
+            { "left": "el menú", "right": "ruokalista, lounaslista" },
+            { "left": "el plato", "right": "lautanen, ruokalaji" },
+            { "left": "la cuenta", "right": "lasku" },
+            { "left": "el postre", "right": "jälkiruoka" },
+            { "left": "el helado", "right": "jäätelö" },
+            { "left": "el pastel", "right": "leivos, kakku" }
+          ]
+        }
+      ]
+    },
+    {
+      "phase_id": "p3-recognition-mc-laajennus",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista — laajemmin",
+      "instruction": "Valitse oikea käännös.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.7, "C": 0.75, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I"],
+      "items": [
+        { "item_type": "mc", "stem": "el pan", "choices": ["leipä", "juusto", "kakku", "puuro"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "el pan = leipä." },
+        { "item_type": "mc", "stem": "el queso", "choices": ["kinkku", "juusto", "jälkiruoka", "munakas"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "el queso = juusto. Älä sekoita: jamón (kinkku)." },
+        { "item_type": "mc", "stem": "el jamón", "choices": ["kana", "liha", "kinkku", "jauheliha"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "el jamón = kinkku. Jamón ibérico on kuuluisa kuivakypsytetty." },
+        { "item_type": "mc", "stem": "la tortilla", "choices": ["espanjalainen perunamunakas", "tortilla-kääre (meksikolainen)", "molemmat — kontekstista riippuen", "leipä"], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "la tortilla tarkoittaa Espanjassa perunamunakasta, Meksikossa ohutta maissi-/vehnälettua. Konteksti ratkaisee." },
+        { "item_type": "mc", "stem": "el pollo", "choices": ["kala", "kana", "porsas", "kalkkuna"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "el pollo = kana. Älä sekoita: pescado (kala), pavo (kalkkuna)." },
+        { "item_type": "mc", "stem": "el pescado", "choices": ["liha", "kala", "kana", "merenelävä"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "el pescado = kala (lautasella). Pez = elävä kala vedessä." },
+        { "item_type": "mc", "stem": "la carne", "choices": ["kala", "kana", "liha", "leipä"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "la carne = liha (yleinen sana, kaikki lihat)." },
+        { "item_type": "mc", "stem": "el helado", "choices": ["jälkiruoka yleisesti", "jäätelö", "jääkylmä juoma", "kuuma kakku"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "el helado = jäätelö. Helado tarkoittaa myös \"jäätynyt\" adjektiivina." },
+        { "item_type": "mc", "stem": "la cuenta", "choices": ["ruokalista", "lasku", "tarjoilija", "tilaus"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "la cuenta = lasku. La cuenta, por favor = lasku, kiitos." },
+        { "item_type": "mc", "stem": "el menú", "choices": ["lasku", "ruokalista, lounaslista", "alkupala", "annos"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "el menú = ruokalista (carta) tai päivän lounas (menú del día)." },
+        { "item_type": "mc", "stem": "el camarero", "choices": ["kokki", "asiakas", "tarjoilija", "tiskaaja"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "el camarero = tarjoilija (mies). Camarera = nainen." },
+        { "item_type": "mc", "stem": "el plato", "choices": ["ruokalista", "ruokalaji, lautanen", "tarjotin", "alkupala"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "el plato = lautanen tai ruokalaji. De primer plato = ensimmäiseksi ruokalajiksi." }
+      ]
+    },
+    {
+      "phase_id": "p4-recall-typed-es-fi",
+      "phase_type": "recall_typed_es_to_fi",
+      "title": "Käännä suomeksi",
+      "instruction": "Kirjoita käännös suomeksi (pienellä).",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.7, "C": 0.75, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I"],
+      "items": [
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "el desayuno", "accept": ["aamiainen"], "hint": "päivän ensimmäinen ateria" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "la cena", "accept": ["illallinen"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "la comida", "accept": ["lounas", "ruoka"], "hint": "Espanjassa päivän tärkein ateria" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "el postre", "accept": ["jälkiruoka"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "el agua", "accept": ["vesi"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "la leche", "accept": ["maito"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "el pan", "accept": ["leipä"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "el queso", "accept": ["juusto"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "el pollo", "accept": ["kana"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "la cuenta", "accept": ["lasku"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "la merienda", "accept": ["iltapala", "välipala"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "el camarero", "accept": ["tarjoilija"] }
+      ]
+    },
+    {
+      "phase_id": "p5-recall-typed-fi-es",
+      "phase_type": "recall_typed_fi_to_es",
+      "title": "Käännä espanjaksi",
+      "instruction": "Kirjoita käännös espanjaksi (pienellä, aksentit hyväksytään ilman).",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "aamiainen", "accept": ["el desayuno", "desayuno"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "illallinen", "accept": ["la cena", "cena"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "vesi", "accept": ["el agua", "agua"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "kahvi", "accept": ["el café", "café", "el cafe", "cafe"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "leipä", "accept": ["el pan", "pan"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "juusto", "accept": ["el queso", "queso"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "kana", "accept": ["el pollo", "pollo"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "kala", "accept": ["el pescado", "pescado"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "salaatti", "accept": ["la ensalada", "ensalada"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "lasku (ravintolassa)", "accept": ["la cuenta", "cuenta"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "jäätelö", "accept": ["el helado", "helado"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "syödä illallinen", "accept": ["cenar"] }
+      ]
+    },
+    {
+      "phase_id": "p6-application-gap-helppo",
+      "phase_type": "application_gap_fill",
+      "title": "Lauseen täydennys — perustaso",
+      "instruction": "Täydennä oikealla sanalla.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.75, "C": 0.8, "M": 0.85, "E": 0.9, "L": 0.92 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Para {1} tomo café con leche.", "answers": [["desayunar"]], "word_bank": ["desayunar", "cenar", "comer"] },
+        { "item_type": "gap_fill", "sentence_template": "De postre quiero un {1} de chocolate.", "answers": [["helado", "pastel"]], "word_bank": ["helado", "pan", "queso"] },
+        { "item_type": "gap_fill", "sentence_template": "Camarero, la {1}, por favor.", "answers": [["cuenta"]], "word_bank": ["cuenta", "comida", "cena"] },
+        { "item_type": "gap_fill", "sentence_template": "Bebo un vaso de {1} con la comida.", "answers": [["agua", "vino", "leche"]], "word_bank": ["agua", "pan", "queso"] },
+        { "item_type": "gap_fill", "sentence_template": "El {1} ibérico es muy famoso en España.", "answers": [["jamón", "jamon"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Por la noche {1} algo ligero.", "answers": [["ceno"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Los niños toman la {1} a las cinco.", "answers": [["merienda"]], "word_bank": ["merienda", "cena", "comida"] },
+        { "item_type": "gap_fill", "sentence_template": "De primero pido la {1} del día.", "answers": [["sopa", "ensalada"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "En el desayuno como una tostada con {1}.", "answers": [["queso", "jamón", "jamon", "mantequilla"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "La {1} española lleva patatas y huevos.", "answers": [["tortilla"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p7-application-gap-vaativa",
+      "phase_type": "application_gap_fill",
+      "title": "Lauseen täydennys — vaativa",
+      "instruction": "Täydennä ilman sanapankkia.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.65, "C": 0.75, "M": 0.85, "E": 0.9, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "En la cocina mi madre prepara la {1} para todos.", "answers": [["comida", "cena"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Soy vegetariano, no como ni {1} ni pescado.", "answers": [["carne"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Para beber {1} un zumo de naranja.", "answers": [["tomo", "quiero"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "El {1} del día cuesta doce euros e incluye bebida y postre.", "answers": [["menú", "menu"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "¿Quieres {1} este vino? Es muy bueno.", "answers": [["probar"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "De segundo plato me gustaría el {1} con arroz.", "answers": [["pollo", "pescado"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "En España la gente {1} a las tres de la tarde.", "answers": [["come"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Antes de cenar tomamos un {1} con aceitunas.", "answers": [["aperitivo"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "La camarera trae el {1} y los cubiertos a la mesa.", "answers": [["plato", "menú", "menu"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "De {1} hay tarta de manzana o helado.", "answers": [["postre"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p8-application-sentence-build",
+      "phase_type": "application_sentence_build",
+      "title": "Lauseiden rakentelua",
+      "instruction": "Käännä koko lause espanjaksi.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.6, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.92 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Aamiaiseksi otan kahvia ja paahtoleipää.", "accept": ["para desayunar tomo café y una tostada", "para desayunar tomo cafe y una tostada", "de desayuno tomo café y una tostada"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Lounaaksi syön salaattia ja kanaa.", "accept": ["para comer como ensalada y pollo", "de comida como ensalada y pollo", "para almorzar como ensalada y pollo"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Tarjoilija, lasku kiitos.", "accept": ["camarero la cuenta por favor", "camarero, la cuenta, por favor", "camarera, la cuenta, por favor"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Juon vettä aterialla.", "accept": ["bebo agua con la comida", "tomo agua con la comida", "tomo agua en la comida"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Jälkiruoaksi haluan jäätelöä.", "accept": ["de postre quiero helado", "para postre quiero helado"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Syömme illallista yhdeksältä.", "accept": ["cenamos a las nueve", "cenamos a las nueve."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "En syö lihaa.", "accept": ["no como carne", "no como carne."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Haluatko maistaa tätä juustoa?", "accept": ["quieres probar este queso", "¿quieres probar este queso?", "quieres probar este queso?"] }
+      ]
+    },
+    {
+      "phase_id": "p9-synthesis-translate",
+      "phase_type": "synthesis_translate",
+      "title": "YO-tyylinen käännös",
+      "instruction": "Käännä koko lause espanjaksi YO-tasolla.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.6, "C": 0.65, "M": 0.75, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Espanjassa lounas syödään myöhään, yleensä kolmen aikaan iltapäivällä.", "accept": ["en españa la comida se come tarde, normalmente a las tres de la tarde", "en españa se come tarde, normalmente a las tres de la tarde"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Aamiaiseksi otan tavallisesti kahvia maidolla ja paahtoleivän juustolla.", "accept": ["para desayunar normalmente tomo café con leche y una tostada con queso", "de desayuno suelo tomar café con leche y tostada con queso"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Tarjoilija, voisinko saada päivän lounaan ja lasin vettä?", "accept": ["camarero, ¿me trae el menú del día y un vaso de agua?", "camarero, ¿podría traerme el menú del día y un vaso de agua?", "camarera, ¿me trae el menú del día y un vaso de agua?"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "En syö lihaa, mutta maistan mielelläni kalaa.", "accept": ["no como carne, pero pruebo el pescado con gusto", "no como carne, pero me gusta probar el pescado"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Sisareni valmistaa illallisen joka päivä keittiössä.", "accept": ["mi hermana prepara la cena todos los días en la cocina", "mi hermana hace la cena todos los días en la cocina"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Jälkiruoaksi otan jäätelön ja kupin kahvia.", "accept": ["de postre tomo un helado y una taza de café", "de postre quiero un helado y un café"] }
+      ]
+    },
+    {
+      "phase_id": "p10-synthesis-short-writing",
+      "phase_type": "synthesis_short_writing",
+      "title": "Lyhyt kirjoitus",
+      "instruction": "Kirjoita lyhyt teksti ruoasta.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.6, "C": 0.65, "M": 0.7, "E": 0.8, "L": 0.9 },
+      "skip_for_targets": ["I", "A", "B", "C", "M"],
+      "items": [
+        { "item_type": "writing", "prompt": "Kuvaile päiväsi ateriat: mitä syöt aamiaiseksi, lounaaksi ja illalliseksi. 5–7 lausetta. Käytä verbejä desayunar, comer, cenar, tomar.", "min_words": 40, "max_words": 90, "rubric_focus": ["communication", "vocab", "structure"] },
+        { "item_type": "writing", "prompt": "Kirjoita kuvitteellinen ravintolakeskustelu (4–6 vuoroa) tarjoilijan kanssa: tilaat alkuruoan, pääruoan ja jälkiruoan, lopuksi pyydät lasku.", "min_words": 50, "max_words": 100, "rubric_focus": ["communication", "vocab"] },
+        { "item_type": "writing", "prompt": "Vertaa suomalaista ja espanjalaista ruokakulttuuria: aterioiden ajat, tärkein ateria, tyypilliset ruoat. 5–7 lausetta.", "min_words": 45, "max_words": 95, "rubric_focus": ["communication", "structure"] }
+      ]
+    }
+  ],
+  "vocab": [
+    { "es": "el desayuno", "fi": "aamiainen", "example_es": "El desayuno es a las ocho.", "example_fi": "Aamiainen on kahdeksalta.", "gender": "m" },
+    { "es": "el almuerzo", "fi": "välipala / lounas", "example_es": "Tomamos el almuerzo a las once.", "example_fi": "Otamme välipalan yhdeltätoista.", "gender": "m" },
+    { "es": "la comida", "fi": "lounas, ruoka", "example_es": "La comida es la comida principal en España.", "example_fi": "Lounas on Espanjan tärkein ateria.", "gender": "f" },
+    { "es": "la merienda", "fi": "iltapala, välipala", "example_es": "Los niños toman la merienda a las cinco.", "example_fi": "Lapset ottavat iltapalan viideltä.", "gender": "f" },
+    { "es": "la cena", "fi": "illallinen", "example_es": "Cenamos a las nueve.", "example_fi": "Syömme illallista yhdeksältä.", "gender": "f" },
+    { "es": "el aperitivo", "fi": "alkupala, aperitiivi", "example_es": "Antes de comer tomamos un aperitivo.", "example_fi": "Ennen lounasta otamme alkupalan.", "gender": "m" },
+    { "es": "el postre", "fi": "jälkiruoka", "example_es": "De postre hay helado.", "example_fi": "Jälkiruoaksi on jäätelöä.", "gender": "m" },
+    { "es": "desayunar", "fi": "syödä aamiainen", "example_es": "Desayuno a las siete.", "example_fi": "Syön aamiaisen seitsemältä.", "gender": null },
+    { "es": "comer", "fi": "syödä, syödä lounas", "example_es": "Comemos en casa.", "example_fi": "Syömme kotona.", "gender": null },
+    { "es": "cenar", "fi": "syödä illallinen", "example_es": "Cenamos en familia.", "example_fi": "Syömme illallista perheen kanssa.", "gender": null },
+    { "es": "tomar", "fi": "ottaa, juoda", "example_es": "Tomo un café.", "example_fi": "Otan kahvin.", "gender": null },
+    { "es": "beber", "fi": "juoda", "example_es": "Bebo agua todos los días.", "example_fi": "Juon vettä joka päivä.", "gender": null },
+    { "es": "probar", "fi": "maistaa", "example_es": "¿Quieres probar esta sopa?", "example_fi": "Haluatko maistaa tätä keittoa?", "gender": null },
+    { "es": "el pan", "fi": "leipä", "example_es": "Compro pan en la panadería.", "example_fi": "Ostan leivän leipomosta.", "gender": "m" },
+    { "es": "el queso", "fi": "juusto", "example_es": "Me gusta el queso manchego.", "example_fi": "Pidän manchego-juustosta.", "gender": "m" },
+    { "es": "el jamón", "fi": "kinkku", "example_es": "El jamón ibérico es famoso.", "example_fi": "Iberico-kinkku on kuuluisa.", "gender": "m" },
+    { "es": "los huevos", "fi": "kananmunat", "example_es": "Como huevos en el desayuno.", "example_fi": "Syön kananmunia aamiaisella.", "gender": "m" },
+    { "es": "la tortilla", "fi": "munakas (espanjalainen)", "example_es": "La tortilla española lleva patatas.", "example_fi": "Espanjalaisessa munakkaassa on perunaa.", "gender": "f" },
+    { "es": "la ensalada", "fi": "salaatti", "example_es": "Pido una ensalada mixta.", "example_fi": "Tilaan sekasalaatin.", "gender": "f" },
+    { "es": "la sopa", "fi": "keitto", "example_es": "De primero la sopa del día.", "example_fi": "Alkuruoaksi päivän keitto.", "gender": "f" },
+    { "es": "el arroz", "fi": "riisi", "example_es": "El arroz con pollo es típico.", "example_fi": "Riisi kanan kanssa on tyypillinen.", "gender": "m" },
+    { "es": "la pasta", "fi": "pasta", "example_es": "La pasta italiana es deliciosa.", "example_fi": "Italialainen pasta on herkullista.", "gender": "f" },
+    { "es": "el pollo", "fi": "kana", "example_es": "El pollo asado está rico.", "example_fi": "Paistettu kana on hyvää.", "gender": "m" },
+    { "es": "el pescado", "fi": "kala", "example_es": "Como pescado los viernes.", "example_fi": "Syön kalaa perjantaisin.", "gender": "m" },
+    { "es": "la carne", "fi": "liha", "example_es": "No como mucha carne.", "example_fi": "En syö paljon lihaa.", "gender": "f" },
+    { "es": "la fruta", "fi": "hedelmä", "example_es": "La fruta es buena para la salud.", "example_fi": "Hedelmät ovat terveellisiä.", "gender": "f" },
+    { "es": "la manzana", "fi": "omena", "example_es": "Como una manzana al día.", "example_fi": "Syön omenan päivässä.", "gender": "f" },
+    { "es": "el plátano", "fi": "banaani", "example_es": "Los plátanos son ricos en potasio.", "example_fi": "Banaanit ovat kalium-pitoisia.", "gender": "m" },
+    { "es": "la naranja", "fi": "appelsiini", "example_es": "Bebo zumo de naranja.", "example_fi": "Juon appelsiinimehua.", "gender": "f" },
+    { "es": "el tomate", "fi": "tomaatti", "example_es": "La ensalada lleva tomate.", "example_fi": "Salaatissa on tomaattia.", "gender": "m" },
+    { "es": "la patata", "fi": "peruna (Espanjassa)", "example_es": "Las patatas fritas son populares.", "example_fi": "Ranskalaiset perunat ovat suosittuja.", "gender": "f" },
+    { "es": "la papa", "fi": "peruna (Latinalaisessa Amerikassa)", "example_es": "En Perú comen muchas papas.", "example_fi": "Perussa syödään paljon perunaa.", "gender": "f" },
+    { "es": "la verdura", "fi": "vihannes", "example_es": "Hay que comer verduras.", "example_fi": "Vihanneksia on syötävä.", "gender": "f" },
+    { "es": "el pastel", "fi": "leivos, kakku", "example_es": "Hago un pastel de chocolate.", "example_fi": "Teen suklaakakun.", "gender": "m" },
+    { "es": "el helado", "fi": "jäätelö", "example_es": "En verano tomo helado.", "example_fi": "Kesällä otan jäätelöä.", "gender": "m" },
+    { "es": "el agua", "fi": "vesi", "example_es": "Bebo agua con la comida.", "example_fi": "Juon vettä aterialla.", "gender": "f" },
+    { "es": "el café", "fi": "kahvi", "example_es": "Tomo café con leche.", "example_fi": "Juon maitokahvia.", "gender": "m" },
+    { "es": "la leche", "fi": "maito", "example_es": "La leche está fría.", "example_fi": "Maito on kylmää.", "gender": "f" },
+    { "es": "el té", "fi": "tee", "example_es": "Por la tarde tomo té.", "example_fi": "Iltapäivällä juon teetä.", "gender": "m" },
+    { "es": "el zumo", "fi": "mehu", "example_es": "Un zumo de naranja, por favor.", "example_fi": "Appelsiinimehu, kiitos.", "gender": "m" },
+    { "es": "el vino", "fi": "viini", "example_es": "El vino tinto va con la carne.", "example_fi": "Punaviini sopii lihalle.", "gender": "m" },
+    { "es": "la cerveza", "fi": "olut", "example_es": "Una cerveza fría, por favor.", "example_fi": "Kylmä olut, kiitos.", "gender": "f" },
+    { "es": "el refresco", "fi": "virvoitusjuoma", "example_es": "Los niños beben refrescos.", "example_fi": "Lapset juovat virvoitusjuomia.", "gender": "m" },
+    { "es": "la cuenta", "fi": "lasku", "example_es": "La cuenta, por favor.", "example_fi": "Lasku, kiitos.", "gender": "f" },
+    { "es": "el camarero", "fi": "tarjoilija (mies)", "example_es": "El camarero trae el menú.", "example_fi": "Tarjoilija tuo ruokalistan.", "gender": "m" },
+    { "es": "la camarera", "fi": "tarjoilija (nainen)", "example_es": "La camarera es muy amable.", "example_fi": "Tarjoilija on ystävällinen.", "gender": "f" },
+    { "es": "el menú", "fi": "ruokalista, lounaslista", "example_es": "El menú del día cuesta doce euros.", "example_fi": "Päivän lounas maksaa 12 euroa.", "gender": "m" },
+    { "es": "el plato", "fi": "lautanen, ruokalaji", "example_es": "De primer plato pido sopa.", "example_fi": "Ensimmäiseksi ruokalajiksi pyydän keiton.", "gender": "m" }
+  ],
+  "side_panel": {
+    "tabs": [
+      {
+        "id": "vocab",
+        "title": "Sanasto",
+        "content_md": "## Päivän ateriat\n\n- **el desayuno** — aamiainen\n- **el almuerzo** — välipala / lounas (Latinalaisessa Amerikassa)\n- **la comida** — lounas (Espanjassa), ruoka\n- **la merienda** — iltapala, välipala\n- **la cena** — illallinen\n- **el aperitivo** — alkupala, aperitiivi\n- **el postre** — jälkiruoka\n\n## Verbit\n\n- **desayunar** — syödä aamiainen\n- **almorzar** — syödä välipala / lounas\n- **comer** — syödä, syödä lounas\n- **cenar** — syödä illallinen\n- **tomar** — ottaa, juoda\n- **beber** — juoda\n- **probar** — maistaa\n\n## Ruoat — perus\n\n- **el pan** — leipä\n- **el queso** — juusto\n- **el jamón** — kinkku\n- **los huevos** — kananmunat\n- **la tortilla** — espanjalainen perunamunakas\n- **la ensalada** — salaatti\n- **la sopa** — keitto\n- **el arroz** — riisi\n- **la pasta** — pasta\n\n## Liha ja kala\n\n- **el pollo** — kana\n- **el pescado** — kala\n- **la carne** — liha\n\n## Hedelmät ja vihannekset\n\n- **la fruta** — hedelmä\n- **la manzana** — omena\n- **el plátano** — banaani\n- **la naranja** — appelsiini\n- **el tomate** — tomaatti\n- **la patata / la papa** — peruna\n- **la verdura** — vihannes\n\n## Jälkiruoat\n\n- **el pastel** — leivos, kakku\n- **el helado** — jäätelö\n\n## Juomat\n\n- **el agua** — vesi\n- **el café** — kahvi\n- **la leche** — maito\n- **el té** — tee\n- **el zumo** — mehu\n- **el vino** — viini\n- **la cerveza** — olut\n- **el refresco** — virvoitusjuoma\n\n## Ravintolatermit\n\n- **la cuenta** — lasku\n- **el camarero / la camarera** — tarjoilija\n- **el menú** — ruokalista, lounaslista\n- **el plato** — lautanen, ruokalaji"
+      },
+      {
+        "id": "tips",
+        "title": "YO-vinkki",
+        "content_md": "## YO-koe — kuullun ymmärtäminen\n\nRavintolakeskustelu on YO-kuullun klassikko. Yleisimmät kysymykset:\n- Mitä asiakas tilaa?\n- Mihin aikaan ateria syödään?\n- Mitä asiakas juo aterialla?\n\n## Yleisimmät ansat\n\n- **comida** = sekä lounas että ruoka yleensä — konteksti ratkaisee\n- **tomar** käytetään juomista (tomar un café), ei aina beber\n- **patata** (Espanja) ja **papa** (Lat. Am.) ovat sama asia\n- **el agua** on feminiini, mutta artikkeli el (sana alkaa painollisella a:lla)\n\n## Kirjoitustehtävässä\n\nOman päivän kuvaus on YO-kirjoituksen perustehtävä. Käytä konkreettisia ilmauksia:\n\n> *Por la mañana desayuno café con leche y tostadas. A las dos como en el comedor del instituto: una ensalada o un plato de pasta. Por la noche ceno en casa con mi familia.*\n\n## Ravintola-kohtelias kieli\n\n- *De primero / De segundo / De postre* — alku-/pää-/jälkiruoaksi\n- *Para beber...* — juotavaksi...\n- *La cuenta, por favor* — lasku, kiitos\n- *¿Me trae...?* — toisitteko minulle...?"
+      }
+    ]
+  }
+}

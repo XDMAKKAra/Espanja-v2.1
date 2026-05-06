@@ -1,0 +1,259 @@
+{
+  "meta": {
+    "course_key": "kurssi_2",
+    "lesson_index": 2,
+    "lesson_type": "grammar",
+    "level": "A",
+    "title": "Epäsäännölliset preesens-verbit (ser/estar/tener/ir/hacer)",
+    "description": "Opettelet espanjan 5 keskeisintä epäsäännöllistä preesensverbiä — ser, estar, tener, ir ja hacer — sekä niiden tärkeimmät idiomit (tener hambre, ir a + paikka, hacer deporte). Nämä verbit muodostavat yli 60 % YO-kokeen verbimuodoista.",
+    "yo_relevance": "Ser, estar, tener, ir ja hacer esiintyvät käytännössä jokaisessa YO-koetehtävässä. Yleisimmät virheet: tengo hambre kääntyy 'I have hunger' eikä 'I am hungry', ja ser/estar -ero ratkaisee usein kuullun ymmärtämisen vastauksen.",
+    "estimated_minutes_median": 15
+  },
+  "teaching": {
+    "intro_md": "# 5 epäsäännöllistä preesensverbiä\n\nNämä viisi verbiä taipuvat omalla tavallaan — ne eivät seuraa -ar/-er/-ir-sääntöjä. Ne ovat espanjan yleisimmät verbit, joten ne on opittava ulkoa.\n\n## Taivutustaulukko\n\n| Persoona | ser (olla) | estar (olla) | tener (omistaa) | ir (mennä) | hacer (tehdä) |\n|---|---|---|---|---|---|\n| yo | **soy** | **estoy** | **tengo** | **voy** | **hago** |\n| tú | **eres** | **estás** | **tienes** | **vas** | **haces** |\n| él/ella/usted | **es** | **está** | **tiene** | **va** | **hace** |\n| nosotros | **somos** | **estamos** | **tenemos** | **vamos** | **hacemos** |\n| vosotros | **sois** | **estáis** | **tenéis** | **vais** | **hacéis** |\n| ellos/ellas/ustedes | **son** | **están** | **tienen** | **van** | **hacen** |\n\n## tener-idiomit — älä käännä sanasta sanaan\n\nEspanjassa 'minulla on nälkä' = **tengo hambre** (kirjaimellisesti 'minulla on nälkää'). Näin sanotaan myös:\n\n- **tengo sed** — minulla on jano\n- **tengo sueño** — minulla on uni\n- **tengo calor** — minulle on kuuma\n- **tengo frío** — minulle on kylmä\n- **tengo … años** — olen … vuotta vanha\n\n## ir a + paikka — minne mennään\n\n> **Voy a** la escuela. (Menen kouluun.)\n>\n> **Vamos al** cine. (Menemme elokuviin.) — *a + el = al*\n\n## hacer + tekeminen\n\n- **hacer deporte** — urheilla\n- **hacer los deberes** — tehdä läksyt\n- **hacer ejercicio** — harjoitella, treenata\n- **hacer un viaje** — tehdä matka",
+    "key_points": [
+      "Yo-muoto on epäsäännöllinen kaikissa viidessä: soy, estoy, tengo, voy, hago.",
+      "tener + hambre/sed/sueño/calor/frío = tunteet ja tarpeet, EI 'tener' suora käännös.",
+      "ir a + paikka, ir a + infinitiivi (= aikoa tehdä).",
+      "a + el sulautuu aina muotoon al (Voy al cine).",
+      "hacer = tehdä; sopivat kollokaatiot: hacer deporte, hacer los deberes, hacer un viaje."
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1-recognition-mc-tunnista-verbi",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista — mikä verbi ja persoona",
+      "instruction": "Mikä on verbin perusmuoto ja kuka tekee?",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.7, "C": 0.75, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "mc", "stem": "soy", "choices": ["ser — yo", "ser — él", "estar — yo", "tener — yo"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "soy = (minä) olen, ser-verbin yo-muoto." },
+        { "item_type": "mc", "stem": "estás", "choices": ["estar — yo", "estar — tú", "ser — tú", "tener — tú"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "estás = (sinä) olet (tila/paikka). Huom. aksentti." },
+        { "item_type": "mc", "stem": "tiene", "choices": ["tener — yo", "tener — tú", "tener — él/ella", "tener — ellos"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "tiene = hänellä on (3. yks.). Tienen = heillä on." },
+        { "item_type": "mc", "stem": "vamos", "choices": ["ir — yo", "ir — nosotros", "ir — ellos", "venir — nosotros"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "vamos = (me) menemme. Ir-verbin nosotros-muoto." },
+        { "item_type": "mc", "stem": "hago", "choices": ["hacer — yo", "hacer — él", "hablar — yo", "hacer — nosotros"], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "hago = (minä) teen. Yo-muoto on epäsäännöllinen: hago." },
+        { "item_type": "mc", "stem": "tengo", "choices": ["ser — yo", "estar — yo", "tener — yo", "hacer — yo"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "tengo = minulla on. Tener-verbin yo-muoto." },
+        { "item_type": "mc", "stem": "es", "choices": ["ser — yo", "ser — tú", "ser — él/ella", "estar — él"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "es = hän on (luonne, alkuperä, ammatti)." },
+        { "item_type": "mc", "stem": "están", "choices": ["estar — nosotros", "ser — ellos", "estar — ellos/ellas/ustedes", "tener — ellos"], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "están = he ovat (tila/paikka). Son = he ovat (luonne)." },
+        { "item_type": "mc", "stem": "tienes", "choices": ["tener — tú", "tener — él", "tener — yo", "tener — vosotros"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "tienes = sinulla on." },
+        { "item_type": "mc", "stem": "va", "choices": ["ir — yo", "ir — tú", "ir — él/ella", "ir — vosotros"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "va = hän menee. Vas = (sinä) menet." },
+        { "item_type": "mc", "stem": "hacen", "choices": ["hacer — nosotros", "hacer — vosotros", "hacer — ellos/ellas/ustedes", "hablar — ellos"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "hacen = he tekevät. Älä sekoita: hablan = he puhuvat (-ar-verbi)." },
+        { "item_type": "mc", "stem": "estoy", "choices": ["ser — yo", "estar — yo", "tener — yo", "ir — yo"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "estoy = (minä) olen (tila/paikka)." }
+      ]
+    },
+    {
+      "phase_id": "p2-recognition-ser-vs-estar",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista — ser vai estar",
+      "instruction": "Mikä muoto sopii lauseeseen?",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.7, "C": 0.75, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I"],
+      "items": [
+        { "item_type": "mc", "stem": "Yo ___ finlandés.", "choices": ["soy", "estoy", "tengo", "voy"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "Kansallisuus = ser. Soy finlandés = olen suomalainen." },
+        { "item_type": "mc", "stem": "Mi madre ___ en casa ahora.", "choices": ["es", "está", "tiene", "hace"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Sijainti = estar. Está en casa = hän on kotona." },
+        { "item_type": "mc", "stem": "Nosotros ___ estudiantes.", "choices": ["estamos", "somos", "tenemos", "vamos"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Identiteetti/ammatti = ser. Somos estudiantes = olemme opiskelijoita." },
+        { "item_type": "mc", "stem": "¿Cómo ___ tú hoy?", "choices": ["eres", "estás", "tienes", "haces"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "¿Cómo estás? = miten voit? (vointi = estar)." },
+        { "item_type": "mc", "stem": "Mi hermana ___ veinte años.", "choices": ["es", "está", "tiene", "va"], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "Ikä espanjassa: tener + años. Tiene 20 años = hän on 20-vuotias." },
+        { "item_type": "mc", "stem": "(Yo) ___ a la escuela todos los días.", "choices": ["soy", "estoy", "tengo", "voy"], "correct_index": 3, "distractor_difficulty": "easy", "explanation": "Mennä jonnekin = ir a. Voy a la escuela = menen kouluun." },
+        { "item_type": "mc", "stem": "Los chicos ___ deporte los lunes.", "choices": ["son", "están", "hacen", "van"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "Urheilla = hacer deporte." },
+        { "item_type": "mc", "stem": "(Yo) ___ hambre.", "choices": ["soy", "estoy", "tengo", "hago"], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "Nälkäinen = tener hambre (EI 'estar hambriento' arkikielessä)." },
+        { "item_type": "mc", "stem": "El café ___ caliente.", "choices": ["es", "está", "tiene", "hace"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "Hetkellinen tila (lämpötila) = estar. El café está caliente = kahvi on kuumaa (juuri nyt)." },
+        { "item_type": "mc", "stem": "Mis padres ___ médicos.", "choices": ["son", "están", "tienen", "hacen"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "Ammatti = ser. Son médicos = he ovat lääkäreitä." },
+        { "item_type": "mc", "stem": "Mañana ___ los deberes con María.", "choices": ["soy", "voy a hacer", "estoy", "tengo"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "Aikomus tulevaisuudessa = ir a + infinitiivi. Voy a hacer los deberes = aion tehdä läksyt." },
+        { "item_type": "mc", "stem": "(Yo) ___ frío en invierno.", "choices": ["soy", "estoy", "tengo", "hago"], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "Sää-/tunneilmaisu: tener frío = minulla on kylmä." }
+      ]
+    },
+    {
+      "phase_id": "p3-recognition-match-paatteet",
+      "phase_type": "recognition_match",
+      "title": "Yhdistä — verbi ja persoonamuoto",
+      "instruction": "Yhdistä subjekti ja oikea muoto.",
+      "mastery_threshold": { "I": 0.6, "A": 0.65, "B": 0.75, "C": 0.8, "M": 0.85, "E": 0.9, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        {
+          "item_type": "match",
+          "left_label": "Subjekti + verbi",
+          "right_label": "Muoto",
+          "pairs": [
+            { "left": "yo + ser", "right": "soy" },
+            { "left": "tú + estar", "right": "estás" },
+            { "left": "él + tener", "right": "tiene" },
+            { "left": "nosotros + ir", "right": "vamos" },
+            { "left": "vosotros + hacer", "right": "hacéis" },
+            { "left": "ellos + ser", "right": "son" },
+            { "left": "yo + tener", "right": "tengo" },
+            { "left": "tú + hacer", "right": "haces" },
+            { "left": "él + ir", "right": "va" },
+            { "left": "nosotros + estar", "right": "estamos" },
+            { "left": "yo + hacer", "right": "hago" },
+            { "left": "ellos + tener", "right": "tienen" }
+          ]
+        }
+      ]
+    },
+    {
+      "phase_id": "p4-recall-typed-fi-es-muoto",
+      "phase_type": "recall_typed_fi_to_es",
+      "title": "Tuota — verbinmuoto",
+      "instruction": "Kirjoita oikea muoto annetussa persoonassa.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "ser — yo", "accept": ["soy"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "ser — tú", "accept": ["eres"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "ser — nosotros", "accept": ["somos"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "estar — yo", "accept": ["estoy"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "estar — ella", "accept": ["está", "esta"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "estar — ellos", "accept": ["están", "estan"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "tener — yo", "accept": ["tengo"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "tener — tú", "accept": ["tienes"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "tener — nosotros", "accept": ["tenemos"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "ir — yo", "accept": ["voy"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "ir — vosotros", "accept": ["vais"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "hacer — yo", "accept": ["hago"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "hacer — él", "accept": ["hace"] }
+      ]
+    },
+    {
+      "phase_id": "p5-application-gap-helppo",
+      "phase_type": "application_gap_fill",
+      "title": "Lauseen täydennys — perustaso",
+      "instruction": "Täydennä oikealla muodolla. Sanapankki auttaa.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.75, "C": 0.8, "M": 0.85, "E": 0.9, "L": 0.92 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Yo {1} de Helsinki. (ser)", "answers": [["soy"]], "word_bank": ["soy", "estoy", "tengo"] },
+        { "item_type": "gap_fill", "sentence_template": "Mi padre {1} en Madrid esta semana. (estar)", "answers": [["está", "esta"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Nosotros {1} dos hermanos. (tener)", "answers": [["tenemos"]], "word_bank": ["tenemos", "tienen", "somos"] },
+        { "item_type": "gap_fill", "sentence_template": "Los lunes (yo) {1} a la escuela en autobús. (ir)", "answers": [["voy"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Mi hermana {1} deporte tres veces por semana. (hacer)", "answers": [["hace"]], "word_bank": ["hace", "haces", "hago"] },
+        { "item_type": "gap_fill", "sentence_template": "Tú {1} muy simpático. (ser)", "answers": [["eres"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "(Yo) {1} cansado hoy. (estar)", "answers": [["estoy"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Mis padres {1} cuarenta y cinco años. (tener)", "answers": [["tienen"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "¿Adónde {1} (tú)? (ir)", "answers": [["vas"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Vosotros {1} los deberes juntos. (hacer)", "answers": [["hacéis", "haceis"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p6-application-gap-vaativa",
+      "phase_type": "application_gap_fill",
+      "title": "Lauseen täydennys — vaativa (ser/estar/tener-idiomit)",
+      "instruction": "Valitse oikea verbi ja muoto kontekstista. Ei sanapankkia.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.65, "C": 0.75, "M": 0.85, "E": 0.9, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Mi hermano {1} hambre — quiere comer ahora.", "answers": [["tiene"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "(Yo) {1} mucho calor en agosto.", "answers": [["tengo"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Mis amigos {1} en el cine ahora.", "answers": [["están", "estan"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Pedro {1} simpático pero hoy {2} de mal humor.", "answers": [["es"], ["está", "esta"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Los domingos nosotros {1} un viaje a la sierra.", "answers": [["hacemos"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Mañana (yo) {1} a visitar a mis abuelos.", "answers": [["voy"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "¿Cuántos años {1} tu hermana?", "answers": [["tiene"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Vosotros {1} muy amables.", "answers": [["sois"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Hace frío y los niños {1} frío en la calle.", "answers": [["tienen"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Nosotros {1} ejercicio en el parque por la mañana.", "answers": [["hacemos"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p7-application-sentence-build",
+      "phase_type": "application_sentence_build",
+      "title": "Lauseiden rakentelua",
+      "instruction": "Käännä koko lause espanjaksi.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.6, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.92 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Minulla on kaksi veljeä.", "accept": ["tengo dos hermanos", "tengo dos hermanos."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Menen kouluun.", "accept": ["voy a la escuela", "voy al colegio", "voy a la escuela."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Urheilen kolme kertaa viikossa.", "accept": ["hago deporte tres veces por semana", "hago deporte tres veces a la semana", "hago deporte tres veces por semana."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Olen väsynyt.", "accept": ["estoy cansado", "estoy cansada", "estoy cansado."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Olen suomalainen.", "accept": ["soy finlandés", "soy finlandesa", "soy finlandes"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Minulla on nälkä.", "accept": ["tengo hambre", "tengo hambre."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Hän on kotona.", "accept": ["está en casa", "ella está en casa", "él está en casa", "esta en casa"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Teemme läksyt yhdessä.", "accept": ["hacemos los deberes juntos", "hacemos los deberes juntas", "hacemos los deberes juntos."] }
+      ]
+    },
+    {
+      "phase_id": "p8-synthesis-translate",
+      "phase_type": "synthesis_translate",
+      "title": "YO-tyylinen käännös",
+      "instruction": "Käännä koko lause espanjaksi YO-tasolla.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.6, "C": 0.65, "M": 0.75, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Olen 17-vuotias ja minulla on yksi sisko.", "accept": ["tengo diecisiete años y tengo una hermana", "tengo 17 años y tengo una hermana", "tengo diecisiete anos y tengo una hermana"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Vanhempani ovat opettajia, mutta isäni on tällä viikolla Madridissa.", "accept": ["mis padres son profesores, pero mi padre está esta semana en madrid", "mis padres son profesores pero mi padre esta esta semana en madrid", "mis padres son profesores, pero mi padre está en madrid esta semana"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Joka päivä menen kouluun ja teen läksyt iltapäivällä.", "accept": ["todos los días voy a la escuela y hago los deberes por la tarde", "todos los dias voy a la escuela y hago los deberes por la tarde", "cada día voy al colegio y hago los deberes por la tarde"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Minulla on jano ja olen vähän väsynyt.", "accept": ["tengo sed y estoy un poco cansado", "tengo sed y estoy un poco cansada", "tengo sed y estoy algo cansado"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Aiomme tehdä matkan Espanjaan ensi kesänä.", "accept": ["vamos a hacer un viaje a españa el próximo verano", "vamos a hacer un viaje a españa el verano que viene", "vamos a hacer un viaje a espana el proximo verano"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Siskoni on hyvin urheilullinen — hän urheilee joka päivä.", "accept": ["mi hermana es muy deportista — hace deporte todos los días", "mi hermana es muy deportista, hace deporte todos los días", "mi hermana es muy deportista y hace deporte todos los dias"] }
+      ]
+    },
+    {
+      "phase_id": "p9-synthesis-short-writing",
+      "phase_type": "synthesis_short_writing",
+      "title": "Lyhyt kirjoitus",
+      "instruction": "Käytä kaikkia 5 verbiä luonnollisesti.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.6, "C": 0.65, "M": 0.7, "E": 0.8, "L": 0.9 },
+      "skip_for_targets": ["I", "A", "B", "C", "M"],
+      "items": [
+        { "item_type": "writing", "prompt": "Kirjoita 5–7 lausetta itsestäsi käyttäen kaikkia 5 verbiä (ser, estar, tener, ir, hacer): kuka olet, missä olet nyt, mitä sinulla on (perhe/ikä), minne menet päivisin, mitä teet vapaa-ajalla.", "min_words": 40, "max_words": 90, "rubric_focus": ["communication", "structure", "vocab"] },
+        { "item_type": "writing", "prompt": "Kerro tyypillisestä päivästäsi: minne menet, mitä teet, miltä olo tuntuu (käytä tener hambre/sueño/cansado-idiomit). 5–7 lausetta.", "min_words": 40, "max_words": 90, "rubric_focus": ["communication", "vocab"] },
+        { "item_type": "writing", "prompt": "Esittele perheesi käyttäen ser- ja tener-verbejä: ketä on, kuinka vanhoja, millaisia he ovat, mitä kukin tekee. 5–7 lausetta.", "min_words": 40, "max_words": 90, "rubric_focus": ["communication", "structure"] }
+      ]
+    },
+    {
+      "phase_id": "p10-cumulative-review",
+      "phase_type": "application_gap_fill",
+      "title": "Kertaus — sekoitettu",
+      "instruction": "Sekoitettu kertaus kaikista 5 verbistä ja idiomista.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.7, "C": 0.75, "M": 0.85, "E": 0.9, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Mi hermana {1} dieciocho años y {2} estudiante de medicina.", "answers": [["tiene"], ["es"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "(Yo) {1} cansado porque {2} mucho ejercicio hoy.", "answers": [["estoy"], ["hago"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Los sábados (nosotros) {1} al cine y después {2} a un restaurante.", "answers": [["vamos"], ["vamos"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "¿Tú {1} hambre? — Sí, mucha.", "answers": [["tienes"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Mis abuelos {1} mayores pero {2} muy activos.", "answers": [["son"], ["están", "estan"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "(Yo) {1} a hacer los deberes después de cenar.", "answers": [["voy"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Mi mejor amigo {1} español y ahora {2} en Finlandia de intercambio.", "answers": [["es"], ["está", "esta"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Hace frío en clase — los niños {1} frío.", "answers": [["tienen"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "¿Cuántos años {1} (tú)? — {2} dieciséis.", "answers": [["tienes"], ["tengo"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Los lunes mi padre {1} deporte y mi madre {2} a yoga.", "answers": [["hace"], ["va"]], "word_bank": null }
+      ]
+    }
+  ],
+  "vocab": [
+    { "es": "ser", "fi": "olla (luonne, alkuperä, ammatti)", "example_es": "Soy finlandés.", "example_fi": "Olen suomalainen.", "gender": null },
+    { "es": "estar", "fi": "olla (tila, sijainti)", "example_es": "Estoy en casa.", "example_fi": "Olen kotona.", "gender": null },
+    { "es": "tener", "fi": "omistaa, olla jollakin", "example_es": "Tengo dos hermanos.", "example_fi": "Minulla on kaksi sisarusta.", "gender": null },
+    { "es": "ir", "fi": "mennä", "example_es": "Voy a la escuela.", "example_fi": "Menen kouluun.", "gender": null },
+    { "es": "hacer", "fi": "tehdä", "example_es": "Hago los deberes por la tarde.", "example_fi": "Teen läksyt iltapäivällä.", "gender": null },
+    { "es": "hambre", "fi": "nälkä", "example_es": "Tengo hambre.", "example_fi": "Minulla on nälkä.", "gender": "f" },
+    { "es": "sed", "fi": "jano", "example_es": "Tengo mucha sed.", "example_fi": "Minulla on kova jano.", "gender": "f" },
+    { "es": "sueño", "fi": "uni, väsymys", "example_es": "Tengo sueño.", "example_fi": "Minulla on uni.", "gender": "m" },
+    { "es": "calor", "fi": "kuuma, lämpö", "example_es": "Tengo calor en agosto.", "example_fi": "Minulle on kuuma elokuussa.", "gender": "m" },
+    { "es": "frío", "fi": "kylmä, vilu", "example_es": "Tengo frío en invierno.", "example_fi": "Minulle on kylmä talvella.", "gender": "m" },
+    { "es": "deporte", "fi": "urheilu", "example_es": "Hago deporte tres veces por semana.", "example_fi": "Urheilen kolme kertaa viikossa.", "gender": "m" },
+    { "es": "deberes", "fi": "läksyt, kotitehtävät", "example_es": "Hago los deberes en casa.", "example_fi": "Teen läksyt kotona.", "gender": "m" },
+    { "es": "viaje", "fi": "matka", "example_es": "Hacemos un viaje a España.", "example_fi": "Teemme matkan Espanjaan.", "gender": "m" },
+    { "es": "ejercicio", "fi": "harjoitus, treeni", "example_es": "Hago ejercicio en el gimnasio.", "example_fi": "Treenaan kuntosalilla.", "gender": "m" },
+    { "es": "cansado", "fi": "väsynyt", "example_es": "Estoy cansado hoy.", "example_fi": "Olen väsynyt tänään.", "gender": "m" },
+    { "es": "año", "fi": "vuosi", "example_es": "Tengo diecisiete años.", "example_fi": "Olen 17-vuotias.", "gender": "m" }
+  ],
+  "side_panel": {
+    "tabs": [
+      {
+        "id": "vocab",
+        "title": "Sanasto",
+        "content_md": "## Verbit\n\n- **ser** — olla (pysyvä: luonne, alkuperä, ammatti)\n- **estar** — olla (tilapäinen: paikka, vointi, tunne)\n- **tener** — omistaa, olla jollakin\n- **ir** — mennä\n- **hacer** — tehdä\n\n## tener-idiomien substantiivit\n\n- **hambre** — nälkä → *tengo hambre* = minulla on nälkä\n- **sed** — jano → *tengo sed*\n- **sueño** — uni → *tengo sueño* = minua väsyttää\n- **calor** — kuuma → *tengo calor* = minulle on kuuma\n- **frío** — kylmä → *tengo frío*\n- **años** — vuosia → *tengo 17 años* = olen 17-vuotias\n\n## hacer-kollokaatiot\n\n- **hacer deporte** — urheilla\n- **hacer los deberes** — tehdä läksyt\n- **hacer ejercicio** — treenata\n- **hacer un viaje** — tehdä matka\n\n## ir-rakenteet\n\n- **ir a** + paikka — *voy a la escuela*\n- **ir a** + infinitiivi — *voy a estudiar* (= aion opiskella)\n- **a + el = al** — *vamos al cine*"
+      },
+      {
+        "id": "tips",
+        "title": "YO-vinkki",
+        "content_md": "## YO-koe — viiden verbin valta\n\nNämä 5 verbiä esiintyvät käytännössä jokaisessa YO-koetehtävässä. Niiden virheettömyys nostaa pisteitä helposti.\n\n## Yleisin YO-virhe: tener-idiomit\n\nSuomalainen kääntää 'minulla on nälkä' suoraan 'I am hungry' → estoy hambriento. **Väärä!** Espanjaksi sanotaan **tengo hambre** (kirjaimellisesti 'minulla on nälkää'). Sama logiikka:\n\n- *tengo sed* (en estoy sediento)\n- *tengo sueño* (en estoy somnoliento)\n- *tengo frío* (en soy frío)\n- *tengo 17 años* (en soy 17)\n\nMuista: kaikki nämä **tener** + substantiivi, ei adjektiivi.\n\n## ser vs estar — pikamuisti\n\n| Käyttö | Verbi | Esimerkki |\n|---|---|---|\n| kansallisuus | ser | *soy finlandés* |\n| ammatti | ser | *es médico* |\n| luonne | ser | *eres simpático* |\n| sijainti | estar | *está en Madrid* |\n| vointi | estar | *estoy bien* |\n| hetkellinen tila | estar | *el café está frío* |\n\n## Kuullun ymmärtäminen — tarkat ansat\n\n- **es** vs **está** — yksi tavu eroa, eri merkitys\n- **van** (he menevät) vs **son** (he ovat) — eri verbi kokonaan\n- **tiene** vs **tienen** — yksi vai monta omistajaa\n\n## Kirjoituksessa\n\nKun esittelet itsesi YO-kirjoituksessa, käytä kaikkia 5 verbiä luonnollisesti. Esimerkki:\n\n> *Soy María. Tengo 18 años y soy de Helsinki. Mi familia y yo vivimos en un piso. Voy al instituto todos los días y por la tarde hago deporte. Ahora estoy un poco cansada porque tengo muchos exámenes.*\n\nSiinä on kaikki 5 + 2 idiomia (tener años, tener cansada via estar)."
+      }
+    ]
+  }
+}

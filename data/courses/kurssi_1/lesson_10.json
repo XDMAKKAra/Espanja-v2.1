@@ -1,0 +1,98 @@
+{
+  "meta": {
+    "course_key": "kurssi_1",
+    "lesson_index": 10,
+    "lesson_type": "test",
+    "level": "A",
+    "title": "Kertaustesti — Kurssi 1",
+    "description": "Kurssi 1:n päättävä kertaustesti: preesensin -ar/-er/-ir-verbit, ser vs estar, perhe ja kansallisuudet, numerot ja ikä, koulu ja värit. Sekoitettu testi monivalintoja, käännöksiä ja aukkotehtäviä.",
+    "yo_relevance": "YO-kokeen rakenne-osio testaa kumulatiivisesti useaa rakennetta yhtä aikaa. Tämä testi simuloi sitä — pelkän viimeisen oppitunnin osaaminen ei riitä, vaan koko kurssin sisältö on aktiivisena.",
+    "estimated_minutes_median": 22
+  },
+  "teaching": {
+    "intro_md": "# Kurssi 1 — kertaustesti\n\nKurssi 1 päättyy kertaustestillä, joka kokoaa kaikki keskeiset rakenteet ja sanaston yhteen.\n\n## Mitä testi mittaa\n\n- **Preesens** — säännölliset -ar, -er, -ir-verbit (L2 ja L3)\n- **Ser ja estar** — kumman valitset (L5 ja L7)\n- **Perhe ja kansallisuudet** (L1)\n- **Koulu ja värit** (L4)\n- **Numerot ja ikä** (L6)\n\n## Vinkki\n\nÄlä jää jumiin yhteen tehtävään. Jos jokin tuntuu hankalalta, ohita ja palaa lopuksi. YO-kokeessa toimii sama strategia.",
+    "key_points": [
+      "30 sekoitettua tehtävää: monivalintoja, käännöksiä, aukkoja.",
+      "Aiheet sekoitettu — ei ryhmitelty oppitunnittain.",
+      "Tämä simuloi YO-kokeen rakenne-osion tilannetta."
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1-test-kurssi-1",
+      "phase_type": "recognition_mc",
+      "title": "Kertaustesti",
+      "instruction": "Vastaa kaikkiin tehtäviin. Tämä on Kurssi 1:n loppukoe.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.65, "C": 0.7, "M": 0.75, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "mc", "stem": "Mi madre _____ profesora.", "choices": ["es", "está", "soy", "estoy"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "Ammatti = ser. Es profesora." },
+        { "item_type": "mc", "stem": "Helsinki _____ en Finlandia.", "choices": ["es", "está", "son", "están"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Sijainti = aina estar." },
+        { "item_type": "mc", "stem": "Yo _____ español todos los días.", "choices": ["habla", "hablas", "hablo", "hablan"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "Yo + hablar (–ar) = hablo." },
+        { "item_type": "mc", "stem": "Mi hermana _____ en la universidad.", "choices": ["estudio", "estudias", "estudia", "estudian"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "Ella + estudiar = estudia (3. persoona yks.)." },
+        { "item_type": "mc", "stem": "¿Cuántos años _____ (tú)?", "choices": ["tiene", "tienes", "tengo", "tienen"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "Tú + tener = tienes. ¿Cuántos años tienes? = kuinka vanha olet." },
+        { "item_type": "mc", "stem": "Nosotros _____ en Madrid.", "choices": ["vivimos", "vivís", "vive", "viven"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "Nosotros + vivir (–ir) = vivimos." },
+        { "item_type": "mc", "stem": "El padre de mi padre es mi _____.", "choices": ["tío", "abuelo", "primo", "hermano"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "Isän isä = abuelo (isoisä)." },
+        { "item_type": "mc", "stem": "La hermana de mi madre es mi _____.", "choices": ["prima", "abuela", "tía", "sobrina"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "Äidin sisko = tía (täti)." },
+        { "item_type": "mc", "stem": "Mi padre es de Berlín. Es _____.", "choices": ["alemán", "francés", "italiano", "estadounidense"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "Berliini → Saksa → alemán." },
+        { "item_type": "mc", "stem": "Hoy _____ jueves.", "choices": ["es", "está", "son", "están"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "Päivä = ser. Hoy es jueves." },
+        { "item_type": "mc", "stem": "Mis amigos _____ cansados después del partido.", "choices": ["son", "están", "es", "está"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "Hetkellinen tila (väsymys ottelun jälkeen) = estar." },
+        { "item_type": "mc", "stem": "Mi color favorito es el _____.", "choices": ["azul", "instituto", "matemáticas", "lápiz"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "Vain azul on väri. Muut ovat koulusanoja." },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Olen suomalainen (mies).", "accept": ["soy finlandés", "soy finlandes", "soy finlandés."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Hän (nainen) on espanjalainen.", "accept": ["es española", "ella es española", "es espanola", "ella es espanola"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Olen 17-vuotias.", "accept": ["tengo 17 años", "tengo diecisiete años", "tengo 17 anos", "tengo diecisiete anos"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Mi hermana mayor estudia medicina.", "accept": ["isosiskoni opiskelee lääketiedettä", "vanhempi siskoni opiskelee lääketiedettä", "isosiskoni opiskelee lääkäriksi"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Estoy en el instituto.", "accept": ["olen lukiossa", "olen koulussa"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Veljeni asuu Madridissa.", "accept": ["mi hermano vive en madrid", "mi hermano vive en madrid."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Reppuni on punainen.", "accept": ["mi mochila es roja", "mi mochila es roja."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Tunnit alkavat kello kahdeksan.", "accept": ["las clases empiezan a las ocho", "las clases empiezan a las ocho.", "la clase empieza a las ocho"] },
+        { "item_type": "gap_fill", "sentence_template": "Mi tío {1} (vivir) en Sevilla.", "answers": [["vive"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Yo {1} (comer) a las dos.", "answers": [["como"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Nosotros {1} (estudiar) español los lunes.", "answers": [["estudiamos"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Mis padres {1} (ser) finlandeses.", "answers": [["son"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "El libro {1} (estar) en la mesa.", "answers": [["está", "esta"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "La hija de mi hermano es mi {1}.", "answers": [["sobrina"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Mi cuaderno es {1} (verde).", "answers": [["verde"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Tengo {1} años. (numero 16)", "answers": [["dieciséis", "dieciseis", "16"]], "word_bank": null },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Äitini on opettaja ja hän työskentelee Helsingissä.", "accept": ["mi madre es profesora y trabaja en helsinki", "mi madre es profesora y ella trabaja en helsinki", "mi madre es profesora y trabaja en helsinki."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Olen lukiossa ja olen tänään väsynyt.", "accept": ["estoy en el instituto y hoy estoy cansado", "estoy en el instituto y hoy estoy cansada", "estoy en el instituto y estoy cansado hoy", "estoy en el instituto y estoy cansada hoy"] }
+      ]
+    }
+  ],
+  "vocab": [
+    { "es": "madre", "fi": "äiti", "gender": "f" },
+    { "es": "padre", "fi": "isä", "gender": "m" },
+    { "es": "hermano", "fi": "veli", "gender": "m" },
+    { "es": "hermana", "fi": "sisko", "gender": "f" },
+    { "es": "abuelo", "fi": "isoisä", "gender": "m" },
+    { "es": "tía", "fi": "täti", "gender": "f" },
+    { "es": "sobrina", "fi": "sisaren-/veljentytär", "gender": "f" },
+    { "es": "finlandés", "fi": "suomalainen (mies)", "gender": "m" },
+    { "es": "española", "fi": "espanjalainen (nainen)", "gender": "f" },
+    { "es": "alemán", "fi": "saksalainen (mies)", "gender": "m" },
+    { "es": "hablar", "fi": "puhua", "gender": null },
+    { "es": "estudiar", "fi": "opiskella", "gender": null },
+    { "es": "comer", "fi": "syödä", "gender": null },
+    { "es": "vivir", "fi": "asua", "gender": null },
+    { "es": "tener", "fi": "olla (jollakulla)", "gender": null },
+    { "es": "ser", "fi": "olla (pysyvä)", "gender": null },
+    { "es": "estar", "fi": "olla (tila/sijainti)", "gender": null },
+    { "es": "instituto", "fi": "lukio", "gender": "m" },
+    { "es": "clase", "fi": "tunti, luokka", "gender": "f" },
+    { "es": "mochila", "fi": "reppu", "gender": "f" },
+    { "es": "libro", "fi": "kirja", "gender": "m" },
+    { "es": "rojo", "fi": "punainen", "gender": "m" },
+    { "es": "verde", "fi": "vihreä", "gender": null },
+    { "es": "azul", "fi": "sininen", "gender": null },
+    { "es": "dieciséis", "fi": "kuusitoista", "gender": null }
+  ],
+  "side_panel": {
+    "tabs": [
+      {
+        "id": "tips",
+        "title": "YO-vinkki",
+        "content_md": "## YO-koe — rakenne-osion simulaatio\n\nKurssi 1:n kertaustesti rakentuu samaan tapaan kuin YO-kokeen rakenne-osio: useita lyhyitä tehtäviä, jokainen testaa eri rakennetta, järjestys ei kerro mitä testataan.\n\n## Strategia\n\n1. **Lue tehtävänanto loppuun.** Pieni sana (esim. *hoy*, *ahora*) voi vihjata estarista.\n2. **Älä jää jumiin.** Jos et tiedä, ohita ja palaa lopuksi.\n3. **Tarkista persoona.** Onko subjekti yo, tú, él/ella vai monikko? Verbi taipuu.\n4. **Tarkista suku.** *Mi madre es simpátic**a***, ei *simpático*.\n5. **Tarkista ser vs estar.** Kansallisuus, ammatti, päivä = ser. Sijainti, mieliala = estar.\n\n## Yleisimmät virheet K1-tason kertauksessa\n\n- **Estoy finlandés** → *Soy finlandés*.\n- **Yo come** → *Yo como*.\n- **Mi familia es cuatro** → *En mi familia somos cuatro*.\n- **Madrid es en España** → *Madrid está en España*.\n- **Hoy está martes** → *Hoy es martes*.\n\n## Tason tulkinta\n\n- 90 % oikein → L-taso saavutettu Kurssi 1:ssä.\n- 75 % oikein → M-taso, hyvä pohja.\n- 55–65 % oikein → A/B-taso. Palaa epävarmoihin oppitunteihin ennen Kurssi 2:ta.\n- Alle 50 % → kertaa erityisesti ser/estar (L5, L7) ja preesens (L2, L3)."
+      }
+    ]
+  }
+}

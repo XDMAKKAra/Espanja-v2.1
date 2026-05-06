@@ -5,87 +5,964 @@
     "lesson_type": "vocab",
     "level": "B",
     "title": "Lapsuus ja muistot",
-    "description": "PLACEHOLDER — sisältö generoidaan myöhemmin PROMPT_GENERATE_LESSON.md:llä",
-    "yo_relevance": "PLACEHOLDER",
+    "description": "Opit lapsuusajan ydinsanaston: lapsuuteen liittyvät substantiivit (la infancia, la niñez, los recuerdos, el juguete), perhemuistot (los abuelos, el pueblo), leikit ja tavat. Sanasto kattaa 30 entryä — juuri se mitä tarvitaan K4:n imperfektitehtävissä ja YO-kirjoituksessa.",
+    "yo_relevance": "Lapsuusaihe on YO-kirjoituksen vakioteema: 'Kerro lapsuudestasi', 'Miten lapsuutesi eroaa nykyelämästä?'. Tämän oppitunnin sanasto (la infancia, los recuerdos, los juguetes, jugar, tener X años) on välttämätön imperfektin kanssa: 'cuando era niño/a...' — rakenne jota K4 L2–L3 harjoittelee.",
     "estimated_minutes_median": 12
   },
   "teaching": {
-    "intro_md": "PLACEHOLDER — opetussisältö generoidaan myöhemmin",
+    "intro_md": "# Lapsuus ja muistot\n\nLapsuusaihe on YO-kokeen kirjoitusosiossa yksi yleisimmistä teemoista. Tällä oppitunnilla opit sanaston, jolla kuvaat omaa lapsuuttasi ja muistojasi — imperfektin kanssa (tulossa K4 L2!).\n\n## Lapsuuden ydinsubstantiivit\n\n| Espanjaksi | Suomeksi |\n|---|---|\n| **la infancia** | lapsuus |\n| **la niñez** | lapsuusaika, lapsuus |\n| **el recuerdo** | muisto |\n| **el juguete** | lelu |\n| **el juego** | peli, leikki |\n| **el columpio** | keinu |\n| **el tobogán** | liukumäki |\n| **el patio** | piha, koulun piha |\n| **la escuela primaria** | alakoulu |\n| **el pueblo** | kylä, pikkukaupunki |\n\n## Perhe ja ihmiset lapsuudessa\n\n| Espanjaksi | Suomeksi |\n|---|---|\n| **los abuelos** | isovanhemmat |\n| **el abuelo** | isoisä |\n| **la abuela** | isoäiti |\n| **los primos** | serkut |\n| **los vecinos** | naapurit |\n| **los amigos de la infancia** | lapsuuden ystävät |\n\n## Leikit ja toiminnot\n\n| Espanjaksi | Suomeksi |\n|---|---|\n| **jugar** | leikkiä, pelata |\n| **contar cuentos** | kertoa satuja |\n| **cantar canciones** | laulaa lauluja |\n| **tener X años** | olla X vuotta vanha |\n| **crecer** | kasvaa |\n| **recordar** | muistaa |\n\n## Aika ja paikat\n\n| Espanjaksi | Suomeksi |\n|---|---|\n| **las vacaciones de verano** | kesäloma |\n| **las navidades** | joulu(n aika) |\n| **antes** | ennen, aiemmin |\n| **de pequeño/a** | lapsena |\n| **cuando era niño/a** | kun olin lapsi |\n\n## Esimerkkejä\n\n> *Cuando era niño, jugaba con mis primos en el patio.* — Kun olin lapsi, leikin serkkujeni kanssa pihalla.\n>\n> *Tenía muchos recuerdos bonitos de la infancia.* — Minulla oli paljon kauniita lapsuusmuistoja.\n>\n> *Antes vivíamos en un pueblo pequeño.* — Aiemmin asuimme pienessä kylässä.",
     "key_points": [
-      "PLACEHOLDER"
+      "la infancia ja la niñez ovat synonyymejä — molemmat tarkoittavat lapsuutta.",
+      "el recuerdo = muisto (ei muistelu — se on el recuerdo tai la memoria).",
+      "los abuelos (monikko) = isovanhemmat — sekä isoisä että isoäiti yhdessä.",
+      "de pequeño/a ja cuando era niño/a ovat imperfektin kanssa käytettäviä avainfraaseja.",
+      "jugar + al + peli: jugar al escondite (piilosta), jugar al fútbol (jalkapalloa)."
     ]
   },
   "phases": [
     {
-      "phase_id": "p1-placeholder",
+      "phase_id": "p1-recognition-mc-lapsuus",
       "phase_type": "recognition_mc",
-      "title": "PLACEHOLDER",
-      "instruction": "PLACEHOLDER",
+      "title": "Tunnista — lapsuussanasto",
+      "instruction": "Valitse oikea suomennos.",
       "mastery_threshold": {
-        "I": 0.5,
-        "A": 0.6,
+        "I": 0.55,
+        "A": 0.60,
         "B": 0.65,
-        "C": 0.7,
-        "M": 0.75,
+        "C": 0.70,
+        "M": 0.80,
         "E": 0.85,
-        "L": 0.9
+        "L": 0.95
       },
+      "skip_for_targets": [],
       "items": [
         {
           "item_type": "mc",
-          "stem": "PLACEHOLDER",
-          "choices": [
-            "a",
-            "b",
-            "c",
-            "d"
-          ],
-          "correct_index": 0,
-          "explanation": "PLACEHOLDER"
+          "stem": "la infancia",
+          "choices": ["nuoruus", "lapsuus", "vanhuus", "teini-ikä"],
+          "correct_index": 1,
+          "distractor_difficulty": "easy",
+          "explanation": "la infancia = lapsuus. Älä sekoita: la adolescencia = nuoruus/teini-ikä, la vejez = vanhuus."
         },
         {
           "item_type": "mc",
-          "stem": "PLACEHOLDER",
-          "choices": [
-            "a",
-            "b",
-            "c",
-            "d"
-          ],
-          "correct_index": 0,
-          "explanation": "PLACEHOLDER"
+          "stem": "el recuerdo",
+          "choices": ["tulevaisuus", "haave", "muisto", "unelma"],
+          "correct_index": 2,
+          "distractor_difficulty": "easy",
+          "explanation": "el recuerdo = muisto. Recordar = muistaa. Älä sekoita: el sueño = unelma tai uni."
         },
         {
           "item_type": "mc",
-          "stem": "PLACEHOLDER",
-          "choices": [
-            "a",
-            "b",
-            "c",
-            "d"
-          ],
-          "correct_index": 0,
-          "explanation": "PLACEHOLDER"
+          "stem": "el juguete",
+          "choices": ["peli", "lelu", "leikkiminen", "lelupuisto"],
+          "correct_index": 1,
+          "distractor_difficulty": "easy",
+          "explanation": "el juguete = lelu. el juego = peli tai leikki (toiminta). jugar = leikkiä/pelata."
         },
         {
           "item_type": "mc",
-          "stem": "PLACEHOLDER",
-          "choices": [
-            "a",
-            "b",
-            "c",
-            "d"
-          ],
+          "stem": "los abuelos",
+          "choices": ["vanhemmat", "isovanhemmat", "serkut", "naapurit"],
+          "correct_index": 1,
+          "distractor_difficulty": "easy",
+          "explanation": "los abuelos = isovanhemmat (monikko kattaa sekä isoisän että isoäidin). los padres = vanhemmat."
+        },
+        {
+          "item_type": "mc",
+          "stem": "el patio",
+          "choices": ["leikkipuisto", "puutarha", "piha (kodin tai koulun)", "kenttä"],
+          "correct_index": 2,
+          "distractor_difficulty": "easy",
+          "explanation": "el patio = piha, erityisesti kodin tai koulun piha. el parque = puisto. el jardín = puutarha."
+        },
+        {
+          "item_type": "mc",
+          "stem": "la niñez",
+          "choices": ["lapsi (yksikkö)", "lapsuusaika", "lastenhuone", "lapseksi tuleminen"],
+          "correct_index": 1,
+          "distractor_difficulty": "easy",
+          "explanation": "la niñez = lapsuusaika. Synonyymi: la infancia. el niño = lapsi (yksittäinen)."
+        },
+        {
+          "item_type": "mc",
+          "stem": "el pueblo",
+          "choices": ["kaupunki", "kylä, pikkukaupunki", "maa", "alue"],
+          "correct_index": 1,
+          "distractor_difficulty": "easy",
+          "explanation": "el pueblo = kylä tai pikkukaupunki. la ciudad = (iso) kaupunki. el país = maa."
+        },
+        {
+          "item_type": "mc",
+          "stem": "las vacaciones de verano",
+          "choices": ["talviloma", "kesäloma", "joulu", "kouluaika"],
+          "correct_index": 1,
+          "distractor_difficulty": "easy",
+          "explanation": "las vacaciones de verano = kesäloma. el verano = kesä. las navidades = joulu(n aika)."
+        },
+        {
+          "item_type": "mc",
+          "stem": "crecer",
+          "choices": ["muistaa", "leikkiä", "kasvaa", "kertoa"],
+          "correct_index": 2,
+          "distractor_difficulty": "easy",
+          "explanation": "crecer = kasvaa. recordar = muistaa. jugar = leikkiä/pelata. contar = kertoa."
+        },
+        {
+          "item_type": "mc",
+          "stem": "el columpio",
+          "choices": ["liukumäki", "keinu", "keinulauta", "hiekkalaatikko"],
+          "correct_index": 1,
+          "distractor_difficulty": "easy",
+          "explanation": "el columpio = keinu. el tobogán = liukumäki. el balancín = keinulauta."
+        },
+        {
+          "item_type": "mc",
+          "stem": "los amigos de la infancia",
+          "choices": ["koulu-ystävät", "lapsuuden ystävät", "naapurit", "serkut"],
+          "correct_index": 1,
+          "distractor_difficulty": "easy",
+          "explanation": "los amigos de la infancia = lapsuuden ystävät. los compañeros de clase = luokkakaverit."
+        },
+        {
+          "item_type": "mc",
+          "stem": "de pequeño/a",
+          "choices": ["pieneksi", "lapsena", "pienenä paikkakuntana", "nuorena"],
+          "correct_index": 1,
+          "distractor_difficulty": "easy",
+          "explanation": "de pequeño/a = lapsena (kirj. 'pienenä'). Synonyymi: cuando era niño/a. Käytetään imperfektin kanssa."
+        },
+        {
+          "item_type": "mc",
+          "stem": "la escuela primaria",
+          "choices": ["lukio", "yliopisto", "alakoulu", "päiväkoti"],
+          "correct_index": 2,
+          "distractor_difficulty": "easy",
+          "explanation": "la escuela primaria = alakoulu. el instituto = lukio. la universidad = yliopisto."
+        }
+      ]
+    },
+    {
+      "phase_id": "p2-recognition-match-sanasto",
+      "phase_type": "recognition_match",
+      "title": "Yhdistä — lapsuussanasto",
+      "instruction": "Yhdistä espanja ja suomi.",
+      "mastery_threshold": {
+        "I": 0.55,
+        "A": 0.60,
+        "B": 0.65,
+        "C": 0.70,
+        "M": 0.80,
+        "E": 0.85,
+        "L": 0.95
+      },
+      "skip_for_targets": ["I"],
+      "items": [
+        {
+          "item_type": "match",
+          "left_label": "Lapsuusajan paikat ja esineet",
+          "right_label": "Suomeksi",
+          "pairs": [
+            {"left": "el columpio", "right": "keinu"},
+            {"left": "el tobogán", "right": "liukumäki"},
+            {"left": "el patio", "right": "piha"},
+            {"left": "el juguete", "right": "lelu"},
+            {"left": "el juego", "right": "peli, leikki"},
+            {"left": "la escuela primaria", "right": "alakoulu"},
+            {"left": "el pueblo", "right": "kylä, pikkukaupunki"},
+            {"left": "el jardín", "right": "puutarha"}
+          ]
+        },
+        {
+          "item_type": "match",
+          "left_label": "Lapsuuden ihmiset ja ajat",
+          "right_label": "Suomeksi",
+          "pairs": [
+            {"left": "los abuelos", "right": "isovanhemmat"},
+            {"left": "los primos", "right": "serkut"},
+            {"left": "los vecinos", "right": "naapurit"},
+            {"left": "las navidades", "right": "joulu(n aika)"},
+            {"left": "las vacaciones de verano", "right": "kesäloma"},
+            {"left": "la infancia", "right": "lapsuus"},
+            {"left": "el recuerdo", "right": "muisto"},
+            {"left": "la niñez", "right": "lapsuusaika"}
+          ]
+        },
+        {
+          "item_type": "match",
+          "left_label": "Verbit ja fraasit",
+          "right_label": "Suomeksi",
+          "pairs": [
+            {"left": "crecer", "right": "kasvaa"},
+            {"left": "recordar", "right": "muistaa"},
+            {"left": "contar cuentos", "right": "kertoa satuja"},
+            {"left": "cantar canciones", "right": "laulaa lauluja"},
+            {"left": "tener X años", "right": "olla X vuotta vanha"},
+            {"left": "de pequeño/a", "right": "lapsena"}
+          ]
+        }
+      ]
+    },
+    {
+      "phase_id": "p3-recall-es-fi",
+      "phase_type": "recall_typed_es_to_fi",
+      "title": "Käännä suomeksi",
+      "instruction": "Kirjoita suomennos pienellä.",
+      "mastery_threshold": {
+        "I": 0.55,
+        "A": 0.60,
+        "B": 0.65,
+        "C": 0.70,
+        "M": 0.80,
+        "E": 0.85,
+        "L": 0.95
+      },
+      "skip_for_targets": ["I"],
+      "items": [
+        {"item_type": "typed", "direction": "es_to_fi", "prompt": "la infancia", "accept": ["lapsuus"]},
+        {"item_type": "typed", "direction": "es_to_fi", "prompt": "el recuerdo", "accept": ["muisto"]},
+        {"item_type": "typed", "direction": "es_to_fi", "prompt": "el juguete", "accept": ["lelu"]},
+        {"item_type": "typed", "direction": "es_to_fi", "prompt": "los abuelos", "accept": ["isovanhemmat"]},
+        {"item_type": "typed", "direction": "es_to_fi", "prompt": "el patio", "accept": ["piha"]},
+        {"item_type": "typed", "direction": "es_to_fi", "prompt": "crecer", "accept": ["kasvaa"]},
+        {"item_type": "typed", "direction": "es_to_fi", "prompt": "el columpio", "accept": ["keinu"]},
+        {"item_type": "typed", "direction": "es_to_fi", "prompt": "el pueblo", "accept": ["kylä", "pikkukaupunki"]},
+        {"item_type": "typed", "direction": "es_to_fi", "prompt": "las navidades", "accept": ["joulu", "joulunaika", "joulu(n aika)"]},
+        {"item_type": "typed", "direction": "es_to_fi", "prompt": "recordar", "accept": ["muistaa"]},
+        {"item_type": "typed", "direction": "es_to_fi", "prompt": "los primos", "accept": ["serkut"]}
+      ]
+    },
+    {
+      "phase_id": "p4-recall-fi-es",
+      "phase_type": "recall_typed_fi_to_es",
+      "title": "Käännä espanjaksi",
+      "instruction": "Kirjoita käännös espanjaksi (pienellä, aksentit hyväksytään ilman).",
+      "mastery_threshold": {
+        "I": 0.55,
+        "A": 0.60,
+        "B": 0.65,
+        "C": 0.70,
+        "M": 0.80,
+        "E": 0.85,
+        "L": 0.95
+      },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        {"item_type": "typed", "direction": "fi_to_es", "prompt": "lapsuus", "accept": ["la infancia", "infancia", "la niñez", "niñez", "la ninez", "ninez"]},
+        {"item_type": "typed", "direction": "fi_to_es", "prompt": "muisto", "accept": ["el recuerdo", "recuerdo"]},
+        {"item_type": "typed", "direction": "fi_to_es", "prompt": "lelu", "accept": ["el juguete", "juguete"]},
+        {"item_type": "typed", "direction": "fi_to_es", "prompt": "isovanhemmat", "accept": ["los abuelos", "abuelos"]},
+        {"item_type": "typed", "direction": "fi_to_es", "prompt": "keinu", "accept": ["el columpio", "columpio"]},
+        {"item_type": "typed", "direction": "fi_to_es", "prompt": "kasvaa", "accept": ["crecer"]},
+        {"item_type": "typed", "direction": "fi_to_es", "prompt": "piha", "accept": ["el patio", "patio"]},
+        {"item_type": "typed", "direction": "fi_to_es", "prompt": "kylä", "accept": ["el pueblo", "pueblo"]},
+        {"item_type": "typed", "direction": "fi_to_es", "prompt": "kesäloma", "accept": ["las vacaciones de verano", "vacaciones de verano"]},
+        {"item_type": "typed", "direction": "fi_to_es", "prompt": "lapsena", "accept": ["de pequeño", "de pequeña", "cuando era niño", "cuando era niña"]},
+        {"item_type": "typed", "direction": "fi_to_es", "prompt": "muistaa", "accept": ["recordar"]}
+      ]
+    },
+    {
+      "phase_id": "p5-application-gap-helppo",
+      "phase_type": "application_gap_fill",
+      "title": "Lauseen täydennys — perustaso",
+      "instruction": "Täydennä lause. Sanapankki auttaa.",
+      "mastery_threshold": {
+        "I": 0.55,
+        "A": 0.60,
+        "B": 0.65,
+        "C": 0.70,
+        "M": 0.80,
+        "E": 0.85,
+        "L": 0.95
+      },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "Tengo muchos {1} bonitos de mi infancia.",
+          "answers": [["recuerdos"]],
+          "word_bank": ["recuerdos", "juguetes", "abuelos"]
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "De pequeña jugaba con mis {1} en el patio.",
+          "answers": [["primos", "vecinos", "amigos"]],
+          "word_bank": ["primos", "vecinos", "amigos"]
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "Cuando era niño, mi juguete favorito era un {1} de madera.",
+          "answers": [["juguete"]],
+          "word_bank": ["juguete", "columpio", "tobogán"]
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "Pasábamos las {1} de verano en el pueblo de los abuelos.",
+          "answers": [["vacaciones"]],
+          "word_bank": ["vacaciones", "navidades", "infancia"]
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "La {1} en el pueblo era muy tranquila.",
+          "answers": [["infancia", "niñez"]],
+          "word_bank": ["infancia", "niñez", "escuela"]
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "Mis abuelos siempre nos {1} cuentos antes de dormir.",
+          "answers": [["contaban"]],
+          "word_bank": ["contaban", "cantaban", "recordaban"]
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "En el {1} de la escuela primaria jugábamos al escondite.",
+          "answers": [["patio"]],
+          "word_bank": ["patio", "jardín", "pueblo"]
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "Cuando tenía ocho años, vivíamos en un {1} pequeño.",
+          "answers": [["pueblo"]],
+          "word_bank": null
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "Los niños subían al {1} y bajaban rápido.",
+          "answers": [["tobogán"]],
+          "word_bank": null
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "Siempre {1} las navidades con toda la familia.",
+          "answers": [["recordamos", "recuerdo"]],
+          "word_bank": null
+        }
+      ]
+    },
+    {
+      "phase_id": "p6-application-gap-vaativa",
+      "phase_type": "application_gap_fill",
+      "title": "Lauseen täydennys — vaativa",
+      "instruction": "Täydennä ilman sanapankkia. Lauseet pidentyvät.",
+      "mastery_threshold": {
+        "I": 0.55,
+        "A": 0.60,
+        "B": 0.65,
+        "C": 0.70,
+        "M": 0.80,
+        "E": 0.85,
+        "L": 0.95
+      },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "Cuando {1} pequeña, tenía muchos juguetes y pasaba el tiempo en el patio.",
+          "answers": [["era"]],
+          "word_bank": null
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "De {1}, mis abuelos me cantaban canciones tradicionales.",
+          "answers": [["pequeño", "pequeña"]],
+          "word_bank": null
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "Los {1} de la infancia son los más difíciles de olvidar.",
+          "answers": [["recuerdos"]],
+          "word_bank": null
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "Antes de {1}, los niños jugaban más tiempo fuera de casa.",
+          "answers": [["crecer"]],
+          "word_bank": null
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "Mis amigos de la {1} siguen siendo mis mejores amigos hoy.",
+          "answers": [["infancia"]],
+          "word_bank": null
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "Cuando {1} diez años, me regalaron una bicicleta por navidades.",
+          "answers": [["tenía"]],
+          "word_bank": null
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "Las {1} de verano eran la mejor época del año cuando éramos pequeños.",
+          "answers": [["vacaciones"]],
+          "word_bank": null
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "El {1} de mi abuela tenía un jardín lleno de flores y árboles frutales.",
+          "answers": [["pueblo"]],
+          "word_bank": null
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "Nos {1} de aquella época con mucho cariño.",
+          "answers": [["recordamos", "acordamos"]],
+          "word_bank": null
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "En la {1} primaria aprendí a leer y a hacer mis primeros amigos.",
+          "answers": [["escuela"]],
+          "word_bank": null
+        }
+      ]
+    },
+    {
+      "phase_id": "p7-application-sentence-build",
+      "phase_type": "application_sentence_build",
+      "title": "Lauseiden rakentelua",
+      "instruction": "Käännä koko lause espanjaksi. Käytä lapsuussanastoa.",
+      "mastery_threshold": {
+        "I": 0.55,
+        "A": 0.60,
+        "B": 0.65,
+        "C": 0.70,
+        "M": 0.80,
+        "E": 0.85,
+        "L": 0.95
+      },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        {
+          "item_type": "typed",
+          "direction": "fi_to_es",
+          "prompt": "Lapsena leikin aina serkkujeni kanssa.",
+          "accept": [
+            "de pequeño siempre jugaba con mis primos",
+            "de pequeña siempre jugaba con mis primos",
+            "cuando era niño siempre jugaba con mis primos",
+            "cuando era niña siempre jugaba con mis primos"
+          ]
+        },
+        {
+          "item_type": "typed",
+          "direction": "fi_to_es",
+          "prompt": "Minulla on hyviä muistoja lapsuudestani.",
+          "accept": [
+            "tengo buenos recuerdos de mi infancia",
+            "tengo buenos recuerdos de mi niñez",
+            "tengo muchos recuerdos bonitos de mi infancia"
+          ]
+        },
+        {
+          "item_type": "typed",
+          "direction": "fi_to_es",
+          "prompt": "Kun olin kahdeksan vuotta, asuimme kylässä.",
+          "accept": [
+            "cuando tenía ocho años vivíamos en un pueblo",
+            "cuando tenia ocho años viviamos en un pueblo"
+          ]
+        },
+        {
+          "item_type": "typed",
+          "direction": "fi_to_es",
+          "prompt": "Isovanhempani kertoivat meille satuja joka ilta.",
+          "accept": [
+            "mis abuelos nos contaban cuentos cada noche",
+            "mis abuelos nos contaban cuentos todas las noches"
+          ]
+        },
+        {
+          "item_type": "typed",
+          "direction": "fi_to_es",
+          "prompt": "Kesäloma oli paras aika koko lapsuudessa.",
+          "accept": [
+            "las vacaciones de verano eran la mejor época de toda la infancia",
+            "las vacaciones de verano eran lo mejor de la niñez"
+          ]
+        },
+        {
+          "item_type": "typed",
+          "direction": "fi_to_es",
+          "prompt": "Lapsena kasvoin pienessä kylässä Espanjassa.",
+          "accept": [
+            "de pequeño crecí en un pueblo pequeño de España",
+            "de pequeña crecí en un pueblo pequeño de España",
+            "cuando era niño crecí en un pueblo de España"
+          ]
+        },
+        {
+          "item_type": "typed",
+          "direction": "fi_to_es",
+          "prompt": "Lapsuuden ystävillä on erityinen merkitys elämässämme.",
+          "accept": [
+            "los amigos de la infancia tienen un significado especial en nuestra vida",
+            "los amigos de la infancia son muy especiales en la vida"
+          ]
+        },
+        {
+          "item_type": "typed",
+          "direction": "fi_to_es",
+          "prompt": "Ennen lapset leikkivät pihalla, ei puhelimella.",
+          "accept": [
+            "antes los niños jugaban en el patio no con el móvil",
+            "antes los niños jugaban en el patio y no con el teléfono"
+          ]
+        }
+      ]
+    },
+    {
+      "phase_id": "p8-synthesis-translate",
+      "phase_type": "synthesis_translate",
+      "title": "YO-tason käännös",
+      "instruction": "Käännä koko lause espanjaksi. Pidemmät lauseet, ei vihjeitä.",
+      "mastery_threshold": {
+        "I": 0.55,
+        "A": 0.60,
+        "B": 0.65,
+        "C": 0.70,
+        "M": 0.80,
+        "E": 0.85,
+        "L": 0.95
+      },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        {
+          "item_type": "translate",
+          "direction": "fi_to_es",
+          "source": "Lapsuuteni parhaat muistot liittyvät isovanhempieni kylään, jossa vietimme kesälomamme.",
+          "accept": [
+            "mis mejores recuerdos de la infancia están relacionados con el pueblo de mis abuelos donde pasábamos las vacaciones de verano",
+            "los mejores recuerdos de mi niñez son del pueblo de mis abuelos donde pasábamos el verano"
+          ]
+        },
+        {
+          "item_type": "translate",
+          "direction": "fi_to_es",
+          "source": "Kun olin pieni, leikimme pihalla serkkujeni kanssa joka päivä ja isoäiti kertoi meille satuja.",
+          "accept": [
+            "cuando era pequeño jugábamos en el patio con mis primos todos los días y la abuela nos contaba cuentos",
+            "cuando era pequeña jugábamos en el patio con mis primos cada día y mi abuela nos contaba cuentos"
+          ]
+        },
+        {
+          "item_type": "translate",
+          "direction": "fi_to_es",
+          "source": "Ennen lapset kasvoivat vapaammin — meillä oli paljon leluja ja leikimme ulkona iltaan asti.",
+          "accept": [
+            "antes los niños crecían con más libertad teníamos muchos juguetes y jugábamos fuera hasta la tarde",
+            "antes los niños crecían de forma más libre teníamos muchos juguetes y jugábamos fuera hasta la noche"
+          ]
+        },
+        {
+          "item_type": "translate",
+          "direction": "fi_to_es",
+          "source": "Lapsuuden ystävyyssuhteet ovat usein kestävimpiä — muistamme aina ne yhteiset hetket pihalla ja koulussa.",
+          "accept": [
+            "las amistades de la infancia son a menudo las más duraderas siempre recordamos esos momentos en el patio y en la escuela",
+            "las amistades de la niñez son generalmente las más fuertes y recordamos siempre los momentos compartidos"
+          ]
+        },
+        {
+          "item_type": "translate",
+          "direction": "es_to_fi",
+          "source": "Cuando tenía diez años, mis padres me regalaron un juguete muy especial por navidades y todavía lo recuerdo con mucho cariño.",
+          "accept": [
+            "kun olin kymmenen vuotta vanhemmat antoivat minulle hyvin erityisen lelun joulunaika na ja muistan sen vieläkin suurella rakkaudella",
+            "kun olin kymmenvuotias vanhempani lahjoittivat minulle erityisen lelun joululahjaksi ja muistan sen yhä lämmöllä"
+          ]
+        },
+        {
+          "item_type": "translate",
+          "direction": "es_to_fi",
+          "source": "De pequeña crecí en un pueblo pequeño del norte de España donde los niños jugábamos juntos en el patio de la escuela primaria.",
+          "accept": [
+            "lapsena kasvoin pienessä kylässä Pohjois-Espanjassa jossa me lapset leikimme yhdessä alakoulun pihalla",
+            "lapsena kasvoin pienessä pohjoisespanjalaisessa kylässä jossa lapset leikkivät yhdessä alakoulun pihalla"
+          ]
+        },
+        {
+          "item_type": "translate",
+          "direction": "fi_to_es",
+          "source": "Lapsuuden muistot ovat tärkeitä — ne muokkaavat sitä, keitä olemme aikuisena.",
+          "accept": [
+            "los recuerdos de la infancia son importantes porque forman lo que somos de adultos",
+            "los recuerdos de la niñez son importantes ya que nos forman como personas"
+          ]
+        }
+      ]
+    },
+    {
+      "phase_id": "p9-synthesis-short-writing",
+      "phase_type": "synthesis_short_writing",
+      "title": "Lyhyt kirjoitus — lapsuusmuistot",
+      "instruction": "Kirjoita lyhyt teksti espanjaksi lapsuudestasi. Ei sanavihjeitä.",
+      "mastery_threshold": {
+        "I": 0.55,
+        "A": 0.60,
+        "B": 0.65,
+        "C": 0.70,
+        "M": 0.80,
+        "E": 0.85,
+        "L": 0.95
+      },
+      "skip_for_targets": ["I", "A", "B", "C", "M"],
+      "items": [
+        {
+          "item_type": "writing",
+          "prompt": "Kuvaile lapsuuttasi: missä kasvoit, keiden kanssa leikit, millaisia muistoja sinulla on. Käytä sanoja la infancia, los recuerdos, los abuelos, jugar, crecer. 6–8 lausetta.",
+          "min_words": 50,
+          "max_words": 100,
+          "rubric_focus": ["communication", "vocab", "structure"]
+        },
+        {
+          "item_type": "writing",
+          "prompt": "Kerro lapsuuden parhaasta muistosta: mitä tapahtui, missä, keiden kanssa, miten se tuntui. Käytä imperfektiä (jugaba, tenía, era). 6–8 lausetta.",
+          "min_words": 50,
+          "max_words": 100,
+          "rubric_focus": ["communication", "vocab", "structure"]
+        },
+        {
+          "item_type": "writing",
+          "prompt": "Vertaa lapsuuttasi ja nykyelämääsi: miten asiat ovat muuttuneet? Käytä ennen/nyt -rakennetta (antes... ahora...). 6–8 lausetta.",
+          "min_words": 50,
+          "max_words": 100,
+          "rubric_focus": ["communication", "structure", "overall"]
+        },
+        {
+          "item_type": "writing",
+          "prompt": "Kirjoita YO-tyylinen vastaus kysymykseen: '¿Cuáles son tus mejores recuerdos de la infancia?' Käytä monipuolista sanastoa ja vähintään 3 imperfektimuotoa. 7–9 lausetta.",
+          "min_words": 60,
+          "max_words": 110,
+          "rubric_focus": ["communication", "vocab", "structure", "overall"]
+        }
+      ]
+    },
+    {
+      "phase_id": "p10-cumulative-review",
+      "phase_type": "recognition_mc",
+      "title": "Kertaus — lapsuussanasto + K4:n verbit",
+      "instruction": "Valitse oikea vaihtoehto. Näissä tehtävissä esiintyy myös K4:n muuta sanastoa.",
+      "mastery_threshold": {
+        "I": 0.55,
+        "A": 0.60,
+        "B": 0.65,
+        "C": 0.70,
+        "M": 0.80,
+        "E": 0.85,
+        "L": 0.95
+      },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        {
+          "item_type": "mc",
+          "stem": "Cuando era pequeño, _______ mucho con mis amigos en el patio.",
+          "choices": ["jugaba", "jugué", "juego", "jugaré"],
           "correct_index": 0,
-          "explanation": "PLACEHOLDER"
+          "distractor_difficulty": "hard",
+          "explanation": "jugaba = imperfekti (toistuva menneisyys). 'cuando era pequeño' + imperfekti on klassinen rakenne. jugué = yksittäinen kerta (preteriti)."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Mis abuelos siempre nos _______ cuentos por la noche.",
+          "choices": ["contaban", "contaron", "cuentan", "contarán"],
+          "correct_index": 0,
+          "distractor_difficulty": "hard",
+          "explanation": "contaban = imperfekti, siempre-sana viittaa toistuvaan toimintaan menneisyydessä."
+        },
+        {
+          "item_type": "mc",
+          "stem": "¿Cuál es la diferencia entre 'la infancia' y 'la niñez'?",
+          "choices": ["infancia = lapsuus, niñez = nuoruus", "molemmat tarkoittavat lapsuutta", "infancia = pojan lapsuus, niñez = tytön lapsuus", "niñez = esiteini-ikä"],
+          "correct_index": 1,
+          "distractor_difficulty": "hard",
+          "explanation": "la infancia ja la niñez ovat synonyymejä — molemmat tarkoittavat lapsuutta. Käytetään vaihtokelpoisesti."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Los _______ de la infancia son muy importantes en la vida.",
+          "choices": ["recuerdos", "juguetes", "juegos", "sueños"],
+          "correct_index": 0,
+          "distractor_difficulty": "medium",
+          "explanation": "los recuerdos = muistot. Lauseen merkitys: 'Lapsuuden muistot ovat erittäin tärkeitä elämässä.'"
+        },
+        {
+          "item_type": "mc",
+          "stem": "Antes vivíamos en un _______ pequeño, pero ahora vivimos en la ciudad.",
+          "choices": ["campo", "pueblo", "jardín", "barrio"],
+          "correct_index": 1,
+          "distractor_difficulty": "medium",
+          "explanation": "el pueblo = kylä, pikkukaupunki. el campo = maaseutu/pelto (ei asutus). el barrio = kaupunginosa."
+        },
+        {
+          "item_type": "mc",
+          "stem": "De _______ me gustaba mucho subir al tobogán.",
+          "choices": ["niño", "pequeño", "chico", "pequeña"],
+          "correct_index": 1,
+          "distractor_difficulty": "hard",
+          "explanation": "de pequeño/a on vakioilmaisu 'lapsena'. de niño myös toimii, mutta de pequeño on yleisempi YO-konteksteissa."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Mis padres _______ mucho cuando yo era pequeño.",
+          "choices": ["trabajan", "trabajarán", "trabajaban", "trabajaron"],
+          "correct_index": 2,
+          "distractor_difficulty": "hard",
+          "explanation": "trabajaban = imperfekti (tausta, toistuva). 'cuando yo era pequeño' vaatii imperfektin taustaverbissä."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Los recuerdos más bonitos de mi _______ son los veranos con los abuelos.",
+          "choices": ["adolescencia", "infancia", "juventud", "vejez"],
+          "correct_index": 1,
+          "distractor_difficulty": "medium",
+          "explanation": "la infancia = lapsuus. la adolescencia = teini-ikä, la juventud = nuoruus, la vejez = vanhuus."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Cuando _______ diez años, me regalaron una bicicleta.",
+          "choices": ["era", "fui", "estaba", "tenía"],
+          "correct_index": 3,
+          "distractor_difficulty": "hard",
+          "explanation": "tener + años = olla X vuotta — tener on imperfektissä tenía. 'Cuando tenía diez años' = kun olin 10. era olisi 'cuando era diez' joka on virheellinen."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Mi abuela nos _______ canciones tradicionales en navidades.",
+          "choices": ["cantó", "cantaba", "canta", "cantará"],
+          "correct_index": 1,
+          "distractor_difficulty": "hard",
+          "explanation": "cantaba = imperfekti (toistuva muisto jouluista). cantó = yksittäinen kerta (preteriti)."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Los amigos de la _______ son especiales porque compartimos momentos importantes.",
+          "choices": ["escuela", "infancia", "familia", "niñez"],
+          "correct_index": 1,
+          "distractor_difficulty": "medium",
+          "explanation": "los amigos de la infancia = lapsuuden ystävät. Tässä infancia sopii parhaiten — se on vakiokollokaatio."
+        },
+        {
+          "item_type": "mc",
+          "stem": "En aquella época, los niños _______ más tiempo jugando fuera.",
+          "choices": ["pasan", "pasaron", "pasaban", "pasarán"],
+          "correct_index": 2,
+          "distractor_difficulty": "hard",
+          "explanation": "pasaban = imperfekti. 'En aquella época' (siihen aikaan) on imperfektin merkki — kuvaa ajan taustoitusta."
         }
       ]
     }
   ],
   "vocab": [
     {
-      "es": "PLACEHOLDER",
-      "fi": "PLACEHOLDER"
+      "es": "la infancia",
+      "fi": "lapsuus",
+      "example_es": "Tengo muchos recuerdos bonitos de mi infancia.",
+      "example_fi": "Minulla on paljon kauniita muistoja lapsuudestani.",
+      "gender": "f"
+    },
+    {
+      "es": "la niñez",
+      "fi": "lapsuusaika, lapsuus",
+      "example_es": "La niñez es la etapa más feliz de la vida.",
+      "example_fi": "Lapsuus on elämän onnellisin vaihe.",
+      "gender": "f"
+    },
+    {
+      "es": "el recuerdo",
+      "fi": "muisto",
+      "example_es": "Los recuerdos de los abuelos son muy especiales.",
+      "example_fi": "Isovanhempiin liittyvät muistot ovat hyvin erityisiä.",
+      "gender": "m"
+    },
+    {
+      "es": "el juguete",
+      "fi": "lelu",
+      "example_es": "Cuando era pequeño, tenía muchos juguetes.",
+      "example_fi": "Kun olin pieni, minulla oli paljon leluja.",
+      "gender": "m"
+    },
+    {
+      "es": "el juego",
+      "fi": "peli, leikki",
+      "example_es": "Mi juego favorito era el escondite.",
+      "example_fi": "Lempilelikkini oli piilosta.",
+      "gender": "m"
+    },
+    {
+      "es": "el columpio",
+      "fi": "keinu",
+      "example_es": "Me encantaba el columpio del parque.",
+      "example_fi": "Rakastasin puiston keinua.",
+      "gender": "m"
+    },
+    {
+      "es": "el tobogán",
+      "fi": "liukumäki",
+      "example_es": "Los niños bajaban por el tobogán una y otra vez.",
+      "example_fi": "Lapset laskivat liukumäkeä yhä uudelleen.",
+      "gender": "m"
+    },
+    {
+      "es": "el patio",
+      "fi": "piha (kodin tai koulun)",
+      "example_es": "Jugábamos en el patio de la escuela primaria.",
+      "example_fi": "Leikimme alakoulun pihalla.",
+      "gender": "m"
+    },
+    {
+      "es": "la escuela primaria",
+      "fi": "alakoulu",
+      "example_es": "Mis mejores amigos eran de la escuela primaria.",
+      "example_fi": "Parhaat ystäväni olivat alakoulusta.",
+      "gender": "f"
+    },
+    {
+      "es": "el pueblo",
+      "fi": "kylä, pikkukaupunki",
+      "example_es": "Antes vivíamos en un pueblo pequeño del norte.",
+      "example_fi": "Aiemmin asuimme pienessä pohjoisen kylässä.",
+      "gender": "m"
+    },
+    {
+      "es": "los abuelos",
+      "fi": "isovanhemmat",
+      "example_es": "Pasábamos el verano con los abuelos en el pueblo.",
+      "example_fi": "Vietimme kesän isovanhempien luona kylässä.",
+      "gender": "m"
+    },
+    {
+      "es": "el abuelo",
+      "fi": "isoisä",
+      "example_es": "Mi abuelo me contaba historias de la guerra.",
+      "example_fi": "Isoisäni kertoi minulle sotaan liittyviä tarinoita.",
+      "gender": "m"
+    },
+    {
+      "es": "la abuela",
+      "fi": "isoäiti",
+      "example_es": "La abuela siempre nos cantaba canciones.",
+      "example_fi": "Isoäiti lauloi meille aina lauluja.",
+      "gender": "f"
+    },
+    {
+      "es": "los primos",
+      "fi": "serkut",
+      "example_es": "Jugaba mucho con mis primos en el patio.",
+      "example_fi": "Leikin paljon serkkujeni kanssa pihalla.",
+      "gender": "m"
+    },
+    {
+      "es": "los vecinos",
+      "fi": "naapurit",
+      "example_es": "Los vecinos eran como familia para nosotros.",
+      "example_fi": "Naapurit olivat kuin perhe meille.",
+      "gender": "m"
+    },
+    {
+      "es": "los amigos de la infancia",
+      "fi": "lapsuuden ystävät",
+      "example_es": "Los amigos de la infancia son los más especiales.",
+      "example_fi": "Lapsuuden ystävät ovat kaikkein erityisimpiä.",
+      "gender": "m"
+    },
+    {
+      "es": "jugar",
+      "fi": "leikkiä, pelata",
+      "example_es": "De pequeños jugábamos al escondite y al fútbol.",
+      "example_fi": "Lapsina leikimme piilosilla ja pelasimme jalkapalloa.",
+      "gender": null
+    },
+    {
+      "es": "contar cuentos",
+      "fi": "kertoa satuja",
+      "example_es": "Mi abuela nos contaba cuentos antes de dormir.",
+      "example_fi": "Isoäitini kertoi meille satuja ennen nukkumaanmenoa.",
+      "gender": null
+    },
+    {
+      "es": "cantar canciones",
+      "fi": "laulaa lauluja",
+      "example_es": "En navidades cantábamos canciones tradicionales.",
+      "example_fi": "Jouluaikaan lauloimme perinteisiä lauluja.",
+      "gender": null
+    },
+    {
+      "es": "tener X años",
+      "fi": "olla X vuotta vanha",
+      "example_es": "Cuando tenía ocho años, vivíamos en el campo.",
+      "example_fi": "Kun olin kahdeksan vuotta, asuimme maaseudulla.",
+      "gender": null
+    },
+    {
+      "es": "crecer",
+      "fi": "kasvaa",
+      "example_es": "Crecí en un pueblo pequeño de Andalucía.",
+      "example_fi": "Kasvoin pienessä andalusialaisessa kylässä.",
+      "gender": null
+    },
+    {
+      "es": "recordar",
+      "fi": "muistaa",
+      "example_es": "Siempre recuerdo las navidades con toda la familia.",
+      "example_fi": "Muistan aina joulun koko perheen kanssa.",
+      "gender": null
+    },
+    {
+      "es": "las vacaciones de verano",
+      "fi": "kesäloma",
+      "example_es": "Las vacaciones de verano eran lo mejor de la infancia.",
+      "example_fi": "Kesäloma oli lapsuuden parasta aikaa.",
+      "gender": "f"
+    },
+    {
+      "es": "las navidades",
+      "fi": "joulu(n aika)",
+      "example_es": "En navidades toda la familia se reunía.",
+      "example_fi": "Jouluaikaan koko perhe kokoontui yhteen.",
+      "gender": "f"
+    },
+    {
+      "es": "antes",
+      "fi": "ennen, aiemmin",
+      "example_es": "Antes los niños jugaban más fuera de casa.",
+      "example_fi": "Ennen lapset leikkivät enemmän ulkona.",
+      "gender": null
+    },
+    {
+      "es": "de pequeño/a",
+      "fi": "lapsena",
+      "example_es": "De pequeña tenía un perro llamado Canela.",
+      "example_fi": "Lapsena minulla oli koira nimeltä Canela.",
+      "gender": null
+    },
+    {
+      "es": "cuando era niño/a",
+      "fi": "kun olin lapsi",
+      "example_es": "Cuando era niño, vivía cerca del mar.",
+      "example_fi": "Kun olin lapsi, asuin lähellä merta.",
+      "gender": null
+    },
+    {
+      "es": "la casa de los abuelos",
+      "fi": "isovanhempien talo",
+      "example_es": "La casa de los abuelos tenía un jardín enorme.",
+      "example_fi": "Isovanhempien talolla oli valtava puutarha.",
+      "gender": "f"
+    },
+    {
+      "es": "el jardín",
+      "fi": "puutarha",
+      "example_es": "Jugábamos en el jardín cuando hacía buen tiempo.",
+      "example_fi": "Leikimme puutarhassa kun oli hyvä sää.",
+      "gender": "m"
+    },
+    {
+      "es": "el parque",
+      "fi": "puisto",
+      "example_es": "Íbamos al parque todos los fines de semana.",
+      "example_fi": "Kävimme puistossa joka viikonloppu.",
+      "gender": "m"
     }
   ],
   "side_panel": {
@@ -93,7 +970,12 @@
       {
         "id": "vocab",
         "title": "Sanasto",
-        "content_md": "PLACEHOLDER"
+        "content_md": "## Lapsuuden ydinsanat\n\n- **la infancia** — lapsuus\n- **la niñez** — lapsuusaika (synonyymi: infancia)\n- **el recuerdo** — muisto\n- **el juguete** — lelu\n- **el juego** — peli, leikki\n\n## Paikat\n\n- **el columpio** — keinu\n- **el tobogán** — liukumäki\n- **el patio** — piha (koti tai koulu)\n- **el jardín** — puutarha\n- **el parque** — puisto\n- **la escuela primaria** — alakoulu\n- **el pueblo** — kylä, pikkukaupunki\n- **la casa de los abuelos** — isovanhempien talo\n\n## Perhe lapsuudessa\n\n- **los abuelos** — isovanhemmat\n- **el abuelo** — isoisä\n- **la abuela** — isoäiti\n- **los primos** — serkut\n- **los vecinos** — naapurit\n- **los amigos de la infancia** — lapsuuden ystävät\n\n## Verbit\n\n- **jugar** — leikkiä, pelata\n- **crecer** — kasvaa\n- **recordar** — muistaa\n- **contar cuentos** — kertoa satuja\n- **cantar canciones** — laulaa lauluja\n- **tener X años** — olla X vuotta\n\n## Aika ja ilmaisut\n\n- **las vacaciones de verano** — kesäloma\n- **las navidades** — joulu(n aika)\n- **antes** — ennen, aiemmin\n- **de pequeño/a** — lapsena\n- **cuando era niño/a** — kun olin lapsi"
+      },
+      {
+        "id": "tips",
+        "title": "YO-vinkki",
+        "content_md": "## Lapsuussanasto YO-kokeessa\n\nLapsuusaihe esiintyy YO-kokeessa lähes joka vuosi:\n- **Kirjoitustehtävä:** 'Kerro lapsuudestasi', 'Vertaa lapsuuttasi ja nykyelämää', 'Miten elämä on muuttunut?'\n- **Lukutehtävä:** tekstit lapsuusmuistoista, sukupolvien erosta\n- **Kuullun ymmärtäminen:** äänitekli perheen muistoista\n\n## Tärkeimmät rakenteet lapsuuskirjoituksessa\n\n```\nCuando era niño/a...       — Kun olin lapsi...\nDe pequeño/a...             — Lapsena...\nCuando tenía X años...      — Kun olin X vuotta...\nAntes...                    — Ennen...\nEn aquella época...         — Siihen aikaan...\n```\n\n**Huom:** Nämä rakenteet vaativat IMPERFEKTIÄ — harjoittelet sen K4 L2:ssa!\n\n## Avainkollokaatiot\n\n- **jugar al escondite** — pelata piilosilla\n- **jugar al fútbol** — pelata jalkapalloa\n- **hacer un viaje** — tehdä matka\n- **pasar el verano** — viettää kesä\n- **tener recuerdos de** — olla muistoja jostakin\n\n## Yleisimmät virheet\n\n- ✗ *la infancia* vs *la adolescencia*: infancia = 0-12 v, adolescencia = teini-ikä\n- ✗ *el recuerdo* (muisto) ≠ *la memoria* (muisti/muisti kyky)\n- ✓ *los abuelos* (monikko) = isoisä JA isoäiti yhdessä"
       }
     ]
   }

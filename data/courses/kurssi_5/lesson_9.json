@@ -1,0 +1,219 @@
+{
+  "meta": {
+    "course_key": "kurssi_5",
+    "lesson_index": 9,
+    "lesson_type": "reading",
+    "level": "C",
+    "title": "Artikkeli tulevaisuudesta",
+    "description": "Harjoittelet C-tason luetun ymmärtämistä. Kaksi tekstiä: yksi tulevaisuuden työelämästä ja yksi teknologian vaikutuksesta. Tehtävissä testataan pääidean ymmärtämistä, yksityiskohtia ja sanaston tuntemusta.",
+    "yo_relevance": "YO-kokeessa luetun ymmärtäminen on oma osa jossa on useita tekstejä. C-tason teksteissä käytetään futuurimuotoja, konditionaalia ja abstraktia sanastoa — tämä oppitunti harjoittaa juuri näitä.",
+    "estimated_minutes_median": 10
+  },
+  "teaching": {
+    "intro_md": "# Artikkeli tulevaisuudesta — luetun ymmärtäminen\n\nTässä oppitunnissa harjoittelet **luetun ymmärtämistä** C-tason teksteillä. Tekstit käsittelevät tulevaisuuden työtä ja teknologiaa.\n\n## Strategia ennen lukemista\n\n1. **Lue kysymykset ensin** — tiedät mitä etsiä\n2. **Alleviivaaja mielessä** — etsi avainsanoja tekstistä\n3. **Älä käännä sanaa sanalta** — etsi merkitys kontekstista\n\n## Tyypilliset YO-kysymykset\n\n- Mikä on tekstin pääviesti?\n- Mitä artikkeli sanoo X:stä?\n- Mihin suuntaan Y kehittyy kirjoittajan mukaan?\n- Mikä sana/ilmaisu tarkoittaa samaa kuin...?\n\n## Tärkeimmät sanat näissä teksteissä\n\n- **el mercado laboral** — työmarkkinat\n- **la automatización** — automatisointi\n- **la habilidad** — taito\n- **la adaptación** — sopeutuminen\n- **el desafío** — haaste\n- **el bienestar** — hyvinvointi",
+    "key_points": [
+      "Lue kysymykset ennen tekstiä — tiedät mitä etsiä.",
+      "Etsi avainsanoja tekstistä — älä käännä sanaa sanalta.",
+      "YO-tekstit käyttävät futuuria (tulee tapahtumaan) ja konditionaalia (voisi tapahtua).",
+      "Teksteissä esiintyy abstraktia sanastoa: automatización, adaptación, habilidad, desafío."
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1-reading-mc-1",
+      "phase_type": "reading_mc",
+      "title": "Teksti 1 — Tulevaisuuden työ",
+      "instruction": "Lue artikkeli huolellisesti ja vastaa kysymyksiin.",
+      "mastery_threshold": {
+        "I": 0.55, "A": 0.55, "B": 0.65, "C": 0.7, "M": 0.75, "E": 0.85, "L": 0.9
+      },
+      "skip_for_targets": [],
+      "items": [
+        {
+          "item_type": "reading_mc",
+          "passage": "El mercado laboral del futuro\n\nEn las próximas décadas, el mercado laboral experimentará cambios profundos debido a la automatización y la inteligencia artificial. Según los expertos, entre el 30 y el 50% de los empleos actuales podrían desaparecer o transformarse significativamente antes de 2040.\n\nSin embargo, esto no significa necesariamente el fin del trabajo humano. Los trabajos que requieren creatividad, empatía y pensamiento crítico serán difíciles de automatizar. Un médico que diagnostica enfermedades raras, un artista que crea obras originales o un educador que motiva a sus alumnos: estos profesionales seguirán siendo imprescindibles.\n\nLo que sí cambiará es la forma de trabajar. Se estima que el teletrabajo se convertirá en la norma para muchos sectores. Además, los trabajadores tendrán que formarse continuamente para adaptarse a las nuevas tecnologías. La formación permanente dejará de ser una opción y pasará a ser una necesidad.\n\nPor otro lado, la automatización también creará nuevos empleos que hoy ni siquiera imaginamos. Así como la revolución industrial creó millones de puestos de trabajo nuevos, la revolución digital también lo hará. El desafío para los gobiernos y las empresas será garantizar una transición justa y equitativa para todos los trabajadores.",
+          "questions": [
+            {
+              "question_fi": "Mitä artikkeli sanoo 30-50 prosentista nykyisistä töistä?",
+              "choices": [
+                "Ne kasvavat merkittävästi vuoteen 2040 mennessä.",
+                "Ne voivat kadota tai muuttua merkittävästi vuoteen 2040 mennessä.",
+                "Ne pysyvät samanlaisina tulevaisuudessa.",
+                "Ne siirtyvät kehittyviin maihin."
+              ],
+              "correct_index": 1,
+              "explanation_fi": "Teksti sanoo: 'entre el 30 y el 50% de los empleos actuales podrían desaparecer o transformarse significativamente antes de 2040'."
+            },
+            {
+              "question_fi": "Mitkä ammatit kirjoittajan mukaan ovat vaikeimmin automatisoitavia?",
+              "choices": [
+                "Teollisuus- ja valmistusalan ammatit.",
+                "Tietotekniikka- ja ohjelmointi-ammatin.",
+                "Luovuutta, empatiaa ja kriittistä ajattelua vaativat ammatit.",
+                "Yksinkertaiset toistuvat tehtävät."
+              ],
+              "correct_index": 2,
+              "explanation_fi": "Teksti mainitsee: 'Los trabajos que requieren creatividad, empatía y pensamiento crítico serán difíciles de automatizar'."
+            },
+            {
+              "question_fi": "Mitä sana 'formación permanente' tarkoittaa suomeksi?",
+              "choices": [
+                "Pysyvä työsopimus",
+                "Jatkuva koulutus",
+                "Pysyvä asuinpaikka",
+                "Kiinteä palkka"
+              ],
+              "correct_index": 1,
+              "explanation_fi": "'Formación' = koulutus, 'permanente' = pysyvä, jatkuva. 'Formación permanente' = jatkuva koulutus."
+            },
+            {
+              "question_fi": "Mitä artikkeli sanoo digitaalisesta vallankumouksesta verrattuna teolliseen vallankumoukseen?",
+              "choices": [
+                "Digitaalinen vallankumous tuhoaa enemmän töitä kuin teollinen.",
+                "Teollinen vallankumous oli vaarallisempi kuin digitaalinen.",
+                "Digitaalinen vallankumous luo uusia töitä kuten teollinenkin teki.",
+                "Molemmat vallankumouukset olivat negatiivisia."
+              ],
+              "correct_index": 2,
+              "explanation_fi": "Teksti sanoo: 'Así como la revolución industrial creó millones de puestos de trabajo nuevos, la revolución digital también lo hará'."
+            },
+            {
+              "question_fi": "Mikä on hallitusten ja yritysten haaste artikkelin mukaan?",
+              "choices": [
+                "Estää automatisoinnin leviäminen.",
+                "Taata reilu siirtymä kaikille työntekijöille.",
+                "Lisätä tietotekniikkainvestointeja.",
+                "Vähentää etätyötä."
+              ],
+              "correct_index": 1,
+              "explanation_fi": "Teksti: 'El desafío para los gobiernos y las empresas será garantizar una transición justa y equitativa para todos los trabajadores'."
+            },
+            {
+              "question_fi": "Mikä artikkelin mukaan tulee olemaan normi monilla aloilla?",
+              "choices": [
+                "Vuorotyö",
+                "Lyhyemmät työpäivät",
+                "Etätyö",
+                "Perinteinen toimistotyö"
+              ],
+              "correct_index": 2,
+              "explanation_fi": "Teksti: 'Se estima que el teletrabajo se convertirá en la norma para muchos sectores'."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "phase_id": "p2-reading-mc-2",
+      "phase_type": "reading_mc",
+      "title": "Teksti 2 — Teknologia ja nuoret",
+      "instruction": "Lue artikkeli ja vastaa kysymyksiin.",
+      "mastery_threshold": {
+        "I": 0.55, "A": 0.55, "B": 0.65, "C": 0.7, "M": 0.75, "E": 0.85, "L": 0.9
+      },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        {
+          "item_type": "reading_mc",
+          "passage": "Los jóvenes y la tecnología: ¿aliada o enemiga?\n\nLa generación Z ha crecido rodeada de dispositivos digitales. Para estos jóvenes, navegar por internet, usar aplicaciones y estar conectados es algo completamente natural. Sin embargo, el uso excesivo de la tecnología plantea preguntas importantes sobre su impacto en el bienestar y la educación.\n\nPor un lado, la tecnología ofrece oportunidades increíbles. Los jóvenes pueden aprender idiomas con aplicaciones gratuitas, acceder a cursos universitarios en línea y conectarse con personas de todo el mundo. Un estudiante de Finlandia puede colaborar con otro de México en un proyecto común sin salir de su habitación.\n\nPor otro lado, el uso excesivo de las redes sociales se asocia con problemas de salud mental. Estudios recientes muestran que los adolescentes que pasan más de tres horas al día en redes sociales tienen más probabilidades de sufrir ansiedad y depresión. Además, el algoritmo de estas plataformas crea 'burbujas de información' donde los usuarios solo ven contenido que confirma sus creencias.\n\nLa clave está en el equilibrio. Los expertos recomiendan desarrollar la 'alfabetización digital': la capacidad de usar la tecnología de forma crítica y responsable. En el futuro, esta habilidad será tan importante como saber leer y escribir.",
+          "questions": [
+            {
+              "question_fi": "Mitä artikkeli sanoo Z-sukupolvesta?",
+              "choices": [
+                "He eivät osaa käyttää teknologiaa hyvin.",
+                "He ovat kasvaneet digitaalisten laitteiden ympäröimänä.",
+                "He käyttävät teknologiaa vain opiskeluun.",
+                "He ovat ainoa sukupolvi joka käyttää sosiaalista mediaa."
+              ],
+              "correct_index": 1,
+              "explanation_fi": "Teksti: 'La generación Z ha crecido rodeada de dispositivos digitales'."
+            },
+            {
+              "question_fi": "Mitä tarkoittaa 'burbuja de información' artikkelin mukaan?",
+              "choices": [
+                "Tilanne jossa käyttäjä näkee vain omia uskomuksiaan vahvistavaa sisältöä.",
+                "Suojaava kuori joka estää virusinfektion.",
+                "Uutisaplikaatio joka näyttää kaikki uutiset tasapuolisesti.",
+                "Tekninen ongelma verkkoyhteydessä."
+              ],
+              "correct_index": 0,
+              "explanation_fi": "Teksti: 'el algoritmo de estas plataformas crea burbujas de información donde los usuarios solo ven contenido que confirma sus creencias'."
+            },
+            {
+              "question_fi": "Mitä 'alfabetización digital' tarkoittaa artikkelin mukaan?",
+              "choices": [
+                "Taito kirjoittaa digitaalisesti.",
+                "Kyky käyttää teknologiaa kriittisesti ja vastuullisesti.",
+                "Tietotekniikan koulutus.",
+                "Älypuhelimen käyttöopas."
+              ],
+              "correct_index": 1,
+              "explanation_fi": "Teksti: 'la capacidad de usar la tecnología de forma crítica y responsable'."
+            },
+            {
+              "question_fi": "Mitä tutkimukset osoittavat yli kolme tuntia päivässä sosiaalista mediaa käyttävistä nuorista?",
+              "choices": [
+                "He menestyvät paremmin koulussa.",
+                "He ovat sosiaalisesti taitavampia.",
+                "Heillä on suurempi riski ahdistukseen ja masennukseen.",
+                "He nukkuvat paremmin."
+              ],
+              "correct_index": 2,
+              "explanation_fi": "Teksti: 'los adolescentes que pasan más de tres horas al día en redes sociales tienen más probabilidades de sufrir ansiedad y depresión'."
+            },
+            {
+              "question_fi": "Mikä on artikkelin pääviesti?",
+              "choices": [
+                "Teknologia on aina hyödyllistä nuorille.",
+                "Nuorten pitäisi lopettaa sosiaalisen median käyttö.",
+                "Tasapaino ja kriittinen teknologian käyttö ovat avain hyvinvointiin.",
+                "Vanhemmat sukupolvet käyttävät teknologiaa paremmin."
+              ],
+              "correct_index": 2,
+              "explanation_fi": "Artikkeli päättyy: 'La clave está en el equilibrio'. Molemmat puolet esitetään tasapuolisesti."
+            },
+            {
+              "question_fi": "Miten suomalainen opiskelija voi artikkelin mukaan tehdä yhteistyötä meksikolaisen kanssa?",
+              "choices": [
+                "Matkustamalla Meksikoon.",
+                "Käyttämällä puhelinta soittamiseen.",
+                "Digitaalisten sovellusten avulla ilman matkustamista.",
+                "Oppimalla espanjaa ensin."
+              ],
+              "correct_index": 2,
+              "explanation_fi": "Teksti: 'Un estudiante de Finlandia puede colaborar con otro de México en un proyecto común sin salir de su habitación'."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "vocab": [
+    {"es": "el mercado laboral", "fi": "työmarkkinat", "example_es": "El mercado laboral cambiará en el futuro.", "example_fi": "Työmarkkinat muuttuvat tulevaisuudessa.", "gender": "m"},
+    {"es": "la automatización", "fi": "automatisointi", "example_es": "La automatización elimina algunos empleos.", "example_fi": "Automatisointi poistaa joitain töitä.", "gender": "f"},
+    {"es": "la habilidad", "fi": "taito", "example_es": "La creatividad es una habilidad clave.", "example_fi": "Luovuus on keskeinen taito.", "gender": "f"},
+    {"es": "el desafío", "fi": "haaste", "example_es": "El desafío es adaptarse al cambio.", "example_fi": "Haaste on sopeutua muutokseen.", "gender": "m"},
+    {"es": "la adaptación", "fi": "sopeutuminen", "example_es": "La adaptación es necesaria en el mundo laboral.", "example_fi": "Sopeutuminen on välttämätöntä työelämässä.", "gender": "f"},
+    {"es": "el bienestar", "fi": "hyvinvointi", "example_es": "El bienestar de los empleados es importante.", "example_fi": "Työntekijöiden hyvinvointi on tärkeää.", "gender": "m"},
+    {"es": "la formación permanente", "fi": "jatkuva koulutus", "example_es": "La formación permanente será una necesidad.", "example_fi": "Jatkuvasta koulutuksesta tulee välttämättömyys.", "gender": "f"},
+    {"es": "imprescindible", "fi": "välttämätön, korvaamaton", "example_es": "Los médicos serán imprescindibles.", "example_fi": "Lääkärit ovat korvaamattomia.", "gender": null},
+    {"es": "la burbuja de información", "fi": "informaatiokupla", "example_es": "Los algoritmos crean burbujas de información.", "example_fi": "Algoritmit luovat informaatiokuplan.", "gender": "f"},
+    {"es": "la alfabetización digital", "fi": "digitaalinen lukutaito", "example_es": "La alfabetización digital es clave hoy.", "example_fi": "Digitaalinen lukutaito on tärkeä nykypäivänä.", "gender": "f"},
+    {"es": "el equilibrio", "fi": "tasapaino", "example_es": "La clave está en el equilibrio.", "example_fi": "Avain on tasapainossa.", "gender": "m"},
+    {"es": "crítico/a", "fi": "kriittinen", "example_es": "El pensamiento crítico es muy valioso.", "example_fi": "Kriittinen ajattelu on hyvin arvokasta.", "gender": null}
+  ],
+  "side_panel": {
+    "tabs": [
+      {
+        "id": "vocab",
+        "title": "Sanasto",
+        "content_md": "## Teksti 1 — Tulevaisuuden työ\n\n- **el mercado laboral** — työmarkkinat\n- **la automatización** — automatisointi\n- **la habilidad** — taito\n- **el desafío** — haaste\n- **la adaptación** — sopeutuminen\n- **la formación permanente** — jatkuva koulutus\n- **imprescindible** — välttämätön, korvaamaton\n- **el teletrabajo** — etätyö\n- **equitativo/a** — oikeudenmukainen, tasapuolinen\n\n## Teksti 2 — Teknologia ja nuoret\n\n- **el bienestar** — hyvinvointi\n- **la burbuja de información** — informaatiokupla\n- **la alfabetización digital** — digitaalinen lukutaito\n- **el equilibrio** — tasapaino\n- **crítico/a** — kriittinen\n- **la ansiedad** — ahdistus\n- **la depresión** — masennus\n- **el algoritmo** — algoritmi"
+      },
+      {
+        "id": "tips",
+        "title": "YO-vinkki",
+        "content_md": "## Luetun ymmärtäminen YO-kokeessa\n\n**Strategia:**\n1. Lue kysymykset ensin\n2. Etsi avainsanoja tekstistä\n3. Älä käännä sanaa sanalta — etsi merkitys kontekstista\n\n**Tyypilliset kysymysmuodot:**\n- *¿Qué dice el texto sobre...?* — Mitä teksti sanoo...?\n- *¿Qué significa la palabra...?* — Mitä tarkoittaa sana...?\n- *¿Cuál es la idea principal?* — Mikä on pääidea?\n- *Según el texto...* — Tekstin mukaan...\n\n**Muista:**\n- YO-tekstit käyttävät futuuria ja konditionaalia — tunnista ne\n- Abstrakti sanasto on yleistä C-tason teksteissä\n- Yksi vastaus on selvästi paras — muut ovat vain osittain oikein"
+      }
+    ]
+  }
+}

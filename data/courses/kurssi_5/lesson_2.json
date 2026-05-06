@@ -1,0 +1,620 @@
+{
+  "meta": {
+    "course_key": "kurssi_5",
+    "lesson_index": 2,
+    "lesson_type": "grammar",
+    "level": "C",
+    "title": "Futuuri — säännölliset verbit",
+    "description": "Opit espanjan futuurin muodostamisen säännöllisillä verbeillä. Futuuri muodostetaan infinitiivistä lisäämällä päätteet -é, -ás, -á, -emos, -éis, -án. Harjoittelet tunnistamaan ja tuottamaan futuurimuotoja työ- ja tulevaisuusaiheisissa lauseissa.",
+    "yo_relevance": "Futuuri on YO-kirjoitustehtävässä välttämätön kun kuvataan tulevaisuudensuunnitelmia tai unelmia. Oikea futuurimuoto erottaa C-tason kirjoituksen B-tasosta.",
+    "estimated_minutes_median": 14
+  },
+  "teaching": {
+    "intro_md": "# Futuuri — säännölliset verbit\n\n**Futuuri** (futuro simple) kertoo mitä tulee tapahtumaan tai mitä aiotaan tehdä.\n\n## Muodostus — infinitiivi + päätteet\n\nSäännöllisillä verbeillä futuuri muodostetaan lisäämällä samat päätteet kaikille verbiryhmille (-ar, -er, -ir) suoraan infinitiiviin:\n\n| Persoona | Päätde | hablar | comer | vivir |\n|---|---|---|---|---|\n| yo | **-é** | hablaré | comeré | viviré |\n| tú | **-ás** | hablarás | comerás | vivirás |\n| él/ella | **-á** | hablará | comerá | vivirá |\n| nosotros | **-emos** | hablaremos | comeremos | viviremos |\n| vosotros | **-éis** | hablaréis | comeréis | viviréis |\n| ellos | **-án** | hablarán | comerán | vivirán |\n\n**Tärkeää:** Kaikilla muodoilla paitsi nosotros on aksentti päätteessä!\n\n## Käyttö\n\n- Tuleva tapahtuma: *Mañana **hablaré** con mi jefa.* — Huomenna puhun johtajani kanssa.\n- Suunnitelma: *El año que viene **estudiaremos** en España.* — Ensi vuonna opiskelemme Espanjassa.\n- Ennustus: *En el futuro, **trabajarán** más horas desde casa.* — Tulevaisuudessa he tekevät enemmän töitä kotoa.\n\n## Aikailmaisut futuurin kanssa\n\n- **mañana** — huomenna\n- **el año que viene / el próximo año** — ensi vuonna\n- **dentro de poco** — pian\n- **en el futuro** — tulevaisuudessa\n- **pronto** — pian\n- **algún día** — jonain päivänä",
+    "key_points": [
+      "Futuuri = infinitiivi + -é, -ás, -á, -emos, -éis, -án.",
+      "Kaikilla muodoilla paitsi nosotros on aksentti: hablaré, hablarás, hablará... hablaréis, hablarán.",
+      "Nosotros-muodossa ei ole aksenttia: hablaremos (vrt. imperfekti: hablábamos).",
+      "Säännöllinen futuuri toimii samoin -ar, -er ja -ir-verbeille — infinitiivi pysyy muuttumattomana.",
+      "Yleisimmät aikailmaisut: mañana, el año que viene, en el futuro, dentro de poco."
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1-recognition-mc-persoona",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista — mikä persoona?",
+      "instruction": "Mikä persoona on kyseessä?",
+      "mastery_threshold": {
+        "I": 0.55, "A": 0.6, "B": 0.7, "C": 0.75, "M": 0.8, "E": 0.85, "L": 0.9
+      },
+      "skip_for_targets": [],
+      "items": [
+        {
+          "item_type": "mc",
+          "stem": "hablaré",
+          "choices": ["yo", "tú", "él", "ellos"],
+          "correct_index": 0,
+          "distractor_difficulty": "easy",
+          "explanation": "hablaré = yo. Päätteen -é = yo. Vertaa: hablarás = tú, hablará = él/ella."
+        },
+        {
+          "item_type": "mc",
+          "stem": "vivirán",
+          "choices": ["nosotros", "vosotros", "ellos", "él"],
+          "correct_index": 2,
+          "distractor_difficulty": "easy",
+          "explanation": "vivirán = ellos/ellas/ustedes. Päätteen -án = ellos."
+        },
+        {
+          "item_type": "mc",
+          "stem": "comeremos",
+          "choices": ["yo", "tú", "nosotros", "vosotros"],
+          "correct_index": 2,
+          "distractor_difficulty": "easy",
+          "explanation": "comeremos = nosotros. Päätteen -emos = nosotros."
+        },
+        {
+          "item_type": "mc",
+          "stem": "trabajarás",
+          "choices": ["yo", "tú", "nosotros", "ellos"],
+          "correct_index": 1,
+          "distractor_difficulty": "easy",
+          "explanation": "trabajarás = tú. Päätteen -ás = tú."
+        },
+        {
+          "item_type": "mc",
+          "stem": "estudiarán",
+          "choices": ["nosotros", "vosotros", "ellos", "él"],
+          "correct_index": 2,
+          "distractor_difficulty": "easy",
+          "explanation": "estudiarán = ellos/ustedes. Päätteen -án = ellos."
+        },
+        {
+          "item_type": "mc",
+          "stem": "beberéis",
+          "choices": ["nosotros", "vosotros", "ellos", "yo"],
+          "correct_index": 1,
+          "distractor_difficulty": "medium",
+          "explanation": "beberéis = vosotros. Päätteen -éis = vosotros."
+        },
+        {
+          "item_type": "mc",
+          "stem": "escribirá",
+          "choices": ["yo", "tú", "él/ella", "nosotros"],
+          "correct_index": 2,
+          "distractor_difficulty": "easy",
+          "explanation": "escribirá = él/ella/usted. Päätteen -á = él/ella."
+        },
+        {
+          "item_type": "mc",
+          "stem": "venderemos",
+          "choices": ["yo", "vosotros", "nosotros", "ellos"],
+          "correct_index": 2,
+          "distractor_difficulty": "medium",
+          "explanation": "venderemos = nosotros. Päätteen -emos = nosotros. Ei aksenttia."
+        },
+        {
+          "item_type": "mc",
+          "stem": "llegaré",
+          "choices": ["yo", "tú", "él", "ellos"],
+          "correct_index": 0,
+          "distractor_difficulty": "easy",
+          "explanation": "llegaré = yo. Päätteen -é = yo."
+        },
+        {
+          "item_type": "mc",
+          "stem": "abrirán",
+          "choices": ["nosotros", "vosotros", "ellos", "tú"],
+          "correct_index": 2,
+          "distractor_difficulty": "easy",
+          "explanation": "abrirán = ellos. Päätteen -án = ellos/ellas/ustedes."
+        },
+        {
+          "item_type": "mc",
+          "stem": "buscaréis",
+          "choices": ["nosotros", "vosotros", "ellos", "yo"],
+          "correct_index": 1,
+          "distractor_difficulty": "medium",
+          "explanation": "buscaréis = vosotros. Päätteen -éis = vosotros."
+        },
+        {
+          "item_type": "mc",
+          "stem": "viajará",
+          "choices": ["yo", "tú", "él/ella", "nosotros"],
+          "correct_index": 2,
+          "distractor_difficulty": "easy",
+          "explanation": "viajará = él/ella/usted. Päätteen -á = él/ella."
+        }
+      ]
+    },
+    {
+      "phase_id": "p2-recognition-match",
+      "phase_type": "recognition_match",
+      "title": "Yhdistä — infinitiivi ja futuurimuoto",
+      "instruction": "Yhdistä infinitiivi oikeaan futuurimuotoon.",
+      "mastery_threshold": {
+        "I": 0.6, "A": 0.65, "B": 0.75, "C": 0.8, "M": 0.85, "E": 0.9, "L": 0.95
+      },
+      "skip_for_targets": ["I"],
+      "items": [
+        {
+          "item_type": "match",
+          "left_label": "Infinitiivi",
+          "right_label": "Futuuri — yo",
+          "pairs": [
+            {"left": "hablar", "right": "hablaré"},
+            {"left": "comer", "right": "comeré"},
+            {"left": "vivir", "right": "viviré"},
+            {"left": "trabajar", "right": "trabajaré"},
+            {"left": "estudiar", "right": "estudiaré"},
+            {"left": "escribir", "right": "escribiré"},
+            {"left": "vender", "right": "venderé"}
+          ]
+        },
+        {
+          "item_type": "match",
+          "left_label": "Infinitiivi",
+          "right_label": "Futuuri — ellos",
+          "pairs": [
+            {"left": "trabajar", "right": "trabajarán"},
+            {"left": "vivir", "right": "vivirán"},
+            {"left": "comer", "right": "comerán"},
+            {"left": "llegar", "right": "llegarán"},
+            {"left": "abrir", "right": "abrirán"},
+            {"left": "buscar", "right": "buscarán"}
+          ]
+        },
+        {
+          "item_type": "match",
+          "left_label": "Aikailmaisu",
+          "right_label": "Suomi",
+          "pairs": [
+            {"left": "mañana", "right": "huomenna"},
+            {"left": "el año que viene", "right": "ensi vuonna"},
+            {"left": "dentro de poco", "right": "pian"},
+            {"left": "en el futuro", "right": "tulevaisuudessa"},
+            {"left": "algún día", "right": "jonain päivänä"},
+            {"left": "pronto", "right": "pian"}
+          ]
+        }
+      ]
+    },
+    {
+      "phase_id": "p3-recognition-mc-muoto",
+      "phase_type": "recognition_mc",
+      "title": "Valitse oikea futuurimuoto",
+      "instruction": "Mikä on oikea futuurimuoto?",
+      "mastery_threshold": {
+        "I": 0.55, "A": 0.6, "B": 0.7, "C": 0.75, "M": 0.8, "E": 0.85, "L": 0.9
+      },
+      "skip_for_targets": ["I"],
+      "items": [
+        {
+          "item_type": "mc",
+          "stem": "trabajar — yo (futuuri)",
+          "choices": ["trabajo", "trabajé", "trabajaba", "trabajaré"],
+          "correct_index": 3,
+          "distractor_difficulty": "medium",
+          "explanation": "Trabajaré = yo (futuuri). Trabajo = preesens, trabajé = preteriti, trabajaba = imperfekti."
+        },
+        {
+          "item_type": "mc",
+          "stem": "vivir — ellos (futuuri)",
+          "choices": ["viven", "vivieron", "vivirán", "vivían"],
+          "correct_index": 2,
+          "distractor_difficulty": "medium",
+          "explanation": "Vivirán = ellos (futuuri). Viven = preesens, vivieron = preteriti, vivían = imperfekti."
+        },
+        {
+          "item_type": "mc",
+          "stem": "comer — nosotros (futuuri)",
+          "choices": ["comemos", "comimos", "comíamos", "comeremos"],
+          "correct_index": 3,
+          "distractor_difficulty": "hard",
+          "explanation": "Comeremos = nosotros (futuuri). Comemos = preesens, comimos = preteriti, comíamos = imperfekti."
+        },
+        {
+          "item_type": "mc",
+          "stem": "hablar — tú (futuuri)",
+          "choices": ["hablas", "hablaste", "hablarás", "hablarías"],
+          "correct_index": 2,
+          "distractor_difficulty": "hard",
+          "explanation": "Hablarás = tú (futuuri). Hablas = preesens, hablaste = preteriti, hablarías = konditionaali."
+        },
+        {
+          "item_type": "mc",
+          "stem": "estudiar — ella (futuuri)",
+          "choices": ["estudia", "estudió", "estudiará", "estudiaría"],
+          "correct_index": 2,
+          "distractor_difficulty": "hard",
+          "explanation": "Estudiará = ella (futuuri). Estudia = preesens, estudió = preteriti, estudiaría = konditionaali."
+        },
+        {
+          "item_type": "mc",
+          "stem": "llegar — yo (futuuri)",
+          "choices": ["llego", "llegué", "llegaba", "llegaré"],
+          "correct_index": 3,
+          "distractor_difficulty": "medium",
+          "explanation": "Llegaré = yo (futuuri). Llego = preesens, llegué = preteriti, llegaba = imperfekti."
+        },
+        {
+          "item_type": "mc",
+          "stem": "escribir — vosotros (futuuri)",
+          "choices": ["escribís", "escribisteis", "escribiréis", "escribíais"],
+          "correct_index": 2,
+          "distractor_difficulty": "medium",
+          "explanation": "Escribiréis = vosotros (futuuri). Escribís = preesens, escribisteis = preteriti."
+        },
+        {
+          "item_type": "mc",
+          "stem": "abrir — él (futuuri)",
+          "choices": ["abre", "abrió", "abría", "abrirá"],
+          "correct_index": 3,
+          "distractor_difficulty": "medium",
+          "explanation": "Abrirá = él (futuuri). Abre = preesens, abrió = preteriti, abría = imperfekti."
+        },
+        {
+          "item_type": "mc",
+          "stem": "vender — nosotros (futuuri)",
+          "choices": ["vendemos", "vendimos", "venderemos", "vendíamos"],
+          "correct_index": 2,
+          "distractor_difficulty": "medium",
+          "explanation": "Venderemos = nosotros (futuuri). Vendemos = preesens, vendimos = preteriti."
+        },
+        {
+          "item_type": "mc",
+          "stem": "buscar — ellas (futuuri)",
+          "choices": ["buscan", "buscaron", "buscarán", "buscaban"],
+          "correct_index": 2,
+          "distractor_difficulty": "medium",
+          "explanation": "Buscarán = ellas (futuuri). Buscan = preesens, buscaron = preteriti."
+        },
+        {
+          "item_type": "mc",
+          "stem": "trabajar — vosotros (futuuri)",
+          "choices": ["trabajáis", "trabajasteis", "trabajaréis", "trabajabais"],
+          "correct_index": 2,
+          "distractor_difficulty": "medium",
+          "explanation": "Trabajaréis = vosotros (futuuri). Trabajáis = preesens, trabajasteis = preteriti."
+        },
+        {
+          "item_type": "mc",
+          "stem": "vivir — tú (futuuri)",
+          "choices": ["vives", "viviste", "vivirás", "vivías"],
+          "correct_index": 2,
+          "distractor_difficulty": "medium",
+          "explanation": "Vivirás = tú (futuuri). Vives = preesens, viviste = preteriti, vivías = imperfekti."
+        }
+      ]
+    },
+    {
+      "phase_id": "p4-recall-es-fi",
+      "phase_type": "recall_typed_es_to_fi",
+      "title": "Käännä suomeksi",
+      "instruction": "Käännä futuurimuoto tai lause suomeksi.",
+      "mastery_threshold": {
+        "I": 0.55, "A": 0.55, "B": 0.7, "C": 0.75, "M": 0.8, "E": 0.85, "L": 0.9
+      },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        {"item_type": "typed", "direction": "es_to_fi", "prompt": "trabajaré", "accept": ["teen töitä", "työskentelen"], "hint": null},
+        {"item_type": "typed", "direction": "es_to_fi", "prompt": "vivirán", "accept": ["he asuvat (tulevaisuudessa)", "he tulevat asumaan"], "hint": null},
+        {"item_type": "typed", "direction": "es_to_fi", "prompt": "Mañana hablaré con mi jefa.", "accept": ["huomenna puhun johtajani kanssa", "huomenna puhun esimieheni kanssa"], "hint": null},
+        {"item_type": "typed", "direction": "es_to_fi", "prompt": "El año que viene estudiaremos en España.", "accept": ["ensi vuonna opiskelemme espanjassa", "opiskelemme espanjassa ensi vuonna"], "hint": null},
+        {"item_type": "typed", "direction": "es_to_fi", "prompt": "comeréis", "accept": ["te syötte (tulevaisuudessa)", "te tulette syömään"], "hint": null},
+        {"item_type": "typed", "direction": "es_to_fi", "prompt": "Dentro de poco llegará el tren.", "accept": ["pian juna saapuu", "juna saapuu pian"], "hint": null},
+        {"item_type": "typed", "direction": "es_to_fi", "prompt": "En el futuro trabajarán más desde casa.", "accept": ["tulevaisuudessa he tekevät enemmän töitä kotoa", "tulevaisuudessa tehdään enemmän töitä kotoa"], "hint": null},
+        {"item_type": "typed", "direction": "es_to_fi", "prompt": "abrirá", "accept": ["hän avaa (tulevaisuudessa)", "se avaa"], "hint": null},
+        {"item_type": "typed", "direction": "es_to_fi", "prompt": "¿Cuándo buscarás trabajo?", "accept": ["milloin etsit töitä?", "koska alat hakea töitä?"], "hint": null},
+        {"item_type": "typed", "direction": "es_to_fi", "prompt": "venderemos", "accept": ["me myymme (tulevaisuudessa)", "me tulemme myymään"], "hint": null}
+      ]
+    },
+    {
+      "phase_id": "p5-recall-fi-es",
+      "phase_type": "recall_typed_fi_to_es",
+      "title": "Käännä espanjaksi",
+      "instruction": "Kirjoita futuurimuoto espanjaksi.",
+      "mastery_threshold": {
+        "I": 0.55, "A": 0.55, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9
+      },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        {"item_type": "typed", "direction": "fi_to_es", "prompt": "hablar — yo (futuuri)", "accept": ["hablaré"], "hint": null},
+        {"item_type": "typed", "direction": "fi_to_es", "prompt": "comer — ellos (futuuri)", "accept": ["comerán"], "hint": null},
+        {"item_type": "typed", "direction": "fi_to_es", "prompt": "vivir — nosotros (futuuri)", "accept": ["viviremos"], "hint": null},
+        {"item_type": "typed", "direction": "fi_to_es", "prompt": "trabajar — tú (futuuri)", "accept": ["trabajarás"], "hint": null},
+        {"item_type": "typed", "direction": "fi_to_es", "prompt": "estudiar — ella (futuuri)", "accept": ["estudiará"], "hint": null},
+        {"item_type": "typed", "direction": "fi_to_es", "prompt": "escribir — vosotros (futuuri)", "accept": ["escribiréis"], "hint": null},
+        {"item_type": "typed", "direction": "fi_to_es", "prompt": "buscar — yo (futuuri)", "accept": ["buscaré"], "hint": null},
+        {"item_type": "typed", "direction": "fi_to_es", "prompt": "Pian hän avaa uuden yrityksen.", "accept": ["pronto abrirá una empresa nueva", "dentro de poco abrirá una empresa nueva"], "hint": null},
+        {"item_type": "typed", "direction": "fi_to_es", "prompt": "Huomenna puhumme esimiehellemme.", "accept": ["mañana hablaremos con nuestro jefe", "mañana hablaremos con nuestra jefa"], "hint": null},
+        {"item_type": "typed", "direction": "fi_to_es", "prompt": "vender — ellas (futuuri)", "accept": ["venderán"], "hint": null}
+      ]
+    },
+    {
+      "phase_id": "p6-gap-helppo",
+      "phase_type": "application_gap_fill",
+      "title": "Lauseen täydennys — perustaso",
+      "instruction": "Täydennä oikea futuurimuoto. Sanapankki auttaa.",
+      "mastery_threshold": {
+        "I": 0.55, "A": 0.6, "B": 0.75, "C": 0.8, "M": 0.85, "E": 0.9, "L": 0.92
+      },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "Mañana {1} con mi jefa sobre el nuevo proyecto. (hablar — yo)",
+          "answers": [["hablaré"]],
+          "word_bank": ["hablaré", "hablé", "hablo"]
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "El año que viene {1} en la universidad. (estudiar — nosotros)",
+          "answers": [["estudiaremos"]],
+          "word_bank": ["estudiaremos", "estudiarán", "estudiamos"]
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "Los empleados {1} un sueldo mejor el próximo mes. (cobrar)",
+          "answers": [["cobrarán"]],
+          "word_bank": ["cobrarán", "cobran", "cobraron"]
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "¿Cuándo {1} trabajo? (buscar — tú)",
+          "answers": [["buscarás"]],
+          "word_bank": ["buscarás", "buscas", "buscaste"]
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "Dentro de poco {1} los resultados de la entrevista. (recibir — yo)",
+          "answers": [["recibiré"]],
+          "word_bank": null
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "En el futuro muchas empresas {1} de forma completamente digital. (trabajar)",
+          "answers": [["trabajarán"]],
+          "word_bank": null
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "El próximo año {1} un nuevo contrato. (firmar — nosotros)",
+          "answers": [["firmaremos"]],
+          "word_bank": null
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "Pronto {1} al nuevo empleado. (contratar — ellos)",
+          "answers": [["contratarán"]],
+          "word_bank": null
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "¿A qué hora {1} mañana? (llegar — tú)",
+          "answers": [["llegarás"]],
+          "word_bank": null
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "Algún día {1} en una empresa internacional. (trabajar — yo)",
+          "answers": [["trabajaré"]],
+          "word_bank": null
+        }
+      ]
+    },
+    {
+      "phase_id": "p7-gap-vaativa",
+      "phase_type": "application_gap_fill",
+      "title": "Lauseen täydennys — vaativa",
+      "instruction": "Täydennä oikea futuurimuoto ilman sanapankkia.",
+      "mastery_threshold": {
+        "I": 0.55, "A": 0.55, "B": 0.65, "C": 0.75, "M": 0.85, "E": 0.9, "L": 0.95
+      },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "En el futuro, los robots {1} muchos trabajos manuales. (hacer — harán — PERO AQUÍ usa hacer sin irregularidad: harán)",
+          "answers": [["harán"]],
+          "word_bank": null
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "Dentro de tres años {1} mi propio negocio. (abrir — yo)",
+          "answers": [["abriré"]],
+          "word_bank": null
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "¿{1} vosotros el contrato esta tarde? (firmar)",
+          "answers": [["Firmaréis", "firmaréis"]],
+          "word_bank": null
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "El director {1} los resultados del proyecto mañana. (presentar)",
+          "answers": [["presentará"]],
+          "word_bank": null
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "Pronto {1} nuevas tecnologías en el sector sanitario. (aparecer)",
+          "answers": [["aparecerán"]],
+          "word_bank": null
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "¿Cuántos años {1} allí? (vivir — tú)",
+          "answers": [["vivirás"]],
+          "word_bank": null
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "En el futuro {1} más tiempo con la familia. (pasar — nosotros)",
+          "answers": [["pasaremos"]],
+          "word_bank": null
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "Algún día {1} en un hospital grande. (trabajar — ella)",
+          "answers": [["trabajará"]],
+          "word_bank": null
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "El año que viene {1} inglés y español. (estudiar — vosotros)",
+          "answers": [["estudiaréis"]],
+          "word_bank": null
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "Pronto {1} los candidatos seleccionados para la entrevista. (llamar — ellos)",
+          "answers": [["llamarán"]],
+          "word_bank": null
+        }
+      ]
+    },
+    {
+      "phase_id": "p8-sentence-build",
+      "phase_type": "application_sentence_build",
+      "title": "Lauseiden rakentelua",
+      "instruction": "Käännä koko lause espanjaksi käyttäen futuuria.",
+      "mastery_threshold": {
+        "I": 0.55, "A": 0.55, "B": 0.6, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.92
+      },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        {
+          "item_type": "typed",
+          "direction": "fi_to_es",
+          "prompt": "Huomenna puhun johtajani kanssa palkasta.",
+          "accept": ["mañana hablaré con mi jefe sobre el sueldo", "mañana hablaré con mi jefa sobre el sueldo"]
+        },
+        {
+          "item_type": "typed",
+          "direction": "fi_to_es",
+          "prompt": "Ensi vuonna opiskelemme Espanjassa.",
+          "accept": ["el año que viene estudiaremos en España", "el próximo año estudiaremos en España"]
+        },
+        {
+          "item_type": "typed",
+          "direction": "fi_to_es",
+          "prompt": "Pian he avaavat uuden toimiston.",
+          "accept": ["pronto abrirán una oficina nueva", "dentro de poco abrirán una nueva oficina"]
+        },
+        {
+          "item_type": "typed",
+          "direction": "fi_to_es",
+          "prompt": "Tulevaisuudessa teknologia muuttaa työtä paljon.",
+          "accept": ["en el futuro la tecnología cambiará mucho el trabajo", "en el futuro la tecnología transformará el mundo laboral"]
+        },
+        {
+          "item_type": "typed",
+          "direction": "fi_to_es",
+          "prompt": "Milloin he allekirjoittavat sopimuksen?",
+          "accept": ["¿cuándo firmarán el contrato?", "¿cuándo van a firmar el contrato?"]
+        },
+        {
+          "item_type": "typed",
+          "direction": "fi_to_es",
+          "prompt": "Jonain päivänä asun Espanjassa.",
+          "accept": ["algún día viviré en españa", "algún día viviré en España"]
+        },
+        {
+          "item_type": "typed",
+          "direction": "fi_to_es",
+          "prompt": "He myyvät yrityksen ensi vuonna.",
+          "accept": ["venderán la empresa el año que viene", "el año que viene venderán la empresa"]
+        },
+        {
+          "item_type": "typed",
+          "direction": "fi_to_es",
+          "prompt": "Missä asut tulevaisuudessa?",
+          "accept": ["¿dónde vivirás en el futuro?", "¿dónde vivirás en el futuro"]
+        }
+      ]
+    },
+    {
+      "phase_id": "p9-translate",
+      "phase_type": "synthesis_translate",
+      "title": "YO-tason käännös",
+      "instruction": "Käännä koko lause espanjaksi mahdollisimman luontevasti.",
+      "mastery_threshold": {
+        "I": 0.55, "A": 0.55, "B": 0.6, "C": 0.65, "M": 0.75, "E": 0.85, "L": 0.95
+      },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        {
+          "item_type": "translate",
+          "direction": "fi_to_es",
+          "source": "Tulevaisuudessa yhä useammat ihmiset tekevät töitä kotoa, koska teknologia mahdollistaa sen.",
+          "accept": ["en el futuro cada vez más personas trabajarán desde casa porque la tecnología lo permite", "en el futuro más gente trabajará desde casa gracias a la tecnología"]
+        },
+        {
+          "item_type": "translate",
+          "direction": "fi_to_es",
+          "source": "Ensi vuonna hän hakee töitä kansainvälisestä yrityksestä.",
+          "accept": ["el año que viene buscará trabajo en una empresa internacional", "el próximo año solicitará trabajo en una empresa internacional"]
+        },
+        {
+          "item_type": "translate",
+          "direction": "fi_to_es",
+          "source": "Opiskelemme kolme vuotta ja sitten aloitamme oman yrityksen.",
+          "accept": ["estudiaremos tres años y luego abriremos nuestra propia empresa", "estudiaremos tres años y después empezaremos nuestro propio negocio"]
+        },
+        {
+          "item_type": "translate",
+          "direction": "fi_to_es",
+          "source": "Robotit korvaavat monia töitä tulevaisuudessa, mutta luovat myös uusia.",
+          "accept": ["los robots reemplazarán muchos trabajos en el futuro pero también crearán nuevos", "en el futuro los robots sustituirán muchos empleos pero también generarán otros nuevos"]
+        },
+        {
+          "item_type": "translate",
+          "direction": "fi_to_es",
+          "source": "Pian saat vastauksen hakemukseesi.",
+          "accept": ["pronto recibirás una respuesta a tu solicitud", "dentro de poco recibirás la respuesta de tu solicitud"]
+        },
+        {
+          "item_type": "translate",
+          "direction": "fi_to_es",
+          "source": "Milloin he julkaisevat uudet palkat?",
+          "accept": ["¿cuándo publicarán los nuevos sueldos?", "¿cuándo anunciarán los nuevos salarios?"]
+        }
+      ]
+    }
+  ],
+  "vocab": [
+    {"es": "hablar (futuurissa: hablaré)", "fi": "puhua — puhun, puhut, puhuu...", "example_es": "Mañana hablaré con mi jefa.", "example_fi": "Huomenna puhun johtajani kanssa.", "gender": null},
+    {"es": "trabajar (futuurissa: trabajaré)", "fi": "tehdä töitä — teen töitä...", "example_es": "Algún día trabajaré en el extranjero.", "example_fi": "Jonain päivänä teen töitä ulkomailla.", "gender": null},
+    {"es": "estudiar (futuurissa: estudiaré)", "fi": "opiskella — opiskelen...", "example_es": "El año que viene estudiaremos juntos.", "example_fi": "Ensi vuonna opiskelemme yhdessä.", "gender": null},
+    {"es": "vivir (futuurissa: viviré)", "fi": "asua — asun...", "example_es": "¿Dónde vivirás en el futuro?", "example_fi": "Missä asut tulevaisuudessa?", "gender": null},
+    {"es": "llegar (futuurissa: llegaré)", "fi": "saapua — saavun...", "example_es": "El tren llegará pronto.", "example_fi": "Juna saapuu pian.", "gender": null},
+    {"es": "buscar (futuurissa: buscaré)", "fi": "etsiä — etsin...", "example_es": "Pronto buscarán un nuevo empleado.", "example_fi": "Pian he etsivät uuden työntekijän.", "gender": null},
+    {"es": "abrir (futuurissa: abriré)", "fi": "avata — avaan...", "example_es": "Abriremos una tienda el año que viene.", "example_fi": "Avaamme kaupan ensi vuonna.", "gender": null},
+    {"es": "vender (futuurissa: venderé)", "fi": "myydä — myyn...", "example_es": "Venderán la empresa.", "example_fi": "He myyvät yrityksen.", "gender": null},
+    {"es": "firmar (futuurissa: firmaré)", "fi": "allekirjoittaa — allekirjoitan...", "example_es": "Firmaremos el contrato mañana.", "example_fi": "Allekirjoitamme sopimuksen huomenna.", "gender": null},
+    {"es": "contratar (futuurissa: contrataré)", "fi": "palkata — palkkaan...", "example_es": "Contratarán más personal.", "example_fi": "He palkkaavat lisää henkilöstöä.", "gender": null},
+    {"es": "mañana", "fi": "huomenna", "example_es": "Mañana hablaré con mi jefe.", "example_fi": "Huomenna puhun johtajani kanssa.", "gender": null},
+    {"es": "el año que viene", "fi": "ensi vuonna", "example_es": "El año que viene estudiaré en Madrid.", "example_fi": "Ensi vuonna opiskelen Madridissa.", "gender": null},
+    {"es": "dentro de poco", "fi": "pian", "example_es": "Dentro de poco llegará la respuesta.", "example_fi": "Pian tulee vastaus.", "gender": null},
+    {"es": "en el futuro", "fi": "tulevaisuudessa", "example_es": "En el futuro trabajaremos desde casa.", "example_fi": "Tulevaisuudessa teemme töitä kotoa.", "gender": null},
+    {"es": "algún día", "fi": "jonain päivänä", "example_es": "Algún día viviré en España.", "example_fi": "Jonain päivänä asun Espanjassa.", "gender": null},
+    {"es": "pronto", "fi": "pian", "example_es": "Pronto recibirás una respuesta.", "example_fi": "Pian saat vastauksen.", "gender": null}
+  ],
+  "side_panel": {
+    "tabs": [
+      {
+        "id": "grammar",
+        "title": "Futuuri — taivutus",
+        "content_md": "## Säännöllinen futuuri — taivutustaulukko\n\n| Persoona | hablar | comer | vivir |\n|---|---|---|---|\n| yo | **hablaré** | **comeré** | **viviré** |\n| tú | **hablarás** | **comerás** | **vivirás** |\n| él/ella | **hablará** | **comerá** | **vivirá** |\n| nosotros | **hablaremos** | **comeremos** | **viviremos** |\n| vosotros | **hablaréis** | **comeréis** | **viviréis** |\n| ellos/ellas | **hablarán** | **comerán** | **vivirán** |\n\n**Muistisääntö:** Kaikilla muodoilla paitsi nosotros on aksentti!\n\n## Aikailmaisut\n\n- **mañana** — huomenna\n- **el año que viene** — ensi vuonna\n- **dentro de poco** — pian\n- **en el futuro** — tulevaisuudessa\n- **pronto** — pian\n- **algún día** — jonain päivänä\n- **el próximo mes** — ensi kuussa"
+      },
+      {
+        "id": "tips",
+        "title": "YO-vinkki",
+        "content_md": "## Futuuri YO-kirjoitustehtävässä\n\nTulevaisuuden kuvaus on kirjoitustehtävässä yksi yleisimmistä rakennevaatimuksista.\n\n## Muista\n\n- ✓ Säännöllinen futuuri: infinitiivi + -é/-ás/-á/-emos/-éis/-án\n- ✓ Kaikilla on aksentti **paitsi** nosotros: *hablaremos* (ei aksenttia)\n- ✗ Älä sekoita futuuriin konditionaalia: *hablaré* (futuuri) ≠ *hablaría* (konditionaali)\n\n## Hyödyllisiä lauseita YO-kirjoitukseen\n\n> *En el futuro me gustaría...* — Tulevaisuudessa haluaisin...\n\n> *El año que viene estudiaré...* — Ensi vuonna opiskelen...\n\n> *Algún día trabajaré en...* — Jonain päivänä teen töitä..."
+      }
+    ]
+  }
+}

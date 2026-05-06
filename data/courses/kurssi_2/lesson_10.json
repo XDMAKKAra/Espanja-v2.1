@@ -1,0 +1,101 @@
+{
+  "meta": {
+    "course_key": "kurssi_2",
+    "lesson_index": 10,
+    "lesson_type": "test",
+    "level": "A",
+    "title": "Kertaustesti — Kurssi 2",
+    "description": "Kurssi 2:n kertaava sekoitustesti: koti, ruoka, harrastukset, gustar, ser/estar, tener, epäsäännölliset preesensit ja stem-changers (e→ie, o→ue, e→i).",
+    "yo_relevance": "Kertaustesti simuloi YO-rakenneosion sekoitusta: monivalinta + aukkotehtävä + käännös samassa setissä. Vastaa siihen että YO-koe ei ryhmittele rakenteita vaan testaa niitä lomittain.",
+    "estimated_minutes_median": 22
+  },
+  "teaching": {
+    "intro_md": "# Kertaustesti — Kurssi 2\n\nTämä testi käy läpi koko Kurssi 2:n. Kysymykset on sekoitettu — ei ryhmitelty aiheen mukaan — koska YO-kokeessa rakenteet ja sanasto tulevat lomittain.\n\n## Mitä testataan\n\n- **Sanasto:** koti, ruoka, harrastukset\n- **gustar-rakenne** (gusta vs. gustan, me/te/le)\n- **Epäsäännölliset preesensit:** ser, estar, ir, tener, hacer, venir, decir\n- **Stem-changers:** querer (e→ie), poder (o→ue), pedir (e→i)\n- **Käännökset** suuntaan ja toiseen\n\n## Vinkki\n\nÄlä juutu yhteen tehtävään. Jos joku ei tule mieleen, merkitse ja jatka — palaa loppuun. YO-kokeessa aika on rajallinen.",
+    "key_points": [
+      "Testissä on monivalintaa, kirjoittamista, aukkoja ja käännöksiä — sekoitettu kuten YO-koe.",
+      "Älä juutu yhteen kysymykseen — palaa loppuun.",
+      "Gustar-rakenteessa esine ratkaisee verbin: gusta (yks.) / gustan (mon.).",
+      "Stem-changersit muuttuvat vain painollisissa muodoissa (yo, tú, él, ellos), eivät nosotros/vosotros."
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1-test-mixed",
+      "phase_type": "recognition_mc",
+      "title": "Kurssi 2 — sekoitustesti",
+      "instruction": "Vastaa kysymyksiin parhaasi mukaan. Älä juutu — jatka eteenpäin ja palaa lopuksi.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.65, "C": 0.7, "M": 0.75, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "mc", "stem": "Mikä on 'la cocina' suomeksi?", "choices": ["olohuone", "keittiö", "kylpyhuone", "makuuhuone"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "la cocina = keittiö. Olohuone = el salón, kylpyhuone = el baño, makuuhuone = el dormitorio." },
+        { "item_type": "mc", "stem": "Valitse oikea muoto: 'Yo ____ a la fiesta.' (mennä — ir)", "choices": ["voy", "vas", "va", "vamos"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "Yo voy = minä menen. Ir on epäsäännöllinen: voy, vas, va, vamos, vais, van." },
+        { "item_type": "mc", "stem": "Mikä on oikein? 'A mí ____ las manzanas.'", "choices": ["me gusta", "me gustan", "te gusta", "te gustan"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "manzanas on monikko → gustan. 'A mí' viittaa minuun, joten 'me'." },
+        { "item_type": "mc", "stem": "Mikä on 'la habitación' suomeksi?", "choices": ["talo", "huone", "katto", "ovi"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "la habitación = huone. La casa = talo, el techo = katto, la puerta = ovi." },
+        { "item_type": "mc", "stem": "Stem-changer: 'querer' yo-muodossa on…", "choices": ["quero", "quiero", "queriero", "querio"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "querer (e→ie): quiero, quieres, quiere, queremos, queréis, quieren. Nosotros/vosotros eivät muutu." },
+        { "item_type": "mc", "stem": "Mikä verbi sopii: 'Nosotros ____ paella los domingos.' (syödä — comer)", "choices": ["come", "comemos", "coméis", "comen"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "Nosotros + comer (säännöllinen -er) → comemos." },
+        { "item_type": "mc", "stem": "Mitä 'el pollo' tarkoittaa?", "choices": ["kala", "kana", "lihapulla", "kinkku"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "el pollo = kana. Kala = el pescado, kinkku = el jamón." },
+        { "item_type": "mc", "stem": "Stem-changer: 'poder' él-muodossa on…", "choices": ["pode", "puede", "puedo", "podes"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "poder (o→ue): puedo, puedes, puede, podemos, podéis, pueden." },
+        { "item_type": "mc", "stem": "'Hago deporte cada día' — mitä 'hago' tarkoittaa?", "choices": ["minä menen", "minä teen / harrastan", "minä syön", "minä luen"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "hago = minä teen / minä harrastan (hacer). Yo-muoto on epäsäännöllinen." },
+        { "item_type": "mc", "stem": "Mikä on harrastus? Valitse virheellinen muoto:", "choices": ["jugar al fútbol", "tocar la guitarra", "ir al cine", "comer la cocina"], "correct_index": 3, "distractor_difficulty": "hard", "explanation": "'comer la cocina' on absurdi — ei ole harrastus. Muut ovat: pelata jalkapalloa, soittaa kitaraa, mennä elokuviin." },
+
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "el salón", "accept": ["olohuone"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "el dormitorio", "accept": ["makuuhuone"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "kylpyhuone", "accept": ["el baño", "baño"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "leipä", "accept": ["el pan", "pan"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "leer", "accept": ["lukea"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "uida", "accept": ["nadar"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "el queso", "accept": ["juusto"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "haluta (infinitiivi)", "accept": ["querer"] },
+
+        { "item_type": "gap_fill", "sentence_template": "A mí me {1} mucho la música clásica.", "answers": [["gusta"]], "word_bank": ["gusta", "gustan", "gusto"] },
+        { "item_type": "gap_fill", "sentence_template": "A nosotros nos {1} las películas españolas.", "answers": [["gustan"]], "word_bank": ["gusta", "gustan", "encanta"] },
+        { "item_type": "gap_fill", "sentence_template": "Yo {1} dieciséis años. (tener)", "answers": [["tengo"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Mi hermano {1} ahora en la universidad. (estudiar)", "answers": [["estudia"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Yo {1} pizza para cenar. (querer — stem-change)", "answers": [["quiero"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Ellos no {1} venir hoy. (poder — stem-change)", "answers": [["pueden"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Mi casa {1} cerca del centro. (estar)", "answers": [["está", "esta"]], "word_bank": null },
+
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Pidän paljon espanjalaisesta ruoasta.", "accept": ["me gusta mucho la comida española", "me gusta mucho la comida española.", "me encanta la comida española"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Asuntossani on kolme huonetta.", "accept": ["en mi piso hay tres habitaciones", "mi piso tiene tres habitaciones", "en mi casa hay tres habitaciones"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Haluan mennä elokuviin tänä iltana.", "accept": ["quiero ir al cine esta noche", "quiero ir al cine esta noche."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Sisareni harrastaa jalkapalloa joka viikko.", "accept": ["mi hermana juega al fútbol cada semana", "mi hermana juega al futbol cada semana", "mi hermana hace fútbol cada semana"] },
+        { "item_type": "translate", "direction": "es_to_fi", "source": "No puedo salir porque tengo que estudiar.", "accept": ["en voi lähteä koska minun täytyy opiskella", "en voi lähteä, koska minun täytyy opiskella", "en pääse lähtemään koska minun pitää opiskella"] }
+      ]
+    }
+  ],
+  "vocab": [
+    { "es": "la casa", "fi": "talo, koti", "example_es": "Mi casa es pequeña.", "example_fi": "Taloni on pieni.", "gender": "f" },
+    { "es": "el piso", "fi": "asunto, kerros", "example_es": "Vivo en un piso del centro.", "example_fi": "Asun keskustan asunnossa.", "gender": "m" },
+    { "es": "la cocina", "fi": "keittiö", "example_es": "La cocina es luminosa.", "example_fi": "Keittiö on valoisa.", "gender": "f" },
+    { "es": "el salón", "fi": "olohuone", "example_es": "Vemos la tele en el salón.", "example_fi": "Katsomme TV:tä olohuoneessa.", "gender": "m" },
+    { "es": "el dormitorio", "fi": "makuuhuone", "example_es": "Mi dormitorio es tranquilo.", "example_fi": "Makuuhuoneeni on rauhallinen.", "gender": "m" },
+    { "es": "el baño", "fi": "kylpyhuone, vessa", "example_es": "El baño está al fondo.", "example_fi": "Kylpyhuone on perällä.", "gender": "m" },
+    { "es": "la habitación", "fi": "huone", "example_es": "Mi piso tiene tres habitaciones.", "example_fi": "Asunnossani on kolme huonetta.", "gender": "f" },
+    { "es": "el pan", "fi": "leipä", "example_es": "Compro pan cada mañana.", "example_fi": "Ostan leipää joka aamu.", "gender": "m" },
+    { "es": "el queso", "fi": "juusto", "example_es": "Me gusta el queso manchego.", "example_fi": "Pidän manchego-juustosta.", "gender": "m" },
+    { "es": "el pollo", "fi": "kana", "example_es": "Cenamos pollo con arroz.", "example_fi": "Syömme illalliseksi kanaa ja riisiä.", "gender": "m" },
+    { "es": "el pescado", "fi": "kala (ruokana)", "example_es": "El pescado es muy fresco aquí.", "example_fi": "Kala on hyvin tuoretta täällä.", "gender": "m" },
+    { "es": "la fruta", "fi": "hedelmä", "example_es": "Como fruta cada día.", "example_fi": "Syön hedelmiä joka päivä.", "gender": "f" },
+    { "es": "leer", "fi": "lukea", "example_es": "Me gusta leer novelas.", "example_fi": "Tykkään lukea romaaneja.", "gender": null },
+    { "es": "nadar", "fi": "uida", "example_es": "Nado los sábados.", "example_fi": "Uin lauantaisin.", "gender": null },
+    { "es": "jugar al fútbol", "fi": "pelata jalkapalloa", "example_es": "Mis primos juegan al fútbol.", "example_fi": "Serkkuni pelaavat jalkapalloa.", "gender": null },
+    { "es": "tocar la guitarra", "fi": "soittaa kitaraa", "example_es": "Toco la guitarra desde niño.", "example_fi": "Olen soittanut kitaraa pikkupojasta asti.", "gender": null },
+    { "es": "querer", "fi": "haluta, rakastaa", "example_es": "Quiero un café.", "example_fi": "Haluan kahvin.", "gender": null },
+    { "es": "poder", "fi": "voida, pystyä", "example_es": "No puedo ir hoy.", "example_fi": "En voi tulla tänään.", "gender": null },
+    { "es": "pedir", "fi": "pyytää, tilata", "example_es": "Pido una pizza.", "example_fi": "Tilaan pizzan.", "gender": null },
+    { "es": "tener", "fi": "olla (jollakin), omistaa", "example_es": "Tengo dos hermanos.", "example_fi": "Minulla on kaksi sisarusta.", "gender": null },
+    { "es": "hacer", "fi": "tehdä", "example_es": "Hago deporte cada día.", "example_fi": "Harrastan urheilua joka päivä.", "gender": null },
+    { "es": "ir", "fi": "mennä", "example_es": "Voy al gimnasio.", "example_fi": "Menen kuntosalille.", "gender": null },
+    { "es": "venir", "fi": "tulla", "example_es": "Vengo de la escuela.", "example_fi": "Tulen koulusta.", "gender": null },
+    { "es": "me gusta / me gustan", "fi": "pidän (yks. / mon. esineestä)", "example_es": "Me gusta el café. Me gustan los libros.", "example_fi": "Pidän kahvista. Pidän kirjoista.", "gender": null }
+  ],
+  "side_panel": {
+    "tabs": [
+      {
+        "id": "tips",
+        "title": "YO-vinkki",
+        "content_md": "## Strategia — kertaava kokoelmatesti\n\n**1. Lue tehtävät ensin nopeasti**. Jos näet helppoja, tee ne ensin — saat varmoja pisteitä.\n\n**2. Älä juutu**. Jos yksi gap_fill ei tule mieleen 30 sekunnissa, jätä, merkitse mielessäsi ja palaa.\n\n**3. Gustar-tarkistus**: katso esinettä, ei henkilöä.\n- *Me gusta __la pizza__* (yksikkö) → **gusta**\n- *Me gustan __las pizzas__* (monikko) → **gustan**\n- *Me gusta __nadar__* (verbi infinitiivissä) → aina **gusta** (yks.)\n\n**4. Stem-changer-tarkistus**: muutos koskee vain painollisia muotoja.\n- yo / tú / él / ellos → muuttuu (quiero, puede)\n- nosotros / vosotros → EI muutu (queremos, podéis)\n\n**5. Käännös fi→es**: lue lause loppuun ennen kuin alat kirjoittaa. Suomen sanajärjestys on eri kuin espanjan.\n\n## Yleisimmät virheet (ja korjaus)\n\n- *Me gusto la pizza* → **Me gusta la pizza** (gusta-rakenteessa subjekti on pizza, ei minä).\n- *Yo tiene 16 años* → **Yo tengo 16 años** (yo-muoto = tengo).\n- *Nosotros queremos* on **oikein** (älä lisää ie:tä — nosotros/vosotros eivät vaihda).\n- *La casa es bonito* → **La casa es bonita** (la → -a-päätteinen adjektiivi).\n\n## YO-kokeen rakenneosio\n\nYO-rakenneosio = ~25 monivalintaa + 5–10 aukkoa + lyhyt käännös. Se on **30 % arvosanasta**. Tämä testi vastaa siihen suoraan."
+      }
+    ]
+  }
+}

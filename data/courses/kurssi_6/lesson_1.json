@@ -5,95 +5,295 @@
     "lesson_type": "vocab",
     "level": "C",
     "title": "Ympäristö ja luonto",
-    "description": "PLACEHOLDER — sisältö generoidaan myöhemmin PROMPT_GENERATE_LESSON.md:llä",
-    "yo_relevance": "PLACEHOLDER",
+    "description": "Opit ympäristön ja luonnon ydinsanaston: saastuminen, kierrätys, ilmastonmuutos, luonnonvarat ja ympäristönsuojelu. Sanasto kattaa noin 30 entryä ja on suoraan käyttökelpoinen YO-kokeen kirjoitustehtävissä ja lukutehtävissä.",
+    "yo_relevance": "Ympäristöteema on YO-kokeen vakioteema joka toistuu lähes joka vuosi kirjoitustehtävässä ja lukutehtävissä. Contaminación, reciclaje, calentamiento global ja medio ambiente ovat sanoja joita esiintyy toistuvasti YTL:n teksteissä.",
     "estimated_minutes_median": 12
   },
   "teaching": {
-    "intro_md": "PLACEHOLDER — opetussisältö generoidaan myöhemmin",
+    "intro_md": "# Ympäristö ja luonto\n\nYmpäristöteema on YO-kokeen vakiosisältöä. Tässä oppitunnissa opit sanat joita tarvitset kun kirjoitat tai luet ympäristöön liittyvistä aiheista.\n\n## Avaintermit\n\n| Espanjaksi | Suomeksi |\n|---|---|\n| **el medio ambiente** | ympäristö |\n| **la contaminación** | saastuminen |\n| **el calentamiento global** | ilmaston lämpeneminen |\n| **el cambio climático** | ilmastonmuutos |\n| **reciclar** | kierrättää |\n| **el reciclaje** | kierrätys |\n| **las energías renovables** | uusiutuvat energialähteet |\n| **la energía solar** | aurinkoenergia |\n| **la energía eólica** | tuulienergia |\n\n## Ympäristöongelmat\n\n> *La contaminación del aire afecta a la salud de millones de personas.* — Ilman saastuminen vaikuttaa miljoonien ihmisten terveyteen.\n\n> *El cambio climático provoca fenómenos meteorológicos extremos.* — Ilmastonmuutos aiheuttaa äärimmäisiä sääilmiöitä.\n\n## Ratkaisut\n\n- **reducir** = vähentää\n- **reutilizar** = uudelleenkäyttää\n- **proteger** = suojella\n- **ahorrar energía** = säästää energiaa\n\n## Muista — kolme R:ää\n\n**Reducir — Reutilizar — Reciclar** = Vähennä — Käytä uudelleen — Kierrätä\n\nNämä sanat yhdessä ovat YO-kirjoitustehtävän standardirakenne kun kirjoitat ympäristöaiheesta.",
     "key_points": [
-      "PLACEHOLDER"
+      "el medio ambiente = ympäristö (ei 'medioambiente' — kaksi sanaa tai yhdyssana, molemmat käyvät).",
+      "la contaminación = saastuminen — voidaan täsmentää: del aire (ilman), del agua (veden), acústica (melu).",
+      "el calentamiento global ja el cambio climático ovat eri termejä mutta liittyvät toisiinsa.",
+      "Kolme R:ää: reducir — reutilizar — reciclar. Muista tämä YO-kirjoitukseen.",
+      "las energías renovables on monikko — se on tärkeä termi YO-teksteissä."
     ]
   },
   "phases": [
     {
-      "phase_id": "p1-placeholder",
+      "phase_id": "p1-recognition-mc-ymparisto",
       "phase_type": "recognition_mc",
-      "title": "PLACEHOLDER",
-      "instruction": "PLACEHOLDER",
-      "mastery_threshold": {
-        "I": 0.5,
-        "A": 0.6,
-        "B": 0.65,
-        "C": 0.7,
-        "M": 0.75,
-        "E": 0.85,
-        "L": 0.9
-      },
+      "title": "Tunnista — ympäristösanasto",
+      "instruction": "Valitse oikea käännös.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.7, "C": 0.75, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "mc", "stem": "el medio ambiente", "choices": ["ilmasto", "ympäristö", "luonto", "ekosysteemi"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "el medio ambiente = ympäristö. Luonto on la naturaleza, ilmasto on el clima." },
+        { "item_type": "mc", "stem": "la contaminación", "choices": ["kierrätys", "saastuminen", "suojelu", "kuivuus"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "la contaminación = saastuminen. Kierrätys on el reciclaje, suojelu on la protección." },
+        { "item_type": "mc", "stem": "el calentamiento global", "choices": ["ilmastonmuutos", "tuulienergia", "ilmaston lämpeneminen", "kasvihuoneilmiö"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "el calentamiento global = ilmaston lämpeneminen. Ilmastonmuutos on el cambio climático." },
+        { "item_type": "mc", "stem": "reciclar", "choices": ["suojella", "kierrättää", "vähentää", "saastuttaa"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "reciclar = kierrättää. Suojella on proteger, vähentää on reducir." },
+        { "item_type": "mc", "stem": "las energías renovables", "choices": ["uusiutuvat energialähteet", "fossiiliset polttoaineet", "ydinenergia", "aurinkoenergia"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "las energías renovables = uusiutuvat energialähteet — yläkäsite joka sisältää aurinkoenergian, tuulienergian jne." },
+        { "item_type": "mc", "stem": "la deforestación", "choices": ["metsäpalo", "metsänhakkuu, metsien tuhoutuminen", "aavikoituminen", "tulva"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "la deforestación = metsänhakkuu / metsien tuhoutuminen. Aavikoituminen on la desertificación." },
+        { "item_type": "mc", "stem": "el efecto invernadero", "choices": ["kasvihuoneilmiö", "otsoniaukko", "saastekerros", "lämpösaaste"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "el efecto invernadero = kasvihuoneilmiö. Otsoniaukko on el agujero de ozono." },
+        { "item_type": "mc", "stem": "ahorrar energía", "choices": ["tuottaa energiaa", "säästää energiaa", "ostaa energiaa", "siirtää energiaa"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "ahorrar = säästää. Ahorrar energía = säästää energiaa. Ahorrar dinero = säästää rahaa." },
+        { "item_type": "mc", "stem": "la sequía", "choices": ["tulva", "myrsky", "kuivuus", "maanjäristys"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "la sequía = kuivuus. Tulva on la inundación, myrsky on la tormenta." },
+        { "item_type": "mc", "stem": "la biodiversidad", "choices": ["biodiversiteetti, luonnon monimuotoisuus", "ekosysteemi", "elinympäristö", "lajikato"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "la biodiversidad = biodiversiteetti, luonnon monimuotoisuus. Lajikato on la extinción de especies." },
+        { "item_type": "mc", "stem": "reducir las emisiones", "choices": ["mitata päästöjä", "vähentää päästöjä", "kompensoida päästöjä", "lisätä päästöjä"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "reducir = vähentää, las emisiones = päästöt. Reducir las emisiones = vähentää päästöjä." },
+        { "item_type": "mc", "stem": "la energía solar", "choices": ["tuulienergia", "vesivoima", "aurinkoenergia", "bioenergia"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "la energía solar = aurinkoenergia. Tuulienergia on la energía eólica." },
+        { "item_type": "mc", "stem": "proteger el medio ambiente", "choices": ["tuhota ympäristö", "tutkia ympäristöä", "suojella ympäristöä", "saastuttaa ympäristöä"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "proteger = suojella. Proteger el medio ambiente = suojella ympäristöä." },
+        { "item_type": "mc", "stem": "el combustible fósil", "choices": ["biohajoava materiaali", "fossiilinen polttoaine", "uusiutuva energia", "hiilidioksidi"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "el combustible fósil = fossiilinen polttoaine (öljy, hiili, maakaasu)." }
+      ]
+    },
+    {
+      "phase_id": "p2-recognition-match",
+      "phase_type": "recognition_match",
+      "title": "Yhdistä — ympäristösanasto",
+      "instruction": "Yhdistä espanjan sana ja suomennos.",
+      "mastery_threshold": { "I": 0.6, "A": 0.65, "B": 0.75, "C": 0.8, "M": 0.85, "E": 0.9, "L": 0.95 },
+      "skip_for_targets": ["I"],
       "items": [
         {
-          "item_type": "mc",
-          "stem": "PLACEHOLDER",
-          "choices": [
-            "a",
-            "b",
-            "c",
-            "d"
-          ],
-          "correct_index": 0,
-          "explanation": "PLACEHOLDER"
+          "item_type": "match",
+          "left_label": "Ympäristöongelmat",
+          "right_label": "Suomeksi",
+          "pairs": [
+            { "left": "la contaminación", "right": "saastuminen" },
+            { "left": "el calentamiento global", "right": "ilmaston lämpeneminen" },
+            { "left": "la deforestación", "right": "metsänhakkuu" },
+            { "left": "la sequía", "right": "kuivuus" },
+            { "left": "la inundación", "right": "tulva" },
+            { "left": "el efecto invernadero", "right": "kasvihuoneilmiö" },
+            { "left": "las emisiones", "right": "päästöt" },
+            { "left": "la extinción", "right": "sukupuuttoon kuoleminen" }
+          ]
         },
         {
-          "item_type": "mc",
-          "stem": "PLACEHOLDER",
-          "choices": [
-            "a",
-            "b",
-            "c",
-            "d"
-          ],
-          "correct_index": 0,
-          "explanation": "PLACEHOLDER"
+          "item_type": "match",
+          "left_label": "Ratkaisut ja toimet",
+          "right_label": "Suomeksi",
+          "pairs": [
+            { "left": "reciclar", "right": "kierrättää" },
+            { "left": "reducir", "right": "vähentää" },
+            { "left": "reutilizar", "right": "käyttää uudelleen" },
+            { "left": "proteger", "right": "suojella" },
+            { "left": "ahorrar", "right": "säästää" },
+            { "left": "las energías renovables", "right": "uusiutuvat energialähteet" },
+            { "left": "la energía solar", "right": "aurinkoenergia" },
+            { "left": "la energía eólica", "right": "tuulienergia" }
+          ]
         },
         {
-          "item_type": "mc",
-          "stem": "PLACEHOLDER",
-          "choices": [
-            "a",
-            "b",
-            "c",
-            "d"
-          ],
-          "correct_index": 0,
-          "explanation": "PLACEHOLDER"
-        },
-        {
-          "item_type": "mc",
-          "stem": "PLACEHOLDER",
-          "choices": [
-            "a",
-            "b",
-            "c",
-            "d"
-          ],
-          "correct_index": 0,
-          "explanation": "PLACEHOLDER"
+          "item_type": "match",
+          "left_label": "Luonto ja ekologia",
+          "right_label": "Suomeksi",
+          "pairs": [
+            { "left": "el bosque", "right": "metsä" },
+            { "left": "el río", "right": "joki" },
+            { "left": "el océano", "right": "valtameri" },
+            { "left": "la biodiversidad", "right": "luonnon monimuotoisuus" },
+            { "left": "el ecosistema", "right": "ekosysteemi" },
+            { "left": "las especies en peligro", "right": "uhanalaiset lajit" }
+          ]
         }
+      ]
+    },
+    {
+      "phase_id": "p3-recognition-mc-laajennus",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista — laajempi sanasto",
+      "instruction": "Valitse oikea käännös.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.7, "C": 0.75, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I"],
+      "items": [
+        { "item_type": "mc", "stem": "el cambio climático", "choices": ["sääilmiö", "ilmastonmuutos", "ilmaston lämpeneminen", "kasvihuoneilmiö"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "el cambio climático = ilmastonmuutos — laajempi käsite kuin el calentamiento global (lämpeneminen)." },
+        { "item_type": "mc", "stem": "la inundación", "choices": ["kuivuus", "myrsky", "tulva", "maanjäristys"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "la inundación = tulva. Kuivuus on la sequía, myrsky on la tormenta." },
+        { "item_type": "mc", "stem": "los residuos", "choices": ["kierrätettävät materiaalit", "jätteet, jäte", "luonnonvarat", "saasteet"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "los residuos = jätteet. Myös la basura = roskat. Jätteiden käsittely on la gestión de residuos." },
+        { "item_type": "mc", "stem": "los recursos naturales", "choices": ["luonnonkatastrofit", "luonnonvarat", "ekosysteemipalvelut", "luonnonalueet"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "los recursos naturales = luonnonvarat (vesi, maaperä, mineraalit, metsät)." },
+        { "item_type": "mc", "stem": "el agujero de ozono", "choices": ["kasvihuoneilmiö", "otsonikerros", "otsoniaukko", "UV-säteily"], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "el agujero de ozono = otsoniaukko. Otsonikerros on la capa de ozono." },
+        { "item_type": "mc", "stem": "la huella de carbono", "choices": ["hiilidioksidi", "hiilijalanjälki", "hiilipäästöt", "hiilisäilö"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "la huella de carbono = hiilijalanjälki. Huella tarkoittaa myös jalanjälkeä kirjaimellisesti." },
+        { "item_type": "mc", "stem": "la desertificación", "choices": ["metsänhakkuu", "kuivuus", "aavikoituminen", "eroosio"], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "la desertificación = aavikoituminen — maaperän muuttuminen aavikoksi. Kuivuus on la sequía." },
+        { "item_type": "mc", "stem": "el desarrollo sostenible", "choices": ["kestävä kehitys", "taloudellinen kasvu", "teollistuminen", "ympäristöpolitiikka"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "el desarrollo sostenible = kestävä kehitys — kehitys joka ei vaaranna tulevia sukupolvia." },
+        { "item_type": "mc", "stem": "la energía eólica", "choices": ["aurinkoenergia", "vesivoima", "tuulienergia", "geoterminen energia"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "la energía eólica = tuulienergia. Eólica tulee kreikan jumalasta Aiolos (tuulen jumala)." },
+        { "item_type": "mc", "stem": "las especies en peligro de extinción", "choices": ["luonnonsuojelualueet", "uhanalaiset lajit", "sukupuuttoon kuolleet lajit", "kotieläinlajit"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "las especies en peligro de extinción = uhanalaiset lajit. Peligro = vaara, extinción = sukupuutto." },
+        { "item_type": "mc", "stem": "la contaminación del agua", "choices": ["veden saastuminen", "tulvavesi", "jätevesi", "happamansade"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "la contaminación del agua = veden saastuminen. Del agua täsmentää kontaminoitunut elementti." },
+        { "item_type": "mc", "stem": "el plástico de un solo uso", "choices": ["kierrätysmuovi", "kertakäyttömuovi", "biohajoava muovi", "muovijäte"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "el plástico de un solo uso = kertakäyttömuovi. De un solo uso = kertakäyttöinen." }
+      ]
+    },
+    {
+      "phase_id": "p4-recall-typed-es-fi",
+      "phase_type": "recall_typed_es_to_fi",
+      "title": "Käännä suomeksi",
+      "instruction": "Kirjoita käännös suomeksi.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.7, "C": 0.75, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "el medio ambiente", "accept": ["ympäristö"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "la contaminación", "accept": ["saastuminen"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "el calentamiento global", "accept": ["ilmaston lämpeneminen", "globaali lämpeneminen"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "reciclar", "accept": ["kierrättää"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "el cambio climático", "accept": ["ilmastonmuutos"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "las energías renovables", "accept": ["uusiutuvat energialähteet", "uusiutuva energia"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "la deforestación", "accept": ["metsänhakkuu", "metsien tuhoutuminen", "metsähakkuu"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "la sequía", "accept": ["kuivuus"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "proteger", "accept": ["suojella"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "el desarrollo sostenible", "accept": ["kestävä kehitys"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "la huella de carbono", "accept": ["hiilijalanjälki"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "los recursos naturales", "accept": ["luonnonvarat"] }
+      ]
+    },
+    {
+      "phase_id": "p5-recall-typed-fi-es",
+      "phase_type": "recall_typed_fi_to_es",
+      "title": "Käännä espanjaksi",
+      "instruction": "Kirjoita käännös espanjaksi.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "ympäristö", "accept": ["el medio ambiente", "medio ambiente", "el medioambiente", "medioambiente"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "saastuminen", "accept": ["la contaminación", "contaminación"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "ilmastonmuutos", "accept": ["el cambio climático", "cambio climático"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "kierrättää", "accept": ["reciclar"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "ilmaston lämpeneminen", "accept": ["el calentamiento global", "calentamiento global"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "kuivuus", "accept": ["la sequía", "sequía"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "metsänhakkuu", "accept": ["la deforestación", "deforestación"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "suojella", "accept": ["proteger"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "aurinkoenergia", "accept": ["la energía solar", "energía solar"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "kestävä kehitys", "accept": ["el desarrollo sostenible", "desarrollo sostenible"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "päästöt", "accept": ["las emisiones", "emisiones"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "luonnonvarat", "accept": ["los recursos naturales", "recursos naturales"] }
+      ]
+    },
+    {
+      "phase_id": "p6-application-gap-helppo",
+      "phase_type": "application_gap_fill",
+      "title": "Lauseen täydennys — perustaso",
+      "instruction": "Täydennä lause oikealla ympäristösanalla. Sanapankki auttaa.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.75, "C": 0.8, "M": 0.85, "E": 0.9, "L": 0.92 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "El {1} es el mayor problema ambiental de nuestro tiempo.", "answers": [["cambio climático", "calentamiento global"]], "word_bank": ["cambio climático", "reciclaje", "bosque"] },
+        { "item_type": "gap_fill", "sentence_template": "Es importante {1} el papel, el plástico y el vidrio.", "answers": [["reciclar"]], "word_bank": ["reciclar", "contaminar", "reducir"] },
+        { "item_type": "gap_fill", "sentence_template": "La {1} del aire es un problema grave en las ciudades grandes.", "answers": [["contaminación"]], "word_bank": ["contaminación", "biodiversidad", "sequía"] },
+        { "item_type": "gap_fill", "sentence_template": "Debemos {1} el uso del plástico de un solo uso.", "answers": [["reducir"]], "word_bank": ["reducir", "aumentar", "reciclar"] },
+        { "item_type": "gap_fill", "sentence_template": "Las {1} como la solar y la eólica son más limpias que el carbón.", "answers": [["energías renovables"]], "word_bank": ["energías renovables", "emisiones", "inundaciones"] },
+        { "item_type": "gap_fill", "sentence_template": "La {1} está destruyendo los bosques tropicales.", "answers": [["deforestación"]], "word_bank": ["deforestación", "sequía", "biodiversidad"] },
+        { "item_type": "gap_fill", "sentence_template": "Hay que {1} el medio ambiente para las generaciones futuras.", "answers": [["proteger"]], "word_bank": ["proteger", "destruir", "ignorar"] },
+        { "item_type": "gap_fill", "sentence_template": "El {1} invernadero provoca el calentamiento del planeta.", "answers": [["efecto"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "En verano hay muchas {1} en España por las altas temperaturas.", "answers": [["sequías", "inundaciones"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "El {1} sostenible busca equilibrio entre economía y naturaleza.", "answers": [["desarrollo"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p7-application-gap-vaativa",
+      "phase_type": "application_gap_fill",
+      "title": "Lauseen täydennys — vaativa",
+      "instruction": "Täydennä ilman sanapankkia.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.65, "C": 0.75, "M": 0.85, "E": 0.9, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "La {1} de carbono de cada persona depende de sus hábitos de consumo.", "answers": [["huella"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Muchas {1} animales están en peligro de extinción por la deforestación.", "answers": [["especies"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "La {1} del agua es un problema especialmente grave en muchas regiones.", "answers": [["escasez", "contaminación"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "El uso excesivo de {1} fósiles como el petróleo acelera el cambio climático.", "answers": [["combustibles"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "La {1} convierte residuos en nuevos materiales útiles.", "answers": [["reciclaje", "reutilización"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "La {1} causa pérdida de tierras fértiles en regiones áridas.", "answers": [["desertificación"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "La {1} de ozono nos protege de la radiación ultravioleta del sol.", "answers": [["capa"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Debemos {1} energía apagando las luces cuando no las usamos.", "answers": [["ahorrar"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Los {1} naturales como el agua y el petróleo no son infinitos.", "answers": [["recursos"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "La {1} de los mares afecta a los peces y la cadena alimentaria.", "answers": [["contaminación"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p8-application-sentence-build",
+      "phase_type": "application_sentence_build",
+      "title": "Lauseiden rakentelua",
+      "instruction": "Käännä koko lause espanjaksi.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.6, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.92 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Ilmastonmuutos on sukupolvemme suurin ongelma.", "accept": ["el cambio climático es el mayor problema de nuestra generación", "el cambio climatico es el mayor problema de nuestra generacion"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Meidän täytyy kierrättää paperia, muovia ja lasia.", "accept": ["tenemos que reciclar papel, plástico y vidrio", "tenemos que reciclar papel, plastico y vidrio", "debemos reciclar papel, plástico y vidrio"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Uusiutuvat energialähteet ovat ratkaisu ilmastonmuutokseen.", "accept": ["las energías renovables son la solución al cambio climático", "las energias renovables son la solucion al cambio climatico"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Metsien hakkuu uhkaa luonnon monimuotoisuutta.", "accept": ["la deforestación amenaza la biodiversidad", "la deforestacion amenaza la biodiversidad"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Jokainen voi vähentää hiilijalanjälkeään.", "accept": ["todos podemos reducir nuestra huella de carbono", "cada uno puede reducir su huella de carbono"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Ympäristön suojelu on kaikkien vastuulla.", "accept": ["la protección del medio ambiente es responsabilidad de todos", "proteger el medio ambiente es responsabilidad de todos"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Kertakäyttömuovi saastuttaa meriä.", "accept": ["el plástico de un solo uso contamina los mares", "el plastico de un solo uso contamina los mares"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Kestävä kehitys tarkoittaa luonnonvarojen järkevää käyttöä.", "accept": ["el desarrollo sostenible significa el uso racional de los recursos naturales", "el desarrollo sostenible implica usar los recursos naturales de forma racional"] }
+      ]
+    },
+    {
+      "phase_id": "p9-synthesis-translate",
+      "phase_type": "synthesis_translate",
+      "title": "YO-tason käännös",
+      "instruction": "Käännä lause espanjaksi YO-tasolla.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.6, "C": 0.65, "M": 0.75, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Ilmaston lämpeneminen aiheuttaa tulvia ja kuivuutta eri puolilla maailmaa.", "accept": ["el calentamiento global provoca inundaciones y sequías en todo el mundo", "el calentamiento global causa inundaciones y sequias en diferentes partes del mundo"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Meidän pitäisi vähentää fossiilisten polttoaineiden käyttöä ja siirtyä uusiutuviin energialähteisiin.", "accept": ["deberíamos reducir el uso de combustibles fósiles y pasar a las energías renovables", "deberiamos reducir el uso de combustibles fosiles y cambiar a energias renovables"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Luonnon monimuotoisuus vähenee nopeasti metsänhakkuun takia.", "accept": ["la biodiversidad disminuye rápidamente debido a la deforestación", "la biodiversidad se reduce rapidamente a causa de la deforestacion"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Kestävä kehitys vaatii sekä taloudellisia että ympäristöllisiä ratkaisuja.", "accept": ["el desarrollo sostenible requiere soluciones tanto económicas como medioambientales", "el desarrollo sostenible necesita soluciones económicas y medioambientales"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Jokainen voi auttaa ympäristöä kierrättämällä ja säästämällä energiaa.", "accept": ["todos pueden ayudar al medio ambiente reciclando y ahorrando energía", "cada uno puede ayudar al medioambiente reciclando y ahorrando energia"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Hallitusten on toimittava nopeasti vähentääkseen kasvihuonekaasupäästöjä.", "accept": ["los gobiernos deben actuar rápidamente para reducir las emisiones de gases de efecto invernadero", "los gobiernos tienen que actuar rapido para reducir las emisiones de gases de invernadero"] }
+      ]
+    },
+    {
+      "phase_id": "p10-synthesis-short-writing",
+      "phase_type": "synthesis_short_writing",
+      "title": "Lyhyt kirjoitus — ympäristöaihe",
+      "instruction": "Kirjoita lyhyt teksti ympäristöaiheesta.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.6, "C": 0.65, "M": 0.7, "E": 0.8, "L": 0.9 },
+      "skip_for_targets": ["I", "A", "B", "C", "M"],
+      "items": [
+        { "item_type": "writing", "prompt": "Kirjoita 5–7 lausetta: mikä on mielestäsi suurin ympäristöongelma ja mitä sinä itse voit tehdä asian hyväksi? Käytä vähintään 4 tämän oppitunnin sanastosta.", "min_words": 50, "max_words": 95, "rubric_focus": ["communication", "vocab", "structure"] },
+        { "item_type": "writing", "prompt": "Kirjoita ystävälle viesti (5–7 lausetta) jossa kerrot miksi kierrätys ja energian säästäminen ovat tärkeitä. Perustele konkreettisesti.", "min_words": 50, "max_words": 95, "rubric_focus": ["communication", "vocab"] },
+        { "item_type": "writing", "prompt": "Kuvaile lyhyesti (5–7 lausetta) miten koulusi tai kotikuntasi voisi toimia ympäristöystävällisemmin. Käytä uusiutuvia energialähteitä, kierrätystä ja muita oppimiasi sanoja.", "min_words": 50, "max_words": 95, "rubric_focus": ["communication", "structure", "vocab"] }
       ]
     }
   ],
   "vocab": [
-    {
-      "es": "PLACEHOLDER",
-      "fi": "PLACEHOLDER"
-    }
+    { "es": "el medio ambiente", "fi": "ympäristö", "example_es": "Debemos proteger el medio ambiente.", "example_fi": "Meidän täytyy suojella ympäristöä.", "gender": "m" },
+    { "es": "la contaminación", "fi": "saastuminen", "example_es": "La contaminación del aire es un problema grave.", "example_fi": "Ilman saastuminen on vakava ongelma.", "gender": "f" },
+    { "es": "el calentamiento global", "fi": "ilmaston lämpeneminen", "example_es": "El calentamiento global sube el nivel del mar.", "example_fi": "Ilmaston lämpeneminen nostaa merenpintaa.", "gender": "m" },
+    { "es": "el cambio climático", "fi": "ilmastonmuutos", "example_es": "El cambio climático afecta a todos.", "example_fi": "Ilmastonmuutos vaikuttaa kaikkiin.", "gender": "m" },
+    { "es": "reciclar", "fi": "kierrättää", "example_es": "Reciclo el papel y el vidrio.", "example_fi": "Kierrätän paperin ja lasin.", "gender": null },
+    { "es": "el reciclaje", "fi": "kierrätys", "example_es": "El reciclaje reduce la cantidad de basura.", "example_fi": "Kierrätys vähentää jätemäärää.", "gender": "m" },
+    { "es": "las energías renovables", "fi": "uusiutuvat energialähteet", "example_es": "Las energías renovables son el futuro.", "example_fi": "Uusiutuvat energialähteet ovat tulevaisuus.", "gender": "f" },
+    { "es": "la energía solar", "fi": "aurinkoenergia", "example_es": "La energía solar es limpia y gratuita.", "example_fi": "Aurinkoenergia on puhdasta ja ilmaista.", "gender": "f" },
+    { "es": "la energía eólica", "fi": "tuulienergia", "example_es": "La energía eólica usa el viento.", "example_fi": "Tuulienergia hyödyntää tuulta.", "gender": "f" },
+    { "es": "la deforestación", "fi": "metsänhakkuu", "example_es": "La deforestación destruye los ecosistemas.", "example_fi": "Metsänhakkuu tuhoaa ekosysteemejä.", "gender": "f" },
+    { "es": "el efecto invernadero", "fi": "kasvihuoneilmiö", "example_es": "El efecto invernadero calienta el planeta.", "example_fi": "Kasvihuoneilmiö lämmittää planeettaa.", "gender": "m" },
+    { "es": "la sequía", "fi": "kuivuus", "example_es": "La sequía afecta a la agricultura.", "example_fi": "Kuivuus vaikuttaa maatalouteen.", "gender": "f" },
+    { "es": "la inundación", "fi": "tulva", "example_es": "Las inundaciones destruyen casas y cultivos.", "example_fi": "Tulvat tuhoavat koteja ja viljelyksiä.", "gender": "f" },
+    { "es": "reducir", "fi": "vähentää", "example_es": "Hay que reducir el uso de plástico.", "example_fi": "Muovin käyttöä täytyy vähentää.", "gender": null },
+    { "es": "reutilizar", "fi": "käyttää uudelleen", "example_es": "Reutilizo las bolsas de la compra.", "example_fi": "Käytän ostoskassit uudelleen.", "gender": null },
+    { "es": "proteger", "fi": "suojella", "example_es": "Proteger la naturaleza es urgente.", "example_fi": "Luonnon suojeleminen on kiireellistä.", "gender": null },
+    { "es": "ahorrar energía", "fi": "säästää energiaa", "example_es": "Apago las luces para ahorrar energía.", "example_fi": "Sammutan valot säästääkseni energiaa.", "gender": null },
+    { "es": "la biodiversidad", "fi": "luonnon monimuotoisuus", "example_es": "La biodiversidad está en peligro.", "example_fi": "Luonnon monimuotoisuus on uhattuna.", "gender": "f" },
+    { "es": "las especies en peligro", "fi": "uhanalaiset lajit", "example_es": "Muchas especies están en peligro de extinción.", "example_fi": "Monet lajit ovat sukupuuttovaarassa.", "gender": "f" },
+    { "es": "los recursos naturales", "fi": "luonnonvarat", "example_es": "Los recursos naturales no son infinitos.", "example_fi": "Luonnonvarat eivät ole loputtomia.", "gender": "m" },
+    { "es": "la huella de carbono", "fi": "hiilijalanjälki", "example_es": "Mi huella de carbono es pequeña.", "example_fi": "Hiilijalanjälkeni on pieni.", "gender": "f" },
+    { "es": "el desarrollo sostenible", "fi": "kestävä kehitys", "example_es": "El desarrollo sostenible protege el futuro.", "example_fi": "Kestävä kehitys suojelee tulevaisuutta.", "gender": "m" },
+    { "es": "los residuos", "fi": "jätteet, jäte", "example_es": "La gestión de residuos es importante.", "example_fi": "Jätteiden käsittely on tärkeää.", "gender": "m" },
+    { "es": "la desertificación", "fi": "aavikoituminen", "example_es": "La desertificación avanza en África.", "example_fi": "Aavikoituminen etenee Afrikassa.", "gender": "f" },
+    { "es": "el combustible fósil", "fi": "fossiilinen polttoaine", "example_es": "El petróleo es un combustible fósil.", "example_fi": "Öljy on fossiilinen polttoaine.", "gender": "m" },
+    { "es": "las emisiones", "fi": "päästöt", "example_es": "Las emisiones de CO2 aumentan cada año.", "example_fi": "CO2-päästöt kasvavat joka vuosi.", "gender": "f" },
+    { "es": "el ecosistema", "fi": "ekosysteemi", "example_es": "Los bosques tropicales son ecosistemas únicos.", "example_fi": "Trooppiset metsät ovat ainutlaatuisia ekosysteemejä.", "gender": "m" },
+    { "es": "el agujero de ozono", "fi": "otsoniaukko", "example_es": "El agujero de ozono se ha reducido.", "example_fi": "Otsoniaukko on pienentynyt.", "gender": "m" },
+    { "es": "el plástico de un solo uso", "fi": "kertakäyttömuovi", "example_es": "La UE prohíbe el plástico de un solo uso.", "example_fi": "EU kieltää kertakäyttömuovin.", "gender": "m" },
+    { "es": "la escasez de agua", "fi": "vesipula, veden niukkuus", "example_es": "La escasez de agua afecta a millones.", "example_fi": "Vesipula koskettaa miljoonia ihmisiä.", "gender": "f" }
   ],
   "side_panel": {
     "tabs": [
       {
         "id": "vocab",
         "title": "Sanasto",
-        "content_md": "PLACEHOLDER"
+        "content_md": "## Ympäristöongelmat\n\n- **el medio ambiente** — ympäristö\n- **la contaminación** — saastuminen\n- **el calentamiento global** — ilmaston lämpeneminen\n- **el cambio climático** — ilmastonmuutos\n- **el efecto invernadero** — kasvihuoneilmiö\n- **la deforestación** — metsänhakkuu\n- **la sequía** — kuivuus\n- **la inundación** — tulva\n- **la desertificación** — aavikoituminen\n- **las emisiones** — päästöt\n- **el combustible fósil** — fossiilinen polttoaine\n- **el agujero de ozono** — otsoniaukko\n- **el plástico de un solo uso** — kertakäyttömuovi\n- **la escasez de agua** — vesipula\n\n## Ratkaisut ja toimet\n\n- **reciclar** — kierrättää\n- **el reciclaje** — kierrätys\n- **reducir** — vähentää\n- **reutilizar** — käyttää uudelleen\n- **proteger** — suojella\n- **ahorrar energía** — säästää energiaa\n- **las energías renovables** — uusiutuvat energialähteet\n- **la energía solar** — aurinkoenergia\n- **la energía eólica** — tuulienergia\n- **el desarrollo sostenible** — kestävä kehitys\n- **la huella de carbono** — hiilijalanjälki\n\n## Luonto ja ekologia\n\n- **la biodiversidad** — luonnon monimuotoisuus\n- **las especies en peligro** — uhanalaiset lajit\n- **los recursos naturales** — luonnonvarat\n- **el ecosistema** — ekosysteemi\n- **los residuos** — jätteet"
+      },
+      {
+        "id": "tips",
+        "title": "YO-vinkki",
+        "content_md": "## YO-kokeessa — ympäristöteema\n\nYmpäristöaihe on YO-kirjoitustehtävän vakioteema. Lähes joka vuosi vaaditaan kommentoimaan ympäristöä tai ilmastonmuutosta.\n\n## Kolme R:ää — muista\n\n**Reducir — Reutilizar — Reciclar**\n\nNämä kolme verbiä riittävät kuvaamaan ympäristötekoja ja niitä odotetaan YO-kirjoituksessa.\n\n## Lauseaihioita kirjoitukseen\n\n- *El cambio climático es el mayor desafío de nuestra época.* — Ilmastonmuutos on aikamme suurin haaste.\n- *Es necesario reducir las emisiones de CO2.* — CO2-päästöjä on vähennettävä.\n- *Las energías renovables son la solución al calentamiento global.* — Uusiutuvat energialähteet ovat ratkaisu ilmaston lämpenemiseen.\n- *Cada uno puede contribuir reciclando y ahorrando energía.* — Jokainen voi osallistua kierrättämällä ja säästämällä energiaa.\n- *El desarrollo sostenible es la clave para el futuro.* — Kestävä kehitys on avain tulevaisuuteen.\n\n## Yleisimmät ansat\n\n- **calentamiento global** ≠ **cambio climático** — molemmat esiintyvät, merkitys hieman eri\n- **proteger** (suojella) ≠ **protesta** (protesti) — älä sekoita\n- **las emisiones** on aina monikossa kun tarkoitetaan päästöjä yleisesti"
       }
     ]
   }
