@@ -102,7 +102,9 @@ function renderLoadingItem() {
   $("placement-level-badge").textContent = "…";
   $("placement-counter").textContent = "";
   $("placement-progress-fill").style.width = "0%";
-  $("placement-question").textContent = "Valmistellaan tasotestiä…";
+  const qEl = $("placement-question");
+  qEl.textContent = "Valmistellaan tasotestiä…";
+  qEl.setAttribute("aria-busy", "true");
   $("placement-options").innerHTML = "";
   $("placement-explanation")?.classList.add("hidden");
 }
@@ -111,7 +113,9 @@ function renderApiFailure() {
   $("placement-level-badge").textContent = "Virhe";
   $("placement-counter").textContent = "";
   $("placement-progress-fill").style.width = "0%";
-  $("placement-question").textContent = "Yhteys katkesi. Yritä uudelleen.";
+  const qElErr = $("placement-question");
+  qElErr.textContent = "Yhteys katkesi. Yritä uudelleen.";
+  qElErr.removeAttribute("aria-busy");
   const opts = $("placement-options");
   opts.innerHTML = "";
   const retry = document.createElement("button");
@@ -129,7 +133,9 @@ function renderApiFailure() {
 
 async function renderBFallback() {
   // Second failure — assume level B and continue to dashboard.
-  $("placement-question").textContent = "Emme saaneet yhteyttä. Arvaamme tasoksi B — tarkennamme myöhemmin.";
+  const qElFallback = $("placement-question");
+  qElFallback.textContent = "Emme saaneet yhteyttä. Arvaamme tasoksi B — tarkennamme myöhemmin.";
+  qElFallback.removeAttribute("aria-busy");
   const opts = $("placement-options");
   opts.innerHTML = "";
   const go = document.createElement("button");
@@ -163,7 +169,9 @@ function renderQuestion() {
   $("placement-progress-fill").style.width = `${(currentIdx / questions.length) * 100}%`;
 
   $("placement-context")?.classList.add("hidden");
-  $("placement-question").textContent = q.question;
+  const qEl = $("placement-question");
+  qEl.textContent = q.question;
+  qEl.removeAttribute("aria-busy");
 
   const optionsEl = $("placement-options");
   optionsEl.innerHTML = "";
@@ -207,7 +215,9 @@ function renderQuestion() {
 
 async function submitAnswers() {
   $("placement-progress-fill").style.width = "100%";
-  $("placement-question").textContent = "Lasketaan tuloksia...";
+  const qElResults = $("placement-question");
+  qElResults.textContent = "Lasketaan tuloksia...";
+  qElResults.removeAttribute("aria-busy");
   $("placement-options").innerHTML = '<div style="text-align:center;padding:20px;color:var(--ink-soft)">Analysoidaan vastauksia...</div>';
 
   // Persist answers to localStorage so a mid-submit network blip doesn't
@@ -232,7 +242,9 @@ async function submitAnswers() {
     showResults();
   } catch (err) {
     track("placement_api_failed", { phase: "submit", error: String(err?.message || err).slice(0, 60) });
-    $("placement-question").textContent = "Verkkovirhe — yritetään uudelleen";
+    const qElNetErr = $("placement-question");
+    qElNetErr.textContent = "Verkkovirhe — yritetään uudelleen";
+    qElNetErr.removeAttribute("aria-busy");
     $("placement-options").innerHTML = '<button class="btn-primary" onclick="location.reload()">Yritä uudelleen</button>';
   }
 }

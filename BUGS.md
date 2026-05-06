@@ -4,26 +4,56 @@ Source: loop-1 audit. 23 SPA screens × 3 viewports (375/768/1440) + landing × 
 
 Ranked by **impact-to-effort**. P0 = ship-blocker / clearly broken. P1 = visible cheap-feel. P2 = polish.
 
+## AUDIT — L-RUFLO-LOOP-5 (2026-05-06)
+
+### npm audit
+**BLOCKER:** `npm`/`node` not available in agent shell session (PATH misconfiguration — `C:\Program Files\nodejs\` in env PATH but directory does not exist). npm audit could not be run. **User action required:** run `npm audit` manually. Known package versions from package-lock.json v3:
+- express 4.22.1, helmet 8.1.0, cors 2.8.6, jsonwebtoken 9.0.3, bcryptjs 3.0.3, web-push 3.6.7, dotenv 16.6.1 — no known CVEs at these versions.
+- Transitive: path-to-regexp 0.1.13 (CVE-2024-45296 patched), cookie 0.7.2 (CVE-2024-47764 patched), send 0.19.2 (CVE-2024-43796 patched), node-fetch 2.7.0 (SSRF patched), semver 7.7.4 (safe).
+- **AUDIT-1 (P2):** `ms` 2.0.0 — transitive dep via `debug` 2.6.9 / express chain. GHSA-w7rc-rwvf-8q5r: ReDoS was fixed IN 2.0.0 (not after). Version is safe but old — consider `npm audit` to confirm no advisory exists in npm registry for this exact version. No auto-fix.
+- **AUDIT-2 (P2):** `esbuild` 0.28.0 devDep — GHSA-67mh-4wv8-2f99 (dev-server SSRF) was fixed in 0.25.1. 0.28.0 is safe.
+- No high/critical advisories identified from package versions alone. Full `npm audit` still required by human reviewer.
+
+### npm run lint
+**BLOCKER:** npm not available in agent shell. Last known state: 0 errors / 106 warnings (L-CI-SW-CHECK, 2026-05-04). Delta unknown. **User action required:** run `npm run lint` and update this section.
+
+### npm test
+**BLOCKER:** npm not available in agent shell. Last known state: 1063/1064 (1 pre-existing flaky email.preferences timeout, L-RUFLO-LOOP-1). **User action required:** run `npm test` and update.
+
+### validate:lessons
+**PASS (manual):** PowerShell JSON parse sweep of all 90 lesson files across 8 courses — 0 parse errors. Count per course: K1=10, K2=10, K3=11, K4=12, K5=11, K6=12, K7=12, K8=12. Total: 90/90 ✓.
+
+### Playwright / axe-core
+Deferred — Playwright E2E gated since d3f5ca5 (`workflow_dispatch` only, no API secrets in shell). `tests/e2e-a11y.spec.js` exists but cannot run without local dev server + secrets.
+
+### SW STATIC_ASSETS audit
+**AUDIT-3 (P1) — LANDING CSS WRONG PATH:** `sw.js` STATIC_ASSETS contains `/landing.css` (root-level, 44 KB — actually the design-tokens file). But `index.html` loads `css/landing-tokens.css` + `css/landing.css` (components, 48 KB). The correct landing CSS paths are **not cached**; `/landing.css` (root) is a stale/wrong entry. Landing page will not work offline and may serve stale tokens.
+- Fix: replace `/landing.css` in STATIC_ASSETS with `/css/landing.css` and add `/css/landing-tokens.css`. Bump SW version.
+**AUDIT-4 (P2) — JS/CSS NOT IN SW (bundled — OK):** 27 JS files and 11 CSS files exist on disk but are not in STATIC_ASSETS individually. These are **expected** — they are bundled into `app.bundle.js`/`app.bundle.css` via esbuild. No action needed for: `js/renderers/*.js`, `js/features/answerGrading.js`, `css/components/button.css`, `css/components/skeleton.css`, etc.
+- Exception: `js/screens/placement.js` is not in STATIC_ASSETS and is not confirmed to be in the bundle entry (`js/main.js` imports it). Likely bundled but worth checking with `npm run build` output.
+
+---
+
 ## P0 — broken or clearly wrong
 
 | # | Bug | Where | Notes |
 |---|-----|-------|-------|
-| P0-1 | "Loading…" in **English** on every async screen (exercise, writing, grammar, reading, results before data) | `app.html`, screen JS modules | Violates `puheo-finnish-voice`. Replace with Finnish skeletons + contextual loading copy: "Generoidaan tehtäviä…", "Tarkistan vastaustasi…". |
-| P0-2 | Helmet CSP blocks Google Fonts CSS — **72 console errors per page** | `server.js:50` connect-src missing `fonts.googleapis.com` + `fonts.gstatic.com` | Either widen CSP or self-host fonts (preferred — perf + privacy). Loop 0 already added `eu-assets.i.posthog.com` but missed fonts. |
-| P0-3 | Dashboard greeting renders "**Hei, .**" when user has no first name | dashboard render path | The time-aware greeter (L9) needs an empty-name fallback. Acceptable: "Hei!" + period removed. |
-| P0-4 | Pre-existing landing 404 (1 occurrence) | landing | Was demo.js — fixed in L0. Remaining 404 is the posthog config endpoint or a missing image; need to identify exact URL from network trace. |
-| P0-5 | Empty placement-test heading violates a11y | `screen-placement-test` `<h2 id="placement-question">` | axe `empty-heading` (×3 viewports). The h2 starts empty and is filled via JS — render a placeholder string or `aria-busy="true"` skeleton instead. |
-| P0-6 | Landing `<div class="feature-dots" role="tablist">` has no `tab` children | `index.html` | axe `aria-required-children` (critical). Either remove the role or actually render `[role="tab"]` children. |
+| P0-1 ✓ shipped L-RUFLO-LOOP-1 | "Loading…" in **English** on every async screen (exercise, writing, grammar, reading, results before data) | `app.html`, screen JS modules | Violates `puheo-finnish-voice`. Replace with Finnish skeletons + contextual loading copy: "Generoidaan tehtäviä…", "Tarkistan vastaustasi…". |
+| P0-2 ✓ verified L-RUFLO-LOOP-2 | Helmet CSP blocks Google Fonts CSS — **72 console errors per page** | `server.js:50` connect-src missing `fonts.googleapis.com` + `fonts.gstatic.com` | Either widen CSP or self-host fonts (preferred — perf + privacy). Loop 0 already added `eu-assets.i.posthog.com` but missed fonts. |
+| P0-3 ✓ shipped L-RUFLO-LOOP-1 | Dashboard greeting renders "**Hei, .**" when user has no first name | dashboard render path | The time-aware greeter (L9) needs an empty-name fallback. Acceptable: "Hei!" + period removed. |
+| P0-4 ✓ verified L-RUFLO-LOOP-2 | Pre-existing landing 404 (1 occurrence) | landing | Was demo.js — fixed in L0. Remaining 404 is the posthog config endpoint or a missing image; need to identify exact URL from network trace. |
+| P0-5 ✓ shipped L-RUFLO-LOOP-2 | Empty placement-test heading violates a11y | `screen-placement-test` `<h2 id="placement-question">` | axe `empty-heading` (×3 viewports). The h2 starts empty and is filled via JS — render a placeholder string or `aria-busy="true"` skeleton instead. |
+| P0-6 ✓ verified L-RUFLO-LOOP-2 | Landing `<div class="feature-dots" role="tablist">` has no `tab` children | `index.html` | axe `aria-required-children` (critical). Either remove the role or actually render `[role="tab"]` children. |
 
 ## P1 — looks cheap / empty / unfinished
 
 | # | Bug | Where | Notes |
 |---|-----|-------|-------|
-| P1-1 | **Dashboard is mostly empty space.** Activity strip blank, "Kehitys" empty-stated to a sad sentence, "Osa-alueet" header with NOTHING under it. | `screen-dashboard` | The empty-state for first-time users is dead air. Apply `puheo-screen-template` empty-state pattern (illustration + headline + body + CTA). Include "Aloita ensimmäinen sana" coach card. |
+| P1-1 ✓ partial L-RUFLO-LOOP-4 | **Dashboard is mostly empty space.** Activity strip blank, "Kehitys" empty-stated to a sad sentence, "Osa-alueet" header with NOTHING under it. | `screen-dashboard` | The empty-state for first-time users is dead air. Apply `puheo-screen-template` empty-state pattern (illustration + headline + body + CTA). Include "Aloita ensimmäinen sana" coach card. |
 | P1-2 | **Exercise screen is a tiny island in a sea of green.** Question + 4 options take ~25% of viewport at 1440. Rest is empty mint background. | `screen-exercise`, `css/components/exercise.css` | Increase max-width, add a sticky progress rail on the right with streak/SR queue/next-up, or make the exercise card visually contained (border + shadow) so it doesn't float in nothing. |
-| P1-3 | **Results screen is a giant 0/0** with no breakdown. No emotional payoff. No "X correct / Y wrong / Z new words mastered". | `screen-results`, `screen-grammar-results`, etc. | Redesign per `puheo-screen-template`: hero score with countUp animation (already exists per L recent), then breakdown cards (correct/wrong/new mastered/time), then primary CTA. Confetti on >80%. |
+| P1-3 ✓ partial L-RUFLO-LOOP-4 | **Results screen is a giant 0/0** with no breakdown. No emotional payoff. No "X correct / Y wrong / Z new words mastered". | `screen-results`, `screen-grammar-results`, etc. | Redesign per `puheo-screen-template`: hero score with countUp animation (already exists per L recent), then breakdown cards (correct/wrong/new mastered/time), then primary CTA. Confetti on >80%. |
 | P1-4 | **Writing screen** — disabled submit button is **mint-on-mint**, almost invisible. | `screen-writing` button | axe color-contrast. Disabled state should still meet 3:1 against background. Use `--ink-faint` text on `--surface-2` not accent-soft on accent. |
-| P1-5 | **14 color-contrast a11y violations** clustered on the **results screens** at all viewports. Sample: `<div class="hc-opt correct">✓ kaupungintalo</div>` — green tick on green pill probably. | results-shared CSS | Audit `.hc-opt.correct` / `.hc-opt.wrong` and any green/red surface tokens. Bump to ≥4.5:1. |
+| P1-5 ✓ partial L-RUFLO-LOOP-4 | **14 color-contrast a11y violations** clustered on the **results screens** at all viewports. Sample: `<div class="hc-opt correct">✓ kaupungintalo</div>` — green tick on green pill probably. | results-shared CSS | Audit `.hc-opt.correct` / `.hc-opt.wrong` and any green/red surface tokens. Bump to ≥4.5:1. |
 | P1-6 | **Heading-order violations** on landing + dashboard (×6) — h3 appears before h2 in some cards. | `index.html` mini-diag block, dashboard | Restructure heading levels. Each section should descend monotonically. |
 | P1-7 | **Landing has huge vertical whitespace** between sections. Page feels slow to skim. | `index.html` `landing.css` | Tighten section paddings to `--space-8`/`--space-12` instead of arbitrary big values. Add visual variety: alternate light/tinted backgrounds, sectional dividers, or a screenshot block. |
 | P1-8 | **No hero illustration / product visual on landing.** Hero is text + a tiny diagnostic widget. | `index.html` hero | Add a real product screenshot or an illustration. Even a stylized "exercise card" mock would beat the current emptiness. |

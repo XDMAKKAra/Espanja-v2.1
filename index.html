@@ -98,6 +98,7 @@
 
       <nav class="nav__links" aria-label="Sivun osiot">
         <a class="nav__link" href="#tuote">Tuote</a>
+        <a class="nav__link" href="#kurssit">Kurssit</a>
         <a class="nav__link" href="#hinnoittelu">Hinnoittelu</a>
         <a class="nav__link" href="#faq">FAQ</a>
       </nav>
@@ -289,7 +290,143 @@
       </div>
     </section>
 
-    <!-- ─── HOW IT WORKS ──────────────────────────────────── -->
+    <!-- ─── COURSES — L-HOME-COURSE-VISIBILITY ─────────────────
+         Pattern: trivial extension of .pillars__grid (STANDARDS §3).
+         Data: lib/curriculumData.js CURRICULUM_KURSSIT (8 kurssit).
+         Static HTML — no JS needed, no new bundle.
+         Layout: 4-col desktop → 2-col tablet → 1-col mobile.
+         YO-taso badge: A/B/C/M/E per kurssi (YO-arvosanat, EI CEFR).
+         Skill: design:taste-frontend + ui-ux-pro-max.
+         Sourcing: .pillars__grid trivial extension per STANDARDS §3.
+    -->
+    <section class="landing-section courses" id="kurssit" aria-labelledby="kurssit-otsikko">
+      <div class="landing-section__inner">
+        <div class="courses__head">
+          <p class="courses__eyebrow">Oppipolku</p>
+          <h2 class="courses__title" id="kurssit-otsikko">
+            8 kurssia. Alusta YO-kokeeseen.
+          </h2>
+          <p class="courses__sub">
+            Jokaisessa kurssissa sanastoa, kielioppia, luetun ymmärtämistä ja kirjoitustehtävä.
+            Aloitat A-tason perusteista ja etenet E-tasoiseen YO-koeharjoitteluun.
+          </p>
+        </div>
+
+        <ol class="courses__grid" aria-label="Puheon 8 kurssia järjestyksessä">
+
+          <!-- K1 — Kuka olen · 10 oppituntia · Taso A -->
+          <li class="course-card" data-reveal>
+            <div class="course-card__head">
+              <span class="course-card__num" aria-hidden="true">01</span>
+              <span class="course-card__badge course-card__badge--a" aria-label="YO-taso A">A</span>
+            </div>
+            <h3 class="course-card__title">Kuka olen</h3>
+            <p class="course-card__body">Preesens säännölliset, ser/estar perusteet, persoona ja perhe.</p>
+            <p class="course-card__meta">
+              <span class="course-card__count">10 oppituntia</span>
+            </p>
+          </li>
+
+          <!-- K2 — Arki ja elämä · 10 oppituntia · Taso A -->
+          <li class="course-card" data-reveal data-reveal-delay="100">
+            <div class="course-card__head">
+              <span class="course-card__num" aria-hidden="true">02</span>
+              <span class="course-card__badge course-card__badge--a" aria-label="YO-taso A">A</span>
+            </div>
+            <h3 class="course-card__title">Arki ja elämä</h3>
+            <p class="course-card__body">Preesens epäsäännölliset, gustar-rakenne, koti ja ruoka.</p>
+            <p class="course-card__meta">
+              <span class="course-card__count">10 oppituntia</span>
+            </p>
+          </li>
+
+          <!-- K3 — Mitä tein · 11 oppituntia · Taso B -->
+          <li class="course-card" data-reveal data-reveal-delay="100">
+            <div class="course-card__head">
+              <span class="course-card__num" aria-hidden="true">03</span>
+              <span class="course-card__badge course-card__badge--b" aria-label="YO-taso B">B</span>
+            </div>
+            <h3 class="course-card__title">Mitä tein</h3>
+            <p class="course-card__body">Preteriti säännölliset ja yleisimmät epäsäännölliset, matkustamisen sanasto.</p>
+            <p class="course-card__meta">
+              <span class="course-card__count">11 oppituntia</span>
+            </p>
+          </li>
+
+          <!-- K4 — Ennen ja nyt · 12 oppituntia · Taso B -->
+          <li class="course-card" data-reveal data-reveal-delay="100">
+            <div class="course-card__head">
+              <span class="course-card__num" aria-hidden="true">04</span>
+              <span class="course-card__badge course-card__badge--b" aria-label="YO-taso B">B</span>
+            </div>
+            <h3 class="course-card__title">Ennen ja nyt</h3>
+            <p class="course-card__body">Imperfekti ja preteriti vs imperfekti — YO-klassikko, lapsuus ja muistot.</p>
+            <p class="course-card__meta">
+              <span class="course-card__count">12 oppituntia</span>
+            </p>
+          </li>
+
+          <!-- K5 — Tulevaisuus ja unelmat · 11 oppituntia · Taso C -->
+          <li class="course-card" data-reveal>
+            <div class="course-card__head">
+              <span class="course-card__num" aria-hidden="true">05</span>
+              <span class="course-card__badge course-card__badge--c" aria-label="YO-taso C">C</span>
+            </div>
+            <h3 class="course-card__title">Tulevaisuus ja unelmat</h3>
+            <p class="course-card__body">Futuuri ja konditionaali, työ ja teknologia.</p>
+            <p class="course-card__meta">
+              <span class="course-card__count">11 oppituntia</span>
+            </p>
+          </li>
+
+          <!-- K6 — Maailman ongelmat · 12 oppituntia · Taso C -->
+          <li class="course-card" data-reveal data-reveal-delay="100">
+            <div class="course-card__head">
+              <span class="course-card__num" aria-hidden="true">06</span>
+              <span class="course-card__badge course-card__badge--c" aria-label="YO-taso C">C</span>
+            </div>
+            <h3 class="course-card__title">Maailman ongelmat</h3>
+            <p class="course-card__body">Subjunktiivin preesens (ojalá, es&nbsp;importante&nbsp;que), ympäristö ja yhteiskunta.</p>
+            <p class="course-card__meta">
+              <span class="course-card__count">12 oppituntia</span>
+            </p>
+          </li>
+
+          <!-- K7 — Kulttuuri ja yhteiskunta · 12 oppituntia · Taso M -->
+          <li class="course-card" data-reveal data-reveal-delay="100">
+            <div class="course-card__head">
+              <span class="course-card__num" aria-hidden="true">07</span>
+              <span class="course-card__badge course-card__badge--m" aria-label="YO-taso M">M</span>
+            </div>
+            <h3 class="course-card__title">Kulttuuri ja yhteiskunta</h3>
+            <p class="course-card__body">Subjunktiivi syvemmin, pluskvamperfekti, kulttuuri ja media.</p>
+            <p class="course-card__meta">
+              <span class="course-card__count">12 oppituntia</span>
+            </p>
+          </li>
+
+          <!-- K8 — YO-koevalmiiksi · 12 oppituntia · Taso E -->
+          <li class="course-card course-card--finale" data-reveal data-reveal-delay="100">
+            <div class="course-card__head">
+              <span class="course-card__num" aria-hidden="true">08</span>
+              <span class="course-card__badge course-card__badge--e" aria-label="YO-taso E">E</span>
+            </div>
+            <h3 class="course-card__title">YO-koevalmiiksi</h3>
+            <p class="course-card__body">Subjunktiivi imperfekti (si&nbsp;tuviera), kaikkien rakenteiden kertaus, YO-tyyppiset tehtävät.</p>
+            <p class="course-card__meta">
+              <span class="course-card__count">12 oppituntia</span>
+            </p>
+          </li>
+
+        </ol>
+
+        <div class="courses__cta">
+          <a class="btn btn--ghost" href="/app.html#rekisteroidy">Aloita Kurssista 1 ilmaiseksi</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── HOW IT WORKS ──────────────────────────────────────── -->
     <section class="landing-section steps" id="miten" aria-labelledby="miten-otsikko">
       <div class="landing-section__inner">
         <div class="steps__head">
@@ -699,6 +836,7 @@ Aino</p>
           <h3 class="landing-footer__col-title">Tuote</h3>
           <ul class="landing-footer__links">
             <li><a href="#tuote">Ominaisuudet</a></li>
+            <li><a href="#kurssit">Kurssit</a></li>
             <li><a href="#miten">Näin se toimii</a></li>
             <li><a href="#hinnoittelu">Hinnoittelu</a></li>
             <li><a href="#faq">UKK</a></li>

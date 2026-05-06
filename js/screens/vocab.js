@@ -1271,6 +1271,14 @@ function showVocabResults() {
   $("res-score-tot").textContent = String(total);
   countUp($("res-score-num"), correct);
   countUp($("res-pct"), pct);
+
+  // P1-3: tone class for score hero celebration (CSS-only, ≥80%)
+  const scoreHeroEl = document.querySelector("#screen-results .results__score");
+  if (scoreHeroEl) {
+    scoreHeroEl.classList.toggle("results__score--good", pct >= 80);
+    scoreHeroEl.classList.toggle("results__score--warn", pct >= 60 && pct < 80);
+    scoreHeroEl.classList.toggle("results__score--low", pct < 60);
+  }
   $("res-mode-label").textContent = "VALMIS · SANASTO";
   $("res-time").textContent = new Date().toLocaleTimeString("fi-FI", { hour: "2-digit", minute: "2-digit" });
   const topicLbl = topicLabel(state.topic || "general vocabulary").toUpperCase();
