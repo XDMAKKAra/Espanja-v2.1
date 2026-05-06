@@ -116,7 +116,7 @@
       "phase_type": "recall_typed_fi_to_es",
       "title": "Tuota — verbinmuoto",
       "instruction": "Kirjoita oikea verbi annetussa persoonassa.",
-      "mastery_threshold": { "I": 0.5, "A": 0.55, "B": 0.7, "C": 0.75, "M": 0.8, "E": 0.85, "L": 0.92 },
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.7, "C": 0.75, "M": 0.8, "E": 0.85, "L": 0.92 },
       "skip_for_targets": ["I", "A"],
       "items": [
         { "item_type": "typed", "direction": "fi_to_es", "prompt": "comer — yo", "accept": ["como"] },
@@ -163,7 +163,7 @@
       "phase_type": "application_gap_fill",
       "title": "Lauseen täydennys — vaativa",
       "instruction": "Ei sanapankkia. Päätä persoona kontekstista.",
-      "mastery_threshold": { "I": 0.5, "A": 0.55, "B": 0.65, "C": 0.75, "M": 0.85, "E": 0.9, "L": 0.95 },
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.65, "C": 0.75, "M": 0.85, "E": 0.9, "L": 0.95 },
       "skip_for_targets": ["I", "A", "B"],
       "items": [
         { "item_type": "gap_fill", "sentence_template": "Mi hermana y yo {1} cerca del centro. (vivir)", "answers": [["vivimos"]], "word_bank": null },
@@ -183,7 +183,7 @@
       "phase_type": "application_sentence_build",
       "title": "Lauseen rakentelua",
       "instruction": "Käännä koko lause espanjaksi.",
-      "mastery_threshold": { "I": 0.5, "A": 0.55, "B": 0.6, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.92 },
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.6, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.92 },
       "skip_for_targets": ["I", "A", "B", "C"],
       "items": [
         { "item_type": "typed", "direction": "fi_to_es", "prompt": "Asun Helsingissä.", "accept": ["vivo en helsinki", "vivo en helsinki."] },
@@ -203,7 +203,7 @@
       "phase_type": "synthesis_translate",
       "title": "YO-tason käännös",
       "instruction": "Käännä koko lause espanjaksi.",
-      "mastery_threshold": { "I": 0.5, "A": 0.55, "B": 0.6, "C": 0.65, "M": 0.75, "E": 0.85, "L": 0.95 },
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.6, "C": 0.65, "M": 0.75, "E": 0.85, "L": 0.95 },
       "skip_for_targets": ["I", "A", "B", "C"],
       "items": [
         { "item_type": "translate", "direction": "fi_to_es", "source": "Asumme isossa kaupungissa, mutta vanhempani asuvat maaseudulla.", "accept": ["vivimos en una ciudad grande, pero mis padres viven en el campo", "vivimos en una ciudad grande pero mis padres viven en el campo"] },
@@ -219,7 +219,7 @@
       "phase_type": "synthesis_short_writing",
       "title": "Lyhyt kirjoitus",
       "instruction": "Käytä -er- ja -ir-verbejä.",
-      "mastery_threshold": { "I": 0.5, "A": 0.55, "B": 0.6, "C": 0.65, "M": 0.7, "E": 0.8, "L": 0.9 },
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.6, "C": 0.65, "M": 0.7, "E": 0.8, "L": 0.9 },
       "skip_for_targets": ["I", "A", "B", "C", "M"],
       "items": [
         { "item_type": "writing", "prompt": "Kirjoita 5–7 lausetta arjestasi: missä asut, mitä syöt ja juot, mitä luet/kirjoitat. Käytä vähintään 5 eri -er- tai -ir-verbiä.", "min_words": 40, "max_words": 90, "rubric_focus": ["communication", "structure", "vocab"] },

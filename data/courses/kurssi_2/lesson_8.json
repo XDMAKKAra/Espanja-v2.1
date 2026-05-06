@@ -1,0 +1,170 @@
+{
+  "meta": {
+    "course_key": "kurssi_2",
+    "lesson_index": 8,
+    "lesson_type": "reading",
+    "level": "A",
+    "title": "Arki-aiheinen teksti — luetun ymmärtäminen",
+    "description": "Kaksi lyhyttä A-tason tekstiä tavallisesta arjesta: koulupäivä ja perheen yhteinen ruokahetki. Harjoitellaan luetun ymmärtämistä YO-kokeen lyhyiden tekstien tyyliin.",
+    "yo_relevance": "Lyhyet luetun ymmärtämiset (~150 sanaa per teksti, 5–7 monivalintakysymystä) ovat YO-kokeen perusrakenne — niitä on joka kokeessa 4–5 kappaletta. Kysymys testaa pääajatusta, yksityiskohtaa ja sananvalintaa kontekstista.",
+    "estimated_minutes_median": 11
+  },
+  "teaching": {
+    "intro_md": "# Luetun ymmärtäminen — arkitekstit\n\nYO-kokeen lyhyet tekstit ovat tavallisen arjen kuvauksia: rutiinit, koti, ruoka, harrastukset. Tärkeintä **ei** ole ymmärtää joka sana — tärkeintä on poimia kysymyksen vastaus.\n\n## Strategia\n\n1. **Lue kysymys ensin** — tiedät mitä etsit.\n2. **Etsi avainsanat tekstistä** — kysymyksen sanat tai niiden synonyymit.\n3. **Lue kohta uudestaan tarkasti** — vasta sitten valitse vastaus.\n4. **Eliminoi väärät vaihtoehdot** — yksi on usein ilmiselvästi väärä.\n\n## Esimerkki\n\n> *Cada día María se levanta a las siete.*\n\nKysymys: *Mihin aikaan María herää?* Avainsana on **se levanta** (= nousee). Vastaus: klo 7.\n\n## Muista\n\n- Aikailmaukset (cada día, siempre, a veces, casi nunca) ovat usein tärkeitä — ne kertovat onko jokin rutiinia vai poikkeus.\n- *Pero* (mutta) ja *aunque* (vaikka) signaloivat ristiriidan — tärkeä lauseen toinen osa.",
+    "key_points": [
+      "Lue kysymys ennen tekstiä — tiedä mitä etsit.",
+      "Avainsanat (siempre, nunca, cada día) kertovat usein vastauksen.",
+      "Pero ja aunque ovat ristiriita-signaaleja.",
+      "Älä valitse vaihtoehtoa joka 'kuulostaa' oikealta — etsi todiste tekstistä."
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1-reading-koulupaiva",
+      "phase_type": "reading_mc",
+      "title": "Teksti 1 — Lucian koulupäivä",
+      "instruction": "Lue teksti rauhassa. Vastaa sitten kysymyksiin tekstin perusteella.",
+      "mastery_threshold": { "I": 0.4, "A": 0.5, "B": 0.6, "C": 0.7, "M": 0.75, "E": 0.8, "L": 0.85 },
+      "skip_for_targets": [],
+      "items": [
+        {
+          "item_type": "reading_mc",
+          "passage": "Hola, me llamo Lucía y tengo dieciséis años. Vivo en Madrid con mis padres y mi hermano menor. Cada día me levanto a las siete y media y desayuno con mi familia: tomo café con leche y tostadas con mermelada. Después voy al instituto en autobús. Las clases empiezan a las ocho y media y terminan a las tres de la tarde. Mi asignatura favorita es la historia, pero las matemáticas no me gustan nada porque son muy difíciles. A veces como en el comedor del instituto, pero casi siempre vuelvo a casa para comer con mi madre. Por la tarde hago los deberes durante una hora y después juego al baloncesto con mis amigas en el parque. Antes de cenar veo un poco la tele o leo una novela. Mientras ceno, hablo con mi hermano sobre el día. Me acuesto a las once.",
+          "questions": [
+            {
+              "question_fi": "Mihin aikaan Lucía herää aamuisin?",
+              "choices": ["Klo 7.00", "Klo 7.30", "Klo 8.30", "Klo 11.00"],
+              "correct_index": 1,
+              "explanation_fi": "Tekstissä: \"me levanto a las siete y media\" = klo 7.30. Klo 8.30 on koulun alkamisaika ja klo 11 on nukkumaanmenoaika."
+            },
+            {
+              "question_fi": "Mitä Lucía syö aamupalaksi?",
+              "choices": ["Hedelmiä ja jogurttia", "Kahvia maidolla ja paahtoleipää hillon kanssa", "Kananmunia ja makkaraa", "Vain kahvin"],
+              "correct_index": 1,
+              "explanation_fi": "Tekstissä: \"tomo café con leche y tostadas con mermelada\". Muut vaihtoehdot eivät esiinny."
+            },
+            {
+              "question_fi": "Miten hän kulkee kouluun?",
+              "choices": ["Kävellen", "Bussilla", "Pyörällä", "Vanhempien kyydillä"],
+              "correct_index": 1,
+              "explanation_fi": "Tekstissä: \"voy al instituto en autobús\" — bussilla."
+            },
+            {
+              "question_fi": "Mikä oppiaine on Lucian mielestä vaikea eikä hän pidä siitä?",
+              "choices": ["Historia", "Espanja", "Matematiikka", "Liikunta"],
+              "correct_index": 2,
+              "explanation_fi": "Tekstissä: \"las matemáticas no me gustan nada porque son muy difíciles\". Historia on hänen suosikkinsa."
+            },
+            {
+              "question_fi": "Missä Lucía syö lounaan useimmiten?",
+              "choices": ["Koulun ruokalassa joka päivä", "Kotona äitinsä kanssa", "Kaverin luona", "Kahvilassa"],
+              "correct_index": 1,
+              "explanation_fi": "Tekstissä: \"casi siempre vuelvo a casa para comer con mi madre\" — melkein aina kotona. Koulun ruokala vain joskus (a veces)."
+            },
+            {
+              "question_fi": "Mitä hän tekee iltapäivisin läksyjen jälkeen?",
+              "choices": ["Katsoo televisiota", "Pelaa koripalloa kavereiden kanssa puistossa", "Soittaa pianoa", "Käy uimassa"],
+              "correct_index": 1,
+              "explanation_fi": "Tekstissä: \"juego al baloncesto con mis amigas en el parque\". TV ja lukeminen ovat ennen illallista."
+            },
+            {
+              "question_fi": "Kenen kanssa hän juttelee illallisella?",
+              "choices": ["Äitinsä kanssa", "Kavereidensa kanssa", "Veljensä kanssa", "Yksin — ei kenenkään"],
+              "correct_index": 2,
+              "explanation_fi": "Tekstissä: \"hablo con mi hermano sobre el día\" — pikkuveljensä kanssa."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "phase_id": "p2-reading-perhe-ruoka",
+      "phase_type": "reading_mc",
+      "title": "Teksti 2 — Sunnuntailounas Carlosin perheessä",
+      "instruction": "Lue teksti ja vastaa kysymyksiin.",
+      "mastery_threshold": { "I": 0.4, "A": 0.5, "B": 0.6, "C": 0.7, "M": 0.75, "E": 0.8, "L": 0.85 },
+      "skip_for_targets": ["I"],
+      "items": [
+        {
+          "item_type": "reading_mc",
+          "passage": "Soy Carlos y vivo en un pueblo pequeño cerca de Valencia. En mi familia el domingo es un día especial porque siempre comemos juntos en casa de mis abuelos. Mi abuela cocina muy bien y prepara una paella enorme para todos. Alrededor de la mesa estamos doce personas: mis padres, mis tíos, mis primos y, claro, los abuelos. Antes de comer mi abuelo nos cuenta historias de cuando era joven, mientras mi abuela termina la comida en la cocina. A mí me encanta la paella, pero a mi prima Sofía no le gusta el marisco, así que mi abuela siempre prepara también un plato de pollo para ella. Después de comer, los adultos toman café y los niños jugamos en el jardín. Casi nunca volvemos a casa antes de las seis. Para mí el domingo es el mejor día de la semana.",
+          "questions": [
+            {
+              "question_fi": "Missä Carlosin perhe kokoontuu sunnuntaisin?",
+              "choices": ["Carlosin kotona", "Isovanhempien luona", "Ravintolassa", "Setänsä mökillä"],
+              "correct_index": 1,
+              "explanation_fi": "Tekstissä: \"comemos juntos en casa de mis abuelos\" — isovanhempien luona."
+            },
+            {
+              "question_fi": "Kuinka monta henkeä on pöydässä?",
+              "choices": ["Kuusi", "Kymmenen", "Kaksitoista", "Kaksikymmentä"],
+              "correct_index": 2,
+              "explanation_fi": "Tekstissä: \"estamos doce personas\" = 12 henkeä."
+            },
+            {
+              "question_fi": "Mitä isoäiti tekee päivän pääruoaksi?",
+              "choices": ["Pizzaa", "Paellaa", "Keittoa", "Pastaa"],
+              "correct_index": 1,
+              "explanation_fi": "Tekstissä: \"prepara una paella enorme\". Carlos rakastaa paellaa: \"me encanta la paella\"."
+            },
+            {
+              "question_fi": "Miksi isoäiti tekee Sofialle eri ruoan?",
+              "choices": ["Sofía on kasvissyöjä", "Sofía ei pidä äyriäisistä/merenelävistä", "Sofía on liian pieni syömään paellaa", "Sofía on allerginen riisille"],
+              "correct_index": 1,
+              "explanation_fi": "Tekstissä: \"a mi prima Sofía no le gusta el marisco\" — Sofía ei pidä mereneläväistä, joten isoäiti tekee hänelle kanaa."
+            },
+            {
+              "question_fi": "Mitä isoisä tekee ennen ruokailua?",
+              "choices": ["Auttaa keittiössä", "Kertoo tarinoita nuoruudestaan", "Katsoo televisiota", "Käy kävelyllä"],
+              "correct_index": 1,
+              "explanation_fi": "Tekstissä: \"mi abuelo nos cuenta historias de cuando era joven\"."
+            },
+            {
+              "question_fi": "Mitä lapset tekevät ruokailun jälkeen?",
+              "choices": ["Juovat kahvia aikuisten kanssa", "Leikkivät puutarhassa", "Lähtevät heti kotiin", "Katsovat TV:tä sisällä"],
+              "correct_index": 1,
+              "explanation_fi": "Tekstissä: \"los niños jugamos en el jardín\" — me lapset leikimme puutarhassa. Aikuiset juovat kahvin."
+            },
+            {
+              "question_fi": "Mihin aikaan he yleensä palaavat kotiin?",
+              "choices": ["Ennen kahta", "Ennen neljää", "Harvoin ennen kuutta", "Vasta keskiyöllä"],
+              "correct_index": 2,
+              "explanation_fi": "Tekstissä: \"casi nunca volvemos a casa antes de las seis\" — melkein koskaan ennen kuutta."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "vocab": [
+    { "es": "cada día", "fi": "joka päivä", "example_es": "Cada día me levanto a las siete.", "example_fi": "Nousen joka päivä klo 7.", "gender": null },
+    { "es": "siempre", "fi": "aina", "example_es": "Siempre desayuno en casa.", "example_fi": "Syön aamupalan aina kotona.", "gender": null },
+    { "es": "casi siempre", "fi": "melkein aina", "example_es": "Casi siempre vuelvo a casa para comer.", "example_fi": "Melkein aina palaan kotiin syömään.", "gender": null },
+    { "es": "casi nunca", "fi": "melkein ei koskaan", "example_es": "Casi nunca volvemos antes de las seis.", "example_fi": "Palaamme melkein koskaan ennen kuutta.", "gender": null },
+    { "es": "a veces", "fi": "joskus, toisinaan", "example_es": "A veces como en el comedor.", "example_fi": "Joskus syön ruokalassa.", "gender": null },
+    { "es": "antes de", "fi": "ennen (jotain)", "example_es": "Antes de cenar veo la tele.", "example_fi": "Ennen illallista katson TV:tä.", "gender": null },
+    { "es": "después de", "fi": "jälkeen (jonkin)", "example_es": "Después de comer tomamos café.", "example_fi": "Ruoan jälkeen juomme kahvia.", "gender": null },
+    { "es": "mientras", "fi": "samalla kun, kun", "example_es": "Mientras ceno hablo con mi hermano.", "example_fi": "Samalla kun syön illallista, juttelen veljeni kanssa.", "gender": null },
+    { "es": "juntos / juntas", "fi": "yhdessä", "example_es": "Comemos juntos los domingos.", "example_fi": "Syömme yhdessä sunnuntaisin.", "gender": null },
+    { "es": "alrededor (de)", "fi": "ympärillä, ympäri", "example_es": "Alrededor de la mesa estamos doce.", "example_fi": "Pöydän ympärillä meitä on 12.", "gender": null },
+    { "es": "durante", "fi": "ajan, kestäessä", "example_es": "Hago los deberes durante una hora.", "example_fi": "Teen läksyjä tunnin verran.", "gender": null },
+    { "es": "el comedor", "fi": "ruokala, ruokasali", "example_es": "El comedor del instituto está lleno.", "example_fi": "Koulun ruokala on täynnä.", "gender": "m" },
+    { "es": "la asignatura", "fi": "oppiaine", "example_es": "Mi asignatura favorita es la historia.", "example_fi": "Suosikkioppiaineeni on historia.", "gender": "f" },
+    { "es": "el marisco", "fi": "äyriäiset, merenelävät", "example_es": "No me gusta el marisco.", "example_fi": "En pidä mereneläväistä.", "gender": "m" },
+    { "es": "así que", "fi": "joten, niinpä", "example_es": "No le gusta el marisco, así que come pollo.", "example_fi": "Hän ei pidä äyriäisistä, joten hän syö kanaa.", "gender": null }
+  ],
+  "side_panel": {
+    "tabs": [
+      {
+        "id": "vocab",
+        "title": "Sanasto",
+        "content_md": "## Aikailmaukset — toistuvuus\n\n- **siempre** — aina\n- **casi siempre** — melkein aina\n- **a veces** — joskus, toisinaan\n- **casi nunca** — melkein ei koskaan\n- **nunca** — ei koskaan\n- **cada día / cada semana** — joka päivä / joka viikko\n\n## Aikajärjestys\n\n- **antes de + infinitivo** — ennen kuin (Antes de comer = ennen syömistä)\n- **después de + infinitivo** — sen jälkeen kun\n- **mientras** — samalla kun (Mientras como, leo = samalla kun syön, luen)\n- **durante + aika** — jonkin aikaa (durante una hora)\n\n## Yhteys ja paikka\n\n- **juntos / juntas** — yhdessä (mies-/sekaryhmä / naisryhmä)\n- **alrededor (de)** — ympärillä\n- **así que** — joten, niinpä (seuraus)\n\n## Arki — ydin\n\n- **la asignatura** — oppiaine\n- **el comedor** — ruokala, ruokasali\n- **el marisco** — äyriäiset, merenelävät\n- **el instituto** — lukio (koulun rakennus)"
+      },
+      {
+        "id": "tips",
+        "title": "YO-vinkki",
+        "content_md": "## Strategia — luetun ymmärtäminen\n\n**1. Lue kysymys ennen tekstiä.** Tiedät mitä etsit. Älä yritä ymmärtää joka sana.\n\n**2. Etsi avainsana, älä lue alusta loppuun joka kerta.** Kysymyksen *Mihin aikaan?* → etsi tekstistä **a las** + numero. *Missä?* → etsi paikannimi tai **en**.\n\n**3. Aikailmaukset paljastavat usein vastauksen.**\n- *siempre* / *cada día* → rutiini\n- *a veces* → joskus, ei aina\n- *casi nunca* / *nunca* → ei tavallista\n\nKysymys voi kysyä juuri sitä mikä on tavallista (siempre) tai mikä on poikkeus (a veces).\n\n**4. Älä luota kuulokkaalta tutulta tuntuvaan vaihtoehtoon.** Tekstissä saattaa olla sana *televisión* mutta vastauksen vaihtoehto käyttää sanaa *un poco la tele* — sama asia.\n\n**5. Ristiriita-signaalit:**\n- **pero** (mutta), **aunque** (vaikka), **sin embargo** (kuitenkin) → seuraavaksi tulee usein vastaus.\n\n## YO-koe — pisteytys\n\nLuetun ymmärtäminen on YO-kokeen helpoimpia osioita pisteyhtälöllä, mutta vaatii **tarkkuutta**. Yksi väärä monivalinta = miinus 1 piste. Älä arvaa — eliminoi ja varmista todiste tekstistä."
+      }
+    ]
+  }
+}

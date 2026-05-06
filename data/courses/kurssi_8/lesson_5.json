@@ -1,0 +1,280 @@
+{
+  "meta": {
+    "course_key": "kurssi_8",
+    "lesson_index": 5,
+    "lesson_type": "mixed",
+    "level": "E",
+    "title": "Pitkä aukkotehtävä — YO-tyyppiset rakenteet",
+    "description": "E-tason sekaoppitunti: YO-tyyppiset aukkotehtävät joissa kaikki K1-K7:n rakenteet ja sanasto sekoitettuna. Kolme pidempää tekstiä joissa 10+ aukkoa per teksti. Kaikki aikamuodot, si-lauseet, subjunktiivi, konditionaali ja sanaston käyttö kontekstissa.",
+    "yo_relevance": "YO-kokeen aukkotehtävä on keskeinen osa lyhyttä espanjaa — tyypillisesti 8–15 aukkoa yhdessä tekstissä jossa sekoitetaan kaikki rakenteet. Tämä oppitunti simuloi täsmälleen YTL:n formaattia.",
+    "estimated_minutes_median": 16
+  },
+  "teaching": {
+    "intro_md": "# YO-tyyppinen aukkotehtävä\n\n## Mitä YO-koe testaa?\n\nYO-kokeen aukkotehtävässä on yksi tai kaksi tekstiä, joissa on 8–15 aukkoa. Rakenteet vaihtelevat:\n\n- Aikamuoto (preteriti vs imperfekti, futuuri vs konditionaali)\n- Si-lauseet (tyyppi 1, 2 tai 3)\n- Subjunktiivi (preesens tai imperfekti)\n- Pluskvamperfekti\n- Sanaston valinta (oikea sana kontekstiin)\n\n## Strategia\n\n1. **Lue koko teksti ensin** — ymmärrä aihe ja sävy\n2. **Tunnista kontekstivihjeet** — laukaisijasanat: ayer, siempre, si, cuando, es necesario que\n3. **Täytä helpot ensin** — vahvista oma ymmärrys ennen vaikeimpia\n4. **Tarkista rakenne** — esim. si-lauseessa tarkista molemmat osat\n5. **Lue valmiilla vastauksilla** — kuulostaako luontevalta?\n\n## Tyypilliset ansat\n\n✗ Konditionaali si:n jälkeen: *Si sería...*\n✓ Subj. imperfekti si:n jälkeen: *Si fuera...*\n\n✗ Indikatiiivi subjunktiivin laukaisimen jälkeen: *Es importante que van...*\n✓ Subj. preesens: *Es importante que vayan...*\n\n✗ Preteriti toistuvan menneisyyden kanssa: *Cuando era niño, fui siempre...*\n✓ Imperfekti: *Cuando era niño, iba siempre...*",
+    "key_points": [
+      "Lue teksti ensin kokonaan ennen kuin täytät aukkoja — konteksti ratkaisee.",
+      "Si + subj. imperfekti + konditionaali = tyyppi 2 (nykyepätodellinen).",
+      "Es necesario/importante/quiero que + subj. preesens. Pääverbi menneessä → subj. imperfekti.",
+      "Ayer/el lunes → preteriti. Siempre/cuando era niño → imperfekti. Mañana → futuuri.",
+      "Pluskvamperfekti (había + partisiippi): tapahtui ennen toista menneisyyden tapahtumaa."
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1-recognition-mc",
+      "phase_type": "recognition_mc",
+      "title": "Lämmin — rakenteiden tunnistus",
+      "instruction": "Valitse oikea muoto. Pikainen rakenteiden tarkistus ennen pitkiä aukkotehtäviä.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "mc", "stem": "Si _______ más tiempo, estudiaría mucho más. (tener — yo)", "choices": ["tengo", "tuviera", "tendría", "tenga"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "tuviera = subj. imperfekti. Si-lause tyyppi 2. tendría = konditionaali — EI si:n jälkeen." },
+        { "item_type": "mc", "stem": "Es fundamental que los jóvenes _______ en política. (participar)", "choices": ["participan", "participaron", "participen", "participarán"], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "participen = subj. preesens. 'Es fundamental que' + subj. preesens. Pääverbi preesens → subj. preesens." },
+        { "item_type": "mc", "stem": "Cuando _______ pequeño, _______ todos los veranos en el pueblo de mis abuelos. (ser / pasar)", "choices": ["era / pasé", "era / pasaba", "fui / pasé", "sea / pase"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "era / pasaba = molemmat imperfekti. 'Cuando era pequeño' + toistuva toiminta → imperfekti." },
+        { "item_type": "mc", "stem": "Si el gobierno _______ antes, la crisis _______ evitarse. (actuar / poder — tyyppi 3)", "choices": ["actuara / podría", "hubiera actuado / habría podido", "actuó / pudo", "actúa / puede"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "hubiera actuado / habría podido = tyyppi 3. Menneisyysepätodellinen: si hubiera + konditionaalin perfekti." },
+        { "item_type": "mc", "stem": "Cuando llegamos a casa, los niños ya _______ dormidos. (quedarse)", "choices": ["se quedaron", "se quedaban", "se habían quedado", "se quedarán"], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "se habían quedado = pluskvamperfekti. Lapset olivat jo nukahtaneet ENNEN kuin saapuimme." },
+        { "item_type": "mc", "stem": "El médico le recomendó que _______ más y que _______ menos alcohol. (descansar / beber)", "choices": ["descansa / bebe", "descansara / bebiera", "descanse / beba", "descansaría / bebería"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "descansara / bebiera = subj. imperfekti. Epäsuora käsky: recomendó (menneessä) que + subj. imperfekti." },
+        { "item_type": "mc", "stem": "Mañana por la tarde _______ los resultados de las elecciones. (conocer — nosotros)", "choices": ["conocimos", "conoceríamos", "conoceremos", "conozcamos"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "conoceremos = futuuri. Mañana = huomenna → tulevaisuus → futuuri." },
+        { "item_type": "mc", "stem": "Aunque _______ todo el dinero del mundo, no habría comprado esa casa. (tener)", "choices": ["tenga", "tuviera", "hubiera tenido", "tiene"], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "hubiera tenido = subj. pluskvamperfekti. Aunque + subj. pluskvamperfekti + konditionaalin perfekti (no habría comprado) = menneisyysepätodellinen." },
+        { "item_type": "mc", "stem": "La contaminación _______ drásticamente si todos _______ el transporte público. (reducirse / usar)", "choices": ["se reduciría / usaran", "se reduce / usan", "se redujo / usaron", "se reducirá / usen"], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "se reduciría / usaran = konditionaali + subj. imperfekti. Si-lause tyyppi 2: si todos usaran (si-osa) + se reduciría (pääosa)." },
+        { "item_type": "mc", "stem": "Ojalá _______ más tiempo para hacer todo lo que quiero. (tener — yo)", "choices": ["tenga", "tuviera", "tendré", "tenía"], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "tenga = subj. preesens. Ojalá + subj. preesens = mahdollinen toivo tulevaisuudesta. Ojalá + subj. imperfekti (tuviera) = lähes mahdoton toivo." },
+        { "item_type": "mc", "stem": "En el siglo pasado, los viajes en avión _______ un lujo para muy pocas personas. (ser)", "choices": ["son", "fueron", "eran", "serán"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "eran = imperfekti. 'en el siglo pasado' = aikakaudenkuvailu → imperfekti. eran kuvailee pitkäaikaista tilaa menneisyydessä." },
+        { "item_type": "mc", "stem": "El director nos dijo que _______ nuestros proyectos antes del fin de mes. (entregar)", "choices": ["entregamos", "entregáramos", "entregaremos", "entreguen"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "entregáramos = entregar, subj. imperfekti nosotros. Epäsuora käsky: dijo (menneessä) que + subj. imperfekti." },
+        { "item_type": "mc", "stem": "Si el nivel de CO2 _______ a aumentar a este ritmo, las consecuencias _______ devastadoras. (seguir / ser)", "choices": ["siga / serán", "sigue / serán", "siguiera / serían", "hubiera seguido / habrían sido"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "sigue / serán = tyyppi 1 tai 2. 'Si sigue' (preesens, todellinen ehto) + 'serán' (futuuri) = todellinen ennuste. Myös 'si siguiera/serían' (tyyppi 2) olisi mahdollinen." }
+      ]
+    },
+    {
+      "phase_id": "p2-recognition-match",
+      "phase_type": "recognition_match",
+      "title": "Yhdistä — lauseen osat",
+      "instruction": "Yhdistä si-lauseen osat tai epäsuoran kerronnan rakenteet.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        {
+          "item_type": "match",
+          "left_label": "Lause alkaa",
+          "right_label": "Oikea loppu",
+          "pairs": [
+            { "left": "Si los ciudadanos reciclaran más...", "right": "...la cantidad de residuos disminuiría significativamente." },
+            { "left": "Si el gobierno hubiera invertido antes...", "right": "...no habríamos llegado a esta crisis energética." },
+            { "left": "Es importante que los jóvenes...", "right": "...participen activamente en la sociedad." },
+            { "left": "El profesor nos pidió que...", "right": "...leyéramos el texto antes de la clase." },
+            { "left": "Cuando era pequeño...", "right": "...pasaba los veranos con mis abuelos en el pueblo." }
+          ]
+        },
+        {
+          "item_type": "match",
+          "left_label": "Suomenkielinen ilmaus",
+          "right_label": "Espanjankielinen rakenne",
+          "pairs": [
+            { "left": "Jos hallitus toimisi nyt...", "right": "Si el gobierno actuara ahora..." },
+            { "left": "Hän pyysi minua tulemaan ajoissa.", "right": "Me pidió que llegara a tiempo." },
+            { "left": "Toivottavasti saa hyvin nukuttua.", "right": "Ojalá pueda dormir bien." },
+            { "left": "On tärkeää, että kaikki osallistuvat.", "right": "Es importante que todos participen." },
+            { "left": "Kun saavuimme, elokuva oli jo alkanut.", "right": "Cuando llegamos, la película ya había empezado." }
+          ]
+        },
+        {
+          "item_type": "match",
+          "left_label": "Sana/rakenne",
+          "right_label": "Aikamuoto jota seuraa",
+          "pairs": [
+            { "left": "Si + nykyepätodellinen ehto", "right": "Subj. imperfekti (si-osa)" },
+            { "left": "Es necesario / importante que", "right": "Subj. preesens" },
+            { "left": "Me pidió que / nos dijo que", "right": "Subj. imperfekti (epäsuora)" },
+            { "left": "Si + menneisyysepätodellinen ehto", "right": "Subj. pluskvamperfekti" },
+            { "left": "Ayer / el lunes pasado", "right": "Preteriti" }
+          ]
+        }
+      ]
+    },
+    {
+      "phase_id": "p3-application-gap-teksti1",
+      "phase_type": "application_gap_fill",
+      "title": "YO-aukkotehtävä 1 — Ympäristö ja yhteiskunta",
+      "instruction": "Täydennä teksti oikeilla muodoilla. Lue ensin koko teksti, sitten täytä aukot.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "El cambio climático {1} (ser) uno de los mayores retos del siglo XXI. Desde hace décadas, los científicos {2} (advertir) sobre sus consecuencias, pero muchos gobiernos no {3} (tomar) medidas suficientes.", "answers": [["es"], ["han advertido", "advierten"], ["tomaron", "han tomado"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Si todos los países {1} (comprometerse) a reducir sus emisiones de CO2, la temperatura global no {2} (subir) tanto en las próximas décadas.", "answers": [["se comprometieran"], ["subiría"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Cuando {1} (ser — yo) estudiante universitario, {2} (pensar) que la tecnología {3} (resolver) todos los problemas ambientales de forma automática.", "answers": [["era"], ["pensaba"], ["resolvería", "resolvería"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Sin embargo, ahora {1} (saber — yo) que la solución requiere también cambios en nuestros estilos de vida y en las políticas públicas. Es esencial que los ciudadanos {2} (actuar) de manera más responsable.", "answers": [["sé"], ["actúen"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Si {1} (haber) más conciencia ecológica hace treinta años, {2} (evitar — nosotros) muchos de los problemas ambientales que afectan al planeta hoy.", "answers": [["hubiera"], ["habríamos evitado"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Los expertos recomendaron que los gobiernos {1} (invertir) más en energías renovables y que {2} (eliminar) los subsidios a los combustibles fósiles.", "answers": [["invirtieran"], ["eliminaran"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Si el transporte público {1} (ser) más eficiente y económico en todas las ciudades, muchas personas {2} (dejar) de usar el coche privado y la calidad del aire {3} (mejorar).", "answers": [["fuera"], ["dejarían"], ["mejoraría"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Ojalá las próximas generaciones {1} (heredar — subj.) un planeta más limpio del que nosotros {2} (recibir — preteriti/perfekti) de los nuestros.", "answers": [["hereden"], ["recibimos", "hemos recibido"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "La sostenibilidad {1} (convertirse — perfekti) en un término central del debate político, aunque aún {2} (faltar — preesens) mucho por hacer para que {3} (ser — subj.) una realidad global.", "answers": [["se ha convertido"], ["falta"], ["sea"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Si los líderes mundiales {1} (llegar) a un acuerdo vinculante en la última cumbre del clima, ya {2} (estar — nosotros) avanzando hacia un futuro más verde.", "answers": [["hubieran llegado"], ["estaríamos"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p4-application-gap-teksti2",
+      "phase_type": "application_gap_fill",
+      "title": "YO-aukkotehtävä 2 — Työ ja teknologia",
+      "instruction": "Täydennä toinen YO-tyyppinen teksti. Aihe: työ ja teknologian muutos.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "La automatización {1} (transformar — preesens) el mercado laboral de forma acelerada. Muchos empleos que {2} (existir — imperfekti) hace veinte años ya no {3} (existir — preesens) hoy.", "answers": [["transforma"], ["existían"], ["existen"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Cuando mi padre {1} (empezar) a trabajar en los años ochenta, {2} (ser) impensable que las máquinas {3} (poder — subj. imperfekti) hacer el trabajo de los contables o los abogados.", "answers": [["empezó"], ["era"], ["pudieran"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Si los trabajadores {1} (tener) acceso a formación profesional continua, {2} (poder — konditionaali) adaptarse mejor a los cambios tecnológicos del mercado.", "answers": [["tuvieran"], ["podrían"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Es fundamental que los jóvenes {1} (desarrollar — subj. preesens) no solo habilidades técnicas, sino también competencias sociales y creativas que las máquinas no {2} (poder — subj. preesens) replicar fácilmente.", "answers": [["desarrollen"], ["puedan"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Un informe reciente {1} (concluir — preteriti) que si los gobiernos no {2} (actuar — subj. imperfekti) con urgencia, el desempleo tecnológico {3} (afectar — konditionaali) a millones de personas en la próxima década.", "answers": [["concluyó"], ["actuaran"], ["afectaría"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Si {1} (haber — tyyppi 3) mejores políticas de reconversión laboral en los países industrializados, muchos trabajadores desplazados {2} (encontrar — kond. perf.) nuevos empleos más fácilmente.", "answers": [["hubiera habido"], ["habrían encontrado"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "La brecha digital {1} (representar — preesens) un obstáculo serio: no todos los ciudadanos {2} (tener — preesens) acceso igualitario a la tecnología, lo que {3} (agravar — preesens) la desigualdad social.", "answers": [["representa"], ["tienen"], ["agrava"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Ojalá los empresarios {1} (invertir — subj. preesens) más en la formación de sus empleados para que {2} (poder — subj. preesens) enfrentar los desafíos del futuro con confianza.", "answers": [["inviertan"], ["puedan"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Si las escuelas {1} (preparar — subj. imperfekti) a los alumnos para las habilidades del siglo XXI desde una edad temprana, la transición al mundo digital {2} (ser — konditionaali) mucho menos traumática.", "answers": [["prepararan"], ["sería"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "En conclusión, la tecnología {1} (ofrecer — preesens) grandes oportunidades, pero también {2} (plantear — preesens) desafíos que {3} (requerir — subj. preesens) soluciones colectivas e innovadoras.", "answers": [["ofrece"], ["plantea"], ["requieran"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p5-application-gap-teksti3",
+      "phase_type": "application_gap_fill",
+      "title": "YO-aukkotehtävä 3 — Matkailu ja kulttuuri",
+      "instruction": "Kolmas teksti: matkailu, kulttuuri ja globalisaatio. Ilman sanapankkia.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "El turismo {1} (convertirse — preesens) en uno de los sectores económicos más importantes del mundo, pero también {2} (generar — preesens) debates sobre su impacto en el patrimonio cultural y el medioambiente.", "answers": [["se ha convertido", "se convierte"], ["genera"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Antes de que el turismo de masas {1} (llegar — subj. imperfekti) a ciertos destinos, los habitantes locales {2} (vivir — imperfekti) de forma más tradicional y {3} (mantener — imperfekti) sus costumbres intactas.", "answers": [["llegara"], ["vivían"], ["mantenían"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Si los turistas {1} (respetar — subj. imperfekti) más las normas locales y {2} (elegir — subj. imperfekti) alojamientos sostenibles, el impacto negativo del turismo {3} (reducirse — konditionaali) considerablemente.", "answers": [["respetaran"], ["eligieran"], ["se reduciría"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "La identidad cultural de un pueblo no {1} (desaparecer — subj. preesens) solo porque {2} (haber — subj. preesens) más contacto con otras culturas, siempre que se {3} (promover — subj. preesens) activamente.", "answers": [["desaparezca"], ["haya"], ["promueva"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Cuando {1} (visitar — yo, preteriti) Barcelona por primera vez, me {2} (sorprender — preteriti) la mezcla de culturas que {3} (coexistir — imperfekti) en la ciudad.", "answers": [["visité"], ["sorprendió"], ["coexistían"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Si {1} (yo, hubiera — pluskvamperfekti subj.) viajado más de joven, ahora {2} (tener — konditionaali) una perspectiva más global y {3} (entender — konditionaali) mejor las diferencias culturales.", "answers": [["hubiera"], ["tendría"], ["entendería"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Los expertos en turismo recomendaron que las ciudades {1} (limitar — subj. imperfekti) el número de visitantes diarios y que {2} (crear — subj. imperfekti) zonas de acceso restringido en los monumentos más frágiles.", "answers": [["limitaran"], ["crearan"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "El patrimonio cultural de un país {1} (pertenecer — preesens) a toda la humanidad, por lo que su protección {2} (ser — subj. preesens) responsabilidad colectiva y no solo de los habitantes locales.", "answers": [["pertenece"], ["sea"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Ojalá las instituciones internacionales {1} (establecer — subj. preesens) normas más estrictas sobre turismo sostenible antes de que {2} (ser — subj. preesens) demasiado tarde para salvar algunos de nuestros tesoros culturales.", "answers": [["establezcan"], ["sea"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "En definitiva, el turismo {1} (poder — preesens) ser una fuerza positiva si {2} (gestionarse — subj. preesens) de forma responsable, y si los viajeros {3} (comprometerse — subj. preesens) a respetar los lugares que {4} (visitar — subj. preesens).", "answers": [["puede"], ["se gestione"], ["se comprometan"], ["visiten"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p6-synthesis-translate",
+      "phase_type": "synthesis_translate",
+      "title": "YO-tason käännös — pidemmät lauseet",
+      "instruction": "Käännä koko virke espanjaksi. Lauseet ovat YO-aukkotehtävätyyppiä.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.60, "C": 0.65, "M": 0.75, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Jos kaikki maat olisivat noudattaneet Pariisin sopimusta, ilmastonmuutos ei olisi edennyt niin nopeasti viimeisen vuosikymmenen aikana.", "accept": ["si todos los países hubieran cumplido el Acuerdo de París el cambio climático no habría avanzado tan rápido en la última década", "si todos los países hubieran respetado el Acuerdo de París el calentamiento global no se habría acelerado tanto en los últimos diez años"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "On tärkeää, että nuoret ymmärtävät, kuinka suuri vaikutus heidän kulutusvalinnoillaan on ympäristöön ja tulevien sukupolvien elämään.", "accept": ["es importante que los jóvenes entiendan cuánto impacto tienen sus decisiones de consumo en el medioambiente y en la vida de las generaciones futuras", "es fundamental que los jóvenes comprendan el gran impacto que tienen sus hábitos de consumo sobre el medioambiente y sobre las generaciones venideras"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Kun saavuimme festivaalille, parhaat esiintyjät olivat jo laulaneet ja yleisö oli alkanut hajaantua, mutta tunnelma oli silti fantastinen.", "accept": ["cuando llegamos al festival los mejores artistas ya habían cantado y el público había empezado a dispersarse pero el ambiente seguía siendo fantástico", "cuando llegamos al festival los mejores grupos ya habían actuado y la gente empezaba a marcharse aunque el ambiente todavía era increíble"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Tutkija suositteli, että hallitus säätäisi tiukemmat lait saastuttamista vastaan ja investoisi enemmän julkiseen liikenteeseen ennen kuin tilanne pahenisi entisestään.", "accept": ["el investigador recomendó que el gobierno aprobara leyes más estrictas contra la contaminación y que invirtiera más en transporte público antes de que la situación empeorara aún más", "el científico recomendó que el gobierno adoptara leyes más rigurosas contra la contaminación e invirtiera en transporte público antes de que la situación se agravara más"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Jos matkailuteollisuus olisi huomioinut kestävyyden jo 1990-luvulla, monilta kulttuuriperintökohteita uhkaavilta ongelmilta olisi voitu välttyä.", "accept": ["si la industria turística hubiera tenido en cuenta la sostenibilidad ya en los años noventa se habrían podido evitar muchos de los problemas que amenazan el patrimonio cultural hoy", "si la industria del turismo hubiera considerado la sostenibilidad desde los noventa habríamos podido evitar muchos de los problemas actuales que afectan al patrimonio cultural"] }
+      ]
+    },
+    {
+      "phase_id": "p7-synthesis-short-writing",
+      "phase_type": "synthesis_short_writing",
+      "title": "Lyhyt YO-kirjoitus — vapaasti",
+      "instruction": "Kirjoita lyhyt teksti espanjaksi. Rakenna argumentti kuten YO-kokeessa.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.60, "C": 0.65, "M": 0.70, "E": 0.80, "L": 0.90 },
+      "skip_for_targets": ["I", "A", "B", "C", "M"],
+      "items": [
+        { "item_type": "writing", "prompt": "Kirjoita 7–9 lausetta aiheesta: 'El impacto del turismo en las culturas locales'. Käytä: (1) preesens faktoja, (2) imperfekti historiaan, (3) si-lause tyyppi 2 (ratkaisuehdotus), (4) subjunktiivi (es importante que / ojalá). Tavoite on argumentoida selkeästi kuin YO-kokeessa.", "min_words": 65, "max_words": 130, "rubric_focus": ["communication", "structure", "vocab"] },
+        { "item_type": "writing", "prompt": "Kirjoita 8–10 lausetta aiheesta: 'La automatización y el futuro del trabajo'. Rakenna: intro (nykytilanne), menneisyys (miten oli ennen), nykytilanne (mitä muutoksia), tulevaisuus (mitä tapahtuu), ratkaisu (si-lause tai es necesario que). Käytä vähintään 4 eri aikamuotoa.", "min_words": 75, "max_words": 140, "rubric_focus": ["communication", "structure", "vocab", "overall"] },
+        { "item_type": "writing", "prompt": "Kirjoita 7–9 lausetta aiheesta jota olet kiinnostunut (ympäristö, terveys, kulttuuri, yhteiskunta tai matkailu). Käytä: preteriti tai imperfekti, konditionaali tai futuuri, yksi si-lause (tyyppi 2 tai 3), yksi subjunktiivilause. Argumentoi selkeästi puolesta tai vastaan.", "min_words": 65, "max_words": 125, "rubric_focus": ["communication", "vocab", "structure"] }
+      ]
+    },
+    {
+      "phase_id": "p8-recognition-mc-kertaus",
+      "phase_type": "recognition_mc",
+      "title": "Kertaus — YO-tyyppinen sekatehtävä",
+      "instruction": "Valitse oikea muoto. Kaikki rakenteet sekaisin, kuten YO-kokeessa.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "mc", "stem": "La semana pasada, el gobierno _______ un nuevo plan de energía sostenible. (presentar)", "choices": ["presenta", "presentaba", "presentó", "presentará"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "presentó = preteriti. 'La semana pasada' = kertaluonteinen menneisyyden tapahtuma → preteriti." },
+        { "item_type": "mc", "stem": "Si _______ (nosotros) más temprano, habríamos visto el amanecer en la montaña. (salir)", "choices": ["saliéramos", "salimos", "hubiéramos salido", "salgamos"], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "hubiéramos salido = subj. pluskvamperfekti. Tyyppi 3: si hubiéramos salido (menneisyys) + habríamos visto (kond. perf.)." },
+        { "item_type": "mc", "stem": "El alcalde propuso que _______ un nuevo parque en el centro de la ciudad. (construir — ellos)", "choices": ["construirán", "construyan", "construyeran", "construirían"], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "construyeran = subj. imperfekti. Epäsuora ehdotus: propuso (menneessä) que + subj. imperfekti." },
+        { "item_type": "mc", "stem": "Aunque _______ mucho dinero, no compraría un coche de lujo — prefiero invertir en experiencias.", "choices": ["tengo", "tuviera", "tendré", "tenga"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "tuviera = subj. imperfekti. Aunque + subj. imperfekti = epätodellinen vastaväite ('vaikka minulla olisikin')." },
+        { "item_type": "mc", "stem": "¿Qué _______ si pudieras cambiar una cosa en tu país? (hacer — tú)", "choices": ["haces", "harías", "harás", "hicieras"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "harías = konditionaali. Tyyppi 2: si pudieras (annettu) + konditionaali. Kysymys on hypoteettinen." },
+        { "item_type": "mc", "stem": "Cuando _______ jóvenes, no había internet y la comunicación era muy diferente. (ser — nosotros)", "choices": ["somos", "fuimos", "éramos", "seríamos"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "éramos = imperfekti. 'Cuando éramos jóvenes' = aikakaudenkuvailu menneissä → imperfekti." },
+        { "item_type": "mc", "stem": "Es urgente que los líderes mundiales _______ un plan de acción climática antes de que sea demasiado tarde. (acordar)", "choices": ["acordarán", "acuerden", "acordaran", "acordarían"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "acuerden = subj. preesens. 'Es urgente que' + subj. preesens. acordaran = subj. imperfekti — tarvitaan pääverbi menneessä." },
+        { "item_type": "mc", "stem": "Si la educación _______ más igualitaria en todo el mundo, habría menos pobreza y más oportunidades para todos.", "choices": ["es", "sea", "fuera", "sería"], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "fuera = subj. imperfekti. Si-lause tyyppi 2: si fuera + habría (konditionaali). 'is' = todellinen, 'sea' = subj. preesens (väärässä kontekstissa)." },
+        { "item_type": "mc", "stem": "Antes de que _______ (nosotros) al hotel, ya habían llegado otros turistas y el recepcionista _______ agotado. (llegar / estar)", "choices": ["llegáramos / estaba", "llegamos / estuvo", "lleguemos / está", "llegáramos / estaría"], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "llegáramos / estaba = subj. imperfekti + imperfekti. 'Antes de que' + subj. imperfekti. 'estaba agotado' = tila menneessä → imperfekti." },
+        { "item_type": "mc", "stem": "Si las redes sociales no _______ existido, nuestras formas de comunicación hoy _______ completamente diferentes. (haber / ser)", "choices": ["habrían / fueran", "hubieran / serían", "hubiera / sería", "haya / sean"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "hubieran existido / serían = tyyppi 3 + sekoitettu nykyvaikutus. Si hubieran existido (menneisyys) + serían (nykyinen tila konditionaalissa)." }
+      ]
+    },
+    {
+      "phase_id": "p9-recall-typed-es-fi",
+      "phase_type": "recall_typed_es_to_fi",
+      "title": "Sanaston kertaus — YO-teemat",
+      "instruction": "Kirjoita espanjankielisen ilmaisun suomenkielinen vastine.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "la sostenibilidad", "accept": ["kestävyys", "kestävä kehitys"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "la brecha digital", "accept": ["digitaalinen kuilu"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "la formación profesional", "accept": ["ammattikoulutus"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "el patrimonio cultural", "accept": ["kulttuuriperintö"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "los derechos humanos", "accept": ["ihmisoikeudet"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "la desigualdad social", "accept": ["yhteiskunnallinen eriarvoisuus", "sosiaalinen eriarvoisuus"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "el cambio climático", "accept": ["ilmastonmuutos"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "la sanidad pública", "accept": ["julkinen terveydenhuolto"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "la automatización laboral", "accept": ["työn automaatio", "automaatio"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "el turismo sostenible", "accept": ["kestävä matkailu"] }
+      ]
+    },
+    {
+      "phase_id": "p10-synthesis-translate-final",
+      "phase_type": "synthesis_translate",
+      "title": "Loppuhaaste — YO-kokeen pisin käännöstehtävä",
+      "instruction": "Käännä pitkä virke espanjaksi. Taso: YO-kokelaan parasta suoritusta.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.60, "C": 0.65, "M": 0.75, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Vaikka teknologia on muuttanut työn luonnetta dramaattisesti viimeisten vuosikymmenten aikana, ihmisten sosiaalinen ja luova kyvykkyys on ja pysyy korvaamattomana.", "accept": ["aunque la tecnología ha transformado la naturaleza del trabajo de forma dramática en las últimas décadas la capacidad social y creativa de las personas es y seguirá siendo irremplazable", "aunque la tecnología ha cambiado drásticamente la naturaleza del trabajo en las últimas décadas la habilidad social y creativa del ser humano es y seguirá siendo irreemplazable"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Jos kaikki kansalaiset ottaisivat ympäristövastuun vakavasti arjessaan, pienet valinnat kuten kierrätys, energiansäästö ja kestävä kulutus muodostaisivat yhdessä merkittävän muutoksen.", "accept": ["si todos los ciudadanos tomaran la responsabilidad ambiental en serio en su vida cotidiana pequeñas decisiones como el reciclaje el ahorro energético y el consumo sostenible formarían juntas un cambio significativo", "si cada ciudadano asumiera seriamente su responsabilidad medioambiental en el día a día pequeñas elecciones como reciclar ahorrar energía y consumir de forma sostenible constituirían juntas un cambio considerable"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "On välttämätöntä, että kansainväliset järjestöt kehittävät mekanismeja, joilla voidaan varmistaa, että matkailusta saadut taloudelliset hyödyt jakautuvat oikeudenmukaisesti paikallisille yhteisöille eivätkä valuta vain suuryritysten kassaan.", "accept": ["es imprescindible que las organizaciones internacionales desarrollen mecanismos para garantizar que los beneficios económicos del turismo se distribuyan de forma justa entre las comunidades locales y no vayan solo a las grandes empresas", "es fundamental que los organismos internacionales creen mecanismos que garanticen que los beneficios económicos del turismo lleguen de manera equitativa a las comunidades locales y no solo a las grandes corporaciones"] }
+      ]
+    },
+    {
+      "phase_id": "p11-synthesis-writing-final",
+      "phase_type": "synthesis_short_writing",
+      "title": "YO-kirjoitus — vapaana argumenttina",
+      "instruction": "Kirjoita YO-koetyyppinen argumentoiva teksti. Ei ohjeistusta — tee itse valinnat.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.60, "C": 0.65, "M": 0.70, "E": 0.80, "L": 0.90 },
+      "skip_for_targets": ["I", "A", "B", "C", "M"],
+      "items": [
+        { "item_type": "writing", "prompt": "YO-koetason tehtävä: '¿Cuáles son los principales desafíos a los que se enfrenta la sociedad actual y cómo pueden superarse?' Kirjoita 9–11 lausetta. Ei rakenneohjetta — päätä itse millaisia aikamuotoja, rakenteita ja sanastoa käytät. Arviointiperusteet: sisältö, rakenne, sanasto, koheesio.", "min_words": 80, "max_words": 150, "rubric_focus": ["communication", "structure", "vocab", "overall"] },
+        { "item_type": "writing", "prompt": "YO-koetason vapaa kirjoitustehtävä: kirjoita 8–10 lausetta aiheesta josta sinulla on mielipide. Voi olla ympäristö, yhteiskunta, kulttuuri, terveys tai matkailu. Argumentoi, käytä esimerkkejä ja yhdistä eri teemoja. Tavoite: E-tason suoritus.", "min_words": 75, "max_words": 145, "rubric_focus": ["communication", "vocab", "structure", "overall"] }
+      ]
+    }
+  ],
+  "vocab": [
+    { "es": "la cumbre climática", "fi": "ilmastokokous", "example_es": "Los líderes mundiales se reunieron en la última cumbre climática para acordar nuevas medidas.", "example_fi": "Maailmanjohtajat kokoontuivat viimeisimmässä ilmastokokouksessa sopimaan uusista toimenpiteistä.", "gender": "f" },
+    { "es": "el acuerdo vinculante", "fi": "sitova sopimus", "example_es": "Un acuerdo vinculante obliga a todos los firmantes a cumplir sus compromisos.", "example_fi": "Sitova sopimus velvoittaa kaikkia allekirjoittajia noudattamaan sitoumuksiaan.", "gender": "m" },
+    { "es": "la reconversión laboral", "fi": "ammatillinen uudelleenkoulutus", "example_es": "La reconversión laboral ayuda a los trabajadores desplazados a encontrar nuevos empleos.", "example_fi": "Ammatillinen uudelleenkoulutus auttaa syrjäytettyjä työntekijöitä löytämään uusia töitä.", "gender": "f" },
+    { "es": "la masificación", "fi": "ylikuormittuminen, massoittuminen", "example_es": "La masificación del turismo pone en peligro el patrimonio de muchas ciudades históricas.", "example_fi": "Matkailun ylikuormittuminen uhkaa monien historiallisten kaupunkien perintöä.", "gender": "f" },
+    { "es": "la resiliencia", "fi": "resilienssi, palautumiskyky", "example_es": "La resiliencia de las comunidades locales frente al cambio climático es fundamental.", "example_fi": "Paikallisyhteisöjen resilienssi ilmastonmuutosta vastaan on perustavanlaatuista.", "gender": "f" },
+    { "es": "la cohesión social", "fi": "sosiaalinen koheesio", "example_es": "La cohesión social se fortalece cuando todos los ciudadanos se sienten representados.", "example_fi": "Sosiaalinen koheesio vahvistuu kun kaikki kansalaiset tuntevat olevansa edustettuina.", "gender": "f" },
+    { "es": "la tasa de desempleo", "fi": "työttömyysaste", "example_es": "La tasa de desempleo entre jóvenes sigue siendo preocupantemente alta.", "example_fi": "Nuorisotyöttömyysaste on edelleen huolestuttavan korkea.", "gender": "f" },
+    { "es": "el impacto medioambiental", "fi": "ympäristövaikutus", "example_es": "Es necesario evaluar el impacto medioambiental de cada gran proyecto de construcción.", "example_fi": "Jokaisen suuren rakennusprojektin ympäristövaikutukset on arvioitava.", "gender": "m" },
+    { "es": "la conciencia ecológica", "fi": "ympäristötietoisuus", "example_es": "La conciencia ecológica ha crecido mucho entre las nuevas generaciones.", "example_fi": "Ympäristötietoisuus on kasvanut huomattavasti nuorten sukupolvien joukossa.", "gender": "f" },
+    { "es": "el desarrollo sostenible", "fi": "kestävä kehitys", "example_es": "El desarrollo sostenible busca satisfacer las necesidades presentes sin comprometer las del futuro.", "example_fi": "Kestävä kehitys pyrkii tyydyttämään nykyiset tarpeet vaarantamatta tulevien mahdollisuuksia.", "gender": "m" },
+    { "es": "la huella de carbono", "fi": "hiilijalanjälki", "example_es": "Viajar en avión deja una gran huella de carbono.", "example_fi": "Lentomatkailu jättää suuren hiilijalanjäljen.", "gender": "f" },
+    { "es": "las energías limpias", "fi": "puhtaat energiamuodot", "example_es": "Las energías limpias son clave para luchar contra el cambio climático.", "example_fi": "Puhtaat energiamuodot ovat avainasemassa ilmastonmuutoksen torjumisessa.", "gender": "f" },
+    { "es": "la igualdad de oportunidades", "fi": "tasa-arvo mahdollisuuksissa", "example_es": "La igualdad de oportunidades no existe si el acceso a la educación no es universal.", "example_fi": "Tasa-arvo mahdollisuuksissa ei toteudu, jos pääsy koulutukseen ei ole universaali.", "gender": "f" },
+    { "es": "el acceso universal", "fi": "universaali pääsy", "example_es": "El acceso universal a internet debería considerarse un derecho básico.", "example_fi": "Universaali pääsy internettiin pitäisi katsoa perusoikeudeksi.", "gender": "m" },
+    { "es": "el debate público", "fi": "julkinen keskustelu", "example_es": "La inmigración es un tema de debate público en muchos países europeos.", "example_fi": "Maahanmuutto on julkisen keskustelun aihe monissa eurooppalaisissa maissa.", "gender": "m" },
+    { "es": "la perspectiva global", "fi": "globaali näkökulma", "example_es": "Viajar amplía la perspectiva global y nos hace más tolerantes.", "example_fi": "Matkustaminen laajentaa globaalia näkökulmaa ja tekee meistä suvaitsevaisempia.", "gender": "f" },
+    { "es": "el desafío contemporáneo", "fi": "nykyaikainen haaste", "example_es": "La desigualdad digital es uno de los grandes desafíos contemporáneos.", "example_fi": "Digitaalinen eriarvoisuus on yksi aikamme suurimmista haasteista.", "gender": "m" },
+    { "es": "la solución colectiva", "fi": "kollektiivinen ratkaisu", "example_es": "Los problemas globales requieren soluciones colectivas e internacionales.", "example_fi": "Globaalit ongelmat vaativat kollektiivisia ja kansainvälisiä ratkaisuja.", "gender": "f" }
+  ],
+  "side_panel": {
+    "tabs": [
+      {
+        "id": "grammar",
+        "title": "Rakenteet",
+        "content_md": "## YO-aukkotehtävä — pikaviite\n\n### Si-lauseet\n\n| Tyyppi | Si-osa | Pääosa |\n|---|---|---|\n| 1 | preesens | preesens / futuuri |\n| 2 | subj. imperfekti | konditionaali |\n| 3 | subj. pluskvamperfekti | kond. perfekti |\n\n### Laukaisijat → subjunktiivi\n\n- Es importante/necesario/fundamental que → **subj. preesens**\n- Recomendó/pidió/dijo que → **subj. imperfekti**\n- Ojalá + toivo mahdollinen → **subj. preesens**\n- Ojalá + toivo lähes mahdoton → **subj. imperfekti**\n\n### Menneisyyden valinta\n\n- Ayer / en 2010 / una vez → **preteriti**\n- Siempre / todos los días / cuando era niño → **imperfekti**\n- Antes de que / cuando llegué, ya... → **preteriti + pluskvamperfekti**\n\n### Epäsuora kerronta\n\n- Dijo/pidió/recomendó que + **subj. imperfekti**\n- Me informó de que + **konditionaali** (epäsuora tulevaisuus)"
+      },
+      {
+        "id": "tips",
+        "title": "YO-strategia",
+        "content_md": "## YO-aukkotehtävän strategia\n\n### Askel 1: Lue teksti kokonaan\nTunnista aihe, sävy ja aikajana ennen kuin täytät yhtään aukkoa.\n\n### Askel 2: Tunnista laukaisijat\n- **ayer** → preteriti ✓\n- **siempre/normalmente** → imperfekti ✓\n- **si** → subj. imperfekti tai subj. pluskvamperfekti ✓\n- **es importante que** → subj. preesens ✓\n\n### Askel 3: Tarkista si-lauseen molemmat osat\nSi tuviera (subj. imp.) → pääosa = konditionaali ✓\nSi hubiera tenido (subj. pkvperf.) → pääosa = kond. perfekti ✓\n\n### Askel 4: Epäsuorassa kerronnassa\nPääverbi menneessä (dijo, recomendó, pidió) → subj. imperfekti\nPääverbi preesensissä (dice, recomienda, pide) → subj. preesens\n\n### Askel 5: Lue valmis teksti läpi\nKuulostaako se oikealta? Ovatko aikamuodot johdonmukaiset?"
+      }
+    ]
+  }
+}

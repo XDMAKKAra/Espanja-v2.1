@@ -1,0 +1,251 @@
+{
+  "meta": {
+    "course_key": "kurssi_7",
+    "lesson_index": 2,
+    "lesson_type": "grammar",
+    "level": "M",
+    "title": "Subjunktiivi aika-konjunktioiden kanssa (cuando, antes de que)",
+    "description": "Opit käyttämään subjunktiivia aika-konjunktioiden kanssa: cuando, antes de que, después de que, hasta que, en cuanto. Pääsääntö: tulevaan viittaava cuando vaatii subjunktiivin.",
+    "yo_relevance": "Aika-konjunktioiden oikea käyttö on YO-kirjoitustehtävässä M-tason kriteeri. 'Cuando tenga tiempo...' vs 'Cuando tengo tiempo...' — tämä ero on keskeinen M-E-L-tason erottelija YO-kokeessa.",
+    "estimated_minutes_median": 13
+  },
+  "teaching": {
+    "intro_md": "# Subjunktiivi aika-konjunktioiden kanssa\n\n## Pääsääntö\n\nKun aika-konjunktio viittaa **tulevaisuuteen** → **subjunktiivi**.\nKun se viittaa **menneisyyteen tai toistuvaan nykyisyyteen** → **indikatiivi**.\n\n## Aika-konjunktiot\n\n| Konjunktio | Suomeksi |\n|---|---|\n| **cuando** | kun |\n| **antes de que** | ennen kuin |\n| **después de que** | sen jälkeen kun |\n| **hasta que** | kunnes |\n| **en cuanto / tan pronto como** | heti kun |\n| **mientras** | samalla kun / niin kauan kuin |\n\n## Esimerkkejä — tulevaisuus vs. menneisyys\n\n| Tulevaisuus (subjunktiivi) | Menneisyys/toistuvuus (indikatiivi) |\n|---|---|\n| *Cuando **tenga** tiempo, te llamaré.* | *Cuando **tenía** tiempo, leía.* |\n| *Llámame en cuanto **llegues**.* | *En cuanto **llegaba**, me llamaba.* |\n| *Antes de que **salgas**, cierra la puerta.* | *Antes de que **salió**, cerró la puerta.* |\n\n## Antes de que — AINA subjunktiivi\n\n**Antes de que** vaatii **aina** subjunktiivin, riippumatta aikaviittauksesta:\n\n> *Te lo dije antes de que **salieras**.* — Sanoin sen sinulle ennen kuin lähdit.\n\n## Muista\n\nSubjunktiivi ei tarkoita 'epävarmuutta' — se on kieliopillinen vaatimus tietyissä rakenteissa. Aika-konjunktioilla subjunktiivi = tuleva viittaus.",
+    "key_points": [
+      "cuando + tuleva tapahtuma = subjunktiivi: 'Cuando llegues, llámame.' — Kun saavut, soita minulle.",
+      "cuando + toistuva tai mennyt = indikatiivi: 'Cuando llegaba, siempre comía.' — Kun saapui, söi aina.",
+      "antes de que vaatii AINA subjunktiivin: 'Antes de que salgas, cierra la puerta.'",
+      "hasta que + tuleva = subjunktiivi: 'Espera hasta que llegue.' — Odota kunnes tulen.",
+      "en cuanto + tuleva = subjunktiivi: 'En cuanto tenga noticias, te aviso.' — Heti kun saan uutisia, ilmoitan."
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1-recognition-mc",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista — subjunktiivi vai indikatiivi?",
+      "instruction": "Valitse oikea muoto lauseessa.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "mc", "stem": "Cuando _______ tiempo, te llamaré. (tener)", "choices": ["tengo", "tenga", "tenía", "tendré"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "tenga = subjunktiivi. 'Cuando' + tulevaisuuteen viittaava tilanne = subjunktiivi. Tulevaisuusmerkki: 'te llamaré'." },
+        { "item_type": "mc", "stem": "Cuando _______ pequeño, leía mucho. (ser)", "choices": ["sea", "fuera", "era", "será"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "era = indikatiivi. 'Cuando era pequeño' = kun olin pieni — menneisyys, toistuva tila. Ei subjunktiivia." },
+        { "item_type": "mc", "stem": "Llámame en cuanto _______ a casa. (llegar)", "choices": ["llegas", "llegué", "llegues", "llegabas"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "llegues = subjunktiivi. 'En cuanto' + tuleva tapahtuma = subjunktiivi." },
+        { "item_type": "mc", "stem": "Antes de que _______, cierra la puerta. (salir — tú)", "choices": ["sales", "saliste", "salgas", "saldrás"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "salgas = subjunktiivi. 'Antes de que' vaatii AINA subjunktiivin." },
+        { "item_type": "mc", "stem": "En cuanto _______ los resultados, te avisaré. (saber — yo)", "choices": ["sé", "sabré", "sepa", "sabía"], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "sepa = saber, subjunktiivi. 'En cuanto' + tuleva = subjunktiivi. Saber on epäsäännöllinen subjunktiivissa: sepa." },
+        { "item_type": "mc", "stem": "Espera aquí hasta que _______ el autobús. (llegar)", "choices": ["llega", "llegó", "llegue", "llegará"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "llegue = subjunktiivi. 'Hasta que' + tulevaan viittaava = subjunktiivi." },
+        { "item_type": "mc", "stem": "Después de que _______ la película, fuimos al restaurante. (ver — nosotros)", "choices": ["veamos", "vimos", "veíamos", "veamos"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "vimos = indikatiivi (preteriti). 'Después de que' + mennyt tapahtuma = indikatiivi. Menneisyydessä tapahtunut." },
+        { "item_type": "mc", "stem": "Te doy el libro cuando lo _______ yo. (terminar)", "choices": ["termino", "termine", "terminé", "terminaré"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "termine = subjunktiivi. 'Te doy el libro cuando...' — annetaan tulevaisuudessa, kun jokin tapahtuu = subjunktiivi." },
+        { "item_type": "mc", "stem": "Antes de que _______ el director, revisa el documento. (llegar — él)", "choices": ["llegue", "llega", "llegará", "llegó"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "llegue = subjunktiivi. 'Antes de que' vaatii aina subjunktiivin." },
+        { "item_type": "mc", "stem": "Cuando _______ al museo, compra las entradas online. (ir — tú)", "choices": ["vayas", "vas", "fuiste", "irás"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "vayas = ir, tú, subjunktiivi. 'Cuando vayas' — tuleva suunniteltu käynti = subjunktiivi." },
+        { "item_type": "mc", "stem": "Mientras _______ en Madrid, visitaremos el Prado. (estar — nosotros)", "choices": ["estamos", "estemos", "estuvimos", "estaremos"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "estemos = subjunktiivi. 'Mientras' + tuleva yhtäaikainen tilanne = subjunktiivi." },
+        { "item_type": "mc", "stem": "En cuanto _______ tu respuesta, confirmo la reserva. (recibir — yo)", "choices": ["recibo", "reciba", "recibí", "recibiría"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "reciba = subjunktiivi. 'En cuanto' + tuleva = subjunktiivi. Puhuja odottaa vastausta → tuleva viittaus." },
+        { "item_type": "mc", "stem": "Espera hasta que _______ el médico. (venir — él)", "choices": ["viene", "venga", "vino", "vendrá"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "venga = subjunktiivi. 'Hasta que' + tuleva = subjunktiivi. venir on epäsäännöllinen: venga." }
+      ]
+    },
+    {
+      "phase_id": "p2-recognition-match",
+      "phase_type": "recognition_match",
+      "title": "Yhdistä — konjunktio ja merkitys",
+      "instruction": "Yhdistä konjunktio sen suomenkieliseen merkitykseen.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        {
+          "item_type": "match",
+          "left_label": "Konjunktio",
+          "right_label": "Suomeksi",
+          "pairs": [
+            { "left": "cuando", "right": "kun" },
+            { "left": "antes de que", "right": "ennen kuin" },
+            { "left": "después de que", "right": "sen jälkeen kun" },
+            { "left": "hasta que", "right": "kunnes" },
+            { "left": "en cuanto", "right": "heti kun" },
+            { "left": "mientras", "right": "samalla kun / niin kauan kuin" }
+          ]
+        },
+        {
+          "item_type": "match",
+          "left_label": "Lause",
+          "right_label": "Suomeksi",
+          "pairs": [
+            { "left": "Cuando tenga tiempo, te llamo.", "right": "Kun minulla on aikaa, soitan sinulle." },
+            { "left": "Antes de que salgas, cierra.", "right": "Ennen kuin lähdet, sulje." },
+            { "left": "Llámame en cuanto llegues.", "right": "Soita heti kun saavut." },
+            { "left": "Espera hasta que llegue.", "right": "Odota kunnes tulen." },
+            { "left": "Mientras estemos aquí, descansemos.", "right": "Niin kauan kuin olemme täällä, levätään." }
+          ]
+        },
+        {
+          "item_type": "match",
+          "left_label": "Rakenne",
+          "right_label": "Sääntö",
+          "pairs": [
+            { "left": "cuando + tuleva", "right": "subjunktiivi" },
+            { "left": "cuando + mennyt / toistuva", "right": "indikatiivi" },
+            { "left": "antes de que + aina", "right": "subjunktiivi" },
+            { "left": "hasta que + tuleva", "right": "subjunktiivi" },
+            { "left": "en cuanto + tuleva", "right": "subjunktiivi" }
+          ]
+        }
+      ]
+    },
+    {
+      "phase_id": "p3-recall-es-fi",
+      "phase_type": "recall_typed_es_to_fi",
+      "title": "Käännä suomeksi",
+      "instruction": "Käännä lause suomeksi.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Cuando tenga tiempo, te llamaré.", "accept": ["kun minulla on aikaa, soitan sinulle", "soitan sinulle kun minulla on aikaa"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Antes de que salgas, cierra la puerta.", "accept": ["ennen kuin lähdet, sulje ovi", "sulje ovi ennen kuin lähdet"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Llámame en cuanto llegues.", "accept": ["soita minulle heti kun saavut", "heti kun saavut, soita minulle"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Espera hasta que llegue el médico.", "accept": ["odota kunnes lääkäri tulee", "odota kunnes lääkäri saapuu"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "En cuanto sepa los resultados, te aviso.", "accept": ["heti kun tiedän tulokset, ilmoitan sinulle", "ilmoitan sinulle heti kun tiedän tulokset"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Cuando era pequeño, vivía en el pueblo.", "accept": ["kun olin pieni, asuin kylässä", "lapsena asuin kylässä"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Mientras estemos en Madrid, visitaremos el Prado.", "accept": ["niin kauan kuin olemme madridissa, käymme pradossa", "ollessamme madridissa käymme pradossa"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Después de que termines el examen, podemos salir.", "accept": ["kun olet tehnyt kokeen, voimme lähteä", "sen jälkeen kun teet kokeen voimme lähteä"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "No te vayas hasta que llegue tu madre.", "accept": ["älä lähde kunnes äitisi tulee", "odota kunnes äitisi saapuu"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "En cuanto llegues a casa, come algo.", "accept": ["heti kun tulet kotiin, syö jotain", "syö jotain heti kun tulet kotiin"] }
+      ]
+    },
+    {
+      "phase_id": "p4-recall-fi-es",
+      "phase_type": "recall_typed_fi_to_es",
+      "title": "Käännä espanjaksi",
+      "instruction": "Kirjoita lause espanjaksi käyttäen oikeaa konjunktiota ja muotoa.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Soita minulle heti kun saavut. (en cuanto + llegar — tú)", "accept": ["llámame en cuanto llegues", "en cuanto llegues, llámame"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Sulje ovi ennen kuin lähdet. (antes de que + salir — tú)", "accept": ["cierra la puerta antes de que salgas", "antes de que salgas, cierra la puerta"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Odota kunnes tulen takaisin. (hasta que + volver — yo)", "accept": ["espera hasta que vuelva", "espera hasta que yo vuelva"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Kun minulla on aikaa, soitan sinulle. (cuando + tener — yo)", "accept": ["cuando tenga tiempo, te llamaré", "te llamaré cuando tenga tiempo"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Heti kun saan uutisia, ilmoitan teille. (en cuanto + saber — yo)", "accept": ["en cuanto sepa las noticias, os aviso", "en cuanto sepa noticias os aviso"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Ennen kuin lähdet matkalle, varaa hotelli. (antes de que + irse — tú)", "accept": ["antes de que te vayas de viaje, reserva el hotel", "antes de que te vayas, reserva el hotel"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Pysy täällä kunnes hän saapuu. (hasta que + llegar — él)", "accept": ["quédate aquí hasta que llegue", "espera aquí hasta que llegue"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Niin kauan kuin olemme Madridissa, käymme museoissa. (mientras + estar — nosotros)", "accept": ["mientras estemos en madrid, visitaremos los museos", "mientras estemos en madrid visitaremos los museos"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Kun pääset töihin, opiskele espanjaa. (en cuanto + conseguir — tú)", "accept": ["en cuanto consigas trabajo, estudia español", "en cuanto consigas empleo, estudia español"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Soitan sinulle sen jälkeen kun konsertti loppuu. (después de que + terminar — el concierto)", "accept": ["te llamo después de que termine el concierto", "después de que termine el concierto, te llamo"] }
+      ]
+    },
+    {
+      "phase_id": "p5-application-gap-helppo",
+      "phase_type": "application_gap_fill",
+      "title": "Lauseen täydennys — perustaso",
+      "instruction": "Täydennä oikealla muodolla. Sanapankki auttaa.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Cuando {1} al museo, compra las entradas anticipadas. (llegar — tú)", "answers": [["llegues"]], "word_bank": ["llegues", "llegas", "llegaste"] },
+        { "item_type": "gap_fill", "sentence_template": "Antes de que {1} el artículo, revísalo bien. (publicar — tú)", "answers": [["publiques"]], "word_bank": ["publiques", "publicas", "publicaste"] },
+        { "item_type": "gap_fill", "sentence_template": "Llámame en cuanto {1} las noticias sobre la exposición. (saber — tú)", "answers": [["sepas"]], "word_bank": ["sabes", "supiste", "sepas"] },
+        { "item_type": "gap_fill", "sentence_template": "Espera hasta que {1} el director de la galería. (volver — él)", "answers": [["vuelva"]], "word_bank": ["vuelva", "vuelve", "volvió"] },
+        { "item_type": "gap_fill", "sentence_template": "En cuanto {1} mi obra, la llevaré a la galería. (terminar — yo)", "answers": [["termine"]], "word_bank": ["termino", "termine", "terminé"] },
+        { "item_type": "gap_fill", "sentence_template": "Cuando {1} pequeña, iba al museo con mi madre todos los meses.", "answers": [["era"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Mientras {1} en Barcelona, visitaré la Sagrada Familia y el Barrio Gótico.", "answers": [["esté"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "No te vayas antes de que {1} el discurso del artista. (terminar — él)", "answers": [["termine"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "En cuanto {1} la oportunidad, inscríbete en el curso de arte.", "answers": [["tengas"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Cuando {1} el catálogo de la exposición, me lo prestas, ¿verdad?", "answers": [["tengas", "consigas"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p6-application-gap-vaativa",
+      "phase_type": "application_gap_fill",
+      "title": "Lauseen täydennys — vaativa",
+      "instruction": "Täydennä ilman sanapankkia. Oikea muoto vaatii analyysia.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "El artista no presentará su obra hasta que {1} completamente satisfecho con ella. (estar — él)", "answers": [["esté"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Antes de que {1} el siglo XX, el flamenco ya era conocido en toda Europa. (empezar — él)", "answers": [["empezara", "empezase"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "En cuanto el museo {1} las entradas a la venta, las reservamos. (poner — él)", "answers": [["ponga"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Cuando {1} la exposición temporal, te aviso para que podamos ir juntos.", "answers": [["abran", "inauguren"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Mientras los artistas {1} en el taller, los estudiantes observaban en silencio.", "answers": [["trabajaban", "trabajaron"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Espero que en cuanto {1} los fondos, el gobierno restaure la catedral.", "answers": [["haya", "tenga"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Antes de que {1} la era digital, los artistas dependían de galerías físicas.", "answers": [["llegara", "llegase"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Cuando {1} más experiencia, podrás exponer en galerías internacionales.", "answers": [["tengas"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "La escultora no firmó el contrato hasta que {1} las condiciones de venta. (revisar — ella)", "answers": [["revisara", "revisase"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "En cuanto {1} el concierto, el público aplaudió durante diez minutos.", "answers": [["terminó"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p7-application-sentence-build",
+      "phase_type": "application_sentence_build",
+      "title": "Lauseiden rakentelua",
+      "instruction": "Käännä koko lause espanjaksi. Valitse oikea konjunktio ja muoto.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.60, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.92 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Heti kun galleria avaa, menemme katsomaan Picasson näyttelyn.", "accept": ["en cuanto abra la galería, iremos a ver la exposición de picasso", "en cuanto la galería abra, iremos a ver la exposición"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Ennen kuin taiteilija julkaisee teoksensa, hän haluaa saada asiantuntijan mielipiteen.", "accept": ["antes de que el artista publique su obra, quiere obtener la opinión de un experto", "antes de que publique la obra, quiere la opinión de un experto"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Odota kunnes kirjailija allekirjoittaa kirjansa sinulle.", "accept": ["espera hasta que el escritor firme tu libro", "espera hasta que la escritora firme tu libro"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Niin kauan kuin museo on auki, voimme katsoa kaikkia näyttelyitä.", "accept": ["mientras el museo esté abierto, podemos ver todas las exposiciones", "mientras esté abierto el museo podemos visitar todas las exposiciones"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Kun hankin lisää kokemusta, haen apurahaa taideprojektilleni.", "accept": ["cuando tenga más experiencia, solicitaré una beca para mi proyecto artístico", "cuando tenga suficiente experiencia solicitaré la beca"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Soita minulle heti kun saat tietää, onko näyttely saatavilla.", "accept": ["llámame en cuanto sepas si la exposición está disponible", "en cuanto sepas si hay entradas para la exposición, llámame"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Ennen kuin lähdette kaupunkiin, tutustukaa Pradon museoon netissä.", "accept": ["antes de que os vayáis a la ciudad, informaos sobre el museo del prado", "antes de que viajéis, visitad la página del prado"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Hän ei hyväksy palkkiota kunnes näyttely on avattu virallisesti.", "accept": ["no aceptará el pago hasta que la exposición sea inaugurada oficialmente", "no aceptará el dinero hasta que abran la exposición oficialmente"] }
+      ]
+    },
+    {
+      "phase_id": "p8-synthesis-translate",
+      "phase_type": "synthesis_translate",
+      "title": "YO-tason käännös",
+      "instruction": "Käännä koko lause espanjaksi. Pidemmät lauseet, ei vihjeitä.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.60, "C": 0.65, "M": 0.75, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Kun kulttuuripolitiikka muuttuu, se vaikuttaa suoraan taiteilijoiden mahdollisuuksiin saada rahoitusta.", "accept": ["cuando la política cultural cambie, afectará directamente a las posibilidades de los artistas de obtener financiación", "cuando cambie la política cultural, afectará directamente las oportunidades de los artistas para financiarse"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Ennen kuin museo avaa uuden näyttelyn, se tarvitsee kuukausien valmistelua ja koordinointia.", "accept": ["antes de que el museo abra una nueva exposición, necesita meses de preparación y coordinación", "antes de que se inaugure la nueva exposición, el museo necesita meses de trabajo de preparación"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Heti kun taiteilija viimeistelee teoksen, kriitikot alkavat arvioida sitä julkisesti.", "accept": ["en cuanto el artista termine la obra, los críticos empezarán a evaluarla públicamente", "en cuanto la artista finalice la obra los críticos comenzarán a analizarla en público"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Odota kunnes opas selittää teoksen merkityksen — se avaa aivan uuden näkökulman.", "accept": ["espera hasta que el guía explique el significado de la obra, te abrirá una perspectiva completamente nueva", "espera hasta que la guía explique el significado porque te dará una perspectiva nueva"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Niin kauan kuin hallitukset rahoittavat kulttuuria, taide pystyy kehittymään vapaasti yhteiskunnassa.", "accept": ["mientras los gobiernos financien la cultura, el arte podrá desarrollarse libremente en la sociedad", "mientras los gobiernos sigan financiando la cultura el arte podrá florecer libremente"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Kun nuoret oppivat arvostamaan kulttuuria koulussa, he kantavat tätä asennetta läpi koko elämänsä.", "accept": ["cuando los jóvenes aprendan a apreciar la cultura en la escuela, llevarán esta actitud a lo largo de toda su vida", "cuando los jóvenes aprendan a valorar la cultura en la escuela esta actitud los acompañará toda la vida"] }
+      ]
+    },
+    {
+      "phase_id": "p9-synthesis-short-writing",
+      "phase_type": "synthesis_short_writing",
+      "title": "Lyhyt kirjoitus — subjunktiivi aika-konjunktioiden kanssa",
+      "instruction": "Kirjoita lyhyt teksti. Käytä vähintään kolmea eri aika-konjunktiota subjunktiivin kanssa.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.60, "C": 0.65, "M": 0.70, "E": 0.80, "L": 0.90 },
+      "skip_for_targets": ["I", "A", "B", "C", "M"],
+      "items": [
+        { "item_type": "writing", "prompt": "Kirjoita 6–8 lausetta tulevaisuuden kulttuurisuunnitelmistasi: mitä aiot tehdä kun sinulla on aikaa, ennen kuin jokin tapahtuu, heti kun jokin on mahdollista. Käytä cuando, antes de que, en cuanto, hasta que. Kulttuurikonteksti pakollinen.", "min_words": 55, "max_words": 110, "rubric_focus": ["communication", "structure", "vocab"] },
+        { "item_type": "writing", "prompt": "Kirjoita 6–8 lausetta taiteilijan näkökulmasta: mitä hän tekee ennen kuin julkaisee teoksensa, kun saa inspiraation, niin kauan kuin hän työskentelee. Käytä aika-konjunktioita monipuolisesti.", "min_words": 55, "max_words": 110, "rubric_focus": ["communication", "vocab", "structure"] },
+        { "item_type": "writing", "prompt": "YO-tyylinen teksti: 'El futuro de la cultura en España'. Kirjoita 7–9 lausetta käyttäen subjunktiivia aika-konjunktioiden kanssa (kun hallitukset investoivat, ennen kuin museot sulkevat, heti kun...). 3+ konjunktiorakennetta.", "min_words": 60, "max_words": 120, "rubric_focus": ["communication", "structure", "vocab", "overall"] }
+      ]
+    }
+  ],
+  "vocab": [
+    { "es": "cuando + subjunktiivi", "fi": "kun (tuleva) + subjunktiivi", "example_es": "Cuando tenga tiempo, te llamaré.", "example_fi": "Kun minulla on aikaa, soitan sinulle.", "gender": null },
+    { "es": "antes de que + subjunktiivi", "fi": "ennen kuin + subjunktiivi (aina)", "example_es": "Antes de que salgas, cierra la puerta.", "example_fi": "Ennen kuin lähdet, sulje ovi.", "gender": null },
+    { "es": "en cuanto + subjunktiivi", "fi": "heti kun (tuleva) + subjunktiivi", "example_es": "En cuanto llegues, llámame.", "example_fi": "Heti kun saavut, soita minulle.", "gender": null },
+    { "es": "hasta que + subjunktiivi", "fi": "kunnes (tuleva) + subjunktiivi", "example_es": "Espera hasta que llegue el médico.", "example_fi": "Odota kunnes lääkäri tulee.", "gender": null },
+    { "es": "después de que + subjunktiivi/indikatiivi", "fi": "sen jälkeen kun + subj. (tuleva) / indik. (mennyt)", "example_es": "Te aviso después de que terminen las clases.", "example_fi": "Ilmoitan sinulle sen jälkeen kun tunnit loppuvat.", "gender": null },
+    { "es": "mientras + subjunktiivi", "fi": "samalla kun / niin kauan kuin + subjunktiivi", "example_es": "Mientras estemos en Madrid, visitaremos los museos.", "example_fi": "Niin kauan kuin olemme Madridissa, käymme museoissa.", "gender": null },
+    { "es": "tan pronto como + subjunktiivi", "fi": "heti kun (tuleva) + subjunktiivi", "example_es": "Tan pronto como abran la galería, entraremos.", "example_fi": "Heti kun galleria avaa, menemme sisään.", "gender": null },
+    { "es": "avisar", "fi": "ilmoittaa, varoittaa", "example_es": "En cuanto sepa los resultados, te aviso.", "example_fi": "Heti kun tiedän tulokset, ilmoitan sinulle.", "gender": null },
+    { "es": "reservar", "fi": "varata (paikka, huone)", "example_es": "Reserva las entradas antes de que se agoten.", "example_fi": "Varaa liput ennen kuin ne loppuvat.", "gender": null },
+    { "es": "inaugurar", "fi": "avata virallisesti, inauguroida", "example_es": "El museo inaugurará la exposición la próxima semana.", "example_fi": "Museo avaa näyttelyn virallisesti ensi viikolla.", "gender": null },
+    { "es": "terminar", "fi": "lopettaa, päättyä", "example_es": "Cuando termine el concierto, saldremos juntos.", "example_fi": "Kun konsertti loppuu, lähdemme yhdessä.", "gender": null },
+    { "es": "publicar", "fi": "julkaista", "example_es": "El escritor publicará su novela cuando esté listo.", "example_fi": "Kirjailija julkaisee romaaninsa kun on valmis.", "gender": null },
+    { "es": "conseguir", "fi": "saavuttaa, hankkia, saada", "example_es": "En cuanto consigas la beca, empieza el proyecto.", "example_fi": "Heti kun saat apurahan, aloita projekti.", "gender": null },
+    { "es": "la beca", "fi": "apuraha", "example_es": "Cuando obtenga la beca, podré dedicarme al arte.", "example_fi": "Kun saan apurahan, voin omistautua taiteelle.", "gender": "f" }
+  ],
+  "side_panel": {
+    "tabs": [
+      {
+        "id": "grammar",
+        "title": "Aika-konjunktiot",
+        "content_md": "## Subjunktiivi vs. indikatiivi\n\n| Tilanne | Muoto |\n|---|---|\n| Tuleva tapahtuma | **subjunktiivi** |\n| Mennyt / toistuva | **indikatiivi** |\n\n## Konjunktiot\n\n| Konjunktio | Suomeksi | Huom. |\n|---|---|---|\n| **cuando** | kun | subj. tulevaan, indik. menneeseen |\n| **antes de que** | ennen kuin | **AINA subjunktiivi** |\n| **en cuanto** | heti kun | subj. tulevaan |\n| **hasta que** | kunnes | subj. tulevaan |\n| **después de que** | sen jälkeen kun | subj. tulevaan, indik. menneeseen |\n| **mientras** | niin kauan kuin | subj. tulevaan |\n\n## Esimerkkejä\n\n> *Cuando **tenga** tiempo, te llamo.* (tuleva → subj.)\n\n> *Cuando **tenía** tiempo, leía.* (mennyt → indik.)\n\n> *Antes de que **salgas**, cierra.* (aina subj.)"
+      },
+      {
+        "id": "tips",
+        "title": "YO-vinkki",
+        "content_md": "## Aika-konjunktiot YO-kokeessa\n\nTämä rakenne erottaa M-E-L-tason C-B-tasosta. YO-kirjoituksessa:\n\n**Vältä tätä virhettä:**\n\n✗ *Cuando **llegas** a España, visita el Prado.*\n✓ *Cuando **llegues** a España, visita el Prado.*\n\n**Muista:** 'cuando' + suositus/ohje/tulevaisuus = **subjunktiivi**.\n\n## Hyödyllisiä lauseita kirjoitukseen\n\n```\nCuando tenga la oportunidad...     — Kun minulla on tilaisuus...\nAntes de que sea demasiado tarde... — Ennen kuin on liian myöhäistä...\nEn cuanto pueda...                 — Heti kun pystyn...\nHasta que no se solucione...       — Kunnes ongelma ratkeaa...\n```\n\n## Ennen koetta\n\n- **antes de que** = AINA subjunktiivi\n- **cuando** + tulevaisuus = AINA subjunktiivi\n- Testaa itsesi: viittaako lause tulevaisuuteen vai menneisyyteen?"
+      }
+    ]
+  }
+}

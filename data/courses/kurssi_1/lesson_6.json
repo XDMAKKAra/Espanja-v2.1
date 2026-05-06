@@ -1,0 +1,285 @@
+{
+  "meta": {
+    "course_key": "kurssi_1",
+    "lesson_index": 6,
+    "lesson_type": "vocab",
+    "level": "A",
+    "title": "Numerot ja ikä",
+    "description": "Opettelet espanjan numerot 0–100 (sekä cien ja mil), ikä-rakenteen tener X años ja päivämäärämuodon el dos de mayo de 2026. YO-kokeen kuullussa numerot ovat lähes joka vuosi: ikä, hinta, puhelinnumero, kellonaika.",
+    "yo_relevance": "Numerot ja iät tulevat YO-kokeen kuullun ymmärtämisessä joka vuosi — puhelinnumeroina, hintoina, ikinä ja vuosilukuina. Yleisin ansa: veinte / veintiuno / treinta sekoittuvat, ja ikä ilmaistaan tener-verbillä, ei ser-verbillä (tengo 17 años, ei *soy 17*).",
+    "estimated_minutes_median": 13
+  },
+  "teaching": {
+    "intro_md": "# Numerot ja ikä\n\nEspanjan numerot 0–15 opetellaan yksittäin; 16–29 kirjoitetaan yhteen sanaan (**dieciséis**, **veintidós**); 31:stä ylöspäin yhdistetään **y**-sanalla (**treinta y uno**, **cuarenta y cinco**).\n\n## 0–15\n\n> 0 cero · 1 uno · 2 dos · 3 tres · 4 cuatro · 5 cinco · 6 seis · 7 siete · 8 ocho · 9 nueve · 10 diez · 11 once · 12 doce · 13 trece · 14 catorce · 15 quince\n\n## 16–29 — yksi sana\n\n> 16 dieciséis · 17 diecisiete · 18 dieciocho · 19 diecinueve\n>\n> 20 veinte · 21 veintiuno · 22 veintidós · 25 veinticinco · 29 veintinueve\n\n## 30, 40, 50… — y-sanalla\n\n> 30 treinta · 40 cuarenta · 50 cincuenta · 60 sesenta · 70 setenta · 80 ochenta · 90 noventa\n>\n> 31 treinta **y** uno · 45 cuarenta **y** cinco · 78 setenta **y** ocho\n\n## 100 ja 1000\n\n- **cien** käytetään pelkkänä satana ja ennen substantiivia: *cien euros*, *cien años*.\n- **ciento** + pienempi numero: *ciento dos*, *ciento cincuenta*.\n- **mil** ei muuta muotoaan: *mil euros*, *dos mil veinte*.\n\n## Ikä — TENER, ei ser\n\n> ¿Cuántos años **tienes**? — **Tengo** 17 años.\n>\n> Mi hermano **tiene** 14 años.\n\n## Päivämäärä\n\n> Hoy es **el dos de mayo de 2026** (el dos de mayo de dos mil veintiséis).\n",
+    "key_points": [
+      "Numerot 16–29 kirjoitetaan yhteen sanaan: dieciséis, veintidós.",
+      "Numerot 31–99 yhdistetään y-sanalla: treinta y uno.",
+      "Ikä ilmaistaan tener-verbillä: tengo 17 años (en soy 17).",
+      "cien ennen substantiivia ja yksinään, ciento + pienempi numero.",
+      "Päivämäärässä 'el + numero + de + kuukausi + de + vuosi'."
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1-recognition-numerot-1-15",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista — numerot 0–15",
+      "instruction": "Valitse oikea käännös.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.7, "C": 0.75, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "mc", "stem": "tres", "choices": ["2", "3", "4", "13"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "tres = 3. Trece = 13 — älä sekoita." },
+        { "item_type": "mc", "stem": "cinco", "choices": ["4", "5", "15", "50"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "cinco = 5. Quince = 15, cincuenta = 50." },
+        { "item_type": "mc", "stem": "siete", "choices": ["6", "7", "8", "17"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "siete = 7." },
+        { "item_type": "mc", "stem": "nueve", "choices": ["4", "9", "19", "90"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "nueve = 9. Diecinueve = 19, noventa = 90 — kaikki samaa juurta." },
+        { "item_type": "mc", "stem": "once", "choices": ["1", "11", "12", "15"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "once = 11." },
+        { "item_type": "mc", "stem": "doce", "choices": ["2", "10", "12", "20"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "doce = 12." },
+        { "item_type": "mc", "stem": "trece", "choices": ["3", "13", "30", "33"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "trece = 13. Tres = 3, treinta = 30." },
+        { "item_type": "mc", "stem": "catorce", "choices": ["4", "14", "40", "44"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "catorce = 14. Cuatro = 4, cuarenta = 40." },
+        { "item_type": "mc", "stem": "quince", "choices": ["5", "15", "50", "500"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "quince = 15. Cinco = 5, cincuenta = 50." },
+        { "item_type": "mc", "stem": "cero", "choices": ["0", "100", "1", "10"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "cero = 0. Cien = 100." },
+        { "item_type": "mc", "stem": "ocho", "choices": ["8", "80", "18", "800"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "ocho = 8. Ochenta = 80, dieciocho = 18." },
+        { "item_type": "mc", "stem": "seis", "choices": ["5", "6", "7", "16"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "seis = 6. Cinco = 5, siete = 7." }
+      ]
+    },
+    {
+      "phase_id": "p2-match-numerot-16-29",
+      "phase_type": "recognition_match",
+      "title": "Yhdistä — 16–29",
+      "instruction": "Yhdistä numero ja sen espanjankielinen muoto.",
+      "mastery_threshold": { "I": 0.6, "A": 0.65, "B": 0.75, "C": 0.8, "M": 0.85, "E": 0.9, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        {
+          "item_type": "match",
+          "left_label": "Numero",
+          "right_label": "Espanjaksi",
+          "pairs": [
+            { "left": "16", "right": "dieciséis" },
+            { "left": "17", "right": "diecisiete" },
+            { "left": "18", "right": "dieciocho" },
+            { "left": "19", "right": "diecinueve" },
+            { "left": "20", "right": "veinte" },
+            { "left": "21", "right": "veintiuno" },
+            { "left": "22", "right": "veintidós" },
+            { "left": "23", "right": "veintitrés" },
+            { "left": "25", "right": "veinticinco" },
+            { "left": "27", "right": "veintisiete" },
+            { "left": "28", "right": "veintiocho" },
+            { "left": "29", "right": "veintinueve" }
+          ]
+        }
+      ]
+    },
+    {
+      "phase_id": "p3-recall-typed-es-fi",
+      "phase_type": "recall_typed_es_to_fi",
+      "title": "Käännä numero",
+      "instruction": "Kirjoita numero numeroina (esim. 17).",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.7, "C": 0.75, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I"],
+      "items": [
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "veinte", "accept": ["20"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "treinta", "accept": ["30"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "cuarenta", "accept": ["40"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "cincuenta", "accept": ["50"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "sesenta", "accept": ["60"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "setenta", "accept": ["70"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "ochenta", "accept": ["80"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "noventa", "accept": ["90"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "cien", "accept": ["100"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "mil", "accept": ["1000"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "treinta y cinco", "accept": ["35"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "setenta y ocho", "accept": ["78"] }
+      ]
+    },
+    {
+      "phase_id": "p4-recall-typed-fi-es",
+      "phase_type": "recall_typed_fi_to_es",
+      "title": "Käännä espanjaksi",
+      "instruction": "Kirjoita numero espanjaksi (yhteen sanaan kun 16–29, muuten y-sanalla).",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "16", "accept": ["dieciséis", "dieciseis"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "21", "accept": ["veintiuno", "veintiún", "veintiun"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "22", "accept": ["veintidós", "veintidos"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "30", "accept": ["treinta"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "33", "accept": ["treinta y tres"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "50", "accept": ["cincuenta"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "67", "accept": ["sesenta y siete"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "84", "accept": ["ochenta y cuatro"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "100", "accept": ["cien", "ciento"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "1000", "accept": ["mil"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "ikä", "accept": ["edad", "la edad"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "syntymäpäivä", "accept": ["cumpleaños", "cumpleanos", "el cumpleaños"] }
+      ]
+    },
+    {
+      "phase_id": "p5-application-gap-helppo",
+      "phase_type": "application_gap_fill",
+      "title": "Lauseen täydennys — perustaso",
+      "instruction": "Täydennä lause oikealla numerolla tai sanalla.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.75, "C": 0.8, "M": 0.85, "E": 0.9, "L": 0.92 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Tengo {1} años (17).", "answers": [["diecisiete"]], "word_bank": ["diecisiete", "dieciséis", "diecinueve"] },
+        { "item_type": "gap_fill", "sentence_template": "Mi hermana tiene {1} años (15).", "answers": [["quince"]], "word_bank": ["once", "quince", "cinco"] },
+        { "item_type": "gap_fill", "sentence_template": "Mi abuelo tiene {1} años (80).", "answers": [["ochenta"]], "word_bank": ["ochenta", "ocho", "dieciocho"] },
+        { "item_type": "gap_fill", "sentence_template": "El libro cuesta {1} euros (12).", "answers": [["doce"]], "word_bank": ["dos", "doce", "veinte"] },
+        { "item_type": "gap_fill", "sentence_template": "En mi clase somos {1} estudiantes (24).", "answers": [["veinticuatro"]], "word_bank": ["veinticuatro", "cuatro", "cuarenta"] },
+        { "item_type": "gap_fill", "sentence_template": "Hoy es el {1} de mayo (2).", "answers": [["dos"]], "word_bank": ["dos", "doce", "veinte"] },
+        { "item_type": "gap_fill", "sentence_template": "¿Cuántos {1} tienes?", "answers": [["años", "anos"]], "word_bank": ["años", "edad", "cumpleaños"] },
+        { "item_type": "gap_fill", "sentence_template": "Mi padre {1} cuarenta y cinco años.", "answers": [["tiene"]], "word_bank": ["es", "tiene", "está"] },
+        { "item_type": "gap_fill", "sentence_template": "Madrid tiene más de tres {1} de habitantes.", "answers": [["millones"]], "word_bank": ["millones", "cien", "mil"] },
+        { "item_type": "gap_fill", "sentence_template": "El curso cuesta {1} euros (100).", "answers": [["cien"]], "word_bank": ["cien", "ciento", "mil"] }
+      ]
+    },
+    {
+      "phase_id": "p6-application-gap-vaativa",
+      "phase_type": "application_gap_fill",
+      "title": "Lauseen täydennys — vaativa",
+      "instruction": "Täydennä ilman sanapankkia. Kirjoita numero sanana.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.65, "C": 0.75, "M": 0.85, "E": 0.9, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Mi madre tiene {1} años (52).", "answers": [["cincuenta y dos"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Mi número de teléfono empieza con {1} (9).", "answers": [["nueve"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "El billete cuesta {1} euros (38).", "answers": [["treinta y ocho"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Mi abuela {1} ochenta y siete años.", "answers": [["tiene"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "En el instituto hay {1} alumnos (450).", "answers": [["cuatrocientos cincuenta"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Nací en el año {1} (2008).", "answers": [["dos mil ocho"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Mi cumpleaños es el {1} de marzo (21).", "answers": [["veintiuno", "veintiún"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Mi hermano menor tiene {1} años (14).", "answers": [["catorce"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "El curso dura {1} semanas (16).", "answers": [["dieciséis", "dieciseis"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "La entrada al museo cuesta {1} euros (12,50 → kokonaisluku).", "answers": [["doce"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p7-application-sentence-build",
+      "phase_type": "application_sentence_build",
+      "title": "Lauseiden rakentelua",
+      "instruction": "Käännä koko lause espanjaksi. Kirjoita numerot sanoina.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.6, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.92 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Olen 17-vuotias.", "accept": ["tengo diecisiete años", "tengo 17 años", "tengo diecisiete anos", "tengo diecisiete años."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Veljeni on 14-vuotias.", "accept": ["mi hermano tiene catorce años", "mi hermano tiene 14 años", "mi hermano tiene catorce anos"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Kuinka vanha olet?", "accept": ["cuántos años tienes", "¿cuántos años tienes?", "cuantos anos tienes", "cuántos años tienes?"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Isoäitini on 80-vuotias.", "accept": ["mi abuela tiene ochenta años", "mi abuela tiene 80 años", "mi abuela tiene ochenta anos"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Luokassani on 25 oppilasta.", "accept": ["en mi clase hay veinticinco alumnos", "en mi clase somos veinticinco", "hay veinticinco alumnos en mi clase"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Synnyin vuonna 2008.", "accept": ["nací en 2008", "nací en dos mil ocho", "naci en dos mil ocho"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Tämä maksaa sata euroa.", "accept": ["cuesta cien euros", "esto cuesta cien euros"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Syntymäpäiväni on toukokuun toinen.", "accept": ["mi cumpleaños es el dos de mayo", "mi cumpleanos es el dos de mayo", "mi cumpleaños es el 2 de mayo"] }
+      ]
+    },
+    {
+      "phase_id": "p8-synthesis-translate",
+      "phase_type": "synthesis_translate",
+      "title": "YO-tyylinen käännös",
+      "instruction": "Käännä koko lause espanjaksi YO-tasolla.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.6, "C": 0.65, "M": 0.75, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Olen 18-vuotias ja syntynyt Helsingissä vuonna 2008.", "accept": ["tengo dieciocho años y nací en helsinki en 2008", "tengo 18 años y nací en helsinki en dos mil ocho"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Isoisäni täyttää ensi viikolla 75 vuotta.", "accept": ["mi abuelo cumple setenta y cinco años la próxima semana", "mi abuelo cumple 75 años la semana próxima", "mi abuelo cumple setenta y cinco la próxima semana"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Pikkusiskoni on yhdeksänvuotias ja serkkuni on yksitoista.", "accept": ["mi hermana menor tiene nueve años y mi primo tiene once", "mi hermana pequeña tiene nueve años y mi prima tiene once"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Kurssi maksaa 150 euroa ja kestää kolme kuukautta.", "accept": ["el curso cuesta ciento cincuenta euros y dura tres meses", "el curso cuesta 150 euros y dura tres meses"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Madridissa asuu yli kolme miljoonaa ihmistä.", "accept": ["en madrid viven más de tres millones de personas", "madrid tiene más de tres millones de habitantes"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Syntymäpäiväni on kahdeskymmeneskahdes maaliskuuta.", "accept": ["mi cumpleaños es el veintidós de marzo", "mi cumpleanos es el veintidos de marzo"] }
+      ]
+    },
+    {
+      "phase_id": "p9-synthesis-short-writing",
+      "phase_type": "synthesis_short_writing",
+      "title": "Lyhyt kirjoitus",
+      "instruction": "Kirjoita lyhyt esittely numeroita käyttäen.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.6, "C": 0.65, "M": 0.7, "E": 0.8, "L": 0.9 },
+      "skip_for_targets": ["I", "A", "B", "C", "M"],
+      "items": [
+        { "item_type": "writing", "prompt": "Esittele itsesi: nimi, ikä, syntymäpäivä, perheenjäsenten iät. 4–6 lausetta. Kirjoita numerot sanoina.", "min_words": 35, "max_words": 80, "rubric_focus": ["communication", "vocab", "structure"] },
+        { "item_type": "writing", "prompt": "Kuvaile luokkasi: kuinka monta oppilasta, kuinka monta tyttöä/poikaa, opettajan ikä jos tiedät. 4–6 lausetta.", "min_words": 35, "max_words": 80, "rubric_focus": ["communication", "vocab"] },
+        { "item_type": "writing", "prompt": "Kerro tärkeimmistä päivämääristä elämässäsi (syntymäpäivä, koulun alkupäivä, lomamatkapäivä). 4–6 lausetta.", "min_words": 35, "max_words": 80, "rubric_focus": ["communication", "structure"] }
+      ]
+    },
+    {
+      "phase_id": "p10-cumulative-review",
+      "phase_type": "application_gap_fill",
+      "title": "Kertaava — numerot + perhe",
+      "instruction": "Käytä numeroita yhdessä aiempien oppituntien sanaston kanssa.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.92 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Mi hermana {1} dieciséis años.", "answers": [["tiene"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Mi padre es finlandés y tiene {1} años (48).", "answers": [["cuarenta y ocho"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Mi prima estudia en Madrid y tiene {1} años (19).", "answers": [["diecinueve"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Mis abuelos tienen {1} y {2} años (75 ja 73).", "answers": [["setenta y cinco"], ["setenta y tres"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "El profesor de español tiene {1} años (36).", "answers": [["treinta y seis"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Mi madre {1} cuarenta y cinco años y es alemana.", "answers": [["tiene"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Tengo dos hermanos: uno tiene {1} y el otro tiene {2} (8 ja 12).", "answers": [["ocho"], ["doce"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Mi cumpleaños es el {1} de septiembre (15).", "answers": [["quince"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Mi tía vive en Sevilla desde hace {1} años (20).", "answers": [["veinte"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Mi novio es estadounidense y tiene {1} años (22).", "answers": [["veintidós", "veintidos"]], "word_bank": null }
+      ]
+    }
+  ],
+  "vocab": [
+    { "es": "cero", "fi": "0, nolla", "example_es": "Mi número empieza con cero.", "example_fi": "Numeroni alkaa nollalla.", "gender": null },
+    { "es": "uno", "fi": "1, yksi", "example_es": "Tengo uno.", "example_fi": "Minulla on yksi.", "gender": null },
+    { "es": "dos", "fi": "2, kaksi", "example_es": "Tengo dos hermanos.", "example_fi": "Minulla on kaksi sisarusta.", "gender": null },
+    { "es": "tres", "fi": "3, kolme", "example_es": "Son las tres.", "example_fi": "Kello on kolme.", "gender": null },
+    { "es": "cuatro", "fi": "4, neljä", "example_es": "Tengo cuatro primos.", "example_fi": "Minulla on neljä serkkua.", "gender": null },
+    { "es": "cinco", "fi": "5, viisi", "example_es": "Cinco euros, por favor.", "example_fi": "Viisi euroa, kiitos.", "gender": null },
+    { "es": "seis", "fi": "6, kuusi", "example_es": "Son las seis de la tarde.", "example_fi": "Kello on kuusi iltapäivällä.", "gender": null },
+    { "es": "siete", "fi": "7, seitsemän", "example_es": "Trabajo siete horas.", "example_fi": "Työskentelen seitsemän tuntia.", "gender": null },
+    { "es": "ocho", "fi": "8, kahdeksan", "example_es": "Mi hermano tiene ocho años.", "example_fi": "Veljeni on 8-vuotias.", "gender": null },
+    { "es": "nueve", "fi": "9, yhdeksän", "example_es": "Vivo en el piso nueve.", "example_fi": "Asun yhdeksännessä kerroksessa.", "gender": null },
+    { "es": "diez", "fi": "10, kymmenen", "example_es": "Diez euros la entrada.", "example_fi": "Pääsylippu kymmenen euroa.", "gender": null },
+    { "es": "once", "fi": "11, yksitoista", "example_es": "Tengo once primos.", "example_fi": "Minulla on yksitoista serkkua.", "gender": null },
+    { "es": "doce", "fi": "12, kaksitoista", "example_es": "Hay doce meses en un año.", "example_fi": "Vuodessa on 12 kuukautta.", "gender": null },
+    { "es": "trece", "fi": "13, kolmetoista", "example_es": "El número trece da mala suerte.", "example_fi": "Numero 13 tuo huonoa onnea.", "gender": null },
+    { "es": "catorce", "fi": "14, neljätoista", "example_es": "Mi prima tiene catorce años.", "example_fi": "Serkkuni on 14-vuotias.", "gender": null },
+    { "es": "quince", "fi": "15, viisitoista", "example_es": "Quince minutos más.", "example_fi": "Vielä 15 minuuttia.", "gender": null },
+    { "es": "dieciséis", "fi": "16, kuusitoista", "example_es": "Tiene dieciséis años.", "example_fi": "Hän on 16-vuotias.", "gender": null },
+    { "es": "diecisiete", "fi": "17, seitsemäntoista", "example_es": "Cumplo diecisiete en mayo.", "example_fi": "Täytän 17 toukokuussa.", "gender": null },
+    { "es": "dieciocho", "fi": "18, kahdeksantoista", "example_es": "A los dieciocho años se vota.", "example_fi": "18-vuotiaana saa äänestää.", "gender": null },
+    { "es": "diecinueve", "fi": "19, yhdeksäntoista", "example_es": "Mi hermano tiene diecinueve años.", "example_fi": "Veljeni on 19-vuotias.", "gender": null },
+    { "es": "veinte", "fi": "20, kaksikymmentä", "example_es": "Veinte euros.", "example_fi": "20 euroa.", "gender": null },
+    { "es": "veintiuno", "fi": "21, kaksikymmentäyksi", "example_es": "Soy mayor de edad: veintiuno.", "example_fi": "Olen täysi-ikäinen: 21.", "gender": null },
+    { "es": "veintidós", "fi": "22, kaksikymmentäkaksi", "example_es": "Tengo veintidós años.", "example_fi": "Olen 22-vuotias.", "gender": null },
+    { "es": "treinta", "fi": "30, kolmekymmentä", "example_es": "Treinta días tiene septiembre.", "example_fi": "Syyskuussa on 30 päivää.", "gender": null },
+    { "es": "cuarenta", "fi": "40, neljäkymmentä", "example_es": "Mi madre tiene cuarenta años.", "example_fi": "Äitini on 40-vuotias.", "gender": null },
+    { "es": "cincuenta", "fi": "50, viisikymmentä", "example_es": "El billete cuesta cincuenta euros.", "example_fi": "Lippu maksaa 50 euroa.", "gender": null },
+    { "es": "sesenta", "fi": "60, kuusikymmentä", "example_es": "Sesenta minutos en una hora.", "example_fi": "Tunnissa on 60 minuuttia.", "gender": null },
+    { "es": "setenta", "fi": "70, seitsemänkymmentä", "example_es": "Mi abuelo tiene setenta años.", "example_fi": "Isoisäni on 70-vuotias.", "gender": null },
+    { "es": "ochenta", "fi": "80, kahdeksankymmentä", "example_es": "Mi abuela cumple ochenta años.", "example_fi": "Isoäitini täyttää 80.", "gender": null },
+    { "es": "noventa", "fi": "90, yhdeksänkymmentä", "example_es": "Vive hasta los noventa.", "example_fi": "Hän elää yli 90-vuotiaaksi.", "gender": null },
+    { "es": "cien", "fi": "100, sata (ennen substantiivia tai yksinään)", "example_es": "Cien euros, por favor.", "example_fi": "Sata euroa, kiitos.", "gender": null },
+    { "es": "ciento", "fi": "sata (+ pienempi numero)", "example_es": "Ciento veinte alumnos.", "example_fi": "120 oppilasta.", "gender": null },
+    { "es": "mil", "fi": "1000, tuhat", "example_es": "Mil euros al mes.", "example_fi": "Tuhat euroa kuukaudessa.", "gender": null },
+    { "es": "millón", "fi": "miljoona", "example_es": "Madrid tiene tres millones de habitantes.", "example_fi": "Madridissa on kolme miljoonaa asukasta.", "gender": "m" },
+    { "es": "año", "fi": "vuosi", "example_es": "Tengo dieciséis años.", "example_fi": "Olen 16-vuotias.", "gender": "m" },
+    { "es": "edad", "fi": "ikä", "example_es": "¿Cuál es tu edad?", "example_fi": "Mikä on ikäsi?", "gender": "f" },
+    { "es": "joven", "fi": "nuori", "example_es": "Es muy joven.", "example_fi": "Hän on hyvin nuori.", "gender": null },
+    { "es": "mayor", "fi": "vanhempi, isompi", "example_es": "Mi hermano mayor estudia medicina.", "example_fi": "Isoveljeni opiskelee lääketiedettä.", "gender": null },
+    { "es": "menor", "fi": "nuorempi, pienempi", "example_es": "Mi hermana menor tiene diez años.", "example_fi": "Pikkusiskoni on 10-vuotias.", "gender": null },
+    { "es": "cumpleaños", "fi": "syntymäpäivä", "example_es": "¡Feliz cumpleaños!", "example_fi": "Hyvää syntymäpäivää!", "gender": "m" },
+    { "es": "nacer", "fi": "syntyä", "example_es": "Nací en 2008.", "example_fi": "Synnyin vuonna 2008.", "gender": null },
+    { "es": "cumplir", "fi": "täyttää (vuosia)", "example_es": "Cumplo dieciocho en julio.", "example_fi": "Täytän 18 heinäkuussa.", "gender": null },
+    { "es": "tener años", "fi": "olla X-vuotias", "example_es": "Tengo diecisiete años.", "example_fi": "Olen 17-vuotias.", "gender": null }
+  ],
+  "side_panel": {
+    "tabs": [
+      {
+        "id": "vocab",
+        "title": "Sanasto",
+        "content_md": "## Numerot 0–15\n\n- **0** cero · **1** uno · **2** dos · **3** tres · **4** cuatro · **5** cinco\n- **6** seis · **7** siete · **8** ocho · **9** nueve · **10** diez\n- **11** once · **12** doce · **13** trece · **14** catorce · **15** quince\n\n## Numerot 16–29 — yksi sana\n\n- **16** dieciséis · **17** diecisiete · **18** dieciocho · **19** diecinueve\n- **20** veinte · **21** veintiuno · **22** veintidós · **23** veintitrés\n- **24** veinticuatro · **25** veinticinco · **26** veintiséis\n- **27** veintisiete · **28** veintiocho · **29** veintinueve\n\n## Kymmenet 30–90\n\n- **30** treinta · **40** cuarenta · **50** cincuenta\n- **60** sesenta · **70** setenta · **80** ochenta · **90** noventa\n- 31 = **treinta y uno**, 45 = **cuarenta y cinco**, 78 = **setenta y ocho**\n\n## Sata, tuhat, miljoona\n\n- **cien** — 100 (ennen substantiivia / yksinään): *cien euros*\n- **ciento** — sata + pienempi: *ciento veinte*\n- **mil** — 1000, ei muutu: *dos mil ocho* (2008)\n- **millón** — miljoona: *tres millones de personas*\n\n## Ikä-sanasto\n\n- **año / años** — vuosi / -vuotias\n- **edad** — ikä\n- **joven** — nuori\n- **mayor** — vanhempi, isompi\n- **menor** — nuorempi, pienempi\n- **cumpleaños** — syntymäpäivä\n- **nacer** — syntyä\n- **cumplir** — täyttää (vuosia)\n\n## Ikä-rakenne\n\n- **tener + numero + años** — *Tengo 17 años.*\n- ¡EI! *soy 17 años* — väärin\n- ¿**Cuántos años tienes**? — Kuinka vanha olet?"
+      },
+      {
+        "id": "tips",
+        "title": "YO-vinkki",
+        "content_md": "## YO-koe — kuullun ymmärtäminen\n\nNumerot tulevat YO-kokeessa joka vuosi: ikä, hinta, kellonaika, puhelinnumero, vuosiluku. Kuullussa kaksi pahinta hämäystä:\n\n- **trece (13) ↔ tres (3)** — sama juuri, eri tavu\n- **catorce (14) ↔ cuatro (4) ↔ cuarenta (40)** — kuuntele tavupaino\n- **quince (15) ↔ cinco (5) ↔ cincuenta (50)** — sama logiikka\n- **veinte (20) ↔ veintiuno (21) ↔ treinta (30)** — kymmenten erottelu\n\n## Ikä — TENER, ei SER\n\nYO-kokeen yleisin numero-ansa kirjoittamisessa: oppilas kirjoittaa *soy 17 años* tai *estoy 17 años*. **Oikein: tengo 17 años.** Ikä on espanjassa omistus, ei identiteetti.\n\n## Puhelinnumerot\n\nEspanjassa puhelinnumerot luetaan yleensä parina: 91 234 56 78 = *noventa y uno · doscientos treinta y cuatro · cincuenta y seis · setenta y ocho*. YO-kuullussa numero kuitenkin yleensä luetaan numero kerrallaan.\n\n## Päivämäärä YO-kirjoituksessa\n\n*Hoy es el dos de mayo de dos mil veintiséis* — espanjaksi ei käytetä järjestyslukua kuukauden päivissä (paitsi 1. = primero, valinnainen).\n\n## cien vai ciento?\n\n- *cien euros* (yksinään tai ennen subst. → cien)\n- *ciento cincuenta euros* (sata + pienempi → ciento)"
+      }
+    ]
+  }
+}

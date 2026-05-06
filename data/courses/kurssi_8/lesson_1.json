@@ -5,95 +5,274 @@
     "lesson_type": "grammar",
     "level": "E",
     "title": "Subjunktiivi imperfekti — muodostus",
-    "description": "PLACEHOLDER — sisältö generoidaan myöhemmin PROMPT_GENERATE_LESSON.md:llä",
-    "yo_relevance": "PLACEHOLDER",
-    "estimated_minutes_median": 12
+    "description": "E-tason kielioppioppitunti: subjunktiivin imperfektin muodostus kaikille persoonille. Sääntö: preteriti ellos -muoto miinus -ron + päätteet -ra/-se. Kattaa säännölliset ja yleisimmät epäsäännölliset verbit.",
+    "yo_relevance": "Subjunktiivin imperfekti on YO-kokeen keskeinen rakenne: se esiintyy si-lauseissa (tyyppi 2 ja 3), aunque-lauseissa, como si -rakenteessa sekä epäsuorassa kerronnassa. E-tason kirjoitustehtävässä rakenne erottaa ylimmät arvosanat.",
+    "estimated_minutes_median": 14
   },
   "teaching": {
-    "intro_md": "PLACEHOLDER — opetussisältö generoidaan myöhemmin",
+    "intro_md": "# Subjunktiivin imperfekti — muodostus\n\nSubjunktiivin imperfekti (imperfecto de subjuntivo) on yksi E-tason tärkeimmistä rakenteista. Se toimii aina yhden säännön mukaan.\n\n## Muodostussääntö\n\n**Preteriti ellos-muoto** → poista **-ron** → lisää päätteet **-ra/-se**\n\n| Verbi | Ellos preteriti | Kanta | yo (imperfekti subj.) |\n|---|---|---|---|\n| hablar | hablaron | habla- | **hablara** |\n| comer | comieron | comie- | **comiera** |\n| vivir | vivieron | vivie- | **viviera** |\n| tener | tuvieron | tuvie- | **tuviera** |\n| estar | estuvieron | estuvie- | **estuviera** |\n| ser / ir | fueron | fue- | **fuera** |\n| hacer | hicieron | hicie- | **hiciera** |\n| poder | pudieron | pudie- | **pudiera** |\n| saber | supieron | supie- | **supiera** |\n| decir | dijeron | dije- | **dijera** |\n| venir | vinieron | vinie- | **viniera** |\n| querer | quisieron | quisie- | **quisiera** |\n\n## Kaikki persoonat (tuviera-esimerkki)\n\n| Pronomini | Muoto |\n|---|---|\n| yo | tuviera |\n| tú | tuvieras |\n| él/ella | tuviera |\n| nosotros | **tuviéramos** |\n| vosotros | tuvierais |\n| ellos | tuvieran |\n\nHuomaa: nosotros-muodossa aksentti!\n\n## Käyttötilanteet\n\n1. **Si-lause tyyppi 2:** *Si tuviera tiempo, estudiaría más.*\n2. **Como si:** *Habla como si lo supiera todo.*\n3. **Aunque + epätodellinen:** *Aunque tuviera dinero, no lo gastaría así.*\n4. **Epäsuora kerronta — aikamuotojen siirto:** *Dijo que viniera.* (hän sanoi minun tulevan)\n\n## I do — We do — You do\n\n**Opettajan esimerkki:** tener → tuvieron → tuvie- → tuviera/tuvieras/tuviera/tuviéramos/tuvierais/tuvieran\n\n**Yhdessä:** poder → pudieron → pudie- → pudiera...\n\n**Nyt sinä:** hacer → ?",
     "key_points": [
-      "PLACEHOLDER"
+      "Sääntö: ellos preteriti miinus -ron + -ra. Esim. tuvieron → tuviera. Sama sääntö kaikille verbeille.",
+      "Nosotros-muodossa aksentti: tuviéramos, fuéramos, comiéramos.",
+      "Ser ja ir taipuvat samoin: fueron → fuera. Konteksti erottaa merkityksen.",
+      "Subj. imperfekti ≠ preesens subj. Distractori: tenga (preesens subj.) vs. tuviera (imperfekti subj.).",
+      "Käyttö: si-lauseet tyyppi 2 ja 3, como si, aunque epätodellinen, epäsuoran kerronnan aikamuotojen siirto."
     ]
   },
   "phases": [
     {
-      "phase_id": "p1-placeholder",
+      "phase_id": "p1-recognition-mc",
       "phase_type": "recognition_mc",
-      "title": "PLACEHOLDER",
-      "instruction": "PLACEHOLDER",
-      "mastery_threshold": {
-        "I": 0.5,
-        "A": 0.6,
-        "B": 0.65,
-        "C": 0.7,
-        "M": 0.75,
-        "E": 0.85,
-        "L": 0.9
-      },
+      "title": "Tunnista — subjunktiivin imperfektimuoto",
+      "instruction": "Valitse oikea subjunktiivin imperfektimuoto.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "mc", "stem": "tener → ellos tuvieron → yo (subj. imp.)", "choices": ["tenga", "tuviera", "tendría", "tenía"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "tuviera = tener, subjunktiivin imperfekti. tenga = preesens subjunktiivi, tendría = konditionaali, tenía = imperfekti." },
+        { "item_type": "mc", "stem": "ser → ellos fueron → nosotros (subj. imp.)", "choices": ["seamos", "éramos", "fuéramos", "fuimos"], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "fuéramos = ser, subj. imperfekti nosotros. Muista aksentti! seamos = preesens subj., éramos = imperfekti indikatiiivi." },
+        { "item_type": "mc", "stem": "poder → ellos pudieron → él (subj. imp.)", "choices": ["puede", "podría", "pueda", "pudiera"], "correct_index": 3, "distractor_difficulty": "hard", "explanation": "pudiera = poder, subjunktiivin imperfekti. puede = preesens indikatiiivi, podría = konditionaali, pueda = preesens subj." },
+        { "item_type": "mc", "stem": "hacer → ellos hicieron → tú (subj. imp.)", "choices": ["hagas", "harías", "hicieras", "hacías"], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "hicieras = hacer, subj. imperfekti. hagas = preesens subj., harías = konditionaali, hacías = imperfekti indikatiiivi." },
+        { "item_type": "mc", "stem": "hablar → ellos hablaron → ellos (subj. imp.)", "choices": ["hablen", "hablaran", "hablarían", "hablaban"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "hablaran = hablar, subj. imperfekti. hablen = preesens subj., hablarían = konditionaali, hablaban = imperfekti indikatiiivi." },
+        { "item_type": "mc", "stem": "venir → ellos vinieron → yo (subj. imp.)", "choices": ["venga", "vendría", "venía", "viniera"], "correct_index": 3, "distractor_difficulty": "hard", "explanation": "viniera = venir, subj. imperfekti. venga = preesens subj., vendría = konditionaali." },
+        { "item_type": "mc", "stem": "estar → ellos estuvieron → vosotros (subj. imp.)", "choices": ["estéis", "estuvierais", "estaríais", "estabais"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "estuvierais = estar, subj. imperfekti vosotros. estéis = preesens subj." },
+        { "item_type": "mc", "stem": "saber → ellos supieron → ella (subj. imp.)", "choices": ["sepa", "sabría", "supiera", "sabía"], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "supiera = saber, subj. imperfekti. sepa = preesens subj., sabría = konditionaali." },
+        { "item_type": "mc", "stem": "querer → ellos quisieron → nosotros (subj. imp.)", "choices": ["queramos", "quisiéramos", "querríamos", "queríamos"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "quisiéramos = querer, subj. imperfekti nosotros (aksentti!). queramos = preesens subj., querríamos = konditionaali." },
+        { "item_type": "mc", "stem": "decir → ellos dijeron → yo (subj. imp.)", "choices": ["diga", "dijera", "diría", "decía"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "dijera = decir, subj. imperfekti. diga = preesens subj., diría = konditionaali." },
+        { "item_type": "mc", "stem": "comer → ellos comieron → tú (subj. imp.)", "choices": ["comas", "comerías", "comieras", "comías"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "comieras = comer, subj. imperfekti. comas = preesens subj., comerías = konditionaali." },
+        { "item_type": "mc", "stem": "ir → ellos fueron → yo (subj. imp.) — HUOM: ser ja ir samoin!", "choices": ["vaya", "iría", "fuera", "iba"], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "fuera = ir (ja ser), subj. imperfekti. vaya = ir, preesens subj., iría = konditionaali. Ser ja ir taipuvat samoin imperfektissä." },
+        { "item_type": "mc", "stem": "vivir → ellos vivieron → ellos (subj. imp.)", "choices": ["vivan", "vivieran", "vivirían", "vivían"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "vivieran = vivir, subj. imperfekti. vivan = preesens subj." }
+      ]
+    },
+    {
+      "phase_id": "p2-recognition-match",
+      "phase_type": "recognition_match",
+      "title": "Yhdistä — ellos-muoto ja imperfektisubjunktiivi",
+      "instruction": "Yhdistä ellos-preteriti ja vastaava yo-subjunktiivi imperfekti.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I"],
       "items": [
         {
-          "item_type": "mc",
-          "stem": "PLACEHOLDER",
-          "choices": [
-            "a",
-            "b",
-            "c",
-            "d"
-          ],
-          "correct_index": 0,
-          "explanation": "PLACEHOLDER"
+          "item_type": "match",
+          "left_label": "Ellos preteriti",
+          "right_label": "Yo subj. imperfekti",
+          "pairs": [
+            { "left": "tuvieron", "right": "tuviera" },
+            { "left": "fueron", "right": "fuera" },
+            { "left": "hicieron", "right": "hiciera" },
+            { "left": "pudieron", "right": "pudiera" },
+            { "left": "supieron", "right": "supiera" },
+            { "left": "dijeron", "right": "dijera" },
+            { "left": "vinieron", "right": "viniera" },
+            { "left": "quisieron", "right": "quisiera" }
+          ]
         },
         {
-          "item_type": "mc",
-          "stem": "PLACEHOLDER",
-          "choices": [
-            "a",
-            "b",
-            "c",
-            "d"
-          ],
-          "correct_index": 0,
-          "explanation": "PLACEHOLDER"
+          "item_type": "match",
+          "left_label": "Nosotros-muoto (subj. imp.)",
+          "right_label": "Verbi",
+          "pairs": [
+            { "left": "tuviéramos", "right": "tener" },
+            { "left": "fuéramos", "right": "ser / ir" },
+            { "left": "pudiéramos", "right": "poder" },
+            { "left": "hiciéramos", "right": "hacer" },
+            { "left": "comiéramos", "right": "comer" },
+            { "left": "viviéramos", "right": "vivir" }
+          ]
         },
         {
-          "item_type": "mc",
-          "stem": "PLACEHOLDER",
-          "choices": [
-            "a",
-            "b",
-            "c",
-            "d"
-          ],
-          "correct_index": 0,
-          "explanation": "PLACEHOLDER"
-        },
-        {
-          "item_type": "mc",
-          "stem": "PLACEHOLDER",
-          "choices": [
-            "a",
-            "b",
-            "c",
-            "d"
-          ],
-          "correct_index": 0,
-          "explanation": "PLACEHOLDER"
+          "item_type": "match",
+          "left_label": "Si-lause",
+          "right_label": "Suomeksi",
+          "pairs": [
+            { "left": "Si tuviera más dinero...", "right": "Jos minulla olisi enemmän rahaa..." },
+            { "left": "Si fuera más joven...", "right": "Jos olisin nuorempi..." },
+            { "left": "Si pudiera elegir...", "right": "Jos voisin valita..." },
+            { "left": "Si supiera la respuesta...", "right": "Jos tietäisin vastauksen..." },
+            { "left": "Si viviéramos en España...", "right": "Jos asuisimme Espanjassa..." }
+          ]
         }
+      ]
+    },
+    {
+      "phase_id": "p3-recall-es-fi",
+      "phase_type": "recall_typed_es_to_fi",
+      "title": "Kirjoita imperfektisubjunktiivimuoto",
+      "instruction": "Kirjoita oikea subjunktiivin imperfektimuoto (yo, ellei toisin mainita).",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "tener → ellos tuvieron → yo (subj. imp.)", "accept": ["tuviera"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "estar → ellos estuvieron → ella (subj. imp.)", "accept": ["estuviera"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "ser → ellos fueron → nosotros (subj. imp.)", "accept": ["fuéramos", "fueramos"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "poder → ellos pudieron → tú (subj. imp.)", "accept": ["pudieras"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "hacer → ellos hicieron → yo (subj. imp.)", "accept": ["hiciera"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "hablar → ellos hablaron → ellos (subj. imp.)", "accept": ["hablaran"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "saber → ellos supieron → él (subj. imp.)", "accept": ["supiera"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "venir → ellos vinieron → yo (subj. imp.)", "accept": ["viniera"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "querer → ellos quisieron → nosotros (subj. imp.)", "accept": ["quisiéramos", "quisieramos"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "decir → ellos dijeron → tú (subj. imp.)", "accept": ["dijeras"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "ir → ellos fueron → yo (subj. imp.)", "accept": ["fuera"] }
+      ]
+    },
+    {
+      "phase_id": "p4-recall-fi-es",
+      "phase_type": "recall_typed_fi_to_es",
+      "title": "Käännä espanjaksi — si-lauseen muoto",
+      "instruction": "Kirjoita espanjankielinen si-lause. Käytä subjunktiivin imperfektiä.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Jos minulla olisi enemmän aikaa... (tener, yo)", "accept": ["si tuviera más tiempo", "si tuviera mas tiempo"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Jos hän olisi rikas... (ser, ella)", "accept": ["si fuera rica", "si fuera rico"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Jos voisimme auttaa... (poder, nosotros)", "accept": ["si pudiéramos ayudar", "si pudieramos ayudar"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Jos he tietäisivät totuuden... (saber, ellos)", "accept": ["si supieran la verdad"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Jos tekisit työn... (hacer, tú)", "accept": ["si hicieras el trabajo"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Jos haluaisin mennä... (querer, yo)", "accept": ["si quisiera ir"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Jos hänellä olisi auto... (tener, él)", "accept": ["si tuviera un coche", "si tuviera coche"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Jos sanoisimme totuuden... (decir, nosotros)", "accept": ["si dijéramos la verdad", "si dijeramos la verdad"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Jos he voisivat valita... (poder, ellos)", "accept": ["si pudieran elegir"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Jos tulisit ajoissa... (venir, tú)", "accept": ["si vinieras a tiempo"] }
+      ]
+    },
+    {
+      "phase_id": "p5-application-gap-helppo",
+      "phase_type": "application_gap_fill",
+      "title": "Lauseen täydennys — si-lauseet perustaso",
+      "instruction": "Täydennä lause oikealla subjunktiivin imperfektimuodolla. Sanapankki auttaa.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Si yo {1} más dinero, lo donaría a una ONG. (tener)", "answers": [["tuviera"]], "word_bank": ["tuviera", "tenga", "tendría"] },
+        { "item_type": "gap_fill", "sentence_template": "Si ella {1} al presidente, le haría muchas preguntas. (poder)", "answers": [["pudiera"]], "word_bank": ["pudiera", "pueda", "podría"] },
+        { "item_type": "gap_fill", "sentence_template": "Si nosotros {1} en España, hablaríamos español todos los días. (vivir)", "answers": [["viviéramos", "vivieramos"]], "word_bank": ["viviéramos", "vivamos", "viviríamos"] },
+        { "item_type": "gap_fill", "sentence_template": "Si él {1} la solución, la compartiría con todos. (saber)", "answers": [["supiera"]], "word_bank": ["supiera", "sepa", "sabría"] },
+        { "item_type": "gap_fill", "sentence_template": "Si los estudiantes {1} más, sacarían mejores notas. (estudiar)", "answers": [["estudiaran"]], "word_bank": ["estudiaran", "estudien", "estudiarían"] },
+        { "item_type": "gap_fill", "sentence_template": "Si {1} posible volver atrás en el tiempo, ¿qué cambiarías? (ser)", "answers": [["fuera"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Si yo {1} presidenta, invertiría más en sanidad. (ser)", "answers": [["fuera"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Si ellos {1} la verdad, cambiarían de opinión. (conocer)", "answers": [["conocieran"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Si tú {1} lo que sé yo, no dirías eso. (saber)", "answers": [["supieras"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Si el gobierno {1} más en educación, los resultados mejorarían. (invertir)", "answers": [["invirtiera"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p6-application-gap-vaativa",
+      "phase_type": "application_gap_fill",
+      "title": "Lauseen täydennys — vaativa (kaikki kontekstit)",
+      "instruction": "Täydennä ilman sanapankkia. Lauseet pidentyvät — tunnista oikea muoto kontekstista.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Habla como si lo {1} todo, pero en realidad no tiene ni idea. (saber)", "answers": [["supiera"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Aunque {1} todo el dinero del mundo, no sería feliz sin su familia. (tener)", "answers": [["tuviera"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "El director dijo que los estudiantes {1} los resultados mañana. (recibir)", "answers": [["recibirían", "recibieran"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Si las empresas {1} más responsables, el medioambiente no estaría tan deteriorado. (ser)", "answers": [["fueran"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Me pidió que le {1} la respuesta antes del viernes. (dar)", "answers": [["diera"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Si yo {1} en tu lugar, no lo dudaría ni un momento. (estar)", "answers": [["estuviera"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "No creo que {1} posible terminar el proyecto sin más recursos. (ser — impersonal)", "answers": [["fuera"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Si nosotros {1} más temprano, habríamos llegado a tiempo. (salir)", "answers": [["hubiéramos salido"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Actuaba como si {1} el dueño del lugar, aunque era simplemente un invitado. (ser)", "answers": [["fuera"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "El profesor nos recomendó que {1} el libro antes del examen. (leer)", "answers": [["leyéramos", "leyeramos"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p7-application-sentence-build",
+      "phase_type": "application_sentence_build",
+      "title": "Lauseiden rakentelua — si-lauseet ja kontekstit",
+      "instruction": "Käännä koko lause espanjaksi. Käytä subjunktiivin imperfektiä oikein.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.60, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.92 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Jos minulla olisi enemmän aikaa, lukisin enemmän kirjoja.", "accept": ["si tuviera más tiempo, leería más libros", "si tuviera mas tiempo, leeria mas libros"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Hän puhuu kuin tietäisi kaiken, vaikka ei tiedä mitään.", "accept": ["habla como si lo supiera todo aunque no sabe nada", "habla como si supiera todo aunque en realidad no sabe nada"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Vaikka hänellä olisi kaikki raha, ei hän silti olisi onnellinen.", "accept": ["aunque tuviera todo el dinero no sería feliz", "aunque tuviera todo el dinero del mundo no sería feliz"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Jos voisimme muuttaa yhden lain, valitsisimme ympäristölain.", "accept": ["si pudiéramos cambiar una ley, elegiríamos la ley ambiental", "si pudieramos cambiar una ley elegiriamos la ley medioambiental"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Jos hallitus toimisi rohkeammin, ilmastotilanne paranisi.", "accept": ["si el gobierno actuara con más valentía, la situación climática mejoraría", "si el gobierno actuara más decididamente la situacion climatica mejoraria"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Hän pyysi minua tulemaan ajoissa kokoukseen.", "accept": ["me pidió que viniera a tiempo a la reunión", "me pidió que llegara a tiempo a la reunión"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Jos he tietäisivät totuuden, kaikki muuttuisi.", "accept": ["si supieran la verdad, todo cambiaría", "si ellos supieran la verdad todo cambiaría"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Vaikka olisi mahdollista, en silti tekisi sitä.", "accept": ["aunque fuera posible, no lo haría", "aunque fuera posible no lo haría de todas formas"] }
+      ]
+    },
+    {
+      "phase_id": "p8-synthesis-translate",
+      "phase_type": "synthesis_translate",
+      "title": "YO-tason käännös — subj. imperfekti",
+      "instruction": "Käännä koko lause espanjaksi. Pidemmät lauseet, useita rakenteita.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.60, "C": 0.65, "M": 0.75, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Jos kaikki kansalaiset äänestäisivät vaaleissa, demokratia toimisi paremmin ja poliitikot olisivat vastuullisempia.", "accept": ["si todos los ciudadanos votaran en las elecciones la democracia funcionaría mejor y los políticos serían más responsables", "si todos los ciudadanos votaran la democracia funcionaria mejor y los politicos serian mas responsables"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Vaikka minulla olisi kaikki aika maailmassa, en silti osaisi tehdä kaikkea täydellisesti.", "accept": ["aunque tuviera todo el tiempo del mundo no podría hacer todo perfectamente", "aunque tuviera todo el tiempo del mundo tampoco lograría hacerlo todo perfectamente"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Opettaja pyysi oppilaita, että he lukisivat tekstin huolellisesti ennen kuin vastaisivat kysymyksiin.", "accept": ["el profesor pidió a los alumnos que leyeran el texto cuidadosamente antes de que respondieran a las preguntas", "el profesor les pidió que leyeran el texto con cuidado antes de contestar las preguntas"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Jos yritykset noudattaisivat ympäristölakeja tarkemmin, saastuminen vähenisi huomattavasti seuraavan kymmenen vuoden aikana.", "accept": ["si las empresas cumplieran las leyes ambientales con más rigor la contaminación se reduciría considerablemente en los próximos diez años", "si las empresas respetaran más las leyes medioambientales la contaminación disminuiría notablemente en la próxima década"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Hän käyttäytyi kuin olisi ollut ainoa asiantuntija koko huoneessa, vaikka muilla oli enemmän kokemusta.", "accept": ["se comportaba como si fuera el único experto de toda la sala aunque los demás tenían más experiencia", "actuaba como si fuera el único experto de la sala a pesar de que los demás tenían más experiencia"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Jos koulutusjärjestelmä investoisi enemmän teknologiaan ja innovaatioihin, se valmisteleisi oppilaita paremmin tulevaisuuden haasteisiin.", "accept": ["si el sistema educativo invirtiera más en tecnología e innovación prepararía mejor a los alumnos para los desafíos del futuro", "si la educación invirtiera más en tecnología los estudiantes estarían mejor preparados para el futuro"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Vaikka matkustaminen olisi kallista, useimmat ihmiset silti priorisoisivat sen, koska se laajentaa maailmankuvaa.", "accept": ["aunque viajar fuera caro la mayoría de personas lo seguiría priorizando porque amplía la visión del mundo", "aunque viajar costara mucho la gente lo priorizaría igualmente porque enriquece la perspectiva del mundo"] }
+      ]
+    },
+    {
+      "phase_id": "p9-synthesis-short-writing",
+      "phase_type": "synthesis_short_writing",
+      "title": "Lyhyt kirjoitus — subjunktiivin imperfekti",
+      "instruction": "Kirjoita lyhyt teksti espanjaksi. Käytä subjunktiivin imperfektiä vähintään kolmesti.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.60, "C": 0.65, "M": 0.70, "E": 0.80, "L": 0.90 },
+      "skip_for_targets": ["I", "A", "B", "C", "M"],
+      "items": [
+        { "item_type": "writing", "prompt": "Kirjoita 6–8 lausetta: mitä tekisit jos voisit muuttaa yhden asian Suomessa tai maailmassa? Käytä si-lauseita tyyppi 2 (si tuviera, si pudiera, si fuera) ja konditionaalia. Perustele valintasi.", "min_words": 55, "max_words": 110, "rubric_focus": ["communication", "structure", "vocab"] },
+        { "item_type": "writing", "prompt": "Kirjoita 6–8 lausetta: kuvaile hypoteettista tilannetta — mitä tapahtuisi jos kaikki maailman maat panostaisivat enemmän koulutukseen? Käytä si-lauseita ja como si -rakennetta vähintään kerran.", "min_words": 60, "max_words": 115, "rubric_focus": ["communication", "vocab", "structure"] },
+        { "item_type": "writing", "prompt": "YO-tyylinen vastaus: '¿Qué harías si pudieras cambiar el sistema educativo de tu país?' Kirjoita 7–9 lausetta. Käytä: (1) vähintään kolme si-lausetta tyyppi 2, (2) aunque + subj. imperfekti kerran, (3) Como si -rakenne kerran.", "min_words": 65, "max_words": 120, "rubric_focus": ["communication", "structure", "vocab", "overall"] }
+      ]
+    },
+    {
+      "phase_id": "p10-cumulative-review",
+      "phase_type": "recognition_mc",
+      "title": "Kertaus — subj. imperfekti vs. muut muodot",
+      "instruction": "Valitse oikea muoto. Konteksti ratkaisee — preesens subj. vai imperfekti subj.?",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "mc", "stem": "Es importante que los estudiantes _______ todos los días. (estudiar)", "choices": ["estudien", "estudiaran", "estudiarían", "estudiaban"], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "estudien = preesens subjunktiivi. 'Es importante que' + preesens subj. (ei si-lause). estudiaran olisi si-lauseen imperfektisubjunktiivi." },
+        { "item_type": "mc", "stem": "Si los jóvenes _______ más en política, la democracia sería más fuerte.", "choices": ["participen", "participaran", "participarán", "participaban"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "participaran = imperfekti subjunktiivi. Si-lause tyyppi 2: si + subj. imp. + konditionaali. participen = preesens subj. — EI si-lauseessa tyyppi 2." },
+        { "item_type": "mc", "stem": "Ojalá _______ mañana buen tiempo para el evento al aire libre. (hacer)", "choices": ["hiciera", "haga", "haría", "hizo"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "haga = preesens subjunktiivi. Ojalá + preesens subj. = toivo joka on vielä mahdollinen. Ojalá + subj. imperfekti (hiciera) = toivo lähes mahdoton." },
+        { "item_type": "mc", "stem": "Aunque _______ toda la suerte del mundo, el éxito requiere esfuerzo. (tener)", "choices": ["tenga", "tuviera", "tendría", "tiene"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "tuviera = imperfekti subj. Aunque + subj. imperfekti = epätodellinen vastaväite ('vaikka — mitä sitten'). aunque tuviera = vaikka sinulla olisikin." },
+        { "item_type": "mc", "stem": "Me pidió que _______ el informe antes del lunes. (entregar — yo)", "choices": ["entregue", "entregara", "entregaría", "entregaré"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "entregara = imperfekti subj. Epäsuora kerronta: pedir que + subj. imperfekti (pääverbi menneessä: pidió). entregue = preesens subj." },
+        { "item_type": "mc", "stem": "Habla como si _______ la única persona inteligente de la sala. (ser)", "choices": ["sea", "fuera", "sería", "es"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "fuera = imperfekti subj. como si + imperfekti subj. = kuvitteellinen vertaus. sea = preesens subj. — EI como si -rakenteessa." },
+        { "item_type": "mc", "stem": "Espero que _______ un trabajo interesante cuando termine los estudios. (encontrar)", "choices": ["encontrara", "encuentre", "encontraría", "encuentra"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "encuentre = preesens subj. Esperar que + preesens subj. = toivo tulevaisuudesta (pääverbi preesenssissä). encontrara olisi oikein jos pääverbi olisi menneessä." },
+        { "item_type": "mc", "stem": "Si _______ (nosotros) más recursos, el proyecto sería un éxito seguro. (tener)", "choices": ["tengamos", "tuviéramos", "tendríamos", "teníamos"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "tuviéramos = tener, imperfekti subj. nosotros (muista aksentti!). tengamos = preesens subj. — EI si-lauseessa tyyppi 2." },
+        { "item_type": "mc", "stem": "El director nos dijo que _______ más atentos durante la presentación. (estar — nosotros)", "choices": ["estemos", "estuviéramos", "estaríamos", "estábamos"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "estuviéramos = imperfekti subj. Epäsuoran kerronnan aikamuodon siirto: dijo que + imperfekti subj. (koska dijo on menneessä)." },
+        { "item_type": "mc", "stem": "Si la tecnología _______ más avanzada, muchos problemas actuales ya estarían resueltos.", "choices": ["sea", "es", "fuera", "será"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "fuera = ser, imperfekti subj. Si-lause tyyppi 2 — epätodellinen nykyehto." }
       ]
     }
   ],
   "vocab": [
-    {
-      "es": "PLACEHOLDER",
-      "fi": "PLACEHOLDER"
-    }
+    { "es": "el subjuntivo imperfecto", "fi": "subjunktiivin imperfekti", "example_es": "El subjuntivo imperfecto se forma desde la tercera persona del plural del pretérito.", "example_fi": "Subjunktiivin imperfekti muodostetaan preteritin ellos-muodosta.", "gender": "m" },
+    { "es": "tuviera", "fi": "minulla olisi (tener, subj. imp. yo)", "example_es": "Si tuviera más tiempo, leería más.", "example_fi": "Jos minulla olisi enemmän aikaa, lukisin enemmän.", "gender": null },
+    { "es": "fuera", "fi": "olisin / menisi (ser/ir, subj. imp. yo)", "example_es": "Si fuera presidente, cambiaría muchas cosas.", "example_fi": "Jos olisin presidentti, muuttaisin monia asioita.", "gender": null },
+    { "es": "estuviera", "fi": "olisin jossakin (estar, subj. imp. yo)", "example_es": "Si estuviera en Madrid, visitaría el Prado.", "example_fi": "Jos olisin Madridissa, vierailisi Pradolla.", "gender": null },
+    { "es": "pudiera", "fi": "voisin (poder, subj. imp. yo)", "example_es": "Si pudiera volar, viajaría a todas partes.", "example_fi": "Jos voisin lentää, matkustaisin kaikkialle.", "gender": null },
+    { "es": "hiciera", "fi": "tekisin (hacer, subj. imp. yo)", "example_es": "Si hiciera buen tiempo, saldríamos.", "example_fi": "Jos olisi hyvä sää, lähtisimme ulos.", "gender": null },
+    { "es": "supiera", "fi": "tietäisin (saber, subj. imp. yo)", "example_es": "Si supiera la respuesta, te la diría.", "example_fi": "Jos tietäisin vastauksen, kertoisin sen sinulle.", "gender": null },
+    { "es": "dijera", "fi": "sanoisin (decir, subj. imp. yo)", "example_es": "Me pidió que le dijera la verdad.", "example_fi": "Hän pyysi minua kertomaan hänelle totuuden.", "gender": null },
+    { "es": "viniera", "fi": "tulisin (venir, subj. imp. yo)", "example_es": "Quería que yo viniera a la reunión.", "example_fi": "Hän halusi minun tulevan kokoukseen.", "gender": null },
+    { "es": "quisiera", "fi": "haluaisin (querer, subj. imp. yo)", "example_es": "Si quisiera irme, lo haría.", "example_fi": "Jos haluaisin lähteä, tekisin sen.", "gender": null },
+    { "es": "tuviéramos", "fi": "meillä olisi (tener, subj. imp. nosotros)", "example_es": "Si tuviéramos más recursos, podríamos hacer más.", "example_fi": "Jos meillä olisi enemmän resursseja, voisimme tehdä enemmän.", "gender": null },
+    { "es": "fuéramos", "fi": "olisimme / menisimme (ser/ir, subj. imp. nosotros)", "example_es": "Si fuéramos al cine, veríamos esa película.", "example_fi": "Jos menisimme elokuviin, näkisimme sen elokuvan.", "gender": null },
+    { "es": "como si", "fi": "kuin jos, ikään kuin", "example_es": "Habla como si lo supiera todo.", "example_fi": "Hän puhuu ikään kuin tietäisi kaiken.", "gender": null },
+    { "es": "aunque + subj. imp.", "fi": "vaikka (epätodellinen vastaväite)", "example_es": "Aunque tuviera todo el dinero, no lo gastaría así.", "example_fi": "Vaikka minulla olisi kaikki raha, en käyttäisi sitä noin.", "gender": null },
+    { "es": "el estilo indirecto", "fi": "epäsuora kerronta", "example_es": "Dijo que viniera → hän sanoi minun tulevan.", "example_fi": "Epäsuorassa kerronnassa preesens subj. muuttuu imperfekti subj.:ksi.", "gender": "m" },
+    { "es": "invertir en", "fi": "investoida johonkin", "example_es": "El gobierno debería invertir más en educación.", "example_fi": "Hallituksen pitäisi investoida enemmän koulutukseen.", "gender": null },
+    { "es": "actuar", "fi": "toimia, käyttäytyä", "example_es": "Es necesario actuar con responsabilidad.", "example_fi": "On tarpeen toimia vastuullisesti.", "gender": null }
   ],
   "side_panel": {
     "tabs": [
       {
-        "id": "vocab",
-        "title": "Sanasto",
-        "content_md": "PLACEHOLDER"
+        "id": "grammar",
+        "title": "Muodostus",
+        "content_md": "## Subjunktiivin imperfekti — sääntö\n\n**Ellos preteriti** → poista **-ron** → lisää **-ra**\n\n| Verbi | Ellos | Yo subj. imp. |\n|---|---|---|\n| tener | tuvieron | **tuviera** |\n| estar | estuvieron | **estuviera** |\n| ser/ir | fueron | **fuera** |\n| hacer | hicieron | **hiciera** |\n| poder | pudieron | **pudiera** |\n| saber | supieron | **supiera** |\n| decir | dijeron | **dijera** |\n| venir | vinieron | **viniera** |\n| querer | quisieron | **quisiera** |\n| hablar | hablaron | **hablara** |\n| comer | comieron | **comiera** |\n\n## Kaikki persoonat (tuviera)\n\n- yo **tuviera**\n- tú **tuvieras**\n- él/ella **tuviera**\n- nosotros **tuviéramos** ← aksentti!\n- vosotros **tuvierais**\n- ellos **tuvieran**\n\n## Käyttötilanteet\n\n- **Si + subj. imp. + konditionaali** (tyyppi 2)\n- **Como si** + subj. imp.\n- **Aunque** + subj. imp. (epätodellinen)\n- **Epäsuora kerronta** (pääverbi menneessä)"
+      },
+      {
+        "id": "tips",
+        "title": "YO-vinkki",
+        "content_md": "## Subjunktiivin imperfekti YO-kokeessa\n\nSubjunktiivin imperfekti erottaa E- ja L-tason vastaukset M-tasosta. Se esiintyy:\n\n- **Si-lauseissa tyyppi 2:** *Si tuviera tiempo, estudiaría más.*\n- **Como si:** *Habla como si lo supiera todo.*\n- **Aunque:** *Aunque fuera rico, no lo gastaría así.*\n- **Epäsuora kerronta:** *Me dijo que viniera.* (pääverbi menneessä → subj. imp.)\n\n## Yleisimmät virheet\n\n✗ *Si **tenga** tiempo...* → preesens subj. EI si-lauseessa\n✓ *Si **tuviera** tiempo...*\n\n✗ *Si **sería** posible...* → konditionaali EI si:n jälkeen\n✓ *Si **fuera** posible...*\n\n## Distractori-ansa\n\nPreesens subj. (tenga, sea, esté) on läheisin distraktori — eri käyttö:\n- Es importante que (preesens) → **tenga, sea, esté**\n- Si-lause tyyppi 2 → **tuviera, fuera, estuviera**"
       }
     ]
   }

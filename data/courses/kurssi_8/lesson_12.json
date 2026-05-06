@@ -1,0 +1,288 @@
+{
+  "meta": {
+    "course_key": "kurssi_8",
+    "lesson_index": 12,
+    "lesson_type": "test",
+    "level": "E",
+    "title": "Loppukertaus + henkilökohtainen palaute",
+    "description": "Koko oppimispolun (K1–K8) loppukertaustesti — 30 kysymystä kaikista kursseista. Sisältää sanastoa, kielioppia ja kontekstuaalista ymmärrystä kaikista kurssiteemoista. Testi kartoittaa koko YO-koevalmiuden.",
+    "yo_relevance": "Tämä testi simuloi täyden YO-kokeen kattavuuden — kaikki rakenteet K1:stä K8:aan ovat edustettuina. Tulokset antavat kokonaisnäkymän siitä, mihin osa-alueisiin on vielä syytä panostaa ennen varsinaista YO-koetta.",
+    "estimated_minutes_median": 22
+  },
+  "teaching": {
+    "intro_md": "# Loppukertaus — koko oppimispolku K1–K8\n\nTämä on koko kurssin viimeinen testi. Se kattaa kaikki Kurssi 1–8:n sisällöt:\n\n**K1–K2 (I-taso):** Perussanasto, ar/er/ir-verbit, ser vs estar, peruspreesens\n\n**K3–K4 (A–B-taso):** Preteriti, imperfekti, säännölliset ja epäsäännölliset verbit, adjektiivit\n\n**K5–K6 (C-taso):** Futuuri, konditionaali, subjunktiivi preesens, ojalá, es importante que\n\n**K7 (M-taso):** Subjunktiivi syvemmin (aika- ja tarkoituskonjunktiot), pluskvamperfekti\n\n**K8 (E-taso):** Subjunktiivi imperfekti, si-lauseet tyyppi 2, como si, aunque + epätodellinen\n\nTulos antaa sinulle henkilökohtaisen palautteen siitä, millä osa-alueilla olet vahva ja mihin kannattaa vielä panostaa ennen YO-koetta.",
+    "key_points": [
+      "Testi kattaa koko polun K1–K8 — laajin yksittäinen testi kursseilla",
+      "30 kysymystä — vaihtelee sanastosta kielioppirakenteiden soveltamiseen",
+      "Lue selitykset virheistä — ne osoittavat mihin osa-alueisiin panostaa"
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1-test",
+      "phase_type": "recognition_mc",
+      "title": "Loppukertaus — K1–K8 (30 kysymystä)",
+      "instruction": "Valitse oikea vaihtoehto. 30 kysymystä — koko oppimispolku K1–K8.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": [],
+      "items": [
+        {
+          "item_type": "mc",
+          "stem": "la familia — K1: mikä ei kuulu perheeseen?",
+          "choices": ["el hermano", "la abuela", "el vecino", "el sobrino"],
+          "correct_index": 2,
+          "distractor_difficulty": "easy",
+          "explanation": "el vecino = naapuri — ei perheenjäsen. el hermano = veli, la abuela = isoäiti, el sobrino = veljenpoika/sisarenpoika."
+        },
+        {
+          "item_type": "mc",
+          "stem": "hablar — yo — preesens (K1-K2)",
+          "choices": ["hablas", "hablo", "hablamos", "habláis"],
+          "correct_index": 1,
+          "distractor_difficulty": "easy",
+          "explanation": "hablo = hablar, yo, preesens. -ar verbeillä: yo → -o. hablas = tú, hablamos = nosotros."
+        },
+        {
+          "item_type": "mc",
+          "stem": "ser vs estar: '_______ cansado' (tilapäinen tila)",
+          "choices": ["Soy cansado", "Estoy cansado", "Soy cansada", "Estaba cansado"],
+          "correct_index": 1,
+          "distractor_difficulty": "medium",
+          "explanation": "Estoy cansado = estar + tilapäinen tila (väsymys). Ser = pysyvä ominaisuus. 'Estoy' on oikein — väsymys on tilapäistä."
+        },
+        {
+          "item_type": "mc",
+          "stem": "ir — ella — preteriti (K3)",
+          "choices": ["iba", "fue", "va", "fuera"],
+          "correct_index": 1,
+          "distractor_difficulty": "medium",
+          "explanation": "fue = ir, ella, preteriti. Epäsäännöllinen: ir ja ser taivutetaan samoin preteritiissä. iba = imperfekti. fuera = subj. imperfekti."
+        },
+        {
+          "item_type": "mc",
+          "stem": "el medio ambiente — mitä tarkoittaa? (K5-K6)",
+          "choices": ["kansainvälinen kauppa", "ympäristö, luonto", "keskiluokka", "mediaympäristö"],
+          "correct_index": 1,
+          "distractor_difficulty": "easy",
+          "explanation": "el medio ambiente = ympäristö, luonto — keskeinen K6:n ympäristöteema-sana."
+        },
+        {
+          "item_type": "mc",
+          "stem": "tener — ellos — imperfekti (K3-K4)",
+          "choices": ["tienen", "tuvieron", "tenían", "han tenido"],
+          "correct_index": 2,
+          "distractor_difficulty": "medium",
+          "explanation": "tenían = tener, ellos, imperfekti. Imperfekti = toistuva tai jatkuva menneisyys. tuvieron = preteriti (yksittäinen kerta)."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Es importante que los estudiantes _______ todos los días. (estudiar — K6)",
+          "choices": ["estudian", "estudiarán", "estudien", "estudiaran"],
+          "correct_index": 2,
+          "distractor_difficulty": "hard",
+          "explanation": "estudien = subjunktiivi preesens. 'Es importante que' vaatii subjunktiivin. estudian = indikatiiivi, estudiaran = subj. imperfekti."
+        },
+        {
+          "item_type": "mc",
+          "stem": "vivir — yo — futuuri (K5)",
+          "choices": ["viviré", "vivo", "vivía", "he vivido"],
+          "correct_index": 0,
+          "distractor_difficulty": "easy",
+          "explanation": "viviré = vivir, yo, futuuri. -ir verbeillä futuuri: infinitiivin kantaan + -é/-ás/-á/-emos/-éis/-án. Ei poisteta mitään."
+        },
+        {
+          "item_type": "mc",
+          "stem": "la herencia cultural — K7",
+          "choices": ["kulttuurikeskus", "kulttuuriperintö", "kulttuuribudjetti", "kulttuuriohjelma"],
+          "correct_index": 1,
+          "distractor_difficulty": "easy",
+          "explanation": "la herencia cultural = kulttuuriperintö. Synonyymiä el patrimonio cultural."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Cuando _______ al museo mañana, mira primero Guernica. (ir — tú — K7)",
+          "choices": ["vayas", "vas", "fuiste", "irás"],
+          "correct_index": 0,
+          "distractor_difficulty": "hard",
+          "explanation": "vayas = ir, tú, subjunktiivi preesens. 'Cuando' + tuleva toiminta = subjunktiivi. vas = indikatiiivi. irás = futuuri."
+        },
+        {
+          "item_type": "mc",
+          "stem": "El artista ya _______ la escultura cuando se inauguró la exposición. (terminar — K7)",
+          "choices": ["terminó", "había terminado", "ha terminado", "terminaba"],
+          "correct_index": 1,
+          "distractor_difficulty": "hard",
+          "explanation": "había terminado = pluskvamperfekti. Veistos valmistui ENNEN näyttelyn avaamista = pluskvamperfekti."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Si tuviera más dinero, _______ un viaje alrededor del mundo. (hacer, yo — K8)",
+          "choices": ["hago", "haré", "haría", "haga"],
+          "correct_index": 2,
+          "distractor_difficulty": "hard",
+          "explanation": "haría = konditionaali. Si-lause tyyppi 2: si + subj. imperfekti + KONDITIONAALI. haré = futuuri, hago = preesens."
+        },
+        {
+          "item_type": "mc",
+          "stem": "para que — mikä rakenne seuraa? (K6-K7)",
+          "choices": ["indikatiiivi", "subjunktiivi", "konditionaali", "infinitiivi"],
+          "correct_index": 1,
+          "distractor_difficulty": "medium",
+          "explanation": "'Para que' vaatii AINA subjunktiivin — sekä preesensin (para que haga) että imperfektin (para que hiciera, menneisyydessä)."
+        },
+        {
+          "item_type": "mc",
+          "stem": "hablar — ellos — preteriti (K3)",
+          "choices": ["hablaron", "hablaban", "han hablado", "hablarán"],
+          "correct_index": 0,
+          "distractor_difficulty": "easy",
+          "explanation": "hablaron = hablar, ellos, preteriti. -aron on ellos-pääte -ar-verbeille preteritiissä. hablaban = imperfekti."
+        },
+        {
+          "item_type": "mc",
+          "stem": "la dictadura — K7",
+          "choices": ["tasavalta", "diktatuuri", "demokratia", "monarkia"],
+          "correct_index": 1,
+          "distractor_difficulty": "easy",
+          "explanation": "la dictadura = diktatuuri. la república = tasavalta, la democracia = demokratia, la monarquía = monarkia."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Habla como si _______ el único experto de la sala. (ser — K8)",
+          "choices": ["sea", "es", "fuera", "sería"],
+          "correct_index": 2,
+          "distractor_difficulty": "hard",
+          "explanation": "fuera = ser, subj. imperfekti. 'Como si' vaatii AINA subjunktiivin imperfektin. sea = preesens subj. — EI como si -rakenteessa."
+        },
+        {
+          "item_type": "mc",
+          "stem": "ser vs estar: 'El café _______ caliente' (tilapäinen tila)",
+          "choices": ["es caliente", "está caliente", "era caliente", "estaba frío"],
+          "correct_index": 1,
+          "distractor_difficulty": "medium",
+          "explanation": "está caliente = estar + tilapäinen tila. Kahvi on nyt kuumaa — tilapäistä. 'Es caliente' ei ole luontevaa — kuumuus ei ole kahvin pysyvä ominaisuus."
+        },
+        {
+          "item_type": "mc",
+          "stem": "No creo que la censura _______ aceptable. (ser — K7)",
+          "choices": ["es", "sea", "era", "será"],
+          "correct_index": 1,
+          "distractor_difficulty": "hard",
+          "explanation": "sea = ser, subjunktiivi preesens. 'No creer que' + subjunktiivi. Myönteinen 'creer que' + indikatiiivi. Kielteinen = subjunktiivi."
+        },
+        {
+          "item_type": "mc",
+          "stem": "saber — yo — preteriti (K3)",
+          "choices": ["sé", "sabía", "supe", "he sabido"],
+          "correct_index": 2,
+          "distractor_difficulty": "hard",
+          "explanation": "supe = saber, yo, preteriti. Epäsäännöllinen: sup- + preteritimuoto. sé = preesens, sabía = imperfekti."
+        },
+        {
+          "item_type": "mc",
+          "stem": "aunque — milloin käytetään imperfektisubjunktiivia? (K8)",
+          "choices": ["Kun viittaa mahdolliseen tulevaisuuteen", "Kun viittaa yleiseen totuuteen", "Kun vastaväite on epätodellinen tai hypoteettinen", "Aina — aunque vaatii aina imperfektin"],
+          "correct_index": 2,
+          "distractor_difficulty": "hard",
+          "explanation": "Aunque + subj. imperfekti = epätodellinen vastaväite ('vaikka mitä sitten'). Aunque + subj. preesens = mahdollinen tulevaisuus. Aunque + indikatiiivi = todellinen tosiasia."
+        },
+        {
+          "item_type": "mc",
+          "stem": "los deberes — K1",
+          "choices": ["unelmat", "läksyt, kotitehtävät", "velvollisuudet (juridiset)", "taloustehtävät"],
+          "correct_index": 1,
+          "distractor_difficulty": "easy",
+          "explanation": "los deberes = läksyt, kotitehtävät (koulussa). los deberes voi tarkoittaa myös velvollisuuksia, mutta koulucontextissa = läksyt."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Ojalá _______ ganar el partido mañana. (poder, nosotros — K6)",
+          "choices": ["podamos", "pudiéramos", "podríamos", "podemos"],
+          "correct_index": 0,
+          "distractor_difficulty": "hard",
+          "explanation": "podamos = poder, nosotros, preesens subj. Ojalá + preesens subj. = mahdollinen toivo (huominen peli on mahdollinen). Ojalá + imperfekti subj. = lähes mahdoton toivo."
+        },
+        {
+          "item_type": "mc",
+          "stem": "ir — tú — konditionaali (K5)",
+          "choices": ["irías", "ibas", "irás", "fuiste"],
+          "correct_index": 0,
+          "distractor_difficulty": "medium",
+          "explanation": "irías = ir, tú, konditionaali. ir on epäsäännöllinen konditionaalissa: ir- + -ías. ibas = imperfekti, irás = futuuri."
+        },
+        {
+          "item_type": "mc",
+          "stem": "la concienciación — K8",
+          "choices": ["omantunnonkysymys", "tietoisuuden lisääminen, valistaminen", "tietoisuuden puute", "tajunnanvirta"],
+          "correct_index": 1,
+          "distractor_difficulty": "medium",
+          "explanation": "la concienciación = tietoisuuden lisääminen, valistaminen. Konteksti: kampanjat jotka lisäävät tietoisuutta jostakin ongelmasta."
+        },
+        {
+          "item_type": "mc",
+          "stem": "ver — ella — pluskvamperfekti (K7)",
+          "choices": ["ha visto", "vio", "había visto", "habría visto"],
+          "correct_index": 2,
+          "distractor_difficulty": "medium",
+          "explanation": "había visto = ver, ella, pluskvamperfekti. ver on epäsäännöllinen: visto. ha visto = perfekti, vio = preteriti."
+        },
+        {
+          "item_type": "mc",
+          "stem": "la empresa — K4-K5",
+          "choices": ["tehdas", "yritys, firma", "yhteisö", "virasto"],
+          "correct_index": 1,
+          "distractor_difficulty": "easy",
+          "explanation": "la empresa = yritys, firma. la fábrica = tehdas, la comunidad = yhteisö, la agencia = virasto/toimisto."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Me pidió que _______ la verdad. (decir, yo — K8)",
+          "choices": ["diga", "dijera", "diría", "decía"],
+          "correct_index": 1,
+          "distractor_difficulty": "medium",
+          "explanation": "dijera = decir, yo, subj. imperfekti. Pääverbi menneessä (pidió) → sivulauseessa subj. imperfekti. diga = preesens subj."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Para que la democracia _______, los ciudadanos deben participar. (funcionar — K6)",
+          "choices": ["funciona", "funcione", "funcionara", "funcionará"],
+          "correct_index": 1,
+          "distractor_difficulty": "hard",
+          "explanation": "funcione = subjunktiivi preesens. 'Para que' vaatii subjunktiivin. Tässä preesens (yleinen totuus). funcionara = subj. imperfekti — tarvitsisi menneisyyden kontekstin."
+        },
+        {
+          "item_type": "mc",
+          "stem": "hacer — yo — konditionaali (K5)",
+          "choices": ["hago", "haría", "haré", "hice"],
+          "correct_index": 1,
+          "distractor_difficulty": "easy",
+          "explanation": "haría = hacer, yo, konditionaali. hacer on epäsäännöllinen konditionaalissa: har- + -ía. haré = futuuri, hago = preesens, hice = preteriti."
+        },
+        {
+          "item_type": "mc",
+          "stem": "sin que + preteriti — mikä aikamuoto sivulauseessa? (K8)",
+          "choices": ["subjunktiivi preesens", "subjunktiivi imperfekti", "konditionaali", "indikatiiivi imperfekti"],
+          "correct_index": 1,
+          "distractor_difficulty": "hard",
+          "explanation": "sin que + preteriti → sivulauseessa subjunktiivi imperfekti. Esim. 'Salió sin que nadie lo supiera.' — pääverbi (salió) on menneessä → sin que -sivulauseessa subj. imperfekti."
+        }
+      ]
+    }
+  ],
+  "vocab": [
+    { "es": "la herencia cultural", "fi": "kulttuuriperintö", "example_es": "La herencia cultural de España es reconocida mundialmente.", "example_fi": "Espanjan kulttuuriperintö on maailmanlaajuisesti tunnustettu.", "gender": "f" },
+    { "es": "el medio ambiente", "fi": "ympäristö, luonto", "example_es": "Debemos proteger el medio ambiente para las generaciones futuras.", "example_fi": "Meidän on suojeltava ympäristöä tuleville sukupolville.", "gender": "m" },
+    { "es": "el cambio climático", "fi": "ilmastonmuutos", "example_es": "El cambio climático es el mayor desafío del siglo XXI.", "example_fi": "Ilmastonmuutos on 2000-luvun suurin haaste.", "gender": "m" },
+    { "es": "la dictadura", "fi": "diktatuuri", "example_es": "La dictadura franquista terminó en 1975.", "example_fi": "Francon diktatuuri päättyi vuonna 1975.", "gender": "f" },
+    { "es": "la empresa", "fi": "yritys, firma", "example_es": "Las empresas deben asumir su responsabilidad ambiental.", "example_fi": "Yritysten on otettava ympäristövastuu.", "gender": "f" }
+  ],
+  "side_panel": {
+    "tabs": [
+      {
+        "id": "tips",
+        "title": "YO-vinkki",
+        "content_md": "## Loppukertaus — koko polku K1–K8\n\n### Tärkeimmät rakenteet YO-kokeessa\n\n**K1–K4 (perusrakenteet):**\n- Ser vs estar — tilapäinen vs. pysyvä\n- Preteriti vs. imperfekti — yksittäinen vs. toistuva menneisyys\n- Epäsäännölliset verbit: ir (fui), ser (fui), tener (tuve), hacer (hice)\n\n**K5–K6 (konditionaali + subjunktiivi preesens):**\n- Futuuri: -é/-ás/-á/-emos/-éis/-án\n- Konditionaali: -ía/-ías/-ía/-íamos/-íais/-ían\n- Subjunktiivi: es importante/necesario/fundamental que + subj.\n- Ojalá + subj. preesens (mahdollinen) / subj. imperfekti (lähes mahdoton)\n\n**K7 (subjunktiivi syvemmin + pluskvamperfekti):**\n- Cuando, antes de que, para que, hasta que → subjunktiivi\n- Pluskvamperfekti: había/habías/... + partisiippi\n\n**K8 (subjunktiivi imperfekti):**\n- Sääntö: ellos preteriti miinus -ron + -ra\n- Si-lause tyyppi 2: si + subj. imp. + konditionaali\n- Como si → aina subj. imperfekti\n- Aunque + epätodellinen → subj. imperfekti\n\n### Yhteenveto — mitä tarkistaa ennen YO-koetta\n\n- [ ] Ser vs estar — muista ero\n- [ ] Preteriti vs. imperfekti — konteksti ratkaisee\n- [ ] Subjunktiivi preesens — es importante/para que/cuando jne.\n- [ ] Subjunktiivi imperfekti — si-lauseet, como si, aunque\n- [ ] Pluskvamperfekti — había + partisiippi\n- [ ] Konditionaali — rakenne ja käyttö si-lauseessa"
+      }
+    ]
+  }
+}

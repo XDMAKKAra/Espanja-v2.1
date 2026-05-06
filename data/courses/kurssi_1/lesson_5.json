@@ -68,7 +68,7 @@
       "phase_type": "recall_typed_fi_to_es",
       "title": "Tuota — verbinmuoto",
       "instruction": "Kirjoita oikea ser- tai estar-muoto.",
-      "mastery_threshold": { "I": 0.5, "A": 0.55, "B": 0.7, "C": 0.75, "M": 0.8, "E": 0.85, "L": 0.92 },
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.7, "C": 0.75, "M": 0.8, "E": 0.85, "L": 0.92 },
       "skip_for_targets": ["I"],
       "items": [
         { "item_type": "typed", "direction": "fi_to_es", "prompt": "ser — yo", "accept": ["soy"] },
@@ -110,7 +110,7 @@
       "phase_type": "application_gap_fill",
       "title": "Lauseen täydennys — vaativa",
       "instruction": "Päätä ser/estar kontekstista.",
-      "mastery_threshold": { "I": 0.5, "A": 0.55, "B": 0.65, "C": 0.75, "M": 0.85, "E": 0.9, "L": 0.95 },
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.65, "C": 0.75, "M": 0.85, "E": 0.9, "L": 0.95 },
       "skip_for_targets": ["I", "A", "B"],
       "items": [
         { "item_type": "gap_fill", "sentence_template": "Mi profesor {1} español, pero ahora {2} en Finlandia.", "answers": [["es"], ["está", "esta"]], "word_bank": null },
@@ -128,7 +128,7 @@
       "phase_type": "application_sentence_build",
       "title": "Lauseen rakentelua",
       "instruction": "Käännä koko lause espanjaksi.",
-      "mastery_threshold": { "I": 0.5, "A": 0.55, "B": 0.6, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.92 },
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.6, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.92 },
       "skip_for_targets": ["I", "A", "B", "C"],
       "items": [
         { "item_type": "typed", "direction": "fi_to_es", "prompt": "Olen suomalainen.", "accept": ["soy finlandés", "soy finlandes", "soy finlandesa"] },
@@ -146,7 +146,7 @@
       "phase_type": "recall_typed_es_to_fi",
       "title": "Käännä suomeksi",
       "instruction": "Käännä lause suomeksi.",
-      "mastery_threshold": { "I": 0.5, "A": 0.55, "B": 0.7, "C": 0.75, "M": 0.8, "E": 0.85, "L": 0.92 },
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.7, "C": 0.75, "M": 0.8, "E": 0.85, "L": 0.92 },
       "skip_for_targets": ["I", "A"],
       "items": [
         { "item_type": "typed", "direction": "es_to_fi", "prompt": "Soy alumna.", "accept": ["olen oppilas", "olen oppilas."] },
@@ -164,7 +164,7 @@
       "phase_type": "synthesis_translate",
       "title": "YO-tason käännös",
       "instruction": "Käännä koko lause espanjaksi.",
-      "mastery_threshold": { "I": 0.5, "A": 0.55, "B": 0.6, "C": 0.65, "M": 0.75, "E": 0.85, "L": 0.95 },
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.6, "C": 0.65, "M": 0.75, "E": 0.85, "L": 0.95 },
       "skip_for_targets": ["I", "A", "B", "C"],
       "items": [
         { "item_type": "translate", "direction": "fi_to_es", "source": "Äitini on espanjalainen, mutta hän asuu nyt Helsingissä ja on hyvin onnellinen siellä.", "accept": ["mi madre es española, pero ahora vive en helsinki y está muy contenta allí", "mi madre es española pero ahora vive en helsinki y está muy contenta allí", "mi madre es espanola pero ahora vive en helsinki y esta muy contenta alli"] },
@@ -198,7 +198,7 @@
       "phase_type": "synthesis_short_writing",
       "title": "Lyhyt kirjoitus",
       "instruction": "Käytä sekä ser että estar.",
-      "mastery_threshold": { "I": 0.5, "A": 0.55, "B": 0.6, "C": 0.65, "M": 0.7, "E": 0.8, "L": 0.9 },
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.6, "C": 0.65, "M": 0.7, "E": 0.8, "L": 0.9 },
       "skip_for_targets": ["I", "A", "B", "C", "M"],
       "items": [
         { "item_type": "writing", "prompt": "Esittele itsesi: kuka olet (ser), mistä kotoisin (ser), missä olet juuri nyt (estar), mitä olet (mielialaltaan, estar). 5–7 lausetta. Käytä kummatkin verbit selvästi.", "min_words": 45, "max_words": 100, "rubric_focus": ["communication", "structure", "vocab"] },
@@ -211,7 +211,7 @@
       "phase_type": "synthesis_translate",
       "title": "Kertaus — perheen ja koulun sanasto + ser/estar",
       "instruction": "Yhdistä K1L1–K1L4 sanasto + ser/estar.",
-      "mastery_threshold": { "I": 0.5, "A": 0.55, "B": 0.6, "C": 0.65, "M": 0.75, "E": 0.85, "L": 0.95 },
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.6, "C": 0.65, "M": 0.75, "E": 0.85, "L": 0.95 },
       "skip_for_targets": ["I", "A", "B", "C", "M"],
       "items": [
         { "item_type": "translate", "direction": "fi_to_es", "source": "Sisareni on lukiossa ja hän on tänään tosi iloinen, koska hän sai hyvän arvosanan.", "accept": ["mi hermana está en el instituto y hoy está muy contenta porque sacó una buena nota", "mi hermana está en el instituto y está muy contenta hoy porque ha sacado una buena nota"] },

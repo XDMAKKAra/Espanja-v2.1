@@ -1,0 +1,277 @@
+{
+  "meta": {
+    "course_key": "kurssi_6",
+    "lesson_index": 2,
+    "lesson_type": "grammar",
+    "level": "C",
+    "title": "Subjunktiivin muodostus — säännölliset",
+    "description": "Opit muodostamaan subjunktiivin preesensin säännöllisistä verbeistä: -ar-verbeille e-päätteet ja -er/-ir-verbeille a-päätteet. Harjoittelet tunnistaen ja tuottaen kaikki kuusi persoonamuotoa.",
+    "yo_relevance": "Subjunktiivi on YO-kokeen C-tason keskeinen kielioppialue. Kirjoitustehtävissä odotetaan sen oikeaa käyttöä laukaisijasanojen jälkeen. Muodostusvirheet ovat yleisiä ja laskevat arvosanaa.",
+    "estimated_minutes_median": 14
+  },
+  "teaching": {
+    "intro_md": "# Subjunktiivin muodostus — säännölliset\n\nSubjunktiivi on verbimuoto joka kertoo toiveista, epävarmuuksista ja vaatimuksista. Se esiintyy aina tietyn laukaisijasanan jälkeen.\n\n## Muodostuksen logiikka\n\n**Lähtökohta:** Ota preesensin yo-muoto ja poista -o. Lisää sitten päätteet käänteisellä vokaalilla.\n\n| Verbi | Preesens yo | Kanta | -ar-päätteet (e) | -er/-ir-päätteet (a) |\n|---|---|---|---|---|\n| hablar | hablo | habl- | hable, hables, hable... | — |\n| comer | como | com- | — | coma, comas, coma... |\n| vivir | vivo | viv- | — | viva, vivas, viva... |\n\n## Täydet paradigmat\n\n### -ar-verbit → e-päätteet\n\n**hablar** (puhua):\n- yo **hable**, tú **hables**, él/ella **hable**\n- nosotros **hablemos**, vosotros **habléis**, ellos **hablen**\n\n### -er-verbit → a-päätteet\n\n**comer** (syödä):\n- yo **coma**, tú **comas**, él/ella **coma**\n- nosotros **comamos**, vosotros **comáis**, ellos **coman**\n\n### -ir-verbit → a-päätteet\n\n**vivir** (asua, elää):\n- yo **viva**, tú **vivas**, él/ella **viva**\n- nosotros **vivamos**, vosotros **viváis**, ellos **vivan**\n\n## Laukaisijasanoja — aina subjunktiivi sen jälkeen\n\n- **quiero que** + subj. — haluan että...\n- **es importante que** + subj. — on tärkeää että...\n- **espero que** + subj. — toivon että...\n- **ojalá** + subj. — kunpa...\n\n> *Quiero que **hables** más despacio.* — Haluan että puhut hitaammin.\n\n> *Es importante que **comamos** verduras.* — On tärkeää että syömme kasviksia.",
+    "key_points": [
+      "-ar-verbit saavat subjunktiivissa e-päätteet: hable, hables, hable, hablemos, habléis, hablen.",
+      "-er ja -ir-verbit saavat subjunktiivissa a-päätteet: coma, comas, coma, comamos, comáis, coman.",
+      "Muodostus: preesensin yo-muoto → poista -o → lisää käänteinen pääte.",
+      "Subjunktiivi tulee aina laukaisijasanan (quiero que, es importante que, ojalá) jälkeen.",
+      "Vosotros-muodoissa aksentti: habléis, comáis, viváis — ei unohdu."
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1-recognition-mc-tunnista",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista — onko tämä subjunktiivi?",
+      "instruction": "Onko lihavoitu verbimuoto subjunktiivi vai jokin muu?",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.7, "C": 0.75, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "mc", "stem": "Es importante que **hable** despacio.", "choices": ["preesens (hablo)", "subjunktiivi", "imperfekti", "preteriti"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "hable = subjunktiivi (hablar, tú tai él/ella). Es importante que vaatii subjunktiivin." },
+        { "item_type": "mc", "stem": "Yo **hablo** español todos los días.", "choices": ["subjunktiivi", "preesens indikatiiivi"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "hablo = preesens indikatiiivi (yo). Ei laukaisijasanaa → ei subjunktiivia." },
+        { "item_type": "mc", "stem": "Quiero que ella **coma** más verduras.", "choices": ["preesens (come)", "subjunktiivi", "preteriti (comió)", "imperfekti (comía)"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "coma = subjunktiivi (comer, ella). Quiero que vaatii subjunktiivin." },
+        { "item_type": "mc", "stem": "Nosotros **comemos** en casa.", "choices": ["subjunktiivi", "preesens indikatiiivi"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "comemos = preesens indikatiiivi (nosotros). Ei laukaisijasanaa → ei subjunktiivia." },
+        { "item_type": "mc", "stem": "Espero que **vivan** felices.", "choices": ["preesens (viven)", "preteriti (vivieron)", "subjunktiivi", "imperfekti (vivían)"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "vivan = subjunktiivi (vivir, ellos). Espero que vaatii subjunktiivin." },
+        { "item_type": "mc", "stem": "Ella **trabaja** mucho.", "choices": ["subjunktiivi", "preesens indikatiiivi", "preteriti", "imperfekti"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "trabaja = preesens indikatiiivi. Ei laukaisijasanaa → indikatiiivi." },
+        { "item_type": "mc", "stem": "Ojalá **llegues** pronto.", "choices": ["preesens (llegas)", "subjunktiivi", "futuuri (llegarás)", "konditionaali (llegarías)"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "llegues = subjunktiivi (llegar, tú). Ojalá vaatii aina subjunktiivin." },
+        { "item_type": "mc", "stem": "Es necesario que todos **reciclen**.", "choices": ["preesens (reciclan)", "subjunktiivi", "preteriti (reciclaron)", "imperfekti (reciclaban)"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "reciclen = subjunktiivi (reciclar, ellos). Es necesario que vaatii subjunktiivin." },
+        { "item_type": "mc", "stem": "Prefiero que **escribas** el correo.", "choices": ["preesens (escribes)", "subjunktiivi", "preteriti (escribiste)", "futuuri (escribirás)"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "escribas = subjunktiivi (escribir, tú). Prefiero que vaatii subjunktiivin." },
+        { "item_type": "mc", "stem": "Los estudiantes **estudian** mucho.", "choices": ["subjunktiivi", "preesens indikatiiivi", "preteriti", "imperfekti"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "estudian = preesens indikatiiivi. Ei laukaisijasanaa → indikatiiivi." },
+        { "item_type": "mc", "stem": "Quiero que **aprendamos** juntos.", "choices": ["preesens (aprendemos)", "subjunktiivi", "imperfekti (aprendíamos)", "futuuri (aprenderemos)"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "aprendamos = subjunktiivi (aprender, nosotros). Quiero que vaatii subjunktiivin." },
+        { "item_type": "mc", "stem": "Es bueno que **protejas** el medio ambiente.", "choices": ["preesens (proteges)", "subjunktiivi", "preteriti (protegiste)", "konditionaali (protegerías)"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "protejas = subjunktiivi (proteger, tú). Es bueno que vaatii subjunktiivin." },
+        { "item_type": "mc", "stem": "Ella **protege** el medio ambiente.", "choices": ["subjunktiivi (proteja)", "preesens indikatiiivi"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "protege = preesens indikatiiivi. Ei laukaisijasanaa → indikatiivia käytetään." },
+        { "item_type": "mc", "stem": "Espero que él **beba** agua suficiente.", "choices": ["preesens (bebe)", "subjunktiivi", "preteriti (bebió)", "imperfekti (bebía)"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "beba = subjunktiivi (beber, él). Espero que vaatii subjunktiivin." }
+      ]
+    },
+    {
+      "phase_id": "p2-recognition-match",
+      "phase_type": "recognition_match",
+      "title": "Yhdistä — subjunktiivipäätteet",
+      "instruction": "Yhdistä persoona ja oikea subjunktiivimuoto.",
+      "mastery_threshold": { "I": 0.6, "A": 0.65, "B": 0.75, "C": 0.8, "M": 0.85, "E": 0.9, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        {
+          "item_type": "match",
+          "left_label": "Persoona",
+          "right_label": "hablar (subj.)",
+          "pairs": [
+            { "left": "yo", "right": "hable" },
+            { "left": "tú", "right": "hables" },
+            { "left": "él/ella", "right": "hable" },
+            { "left": "nosotros", "right": "hablemos" },
+            { "left": "vosotros", "right": "habléis" },
+            { "left": "ellos", "right": "hablen" }
+          ]
+        },
+        {
+          "item_type": "match",
+          "left_label": "Persoona",
+          "right_label": "comer (subj.)",
+          "pairs": [
+            { "left": "yo", "right": "coma" },
+            { "left": "tú", "right": "comas" },
+            { "left": "él/ella", "right": "coma" },
+            { "left": "nosotros", "right": "comamos" },
+            { "left": "vosotros", "right": "comáis" },
+            { "left": "ellos", "right": "coman" }
+          ]
+        },
+        {
+          "item_type": "match",
+          "left_label": "Persoona",
+          "right_label": "vivir (subj.)",
+          "pairs": [
+            { "left": "yo", "right": "viva" },
+            { "left": "tú", "right": "vivas" },
+            { "left": "nosotros", "right": "vivamos" },
+            { "left": "vosotros", "right": "viváis" },
+            { "left": "ellos", "right": "vivan" }
+          ]
+        }
+      ]
+    },
+    {
+      "phase_id": "p3-recognition-mc-muoto",
+      "phase_type": "recognition_mc",
+      "title": "Valitse oikea subjunktiivimuoto",
+      "instruction": "Mikä on oikea subjunktiivimuoto?",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.7, "C": 0.75, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I"],
+      "items": [
+        { "item_type": "mc", "stem": "hablar — tú — subjunktiivi", "choices": ["hablas", "hables", "hablaste", "hablarías"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "hables = hablar, tú, subjunktiivi. -ar-verbi saa e-päätteen: -es tú:lle. Distraktorit: hablas (preesens), hablaste (preteriti), hablarías (konditionaali)." },
+        { "item_type": "mc", "stem": "comer — nosotros — subjunktiivi", "choices": ["comemos", "comamos", "comáis", "comemos"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "comamos = comer, nosotros, subjunktiivi. -er-verbi saa a-päätteen: -amos nosotros:lle." },
+        { "item_type": "mc", "stem": "vivir — ellos — subjunktiivi", "choices": ["viven", "vivan", "vivean", "viváis"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "vivan = vivir, ellos, subjunktiivi. -ir-verbi saa a-päätteen: -an ellos:lle." },
+        { "item_type": "mc", "stem": "trabajar — él — subjunktiivi", "choices": ["trabaja", "trabajé", "trabaje", "trabajaría"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "trabaje = trabajar, él, subjunktiivi. -ar-verbi: kanta + e = trabaje. Distraktorit: trabaja (preesens), trabajé (preteriti, yo), trabajaría (konditionaali)." },
+        { "item_type": "mc", "stem": "beber — yo — subjunktiivi", "choices": ["bebo", "bebia", "beba", "bebas"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "beba = beber, yo, subjunktiivi. -er-verbi saa a-päätteen: -a yo:lle." },
+        { "item_type": "mc", "stem": "escribir — vosotros — subjunktiivi", "choices": ["escribís", "escribáis", "escribais", "escribeis"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "escribáis = escribir, vosotros, subjunktiivi. -ir-verbi: -áis vosotros:lle (aksentti on tärkeä)." },
+        { "item_type": "mc", "stem": "llegar — nosotros — subjunktiivi", "choices": ["llegamos", "lleguemos", "llegemos", "lleguemos"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "lleguemos = llegar, nosotros, subjunktiivi. g → gu ennen e:tä (oikeinkirjoitussääntö)." },
+        { "item_type": "mc", "stem": "reciclar — tú — subjunktiivi", "choices": ["reciclas", "reciclés", "recicles", "reciclars"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "recicles = reciclar, tú, subjunktiivi. -ar-verbi: -es tú:lle." },
+        { "item_type": "mc", "stem": "aprender — ellos — subjunktiivi", "choices": ["aprenden", "aprendan", "aprenden", "aprendean"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "aprendan = aprender, ellos, subjunktiivi. -er-verbi: -an ellos:lle." },
+        { "item_type": "mc", "stem": "proteger — yo — subjunktiivi", "choices": ["protejo", "proteja", "protegas", "protegís"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "proteja = proteger, yo, subjunktiivi. g → j ennen a:ta (oikeinkirjoitussääntö). Kanta: protej-." },
+        { "item_type": "mc", "stem": "estudiar — ella — subjunktiivi", "choices": ["estudia", "estudie", "estudié", "estudiara"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "estudie = estudiar, ella, subjunktiivi. -ar-verbi: kanta estudi- + e." },
+        { "item_type": "mc", "stem": "vivir — tú — subjunktiivi", "choices": ["vives", "vivas", "vivís", "viveas"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "vivas = vivir, tú, subjunktiivi. -ir-verbi: -as tú:lle." }
+      ]
+    },
+    {
+      "phase_id": "p4-recall-typed-fi-es",
+      "phase_type": "recall_typed_fi_to_es",
+      "title": "Kirjoita subjunktiivimuoto",
+      "instruction": "Kirjoita pyydetty subjunktiivimuoto.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.7, "C": 0.75, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "hablar — yo — subjunktiivi", "accept": ["hable"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "hablar — tú — subjunktiivi", "accept": ["hables"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "hablar — ellos — subjunktiivi", "accept": ["hablen"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "comer — yo — subjunktiivi", "accept": ["coma"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "comer — tú — subjunktiivi", "accept": ["comas"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "comer — nosotros — subjunktiivi", "accept": ["comamos"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "vivir — yo — subjunktiivi", "accept": ["viva"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "vivir — ellos — subjunktiivi", "accept": ["vivan"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "trabajar — ella — subjunktiivi", "accept": ["trabaje"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "beber — tú — subjunktiivi", "accept": ["bebas"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "escribir — vosotros — subjunktiivi", "accept": ["escribáis", "escribais"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "reciclar — nosotros — subjunktiivi", "accept": ["reciclemos"] }
+      ]
+    },
+    {
+      "phase_id": "p5-recall-typed-fi-es",
+      "phase_type": "recall_typed_fi_to_es",
+      "title": "Muodosta lause subjunktiivilla",
+      "instruction": "Kirjoita lause espanjaksi käyttäen subjunktiivia.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Haluan että sinä puhut hitaammin. (hablar — tú, subjunktiivi)", "accept": ["quiero que hables más despacio", "quiero que hables más lento"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "On tärkeää että syöt hyvin. (comer — tú, subjunktiivi)", "accept": ["es importante que comas bien"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Toivon että he asuvat lähellä. (vivir — ellos, subjunktiivi)", "accept": ["espero que vivan cerca"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "On hyvä että työskentelemme yhdessä. (trabajar — nosotros, subjunktiivi)", "accept": ["es bueno que trabajemos juntos"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Haluan että te kierrätätte. (reciclar — vosotros, subjunktiivi)", "accept": ["quiero que recicleis", "quiero que recicléis"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "On tärkeää että hän oppii. (aprender — él, subjunktiivi)", "accept": ["es importante que aprenda"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Toivon että kirjoitat sähköpostin. (escribir — tú, subjunktiivi)", "accept": ["espero que escribas el correo", "espero que escribas el email"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "On hyvä että juotte vettä. (beber — vosotros, subjunktiivi)", "accept": ["es bueno que bebáis agua", "es bueno que bebais agua"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Haluan että te opiskelette enemmän. (estudiar — vosotros, subjunktiivi)", "accept": ["quiero que estudiéis más", "quiero que estudiais mas"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "On tärkeää että he suojelevat ympäristöä. (proteger — ellos, subjunktiivi)", "accept": ["es importante que protejan el medio ambiente"] }
+      ]
+    },
+    {
+      "phase_id": "p6-application-gap-helppo",
+      "phase_type": "application_gap_fill",
+      "title": "Lauseen täydennys — perustaso",
+      "instruction": "Täydennä oikealla subjunktiivimuodolla. Sanapankki auttaa.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.75, "C": 0.8, "M": 0.85, "E": 0.9, "L": 0.92 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Es importante que tú {1} bien. (comer)", "answers": [["comas"]], "word_bank": ["coma", "comas", "comes"] },
+        { "item_type": "gap_fill", "sentence_template": "Quiero que ella {1} más rápido. (hablar)", "answers": [["hable"]], "word_bank": ["habla", "hable", "habló"] },
+        { "item_type": "gap_fill", "sentence_template": "Es necesario que nosotros {1} el plástico. (reciclar)", "answers": [["reciclemos"]], "word_bank": ["reciclamos", "reciclemos", "reciclen"] },
+        { "item_type": "gap_fill", "sentence_template": "Espero que ellos {1} juntos. (vivir)", "answers": [["vivan"]], "word_bank": ["viven", "vivan", "vivían"] },
+        { "item_type": "gap_fill", "sentence_template": "Es bueno que tú {1} español. (aprender)", "answers": [["aprendas"]], "word_bank": ["aprendes", "aprendas", "aprendías"] },
+        { "item_type": "gap_fill", "sentence_template": "Quiero que vosotros {1} el correo hoy. (escribir)", "answers": [["escribáis", "escribais"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Es importante que él {1} mucho. (trabajar)", "answers": [["trabaje"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Espero que yo {1} a tiempo. (llegar)", "answers": [["llegue"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Es necesario que ellos {1} agua. (beber)", "answers": [["beban"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Quiero que nosotros {1} juntos. (comer)", "answers": [["comamos"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p7-application-gap-vaativa",
+      "phase_type": "application_gap_fill",
+      "title": "Lauseen täydennys — vaativa",
+      "instruction": "Täydennä subjunktiivimuodolla ilman sanapankkia.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.65, "C": 0.75, "M": 0.85, "E": 0.9, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Es importante que tú {1} el medio ambiente. (proteger)", "answers": [["protejas"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Quiero que ellos {1} la verdad. (decir — dice → diga)", "answers": [["digan"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Es necesario que nosotros {1} energía. (ahorrar)", "answers": [["ahorremos"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Espero que tú {1} pronto. (llegar — llega → llegue)", "answers": [["llegues"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Es bueno que vosotros {1} verduras. (comer)", "answers": [["comáis", "comais"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Quiero que ella {1} el libro. (leer — lee → lea)", "answers": [["lea"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Es importante que yo {1} el informe. (escribir)", "answers": [["escriba"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Espero que ellos {1} bien. (vivir)", "answers": [["vivan"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Es necesario que él {1} más. (estudiar)", "answers": [["estudie"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Quiero que nosotros {1} una solución. (encontrar — encuentra → encuentre)", "answers": [["encontremos"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p8-application-sentence-build",
+      "phase_type": "application_sentence_build",
+      "title": "Lauseiden rakentelua — subjunktiivi",
+      "instruction": "Käännä lause espanjaksi. Käytä subjunktiivia.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.6, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.92 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "On tärkeää että kaikki suojelevat ympäristöä.", "accept": ["es importante que todos protejan el medio ambiente"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Haluan että sinä kirjoitat enemmän.", "accept": ["quiero que escribas más"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "On hyvä että me syömme terveellisesti.", "accept": ["es bueno que comamos de forma saludable", "es bueno que comamos sano"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Toivon että he asuvat lähellä meitä.", "accept": ["espero que vivan cerca de nosotros"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "On tärkeää että opiskelette enemmän.", "accept": ["es importante que estudiéis más", "es importante que estudiais mas"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Toivon että hän oppii espanjaa.", "accept": ["espero que aprenda español", "espero que aprenda espanol"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Haluan että he kierrättävät jätteen.", "accept": ["quiero que reciclen la basura", "quiero que reciclen los residuos"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "On hyvä että te autte toisianne.", "accept": ["es bueno que os ayudéis", "es bueno que os ayudeis"] }
+      ]
+    },
+    {
+      "phase_id": "p9-synthesis-translate",
+      "phase_type": "synthesis_translate",
+      "title": "YO-tason käännös — subjunktiivi",
+      "instruction": "Käännä lause espanjaksi. Valitse oikea muoto.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.6, "C": 0.65, "M": 0.75, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "translate", "direction": "fi_to_es", "source": "On tärkeää että opiskelijat kirjoittavat selkeästi.", "accept": ["es importante que los estudiantes escriban claramente", "es importante que los alumnos escriban de forma clara"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Toivon että sinä syöt enemmän hedelmiä ja kasviksia.", "accept": ["espero que comas más frutas y verduras", "espero que comas más fruta y verduras"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "On tärkeää että kaikki vähentävät energiankulutustaan.", "accept": ["es importante que todos reduzcan su consumo de energía", "es importante que todo el mundo reduzca su consumo de energía"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Haluan että me kaikki suojelemme luontoa.", "accept": ["quiero que todos protejamos la naturaleza", "quiero que nosotros protejamos la naturaleza"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "On hyvä että hän asuu lähellä töitä eikä aja autolla.", "accept": ["es bueno que viva cerca del trabajo y no conduzca en coche", "es bueno que viva cerca del trabajo y no use el coche"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Toivon että he oppivat puhumaan sujuvasti espanjaa.", "accept": ["espero que aprendan a hablar español con fluidez", "espero que aprendan a hablar fluidamente en español"] }
+      ]
+    },
+    {
+      "phase_id": "p10-synthesis-short-writing",
+      "phase_type": "synthesis_short_writing",
+      "title": "Lyhyt kirjoitus — subjunktiivia käyttäen",
+      "instruction": "Kirjoita lyhyt teksti jossa käytät subjunktiivia luonnollisesti.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.6, "C": 0.65, "M": 0.7, "E": 0.8, "L": 0.9 },
+      "skip_for_targets": ["I", "A", "B", "C", "M"],
+      "items": [
+        { "item_type": "writing", "prompt": "Kirjoita 5–6 lausetta ympäristönsuojelusta käyttäen vähintään 3 eri subjunktiivilausetta. Aloita esim. 'Es importante que...', 'Quiero que...', 'Espero que...'", "min_words": 45, "max_words": 90, "rubric_focus": ["communication", "structure", "vocab"] },
+        { "item_type": "writing", "prompt": "Kirjoita ystävälle viesti (5–6 lausetta) jossa kerrot mitä toivot häneltä ja mitä on tärkeää tehdä yhdessä. Käytä subjunktiivia vähintään kolmessa lauseessa.", "min_words": 45, "max_words": 90, "rubric_focus": ["communication", "vocab"] },
+        { "item_type": "writing", "prompt": "Kirjoita 5–6 lausetta siitä mitä on tärkeää tai hyvää opinnoissasi. Käytä es importante que, es bueno que ja espero que.", "min_words": 45, "max_words": 90, "rubric_focus": ["communication", "structure"] }
+      ]
+    }
+  ],
+  "vocab": [
+    { "es": "hablar (subjunktiivi: hable)", "fi": "puhua — subjunktiivi: hable", "example_es": "Quiero que hables más.", "example_fi": "Haluan että puhut enemmän.", "gender": null },
+    { "es": "comer (subjunktiivi: coma)", "fi": "syödä — subjunktiivi: coma", "example_es": "Es importante que comas bien.", "example_fi": "On tärkeää että syöt hyvin.", "gender": null },
+    { "es": "vivir (subjunktiivi: viva)", "fi": "asua, elää — subjunktiivi: viva", "example_es": "Espero que vivas bien.", "example_fi": "Toivon että asut hyvin.", "gender": null },
+    { "es": "trabajar (subjunktiivi: trabaje)", "fi": "työskennellä — subjunktiivi: trabaje", "example_es": "Quiero que trabajes conmigo.", "example_fi": "Haluan että työskentelet kanssani.", "gender": null },
+    { "es": "aprender (subjunktiivi: aprenda)", "fi": "oppia — subjunktiivi: aprenda", "example_es": "Es bueno que aprendas español.", "example_fi": "On hyvä että opit espanjaa.", "gender": null },
+    { "es": "escribir (subjunktiivi: escriba)", "fi": "kirjoittaa — subjunktiivi: escriba", "example_es": "Espero que escribas pronto.", "example_fi": "Toivon että kirjoitat pian.", "gender": null },
+    { "es": "beber (subjunktiivi: beba)", "fi": "juoda — subjunktiivi: beba", "example_es": "Es importante que bebas agua.", "example_fi": "On tärkeää että juot vettä.", "gender": null },
+    { "es": "llegar (subjunktiivi: llegue)", "fi": "saapua — subjunktiivi: llegue", "example_es": "Espero que llegues a tiempo.", "example_fi": "Toivon että saavut ajoissa.", "gender": null },
+    { "es": "reciclar (subjunktiivi: recicle)", "fi": "kierrättää — subjunktiivi: recicle", "example_es": "Es necesario que reciclemos.", "example_fi": "On tarpeellista että kierrätämme.", "gender": null },
+    { "es": "proteger (subjunktiivi: proteja)", "fi": "suojella — subjunktiivi: proteja", "example_es": "Es bueno que protejas el medio ambiente.", "example_fi": "On hyvä että suojelet ympäristöä.", "gender": null },
+    { "es": "estudiar (subjunktiivi: estudie)", "fi": "opiskella — subjunktiivi: estudie", "example_es": "Quiero que estudies más.", "example_fi": "Haluan että opiskelet enemmän.", "gender": null },
+    { "es": "leer (subjunktiivi: lea)", "fi": "lukea — subjunktiivi: lea", "example_es": "Es bueno que leas cada día.", "example_fi": "On hyvä että luet joka päivä.", "gender": null },
+    { "es": "ahorrar (subjunktiivi: ahorre)", "fi": "säästää — subjunktiivi: ahorre", "example_es": "Es necesario que ahorres energía.", "example_fi": "On tarpeellista että säästät energiaa.", "gender": null },
+    { "es": "encontrar (subjunktiivi: encuentre)", "fi": "löytää — subjunktiivi: encuentre", "example_es": "Espero que encuentres la solución.", "example_fi": "Toivon että löydät ratkaisun.", "gender": null }
+  ],
+  "side_panel": {
+    "tabs": [
+      {
+        "id": "grammar",
+        "title": "Subjunktiivi — muodostus",
+        "content_md": "## Muodostuksen kaava\n\n**Preesens yo** → poista -o → lisää käänteinen pääte\n\n### -ar-verbit → e-päätteet\n\n| Persoona | hablar |\n|---|---|\n| yo | **hable** |\n| tú | **hables** |\n| él/ella | **hable** |\n| nosotros | **hablemos** |\n| vosotros | **habléis** |\n| ellos | **hablen** |\n\n### -er/-ir-verbit → a-päätteet\n\n| Persoona | comer | vivir |\n|---|---|---|\n| yo | **coma** | **viva** |\n| tú | **comas** | **vivas** |\n| él/ella | **coma** | **viva** |\n| nosotros | **comamos** | **vivamos** |\n| vosotros | **comáis** | **viváis** |\n| ellos | **coman** | **vivan** |\n\n## Laukaisijasanat — vaativat aina subjunktiivin\n\n- **quiero que** — haluan että\n- **espero que** — toivon että\n- **es importante que** — on tärkeää että\n- **es necesario que** — on tarpeellista että\n- **es bueno que** — on hyvää että\n- **ojalá** — kunpa\n\n## Oikeinkirjoitushuomiot\n\n- llegar → llegue (g → gu ennen e)\n- proteger → proteja (g → j ennen a)\n- buscar → busque (c → qu ennen e)"
+      },
+      {
+        "id": "tips",
+        "title": "YO-vinkki",
+        "content_md": "## YO-kokeessa — subjunktiivin muodostus\n\nSubjunktiivi on C-tason tärkein kielioppirakenne. Kirjoitustehtävässä odotetaan sen käyttöä.\n\n## Yleisin virhe\n\n✗ *Es importante que tú **hablas** más.* (indikatiiivi)\n✓ *Es importante que tú **hables** más.* (subjunktiivi)\n\n✗ *Quiero que ella **come** menos.* (indikatiiivi)\n✓ *Quiero que ella **coma** menos.* (subjunktiivi)\n\n## Muistisääntö\n\n**-ar-verbit = e-päätteet** (vaihdetaan kuin 'vaihtoehtoon')\n**-er/-ir-verbit = a-päätteet** (vaihdetaan takaisin)\n\nAjattele se niin: -ar-verbissä on -a, joten subjunktiivissa käytetään -e (vastakohta). Vastaavasti -er-verbissä on -e, joten subjunktiivissa käytetään -a.\n\n## Lauserakenne\n\n> *Es importante que + [subjekti] + [verbi subjunktiivissa]*\n\n> *Quiero que + [toinen subjekti] + [verbi subjunktiivissa]*\n\nHuom: quiero que -rakenteessa täytyy olla **kaksi eri subjektia**. Jos sama henkilö tekee molemmat asiat, käytä infinitiiviä: *Quiero estudiar* (haluan opiskella, minä itse)."
+      }
+    ]
+  }
+}

@@ -5,95 +5,278 @@
     "lesson_type": "vocab",
     "level": "A",
     "title": "Koti ja huonekalut",
-    "description": "PLACEHOLDER — sisältö generoidaan myöhemmin PROMPT_GENERATE_LESSON.md:llä",
-    "yo_relevance": "PLACEHOLDER",
+    "description": "Opettelet kodin tilat (cocina, dormitorio, salón…), keskeiset huonekalut (mesa, silla, sofá…) ja kodintekniikan (nevera, lavadora, ordenador). Sanasto kattaa myös asumiseen liittyvät verbit vivir, alquilar ja compartir.",
+    "yo_relevance": "Koti-aihe kuuluu YO-kokeen peruskuvauksiin lähes joka vuosi: kuullun ymmärtämisessä kuvaillaan asuntoja ja luetun ymmärtämisessä toistuvat ilmoitukset ja asumiskertomukset. Tarkimmat ansat ovat salón/sala, baño/cuarto de baño ja nevera/frigorífico — eri muodot tarkoittavat samaa.",
     "estimated_minutes_median": 12
   },
   "teaching": {
-    "intro_md": "PLACEHOLDER — opetussisältö generoidaan myöhemmin",
+    "intro_md": "# Koti ja huonekalut\n\nEspanjankielisessä maailmassa koti voi olla **casa** (talo) tai **piso/apartamento** (kerrostaloasunto). Espanjassa käytetään yleensä sanaa *piso*, Latinalaisessa Amerikassa *apartamento*.\n\n## Tilat\n\n> En mi piso hay tres **habitaciones**, una **cocina**, un **salón** y dos **baños**. (Asunnossani on kolme makuuhuonetta, keittiö, olohuone ja kaksi kylpyhuonetta.)\n\n- **habitación** voi tarkoittaa mitä tahansa huonetta — yleensä makuuhuonetta\n- **dormitorio** = makuuhuone (tarkasti)\n- **salón** = olohuone (Espanjassa); **sala** käytössä Latinalaisessa Amerikassa\n- **baño** / **cuarto de baño** = kylpyhuone — sama asia\n\n## Huonekalut ja tekniikka\n\n> En la cocina tengo una **nevera**, un **microondas** y una **lavadora** pequeña. (Keittiössäni on jääkaappi, mikro ja pieni pesukone.)\n\nMuista että **nevera** ja **frigorífico** ovat synonyymejä — molemmat tarkoittavat jääkaappia.\n\n## Asumisen verbit\n\n- **vivir en** — asua jossakin\n- **alquilar** — vuokrata\n- **compartir** — jakaa (esim. piso compartido = jaettu asunto)",
     "key_points": [
-      "PLACEHOLDER"
+      "casa = talo, piso/apartamento = kerrostaloasunto.",
+      "habitación on yleinen sana huoneelle, dormitorio nimenomaan makuuhuone.",
+      "salón ja sala tarkoittavat samaa olohuonetta — Espanja vs Latinalainen Amerikka.",
+      "nevera ja frigorífico ovat synonyymeja jääkaapille.",
+      "vivir en + paikka = asua jossakin (Vivo en Helsinki)."
     ]
   },
   "phases": [
     {
-      "phase_id": "p1-placeholder",
+      "phase_id": "p1-recognition-tilat",
       "phase_type": "recognition_mc",
-      "title": "PLACEHOLDER",
-      "instruction": "PLACEHOLDER",
-      "mastery_threshold": {
-        "I": 0.5,
-        "A": 0.6,
-        "B": 0.65,
-        "C": 0.7,
-        "M": 0.75,
-        "E": 0.85,
-        "L": 0.9
-      },
+      "title": "Tunnista — kodin tilat",
+      "instruction": "Valitse oikea käännös.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.7, "C": 0.75, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "mc", "stem": "casa", "choices": ["talo", "luokka", "katu", "kaupunki"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "casa = talo. Älä sekoita: clase = luokka." },
+        { "item_type": "mc", "stem": "piso", "choices": ["lattia tai kerrostaloasunto", "katto", "huone", "ovi"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "piso = kerrostaloasunto Espanjassa; tarkoittaa myös kerrosta tai lattiaa." },
+        { "item_type": "mc", "stem": "apartamento", "choices": ["talo", "kerrostaloasunto", "hotellihuone", "olohuone"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "apartamento = kerrostaloasunto, käytössä erityisesti Latinalaisessa Amerikassa. Espanjassa yleisempi sana on piso." },
+        { "item_type": "mc", "stem": "habitación", "choices": ["asunto", "huone, makuuhuone", "kylpyhuone", "kerros"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "habitación = huone, usein makuuhuone." },
+        { "item_type": "mc", "stem": "dormitorio", "choices": ["olohuone", "makuuhuone", "ruokasali", "kellari"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "dormitorio = makuuhuone (sana dormir = nukkua)." },
+        { "item_type": "mc", "stem": "cocina", "choices": ["kylpyhuone", "olohuone", "keittiö", "parveke"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "cocina = keittiö. Verbi cocinar = laittaa ruokaa." },
+        { "item_type": "mc", "stem": "salón", "choices": ["olohuone", "ruokasali", "makuuhuone", "käytävä"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "salón = olohuone (Espanjassa). Latinalaisessa Amerikassa sana sala." },
+        { "item_type": "mc", "stem": "baño", "choices": ["kylpyhuone, vessa", "kylpy", "uima-allas", "sauna"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "baño = kylpyhuone tai vessa. Pidempi muoto cuarto de baño." },
+        { "item_type": "mc", "stem": "comedor", "choices": ["keittiö", "ruokasali", "olohuone", "ruokakomero"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "comedor = ruokasali (sana comer = syödä). Älä sekoita: cocina = keittiö." },
+        { "item_type": "mc", "stem": "pasillo", "choices": ["käytävä", "parveke", "terassi", "ulko-ovi"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "pasillo = käytävä." },
+        { "item_type": "mc", "stem": "jardín", "choices": ["puutarha", "puisto", "parveke", "katto"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "jardín = puutarha. Älä sekoita: parque = puisto." },
+        { "item_type": "mc", "stem": "terraza", "choices": ["parveke", "terassi", "kellari", "ullakko"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "terraza = terassi (yleensä iso ulkotila). Balcón = parveke (pieni)." },
+        { "item_type": "mc", "stem": "balcón", "choices": ["terassi", "parveke", "ikkuna", "katto"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "balcón = parveke. Terraza on isompi avoin ulkotila." },
+        { "item_type": "mc", "stem": "garaje", "choices": ["autotalli", "varasto", "kellari", "ullakko"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "garaje = autotalli." },
+        { "item_type": "mc", "stem": "sótano", "choices": ["ullakko", "kellari", "varasto", "autotalli"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "sótano = kellari. Ático = ullakko." }
+      ]
+    },
+    {
+      "phase_id": "p2-recognition-match-huonekalut",
+      "phase_type": "recognition_match",
+      "title": "Yhdistä — huonekalut ja kodintekniikka",
+      "instruction": "Yhdistä espanjan sana ja suomennos.",
+      "mastery_threshold": { "I": 0.6, "A": 0.65, "B": 0.75, "C": 0.8, "M": 0.85, "E": 0.9, "L": 0.95 },
+      "skip_for_targets": ["I"],
       "items": [
         {
-          "item_type": "mc",
-          "stem": "PLACEHOLDER",
-          "choices": [
-            "a",
-            "b",
-            "c",
-            "d"
-          ],
-          "correct_index": 0,
-          "explanation": "PLACEHOLDER"
-        },
-        {
-          "item_type": "mc",
-          "stem": "PLACEHOLDER",
-          "choices": [
-            "a",
-            "b",
-            "c",
-            "d"
-          ],
-          "correct_index": 0,
-          "explanation": "PLACEHOLDER"
-        },
-        {
-          "item_type": "mc",
-          "stem": "PLACEHOLDER",
-          "choices": [
-            "a",
-            "b",
-            "c",
-            "d"
-          ],
-          "correct_index": 0,
-          "explanation": "PLACEHOLDER"
-        },
-        {
-          "item_type": "mc",
-          "stem": "PLACEHOLDER",
-          "choices": [
-            "a",
-            "b",
-            "c",
-            "d"
-          ],
-          "correct_index": 0,
-          "explanation": "PLACEHOLDER"
+          "item_type": "match",
+          "left_label": "Espanja",
+          "right_label": "Suomi",
+          "pairs": [
+            { "left": "mesa", "right": "pöytä" },
+            { "left": "silla", "right": "tuoli" },
+            { "left": "sofá", "right": "sohva" },
+            { "left": "cama", "right": "sänky" },
+            { "left": "armario", "right": "vaatekaappi" },
+            { "left": "estantería", "right": "kirjahylly" },
+            { "left": "escritorio", "right": "työpöytä" },
+            { "left": "lámpara", "right": "lamppu" },
+            { "left": "alfombra", "right": "matto" },
+            { "left": "espejo", "right": "peili" },
+            { "left": "cortina", "right": "verho" },
+            { "left": "nevera", "right": "jääkaappi" }
+          ]
         }
+      ]
+    },
+    {
+      "phase_id": "p3-recall-typed-es-fi",
+      "phase_type": "recall_typed_es_to_fi",
+      "title": "Käännä suomeksi",
+      "instruction": "Kirjoita käännös suomeksi (pienellä).",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.7, "C": 0.75, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I"],
+      "items": [
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "casa", "accept": ["talo"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "cocina", "accept": ["keittiö"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "dormitorio", "accept": ["makuuhuone"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "salón", "accept": ["olohuone"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "baño", "accept": ["kylpyhuone", "vessa"], "hint": "kaksi mahdollista käännöstä" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "mesa", "accept": ["pöytä"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "cama", "accept": ["sänky", "vuode"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "armario", "accept": ["vaatekaappi", "kaappi"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "nevera", "accept": ["jääkaappi"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "lavadora", "accept": ["pesukone"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "ordenador", "accept": ["tietokone"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "vivir", "accept": ["asua", "elää"] }
+      ]
+    },
+    {
+      "phase_id": "p4-recall-typed-fi-es",
+      "phase_type": "recall_typed_fi_to_es",
+      "title": "Käännä espanjaksi",
+      "instruction": "Kirjoita käännös espanjaksi.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "talo", "accept": ["casa"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "kerrostaloasunto", "accept": ["piso", "apartamento"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "keittiö", "accept": ["cocina"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "olohuone", "accept": ["salón", "salon", "sala"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "kylpyhuone", "accept": ["baño", "bano", "cuarto de baño", "cuarto de bano"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "sänky", "accept": ["cama"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "tuoli", "accept": ["silla"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "sohva", "accept": ["sofá", "sofa"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "jääkaappi", "accept": ["nevera", "frigorífico", "frigorifico"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "pesukone", "accept": ["lavadora"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "tietokone", "accept": ["ordenador", "computadora"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "asua", "accept": ["vivir"] }
+      ]
+    },
+    {
+      "phase_id": "p5-application-gap-helppo",
+      "phase_type": "application_gap_fill",
+      "title": "Lauseen täydennys — perustaso",
+      "instruction": "Täydennä lause oikealla sanalla.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.75, "C": 0.8, "M": 0.85, "E": 0.9, "L": 0.92 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Cocino en la {1}.", "answers": [["cocina"]], "word_bank": ["cocina", "salón", "baño"] },
+        { "item_type": "gap_fill", "sentence_template": "Duermo en mi {1}.", "answers": [["dormitorio", "cama", "habitación", "habitacion"]], "word_bank": ["dormitorio", "cocina", "comedor"] },
+        { "item_type": "gap_fill", "sentence_template": "Veo la tele en el {1}.", "answers": [["salón", "salon"]], "word_bank": ["salón", "garaje", "pasillo"] },
+        { "item_type": "gap_fill", "sentence_template": "La leche está en la {1}.", "answers": [["nevera", "frigorífico", "frigorifico"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Lavo la ropa en la {1}.", "answers": [["lavadora"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Estudio con mi {1} en el escritorio.", "answers": [["ordenador", "computadora"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Hay cuatro {1} en la mesa del comedor.", "answers": [["sillas"]], "word_bank": ["sillas", "mesas", "camas"] },
+        { "item_type": "gap_fill", "sentence_template": "Mi ropa está en el {1}.", "answers": [["armario"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "El coche está en el {1}.", "answers": [["garaje"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Las plantas están en el {1}.", "answers": [["jardín", "jardin", "balcón", "balcon", "terraza"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p6-application-gap-vaativa",
+      "phase_type": "application_gap_fill",
+      "title": "Lauseen täydennys — vaativa",
+      "instruction": "Täydennä ilman sanapankkia.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.65, "C": 0.75, "M": 0.85, "E": 0.9, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Yo {1} en un piso pequeño en Madrid. (vivir)", "answers": [["vivo"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Mi hermano y yo {1} el piso con dos amigos. (compartir)", "answers": [["compartimos"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Mis padres {1} una casa cerca de la playa en verano. (alquilar)", "answers": [["alquilan"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "El microondas está encima de la {1}.", "answers": [["nevera", "mesa", "encimera"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "En mi habitación hay una {1} para los libros.", "answers": [["estantería", "estanteria"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Para ver bien por la mañana, miro el {1}.", "answers": [["espejo"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "En invierno cierro las {1} para que no entre el frío.", "answers": [["cortinas"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Mi piso tiene un {1} pequeño con dos plantas.", "answers": [["balcón", "balcon"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Las herramientas están en el {1} de la casa.", "answers": [["sótano", "sotano", "garaje"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Para leer por la noche enciendo la {1}.", "answers": [["lámpara", "lampara"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p7-application-sentence-build",
+      "phase_type": "application_sentence_build",
+      "title": "Lauseiden rakentelua",
+      "instruction": "Käännä koko lause espanjaksi.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.6, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.92 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Asun pienessä asunnossa.", "accept": ["vivo en un piso pequeño", "vivo en un apartamento pequeño", "vivo en un piso pequeno", "vivo en un apartamento pequeno"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Keittiössä on jääkaappi ja mikro.", "accept": ["en la cocina hay una nevera y un microondas", "en la cocina hay un frigorífico y un microondas", "en la cocina hay una nevera y un microondas."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Makuuhuoneessani on sänky ja vaatekaappi.", "accept": ["en mi dormitorio hay una cama y un armario", "en mi habitación hay una cama y un armario", "en mi habitacion hay una cama y un armario"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Olohuoneessa on iso sohva.", "accept": ["en el salón hay un sofá grande", "en el salon hay un sofa grande", "hay un sofá grande en el salón"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Jaan asunnon kahden ystävän kanssa.", "accept": ["comparto el piso con dos amigos", "comparto el apartamento con dos amigos", "comparto piso con dos amigos"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Vuokraamme talon meren rannalla.", "accept": ["alquilamos una casa en la playa", "alquilamos una casa cerca de la playa", "alquilamos una casa junto al mar"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Tietokoneeni on työpöydällä.", "accept": ["mi ordenador está en el escritorio", "mi ordenador esta en el escritorio", "mi computadora está en el escritorio"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Asunnossa on parveke ja pieni puutarha.", "accept": ["el piso tiene un balcón y un jardín pequeño", "el piso tiene un balcon y un jardin pequeno", "la casa tiene un balcón y un jardín pequeño"] }
+      ]
+    },
+    {
+      "phase_id": "p8-synthesis-translate",
+      "phase_type": "synthesis_translate",
+      "title": "YO-tyylinen käännös",
+      "instruction": "Käännä koko lause espanjaksi YO-tasolla.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.6, "C": 0.65, "M": 0.75, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Asun vanhempieni kanssa pienessä talossa kaupungin laidalla.", "accept": ["vivo con mis padres en una casa pequeña en las afueras de la ciudad", "vivo con mis padres en una casa pequena en las afueras de la ciudad", "vivo con mis padres en una pequeña casa a las afueras de la ciudad"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Asuntomme on kolmannessa kerroksessa ja siinä on kaksi makuuhuonetta.", "accept": ["nuestro piso está en el tercer piso y tiene dos dormitorios", "nuestro piso está en la tercera planta y tiene dos dormitorios", "nuestro apartamento está en el tercer piso y tiene dos habitaciones"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Vuokraan huonetta yliopistossa opiskelevan tytön kanssa.", "accept": ["alquilo una habitación con una chica que estudia en la universidad", "alquilo una habitacion con una chica que estudia en la universidad", "comparto una habitación con una chica que estudia en la universidad"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Keittiössä on uusi pesukone, mutta jääkaappi on melko vanha.", "accept": ["en la cocina hay una lavadora nueva, pero la nevera es bastante vieja", "en la cocina hay una lavadora nueva pero el frigorífico es bastante viejo", "en la cocina hay una lavadora nueva, pero el frigorífico es bastante antiguo"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Olohuoneessa on iso sohva, kirjahylly ja matto.", "accept": ["en el salón hay un sofá grande, una estantería y una alfombra", "en el salon hay un sofa grande, una estanteria y una alfombra", "en el salón hay un sofá grande, una estantería y una alfombra."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Kesällä syömme parvekkeella ja talvella ruokasalissa.", "accept": ["en verano comemos en el balcón y en invierno en el comedor", "en verano comemos en la terraza y en invierno en el comedor", "en verano comemos en el balcon y en invierno en el comedor"] }
+      ]
+    },
+    {
+      "phase_id": "p9-synthesis-short-writing",
+      "phase_type": "synthesis_short_writing",
+      "title": "Lyhyt kirjoitus",
+      "instruction": "Kirjoita lyhyt teksti kodistasi.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.6, "C": 0.65, "M": 0.7, "E": 0.8, "L": 0.9 },
+      "skip_for_targets": ["I", "A", "B", "C", "M"],
+      "items": [
+        { "item_type": "writing", "prompt": "Kuvaile asuntoasi 5–7 lauseella: missä se sijaitsee, kuinka monta huonetta on, mitä huonekaluja keittiössä ja olohuoneessa. Käytä vähintään 6 oppimaasi sanaa.", "min_words": 40, "max_words": 90, "rubric_focus": ["communication", "vocab", "structure"] },
+        { "item_type": "writing", "prompt": "Esittele oma huoneesi: mitä siellä on (sänky, työpöytä, kaappi, hylly…), mistä pidät ja mitä haluaisit muuttaa. 5–7 lausetta.", "min_words": 40, "max_words": 90, "rubric_focus": ["communication", "vocab"] },
+        { "item_type": "writing", "prompt": "Kuvittele unelma-asuntosi: missä se on, millainen se on, mitä huonekaluja ja kodintekniikkaa siinä on. 5–7 lausetta.", "min_words": 40, "max_words": 90, "rubric_focus": ["communication", "structure"] }
+      ]
+    },
+    {
+      "phase_id": "p10-cumulative-review",
+      "phase_type": "application_gap_fill",
+      "title": "Kertaus — koko sanasto",
+      "instruction": "Sekoitettu kertaus. Täydennä sopiva sana.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.7, "C": 0.75, "M": 0.85, "E": 0.9, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Mi piso tiene tres {1}: una para mí, una para mi hermana y una para mis padres.", "answers": [["dormitorios", "habitaciones"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Para preparar la cena entro en la {1}.", "answers": [["cocina"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Después de comer fregamos los platos y los guardamos en el {1}.", "answers": [["armario"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Yo {1} con dos amigos en un piso del centro. (compartir)", "answers": [["comparto"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Mis abuelos {1} en una casa grande con jardín. (vivir)", "answers": [["viven"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "El microondas no funciona — voy a calentar la sopa en la {1}.", "answers": [["cocina"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "En el {1} aparcamos los coches.", "answers": [["garaje"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Hace frío — cierro las {1} de la ventana.", "answers": [["cortinas"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "El {1} es perfecto para las plantas porque tiene mucha luz.", "answers": [["balcón", "balcon", "salón", "salon"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Estoy buscando un {1} para vivir el próximo año en Barcelona.", "answers": [["piso", "apartamento"]], "word_bank": null }
       ]
     }
   ],
   "vocab": [
-    {
-      "es": "PLACEHOLDER",
-      "fi": "PLACEHOLDER"
-    }
+    { "es": "casa", "fi": "talo", "example_es": "Mi casa está cerca del centro.", "example_fi": "Taloni on keskustan lähellä.", "gender": "f" },
+    { "es": "piso", "fi": "kerrostaloasunto (Espanjassa)", "example_es": "Vivo en un piso pequeño.", "example_fi": "Asun pienessä asunnossa.", "gender": "m" },
+    { "es": "apartamento", "fi": "kerrostaloasunto", "example_es": "Alquilamos un apartamento en la playa.", "example_fi": "Vuokraamme asunnon rannalla.", "gender": "m" },
+    { "es": "habitación", "fi": "huone, makuuhuone", "example_es": "Mi habitación es muy luminosa.", "example_fi": "Huoneeni on hyvin valoisa.", "gender": "f" },
+    { "es": "dormitorio", "fi": "makuuhuone", "example_es": "El dormitorio está al fondo del pasillo.", "example_fi": "Makuuhuone on käytävän päässä.", "gender": "m" },
+    { "es": "cocina", "fi": "keittiö", "example_es": "La cocina es pequeña pero moderna.", "example_fi": "Keittiö on pieni mutta moderni.", "gender": "f" },
+    { "es": "salón", "fi": "olohuone", "example_es": "Vemos la tele en el salón.", "example_fi": "Katsomme telkkaria olohuoneessa.", "gender": "m" },
+    { "es": "sala", "fi": "olohuone (Lat. Am.)", "example_es": "La sala tiene un sofá grande.", "example_fi": "Olohuoneessa on iso sohva.", "gender": "f" },
+    { "es": "baño", "fi": "kylpyhuone, vessa", "example_es": "El baño está al lado de la cocina.", "example_fi": "Kylpyhuone on keittiön vieressä.", "gender": "m" },
+    { "es": "cuarto de baño", "fi": "kylpyhuone", "example_es": "Hay dos cuartos de baño en el piso.", "example_fi": "Asunnossa on kaksi kylpyhuonetta.", "gender": "m" },
+    { "es": "comedor", "fi": "ruokasali", "example_es": "Cenamos en el comedor los domingos.", "example_fi": "Syömme illallisen ruokasalissa sunnuntaisin.", "gender": "m" },
+    { "es": "pasillo", "fi": "käytävä", "example_es": "Mi habitación está al final del pasillo.", "example_fi": "Huoneeni on käytävän päässä.", "gender": "m" },
+    { "es": "jardín", "fi": "puutarha", "example_es": "La casa tiene un jardín con árboles.", "example_fi": "Talossa on puutarha jossa kasvaa puita.", "gender": "m" },
+    { "es": "terraza", "fi": "terassi", "example_es": "En verano comemos en la terraza.", "example_fi": "Kesällä syömme terassilla.", "gender": "f" },
+    { "es": "balcón", "fi": "parveke", "example_es": "Tenemos plantas en el balcón.", "example_fi": "Meillä on kasveja parvekkeella.", "gender": "m" },
+    { "es": "garaje", "fi": "autotalli", "example_es": "El coche está en el garaje.", "example_fi": "Auto on autotallissa.", "gender": "m" },
+    { "es": "ático", "fi": "ullakko, kattohuoneisto", "example_es": "Viven en un ático con vistas.", "example_fi": "He asuvat kattohuoneistossa, josta on näkymät.", "gender": "m" },
+    { "es": "sótano", "fi": "kellari", "example_es": "Las herramientas están en el sótano.", "example_fi": "Työkalut ovat kellarissa.", "gender": "m" },
+    { "es": "mesa", "fi": "pöytä", "example_es": "La mesa del comedor es de madera.", "example_fi": "Ruokapöytä on puuta.", "gender": "f" },
+    { "es": "silla", "fi": "tuoli", "example_es": "Hay cuatro sillas alrededor de la mesa.", "example_fi": "Pöydän ympärillä on neljä tuolia.", "gender": "f" },
+    { "es": "sofá", "fi": "sohva", "example_es": "El sofá del salón es muy cómodo.", "example_fi": "Olohuoneen sohva on tosi mukava.", "gender": "m" },
+    { "es": "cama", "fi": "sänky", "example_es": "Mi cama es grande.", "example_fi": "Sänkyni on iso.", "gender": "f" },
+    { "es": "armario", "fi": "vaatekaappi", "example_es": "Guardo la ropa en el armario.", "example_fi": "Säilytän vaatteita kaapissa.", "gender": "m" },
+    { "es": "estantería", "fi": "kirjahylly", "example_es": "Los libros están en la estantería.", "example_fi": "Kirjat ovat hyllyssä.", "gender": "f" },
+    { "es": "escritorio", "fi": "työpöytä", "example_es": "Estudio en mi escritorio.", "example_fi": "Opiskelen työpöydälläni.", "gender": "m" },
+    { "es": "lámpara", "fi": "lamppu", "example_es": "Enciendo la lámpara para leer.", "example_fi": "Sytytän lampun lukemista varten.", "gender": "f" },
+    { "es": "alfombra", "fi": "matto", "example_es": "La alfombra del salón es azul.", "example_fi": "Olohuoneen matto on sininen.", "gender": "f" },
+    { "es": "espejo", "fi": "peili", "example_es": "Hay un espejo grande en el baño.", "example_fi": "Kylpyhuoneessa on iso peili.", "gender": "m" },
+    { "es": "cortina", "fi": "verho", "example_es": "Cierro las cortinas por la noche.", "example_fi": "Suljen verhot illalla.", "gender": "f" },
+    { "es": "nevera", "fi": "jääkaappi", "example_es": "La leche está en la nevera.", "example_fi": "Maito on jääkaapissa.", "gender": "f" },
+    { "es": "frigorífico", "fi": "jääkaappi", "example_es": "El frigorífico es nuevo.", "example_fi": "Jääkaappi on uusi.", "gender": "m" },
+    { "es": "lavadora", "fi": "pesukone", "example_es": "La lavadora está en la cocina.", "example_fi": "Pesukone on keittiössä.", "gender": "f" },
+    { "es": "microondas", "fi": "mikroaaltouuni", "example_es": "Caliento la comida en el microondas.", "example_fi": "Lämmitän ruoan mikrossa.", "gender": "m" },
+    { "es": "televisión", "fi": "televisio", "example_es": "La televisión está en el salón.", "example_fi": "Televisio on olohuoneessa.", "gender": "f" },
+    { "es": "ordenador", "fi": "tietokone (Espanjassa)", "example_es": "Mi ordenador es nuevo.", "example_fi": "Tietokoneeni on uusi.", "gender": "m" },
+    { "es": "vivir", "fi": "asua, elää", "example_es": "Vivo en Helsinki.", "example_fi": "Asun Helsingissä.", "gender": null },
+    { "es": "alquilar", "fi": "vuokrata", "example_es": "Alquilamos un piso en Madrid.", "example_fi": "Vuokraamme asunnon Madridissa.", "gender": null },
+    { "es": "compartir", "fi": "jakaa", "example_es": "Comparto piso con dos amigos.", "example_fi": "Jaan asunnon kahden ystävän kanssa.", "gender": null }
   ],
   "side_panel": {
     "tabs": [
       {
         "id": "vocab",
         "title": "Sanasto",
-        "content_md": "PLACEHOLDER"
+        "content_md": "## Asunnon tyypit\n\n- **casa** — talo\n- **piso** — kerrostaloasunto (Espanja)\n- **apartamento** — kerrostaloasunto (yleisempi Lat. Am.)\n- **ático** — kattohuoneisto\n\n## Tilat\n\n- **habitación** — huone (yleinen sana)\n- **dormitorio** — makuuhuone\n- **cocina** — keittiö\n- **salón** / **sala** — olohuone\n- **baño** / **cuarto de baño** — kylpyhuone\n- **comedor** — ruokasali\n- **pasillo** — käytävä\n- **jardín** — puutarha\n- **terraza** — terassi\n- **balcón** — parveke\n- **garaje** — autotalli\n- **sótano** — kellari\n\n## Huonekalut\n\n- **mesa** — pöytä\n- **silla** — tuoli\n- **sofá** — sohva\n- **cama** — sänky\n- **armario** — vaatekaappi\n- **estantería** — kirjahylly\n- **escritorio** — työpöytä\n- **lámpara** — lamppu\n- **alfombra** — matto\n- **espejo** — peili\n- **cortina** — verho\n\n## Kodintekniikka\n\n- **nevera** / **frigorífico** — jääkaappi\n- **lavadora** — pesukone\n- **microondas** — mikroaaltouuni\n- **televisión** / **televisor** — televisio\n- **ordenador** — tietokone (Espanjassa); **computadora** Lat. Am.\n\n## Asumisen verbit\n\n- **vivir (en)** — asua\n- **alquilar** — vuokrata\n- **compartir** — jakaa"
+      },
+      {
+        "id": "tips",
+        "title": "YO-vinkki",
+        "content_md": "## YO-koe — koti-aihe\n\nKoti-sanasto näkyy YO-kokeessa joka vuosi: kuullun ymmärtämisessä asunto-ilmoituksissa ja luetun ymmärtämisessä asumiskertomuksissa.\n\n## Yleisimmät ansat\n\n- **salón** = **sala** = olohuone (Espanja vs Lat. Am.)\n- **nevera** = **frigorífico** = jääkaappi (synonyymejä)\n- **baño** ja **cuarto de baño** ovat sama sana\n- **piso** = kerrostaloasunto JA kerros — konteksti ratkaisee\n- **habitación** voi olla yleinen huone tai makuuhuone — **dormitorio** on aina makuuhuone\n\n## Latinalaisen Amerikan sanat\n\nYO-kokeessa voi esiintyä myös **apartamento**, **sala**, **computadora** — kaikki hyväksytään.\n\n## Kirjoituksessa\n\nKun kuvaat kotia, käytä **hay**-rakennetta: *Hay una mesa, dos sillas y un sofá* (= on/sijaitsee). **Está**-muoto kun jokin on tietyssä paikassa: *La mesa está en la cocina*.\n\n## Sanapareja jotka kannattaa muistaa\n\n- **vivir en** + paikka — *Vivo en un piso*\n- **alquilar** + asia — *alquilo una habitación*\n- **compartir** + asia + **con** + henkilö — *comparto piso con María*"
       }
     ]
   }
