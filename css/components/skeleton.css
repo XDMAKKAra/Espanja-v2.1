@@ -24,13 +24,25 @@
 .skeleton__bar {
   height: 14px;
   border-radius: var(--r-sm);
+  /* Light mode: subtle shimmer on near-white surface */
   background: linear-gradient(
     90deg,
-    rgba(255, 255, 255, 0.04) 0%,
-    rgba(255, 255, 255, 0.08) 50%,
-    rgba(255, 255, 255, 0.04) 100%
+    var(--surface-2) 0%,
+    color-mix(in srgb, var(--border) 60%, var(--surface-2)) 50%,
+    var(--surface-2) 100%
   );
-  animation: skeleton-pulse 1.5s var(--ease-inout) infinite;
+  background-size: 300% 100%;
+  animation: skeleton-shimmer-v2 1.6s ease-in-out infinite;
+}
+/* Dark mode: flip to white-channel shimmer so bars are visible on #141414 */
+:root[data-theme="dark"] .skeleton__bar {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.05) 0%,
+    rgba(255, 255, 255, 0.11) 50%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
+  background-size: 300% 100%;
 }
 
 .skeleton__bar--title  { height: 24px; width: 55%; }
@@ -60,9 +72,13 @@
   0%, 100% { opacity: 0.6; }
   50%      { opacity: 1; }
 }
+@keyframes skeleton-shimmer-v2 {
+  0%   { background-position: 150% 0; }
+  100% { background-position: -150% 0; }
+}
 
 @media (prefers-reduced-motion: reduce) {
-  .skeleton__bar { animation: none; opacity: 0.75; }
+  .skeleton__bar { animation: none; opacity: 0.75; background-size: 100%; }
 }
 
 /* ── Variant: vocab (1 prompt + 4 options) ──────────────────────── */
@@ -119,3 +135,52 @@
   white-space: nowrap;
   border: 0;
 }
+
+/* ── Variant: mode-page (eyebrow + h1 + sub + 3 topic rows) ─────── */
+/* Used when the mode-page is loading briefing stats. Shape mirrors the
+   real content so there's no layout shift when data arrives. */
+.skeleton--mode-page {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  gap: var(--s-3);
+}
+.skeleton--mode-page .skeleton__bar--eyebrow {
+  height: 10px;
+  width: 140px;
+  border-radius: var(--r-sm);
+  margin-bottom: var(--s-2);
+}
+.skeleton--mode-page .skeleton__bar--h1 {
+  height: 32px;
+  width: 200px;
+  border-radius: var(--r-sm);
+  margin-bottom: var(--s-1);
+}
+.skeleton--mode-page .skeleton__bar--sub {
+  height: 14px;
+  width: 320px;
+  max-width: 90%;
+  border-radius: var(--r-sm);
+  margin-bottom: var(--s-6);
+}
+/* Topic row skeleton — mimics .mode-topic pill (48px tall) */
+.skeleton--mode-page .skeleton__bar--topic {
+  height: 48px;
+  width: 100%;
+  border-radius: var(--r-sm);
+  margin-bottom: -1px; /* collapse borders like real rows */
+}
+
+/* ── Option-button skeleton (4 stacked, matching .ex-option height) ─ */
+/* Used as fallback inside #exercise-skeleton-slot when the exercise CSS
+   skeleton-option doesn't match the new .ex-option shape. */
+.skeleton__bar--option-btn {
+  height: 52px; /* matches padding:14px*2 + line-height of .ex-option */
+  width: 100%;
+  border-radius: var(--r-sm);
+  margin-bottom: -1px;
+}
+.skeleton__bar--option-btn:first-child { border-radius: var(--r-sm) var(--r-sm) 0 0; }
+.skeleton__bar--option-btn:last-child  { border-radius: 0 0 var(--r-sm) var(--r-sm); margin-bottom: 0; }

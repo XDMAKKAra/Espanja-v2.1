@@ -303,6 +303,35 @@ function wireFocus() {
   });
 }
 
+// ── Animated number counter (requestAnimationFrame, ~600 ms, ease-out) ────
+/**
+ * Counts from 0 → target over ~600 ms using ease-out easing.
+ * Writes the formatted value to `el` on each tick. Respects
+ * prefers-reduced-motion — skips animation and sets final value immediately.
+ * @param {HTMLElement} el
+ * @param {number} target   integer end value
+ * @param {string} [suffix] optional suffix (e.g. " viikkoa")
+ */
+function animateCounter(el, target, suffix = "") {
+  if (!el || target == null || !Number.isFinite(target)) return;
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    el.textContent = target + suffix;
+    return;
+  }
+  const duration = 600;
+  const start = performance.now();
+  function tick(now) {
+    const elapsed = now - start;
+    const progress = Math.min(elapsed / duration, 1);
+    // ease-out cubic
+    const eased = 1 - Math.pow(1 - progress, 3);
+    el.textContent = Math.round(eased * target) + suffix;
+    if (progress < 1) requestAnimationFrame(tick);
+    else el.textContent = target + suffix;
+  }
+  requestAnimationFrame(tick);
+}
+
 // ── Stage 8: reveal ────────────────────────────────────────────────────────
 function wireReveal() {
   const pricing = document.querySelector('[data-ob3="pricing"]');
@@ -328,25 +357,34 @@ function renderReveal() {
   if (nameEl) {
     const email = (typeof localStorage !== "undefined" && localStorage.getItem("puheo_email")) || "";
     const name = email ? email.split("@")[0] : "";
-    nameEl.textContent = name ? `Hei ${name}.` : "Polkusi on valmis.";
+    nameEl.textContent = name ? `Hei, ${name}!` : "Tässä sinun polkusi.";
   }
 
   const jumpEl = document.getElementById("ob3-reveal-jump");
   if (jumpEl) jumpEl.textContent = `${flow.current_level || "?"} → ${flow.target_grade || "?"}`;
 
+  // Animated counters for weeks / lessonsPerWeek / minutesPerWeek.
   const weeksEl = document.getElementById("ob3-reveal-weeks");
   if (weeksEl) {
     const examLabel = flow.exam_date
       ? new Date(flow.exam_date).toLocaleDateString("fi-FI", { day: "numeric", month: "numeric", year: "numeric" })
       : null;
-    weeksEl.textContent = examLabel
-      ? `${plan.weeksUntilExam} viikkoa · ${examLabel}`
-      : `${plan.weeksUntilExam} viikkoa`;
+    if (examLabel) {
+      // counter on weeks number only, suffix appended statically
+      weeksEl.innerHTML = `<span id="ob3-counter-weeks"></span> viikkoa · ${examLabel}`;
+      animateCounter(document.getElementById("ob3-counter-weeks"), plan.weeksUntilExam);
+    } else {
+      weeksEl.innerHTML = `<span id="ob3-counter-weeks"></span> viikkoa`;
+      animateCounter(document.getElementById("ob3-counter-weeks"), plan.weeksUntilExam);
+    }
   }
 
   const paceEl = document.getElementById("ob3-reveal-pace");
   if (paceEl) {
-    paceEl.textContent = `${plan.lessonsPerWeek} oppituntia/vk · ~${plan.minutesPerWeek} min`;
+    paceEl.innerHTML = `<span id="ob3-counter-lessons"></span> oppituntia/vk · ~<span id="ob3-counter-mins"></span> min`;
+    // stagger the counters slightly so they feel sequential
+    animateCounter(document.getElementById("ob3-counter-lessons"), plan.lessonsPerWeek);
+    setTimeout(() => animateCounter(document.getElementById("ob3-counter-mins"), plan.minutesPerWeek), 120);
   }
 
   const focusEl = document.getElementById("ob3-reveal-focus");
@@ -430,6 +468,16 @@ function openWaitlist(language, level) {
   const success = document.getElementById("ob3-waitlist-success");
   if (success) success.classList.add("hidden");
   track("ob_v3_waitlist_open", { language, level: level || null });
+  // Move focus into modal so keyboard users land inside (focus trap handles the rest)
+  const closeBtn = document.getElementById("ob3-waitlist-close");
+  if (closeBtn) requestAnimationFrame(() => closeBtn.focus());
+}
+
+function _closeWaitlist(modal) {
+  modal.classList.add("hidden");
+  // Return focus to the card that opened the modal (language stage)
+  const trigger = document.querySelector('[data-ob3-field="target_language"] .ob3-card[data-soon="1"]');
+  trigger?.focus();
 }
 
 function wireWaitlist() {
@@ -437,9 +485,29 @@ function wireWaitlist() {
   if (!modal || modal.dataset.wired) return;
   modal.dataset.wired = "1";
   const close = document.getElementById("ob3-waitlist-close");
-  if (close) close.addEventListener("click", () => modal.classList.add("hidden"));
+  if (close) close.addEventListener("click", () => _closeWaitlist(modal));
   modal.addEventListener("click", (e) => {
-    if (e.target === modal) modal.classList.add("hidden");
+    if (e.target === modal) _closeWaitlist(modal);
+  });
+  // Escape key closes modal (a11y requirement for dialog role)
+  modal.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") { e.stopPropagation(); _closeWaitlist(modal); }
+    // Simple focus trap: Tab / Shift+Tab stays inside the panel
+    if (e.key === "Tab") {
+      const panel = modal.querySelector(".ob3-modal__panel");
+      if (!panel) return;
+      const focusables = Array.from(
+        panel.querySelectorAll('button:not([disabled]), input, [tabindex]:not([tabindex="-1"])')
+      );
+      if (focusables.length === 0) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      if (e.shiftKey) {
+        if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+      } else {
+        if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+    }
   });
   const form = document.getElementById("ob3-waitlist-form");
   if (form) {

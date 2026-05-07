@@ -594,5 +594,5 @@ Push → Vercel deploy → mittaus tuotannossa → IMPROVEMENTS.md (mittausparei
 
 ---
 ## Lopuksi
-Tämä on **06 / 6** jonossa (`agent-prompts/02-queue/06_LIVE_AUDIT_P2.md`).
+Tämä on **10 / 12** jonossa (`agent-prompts/02-queue/10_LIVE_AUDIT_P2.md`).
 Close-out hoituu META_QA_LOOP-orkestraattorin Vaihe 4:ssa — **älä manuaalisesti poista tätä tiedostoa workerina**, orkestraattori tekee sen.

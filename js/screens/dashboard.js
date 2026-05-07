@@ -196,15 +196,29 @@ function renderFreeChip() {
     return;
   }
 
-  // /api/free-usage does not exist yet — show static encouraging chip.
+  // /api/free-usage does not exist yet — show static quota chip with progress bar.
+  // aiUsage is not in scope here; read from cached profile or use placeholder counts.
+  const used = window._userProfile?.ai_calls_this_month ?? null;
+  const limit = 20; // static free-tier limit placeholder
+  const usedSafe = (used != null && Number.isFinite(Number(used))) ? Number(used) : null;
+  const fillPct = usedSafe != null ? Math.min(100, Math.round((usedSafe / limit) * 100)) : 0;
+  const isHigh = fillPct >= 75;
+  const fillClass = isHigh ? "dash-free-meter__fill--warn" : "dash-free-meter__fill--ok";
+
   root.hidden = false;
   root.innerHTML = `
     <div class="dash-free-chip">
-      <span class="dash-free-chip__label">Free</span>
-      <span class="dash-free-chip__sep">·</span>
-      <span>Rajoitettu sisältö</span>
-      <span class="dash-free-chip__sep">·</span>
-      <a href="/pricing.html?from=meter">Avaa Treeni &rarr;</a>
+      <div class="dash-free-chip__left">
+        <span class="dash-free-chip__badge">Free</span>
+        ${usedSafe != null
+          ? `<span class="dash-free-chip__quota">${usedSafe}/${limit} AI-harjoitusta</span>`
+          : `<span class="dash-free-chip__quota">Rajoitettu sisältö</span>`}
+      </div>
+      ${usedSafe != null ? `
+        <div class="dash-free-meter" title="${usedSafe} / ${limit} käytetty">
+          <div class="dash-free-meter__fill ${fillClass}" style="width:${fillPct}%"></div>
+        </div>` : ""}
+      <a class="dash-free-chip__cta" href="/pricing.html?from=meter">Avaa Treeni &rarr;</a>
     </div>`;
 }
 
@@ -328,7 +342,14 @@ function renderDashboard({
   const streakEl = $("dash-streak");
   if (streakEl) {
     streakEl.className = streak >= 3 ? "mono-num dash-stat-streak-active" : "mono-num";
-    countUp(streakEl, streak, streak >= 30 ? 1600 : 1100);
+    const safeStreak = (streak != null && Number.isFinite(streak)) ? streak : 0;
+    countUp(streakEl, safeStreak, safeStreak >= 30 ? 1600 : 1100);
+  }
+
+  // KPI tile — streak flame icon tint
+  const kpiTile1 = document.querySelector(".dash-kpi-tile--1");
+  if (kpiTile1) {
+    kpiTile1.classList.toggle("dash-kpi-tile--hot", (streak ?? 0) >= 7);
   }
   // Once-per-crossing milestone confetti (3 / 7 / 30 days). Cheap call: gated
   // by localStorage and prefers-reduced-motion in the helper itself.
@@ -356,7 +377,14 @@ function renderDashboard({
   }
 
   const totalEl = $("dash-total-sessions");
-  if (totalEl) countUp(totalEl, totalSessions, 1300);
+  if (totalEl) {
+    const safeTotal = (totalSessions != null && Number.isFinite(Number(totalSessions))) ? Number(totalSessions) : 0;
+    if (safeTotal === 0 && totalSessions == null) {
+      totalEl.textContent = "—";
+    } else {
+      countUp(totalEl, safeTotal, 1300);
+    }
+  }
 
   // YO-readiness rail stat — filled async by loadAndRenderReadinessMap below.
   // dash-yo-delta stays blank until the API exposes a delta source.
@@ -373,10 +401,12 @@ function renderDashboard({
   const weekValEl = $("dash-week-val");
   const weekTrendEl = $("dash-week-trend");
   if (weekValEl && weekTrendEl) {
-    weekValEl.childNodes[0].textContent = weekSessions;
-    if (weekSessions > prevWeekSessions) {
+    const safeWeek = (weekSessions != null && Number.isFinite(Number(weekSessions))) ? Number(weekSessions) : null;
+    const safeNumEl = weekValEl.querySelector(".mono-num") || weekValEl.childNodes[0];
+    if (safeNumEl) safeNumEl.textContent = safeWeek != null ? safeWeek : "—";
+    if (safeWeek != null && weekSessions > prevWeekSessions) {
       weekTrendEl.textContent = "↑"; weekTrendEl.className = "week-trend-arrow up";
-    } else if (weekSessions < prevWeekSessions && prevWeekSessions > 0) {
+    } else if (safeWeek != null && weekSessions < prevWeekSessions && prevWeekSessions > 0) {
       weekTrendEl.textContent = "↓"; weekTrendEl.className = "week-trend-arrow down";
     } else {
       weekTrendEl.textContent = ""; weekTrendEl.className = "week-trend-arrow same";
@@ -421,35 +451,48 @@ function renderDashboard({
   }
 
   const modesEl = $("dash-modes");
-  modesEl.innerHTML = "";
-  for (const [mode, meta] of Object.entries(MODE_META)) {
-    const s = modeStats[mode];
-    const daysAgo = modeDaysAgo[mode];
-    const isDue = daysAgo === null || daysAgo >= 2;
-    const card = document.createElement("div");
-    card.className = "dash-mode-card" + (s ? " has-data" : "");
-    const dueDot = isDue && totalSessions > 0 ? `<span class="dash-mode-due" title="Ei harjoiteltu vähään aikaan"></span>` : "";
-    const right = s
-      ? (s.bestGrade
-          ? `<div class="dash-mode-stat-label">Paras</div><div class="dash-mode-grade">${s.bestGrade}</div>`
-          : s.avgPct != null
-          ? `<div class="dash-mode-stat-label">Keskim.</div><div class="dash-mode-pct">${s.avgPct}%</div>`
-          : "")
-      : `<div class="dash-mode-empty"><span class="dash-mode-empty__label">Ei vielä</span><span class="dash-mode-empty__cta">Aloita →</span></div>`;
-    card.innerHTML = `
-      <div class="dash-mode-left">
-        <span class="dash-mode-icon">${meta.icon}</span>
-        <div>
-          <div class="dash-mode-name">${meta.name}${dueDot}</div>
-          <div class="dash-mode-sessions">${s ? `${s.sessions} krt` : "0 krt"}</div>
+  if (modesEl) {
+    modesEl.innerHTML = "";
+    for (const [mode, meta] of Object.entries(MODE_META)) {
+      const s = modeStats?.[mode];
+      const daysAgo = modeDaysAgo?.[mode];
+      const isDue = daysAgo === null || daysAgo === undefined || daysAgo >= 2;
+      const card = document.createElement("div");
+      card.className = "dash-mode-card" + (s ? " has-data" : "");
+      card.setAttribute("tabindex", "0");
+      card.setAttribute("role", "button");
+      card.setAttribute("aria-label", `${meta.name} — ${s ? `${s.sessions ?? 0} harjoituskertaa` : "aloita"}`);
+      // Due dot — pulsing accent dot when practice is overdue
+      const dueDot = isDue && totalSessions > 0
+        ? `<span class="dash-mode-due dash-mode-due--pulse" title="Harjoittele tänään"></span>`
+        : "";
+      // Right side: grade / pct or CTA button
+      let right;
+      if (s) {
+        if (s.bestGrade) {
+          right = `<div class="dash-mode-stat-label">Paras</div><div class="dash-mode-grade">${s.bestGrade}</div>`;
+        } else if (s.avgPct != null && Number.isFinite(Number(s.avgPct))) {
+          right = `<div class="dash-mode-stat-label">Keskim.</div><div class="dash-mode-pct">${s.avgPct}%</div>`;
+        } else {
+          right = `<button class="dash-mode-cta-btn" tabindex="-1" aria-hidden="true">Aloita</button>`;
+        }
+      } else {
+        right = `<button class="dash-mode-cta-btn" tabindex="-1" aria-hidden="true">Aloita</button>`;
+      }
+      card.innerHTML = `
+        <div class="dash-mode-left">
+          <span class="dash-mode-icon" aria-hidden="true">${meta.icon}</span>
+          <div>
+            <div class="dash-mode-name">${meta.name}${dueDot}</div>
+            <div class="dash-mode-sessions">${s ? `${s.sessions ?? 0} krt` : "0 krt"}</div>
+          </div>
         </div>
-      </div>
-      <div class="dash-mode-right">${right}</div>`;
+        <div class="dash-mode-right">${right}</div>`;
 
-    card.addEventListener("click", () => {
-      navigateToMode(mode);
-    });
-    modesEl.appendChild(card);
+      card.addEventListener("click", () => navigateToMode(mode));
+      card.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); navigateToMode(mode); } });
+      modesEl.appendChild(card);
+    }
   }
 
   renderRecommendations(modeDaysAgo, modeStats, totalSessions);
@@ -472,21 +515,30 @@ function renderDashboard({
 
   if (recent.length > 0) {
     $("dash-recent-wrap").classList.remove("hidden");
-    $("dash-empty").classList.add("hidden");
+    $("dash-empty")?.classList.add("hidden");
+    const emptyRailEl = document.getElementById("dash-empty-rail");
+    if (emptyRailEl) emptyRailEl.classList.add("hidden");
     const listEl = $("dash-recent-list");
     listEl.innerHTML = "";
     for (const log of recent) {
       const meta = MODE_META[log.mode] || { icon: icon("document"), name: log.mode };
       const scoreStr =
-        log.scoreTotal > 0 ? `${log.scoreCorrect}/${log.scoreTotal}` : "";
+        log.scoreTotal > 0 ? `${log.scoreCorrect ?? "—"}/${log.scoreTotal}` : "";
       const gradeStr = log.ytlGrade || "";
       const item = document.createElement("div");
       item.className = "dash-recent-item";
+      item.setAttribute("role", "listitem");
+      item.setAttribute("tabindex", "0");
+      item.setAttribute("aria-label", `${meta.name}, ${timeAgo(log.createdAt)}`);
+      // Level chip — styled pill
+      const levelChip = log.level
+        ? `<span class="dash-recent-level-chip">${log.level}</span>`
+        : "";
       item.innerHTML = `
         <div class="dash-recent-left">
-          <span class="dash-recent-icon">${meta.icon}</span>
+          <span class="dash-recent-icon" aria-hidden="true">${meta.icon}</span>
           <div>
-            <div class="dash-recent-mode">${meta.name}${log.level ? ` · taso ${log.level}` : ""}</div>
+            <div class="dash-recent-mode">${meta.name}${levelChip}</div>
             <div class="dash-recent-time">${timeAgo(log.createdAt)}</div>
           </div>
         </div>
@@ -494,11 +546,28 @@ function renderDashboard({
           ${scoreStr ? `<div class="dash-recent-score">${scoreStr}</div>` : ""}
           ${gradeStr ? `<div class="dash-recent-grade">${gradeStr}</div>` : ""}
         </div>`;
+      // Full-row click — navigate to that mode
+      const clickMode = log.mode;
+      item.addEventListener("click", () => { try { navigateToMode(clickMode); } catch { /* noop */ } });
+      item.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); try { navigateToMode(clickMode); } catch { /* noop */ } } });
       listEl.appendChild(item);
     }
   } else {
-    $("dash-recent-wrap").classList.add("hidden");
-    $("dash-empty").classList.remove("hidden");
+    $("dash-recent-wrap")?.classList.add("hidden");
+    $("dash-empty")?.classList.remove("hidden");
+    // Show the rail empty state (new element in screen-path)
+    const emptyRailEl = document.getElementById("dash-empty-rail");
+    if (emptyRailEl) {
+      emptyRailEl.classList.remove("hidden");
+      const emptyBtn = document.getElementById("btn-empty-start");
+      if (emptyBtn && !emptyBtn._wired) {
+        emptyBtn._wired = true;
+        emptyBtn.addEventListener("click", () => {
+          const navBtn = document.getElementById("nav-vocab");
+          if (navBtn) navBtn.click(); else navigateToMode("vocab");
+        });
+      }
+    }
   }
 }
 
@@ -1487,7 +1556,10 @@ async function loadAndRenderReadinessMap() {
   wrap.classList.remove("hidden");
 
   const railReadinessEl = document.getElementById("dash-yo-readiness");
-  if (railReadinessEl) countUp(railReadinessEl, readinessPct, 1300);
+  if (railReadinessEl) {
+    const safePct = Number.isFinite(readinessPct) ? readinessPct : 0;
+    countUp(railReadinessEl, safePct, 1300);
+  }
 
   const ringEl = document.getElementById("dash-yo-readiness-ring");
   if (ringEl) {

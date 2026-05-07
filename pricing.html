@@ -40,11 +40,11 @@
     /* Segmented control: kk / paketti */
     .price-toggle {
       display: inline-flex;
-      gap: 4px;
-      padding: 4px;
-      background: var(--surface-2, #f1f1ee);
-      border: 1px solid var(--border);
-      border-radius: var(--r-full);
+      gap: 2px;
+      padding: 3px;
+      background: rgba(0, 0, 0, 0.06);
+      border: 1px solid rgba(0, 0, 0, 0.10);
+      border-radius: 999px;
       margin-bottom: 40px;
       font-family: var(--font-body);
     }
@@ -52,18 +52,23 @@
       appearance: none;
       background: transparent;
       border: 0;
-      padding: 8px 18px;
-      border-radius: var(--r-full);
+      padding: 8px 20px;
+      border-radius: 999px;
       font-size: 14px;
       font-weight: 600;
       color: var(--ink-soft);
       cursor: pointer;
-      transition: background var(--dur-base) var(--ease-out), color var(--dur-base) var(--ease-out);
+      transition: background 200ms ease-out, color 200ms ease-out, box-shadow 200ms ease-out;
       min-height: 36px;
+      position: relative;
     }
     .price-toggle button[aria-pressed="true"] {
-      background: var(--ink);
-      color: var(--bg, #fff);
+      background: #fff;
+      color: var(--ink);
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.14), 0 0 0 1px rgba(0, 0, 0, 0.06);
+    }
+    .price-toggle button[aria-pressed="false"] {
+      color: var(--ink-soft);
     }
     .price-toggle button:focus-visible {
       outline: 2px solid var(--accent);
@@ -100,13 +105,15 @@
       transform: translateX(-50%);
       font-family: var(--font-body);
       font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.08em;
+      font-weight: 600;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
-      color: var(--ink);
-      padding: 5px 14px;
-      border-radius: var(--r-full);
-      background: var(--accent);
+      color: #fff;
+      padding: 4px 12px;
+      border-radius: 999px;
+      background: #0f766e;
+      white-space: nowrap;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
     }
     .price-name {
       font-size: 13px;
@@ -264,6 +271,15 @@
       font-size: 14px;
       line-height: 1.6;
     }
+    /* "Ei luottokorttia" microcopy */
+    .cta-no-cc {
+      display: block;
+      margin-top: 8px;
+      font-size: 12px;
+      color: var(--ink-soft);
+      text-align: center;
+      font-family: var(--font-body);
+    }
   </style>
 </head>
 <body class="landing">
@@ -304,6 +320,7 @@
           <li class="muted">Ei AI-trackingia</li>
         </ul>
         <a href="/app.html#/aloitus" class="price-cta free">Aloita ilmaiseksi</a>
+        <span class="cta-no-cc">Ei luottokorttia tarvita</span>
       </article>
 
       <!-- Treeni -->
@@ -323,6 +340,7 @@
           <li class="muted">Ei adaptiivisuutta</li>
         </ul>
         <a href="/app.html#/aloitus?tier=treeni" class="price-cta tier" data-tier="treeni">Valitse Treeni</a>
+        <span class="cta-no-cc">Ei luottokorttia tarvita</span>
       </article>
 
       <!-- Mestari -->
@@ -343,6 +361,7 @@
           <li>Adaptiiviset koesimulaatiot</li>
         </ul>
         <a href="/app.html#/aloitus?tier=mestari" class="price-cta featured-cta" data-tier="mestari">Valitse Mestari</a>
+        <span class="cta-no-cc">Ei luottokorttia tarvita</span>
       </article>
     </div>
 
@@ -377,13 +396,21 @@
     </p>
   </main>
 
-  <footer>
-    <div class="footer-logo">Puhe<span>o</span></div>
-    <div class="footer-text">
-      <a href="/terms.html" class="footer-link">Käyttöehdot</a> &middot;
-      <a href="/privacy.html" class="footer-link">Tietosuoja</a> &middot;
-      <a href="/refund.html" class="footer-link">Palautukset</a>
+  <footer style="border-top:1px solid var(--border,rgba(0,0,0,0.10));padding:32px;text-align:center;font-family:var(--font-body);font-size:14px;color:var(--ink-soft);">
+    <div style="margin-bottom:16px;font-size:16px;font-weight:700;letter-spacing:-0.02em;color:var(--ink);">Puhe<span style="color:var(--accent-dark)">o</span></div>
+    <nav style="display:flex;flex-wrap:wrap;justify-content:center;gap:8px 16px;margin-bottom:12px;" aria-label="Kielet">
+      <a href="/espanja-yo-koe" style="color:var(--ink-soft);text-decoration:none;padding:3px 10px;border:1px solid var(--border,rgba(0,0,0,0.10));border-radius:999px;font-size:13px;transition:color 150ms,border-color 150ms;">Espanja</a>
+      <a href="/saksan-yo-koe" style="color:var(--ink-soft);text-decoration:none;padding:3px 10px;border:1px solid var(--border,rgba(0,0,0,0.10));border-radius:999px;font-size:13px;transition:color 150ms,border-color 150ms;">Saksa</a>
+      <a href="/ranskan-yo-koe" style="color:var(--ink-soft);text-decoration:none;padding:3px 10px;border:1px solid var(--border,rgba(0,0,0,0.10));border-radius:999px;font-size:13px;transition:color 150ms,border-color 150ms;">Ranska</a>
+    </nav>
+    <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:4px 12px;">
+      <a href="/terms.html" style="color:var(--ink-soft);text-decoration:none;">Käyttöehdot</a>
+      <span aria-hidden="true" style="color:var(--ink-soft);opacity:0.4;">&middot;</span>
+      <a href="/privacy.html" style="color:var(--ink-soft);text-decoration:none;">Tietosuoja</a>
+      <span aria-hidden="true" style="color:var(--ink-soft);opacity:0.4;">&middot;</span>
+      <a href="/refund.html" style="color:var(--ink-soft);text-decoration:none;">Palautukset</a>
     </div>
+    <p style="margin:12px 0 0;font-size:12px;color:var(--ink-soft);">© 2026 Puheo · Tehty Suomessa</p>
   </footer>
 
   <script>

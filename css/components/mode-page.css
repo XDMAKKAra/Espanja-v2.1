@@ -88,7 +88,10 @@
   font-family: var(--font-display);
   transition: background 100ms var(--ease-out), border-left-color 100ms var(--ease-out);
 }
-.mode-topic:hover { background: var(--surface-2); }
+.mode-topic:hover:not(.is-current) {
+  background: var(--surface-2);
+  border-left-color: var(--border-strong);
+}
 .mode-topic.is-current {
   border-left-color: var(--accent);
   background: var(--surface);
@@ -176,21 +179,42 @@
    L-PLAN-4 UPDATE 3 — guarantee a visible top buffer so the H1 never tucks
    under the fixed app-countdown bar (34px) or any sticky affordance, even
    when scrolling restores or the layout shifts. The eyebrow + heading need
-   air to read as a heading block, not a clipped strip. */
+   air to read as a heading block, not a clipped strip.
+   L-FRONTEND-POLISH-1 — eyebrow enforces 12px / ls 0.08em / text-faint;
+   display-h1 locked to 28–36px / weight 700 / lh 1.2;
+   sub-tagline bumped to 16px with max-width 520px. */
+
+/* Eyebrow — 12 px, 0.08 em tracking, uppercase, text-faint.
+   The global .eyebrow utility sets 0.14em but the mode-page header eyebrow
+   reads better slightly tighter (0.08em) because it sits next to a large h1. */
+.mode-page > .eyebrow:first-of-type {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--ink-faint);
+  margin-top: 8px;
+}
+
+/* Display h1 — clamp to 28–36px, weight 700, lh 1.2 */
 .mode-page .display {
-  margin: 0 0 8px;
+  font-size: clamp(1.75rem, 3.5vw, 2.25rem); /* 28–36px */
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 4px 0 10px;
   scroll-margin-top: var(--header-height);
 }
 .mode-page .eyebrow {
   scroll-margin-top: var(--header-height);
 }
 .mode-page > .eyebrow:first-child { margin-top: 8px; }
+
+/* Sub-tagline — 16px, ink-soft, max-width 520px */
 .mode-page__sub {
   font-family: var(--font-display);
-  font-size: var(--fs-body);
+  font-size: 1rem;           /* 16px */
+  line-height: 1.5;
   color: var(--ink-soft);
   margin: 0 0 32px;
-  max-width: 50ch;
+  max-width: 520px;
 }
 
 /* Outer mode-page wrapper consumes the existing .app-main-inner padding. */

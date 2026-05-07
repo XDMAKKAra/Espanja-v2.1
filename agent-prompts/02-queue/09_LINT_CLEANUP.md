@@ -147,5 +147,5 @@ Per puuttuva funktio:
 
 ---
 ## Lopuksi
-Tämä on **05 / 6** jonossa (`agent-prompts/02-queue/05_LINT_CLEANUP.md`).
+Tämä on **09 / 12** jonossa (`agent-prompts/02-queue/09_LINT_CLEANUP.md`).
 Close-out hoituu META_QA_LOOP-orkestraattorin Vaihe 4:ssa — **älä manuaalisesti poista tätä tiedostoa workerina**, orkestraattori tekee sen.

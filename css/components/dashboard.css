@@ -3,6 +3,273 @@
    Rules below are identical to what previously lived in style.css.
    They will be progressively rewritten in subsequent tasks (T7-T10). */
 
+/* ── KPI STAT ROW (L-FRONTEND-POLISH-1) ── */
+/* Four tiles: Putki / Yhteensä / Tällä viikolla / YO-valmius.
+   Mono numerals, varied surface tokens per tile, 16-20px gap. */
+.dash-kpi-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin: 0 0 20px;
+}
+@media (max-width: 540px) {
+  .dash-kpi-row {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+}
+.dash-kpi-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 14px 16px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  position: relative;
+  overflow: hidden;
+}
+/* Surface variation per tile — no two adjacent tiles identical */
+.dash-kpi-tile--1 { background: var(--surface); }
+.dash-kpi-tile--2 { background: var(--surface-2); }
+.dash-kpi-tile--3 { background: var(--surface); }
+.dash-kpi-tile--4 {
+  background: color-mix(in srgb, var(--accent) 8%, var(--surface));
+  border-color: color-mix(in srgb, var(--accent) 28%, var(--border));
+}
+[data-theme="light"] .dash-kpi-tile--4 {
+  background: color-mix(in srgb, var(--accent) 10%, var(--surface));
+}
+/* Hot-streak tint on tile 1 */
+.dash-kpi-tile--1.dash-kpi-tile--hot {
+  background: color-mix(in srgb, var(--warn, #D97706) 8%, var(--surface));
+  border-color: color-mix(in srgb, var(--warn, #D97706) 24%, var(--border));
+}
+.dash-kpi-tile__icon {
+  color: var(--ink-faint);
+  line-height: 1;
+  margin-bottom: 2px;
+}
+.dash-kpi-tile--hot .dash-kpi-tile__icon { color: var(--warn, #D97706); }
+.dash-kpi-tile__val {
+  font-family: var(--font-mono);
+  font-feature-settings: "tnum" 1;
+  font-size: clamp(1.6rem, 2.5vw, 2rem);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.dash-kpi-tile--4 .dash-kpi-tile__val { color: var(--accent-hover); }
+[data-theme="light"] .dash-kpi-tile--4 .dash-kpi-tile__val { color: var(--accent-dark); }
+.dash-kpi-tile__label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+/* Week trend arrows */
+.week-trend-arrow {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1;
+}
+.week-trend-arrow.up   { color: var(--success); }
+.week-trend-arrow.down { color: var(--error); }
+.week-trend-arrow.same { color: var(--ink-faint); }
+
+/* ── FREE TIER CHIP (L-FRONTEND-POLISH-1) ── */
+.dash-free-chip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 14px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  font-size: 12px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+.dash-free-chip__left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+}
+.dash-free-chip__badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: var(--surface);
+  border: 1px solid var(--border-strong, var(--border));
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--ink-soft);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.dash-free-chip__quota {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-soft);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.dash-free-meter {
+  width: 60px;
+  height: 5px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.dash-free-meter__fill {
+  height: 100%;
+  border-radius: inherit;
+  transition: width 0.6s var(--ease-out, ease);
+}
+.dash-free-meter__fill--ok   { background: var(--accent); }
+.dash-free-meter__fill--warn { background: var(--warn); }
+.dash-free-chip__cta {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--accent-dark, var(--accent));
+  font-weight: 600;
+  white-space: nowrap;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+.dash-free-chip__cta:hover { text-decoration: underline; }
+
+/* ── RECENT ITEM: level chip (L-FRONTEND-POLISH-1) ── */
+.dash-recent-level-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 6px;
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent) 14%, var(--surface-2));
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--accent-hover);
+  vertical-align: middle;
+}
+[data-theme="light"] .dash-recent-level-chip {
+  color: var(--accent-dark);
+}
+
+/* ── RECENT ITEM: full-row click, hover feedback (L-FRONTEND-POLISH-1) ── */
+.dash-recent-item {
+  cursor: pointer;
+  transition: background 120ms var(--ease-out, ease), border-color 120ms var(--ease-out, ease);
+}
+.dash-recent-item:hover {
+  background: var(--surface-2) !important;
+  border-color: var(--accent-dark, var(--border)) !important;
+}
+.dash-recent-item:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.dash-recent-item:active { opacity: 0.85; }
+
+/* ── MODE TILE: CTA button (L-FRONTEND-POLISH-1) ── */
+.dash-mode-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 12px;
+  border: 1px solid var(--accent);
+  border-radius: var(--r-md);
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  color: var(--accent-hover);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: background 120ms, border-color 120ms;
+  pointer-events: none; /* parent card handles clicks */
+  white-space: nowrap;
+}
+[data-theme="light"] .dash-mode-cta-btn { color: var(--accent-dark); }
+.dash-mode-card:hover .dash-mode-cta-btn {
+  background: color-mix(in srgb, var(--accent) 22%, transparent);
+}
+
+/* ── MODE TILE: due dot — pulsing (L-FRONTEND-POLISH-1) ── */
+.dash-mode-due--pulse {
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+  box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 55%, transparent);
+  animation: dash-due-pulse 2.2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+@keyframes dash-due-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 55%, transparent); }
+  50%       { box-shadow: 0 0 0 5px color-mix(in srgb, var(--accent) 0%, transparent); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dash-mode-due--pulse { animation: none; }
+}
+
+/* ── RAIL EMPTY STATE (L-FRONTEND-POLISH-1) ── */
+.dash-empty-rail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 28px 20px 24px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px; /* matches path-rail bento cards */
+  gap: 10px;
+}
+.dash-empty-rail.hidden { display: none; }
+.dash-empty-rail__icon {
+  color: var(--accent);
+  opacity: 0.7;
+}
+.dash-empty-rail__title {
+  font-family: var(--font-display);
+  font-size: var(--fs-h3, 1.25rem);
+  font-weight: 700;
+  color: var(--ink);
+  margin: 0;
+  line-height: 1.2;
+}
+.dash-empty-rail__sub {
+  font-size: var(--fs-body-sm, 0.875rem);
+  color: var(--ink-soft);
+  margin: 0;
+  max-width: 24ch;
+  line-height: 1.5;
+}
+.dash-empty-rail__cta {
+  margin-top: 4px;
+}
+
 /* ── SR FORECAST CHART ── */
 .dash-forecast-section {
   margin-bottom: 16px;

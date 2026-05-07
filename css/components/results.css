@@ -3,12 +3,25 @@
    list → next-action CTAs. Replaces #screen-results, #screen-grammar-results,
    #screen-reading-results visual treatments. No new tokens. */
 
-/* §5 Results view */
+/* §5 Results view
+   L-FRONTEND-POLISH-1 — hero score enlarged to 48–72px range; coach line
+   gets proper line-height and max-width; stats strip gains color semantics. */
 .results { padding: 0; }
 .results__score {
   margin: 12px 0 4px;
   font-family: var(--font-mono);
-  font-weight: 600;
+  font-weight: 700;
+  /* Hero score: 48px mobile → 72px wide screen */
+  font-size: clamp(3rem, 8vw, 4.5rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+/* The .mono-num inside the score inherits the parent font-size */
+.results__score .mono-num {
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
 }
 .results__sub {
   font-family: var(--font-display);
@@ -28,12 +41,16 @@
   font-family: var(--font-mono);
   font-size: var(--fs-mono-sm);
 }
+/* Coach line — 16px, ink-soft, max-width 480px, generous line-height.
+   Agentic tone lives in mode-page.js generateCoachLine; these rules
+   just give it room to breathe visually. */
 .results__coach {
   font-family: var(--font-display);
-  font-size: var(--fs-body);
+  font-size: 1rem;        /* 16px */
+  line-height: 1.55;
   color: var(--ink-soft);
-  margin: 0 0 32px;
-  max-width: 50ch;
+  margin: 0 0 28px;
+  max-width: 480px;
 }
 .results__coach:empty { display: none; }
 
@@ -58,7 +75,8 @@
 .results__stat-n {
   font-family: var(--font-mono);
   font-weight: 600;
-  line-height: 1.05;
+  font-size: var(--fs-mono-lg, 2.25rem); /* 36px — prominent breakdown numbers */
+  line-height: 1;
   color: var(--ink);
 }
 .results__stat-l {
@@ -67,8 +85,12 @@
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--ink-faint);
+  margin-top: 2px;
 }
+/* Correct count: success green (5.5:1 on white / dark surfaces) */
 .results__stat--ok .results__stat-n { color: var(--success); }
+/* Wrong count: muted ink-soft rather than harsh red — red is reserved for
+   the answer badge. This keeps the strip readable without screaming. */
 .results__stat--no .results__stat-n { color: var(--ink-soft); }
 .results__stat--no:has(.results__stat-n:not(:empty)) .results__stat-n[data-zero="0"] {
   color: var(--ink-faint);

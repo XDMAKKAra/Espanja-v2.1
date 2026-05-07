@@ -2288,12 +2288,15 @@ select option { background: var(--surface-2); }
 @media (prefers-reduced-motion: reduce) {
   .skel { animation: none; background: var(--surface-2, #f1f5f9); }
 }
+/* L-FRONTEND-POLISH-1 — exam progress bar: accent fill, 4px height, clear
+   visual weight so the student knows where they are in the exam. */
 .exam-progress-bar {
-  height: 3px; background: var(--border); border-radius: 2px; margin-bottom: 24px;
+  height: 4px; background: var(--border); border-radius: 3px; margin-bottom: 28px;
+  overflow: hidden;
 }
 .exam-progress-fill {
-  height: 100%; background: var(--accent-hover); border-radius: 2px;
-  transition: width 0.6s ease;
+  height: 100%; background: var(--accent); border-radius: 3px;
+  transition: width 0.5s var(--ease-out, cubic-bezier(0,0,.2,1));
 }
 /* L-LIVE-AUDIT-P1 UPDATE 5 — exam reading passage was rendering 200+ Spanish
    words in DM Mono; switched to Inter (font-display) with reading-grade
@@ -2306,8 +2309,18 @@ select option { background: var(--surface-2); }
   color: var(--ink);
   max-height: 280px; overflow-y: auto;
 }
-.reading-q-block { margin-bottom: 20px; }
-.reading-q-text { font-size: 14px; font-weight: 600; margin-bottom: 10px; }
+/* L-FRONTEND-POLISH-1 — exam question cards: wider padding, subtle border */
+.reading-q-block {
+  margin-bottom: 16px;
+  padding: 24px 28px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+}
+@media (max-width: 480px) {
+  .reading-q-block { padding: 16px 18px; }
+}
+.reading-q-text { font-size: 15px; font-weight: 600; margin-bottom: 12px; color: var(--ink); }
 .selected-answer { border-color: var(--accent-dark) !important; background: rgba(167,139,250,0.12) !important; color: var(--accent-dark) !important; }
 .exam-result-row {
   display: flex; justify-content: space-between; align-items: center;
@@ -5370,13 +5383,16 @@ body:has(.app-countdown:not(.hidden)) #app-main { padding-top: 34px; }
   gap: 10px;
   margin-top: 8px;
 }
+/* L-FRONTEND-POLISH-1 — match .ex-option actual height (52px with border) */
 .skeleton-option {
-  height: 44px;
-  border-radius: 10px;
+  height: 52px;
+  border-radius: 8px;
   background: linear-gradient(90deg, var(--surface-2) 0%, var(--border) 50%, var(--surface-2) 100%);
   background-size: 200% 100%;
   animation: skeleton-shimmer 1.4s ease-in-out infinite;
 }
+.skeleton-option:first-child { border-radius: 6px 6px 0 0; }
+.skeleton-option:last-child  { border-radius: 0 0 6px 6px; }
 .skeleton-hint {
   margin-top: 8px;
   font-family: var(--font-mono);
