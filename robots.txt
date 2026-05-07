@@ -10,10 +10,14 @@ Disallow: /migrations/
 Disallow: /.env
 Disallow: /node_modules/
 
+# Estä kirjautunut sovellus ja onboarding hakukoneista
+Disallow: /app
+Disallow: /app.html
+Disallow: /onboarding
+Disallow: /diagnose.html
+
 # Salli kaikki muu julkinen sisältö
 Allow: /blog/
-Allow: /app.html
-Allow: /diagnose.html
 
 # Sitemap
 Sitemap: https://espanja-v2-1.vercel.app/sitemap.xml

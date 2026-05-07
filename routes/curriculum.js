@@ -1,13 +1,12 @@
 import { Router } from "express";
-import { readFile } from "node:fs/promises";
-import path from "node:path";
 import supabase from "../supabase.js";
 import { requireAuth } from "../middleware/auth.js";
 import { callOpenAI } from "../lib/openai.js";
-import { KURSSI_META } from "../lib/curriculum.js";
+import { KURSSI_META, readLessonFile } from "../lib/curriculum.js";
 import {
   CURRICULUM_KURSSIT,
   CURRICULUM_LESSONS,
+  LANG_CURRICULA,
   lessonsForKurssi,
   findKurssi,
 } from "../lib/curriculumData.js";
@@ -116,15 +115,36 @@ function summariseProgress(allProgress, kurssiKey, kertausLessonIndex) {
 }
 
 // ─── GET /api/curriculum ────────────────────────────────────────────────────
+const SUPPORTED_LANGS = new Set(["es", "de", "fr"]);
+
 router.get("/", optionalAuth, async (req, res) => {
   try {
-    let kurssit = null;
-    try {
-      kurssit = await fetchKurssitDb();
-    } catch (err) {
-      console.error("curriculum fetch error:", err.message);
+    // L-LANG-INFRA-1 — ?lang= selects the language. Default "es".
+    const lang = SUPPORTED_LANGS.has(req.query.lang) ? req.query.lang : "es";
+
+    // For languages without content, return a structured "not available" response.
+    if (lang !== "es") {
+      const langKurssit = LANG_CURRICULA[lang] || [];
+      if (langKurssit.length === 0) {
+        return res.json({
+          kurssit: [],
+          available: false,
+          language: lang,
+          message: "Sisältöä ei vielä julkaistu — liity wait-listille",
+        });
+      }
     }
-    if (!kurssit || kurssit.length === 0) kurssit = CURRICULUM_KURSSIT;
+
+    let kurssit = null;
+    // DB kurssit are currently Spanish-only; skip DB fetch for non-es.
+    if (lang === "es") {
+      try {
+        kurssit = await fetchKurssitDb();
+      } catch (err) {
+        console.error("curriculum fetch error:", err.message);
+      }
+    }
+    if (!kurssit || kurssit.length === 0) kurssit = LANG_CURRICULA[lang] || CURRICULUM_KURSSIT;
 
     let progressByKurssi = {};
     if (req.user?.userId) {
@@ -494,25 +514,11 @@ async function getOrGenerateTeachingPage(kurssiKey, sortOrder, lesson) {
   return { contentMd, cached: false };
 }
 
-// L-COURSE-1 UPDATE 3 — pre-generated lesson reader. When USE_PREGENERATED_LESSONS
-// is "true", attempt to read data/courses/{courseKey}/lesson_{index}.json. If
-// the file is a placeholder (description starts "PLACEHOLDER") or missing, we
-// fall through to runtime OpenAI generation. Returning the parsed JSON shape
-// directly is intentional — js/lib/lessonAdapter.js normalises it.
-async function readPregeneratedLesson(courseKey, lessonIndex) {
+// L-LANG-INFRA-1 — delegate to lib/curriculum.js readLessonFile so the
+// data/courses/${lang}/ path is managed in one place. Lang defaults to "es".
+async function readPregeneratedLesson(courseKey, lessonIndex, lang = "es") {
   if (process.env.USE_PREGENERATED_LESSONS !== "true") return null;
-  try {
-    const filePath = path.join(process.cwd(), "data", "courses", courseKey, `lesson_${lessonIndex}.json`);
-    const raw = await readFile(filePath, "utf8");
-    const lesson = JSON.parse(raw);
-    if (typeof lesson?.meta?.description === "string" && lesson.meta.description.startsWith("PLACEHOLDER")) {
-      return null;
-    }
-    return lesson;
-  } catch (err) {
-    if (err.code !== "ENOENT") console.error("readPregeneratedLesson error:", err.message);
-    return null;
-  }
+  return readLessonFile(courseKey, lessonIndex, lang);
 }
 
 // ─── GET /api/curriculum/:kurssiKey/lesson/:lessonIndex ─────────────────────
@@ -527,11 +533,21 @@ router.get("/:kurssiKey/lesson/:lessonIndex", optionalAuth, async (req, res) => 
       return res.status(404).json({ error: "Kurssia ei löydy" });
     }
 
-    // L-COURSE-1 UPDATE 3 — pre-generated short-circuit. Returns the full
-    // schema-shaped object plus lessonContext (target_grade) so the runner
-    // can pick mastery thresholds + skip_for_targets correctly.
-    const pregenerated = await readPregeneratedLesson(kurssiKey, lessonIndex);
+    // L-COURSE-1 UPDATE 3 / L-LANG-INFRA-1 — pre-generated short-circuit.
+    // Returns the full schema-shaped object plus lessonContext (target_grade)
+    // so the runner can pick mastery thresholds + skip_for_targets correctly.
+    // For non-ES langs, readPregeneratedLesson returns { available: false }
+    // which is surfaced to the client rather than falling through to AI gen.
+    const lang = SUPPORTED_LANGS.has(req.query.lang) ? req.query.lang : "es";
+    const pregenerated = await readPregeneratedLesson(kurssiKey, lessonIndex, lang);
     if (pregenerated) {
+      if (pregenerated.available === false) {
+        return res.status(503).json({
+          available: false,
+          language: pregenerated.language,
+          message: pregenerated.message,
+        });
+      }
       const tg = req.user?.userId ? await fetchTargetGrade(req.user.userId) : "B";
       return res.json({ pregenerated, lessonContext: { targetGrade: tg } });
     }

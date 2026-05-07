@@ -213,7 +213,7 @@ function renderProfile(data = {}, learningPath = []) {
   if (modesEl) {
     const modes = ["vocab", "grammar", "reading", "writing"];
     modesEl.innerHTML = modes.map((m) => {
-      const count = (modeStats && modeStats[m]) || 0;
+      const count = (modeStats && modeStats[m]?.sessions) || 0;
       const zero = count === 0 ? " profile-mode-count--zero" : "";
       return `
         <div class="profile-mode-row">

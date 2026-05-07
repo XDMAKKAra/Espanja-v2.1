@@ -37,6 +37,11 @@
   <!-- L-LIVE-AUDIT-P2 UPDATE 1 — single bundle replaces 16 separate CSS requests.
        Source files remain in repo; bundle produced by `npm run build`. -->
   <link rel="stylesheet" href="/app.bundle.css" />
+  <!-- L-ONBOARDING-REDESIGN-1 — V3 onboarding styles. Loaded outside bundle
+       so the redesign is testable before the next `npm run build`. -->
+  <link rel="stylesheet" href="/css/components/onboarding-v3.css" />
+  <!-- L-LANG-INFRA-1 — coming-soon screen + settings language modal styles. -->
+  <link rel="stylesheet" href="/css/components/coming-soon.css" />
 </head>
 <body>
 
@@ -396,7 +401,239 @@
     </div>
   </div>
 
-  <!-- ─── L-PLAN-1 onboarding V2 (4 screens) ─────────────────────────────── -->
+  <!-- ─── L-ONBOARDING-REDESIGN-1 — V3 flow (9 stages) ───────────────────── -->
+  <!-- Stage 0: hero welcome -->
+  <div id="screen-ob-v3-welcome" class="screen ob3">
+    <div class="ob3-shell ob3-shell--center">
+      <div class="ob3-hero" aria-hidden="true">
+        <svg viewBox="0 0 320 80" class="ob3-curve">
+          <path d="M0,72 C80,72 110,28 160,28 S260,8 320,8" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+          <circle cx="0" cy="72" r="3.6" fill="currentColor"/>
+          <circle cx="320" cy="8" r="4.2" fill="currentColor" class="ob3-curve__head"/>
+        </svg>
+        <div class="ob3-hero__rungs"><span>I</span><span>A</span><span>B</span><span>C</span><span>M</span><span>E</span><span>L</span></div>
+      </div>
+      <h1 class="ob3-hero__title">Tehdään tästä SINUN polkusi yo-kokeeseen.</h1>
+      <p class="ob3-hero__sub">8 lyhyttä kysymystä, noin 2 minuuttia. Sen jälkeen näet räätälöidyn lukusuunnitelman.</p>
+      <div class="ob3-actions">
+        <button type="button" class="ob3-cta" data-ob3="next" data-from="welcome">Aloita</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stage 1: language -->
+  <div id="screen-ob-v3-language" class="screen ob3">
+    <div class="ob3-shell">
+      <header class="ob3-head">
+        <p class="ob3-eyebrow">1 / 8</p>
+        <h1 class="ob3-title">Mitä kieltä kirjoitat?</h1>
+        <p class="ob3-sub">Pidä huoli että valitset oikean — sisältö rakentuu tämän mukaan.</p>
+      </header>
+      <div class="ob3-cards" data-ob3-field="target_language" role="radiogroup" aria-label="Kieli">
+        <button class="ob3-card" data-value="es" type="button" role="radio" aria-checked="false">
+          <span class="ob3-card__greet">¡Hola!</span>
+          <span class="ob3-card__name">Espanja</span>
+          <span class="ob3-card__status ob3-card__status--live">Avoinna nyt</span>
+        </button>
+        <button class="ob3-card ob3-card--soon" data-value="de" data-soon="1" type="button" role="radio" aria-checked="false">
+          <span class="ob3-card__greet">Hallo!</span>
+          <span class="ob3-card__name">Saksa</span>
+          <span class="ob3-card__status">Pian saatavilla</span>
+        </button>
+        <button class="ob3-card ob3-card--soon" data-value="fr" data-soon="1" type="button" role="radio" aria-checked="false">
+          <span class="ob3-card__greet">Bonjour!</span>
+          <span class="ob3-card__name">Ranska</span>
+          <span class="ob3-card__status">Pian saatavilla</span>
+        </button>
+      </div>
+      <div class="ob3-actions ob3-actions--split">
+        <button type="button" class="ob3-back" data-ob3="back">← Takaisin</button>
+        <button type="button" class="ob3-cta" data-ob3="next" data-from="language" disabled>Seuraava →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stage 2: oppimäärä -->
+  <div id="screen-ob-v3-level" class="screen ob3">
+    <div class="ob3-shell">
+      <header class="ob3-head">
+        <p class="ob3-eyebrow">2 / 8</p>
+        <h1 class="ob3-title">Lyhyt vai pitkä oppimäärä?</h1>
+        <p class="ob3-sub">Lyhyt = 8 kurssia (B-taso). Pitkä = enemmän kursseja, vaativampi yo-koe.</p>
+      </header>
+      <div class="ob3-pillrow ob3-pillrow--big" data-ob3-field="target_level" role="radiogroup" aria-label="Oppimäärä">
+        <button class="ob3-pill" data-value="lyhyt" type="button" role="radio" aria-checked="true">Lyhyt oppimäärä</button>
+        <button class="ob3-pill" data-value="pitka" data-soon="1" type="button" role="radio" aria-checked="false">Pitkä oppimäärä · pian</button>
+      </div>
+      <div class="ob3-actions ob3-actions--split">
+        <button type="button" class="ob3-back" data-ob3="back">← Takaisin</button>
+        <button type="button" class="ob3-cta" data-ob3="next" data-from="level">Seuraava →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stage 3: opiskeluhistoria -->
+  <div id="screen-ob-v3-current" class="screen ob3">
+    <div class="ob3-shell">
+      <header class="ob3-head">
+        <p class="ob3-eyebrow">3 / 8</p>
+        <h1 class="ob3-title">Mihin asti olet jo päässyt?</h1>
+        <p class="ob3-sub">Tämä määrittää lähtötasosi. Ei tasokoetta vielä — luotamme arvioosi.</p>
+      </header>
+      <div class="ob3-chiprow" data-ob3-field="courses_done" role="radiogroup" aria-label="Suoritetut kurssit">
+        <button class="ob3-chip" data-value="1" type="button" role="radio" aria-checked="false">1 kurssi</button>
+        <button class="ob3-chip" data-value="2" type="button" role="radio" aria-checked="false">2–3 kurssia</button>
+        <button class="ob3-chip" data-value="4" type="button" role="radio" aria-checked="false">4–5 kurssia</button>
+        <button class="ob3-chip" data-value="6" type="button" role="radio" aria-checked="false">6+ kurssia</button>
+      </div>
+      <div class="ob3-actions ob3-actions--split">
+        <button type="button" class="ob3-back" data-ob3="back">← Takaisin</button>
+        <button type="button" class="ob3-cta" data-ob3="next" data-from="current" disabled>Seuraava →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stage 4: tavoitearvosana -->
+  <div id="screen-ob-v3-target" class="screen ob3">
+    <div class="ob3-shell">
+      <header class="ob3-head">
+        <p class="ob3-eyebrow">4 / 8</p>
+        <h1 class="ob3-title">Mihin haluat?</h1>
+        <p class="ob3-sub">Valitse tavoitearvosana — voit muuttaa milloin tahansa.</p>
+      </header>
+      <div class="ob3-grades" data-ob3-field="target_grade" role="radiogroup" aria-label="Tavoitearvosana">
+        <button class="ob3-grade" data-value="A" type="button" role="radio" aria-checked="false"><span class="ob3-grade__letter">A</span><span class="ob3-grade__lat">approbatur</span></button>
+        <button class="ob3-grade" data-value="B" type="button" role="radio" aria-checked="false"><span class="ob3-grade__letter">B</span><span class="ob3-grade__lat">lubenter</span></button>
+        <button class="ob3-grade" data-value="C" type="button" role="radio" aria-checked="false"><span class="ob3-grade__letter">C</span><span class="ob3-grade__lat">cum laude</span></button>
+        <button class="ob3-grade" data-value="M" type="button" role="radio" aria-checked="false"><span class="ob3-grade__letter">M</span><span class="ob3-grade__lat">magna</span></button>
+        <button class="ob3-grade" data-value="E" type="button" role="radio" aria-checked="false"><span class="ob3-grade__letter">E</span><span class="ob3-grade__lat">eximia</span></button>
+        <button class="ob3-grade" data-value="L" type="button" role="radio" aria-checked="false"><span class="ob3-grade__letter">L</span><span class="ob3-grade__lat">laudatur</span></button>
+      </div>
+      <p class="ob3-grade-hint" id="ob3-grade-hint" aria-live="polite"></p>
+      <div class="ob3-actions ob3-actions--split">
+        <button type="button" class="ob3-back" data-ob3="back">← Takaisin</button>
+        <button type="button" class="ob3-cta" data-ob3="next" data-from="target" disabled>Seuraava →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stage 5: koepäivä -->
+  <div id="screen-ob-v3-exam-date" class="screen ob3">
+    <div class="ob3-shell">
+      <header class="ob3-head">
+        <p class="ob3-eyebrow">5 / 8</p>
+        <h1 class="ob3-title">Milloin kirjoitat?</h1>
+        <p class="ob3-sub">Tämä määrittää lukusuunnitelman pituuden.</p>
+      </header>
+      <div class="ob3-pillrow" data-ob3-field="exam_session" role="radiogroup" aria-label="Yo-kausi">
+        <button class="ob3-pill" data-value="2026-09-15" type="button" role="radio" aria-checked="false">Syksy 2026</button>
+        <button class="ob3-pill" data-value="2027-03-15" type="button" role="radio" aria-checked="false">Kevät 2027</button>
+        <button class="ob3-pill" data-value="2027-09-15" type="button" role="radio" aria-checked="false">Syksy 2027</button>
+        <button class="ob3-pill" data-value="2028-03-15" type="button" role="radio" aria-checked="false">Kevät 2028</button>
+      </div>
+      <label class="ob3-precise">
+        <span>Tai tarkka päivä</span>
+        <input type="date" id="ob3-exam-precise" class="ob3-date" />
+      </label>
+      <div class="ob3-actions ob3-actions--split">
+        <button type="button" class="ob3-back" data-ob3="back">← Takaisin</button>
+        <button type="button" class="ob3-cta" data-ob3="next" data-from="exam-date" disabled>Seuraava →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stage 6: viikkominuutit -->
+  <div id="screen-ob-v3-time" class="screen ob3">
+    <div class="ob3-shell">
+      <header class="ob3-head">
+        <p class="ob3-eyebrow">6 / 8</p>
+        <h1 class="ob3-title">Paljonko aikaa viikossa?</h1>
+        <p class="ob3-sub">Voit muuttaa myöhemmin — tämä on lähtöarvio.</p>
+      </header>
+      <div class="ob3-slider-wrap">
+        <input type="range" id="ob3-weekly" min="30" max="300" step="15" value="120" class="ob3-slider" aria-label="Minuuttia viikossa" />
+        <div class="ob3-slider-ticks"><span>30</span><span>60</span><span>120</span><span>180</span><span>240</span><span>300</span></div>
+        <p class="ob3-slider-value"><span class="mono-num" id="ob3-weekly-val">120</span> min / vk</p>
+      </div>
+      <p class="ob3-time-preview" id="ob3-time-preview" aria-live="polite"></p>
+      <div class="ob3-actions ob3-actions--split">
+        <button type="button" class="ob3-back" data-ob3="back">← Takaisin</button>
+        <button type="button" class="ob3-cta" data-ob3="next" data-from="time">Seuraava →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stage 7: focus areas -->
+  <div id="screen-ob-v3-focus" class="screen ob3">
+    <div class="ob3-shell">
+      <header class="ob3-head">
+        <p class="ob3-eyebrow">7 / 8</p>
+        <h1 class="ob3-title">Mitä haluat painottaa?</h1>
+        <p class="ob3-sub">Valitse vähintään yksi. Voit valita monta — kaikki ovat lähtökohtaisesti päällä.</p>
+      </header>
+      <div class="ob3-focus" data-ob3-field="focus_areas" role="group" aria-label="Painopisteet">
+        <button class="ob3-focus__chip" data-value="vocab" type="button" aria-pressed="true">Sanasto</button>
+        <button class="ob3-focus__chip" data-value="grammar" type="button" aria-pressed="true">Kielioppi</button>
+        <button class="ob3-focus__chip" data-value="writing" type="button" aria-pressed="true">Kirjoittaminen</button>
+        <button class="ob3-focus__chip" data-value="reading" type="button" aria-pressed="true">Luetun ymmärtäminen</button>
+        <button class="ob3-focus__chip" data-value="exam" type="button" aria-pressed="true">Koe-simulaatiot</button>
+      </div>
+      <div class="ob3-actions ob3-actions--split">
+        <button type="button" class="ob3-back" data-ob3="back">← Takaisin</button>
+        <button type="button" class="ob3-cta" data-ob3="next" data-from="focus">Näytä polkuni →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stage 8: reveal -->
+  <div id="screen-ob-v3-reveal" class="screen ob3">
+    <div class="ob3-shell">
+      <header class="ob3-head ob3-head--reveal">
+        <p class="ob3-eyebrow ob3-eyebrow--accent">Polkusi on valmis</p>
+        <h1 class="ob3-title ob3-title--xl"><span id="ob3-reveal-name">Hei.</span></h1>
+      </header>
+      <div class="ob3-reveal-stack">
+        <div class="ob3-reveal-row" data-reveal>
+          <span class="ob3-reveal-key">Tasoharppaus</span>
+          <span class="ob3-reveal-val mono-num" id="ob3-reveal-jump">B → M</span>
+        </div>
+        <div class="ob3-reveal-row" data-reveal>
+          <span class="ob3-reveal-key">Aikaa kokeeseen</span>
+          <span class="ob3-reveal-val mono-num" id="ob3-reveal-weeks">12 viikkoa</span>
+        </div>
+        <div class="ob3-reveal-row" data-reveal>
+          <span class="ob3-reveal-key">Lukusuunnitelma</span>
+          <span class="ob3-reveal-val mono-num" id="ob3-reveal-pace">8 oppituntia / vk · ~64 min</span>
+        </div>
+        <div class="ob3-reveal-row" data-reveal>
+          <span class="ob3-reveal-key">Painopiste</span>
+          <span class="ob3-reveal-val" id="ob3-reveal-focus">Sanasto · Kielioppi</span>
+        </div>
+      </div>
+      <div class="ob3-courses" id="ob3-reveal-courses" aria-label="Kurssit polullasi"></div>
+      <div class="ob3-actions ob3-actions--reveal">
+        <button type="button" class="ob3-cta ob3-cta--lg" data-ob3="next" data-from="reveal">Aloita ilmaiseksi</button>
+        <a class="ob3-link" href="/pricing.html" data-ob3="pricing">Avaa kaikki Mestarilla alkaen 19 €/kk</a>
+        <p class="ob3-fineprint">Ei luottokorttia · 1 oppitunti vapaa · Treeni alkaen 9 €/kk</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Waitlist modal (de/fr) -->
+  <div class="ob3-modal hidden" id="ob3-waitlist-modal" role="dialog" aria-modal="true" aria-labelledby="ob3-waitlist-title">
+    <div class="ob3-modal__panel">
+      <button type="button" class="ob3-modal__close" id="ob3-waitlist-close" aria-label="Sulje">×</button>
+      <h2 id="ob3-waitlist-title" class="ob3-modal__title">Tulossa pian</h2>
+      <p class="ob3-modal__body" id="ob3-waitlist-body">Jätä sähköpostisi, niin kerromme heti kun kurssi avautuu.</p>
+      <form class="ob3-modal__form" id="ob3-waitlist-form">
+        <input type="email" id="ob3-waitlist-email" placeholder="sahkoposti@example.com" required class="ob3-input" />
+        <button type="submit" class="ob3-cta">Liity jonoon</button>
+      </form>
+      <p class="ob3-modal__success hidden" id="ob3-waitlist-success">Kiitos — kuulet meistä ensimmäisten joukossa.</p>
+    </div>
+  </div>
+
+  <!-- ─── L-PLAN-1 onboarding V2 (4 screens, LEGACY — kept for fallback) ── -->
 
   <!-- OB-1: Profile (school grade, target grade, weak areas, daily minutes) -->
   <div id="screen-ob1-profile" class="screen ob2">
@@ -568,6 +805,9 @@
        js/screens/curriculum.js course-card renderer in #path-courses-root. -->
   <div id="screen-path" class="screen">
     <div class="path-inner">
+
+      <!-- Free-tier quota chip — rendered by dashboard.js; hidden for paid tiers -->
+      <div id="dash-free-chip-root" hidden aria-live="polite"></div>
 
       <header class="dash-greeting">
         <div class="meteors-fx" id="dash-meteors" hidden></div>
@@ -2326,6 +2566,14 @@
         </div>
       </section>
 
+      <!-- L-LANG-INFRA-1: language switcher section — rendered by settings.js renderLanguageSection() -->
+      <section class="settings-section" id="settings-language-section">
+        <h2 class="settings-section-title">Opiskelukieli</h2>
+        <div class="settings-rows" id="settings-language-rows">
+          <div class="skel skel--text" style="height:18px; max-width:50%; margin:14px 0;"></div>
+        </div>
+      </section>
+
       <section class="settings-section">
         <h2 class="settings-section-title">Ulkoasu</h2>
         <div class="settings-rows">
@@ -2343,6 +2591,14 @@
         </div>
       </section>
 
+      <!-- Tilaus-section — rendered by settings.js wireSubscriptionSection() -->
+      <section class="settings-section" id="settings-subscription-section">
+        <h2 class="settings-section-title">Tilaus</h2>
+        <div class="settings-rows settings-sub-section" id="settings-subscription-rows" aria-busy="true">
+          <span class="sr-only">Ladataan tilauksen tietoja…</span>
+        </div>
+      </section>
+
       <section class="settings-section">
         <h2 class="settings-section-title">Tili</h2>
         <div class="settings-rows">
@@ -2351,13 +2607,6 @@
               <div class="settings-row-label">Sähköposti</div>
               <div class="settings-row-value" id="settings-account-email">—</div>
             </div>
-          </div>
-          <div class="settings-row">
-            <div class="settings-row-main">
-              <div class="settings-row-label">Tilaus</div>
-              <div class="settings-row-value" id="settings-account-plan">Ilmainen</div>
-            </div>
-            <button type="button" class="settings-row-edit" id="settings-manage-billing" hidden>Hallitse</button>
           </div>
           <div class="settings-row settings-row--danger">
             <div class="settings-row-main">
@@ -2368,6 +2617,84 @@
           </div>
         </div>
       </section>
+    </div>
+  </div>
+
+  <!-- L-LANG-INFRA-1: Coming-soon screen (DE/FR users) -->
+  <div id="screen-coming-soon" class="screen" role="main" aria-labelledby="cs-title">
+    <div class="cs-card">
+      <header class="cs-header">
+        <p class="cs-eyebrow" aria-hidden="true">Puheo</p>
+        <h1 class="cs-title" id="cs-title">Saksa tulossa pian</h1>
+        <p class="cs-body" id="cs-body">
+          Rakennamme parhaillaan kurssimateriaaleja. Jätä sähköpostisi niin
+          ilmoitamme heti kun pääset harjoittelemaan.
+        </p>
+      </header>
+
+      <form class="cs-form" id="cs-form" novalidate>
+        <label class="cs-form-label" for="cs-email">Sähköposti</label>
+        <div class="cs-email-wrap">
+          <input
+            type="email"
+            id="cs-email"
+            name="email"
+            class="cs-email-input"
+            placeholder="sinä@koulu.fi"
+            autocomplete="email"
+            required
+            aria-describedby="cs-error"
+          >
+          <button type="submit" class="cs-submit" id="cs-submit">
+            Liity listalle →
+          </button>
+        </div>
+        <p class="cs-error hidden" id="cs-error" role="alert"></p>
+      </form>
+
+      <div class="cs-success hidden" id="cs-success" role="status">
+        <p class="cs-success-title">Olet listalla!</p>
+        <p class="cs-success-body">Kerromme heti kun kurssi aukeaa. Sillä välin — espanja on jo valmis.</p>
+      </div>
+
+      <footer class="cs-footer">
+        <p class="cs-footer-note">Haluatko harjoitella jo nyt?</p>
+        <button type="button" class="cs-link" id="cs-switch-es">
+          Voit vaihtaa kielen takaisin espanjaksi asetuksissa
+        </button>
+      </footer>
+    </div>
+  </div>
+
+  <!-- L-LANG-INFRA-1: Language-picker modal (from settings) -->
+  <div class="settings-lang-overlay hidden" id="settings-lang-overlay"
+       role="dialog" aria-modal="true" aria-labelledby="settings-lang-title">
+    <div class="settings-lang-modal">
+      <button class="settings-lang-close" id="settings-lang-close" aria-label="Sulje">&times;</button>
+      <h2 class="settings-lang-title" id="settings-lang-title">Vaihda kieli</h2>
+      <div class="settings-lang-body" id="settings-lang-body" role="radiogroup" aria-label="Opiskelukieli"></div>
+      <p class="settings-lang-error hidden" id="settings-lang-error" role="alert"></p>
+      <div class="settings-lang-actions">
+        <button type="button" class="btn-secondary" id="settings-lang-cancel">Peruuta</button>
+        <button type="button" class="btn-primary" id="settings-lang-save">Tallenna</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- L-LANG-INFRA-1: Language-change confirmation modal (warns about losing ES progress) -->
+  <div class="settings-lang-confirm-overlay hidden" id="settings-lang-confirm-overlay"
+       role="dialog" aria-modal="true" aria-labelledby="settings-lang-confirm-title">
+    <div class="settings-lang-confirm-modal">
+      <h2 class="settings-lang-confirm-title" id="settings-lang-confirm-title">Vaihdetaanko kieli?</h2>
+      <p class="settings-lang-confirm-body">
+        Vaihtamalla kielen siirrät painopisteen pois espanjasta — tekemäsi espanjan harjoitteet
+        eivät katoa, mutta oppimispolku ja suositukset päivittyvät uudelle kielelle.
+        Oletko varma?
+      </p>
+      <div class="settings-lang-confirm-actions">
+        <button type="button" class="btn-secondary" id="settings-lang-confirm-cancel">Peruuta</button>
+        <button type="button" class="btn-primary" id="settings-lang-confirm-ok">Vaihda kieli</button>
+      </div>
     </div>
   </div>
 
@@ -2386,6 +2713,19 @@
         <button class="btn-primary" id="settings-modal-save">Tallenna</button>
       </div>
     </div>
+  </div>
+
+  <!-- Paywall modal — three variants: quota | feature | upgrade -->
+  <div id="paywall-modal" role="dialog" aria-modal="true" aria-labelledby="paywall-modal-title" hidden data-variant="quota">
+    <div class="paywall-dialog" data-paywall-backdrop-stop>
+      <button class="paywall-close" data-paywall-close aria-label="Sulje">&times;</button>
+      <div class="paywall-badge" data-paywall-badge>Treeni</div>
+      <h2 class="paywall-title" id="paywall-modal-title" data-paywall-title>Olet käyttänyt ilmaisen kvoottisi</h2>
+      <p class="paywall-body" data-paywall-body>Jatka harjoittelua rajattomasti — Treeni avaa kaiken tämän viikon harjoitteet uudelleen.</p>
+      <a class="paywall-cta" data-paywall-cta href="/pricing.html?from=quota&tier=treeni">Avaa Treeni</a>
+      <button class="paywall-dismiss" data-paywall-close aria-label="Sulje maksumuuri">Ei nyt</button>
+    </div>
+    <div class="paywall-backdrop-hit" data-paywall-backdrop style="position:fixed;inset:0;z-index:-1"></div>
   </div>
 
   <!-- Level bump prompt (shown after grade-avg increase) -->

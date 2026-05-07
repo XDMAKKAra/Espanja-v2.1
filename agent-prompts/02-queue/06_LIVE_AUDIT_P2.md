@@ -590,3 +590,9 @@ Yksi commit per UPDATE, mahdollisesti useampia jos UPDATE on iso:
 Push → Vercel deploy → mittaus tuotannossa → IMPROVEMENTS.md (mittauspareineen) + AGENT_STATE.md.
 
 **Mittaus tuotannossa on pakollinen ennen merkitsemistä valmiiksi.** Tämä loop on numerokeskeinen — ilman before/after-vertailua loopia ei ole tehty.
+
+
+---
+## Lopuksi
+Tämä on **06 / 6** jonossa (`agent-prompts/02-queue/06_LIVE_AUDIT_P2.md`).
+Close-out hoituu META_QA_LOOP-orkestraattorin Vaihe 4:ssa — **älä manuaalisesti poista tätä tiedostoa workerina**, orkestraattori tekee sen.

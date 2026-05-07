@@ -12,6 +12,7 @@
     "test:coverage": "vitest run --coverage",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
+    "test:bug-scan": "playwright test tests/e2e-bug-scan.spec.js",
     "test:a11y": "playwright test tests/e2e-a11y.spec.js",
     "test:visual": "VISUAL_BASELINE=1 playwright test tests/e2e-visual.spec.js",
     "test:visual:update": "VISUAL_BASELINE=1 playwright test tests/e2e-visual.spec.js --update-snapshots",

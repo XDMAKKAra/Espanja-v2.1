@@ -62,7 +62,15 @@ export async function isPro(userId) {
     }
   }
 
-  // Check summer package (one-time purchase with expiry)
+  // L-PRICING-REVAMP-1 — new tier columns live on `user_profile` (PK user_id).
+  const { data: userRow } = await supabase
+    .from("user_profile")
+    .select("subscription_tier, subscription_billing, subscription_status, subscription_expires_at")
+    .eq("user_id", userId)
+    .single();
+  if (isPayingRow(userRow)) return true;
+
+  // Legacy summer package (one-time purchase with expiry)
   const { data: profile } = await supabase
     .from("user_profile")
     .select("summer_package_expires_at")
@@ -78,6 +86,95 @@ export async function isPro(userId) {
     .eq("user_id", userId)
     .single();
   return data?.active === true;
+}
+
+// ─── Tier-aware helpers (L-PRICING-REVAMP-1) ──────────────────────────────
+
+export const FREE_LIMITS = { writing: 1, reading: 1, exam: 1, lessons: 1 };
+
+export const FEATURES = {
+  free:    new Set(["writing", "reading", "exam", "lesson"]),
+  treeni:  new Set(["writing", "reading", "exam"]),
+  mestari: new Set(["writing", "reading", "exam", "lesson", "course", "adaptive", "yo_readiness", "study_plan", "mistake_tracking"]),
+};
+
+function isPayingRow(row) {
+  if (!row) return false;
+  const tier = row.subscription_tier;
+  if (!tier || tier === "free") return false;
+  if (row.subscription_status === "active") return true;
+  if (row.subscription_billing === "package"
+      && row.subscription_expires_at
+      && new Date(row.subscription_expires_at) > new Date()) return true;
+  return false;
+}
+
+export async function getUserTier(userId) {
+  const { data } = await supabase
+    .from("user_profile")
+    .select("subscription_tier, subscription_billing, subscription_status, subscription_expires_at")
+    .eq("user_id", userId)
+    .single();
+  if (!isPayingRow(data)) return "free";
+  return data.subscription_tier; // 'treeni' | 'mestari'
+}
+
+export async function hasFeature(userId, feature) {
+  const tier = await getUserTier(userId);
+  return FEATURES[tier]?.has(feature) || false;
+}
+
+export async function getFreeUsage(userId) {
+  const { data } = await supabase
+    .from("free_usage")
+    .select("writing_count, reading_count, exam_count, lessons_done")
+    .eq("user_id", userId)
+    .single();
+  return {
+    writing_count: data?.writing_count || 0,
+    reading_count: data?.reading_count || 0,
+    exam_count:    data?.exam_count || 0,
+    lessons_done:  data?.lessons_done || 0,
+  };
+}
+
+export async function incrementFreeUsage(userId, feature) {
+  const col = ({
+    writing: "writing_count",
+    reading: "reading_count",
+    exam:    "exam_count",
+    lessons: "lessons_done",
+  })[feature];
+  if (!col) return;
+  const usage = await getFreeUsage(userId);
+  const next = (usage[col] || 0) + 1;
+  await supabase
+    .from("free_usage")
+    .upsert({ user_id: userId, [col]: next, updated_at: new Date().toISOString() }, { onConflict: "user_id" });
+}
+
+/**
+ * Combined gate for paid features. Returns
+ *   { allowed: true, tier }
+ *   { allowed: false, reason: 'tier_required', requiredTier, currentTier }
+ *   { allowed: false, reason: 'free_quota_exceeded', used, limit }
+ */
+export async function checkFeatureAccess(userId, feature) {
+  const tier = await getUserTier(userId);
+  const allowedByTier = FEATURES[tier]?.has(feature);
+  if (!allowedByTier) {
+    const requiredTier = FEATURES.mestari.has(feature) && !FEATURES.treeni.has(feature) ? "mestari" : "treeni";
+    return { allowed: false, reason: "tier_required", requiredTier, currentTier: tier };
+  }
+  if (tier !== "free") return { allowed: true, tier };
+  const limitKey = feature === "lesson" ? "lessons" : feature;
+  const limit = FREE_LIMITS[limitKey];
+  if (limit == null) return { allowed: true, tier };
+  const usage = await getFreeUsage(userId);
+  const usedCol = limitKey === "lessons" ? "lessons_done" : `${limitKey}_count`;
+  const used = usage[usedCol] || 0;
+  if (used >= limit) return { allowed: false, reason: "free_quota_exceeded", used, limit, currentTier: tier };
+  return { allowed: true, tier, used, limit };
 }
 
 /**

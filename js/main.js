@@ -1,8 +1,8 @@
 // ─── Entry point ────────────────────────────────────────────────────────────
 // Imports all modules and wires them together
 
-import { API, isLoggedIn, getAuthEmail, authHeader, clearAuth, apiFetch, setShowFn } from "./api.js";
-import { state } from "./state.js";
+import { API, isLoggedIn, getAuthEmail, authHeader, clearAuth, apiFetch, setShowFn, setLangFn } from "./api.js";
+import { state, setLanguage } from "./state.js";
 import { $, show } from "./ui/nav.js";
 import { applyFeatureFlags } from "./features/flags.js";
 
@@ -20,6 +20,7 @@ import { initFullExam, startFullExam } from "./screens/fullExam.js";
 import { initAdaptive, masteryNext, masteryDone } from "./screens/adaptive.js";
 import { initOnboarding, checkOnboarding } from "./screens/onboarding.js";
 import { initOnboardingV2, showOnboardingV2 } from "./screens/onboardingV2.js";
+import { initOnboardingV3, showOnboardingV3 } from "./screens/onboardingV3.js";
 import { initPlacement, checkPlacementNeeded, showPlacementIntro, startPlacementFromRetake } from "./screens/placement.js";
 import { initLearningPath, submitMasteryResult } from "./screens/learningPath.js";
 import { loadCurriculum } from "./screens/curriculum.js";
@@ -34,9 +35,15 @@ import { initAnalytics } from "./analytics.js";
 import { initProfileMenu, syncProfileMenu } from "./features/profileMenu.js";
 // L-PLAN-5 UPDATE 4 — re-readable teaching page (side-panel desktop / modal mobile).
 import { initTeachingPanel } from "./features/teachingPanel.js";
+// Paywall modal — wired early so the 403 intercept in api.js can open it.
+import { initPaywallModal } from "./features/paywallModal.js";
 
 // ─── Inject show into api.js (avoids circular dep) ─────────────────────────
 setShowFn(show);
+
+// L-LANG-INFRA-1: inject language getter so apiFetch can append ?lang= to
+// AI routes without importing state.js (avoids circular deps at parse time).
+setLangFn(() => state.language);
 
 // ─── Loading-shimmer auto-clear ────────────────────────────────────────────
 // Strip `.loading-shimmer` from placeholder elements as soon as JS replaces
@@ -112,10 +119,14 @@ initFullExam({ loadDashboard, saveProgress, shareResult });
 initAdaptive({ loadDashboard });
 initOnboarding({ loadDashboard, loadNextBatch });
 initOnboardingV2({ loadDashboard });
+initOnboardingV3({ loadDashboard });
 window._onboardingV2 = { show: showOnboardingV2 };
-// Hash entry: visiting /app.html#/aloitus enters the L-PLAN-1 V2 onboarding.
+window._onboardingV3 = { show: showOnboardingV3 };
+// Hash entry: /app.html#/aloitus → V3 (L-ONBOARDING-REDESIGN-1) by default.
+// Legacy V2 still reachable via /app.html#/aloitus-v2 for fallback testing.
 if (location.hash === "#/aloitus") {
-  // Defer to next tick so the rest of init runs (auth checks etc.) first.
+  setTimeout(() => showOnboardingV3(), 0);
+} else if (location.hash === "#/aloitus-v2") {
   setTimeout(() => showOnboardingV2(), 0);
 }
 initPlacement({ loadDashboard });
@@ -335,6 +346,8 @@ initProfileMenu({ startCheckout, updateSidebarState });
 window._profileMenuRef = { syncProfileMenu };
 // Teaching panel — mounted once at boot, syncs visibility with screen + lesson.
 initTeachingPanel();
+// Paywall modal — wired once at boot so the backdrop/close buttons work.
+initPaywallModal();
 
 if ($("btn-start-reading")) $("btn-start-reading").addEventListener("click", async () => {
   state.mode = "reading";
@@ -529,8 +542,8 @@ document.querySelectorAll(".mode-btn").forEach((btn) => {
   });
 });
 
-// Language is fixed to Spanish
-state.language = "spanish";
+// L-LANG-INFRA-1: language is now set from profile.target_language after login.
+// Default remains "es" (set in state.js). The old hardcoded assignment is removed.
 
 // Pass 0.6: legacy #level-picker / #grammar-level-picker / #reading-level-picker
 // listeners removed. The pickers no longer exist; state.level et al. are now
@@ -737,6 +750,31 @@ function urlBase64ToUint8Array(base64String) {
   return Uint8Array.from([...raw].map((c) => c.charCodeAt(0)));
 }
 
+// ─── L-LANG-INFRA-1: language routing helpers ──────────────────────────────
+
+// Hydrate state.language from a profile object. Called after login/profile-load.
+function hydrateLanguage(profile) {
+  if (!profile) return;
+  const lang = profile.target_language;
+  if (lang) setLanguage(lang);
+}
+
+// Returns true if the user should be routed to the coming-soon screen.
+function needsComingSoon() {
+  return isLoggedIn() && state.language !== "es";
+}
+
+// Route to coming-soon or let normal flow proceed. Returns true if rerouted.
+function maybeRouteComingSoon() {
+  if (needsComingSoon()) {
+    import("./screens/comingSoon.js")
+      .then((m) => m.showComingSoon())
+      .catch(() => show("screen-coming-soon"));
+    return true;
+  }
+  return false;
+}
+
 // ─── Startup ───────────────────────────────────────────────────────────────
 
 updateSidebarState();
@@ -758,6 +796,9 @@ if (!resetToken && isLoggedIn()) {
   initPushNotifications();
   initAnalytics(null, getAuthEmail());
 }
+
+// Expose for use by screens that load the profile (auth.js, settings.js, etc.)
+window._langRef = { hydrateLanguage, maybeRouteComingSoon };
 
 // Handle manifest shortcut hashes (legacy bare names — translate to new hash form)
 const legacyHash = window.location.hash.slice(1);

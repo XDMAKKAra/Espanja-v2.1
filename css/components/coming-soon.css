@@ -1,0 +1,404 @@
+/* L-LANG-INFRA-1 — coming-soon screen for DE/FR users.
+   Sourced from 21st.dev/s/coming-soon (restrained dark card pattern).
+   Tokens: same as rest of app-shell (--bg, --surface, --accent, etc.) */
+
+/* ─── Screen wrapper ──────────────────────────────────────────────────────── */
+
+#screen-coming-soon {
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(24px, 5vw, 56px) clamp(16px, 4vw, 32px);
+  background: var(--bg, #0a0a0a);
+}
+
+/* ─── Card ────────────────────────────────────────────────────────────────── */
+
+.cs-card {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  background: var(--surface, rgba(255,255,255,0.04));
+  border: 1px solid var(--border, rgba(255,255,255,0.08));
+  border-radius: var(--r-xl, 24px);
+  padding: clamp(28px, 5vw, 48px);
+}
+
+/* ─── Header ──────────────────────────────────────────────────────────────── */
+
+.cs-header {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cs-eyebrow {
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent, #2DD4BF);
+  margin: 0;
+  font-weight: 500;
+}
+
+.cs-title {
+  font-size: clamp(24px, 4vw, 32px);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+  color: var(--text, #fafafa);
+  margin: 0;
+}
+
+.cs-body {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text-muted, #a1a1aa);
+  margin: 0;
+  max-width: 52ch;
+}
+
+/* ─── Waitlist form ───────────────────────────────────────────────────────── */
+
+.cs-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cs-form-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted, #a1a1aa);
+  display: block;
+  margin-bottom: 2px;
+}
+
+.cs-email-wrap {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.cs-email-input {
+  flex: 1 1 200px;
+  min-width: 0;
+  height: 48px;
+  padding: 0 16px;
+  border-radius: var(--r-md, 12px);
+  border: 1px solid var(--border-strong, rgba(255,255,255,0.14));
+  background: var(--bg, #0a0a0a);
+  color: var(--text, #fafafa);
+  font-size: 15px;
+  outline: none;
+  transition: border-color 150ms ease-out;
+}
+
+.cs-email-input::placeholder {
+  color: var(--text-subtle, #71717a);
+}
+
+.cs-email-input:focus {
+  border-color: var(--accent, #2DD4BF);
+  outline: 2px solid var(--accent, #2DD4BF);
+  outline-offset: 2px;
+}
+
+.cs-submit {
+  height: 48px;
+  padding: 0 24px;
+  border-radius: var(--r-md, 12px);
+  background: var(--accent, #2DD4BF);
+  color: #0a0a0a;
+  font-size: 15px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 150ms ease-out, opacity 150ms ease-out;
+  min-width: 44px;
+  min-height: 44px;
+}
+
+.cs-submit:hover:not(:disabled) {
+  background: var(--accent-hover, #14B8A6);
+}
+
+.cs-submit:focus-visible {
+  outline: 2px solid var(--accent, #2DD4BF);
+  outline-offset: 2px;
+}
+
+.cs-submit:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.cs-error {
+  font-size: 14px;
+  color: var(--error, #f87171);
+  margin: 0;
+}
+
+.cs-error.hidden { display: none; }
+
+/* ─── Success state ───────────────────────────────────────────────────────── */
+
+.cs-success {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 20px;
+  border-radius: var(--r-md, 12px);
+  background: var(--accent-soft, rgba(45,212,191,0.12));
+  border: 1px solid var(--accent, #2DD4BF);
+}
+
+.cs-success.hidden { display: none; }
+
+.cs-success-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--accent, #2DD4BF);
+  margin: 0;
+}
+
+.cs-success-body {
+  font-size: 14px;
+  color: var(--text-muted, #a1a1aa);
+  margin: 0;
+}
+
+/* ─── Footer link ─────────────────────────────────────────────────────────── */
+
+.cs-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cs-footer-note {
+  font-size: 14px;
+  color: var(--text-subtle, #71717a);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.cs-link {
+  color: var(--accent, #2DD4BF);
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 3px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  font-size: 14px;
+  transition: text-decoration-color 150ms ease-out;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.cs-link:hover {
+  text-decoration-color: var(--accent, #2DD4BF);
+}
+
+.cs-link:focus-visible {
+  outline: 2px solid var(--accent, #2DD4BF);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ─── Reduced-motion ──────────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .cs-submit,
+  .cs-email-input,
+  .cs-link { transition: none; }
+}
+
+/* ─── Settings language section ──────────────────────────────────────────── */
+
+.settings-lang-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 800;
+  padding: 16px;
+}
+
+.settings-lang-overlay.hidden { display: none; }
+
+.settings-lang-modal {
+  background: var(--bg-elevated, #141414);
+  border: 1px solid var(--border-strong, rgba(255,255,255,0.14));
+  border-radius: var(--r-xl, 24px);
+  width: 100%;
+  max-width: 400px;
+  padding: 28px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: relative;
+}
+
+.settings-lang-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--border, rgba(255,255,255,0.08));
+  background: transparent;
+  color: var(--text-muted, #a1a1aa);
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 150ms ease-out;
+}
+
+.settings-lang-close:hover { background: var(--surface-hover, rgba(255,255,255,0.06)); }
+.settings-lang-close:focus-visible { outline: 2px solid var(--accent, #2DD4BF); outline-offset: 2px; }
+
+.settings-lang-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text, #fafafa);
+  margin: 0;
+}
+
+.settings-lang-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.settings-lang-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: var(--r-md, 12px);
+  border: 1px solid var(--border, rgba(255,255,255,0.08));
+  cursor: pointer;
+  transition: border-color 150ms ease-out, background 150ms ease-out;
+  min-height: 52px;
+  user-select: none;
+}
+
+.settings-lang-option:hover {
+  background: var(--surface-hover, rgba(255,255,255,0.06));
+}
+
+.settings-lang-option.is-selected {
+  border-color: var(--accent, #2DD4BF);
+  background: var(--accent-soft, rgba(45,212,191,0.08));
+}
+
+.settings-lang-option:focus-within {
+  outline: 2px solid var(--accent, #2DD4BF);
+  outline-offset: 2px;
+}
+
+.settings-lang-flag {
+  font-size: 20px;
+  line-height: 1;
+  flex-shrink: 0;
+  width: 28px;
+  text-align: center;
+}
+
+.settings-lang-label {
+  flex: 1;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text, #fafafa);
+}
+
+.settings-lang-check {
+  color: var(--accent, #2DD4BF);
+  opacity: 0;
+  transition: opacity 150ms ease-out;
+  flex-shrink: 0;
+}
+
+.settings-lang-option.is-selected .settings-lang-check { opacity: 1; }
+
+.settings-lang-error {
+  font-size: 13px;
+  color: var(--error, #f87171);
+  margin: 0;
+}
+
+.settings-lang-error.hidden { display: none; }
+
+.settings-lang-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+/* Confirmation modal */
+.settings-lang-confirm-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 900;
+  padding: 16px;
+}
+
+.settings-lang-confirm-overlay.hidden { display: none; }
+
+.settings-lang-confirm-modal {
+  background: var(--bg-elevated, #141414);
+  border: 1px solid var(--border-strong, rgba(255,255,255,0.14));
+  border-radius: var(--r-xl, 24px);
+  width: 100%;
+  max-width: 380px;
+  padding: 28px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.settings-lang-confirm-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text, #fafafa);
+  margin: 0;
+}
+
+.settings-lang-confirm-body {
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--text-muted, #a1a1aa);
+  margin: 0;
+}
+
+.settings-lang-confirm-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  margin-top: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .settings-lang-option,
+  .settings-lang-close,
+  .settings-lang-check { transition: none; }
+}

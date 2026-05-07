@@ -22,22 +22,35 @@ async function loadSchema() {
 }
 
 async function findLessonFiles() {
+  // L-LANG-INFRA-1: lessons now live under data/courses/${lang}/kurssi_N/.
+  // Iterate all lang subdirs that themselves contain kurssi_N directories.
   const out = [];
-  let entries;
+  let topEntries;
   try {
-    entries = await readdir(DATA_ROOT, { withFileTypes: true });
+    topEntries = await readdir(DATA_ROOT, { withFileTypes: true });
   } catch (err) {
     if (err.code === "ENOENT") return [];
     throw err;
   }
-  for (const entry of entries) {
-    if (!entry.isDirectory()) continue;
-    if (!/^kurssi_[1-8]$/.test(entry.name)) continue;
-    const courseDir = path.join(DATA_ROOT, entry.name);
-    const courseFiles = await readdir(courseDir);
-    for (const f of courseFiles) {
-      if (!f.endsWith(".json")) continue;
-      out.push(path.join(courseDir, f));
+
+  for (const langEntry of topEntries) {
+    if (!langEntry.isDirectory()) continue;
+    // Skip legacy flat kurssi_N dirs at the root (already moved to es/).
+    if (/^kurssi_/.test(langEntry.name)) continue;
+    const langDir = path.join(DATA_ROOT, langEntry.name);
+    let courseEntries;
+    try {
+      courseEntries = await readdir(langDir, { withFileTypes: true });
+    } catch { continue; }
+    for (const entry of courseEntries) {
+      if (!entry.isDirectory()) continue;
+      if (!/^kurssi_[1-8]$/.test(entry.name)) continue;
+      const courseDir = path.join(langDir, entry.name);
+      const courseFiles = await readdir(courseDir);
+      for (const f of courseFiles) {
+        if (!f.endsWith(".json")) continue;
+        out.push(path.join(courseDir, f));
+      }
     }
   }
   return out.sort();

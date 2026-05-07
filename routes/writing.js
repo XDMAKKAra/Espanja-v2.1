@@ -1,7 +1,8 @@
 import { Router } from "express";
 import { callOpenAI, getUserProfileContext, LANGUAGE_META, VALID_LANGUAGES } from "../lib/openai.js";
 import { buildGradingPrompt, processGradingResult, SHORT_MAX, LONG_MAX } from "../lib/writingGrading.js";
-import { requireAuth, requirePro } from "../middleware/auth.js";
+import { requireAuth, requirePro, checkFeatureAccess, incrementFreeUsage } from "../middleware/auth.js";
+import { requireSupportedLanguage, resolveLang } from "../middleware/language.js";
 import { aiStrictLimiter } from "../middleware/rateLimit.js";
 import { checkMonthlyCostLimit } from "../middleware/costLimit.js";
 import { logAiUsage } from "../lib/aiCost.js";
@@ -10,13 +11,27 @@ const router = Router();
 
 const VALID_TASK_TYPES = new Set(["short", "long"]);
 
-router.post("/writing-task", requireAuth, requirePro, aiStrictLimiter, checkMonthlyCostLimit, async (req, res) => {
+router.post("/writing-task", requireAuth, aiStrictLimiter, checkMonthlyCostLimit, async (req, res) => {
+  if (requireSupportedLanguage(req, res)) return;
+
   const { taskType = "short", topic = "general", language = "spanish", recentWeaknesses = [] } = req.body;
+  const lang = resolveLang(req);
+
+  const access = await checkFeatureAccess(req.user.userId, "writing");
+  if (!access.allowed) {
+    return res.status(403).json({
+      error: access.reason,
+      tier_required: access.requiredTier || null,
+      current_tier: access.currentTier,
+      used: access.used,
+      limit: access.limit,
+    });
+  }
 
   if (!VALID_TASK_TYPES.has(taskType)) return res.status(400).json({ error: "Virheellinen tehtävätyyppi (short/long)" });
   if (!VALID_LANGUAGES.has(language)) return res.status(400).json({ error: "Virheellinen kieli" });
 
-  const lang = LANGUAGE_META[language];
+  const langMeta = LANGUAGE_META[language];
   const isShort = taskType === "short";
   const maxPoints = isShort ? SHORT_MAX : LONG_MAX;
   const charRange = isShort ? "160–240" : "300–450";
@@ -41,7 +56,7 @@ router.post("/writing-task", requireAuth, requirePro, aiStrictLimiter, checkMont
     }
   }
 
-  const prompt = `Generate ONE realistic ${lang.name} yo-koe writing task for Finnish students (lyhyt oppimäärä, ${lang.yearsStudied} of ${lang.name}).
+  const prompt = `Generate ONE realistic ${langMeta.name} yo-koe writing task for Finnish students (lyhyt oppimäärä, ${langMeta.yearsStudied} of ${langMeta.name}).
 ${profileCtx}
 ${weaknessLine}
 Task type: ${isShort ? "SHORT task (lyhyt kirjoitelma)" : "LONG task (pitkä kirjoitelma)"}
@@ -63,7 +78,7 @@ Return ONLY JSON:
   "charMin": ${isShort ? 160 : 300},
   "charMax": ${isShort ? 240 : 450},
   "situation": "Brief Finnish context sentence explaining the situation (1-2 sentences in Finnish)",
-  "prompt": "The actual task instruction in Spanish (what they must write)",
+  "prompt": "The actual task instruction in ${langMeta.name} (what they must write)",
   "requirements": ["requirement 1 in Finnish", "requirement 2 in Finnish", "requirement 3 in Finnish"],
   "textType": "e.g. sähköpostiviesti / foorumikommentti / TripAdvisor-arvio"
 }`;
@@ -72,6 +87,7 @@ Return ONLY JSON:
     const task = await callOpenAI(prompt, 1000);
     logAiUsage(req.user?.userId, "writing-task", task._usage).catch(() => {});
     delete task._usage;
+    if (access.tier === "free") await incrementFreeUsage(req.user.userId, "writing");
     res.json({ task });
   } catch (err) {
     console.error(err);
@@ -79,7 +95,10 @@ Return ONLY JSON:
   }
 });
 
-router.post("/grade-writing", requireAuth, requirePro, aiStrictLimiter, checkMonthlyCostLimit, async (req, res) => {
+router.post("/grade-writing", requireAuth, aiStrictLimiter, checkMonthlyCostLimit, async (req, res) => {
+  if (requireSupportedLanguage(req, res)) return;
+  const lang = resolveLang(req);
+
   const { task, studentText } = req.body;
 
   if (!task || !studentText || typeof studentText !== "string" || studentText.trim().length === 0) {
@@ -89,10 +108,21 @@ router.post("/grade-writing", requireAuth, requirePro, aiStrictLimiter, checkMon
     return res.status(400).json({ error: "Virheellinen tehtävädata" });
   }
 
+  const access = await checkFeatureAccess(req.user.userId, "writing");
+  if (!access.allowed) {
+    return res.status(403).json({
+      error: access.reason,
+      tier_required: access.requiredTier || null,
+      current_tier: access.currentTier,
+      used: access.used,
+      limit: access.limit,
+    });
+  }
+
   const isShort = task.taskType === "short";
   const charCount = studentText.replace(/\s/g, "").length;
 
-  const prompt = buildGradingPrompt(task, studentText, isShort);
+  const prompt = buildGradingPrompt(task, studentText, isShort, lang);
 
   try {
     // Per puheo-ai-prompt skill: graders use temp 0.2 for determinism + force
@@ -105,6 +135,7 @@ router.post("/grade-writing", requireAuth, requirePro, aiStrictLimiter, checkMon
     delete aiResult._usage;
     const result = processGradingResult(aiResult, charCount, task.charMin, isShort, studentText);
     result.originalText = studentText;
+    if (access.tier === "free") await incrementFreeUsage(req.user.userId, "writing");
     res.json({ result });
   } catch (err) {
     console.error(err);

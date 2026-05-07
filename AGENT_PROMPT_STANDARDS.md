@@ -101,6 +101,7 @@ Joka loop päättyy nämä tehden:
 4. **IMPROVEMENTS.md** — yksi rivi per UPDATE, prefix `[YYYY-MM-DD L-PLAN-N]`, mainitsee käytetyt skillit ja 21st.dev-URLit.
 5. **AGENT_STATE.md** — päivitä `Last completed loop` ja `Next loop` kentät.
 6. **SW-bumppi** jos STATIC_ASSETS muuttui (uusia .css/.js-tiedostoja lisätty).
+7. **`graphify update .`** jos koodi muuttui (AST-only, 0 token-kustannus). Pitää `graphify-out/`:n synkassa, jotta seuraava istunto näkee oikean rakenteen.
 
 ---
 

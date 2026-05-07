@@ -2,6 +2,40 @@
 
 export const API = window.location.origin;
 
+// L-LANG-INFRA-1: AI routes that must receive ?lang= so the backend can select
+// the right language model/prompt. Matched as prefix against the request URL.
+const AI_ROUTE_PREFIXES = [
+  "/api/exercises",
+  "/api/writing",
+  "/api/exam",
+  "/api/reading",
+];
+
+// Inject ?lang=<state.language> onto AI routes. Lazy-imports state to avoid a
+// circular dep at module parse time (api.js → state.js is fine; state.js has
+// no imports, but the import() guard keeps things clean across bundlers).
+function injectLangParam(url) {
+  try {
+    // Import state synchronously — state.js is a plain ES module with no async
+    // code, so by the time any fetch fires it will already be evaluated.
+    // We access it via a module-level cache set by setStateFn() below.
+    if (!_stateFn) return url;
+    const lang = _stateFn();
+    if (!lang || lang === "es") return url; // es is backend default — no-op
+    const u = new URL(url, window.location.origin);
+    const isAiRoute = AI_ROUTE_PREFIXES.some((p) => u.pathname.startsWith(p));
+    if (!isAiRoute) return url;
+    u.searchParams.set("lang", lang);
+    return u.toString();
+  } catch {
+    return url;
+  }
+}
+
+let _stateFn = null;
+/** Call once from main.js after state is loaded: setLangFn(() => state.language) */
+export function setLangFn(fn) { _stateFn = fn; }
+
 let authToken        = localStorage.getItem("puheo_token");
 let authRefreshToken = localStorage.getItem("puheo_refresh_token");
 let authEmail        = localStorage.getItem("puheo_email");
@@ -44,7 +78,30 @@ let _showFn = null;
 export function setShowFn(fn) { _showFn = fn; }
 
 export async function apiFetch(url, opts = {}) {
+  // L-LANG-INFRA-1: inject ?lang= on AI routes for non-ES languages.
+  url = injectLangParam(url);
   let res = await fetch(url, opts);
+
+  // ── 403 paywall intercept ────────────────────────────────────────────────
+  // Intercept quota / tier gate errors and open the paywall modal so callers
+  // don't need to handle it individually.  The response is still returned so
+  // callers that want to react programmatically can do so.
+  if (res.status === 403) {
+    // Clone before reading so the caller can still consume the body.
+    const cloned = res.clone();
+    cloned.json().then((data) => {
+      if (!data || typeof data !== "object") return;
+      const errCode = data.error;
+      if (errCode !== "free_quota_exceeded" && errCode !== "tier_required") return;
+      // Lazy-import to avoid circular dep at parse time.
+      import("./features/paywallModal.js").then(({ openPaywall, deriveVariant }) => {
+        const variant = deriveVariant(data.current_tier, data.tier_required);
+        openPaywall({ variant });
+      }).catch(() => { /* no-op if modal not available */ });
+    }).catch(() => { /* JSON parse failed — leave to caller */ });
+    return res;
+  }
+
   if (res.status !== 401 || !authRefreshToken) return res;
 
   if (!_refreshing) {

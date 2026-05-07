@@ -2,13 +2,15 @@ import { Router } from "express";
 import supabase from "../supabase.js";
 import {
   callOpenAI, coerceArrayResponse, getUserProfileContext,
-  LEVEL_DESCRIPTIONS, TOPIC_CONTEXT, LANGUAGE_META,
+  LEVEL_DESCRIPTIONS, TOPIC_CONTEXT, getTopicContext, LANGUAGE_META,
   GRAMMAR_TOPIC_DESCS, READING_LEVEL_DESCS, READING_TOPIC_CONTEXTS,
   GRADES, GRADE_ORDER,
   VALID_LEVELS, VALID_VOCAB_TOPICS, VALID_GRAMMAR_TOPICS,
   VALID_READING_TOPICS, VALID_READING_LEVELS, VALID_LANGUAGES,
+  LANG_LABEL,
 } from "../lib/openai.js";
-import { requireAuth, requirePro, softReadingGate, incrementReadingPieces } from "../middleware/auth.js";
+import { requireSupportedLanguage, resolveLang } from "../middleware/language.js";
+import { requireAuth, requirePro, softReadingGate, incrementReadingPieces, checkFeatureAccess, incrementFreeUsage } from "../middleware/auth.js";
 import { aiLimiter, aiStrictLimiter, reportLimiter } from "../middleware/rateLimit.js";
 import { checkMonthlyCostLimit } from "../middleware/costLimit.js";
 import { logAiUsage } from "../lib/aiCost.js";
@@ -225,6 +227,9 @@ async function saveToBankBulk(mode, level, topic, language, exercises) {
 // ─── Vocab exercises ───────────────────────────────────────────────────────
 
 router.post("/generate", requireAuth, aiLimiter, checkMonthlyCostLimit, async (req, res) => {
+  if (requireSupportedLanguage(req, res)) return;
+  const lang = resolveLang(req);
+
   const reqLevel = req.body?.level ?? "B";
   const reqTopic = req.body?.topic ?? "general vocabulary";
   const reqCount = req.body?.count ?? 4;
@@ -259,6 +264,17 @@ router.post("/generate", requireAuth, aiLimiter, checkMonthlyCostLimit, async (r
         .slice(-30)
     : [];
 
+  const generateAccess = await checkFeatureAccess(req.user.userId, "lesson");
+  if (!generateAccess.allowed) {
+    return res.status(403).json({
+      error: generateAccess.reason,
+      tier_required: generateAccess.requiredTier || null,
+      current_tier: generateAccess.currentTier,
+      used: generateAccess.used,
+      limit: generateAccess.limit,
+    });
+  }
+
   try {
     // Try bank first — skip when curriculum context is active so the AI can
     // honour the lesson focus rather than serve a generic banked batch.
@@ -271,9 +287,9 @@ router.post("/generate", requireAuth, aiLimiter, checkMonthlyCostLimit, async (r
     }
 
     // Generate with AI
-    const lang = LANGUAGE_META[language];
+    const langMeta = LANGUAGE_META[language];
     const levelDesc = LEVEL_DESCRIPTIONS[level];
-    const topicContext = TOPIC_CONTEXT[topic];
+    const topicContext = getTopicContext(lang)[topic] || TOPIC_CONTEXT[topic];
     const profileCtx = await getUserProfileContext(userId);
     const baseLessonBlock = lessonCtx
       ? (lessonCtx.isKertaustesti ? curriculumTestInstruction(lessonCtx) : curriculumFocusInstruction(lessonCtx))
@@ -284,7 +300,7 @@ router.post("/generate", requireAuth, aiLimiter, checkMonthlyCostLimit, async (r
     // and validateVocabBatch then rejects it as malformed. Ask explicitly for
     // the wrapper shape and unwrap with coerceArrayResponse so older cached
     // bare-array responses still work.
-    const buildPrompt = (lessonBlock) => `You are generating vocabulary exercises for Finnish high school students taking the ${lang.name} "lyhyt oppimäärä" yo-koe (matriculation exam). Students have studied ${lang.name} for about ${lang.yearsStudied}.
+    const buildPrompt = (lessonBlock) => `You are generating vocabulary exercises for Finnish high school students taking the ${langMeta.name} "lyhyt oppimäärä" yo-koe (matriculation exam). Students have studied ${langMeta.name} for about ${langMeta.yearsStudied}.
 ${profileCtx}${lessonBlock}
 TARGET LEVEL: ${level} = ${levelDesc}
 
@@ -292,29 +308,29 @@ TOPIC: ${topicContext}
 
 Generate ${clampedCount} exercises. You MUST use a DIFFERENT type for each question. Cycle through these types:
 
-TYPE 1 — "context": Show a realistic ${lang.name} sentence containing a target word/phrase. Ask what the highlighted word means in that context. Question format: "Lauseessa '...el alcalde anunció...' — mitä tarkoittaa 'el alcalde'?"
-TYPE 2 — "translate": Give a Finnish word or short phrase. Ask which ${lang.name} option is the correct translation. Question: "Miten sanotaan espanjaksi: 'kaupungintalo'?" Options are in ${lang.name}.
-TYPE 3 — "gap": Show a ${lang.name} sentence with ___ blank. Ask which word/phrase fills the gap correctly. Question: "Täydennä: 'Mañana vamos a ___ con nuestros amigos.'" Options are ${lang.name} words.
-TYPE 4 — "meaning": Classic format — show a ${lang.name} word, ask what it means. "¿Qué significa 'el ayuntamiento'?" Options in Finnish.
+TYPE 1 — "context": Show a realistic ${langMeta.name} sentence containing a target word/phrase. Ask what the highlighted word means in that context. Question format: "Lauseessa '...[word]...' — mitä tarkoittaa '[word]'?"
+TYPE 2 — "translate": Give a Finnish word or short phrase. Ask which ${langMeta.name} option is the correct translation. Question: "Miten sanotaan ${LANG_LABEL[lang]?.fi ?? langMeta.name.toLowerCase()}ksi: '[Finnish word]'?" Options are in ${langMeta.name}.
+TYPE 3 — "gap": Show a ${langMeta.name} sentence with ___ blank. Ask which word/phrase fills the gap correctly. Options are ${langMeta.name} words.
+TYPE 4 — "meaning": Classic format — show a ${langMeta.name} word, ask what it means. Options in Finnish.
 
 Rules:
 - Each question MUST have a "type" field with one of: "context", "translate", "gap", "meaning"
 - Options labeled A) B) C) D)
-- For "translate" type: options must be in ${lang.name}
+- For "translate" type: options must be in ${langMeta.name}
 - For "context", "meaning" types: options in Finnish
-- For "gap" type: options in ${lang.name}
+- For "gap" type: options in ${langMeta.name}
 - Difficulty MUST match the level description exactly
 - For level B-C: words from real yo-koe reading texts (daily life, travel, culture)
 - For level E-L: nuanced vocabulary, near-synonyms, register differences
-- Explanations brief: give both ${lang.name} meaning AND Finnish translation
+- Explanations brief: give both ${langMeta.name} meaning AND Finnish translation
 - Context sentences must be realistic, like from a yo-koe text
 
 HARD REQUIREMENTS (enforced server-side):
-- EVERY item MUST include a non-empty "context" field: a realistic ${lang.name} sentence of at least 6 words that uses the target word/phrase. This applies to ALL four types, not just "context". For "translate" and "meaning" the context sentence models how the word is used; for "gap" the context is the full sentence with the blank filled in.
+- EVERY item MUST include a non-empty "context" field: a realistic ${langMeta.name} sentence of at least 6 words that uses the target word/phrase. This applies to ALL four types, not just "context". For "translate" and "meaning" the context sentence models how the word is used; for "gap" the context is the full sentence with the blank filled in.
 - All four options A-D MUST share the same part of speech as the target word. If the target is a verb, all four options must be verbs in the same tense/mood. If the target is a noun, all four must be nouns (same singular/plural and, when relevant, the same gender). Mixing a verb with a noun, or a singular with a plural, is forbidden.
-- Within this batch of ${clampedCount} items, NO target headword (Spanish lemma) may repeat. Use distinct words for every item.
+- Within this batch of ${clampedCount} items, NO target headword (${langMeta.name} lemma) may repeat. Use distinct words for every item.
 ${recentList.length ? `- ANTI-REPETITION: the student has already seen these target headwords this session — do NOT use any of them as a target word in this batch (variation in options is fine, but pick fresh target lemmas):\n  ${recentList.join(", ")}\n` : ""}
-Return ONLY a JSON object with shape {"exercises":[ ... ]}, no markdown. Example:
+Return ONLY a JSON object with shape {"exercises":[ ... ]}, no markdown.${lang === "es" ? ` Example:
 {"exercises":[
   {
     "id": 1,
@@ -333,7 +349,7 @@ Return ONLY a JSON object with shape {"exercises":[ ... ]}, no markdown. Example
     "correct": "A",
     "explanation": "el medio ambiente = ympäristö (environment). el paisaje = maisema, el desarrollo = kehitys."
   }
-]}`;
+]}` : ""}`;
 
     const warnings = [];
 
@@ -384,6 +400,7 @@ Return ONLY a JSON object with shape {"exercises":[ ... ]}, no markdown. Example
     // and the post-results "Kertasit myös tätä" -osio.
     exercises = annotateReviewTags(exercises, lessonCtx);
 
+    if (generateAccess.tier === "free") await incrementFreeUsage(req.user.userId, "lessons");
     res.json({ exercises, ...(warnings.length ? { warnings } : {}) });
   } catch (err) {
     console.error("Generate exercises error:", err.message);
@@ -585,6 +602,9 @@ router.get("/seed-counts", requireAuth, (_req, res) => {
 // ─── Grammar exercises ─────────────────────────────────────────────────────
 
 router.post("/grammar-drill", requireAuth, aiLimiter, checkMonthlyCostLimit, async (req, res) => {
+  if (requireSupportedLanguage(req, res)) return;
+  const lang = resolveLang(req);
+
   const reqTopic = req.body?.topic ?? "mixed";
   const reqLevel = req.body?.level ?? "C";
   const reqCount = req.body?.count ?? 6;
@@ -623,23 +643,35 @@ router.post("/grammar-drill", requireAuth, aiLimiter, checkMonthlyCostLimit, asy
         .slice(-20)
     : [];
 
+  const grammarAccess = await checkFeatureAccess(req.user.userId, "lesson");
+  if (!grammarAccess.allowed) {
+    return res.status(403).json({
+      error: grammarAccess.reason,
+      tier_required: grammarAccess.requiredTier || null,
+      current_tier: grammarAccess.currentTier,
+      used: grammarAccess.used,
+      limit: grammarAccess.limit,
+    });
+  }
+
   try {
     const userId = await getUserId(req);
     if (!lessonCtx) {
       const banked = await tryBankExercise("grammar", level, topic, language, userId);
       if (banked) {
+        if (grammarAccess.tier === "free") await incrementFreeUsage(req.user.userId, "lessons");
         return res.json({ exercises: banked.payload, bankId: banked.bankId });
       }
     }
 
-    const lang = LANGUAGE_META[language];
+    const langMeta = LANGUAGE_META[language];
     const topicDesc = GRAMMAR_TOPIC_DESCS[topic];
     const profileCtx = await getUserProfileContext(userId);
     const lessonBlock = lessonCtx
       ? (lessonCtx.isKertaustesti ? curriculumTestInstruction(lessonCtx) : curriculumFocusInstruction(lessonCtx))
       : "";
 
-    const prompt = `You are generating ${lang.name} grammar exercises for Finnish high school students (yo-koe, lyhyt oppimäärä, ${lang.yearsStudied} of ${lang.name}).
+    const prompt = `You are generating ${langMeta.name} grammar exercises for Finnish high school students (yo-koe, lyhyt oppimäärä, ${langMeta.yearsStudied} of ${langMeta.name}).
 ${profileCtx}${lessonBlock}
 GRAMMAR FOCUS: ${topicDesc}
 LEVEL: ${level} — appropriate difficulty for this yo-koe level
@@ -647,7 +679,7 @@ COUNT: ${clampedCount} exercises
 
 Generate ${clampedCount} exercises. Use AT LEAST 3 different types from below:
 
-TYPE "gap": Sentence with ___ blank — choose the correct ${lang.name} form.
+TYPE "gap": Sentence with ___ blank — choose the correct ${langMeta.name} form.
   instruction: "Täydennä aukko oikealla muodolla."
 
 TYPE "correction": Show a sentence WITH an error. Student must identify the corrected version.
@@ -671,7 +703,7 @@ YTL LYHYT OPPIMÄÄRÄ SCOPE — MANDATORY:
 - DO NOT generate items that test: conditional perfect (habría hecho), past subjunctive / imperfect subjunctive (-ara/-iese forms), future subjunctive (-are/-iere), passive voice with ser + por. These are OUT OF SCOPE.
 - When topic=mixed, ensure the batch covers AT LEAST 3 distinct grammar rules (e.g. one ser/estar + one preterite/imperfect + one subjunctive) — not three of the same rule with different exercise formats.
 ${topic === "mixed" && recentRules.length ? `- ANTI-REPETITION: the student has already drilled these grammar rules in earlier batches this session — strongly prefer DIFFERENT rules in this batch (variety builds confidence; revisiting the same rule batch-after-batch feels stale):\n  ${recentRules.join(", ")}\n` : ""}
-Return ONLY a JSON object with shape {"exercises":[ ... ]} (no markdown):
+Return ONLY a JSON object with shape {"exercises":[ ... ]} (no markdown).${lang === "es" ? `
 {"exercises":[
   {
     "id": 1,
@@ -703,7 +735,7 @@ Return ONLY a JSON object with shape {"exercises":[ ... ]} (no markdown):
     "rule": "konditionaali",
     "explanation": "Querría = konditionaali (haluaisin). Quise = preteriti, Quería = imperfekti, Quiera = subjunktiivi."
   }
-]}`;
+]}` : ""}`;
 
     const warnings = [];
     const raw = await callOpenAI(prompt, 2500);
@@ -728,6 +760,7 @@ Return ONLY a JSON object with shape {"exercises":[ ... ]} (no markdown):
     // L-PLAN-7 — tag review items.
     exercises = annotateReviewTags(exercises, lessonCtx);
 
+    if (grammarAccess.tier === "free") await incrementFreeUsage(req.user.userId, "lessons");
     res.json({ exercises, ...(warnings.length ? { warnings } : {}) });
   } catch (err) {
     console.error("Grammar drill error:", err.message);
@@ -737,7 +770,10 @@ Return ONLY a JSON object with shape {"exercises":[ ... ]} (no markdown):
 
 // ─── Reading exercises ─────────────────────────────────────────────────────
 
-router.post("/reading-task", requireAuth, softReadingGate, aiStrictLimiter, checkMonthlyCostLimit, async (req, res) => {
+router.post("/reading-task", requireAuth, aiStrictLimiter, checkMonthlyCostLimit, async (req, res) => {
+  if (requireSupportedLanguage(req, res)) return;
+  const lang = resolveLang(req);
+
   const reqLevel = req.body?.level ?? "C";
   const reqTopic = req.body?.topic ?? "animals and nature";
   const language = req.body?.language ?? "spanish";
@@ -771,23 +807,34 @@ router.post("/reading-task", requireAuth, softReadingGate, aiStrictLimiter, chec
         .slice(-10)
     : [];
 
+  const readingAccess = await checkFeatureAccess(req.user.userId, "reading");
+  if (!readingAccess.allowed) {
+    return res.status(403).json({
+      error: readingAccess.reason,
+      tier_required: readingAccess.requiredTier || null,
+      current_tier: readingAccess.currentTier,
+      used: readingAccess.used,
+      limit: readingAccess.limit,
+    });
+  }
+
   try {
     const userId = await getUserId(req);
     if (!lessonCtx) {
       const banked = await tryBankExercise("reading", level, topic, language, userId);
       if (banked) {
-        if (!req.isPro) await incrementReadingPieces(userId);
+        if (readingAccess.tier === "free") await incrementFreeUsage(req.user.userId, "reading");
         return res.json({ reading: banked.payload, bankId: banked.bankId });
       }
     }
 
-    const lang = LANGUAGE_META[language];
+    const langMeta = LANGUAGE_META[language];
     const levelDesc = READING_LEVEL_DESCS[level];
     const topicContext = READING_TOPIC_CONTEXTS[topic];
     const profileCtx = await getUserProfileContext(userId);
     const lessonBlock = lessonCtx ? curriculumFocusInstruction(lessonCtx) : "";
 
-    const prompt = `Generate a reading comprehension exercise for Finnish students taking the ${lang.name} yo-koe (lyhyt oppimäärä, ${lang.yearsStudied} of ${lang.name}).
+    const prompt = `Generate a reading comprehension exercise for Finnish students taking the ${langMeta.name} yo-koe (lyhyt oppimäärä, ${langMeta.yearsStudied} of ${langMeta.name}).
 ${profileCtx}${lessonBlock}
 Text level: ${level} — ${levelDesc}
 Topic: ${topicContext}
@@ -845,7 +892,7 @@ Return ONLY this JSON (no markdown):
     logAiUsage(userId, "reading-task", reading._usage).catch(() => {});
     delete reading._usage;
     if (!lessonCtx) saveToBankBulk("reading", level, topic, language, reading).catch(() => {});
-    if (!req.isPro) await incrementReadingPieces(userId);
+    if (readingAccess.tier === "free") await incrementFreeUsage(req.user.userId, "reading");
     res.json({ reading });
   } catch (err) {
     console.error("Reading task error:", err.message);
@@ -1231,6 +1278,19 @@ router.post("/adaptive-exercise", requireAuth, aiLimiter, checkMonthlyCostLimit,
   if (!VALID_LANGUAGES.has(language)) return res.status(400).json({ error: "Virheellinen kieli" });
   const clampedCount = Math.max(1, Math.min(8, Number(count) || 4));
 
+  {
+    const access = await checkFeatureAccess(req.user.userId, "adaptive");
+    if (!access.allowed) {
+      return res.status(403).json({
+        error: access.reason,
+        tier_required: access.requiredTier || null,
+        current_tier: access.currentTier,
+        used: access.used,
+        limit: access.limit,
+      });
+    }
+  }
+
   try {
     const userId = req.user.userId;
 
@@ -1320,6 +1380,19 @@ router.post("/adaptive-answer", requireAuth, async (req, res) => {
 
 router.post("/checkpoint/start", requireAuth, aiLimiter, checkMonthlyCostLimit, async (req, res) => {
   const { language = "spanish" } = req.body;
+
+  {
+    const access = await checkFeatureAccess(req.user.userId, "adaptive");
+    if (!access.allowed) {
+      return res.status(403).json({
+        error: access.reason,
+        tier_required: access.requiredTier || null,
+        current_tier: access.currentTier,
+        used: access.used,
+        limit: access.limit,
+      });
+    }
+  }
 
   try {
     const userId = req.user.userId;
@@ -1427,6 +1500,19 @@ router.post("/focus-session", requireAuth, aiLimiter, checkMonthlyCostLimit, asy
   }
   if (!VALID_LANGUAGES.has(language)) return res.status(400).json({ error: "Virheellinen kieli" });
   const clampedCount = Math.max(5, Math.min(15, Number(count) || 10));
+
+  {
+    const access = await checkFeatureAccess(req.user.userId, "adaptive");
+    if (!access.allowed) {
+      return res.status(403).json({
+        error: access.reason,
+        tier_required: access.requiredTier || null,
+        current_tier: access.currentTier,
+        used: access.used,
+        limit: access.limit,
+      });
+    }
+  }
 
   try {
     const userId = req.user.userId;
@@ -1546,6 +1632,19 @@ router.post("/mastery-test/start", requireAuth, aiLimiter, checkMonthlyCostLimit
   const topic = getTopicByKey(topicKey);
   if (!topic) return res.status(400).json({ error: "Virheellinen aihe" });
 
+  {
+    const access = await checkFeatureAccess(req.user.userId, "adaptive");
+    if (!access.allowed) {
+      return res.status(403).json({
+        error: access.reason,
+        tier_required: access.requiredTier || null,
+        current_tier: access.currentTier,
+        used: access.used,
+        limit: access.limit,
+      });
+    }
+  }
+
   try {
     const userId = req.user.userId;
     const path = await getUserPath(userId);
@@ -1645,6 +1744,19 @@ router.post("/mastery-test/submit", requireAuth, async (req, res) => {
 // Mixed review of all mastered topics
 router.post("/mixed-review", requireAuth, aiLimiter, checkMonthlyCostLimit, async (req, res) => {
   const { count = 15, language = "spanish" } = req.body;
+
+  {
+    const access = await checkFeatureAccess(req.user.userId, "adaptive");
+    if (!access.allowed) {
+      return res.status(403).json({
+        error: access.reason,
+        tier_required: access.requiredTier || null,
+        current_tier: access.currentTier,
+        used: access.used,
+        limit: access.limit,
+      });
+    }
+  }
 
   try {
     const userId = req.user.userId;
