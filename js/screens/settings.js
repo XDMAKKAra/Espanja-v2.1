@@ -1,8 +1,10 @@
 import { $, show } from "../ui/nav.js";
 import { API, authHeader, apiFetch, getAuthEmail, clearAuth, invalidateProfileCache } from "../api.js";
+import { state, setLanguage } from "../state.js";
 import { track } from "../analytics.js";
 import { computeStartingLevel, YTL_LEVELS } from "../features/startingLevel.js";
 import { toast } from "../ui/toast.js";
+import { initPaywallModal } from "../features/paywallModal.js";
 
 const THEME_LABELS = {
   auto:  "Vaalea — seuraa järjestelmää",
@@ -92,10 +94,6 @@ function wireThemeToggle() {
 function wireAccountSection() {
   const emailEl = document.getElementById("settings-account-email");
   if (emailEl) emailEl.textContent = getAuthEmail() || "—";
-  const planEl = document.getElementById("settings-account-plan");
-  if (planEl) planEl.textContent = window._isPro ? "Pro" : "Ilmainen";
-  const billingBtn = document.getElementById("settings-manage-billing");
-  if (billingBtn && window._isPro) billingBtn.hidden = false;
   const signOutBtn = document.getElementById("settings-signout");
   if (signOutBtn && !signOutBtn.dataset.wired) {
     signOutBtn.dataset.wired = "1";
@@ -109,6 +107,99 @@ function wireAccountSection() {
   }
 }
 
+// ─── Subscription section ─────────────────────────────────────────────────────
+
+const TIER_LABELS = {
+  free:    "Ilmainen",
+  treeni:  "Treeni",
+  mestari: "Mestari",
+  pro:     "Pro",         // legacy
+};
+
+async function wireSubscriptionSection(profile) {
+  const container = document.getElementById("settings-subscription-rows");
+  if (!container) return;
+  container.setAttribute("aria-busy", "false");
+
+  const tier    = profile?.subscription_tier || "free";
+  const billing = profile?.subscription_billing;
+  const status  = profile?.subscription_status;
+  const expires = profile?.subscription_expires_at;
+
+  const tierLabel = TIER_LABELS[tier] || escapeHtml(String(tier));
+  const tierClass =
+    tier === "mestari" ? "settings-tier-badge--mestari"
+    : tier === "treeni" || tier === "pro" ? "settings-tier-badge--treeni"
+    : "settings-tier-badge--free";
+
+  let expiresHtml = "";
+  if (billing === "package" && expires) {
+    const d = new Date(expires);
+    if (!Number.isNaN(d.getTime())) {
+      const fmt = new Intl.DateTimeFormat("fi-FI", { day: "numeric", month: "long", year: "numeric" });
+      expiresHtml = `<p class="settings-tier-expires">Voimassa: ${escapeHtml(fmt.format(d))}</p>`;
+    }
+  }
+
+  let actionsHtml = "";
+  if (tier === "free") {
+    actionsHtml = `
+      <div class="settings-tier-actions">
+        <a href="/pricing.html?from=settings&tier=treeni" class="btn-secondary">Avaa Treeni</a>
+        <a href="/pricing.html?from=settings&tier=mestari" class="btn-primary">Avaa Mestari</a>
+      </div>`;
+  } else {
+    // treeni, mestari, pro — show Stripe portal button
+    actionsHtml = `
+      <div class="settings-tier-actions">
+        <button type="button" class="btn-secondary" id="settings-portal-btn">Hallinnoi tilausta</button>
+      </div>
+      <p class="settings-portal-error hidden" id="settings-portal-error" role="alert"></p>`;
+  }
+
+  container.innerHTML = `
+    <div class="settings-row">
+      <div class="settings-row-main" style="flex-direction:column;align-items:flex-start;gap:6px;">
+        <span class="settings-tier-badge ${escapeHtml(tierClass)}">${escapeHtml(tierLabel)}</span>
+        ${expiresHtml}
+        ${actionsHtml}
+      </div>
+    </div>`;
+
+  // Wire portal button
+  const portalBtn = document.getElementById("settings-portal-btn");
+  if (portalBtn && !portalBtn.dataset.wired) {
+    portalBtn.dataset.wired = "1";
+    portalBtn.addEventListener("click", () => openBillingPortal(portalBtn));
+  }
+}
+
+async function openBillingPortal(btn) {
+  const errorEl = document.getElementById("settings-portal-error");
+  if (btn) { btn.disabled = true; btn.textContent = "Ladataan…"; }
+  if (errorEl) errorEl.classList.add("hidden");
+  try {
+    const res = await apiFetch(`${API}/api/stripe/portal-session`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", ...authHeader() },
+    });
+    if (!res.ok) {
+      const data = await res.json().catch(() => ({}));
+      throw new Error(data.error || `HTTP ${res.status}`);
+    }
+    const { url } = await res.json();
+    if (!url) throw new Error("no_url");
+    window.location.href = url;
+  } catch (err) {
+    if (errorEl) {
+      errorEl.textContent = "Portaalin avaaminen epäonnistui. Kokeile hetken kuluttua uudelleen.";
+      errorEl.classList.remove("hidden");
+    }
+    if (btn) { btn.disabled = false; btn.textContent = "Hallinnoi tilausta"; }
+    track("billing_portal_error", { message: String(err?.message || err) });
+  }
+}
+
 let _deps = {};
 let _profile = null;
 let _editingField = null;
@@ -118,6 +209,8 @@ export function initSettings(deps) {
   _deps = deps || {};
   wireModal();
   wireBumpModal();
+  wireLangModal();
+  initPaywallModal();
   // Sidebar click is handled centrally in main.js — it calls showSettings().
 }
 
@@ -359,6 +452,8 @@ export async function showSettings() {
     _profile = profile || {};
     window._userProfile = _profile;
     renderRows();
+    wireSubscriptionSection(_profile);
+    renderLanguageSection(_profile);
   } catch {
     rowsEl.innerHTML = `<p class="settings-loading">Profiilin lataus epäonnistui. Kokeile myöhemmin uudelleen.</p>`;
   } finally {
@@ -641,6 +736,216 @@ function goToPlacement() {
   const ref = window._placementRef;
   if (ref && typeof ref.showPlacementIntro === "function") {
     ref.showPlacementIntro();
+  }
+}
+
+// ─── Language section (L-LANG-INFRA-1) ───────────────────────────────────────
+// Three radio options: Espanja / Saksa / Ranska.
+// Changing away from Espanja requires a confirmation modal (warns about losing
+// Spanish progress). On confirm → PATCH /api/onboarding/complete (only the
+// target_language field), update state.language, re-route.
+
+const LANG_OPTIONS = [
+  { value: "es", label: "Espanja", flag: "🇪🇸" },
+  { value: "de", label: "Saksa",   flag: "🇩🇪" },
+  { value: "fr", label: "Ranska",  flag: "🇫🇷" },
+];
+
+let _pendingLang = null;
+
+export function renderLanguageSection(profile) {
+  const container = document.getElementById("settings-language-rows");
+  if (!container) return;
+
+  const current = profile?.target_language || state.language || "es";
+  const currentLabel = LANG_OPTIONS.find((o) => o.value === current)?.label || "Espanja";
+
+  container.innerHTML = `
+    <div class="settings-row" data-field="target_language">
+      <div class="settings-row-main">
+        <div class="settings-row-label">Opiskelukieli</div>
+        <div class="settings-row-value" id="settings-lang-value">${escapeHtml(currentLabel)}</div>
+      </div>
+      <button type="button" class="settings-row-edit" id="settings-lang-edit"
+              aria-label="Vaihda opiskelukieli">Vaihda kieli</button>
+    </div>`;
+
+  const editBtn = document.getElementById("settings-lang-edit");
+  if (editBtn && !editBtn.dataset.wired) {
+    editBtn.dataset.wired = "1";
+    editBtn.addEventListener("click", () => openLangEditor(profile?.target_language || "es"));
+  }
+}
+
+function openLangEditor(currentLang) {
+  const overlay = document.getElementById("settings-lang-overlay");
+  if (!overlay) return;
+  _pendingLang = currentLang;
+
+  // Render radio options
+  const body = document.getElementById("settings-lang-body");
+  if (body) {
+    body.innerHTML = LANG_OPTIONS.map((opt) => `
+      <label class="settings-lang-option${opt.value === currentLang ? " is-selected" : ""}"
+             data-value="${escapeHtml(opt.value)}">
+        <input type="radio" name="settings-lang-radio" value="${escapeHtml(opt.value)}"
+               ${opt.value === currentLang ? "checked" : ""}
+               class="sr-only" aria-label="${escapeHtml(opt.flag + " " + opt.label)}">
+        <span class="settings-lang-flag" aria-hidden="true">${escapeHtml(opt.flag)}</span>
+        <span class="settings-lang-label">${escapeHtml(opt.label)}</span>
+        <span class="settings-lang-check" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+        </span>
+      </label>`).join("");
+
+    body.querySelectorAll("label.settings-lang-option").forEach((lbl) => {
+      lbl.addEventListener("click", () => {
+        _pendingLang = lbl.dataset.value;
+        body.querySelectorAll("label.settings-lang-option").forEach((l) =>
+          l.classList.toggle("is-selected", l.dataset.value === _pendingLang));
+      });
+    });
+  }
+
+  const errEl = document.getElementById("settings-lang-error");
+  if (errEl) { errEl.textContent = ""; errEl.classList.add("hidden"); }
+
+  overlay.classList.remove("hidden");
+  document.body.style.overflow = "hidden";
+  document.getElementById("settings-lang-save")?.focus();
+}
+
+function closeLangEditor() {
+  const overlay = document.getElementById("settings-lang-overlay");
+  if (overlay) overlay.classList.add("hidden");
+  document.body.style.overflow = "";
+  _pendingLang = null;
+}
+
+// Focus-trap helper: cycles Tab among focusable descendants of `container`.
+function trapTab(e, container) {
+  if (e.key !== "Tab" || !container) return;
+  const f = container.querySelectorAll(
+    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+  );
+  const focusables = Array.from(f).filter((el) => !el.disabled && el.offsetParent !== null);
+  if (!focusables.length) return;
+  const first = focusables[0];
+  const last  = focusables[focusables.length - 1];
+  if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+  else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+}
+
+function wireLangModal() {
+  const overlay = document.getElementById("settings-lang-overlay");
+  if (!overlay) return;
+
+  document.getElementById("settings-lang-close")?.addEventListener("click", closeLangEditor);
+  document.getElementById("settings-lang-cancel")?.addEventListener("click", closeLangEditor);
+  overlay.addEventListener("click", (e) => { if (e.target === overlay) closeLangEditor(); });
+
+  // Confirmation modal
+  const confirmOverlay = document.getElementById("settings-lang-confirm-overlay");
+
+  document.addEventListener("keydown", (e) => {
+    const langOpen     = !overlay.classList.contains("hidden");
+    const confirmOpen  = confirmOverlay && !confirmOverlay.classList.contains("hidden");
+    if (e.key === "Escape") {
+      if (confirmOpen) {
+        confirmOverlay.classList.add("hidden");
+        openLangEditor(state.language); // reopen lang picker
+      } else if (langOpen) {
+        closeLangEditor();
+      }
+      return;
+    }
+    if (e.key === "Tab") {
+      if (confirmOpen) trapTab(e, confirmOverlay.querySelector(".settings-lang-confirm-modal"));
+      else if (langOpen) trapTab(e, overlay.querySelector(".settings-lang-modal"));
+    }
+  });
+
+  document.getElementById("settings-lang-save")?.addEventListener("click", handleLangSave);
+
+  if (!confirmOverlay) return;
+  document.getElementById("settings-lang-confirm-cancel")?.addEventListener("click", () => {
+    confirmOverlay.classList.add("hidden");
+    document.body.style.overflow = "hidden"; // lang modal still open
+    openLangEditor(state.language); // reopen with current selection
+  });
+  document.getElementById("settings-lang-confirm-ok")?.addEventListener("click", async () => {
+    confirmOverlay.classList.add("hidden");
+    await saveLang(_pendingLang);
+  });
+  confirmOverlay.addEventListener("click", (e) => {
+    if (e.target === confirmOverlay) {
+      confirmOverlay.classList.add("hidden");
+      openLangEditor(state.language);
+    }
+  });
+}
+
+async function handleLangSave() {
+  if (!_pendingLang) { closeLangEditor(); return; }
+  const currentLang = state.language || "es";
+  if (_pendingLang === currentLang) { closeLangEditor(); return; }
+
+  // Switching away from ES → warn about losing Spanish progress.
+  if (currentLang === "es" && _pendingLang !== "es") {
+    closeLangEditor();
+    const confirmOverlay = document.getElementById("settings-lang-confirm-overlay");
+    if (confirmOverlay) {
+      confirmOverlay.classList.remove("hidden");
+      document.body.style.overflow = "hidden";
+      // Focus the non-destructive option first (WCAG: prevent accidental Enter).
+      document.getElementById("settings-lang-confirm-cancel")?.focus();
+    }
+    return;
+  }
+
+  // Switching from non-ES to another non-ES (or back to ES) — no warning.
+  await saveLang(_pendingLang);
+}
+
+async function saveLang(lang) {
+  const saveBtn = document.getElementById("settings-lang-save");
+  const errEl = document.getElementById("settings-lang-error");
+  if (saveBtn) { saveBtn.disabled = true; saveBtn.textContent = "Tallennetaan…"; }
+  if (errEl) errEl.classList.add("hidden");
+
+  try {
+    const res = await apiFetch(`${API}/api/onboarding/complete`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", ...authHeader() },
+      body: JSON.stringify({ target_language: lang }),
+    });
+    if (!res.ok) {
+      const d = await res.json().catch(() => ({}));
+      throw new Error(d.error || `HTTP ${res.status}`);
+    }
+    // Update in-memory state.
+    setLanguage(lang);
+    invalidateProfileCache();
+    track("settings_language_changed", { lang });
+
+    closeLangEditor();
+    document.getElementById("settings-lang-confirm-overlay")?.classList.add("hidden");
+    document.body.style.overflow = "";
+
+    // Re-route: non-ES → coming-soon; ES → dashboard.
+    if (lang !== "es") {
+      import("./comingSoon.js")
+        .then((m) => m.showComingSoon())
+        .catch(() => show("screen-coming-soon"));
+    } else {
+      if (_deps.loadDashboard) _deps.loadDashboard();
+    }
+  } catch (err) {
+    if (errEl) {
+      errEl.textContent = "Tallennus epäonnistui. Kokeile uudelleen.";
+      errEl.classList.remove("hidden");
+    }
+    if (saveBtn) { saveBtn.disabled = false; saveBtn.textContent = "Tallenna"; }
   }
 }
 

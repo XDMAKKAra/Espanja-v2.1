@@ -4,17 +4,19 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Puheo — Hinnoittelu</title>
+  <meta name="description" content="Free, Treeni ja Mestari. Aloita ilmaiseksi tai avaa koko YO-valmennus Mestarilla alkaen 19 €/kk." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap&subset=latin,latin-ext" rel="stylesheet" />
-  <link rel="stylesheet" href="landing.css" />
+  <link rel="stylesheet" href="css/landing-tokens.css" />
+  <link rel="stylesheet" href="css/landing.css" />
   <style>
     .page-content {
       position: relative;
       z-index: 1;
       max-width: 1200px;
       margin: 0 auto;
-      padding: 120px 32px 80px;
+      padding: 120px 32px 96px;
     }
     .page-content h1 {
       font-size: clamp(2rem, 5vw, 3.2rem);
@@ -30,64 +32,86 @@
     .page-subtitle {
       color: var(--ink-soft);
       font-size: 15px;
-      margin-bottom: 48px;
+      margin-bottom: 32px;
+      font-family: var(--font-body);
+      max-width: 56ch;
+    }
+
+    /* Segmented control: kk / paketti */
+    .price-toggle {
+      display: inline-flex;
+      gap: 4px;
+      padding: 4px;
+      background: var(--surface-2, #f1f1ee);
+      border: 1px solid var(--border);
+      border-radius: var(--r-full);
+      margin-bottom: 40px;
       font-family: var(--font-body);
     }
+    .price-toggle button {
+      appearance: none;
+      background: transparent;
+      border: 0;
+      padding: 8px 18px;
+      border-radius: var(--r-full);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink-soft);
+      cursor: pointer;
+      transition: background var(--dur-base) var(--ease-out), color var(--dur-base) var(--ease-out);
+      min-height: 36px;
+    }
+    .price-toggle button[aria-pressed="true"] {
+      background: var(--ink);
+      color: var(--bg, #fff);
+    }
+    .price-toggle button:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
     .pricing-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 20px;
-      margin-bottom: 48px;
+      margin-bottom: 64px;
+      align-items: stretch;
     }
-    @media (max-width: 960px) { .pricing-grid { grid-template-columns: 1fr 1fr; } }
-    @media (max-width: 640px) { .pricing-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 960px) { .pricing-grid { grid-template-columns: 1fr; gap: 16px; } }
+
     .price-card {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--r-lg);
-      padding: 32px;
+      padding: 32px 28px;
       display: flex;
       flex-direction: column;
       position: relative;
     }
-    .price-card.featured,
-    .price-card.summer { border-color: var(--border); }
-    .price-card.featured::before,
-    .price-card.summer::before {
-      content: "";
-      position: absolute; top: 0; left: 0; right: 0; height: 4px;
-      background: var(--accent);
-      border-top-left-radius: var(--r-lg);
-      border-top-right-radius: var(--r-lg);
+    .price-card.featured {
+      border-color: var(--accent-dark);
+      box-shadow: 0 8px 28px -16px rgba(15, 118, 110, 0.35);
     }
-    .price-card.featured::after,
-    .price-card.summer::after {
-      content: attr(data-badge);
+    .price-card.featured::after {
+      content: "Suosituin";
       position: absolute;
-      top: -11px;
-      right: 20px;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
       font-family: var(--font-body);
       font-size: 11px;
-      font-weight: 600;
+      font-weight: 700;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: #ffffff;
-      padding: 4px 12px;
+      color: var(--ink);
+      padding: 5px 14px;
       border-radius: var(--r-full);
-      background: var(--ink);
+      background: var(--accent);
     }
-    .price-compare {
-      font-family: var(--font-body);
-      font-size: 12px;
-      color: var(--ink-soft);
-      margin-bottom: 6px;
-    }
-    .price-compare s { opacity: 0.6; }
-    .price-compare strong { color: var(--success); font-weight: 600; }
     .price-name {
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 600;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
       color: var(--ink-soft);
       margin-bottom: 8px;
@@ -102,29 +126,58 @@
       color: var(--ink);
       margin-bottom: 4px;
     }
-    .price-amount span { font-size: 18px; color: var(--ink-soft); font-weight: 500; }
+    .price-amount span {
+      font-size: 18px;
+      color: var(--ink-soft);
+      font-weight: 500;
+    }
     .price-period {
       font-size: 13px;
       color: var(--ink-soft);
       font-family: var(--font-body);
+      margin-bottom: 8px;
+      min-height: 1.4em;
+    }
+    .price-sub {
+      font-size: 12px;
+      color: var(--ink-soft);
+      font-family: var(--font-body);
       margin-bottom: 24px;
+      min-height: 2em;
+      line-height: 1.5;
     }
     .price-features {
       list-style: none;
-      margin-bottom: 32px;
+      margin: 0 0 28px;
+      padding: 0;
       flex: 1;
     }
     .price-features li {
       font-size: 14px;
       font-family: var(--font-body);
-      color: var(--ink-soft);
-      padding: 8px 0;
+      color: var(--ink);
+      padding: 10px 0;
       border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      line-height: 1.4;
     }
     .price-features li::before {
-      content: '✓ ';
-      color: var(--accent-dark);
-      font-weight: 700;
+      content: '';
+      flex: 0 0 6px;
+      width: 6px;
+      height: 6px;
+      margin-top: 8px;
+      border-radius: 50%;
+      background: var(--accent-dark);
+    }
+    .price-features li.muted {
+      color: var(--ink-soft);
+    }
+    .price-features li.muted::before {
+      background: var(--ink-soft);
+      opacity: 0.4;
     }
     .price-cta {
       display: block;
@@ -137,26 +190,83 @@
       text-decoration: none;
       transition: background var(--dur-base) var(--ease-out), color var(--dur-base) var(--ease-out);
       border: 1px solid transparent;
+      min-height: 44px;
     }
     .price-cta.free {
       background: transparent;
       border-color: var(--ink);
       color: var(--ink);
     }
-    .price-cta.free:hover { background: var(--ink); color: #ffffff; }
-    .price-cta.pro {
+    .price-cta.free:hover { background: var(--ink); color: var(--bg, #fff); }
+    .price-cta.tier {
+      background: var(--ink);
+      color: var(--bg, #fff);
+    }
+    .price-cta.tier:hover { background: var(--accent-dark); }
+    .price-cta.featured-cta {
       background: var(--accent);
       color: var(--ink);
     }
-    .price-cta.pro:hover { background: var(--accent-hover); color: var(--ink); }
-    .price-cta.summer {
-      background: var(--accent);
-      color: var(--ink);
+    .price-cta.featured-cta:hover { background: var(--accent-hover); }
+
+    /* Hide/show based on grid mode */
+    .pricing-grid[data-mode="monthly"] .price--package { display: none; }
+    .pricing-grid[data-mode="package"] .price--monthly { display: none; }
+
+    /* Comparison table */
+    .compare-section { margin-bottom: 80px; }
+    .compare-section h2 {
+      font-size: clamp(1.4rem, 3vw, 1.8rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
     }
-    .price-cta.summer:hover { background: var(--accent-hover); color: var(--ink); }
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: var(--font-body);
+      font-size: 14px;
+    }
+    .compare-table thead th {
+      text-align: left;
+      padding: 14px 16px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      border-bottom: 2px solid var(--ink);
+    }
+    .compare-table thead th:not(:first-child) { text-align: center; }
+    .compare-table tbody td {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border);
+      color: var(--ink);
+      vertical-align: top;
+    }
+    .compare-table tbody td:first-child { font-weight: 500; }
+    .compare-table tbody td:not(:first-child) {
+      text-align: center;
+      color: var(--ink-soft);
+      font-family: var(--font-mono, var(--font-body));
+    }
+    .compare-table .yes { color: var(--accent-dark); font-weight: 700; }
+    .compare-table .no { color: var(--ink-soft); opacity: 0.4; }
+    @media (max-width: 720px) {
+      .compare-table thead th,
+      .compare-table tbody td { padding: 10px 8px; font-size: 13px; }
+    }
+
+    .faq-note {
+      max-width: 60ch;
+      font-family: var(--font-body);
+      color: var(--ink-soft);
+      font-size: 14px;
+      line-height: 1.6;
+    }
   </style>
 </head>
-<body>
+<body class="landing">
 
   <nav class="nav">
     <a href="/" class="nav-logo">Puhe<span>o</span></a>
@@ -165,63 +275,107 @@
       <a href="/pricing.html">Hinnoittelu</a>
     </div>
     <div class="nav-right">
-      <a href="app.html?mode=login" class="nav-login">Kirjaudu sisään</a>
-      <a href="app.html" class="nav-cta">Aloita harjoittelu</a>
+      <a href="app.html?mode=login" class="nav-login">Kirjaudu</a>
+      <a href="app.html" class="nav-cta">Aloita ilmaiseksi</a>
     </div>
   </nav>
 
-  <div class="page-content">
-    <h1>Yksinkertainen <em>hinnoittelu</em></h1>
-    <p class="page-subtitle">Aloita ilmaiseksi. Päivitä Pro-tiliin kun olet valmis.</p>
+  <main class="page-content">
+    <h1>Kolme tasoa. <em>Valitse omasi.</em></h1>
+    <p class="page-subtitle">Aloita Freellä, treenaa Treenillä, valmistaudu Mestarilla. Vaihtaminen onnistuu milloin vain.</p>
 
-    <div class="pricing-grid">
-      <div class="price-card">
-        <div class="price-name">Ilmainen</div>
-        <div class="price-amount">0 <span>&euro;</span></div>
-        <div class="price-period">ikuisesti</div>
-        <ul class="price-features">
-          <li>Sanastoharjoittelu (adaptiivinen)</li>
-          <li>Kielioppiharjoitukset</li>
-          <li>7 tasoa (I - L)</li>
-          <li>Rajoittamaton harjoittelu</li>
-        </ul>
-        <a href="app.html" class="price-cta free">Aloita ilmaiseksi</a>
-      </div>
-
-      <div class="price-card featured" data-badge="Suosituin">
-        <div class="price-name">Pro</div>
-        <div class="price-amount">9,99 <span>&euro;/kk</span></div>
-        <div class="price-period">Peruta milloin tahansa</div>
-        <ul class="price-features">
-          <li>Kaikki ilmaisen tilin ominaisuudet</li>
-          <li>Luetun ymmärtäminen (AI-tekstit)</li>
-          <li>Kirjoittaminen + YTL-arviointi</li>
-          <li>Koeharjoitus (ajastettu simulaatio)</li>
-          <li>Yksityiskohtainen edistymisraportti</li>
-        </ul>
-        <a href="app.html" class="price-cta pro">Aloita Pro · 9,99 €/kk</a>
-      </div>
-
-      <div class="price-card summer" data-badge="Kesä 2026">
-        <div class="price-name">Kesäpaketti 2026</div>
-        <div class="price-amount">29 <span>&euro;</span></div>
-        <div class="price-compare"><s>39,96 €</s> &rarr; 29 € &middot; <strong>Säästä 10,96 €</strong></div>
-        <div class="price-period">Kertamaksu &middot; ei automaattista uusimista</div>
-        <ul class="price-features">
-          <li>Kaikki mitä Pro:ssa — ja lisää</li>
-          <li>4 kk täysi pääsy: 1.6.–30.9.2026</li>
-          <li>BONUS: Viikkosuunnitelma syksyn YO-kirjoituksiin</li>
-          <li>BONUS: Prioriteettituki (vastaus 12h sisällä)</li>
-          <li>BONUS: 1 henkilökohtainen kirjoitelmapalaute</li>
-        </ul>
-        <a href="app.html" class="price-cta summer">Osta kesäpaketti · 29 €</a>
-      </div>
+    <div class="price-toggle" role="group" aria-label="Valitse laskutusjakso">
+      <button type="button" id="toggle-monthly" aria-pressed="true">Kuukausi</button>
+      <button type="button" id="toggle-package" aria-pressed="false">8 viikon paketti</button>
     </div>
 
-    <p class="page-subtitle" style="text-align:center;margin-bottom:0">
-      Kysyttävää? Ota yhteyttä: <a href="mailto:marcel.catchot@gmail.com" style="color:var(--accent-dark)">marcel.catchot@gmail.com</a>
+    <div class="pricing-grid" id="pricing-grid" data-mode="monthly">
+      <!-- Free -->
+      <article class="price-card">
+        <div class="price-name">Free</div>
+        <div class="price-amount">0 <span>&euro;</span></div>
+        <div class="price-period">aina ilmainen</div>
+        <p class="price-sub">Kokeile ennen kuin valitset.</p>
+        <ul class="price-features">
+          <li>1 oppitunti</li>
+          <li>1 kirjoitustehtävä</li>
+          <li>1 luetun ymmärtäminen</li>
+          <li>1 harjoituskoe</li>
+          <li class="muted">Ei AI-trackingia</li>
+        </ul>
+        <a href="/app.html#/aloitus" class="price-cta free">Aloita ilmaiseksi</a>
+      </article>
+
+      <!-- Treeni -->
+      <article class="price-card">
+        <div class="price-name">Treeni</div>
+        <div class="price-amount price--monthly">9 <span>&euro;/kk</span></div>
+        <div class="price-amount price--package">19 <span>&euro;</span></div>
+        <div class="price-period price--monthly">Peruuta milloin vain</div>
+        <div class="price-period price--package">8 viikon kertamaksu</div>
+        <p class="price-sub">Pakettihinta sopii 4–8 viikon valmistautumiseen.</p>
+        <ul class="price-features">
+          <li>Rajaton kirjoitustehtävät</li>
+          <li>Rajaton luetun ymmärtäminen</li>
+          <li>Rajaton harjoituskokeet</li>
+          <li>AI-arviointi</li>
+          <li class="muted">Ei rakenteellista kurssia</li>
+          <li class="muted">Ei adaptiivisuutta</li>
+        </ul>
+        <a href="/app.html#/aloitus?tier=treeni" class="price-cta tier" data-tier="treeni">Valitse Treeni</a>
+      </article>
+
+      <!-- Mestari -->
+      <article class="price-card featured">
+        <div class="price-name">Mestari</div>
+        <div class="price-amount price--monthly">19 <span>&euro;/kk</span></div>
+        <div class="price-amount price--package">39 <span>&euro;</span></div>
+        <div class="price-period price--monthly">Peruuta milloin vain</div>
+        <div class="price-period price--package">8 viikon kertamaksu</div>
+        <p class="price-sub">Säästät, jos rekisteröidyt vähintään 3 viikkoa ennen koetta.</p>
+        <ul class="price-features">
+          <li>Kaikki Treenin ominaisuudet</li>
+          <li>Koko 8-kurssin polku</li>
+          <li>Adaptiivinen vaikeus</li>
+          <li>YO-valmiusmittari</li>
+          <li>Henkilökohtainen lukusuunnitelma</li>
+          <li>Virheseuranta</li>
+          <li>Adaptiiviset koesimulaatiot</li>
+        </ul>
+        <a href="/app.html#/aloitus?tier=mestari" class="price-cta featured-cta" data-tier="mestari">Valitse Mestari</a>
+      </article>
+    </div>
+
+    <section class="compare-section">
+      <h2>Vertailu</h2>
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th scope="col">Ominaisuus</th>
+            <th scope="col">Free</th>
+            <th scope="col">Treeni</th>
+            <th scope="col">Mestari</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Kirjoitustehtävät</td><td>1</td><td>Rajaton</td><td>Rajaton</td></tr>
+          <tr><td>Luetun ymmärtämiset</td><td>1</td><td>Rajaton</td><td>Rajaton</td></tr>
+          <tr><td>Harjoituskokeet</td><td>1</td><td>Rajaton</td><td>Rajaton</td></tr>
+          <tr><td>Oppitunnit</td><td>1 demo</td><td><span class="no">–</span></td><td>Kaikki 90</td></tr>
+          <tr><td>AI-arviointi YO-rubriikilla</td><td><span class="no">–</span></td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
+          <tr><td>Rakenteellinen 8-kurssin polku</td><td><span class="no">–</span></td><td><span class="no">–</span></td><td><span class="yes">✓</span></td></tr>
+          <tr><td>Adaptiivinen vaikeus</td><td><span class="no">–</span></td><td><span class="no">–</span></td><td><span class="yes">✓</span></td></tr>
+          <tr><td>YO-valmiusmittari</td><td><span class="no">–</span></td><td><span class="no">–</span></td><td><span class="yes">✓</span></td></tr>
+          <tr><td>Henkilökohtainen lukusuunnitelma</td><td><span class="no">–</span></td><td><span class="no">–</span></td><td><span class="yes">✓</span></td></tr>
+          <tr><td>Virheseuranta</td><td><span class="no">–</span></td><td><span class="no">–</span></td><td><span class="yes">✓</span></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <p class="faq-note">
+      Paketit ovat voimassa 8 viikkoa ostosta tai koepäiväsi + 7 päivää, kumpi tulee ensin. Kuukausitilauksen voi peruuttaa milloin vain — peruutus astuu voimaan laskutusjakson lopussa. Kysyttävää? <a href="mailto:marcel.catchot@gmail.com" style="color:var(--accent-dark)">marcel.catchot@gmail.com</a>
     </p>
-  </div>
+  </main>
 
   <footer>
     <div class="footer-logo">Puhe<span>o</span></div>
@@ -231,6 +385,26 @@
       <a href="/refund.html" class="footer-link">Palautukset</a>
     </div>
   </footer>
+
+  <script>
+    (function () {
+      const grid = document.getElementById("pricing-grid");
+      const btnM = document.getElementById("toggle-monthly");
+      const btnP = document.getElementById("toggle-package");
+      function setMode(mode) {
+        grid.dataset.mode = mode;
+        const isMonthly = mode === "monthly";
+        btnM.setAttribute("aria-pressed", String(isMonthly));
+        btnP.setAttribute("aria-pressed", String(!isMonthly));
+        document.querySelectorAll(".price-cta[data-tier]").forEach((a) => {
+          const tier = a.dataset.tier;
+          a.href = "/app.html#/aloitus?tier=" + tier + "&billing=" + (isMonthly ? "monthly" : "package");
+        });
+      }
+      btnM.addEventListener("click", () => setMode("monthly"));
+      btnP.addEventListener("click", () => setMode("package"));
+    })();
+  </script>
 
 </body>
 </html>

@@ -20,6 +20,7 @@ try {
   const { default: curriculumRoutes } = await import("../routes/curriculum.js");
   const { default: statusRoutes } = await import("../routes/status.js");
   const { default: dashboardV2Routes } = await import("../routes/dashboardV2.js");
+  const { default: onboardingRoutes } = await import("../routes/onboarding.js");
   const { waitlistLimiter } = await import("../middleware/rateLimit.js");
   const { default: supabase } = await import("../supabase.js");
 
@@ -34,6 +35,7 @@ try {
     credentials: true,
   } : undefined));
 
+  app.post("/api/stripe/webhook", express.raw({ type: "application/json" }), handleWebhook);
   app.post("/api/payments/webhook", express.raw({ type: "application/json" }), handleWebhook);
   app.use(express.json());
 
@@ -45,6 +47,7 @@ try {
   app.use("/api", writingRoutes);
   app.use("/api/email", emailRoutes);
   app.use("/api/payments", paymentRoutes);
+  app.use("/api/stripe", paymentRoutes);
   app.use("/api/exam", examRoutes);
   app.use("/api/sr", srRoutes);
   app.use("/api", adaptiveRoutes);
@@ -57,6 +60,7 @@ try {
   app.use("/api/status", statusRoutes);
   // L-LIVE-AUDIT-P2 UPDATE 3 — batched dashboard endpoint at /api/dashboard/v2.
   app.use("/api", dashboardV2Routes);
+  app.use("/api/onboarding", onboardingRoutes);
 
   app.post("/api/waitlist", waitlistLimiter, async (req, res) => {
     const { email, product } = req.body;

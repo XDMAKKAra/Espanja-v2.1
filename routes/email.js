@@ -293,14 +293,9 @@ router.post("/d7-offer", async (req, res) => {
 
     const userIsPro = await isPro(u.id);
 
-    // Seasonal block — June–August: kesäpaketti preferred; rest: monthly.
-    const month = new Date().getMonth();
-    let seasonalBlock = "Pro 9,99 € / kk. Peruuta milloin tahansa.";
-    if (month >= 5 && month <= 7) {
-      seasonalBlock = "Juuri nyt Kesäpaketti 29 € kattaa kesä–syyskuun (säästät 27 % vs. kuukausimaksu).";
-    } else if (month === 8) {
-      seasonalBlock = "Syyskuun kesäpaketti loppuu 30.9. — Pro kuukausimaksulla 9,99 € jatkaa siitä.";
-    }
+    // L-PRICING-REVAMP-1 — 3-tier model. Treeni = open practice, Mestari = full
+    // YO-prep with course path. Both have 8-week packages priced as ~2× monthly.
+    const seasonalBlock = "Treeni 9 €/kk tai Mestari 19 €/kk. 8 viikon paketti Treeni 19 € · Mestari 39 €.";
 
     const level = logs?.[0]?.level || "C";
 

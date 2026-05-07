@@ -14,7 +14,9 @@ export const CRITERIA_LABELS = {
 export let state = {
   // Shared
   mode: "vocab",
-  language: "spanish",
+  // L-LANG-INFRA-1: target language code ("es" | "de" | "fr"). Hydrated from
+  // user_profile.target_language after login. Default "es" (Spanish).
+  language: "es",
   sessionStartTime: null,
 
   // First-ever session flag (set by S4 onboarding, consumed + cleared
@@ -64,4 +66,11 @@ export let state = {
 
 export function resetState(overrides = {}) {
   Object.assign(state, overrides);
+}
+
+// L-LANG-INFRA-1: set the active language and persist nothing (source of truth
+// is user_profile.target_language; this is in-memory only for the session).
+export function setLanguage(lang) {
+  const allowed = ["es", "de", "fr"];
+  state.language = allowed.includes(lang) ? lang : "es";
 }

@@ -1,6 +1,6 @@
 import { $, show } from "../ui/nav.js";
 import { API, isLoggedIn, clearAuth, authHeader, apiFetch, getAuthEmail, setDashboardV2, getDashboardV2Section } from "../api.js";
-import { state } from "../state.js";
+import { state, setLanguage } from "../state.js";
 import { showLoading } from "../ui/loading.js";
 import { srDueCount } from "../features/spacedRepetition.js";
 import { renderAdaptiveCard } from "./adaptive.js";
@@ -107,6 +107,11 @@ export async function loadDashboard() {
       if (v2.profile?.profile && !window._userProfile) {
         window._userProfile = v2.profile.profile;
       }
+      // L-LANG-INFRA-1: hydrate language from profile so routing + ?lang= work
+      // immediately after the first dashboard load (no extra /api/profile fetch).
+      if (v2.profile?.profile?.target_language) {
+        setLanguage(v2.profile.profile.target_language);
+      }
     }
     // Fallback to legacy single endpoint if v2 unavailable / not yet deployed.
     if (!dashboardCore) {
@@ -114,6 +119,13 @@ export async function loadDashboard() {
       const legacy = await apiFetch(`${API}/api/dashboard`, { headers: authHeader() });
       if (legacy.status === 401) { clearAuth(); show("screen-auth"); return; }
       dashboardCore = await legacy.json();
+    }
+    // L-LANG-INFRA-1: if user has a non-ES language, show coming-soon instead.
+    if (state.language !== "es") {
+      import("./comingSoon.js")
+        .then((m) => m.showComingSoon())
+        .catch(() => show("screen-coming-soon"));
+      return;
     }
     renderDashboard(dashboardCore);
     hideAppCountdown();
@@ -172,6 +184,30 @@ async function loadTutorMessage() {
   }
 }
 
+// ─── Free-tier quota chip ────────────────────────────────────────────────────
+function renderFreeChip() {
+  const root = document.getElementById("dash-free-chip-root");
+  if (!root) return;
+
+  // Read tier from cached profile. Fall back gracefully — don't crash.
+  const tier = window._userProfile?.subscription_tier || "free";
+  if (tier !== "free") {
+    root.hidden = true;
+    return;
+  }
+
+  // /api/free-usage does not exist yet — show static encouraging chip.
+  root.hidden = false;
+  root.innerHTML = `
+    <div class="dash-free-chip">
+      <span class="dash-free-chip__label">Free</span>
+      <span class="dash-free-chip__sep">·</span>
+      <span>Rajoitettu sisältö</span>
+      <span class="dash-free-chip__sep">·</span>
+      <a href="/pricing.html?from=meter">Avaa Treeni &rarr;</a>
+    </div>`;
+}
+
 function renderDashboard({
   totalSessions, modeStats, recent, chartData = [], estLevel = null,
   gradeEstimate = null,
@@ -182,6 +218,8 @@ function renderDashboard({
   // Kick off the tutor-message fetch in parallel — the rest of the dashboard
   // doesn't block on it. The card stays hidden until a message arrives.
   loadTutorMessage().catch(() => {});
+  // Free-tier chip — shown before greeting so it's the first thing free users see.
+  renderFreeChip();
   // Pro badge — moved from dashboard header to sidebar footer (T11)
   const proSlot = document.getElementById("sidebar-pro-slot");
   if (proSlot) {
@@ -1310,7 +1348,7 @@ function renderWritingProgression() {
   let html = '<div class="dash-writing-progression-title">Kirjoittamisen osa-alueet · viimeiset 5 kertaa</div>';
   for (const k of order) {
     const d = dims[k];
-    if (!d) continue;
+    if (!d || typeof d.avg !== "number" || !Number.isFinite(d.avg)) continue;
     const pct = Math.round((d.avg / 5) * 100);
     const cls = d.avg >= 3.5 ? "" : d.avg >= 2.5 ? "is-mid" : "is-weak";
     // Suomalainen desimaalipilkku — "3,5/5" eikä "3.5 / 5".

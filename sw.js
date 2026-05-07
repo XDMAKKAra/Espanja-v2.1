@@ -1,7 +1,14 @@
-const CACHE_VERSION = "puheo-v132";
+const CACHE_VERSION = "puheo-v139";
 const STATIC_ASSETS = [
   "/app.html",
   "/index.html",
+  "/pricing.html",
+  // L-LANG-LANDINGS-1 — per-language SEO landing pages.
+  "/public/landing/espanja.html",
+  "/public/landing/saksa.html",
+  "/public/landing/ranska.html",
+  "/css/landing-de.css",
+  "/css/landing-fr.css",
   // L-LIVE-AUDIT-P2 UPDATE 1+2 — bundled CSS+JS replace 16 CSS links + 28 JS modules
   // on app.html cold load. Source files stay in repo + cached below for offline robustness.
   "/app.bundle.css",
@@ -39,7 +46,10 @@ const STATIC_ASSETS = [
   "/css/components/profile.css",
   "/css/components/meteors.css",
   "/css/components/onboarding-v2.css",
+  "/css/components/onboarding-v3.css",
   "/js/screens/onboardingV2.js",
+  "/js/screens/onboardingV3.js",
+  "/js/lib/studyPlan.js",
   "/css/components/curriculum.css",
   "/css/components/lesson-runner.css",
   "/js/screens/curriculum.js",
@@ -54,6 +64,11 @@ const STATIC_ASSETS = [
   "/js/features/confirmDialog.js",
   "/js/features/reviewBadge.js",
   "/js/lib/lessonLabels.js",
+  "/css/components/paywall.css",
+  "/js/features/paywallModal.js",
+  // L-LANG-INFRA-1 — coming-soon screen + settings language section.
+  "/css/components/coming-soon.css",
+  "/js/screens/comingSoon.js",
   "/manifest.json",
   "/offline.html",
   "/js/diagnostic.js",

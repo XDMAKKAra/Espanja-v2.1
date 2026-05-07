@@ -6,7 +6,10 @@
     }
   },
   "rewrites": [
-    { "source": "/api/(.*)", "destination": "/api" }
+    { "source": "/api/(.*)", "destination": "/api" },
+    { "source": "/espanja-yo-koe", "destination": "/public/landing/espanja.html" },
+    { "source": "/saksan-yo-koe",  "destination": "/public/landing/saksa.html" },
+    { "source": "/ranskan-yo-koe", "destination": "/public/landing/ranska.html" }
   ],
   "headers": [
     {

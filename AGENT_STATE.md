@@ -1,48 +1,52 @@
 # Puheo Agent State
 
-**Last updated:** 2026-05-06
-**Current state:** L-RUFLO-LOOP-5 AUDIT-PASS — npm/node ei saatavilla shellissä (PATH-ongelma). validate:lessons 90/90 ✓. SW STATIC_ASSETS: AUDIT-3 löytyi (/landing.css väärä polku; index.html lataa /css/landing.css + /css/landing-tokens.css). BUGS.md päivitetty AUDIT-osiolla + P0-P1 ✓-merkinnöillä.
+**Last updated:** 2026-05-07
+**Current state:** L-LANG-LANDINGS-1 ✓ shipped. Per-language SEO-landingit + post-login kieli-routing. Vanha `index.html` (953 r) → `public/landing/espanja.html` (canonical `/espanja-yo-koe`, JSON-LD `Course` lisätty, asset-polut absoluuttisiksi). Uusi geneerinen `index.html` (254 r): hub + 3 kielikorttia. Uudet `public/landing/{saksa,ranska}.html` (DE/FR placeholderit; "Tulossa" + waitlist-modaali, lokalisoidut hero-mockupit, JSON-LD `Course`). Per-language CSS overrides `css/landing-{de,fr}.css` (sininen / burgundi accent). `vercel.json` rewrites `/espanja-yo-koe`/`/saksan-yo-koe`/`/ranskan-yo-koe` → `public/landing/*.html`. `sitemap.xml` +3 entryä, `robots.txt` Disallow `/app`+`/onboarding`+`/diagnose.html`. `routes/onboarding.js`: waitlist-endpoint lähettää nyt Resend-kuittauksen (non-fatal) + uusi `GET /waitlist/count?language=`. SW v138→v139 (uudet HTML+CSS STATIC_ASSETS-listalla). Post-login lang-routing oli jo L-LANG-INFRA-1:ssä (main.js:756-760). Phase 2: live-test 12/12 PASS, 2 skipped (TEST_LOGIN ei asetettu). **NEXT (`02-queue/05_LINT_CLEANUP.md`):** ESLint/parse-error-cleanup. **ACTION REQUIRED (käyttäjä):** (a) `npm run build` rebuildaamaan `app.bundle.css/js`; (b) Vercel-deploy → testaa `/espanja-yo-koe` + `/saksan-yo-koe` + `/ranskan-yo-koe` URL:t toimivat (rewrites-validointi vain prodissa); (c) saksa-landingilla → liity waitlistille → Resend-email tulee perille (jos `RESEND_API_KEY` envissä).
 
 ---
 
 ## Recent loops (last 5)
 
-### L-RUFLO-LOOP-5 — 2026-05-06 ✓ audit-pass
-**Scope:** AUDIT-PASS — ei koodimuutoksia. npm/node ei saatavilla shellissä → audit/lint/test deferred käyttäjälle. validate:lessons: 90/90 ✓ (PowerShell JSON parse). SW STATIC_ASSETS: 77 polkua tarkistettu, 0 dead paths. AUDIT-3: `/landing.css` (root) väärässä polussa SW:ssä — index.html lataa `/css/landing.css` + `/css/landing-tokens.css` joita ei cachata. Bundled JS/CSS (27 JS + 11 CSS tiedostoa) oikein pois STATIC_ASSETS:sta (app.bundle.js/css:ssä). BUGS.md: AUDIT-osio lisätty, P0-1/2/3/4/5/6 ja P1-1/3/5 ✓-merkitty.
-**Files:** `BUGS.md`, `AGENT_STATE.md`, `IMPROVEMENTS.md`. **SW:** ei bumppia (ei koodimuutoksia). **Tests:** ei ajettu (npm ei saatavilla). **Pending:** käyttäjä ajaa npm audit + npm run lint + npm test; AUDIT-3 SW-fix seuraavassa loopissa.
+### L-LANG-LANDINGS-1 — 2026-05-07 ✓ shipped
+**Scope:** SEO-landingit per kieli (`/espanja-yo-koe`, `/saksan-yo-koe`, `/ranskan-yo-koe`) + uusi geneerinen hub. Worker A: vanha `index.html` siirretty `public/landing/espanja.html`-polkuun (canonical + Course JSON-LD + absoluuttiset asset-polut), uusi `index.html` (254 r) hub-sivu 3 kielikortilla, uudet `public/landing/{saksa,ranska}.html` placeholder-tilassa lokalisoiduilla hero-mockupeilla + waitlist-modaali, `css/landing-{de,fr}.css` accent-overridet (sininen #4f7cff / burgundi #a8324a). Worker B: `vercel.json` 3 rewriteä, `sitemap.xml` +3 entryä, `robots.txt` Disallow `/app`+`/app.html`+`/onboarding`+`/diagnose.html`. Worker C: `routes/onboarding.js` waitlist-endpoint lähettää Resend-kuittausemailin (non-fatal try/catch), uusi `GET /api/onboarding/waitlist/count?language=` -laskuri (real-data, ei keksitty). Cleanup §11 oli jo edellisten looppien jälkeen täytetty (app.html ja onboardingV3.js sisälsivät jo "Mestari"+"19 €/kk").
+**Files:** `index.html` (rewrite), `public/landing/{espanja,saksa,ranska}.html` (NEW), `css/landing-{de,fr}.css` (NEW), `css/landing.css` (+85 r hub-CSS), `vercel.json`, `sitemap.xml`, `robots.txt`, `routes/onboarding.js`, `sw.js`. **SW:** v138→v139. **Pending:** käyttäjän `npm run build` + Vercel-deploy (rewrites-tarkistus prodissa).
 
-### L-RUFLO-LOOP-4 — 2026-05-06 ✓ shipped
-**Scope:** P1-1 (Kehitys empty-state copy) + P1-3 (grammar/reading results hero score + stats strip + coach line + celebration class) + P1-5 (dark mode `.option-btn.correct/.wrong` kontrasti → `color:var(--ink)` dark-mode override). CSS: `results__score--good/warn/low` toneluokat + spring animation ≥80%, `resScoreGood`-keyframe.
-**Files:** `app.html`, `app.js`, `js/screens/vocab.js`, `style.css`, `css/components/results.css`, `sw.js`. **SW:** v129→v130. **Tests:** node/npm ei saatavilla — ei ajettu. **Pending:** npm test + Playwright-screenshot käyttäjän tehtävä.
+### L-LANG-INFRA-1 — 2026-05-07 ✓ shipped
+**Scope:** Multi-language infra. Worker A: `git mv` 90 lesson-JSON `data/courses/es/`:n alle, DE/FR README-skeletot, `LANG_CURRICULA={es,de,fr}` + back-compat `CURRICULUM_KURSSIT`, `routes/curriculum.js` `?lang=`-tuki, validate-lessons 90/90 PASS. Worker B: `LANG_LABEL`-export + prompt-buildereiden `lang`-parametri (kielineutraalit promptit, ES few-shotit gated `lang==='es'`), `middleware/language.js` (`resolveLang`+`requireSupportedLanguage`), 403 gate writing/exercises/exam-reiteissä. Worker C: `state.language`+setLanguage, `apiFetch` `?lang=` non-ES-reiteille, `#screen-coming-soon` (waitlist), Settings "Vaihda kieli" + confirm-modaali. Phase 3 a11y-fix: close-btn 44×44, role="main" coming-soon, role=status+aria-live double-announce poistettu, focus-trap+Escape molempiin modaaleihin, focus cancel-nappiin destruktiivisen sijaan.
+**Files:** `data/courses/{es,de,fr}/**`, `lib/{curriculumData,curriculum,openai,writingGrading}.js`, `routes/{curriculum,exercises,writing,exam}.js`, `middleware/language.js` (NEW), `scripts/validate-lessons.mjs`, `js/{state,api,main}.js`, `js/screens/{dashboard,onboardingV3,settings,comingSoon}.js`, `css/components/coming-soon.css` (NEW), `app.html`, `sw.js`. **SW:** v137→v138. **Pending:** käyttäjän `npm run build`.
 
-## Recent loops (older)
+### L-PRICING-REVAMP-2 — 2026-05-07 ✓ shipped
+**Scope:** Paywall-wirings + Settings tier UI + Customer Portal. Backend gate (`checkFeatureAccess`+`incrementFreeUsage`) writing/reading/exam/lesson/adaptive-reiteille. Frontend paywall-modaali 3 variantilla (quota/feature/upgrade), `apiFetch` 403→modaali, Settings "Tilaus" + Stripe portal CTA, dashboard Free-chip. Phase 2: live-test PASS, code-review 0 todellista P0, a11y serious-fix 4 kpl.
+**Files:** `routes/{writing,exercises,exam}.js`, `js/features/paywallModal.js` (NEW), `css/components/paywall.css` (NEW), `app.html`, `js/{api,main}.js`, `js/screens/{settings,dashboard}.js`, `scripts/bundle-entry.css`, `sw.js`. **SW:** v136→v137. **Pending:** käyttäjän `npm run build`, Stripe-aktivointi.
 
-### L-RUFLO-LOOP-3 — 2026-05-06 ✓ shipped
-**Scope:** L-HOME-COURSE-VISIBILITY — etusivulle kurssien näkyvyys. Lisätty `<section id="kurssit">` 8 kurssikorttia (K1-K8) lesson_count + YO-taso per kurssi (curriculumData.js kanoninen lähde). Lisätty "Kurssit"-nav-linkki + footer-linkki. 4-col grid (→2-col 1080px →1-col 580px). course-card__badge --a/--b/--c/--m/--e taso-indikaattorit.
-**Files:** `index.html`, `css/landing.css`, `sw.js`. **SW:** v128→v129 (index.html + landing.css molemmat STATIC_ASSETS). **Tests:** node ei saatavilla tässä shellissä — ei ajettu. **Pending:** npm test + Playwright-screenshot + axe-sweep käyttäjän tehtävä.
+### L-BUG-HUNT-DASHBOARD-1 — 2026-05-07 ✓ shipped (Phase 2 partial)
+**Scope:** Bug-hunt screenissä jonka käyttäjä raportoi näyttävän [object Object]:ja. Worker löysi profile.js:216 (`count: modeStats[m]` → `.sessions`); Opus-fix lisäsi dashboard.js:1314 NaN-guardin (writing-progression `d.avg.toFixed()`). Code-reviewer-verifier: 0 P0, 2 P1, 5 P2. Live-tester (Playwright) ei toiminut shellissä — SKIPPED.
+**Files:** `js/screens/profile.js`, `js/screens/dashboard.js`, `sw.js`. **SW:** v135→v136. **Pending:** käyttäjän selaintesti + `npm run build`.
 
-### L-RUFLO-LOOP-2 — 2026-05-06 ✓ shipped
-**Scope:** P0-2 (CSP fonts) + P0-4 (landing 404) + P0-5 (placement heading aria-busy) + P0-6 (feature-dots tablist). P0-2: server.js CSP jo kunnossa, ei muutoksia. P0-4: PostHog 404 on eu-assets CDN config — analytics.js jo resilientti (try/catch + key-gate). P0-6: feature-dots role="tablist" poistettu index.html:stä aiemmassa loopissa — ei muutoksia. P0-5: app.html `aria-busy="true"` lisätty + placement.js 5 kohtaa päivitetty (removeAttribute/setAttribute).
-**Files:** `app.html`, `js/screens/placement.js`, `sw.js`. **SW:** v127→v128 (app.html on STATIC_ASSETS). **Tests:** 1063/1064 (pre-existing flaky, ei regressioita). **Pending:** Vercel redeploy CSP:lle.
+### L-DB-TABLE-FIX-1 — 2026-05-07 ✓ shipped
+**Scope:** Korjasi 3 shipped-tiedostoa (`routes/onboarding.js`, `middleware/auth.js`, `routes/stripe.js`) käyttämään `user_profile`-taulua, koska sekä onboarding- että pricing-workerit kirjoittivat olemattomalle `public.users`:lle. Migraatiot oli jo ajettu MCP:llä PRICING-REVAMP-1:n yhteydessä.
+**Files:** `routes/onboarding.js`, `middleware/auth.js`, `routes/stripe.js`. **SW:** ei bumppia. **Pending:** ei.
 
-### L-RUFLO-LOOP-1 — 2026-05-06 ✓ shipped
-**Scope:** P0-1 (Loading…-sweep → Finnish skeletons + aria) + P0-3 (greeting-fallback "Hei!" eikä "Hei, ."). Loading sweep: kaikki aiemmat kutsut jo suomeksi; lisätty `role="status" aria-live="polite"` `#loading-text`-elementille, `aria-hidden="true"` spinnerille, `aria-busy="true"` `.loading-inner`:lle. Default loading-teksti "Luodaan tehtäviä…" → "Ladataan…". Greeting: `#dash-greeting-punct` id:lle; kun `name=""` → `punct.textContent="!"` → "Hei!"; kun name=email-prefix → "Hei, eero.".
-**Files:** `app.html`, `js/screens/dashboard.js`, `sw.js`. **SW:** v126→v127. **Tests:** 1063/1064 (1 pre-existing flaky email-timeout, ei regressioita). **Build:** ei ajettu (ei bundlea muutettu).
-**Pending:** Muut BUGS.md P0-bugit (P0-2 CSP, P0-4 404, P0-5 placement-heading, P0-6 landing-tablist). No new UI component — copy/conditional only per brief.
+### L-PRICING-REVAMP-1 — 2026-05-07 ✓ shipped
+**Scope:** 3-tier hinnoittelumalli (per ROADMAP järjestys 3). Tähtäin→Mestari rename + €29→€19 / €49→€39 cleanup yhdistetty Stripe-setupiin. Vanha kesäpaketti+Pro 9,99 -malli korvattu Free/Treeni/Mestari -triolla. routes/stripe.js placeholder→toiminnallinen lazy-loaded SDK:lla, idempotenttinen webhook (stripe_events-taulu).
+**Files:** `pricing.html` (rewrite), `index.html` (pricing section + JSON-LD + FAQ), `app.html` (ob3-link), `routes/stripe.js` (rewrite), `middleware/auth.js` (+tier helpers), `routes/email.js` (seasonalBlock), `js/screens/onboardingV3.js` (comment), `ui-ux-prompt.md`, `server.js` + `api/index.js` (mount /api/stripe), `sw.js` (+pricing.html). **SW:** v134→v135. **Archive:** `onboarding/PAYWALL.md` + `EMAILS.md` → `docs/archive/onboarding-old-pricing/`. **Pending:** Stripe-dashboard tuotteet+envit, `npm install stripe`, SQL migraatio (users tier-kolumnit + free_usage + stripe_events), Playwright + axe-sweep.
 
-### L-LESSON-BATCH-7 — 2026-05-06 ✓ shipped
-**Scope:** K8 L1-12 (E-taso, Eximia cum laude — YO-koevalmiiksi). Review-Sonnet: P0=1, P1=7, P2=2. Kaikki P0+P1 korjattu: K8L3 gap_fill väärä accept (diversidad→patrimonio), K8L1 si-3 saliéramos→hubiéramos salido, K8L2 dependería mos→dependeríamos, K8L4 viajaré poistettu, K8L8 vocab englanti→suomi, K8L9 template {1}+{1}→{1}+{2}, K8L9 epätodelline→epätodellinen, K8L12 tinha→había.
-**Files:** 12 generated. **Validate:** 90/90 ✓. **Tests:** ei ajettu (lesson-data ei vaikuta vitestiin).
-**Pending:** USE_PREGENERATED_LESSONS=true Vercel-dashiin + manuaalinen testi K1L1/K3L1/K5L1/K7L1/K8L1.
+### L-ONBOARDING-REDESIGN-1 — 2026-05-07 ✓ shipped
+**Scope:** 9-vaihe onboarding-redesign (per ROADMAP järjestys 1). Persuasion-first ennen Pro-ostoa. Reveal-vaihe rakentaa lukusuunnitelman (weeksUntilExam / lessonsPerWeek / minutesPerWeek) + 8 kurssikorttia. Saksa/Ranska → wait-list-modaali. Vanha V2 säilytetty `#/aloitus-v2`-hashilla.
+**Files:** `app.html` (+9 screens), `js/screens/onboardingV3.js`, `js/lib/studyPlan.js`, `lib/studyPlan.js`, `routes/onboarding.js`, `css/components/onboarding-v3.css`, `js/main.js`, `server.js`, `api/index.js`, `sw.js`. **SW:** v133→v134. **Tests:** ei ajettu (npm/Playwright ei saatavilla shellissä). **Pending:** SQL migraatio (users-kolumnit + onboarding_waitlist-taulu) käyttäjän ajettava Supabase SQL-editorissa; `npm run build` rebuildaa bundlen; selaintesti `/app.html#/aloitus`.
+
+### L-LANDING-CONVERT-1 — 2026-05-07 ✓ shipped
+**Scope:** Etusivun convert-redesign. UPDATE 1: `<body class="landing">` (P0 — aktivoi 246 `.landing`-CSS-sääntöä). UPDATE 2: hero-mockup CSS-driven 3-frame loop. UPDATE 3: courses-osiolle A→E -tasoprogressio-rail; K8 highlight. UPDATE 4: alternating elevated surfaces.
+**Files:** `index.html`, `css/landing.css`, `sw.js`. **SW:** v132→v133. **Tests:** ei ajettu.
 
 ---
 
 ## Next loop
 
-**Recommended:** L-RUFLO-LOOP-6 — (1) AUDIT-3 SW-fix: korvaa `/landing.css` → `/css/landing.css` + `/css/landing-tokens.css` + bump SW v130→v131. (2) P1-kirjo: P1-2 (exercise island), P1-4 (writing disabled-contrast), P1-6 (heading order), P1-12 (mode page accents). (3) Käyttäjä ajaa npm audit/lint/test ensin ja syöttää tulokset takaisin.
+**Recommended (per ROADMAP):** L-LANG-LANDINGS-1 (`02-queue/04_LANG_LANDINGS_1.md`) — `/espanja /saksa /ranska` SEO-landing-sivut + login-jälkeinen oletuskielen routing. Edellytys L-LANG-INFRA-1 ✓ täyttyy.
 
-**Recurring blockers:** Playwright E2E gated since d3f5ca5; manual prod verify on käyttäjän tehtävä. Vercel redeploy vaaditaan ennen CSP-headers-tarkistusta tuotannossa.
+**Harness status:** npm + Playwright TOIMIVAT Bash-toolissa (validoitu 2026-05-07, ks. memory: `feedback_playwright_works_in_harness.md`). `npm run test:bug-scan` käytössä Phase 2B gateinä.
 
 ---
 
-For older loop history (L-PLAN-1 through L-HOME-HOTFIX-3 + L-MERGE-DASH-PATH + L-COURSE-1 + L-CAT-COLORS-1), see `docs/archive/AGENT_STATE_HISTORY.md`.
+For older loop history (L-RUFLO-LOOP-1..5 + L-PLAN-1..8 + L-HOME-HOTFIX-3 + L-MERGE-DASH-PATH + L-COURSE-1 + L-CAT-COLORS-1 + L-LESSON-BATCH-1..7), see `docs/archive/AGENT_STATE_HISTORY.md`.

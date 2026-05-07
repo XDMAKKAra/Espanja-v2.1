@@ -1,0 +1,137 @@
+{
+  "$schema": "https://github.com/ruvnet/ruflo/raw/main/schemas/ruflo.config.json",
+  "project": {
+    "name": "Puheo",
+    "description": "AI-powered Spanish YO-koe (matriculation exam) prep platform for Finnish high school students. Lyhyt oppimäärä.",
+    "language": "fi",
+    "primary_target_users": "Finnish high school students preparing for the Spanish ylioppilaskirjoitukset"
+  },
+  "agent_directives": {
+    "must_read_before_each_loop": [
+      "AGENT_PROMPT_STANDARDS.md",
+      "AGENT_STATE.md",
+      "BUGS.md",
+      "CLAUDE.md"
+    ],
+    "must_apply_skills": {
+      "always": [
+        ".claude/skills/puheo-finnish-voice/SKILL.md",
+        ".claude/skills/puheo-screen-template/SKILL.md",
+        ".claude/skills/ui-ux-pro-max/SKILL.md"
+      ],
+      "frontend_loops_required": {
+        "ui_ux_pro_max": ".claude/skills/ui-ux-pro-max/SKILL.md - open before any UI work and keep open through the whole loop. Covers a11y, focus, motion, contrast, touch targets, font-pairings.",
+        "taste_frontend_primary": "design:taste-frontend - PRIMARY for any frontend revamp. Use it on the 21st.dev candidates AND on the final implementation. If installed, it is mandatory.",
+        "taste_frontend_fallback": "If design:taste-frontend is not installed, fall back to design:design-critique + ui-ux-pro-max combo per AGENT_PROMPT_STANDARDS.md section 2.",
+        "additional": [
+          "design:design-critique - required after sourcing pass and on the final result, even if taste-frontend was used",
+          "design:ux-copy - for any new microcopy / labels / CTAs",
+          "design:accessibility-review - required before marking the loop complete",
+          "design:design-system - when adding a new token or component"
+        ]
+      },
+      "marketing_loops_call_by_name": [
+        "marketing:brand-review",
+        "marketing:draft-content",
+        "marketing:content-creation"
+      ],
+      "education_loops_open_relevant_only": [
+        ".claude/skills/education/*/SKILL.md"
+      ]
+    },
+    "sourcing_rule": {
+      "primary": "21st.dev",
+      "rule": "Before writing the first HTML tag or CSS class for any new UI component, browse 21st.dev/s/<term> with 3-5 relevant search terms. This is mandatory, not optional. Screenshot 2-3 candidates, pick the most restrained dark option, port React+Tailwind to vanilla CSS using existing tokens, cite exact URL in IMPROVEMENTS.md.",
+      "fallback_order": [
+        "magicui.design",
+        "ui.shadcn.com",
+        "Aceternity UI",
+        "HyperUI"
+      ],
+      "exceptions": "Trivial extensions of existing Puheo components (e.g. expanding a 3-card grid to 8-card) do not require a new sourcing pass. New patterns (modal, segmented-control, accordion, stepper) always require sourcing.",
+      "taste_frontend_integration": "If design:taste-frontend is available, run it on the 21st.dev candidate set and let it pick the restrained option."
+    }
+  },
+  "guardrails": {
+    "do_not_commit_to_git": true,
+    "do_not_deploy_to_vercel": true,
+    "do_not_run_supabase_migrations": true,
+    "do_not_modify_lesson_json": true,
+    "do_not_invent_facts": "No fake reviews, partner schools, or numbers not present in lib/curriculumData.js or BUGS.md."
+  },
+  "task_routing": {
+    "BUGS.md::P0": {
+      "agent": "ruflo-coder + ruflo-reviewer",
+      "priority": "highest",
+      "exit_criteria": "Bug verified fixed by re-running the audit command in BUGS.md header."
+    },
+    "BUGS.md::P1": {
+      "agent": "ruflo-coder + ruflo-reviewer",
+      "priority": "high",
+      "exit_criteria": "axe-core sweep passes on affected screens at 1440 + 375."
+    },
+    "BUGS.md::P2": {
+      "agent": "ruflo-coder",
+      "priority": "low",
+      "exit_criteria": "Polish only - ship if loop has slack."
+    },
+    "audits": {
+      "agent": "ruflo-security-audit, ruflo-testgen, ruflo-docs",
+      "schedule": "every 5 loops",
+      "deliverable": "Update BUGS.md with new findings, do not auto-fix critical security issues without human review."
+    },
+    "ci_repair": {
+      "agent": "ruflo-coder",
+      "trigger": "GitHub Actions main branch failure",
+      "exit_criteria": "main branch goes green; no email spam to user."
+    }
+  },
+  "loop_workflow": {
+    "max_loop_minutes": 90,
+    "max_loops_per_session": 5,
+    "stop_conditions": [
+      "BUGS.md is empty",
+      "test coverage on critical paths < 80%",
+      "Lighthouse score < 90 on landing or app dashboard",
+      "npm audit reports any high/critical vulnerability"
+    ],
+    "verify_before_marking_complete": [
+      "axe-core 0 violations on changed screens at 1440 + 375",
+      "ui-ux-pro-max applied (frontend loops)",
+      "design:taste-frontend applied if installed, fallback design:design-critique + ui-ux-pro-max",
+      "21st.dev sourcing pass cited with exact URL in IMPROVEMENTS.md (any new UI component)",
+      "design:design-critique applied to changed screens",
+      "design:accessibility-review applied to changed screens",
+      "marketing:brand-review applied to new copy",
+      "npm test 1064/1064 pass",
+      "IMPROVEMENTS.md updated (1 line per UPDATE)",
+      "AGENT_STATE.md updated (Last/Next loop)",
+      "SW bumped if STATIC_ASSETS changed"
+    ]
+  },
+  "documentation_size_limits": {
+    "AGENT_STATE.md": "max 50 lines, archive oldest to docs/archive/AGENT_STATE_HISTORY.md",
+    "IMPROVEMENTS.md": "max 100 lines, archive oldest to docs/archive/",
+    "loop_entry_state": "max 7 lines",
+    "loop_entry_improvements": "max 3 lines"
+  },
+  "ship_readiness_definition": {
+    "BUGS.md_empty": true,
+    "test_coverage_critical_paths": ">=80%",
+    "lighthouse_landing_min": 90,
+    "lighthouse_dashboard_min": 90,
+    "npm_audit_clean": true,
+    "smoke_test_levels": [
+      "A",
+      "B",
+      "C",
+      "M",
+      "E"
+    ],
+    "smoke_test_target": "K1L1, K3L1, K5L1, K7L1, K8L1"
+  },
+  "fallback_when_ruflo_unavailable": {
+    "alternative_workflow_doc": "AGENT_PROMPT_RUFLO_LOOP.md",
+    "rationale": "If Ruflo cannot be installed or the user prefers Claude Code direct, the fallback prompt orchestrates the same loops via subagents."
+  }
+}

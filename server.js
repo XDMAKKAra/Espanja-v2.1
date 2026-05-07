@@ -36,6 +36,7 @@ import placementRoutes from "./routes/placement.js";
 import curriculumRoutes from "./routes/curriculum.js";
 import statusRoutes from "./routes/status.js";
 import dashboardV2Routes from "./routes/dashboardV2.js";
+import onboardingRoutes from "./routes/onboarding.js";
 import { waitlistLimiter } from "./middleware/rateLimit.js";
 import supabase from "./supabase.js";
 
@@ -79,7 +80,10 @@ app.use(cors(allowedOrigins.length ? {
 } : undefined));
 
 // Payment webhook needs raw body — must come BEFORE express.json().
-// Currently a placeholder that returns 410 until Stripe is wired (L-STRIPE-1).
+// New canonical path is /api/stripe/webhook (L-PRICING-REVAMP-1); legacy
+// /api/payments/webhook is kept so already-configured Stripe endpoints don't
+// break during the migration.
+app.post("/api/stripe/webhook", express.raw({ type: "application/json" }), handleWebhook);
 app.post("/api/payments/webhook", express.raw({ type: "application/json" }), handleWebhook);
 
 app.use(express.json());
@@ -132,6 +136,7 @@ app.use("/api", exerciseRoutes);
 app.use("/api", writingRoutes);
 app.use("/api/email", emailRoutes);
 app.use("/api/payments", paymentRoutes);
+app.use("/api/stripe", paymentRoutes);
 app.use("/api/exam", examRoutes);
 app.use("/api/sr", srRoutes);
 app.use("/api", adaptiveRoutes);
@@ -144,6 +149,7 @@ app.use("/api/dev", configRoutes);
 app.use("/api/status", statusRoutes);
 // L-LIVE-AUDIT-P2 UPDATE 3 — batched dashboard endpoint at /api/dashboard/v2.
 app.use("/api", dashboardV2Routes);
+app.use("/api/onboarding", onboardingRoutes);
 
 // ─── Waitlist (public, no auth) ─────────────────────────────────────────────
 app.post("/api/waitlist", waitlistLimiter, async (req, res) => {

@@ -3,8 +3,9 @@ import { readFileSync } from "fs";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
 import supabase from "../supabase.js";
-import { callOpenAI } from "../lib/openai.js";
-import { requireAuth } from "../middleware/auth.js";
+import { callOpenAI, LANG_LABEL } from "../lib/openai.js";
+import { requireAuth, checkFeatureAccess, incrementFreeUsage } from "../middleware/auth.js";
+import { requireSupportedLanguage, resolveLang } from "../middleware/language.js";
 import { pointsToYoGrade } from "../lib/grading.js";
 
 const router = Router();
@@ -150,9 +151,11 @@ function gradeStructure(partsData, answers) {
 
 // ─── Grade writing with AI ──────────────────────────────────────────────────
 
-async function gradeWriting(task, studentText, isShort) {
+async function gradeWriting(task, studentText, isShort, lang = "es") {
   const maxScore = isShort ? 33 : 66;
   const charCount = studentText.replace(/\s/g, "").length;
+  const langLabel = LANG_LABEL[lang] || LANG_LABEL.es;
+  const langEn = langLabel.en;
 
   const shortSteps = [0, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33];
   const longSteps = [0, 6, 10, 14, 18, 22, 26, 30, 34, 38, 42, 46, 50, 54, 58, 62, 66];
@@ -165,7 +168,7 @@ async function gradeWriting(task, studentText, isShort) {
   // YTL lyhyt oppimäärä does not penalise exceeding the upper char limit —
   // the limit is guidance, not a deduction rule. Soft-cap: no extra points
   // past max, but no penalty either. (Previously we deducted 3/6 pts.)
-  const prompt = `You are grading a Finnish high school student's Spanish writing for the yo-koe exam (lyhyt oppimäärä).
+  const prompt = `You are grading a Finnish high school student's ${langEn} writing for the yo-koe exam (lyhyt oppimäärä).
 
 TASK:
 ${task.situation}
@@ -210,8 +213,21 @@ Return ONLY JSON:
 // ─── POST /api/exam/start ──────────────────────────────────────────────────
 
 router.post("/start", requireAuth, async (req, res) => {
+  if (requireSupportedLanguage(req, res)) return;
+
   const { durationMode = "demo" } = req.body;
   const userId = req.user.userId;
+
+  const examAccess = await checkFeatureAccess(userId, "exam");
+  if (!examAccess.allowed) {
+    return res.status(403).json({
+      error: examAccess.reason,
+      tier_required: examAccess.requiredTier || null,
+      current_tier: examAccess.currentTier,
+      used: examAccess.used,
+      limit: examAccess.limit,
+    });
+  }
 
   try {
     const { data: active } = await supabase
@@ -318,6 +334,9 @@ router.post("/resume", requireAuth, async (req, res) => {
 // ─── POST /api/exam/submit ─────────────────────────────────────────────────
 
 router.post("/submit", requireAuth, async (req, res) => {
+  if (requireSupportedLanguage(req, res)) return;
+  const lang = resolveLang(req);
+
   const { sessionId, answers } = req.body;
   if (!sessionId) return res.status(400).json({ error: "sessionId vaaditaan" });
 
@@ -338,10 +357,10 @@ router.post("/submit", requireAuth, async (req, res) => {
     const structureResult = gradeStructure(partsData, finalAnswers);
 
     const shortText = finalAnswers["3_writing"] || "";
-    const shortResult = await gradeWriting(partsData[2].task, shortText, true);
+    const shortResult = await gradeWriting(partsData[2].task, shortText, true, lang);
 
     const longText = finalAnswers["4_writing"] || "";
-    const longResult = await gradeWriting(partsData[3].task, longText, false);
+    const longResult = await gradeWriting(partsData[3].task, longText, false, lang);
 
     const partScores = {
       reading: readingResult,
@@ -368,6 +387,15 @@ router.post("/submit", requireAuth, async (req, res) => {
       .eq("user_id", req.user.userId);
 
     if (updateErr) throw updateErr;
+
+    // Increment free usage after all AI grading has succeeded and the session
+    // has been persisted. checkFeatureAccess is cheap (single DB read) — we
+    // repeat it here because /submit is independent of /start and a user
+    // could theoretically submit an old session after upgrading.
+    {
+      const access = await checkFeatureAccess(userId, "exam");
+      if (access.tier === "free") await incrementFreeUsage(userId, "exam");
+    }
 
     res.json({ totalPoints, maxPoints: MAX_POINTS, finalGrade, partScores });
   } catch (err) {
