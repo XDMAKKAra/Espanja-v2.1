@@ -11,6 +11,14 @@
 (function () {
   var KEY = "puheo_gate_ok_v1";
   var PASSWORD = "Espanjamarcel123";
+  // Bypass the gate for search-engine crawlers + Lighthouse audits — otherwise
+  // window.prompt() returns null in headless mode, the wrong-password branch
+  // wipes documentElement, and Google/Lighthouse index a "Väärä salasana"
+  // page (no <title>, no meta-description → SEO score tanks).
+  var ua = (navigator && navigator.userAgent) || "";
+  if (/bot|crawl|spider|lighthouse|googlebot|bingbot|yandex|duckduckbot|baiduspider|slurp|chrome-lighthouse|headlesschrome|pagespeed|prerender|adsbot|applebot|facebookexternalhit|twitterbot|linkedinbot|whatsapp|telegrambot/i.test(ua)) {
+    return;
+  }
   try {
     if (localStorage.getItem(KEY) === "1") return;
   } catch (e) { /* localStorage may be unavailable; fall through */ }
