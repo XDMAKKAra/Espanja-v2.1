@@ -91,11 +91,15 @@ Orkestraattori hoitaa 4-vaiheen pipeline:n (implement → verify [code-review + 
 
 ### Kesken / odottaa toimintaa
 - **Aktiivinen jono** (`agent-prompts/02-queue/`):
-  - **03_LANG_INFRA_1** — NEXT (multi-lang infra: data/courses/ split, curriculumData/openai/state.language parametrisoitu, DE/FR Coming-Soon-screen — sisältö pysyy es-only)
-  - **04_LANG_LANDINGS_1** — `/espanja /saksa /ranska` SEO-sivut + post-login kielirouting (edellyttää 03 shipped)
-  - **05_LINT_CLEANUP** — 101 warningia
-  - **06_LIVE_AUDIT_P2** — production perf-audit
-- L-LESSONS-PER-LANG (myöhemmin): käsin generointi saksa+ranska. Sisältö on data-drop INFRA-1:n perustaan — ei koodimuutoksia.
+  - **05_FRONTEND_POLISH_1** — NEXT (visuaalinen polish 4 päänäkymälle ennen markkinointia)
+  - **06_LESSON_PREP_DE_FR_1** — research-loop, yo-rubriikit + curriculum-spec saksalle ja ranskalle, canonical-pipeline-template DE/FR
+  - **07_LESSONS_DE_LYHYT** — 90 saksa-lessonia canonical-pipelinen kautta (edellyttää 06)
+  - **08_LESSONS_FR_LYHYT** — 90 ranska-lessonia (edellyttää 06)
+  - **09_LINT_CLEANUP** — 101 warningia
+  - **10_LIVE_AUDIT_P2** — production perf-audit
+  - **11_SEO_BROADENING_1** — abikurssi-keyword + 6 blog-postausta (perustuu `docs/seo-keywords.md`)
+  - **12_SOCIAL_CONTENT_PLAYBOOK** — TikTok/Reels-launch + 30 skriptiä (pää-growth-vivu)
+- ✓ valmiit (kaikki 2026-05-07): ONBOARDING-REDESIGN-1, PRICING-REVAMP-1, DB-TABLE-FIX-1, BUG-HUNT-DASHBOARD-1, PRICING-REVAMP-2, LANG-INFRA-1, LANG-LANDINGS-1.
 - USE_PREGENERATED_LESSONS=true Vercelliin (käyttäjän toimi).
 - Stripe-dashboard tuotteet+webhook + `npm install stripe` (käyttäjän toimi, vain pyydettäessä).
 

@@ -17,8 +17,13 @@ _Tyhjä_
 
 | # | Brief | Status | Skoop |
 |---|---|---|---|
-| 05 | `02-queue/05_LINT_CLEANUP.md` | 🟢 P3 | ESLint/parse-error-cleanup, 101 warningia |
-| 06 | `02-queue/06_LIVE_AUDIT_P2.md` | 🟢 P3 | Production perf-audit, fontit self-host, ennen/jälkeen-mittaus |
+| 06 | `02-queue/06_LESSON_PREP_DE_FR_1.md` | 🔴 NEXT | Research: yo-rubriikit + curriculum-spec saksalle ja ranskalle. Canonical-pipeline-template DE/FR-lessoneille. |
+| 07 | `02-queue/07_LESSONS_DE_LYHYT.md` | 🟡 P1 | 90 saksa-lyhyt-oppituntia (canonical pipeline). Edellyttää 06. |
+| 08 | `02-queue/08_LESSONS_FR_LYHYT.md` | 🟡 P1 | 90 ranska-lyhyt-oppituntia. Edellyttää 06. |
+| 09 | `02-queue/09_LINT_CLEANUP.md` | 🟢 P3 | ESLint/parse-error-cleanup, 101 warningia |
+| 10 | `02-queue/10_LIVE_AUDIT_P2.md` | 🟢 P3 | Production perf-audit, fontit self-host, ennen/jälkeen-mittaus |
+| 11 | `02-queue/11_SEO_BROADENING_1.md` | 🟡 P2 | Abikurssi-keyword + 6 blog-postausta. Perustuu `docs/seo-keywords.md`-dataan. |
+| 12 | `02-queue/12_SOCIAL_CONTENT_PLAYBOOK.md` | 🟡 P2 | TikTok/Reels-launch: 5 pilaria, 30 valmista skriptiä, mittarit. |
 
 ---
 
@@ -33,6 +38,7 @@ _Tyhjä_
 - `02_PRICING_REVAMP_2.md` — ✓ 2026-05-07 (paywall-wirings + Settings tier + Customer Portal)
 - `03_LANG_INFRA_1.md` — ✓ 2026-05-07 (data/courses/{es,de,fr} split + AI-prompt lang-param + Coming-Soon-screen + Settings lang-vaihto)
 - `04_LANG_LANDINGS_1.md` — ✓ 2026-05-07 (per-lang SEO landings `/espanja-yo-koe`/`/saksan-yo-koe`/`/ranskan-yo-koe` + waitlist email + sitemap/robots)
+- `05_FRONTEND_POLISH_1.md` — ✓ 2026-05-07 (visuaalinen polish 4 päänäkymälle: onboarding/dashboard/mode-pages/pricing+landing; a11y-fixit 3 critical + 3 serious)
 
 ---
 

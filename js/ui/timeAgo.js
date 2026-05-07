@@ -34,7 +34,14 @@ export function timeAgo(input) {
   const hrs = Math.floor(mins / 60);
   if (hrs < 24)   return `${hrs} t sitten`;
   const days = Math.floor(hrs / 24);
+  if (days === 1) return "Eilen";
+  if (days <= 6)  return `${days} päivää sitten`;
   if (days < 30)  return `${days} pv sitten`;
+  // For older items, show locale date string (Finnish dd.m.yyyy)
+  const d = new Date(ms);
+  if (Number.isFinite(d.getTime())) {
+    return d.toLocaleDateString("fi-FI", { day: "numeric", month: "numeric", year: "numeric" });
+  }
   const months = Math.floor(days / 30);
   if (months < 12) return `${months} kk sitten`;
   const years = Math.floor(months / 12);

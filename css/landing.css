@@ -203,12 +203,15 @@
 
 .landing .hero__title {
   font-family: var(--font-display);
-  font-weight: 600;
-  font-size: clamp(40px, 6.5vw, 72px);
+  font-weight: 700;
+  font-size: clamp(36px, 6.5vw, 72px);
   line-height: 1.02;
   letter-spacing: var(--tracking-tight);
   color: var(--text);
   margin: 0 0 24px;
+}
+@media (min-width: 960px) {
+  .landing .hero__title { font-size: clamp(52px, 6.5vw, 72px); }
 }
 .landing .hero__title-accent {
   background: linear-gradient(180deg, #fafafa 0%, #a1a1aa 100%);
@@ -2255,11 +2258,13 @@
 .landing .lang-card:hover {
   border-color: var(--border-strong);
   background: var(--surface-hover);
-  transform: translateY(-2px);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px -16px rgba(0, 0, 0, 0.5);
 }
 .landing .lang-card__flag {
-  font-size: 2rem;
+  font-size: 2.5rem;
   line-height: 1;
+  margin-bottom: var(--sp-1);
 }
 .landing .lang-card__badge {
   display: inline-flex;
@@ -2295,6 +2300,28 @@
 .landing .lang-card .btn {
   margin-top: var(--sp-2);
   align-self: flex-start;
+}
+
+/* Active language card (Espanja — open now) */
+.landing .lang-card--es {
+  border-color: color-mix(in srgb, var(--accent) 30%, var(--border));
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--accent) 5%, var(--surface)) 0%,
+    var(--surface) 70%
+  );
+}
+.landing .lang-card--es:hover {
+  border-color: color-mix(in srgb, var(--accent) 50%, var(--border));
+}
+
+/* "Ei luottokorttia" microcopy below CTAs */
+.landing .cta-no-cc {
+  display: block;
+  margin-top: 10px;
+  font-size: 12px;
+  color: var(--text-subtle);
+  text-align: center;
 }
 
 /* hub hero copy centered variant */
