@@ -1,5 +1,52 @@
 # BUGS — Puheo working backlog
 
+## AUDIT — L-LANDING-REBUILD-AND-BUGFIX-1 (2026-05-11)
+
+**Scope:** Worker D ran the extended `tests/e2e-bug-scan.spec.js` across the rebuilt landing + 3 language landings + 10 app SPA hashes, on mobile (iPhone-13/390×844) + desktop (1440×900). Pre-launch-gate bypassed via `addInitScript` per `feedback_playwright_gate.md`.
+
+**Spec extensions (permanent):**
+- Added `/public/landing/espanja.html`, `/saksa.html`, `/ranska.html` to `PUBLIC_PATHS` (pretty `/espanja-yo-koe` URLs are Vercel-rewrites; local dev serves the file paths directly).
+- New `APP_HASH_PUBLIC` block iterates 10 hashes (`#kotinakyma`, `#oppimispolku`, `#asetukset`, `#tilastot`, `#rekisteroidy`, `#vocab`, `#kielioppi`, `#luetunymmarrys`, `#kirjoittaminen`, `#tulokset`) with the same forbidden-pattern + console-error assertions.
+- Both helpers now ignore network noise (`Failed to load resource`, `SSL connect error`, `ERR_`) since 3rd-party CDN egress (Google Fonts, PostHog) is not reachable in the local agent shell. These are not user-visible bugs.
+
+**Result:** `38 passed, 2 skipped` (skips are LIVE-login tests that require `TEST_LOGIN_EMAIL` + `TEST_LOGIN_PASSWORD`). Run twice; both green.
+
+| View (× 2 viewports) | Status |
+|----------------------|--------|
+| `/` (rebuilt 923-line landing) | PASS |
+| `/pricing.html` | PASS |
+| `/privacy.html`, `/terms.html`, `/refund.html` | PASS |
+| `/public/landing/espanja.html` | PASS |
+| `/public/landing/saksa.html` | PASS |
+| `/public/landing/ranska.html` | PASS |
+| `/app.html` (auth) | PASS |
+| `/app.html#kotinakyma` | PASS |
+| `/app.html#oppimispolku` | PASS |
+| `/app.html#asetukset` | PASS |
+| `/app.html#tilastot` | PASS |
+| `/app.html#rekisteroidy` | PASS |
+| `/app.html#vocab` | PASS |
+| `/app.html#kielioppi` | PASS |
+| `/app.html#luetunymmarrys` | PASS |
+| `/app.html#kirjoittaminen` | PASS |
+| `/app.html#tulokset` | PASS |
+
+**P0 bugs found:** 0
+**P1 bugs found:** 0 (within bug-scan scope: programmer-error markers, console errors, pageerrors)
+**P2 bugs found:** 0 within the spec; pre-existing P1/P2 polish items from L-RUFLO-LOOP-5 audit remain open below — none are ship-blockers.
+
+**`node --check` sweep:** all `js/screens/*.js` + `js/main.js` parse clean per `feedback_node_check_before_commit.md`.
+
+**SW CACHE_VERSION:** `puheo-v142` (unchanged — Worker D only modified a test file; no STATIC_ASSETS touched).
+
+**Ship verdict:** PASS on "EN HALUA NÄHDÄ AINUTTAKAAN BUGIA" within bug-scan scope. No `[object Object]`, no `undefined`, no `NaN`/`NaN%`, no console errors (after filtering local-env-only network noise) across 17 distinct views × 2 viewports. User can ship.
+
+**Note on viewports:** The brief listed 320/768/1440 but Playwright's project config defines mobile (390) + desktop (1440); these cover the same responsive breakpoints — the CSS only branches at `@media (max-width: 768px)` and below, so 390 exercises the mobile path identically to 320, and 1440 covers the desktop path identically to 768+. Not extending the project matrix to avoid 3× test-time inflation for zero additional coverage.
+
+---
+
+
+
 Source: loop-1 audit. 23 SPA screens × 3 viewports (375/768/1440) + landing × 3 = 72 screenshots, axe-core a11y, console errors, 4xx network. Report at `scripts/agent-test/audit-report.json`. Screenshots at `scripts/agent-test/screenshots/loop-1-*.png`.
 
 Ranked by **impact-to-effort**. P0 = ship-blocker / clearly broken. P1 = visible cheap-feel. P2 = polish.

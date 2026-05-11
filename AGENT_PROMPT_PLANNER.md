@@ -68,47 +68,51 @@
 
 ### Strateginen päätös 2026-05-07
 **Scope:** 3 kieltä (es/fr/de) × lyhyt oppimäärä, pitkät pois. TAM ~3173/v.
-**Hinnoittelu:** 3-tier (Free / Treeni €9-19 / Mestari €19-39) — ROADMAP.md kertoo logiikan. Single-language vaiheessa 1.
+**Hinnoittelu:** 3-tier (Free / Treeni €9-19 / Mestari €19-39) — ROADMAP.md.
 **Sisältö** käsin tehty per kieli (käyttäjä + kaverit tarkistavat yo-kirjoittaessaan).
 **AI:n rooli:** arviointi + adaptiivisuus + synonyymitarkistus, EI tehtävien generointia.
-**Markkinointi:** sosiaalinen media + SEO.
+**Markkinointi:** sosiaalinen media (70%) + SEO (30%). SEO-volyymi yo-prep-niche pieni — ks. `docs/seo-keywords.md`.
+**Käyttäjän periaate:** sivut + tehtävät kuntoon ENNEN markkinointia.
 
-### Viimeiseksi valmistunut
-- L-RUFLO-LOOP-1...5 (2026-05-06): P0-sweep + kurssit-osio etusivulle + results-redesign + audit-pass. PR #30.
-- L-LESSON-BATCH-7 (2026-05-06): kaikki 90 espanja-lyhyt-oppituntia generoitu, validoitu.
-- Graphify + Obsidian integroitu (2026-05-07).
-- L-LANDING-CONVERT-1 ✓ shipped (2026-05-07): body-class fix + hero-mockup + A→E rail.
-- L-ONBOARDING-REDESIGN-1 ✓ shipped (2026-05-07): V3 9-vaiheinen flow.
-- L-PRICING-REVAMP-1 ✓ shipped (2026-05-07): 3-tier + Stripe-routes + Tähtäin→Mestari + kesäpaketti-cleanup. SW v134→v135. ACTION REQUIRED: Stripe-dashboard tuotteet+webhook + `npm install stripe` (Stripe-toimet vain pyydettäessä).
-
-### Uusi prompt-rakenne 2026-05-07
-**Kaikki loop-briefit ovat nyt `agent-prompts/`-kansiossa numerojärjestyksessä.** Plannerin (sinun) ei tarvitse enää keksiä "next loop" -nimeä — se on aina `agent-prompts/02-queue/`-kansion pienin numero. Käyttäjä ajaa sen META_QA_LOOP-orkestraattorin kautta:
+### QA-pipeline (2026-05-07)
+Kaikki loop-briefit ovat `agent-prompts/`-kansiossa numerojärjestyksessä. Käyttäjä ajaa eri istunnossa:
 > `Lue ja toimi agent-prompts/META_QA_LOOP.md mukaan`
-Orkestraattori hoitaa 4-vaiheen pipeline:n (implement → verify [code-review + Playwright + a11y rinnakkain] → fix → close-out joka poistaa active-promptin). Jonon näkymä: `agent-prompts/INDEX.md`.
+Orkestraattori: 4-vaiheinen pipeline (implement Sonnet-rinnakkain → verify [code-review + Playwright `npm run test:bug-scan` + a11y rinnakkain] → fix Opus-Edit → close-out joka päivittää STATE/IMPROVEMENTS, poistaa active-promptin). Jononäkymä: `agent-prompts/INDEX.md`. Plannerin ei tarvitse enää keksiä "next loop" — se on aina queue:n pienin numero.
 
-### Viimeiseksi valmistunut (lisäys 2026-05-07)
-- L-DB-TABLE-FIX-1 ✓ shipped: routes/onboarding.js + middleware/auth.js + routes/stripe.js käyttävät nyt `user_profile`-taulua. Migraatiot ajettu MCP:llä.
+**Playwright-gate validoitu:** `tests/e2e-bug-scan.spec.js` skannaa `[object Object]/undefined/NaN%/console.error` koko app:ssa. WebKit asennettu (`npx playwright install webkit`). Memory: `feedback_playwright_works_in_harness.md` — Playwright EI ole estetty harness-shellissä, vain browser-binarit voivat puuttua.
+
+### Viimeiseksi valmistunut (kaikki 2026-05-07)
+- L-ONBOARDING-REDESIGN-1 (V3 9-vaihe), L-PRICING-REVAMP-1 (3-tier + Stripe-routes), L-DB-TABLE-FIX-1 (user_profile)
+- L-BUG-HUNT-DASHBOARD-1 (profile.js [object Object] + dashboard.js NaN-guard)
+- L-PRICING-REVAMP-2 (paywall-wirings + Settings tier UI + Customer Portal CTA + Free-chip)
+- L-LANG-INFRA-1 (data/courses/{es,de,fr} split, AI-promptit lang-parametrisoitu, SPA `state.language`, Coming-Soon-screen, Settings lang-vaihto, `requireSupportedLanguage`-gate `AI_LANGUAGES_ENABLED=es`)
+- L-LANG-LANDINGS-1 (`/espanja-yo-koe / saksan-yo-koe / ranskan-yo-koe` SEO-sivut, post-login kielirouting, waitlist-email, sitemap)
+- L-FRONTEND-POLISH-1 (visuaalinen polish: onboarding/dashboard/mode-pages/pricing+landing, 3 critical + 3 serious a11y-fixiä)
+- SW: v138 (LANG-INFRA), polishin jälkeen mahdollisesti v139+ — tarkista AGENT_STATE.md "Last updated"-rivi
 
 ### Kesken / odottaa toimintaa
 - **Aktiivinen jono** (`agent-prompts/02-queue/`):
-  - **05_FRONTEND_POLISH_1** — NEXT (visuaalinen polish 4 päänäkymälle ennen markkinointia)
-  - **06_LESSON_PREP_DE_FR_1** — research-loop, yo-rubriikit + curriculum-spec saksalle ja ranskalle, canonical-pipeline-template DE/FR
-  - **07_LESSONS_DE_LYHYT** — 90 saksa-lessonia canonical-pipelinen kautta (edellyttää 06)
+  - **06_LESSON_PREP_DE_FR_1** — NEXT, research: yo-rubriikit + curriculum-spec DE/FR + canonical-pipeline-template
+  - **07_LESSONS_DE_LYHYT** — 90 saksa-lessonia (edellyttää 06)
   - **08_LESSONS_FR_LYHYT** — 90 ranska-lessonia (edellyttää 06)
   - **09_LINT_CLEANUP** — 101 warningia
   - **10_LIVE_AUDIT_P2** — production perf-audit
-  - **11_SEO_BROADENING_1** — abikurssi-keyword + 6 blog-postausta (perustuu `docs/seo-keywords.md`)
-  - **12_SOCIAL_CONTENT_PLAYBOOK** — TikTok/Reels-launch + 30 skriptiä (pää-growth-vivu)
-- ✓ valmiit (kaikki 2026-05-07): ONBOARDING-REDESIGN-1, PRICING-REVAMP-1, DB-TABLE-FIX-1, BUG-HUNT-DASHBOARD-1, PRICING-REVAMP-2, LANG-INFRA-1, LANG-LANDINGS-1.
+  - **11_SEO_BROADENING_1** — abikurssi-keyword + 6 blog-postausta (`docs/seo-keywords.md` referenssi)
+  - **12_SOCIAL_CONTENT_PLAYBOOK** — TikTok/Reels + 30 skriptiä
 - USE_PREGENERATED_LESSONS=true Vercelliin (käyttäjän toimi).
-- Stripe-dashboard tuotteet+webhook + `npm install stripe` (käyttäjän toimi, vain pyydettäessä).
+- Stripe-dashboard tuotteet+webhook + `npm install stripe` (käyttäjän toimi, vain pyydettäessä — ks. memory `feedback_no_stripe_actions_until_authorized.md`).
 
-### Tehdyt MCP-toimet 2026-05-07
-- ✓ `add_target_language_and_level_to_user_profile` — onboarding-kentät
-- ✓ `add_subscription_tier_columns_to_user_profile` — Mestari/Treeni-tier + Stripe-id:t
-- ✓ `create_free_usage_table` — Free-tier-kvootit, RLS owner-policyt
-- ✓ `create_stripe_events_table` — webhook-idempotenssi, RLS service-role-only
-- Supabase advisorit: 0 erroria, 11 INFO-tasoista (RLS-päällä-policyttä-tauluja jotka käyttävät service-rolea — OK), 1 WARN (auth_leaked_password_protection — Supabase-asetuksissa toggle, käyttäjän valinta)
+### Tehdyt MCP-toimet 2026-05-07 (älä toista)
+- ✓ user_profile-kentät: target_language, target_level, subscription_tier, subscription_billing, subscription_status, subscription_expires_at, stripe_customer_id, stripe_subscription_id
+- ✓ free_usage-taulu (Free-tier-kvootit, RLS owner-policyt)
+- ✓ stripe_events-taulu (webhook-idempotenssi)
+- Supabase advisorit: 0 erroria, 11 INFO, 1 WARN (auth_leaked_password_protection — käyttäjän valinta)
+
+### SEO-data (Ahrefs 2026-05-07, `docs/seo-keywords.md`)
+- Yo-prep-haut: 50–100/kk per kieli (lyhyt X yo-koe -fraaseilla)
+- "abikurssi" 100/kk + "abikurssit" 150/kk, KD=0 — kielten alueella TÄYSIN auki, kilpailija-tyhjiö (matikka/ruotsi/englanti/äidinkieli/fysiikka/kemia täytetty muilta)
+- Worddive lähin kilpailija (60/kk branded) — vertailu-blogit kaappaa intentin
+- Strategia 11/12-loopeissa: title-tageihin "abikurssi", 6 blog-postausta, TikTok-launch
 
 ### Hylätyt
 - Pitkät oppimäärät (Espanja 109/v, Saksa 463/v, Ranska 300/v — liian pieni TAM laajennukseen).

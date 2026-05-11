@@ -151,7 +151,10 @@
     <div class="app-main-inner">
 
   <!-- SCREEN: Auth (login / register) -->
-  <div id="screen-auth" class="screen active">
+  <!-- BUGFIX: `active` no longer baked in. The inline pre-paint script at the
+       top of <body> picks the correct initial screen based on auth state so
+       logged-in users don't flash the login screen before main.js routes them. -->
+  <div id="screen-auth" class="screen">
     <!-- Sourced: Magic UI grid-pattern (apps/www/registry/magicui/grid-pattern.tsx)
          — SVG <pattern> tile with a corner-piece path, masked by a radial
          gradient so the grid fades out at the edges of the viewport. -->

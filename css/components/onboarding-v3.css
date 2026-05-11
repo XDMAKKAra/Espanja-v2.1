@@ -3,12 +3,18 @@
    Uses existing tokens (--bg, --surface, --surface-2, --text, --text-2,
    --accent, --accent-2, --line, --radius, --space-*). Mobile-first. */
 
+/* L-LANDING-REBUILD-AND-BUGFIX-1 hotfix: do NOT set display:flex here.
+   `.ob3` is combined with `.screen` on ob-v3 screens; an unconditional
+   `display:flex` overrode `.screen { display:none }` and left every ob3
+   screen visible beneath the active screen (user-reported leak-through
+   of reveal CTA + microcopy onto dashboard/mode pages). Layout flexbox
+   is handled by `.screen.active { display:flex }`; this rule only
+   contributes the visual chrome (bg/color/padding) common to all stages. */
 .ob3 {
   min-height: 100dvh;
   background: var(--bg, #0b0d10);
   color: var(--text, #f1f1ef);
   padding: clamp(20px, 5vw, 56px) clamp(16px, 4vw, 32px);
-  display: flex;
   align-items: center;
   justify-content: center;
 }

@@ -46,7 +46,13 @@ supabase.js        — Supabase client
 - Test accounts are configured via env vars (TEST_PRO_EMAILS, TEST_FREE_EMAILS)
 - CORS is restricted to ALLOWED_ORIGINS env var
 
-## graphify
+## Conetext Navigation
+When you need to understand the codebase,docs, or any files in this project
+1. ALWAYS query the knowledge graph first: '/graphify query "your questio"'
+2. Only read raw files if i explicitly say "read the file or "look at the raw file"
+3. Use ' graphify-out/wiki/index.md' as your navigation entrypoint for browsing sructure
+
+# graphify
 
 This project has a graphify knowledge graph at graphify-out/.
 

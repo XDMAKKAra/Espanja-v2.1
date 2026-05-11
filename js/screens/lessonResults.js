@@ -250,7 +250,9 @@ async function startDeepenRun(ctx) {
   state.totalAnswered = 0;
   state.recentVocabHeadwords = [];
   state.sessionStartTime = Date.now();
-  state.language = "spanish";
+  // L-LANDING-REBUILD-AND-BUGFIX-1 — don't overwrite state.language; it's a
+  // 2-letter code ("es"/"de"/"fr") hydrated from profile. Resetting to legacy
+  // "spanish" broke dashboard.js coming-soon gate on the next home visit.
 
   if (ctx.lessonType === "vocab") {
     const vocab = await import("./vocab.js");
