@@ -349,12 +349,37 @@ export async function loadCurriculum() {
   renderSkeleton(root);
 
   try {
-    const res = await apiFetch(`${API}/api/curriculum`, {
+    // L-LANDING-REBUILD-AND-BUGFIX-1 — pass ?lang= explicitly so the backend
+    // selects the right LANG_CURRICULA registry. The /api/curriculum route is
+    // not in the AI_ROUTE_PREFIXES list, so apiFetch wouldn't inject it.
+    const lang = (state.language === "de" || state.language === "fr") ? state.language : "es";
+    const res = await apiFetch(`${API}/api/curriculum?lang=${encodeURIComponent(lang)}`, {
       headers: { ...(isLoggedIn() ? authHeader() : {}) },
     });
-    if (!res.ok) throw new Error("Polun lataus epäonnistui");
-    const data = await res.json();
-    _state.kurssit = data.kurssit || [];
+    if (!res.ok) {
+      // Distinguish error classes so the user (and the next debugger) sees a
+      // precise message instead of the generic "Polun lataus epäonnistui".
+      if (res.status === 401) throw new Error("Kirjaudu sisään nähdäksesi polun.");
+      if (res.status === 403) throw new Error("Tämä kieli ei ole vielä käytössä.");
+      if (res.status === 404) throw new Error("Polkupäätepistettä ei löytynyt — yritä uudelleen.");
+      if (res.status >= 500) throw new Error(`Palvelinvirhe (${res.status}) — yritä uudelleen.`);
+      throw new Error(`Polun lataus epäonnistui (HTTP ${res.status}).`);
+    }
+    let data;
+    try {
+      data = await res.json();
+    } catch {
+      throw new Error("Polun vastaus oli virheellinen — yritä uudelleen.");
+    }
+    if (!data || typeof data !== "object") {
+      throw new Error("Polun vastaus oli tyhjä — yritä uudelleen.");
+    }
+    if (data.available === false) {
+      throw new Error(data.message || "Sisältöä ei vielä julkaistu tälle kielelle.");
+    }
+    _state.kurssit = Array.isArray(data.kurssit)
+      ? data.kurssit.filter((k) => k && typeof k.key === "string")
+      : [];
     // L-HOME-HOTFIX-3 — auto-expand the first active (unlocked, not yet
     // mastered) course so users see the lesson list without an extra click.
     // If the previously expanded course is now mastered/locked, advance.
@@ -552,7 +577,13 @@ function startExercises(kurssiKey, lesson) {
   // back-button works and the sidebar nav highlights correctly.
   const { type } = lesson;
   state.sessionStartTime = Date.now();
-  state.language = "spanish";
+  // L-LANDING-REBUILD-AND-BUGFIX-1 — do NOT overwrite state.language here.
+  // It's hydrated from user_profile.target_language as the 2-letter code
+  // ("es"/"de"/"fr"); overwriting to legacy "spanish" caused dashboard.js
+  // line 124 to redirect every post-lesson home visit to the coming-soon
+  // screen (state.language !== "es"). Backend reading/exercises routes
+  // accept the 2-letter code via apiFetch's lang injection, and default to
+  // Spanish content when the body field is empty.
 
   if (type === "vocab") {
     state.mode = "vocab";

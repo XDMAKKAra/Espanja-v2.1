@@ -27,10 +27,88 @@
 }
 @media (max-width: 768px) {
   #screen-exercise > .exercise,
-  #screen-grammar > .exercise {
+  #screen-grammar > .exercise,
+  /* L-LANDING-REBUILD-AND-BUGFIX-1 — reading was missing here, so on mobile
+     the question text + textarea sat flush against the viewport edges and the
+     short-answer textarea looked like a raw uncontained input. */
+  #screen-reading > .exercise.reading-inner {
     padding: 0 16px;
   }
 }
+
+/* L-LANDING-REBUILD-AND-BUGFIX-1 — short-answer + true/false fallback styles
+   in case the legacy style.css rules don't make it into the bundle. Mirrors
+   the .ex-option visual language so reading short-answer questions look
+   styled, not raw-DOM. */
+.reading-short-textarea {
+  width: 100%;
+  min-height: 96px;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm, 8px);
+  background: var(--surface-2, #ECFDF5);
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: var(--fs-body, 16px);
+  line-height: 1.5;
+  box-sizing: border-box;
+  resize: vertical;
+}
+.reading-short-textarea:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+  border-color: var(--accent-dark, var(--accent));
+}
+.tf-buttons {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.tf-btn {
+  flex: 1;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm, 8px);
+  background: var(--surface-2, #ECFDF5);
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: var(--fs-h3, 18px);
+  cursor: pointer;
+  transition: background 100ms var(--ease-out), border-color 100ms var(--ease-out);
+}
+.tf-btn:hover:not(:disabled) {
+  background: var(--surface, #ffffff);
+  border-color: var(--border-strong, var(--accent));
+}
+.tf-btn.correct {
+  border-color: var(--success);
+  background: color-mix(in srgb, var(--success) 10%, var(--surface, #ffffff));
+  color: var(--success);
+}
+.tf-btn.wrong {
+  border-color: var(--error);
+  background: color-mix(in srgb, var(--error) 8%, var(--surface, #ffffff));
+  color: var(--error);
+}
+.tf-btn:disabled { cursor: default; opacity: 0.7; }
+.reading-self-grade {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+.reading-self-correct,
+.reading-self-wrong {
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm, 8px);
+  background: var(--surface-2, #ECFDF5);
+  color: var(--ink);
+  font-family: var(--font-display);
+  cursor: pointer;
+}
+.reading-self-correct:hover { border-color: var(--success); color: var(--success); }
+.reading-self-wrong:hover   { border-color: var(--error);   color: var(--error); }
 .exercise__top {
   display: flex;
   align-items: center;

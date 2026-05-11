@@ -30,6 +30,28 @@ const PUBLIC_PATHS = [
   "/privacy.html",
   "/terms.html",
   "/refund.html",
+  // Language landings — pretty URLs (/espanja-yo-koe etc.) are Vercel-only
+  // rewrites; locally they 404. Test the actual served files. Either path
+  // works in CI; we use the real file path so `npm start` doesn't need
+  // Vercel's rewrite engine.
+  "/public/landing/espanja.html",
+  "/public/landing/saksa.html",
+  "/public/landing/ranska.html",
+];
+
+// App SPA hashes to audit after gate bypass. These render without login
+// (auth screen + onboarding shells). Logged-in screens stay in the LIVE block.
+const APP_HASH_PUBLIC = [
+  "#kotinakyma",
+  "#oppimispolku",
+  "#asetukset",
+  "#tilastot",
+  "#rekisteroidy",
+  "#vocab",
+  "#kielioppi",
+  "#luetunymmarrys",
+  "#kirjoittaminen",
+  "#tulokset",
 ];
 
 const LIVE = !!(process.env.TEST_LOGIN_EMAIL && process.env.TEST_LOGIN_PASSWORD);
@@ -55,7 +77,12 @@ async function assertCleanRender(page, label) {
   const errors = [];
   page.on("pageerror", (err) => errors.push(`pageerror: ${err.message}`));
   page.on("console", (msg) => {
-    if (msg.type() === "error") errors.push(`console.error: ${msg.text()}`);
+    if (msg.type() === "error") {
+      const t = msg.text();
+      if (/service.?worker|sw\.js|cache/i.test(t)) return;
+      if (/Failed to load resource|SSL connect error|ERR_/i.test(t)) return;
+      errors.push(`console.error: ${t}`);
+    }
   });
   // SPA hash routes never reach networkidle (long-polling, prefetch). Wait for
   // DOM content + a short paint window instead.
@@ -88,6 +115,38 @@ test.describe("bug-scan — public surfaces (always)", () => {
     await page.goto("/app.html");
     await assertCleanRender(page, "/app.html (auth)");
   });
+
+  for (const hash of APP_HASH_PUBLIC) {
+    test(`/app.html${hash} renders clean (no [object Object] / undefined / NaN)`, async ({ page }) => {
+      await bypassGate(page);
+      const errors = [];
+      page.on("pageerror", (err) => errors.push(`pageerror: ${err.message}`));
+      page.on("console", (msg) => {
+        if (msg.type() === "error") {
+          const t = msg.text();
+          // SW cache version warnings/info are allowed per task brief.
+          if (/service.?worker|sw\.js|cache/i.test(t)) return;
+          // Network errors loading 3rd-party resources (fonts, posthog) in a
+          // local dev env without TLS egress aren't user-visible bugs.
+          if (/Failed to load resource|SSL connect error|ERR_/i.test(t)) return;
+          errors.push(`console.error: ${t}`);
+        }
+      });
+      await page.goto(`/app.html${hash}`);
+      await page.waitForLoadState("domcontentloaded", { timeout: 10_000 }).catch(() => {});
+      await page.waitForTimeout(500);
+      const body = await page.locator("body").innerText();
+      const match = body.match(FORBIDDEN);
+      if (match) {
+        const idx = body.indexOf(match[0]);
+        const snippet = body.slice(Math.max(0, idx - 80), idx + 80);
+        throw new Error(`[app${hash}] forbidden pattern "${match[0]}" found: …${snippet}…`);
+      }
+      if (errors.length) {
+        throw new Error(`[app${hash}] runtime error(s):\n${errors.join("\n")}`);
+      }
+    });
+  }
 });
 
 test.describe("bug-scan — logged-in app screens", () => {

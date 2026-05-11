@@ -432,6 +432,10 @@ async function completeAndRedirect() {
     if (flow.target_language) setLanguage(flow.target_language);
     track("ob_v3_completed", { logged_in: true });
     // Non-ES users → coming-soon, ES users → normal dashboard.
+    // BUGFIX: clear `#/aloitus` from the URL so a subsequent reload doesn't
+    // re-trigger showOnboardingV3() and leave screen-ob-v3-reveal as `.active`
+    // behind the dashboard.
+    try { history.replaceState({}, "", location.pathname); } catch { /* noop */ }
     if (flow.target_language && flow.target_language !== "es") {
       import("./comingSoon.js")
         .then((m) => m.showComingSoon())
