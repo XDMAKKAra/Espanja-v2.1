@@ -86,4 +86,5 @@ Rules:
 - Before answering architecture or codebase questions, read graphify-out/GRAPH_REPORT.md for god nodes and community structure
 - If graphify-out/wiki/index.md exists, navigate it instead of reading raw files
 - For cross-module "how does X relate to Y" questions, prefer `graphify query "<question>"`, `graphify path "<A>" "<B>"`, or `graphify explain "<concept>"` over grep — these traverse the graph's EXTRACTED + INFERRED edges instead of scanning files
-- After modifying code files in this session, run `graphify update .` to keep the graph current (AST-only, no API cost)
+- **Auto-update on commit:** `.git/hooks/post-commit` ajaa `graphify update .`:n automaattisesti aina kun commit koskettaa koodi-tiedostoja (js/mjs/cjs/ts/tsx/jsx/html/css/json/py). Ei API-kuluja (AST-only). Älä poista hookia.
+- **Käytä graphify:tä proaktiivisesti:** (a) cross-module-kyselyihin jotka muuten vaatisivat >3 file-luentaa, (b) "miten X liittyy Y:hin" -arkkitehtuuriin, (c) ennen ison refaktoroinnin scope-ehdotusta, (d) kun palaat tyhjästä kontekstista pitkän tauon jälkeen. ÄLÄ käytä yhden tiedoston bug-fix:ssä tai pienissä CSS/copy-muutoksissa — Read/Grep ovat nopeammat.

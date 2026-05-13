@@ -108,39 +108,22 @@
   </header>
 
   <main>
-    <!-- ─── YO-COUNTDOWN — L-HERO-COUNTDOWN-AND-OFFCANVAS-1 ── -->
-    <section class="yo-countdown" aria-labelledby="yo-countdown-title">
-      <div class="yo-countdown__card">
-        <span class="yo-countdown__badge">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-          Seuraava YO-koe
-        </span>
-        <h2 id="yo-countdown-title" class="yo-countdown__title">YO-koe lähestyy</h2>
-        <p class="yo-countdown__sub">Aloita valmistautuminen nyt — jokainen päivä lasketaan.</p>
-        <ol class="yo-countdown__grid" role="list" aria-live="polite">
-          <li><span class="yo-countdown__num" data-unit="days">—</span><span class="yo-countdown__label">Päivää</span></li>
-          <li class="yo-countdown__sep" aria-hidden="true">:</li>
-          <li><span class="yo-countdown__num" data-unit="hours">—</span><span class="yo-countdown__label">Tuntia</span></li>
-          <li class="yo-countdown__sep" aria-hidden="true">:</li>
-          <li><span class="yo-countdown__num" data-unit="minutes">—</span><span class="yo-countdown__label">Minuuttia</span></li>
-          <li class="yo-countdown__sep" aria-hidden="true">:</li>
-          <li><span class="yo-countdown__num" data-unit="seconds">—</span><span class="yo-countdown__label">Sekuntia</span></li>
-        </ol>
-        <div class="yo-countdown__ctas">
-          <a href="/app.html#rekisteroidy" class="btn btn--primary btn--lg">Aloita ilmaiseksi</a>
-          <a href="#kielet" class="btn btn--ghost btn--lg">Valitse kielesi</a>
-        </div>
-        <p class="yo-countdown__trust">Tehty Suomessa · YTL-rubriikilla · Ei luottokorttia</p>
-      </div>
-    </section>
-
     <!-- ─── HERO ───────────────────────────────────────────── -->
     <section class="hero" id="hero">
       <div class="hero__glow hero__glow--drift" aria-hidden="true"></div>
 
       <div class="hero__inner">
         <div class="hero__copy">
-          <p class="hero__eyebrow">Puheo · YO-koe valmennus</p>
+          <p class="hero__eyebrow yo-countdown" aria-live="polite">
+            <span class="hero__eyebrow-label">Puheo · YO-koe-valmennus</span>
+            <span class="hero__eyebrow-dot" aria-hidden="true"></span>
+            <span class="hero__eyebrow-time">
+              <span data-unit="days">—</span><em>pv</em>
+              <span data-unit="hours">—</span><em>h</em>
+              <span data-unit="minutes">—</span><em>min</em>
+            </span>
+            <span hidden data-unit="seconds">0</span>
+          </p>
 
           <h1 class="hero__title">
             <span class="hero__title-accent">Tehoa espanjan, saksan ja ranskan YO-kokeisiin.</span>
