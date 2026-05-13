@@ -43,29 +43,39 @@ import supabase from "./supabase.js";
 const app = express();
 
 // ─── Security headers ──────────────────────────────────────────────────────
+// HSTS and `upgrade-insecure-requests` are production-only. On localhost
+// (NODE_ENV !== "production") the dev server speaks plain HTTP, and either
+// directive pushes browsers — Safari especially — to upgrade asset URLs to
+// https://localhost, which the dev server doesn't serve, breaking the page.
+const __IS_PROD = process.env.NODE_ENV === "production";
 app.use(helmet({
+  hsts: __IS_PROD ? undefined : false,
   contentSecurityPolicy: {
-    directives: {
-      defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", "'unsafe-inline'", "https://browser.sentry-cdn.com", "https://cdn.jsdelivr.net"],
-      styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
-      fontSrc: ["'self'", "https://fonts.gstatic.com"],
-      imgSrc: ["'self'", "data:"],
-      connectSrc: [
-        "'self'",
-        "https://*.supabase.co",
-        "https://api.openai.com",
-        "https://eu.i.posthog.com",
-        "https://eu-assets.i.posthog.com",
-        "https://*.ingest.sentry.io",
-        // Some browsers route the Google Fonts CSS fetch through connect-src
-        // even when style-src explicitly allows the host. Without this, every
-        // page logs ~9 console errors on first paint. Future loop should
-        // self-host Inter + DM Mono and drop both entries.
-        "https://fonts.googleapis.com",
-        "https://fonts.gstatic.com",
-      ],
-    },
+    useDefaults: true,
+    directives: Object.assign(
+      {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'", "'unsafe-inline'", "https://browser.sentry-cdn.com", "https://cdn.jsdelivr.net"],
+        styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+        fontSrc: ["'self'", "https://fonts.gstatic.com"],
+        imgSrc: ["'self'", "data:"],
+        connectSrc: [
+          "'self'",
+          "https://*.supabase.co",
+          "https://api.openai.com",
+          "https://eu.i.posthog.com",
+          "https://eu-assets.i.posthog.com",
+          "https://*.ingest.sentry.io",
+          // Some browsers route the Google Fonts CSS fetch through connect-src
+          // even when style-src explicitly allows the host. Without this, every
+          // page logs ~9 console errors on first paint. Future loop should
+          // self-host Inter + DM Mono and drop both entries.
+          "https://fonts.googleapis.com",
+          "https://fonts.gstatic.com",
+        ],
+      },
+      __IS_PROD ? {} : { upgradeInsecureRequests: null }
+    ),
   },
 }));
 

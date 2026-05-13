@@ -135,7 +135,16 @@
 
       <div class="hero__inner">
         <div class="hero__copy">
-          <p class="hero__eyebrow">Espanjan YO-koe • Lyhyt oppimäärä</p>
+          <p class="hero__eyebrow yo-countdown" aria-live="polite">
+            <span class="hero__eyebrow-label">Espanjan YO-koe · Lyhyt oppimäärä</span>
+            <span class="hero__eyebrow-dot" aria-hidden="true"></span>
+            <span class="hero__eyebrow-time">
+              <span data-unit="days">—</span><em>pv</em>
+              <span data-unit="hours">—</span><em>h</em>
+              <span data-unit="minutes">—</span><em>min</em>
+            </span>
+            <span hidden data-unit="seconds">0</span>
+          </p>
 
           <h1 class="hero__title">
             <span class="hero__title-accent">Pärjää espanjan YO-kokeessa.</span>
@@ -962,5 +971,6 @@ Aino</p>
        can ship. Both are idempotent + reduced-motion-safe internally. -->
   <script type="module" src="/js/landing-init.js"></script>
   <script src="/js/landing-nav.js"></script>
+  <script src="/js/landing-countdown.js"></script>
 </body>
 </html>
