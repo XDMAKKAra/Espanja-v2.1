@@ -1,10 +1,10 @@
 # Puheo Writing Rubric — YTL Saksa, Lyhyt Oppimäärä (B3)
 
 **Target exam:** Ylioppilastutkinto, saksan lyhyt oppimäärä (B3, useimmiten lukiossa aloitettu), tutkintokerta 2026+
-**Target level:** A2 CEFR (LOPS 2021 B3 saksan tavoitetaso on A2.1; realistinen haarukka A1.3 → A2.2)
+**Tavoitetaso (Puheon taksonomia):** YTL-arvosanat A → E. Taustana LOPS 2021 B3 (saksan tavoitetaso vastaa likimäärin CEFR A2:ta), mutta Puheo käyttää AINA YTL-arvosanoja I/A/B/C/M/E/L kalibroinnissa — ei CEFR-mittareita.
 **Document purpose:** Vastine `pedagogy/RUBRIC.md`:lle, joka kattaa espanjan lyhyen oppimäärän. Tämä dokumentti kuvaa saksan lyhyen oppimäärän kirjoitelman arvosteluperusteet ja niistä johdetun Puheon AI-graderin 4-ulottuvuus-rubriikin (viestinnällisyys, kielen rakenteet, sanasto, kokonaisuus). YTL:n yleiset arvosteluperiaatteet ovat samat kaikille B-tason kielille; saksan-spesifit kohdat (kielioppi, virhetyypit, sanasto) on käännetty saksan kontekstiin.
 
-> **Tärkeä huom**: tavoitetaso B3 saksassa on **A2**, ei B1 kuten espanjassa. Tämä alentaa kaikkia ankkureita yhden tason verran. M-tason (50/100) ankkuri on A2-suoritus, ei B1.
+> **Tärkeä huom**: saksan B3-tausta on yhden tason alempi kuin espanjan B3. Tämä alentaa kaikkia kielioppi- ja sanasto-ankkureita yhden askeleen verran. Puheon kalibrointi tehdään YTL-arvosanoilla (M ≈ keskitaso, ei kiinteää CEFR-mittaria).
 
 ---
 
@@ -178,10 +178,10 @@ Nämä ovat suomalaisten lukiolaisten yleisimmät virheet B3-saksan kirjoitelmis
 
 ## 4. AI-graderin prompt (ehdotus, kalibroinnin jälkeen)
 
-Saman muoto kuin espanjan rubricin §4 (lib/writingGrading.js), mutta saksan A2-tasolle kalibroitu:
+Saman muoto kuin espanjan rubricin §4 (lib/writingGrading.js), mutta saksan B3-tasolle kalibroitu (yksi askel matalampi kuin espanjan B3):
 
 ```
-You are a YTL examiner grading a German writing sample from a Finnish high school student taking the German lyhyt oppimäärä (B3) yo-koe. Target level is A2 (LOPS 2021 B3). Apply YTL B3 short syllabus standards — NOT B2, NOT CEFR-generic, NOT university.
+You are a YTL examiner grading a German writing sample from a Finnish high school student taking the German lyhyt oppimäärä (B3) yo-koe. Apply YTL B3 short syllabus standards as graded by Ylioppilastutkintolautakunta — NOT B2, NOT general CEFR descriptors, NOT university level. Use the YTL grading band (I/A/B/C/M/E/L) as your reference.
 
 TASK CONTEXT:
 Situation: ${task.situation}
@@ -249,13 +249,13 @@ OUTPUT: same JSON shape as Spanish grader, with Finnish field names (viestinnall
 
 ## 6. Eroja espanjan rubriciin
 
-| Aspekti                | Espanja (B1)                                | Saksa (A2)                                  |
+| Aspekti                | Espanja (B3 lyhyt)                          | Saksa (B3 lyhyt)                            |
 |------------------------|---------------------------------------------|---------------------------------------------|
-| Tavoitetaso CEFR       | B1                                          | **A2** (yksi taso alempi)                   |
+| Taustataso (LOPS 2021) | ≈ CEFR B1                                   | ≈ CEFR A2 (yksi askel matalampi)            |
 | M-ankkurin rakenteet   | Preesens + preteriti + perfekti + perussubjunktiivi | **Präsens + Perfekt + modaaliverbit + perussijat (Nom/Akk)** |
 | Yleisimmät virheet     | ser/estar, sukukongruenssi, subjunktiivin laukaisijat | **artikkelin suku (der/die/das), V2-sananjärjestys, haben/sein** |
-| Kuullun ymmärtäminen kokeessa | ❌ Ei (espanja-koe ilman) | ✅ Kyllä (~25 % painotus) |
-| Konjunktiv II / subjunktiivi | E-tasolla vaadittu | **A2:lla vain Konjunktiv II kohteliaisuusmuodot (ich würde, ich hätte gern); muu Konjunktiv II E-/L-tason ekstra** |
+| Kuullun ymmärtäminen kokeessa | ❌ Ei (espanja-koe ilman) | ✅ Kyllä (~29 % painotus) |
+| Konjunktiv II / subjunktiivi | E-tasolla vaadittu | **M-tasolla vain kohteliaisuusmuodot (ich würde, ich hätte gern); laajempi Konjunktiv II E-/L-tason ekstra** |
 | Sananjärjestys-painotus | Vähäinen (SVO yleensä toimii) | **Kriittinen — V2-sääntö ja V-loppu sivulauseessa** |
 | Sanasto-aiheet         | Ympäristö, työ, kulttuuri (Latinalaisen Amerikan monimuotoisuus mukana) | **Ympäristö, työ, kulttuuri (DACH-fokus: Saksa, Itävalta, Sveitsi, plus EU)** |
 

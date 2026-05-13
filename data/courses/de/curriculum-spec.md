@@ -1,7 +1,7 @@
 # Saksan B3 curriculum — Puheo
 
 **Kohderyhmä:** suomalaiset lukiolaiset, jotka kirjoittavat saksan **lyhyen oppimäärän (B3)** ylioppilaskokeessa.
-**Tavoitetaso CEFR:** A2.1 (LOPS 2021 B3 virallinen tavoite). Realistinen haarukka A1.3 → A2.2 / B1.1.
+**Tavoitetaso:** YTL-arvosanaprogressio A → E (LOPS 2021 B3 tavoittelee likimäärin CEFR A2-tasoa, mutta Puheo käyttää AINA YTL-arvosanoja I/A/B/C/M/E/L curriculum-tasoina, koska sovellus valmentaa yo-kokeeseen).
 **Tutkintokerta:** kevät 2026 →
 **Liittyvät dokumentit:**
 - `pedagogy/saksa-RUBRIC.md` — kirjoitelman 4-ulottuvuus-rubric, YTL:n arvosteluperusteet ja yleisimmät virhetyypit
@@ -14,20 +14,20 @@
 
 ## Progressio yleisesti
 
-| Kurssi  | Otsikko                       | CEFR   | Kielioppifokus                                             | Sanasto-aihe         |
+| Kurssi  | Otsikko                       | YTL    | Kielioppifokus                                             | Sanasto-aihe         |
 |---------|-------------------------------|--------|------------------------------------------------------------|----------------------|
-| K1 (A)  | Wer bin ich                   | A1.1   | Präsens säännölliset, artikkelit Nominativissa             | Yleissanasto         |
-| K2 (A)  | Alltag und Leben              | A1.2   | Präsens epäsäännölliset, Akkusativ, modaaliverbit          | Yleissanasto         |
-| K3 (B)  | Was habe ich gemacht          | A1.3   | Perfekt (haben/sein), V2-sääntö                            | Matkustus            |
-| K4 (B)  | Damals und heute              | A2.1   | Präteritum, Dativ-prepositiot, weil/dass-sivulauseet       | Luonto & ympäristö   |
-| K5 (C)  | Zukunft und Träume            | A2.1   | Futur I, wenn-sivulauseet, V-loppu                         | Työ & talous         |
-| K6 (C)  | Probleme der Welt             | A2.2   | Passiv, Konjunktiv II kohteliaisuusmuodot                  | Yhteiskunta          |
-| K7 (M)  | Kultur und Gesellschaft       | A2.2/B1.1 | Konjunktiv II syvemmin, Genitiv, obwohl/damit            | Kulttuuri (DACH)     |
-| K8 (E)  | Bereit fürs Abitur            | B1.1   | Indirekte Rede, kertaus, yo-tyyppiset tehtävät             | Sekoitettu kaikki    |
+| K1      | Wer bin ich                   | A      | Präsens säännölliset, artikkelit Nominativissa             | Yleissanasto         |
+| K2      | Alltag und Leben              | A      | Präsens epäsäännölliset, Akkusativ, modaaliverbit          | Yleissanasto         |
+| K3      | Was habe ich gemacht          | B      | Perfekt (haben/sein), V2-sääntö                            | Matkustus            |
+| K4      | Damals und heute              | B      | Präteritum, Dativ-prepositiot, weil/dass-sivulauseet       | Luonto & ympäristö   |
+| K5      | Zukunft und Träume            | C      | Futur I, wenn-sivulauseet, V-loppu                         | Työ & talous         |
+| K6      | Probleme der Welt             | C      | Passiv, Konjunktiv II kohteliaisuusmuodot                  | Yhteiskunta          |
+| K7      | Kultur und Gesellschaft       | M      | Konjunktiv II syvemmin, Genitiv, obwohl/damit              | Kulttuuri (DACH)     |
+| K8      | Bereit fürs Abitur            | E      | Indirekte Rede, kertaus, yo-tyyppiset tehtävät             | Sekoitettu kaikki    |
 
 ---
 
-## Kurssi 1 — Wer bin ich (Taso A, CEFR A1.1)
+## Kurssi 1 — Wer bin ich (YTL A-taso)
 
 ### Kielioppi-fokus
 - **Präsens säännölliset verbit** (-en, -en, -en) — *machen, spielen, lernen, kommen, wohnen*. Päätteet: ich -e, du -st, er/sie/es -t, wir -en, ihr -t, sie/Sie -en.
@@ -49,7 +49,7 @@ Esimerkkisanoja: *die Mutter* (äiti), *der Vater* (isä), *der Bruder* (veli), 
 
 ---
 
-## Kurssi 2 — Alltag und Leben (Taso A, CEFR A1.2)
+## Kurssi 2 — Alltag und Leben (YTL A-taso)
 
 ### Kielioppi-fokus
 - **Präsens epäsäännölliset** — *sprechen → spreche/sprichst/spricht*, *lesen → lese/liest/liest*, *fahren → fahre/fährst/fährt*, *nehmen → nehme/nimmst/nimmt*. Vokaalimuutos vain du-/er-muodoissa.
@@ -71,7 +71,7 @@ Esimerkkisanoja: *das Haus*, *die Wohnung*, *das Zimmer* (huone), *die Küche* (
 
 ---
 
-## Kurssi 3 — Was habe ich gemacht (Taso B, CEFR A1.3)
+## Kurssi 3 — Was habe ich gemacht (YTL B-taso)
 
 ### Kielioppi-fokus
 - **Perfekt** — Saksan tärkein puhuttu mennyt aikamuoto. Apuverbi (*haben* tai *sein*) + Partizip II lauseen loppuun: *Ich **habe** gestern Pizza **gegessen**. Wir **sind** ins Kino **gegangen**.*
@@ -93,7 +93,7 @@ Esimerkkisanoja: *die Reise* (matka), *der Zug* (juna), *das Flugzeug* (lentokon
 
 ---
 
-## Kurssi 4 — Damals und heute (Taso B, CEFR A2.1)
+## Kurssi 4 — Damals und heute (YTL B-taso)
 
 ### Kielioppi-fokus
 - **Präteritum** — kirjoitetun kielen yksinkertainen mennyt aikamuoto. Tärkeät verbit aina Präteritumissa: *sein → war, haben → hatte, werden → wurde, können → konnte, müssen → musste, geben → gab, sagen → sagte.*
@@ -103,7 +103,7 @@ Esimerkkisanoja: *die Reise* (matka), *der Zug* (juna), *das Flugzeug* (lentokon
 - **Adjektiivin pohjamuoto + komparatiivi** — *groß → größer, alt → älter, gut → besser, gern → lieber.*
 
 ### Sanasto-teema: ympäristö ja luonto (environment and nature)
-Esimerkkisanoja: *die Natur*, *der Wald* (metsä), *der See* (järvi), *das Meer*, *der Berg* (vuori), *der Fluss* (joki), *das Wetter*, *die Sonne*, *der Regen*, *der Schnee*, *kalt / warm / heiß*, *der Baum* (puu), *die Blume*, *der Vogel*, *die Umwelt* (ympäristö — A2.1 vasta perustasolla), *die Jahreszeit* (vuodenaika).
+Esimerkkisanoja: *die Natur*, *der Wald* (metsä), *der See* (järvi), *das Meer*, *der Berg* (vuori), *der Fluss* (joki), *das Wetter*, *die Sonne*, *der Regen*, *der Schnee*, *kalt / warm / heiß*, *der Baum* (puu), *die Blume*, *der Vogel*, *die Umwelt* (ympäristö — vasta perustasolla B-tasolla), *die Jahreszeit* (vuodenaika).
 
 ### Yo-koerelevanssi
 - **Teil 2 Luetun ymmärtäminen:** kevään 2025 koe sisälsi ympäristöaiheen — sanasto ja Präteritumin tunnistus ovat kriittisiä.
@@ -115,7 +115,7 @@ Esimerkkisanoja: *die Natur*, *der Wald* (metsä), *der See* (järvi), *das Meer
 
 ---
 
-## Kurssi 5 — Zukunft und Träume (Taso C, CEFR A2.1)
+## Kurssi 5 — Zukunft und Träume (YTL C-taso)
 
 ### Kielioppi-fokus
 - **Futur I** — *werden* + infinitiivi: *Ich **werde** morgen **kommen**.* Käytetään harvemmin kuin suomi-opiskelija olettaa; useimmiten Präsens + ajan ilmaus riittää: *Morgen gehe ich…*
@@ -137,7 +137,7 @@ Esimerkkisanoja: *der Beruf* (ammatti), *der Arbeitnehmer / der Chef*, *die Firm
 
 ---
 
-## Kurssi 6 — Probleme der Welt (Taso C, CEFR A2.2)
+## Kurssi 6 — Probleme der Welt (YTL C-taso)
 
 ### Kielioppi-fokus
 - **Passiv (Vorgangspassiv)** — *werden* + Partizip II: *Das Haus **wird gebaut**. Der Brief **wurde geschrieben**.* Käytetään uutiskielessä ja muodollisissa teksteissä.
@@ -159,7 +159,7 @@ Esimerkkisanoja: *die Gesellschaft*, *die Politik*, *die Regierung* (hallitus), 
 
 ---
 
-## Kurssi 7 — Kultur und Gesellschaft (Taso M, CEFR A2.2 / B1.1)
+## Kurssi 7 — Kultur und Gesellschaft (YTL M-taso)
 
 ### Kielioppi-fokus
 - **Konjunktiv II syvemmin** — *wenn*-sivulauseen epätodellinen ehto: *Wenn ich Zeit **hätte**, **würde** ich nach Berlin **fahren**.* (Konditionaali II: jos olisi tähän hetkeen → würde + inf.)
@@ -182,7 +182,7 @@ Esimerkkisanoja: *die Kultur*, *die Kunst*, *das Theater*, *das Museum*, *die Au
 
 ---
 
-## Kurssi 8 — Bereit fürs Abitur (Taso E, CEFR B1.1)
+## Kurssi 8 — Bereit fürs Abitur (YTL E-taso)
 
 ### Kielioppi-fokus
 - **Konjunktiv II edistynyt** — koko *wenn-Satz*-paradigma + epätodellinen menneisyys: *Wenn ich Zeit **gehabt hätte**, **wäre** ich nach Berlin **gefahren**.* (Konditionaali III: jos olisi ollut → menneisyyden Konjunktiv II.)
@@ -227,7 +227,7 @@ Sama kaava kuin espanjassa (ks. `lib/curriculumData.js`):
 
 ## Vaihe-erot espanjan curriculumiin
 
-1. **CEFR-taso yksi askel alempana** — saksan B3 tavoittelee A2:a, espanjan B3 tavoittelee B1:tä. Tämä alentaa kaikkia kielioppi- ja sanasto-ankkureita.
+1. **Taustataso yksi askel alempana** — saksan B3-oppimäärä tavoittelee LOPS 2021 -dokumentin mukaan likimäärin CEFR A2:ta, kun taas espanjan B3 tavoittelee B1:tä. Tämä alentaa kielioppi- ja sanasto-ankkureita Puheon YTL-asteikolla, mutta YTL-arvosanat A→E määräävät kalibroinnin — eivät CEFR-mittarit.
 2. **Ei kuullun ymmärtämistä Puheo-MVP:ssä** — saksan YO-koe sisältää kuullun ymmärtämisen (~25 % painotus), mutta Puheo MVP keskittyy luetun ymmärtämiseen + sanasto-rakenne + kirjoitelma.
 3. **Sananjärjestys pakollinen oma fokus** — V2-sääntö ja V-loppu sivulauseessa ovat suomalaisten suurin saksa-kompastuskivi. Espanjassa sananjärjestys on joustavampi eikä vaadi omaa kurssia.
 4. **Sijamuodot (Akkusativ, Dativ) kriittisiä** — Espanjassa ei vastinetta. Tarvitaan oma harjoitusfokus kursseilla 2 ja 4.
