@@ -81,6 +81,18 @@ vi.mock("../../middleware/auth.js", () => ({
   softReadingGate: (req, _res, next) => { req.isPro = true; next(); },
   incrementReadingPieces: async () => 1,
   FREE_READING_PIECES: 2,
+  checkFeatureAccess: async () => ({ allowed: true, tier: "mestari" }),
+  incrementFreeUsage: async () => ({}),
+  getFreeUsage: async () => ({}),
+  getUserTier: async () => "mestari",
+  hasFeature: async () => true,
+  isTestProEmail: () => false,
+  FREE_LIMITS: { writing: 1, reading: 1, exam: 1, lessons: 1 },
+  FEATURES: {
+    free: new Set(),
+    treeni: new Set(["writing", "reading", "exam", "vocab", "grammar"]),
+    mestari: new Set(["writing", "reading", "exam", "vocab", "grammar", "lesson", "adaptive", "placement"]),
+  },
 }));
 
 let request, app, express;

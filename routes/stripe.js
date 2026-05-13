@@ -34,7 +34,12 @@ async function getStripe() {
   const key = process.env.STRIPE_SECRET_KEY;
   if (!key) return null;
   try {
-    const { default: Stripe } = await import("stripe");
+    // Hidden from Vite/Vitest static import-analysis — `stripe` is an
+    // optional runtime dep that's intentionally absent during tests. The
+    // string concat keeps the bundler from trying to resolve it at import
+    // time and failing the whole test suite with vite:import-analysis.
+    const modName = "stri" + "pe";
+    const { default: Stripe } = await import(/* @vite-ignore */ modName);
     _stripeClient = new Stripe(key, { apiVersion: "2024-06-20" });
     return _stripeClient;
   } catch (err) {
@@ -240,8 +245,11 @@ async function applyInvoiceFailed(invoice) {
 export async function handleWebhook(req, res) {
   const stripe = await getStripe();
   const secret = process.env.STRIPE_WEBHOOK_SECRET;
+  // Placeholder while Stripe is unwired: return 410 Gone so any leftover
+  // LemonSqueezy webhook senders (or unconfigured Stripe dashboards) stop
+  // retrying, instead of treating us as a flaky 503 endpoint.
   if (!stripe || !secret) {
-    return res.status(503).json({ error: "webhook_unavailable" });
+    return res.status(410).json({ error: "webhook_unavailable" });
   }
 
   const sig = req.headers["stripe-signature"];
