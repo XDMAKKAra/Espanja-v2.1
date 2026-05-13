@@ -80,6 +80,21 @@ vi.mock("../../middleware/auth.js", () => ({
   softReadingGate: (req, _res, next) => { req.isPro = true; next(); },
   incrementReadingPieces: async () => 1,
   FREE_READING_PIECES: 2,
+  // Tier-gating stubs — routes call checkFeatureAccess/incrementFreeUsage
+  // (added in the exam-quota work). The buildApp helper treats every test
+  // user as Pro to keep specs focused on logic, not paywall edges.
+  checkFeatureAccess: async () => ({ allowed: true, tier: "mestari" }),
+  incrementFreeUsage: async () => ({}),
+  getFreeUsage: async () => ({}),
+  getUserTier: async () => "mestari",
+  hasFeature: async () => true,
+  isTestProEmail: () => false,
+  FREE_LIMITS: { writing: 1, reading: 1, exam: 1, lessons: 1 },
+  FEATURES: {
+    free: new Set(),
+    treeni: new Set(["writing", "reading", "exam", "vocab", "grammar"]),
+    mestari: new Set(["writing", "reading", "exam", "vocab", "grammar", "lesson", "adaptive", "placement"]),
+  },
 }));
 
 export async function buildApp() {
