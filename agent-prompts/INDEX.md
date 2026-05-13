@@ -17,8 +17,8 @@ _Tyhjä_
 
 | # | Brief | Status | Skoop |
 |---|---|---|---|
-| 07 | `02-queue/07_LESSONS_DE_LYHYT.md` | 🔴 NEXT | 90 saksa-lyhyt-oppituntia (canonical pipeline). Edellyttää 06 (✓ valmis). BLOCKER: `scripts/validate-lessons.mjs` `--lang=`-tuki puuttuu — ks. `agent-prompts/templates/VALIDATE_LESSONS_LANG_SUPPORT_TODO.md`. |
-| 08 | `02-queue/08_LESSONS_FR_LYHYT.md` | 🟡 P1 | 90 ranska-lyhyt-oppituntia. Edellyttää 06 (✓ valmis) + sama validate-blocker. |
+| 07 | `02-queue/07_LESSONS_DE_LYHYT.md` | 🔴 NEXT | 90 saksa-lyhyt-oppituntia (canonical pipeline). Edellyttää 06 (✓ valmis). Validate-blocker ratkaistu (`--lang=de` toimii). |
+| 08 | `02-queue/08_LESSONS_FR_LYHYT.md` | 🟡 P1 | 90 ranska-lyhyt-oppituntia. Edellyttää 06 (✓ valmis). Validate-blocker ratkaistu. |
 | 09 | `02-queue/09_LINT_CLEANUP.md` | 🟢 P3 | ESLint/parse-error-cleanup, 101 warningia |
 | 10 | `02-queue/10_LIVE_AUDIT_P2.md` | 🟢 P3 | Production perf-audit, fontit self-host, ennen/jälkeen-mittaus |
 | 11 | `02-queue/11_SEO_BROADENING_1.md` | 🟡 P2 | Abikurssi-keyword + 6 blog-postausta. Perustuu `docs/seo-keywords.md`-dataan. |
