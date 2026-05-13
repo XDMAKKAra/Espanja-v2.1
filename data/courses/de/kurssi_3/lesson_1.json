@@ -1,0 +1,280 @@
+{
+  "meta": {
+    "course_key": "kurssi_3",
+    "lesson_index": 1,
+    "lesson_type": "vocab",
+    "level": "B",
+    "title": "Matkustaminen ja kulkuvälineet",
+    "description": "Opit matkustamisen ydinsanaston saksaksi: kulkuvälineet (Zug, Flugzeug, Bus, Auto), lentokenttä- ja asematermit (Fahrkarte, Bahnhof, Flughafen, Gepäck) sekä matkaverbit (reisen, ankommen, abfahren). Noin 30 sanaa — riittää YO-kokeen matkakirjoitelman tuottamiseen ja luetun ymmärtämiseen.",
+    "yo_relevance": "Teil 4 (Kirjoitelma): 'Schreibe einen Blogeintrag über deine letzte Reise' — matka-aihe on YTL:n suosikki kevään 2025 kokeessa. Teil 3 (Rakenne ja sanasto): Perfekt-aukkotehtävät käyttävät matkasanastoa (Ich bin mit dem Zug gefahren). Matkasanasto esiintyy myös Teil 2 -luetun ymmärtämistehtävissä.",
+    "estimated_minutes_median": 12
+  },
+  "teaching": {
+    "intro_md": "# Matkustaminen ja kulkuvälineet saksaksi\n\nSaksan matkasanasto on YO-kokeen vakioteema. Huomaa kaksi tärkeää eroa suomeen:\n\n## Kulkuvälineet — prepositio *mit + Dativ*\n\n| Suomeksi | Saksaksi | Esimerkki |\n|---|---|---|\n| junalla | **mit dem Zug** | Ich fahre mit dem Zug nach Berlin. |\n| autolla | **mit dem Auto** | Wir fahren mit dem Auto. |\n| lentokoneella | **mit dem Flugzeug** | Ich fliege mit dem Flugzeug. |\n| bussilla | **mit dem Bus** | Sie kommt mit dem Bus. |\n| laivalla | **mit dem Schiff** | Wir reisen mit dem Schiff. |\n| polkupyörällä | **mit dem Fahrrad** | Er fährt mit dem Fahrrad. |\n\nYksiköllinen muistisääntö: kulkuvälineen kanssa käytetään **mit + dem** (Dativ).\n\n## Lentokenttä ja asema\n\n- **der Bahnhof** = juna-asema (*der Hauptbahnhof* = pääasema)\n- **der Flughafen** = lentokenttä\n- **die Fahrkarte / das Ticket** = matkalippu\n- **das Gepäck** = matkatavara (kollektiivimuoto, ei monikkoa)\n- **die Ankunft** = saapuminen; **die Abfahrt** = lähtö\n- **der Zug** = juna; *ICE/IC/RE* = junaluokat (Deutsche Bahn)\n- **das Gleis** = raide, laituri juna-asemalla\n- **der Flug** = lento\n\n## Tärkeät verbit\n\n- **reisen** = matkustaa (haben: Ich habe viel gereist)\n- **fahren** = ajaa, matkustaa maateitse (sein: Ich bin nach Hamburg gefahren)\n- **fliegen** = lentää (sein: Ich bin nach Spanien geflogen)\n- **ankommen** = saapua (sein: Ich bin um 10 Uhr angekommen)\n- **abfahren** = lähteä (sein: Der Zug ist um 8 Uhr abgefahren)\n- **übernachten** = yöpyä (haben: Ich habe im Hotel übernachtet)\n\n**Muistisääntö:** *sein* = liikkumisverbit (fahren, fliegen, gehen, kommen). *haben* = paikalla pysyminen tai transitiivit.",
+    "key_points": [
+      "Kulkuvälineen kanssa käytetään mit + dem (Dativ): mit dem Zug, mit dem Auto, mit dem Flugzeug.",
+      "Liikkumisverbit Perfektissä ottavat apuverbiksi sein: Ich bin gefahren / geflogen / gegangen.",
+      "das Gepäck on substantiivi jolla ei ole monikkoa — aina yksikkö.",
+      "der Bahnhof = juna-asema; der Flughafen = lentokenttä — älä sekoita.",
+      "ankommen ja abfahren ovat erottuvia verbityyppejä (trennbare Verben): Zug kommt um 10 an."
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1-recognition-mc-kulkuvalineet",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista — kulkuvälineet ja matkasanat",
+      "instruction": "Valitse oikea suomennos.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "mc", "stem": "der Zug", "choices": ["bussi", "juna", "raitiovaunu", "metro"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "der Zug = juna. Älä sekoita: der Bus = bussi, die U-Bahn = metro." },
+        { "item_type": "mc", "stem": "das Flugzeug", "choices": ["laiva", "lentokone", "helikopteri", "purjeentokki"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "das Flugzeug = lentokone. Verbi fliegen = lentää." },
+        { "item_type": "mc", "stem": "der Bus", "choices": ["taksi", "bussi", "auto", "kuorma-auto"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "der Bus = bussi. Yhdyssana: der Schulbus = koulubussi." },
+        { "item_type": "mc", "stem": "das Auto", "choices": ["polkupyörä", "moottoripyörä", "auto", "vaunu"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "das Auto = auto. Myös: das Fahrzeug = kulkuneuvo (yleismuoto)." },
+        { "item_type": "mc", "stem": "das Fahrrad", "choices": ["mopo", "polkupyörä", "skootteri", "potkulauta"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "das Fahrrad = polkupyörä. fahren (ajaa) + Rad (pyörä)." },
+        { "item_type": "mc", "stem": "das Schiff", "choices": ["purje", "laiva", "vene", "kanoo"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "das Schiff = laiva. das Boot = pieni vene." },
+        { "item_type": "mc", "stem": "die Fahrkarte", "choices": ["ajolupa", "lippu (matkalippu)", "passi", "varaus"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "die Fahrkarte = matkalippu. Myös das Ticket on käytössä. Karte tarkoittaa myös korttia." },
+        { "item_type": "mc", "stem": "der Bahnhof", "choices": ["lentokenttä", "bussiasema", "juna-asema", "satama"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "der Bahnhof = juna-asema. der Flughafen = lentokenttä. Bahn = rautatie." },
+        { "item_type": "mc", "stem": "das Gepäck", "choices": ["matkatavara", "reppu", "kassi", "matkalaukku"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "das Gepäck = matkatavara (kollektiivimuoto, ei monikkoa). die Tasche = laukku, der Koffer = matkalaukku." },
+        { "item_type": "mc", "stem": "der Urlaub", "choices": ["loma", "matkustaja", "matka", "retki"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "der Urlaub = loma. im Urlaub sein = olla lomalla. die Ferien (mon.) = koululoma." },
+        { "item_type": "mc", "stem": "die Reise", "choices": ["loma", "matka", "retki", "vierailu"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "die Reise = matka. reisen = matkustaa. der Reisende = matkustaja." },
+        { "item_type": "mc", "stem": "der Flughafen", "choices": ["lentokenttä", "bussiasema", "juna-asema", "satama"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "der Flughafen = lentokenttä. fliegen = lentää + Hafen = satama. der Hafen = satama." }
+      ]
+    },
+    {
+      "phase_id": "p2-recognition-match",
+      "phase_type": "recognition_match",
+      "title": "Yhdistä — matkasanasto",
+      "instruction": "Yhdistä saksan sana ja suomennos.",
+      "mastery_threshold": { "I": 0.6, "A": 0.65, "B": 0.7, "C": 0.75, "M": 0.85, "E": 0.9, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        {
+          "item_type": "match",
+          "left_label": "Lentokenttä",
+          "right_label": "Suomeksi",
+          "pairs": [
+            { "left": "der Flughafen", "right": "lentokenttä" },
+            { "left": "das Flugzeug", "right": "lentokone" },
+            { "left": "der Flug", "right": "lento" },
+            { "left": "das Gepäck", "right": "matkatavara" },
+            { "left": "einchecken", "right": "lähtöselvitys" },
+            { "left": "ankommen", "right": "saapua" },
+            { "left": "die Ankunft", "right": "saapuminen" },
+            { "left": "die Abfahrt", "right": "lähtö" }
+          ]
+        },
+        {
+          "item_type": "match",
+          "left_label": "Juna-asema",
+          "right_label": "Suomeksi",
+          "pairs": [
+            { "left": "der Bahnhof", "right": "juna-asema" },
+            { "left": "der Zug", "right": "juna" },
+            { "left": "das Gleis", "right": "raide, laituri" },
+            { "left": "die Fahrkarte", "right": "matkalippu" },
+            { "left": "abfahren", "right": "lähteä" },
+            { "left": "verspätet", "right": "myöhässä" },
+            { "left": "der Hauptbahnhof", "right": "pääasema" },
+            { "left": "umsteigen", "right": "vaihtaa (junaa)" }
+          ]
+        },
+        {
+          "item_type": "match",
+          "left_label": "Matkaverbit ja yleistä",
+          "right_label": "Suomeksi",
+          "pairs": [
+            { "left": "reisen", "right": "matkustaa" },
+            { "left": "übernachten", "right": "yöpyä" },
+            { "left": "buchen", "right": "varata" },
+            { "left": "der Urlaub", "right": "loma" },
+            { "left": "die Reise", "right": "matka" },
+            { "left": "das Hotel", "right": "hotelli" },
+            { "left": "der Koffer", "right": "matkalaukku" },
+            { "left": "packen", "right": "pakata" }
+          ]
+        }
+      ]
+    },
+    {
+      "phase_id": "p3-recall-de-to-fi",
+      "phase_type": "recall_typed_es_to_fi",
+      "title": "Kirjoita — saksa → suomi",
+      "instruction": "Kirjoita saksan sanan suomennos.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I"],
+      "items": [
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "der Zug", "accept": ["juna"], "hint": "kulkuväline raiteilla" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "der Flughafen", "accept": ["lentokenttä"], "hint": "fliegen + Hafen" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "das Gepäck", "accept": ["matkatavara", "matkatavarat"], "hint": "kaikki mitä kannat matkalla" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "die Fahrkarte", "accept": ["matkalippu", "lippu"], "hint": "tarvitset junaan tai bussiin" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "übernachten", "accept": ["yöpyä", "viettää yö"], "hint": "Nacht = yö" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "ankommen", "accept": ["saapua", "tulla perille"], "hint": "kommen + an (etuliite)" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "der Urlaub", "accept": ["loma"], "hint": "im Urlaub sein = olla lomalla" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "buchen", "accept": ["varata", "tehdä varaus"], "hint": "hotellin tai lennon..." },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "verspätet", "accept": ["myöhässä", "myöhästynyt"], "hint": "Zug ist verspätet" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "umsteigen", "accept": ["vaihtaa junaa", "vaihtaa kulkuneuvoa", "vaihtaa"], "hint": "steigen + um — vaihdat junaa asemalla" }
+      ]
+    },
+    {
+      "phase_id": "p4-recall-fi-to-de",
+      "phase_type": "recall_typed_fi_to_es",
+      "title": "Kirjoita — suomi → saksa",
+      "instruction": "Kirjoita suomen sana saksaksi. Muista artikkeli (der/die/das) substantiiveille.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "juna", "accept": ["der Zug", "Zug"], "hint": "maskuliini" },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "lentokenttä", "accept": ["der Flughafen", "Flughafen"], "hint": "fliegen + Hafen, maskuliini" },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "matkalippu", "accept": ["die Fahrkarte", "Fahrkarte", "das Ticket", "Ticket"], "hint": "feminiini (Fahrkarte) tai neutri (Ticket)" },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "matkustaa", "accept": ["reisen"], "hint": "reisen on infinitiivi" },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "loma", "accept": ["der Urlaub", "Urlaub", "die Ferien", "Ferien"], "hint": "Urlaub = aikuisten loma, Ferien = koululoma" },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "juna-asema", "accept": ["der Bahnhof", "Bahnhof"], "hint": "Bahn (rautatie) + Hof (piha)" },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "saapua", "accept": ["ankommen"], "hint": "trennbares Verb: kommt an" },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "lähteä (juna)", "accept": ["abfahren"], "hint": "fahren + ab" },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "varata (hotelli)", "accept": ["buchen"], "hint": "Buchung = varaus" },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "yöpyä", "accept": ["übernachten"], "hint": "über + Nacht + en" }
+      ]
+    },
+    {
+      "phase_id": "p5-gap-fill-helppo",
+      "phase_type": "application_gap_fill",
+      "title": "Täytä aukko — kulkuvälineet",
+      "instruction": "Täytä aukko oikealla saksan sanalla. Muista: mit + dem + kulkuväline.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Ich fahre mit dem ___ nach München.", "answers": [["Zug"]], "word_bank": ["Zug", "Flugzeug", "Fahrrad", "Boot"] },
+        { "item_type": "gap_fill", "sentence_template": "Sie fliegt mit dem ___ nach Berlin.", "answers": [["Flugzeug"]], "word_bank": ["Zug", "Flugzeug", "Bus", "Schiff"] },
+        { "item_type": "gap_fill", "sentence_template": "Wir fahren mit dem ___ in die Stadt.", "answers": [["Bus", "Fahrrad", "Auto"]], "word_bank": ["Bus", "Fahrrad", "Auto", "Zug"] },
+        { "item_type": "gap_fill", "sentence_template": "Der ___ fährt um 14:00 Uhr ab.", "answers": [["Zug"]], "word_bank": ["Zug", "Flugzeug", "Schiff", "Bus"] },
+        { "item_type": "gap_fill", "sentence_template": "Ich muss mein ___ einchecken.", "answers": [["Gepäck"]], "word_bank": ["Gepäck", "Koffer", "Ticket", "Pass"] },
+        { "item_type": "gap_fill", "sentence_template": "Der Flug landet am ___.", "answers": [["Flughafen"]], "word_bank": ["Bahnhof", "Flughafen", "Hafen", "Hotel"] },
+        { "item_type": "gap_fill", "sentence_template": "Ich habe ein Zimmer im Hotel ___.", "answers": [["gebucht"]], "word_bank": ["gebucht", "gemacht", "gefahren", "gefunden"] },
+        { "item_type": "gap_fill", "sentence_template": "Der Zug ist zehn Minuten ___.", "answers": [["verspätet"]], "word_bank": ["verspätet", "früh", "schnell", "langsam"] },
+        { "item_type": "gap_fill", "sentence_template": "In Hamburg müssen wir ___.", "answers": [["umsteigen"]], "word_bank": ["umsteigen", "ankommen", "abfahren", "reisen"] },
+        { "item_type": "gap_fill", "sentence_template": "Die ___ des Zuges ist um 15:30 Uhr.", "answers": [["Ankunft"]], "word_bank": ["Ankunft", "Abfahrt", "Reise", "Zeit"] }
+      ]
+    },
+    {
+      "phase_id": "p6-gap-fill-vaativampi",
+      "phase_type": "application_gap_fill",
+      "title": "Täytä aukko — lausekonteksti",
+      "instruction": "Täytä aukko. Huomio Perfekti: haben tai sein?",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Letzten Sommer ___ ich nach Spanien geflogen.", "answers": [["bin"]], "word_bank": ["bin", "habe", "war", "hatte"] },
+        { "item_type": "gap_fill", "sentence_template": "Wir ___ mit dem Zug nach Hamburg gefahren.", "answers": [["sind"]], "word_bank": ["sind", "haben", "waren", "hatten"] },
+        { "item_type": "gap_fill", "sentence_template": "Ich ___ im Hotel übernachtet.", "answers": [["habe"]], "word_bank": ["habe", "bin", "hatte", "war"] },
+        { "item_type": "gap_fill", "sentence_template": "Der Zug ___ um 9 Uhr am Bahnhof angekommen.", "answers": [["ist"]], "word_bank": ["ist", "hat", "war", "hatte"] },
+        { "item_type": "gap_fill", "sentence_template": "Sie ___ eine Fahrkarte gekauft.", "answers": [["hat"]], "word_bank": ["hat", "ist", "hatte", "war"] },
+        { "item_type": "gap_fill", "sentence_template": "Wir ___ das Gepäck am Flughafen aufgegeben.", "answers": [["haben"]], "word_bank": ["haben", "sind", "hatten", "waren"] },
+        { "item_type": "gap_fill", "sentence_template": "Ich ___ um 10 Uhr am Flughafen angekommen.", "answers": [["bin"]], "word_bank": ["bin", "habe", "war", "hatte"] },
+        { "item_type": "gap_fill", "sentence_template": "Er ___ das Hotel online gebucht.", "answers": [["hat"]], "word_bank": ["hat", "ist", "hatte", "war"] },
+        { "item_type": "gap_fill", "sentence_template": "Die Familie ___ nach Italien gereist.", "answers": [["ist"]], "word_bank": ["ist", "hat", "war", "hatte"] },
+        { "item_type": "gap_fill", "sentence_template": "Wir ___ drei Tage in Berlin geblieben.", "answers": [["sind"]], "word_bank": ["sind", "haben", "waren", "hatten"] }
+      ]
+    },
+    {
+      "phase_id": "p7-sentence-build",
+      "phase_type": "application_sentence_build",
+      "title": "Järjestä lause — V2-sääntö",
+      "instruction": "Järjestä sanat oikeaan lausejärjestykseen. Muista: verbi on aina 2. paikalla!",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "mc", "stem": "Järjestä oikein: [Letzten Sommer] [ich] [bin] [nach Spanien geflogen]", "choices": ["Letzten Sommer ich bin nach Spanien geflogen.", "Letzten Sommer bin ich nach Spanien geflogen.", "Ich bin letzten Sommer geflogen nach Spanien.", "Bin letzten Sommer ich nach Spanien geflogen."], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "V2-sääntö: kun lause alkaa ajanilmauksella (Letzten Sommer), verbi (bin) tulee heti seuraavaksi — ennen subjektia (ich)." },
+        { "item_type": "mc", "stem": "Järjestä oikein: [Gestern] [wir] [haben] [das Hotel gebucht]", "choices": ["Gestern wir haben das Hotel gebucht.", "Gestern haben wir das Hotel gebucht.", "Wir haben gestern gebucht das Hotel.", "Das Hotel haben wir gestern gebucht."], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "Gestern (eilen) on ensimmäinen asema → verbi (haben) tulee 2. paikalle → subjekti (wir) kolmanneksi." },
+        { "item_type": "mc", "stem": "Järjestä oikein: [Mit dem Zug] [ich] [bin] [nach Berlin gefahren]", "choices": ["Mit dem Zug ich bin nach Berlin gefahren.", "Mit dem Zug bin ich nach Berlin gefahren.", "Ich bin mit dem Zug gefahren nach Berlin.", "Bin ich mit dem Zug nach Berlin gefahren."], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "Kun prepositiorakenne (Mit dem Zug) aloittaa lauseen, verbi (bin) on 2. paikalla. Partisiippi (gefahren) menee loppuun." },
+        { "item_type": "mc", "stem": "Järjestä oikein: [Am Montag] [der Zug] [ist] [angekommen]", "choices": ["Am Montag der Zug ist angekommen.", "Am Montag ist der Zug angekommen.", "Der Zug ist am Montag angekommen.", "Ist am Montag der Zug angekommen."], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "Molemmat järjestykset (1 ja 3) ovat kieliopillisesti oikein — molemmat hyväksytään. Tässä 2. vaihtoehto korostaa ajanilmausta." },
+        { "item_type": "mc", "stem": "Järjestä oikein: [Im Urlaub] [wir] [haben] [viel gesehen]", "choices": ["Im Urlaub wir haben viel gesehen.", "Im Urlaub haben wir viel gesehen.", "Wir haben im Urlaub viel gesehen.", "Haben wir im Urlaub viel gesehen."], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "Im Urlaub = ensimmäinen asema. haben = 2. paikka (verbi). wir = subjekti 3. paikalla. gesehen = loppuun." },
+        { "item_type": "mc", "stem": "Järjestä oikein: [Heute] [ich] [fliege] [nach Madrid]", "choices": ["Heute ich fliege nach Madrid.", "Heute fliege ich nach Madrid.", "Ich fliege heute nach Madrid.", "Fliege heute ich nach Madrid."], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "Heute = 1. paikka → fliege = 2. paikka. Vaihtoehto 3 on myös kieliopillinen (subjekti alussa)." },
+        { "item_type": "mc", "stem": "Järjestä oikein: [Morgen] [wir] [fahren] [mit dem Zug]", "choices": ["Morgen wir fahren mit dem Zug.", "Morgen fahren wir mit dem Zug.", "Wir fahren morgen mit dem Zug.", "Mit dem Zug fahren wir morgen."], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "Morgen = 1. paikka → verbi (fahren) = 2. paikka → subjekti (wir) = 3. paikka. Kaikki muut vaihtoehdot rikkovat V2-säännön tai ovat vähemmän luontevia." },
+        { "item_type": "mc", "stem": "Järjestä oikein: [In München] [ich] [habe] [das Hotel gefunden]", "choices": ["In München ich habe das Hotel gefunden.", "In München habe ich das Hotel gefunden.", "Ich habe in München gefunden das Hotel.", "Habe ich in München das Hotel gefunden."], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "Paikkarakenteen jälkeen V2: habe (2. paikka), ich (3. paikka), gefunden (loppuun)." }
+      ]
+    },
+    {
+      "phase_id": "p8-synthesis-translate",
+      "phase_type": "synthesis_translate",
+      "title": "Käännä — suomesta saksaksi",
+      "instruction": "Käännä lause saksaksi. Huomio Perfekti ja V2.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Matkustin junalla Berliiniin.", "accept": ["Ich bin mit dem Zug nach Berlin gefahren.", "Ich bin nach Berlin mit dem Zug gefahren."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Lensin Espanjaan viime kesänä.", "accept": ["Ich bin letzten Sommer nach Spanien geflogen.", "Letzten Sommer bin ich nach Spanien geflogen."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Yövyimme hotellissa.", "accept": ["Wir haben im Hotel übernachtet.", "Wir haben in einem Hotel übernachtet."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Juna saapui myöhässä.", "accept": ["Der Zug ist verspätet angekommen.", "Der Zug kam verspätet an."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Eilen varattiin hotelli.", "accept": ["Gestern haben wir das Hotel gebucht.", "Gestern habe ich das Hotel gebucht."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Olimme kolme päivää lomalla.", "accept": ["Wir waren drei Tage im Urlaub.", "Ich war drei Tage im Urlaub."] }
+      ]
+    },
+    {
+      "phase_id": "p9-short-writing",
+      "phase_type": "synthesis_short_writing",
+      "title": "Kirjoita lyhyesti — matka",
+      "instruction": "Kirjoita 3–5 lausetta saksaksi. Käytä Perfektiä ja matkasanastoa.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I", "A", "B", "C", "M"],
+      "items": [
+        { "item_type": "writing", "prompt": "Kerro lyhyesti viime kesän matkastasi saksaksi. Missä olit? Miten matkustit? Käytä Perfektiä (Ich bin ... gefahren / geflogen).", "min_words": 25, "max_words": 60, "rubric_focus": ["communication", "structure", "vocab"] },
+        { "item_type": "writing", "prompt": "Kuvaa unelmamatkaasi saksaksi. Minne haluaisit mennä? Miten matkustaisit? Käytä sanoja: Zug, Flugzeug, Hotel, Urlaub.", "min_words": 25, "max_words": 60, "rubric_focus": ["communication", "vocab"] },
+        { "item_type": "writing", "prompt": "Sinä olet juuri saapunut perille. Kirjoita 3 lausetta: mistä tulit, miten matkustit, missä aiot yöpyä.", "min_words": 20, "max_words": 50, "rubric_focus": ["communication", "structure"] }
+      ]
+    }
+  ],
+  "vocab": [
+    { "es": "der Zug", "fi": "juna", "example_es": "Ich fahre mit dem Zug nach Berlin.", "example_fi": "Matkustan junalla Berliiniin.", "gender": "m" },
+    { "es": "das Flugzeug", "fi": "lentokone", "example_es": "Das Flugzeug landet um 15 Uhr.", "example_fi": "Lentokone laskeutuu klo 15.", "gender": null },
+    { "es": "der Bus", "fi": "bussi", "example_es": "Der Bus fährt alle 10 Minuten.", "example_fi": "Bussi ajaa joka 10. minuutti.", "gender": "m" },
+    { "es": "das Auto", "fi": "auto", "example_es": "Wir fahren mit dem Auto.", "example_fi": "Ajamme autolla.", "gender": null },
+    { "es": "das Fahrrad", "fi": "polkupyörä", "example_es": "Er fährt mit dem Fahrrad zur Schule.", "example_fi": "Hän ajaa polkupyörällä kouluun.", "gender": null },
+    { "es": "das Schiff", "fi": "laiva", "example_es": "Wir reisen mit dem Schiff nach Helsinki.", "example_fi": "Matkustamme laivalla Helsinkiin.", "gender": null },
+    { "es": "die U-Bahn", "fi": "metro", "example_es": "In Berlin gibt es viele U-Bahn-Linien.", "example_fi": "Berliinissä on paljon metrolinjoja.", "gender": "f" },
+    { "es": "das Taxi", "fi": "taksi", "example_es": "Wir nehmen ein Taxi zum Hotel.", "example_fi": "Otamme taksin hotellille.", "gender": null },
+    { "es": "der Bahnhof", "fi": "juna-asema", "example_es": "Der Hauptbahnhof ist sehr groß.", "example_fi": "Pääasema on hyvin suuri.", "gender": "m" },
+    { "es": "der Flughafen", "fi": "lentokenttä", "example_es": "Der Flughafen öffnet um 5 Uhr morgens.", "example_fi": "Lentokenttä aukeaa klo 5 aamulla.", "gender": "m" },
+    { "es": "die Fahrkarte", "fi": "matkalippu", "example_es": "Ich kaufe eine Fahrkarte am Automaten.", "example_fi": "Ostan matkalipun automaatista.", "gender": "f" },
+    { "es": "das Ticket", "fi": "lippu", "example_es": "Das Ticket kostet 30 Euro.", "example_fi": "Lippu maksaa 30 euroa.", "gender": null },
+    { "es": "das Gepäck", "fi": "matkatavara", "example_es": "Mein Gepäck ist sehr schwer.", "example_fi": "Matkatavaroni on hyvin raskas.", "gender": null },
+    { "es": "der Koffer", "fi": "matkalaukku", "example_es": "Ich packe meinen Koffer.", "example_fi": "Pakkaän matkalaukkuni.", "gender": "m" },
+    { "es": "die Reise", "fi": "matka", "example_es": "Die Reise nach Spanien war wunderbar.", "example_fi": "Matka Espanjaan oli upea.", "gender": "f" },
+    { "es": "der Urlaub", "fi": "loma", "example_es": "Im Urlaub bin ich nach Italien gefahren.", "example_fi": "Lomalla ajoin Italiaan.", "gender": "m" },
+    { "es": "die Ferien", "fi": "koululoma", "example_es": "In den Ferien fahren wir ans Meer.", "example_fi": "Koululomalla ajamme merelle.", "gender": "f" },
+    { "es": "das Hotel", "fi": "hotelli", "example_es": "Wir übernachten in einem Hotel.", "example_fi": "Yövymme hotellissa.", "gender": null },
+    { "es": "reisen", "fi": "matkustaa", "example_es": "Ich reise gern ins Ausland.", "example_fi": "Matkustan mielelläni ulkomaille.", "gender": null },
+    { "es": "fahren", "fi": "ajaa, matkustaa (maateitse)", "example_es": "Wir fahren mit dem Zug nach Wien.", "example_fi": "Ajamme junalla Wieniin.", "gender": null },
+    { "es": "fliegen", "fi": "lentää", "example_es": "Ich fliege nächste Woche nach Berlin.", "example_fi": "Lennän ensi viikolla Berliiniin.", "gender": null },
+    { "es": "ankommen", "fi": "saapua", "example_es": "Der Zug kommt um 14 Uhr an.", "example_fi": "Juna saapuu klo 14.", "gender": null },
+    { "es": "abfahren", "fi": "lähteä (juna, bussi)", "example_es": "Der Bus fährt um 8 Uhr ab.", "example_fi": "Bussi lähtee klo 8.", "gender": null },
+    { "es": "übernachten", "fi": "yöpyä", "example_es": "Wir übernachten drei Nächte in München.", "example_fi": "Yövymme kolme yötä Münchenissä.", "gender": null },
+    { "es": "buchen", "fi": "varata", "example_es": "Ich habe das Hotel online gebucht.", "example_fi": "Varasin hotellin netistä.", "gender": null },
+    { "es": "packen", "fi": "pakata", "example_es": "Ich packe meinen Koffer am Abend.", "example_fi": "Pakkaän matkalaukkuni illalla.", "gender": null },
+    { "es": "umsteigen", "fi": "vaihtaa (kulkuneuvoa)", "example_es": "In Frankfurt müssen wir umsteigen.", "example_fi": "Frankfurtissa meidän täytyy vaihtaa junaa.", "gender": null },
+    { "es": "verspätet", "fi": "myöhässä, myöhästynyt", "example_es": "Der Zug ist 20 Minuten verspätet.", "example_fi": "Juna on 20 minuuttia myöhässä.", "gender": null },
+    { "es": "die Ankunft", "fi": "saapuminen", "example_es": "Die Ankunft des Zuges ist um 15:30 Uhr.", "example_fi": "Junan saapumisaika on 15:30.", "gender": "f" },
+    { "es": "die Abfahrt", "fi": "lähtö", "example_es": "Die Abfahrt ist von Gleis 7.", "example_fi": "Lähtö on raiteelta 7.", "gender": "f" },
+    { "es": "das Gleis", "fi": "raide, laituri (asemalla)", "example_es": "Der Zug fährt auf Gleis 3.", "example_fi": "Juna lähtee raiteelta 3.", "gender": null }
+  ],
+  "side_panel": {
+    "tabs": [
+      {
+        "id": "vocab",
+        "title": "Sanasto",
+        "content_md": "## Kulkuvälineet\n\n- **der Zug** — juna\n- **das Flugzeug** — lentokone\n- **der Bus** — bussi\n- **das Auto** — auto\n- **das Fahrrad** — polkupyörä\n- **das Schiff** — laiva\n- **die U-Bahn** — metro\n- **das Taxi** — taksi\n\n## Asema ja lentokenttä\n\n- **der Bahnhof** — juna-asema\n- **der Flughafen** — lentokenttä\n- **die Fahrkarte / das Ticket** — matkalippu\n- **das Gepäck** — matkatavara\n- **der Koffer** — matkalaukku\n- **das Gleis** — raide, laituri\n- **die Ankunft** — saapuminen\n- **die Abfahrt** — lähtö\n\n## Matkaverbit\n\n- **reisen** — matkustaa\n- **fahren** — ajaa, matkustaa\n- **fliegen** — lentää\n- **ankommen** — saapua\n- **abfahren** — lähteä\n- **übernachten** — yöpyä\n- **buchen** — varata\n- **packen** — pakata\n- **umsteigen** — vaihtaa junaa\n\n## Muuta matkasanastoa\n\n- **die Reise** — matka\n- **der Urlaub** — loma\n- **die Ferien** — koululoma\n- **das Hotel** — hotelli\n- **verspätet** — myöhässä"
+      },
+      {
+        "id": "grammar",
+        "title": "Kielioppi",
+        "content_md": "## Kulkuvälineen kanssa: mit + dem\n\nSaksan matkasanastossa kulkuvälineen kanssa käytetään prepositiota **mit + Dativ**:\n\n- mit dem Zug — junalla\n- mit dem Auto — autolla\n- mit dem Flugzeug — lentokoneella\n- mit dem Bus — bussilla\n- mit dem Fahrrad — polkupyörällä\n\n## Perfekti: haben vai sein?\n\n**sein** = liikkumis- ja tilanmuutosverbit:\n- fahren → bin gefahren\n- fliegen → bin geflogen\n- gehen → bin gegangen\n- ankommen → bin angekommen\n- abfahren → bin abgefahren\n\n**haben** = muut verbit:\n- buchen → habe gebucht\n- übernachten → habe übernachtet\n- kaufen → habe gekauft\n\n## V2-sääntö\n\nVerbi on AINA lauseen 2. paikalla:\n\n✅ *Letzten Sommer **bin** ich nach Spanien geflogen.*\n❌ *Letzten Sommer ich bin nach Spanien geflogen.*"
+      },
+      {
+        "id": "tips",
+        "title": "YO-vinkit",
+        "content_md": "## Matka-aihe YO-kokeessa\n\n**Teil 4 (Kirjoitelma):** Matka-aihe on YTL:n suosikki. Kevään 2025 kokeessa pyydettiin blogitekstiä viime matkasta. Harjoittele:\n- Miten matkustit? → *mit dem Zug / Flugzeug*\n- Minne? → *nach + maa/kaupunki*\n- Milloin? → *letzten Sommer, letzte Woche*\n\n**Teil 3 (Rakenne ja sanasto):** Perfekt-aukkotehtävät! Osaat täyttää:\n- *Ich ___ nach Berlin gefahren.* → bin\n- *Wir ___ im Hotel übernachtet.* → haben\n\n**Yleisimmät virheet matka-aiheessa:**\n1. *Heute ich bin gefahren* ❌ → *Heute **bin ich** gefahren* ✅ (V2!)\n2. *Ich habe gegangen* ❌ → *Ich **bin** gegangen* ✅ (sein!)\n3. *mit Zug* ❌ → *mit **dem** Zug* ✅ (Dativ-artikkeli)"
+      }
+    ]
+  }
+}

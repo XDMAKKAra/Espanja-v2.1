@@ -1,0 +1,225 @@
+{
+  "meta": {
+    "course_key": "kurssi_3",
+    "lesson_index": 5,
+    "lesson_type": "grammar",
+    "level": "B",
+    "title": "haben vs. sein — apuverbin valinta Perfektissä",
+    "description": "Syvennät haben/sein-jakoa Perfektissä: liikkumis- ja tilanmuutosverbit saavat sein:in, muut haben:in. Harjoittelet epäsäännöllisiä tapauksia (bleiben, sein, werden) ja yleisimpiä suomalaisten virheitä.",
+    "yo_relevance": "Teil 3 (Rakenne): haben/sein-valinta on YO-kokeen aukkorakenteiden yleisin testattava asia. Teil 4 (Kirjoitelma): matkakertomus vaatii oikeaa apuverbiä jokaisessa Perfekt-lauseessa.",
+    "estimated_minutes_median": 13
+  },
+  "teaching": {
+    "intro_md": "# haben vs. sein — kuka ottaa kumman?\n\nTämä on suomalaisten yleisin virhe Perfektissä. Säännöt ovat selkeät, kunhan ne oppii.\n\n## SEIN ottaa: liikkuminen ja tilanmuutos\n\n| Verbi | Partizip II | Suomeksi |\n|---|---|---|\n| **gehen** | gegangen | mennä |\n| **fahren** | gefahren | ajaa, matkustaa |\n| **fliegen** | geflogen | lentää |\n| **kommen** | gekommen | tulla |\n| **laufen** | gelaufen | juosta, kävellä |\n| **schwimmen** | geschwommen | uida |\n| **steigen** | gestiegen | nousta, kiipeillä |\n| **aufstehen** | aufgestanden | nousta ylös |\n| **aufwachen** | aufgewacht | herätä |\n| **ankommen** | angekommen | saapua |\n| **abfahren** | abgefahren | lähteä (juna) |\n| **bleiben** | geblieben | jäädä, pysyä |\n| **werden** | geworden | tulla joksikin |\n| **sein (olla)** | gewesen | olla (jossain) |\n\n## HABEN ottaa: kaikki muut\n\nTransitiiviverbit (joilla on objekti) ottavat aina haben:\n- essen → habe gegessen\n- trinken → habe getrunken  \n- kaufen → habe gekauft\n- sehen → habe gesehen\n- schreiben → habe geschrieben\n\nHuom: **bleiben** ja **sein** ovat poikkeuksia — eivät liiku mutta ottavat sein:in.\n\n## Testikysymys\n\nMieti: *Siirtyykö subjekti paikasta A paikkaan B?*\n- Kyllä → **sein** (*gehen, fahren, fliegen, laufen, schwimmen*)\n- Ei (tai muutos tilassa) → **sein** (*bleiben, werden, sein*)\n- Muu toiminta → **haben**",
+    "key_points": [
+      "sein = liikkumisverbit (gehen, fahren, fliegen, kommen, laufen, schwimmen) + tilanmuutos (aufstehen, aufwachen, werden) + poikkeukset (bleiben, sein).",
+      "haben = kaikki muut, erityisesti transitiiviset verbit joilla on objekti.",
+      "Yleisimmät suomalaisten virheet: 'Ich habe gegangen' → 'Ich BIN gegangen'.",
+      "bleiben ja sein ovat 'epäloogisia': eivät liiku mutta ottavat sein:in.",
+      "Trennbare Verben (erottuvat verbit) säilyttävät apuverbisäännön: aufstehen → bin aufgestanden."
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1-recognition-mc-haben-sein",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista — haben vai sein?",
+      "instruction": "Valitse oikea apuverbi (1. persoona yksikkö).",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "mc", "stem": "gehen → Ich ___ gegangen.", "choices": ["habe", "bin", "hatte", "war"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "gehen = liikkumisverbi → sein. Ich BIN gegangen." },
+        { "item_type": "mc", "stem": "essen → Ich ___ gegessen.", "choices": ["bin", "habe", "war", "hatte"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "essen = transitiivi, ei liikkumista → haben. Ich HABE gegessen." },
+        { "item_type": "mc", "stem": "fahren → Wir ___ gefahren.", "choices": ["haben", "sind", "hatten", "waren"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "fahren = liikkumisverbi → sein. Wir SIND gefahren." },
+        { "item_type": "mc", "stem": "kaufen → Er ___ gekauft.", "choices": ["ist", "hat", "war", "hatte"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "kaufen = transitiivi → haben. Er HAT gekauft." },
+        { "item_type": "mc", "stem": "bleiben → Sie ___ geblieben.", "choices": ["hat", "ist", "hatte", "war"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "bleiben = pysyä — EI liiku, mutta ottaa SEIN:in. Poikkeus! Sie IST geblieben." },
+        { "item_type": "mc", "stem": "schwimmen → Ich ___ geschwommen.", "choices": ["habe", "bin", "hatte", "war"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "schwimmen = liikkuminen (vedessä) → sein. Ich BIN geschwommen." },
+        { "item_type": "mc", "stem": "aufstehen → Er ___ aufgestanden.", "choices": ["hat", "ist", "hatte", "war"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "aufstehen = tilanmuutos (makuulta seisomaan) → sein. Er IST aufgestanden." },
+        { "item_type": "mc", "stem": "schreiben → Wir ___ geschrieben.", "choices": ["sind", "haben", "waren", "hatten"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "schreiben = transitiivi → haben. Wir HABEN geschrieben." },
+        { "item_type": "mc", "stem": "fliegen → Sie ___ geflogen.", "choices": ["hat", "ist", "hatte", "war"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "fliegen = liikkumisverbi → sein. Sie IST geflogen." },
+        { "item_type": "mc", "stem": "aufwachen → Ich ___ aufgewacht.", "choices": ["habe", "bin", "hatte", "war"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "aufwachen = tilanmuutos (uni → hereillä) → sein. Ich BIN aufgewacht." },
+        { "item_type": "mc", "stem": "werden → Er ___ Arzt geworden.", "choices": ["hat", "ist", "hatte", "war"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "werden = tulla joksikin, tilanmuutos → sein. Er IST Arzt geworden." },
+        { "item_type": "mc", "stem": "trinken → Wir ___ Kaffee getrunken.", "choices": ["sind", "haben", "waren", "hatten"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "trinken = transitiivi → haben. Wir HABEN Kaffee getrunken." }
+      ]
+    },
+    {
+      "phase_id": "p2-recognition-match",
+      "phase_type": "recognition_match",
+      "title": "Lajittele — haben vai sein?",
+      "instruction": "Yhdistä verbi oikeaan apuverbiin.",
+      "mastery_threshold": { "I": 0.6, "A": 0.65, "B": 0.7, "C": 0.75, "M": 0.85, "E": 0.9, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        {
+          "item_type": "match",
+          "left_label": "Verbi",
+          "right_label": "Apuverbi Perfektissä",
+          "pairs": [
+            { "left": "gehen (mennä)", "right": "sein" },
+            { "left": "essen (syödä)", "right": "haben" },
+            { "left": "fahren (ajaa)", "right": "sein" },
+            { "left": "kaufen (ostaa)", "right": "haben" },
+            { "left": "fliegen (lentää)", "right": "sein" },
+            { "left": "sehen (nähdä)", "right": "haben" },
+            { "left": "bleiben (jäädä)", "right": "sein" },
+            { "left": "lernen (oppia)", "right": "haben" }
+          ]
+        },
+        {
+          "item_type": "match",
+          "left_label": "Verbi",
+          "right_label": "Apuverbi Perfektissä",
+          "pairs": [
+            { "left": "kommen (tulla)", "right": "sein" },
+            { "left": "trinken (juoda)", "right": "haben" },
+            { "left": "aufwachen (herätä)", "right": "sein" },
+            { "left": "schreiben (kirjoittaa)", "right": "haben" },
+            { "left": "laufen (juosta)", "right": "sein" },
+            { "left": "kochen (kokata)", "right": "haben" },
+            { "left": "schwimmen (uida)", "right": "sein" },
+            { "left": "spielen (pelata)", "right": "haben" }
+          ]
+        }
+      ]
+    },
+    {
+      "phase_id": "p3-recall-apuverbi",
+      "phase_type": "recall_typed_es_to_fi",
+      "title": "Kirjoita apuverbi",
+      "instruction": "Kirjoita oikea apuverbi (1. persoona yksikkö: habe tai bin).",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I"],
+      "items": [
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Ich ___ gegessen. (essen)", "accept": ["habe"], "hint": "essen = syödä, transitiivi" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Ich ___ gegangen. (gehen)", "accept": ["bin"], "hint": "gehen = mennä, liikkuminen" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Ich ___ geflogen. (fliegen)", "accept": ["bin"], "hint": "fliegen = lentää" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Ich ___ geblieben. (bleiben)", "accept": ["bin"], "hint": "bleiben = jäädä — POIKKEUS, ei liiku mutta sein!" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Ich ___ aufgewacht. (aufwachen)", "accept": ["bin"], "hint": "aufwachen = herätä, tilanmuutos" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Ich ___ gekauft. (kaufen)", "accept": ["habe"], "hint": "kaufen = ostaa, transitiivi" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Ich ___ geschwommen. (schwimmen)", "accept": ["bin"], "hint": "schwimmen = uida, liikkuminen" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Ich ___ gearbeitet. (arbeiten)", "accept": ["habe"], "hint": "arbeiten = tehdä töitä" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Ich ___ aufgestanden. (aufstehen)", "accept": ["bin"], "hint": "aufstehen = nousta ylös, tilanmuutos" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Ich ___ geschrieben. (schreiben)", "accept": ["habe"], "hint": "schreiben = kirjoittaa, transitiivi" }
+      ]
+    },
+    {
+      "phase_id": "p4-gap-fill-valinta",
+      "phase_type": "application_gap_fill",
+      "title": "Täytä aukko — oikea apuverbi lauseessa",
+      "instruction": "Täytä oikea muoto (habe/hast/hat/haben tai bin/bist/ist/sind).",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Ich ___ gestern Pizza gegessen.", "answers": [["habe"]], "word_bank": ["habe", "bin", "hatte", "war"] },
+        { "item_type": "gap_fill", "sentence_template": "Wir ___ nach Berlin gefahren.", "answers": [["sind"]], "word_bank": ["sind", "haben", "waren", "hatten"] },
+        { "item_type": "gap_fill", "sentence_template": "Er ___ im Hotel geblieben.", "answers": [["ist"]], "word_bank": ["ist", "hat", "war", "hatte"] },
+        { "item_type": "gap_fill", "sentence_template": "Sie ___ um 7 Uhr aufgewacht.", "answers": [["ist"]], "word_bank": ["ist", "hat", "war", "hatte"] },
+        { "item_type": "gap_fill", "sentence_template": "Ich ___ Deutsch gelernt.", "answers": [["habe"]], "word_bank": ["habe", "bin", "hatte", "war"] },
+        { "item_type": "gap_fill", "sentence_template": "Wir ___ ans Meer gefahren.", "answers": [["sind"]], "word_bank": ["sind", "haben", "waren", "hatten"] },
+        { "item_type": "gap_fill", "sentence_template": "Er ___ im Fluss geschwommen.", "answers": [["ist"]], "word_bank": ["ist", "hat", "war", "hatte"] },
+        { "item_type": "gap_fill", "sentence_template": "Sie ___ ein Buch gelesen.", "answers": [["hat"]], "word_bank": ["hat", "ist", "hatte", "war"] },
+        { "item_type": "gap_fill", "sentence_template": "Ich ___ um 8 Uhr aufgestanden.", "answers": [["bin"]], "word_bank": ["bin", "habe", "war", "hatte"] },
+        { "item_type": "gap_fill", "sentence_template": "Wir ___ Kaffee getrunken.", "answers": [["haben"]], "word_bank": ["haben", "sind", "hatten", "waren"] }
+      ]
+    },
+    {
+      "phase_id": "p5-gap-fill-virhekorjaus",
+      "phase_type": "application_gap_fill",
+      "title": "Korjaa virhe — haben vai sein?",
+      "instruction": "Valitse oikea lause. Toinen on väärä apuverbi.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "mc", "stem": "Kumpi on OIKEIN?", "choices": ["Ich habe ins Kino gegangen.", "Ich bin ins Kino gegangen."], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "gehen = liikkumisverbi → SEIN. 'Ich habe gegangen' on yleisin suomalaisten virhe saksan Perfektissä." },
+        { "item_type": "mc", "stem": "Kumpi on OIKEIN?", "choices": ["Wir sind Pizza gegessen.", "Wir haben Pizza gegessen."], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "essen = transitiivi → HABEN. 'Wir sind gegessen' ei tarkoita mitään." },
+        { "item_type": "mc", "stem": "Kumpi on OIKEIN?", "choices": ["Er ist drei Tage in Berlin geblieben.", "Er hat drei Tage in Berlin geblieben."], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "bleiben = poikkeus: ei liiku mutta ottaa SEIN:in. Er IST geblieben." },
+        { "item_type": "mc", "stem": "Kumpi on OIKEIN?", "choices": ["Sie bin geflogen.", "Sie ist geflogen."], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "fliegen → sein, mutta 3. persoona yksikkö = IST (ei bin!). Bin = minä." },
+        { "item_type": "mc", "stem": "Kumpi on OIKEIN?", "choices": ["Wir haben aufgewacht.", "Wir sind aufgewacht."], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "aufwachen = tilanmuutos → SEIN. Wir SIND aufgewacht." },
+        { "item_type": "mc", "stem": "Kumpi on OIKEIN?", "choices": ["Ich habe das Hotel gefunden.", "Ich bin das Hotel gefunden."], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "finden = löytää, transitiivi → HABEN. Ich HABE gefunden." },
+        { "item_type": "mc", "stem": "Kumpi on OIKEIN?", "choices": ["Er hat nach Hause gelaufen.", "Er ist nach Hause gelaufen."], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "laufen = liikkumisverbi → SEIN. Er IST nach Hause gelaufen." },
+        { "item_type": "mc", "stem": "Kumpi on OIKEIN?", "choices": ["Ich habe gut geschlafen.", "Ich bin gut geschlafen."], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "schlafen = nukkua — paikalla pysyminen → HABEN. Ich HABE gut geschlafen." }
+      ]
+    },
+    {
+      "phase_id": "p6-gap-fill-kompleksi",
+      "phase_type": "application_gap_fill",
+      "title": "Täytä aukko — monimutkaisemmat lauseet",
+      "instruction": "Täytä oikea apuverbi. Huomio kaikkien persoonien muodot.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Letzten Sommer ___ wir nach Österreich gereist.", "answers": [["sind"]], "word_bank": ["sind", "haben", "waren", "hatten"] },
+        { "item_type": "gap_fill", "sentence_template": "Mein Bruder ___ Arzt geworden.", "answers": [["ist"]], "word_bank": ["ist", "hat", "war", "hatte"] },
+        { "item_type": "gap_fill", "sentence_template": "Ihr ___ lange im Café geblieben.", "answers": [["seid"]], "word_bank": ["seid", "habt", "wart", "hattet"] },
+        { "item_type": "gap_fill", "sentence_template": "Du ___ früh aufgestanden.", "answers": [["bist"]], "word_bank": ["bist", "hast", "warst", "hattest"] },
+        { "item_type": "gap_fill", "sentence_template": "Wir ___ viel im Urlaub erlebt.", "answers": [["haben"]], "word_bank": ["haben", "sind", "hatten", "waren"] },
+        { "item_type": "gap_fill", "sentence_template": "Er ___ gestern Nacht nicht gut geschlafen.", "answers": [["hat"]], "word_bank": ["hat", "ist", "hatte", "war"] },
+        { "item_type": "gap_fill", "sentence_template": "Ich ___ früh angekommen.", "answers": [["bin"]], "word_bank": ["bin", "habe", "war", "hatte"] },
+        { "item_type": "gap_fill", "sentence_template": "Wir ___ ins Restaurant gegangen und ___ gut gegessen.", "answers": [["sind", "haben"]], "word_bank": ["sind", "haben", "waren", "hatten"] }
+      ]
+    },
+    {
+      "phase_id": "p7-sentence-build",
+      "phase_type": "application_sentence_build",
+      "title": "Järjestä lause — haben/sein + V2",
+      "instruction": "Järjestä lauseeksi. Valitse oikea apuverbi JA paikka lauseessa.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "mc", "stem": "Järjestä: [Letzte Woche] [ich] [habe/bin] [ins Kino gegangen]", "choices": ["Letzte Woche ich habe ins Kino gegangen.", "Letzte Woche bin ich ins Kino gegangen.", "Letzte Woche habe ich ins Kino gegangen.", "Letzte Woche ich bin ins Kino gegangen."], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "gehen = liikkuminen → sein. Letzte Woche (1.) → bin (V2!) → ich (subjekti) → gegangen (loppuun). Vaihtoehto 3 käyttää väärää apuverbiä." },
+        { "item_type": "mc", "stem": "Järjestä: [In München] [er] [hat/ist] [gut geschlafen]", "choices": ["In München er hat gut geschlafen.", "In München ist er gut geschlafen.", "In München hat er gut geschlafen.", "In München er ist gut geschlafen."], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "schlafen = nukkua → haben. In München (1.) → hat (V2, haben!) → er → geschlafen (loppuun)." },
+        { "item_type": "mc", "stem": "Valitse oikea lause lomakertomuksesta:", "choices": ["Zuerst ich habe das Hotel gefunden, dann bin gegangen ich ins Restaurant.", "Zuerst habe ich das Hotel gefunden, dann bin ich ins Restaurant gegangen.", "Zuerst habe ich gefunden das Hotel, dann ich bin ins Restaurant gegangen.", "Zuerst das Hotel ich habe gefunden, dann ins Restaurant bin gegangen ich."], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "Molemmat lauseet tarvitsevat V2: habe (2.) + ich (3.) / bin (2.) + ich (3.). Partisiipit (gefunden, gegangen) loppuun." },
+        { "item_type": "mc", "stem": "Järjestä: [Gestern] [wir] [sind] [drei Stunden im Park gelaufen]", "choices": ["Gestern wir sind drei Stunden im Park gelaufen.", "Gestern sind wir drei Stunden im Park gelaufen.", "Wir sind gestern im Park gelaufen drei Stunden.", "Drei Stunden gelaufen sind wir gestern im Park."], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "laufen = liikkuminen → sein. Gestern (1.) → sind (V2!) → wir → gelaufen (loppuun)." }
+      ]
+    },
+    {
+      "phase_id": "p8-synthesis-translate",
+      "phase_type": "synthesis_translate",
+      "title": "Käännä — haben vai sein?",
+      "instruction": "Käännä lauseet saksaksi. Valitse oikea apuverbi.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Menin elokuvateatteriin.", "accept": ["Ich bin ins Kino gegangen.", "Ich bin ins Kino gegangen."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Söimme italialaisessa ravintolassa.", "accept": ["Wir haben in einem italienischen Restaurant gegessen.", "Wir haben im italienischen Restaurant gegessen."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Hän ui meressä.", "accept": ["Er ist im Meer geschwommen.", "Sie ist im Meer geschwommen."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Jäimme kolme päivää Berliinissä.", "accept": ["Wir sind drei Tage in Berlin geblieben.", "Ich bin drei Tage in Berlin geblieben."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Hän heräsi aikaisin.", "accept": ["Er ist früh aufgewacht.", "Sie ist früh aufgewacht."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Ostimme matkamuistoja.", "accept": ["Wir haben Souvenirs gekauft.", "Ich habe Souvenirs gekauft."] }
+      ]
+    }
+  ],
+  "vocab": [
+    { "es": "gehen → bin gegangen", "fi": "mennä (sein)", "example_es": "Ich bin in die Stadt gegangen.", "example_fi": "Menin kaupunkiin.", "gender": null },
+    { "es": "fahren → bin gefahren", "fi": "ajaa, matkustaa (sein)", "example_es": "Wir sind nach Wien gefahren.", "example_fi": "Matkustimme Wieniin.", "gender": null },
+    { "es": "fliegen → bin geflogen", "fi": "lentää (sein)", "example_es": "Ich bin nach Berlin geflogen.", "example_fi": "Lennoin Berliiniin.", "gender": null },
+    { "es": "kommen → bin gekommen", "fi": "tulla (sein)", "example_es": "Er ist aus Hamburg gekommen.", "example_fi": "Hän tuli Hampurista.", "gender": null },
+    { "es": "laufen → bin gelaufen", "fi": "juosta, kävellä (sein)", "example_es": "Ich bin durch den Park gelaufen.", "example_fi": "Juoksin puiston halki.", "gender": null },
+    { "es": "schwimmen → bin geschwommen", "fi": "uida (sein)", "example_es": "Wir sind im See geschwommen.", "example_fi": "Uimme järvessä.", "gender": null },
+    { "es": "bleiben → bin geblieben", "fi": "jäädä, pysyä (sein — poikkeus!)", "example_es": "Ich bin drei Tage geblieben.", "example_fi": "Jäin kolmeksi päiväksi.", "gender": null },
+    { "es": "werden → bin geworden", "fi": "tulla joksikin (sein)", "example_es": "Er ist Arzt geworden.", "example_fi": "Hänestä tuli lääkäri.", "gender": null },
+    { "es": "aufstehen → bin aufgestanden", "fi": "nousta ylös (sein)", "example_es": "Ich bin früh aufgestanden.", "example_fi": "Nousin aikaisin ylös.", "gender": null },
+    { "es": "aufwachen → bin aufgewacht", "fi": "herätä (sein)", "example_es": "Sie ist um 7 Uhr aufgewacht.", "example_fi": "Hän heräsi klo 7.", "gender": null },
+    { "es": "ankommen → bin angekommen", "fi": "saapua (sein)", "example_es": "Der Zug ist pünktlich angekommen.", "example_fi": "Juna saapui ajoissa.", "gender": null },
+    { "es": "abfahren → bin abgefahren", "fi": "lähteä, ajaa pois (sein)", "example_es": "Der Bus ist abgefahren.", "example_fi": "Bussi lähti.", "gender": null }
+  ],
+  "side_panel": {
+    "tabs": [
+      {
+        "id": "grammar",
+        "title": "Kielioppi",
+        "content_md": "## haben vs. sein — muistisääntö\n\n**SEIN = liikkuminen + tilanmuutos + poikkeukset**\n\n| Verbi | Partizip II |\n|---|---|\n| gehen | gegangen |\n| fahren | gefahren |\n| fliegen | geflogen |\n| kommen | gekommen |\n| laufen | gelaufen |\n| schwimmen | geschwommen |\n| bleiben | geblieben (poikkeus!) |\n| werden | geworden |\n| aufstehen | aufgestanden |\n| aufwachen | aufgewacht |\n| ankommen | angekommen |\n\n**HABEN = kaikki muut (transitiiviset)**\n\n- essen → gegessen\n- trinken → getrunken\n- kaufen → gekauft\n- sehen → gesehen\n- schreiben → geschrieben\n- lernen → gelernt\n\n## Testikysymys\n\n❓ Siirtyykö paikasta A paikkaan B?\n→ Kyllä = **sein**\n→ Ei = **haben**\n\n❓ Tapahtuuko tilanmuutos?\n→ Kyllä = **sein**"
+      },
+      {
+        "id": "examples",
+        "title": "Esimerkit",
+        "content_md": "## Mallilauseet — lomapäivä\n\n**Sein (liikkuminen):**\n- Wir sind mit dem Zug **gefahren**.\n- Ich bin ins Kino **gegangen**.\n- Er ist früh **aufgestanden**.\n- Sie sind im Meer **geschwommen**.\n- Wir sind drei Tage in Innsbruck **geblieben**.\n\n**Haben (toiminta):**\n- Wir haben Pizza **gegessen**.\n- Ich habe Wasser **getrunken**.\n- Er hat ein Ticket **gekauft**.\n- Wir haben das Schloss **besichtigt**.\n\n## Yleisimmät virheet:\n❌ *Ich habe gegangen* → ✅ *Ich **bin** gegangen*\n❌ *Wir sind gegessen* → ✅ *Wir **haben** gegessen*\n❌ *Er hat geblieben* → ✅ *Er **ist** geblieben*"
+      },
+      {
+        "id": "tips",
+        "title": "YO-vinkit",
+        "content_md": "## haben/sein YO-kokeessa\n\nTeil 3 testaa apuverbivalintaa suoraan:\n*Wir ___ drei Tage in München geblieben.* → **sind**\n*Ich ___ Bratwurst gegessen.* → **habe**\n\n**Kolme kriittisintä muistettavaa:**\n1. gehen → **bin** gegangen (mennä = liikkuminen)\n2. bleiben → **bin** geblieben (jäädä = poikkeus sein!)\n3. essen → **habe** gegessen (syödä = transitiivi, ei liiku)\n\n**Teil 4 -kirjoitelmassa:** Käytä molempia realistisesti:\n*Wir **sind** nach Berlin **gefahren**. Dort **haben** wir viel Sightseeing **gemacht** und **sind** in die Altstadt **gegangen**.*"
+      }
+    ]
+  }
+}

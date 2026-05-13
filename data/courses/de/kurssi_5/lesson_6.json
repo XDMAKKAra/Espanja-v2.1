@@ -1,0 +1,198 @@
+{
+  "meta": {
+    "course_key": "kurssi_5",
+    "lesson_index": 6,
+    "lesson_type": "grammar",
+    "level": "C",
+    "title": "Sivulauseen inversio päälauseessa",
+    "description": "Kun wenn-sivulause tulee ennen päälausetta, päälause alkaa verbillä (inversio). Tämä on saksan sananjärjestyksen kriittisin sääntö — ja YO-kirjoitelmien yleisin virhe.",
+    "yo_relevance": "Teil 4 (Schreiben): inversiovirhe on yleinen C-tason kirjoitelmissa. Teil 3 (Struktur): aukkotehtävässä voidaan kysyä verbin paikkaa sivulauseen jälkeen.",
+    "estimated_minutes_median": 13
+  },
+  "teaching": {
+    "intro_md": "# Sivulauseen inversio päälauseessa\n\n## Perussääntö — V2 aina!\n\nSaksassa verbi on **aina toisena** päälauseessa — tätä kutsutaan V2-säännöksi.\n\nKun päälause alkaa sivulauseella, koko sivulause = ensimmäinen elementti. Niinpä **verbi tulee heti pilkun jälkeen**:\n\n```\n[Wenn-sivulause], VERBI + Subjekti + ...\n```\n\n## Esimerkit\n\n✅ *Wenn ich Zeit habe, **gehe ich** ins Kino.*\n❌ *Wenn ich Zeit habe, **ich gehe** ins Kino.*\n\n✅ *Wenn es regnet, **bleiben wir** zuhause.*\n❌ *Wenn es regnet, **wir bleiben** zuhause.*\n\n## Muistisääntö\n\n1. Sivulause (Wenn...)\n2. Pilkku (,)\n3. **VERBI** (suoraan pilkun jälkeen!)\n4. Subjekti\n5. Loput\n\n## Muut sivulauseet — sama sääntö\n\nSama inversio koskee **kaikkia sivulauseita** päälauseen edessä:\n\n> *Weil es regnet, **gehe ich** nicht raus.*\n> *Obwohl es kalt ist, **spielen wir** draußen.*\n> *Als ich jung war, **lebte ich** in Helsinki.*",
+    "key_points": [
+      "Sivulause päälauseen edessä → verbi suoraan pilkun jälkeen.",
+      "Muistisääntö: Sivulause + pilkku + VERBI + subjekti.",
+      "VIRHE: 'Wenn ich Zeit habe, ich gehe...' — subjekti ei tule ennen verbiä.",
+      "Sama sääntö koskee weil, obwohl, als, da, damit -sivulauseita.",
+      "Päälause normaalissa järjestyksessä JOS sivulause tulee sen jälkeen."
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1-recognition-mc-inversio",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista — oikea inversio",
+      "instruction": "Valitse oikein muodostettu lause, jossa sivulause on päälauseen edessä.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "mc", "stem": "Kun minulla on aikaa — mikä on oikein?", "choices": ["Wenn ich Zeit habe, ich gehe ins Kino.", "Wenn ich Zeit habe, gehe ich ins Kino.", "Wenn ich Zeit habe, ins Kino gehe ich.", "Wenn ich Zeit habe, ich ins Kino gehe."], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Inversio: sivulause + pilkku + VERBI + subjekti. 'Wenn ich Zeit habe, **gehe ich** ins Kino.'" },
+        { "item_type": "mc", "stem": "Jos sataa — mikä on oikein?", "choices": ["Wenn es regnet, wir bleiben zuhause.", "Wenn es regnet, zuhause wir bleiben.", "Wenn es regnet, bleiben wir zuhause.", "Wenn es regnet, wir zuhause bleiben."], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "'Wenn es regnet, **bleiben wir** zuhause.' — verbi ensin, sitten subjekti." },
+        { "item_type": "mc", "stem": "Koska olen väsynyt — mikä on oikein?", "choices": ["Weil ich müde bin, ich schlafe.", "Weil ich müde bin, schlafe ich.", "Weil bin ich müde, schlafe ich.", "Weil ich bin müde, ich schlafe."], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Weil-sivulause edessä → inversio: 'Weil ich müde bin, **schlafe ich**.'" },
+        { "item_type": "mc", "stem": "Mikä lause on VÄÄRIN?", "choices": ["Wenn er kommt, gehe ich.", "Weil es kalt ist, bleiben wir.", "Als ich jung war, lebte ich in Helsinki.", "Wenn sie schläft, ich arbeite."], "correct_index": 3, "distractor_difficulty": "hard", "explanation": "'Wenn sie schläft, **ich arbeite**' on väärin — verbi pitää tulla ennen subjektia: 'arbeite ich'." },
+        { "item_type": "mc", "stem": "Vaikka on kylmä — mikä on oikein?", "choices": ["Obwohl es kalt ist, wir spielen draußen.", "Obwohl es kalt ist, spielen wir draußen.", "Obwohl kalt ist es, spielen wir draußen.", "Obwohl es kalt ist, draußen spielen wir."], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "Obwohl-sivulause edessä → inversio: 'Obwohl es kalt ist, **spielen wir** draußen.'" },
+        { "item_type": "mc", "stem": "Kun sain työpaikan — mikä on oikein?", "choices": ["Als ich den Job bekam, ich sehr glücklich war.", "Als ich den Job bekam, war ich sehr glücklich.", "Als ich bekam den Job, war ich sehr glücklich.", "Als ich den Job bekam, ich glücklich sehr war."], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "'Als ich den Job bekam, **war ich** sehr glücklich.' — kopulaverbi war ensin, sitten subjekti." },
+        { "item_type": "mc", "stem": "Modaaliverbilauseen inversio — mikä on oikein?", "choices": ["Wenn du kommen kannst, wir uns treffen können.", "Wenn du kommen kannst, ich würde mich freuen.", "Wenn du kommen kannst, würde ich mich freuen.", "Wenn du kannst kommen, würde ich mich freuen."], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "Konditionaalin inversio: sivulause + pilkku + **würde** + subjekti + infinitiivi loppuun." }
+      ]
+    },
+    {
+      "phase_id": "p2-recognition-match-inversio",
+      "phase_type": "recognition_match",
+      "title": "Yhdistä — sivulause ja oikea päälause",
+      "instruction": "Yhdistä sivulause ja siihen sopiva inversio-päälause.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        {
+          "item_type": "match",
+          "left_label": "Sivulause",
+          "right_label": "Päälause (oikea inversio)",
+          "pairs": [
+            { "left": "Wenn ich Zeit habe,", "right": "gehe ich ins Kino." },
+            { "left": "Weil es regnet,", "right": "bleiben wir zuhause." },
+            { "left": "Als ich jung war,", "right": "wohnte ich in Tampere." },
+            { "left": "Wenn sie kommt,", "right": "sind wir alle glücklich." },
+            { "left": "Obwohl es kalt ist,", "right": "spielen die Kinder draußen." },
+            { "left": "Wenn ich den Job bekomme,", "right": "feiere ich das." }
+          ]
+        },
+        {
+          "item_type": "match",
+          "left_label": "Väärin",
+          "right_label": "Oikein",
+          "pairs": [
+            { "left": "Wenn ich Zeit habe, ich gehe.", "right": "Wenn ich Zeit habe, gehe ich." },
+            { "left": "Weil es regnet, wir bleiben.", "right": "Weil es regnet, bleiben wir." },
+            { "left": "Als er kam, er war müde.", "right": "Als er kam, war er müde." },
+            { "left": "Wenn du lernst, du schaffst es.", "right": "Wenn du lernst, schaffst du es." }
+          ]
+        }
+      ]
+    },
+    {
+      "phase_id": "p3-gap-fill-inversio",
+      "phase_type": "application_gap_fill",
+      "title": "Täydennä — inversio päälauseeseen",
+      "instruction": "Kirjoita verbi ja subjekti oikeaan järjestykseen pilkun jälkeen.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        { "item_type": "mc", "stem": "Wenn ich Zeit habe, ___ ins Kino.", "choices": ["ich gehe", "gehe ich", "gehe", "ich gehen"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Inversio: verbi ensin → gehe ich." },
+        { "item_type": "mc", "stem": "Weil es kalt ist, ___ wir zuhause.", "choices": ["wir bleiben", "bleiben wir", "wir bleiben immer", "wir werden bleiben"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Inversio: bleiben wir (verbi ensin)." },
+        { "item_type": "mc", "stem": "Als ich jung war, ___ in Tampere.", "choices": ["ich wohnte", "wohnte ich", "ich gewohnt habe", "habe ich gewohnt"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "Inversio: wohnte ich. Als-sivulause käytetään menneisyyden kertaluonteiseen tapahtumaan." },
+        { "item_type": "mc", "stem": "Wenn du das schaffst, ___ sehr stolz auf dich.", "choices": ["ich bin", "bin ich", "ich werde sein", "sein ich"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Inversio: bin ich (kopulaverbi ensin)." },
+        { "item_type": "mc", "stem": "Obwohl es regnet, ___ die Kinder draußen.", "choices": ["spielen die Kinder", "die Kinder spielen", "die Kinder spielen nicht", "spielen die Kinder nicht"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "Inversio: spielen die Kinder (verbi, sitten subjekti). Huom: 'die Kinder' on pitkä subjekti." },
+        { "item_type": "mc", "stem": "Wenn sie die Prüfung besteht, ___ wirklich glücklich.", "choices": ["sie ist", "ist sie", "sie wird", "wird sie sein"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Inversio: ist sie (kopulaverbi ensin)." },
+        { "item_type": "mc", "stem": "Weil er keine Zeit hat, ___ er nicht.", "choices": ["er kommt", "kommt er", "er nicht kommt", "nicht kommt er"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Inversio: kommt er. Negaatio nicht lauseen lopussa normaaliasemassaan." },
+        { "item_type": "mc", "stem": "Wenn ich nach Berlin komme, ___ das Museum.", "choices": ["ich besuche", "besuche ich", "ich werde besuchen", "besuche ich bestimmt"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Inversio: besuche ich." },
+        { "item_type": "mc", "stem": "Als wir in Spanien waren, ___ jeden Tag Eis.", "choices": ["wir gegessen haben", "haben wir gegessen", "wir essen haben", "wir essen"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "Inversio Perfektillä: haben wir gegessen. Apuverbi haben ensin, sitten subjekti wir, Partizip II loppuun." }
+      ]
+    },
+    {
+      "phase_id": "p4-gap-fill-virhe-korjaus",
+      "phase_type": "application_gap_fill",
+      "title": "Korjaa virhe — inversio",
+      "instruction": "Valitse korjattu versio väärin muodostetusta lauseesta.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "mc", "stem": "VÄÄRIN: 'Wenn ich müde bin, ich schlafe früh.' Mikä on oikein?", "choices": ["Wenn ich müde bin, schlafe früh ich.", "Wenn ich müde bin, schlafe ich früh.", "Wenn müde ich bin, schlafe ich früh.", "Wenn ich müde bin, ich früh schlafe."], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Inversio: schlafe ich früh — verbi ensin, sitten subjekti, sitten adverbi." },
+        { "item_type": "mc", "stem": "VÄÄRIN: 'Weil es kalt ist, wir tragen Mäntel.' Oikein?", "choices": ["Weil es kalt ist, tragen wir Mäntel.", "Weil kalt ist es, tragen wir Mäntel.", "Weil es kalt ist, wir Mäntel tragen.", "Weil es kalt ist, Mäntel wir tragen."], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "Inversio: tragen wir Mäntel." },
+        { "item_type": "mc", "stem": "VÄÄRIN: 'Wenn sie die Stelle bekommt, sie sehr glücklich ist.' Oikein?", "choices": ["Wenn sie die Stelle bekommt, sehr glücklich sie ist.", "Wenn sie die Stelle bekommt, ist sie sehr glücklich.", "Wenn sie die Stelle bekommt, sie ist sehr glücklich.", "Wenn die Stelle sie bekommt, ist sie glücklich."], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Inversio: ist sie sehr glücklich — kopulaverbi ensin." },
+        { "item_type": "mc", "stem": "VÄÄRIN: 'Obwohl es spät ist, wir gehen aus.' Oikein?", "choices": ["Obwohl es spät ist, aus gehen wir.", "Obwohl es spät ist, gehen wir aus.", "Obwohl spät es ist, gehen wir aus.", "Obwohl es spät ist, wir ausgehen."], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Inversio + separaabeli verbi ausgehen: gehen wir aus (aus loppuun)." },
+        { "item_type": "mc", "stem": "VÄÄRIN: 'Als ich ein Kind war, ich viel gespielt habe.' Oikein?", "choices": ["Als ich ein Kind war, ich habe viel gespielt.", "Als ich ein Kind war, viel habe ich gespielt.", "Als ich ein Kind war, habe ich viel gespielt.", "Als ich ein Kind war, gespielt habe ich."], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "Inversio Perfektillä: habe ich viel gespielt — apuverbi habe ensin, sitten subjekti ich, Partizip II loppuun." }
+      ]
+    },
+    {
+      "phase_id": "p5-gap-fill-vaativampi",
+      "phase_type": "application_gap_fill",
+      "title": "Muodosta lause — inversio + eri sivulauseet",
+      "instruction": "Täydennä lauseet oikein.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Weil er krank ist, ___ er nicht zur Arbeit.", "answers": [["kommt er"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Wenn du lernst, ___ du die Prüfung bestehen.", "answers": [["wirst du"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Als sie jung war, ___ sie viel Sport gemacht.", "answers": [["hat sie"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Obwohl er keine Zeit hat, ___ er mir.", "answers": [["hilft er"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Wenn ich die Stelle bekomme, ___ ich eine Party.", "answers": [["mache ich", "gebe ich"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Da es schon spät ist, ___ wir nach Hause gehen.", "answers": [["müssen wir"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Wenn wir frühzeitig buchen, ___ wir Geld.", "answers": [["sparen wir"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Als das Konzert begann, ___ wir alle.", "answers": [["sangen wir", "haben wir gesungen"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p6-sentence-build",
+      "phase_type": "application_sentence_build",
+      "title": "Rakenna — inversio-lauseet",
+      "instruction": "Järjestä oikeaan järjestykseen.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "mc", "stem": "Järjestä: 'Zeit / habe / Wenn / gehe / ich / ins / ich / Kino'", "choices": ["Wenn ich Zeit habe, gehe ich ins Kino.", "Wenn ich Zeit habe, ich gehe ins Kino.", "Wenn ich habe Zeit, ins Kino gehe ich.", "Wenn ich Zeit, gehe ich ins Kino habe."], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "V-loppu sivulauseessa (habe), pilkku, inversio päälauseessa (gehe ich)." },
+        { "item_type": "mc", "stem": "Järjestä: 'ist / regnet / Weil / bleibe / es / zuhause / ich'", "choices": ["Weil es regnet, ist bleibe ich zuhause.", "Weil es regnet, bleibe ich zuhause.", "Weil regnet es, bleibe ich zuhause.", "Es regnet, weil ich zuhause bleibe."], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Weil es **regnet**, bleibe ich zuhause. V-loppu weil-sivulauseessa, inversio päälauseessa." },
+        { "item_type": "mc", "stem": "Järjestä: 'jung / Als / war / ich / ich / in / Helsinki / wohnte'", "choices": ["Als ich jung war, wohnte ich in Helsinki.", "Als jung ich war, wohnte ich in Helsinki.", "Als ich jung war, ich wohnte in Helsinki.", "Jung als ich war, wohnte ich in Helsinki."], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "Als ich jung **war**, (inversio) **wohnte ich** in Helsinki." },
+        { "item_type": "mc", "stem": "Järjestä: 'Obwohl / kalt / ist / spielen / draußen / die / Kinder / es'", "choices": ["Obwohl es kalt ist, spielen die Kinder draußen.", "Obwohl kalt es ist, spielen die Kinder draußen.", "Obwohl es kalt ist, die Kinder spielen draußen.", "Obwohl es kalt, spielen draußen die Kinder ist."], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "Obwohl es kalt **ist**, **spielen** die Kinder draußen. Inversio: verbi ensin." },
+        { "item_type": "mc", "stem": "Järjestä: 'bekommt / sie / Wenn / die / Stelle / sie / sehr / glücklich / ist'", "choices": ["Wenn sie die Stelle bekommt, ist sie sehr glücklich.", "Wenn sie die Stelle bekommt, sie ist sehr glücklich.", "Wenn sie bekommt die Stelle, ist sie sehr glücklich.", "Sie ist sehr glücklich, wenn sie bekommt die Stelle."], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "V-loppu sivulauseessa (bekommt), inversio (ist sie)." },
+        { "item_type": "mc", "stem": "Järjestä: 'er / krank / Da / ist / arbeitet / er / nicht'", "choices": ["Da er krank ist, arbeitet er nicht.", "Da ist er krank, arbeitet er nicht.", "Da er krank ist, er arbeitet nicht.", "Er arbeitet nicht, da krank er ist."], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "Da er krank **ist**, **arbeitet er** nicht. V-loppu + inversio." }
+      ]
+    },
+    {
+      "phase_id": "p7-synthesis-translate",
+      "phase_type": "synthesis_translate",
+      "title": "Käännä — inversio-lauseet",
+      "instruction": "Käännä lause saksaksi. Muista inversio kun sivulause on ensin.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Kun minulla on aikaa, menen elokuviin.", "accept": ["Wenn ich Zeit habe, gehe ich ins Kino.", "Ich gehe ins Kino, wenn ich Zeit habe."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Koska on kylmää, pysymme kotona.", "accept": ["Weil es kalt ist, bleiben wir zuhause.", "Da es kalt ist, bleiben wir zuhause."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Jos saat työpaikan, olet onnellinen.", "accept": ["Wenn du die Stelle bekommst, bist du glücklich.", "Wenn du die Stelle bekommst, bist du sehr glücklich."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Vaikka hän on väsynyt, hän työskentelee.", "accept": ["Obwohl er müde ist, arbeitet er.", "Obwohl sie müde ist, arbeitet sie."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Kun olin nuori, asuin Helsingissä.", "accept": ["Als ich jung war, wohnte ich in Helsinki.", "Als ich jung war, lebte ich in Helsinki."] }
+      ]
+    },
+    {
+      "phase_id": "p8-synthesis-short-writing",
+      "phase_type": "synthesis_short_writing",
+      "title": "Kirjoita — sivulause + inversio",
+      "instruction": "Kirjoita 4–5 lausetta käyttäen sivulauseita päälauseen edessä (inversio).",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C", "M"],
+      "items": [
+        { "item_type": "writing", "prompt": "Kirjoita 4–5 lausetta saksaksi käyttäen sivulauseita (wenn, weil, obwohl) päälauseen EDESSÄ. Muista inversio pilkun jälkeen.", "min_words": 40, "max_words": 70, "rubric_focus": ["structure", "communication", "vocab"] },
+        { "item_type": "writing", "prompt": "Kerro päivästäsi saksaksi: mitä teit ennen kuin menit kouluun, mitä tapahtui kun olit siellä, ja mitä teet kun tulet kotiin. Käytä sivulauseita (als, wenn, weil).", "min_words": 45, "max_words": 75, "rubric_focus": ["communication", "structure", "vocab"] },
+        { "item_type": "writing", "prompt": "Kirjoita saksaksi: miksi sinä opiskelit / miksi haluat tietyn ammatin. Aloita vähintään 2 lausetta sivulauseella (Weil ich..., Wenn ich..., Obwohl es schwierig ist...).", "min_words": 40, "max_words": 70, "rubric_focus": ["communication", "structure", "overall"] }
+      ]
+    }
+  ],
+  "vocab": [
+    { "es": "Inversio (Inversion)", "fi": "sananjärjestyksen kääntyminen", "example_es": "Wenn ich Zeit habe, GEHE ICH ins Kino.", "example_fi": "Kun minulla on aikaa, MENEN elokuviin.", "gender": null },
+    { "es": "V2-sääntö", "fi": "verbi toisena päälauseessa", "example_es": "Heute GEHE ich ins Kino.", "example_fi": "Tänään MENEN elokuviin.", "gender": null },
+    { "es": "obwohl", "fi": "vaikka (vastoin odotuksia)", "example_es": "Obwohl es regnet, spielen sie.", "example_fi": "Vaikka sataa, he leikkivät.", "gender": null },
+    { "es": "da", "fi": "koska (formaalimpi kuin weil)", "example_es": "Da er krank ist, arbeitet er nicht.", "example_fi": "Koska hän on sairas, hän ei tee töitä.", "gender": null },
+    { "es": "als", "fi": "kun (menneisyydessä, kertaluonteinen)", "example_es": "Als ich jung war, lebte ich in Helsinki.", "example_fi": "Kun olin nuori, asuin Helsingissä.", "gender": null },
+    { "es": "während", "fi": "kun taas / samaan aikaan", "example_es": "Während ich lerne, hört er Musik.", "example_fi": "Samalla kun opiskelen, hän kuuntelee musiikkia.", "gender": null }
+  ],
+  "side_panel": {
+    "tabs": [
+      {
+        "id": "grammar",
+        "title": "Kielioppi",
+        "content_md": "## Sivulauseen inversio\n\n```\n[Sivulause], VERBI + Subjekti + ...\n```\n\n✅ *Wenn ich Zeit habe, **gehe ich** ins Kino.*\n❌ *Wenn ich Zeit habe, **ich gehe** ins Kino.*\n\n## Muistisääntö\n\n1. Sivulause (Wenn/Weil/Als/Obwohl...)\n2. Pilkku (,)\n3. **VERBI** ← suoraan pilkun jälkeen!\n4. Subjekti\n5. Loput\n\n## Toimii kaikilla sivulauseilla\n\n- *Weil es regnet, **bleiben wir** zuhause.*\n- *Als ich jung war, **wohnte ich** in Helsinki.*\n- *Obwohl es kalt ist, **spielen wir** draußen.*\n- *Da er krank ist, **kommt er** nicht.*"
+      },
+      {
+        "id": "examples",
+        "title": "Esimerkit",
+        "content_md": "## Oikeat lauseet\n\n✅ *Wenn ich Zeit habe, **gehe ich** ins Kino.*\n✅ *Weil es kalt ist, **tragen wir** Mäntel.*\n✅ *Als er jung war, **wohnte er** in Wien.*\n✅ *Obwohl sie müde ist, **arbeitet sie** weiter.*\n\n## Väärät lauseet\n\n❌ *Wenn ich Zeit habe, **ich gehe** ins Kino.*\n❌ *Weil es kalt ist, **wir tragen** Mäntel.*\n❌ *Als er jung war, **er wohnte** in Wien.*\n\n## Perfekti + inversio\n\n✅ *Als ich jung war, **habe ich** viel gespielt.*\n(apuverbi habe ensin!)"
+      },
+      {
+        "id": "tips",
+        "title": "YO-vinkit",
+        "content_md": "## YO-kokeessa\n\n**Teil 4 (Schreiben):** Inversiovirhe on yleinen! Kirjoitelmassa sivulauseita tulee paljon — muista aina: verbi ensin pilkun jälkeen.\n\n**Teil 3 (Struktur):** Aukkotehtävä: 'Wenn er kommt, ___ ich.' → gehe (ei 'ich gehe').\n\n## Nopea tarkistus\n\nKun kirjoitat sivulauseen edessä:\n1. Laita pilkku sivulauseen jälkeen ✓\n2. Kirjoita verbi HETI pilkun jälkeen ✓\n3. Sitten subjekti ✓"
+      }
+    ]
+  }
+}

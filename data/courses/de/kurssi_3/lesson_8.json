@@ -1,0 +1,206 @@
+{
+  "meta": {
+    "course_key": "kurssi_3",
+    "lesson_index": 8,
+    "lesson_type": "mixed",
+    "level": "B",
+    "title": "Perfekt + V2 + matka-aiheinen kertomus",
+    "description": "Yhdistät kurssin 3 kaikki rakenteet: Perfekti (haben/sein + oikea Partizip II), V2-sääntö, matkasanasto ja ajan ilmaukset. Harjoittelet koherenttia matkakirjaa blogityyliä.",
+    "yo_relevance": "Teil 4 (Kirjoitelma): tämä oppitunti valmentaa suoraan YO-kirjoitelmaan 'Schreibe einen Blogeintrag über deine letzte Reise'. Teil 3 (Rakenne): Perfekt-aukot käyttävät juuri tätä sanastoa.",
+    "estimated_minutes_median": 16
+  },
+  "teaching": {
+    "intro_md": "# Perfekt + V2 + matkakertomus\n\nTässä oppitunnissa harjoittelet kaikkia kurssin 3 rakenteita yhdessä — kuten YO-kirjoitelmassa.\n\n## Malliblogi — rakenne\n\n**Otsikko:** *Mein Urlaub in Berlin*\n\n*Letzten Sommer **bin** ich mit dem Zug nach Berlin **gefahren**. Am ersten Tag **habe** ich das Hotel **gefunden** und **bin** in die Altstadt **gegangen**.*\n\n*Am zweiten Tag **habe** ich das Brandenburger Tor **gesehen** und viele Fotos **gemacht**. Danach **habe** ich eine Currywurst **gegessen** — sehr lecker!*\n\n*Am letzten Tag **sind** wir ins Museum **gegangen** und **haben** lange dort **geblieben**. Leider **war** das Wetter nicht so gut, aber der Urlaub **hat** mir sehr gut **gefallen**.*\n\n## Tarkistuslista kirjoitelmaan\n\n1. ✅ Jokaisessa lauseessa apuverbi oikealla paikalla (2. paikka)\n2. ✅ Liikkumisverbeillä sein, muilla haben\n3. ✅ Partisiippi lauseen loppuun\n4. ✅ Kun lause alkaa ajan ilmauksella → inversio (V2!)\n5. ✅ Oikeat partisiipit: gegessen (ei *geessen*), gegangen (ei *gegehen*)",
+    "key_points": [
+      "Lause alkaa ajan ilmauksella → apuverbi 2. paikalle (inversio): Gestern HABE ich, Letzten Sommer BIN ich.",
+      "sein-verbeillä: bin/ist/sind + gefahren, gegangen, geflogen, geblieben.",
+      "haben-verbeillä: habe/hat/haben + gegessen, gesehen, gemacht, gefunden.",
+      "Partisiippi aina lauseen loppuun: Ich bin nach Berlin *gefahren*.",
+      "Tekstin rakenne: Einleitung (johdanto) → Hauptteil (pääosa) → Schluss (lopetus)."
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1-recognition-mc-mixed",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista — oikea muoto",
+      "instruction": "Valitse oikea muoto. Testaa kaikki rakenteet!",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "mc", "stem": "Letzten Sommer ___ ich nach Wien gefahren.", "choices": ["habe", "bin", "hatte", "war"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "fahren = liikkuminen → sein. Letzten Sommer (ajan ilmaus, 1. paikka) → bin (V2!) → ich." },
+        { "item_type": "mc", "stem": "Im Hotel ___ wir sehr gut geschlafen.", "choices": ["sind", "haben", "waren", "hatten"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "schlafen → haben. Im Hotel (1. paikka) → haben (V2!) → wir." },
+        { "item_type": "mc", "stem": "Das Schloss ___ wir am zweiten Tag ___.", "choices": ["haben / besuchen", "haben / besucht", "sind / besucht", "sind / besuchten"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "besuchen → haben + besucht (Partizip II, kanta be- → ei ge-)." },
+        { "item_type": "mc", "stem": "Welche Satz ist richtig? (Kumpi lause on oikein?)", "choices": ["Gestern ich habe Bratwurst gegessen.", "Gestern habe ich Bratwurst gegessen.", "Gestern gegessen habe ich Bratwurst.", "Ich gestern habe Bratwurst gegessen."], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "V2: Gestern (1.) → habe (verbi 2. paikalla!) → ich (subjekti 3.) → gegessen (loppuun)." },
+        { "item_type": "mc", "stem": "Wir ___ drei Tage in München ___. (bleiben)", "choices": ["haben / geblieben", "sind / geblieben", "haben / gebleibt", "sind / gebleibt"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "bleiben → sein + geblieben (ei gebleibt!). sind + geblieben." },
+        { "item_type": "mc", "stem": "Ich ___ die Stadtführung sehr ___. (genießen)", "choices": ["habe / genossen", "bin / genossen", "habe / gegenossen", "bin / genossen haben"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "genießen → haben + genossen (vahva verbi, ei ge-nossen vaan ge-nossen — partisiippimuoto)." },
+        { "item_type": "mc", "stem": "Letzte Woche ___ sie nach Österreich ___. (fliegen)", "choices": ["hat / geflogen", "ist / geflogen", "hat / gefliegt", "ist / geflogen sein"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "fliegen → sein + geflogen. Letzte Woche (1.) → ist (V2!) → sie (3.) → geflogen (loppuun)." },
+        { "item_type": "mc", "stem": "Welche Satz ist falsch? (Kumpi on väärin?)", "choices": ["Im Urlaub haben wir viel Deutsch gesprochen.", "Gestern sind wir ins Restaurant gegangen.", "Vorgestern ich habe das Museum besucht.", "Am Montag bin ich aufgewacht."], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "'Vorgestern ich habe' on V2-virhe. Pitää olla: 'Vorgestern habe ich'." },
+        { "item_type": "mc", "stem": "Das Essen ___ sehr ___. (sein: war)", "choices": ["hat / lecker geworden", "ist / lecker geworden", "war / lecker", "wurden / lecker"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "Kuvaileva lausuma (ei toimintaa) → Präteritum war on luontevin: Das Essen war lecker." },
+        { "item_type": "mc", "stem": "Er ___ alle Sehenswürdigkeiten ___. (fotografieren)", "choices": ["ist / fotografiert", "hat / fotografiert", "ist / gefotografiert", "hat / gefotografiert"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "fotografieren = -ieren-verbi → ei ge-:tä: fotografiert (ei gefotografiert!). haben-verbi." }
+      ]
+    },
+    {
+      "phase_id": "p2-recognition-match",
+      "phase_type": "recognition_match",
+      "title": "Yhdistä — lauseen osat",
+      "instruction": "Yhdistä lauseen alku ja oikea loppu.",
+      "mastery_threshold": { "I": 0.6, "A": 0.65, "B": 0.7, "C": 0.75, "M": 0.85, "E": 0.9, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        {
+          "item_type": "match",
+          "left_label": "Lauseen alku",
+          "right_label": "Lauseen loppu",
+          "pairs": [
+            { "left": "Letzten Sommer bin ich", "right": "nach Berlin gefahren." },
+            { "left": "Im Hotel haben wir", "right": "gut geschlafen." },
+            { "left": "Gestern habe ich", "right": "eine Bratwurst gegessen." },
+            { "left": "Am zweiten Tag sind wir", "right": "ins Museum gegangen." },
+            { "left": "Leider hat es", "right": "geregnet." },
+            { "left": "Mit dem Zug bin ich", "right": "nach München gefahren." },
+            { "left": "Die Sehenswürdigkeiten haben wir", "right": "alle besichtigt." },
+            { "left": "Im Urlaub habe ich mich", "right": "sehr gut erholt." }
+          ]
+        }
+      ]
+    },
+    {
+      "phase_id": "p3-recall-virheanalyysi",
+      "phase_type": "recall_typed_es_to_fi",
+      "title": "Korjaa virhe",
+      "instruction": "Jokaisessa lauseessa on yksi virhe. Tunnista virhe.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I"],
+      "items": [
+        { "item_type": "mc", "stem": "Mikä on virhe: 'Ich habe ins Kino gegangen.'", "choices": ["habe → bin (gehen = sein)", "gegangen → gegehen (Partizip II)", "ins Kino → im Kino (prepositio)", "Ich → Er (persoona)"], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "gehen = liikkumisverbi → sein! Oikein: Ich BIN ins Kino gegangen." },
+        { "item_type": "mc", "stem": "Mikä on virhe: 'Gestern ich habe das Schloss besichtigt.'", "choices": ["besichtigt → gebesichtigt (Partizip II)", "Gestern ich habe → Gestern habe ich (V2!)", "das Schloss → dem Schloss (Dativ)", "ich → wir (väärä persoona)"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "V2-virhe! Ajan ilmaus alussa → verbi 2. paikalle: Gestern HABE ich." },
+        { "item_type": "mc", "stem": "Mikä on virhe: 'Wir haben das Hotel gereserviert.'", "choices": ["haben → sind (-ieren käyttää sein)", "gereserviert → reserviert (-ieren ei saa ge-:tä)", "das Hotel → dem Hotel (Dativ)", "Wir → Sie (persoona)"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "-ieren-verbit eivät koskaan saa ge-:tä! reservieren → reserviert (ei gereserviert)." },
+        { "item_type": "mc", "stem": "Mikä on virhe: 'Er ist Bratwurst gegessen.'", "choices": ["ist → hat (essen = haben)", "gegessen → geessen (Partizip II)", "Bratwurst → die Bratwurst (artikkeli puuttuu)", "Er → Ich (persoona)"], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "essen = transitiivi → haben! Oikein: Er HAT Bratwurst gegessen." },
+        { "item_type": "mc", "stem": "Mikä on virhe: 'Wir haben drei Tage in Berlin gebleibt.'", "choices": ["haben → sind (bleiben = sein)", "gebleibt → geblieben (vahva Partizip II)", "in Berlin → nach Berlin (prepositio)", "Wir → Sie (persoona)"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "bleiben → geblieben (vahva verbi). Ja: bleiben ottaa sein:in. Oikein: Wir SIND drei Tage geblieben." }
+      ]
+    },
+    {
+      "phase_id": "p4-gap-fill-matkablogi",
+      "phase_type": "application_gap_fill",
+      "title": "Täytä aukko — matkablogi",
+      "instruction": "Täytä aukot oikeilla muodoilla. Apuverbi JA Partizip II.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Letzten Sommer ___ ich mit dem Zug nach Berlin ___. (fahren)", "answers": [["bin", "gefahren"]], "word_bank": ["bin", "habe", "gefahren", "gefahrt"] },
+        { "item_type": "gap_fill", "sentence_template": "Am ersten Tag ___ ich das Hotel ___. (finden)", "answers": [["habe", "gefunden"]], "word_bank": ["habe", "bin", "gefunden", "gefundt"] },
+        { "item_type": "gap_fill", "sentence_template": "Wir ___ das Brandenburger Tor ___. (sehen)", "answers": [["haben", "gesehen"]], "word_bank": ["haben", "sind", "gesehen", "gesehn"] },
+        { "item_type": "gap_fill", "sentence_template": "Im Restaurant ___ wir Currywurst ___. (essen)", "answers": [["haben", "gegessen"]], "word_bank": ["haben", "sind", "gegessen", "geessen"] },
+        { "item_type": "gap_fill", "sentence_template": "Am letzten Tag ___ wir ins Museum ___. (gehen)", "answers": [["sind", "gegangen"]], "word_bank": ["sind", "haben", "gegangen", "gegehen"] },
+        { "item_type": "gap_fill", "sentence_template": "Leider ___ das Wetter am dritten Tag nicht gut.", "answers": [["war"]], "word_bank": ["war", "ist", "hatte", "hat"] },
+        { "item_type": "gap_fill", "sentence_template": "Ich ___ sehr viele Fotos ___. (fotografieren)", "answers": [["habe", "fotografiert"]], "word_bank": ["habe", "bin", "fotografiert", "gefotografiert"] },
+        { "item_type": "gap_fill", "sentence_template": "Wir ___ drei Nächte im Hotel ___. (übernachten)", "answers": [["haben", "übernachtet"]], "word_bank": ["haben", "sind", "übernachtet", "übergeachtet"] },
+        { "item_type": "gap_fill", "sentence_template": "Der Urlaub ___ mir sehr gut ___. (gefallen)", "answers": [["hat", "gefallen"]], "word_bank": ["hat", "ist", "gefallen", "gefällt"] },
+        { "item_type": "gap_fill", "sentence_template": "Schließlich ___ wir nach Hause ___. (fahren)", "answers": [["sind", "gefahren"]], "word_bank": ["sind", "haben", "gefahren", "gefahrt"] }
+      ]
+    },
+    {
+      "phase_id": "p5-gap-fill-tekstiaukot",
+      "phase_type": "application_gap_fill",
+      "title": "Täytä teksti — kokonainen blogi",
+      "instruction": "Täytä aukot johdonmukaiseen blogitekstin. Kiinnitä huomio V2:een ja Perfektiin.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Gestern ___ ich nach München ___. Das ___ sehr schön!", "answers": [["bin", "gefahren", "war"]], "word_bank": ["bin", "habe", "gefahren", "gefahrt", "war", "ist"] },
+        { "item_type": "gap_fill", "sentence_template": "Zuerst ___ wir das Schloss ___. Dann ___ wir Weißwurst ___.", "answers": [["haben", "besichtigt", "haben", "gegessen"]], "word_bank": ["haben", "sind", "besichtigt", "besucht", "gegessen", "geessen"] },
+        { "item_type": "gap_fill", "sentence_template": "Am Abend ___ wir lange im Restaurant ___. Das Essen ___ sehr lecker.", "answers": [["sind", "geblieben", "war"]], "word_bank": ["sind", "haben", "geblieben", "gebleibt", "war", "ist"] },
+        { "item_type": "gap_fill", "sentence_template": "Leider ___ es am letzten Tag ___. Trotzdem ___ wir viel Spaß ___.", "answers": [["hat", "geregnet", "haben", "gehabt"]], "word_bank": ["hat", "ist", "geregnet", "geregnt", "haben", "sind", "gehabt", "gemacht"] },
+        { "item_type": "gap_fill", "sentence_template": "Ich ___ den Urlaub sehr ___. Nächstes Jahr möchte ich wieder nach Bayern ___.", "answers": [["habe", "genossen", "fahren"]], "word_bank": ["habe", "bin", "genossen", "geniessen", "fahren", "gefahren"] }
+      ]
+    },
+    {
+      "phase_id": "p6-sentence-build-blogi",
+      "phase_type": "application_sentence_build",
+      "title": "Järjestä lause — blogi oikeaan järjestykseen",
+      "instruction": "Järjestä sanat lauseeksi. V2 + Perfekti yhdessä!",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "mc", "stem": "Järjestä: [Letzten Sommer] [ich] [bin] [mit dem Zug nach Berlin gefahren]", "choices": ["Letzten Sommer ich bin mit dem Zug nach Berlin gefahren.", "Letzten Sommer bin ich mit dem Zug nach Berlin gefahren.", "Ich bin letzten Sommer nach Berlin mit dem Zug gefahren.", "Mit dem Zug bin ich letzten Sommer nach Berlin gefahren."], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "Letzten Sommer (1.) → bin (V2, sein!) → ich → gefahren (loppuun, fahren = sein)." },
+        { "item_type": "mc", "stem": "Järjestä: [Im Hotel] [wir] [haben] [uns gut erholt]", "choices": ["Im Hotel wir haben uns gut erholt.", "Im Hotel haben wir uns gut erholt.", "Wir haben uns im Hotel gut erholt.", "Uns erholt haben wir gut im Hotel."], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "Im Hotel (1.) → haben (V2!) → wir (subjekti) → erholt (loppuun, sich erholen = haben)." },
+        { "item_type": "mc", "stem": "Järjestä: [Am letzten Tag] [wir] [sind] [ins Museum gegangen]", "choices": ["Am letzten Tag wir sind ins Museum gegangen.", "Am letzten Tag sind wir ins Museum gegangen.", "Wir sind am letzten Tag gegangen ins Museum.", "Ins Museum sind wir am letzten Tag gegangen."], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "Am letzten Tag (1.) → sind (V2!, gehen = sein) → wir → gegangen (loppuun)." },
+        { "item_type": "mc", "stem": "Valitse VÄÄRÄ lause matkablogista:", "choices": ["Gestern habe ich die Altstadt besichtigt.", "Im Restaurant bin ich Weißwurst gegessen.", "Dann sind wir ins Hotel gegangen.", "Leider war das Wetter schlecht."], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "'Im Restaurant bin ich Weißwurst gegessen' on VÄÄRIN: essen = haben-verbi → 'habe ich Weißwurst gegessen'." },
+        { "item_type": "mc", "stem": "Järjestä: [Schließlich] [wir] [sind] [nach Hause gefahren]", "choices": ["Schließlich wir sind nach Hause gefahren.", "Schließlich sind wir nach Hause gefahren.", "Wir sind schließlich gefahren nach Hause.", "Nach Hause sind wir schließlich gefahren."], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "Schließlich (1.) → sind (V2!, fahren = sein) → wir → gefahren (loppuun)." }
+      ]
+    },
+    {
+      "phase_id": "p7-synthesis-translate",
+      "phase_type": "synthesis_translate",
+      "title": "Käännä — matkakertomuksen lauseet",
+      "instruction": "Käännä lauseet saksaksi. Kaikki rakenteet yhdessä!",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Viime kesänä matkustin junalla Müncheniin.", "accept": ["Letzten Sommer bin ich mit dem Zug nach München gefahren.", "Letzten Sommer bin ich nach München mit dem Zug gefahren."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Ensimmäisenä päivänä kävimme katsomassa linnaa.", "accept": ["Am ersten Tag haben wir das Schloss besichtigt.", "Am ersten Tag haben wir die Burg besichtigt."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Ravintolassa söimme perinteistä saksalaista ruokaa.", "accept": ["Im Restaurant haben wir traditionelles deutsches Essen gegessen.", "Im Restaurant haben wir typisch deutsches Essen gegessen."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Valitettavasti kolmantena päivänä satoi.", "accept": ["Leider hat es am dritten Tag geregnet.", "Am dritten Tag hat es leider geregnet."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Lopulta palasimme kotiin junalla.", "accept": ["Schließlich sind wir mit dem Zug nach Hause gefahren.", "Schließlich sind wir nach Hause mit dem Zug gefahren."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Loma oli hieno — palaan ensi vuonna!", "accept": ["Der Urlaub war toll — ich komme nächstes Jahr wieder!", "Der Urlaub war wunderbar — nächstes Jahr komme ich wieder!"] }
+      ]
+    },
+    {
+      "phase_id": "p8-short-writing-blogi",
+      "phase_type": "synthesis_short_writing",
+      "title": "Kirjoita — matkablogi",
+      "instruction": "Kirjoita lyhyt matkablogi saksaksi. YO-kirjoitelmaharjoitus!",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "writing", "prompt": "Kirjoita lyhyt matkablogi (Blogeintrag) saksaksi viime lomastasi. Käytä: Perfektiä (haben/sein + oikea Partizip II), ainakin kolmea eri ajan ilmausta (gestern, letzten Sommer, zuerst/dann), V2-rakennetta. Noin 60–100 sanaa.", "min_words": 50, "max_words": 110, "rubric_focus": ["communication", "structure", "vocab", "overall"] },
+        { "item_type": "writing", "prompt": "Kuvittele matkasi saksalaiseen kaupunkiin (Berlin, München, Hamburg jne.). Kirjoita blogi: miten matkustit, missä yövyit, mitä näit, mitä söit, miten loma meni. Perfekti pakollinen, V2 pakollinen.", "min_words": 55, "max_words": 120, "rubric_focus": ["communication", "structure", "vocab", "overall"] },
+        { "item_type": "writing", "prompt": "Kirjoita matkakirje ystävälle saksaksi. Aloita 'Liebe(r) [nimi],' ja lopeta 'Viele Grüße'. Kerro vähintään kolme tapahtumaa Perfektissä.", "min_words": 50, "max_words": 100, "rubric_focus": ["communication", "structure", "overall"] }
+      ]
+    },
+    {
+      "phase_id": "p9-synthesis-pitkä-blogi",
+      "phase_type": "synthesis_short_writing",
+      "title": "Kirjoita — YO-tyyppinen blogeintrag",
+      "instruction": "Kirjoita pidempää YO-tasoa vastaava blogi. Otsikko + 3 kappaletta.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I", "A", "B", "C", "M"],
+      "items": [
+        { "item_type": "writing", "prompt": "Kirjoita YO-tasoinen Blogeintrag (120–150 sanaa) viime matkastasi saksaksi. Rakenne: johdanto (minne, milloin, miten), pääosa (mitä teit joka päivä), lopetus (suosittelisitko, haluaisitko palata). Käytä Perfektiä, ajan ilmauksia ja V2-rakennetta systemaattisesti.", "min_words": 100, "max_words": 160, "rubric_focus": ["communication", "structure", "vocab", "overall"] },
+        { "item_type": "writing", "prompt": "YO-harjoitus: 'Schreibe einen Blogeintrag über deine letzte Reise.' Kirjoita 120–150 sanaa. Muista: blogissa käytetään du-muotoa (puhutellaan lukijaa), tervehdys ja lopetus (Hallo liebe Leser! / Bis zum nächsten Mal!).", "min_words": 100, "max_words": 160, "rubric_focus": ["communication", "structure", "vocab", "overall"] }
+      ]
+    }
+  ],
+  "vocab": [
+    { "es": "der Blogeintrag", "fi": "blogikirjoitus", "example_es": "Ich schreibe einen Blogeintrag über meine Reise.", "example_fi": "Kirjoitan blogikirjoituksen matkastani.", "gender": "m" },
+    { "es": "die Stadtführung", "fi": "kaupunkikierros, opaskierros", "example_es": "Wir haben an einer Stadtführung teilgenommen.", "example_fi": "Osallistuimme opaskierrokselle.", "gender": "f" },
+    { "es": "lecker", "fi": "maukas, hyvää", "example_es": "Die Bratwurst war sehr lecker.", "example_fi": "Bratwurst oli erittäin maukasta.", "gender": null },
+    { "es": "trotzdem", "fi": "siitä huolimatta", "example_es": "Trotzdem haben wir Spaß gehabt.", "example_fi": "Siitä huolimatta meillä oli hauskaa.", "gender": null },
+    { "es": "es hat geregnet", "fi": "satoi (rain), oli sateista", "example_es": "Leider hat es geregnet.", "example_fi": "Valitettavasti satoi.", "gender": null },
+    { "es": "Spaß haben", "fi": "pitää hauskaa", "example_es": "Wir haben viel Spaß gehabt.", "example_fi": "Meillä oli paljon hauskaa.", "gender": null },
+    { "es": "gefallen (jemandem)", "fi": "pitää jostakin, maistua", "example_es": "Berlin hat mir sehr gut gefallen.", "example_fi": "Berliini maistui minulle erittäin hyvin.", "gender": null },
+    { "es": "typisch", "fi": "tyypillinen", "example_es": "Wir haben typisch deutsches Essen probiert.", "example_fi": "Maistelimme tyypillistä saksalaista ruokaa.", "gender": null },
+    { "es": "zurückkehren / zurückfahren", "fi": "palata", "example_es": "Am letzten Tag sind wir nach Hause zurückgefahren.", "example_fi": "Viimeisenä päivänä palasimme kotiin.", "gender": null },
+    { "es": "empfehlen", "fi": "suositella", "example_es": "Ich empfehle Berlin sehr.", "example_fi": "Suosittelen Berliiniä lämpimästi.", "gender": null }
+  ],
+  "side_panel": {
+    "tabs": [
+      {
+        "id": "grammar",
+        "title": "Kielioppi",
+        "content_md": "## Kurssi 3 — yhteenveto\n\n**Perfektin rakenne:**\nhaben/sein (2. paikka) + ... + Partizip II (loppuun)\n\n**haben** → essen, trinken, kaufen, sehen, schreiben, lesen, schlafen, machen, lernen, besichtigen, fotografieren...\n\n**sein** → fahren, gehen, fliegen, kommen, laufen, schwimmen, bleiben, werden, aufstehen, ankommen...\n\n**V2 + inversio:**\n*Gestern **habe** ich...*\n*Letzten Sommer **bin** ich...*\n*Im Urlaub **haben** wir...*\n\n**Partisiipit — tärkeimmät:**\n- gemacht, gespielt, gekauft, gelernt\n- gegessen, getrunken, gesehen, geschrieben\n- gefahren, gegangen, geflogen, geblieben\n- reserviert, besichtigt, fotografiert"
+      },
+      {
+        "id": "examples",
+        "title": "Esimerkit",
+        "content_md": "## Malli-blogi — kopioi ja sovita\n\n*Mein Urlaub in Berlin*\n\n*Letzten Sommer **bin** ich mit dem Zug nach Berlin **gefahren**. Das **war** eine tolle Reise!*\n\n*Am ersten Tag **habe** ich das Hotel **gefunden** und dann **bin** ich in die Altstadt **gegangen**. Ich **habe** das Brandenburger Tor **gesehen** und viele Fotos **gemacht**.*\n\n*Am zweiten Tag **haben** wir das Museum **besichtigt** und Currywurst **gegessen**. Das Essen **war** sehr lecker!*\n\n*Leider **hat** es am letzten Tag **geregnet**. Trotzdem **haben** wir viel Spaß **gehabt**. Schließlich **sind** wir nach Hause **gefahren**.*\n\n*Berlin hat mir super gefallen — ich komme nächstes Jahr wieder!*"
+      },
+      {
+        "id": "tips",
+        "title": "YO-vinkit",
+        "content_md": "## Matkablogi YO-kokeessa\n\n**Teil 4 tyypillinen tehtävänanto:**\n'Schreibe einen Blogeintrag über deine letzte Reise. Erzähle, wohin du gefahren bist, was du gemacht hast und wie es dir gefallen hat.'\n\n**Pisteitä keräät kun:**\n✅ Käytät Perfektiä oikein (haben/sein + Partizip II)\n✅ V2-sääntö toimii (Gestern habe ich, nicht *Gestern ich habe*)\n✅ Tekstilaji on oikea: blogi alkaa Hallo/Liebe Leser, loppuu Bis zum nächsten Mal!\n✅ Käytät ajanilmauksia: letzten Sommer, am ersten Tag, dann, schließlich\n\n**Yleisimmät virheet kirjoitelmassa:**\n1. haben/sein sekaannus (gehen → SEIN!)\n2. Partisiippi väärässä paikassa (ei keskelle lausetta)\n3. V2-virhe ajanilmauksen jälkeen"
+      }
+    ]
+  }
+}

@@ -1,0 +1,224 @@
+{
+  "meta": {
+    "course_key": "kurssi_2",
+    "lesson_index": 4,
+    "lesson_type": "grammar",
+    "level": "A",
+    "title": "Akkusativ — den ja einen (maskuliini muuttuu)",
+    "description": "Harjoittelet Akkusativia: Wen? Was? Vain maskuliinisubstantiivit muuttuvat (der → den, ein → einen). Feminiini, neutri ja monikko pysyvät samana kuin Nominativissa.",
+    "yo_relevance": "Teil 3 Rakenne ja sanasto: artikkelivirheet ovat yksi yleisimmistä virhekategorioista saksassa. Teil 4 Kirjoitelma: Akkusativ tarvitaan aina kun kuvaillaan mitä syödään, mitä otetaan tai mitä nähdään.",
+    "estimated_minutes_median": 13
+  },
+  "teaching": {
+    "intro_md": "# Akkusativ — den ja einen\n\nAkkusativ vastaa kysymykseen **Wen? Was?** (kuka? mitä? — objekti).\n\n## Tärkein sääntö: VAIN maskuliini muuttuu!\n\n| Suku | Nominativ (subjekti) | Akkusativ (objekti) |\n|---|---|---|\n| maskuliini | **der** Mann / **ein** Mann | **den** Mann / **einen** Mann |\n| feminiini | **die** Frau / **eine** Frau | **die** Frau / **eine** Frau |\n| neutri | **das** Kind / **ein** Kind | **das** Kind / **ein** Kind |\n| monikko | **die** Kinder | **die** Kinder |\n\n> *Ich sehe **den** Mann.* — Näen miehen. (maskuliini → den)\n> *Ich sehe **die** Frau.* — Näen naisen. (feminiini → pysyy die)\n> *Ich sehe **das** Kind.* — Näen lapsen. (neutri → pysyy das)\n\n## Tunnistus: Akkusativin laukaisijat\n\nAkkusativ tulee näiden verbien jälkeen:\n- **sehen** — nähdä: *Ich sehe den Film*\n- **haben** — omistaa: *Ich habe einen Bruder*\n- **nehmen** — ottaa: *Ich nehme den Bus*\n- **kaufen** — ostaa: *Ich kaufe einen Apfel*\n- **essen** — syödä: *Er isst einen Kuchen*\n\n## Muistisääntö\n\n**der → den, ein → einen** — vain maskuliini muuttuu, n tulee loppuun!",
+    "key_points": [
+      "Akkusativ = objekti (Wen? Was?).",
+      "VAIN maskuliini muuttuu: der → den, ein → einen.",
+      "Feminiini, neutri ja monikko pysyvät samana.",
+      "Laukaisijat: sehen, haben, nehmen, kaufen, essen.",
+      "Distraktori: 'Ich sehe der Mann' on VÄÄRIN — oikein 'Ich sehe den Mann'."
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1-recognition-mc-akkusativ",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista — oikea artikkeli",
+      "instruction": "Valitse oikea artikkeli Akkusativissa.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "mc", "stem": "Ich sehe ___ Mann.", "choices": ["der", "den", "die", "das"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Mann on maskuliini → Akkusativissa den. der on Nominativ-muoto (virhe jonka suomalaiset usein tekevät)." },
+        { "item_type": "mc", "stem": "Er kauft ___ Apfel.", "choices": ["ein", "einen", "eine", "die"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Apfel on maskuliini (der Apfel) → epämääräinen Akkusativ = einen." },
+        { "item_type": "mc", "stem": "Ich habe ___ Bruder.", "choices": ["ein", "eine", "einen", "der"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "Bruder on maskuliini → einen. Ich habe einen Bruder = minulla on veli." },
+        { "item_type": "mc", "stem": "Sie kauft ___ Tasche. (laukku, feminiini)", "choices": ["den", "einen", "eine", "ein"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "Tasche on feminiini — Akkusativissa feminiini EI muutu: eine Tasche." },
+        { "item_type": "mc", "stem": "Wir sehen ___ Film.", "choices": ["die", "der", "ein", "den"], "correct_index": 3, "distractor_difficulty": "medium", "explanation": "Film on maskuliini (der Film) → Akkusativissa den Film." },
+        { "item_type": "mc", "stem": "Er isst ___ Kuchen.", "choices": ["ein", "eine", "einen", "der"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "Kuchen on maskuliini (der Kuchen) → einen Kuchen." },
+        { "item_type": "mc", "stem": "Ich lese ___ Buch. (neutri)", "choices": ["den", "einen", "ein", "die"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "Buch on neutri (das Buch) — Akkusativissa neutri EI muutu: ein Buch." },
+        { "item_type": "mc", "stem": "Du nimmst ___ Bus.", "choices": ["die", "der", "einen", "den"], "correct_index": 3, "distractor_difficulty": "medium", "explanation": "Bus on maskuliini (der Bus) → Akkusativissa den Bus." },
+        { "item_type": "mc", "stem": "Er hat ___ Hund.", "choices": ["einen", "ein", "eine", "den"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "Hund on maskuliini → epämääräinen Akkusativ: einen Hund." },
+        { "item_type": "mc", "stem": "Sie sieht ___ Katze. (feminiini)", "choices": ["den", "einen", "die", "das"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "Katze on feminiini → die Katze (ei muutu Akkusativissa)." },
+        { "item_type": "mc", "stem": "Ich kaufe ___ Tisch. (maskuliini)", "choices": ["ein", "eine", "einen", "der"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "Tisch on maskuliini (der Tisch) → epämääräinen Akkusativ: einen Tisch." },
+        { "item_type": "mc", "stem": "Er trinkt ___ Kaffee. (maskuliini)", "choices": ["die", "das", "eine", "einen"], "correct_index": 3, "distractor_difficulty": "medium", "explanation": "Kaffee on maskuliini (der Kaffee) → Akkusativissa einen Kaffee." },
+        { "item_type": "mc", "stem": "Wir haben ___ Wohnung. (feminiini)", "choices": ["einen", "ein", "eine", "der"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "Wohnung on feminiini → eine Wohnung (ei muutu Akkusativissa)." },
+        { "item_type": "mc", "stem": "Ich sehe ___ Auto. (neutri)", "choices": ["den", "einen", "ein", "die"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "Auto on neutri (das Auto) → Akkusativissa ein Auto (ei muutu)." },
+        { "item_type": "mc", "stem": "Er hat ___ Computer.", "choices": ["eine", "einen", "ein", "der"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "Computer on maskuliini (der Computer) → einen Computer." }
+      ]
+    },
+    {
+      "phase_id": "p2-recognition-match-nominativ-akkusativ",
+      "phase_type": "recognition_match",
+      "title": "Yhdistä — Nominativ ja Akkusativ",
+      "instruction": "Yhdistä Nominativ-muoto oikeaan Akkusativ-muotoon.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        {
+          "item_type": "match",
+          "left_label": "Nominativ",
+          "right_label": "Akkusativ",
+          "pairs": [
+            { "left": "der Mann", "right": "den Mann" },
+            { "left": "ein Hund", "right": "einen Hund" },
+            { "left": "die Frau", "right": "die Frau" },
+            { "left": "das Kind", "right": "das Kind" },
+            { "left": "der Film", "right": "den Film" },
+            { "left": "ein Apfel", "right": "einen Apfel" },
+            { "left": "eine Tasche", "right": "eine Tasche" },
+            { "left": "der Kaffee", "right": "den Kaffee" },
+            { "left": "ein Buch", "right": "ein Buch" },
+            { "left": "der Bus", "right": "den Bus" }
+          ]
+        }
+      ]
+    },
+    {
+      "phase_id": "p3-recall-typed-de-fi",
+      "phase_type": "recall_typed_es_to_fi",
+      "title": "Kirjoita Akkusativ-muoto",
+      "instruction": "Kirjoita annettu lauseke Akkusativissa.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "der Mann → Akkusativ", "accept": ["den Mann"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "ein Hund → Akkusativ", "accept": ["einen Hund"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "die Frau → Akkusativ", "accept": ["die Frau"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "das Buch → Akkusativ", "accept": ["das Buch"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "der Film → Akkusativ", "accept": ["den Film"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "ein Apfel → Akkusativ", "accept": ["einen Apfel"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "eine Tasche → Akkusativ", "accept": ["eine Tasche"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "der Bus → Akkusativ", "accept": ["den Bus"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "ein Kuchen → Akkusativ", "accept": ["einen Kuchen"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "das Auto → Akkusativ", "accept": ["das Auto"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "der Kaffee → Akkusativ", "accept": ["den Kaffee"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "ein Bruder → Akkusativ", "accept": ["einen Bruder"] }
+      ]
+    },
+    {
+      "phase_id": "p4-recall-typed-fi-de",
+      "phase_type": "recall_typed_fi_to_es",
+      "title": "Suomesta saksaksi — Akkusativ",
+      "instruction": "Käännä lauseke saksaksi Akkusativissa.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "miehen (määräinen, maskuliini)", "accept": ["den Mann"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "yhden koiran (epämääräinen, maskuliini)", "accept": ["einen Hund"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "naisen (määräinen, feminiini)", "accept": ["die Frau"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "elokuvan (määräinen, maskuliini)", "accept": ["den Film"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "yhden bussin (epämääräinen, maskuliini)", "accept": ["einen Bus"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "kirjan (määräinen, neutri)", "accept": ["das Buch"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "yhden veljen (epämääräinen)", "accept": ["einen Bruder"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "kahvin (määräinen, maskuliini)", "accept": ["den Kaffee"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "laukun (määräinen, feminiini)", "accept": ["die Tasche"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "yhden kakun (epämääräinen)", "accept": ["einen Kuchen"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "auton (määräinen, neutri)", "accept": ["das Auto"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "omenan (määräinen, maskuliini)", "accept": ["den Apfel"] }
+      ]
+    },
+    {
+      "phase_id": "p5-application-gap-helppo",
+      "phase_type": "application_gap_fill",
+      "title": "Lauseen täydennys — perustaso",
+      "instruction": "Täydennä oikea artikkeli lauseeseen.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Ich sehe {1} Mann. (määräinen)", "answers": [["den"]], "word_bank": ["den", "der", "die", "das"] },
+        { "item_type": "gap_fill", "sentence_template": "Er kauft {1} Apfel. (epämääräinen)", "answers": [["einen"]], "word_bank": ["einen", "ein", "eine", "der"] },
+        { "item_type": "gap_fill", "sentence_template": "Wir sehen {1} Film. (määräinen)", "answers": [["den"]], "word_bank": ["den", "die", "das", "der"] },
+        { "item_type": "gap_fill", "sentence_template": "Sie hat {1} Tasche. (epämääräinen, feminiini)", "answers": [["eine"]], "word_bank": ["eine", "einen", "ein", "die"] },
+        { "item_type": "gap_fill", "sentence_template": "Ich lese {1} Buch. (epämääräinen, neutri)", "answers": [["ein"]], "word_bank": ["ein", "einen", "eine", "das"] },
+        { "item_type": "gap_fill", "sentence_template": "Du nimmst {1} Bus. (määräinen)", "answers": [["den"]], "word_bank": ["den", "die", "der", "das"] },
+        { "item_type": "gap_fill", "sentence_template": "Er hat {1} Hund. (epämääräinen, maskuliini)", "answers": [["einen"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Ich trinke {1} Kaffee. (epämääräinen)", "answers": [["einen"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Wir kaufen {1} Tisch. (epämääräinen, maskuliini)", "answers": [["einen"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Sie sieht {1} Katze. (määräinen, feminiini)", "answers": [["die"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p6-application-gap-vaativa",
+      "phase_type": "application_gap_fill",
+      "title": "Lauseen täydennys — vaativa",
+      "instruction": "Täydennä oikea artikkeli. Tunnista substantiivin suku kontekstista.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Ich brauche {1} neuen Computer. (maskuliini, epämääräinen)", "answers": [["einen"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Er liest {1} Artikel in der Zeitung. (maskuliini, määräinen)", "answers": [["den"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Sie kauft {1} Wohnung in Berlin. (feminiini, epämääräinen)", "answers": [["eine"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Wir haben {1} Garten hinter dem Haus. (maskuliini)", "answers": [["einen"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Er isst {1} Kuchen zum Geburtstag. (maskuliini, epämääräinen)", "answers": [["einen"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Ich sehe {1} Hund im Park. (maskuliini, määräinen)", "answers": [["den"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Du nimmst {1} Zug um 8 Uhr. (maskuliini, määräinen)", "answers": [["den"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Mein Vater hat {1} alten Wagen. (maskuliini, epämääräinen)", "answers": [["einen"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Ich mag {1} Käse sehr. (maskuliini, määräinen)", "answers": [["den"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Er sucht {1} Job in München. (maskuliini, epämääräinen)", "answers": [["einen"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p7-application-sentence-build",
+      "phase_type": "application_sentence_build",
+      "title": "Lauseiden rakentelu",
+      "instruction": "Kirjoita kokonainen lause oikealla artikkelilla.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Näen miehen kadulla.", "accept": ["Ich sehe den Mann auf der Straße.", "Ich sehe einen Mann auf der Straße."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Hän ostaa kakun synttäreille.", "accept": ["Er kauft einen Kuchen für den Geburtstag.", "Sie kauft einen Kuchen für den Geburtstag."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Katsomme elokuvaa.", "accept": ["Wir sehen den Film.", "Wir schauen den Film."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Minulla on veli ja koira.", "accept": ["Ich habe einen Bruder und einen Hund.", "Ich habe einen Bruder und einen Hund"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Hän juo kahvin aamiaisella.", "accept": ["Er trinkt den Kaffee beim Frühstück.", "Er trinkt einen Kaffee beim Frühstück."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Otatko sinä bussin vai junan?", "accept": ["Nimmst du den Bus oder den Zug?", "Nimmst du den Bus oder die Bahn?"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Osta minulle omena.", "accept": ["Kauf mir einen Apfel.", "Kauf mir bitte einen Apfel."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Hän lukee sanomalehteä joka aamu.", "accept": ["Er liest jeden Morgen die Zeitung.", "Er liest die Zeitung jeden Morgen."] }
+      ]
+    },
+    {
+      "phase_id": "p8-synthesis-translate",
+      "phase_type": "synthesis_translate",
+      "title": "YO-tyylinen käännös",
+      "instruction": "Käännä lauseet saksaksi. Kiinnitä huomiota artikkeleihin.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Minulla on koira ja kissa.", "accept": ["Ich habe einen Hund und eine Katze.", "Ich habe einen Hund und eine Katze"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Hän ostaa uuden tietokoneen.", "accept": ["Er kauft einen neuen Computer.", "Sie kauft einen neuen Computer."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Katsomme elokuvaa lauantaina.", "accept": ["Wir sehen den Film am Samstag.", "Wir schauen den Film am Samstag."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Hän tarvitsee uuden auton.", "accept": ["Er braucht einen neuen Wagen.", "Er braucht ein neues Auto.", "Sie braucht ein neues Auto."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Otatko bussin vai ajatko autolla?", "accept": ["Nimmst du den Bus oder fährst du mit dem Auto?", "Nimmst du den Bus oder fährst du Auto?"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Hän näkee naisen ja kaksi lasta puistossa.", "accept": ["Er sieht die Frau und zwei Kinder im Park.", "Er sieht eine Frau und zwei Kinder im Park."] }
+      ]
+    }
+  ],
+  "vocab": [
+    { "es": "der Akkusativ", "fi": "akkusatiivi (objektin sija)", "example_es": "Ich sehe den Mann. (Akkusativ)", "example_fi": "Näen miehen. (akkusatiivi)", "gender": "m" },
+    { "es": "den (maskuliini, määräinen)", "fi": "den = der akkusativissa", "example_es": "Ich sehe den Film.", "example_fi": "Näen elokuvan.", "gender": null },
+    { "es": "einen (maskuliini, epämääräinen)", "fi": "einen = ein akkusativissa", "example_es": "Ich habe einen Bruder.", "example_fi": "Minulla on veli.", "gender": null },
+    { "es": "sehen", "fi": "nähdä", "example_es": "Ich sehe den Mann.", "example_fi": "Näen miehen.", "gender": null },
+    { "es": "kaufen", "fi": "ostaa", "example_es": "Er kauft einen Apfel.", "example_fi": "Hän ostaa omenan.", "gender": null },
+    { "es": "brauchen", "fi": "tarvita", "example_es": "Ich brauche einen Computer.", "example_fi": "Tarvitsen tietokoneen.", "gender": null },
+    { "es": "suchen", "fi": "etsiä", "example_es": "Er sucht einen Job.", "example_fi": "Hän etsii työtä.", "gender": null },
+    { "es": "der Hund", "fi": "koira", "example_es": "Ich habe einen Hund.", "example_fi": "Minulla on koira.", "gender": "m" },
+    { "es": "die Katze", "fi": "kissa", "example_es": "Sie hat eine Katze.", "example_fi": "Hänellä on kissa.", "gender": "f" },
+    { "es": "der Film", "fi": "elokuva", "example_es": "Wir sehen den Film.", "example_fi": "Katsomme elokuvan.", "gender": "m" },
+    { "es": "der Apfel", "fi": "omena", "example_es": "Er isst einen Apfel.", "example_fi": "Hän syö omenan.", "gender": "m" },
+    { "es": "die Tasche", "fi": "laukku", "example_es": "Sie kauft eine Tasche.", "example_fi": "Hän ostaa laukun.", "gender": "f" },
+    { "es": "der Computer", "fi": "tietokone", "example_es": "Ich brauche einen Computer.", "example_fi": "Tarvitsen tietokoneen.", "gender": "m" },
+    { "es": "der Job", "fi": "työ, pesti", "example_es": "Er sucht einen Job.", "example_fi": "Hän etsii töitä.", "gender": "m" }
+  ],
+  "side_panel": {
+    "tabs": [
+      {
+        "id": "grammar",
+        "title": "Kielioppi",
+        "content_md": "## Akkusativ — vain maskuliini muuttuu!\n\n| Suku | Nominativ | Akkusativ |\n|---|---|---|\n| maskuliini | **der** / **ein** | **den** / **einen** |\n| feminiini | die / eine | die / eine |\n| neutri | das / ein | das / ein |\n| monikko | die | die |\n\n## Akkusativin laukaisijat\n\nVerbit jotka vaativat Akkusatiivin:\n- **haben** — omistaa\n- **sehen** — nähdä\n- **kaufen** — ostaa\n- **nehmen** — ottaa\n- **essen** — syödä\n- **trinken** — juoda\n- **brauchen** — tarvita\n- **suchen** — etsiä\n\n## Muistisääntö\n\n**der → den, ein → einen** — n loppuun, vain maskuliini!"
+      },
+      {
+        "id": "tips",
+        "title": "YO-vinkki",
+        "content_md": "## YO-koe — artikkelivirheet\n\nArtikkelivirheet ovat yksi yleisimmistä saksan YO-koevirheistä. Teil 3:ssa on usein tehtäviä joissa pitää valita oikea artikkeli.\n\n## Yleisin virhe\n\n*Ich sehe **der** Mann.* ❌\n*Ich sehe **den** Mann.* ✅\n\nMuista: **der** on Nominativ (subjekti), **den** on Akkusativ (objekti)!\n\n## Feminiini ja neutri — helppoja pisteitä\n\nFeminiini (die) ja neutri (das) **eivät muutu** Akkusativissa — jos tiedät sukupuolen, nämä ovat helppoja pisteitä kirjoitelmassa.\n\n## Käytännön vinkki\n\nKun kirjoitat: *Ich habe...*, *Ich sehe...*, *Ich kaufe...* — tarkista artikkeli. Maskuliini? → den/einen."
+      }
+    ]
+  }
+}

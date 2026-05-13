@@ -1,0 +1,110 @@
+{
+  "meta": {
+    "course_key": "kurssi_3",
+    "lesson_index": 10,
+    "lesson_type": "writing",
+    "level": "B",
+    "title": "Kirjoitustehtävä — Blogeintrag über deine letzte Reise",
+    "description": "Kirjoitat YO-tyylisen matkablogin saksaksi. Harjoittelet tekstilajin konventioita (otsikko, tervehdys, kappaleet, lopetus) ja Perfektin käyttöä matkakirjoitelmassa. AI-arviointi käyttää Puheon saksa-rubriikkia.",
+    "yo_relevance": "Teil 4 (Kirjoitelma): tämä on suora YO-kirjoitelmavalmistelu. YO-kokeessa pyydetään usein 'Schreibe einen Blogeintrag über deine letzte Reise' — tässä harjoitellaan juuri sitä. Rubriikissa mitataan viestinnällisyys, kielen rakenteet, sanasto ja kokonaisuus.",
+    "estimated_minutes_median": 20
+  },
+  "teaching": {
+    "intro_md": "# Kirjoitustehtävä — matkablogi saksaksi\n\nYO-kokeessa Teil 4 sisältää yhden lyhyen (160–240 merkkiä ilman välilyöntejä) ja yhden pitkän (300–450 merkkiä) kirjoitelman.\n\n## Matkablogin rakenne\n\n**Otsikko:** *Mein Urlaub in [kaupunki/maa]*\n\n**Johdanto (Einleitung):**\n- Minne matkustit? Milloin? Miten?\n- *Letzten Sommer bin ich mit dem Zug nach Berlin gefahren.*\n\n**Pääosa (Hauptteil) — joka päivä:**\n- *Am ersten Tag habe ich... besichtigt.*\n- *Dann haben wir... gegessen.*\n- *Am zweiten Tag sind wir... gegangen.*\n\n**Lopetus (Schluss):**\n- Miten loma meni? Suosittelisitko?\n- *Der Urlaub hat mir sehr gut gefallen.*\n- *Ich kann [kaupunki] sehr empfehlen!*\n\n## Tarkistuslista\n\n✅ Otsikko\n✅ Blogin tervehdys: *Hallo liebe Leser!* tai *Liebe Freunde,*\n✅ Perfekti jokaisessa tapahtumakuvauksessa\n✅ V2-rakenne ajan ilmausten jälkeen\n✅ Lopetus: *Bis zum nächsten Mal!* tai *Viele Grüße*\n\n## YTL-rubriikki (4 ulottuvuutta)\n\n1. **Viestinnällisyys** — välittyykö viesti, tekstilaji oikea\n2. **Kielen rakenteet** — Perfekti oikein, V2 toimii, artikkelit\n3. **Sanasto** — matkasanasto, ei toistoa, ei anglismeja\n4. **Kokonaisuus** — konnektorit, kappalejako, rakenne",
+    "key_points": [
+      "Blogi alkaa tervehdyksellä (Hallo liebe Leser!) ja loppuu lopetuksella (Bis zum nächsten Mal!).",
+      "Käytä Perfektiä jokaisessa tapahtumakuvauksessa — se on kirjoitelman ydin.",
+      "Aloita lauseita eri ajan ilmauksilla: Am ersten Tag, Dann, Danach, Am Abend, Schließlich.",
+      "Konnektorit lisäävät pisteitä: außerdem, trotzdem, leider, natürlich.",
+      "YTL arvioi viestinnällisyyden ensin — varmista että viesti välittyy."
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1-writing-lyhyt",
+      "phase_type": "writing_long",
+      "title": "Kirjoita — lyhyt matkablogi",
+      "instruction": "Kirjoita lyhyt matkablogi saksaksi (50–80 sanaa). Käytä Perfektiä.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "writing", "prompt": "Kirjoita lyhyt matkablogi (Blogeintrag) saksaksi viime lomastasi tai kuviteltuasi lomasta. Kirjoita 50–80 sanaa. Kerro: minne matkustit, miten matkustit, mitä teit ja miltä loma tuntui. Käytä Perfektiä.", "min_words": 40, "max_words": 90, "rubric_focus": ["communication", "structure"] }
+      ]
+    },
+    {
+      "phase_id": "p2-writing-ytl-blogi",
+      "phase_type": "writing_long",
+      "title": "Kirjoita — YO-tyylinen Blogeintrag",
+      "instruction": "Kirjoita YO-kokeeseen valmistava matkablogi (100–140 sanaa). Rakenne + Perfekti + V2.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I"],
+      "items": [
+        { "item_type": "writing", "prompt": "YO-harjoitus: 'Schreibe einen Blogeintrag über deine letzte Reise.' Kirjoita 100–140 sanaa saksaksi. Rakenne: 1) otsikko + tervehdys, 2) missä olit ja milloin, 3) mitä teit joka päivä (Perfekti!), 4) miltä loma tuntui + suositus. Lopeta: Bis zum nächsten Mal!", "min_words": 80, "max_words": 160, "rubric_focus": ["communication", "structure", "vocab", "overall"] }
+      ]
+    },
+    {
+      "phase_id": "p3-writing-ytl-pitkä",
+      "phase_type": "writing_long",
+      "title": "Kirjoita — pitkä YO-blogi",
+      "instruction": "Kirjoita YO-koetta vastaava pitkä kirjoitelma (150–200 sanaa).",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "writing", "prompt": "Kirjoita pitkä matkablogi (150–200 sanaa) saksaksi. Tehtävä: 'Du warst letzte Woche in einer deutschen Stadt. Schreibe einen Blogeintrag für deine Freunde.' Sisällytä: 1) matkan kuvaus (milloin, miten, minne), 2) vähintään kolme aktiviteettia Perfektissä, 3) ruokailu tai ostokset, 4) sää ja miltä tuntui, 5) lopetus + suositus. Käytä konnektoreita: außerdem, trotzdem, leider, danach, schließlich.", "min_words": 120, "max_words": 220, "rubric_focus": ["communication", "structure", "vocab", "overall"] }
+      ]
+    },
+    {
+      "phase_id": "p4-writing-sähköposti",
+      "phase_type": "writing_long",
+      "title": "Kirjoita — sähköposti matkasta",
+      "instruction": "Kirjoita sähköposti ystävälle matkastasi (80–120 sanaa).",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "writing", "prompt": "Kirjoita sähköposti ystävälle (Liebe/r [nimi], ... Viele Grüße) matkastasi saksalaiseen kaupunkiin. Kerro: missä olit, mitä teit, mitä söit, mikä oli parasta. Käytä Perfektiä ja ainakin neljää eri ajan ilmausta. Kirjoita 80–120 sanaa.", "min_words": 70, "max_words": 140, "rubric_focus": ["communication", "structure", "vocab", "overall"] }
+      ]
+    },
+    {
+      "phase_id": "p5-writing-vapaa",
+      "phase_type": "writing_long",
+      "title": "Kirjoita — vapaa blogi",
+      "instruction": "Kirjoita blogi mistä tahansa matkasta (100–160 sanaa). Täysin vapaa aihe.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "writing", "prompt": "Kirjoita vapaamuotoinen matkablogi saksaksi. Aihe vapaa: voit kirjoittaa oikeasta matkastasi tai kuvitteellisesta. Kielioppitavoite: vähintään viisi eri Perfekti-muotoa, joista 2 sein-verbeillä; vähintään kolme lausetta alkaa ajan ilmauksella (V2-inversio); konnektoreita vähintään 3. Pituus: 100–160 sanaa.", "min_words": 90, "max_words": 180, "rubric_focus": ["communication", "structure", "vocab", "overall"] }
+      ]
+    }
+  ],
+  "vocab": [
+    { "es": "außerdem", "fi": "lisäksi", "example_es": "Außerdem haben wir ein Museum besucht.", "example_fi": "Lisäksi kävimme museossa.", "gender": null },
+    { "es": "trotzdem", "fi": "siitä huolimatta", "example_es": "Trotzdem hat uns der Urlaub gut gefallen.", "example_fi": "Siitä huolimatta loma maistui meille.", "gender": null },
+    { "es": "natürlich", "fi": "tietenkin, luonnollisesti", "example_es": "Natürlich haben wir Bratwurst gegessen.", "example_fi": "Tietenkin söimme Bratwurstin.", "gender": null },
+    { "es": "besonders", "fi": "erityisesti, varsinkin", "example_es": "Besonders gut hat mir das Museum gefallen.", "example_fi": "Erityisesti museo maistui minulle.", "gender": null },
+    { "es": "wirklich", "fi": "todella, oikeasti", "example_es": "Der Dom ist wirklich beeindruckend.", "example_fi": "Tuomiokirkko on todella vaikuttava.", "gender": null },
+    { "es": "insgesamt", "fi": "kaiken kaikkiaan", "example_es": "Insgesamt war der Urlaub super.", "example_fi": "Kaiken kaikkiaan loma oli loistava.", "gender": null },
+    { "es": "empfehlen", "fi": "suositella", "example_es": "Ich kann München sehr empfehlen.", "example_fi": "Suosittelen Müncheniä lämpimästi.", "gender": null },
+    { "es": "bis zum nächsten Mal", "fi": "ensi kerralla (hyvästelytervehdys)", "example_es": "Bis zum nächsten Mal, liebe Leser!", "example_fi": "Ensi kerralla, rakkaat lukijat!", "gender": null },
+    { "es": "die Unterkunft", "fi": "majoitus", "example_es": "Die Unterkunft war günstig.", "example_fi": "Majoitus oli edullinen.", "gender": "f" },
+    { "es": "toll / super / wunderbar", "fi": "loistava / super / ihana", "example_es": "Der Urlaub war toll!", "example_fi": "Loma oli loistava!", "gender": null }
+  ],
+  "side_panel": {
+    "tabs": [
+      {
+        "id": "examples",
+        "title": "Malliteksti",
+        "content_md": "## Malli-Blogeintrag\n\n**Mein Urlaub in Berlin**\n\n*Hallo liebe Leser!*\n\n*Letzten Sommer bin ich mit dem Zug nach Berlin gefahren. Die Reise hat nur vier Stunden gedauert.*\n\n*Am ersten Tag habe ich das Hotel gesucht und bin dann in die Altstadt gegangen. Ich habe das Brandenburger Tor gesehen und viele Fotos gemacht.*\n\n*Am zweiten Tag haben wir ein Museum besichtigt — kostenlos und sehr interessant! Am Abend haben wir im Restaurant Currywurst gegessen. Lecker!*\n\n*Leider hat es am letzten Tag geregnet. Trotzdem war der Urlaub super.*\n\n*Ich kann Berlin sehr empfehlen — besonders das Brandenburger Tor und die Museen!*\n\n*Bis zum nächsten Mal!*\n\n---\n**Konnektorit:** dann, danach, trotzdem, leider, besonders, außerdem"
+      },
+      {
+        "id": "tips",
+        "title": "YO-vinkit",
+        "content_md": "## Blogeintrag YO-kokeessa\n\n**Tekstilajin vaatimukset:**\n- Otsikko: Mein Urlaub in...\n- Tervehdys: Hallo liebe Leser! / Liebe Freunde,\n- Lopetus: Bis zum nächsten Mal! / Viele Grüße\n\n**Pisteitä keräät:**\n✅ Perfekti oikein: bin gefahren, habe gegessen\n✅ V2 toimii: Gestern habe ich..., Am ersten Tag sind wir...\n✅ Monipuolinen sanasto: matkasanat, ajan ilmaukset\n✅ Konnektorit: außerdem, trotzdem, danach, leider\n\n**Yleisimmät virheet kirjoitelmassa:**\n1. *habe gegangen* → *bin gegangen* ✓\n2. *Gestern ich habe...* → *Gestern habe ich...* ✓\n3. *gereserviert* → *reserviert* ✓ (-ieren ei saa ge-:tä)\n\n**Merkkimäärät YO-kokeessa:**\n- Lyhyt: 160–240 merkkiä (ilman välilyöntejä)\n- Pitkä: 300–450 merkkiä (ilman välilyöntejä)"
+      },
+      {
+        "id": "grammar",
+        "title": "Kielioppi",
+        "content_md": "## Blogeintrag — rakennepankki\n\n**Aloituslauseet:**\n- *Letzten Sommer bin ich... gefahren/geflogen.*\n- *Letzte Woche haben wir... besucht.*\n- *Vor zwei Wochen bin ich... angekommen.*\n\n**Joka päivä:**\n- *Am ersten/zweiten/letzten Tag habe ich...*\n- *Zuerst haben wir... dann sind wir...*\n- *Am Abend haben wir... gegessen.*\n\n**Kuvailulauseet:**\n- *Das Wetter war...*\n- *Die Stadt ist wirklich...*\n- *Das Essen hat mir... gefallen.*\n\n**Lopetus:**\n- *Insgesamt war der Urlaub...*\n- *Ich kann... sehr empfehlen!*\n- *Nächstes Jahr möchte ich...*"
+      }
+    ]
+  }
+}

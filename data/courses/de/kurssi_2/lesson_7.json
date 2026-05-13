@@ -1,0 +1,251 @@
+{
+  "meta": {
+    "course_key": "kurssi_2",
+    "lesson_index": 7,
+    "lesson_type": "mixed",
+    "level": "A",
+    "title": "Possessivit + Akkusativ yhdessä",
+    "description": "Yhdistät possessivit (mein/dein/sein/ihr…) Akkusativiin. Possessiivit taipuvat kuten artikkelit: maskuliinissa Akkusativ meinen/deinen/seinen/ihren. Harjoitat myös kodin ja perheen sanastoa (L1+K1).",
+    "yo_relevance": "Teil 3 Rakenne ja sanasto: possessiivien Akkusativ-muodot ovat klassisia tehtäviä. Teil 4 Kirjoitelma: 'Meine Familie' -aihe vaatii possessiveja joka lauseessa.",
+    "estimated_minutes_median": 15
+  },
+  "teaching": {
+    "intro_md": "# Possessivit + Akkusativ\n\nPossessivit (minun, sinun, hänen…) taipuvat **samoin kuin artikkelit**.\n\n## Nominativ vs. Akkusativ\n\n| Suku | Nominativ | Akkusativ |\n|---|---|---|\n| maskuliini | mein**∅** Vater | mein**en** Vater |\n| feminiini | mein**e** Mutter | mein**e** Mutter |\n| neutri | mein**∅** Kind | mein**∅** Kind |\n| monikko | mein**e** Eltern | mein**e** Eltern |\n\n## Kaikki possessivit\n\n| Persoona | Possessiivi |\n|---|---|\n| ich | **mein** |\n| du | **dein** |\n| er | **sein** |\n| sie (hän) | **ihr** |\n| wir | **unser** |\n| ihr | **euer** |\n| sie/Sie | **ihr/Ihr** |\n\n> *Ich sehe **meinen** Vater.* — Näen isäni. (maskuliini, Akkusativ)\n> *Ich habe **meine** Mutter.* — Minulla on äitini. (feminiini, ei muutu)\n> *Er vermisst **seinen** Hund.* — Hän ikävöi koiraansa.\n\n## Muistisääntö\n\nVain maskuliini saa -en-päätteen Akkusativissa: **mein → meinen, dein → deinen** jne.",
+    "key_points": [
+      "Possessivit taipuvat samoin kuin ein/eine/ein.",
+      "Maskuliini Akkusativissa: mein → meinen, dein → deinen, sein → seinen, ihr → ihren.",
+      "Feminiini ja neutri eivät muutu: meine Mutter (Nom.) = meine Mutter (Akk.).",
+      "ihr voi tarkoittaa 'hänen (fem.)' tai 'heidän' — konteksti ratkaisee.",
+      "Cross-pollination: perhe- ja kotisanasto L1:stä ja K1:stä."
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1-recognition-mc-possessiv",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista — oikea possessiivi",
+      "instruction": "Valitse oikea possessiivi Akkusativissa.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "mc", "stem": "Ich sehe ___ Vater. (minun isäni)", "choices": ["mein", "meinen", "meine", "meinem"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Vater on maskuliini → Akkusativissa meinen. mein on Nominativ-muoto." },
+        { "item_type": "mc", "stem": "Er ruft ___ Mutter an. (hänen äitinsä)", "choices": ["sein", "seine", "seinen", "seiner"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Mutter on feminiini → seine (ei muutu Akkusativissa). Älä lisää -en." },
+        { "item_type": "mc", "stem": "Du liebst ___ Hund. (sinun koirasi)", "choices": ["dein", "deinen", "deine", "deinem"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Hund on maskuliini → Akkusativissa deinen." },
+        { "item_type": "mc", "stem": "Ich vermisse ___ Bruder. (minun veljeäni)", "choices": ["meinen", "mein", "meine", "meiner"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "Bruder on maskuliini → meinen." },
+        { "item_type": "mc", "stem": "Sie liebt ___ Familie. (hänen perhettään, she)", "choices": ["ihre", "ihren", "ihr", "ihrem"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "Familie on feminiini → ihre (ei muutu). ihren olisi maskuliinin Akkusativ." },
+        { "item_type": "mc", "stem": "Wir besuchen ___ Großvater. (meidän isoisäämme)", "choices": ["unseren", "unser", "unsere", "unserem"], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "Großvater on maskuliini → Akkusativissa unseren." },
+        { "item_type": "mc", "stem": "Er kauft ___ Schwester ein Geschenk. (hänen sisarelleen)", "choices": ["seinen", "sein", "seiner", "seine"], "correct_index": 3, "distractor_difficulty": "medium", "explanation": "Schwester on feminiini → seine (Akkusativissa feminiini ei muutu). Datiivi tulisi jos 'hänelle' — mutta tässä objekti on Geschenk." },
+        { "item_type": "mc", "stem": "Ich sehe ___ Wohnung. (minun asuntoani)", "choices": ["meine", "meinen", "mein", "meiner"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "Wohnung on feminiini → meine (ei muutu Akkusativissa)." },
+        { "item_type": "mc", "stem": "Du nimmst ___ Computer mit. (sinun tietokoneesi)", "choices": ["deine", "deinen", "dein", "deiner"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Computer on maskuliini → Akkusativissa deinen." },
+        { "item_type": "mc", "stem": "Sie besuchen ___ Eltern. (heidän vanhempiaan, they)", "choices": ["ihren", "ihre", "ihrer", "ihr"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Eltern on monikko → Akkusativissa ihre (monikko ei muutu)." },
+        { "item_type": "mc", "stem": "Er liest ___ Buch. (hänen kirjaansa, he)", "choices": ["seine", "seinen", "sein", "seines"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "Buch on neutri → sein (neutri ei muutu Akkusativissa)." },
+        { "item_type": "mc", "stem": "Ich liebe ___ Katze. (minun kissaani)", "choices": ["meinen", "mein", "meine", "meiner"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "Katze on feminiini → meine." }
+      ]
+    },
+    {
+      "phase_id": "p2-recognition-match-possessiv",
+      "phase_type": "recognition_match",
+      "title": "Yhdistä — possessiivi oikeaan muotoon",
+      "instruction": "Yhdistä tilanne oikeaan possessiivi-muotoon.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        {
+          "item_type": "match",
+          "left_label": "Tilanne (Akkusativ)",
+          "right_label": "Possessiivi",
+          "pairs": [
+            { "left": "Ich sehe ___ Vater (maskuliini)", "right": "meinen" },
+            { "left": "Er liebt ___ Mutter (feminiini, his)", "right": "seine" },
+            { "left": "Du besuchst ___ Freund (maskuliini)", "right": "deinen" },
+            { "left": "Sie vermisst ___ Kind (neutri, her)", "right": "ihr" },
+            { "left": "Wir brauchen ___ Lehrer (maskuliini)", "right": "unseren" },
+            { "left": "Ich liebe ___ Familie (feminiini)", "right": "meine" },
+            { "left": "Er nimmt ___ Buch (neutri, his)", "right": "sein" },
+            { "left": "Du liebst ___ Schwester (feminiini)", "right": "deine" }
+          ]
+        }
+      ]
+    },
+    {
+      "phase_id": "p3-recall-typed-de-fi",
+      "phase_type": "recall_typed_es_to_fi",
+      "title": "Kirjoita possessiivi oikein",
+      "instruction": "Kirjoita oikea possessiivi-muoto Akkusativissa.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Ich sehe ___ Vater. (mein, Akkusativ)", "accept": ["meinen"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Er liebt ___ Mutter. (sein, Akkusativ)", "accept": ["seine"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Du nimmst ___ Computer. (dein, Akkusativ)", "accept": ["deinen"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Wir besuchen ___ Großeltern. (unser, Akkusativ, monikko)", "accept": ["unsere"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Sie vermisst ___ Hund. (ihr, Akkusativ, maskuliini)", "accept": ["ihren"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Ich liebe ___ Katze. (mein, Akkusativ, feminiini)", "accept": ["meine"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Er kennt ___ Freund gut. (sein, Akkusativ)", "accept": ["seinen"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Du liebst ___ Familie. (dein, Akkusativ, feminiini)", "accept": ["deine"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Ich suche ___ Schlüssel. (mein, Akkusativ, maskuliini)", "accept": ["meinen"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Sie besucht ___ Bruder. (ihr, Akkusativ, maskuliini)", "accept": ["ihren"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Wir kennen ___ Lehrer. (unser, Akkusativ, maskuliini)", "accept": ["unseren"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Er liest ___ Buch. (sein, Akkusativ, neutri)", "accept": ["sein"] }
+      ]
+    },
+    {
+      "phase_id": "p4-recall-typed-fi-de",
+      "phase_type": "recall_typed_fi_to_es",
+      "title": "Suomesta saksaksi — possessiivit",
+      "instruction": "Käännä ilmaisu saksaksi oikeassa muodossa.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "minun isäni (Akkusativ)", "accept": ["meinen Vater"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "sinun äitisi (Akkusativ)", "accept": ["deine Mutter"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "hänen koiransa (maskuliini, Akkusativ, his)", "accept": ["seinen Hund"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "minun kissani (Akkusativ, feminiini)", "accept": ["meine Katze"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "hänen kirjansa (neutri, Akkusativ, her)", "accept": ["ihr Buch"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "meidän opettajamme (Akkusativ)", "accept": ["unseren Lehrer"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "sinun tietokoneesi (Akkusativ)", "accept": ["deinen Computer"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "hänen perheensä (feminiini, Akkusativ, his)", "accept": ["seine Familie"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "minun veljeni (Akkusativ)", "accept": ["meinen Bruder"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "hänen asuntonsa (Akkusativ, feminiini, her)", "accept": ["ihre Wohnung"] }
+      ]
+    },
+    {
+      "phase_id": "p5-application-gap-helppo",
+      "phase_type": "application_gap_fill",
+      "title": "Lauseen täydennys — perustaso",
+      "instruction": "Täydennä oikea possessiivi-muoto.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Ich sehe {1} Vater im Park. (mein, Akk.)", "answers": [["meinen"]], "word_bank": ["meinen", "mein", "meine"] },
+        { "item_type": "gap_fill", "sentence_template": "Er ruft {1} Mutter an. (sein, Akk.)", "answers": [["seine"]], "word_bank": ["seine", "seinen", "sein"] },
+        { "item_type": "gap_fill", "sentence_template": "Ich vermisse {1} Hund. (mein, Akk.)", "answers": [["meinen"]], "word_bank": ["meinen", "meine", "mein"] },
+        { "item_type": "gap_fill", "sentence_template": "Du liebst {1} Familie. (dein, Akk.)", "answers": [["deine"]], "word_bank": ["deine", "deinen", "dein"] },
+        { "item_type": "gap_fill", "sentence_template": "Wir besuchen {1} Großeltern. (unser, Akk., monikko)", "answers": [["unsere"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Sie sucht {1} Schlüssel. (ihr, Akk., maskuliini, she)", "answers": [["ihren"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Er kennt {1} Freund seit Jahren. (sein, Akk.)", "answers": [["seinen"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Ich brauche {1} Computer. (mein, Akk.)", "answers": [["meinen"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Du liest {1} Buch. (dein, Akk., neutri)", "answers": [["dein"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Er liebt {1} Katze sehr. (sein, Akk.)", "answers": [["seine"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p6-application-gap-vaativa",
+      "phase_type": "application_gap_fill",
+      "title": "Lauseen täydennys — vaativa",
+      "instruction": "Täydennä ilman sanapankkia. Päättele kontekstista.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Maria vermisst {1} Bruder, der in Australien lebt. (ihr)", "answers": [["ihren"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Wir müssen {1} Lehrer fragen. (unser, Akk.)", "answers": [["unseren"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Er liebt {1} Wohnung in München. (sein, Akk.)", "answers": [["seine"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Ich möchte {1} Freund einladen. (mein, Akk., maskuliini)", "answers": [["meinen"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Sie vermisst {1} Hund sehr. (ihr, Akk., maskuliini, she)", "answers": [["ihren"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Er braucht {1} Schwester jetzt. (sein, Akk.)", "answers": [["seine"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Ich rufe {1} Vater an. (mein, Akk.)", "answers": [["meinen"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Du kennst {1} Nachbarn gut. (dein, Akk., maskuliini)", "answers": [["deinen"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Wir besuchen {1} Onkel am Wochenende. (unser, Akk.)", "answers": [["unseren"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Er sieht {1} Freundin jeden Tag. (sein, Akk., feminiini)", "answers": [["seine"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p7-application-sentence-build",
+      "phase_type": "application_sentence_build",
+      "title": "Lauseiden rakentelu",
+      "instruction": "Kirjoita kokonainen lause oikealla possessiivilla.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Näen isäni puistossa.", "accept": ["Ich sehe meinen Vater im Park.", "Im Park sehe ich meinen Vater."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Hän ikävöi veljeään.", "accept": ["Er vermisst seinen Bruder.", "Sie vermisst ihren Bruder."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Me rakastamme perhettämme.", "accept": ["Wir lieben unsere Familie.", "Wir lieben unsere Familie"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Sinä tarvitset tietokonettasi.", "accept": ["Du brauchst deinen Computer.", "Du brauchst deinen Computer"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Hän soittaa äidilleen joka viikko.", "accept": ["Er ruft seine Mutter jede Woche an.", "Er ruft jede Woche seine Mutter an."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Minä kutsun ystäväni kylään.", "accept": ["Ich lade meinen Freund ein.", "Ich lade meine Freundin ein."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Me vierailemme isovanhempiamme luona.", "accept": ["Wir besuchen unsere Großeltern.", "Wir besuchen unsere Großeltern"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Hän tuntee opettajansa hyvin.", "accept": ["Er kennt seinen Lehrer gut.", "Sie kennt ihre Lehrerin gut."] }
+      ]
+    },
+    {
+      "phase_id": "p8-synthesis-translate",
+      "phase_type": "synthesis_translate",
+      "title": "YO-tyylinen käännös",
+      "instruction": "Käännä lauseet saksaksi. Kiinnitä huomiota possessiveihin.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Rakastan perhettäni — vanhempiani, veljeäni ja sisartani.", "accept": ["Ich liebe meine Familie — meine Eltern, meinen Bruder und meine Schwester.", "Ich liebe meine Familie: meine Eltern, meinen Bruder und meine Schwester."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Hän näkee ystävänsä joka viikko.", "accept": ["Er sieht seinen Freund jede Woche.", "Sie sieht ihre Freundin jede Woche."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Vierailemme isovanhempiemme luona joka kesä.", "accept": ["Wir besuchen unsere Großeltern jeden Sommer.", "Jedes Jahr besuchen wir unsere Großeltern."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Sinä tarvitset tietokonettasi koulussa joka päivä.", "accept": ["Du brauchst deinen Computer jeden Tag in der Schule.", "Du brauchst täglich deinen Computer in der Schule."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Hän ikävöi koiraansa lomalla.", "accept": ["Er vermisst seinen Hund im Urlaub.", "Sie vermisst ihren Hund im Urlaub."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Me rakastamme asuntoamme, mutta talo olisi parempi.", "accept": ["Wir lieben unsere Wohnung, aber ein Haus wäre besser.", "Wir mögen unsere Wohnung, aber ein Haus wäre schöner."] }
+      ]
+    },
+    {
+      "phase_id": "p9-synthesis-short-writing",
+      "phase_type": "synthesis_short_writing",
+      "title": "Lyhyt kirjoitus",
+      "instruction": "Kirjoita teksti perheestäsi käyttäen possessiveja.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C", "M"],
+      "items": [
+        { "item_type": "writing", "prompt": "Kuvaile perhettäsi saksaksi: keitä siihen kuuluu, mitä harrastat heidän kanssaan. Käytä possessiveja (meinen Bruder, meine Schwester…). 5–7 lausetta.", "min_words": 40, "max_words": 90, "rubric_focus": ["communication", "vocab", "structure"] },
+        { "item_type": "writing", "prompt": "Kirjoita saksaksi ystävälle perhesuhteistasi: ketä rakastat, ketä ikävöit, kenen kanssa asut. Käytä possessiveja oikeissa sijoissa. 5–7 lausetta.", "min_words": 40, "max_words": 90, "rubric_focus": ["communication", "vocab"] },
+        { "item_type": "writing", "prompt": "Kuvaile saksaksi kodin ihmisiä: kenellä on oma huone, kenen kanssa jaat asunnon, kenet otat mukaan kotimatkalle. 5–7 lausetta.", "min_words": 40, "max_words": 90, "rubric_focus": ["communication", "structure"] }
+      ]
+    },
+    {
+      "phase_id": "p10-cumulative-review",
+      "phase_type": "application_gap_fill",
+      "title": "Kertaus — possessivit + Akkusativ",
+      "instruction": "Sekoitettu kertaus. Täydennä sopiva possessiivi.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Ich liebe {1} Vater. (mein, Akk.)", "answers": [["meinen"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Er besucht {1} Onkel. (sein, Akk.)", "answers": [["seinen"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Du brauchst {1} Wörterbuch. (dein, Akk., neutri)", "answers": [["dein"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Wir vermissen {1} Hund. (unser, Akk., maskuliini)", "answers": [["unseren"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Sie ruft {1} Mutter an. (ihr, Akk., feminiini, she)", "answers": [["ihre"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Ich kenne {1} Lehrer sehr gut. (mein, Akk.)", "answers": [["meinen"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Er liebt {1} Familie. (sein, Akk., feminiini)", "answers": [["seine"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Du siehst {1} Bruder selten. (dein, Akk.)", "answers": [["deinen"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Wir möchten {1} Lehrer einladen. (unser, Akk.)", "answers": [["unseren"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Sie sucht {1} Hund im Park. (ihr, Akk., maskuliini, she)", "answers": [["ihren"]], "word_bank": null }
+      ]
+    }
+  ],
+  "vocab": [
+    { "es": "mein / meine / meinen", "fi": "minun", "example_es": "Ich sehe meinen Vater.", "example_fi": "Näen isäni.", "gender": null },
+    { "es": "dein / deine / deinen", "fi": "sinun", "example_es": "Du liebst deine Familie.", "example_fi": "Rakastat perhettäsi.", "gender": null },
+    { "es": "sein / seine / seinen", "fi": "hänen (mask.)", "example_es": "Er ruft seinen Bruder an.", "example_fi": "Hän soittaa veljelleen.", "gender": null },
+    { "es": "ihr / ihre / ihren", "fi": "hänen (fem.) / heidän", "example_es": "Sie liebt ihren Hund.", "example_fi": "Hän rakastaa koiraansa.", "gender": null },
+    { "es": "unser / unsere / unseren", "fi": "meidän", "example_es": "Wir besuchen unsere Großeltern.", "example_fi": "Vierailemme isovanhempiamme luona.", "gender": null },
+    { "es": "vermissen", "fi": "ikävöidä", "example_es": "Ich vermisse meinen Freund.", "example_fi": "Ikävöin ystävääni.", "gender": null },
+    { "es": "besuchen", "fi": "vierailla, käydä luona", "example_es": "Wir besuchen unsere Tante.", "example_fi": "Vierailemme tätiemme luona.", "gender": null },
+    { "es": "kennen", "fi": "tuntea (henkilö/paikka)", "example_es": "Ich kenne meinen Lehrer gut.", "example_fi": "Tunnen opettajani hyvin.", "gender": null },
+    { "es": "lieben", "fi": "rakastaa", "example_es": "Er liebt seine Familie.", "example_fi": "Hän rakastaa perhettään.", "gender": null },
+    { "es": "einladen", "fi": "kutsua", "example_es": "Ich lade meinen Freund ein.", "example_fi": "Kutsun ystäväni.", "gender": null },
+    { "es": "der Großvater", "fi": "isoisä", "example_es": "Wir besuchen unseren Großvater.", "example_fi": "Vierailemme isoisämme luona.", "gender": "m" },
+    { "es": "die Großmutter", "fi": "isoäiti", "example_es": "Meine Großmutter wohnt in Wien.", "example_fi": "Isoäitini asuu Wienissä.", "gender": "f" },
+    { "es": "der Onkel", "fi": "setä, eno", "example_es": "Mein Onkel ist Arzt.", "example_fi": "Setäni on lääkäri.", "gender": "m" },
+    { "es": "die Tante", "fi": "täti", "example_es": "Meine Tante wohnt in Hamburg.", "example_fi": "Tätini asuu Hampurissa.", "gender": "f" },
+    { "es": "der Nachbar", "fi": "naapuri", "example_es": "Ich kenne meinen Nachbarn gut.", "example_fi": "Tunnen naapurini hyvin.", "gender": "m" }
+  ],
+  "side_panel": {
+    "tabs": [
+      {
+        "id": "grammar",
+        "title": "Kielioppi",
+        "content_md": "## Possessivit — Akkusativ\n\n| | maskuliini | feminiini | neutri | monikko |\n|---|---|---|---|---|\n| mein | **meinen** | meine | mein | meine |\n| dein | **deinen** | deine | dein | deine |\n| sein | **seinen** | seine | sein | seine |\n| ihr | **ihren** | ihre | ihr | ihre |\n| unser | **unseren** | unsere | unser | unsere |\n\n**Muistisääntö:** Vain maskuliini saa -en päätteen Akkusativissa!\n\n## Nominativ vs. Akkusativ\n\n- *Das ist **mein** Vater.* (Nom.) — Tämä on isäni.\n- *Ich sehe **meinen** Vater.* (Akk.) — Näen isäni.\n\n## ihr on monitulkintainen\n\n- **ihr** Hund = hänen koiransa (feminiinin omistus)\n- **ihr** Hund = heidän koiransa (monikon omistus)\n- **Ihr** Hund = Teidän koiranne (kohtelias Sie)"
+      },
+      {
+        "id": "tips",
+        "title": "YO-vinkki",
+        "content_md": "## YO-koe — possessivit\n\nPossessiivien oikea muoto on Teil 3:n yleinen testikohde. Kirjoitelmassa tarvitaan joka lauseessa.\n\n## Yleisin virhe\n\n*Ich sehe **mein** Vater.* ❌\n*Ich sehe **meinen** Vater.* ✅\n\nMuista: maskuliini Akkusativissa → -en loppuun!\n\n## Kirjoitelmassa\n\nKun kirjoitat 'Meine Familie' -aiheesta:\n- *Ich habe **einen** Bruder und **eine** Schwester.*\n- *Ich liebe **meine** Eltern sehr.*\n- *Ich vermisse **meinen** Vater, wenn ich weg bin.*"
+      }
+    ]
+  }
+}

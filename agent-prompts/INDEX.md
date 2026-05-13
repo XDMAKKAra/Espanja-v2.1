@@ -3,7 +3,7 @@
 > **Päivitetään automaattisesti META_QA_LOOP-orkestraattorin Vaihe 4:ssä jokaisen loopin lopussa.**
 > Manuaalinen päivitys vain kun lisäät/poistat/uudelleenjärjestät prompteja queue:hen.
 
-**Last updated:** 2026-05-13 (L-LESSON-PREP-DE-FR-1 valmis → 06 arkistoitu, 07 = NEXT)
+**Last updated:** 2026-05-13 (L-LESSONS-DE-LYHYT-1 valmis → 07 arkistoitu, 08 = NEXT)
 
 ---
 
@@ -17,8 +17,7 @@ _Tyhjä_
 
 | # | Brief | Status | Skoop |
 |---|---|---|---|
-| 07 | `02-queue/07_LESSONS_DE_LYHYT.md` | 🔴 NEXT | 90 saksa-lyhyt-oppituntia (canonical pipeline). Edellyttää 06 (✓ valmis). Validate-blocker ratkaistu (`--lang=de` toimii). |
-| 08 | `02-queue/08_LESSONS_FR_LYHYT.md` | 🟡 P1 | 90 ranska-lyhyt-oppituntia. Edellyttää 06 (✓ valmis). Validate-blocker ratkaistu. |
+| 08 | `02-queue/08_LESSONS_FR_LYHYT.md` | 🔴 NEXT | 90 ranska-lyhyt-oppituntia. Edellyttää 06 (✓ valmis). Validate-blocker ratkaistu. |
 | 09 | `02-queue/09_LINT_CLEANUP.md` | 🟢 P3 | ESLint/parse-error-cleanup, 101 warningia |
 | 10 | `02-queue/10_LIVE_AUDIT_P2.md` | 🟢 P3 | Production perf-audit, fontit self-host, ennen/jälkeen-mittaus |
 | 11 | `02-queue/11_SEO_BROADENING_1.md` | 🟡 P2 | Abikurssi-keyword + 6 blog-postausta. Perustuu `docs/seo-keywords.md`-dataan. |
@@ -40,6 +39,7 @@ _Tyhjä_
 - `05_FRONTEND_POLISH_1.md` — ✓ 2026-05-07 (visuaalinen polish 4 päänäkymälle: onboarding/dashboard/mode-pages/pricing+landing; a11y-fixit 3 critical + 3 serious)
 - `06_LESSON_PREP_DE_FR_1.md` — ✓ 2026-05-13 (yo-rubriikit DE+FR, LANG_CURRICULA.{de,fr} 8 kurssia A→E, curriculum-spec kavereille, DE/FR canonical lesson-template + validate-skripti-TODO)
 - `13_HERO_COUNTDOWN_AND_OFFCANVAS_MENU.md` — ✓ 2026-05-13 (YO-countdown landing-heroon 4 kielelle + slide-in off-canvas mobile-nav app-shelliin focus-trapilla)
+- `07_LESSONS_DE_LYHYT.md` — ✓ 2026-05-13 (90 saksan oppituntia 8 kurssissa K1–K8, YTL A→E, canonical pipeline 4 aaltoa, validate 90/90)
 
 ---
 

@@ -1,0 +1,257 @@
+{
+  "meta": {
+    "course_key": "kurssi_1",
+    "lesson_index": 4,
+    "lesson_type": "grammar",
+    "level": "A",
+    "title": "Präsens — säännölliset verbit",
+    "description": "Harjoittelet säännöllisten verbien taivutusta preesensissä (Präsens). Tämä on saksan kieliopin tärkein pohja — kaikki muu rakentuu tämän päälle.",
+    "yo_relevance": "Teil 3 (Struktur und Vokabular): verbien oikea taivutus on aukkotehtävien perussisältöä. Teil 4 (Schreiben): Präsens on kirjoitelman tärkein aikamuoto — virheet aikamuodossa ovat yksi yleisimmistä pistevähennyksen syistä.",
+    "estimated_minutes_median": 13
+  },
+  "teaching": {
+    "intro_md": "# Präsens — säännölliset verbit\n\nSaksan Präsens muodostetaan ottamalla verbin infinitiivistä pois -en-pääte ja lisäämällä persoonapääte:\n\n| Pronomini | Pääte | Esimerkki (machen) |\n|-----------|-------|--------------------|\n| ich | -e | ich mach**e** |\n| du | -st | du mach**st** |\n| er/sie/es | -t | er mach**t** |\n| wir | -en | wir mach**en** |\n| ihr | -t | ihr mach**t** |\n| sie/Sie | -en | sie mach**en** |\n\n## Verbi lernens (oppia)\n\n- ich lern**e**, du lern**st**, er lern**t**, wir lern**en**, ihr lern**t**, sie lern**en**\n\n## V2-sääntö (tärkeä!)\n\nSaksassa verbi on aina **toisella paikalla** päälauseessa:\n- *Heute **gehe** ich in die Schule.* (Tänään MENEN kouluun.)\n- *Ich **gehe** heute in die Schule.*\n\nJos lause alkaa muulla kuin subjektilla, subjekti siirtyy verbin jälkeen.",
+    "key_points": [
+      "Persoonapäätteet: -e, -st, -t, -en, -t, -en.",
+      "V2-sääntö: verbi on aina toisella paikalla päälauseessa.",
+      "Vartalopäätteen -t tai -d jälkeen: du -est, er -et (arbeit**est**, arbeit**et**).",
+      "Monikkomuoto wir ja sie/Sie ovat sama kuin infinitiivi."
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1-recognition-taivutus",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista — oikea taivutusmuoto",
+      "instruction": "Valitse oikea verbinmuoto.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "mc", "stem": "Ich ___ Deutsch. (lernen)", "choices": ["lernt", "lerne", "lernen", "lernst"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "ich + -e pääte → ich lerne. Lernt = er/sie/es." },
+        { "item_type": "mc", "stem": "Du ___ in Helsinki. (wohnen)", "choices": ["wohne", "wohnen", "wohnst", "wohnt"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "du + -st pääte → du wohnst." },
+        { "item_type": "mc", "stem": "Er ___ Fußball. (spielen)", "choices": ["spielst", "spiele", "spielen", "spielt"], "correct_index": 3, "distractor_difficulty": "medium", "explanation": "er + -t pääte → er spielt." },
+        { "item_type": "mc", "stem": "Wir ___ zusammen. (lernen)", "choices": ["lernst", "lerne", "lernt", "lernen"], "correct_index": 3, "distractor_difficulty": "medium", "explanation": "wir + -en pääte → wir lernen. Sama kuin infinitiivi." },
+        { "item_type": "mc", "stem": "Ihr ___ viel Musik. (hören)", "choices": ["höre", "hörst", "hört", "hören"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "ihr + -t pääte → ihr hört." },
+        { "item_type": "mc", "stem": "Sie (mon.) ___ in Berlin. (wohnen)", "choices": ["wohne", "wohnst", "wohnt", "wohnen"], "correct_index": 3, "distractor_difficulty": "medium", "explanation": "sie (monikko) + -en pääte → sie wohnen." },
+        { "item_type": "mc", "stem": "Ich ___ Hausaufgaben. (machen)", "choices": ["machst", "mache", "macht", "machen"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "ich mache — ensimmäinen persoona." },
+        { "item_type": "mc", "stem": "Er ___ in der Schule. (arbeiten)", "choices": ["arbeitest", "arbeite", "arbeitet", "arbeiten"], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "arbeiten: vartalo päättyy -t → er arbeit**et** (lisätään -et, ei pelkkä -t)." },
+        { "item_type": "mc", "stem": "Woher ___ du? (kommen)", "choices": ["komme", "kommt", "kommen", "kommst"], "correct_index": 3, "distractor_difficulty": "medium", "explanation": "du + -st → du kommst. Woher kommst du? = Mistä tulet?" },
+        { "item_type": "mc", "stem": "Sie (yks.) ___ Finnisch. (sprechen) [huom: epäsäännöllinen!]", "choices": ["spricht", "sprecht", "spreche", "sprechen"], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "sprechen on epäsäännöllinen: sie spricht (e→i muutos). Opitaan seuraavassa kurssissa tarkemmin." },
+        { "item_type": "mc", "stem": "Wir ___ jeden Tag Kaffee. (trinken)", "choices": ["trinkst", "trinke", "trinkst", "trinken"], "correct_index": 3, "distractor_difficulty": "medium", "explanation": "wir + -en → wir trinken." },
+        { "item_type": "mc", "stem": "Du ___ um sieben Uhr auf. (aufstehen)", "choices": ["aufstehe", "aufsteht", "stehst auf", "stehe auf"], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "aufstehen on erottuva verbi: stehst auf. Etuliite menee lauseen loppuun!" }
+      ]
+    },
+    {
+      "phase_id": "p2-recognition-match-paradigma",
+      "phase_type": "recognition_match",
+      "title": "Yhdistä — pronomini ja verbinmuoto",
+      "instruction": "Yhdistä pronomini ja oikea verbinmuoto.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        {
+          "item_type": "match",
+          "left_label": "Pronomini",
+          "right_label": "machen (tehdä)",
+          "pairs": [
+            { "left": "ich", "right": "mache" },
+            { "left": "du", "right": "machst" },
+            { "left": "er/sie/es", "right": "macht" },
+            { "left": "wir", "right": "machen" },
+            { "left": "ihr", "right": "macht" },
+            { "left": "sie/Sie", "right": "machen" }
+          ]
+        },
+        {
+          "item_type": "match",
+          "left_label": "Pronomini",
+          "right_label": "lernen (oppia)",
+          "pairs": [
+            { "left": "ich", "right": "lerne" },
+            { "left": "du", "right": "lernst" },
+            { "left": "er/sie/es", "right": "lernt" },
+            { "left": "wir", "right": "lernen" },
+            { "left": "ihr", "right": "lernt" },
+            { "left": "sie/Sie", "right": "lernen" }
+          ]
+        },
+        {
+          "item_type": "match",
+          "left_label": "Pronomini",
+          "right_label": "wohnen (asua)",
+          "pairs": [
+            { "left": "ich", "right": "wohne" },
+            { "left": "du", "right": "wohnst" },
+            { "left": "er/sie/es", "right": "wohnt" },
+            { "left": "wir", "right": "wohnen" },
+            { "left": "ihr", "right": "wohnt" },
+            { "left": "sie/Sie", "right": "wohnen" }
+          ]
+        }
+      ]
+    },
+    {
+      "phase_id": "p3-recall-typed-de-fi",
+      "phase_type": "recall_typed_es_to_fi",
+      "title": "Tunnista verbinmuoto ja käännä",
+      "instruction": "Kirjoita mitä suomeksi lauseen saksan verbi tarkoittaa.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "ich lerne", "accept": ["minä opin", "opiskelen", "oppin"], "hint": "lern- + e pääte" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "du wohnst", "accept": ["sinä asut", "asut"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "er spielt", "accept": ["hän pelaa", "hän leikkii", "pelaa"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "wir machen", "accept": ["me teemme", "teemme"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "ihr hört", "accept": ["te kuulette", "kuulette", "te kuuntelette"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "sie trinken", "accept": ["he juovat", "juovat"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "ich arbeite", "accept": ["minä työskentelen", "työskentelen"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "du kommst", "accept": ["sinä tulet", "tulet"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "sie (yks.) kauft", "accept": ["hän ostaa", "ostaa"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "wir spielen", "accept": ["me pelaamme", "pelaamme"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "ich esse", "accept": ["minä syön", "syön"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "ihr wartet", "accept": ["te odotatte", "odotatte"] }
+      ]
+    },
+    {
+      "phase_id": "p4-recall-typed-fi-de",
+      "phase_type": "recall_typed_fi_to_es",
+      "title": "Taivuta oikein",
+      "instruction": "Kirjoita saksan verbinmuoto oikein (pronomini + verbi).",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "minä opin (lernen)", "accept": ["ich lerne"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "sinä asut (wohnen)", "accept": ["du wohnst"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "hän tekee (machen)", "accept": ["er macht", "sie macht", "es macht"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "me pelaamme (spielen)", "accept": ["wir spielen"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "te kuuntelette (hören)", "accept": ["ihr hört"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "he tulevat (kommen)", "accept": ["sie kommen"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "minä juon (trinken)", "accept": ["ich trinke"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "sinä odotat (warten)", "accept": ["du wartest"], "hint": "vartalo päättyy -t → lisää -est" },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "hän työskentelee (arbeiten)", "accept": ["er arbeitet", "sie arbeitet"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "me sanomme (sagen)", "accept": ["wir sagen"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "sinä ostat (kaufen)", "accept": ["du kaufst"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "he oppivat (lernen)", "accept": ["sie lernen"] }
+      ]
+    },
+    {
+      "phase_id": "p5-application-gap-helppo",
+      "phase_type": "application_gap_fill",
+      "title": "Lauseen täydennys — oikea verbinmuoto",
+      "instruction": "Täydennä lause oikealla verbinmuodolla sanapankista.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Ich {1} in Helsinki.", "answers": [["wohne"]], "word_bank": ["wohne", "wohnst", "wohnt"] },
+        { "item_type": "gap_fill", "sentence_template": "Du {1} sehr gut Deutsch.", "answers": [["sprichst", "lernst"]], "word_bank": ["sprichst", "spricht", "spreche"] },
+        { "item_type": "gap_fill", "sentence_template": "Meine Schwester {1} in der Schule.", "answers": [["lernt", "arbeitet"]], "word_bank": ["lernt", "lernst", "lernen"] },
+        { "item_type": "gap_fill", "sentence_template": "Wir {1} jeden Abend Hausaufgaben.", "answers": [["machen"]], "word_bank": ["machen", "macht", "mache"] },
+        { "item_type": "gap_fill", "sentence_template": "Ihr {1} viel Musik, oder?", "answers": [["hört"]], "word_bank": ["hörst", "höre", "hört"] },
+        { "item_type": "gap_fill", "sentence_template": "Die Schüler {1} fleißig für die Prüfung.", "answers": [["lernen"]], "word_bank": ["lernen", "lerne", "lernt"] },
+        { "item_type": "gap_fill", "sentence_template": "Mein Vater {1} als Ingenieur.", "answers": [["arbeitet"]], "word_bank": ["arbeitet", "arbeite", "arbeitest"] },
+        { "item_type": "gap_fill", "sentence_template": "Du {1} um wie viel Uhr auf?", "answers": [["stehst"]], "word_bank": ["stehst", "stehe", "steht"] },
+        { "item_type": "gap_fill", "sentence_template": "Ich {1} gerne Fußball.", "answers": [["spiele"]], "word_bank": ["spiele", "spielst", "spielt"] },
+        { "item_type": "gap_fill", "sentence_template": "Heute {1} ich ins Kino.", "answers": [["gehe"]], "word_bank": ["gehe", "geht", "gehst"] }
+      ]
+    },
+    {
+      "phase_id": "p6-application-gap-vaativa",
+      "phase_type": "application_gap_fill",
+      "title": "Lauseen täydennys — vaativa (V2-sääntö)",
+      "instruction": "Täydennä lause ilman sanapankkia. Kiinnitä huomiota V2-sääntöön.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.65, "C": 0.75, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Heute {1} ich sehr müde.", "answers": [["bin"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Jeden Morgen {1} mein Vater Kaffee.", "answers": [["trinkt"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Am Wochenende {1} wir ins Kino.", "answers": [["gehen"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Meine Lehrerin {1} sehr gut Englisch.", "answers": [["spricht"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Er {1} jeden Tag um sieben Uhr auf.", "answers": [["steht"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "In Deutschland {1} die Kinder früh mit der Schule.", "answers": [["beginnen", "fangen an"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Wann {1} du Hausaufgaben?", "answers": [["machst"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Ich {1} um 15 Uhr nach Hause.", "answers": [["komme"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p7-application-sentence-build",
+      "phase_type": "application_sentence_build",
+      "title": "Lauseiden rakentelua",
+      "instruction": "Rakenna lause oikealla verbinmuodolla saksaksi.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.60, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Opiskelen saksaa koulussa.", "accept": ["Ich lerne Deutsch in der Schule.", "Ich lerne in der Schule Deutsch."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Hän asuu Berliinissä.", "accept": ["Er wohnt in Berlin.", "Sie wohnt in Berlin."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Me pelaamme jalkapalloa joka viikko.", "accept": ["Wir spielen jede Woche Fußball.", "Jede Woche spielen wir Fußball."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Tänään he tekevät läksyt.", "accept": ["Heute machen sie die Hausaufgaben.", "Sie machen heute die Hausaufgaben."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Sinä kuuntelet paljon musiikkia.", "accept": ["Du hörst viel Musik.", "Viel Musik hörst du."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Meidän opettaja työskentelee kovasti.", "accept": ["Unser Lehrer arbeitet viel.", "Unsere Lehrerin arbeitet viel."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Aamuisin juon kahvia.", "accept": ["Morgens trinke ich Kaffee.", "Ich trinke morgens Kaffee."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "He tulevat Suomesta.", "accept": ["Sie kommen aus Finnland.", "Sie kommen aus Finnland"] }
+      ]
+    },
+    {
+      "phase_id": "p8-synthesis-translate",
+      "phase_type": "synthesis_translate",
+      "title": "YO-tyylinen käännös",
+      "instruction": "Käännä lauseet saksaksi. Kiinnitä huomiota V2-sääntöön.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.60, "C": 0.65, "M": 0.75, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Joka päivä herään kello seitsemän ja juon kahvia aamiaisella.", "accept": ["Jeden Tag stehe ich um sieben Uhr auf und trinke Kaffee zum Frühstück.", "Ich stehe jeden Tag um sieben auf und trinke Frühstückskaffee."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Opettajani työskentelee saksalaisessa lukiossa Berliinissä.", "accept": ["Mein Lehrer arbeitet an einem deutschen Gymnasium in Berlin.", "Meine Lehrerin arbeitet in Berlin an einem Gymnasium."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Viikonloppuna pelaamme jalkapalloa ja kuuntelemme musiikkia.", "accept": ["Am Wochenende spielen wir Fußball und hören Musik.", "Wir spielen am Wochenende Fußball und hören Musik."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Minä opin saksaa, koska se on tärkeä kieli Euroopassa.", "accept": ["Ich lerne Deutsch, weil es eine wichtige Sprache in Europa ist.", "Ich lerne Deutsch, weil Deutsch eine wichtige Sprache in Europa ist."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Te teette läksyt liian nopeasti — ottakaa aikaa.", "accept": ["Ihr macht die Hausaufgaben zu schnell — nehmt euch Zeit.", "Ihr macht die Hausaufgaben zu schnell."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Hän asuu Münchenissä ja työskentelee pankissa.", "accept": ["Er wohnt in München und arbeitet in einer Bank.", "Sie wohnt in München und arbeitet in einer Bank."] }
+      ]
+    },
+    {
+      "phase_id": "p9-synthesis-short-writing",
+      "phase_type": "synthesis_short_writing",
+      "title": "Lyhyt kirjoitus",
+      "instruction": "Kirjoita lyhyt teksti käyttäen Präsensiä.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.60, "C": 0.65, "M": 0.70, "E": 0.80, "L": 0.90 },
+      "skip_for_targets": ["I", "A", "B", "C", "M"],
+      "items": [
+        { "item_type": "writing", "prompt": "Kuvaile tavallista koulupäivääsi saksaksi 4–6 lauseella. Käytä verbejä: aufstehen, lernen, machen, essen, kommen.", "min_words": 35, "max_words": 80, "rubric_focus": ["communication", "structure", "vocab"] },
+        { "item_type": "writing", "prompt": "Esittele perheenjäsen: mitä hän tekee päivittäin (Präsens), missä hän asuu, mitä hän harrastaa. 4–6 lausetta saksaksi.", "min_words": 35, "max_words": 80, "rubric_focus": ["communication", "vocab"] },
+        { "item_type": "writing", "prompt": "Kirjoita sähköposti saksalaiselle kirjekavereille ja kerro mitä teet viikolla ja viikonloppuna. 5–7 lausetta.", "min_words": 40, "max_words": 90, "rubric_focus": ["communication", "structure", "overall"] }
+      ]
+    }
+  ],
+  "vocab": [
+    { "es": "machen", "fi": "tehdä", "example_es": "Ich mache die Hausaufgaben.", "example_fi": "Teen läksyt.", "gender": null },
+    { "es": "lernen", "fi": "oppia, opiskella", "example_es": "Wir lernen Deutsch.", "example_fi": "Opiskelemme saksaa.", "gender": null },
+    { "es": "wohnen", "fi": "asua", "example_es": "Er wohnt in München.", "example_fi": "Hän asuu Münchenissä.", "gender": null },
+    { "es": "spielen", "fi": "pelata, leikkiä", "example_es": "Sie spielen Fußball.", "example_fi": "He pelaavat jalkapalloa.", "gender": null },
+    { "es": "hören", "fi": "kuulla, kuunnella", "example_es": "Ich höre Musik.", "example_fi": "Kuuntelen musiikkia.", "gender": null },
+    { "es": "kommen", "fi": "tulla", "example_es": "Woher kommst du?", "example_fi": "Mistä tulet?", "gender": null },
+    { "es": "gehen", "fi": "mennä, kävellä", "example_es": "Ich gehe in die Schule.", "example_fi": "Menen kouluun.", "gender": null },
+    { "es": "arbeiten", "fi": "työskennellä", "example_es": "Mein Vater arbeitet in Hamburg.", "example_fi": "Isäni työskentelee Hampurissa.", "gender": null },
+    { "es": "trinken", "fi": "juoda", "example_es": "Sie trinken Kaffee.", "example_fi": "He juovat kahvia.", "gender": null },
+    { "es": "kaufen", "fi": "ostaa", "example_es": "Ich kaufe ein neues Buch.", "example_fi": "Ostan uuden kirjan.", "gender": null },
+    { "es": "sagen", "fi": "sanoa", "example_es": "Was sagst du?", "example_fi": "Mitä sanot?", "gender": null },
+    { "es": "warten", "fi": "odottaa", "example_es": "Wir warten auf den Bus.", "example_fi": "Odotamme bussia.", "gender": null },
+    { "es": "aufstehen", "fi": "nousta ylös", "example_es": "Ich stehe um sieben Uhr auf.", "example_fi": "Nousen kello seitsemän.", "gender": null },
+    { "es": "die Pääte -e/-st/-t/-en/-t/-en", "fi": "Präsens-päätteet ich/du/er/wir/ihr/sie", "example_es": "ich lerne, du lernst, er lernt...", "example_fi": "minä opin, sinä opit, hän oppii...", "gender": null },
+    { "es": "das V2-Satz", "fi": "V2-sääntö (verbi toisena)", "example_es": "Heute gehe ich in die Schule.", "example_fi": "Tänään menen kouluun. (Verbi toisena!)", "gender": null },
+    { "es": "sprechen", "fi": "puhua (kieltä)", "example_es": "Sprichst du Finnisch?", "example_fi": "Puhutko suomea?", "gender": null },
+    { "es": "beginnen", "fi": "alkaa, aloittaa", "example_es": "Der Unterricht beginnt um acht.", "example_fi": "Oppitunti alkaa kahdeksalta.", "gender": null },
+    { "es": "lesen", "fi": "lukea", "example_es": "Er liest ein Buch.", "example_fi": "Hän lukee kirjaa.", "gender": null }
+  ],
+  "side_panel": {
+    "tabs": [
+      {
+        "id": "grammar",
+        "title": "Kielioppi",
+        "content_md": "## Präsens — persoonapäätteet\n\n| Pronomini | Pääte | Esimerkki |\n|-----------|-------|-----------|\n| ich | -e | ich lerne |\n| du | -st | du lernst |\n| er/sie/es | -t | er lernt |\n| wir | -en | wir lernen |\n| ihr | -t | ihr lernt |\n| sie/Sie | -en | sie lernen |\n\n## Erityistapaukset\n\n**Vartalo päättyy -t tai -d:**\n- arbeiten → du arbeit**est**, er arbeit**et**\n- warten → du wart**est**, er wart**et**\n\n**Erottuvat verbit (trennbare Verben):**\n- aufstehen → ich stehe auf *(etuliite lauseen loppuun!)*\n- anfangen → ich fange an\n\n## V2-sääntö\n\nVerbi on aina toisella paikalla päälauseessa!\n\n- **Ich** lerne jeden Tag.\n- **Heute** lerne ich sehr viel.\n- **In der Schule** lerne ich Deutsch.\n\nJos lause alkaa muulla kuin subjektilla → subjekti siirtyy verbin taakse."
+      },
+      {
+        "id": "tips",
+        "title": "YO-vinkki",
+        "content_md": "## YO-koe — Verbien taivutus\n\nTeil 3 (Struktur und Vokabular) testaa suoraan verbien oikeaa taivutusmuotoa. V2-sääntö on yksi yleisimmin testattavista rakenteista.\n\n**Yleisin virhe:**\n- *Heute ich gehe ins Kino.* ❌\n- *Heute **gehe ich** ins Kino.* ✅\n\n**Muista arbeiten-tyyppi:**\n- vartalo päättyy -t → lisää -et (ei -t)\n- du arbeit**est**, er arbeit**et**\n\n**Teil 4 -strategia:**\nKäytä vähintään kolmea eri verbiä kirjoitelmassasi. Monotoninen machen, machen, machen vie pisteitä pois sanasto-ulottuvuudesta."
+      }
+    ]
+  }
+}

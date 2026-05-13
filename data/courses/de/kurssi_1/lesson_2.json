@@ -1,0 +1,291 @@
+{
+  "meta": {
+    "course_key": "kurssi_1",
+    "lesson_index": 2,
+    "lesson_type": "vocab",
+    "level": "A",
+    "title": "Koulu ja arki",
+    "description": "Opettelet 30 koulu- ja arkipäiväsanaa saksaksi. Koulun sanasto toistuu YO-kokeen luetunymmärtämisteksteissä ja on kirjoitelmien perussanastoa.",
+    "yo_relevance": "Teil 2 (Lesen): kouluaihe on yksi yleisimmistä luetunymmärtämistekstien aiheista lyhyen saksan kokeessa. Teil 4 (Schreiben): koulukuvaukset esiintyvät toistuvasti lyhyen kirjoitelman tehtävänannoissa.",
+    "estimated_minutes_median": 12
+  },
+  "teaching": {
+    "intro_md": "# Koulu ja arki saksaksi\n\nSaksan koulujärjestelmä eroaa suomalaisesta: saksalaiset nuoret käyvät usein **das Gymnasium** (lukio) tai **die Realschule**. Koulupäivä alkaa usein aikaisemmin kuin Suomessa.\n\n## Avainsanat\n\n- **die Schule** — koulu\n- **der Lehrer / die Lehrerin** — opettaja\n- **das Fach** — oppiaine\n- **die Hausaufgaben** — läksyt (aina monikko!)\n- **die Klasse** — luokka\n\n## Esimerkki\n\n> Ich gehe jeden Tag in die **Schule**. Mein Lieblingsfach ist **Mathematik**. Die **Hausaufgaben** mache ich nachmittags.\n\n## Huomio\n\nHausaufgaben on aina monikko — kuten suomen \"läksyt\". Yksikkömuotoa ei käytetä.",
+    "key_points": [
+      "die Hausaufgaben on aina monikkomuoto.",
+      "das Fach (oppiaine) — monikko: die Fächer.",
+      "der Lehrer (miespuolinen opettaja) / die Lehrerin (naispuolinen).",
+      "Koulupäivä: der Unterricht = oppitunti/opetus, die Pause = välitunti."
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1-recognition-koulu-ydin",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista — koulun perussanasto",
+      "instruction": "Valitse oikea suomenkielinen käännös.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "mc", "stem": "die Schule", "choices": ["kirjasto", "koulu", "yliopisto", "päiväkoti"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "die Schule = koulu. Yliopisto = die Universität / die Uni." },
+        { "item_type": "mc", "stem": "der Lehrer", "choices": ["oppilas", "rehtori", "opettaja (mies)", "luokanvalvoja"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "der Lehrer = miespuolinen opettaja. Nainen: die Lehrerin." },
+        { "item_type": "mc", "stem": "das Fach", "choices": ["tehtävä", "oppiaine", "kokeet", "tunnit"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "das Fach = oppiaine. Monikko: die Fächer." },
+        { "item_type": "mc", "stem": "die Klasse", "choices": ["luokka", "koe", "oppiaine", "koulu"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "die Klasse = luokka (huone tai vuosiluokka)." },
+        { "item_type": "mc", "stem": "die Hausaufgaben", "choices": ["kotitunnit", "läksyt", "koetehtävät", "lisätehtävät"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "die Hausaufgaben = läksyt. Aina monikkomuoto." },
+        { "item_type": "mc", "stem": "die Pause", "choices": ["koe", "välitunti", "oppitunti", "loma"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "die Pause = välitunti tai tauko." },
+        { "item_type": "mc", "stem": "das Buch", "choices": ["kirja", "vihko", "kynä", "tietokone"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "das Buch = kirja. Oppikirja = das Schulbuch." },
+        { "item_type": "mc", "stem": "der Schüler / die Schülerin", "choices": ["opettaja", "opiskelija (yliopisto)", "koululainen", "luokanvalvoja"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "der Schüler / die Schülerin = koululainen (peruskoulu/lukio). Opiskelija yliopistossa = der Student." },
+        { "item_type": "mc", "stem": "die Prüfung", "choices": ["läksyt", "tunti", "koe, tentti", "arvosana"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "die Prüfung = koe, tentti. Koepäivä = der Prüfungstag." },
+        { "item_type": "mc", "stem": "lernen", "choices": ["opettaa", "oppia, opiskella", "lukea", "kirjoittaa"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "lernen = oppia, opiskella. Opettaa = lehren/unterrichten." },
+        { "item_type": "mc", "stem": "der Stundenplan", "choices": ["aikataulukirja", "lukujärjestys", "koekalenteri", "koulupäiväkirja"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "der Stundenplan = lukujärjestys. Stunde = tunti, Plan = suunnitelma." },
+        { "item_type": "mc", "stem": "die Note", "choices": ["muistiinpano", "sävel", "arvosana", "koe"], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "die Note = arvosana (myös sävel). Saksan asteikko 1–6: 1 on paras!" },
+        { "item_type": "mc", "stem": "das Gymnasium", "choices": ["urheiluhalli", "peruskoulu", "yliopisto", "lukio (akateeminen)"], "correct_index": 3, "distractor_difficulty": "hard", "explanation": "das Gymnasium = akateeminen lukio Saksassa (johtaa Abituriin eli yo-kokeeseen)." }
+      ]
+    },
+    {
+      "phase_id": "p2-recognition-match-koulu",
+      "phase_type": "recognition_match",
+      "title": "Yhdistä — koulun ja arjen sanat",
+      "instruction": "Yhdistä saksan sana ja suomennos.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        {
+          "item_type": "match",
+          "left_label": "Saksa",
+          "right_label": "Suomi",
+          "pairs": [
+            { "left": "die Schule", "right": "koulu" },
+            { "left": "der Lehrer", "right": "opettaja (mies)" },
+            { "left": "das Fach", "right": "oppiaine" },
+            { "left": "die Klasse", "right": "luokka" },
+            { "left": "die Hausaufgaben", "right": "läksyt" },
+            { "left": "die Pause", "right": "välitunti" },
+            { "left": "das Buch", "right": "kirja" },
+            { "left": "der Schüler", "right": "koululainen (poika)" },
+            { "left": "die Prüfung", "right": "koe, tentti" },
+            { "left": "lernen", "right": "oppia, opiskella" },
+            { "left": "die Note", "right": "arvosana" },
+            { "left": "das Gymnasium", "right": "lukio (akateeminen)" }
+          ]
+        },
+        {
+          "item_type": "match",
+          "left_label": "Saksa",
+          "right_label": "Suomi",
+          "pairs": [
+            { "left": "der Morgen", "right": "aamu" },
+            { "left": "der Abend", "right": "ilta" },
+            { "left": "der Tag", "right": "päivä" },
+            { "left": "die Woche", "right": "viikko" },
+            { "left": "das Wochenende", "right": "viikonloppu" },
+            { "left": "frühstücken", "right": "syödä aamiainen" },
+            { "left": "aufstehen", "right": "nousta ylös" },
+            { "left": "schlafen", "right": "nukkua" },
+            { "left": "essen", "right": "syödä" },
+            { "left": "trinken", "right": "juoda" },
+            { "left": "fahren", "right": "matkustaa, ajaa" },
+            { "left": "kommen", "right": "tulla" }
+          ]
+        }
+      ]
+    },
+    {
+      "phase_id": "p3-recognition-oppiaineet",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista — oppiaineet",
+      "instruction": "Valitse oikea suomennos oppiaineelle.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        { "item_type": "mc", "stem": "Mathematik", "choices": ["biologia", "matematiikka", "fysiikka", "kemia"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "Mathematik = matematiikka. Tuttu sana!" },
+        { "item_type": "mc", "stem": "Deutsch", "choices": ["tanska", "saksa (kieli)", "hollanti", "itävaltalainen"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Deutsch = saksa (kieli). Dänisch = tanska, Niederländisch = hollanti." },
+        { "item_type": "mc", "stem": "Englisch", "choices": ["englanti", "irlantilainen", "skottilainen", "walesinkieli"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "Englisch = englanti." },
+        { "item_type": "mc", "stem": "Geschichte", "choices": ["maantieto", "historia", "yhteiskuntaoppi", "uskonto"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Geschichte = historia. Geographie = maantieto." },
+        { "item_type": "mc", "stem": "Biologie", "choices": ["fysiikka", "kemia", "biologia", "maantieto"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "Biologie = biologia." },
+        { "item_type": "mc", "stem": "Sport", "choices": ["liikunta", "terveys", "urheilu, liikunta", "luonnontiede"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "Sport = liikunta/urheilu koulussa." },
+        { "item_type": "mc", "stem": "Kunst", "choices": ["kuvataide", "musiikki", "käsityö", "teatteri"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "Kunst = kuvataide (koulu-oppiaine) tai taide yleensä." },
+        { "item_type": "mc", "stem": "Musik", "choices": ["kuvataide", "musiikki", "tanssi", "draama"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "Musik = musiikki." },
+        { "item_type": "mc", "stem": "Physik", "choices": ["biologia", "kemia", "fysiikka", "matematiikka"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "Physik = fysiikka. Chemie = kemia." },
+        { "item_type": "mc", "stem": "Chemie", "choices": ["fysiikka", "biologia", "kemia", "matematiikka"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "Chemie = kemia." },
+        { "item_type": "mc", "stem": "Geographie", "choices": ["historia", "maantieto", "yhteiskuntaoppi", "biologia"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Geographie = maantieto/maantiede." },
+        { "item_type": "mc", "stem": "Informatik", "choices": ["fysiikka", "tietotekniikka", "matematiikka", "automaatio"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Informatik = tietotekniikka/tietojenkäsittely." }
+      ]
+    },
+    {
+      "phase_id": "p4-recall-typed-de-fi",
+      "phase_type": "recall_typed_es_to_fi",
+      "title": "Käännä suomeksi",
+      "instruction": "Kirjoita saksan sanan suomennos pienellä kirjaimella.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "die Schule", "accept": ["koulu"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "der Lehrer", "accept": ["opettaja"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "das Fach", "accept": ["oppiaine"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "die Hausaufgaben", "accept": ["läksyt"], "hint": "aina monikossa" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "die Pause", "accept": ["välitunti", "tauko"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "lernen", "accept": ["oppia", "opiskella"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "die Note", "accept": ["arvosana"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "der Morgen", "accept": ["aamu"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "das Wochenende", "accept": ["viikonloppu"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "schlafen", "accept": ["nukkua"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Geschichte", "accept": ["historia"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Geographie", "accept": ["maantieto", "maantiede"] }
+      ]
+    },
+    {
+      "phase_id": "p5-recall-typed-fi-de",
+      "phase_type": "recall_typed_fi_to_es",
+      "title": "Käännä saksaksi",
+      "instruction": "Kirjoita saksan sana artikkeleineen (der/die/das + sana) tai infinitiivinä.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "koulu", "accept": ["die Schule", "Schule"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "opettaja (nainen)", "accept": ["die Lehrerin", "Lehrerin"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "oppiaine", "accept": ["das Fach", "Fach"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "läksyt", "accept": ["die Hausaufgaben", "Hausaufgaben"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "kirja", "accept": ["das Buch", "Buch"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "oppia, opiskella", "accept": ["lernen"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "koe, tentti", "accept": ["die Prüfung", "Prüfung"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "viikko", "accept": ["die Woche", "Woche"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "syödä", "accept": ["essen"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "nousta ylös", "accept": ["aufstehen"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "matematiikka", "accept": ["Mathematik"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "historia (oppiaine)", "accept": ["Geschichte"] }
+      ]
+    },
+    {
+      "phase_id": "p6-application-gap-helppo",
+      "phase_type": "application_gap_fill",
+      "title": "Lauseen täydennys — perustaso",
+      "instruction": "Täydennä lause oikealla sanalla sanapankista.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Jeden Tag gehe ich in die {1}.", "answers": [["Schule"]], "word_bank": ["Schule", "Klasse", "Bibliothek"] },
+        { "item_type": "gap_fill", "sentence_template": "Mein Lieblingsfach ist {1} — ich rechne gerne.", "answers": [["Mathematik"]], "word_bank": ["Mathematik", "Geschichte", "Biologie"] },
+        { "item_type": "gap_fill", "sentence_template": "Ich mache meine {1} am Nachmittag.", "answers": [["Hausaufgaben"]], "word_bank": ["Hausaufgaben", "Pause", "Prüfung"] },
+        { "item_type": "gap_fill", "sentence_template": "Um 10 Uhr haben wir eine kurze {1} von 15 Minuten.", "answers": [["Pause"]], "word_bank": ["Pause", "Stunde", "Prüfung"] },
+        { "item_type": "gap_fill", "sentence_template": "Der {1} erklärt die Grammatik an der Tafel.", "answers": [["Lehrer"]], "word_bank": ["Lehrer", "Schüler", "Direktor"] },
+        { "item_type": "gap_fill", "sentence_template": "Morgen haben wir eine {1} in Mathematik — ich lerne heute Abend.", "answers": [["Prüfung"]], "word_bank": ["Prüfung", "Pause", "Note"] },
+        { "item_type": "gap_fill", "sentence_template": "Ich stehe um 7 Uhr auf und {1} Frühstück.", "answers": [["esse", "frühstücke"]], "word_bank": ["esse", "trinke", "lerne"] },
+        { "item_type": "gap_fill", "sentence_template": "Am Wochenende {1} ich viel — am Samstag und am Sonntag.", "answers": [["schlafe"]], "word_bank": ["schlafe", "lerne", "esse"] },
+        { "item_type": "gap_fill", "sentence_template": "Wir haben sechs {1} heute: Deutsch, Mathe, Sport, Geschichte, Biologie und Musik.", "answers": [["Fächer", "Stunden"]], "word_bank": ["Fächer", "Klassen", "Noten"] },
+        { "item_type": "gap_fill", "sentence_template": "Meine Freundin bekommt immer gute {1} — sie ist sehr fleißig.", "answers": [["Noten"]], "word_bank": ["Noten", "Fächer", "Hausaufgaben"] }
+      ]
+    },
+    {
+      "phase_id": "p7-application-gap-vaativa",
+      "phase_type": "application_gap_fill",
+      "title": "Lauseen täydennys — vaativa",
+      "instruction": "Täydennä ilman sanapankkia.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.65, "C": 0.75, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Ich {1} jeden Morgen um halb sieben auf.", "answers": [["stehe"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Das Gymnasium {1} mit dem Abitur ab.", "answers": [["schließt", "endet"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Wir {1} Deutsch als Fremdsprache in der Schule.", "answers": [["lernen"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "In Finland {1} die Schüler sehr gute Noten in PISA.", "answers": [["bekommen"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Mein Lieblingsfach ist {1} — ich mag Experimente.", "answers": [["Biologie", "Chemie", "Physik"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Die {1} beginnt um 8 Uhr und endet um 15 Uhr.", "answers": [["Schule", "Unterricht"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Nach der {1} treffe ich meine Freunde.", "answers": [["Schule", "Pause"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Ich {1} gerne Bücher — besonders Geschichtsbücher.", "answers": [["lese"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p8-application-sentence-build",
+      "phase_type": "application_sentence_build",
+      "title": "Lauseiden rakentelua",
+      "instruction": "Käännä koko lause saksaksi.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.60, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Käyn koulua joka päivä.", "accept": ["Ich gehe jeden Tag in die Schule.", "Ich gehe täglich in die Schule."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Lempioppiaineeni on historia.", "accept": ["Mein Lieblingsfach ist Geschichte.", "Mein Lieblingsfach ist Geschichte"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Meillä on koe huomenna matematiikassa.", "accept": ["Morgen haben wir eine Prüfung in Mathematik.", "Morgen haben wir eine Prüfung in Mathe."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Teen läksyt iltapäivällä.", "accept": ["Ich mache die Hausaufgaben am Nachmittag.", "Ich mache meine Hausaufgaben am Nachmittag."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Nousen kello seitsemän.", "accept": ["Ich stehe um sieben Uhr auf.", "Ich stehe um 7 Uhr auf."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Opettajamme selittää hyvin.", "accept": ["Unser Lehrer erklärt gut.", "Unsere Lehrerin erklärt gut."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Saan yleensä hyviä arvosanoja.", "accept": ["Ich bekomme normalerweise gute Noten.", "Ich bekomme meistens gute Noten."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Koulussa on kymmenen minuutin välitunti.", "accept": ["In der Schule gibt es eine Pause von zehn Minuten.", "In der Schule haben wir eine Pause von zehn Minuten."] }
+      ]
+    },
+    {
+      "phase_id": "p9-synthesis-translate",
+      "phase_type": "synthesis_translate",
+      "title": "YO-tyylinen käännös",
+      "instruction": "Käännä koko lause saksaksi.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.60, "C": 0.65, "M": 0.75, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Käyn saksalaisessa lukiossa ja minulla on kuusi oppiainetta.", "accept": ["Ich gehe auf ein deutsches Gymnasium und habe sechs Fächer.", "Ich besuche ein deutsches Gymnasium und habe sechs Fächer."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Herään kello kuusi ja syön aamiaisen ennen koulua.", "accept": ["Ich wache um sechs Uhr auf und frühstücke vor der Schule.", "Ich stehe um sechs Uhr auf und esse Frühstück vor der Schule."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Matematiikka on vaikea oppiaine, mutta pidän siitä.", "accept": ["Mathematik ist ein schweres Fach, aber ich mag es.", "Mathematik ist schwierig, aber ich mag das Fach."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Saksalaisessa koulussa arvosana-asteikko on 1–6.", "accept": ["In der deutschen Schule gibt es Noten von 1 bis 6.", "In Deutschland geht die Notenskala von 1 bis 6."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Viikonloppuna minulla ei ole läksyjä.", "accept": ["Am Wochenende habe ich keine Hausaufgaben.", "Am Wochenende habe ich keine Hausaufgaben"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Liikunta on lempioppiaineeni, koska pidän urheilusta.", "accept": ["Sport ist mein Lieblingsfach, weil ich Sport mag.", "Sport ist mein Lieblingsfach, weil ich gerne Sport mache."] }
+      ]
+    },
+    {
+      "phase_id": "p10-synthesis-short-writing",
+      "phase_type": "synthesis_short_writing",
+      "title": "Lyhyt kirjoitus",
+      "instruction": "Kirjoita lyhyt teksti kouluarjestasi saksaksi.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.60, "C": 0.65, "M": 0.70, "E": 0.80, "L": 0.90 },
+      "skip_for_targets": ["I", "A", "B", "C", "M"],
+      "items": [
+        { "item_type": "writing", "prompt": "Kirjoita 4–6 lausetta koulupäivästäsi saksaksi: milloin heräät, mitä oppiaineita sinulla on, milloin tulet kotiin. Käytä sanoja: Schule, Fach, Hausaufgaben, Lehrer.", "min_words": 35, "max_words": 80, "rubric_focus": ["communication", "vocab", "structure"] },
+        { "item_type": "writing", "prompt": "Kuvaile lempioppiaineesi saksaksi: mikä se on, miksi pidät siitä, mikä on vaikeaa. 4–6 lausetta.", "min_words": 35, "max_words": 80, "rubric_focus": ["communication", "vocab"] },
+        { "item_type": "writing", "prompt": "Vertaa suomalaista ja saksalaista koulujärjestelmää saksaksi lyhyesti. Mitä tiedät Gymnasiumista? 4–6 lausetta.", "min_words": 35, "max_words": 80, "rubric_focus": ["communication", "structure"] }
+      ]
+    }
+  ],
+  "vocab": [
+    { "es": "die Schule", "fi": "koulu", "example_es": "Ich gehe jeden Tag in die Schule.", "example_fi": "Käyn koulua joka päivä.", "gender": "f" },
+    { "es": "der Lehrer", "fi": "opettaja (mies)", "example_es": "Unser Lehrer ist sehr nett.", "example_fi": "Opettajamme on todella mukava.", "gender": "m" },
+    { "es": "die Lehrerin", "fi": "opettaja (nainen)", "example_es": "Die Lehrerin erklärt die Grammatik.", "example_fi": "Opettaja selittää kielioppia.", "gender": "f" },
+    { "es": "das Fach", "fi": "oppiaine", "example_es": "Mein Lieblingsfach ist Deutsch.", "example_fi": "Lempioppiaineeni on saksa.", "gender": null },
+    { "es": "die Klasse", "fi": "luokka", "example_es": "Unsere Klasse hat 25 Schüler.", "example_fi": "Luokassamme on 25 oppilasta.", "gender": "f" },
+    { "es": "die Hausaufgaben", "fi": "läksyt", "example_es": "Ich mache die Hausaufgaben nach der Schule.", "example_fi": "Teen läksyt koulun jälkeen.", "gender": null },
+    { "es": "die Pause", "fi": "välitunti, tauko", "example_es": "In der Pause essen wir etwas.", "example_fi": "Välitunnilla syömme jotain.", "gender": "f" },
+    { "es": "das Buch", "fi": "kirja", "example_es": "Das Schulbuch ist sehr schwer.", "example_fi": "Oppikirja on todella painava.", "gender": null },
+    { "es": "der Schüler", "fi": "koululainen (poika)", "example_es": "Die Schüler lernen Englisch.", "example_fi": "Oppilaat opiskelevat englantia.", "gender": "m" },
+    { "es": "die Schülerin", "fi": "koululainen (tyttö)", "example_es": "Die Schülerin schreibt die Antwort.", "example_fi": "Oppilas kirjoittaa vastauksen.", "gender": "f" },
+    { "es": "die Prüfung", "fi": "koe, tentti", "example_es": "Morgen habe ich eine Prüfung.", "example_fi": "Huomenna minulla on koe.", "gender": "f" },
+    { "es": "lernen", "fi": "oppia, opiskella", "example_es": "Ich lerne jeden Abend Vokabeln.", "example_fi": "Opiskelen sanoja joka ilta.", "gender": null },
+    { "es": "die Note", "fi": "arvosana", "example_es": "Er bekommt immer gute Noten.", "example_fi": "Hän saa aina hyviä arvosanoja.", "gender": "f" },
+    { "es": "der Stundenplan", "fi": "lukujärjestys", "example_es": "Mein Stundenplan ist voll.", "example_fi": "Lukujärjestykseni on täynnä.", "gender": "m" },
+    { "es": "das Gymnasium", "fi": "lukio (akateeminen, DE)", "example_es": "Sie geht auf das Gymnasium.", "example_fi": "Hän käy lukiota.", "gender": null },
+    { "es": "Mathematik", "fi": "matematiikka", "example_es": "Mathematik ist schwierig, aber wichtig.", "example_fi": "Matematiikka on vaikea mutta tärkeä.", "gender": null },
+    { "es": "Deutsch", "fi": "saksa (kieli, oppiaine)", "example_es": "Ich lerne Deutsch als Fremdsprache.", "example_fi": "Opiskelen saksaa vieraana kielenä.", "gender": null },
+    { "es": "Geschichte", "fi": "historia (oppiaine)", "example_es": "Geschichte ist mein Lieblingsfach.", "example_fi": "Historia on lempioppiaineeni.", "gender": null },
+    { "es": "Biologie", "fi": "biologia", "example_es": "Im Biologieunterricht sehen wir Pflanzen.", "example_fi": "Biologiantunnilla tarkastelemme kasveja.", "gender": null },
+    { "es": "Sport", "fi": "liikunta (oppiaine)", "example_es": "Sport macht Spaß!", "example_fi": "Liikunta on hauskaa!", "gender": null },
+    { "es": "der Morgen", "fi": "aamu", "example_es": "Am Morgen trinke ich Kaffee.", "example_fi": "Aamulla juon kahvia.", "gender": "m" },
+    { "es": "der Abend", "fi": "ilta", "example_es": "Am Abend lerne ich für die Schule.", "example_fi": "Illalla opiskelen koulua varten.", "gender": "m" },
+    { "es": "der Tag", "fi": "päivä", "example_es": "Jeden Tag gehe ich laufen.", "example_fi": "Käyn joka päivä juoksemassa.", "gender": "m" },
+    { "es": "die Woche", "fi": "viikko", "example_es": "Diese Woche ist sehr stressig.", "example_fi": "Tämä viikko on todella stressaava.", "gender": "f" },
+    { "es": "das Wochenende", "fi": "viikonloppu", "example_es": "Am Wochenende schlafe ich lange.", "example_fi": "Viikonloppuna nukun pitkään.", "gender": null },
+    { "es": "aufstehen", "fi": "nousta ylös", "example_es": "Ich stehe um sieben Uhr auf.", "example_fi": "Nousen kello seitsemän.", "gender": null },
+    { "es": "schlafen", "fi": "nukkua", "example_es": "Ich schlafe acht Stunden pro Nacht.", "example_fi": "Nukun kahdeksan tuntia yössä.", "gender": null },
+    { "es": "essen", "fi": "syödä", "example_es": "Wir essen zusammen in der Schule.", "example_fi": "Syömme yhdessä koulussa.", "gender": null },
+    { "es": "trinken", "fi": "juoda", "example_es": "Sie trinkt viel Wasser.", "example_fi": "Hän juo paljon vettä.", "gender": null },
+    { "es": "kommen", "fi": "tulla", "example_es": "Ich komme um 14 Uhr nach Hause.", "example_fi": "Tulen kotiin kello 14.", "gender": null }
+  ],
+  "side_panel": {
+    "tabs": [
+      {
+        "id": "vocab",
+        "title": "Sanasto",
+        "content_md": "## Koulu\n\n- **die Schule** — koulu\n- **das Gymnasium** — lukio (akateeminen)\n- **die Klasse** — luokka\n- **der Lehrer / die Lehrerin** — opettaja\n- **der Schüler / die Schülerin** — koululainen\n- **das Fach** — oppiaine (mon. die Fächer)\n- **die Note** — arvosana\n- **die Prüfung** — koe, tentti\n- **die Hausaufgaben** — läksyt (aina mon.)\n- **die Pause** — välitunti\n- **der Stundenplan** — lukujärjestys\n- **das Buch** — kirja\n\n## Oppiaineet\n\n- **Mathematik** — matematiikka\n- **Deutsch** — saksa\n- **Geschichte** — historia\n- **Biologie** — biologia\n- **Sport** — liikunta\n- **Musik** — musiikki\n- **Kunst** — kuvataide\n- **Physik** — fysiikka\n- **Chemie** — kemia\n- **Geographie** — maantieto\n- **Informatik** — tietotekniikka\n\n## Arki ja aika\n\n- **der Morgen** — aamu\n- **der Abend** — ilta\n- **der Tag** — päivä\n- **die Woche** — viikko\n- **das Wochenende** — viikonloppu\n- **aufstehen** — nousta ylös\n- **schlafen** — nukkua\n- **essen** — syödä\n- **trinken** — juoda\n- **lernen** — oppia, opiskella"
+      },
+      {
+        "id": "tips",
+        "title": "YO-vinkki",
+        "content_md": "## YO-koe — Koulu-aihe\n\nKouluaihe on yleinen sekä luetunymmärtämisessä (Teil 2) että kirjoitelmassa (Teil 4). Tyypillisiä tehtävänantoja: 'Schreibe eine E-Mail an deinen deutschen Freund über deine Schule.'\n\n**Muista:**\n- die Hausaufgaben — AINA monikko, ei yksikköä\n- Saksan arvosana-asteikko: **1 = paras**, 6 = heikoin (päinvastoin kuin Suomessa!)\n- das Gymnasium → Abitur (saksan yo-koe)\n\n**Teil 2 -vihje:**\nKun luet tekstiä koulusta, etsi avainsanoja: Schüler, Lehrer, Fach, Note, Stunde. Ne auttavat vastaamaan nopeasti."
+      }
+    ]
+  }
+}

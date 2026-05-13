@@ -1,0 +1,198 @@
+{
+  "meta": {
+    "course_key": "kurssi_3",
+    "lesson_index": 6,
+    "lesson_type": "grammar",
+    "level": "B",
+    "title": "V2-sääntö — verbi 2. paikalla päälauseessa",
+    "description": "Syvennät V2-säännön hallintaa: verbi on AINA lauseen 2. paikalla päälauseessa riippumatta siitä, mikä elementti on ensimmäisellä paikalla. Harjoittelet inversiorakennetta (ajanilmaus/paikkailmaus/objekti alussa → verbi ennen subjektia) ja yleisimpiä suomalaisten virheitä.",
+    "yo_relevance": "Teil 3 (Rakenne): V2-sääntö on saksan B3-kokelaan yleisin sananjärjestysvirhe ja siksi YTL:n tärkeä testikohde. Teil 4 (Kirjoitelma): jokainen alkulause ajanilmauksella testaa V2:ta suoraan.",
+    "estimated_minutes_median": 13
+  },
+  "teaching": {
+    "intro_md": "# V2-sääntö — verbi 2. paikalla AINA\n\nSaksan tärkein sananjärjestyssääntö: **verbi on AINA lauseen 2. paikalla** päälauseessa.\n\n## Mitä tarkoittaa '2. paikka'?\n\nLause jakautuu paikkoihin. 1. paikalla voi olla:\n- Subjekti: *Ich gehe ins Kino.*\n- Ajanilmaus: *Gestern gehe ich ins Kino.*\n- Paikkailmaus: *In Berlin arbeite ich.*\n- Objekti: *Den Film habe ich gesehen.*\n\n**Riippumatta 1. paikasta, verbi on aina 2. paikalla!**\n\n## Esimerkkejä\n\n| 1. paikka | Verbi (2.) | Subjekti (3.) | Lause |\n|---|---|---|---|\n| Ich | gehe | — | *Ich gehe ins Kino.* |\n| Gestern | ging | ich | *Gestern **ging** ich ins Kino.* |\n| Heute | habe | ich | *Heute **habe** ich Pizza gegessen.* |\n| In München | ist | er | *In München **ist** er geboren.* |\n| Den Koffer | habe | ich | *Den Koffer **habe** ich gepackt.* |\n\n## Inversio — subjekti siirtyy 3. paikalle\n\nKun jokin muu kuin subjekti aloittaa lauseen, subjekti siirtyy verbin jälkeen:\n\n❌ *Gestern ich habe Pizza gegessen.* (suomalaisten yleisin virhe!)\n✅ *Gestern **habe** ich Pizza gegessen.* (V2 → inversio)\n\n## Perfektissä: molemmat verbit paikoillaan\n\n- Apuverbi = 2. paikka\n- Partizip II = lauseen loppu\n\n✅ *Gestern **habe** ich eine Pizza **gegessen**.*\n✅ *In Berlin **bin** ich **geblieben**.*",
+    "key_points": [
+      "Verbi on AINA lauseen 2. paikalla päälauseessa.",
+      "Kun lause alkaa ajanilmauksella (gestern, heute, morgen), verbi tulee ennen subjektia: Gestern HABE ICH → inversio.",
+      "Yleisin suomalaisten virhe: 'Gestern ich habe...' → pitää olla 'Gestern HABE ich...'",
+      "Perfektissä apuverbi = 2. paikka, Partizip II = lauseen loppuun.",
+      "Myös objekti tai paikkailmaus voi aloittaa lauseen → sama inversio: Den Koffer HABE ICH gepackt."
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1-recognition-mc-v2",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista — oikea sanajärjestys",
+      "instruction": "Valitse oikein järjestetty lause. V2-sääntö!",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "mc", "stem": "Kumpi on OIKEIN?", "choices": ["Heute ich gehe ins Kino.", "Heute gehe ich ins Kino."], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "V2: Heute (1.) → gehe (verbi, 2.) → ich (subjekti, 3.). 'Heute ich gehe' on väärin — suomivaikutus!" },
+        { "item_type": "mc", "stem": "Kumpi on OIKEIN?", "choices": ["Gestern habe ich Pizza gegessen.", "Gestern ich habe Pizza gegessen."], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "Perfektissä: Gestern (1.) → habe (apuverbi, V2!) → ich (subjekti) → gegessen (loppuun)." },
+        { "item_type": "mc", "stem": "Kumpi on OIKEIN?", "choices": ["Morgen wir fahren nach Berlin.", "Morgen fahren wir nach Berlin."], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "Morgen (1.) → fahren (V2!) → wir (subjekti). 'Morgen wir fahren' on väärin." },
+        { "item_type": "mc", "stem": "Kumpi on OIKEIN?", "choices": ["In München ist er geblieben.", "In München er ist geblieben."], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "In München (1.) → ist (V2!) → er (subjekti) → geblieben (loppuun)." },
+        { "item_type": "mc", "stem": "Valitse VÄÄRÄ lause:", "choices": ["Ich gehe morgen ins Kino.", "Morgen gehe ich ins Kino.", "Morgen ich gehe ins Kino.", "Ins Kino gehe ich morgen."], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "'Morgen ich gehe' on VÄÄRIN — V2-sääntö rikottu. Morgen jälkeen verbi (gehe), ei subjekti (ich)." },
+        { "item_type": "mc", "stem": "Kumpi on OIKEIN?", "choices": ["Letzte Woche sind wir geflogen.", "Letzte Woche wir sind geflogen."], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "Letzte Woche (1.) → sind (V2!) → wir → geflogen (loppuun)." },
+        { "item_type": "mc", "stem": "Kumpi on OIKEIN?", "choices": ["Den Koffer hat sie gepackt.", "Den Koffer sie hat gepackt."], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "Den Koffer (objekti, 1. paikka) → hat (V2!) → sie (subjekti) → gepackt (loppuun). Inversio toimii myös objektin kanssa." },
+        { "item_type": "mc", "stem": "Kumpi on OIKEIN?", "choices": ["Am Montag ich habe Deutsch gelernt.", "Am Montag habe ich Deutsch gelernt."], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "Am Montag (1.) → habe (apuverbi, V2!) → ich (subjekti) → gelernt (loppuun)." },
+        { "item_type": "mc", "stem": "Kumpi on OIKEIN?", "choices": ["Jeden Abend er hört Musik.", "Jeden Abend hört er Musik."], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "Jeden Abend (1.) → hört (V2!) → er (subjekti) → Musik." },
+        { "item_type": "mc", "stem": "Kumpi on OIKEIN?", "choices": ["Im Urlaub wir haben viel gesehen.", "Im Urlaub haben wir viel gesehen."], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "Im Urlaub (1.) → haben (V2!) → wir → gesehen (loppuun)." },
+        { "item_type": "mc", "stem": "Kumpi on OIKEIN?", "choices": ["Leider das Wetter war nicht gut.", "Leider war das Wetter nicht gut."], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "Leider (valitettavasti, 1. paikka) → war (V2!) → das Wetter (subjekti). Adverbi aloittaa → inversio." },
+        { "item_type": "mc", "stem": "Kumpi on OIKEIN?", "choices": ["Erst dann bin ich ins Hotel gegangen.", "Erst dann ich bin ins Hotel gegangen."], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "Erst dann (1. paikka) → bin (V2!) → ich (subjekti) → gegangen (loppuun)." }
+      ]
+    },
+    {
+      "phase_id": "p2-recognition-match",
+      "phase_type": "recognition_match",
+      "title": "Yhdistä — lauseen osat",
+      "instruction": "Yhdistä lauseen alku ja oikea jatko.",
+      "mastery_threshold": { "I": 0.6, "A": 0.65, "B": 0.7, "C": 0.75, "M": 0.85, "E": 0.9, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        {
+          "item_type": "match",
+          "left_label": "Alku (1. paikka)",
+          "right_label": "Jatko (V2 + subjekti + loppu)",
+          "pairs": [
+            { "left": "Gestern", "right": "habe ich Fußball gespielt." },
+            { "left": "Heute Morgen", "right": "bin ich früh aufgestanden." },
+            { "left": "Im Urlaub", "right": "haben wir viel besichtigt." },
+            { "left": "Nach dem Abendessen", "right": "sind wir ins Kino gegangen." },
+            { "left": "Leider", "right": "war das Wetter schlecht." },
+            { "left": "Letztes Jahr", "right": "sind sie nach Spanien geflogen." },
+            { "left": "Am Bahnhof", "right": "haben wir auf den Zug gewartet." },
+            { "left": "Jeden Tag", "right": "hört er Musik." }
+          ]
+        }
+      ]
+    },
+    {
+      "phase_id": "p3-recall-v2-korjaus",
+      "phase_type": "recall_typed_es_to_fi",
+      "title": "Korjaa sanajärjestys",
+      "instruction": "Onko lause oikein (JA) vai väärin (EI)? Jos väärin, mikä on oikea järjestys?",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I"],
+      "items": [
+        { "item_type": "mc", "stem": "Oikein vai väärin: 'Gestern ich habe das Schloss besichtigt.'", "choices": ["Oikein", "Väärin — pitää olla: Gestern habe ich das Schloss besichtigt."], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "V2-virhe! Gestern jälkeen tulee verbi (habe), ei subjekti (ich)." },
+        { "item_type": "mc", "stem": "Oikein vai väärin: 'Morgen fahren wir nach Wien.'", "choices": ["Oikein", "Väärin"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "Oikein! Morgen (1.) → fahren (V2!) → wir (subjekti)." },
+        { "item_type": "mc", "stem": "Oikein vai väärin: 'Am Montag wir sind ins Kino gegangen.'", "choices": ["Oikein", "Väärin — pitää olla: Am Montag sind wir ins Kino gegangen."], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "V2-virhe! Am Montag jälkeen verbi (sind), ei subjekti (wir)." },
+        { "item_type": "mc", "stem": "Oikein vai väärin: 'Heute habe ich viel gelernt.'", "choices": ["Oikein", "Väärin"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "Oikein! Heute (1.) → habe (V2!) → ich → gelernt (loppuun)." },
+        { "item_type": "mc", "stem": "Oikein vai väärin: 'Leider ich war sehr müde.'", "choices": ["Oikein", "Väärin — pitää olla: Leider war ich sehr müde."], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "V2-virhe! Leider jälkeen verbi (war), ei subjekti (ich)." }
+      ]
+    },
+    {
+      "phase_id": "p4-gap-fill-inversio",
+      "phase_type": "application_gap_fill",
+      "title": "Täytä aukko — inversio",
+      "instruction": "Täytä puuttuva verbi (V2-paikka) tai subjekti (3. paikka).",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Gestern ___ ich ins Restaurant gegangen.", "answers": [["bin"]], "word_bank": ["bin", "ich bin", "habe", "war"] },
+        { "item_type": "gap_fill", "sentence_template": "Heute Morgen ___ wir früh aufgestanden.", "answers": [["sind"]], "word_bank": ["sind", "wir sind", "haben", "waren"] },
+        { "item_type": "gap_fill", "sentence_template": "Im Urlaub ___ er viel Fußball gespielt.", "answers": [["hat"]], "word_bank": ["hat", "er hat", "ist", "war"] },
+        { "item_type": "gap_fill", "sentence_template": "Letztes Jahr ___ sie nach Berlin geflogen.", "answers": [["ist"]], "word_bank": ["ist", "sie ist", "hat", "war"] },
+        { "item_type": "gap_fill", "sentence_template": "Leider ___ das Hotel sehr teuer.", "answers": [["war"]], "word_bank": ["war", "ist", "hatte", "wurde"] },
+        { "item_type": "gap_fill", "sentence_template": "Am Bahnhof ___ ich auf den Zug gewartet.", "answers": [["habe"]], "word_bank": ["habe", "bin", "hatte", "war"] },
+        { "item_type": "gap_fill", "sentence_template": "Nach dem Frühstück ___ wir in die Altstadt gegangen.", "answers": [["sind"]], "word_bank": ["sind", "haben", "waren", "hatten"] },
+        { "item_type": "gap_fill", "sentence_template": "Erst dann ___ er das Hotel gefunden.", "answers": [["hat"]], "word_bank": ["hat", "ist", "hatte", "war"] },
+        { "item_type": "gap_fill", "sentence_template": "Jeden Abend ___ sie Musik gehört.", "answers": [["hat"]], "word_bank": ["hat", "ist", "hatte", "war"] },
+        { "item_type": "gap_fill", "sentence_template": "Vor zwei Wochen ___ ich den Flug gebucht.", "answers": [["habe"]], "word_bank": ["habe", "bin", "hatte", "war"] }
+      ]
+    },
+    {
+      "phase_id": "p5-gap-fill-kompleksi",
+      "phase_type": "application_gap_fill",
+      "title": "Täytä aukko — V2 useammalla lauseella",
+      "instruction": "Täytä puuttuva verbi tai subjekti V2-säännön mukaisesti.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Zuerst ___ wir am Bahnhof angekommen. Dann ___ wir in das Hotel gegangen.", "answers": [["sind", "sind"]], "word_bank": ["sind", "haben", "waren", "hatten"] },
+        { "item_type": "gap_fill", "sentence_template": "Am ersten Tag ___ ich das Museum besucht. Am zweiten Tag ___ ich in die Altstadt gegangen.", "answers": [["habe", "bin"]], "word_bank": ["habe", "bin", "hatte", "war"] },
+        { "item_type": "gap_fill", "sentence_template": "Im Urlaub ___ wir viel gegessen und ___  wir viel getrunken.", "answers": [["haben", "haben"]], "word_bank": ["haben", "sind", "hatten", "waren"] },
+        { "item_type": "gap_fill", "sentence_template": "Leider ___ das Wetter schlecht, deshalb ___ wir im Hotel geblieben.", "answers": [["war", "sind"]], "word_bank": ["war", "ist", "sind", "haben", "waren", "hatten"] },
+        { "item_type": "gap_fill", "sentence_template": "Am letzten Tag ___ wir früh aufgestanden und ___ wir zum Flughafen gefahren.", "answers": [["sind", "sind"]], "word_bank": ["sind", "haben", "waren", "hatten"] }
+      ]
+    },
+    {
+      "phase_id": "p6-sentence-build-v2",
+      "phase_type": "application_sentence_build",
+      "title": "Järjestä lause — V2",
+      "instruction": "Järjestä sanat lauseeksi. Muista: verbi AINA 2. paikalle!",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "mc", "stem": "Järjestä: [Letzten Sommer] [ich] [habe] [in Österreich Urlaub gemacht]", "choices": ["Letzten Sommer ich habe in Österreich Urlaub gemacht.", "Letzten Sommer habe ich in Österreich Urlaub gemacht.", "Ich habe letzten Sommer Urlaub in Österreich gemacht.", "Urlaub gemacht habe ich letzten Sommer in Österreich."], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "Letzten Sommer (1.) → habe (V2!) → ich (subjekti) → gemacht (loppuun). Vaihtoehto 3 on myös oikein." },
+        { "item_type": "mc", "stem": "Järjestä: [Zuerst] [wir] [sind] [zum Bahnhof gefahren]", "choices": ["Zuerst wir sind zum Bahnhof gefahren.", "Zuerst sind wir zum Bahnhof gefahren.", "Wir sind zuerst gefahren zum Bahnhof.", "Gefahren sind wir zuerst zum Bahnhof."], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "Zuerst (1.) → sind (V2!) → wir (subjekti) → gefahren (loppuun)." },
+        { "item_type": "mc", "stem": "Järjestä: [Nach dem Mittagessen] [er] [hat] [eine Stunde geschlafen]", "choices": ["Nach dem Mittagessen er hat eine Stunde geschlafen.", "Nach dem Mittagessen hat er eine Stunde geschlafen.", "Er hat nach dem Mittagessen geschlafen eine Stunde.", "Eine Stunde hat er nach dem Mittagessen geschlafen."], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "Nach dem Mittagessen (aikarakenne, 1.) → hat (V2!) → er (subjekti) → geschlafen (loppuun)." },
+        { "item_type": "mc", "stem": "Valitse VÄÄRÄ lause:", "choices": ["Gestern bin ich ins Kino gegangen.", "Ich bin gestern ins Kino gegangen.", "Gestern ich bin ins Kino gegangen.", "Ins Kino bin ich gestern gegangen."], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "'Gestern ich bin' on VÄÄRIN — V2 rikottu. Gestern jälkeen heti apuverbi (bin), ei subjekti (ich)." },
+        { "item_type": "mc", "stem": "Järjestä: [In Berlin] [wir] [haben] [viele Sehenswürdigkeiten gesehen]", "choices": ["In Berlin wir haben viele Sehenswürdigkeiten gesehen.", "In Berlin haben wir viele Sehenswürdigkeiten gesehen.", "Wir haben in Berlin gesehen viele Sehenswürdigkeiten.", "Viele Sehenswürdigkeiten haben wir in Berlin gesehen."], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "In Berlin (paikka, 1.) → haben (V2!) → wir (subjekti) → gesehen (loppuun). Vaihtoehto 4 on myös kieliopillinen." },
+        { "item_type": "mc", "stem": "Järjestä: [Leider] [das Hotel] [war] [sehr teuer]", "choices": ["Leider das Hotel war sehr teuer.", "Leider war das Hotel sehr teuer.", "Das Hotel war leider sehr teuer.", "Sehr teuer war leider das Hotel."], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "Leider (adverbi, 1.) → war (V2!) → das Hotel (subjekti). Vaihtoehto 3 on myös oikein (subjekti alussa)." }
+      ]
+    },
+    {
+      "phase_id": "p7-synthesis-translate",
+      "phase_type": "synthesis_translate",
+      "title": "Käännä — V2-sääntö käytännössä",
+      "instruction": "Käännä lauseet saksaksi. Aloita joka lause ajanilmauksella — muista V2!",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Eilen söin pizzaa ravintolassa.", "accept": ["Gestern habe ich Pizza im Restaurant gegessen.", "Gestern habe ich im Restaurant Pizza gegessen."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Viime viikolla matkustimme junalla Berliiniin.", "accept": ["Letzte Woche sind wir mit dem Zug nach Berlin gefahren.", "Letzte Woche sind wir nach Berlin mit dem Zug gefahren."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Valitettavasti sää oli huono.", "accept": ["Leider war das Wetter schlecht.", "Leider war das Wetter nicht gut."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Ensin kävimme museossa, sitten söimme.", "accept": ["Zuerst sind wir ins Museum gegangen, dann haben wir gegessen.", "Zuerst haben wir das Museum besucht, dann haben wir gegessen."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Viime kesänä olin Itävallassa.", "accept": ["Letzten Sommer war ich in Österreich.", "Letzten Sommer bin ich in Österreich gewesen."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Tänään heräsin aikaisin.", "accept": ["Heute bin ich früh aufgewacht.", "Heute bin ich früh aufgestanden."] }
+      ]
+    },
+    {
+      "phase_id": "p8-short-writing",
+      "phase_type": "synthesis_short_writing",
+      "title": "Kirjoita — lomapäivä V2:lla",
+      "instruction": "Kirjoita 5–7 lausetta lomapäivästä. Aloita 3 lausetta ajanilmauksella (gestern, zuerst, dann, am Abend jne.) — testaa V2!",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I", "A", "B", "C", "M"],
+      "items": [
+        { "item_type": "writing", "prompt": "Kirjoita kuvaus lomapäivästä Saksassa. Aloita ainakin kolme lausetta eri ajanilmauksella (gestern, zuerst, dann, am Abend, leider...). Käytä Perfektiä.", "min_words": 40, "max_words": 90, "rubric_focus": ["structure", "communication", "overall"] },
+        { "item_type": "writing", "prompt": "Kirjoita matkakirje ystävälle saksaksi. Kerro mitä teit lomalla — käytä inversiorakenteita: Gestern habe ich..., Am ersten Tag sind wir..., Leider war...", "min_words": 45, "max_words": 100, "rubric_focus": ["communication", "structure", "vocab", "overall"] }
+      ]
+    }
+  ],
+  "vocab": [
+    { "es": "gestern", "fi": "eilen", "example_es": "Gestern habe ich Pizza gegessen.", "example_fi": "Eilen söin pizzaa.", "gender": null },
+    { "es": "heute", "fi": "tänään", "example_es": "Heute bin ich früh aufgestanden.", "example_fi": "Tänään nousin aikaisin.", "gender": null },
+    { "es": "morgen", "fi": "huomenna", "example_es": "Morgen fahren wir nach Berlin.", "example_fi": "Huomenna matkustamme Berliiniin.", "gender": null },
+    { "es": "zuerst", "fi": "ensin", "example_es": "Zuerst sind wir ins Museum gegangen.", "example_fi": "Ensin kävimme museossa.", "gender": null },
+    { "es": "dann", "fi": "sitten, sen jälkeen", "example_es": "Dann haben wir gegessen.", "example_fi": "Sitten söimme.", "gender": null },
+    { "es": "danach", "fi": "sen jälkeen", "example_es": "Danach sind wir ins Hotel gegangen.", "example_fi": "Sen jälkeen menimme hotelliin.", "gender": null },
+    { "es": "schließlich", "fi": "lopulta", "example_es": "Schließlich haben wir das Schloss gefunden.", "example_fi": "Lopulta löysimme linnan.", "gender": null },
+    { "es": "leider", "fi": "valitettavasti", "example_es": "Leider war das Wetter schlecht.", "example_fi": "Valitettavasti sää oli huono.", "gender": null },
+    { "es": "glücklicherweise", "fi": "onneksi", "example_es": "Glücklicherweise haben wir ein Zimmer gefunden.", "example_fi": "Onneksi löysimme huoneen.", "gender": null },
+    { "es": "am ersten Tag", "fi": "ensimmäisenä päivänä", "example_es": "Am ersten Tag sind wir angekommen.", "example_fi": "Ensimmäisenä päivänä saavuimme.", "gender": null },
+    { "es": "am Abend", "fi": "illalla", "example_es": "Am Abend haben wir im Restaurant gegessen.", "example_fi": "Illalla söimme ravintolassa.", "gender": null },
+    { "es": "am Morgen", "fi": "aamulla", "example_es": "Am Morgen bin ich früh aufgestanden.", "example_fi": "Aamulla nousin aikaisin.", "gender": null }
+  ],
+  "side_panel": {
+    "tabs": [
+      {
+        "id": "grammar",
+        "title": "Kielioppi",
+        "content_md": "## V2-sääntö — verbi 2. paikalla AINA\n\n**1. paikka** (jokin) + **verbi (2. paikka)** + subjekti + ...\n\n| 1. paikka | Verbi | Subjekti | Loppuosa |\n|---|---|---|---|\n| Ich | gehe | — | ins Kino. |\n| Gestern | **bin** | ich | ins Kino gegangen. |\n| Im Urlaub | **haben** | wir | viel gesehen. |\n| Leider | **war** | das Wetter | schlecht. |\n\n## Inversio\n\nKun jokin MUU kuin subjekti aloittaa:\n\n✅ *Gestern **bin** ich ins Kino gegangen.*\n❌ *Gestern **ich bin** ins Kino gegangen.*\n\n## Perfektissä\n\n- Apuverbi = 2. paikka\n- Partizip II = LOPPUUN\n\n✅ *Gestern **habe** ich Pizza **gegessen**.*\n✅ *Dann **sind** wir ins Hotel **gegangen**.*"
+      },
+      {
+        "id": "examples",
+        "title": "Esimerkit",
+        "content_md": "## Malli-blogi — V2 käytössä\n\n*Zuerst **bin** ich am Bahnhof **angekommen**.*\n*Am ersten Tag **habe** ich das Museum **besucht**.*\n*Danach **sind** wir in die Altstadt **gegangen**.*\n*Am Abend **haben** wir im Restaurant **gegessen**.*\n*Leider **war** das Wetter nicht so gut.*\n*Schließlich **sind** wir ins Hotel **zurückgekehrt**.*\n\n## Aloitussanoja inversiolle:\n- Gestern / Heute / Morgen\n- Zuerst / Dann / Danach\n- Im Urlaub / Am Bahnhof / In Berlin\n- Leider / Glücklicherweise"
+      },
+      {
+        "id": "tips",
+        "title": "YO-vinkit",
+        "content_md": "## V2-sääntö YO-kokeessa\n\nTeil 3 testaa V2:ta suoraan lauseenmuodostuksessa.\n\n**Kirjoitelmassa (Teil 4):** Joka kerta kun aloitat lauseen ajanilmauksella, testaat V2:ta. YTL-arvostelija laskee V2-virheitä.\n\n**Yleisimmät virheet (suomalaiset):**\n1. *Gestern ich habe...* ❌ → *Gestern **habe ich**...* ✅\n2. *Im Urlaub wir haben...* ❌ → *Im Urlaub **haben wir**...* ✅\n3. *Leider ich war...* ❌ → *Leider **war ich**...* ✅\n\n**Ohje kirjoitelmaan:**\nÄlä aloita joka lausetta 'Ich'. Vaihtele aloituksia:\n- *Gestern habe ich...*\n- *Dann sind wir...*\n- *Am Abend haben wir...*\nTämä tekee tekstistä eloisampaa JA osoittaa V2-osaamisen."
+      }
+    ]
+  }
+}

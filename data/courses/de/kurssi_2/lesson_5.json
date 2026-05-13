@@ -1,0 +1,244 @@
+{
+  "meta": {
+    "course_key": "kurssi_2",
+    "lesson_index": 5,
+    "lesson_type": "grammar",
+    "level": "A",
+    "title": "Modaaliverbit — können, müssen, möchten, wollen",
+    "description": "Harjoittelet neljää tärkeintä modaaliverbiä (können, müssen, möchten, wollen) ja niiden taivutusta. Pääverbi on aina infinitiivissä lauseen lopussa.",
+    "yo_relevance": "Teil 3 Rakenne ja sanasto: modaaliverbien taivutus ja pääverbin paikka ovat Teil 3:n klassisia testikohteita. Teil 4 Kirjoitelma: modaaliverbeillä kuvaillaan kykyä, velvollisuutta ja toiveita — välttämättömiä arkikirjoitelmassa.",
+    "estimated_minutes_median": 14
+  },
+  "teaching": {
+    "intro_md": "# Modaaliverbit\n\nModaaliverbeillä ilmaistaan **kykyä, velvollisuutta, halua tai toivetta**. Saksassa tärkein sääntö: **pääverbi on infinitiivinä lauseen loppuun**!\n\n## Taivutus\n\n| | können | müssen | möchten | wollen |\n|---|---|---|---|---|\n| ich | kann | muss | möchte | will |\n| du | kannst | musst | möchtest | willst |\n| er/sie | kann | muss | möchte | will |\n| wir | können | müssen | möchten | wollen |\n| ihr | könnt | müsst | möchtet | wollt |\n| sie/Sie | können | müssen | möchten | wollen |\n\n## Pääverbi lauseen loppuun!\n\n> *Ich **möchte** ins Kino **gehen**.* — Haluaisin mennä elokuviin.\n> *Er **kann** sehr gut Deutsch **sprechen**.* — Hän osaa puhua saksaa hyvin.\n> *Wir **müssen** jetzt nach Hause **gehen**.* — Meidän täytyy mennä nyt kotiin.\n\n## Ero: möchten vs. wollen\n\n- **möchten** = haluaisin (kohteliaampi, toive): *Ich möchte einen Kaffee.*\n- **wollen** = halua (vahvempi): *Ich will Arzt werden.*",
+    "key_points": [
+      "Pääverbi on aina infinitiivissä lauseen loppuun: Ich möchte ins Kino gehen.",
+      "können = osata/voida, müssen = täytyä, möchten = haluaisi (kohtelias), wollen = haluta (vahva).",
+      "ich/er/sie-muodot ovat samat: kann, muss, möchte, will.",
+      "möchten on kohteliaampi kuin wollen — käytä YO-kirjoitelmassa möchten.",
+      "Virhe: 'Ich möchte gehe ins Kino' ❌ → 'Ich möchte ins Kino gehen' ✅"
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1-recognition-mc-modaali",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista — oikea muoto ja rakenne",
+      "instruction": "Valitse oikea vastaus.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "mc", "stem": "Ich ___ gut schwimmen. (osata)", "choices": ["könnte", "kann", "kannst", "können"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "ich kann = minä osaan. können-verbin ich-muoto on kann (ei könnte = konditionaali)." },
+        { "item_type": "mc", "stem": "Du ___ morgen früh aufstehen. (täytyä)", "choices": ["müssen", "muss", "musst", "müsst"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "du musst = sinun täytyy. muss on ich/er-muoto, müsst on ihr-muoto." },
+        { "item_type": "mc", "stem": "Er ___ einen Kaffee trinken. (haluaisi)", "choices": ["wollte", "möchte", "möchtest", "will"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "er möchte = hän haluaisi. möchten on kohteliaampi kuin wollen. möchtest on du-muoto." },
+        { "item_type": "mc", "stem": "Wir ___ ins Kino gehen. (halutaan)", "choices": ["wollen", "will", "willst", "wollt"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "wir wollen = me haluamme. wollen on wir/sie-muoto." },
+        { "item_type": "mc", "stem": "Ich möchte ins Kino ___.", "choices": ["gehe", "gehst", "gehen", "geht"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "Pääverbi on infinitiivissä lauseen loppuun: möchte + gehen (ei gehe)." },
+        { "item_type": "mc", "stem": "Er muss zur Schule ___.", "choices": ["fährt", "fahren", "gefahren", "fährst"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Pääverbi infinitiivissä loppuun: muss + fahren. fährt on preesens ilman modaalia." },
+        { "item_type": "mc", "stem": "Sie ___ sehr gut kochen. (osaa)", "choices": ["können", "könnt", "kann", "kannst"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "sie (hän) kann = hän osaa. können on wir/sie-muoto, könnt on ihr-muoto." },
+        { "item_type": "mc", "stem": "Ihr ___ leise sein. (täytyy)", "choices": ["muss", "musst", "müssen", "müsst"], "correct_index": 3, "distractor_difficulty": "hard", "explanation": "ihr müsst = teidän täytyy. müsst on ihr-muoto. muss on ich/er-muoto." },
+        { "item_type": "mc", "stem": "Was ist die RICHTIGE Satzstellung?", "choices": ["Ich möchte gehe ins Kino.", "Ich möchte ins Kino gehen.", "Ich ins Kino möchte gehen.", "Ich gehen ins Kino möchte."], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "Oikea järjestys: modaali verbi 2. paikalla, pääverbi infinitiivissä LOPPUUN. 'Ich möchte ins Kino gehen.'" },
+        { "item_type": "mc", "stem": "Du ___ heute nicht kommen. (ei tarvitse)", "choices": ["musst nicht", "kannst nicht", "willst nicht", "möchtest nicht"], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "musst nicht = sinun ei tarvitse. kannst nicht = et osaa/voi. Kyse on velvollisuuden kieltämisestä." },
+        { "item_type": "mc", "stem": "Ich ___ einen Tee bitte. (haluaisin, kohtelias)", "choices": ["will", "wollte", "möchte", "kann"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "möchte on kohtelias haluamisen ilmaus. will on vahvempi ja epäkohteliaampi tilauksessa." },
+        { "item_type": "mc", "stem": "Wir ___ morgen früh aufstehen. (täytyy)", "choices": ["muss", "müssen", "musst", "müsst"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "wir müssen = meidän täytyy. müssen on wir/sie-muoto." },
+        { "item_type": "mc", "stem": "Er ___ Arzt werden. (haluaa, vahva)", "choices": ["möchte", "kann", "will", "muss"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "will = haluaa (vahva elämäntavoite). möchte olisi myös mahdollinen mutta heikompi." },
+        { "item_type": "mc", "stem": "Kannst du ___ helfen?", "choices": ["ich", "mir", "mich", "er"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "Kannst du mir helfen? = Voitko auttaa minua? mir on Dativ (helfen vaatii Datiivin)." },
+        { "item_type": "mc", "stem": "Sie ___ gut tanzen. (osaa, she)", "choices": ["können", "kannst", "kann", "könntet"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "sie (hän) kann = hän osaa. können on wir/sie monikko." }
+      ]
+    },
+    {
+      "phase_id": "p2-recognition-match-taivutus",
+      "phase_type": "recognition_match",
+      "title": "Yhdistä — modaaliverbin muoto",
+      "instruction": "Yhdistä persoona oikeaan modaaliverbimuotoon.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        {
+          "item_type": "match",
+          "left_label": "Persoona",
+          "right_label": "können",
+          "pairs": [
+            { "left": "ich", "right": "kann" },
+            { "left": "du", "right": "kannst" },
+            { "left": "er/sie", "right": "kann" },
+            { "left": "wir", "right": "können" },
+            { "left": "ihr", "right": "könnt" }
+          ]
+        },
+        {
+          "item_type": "match",
+          "left_label": "Persoona",
+          "right_label": "müssen / möchten / wollen",
+          "pairs": [
+            { "left": "ich (müssen)", "right": "muss" },
+            { "left": "du (müssen)", "right": "musst" },
+            { "left": "ich (möchten)", "right": "möchte" },
+            { "left": "er (wollen)", "right": "will" },
+            { "left": "du (wollen)", "right": "willst" },
+            { "left": "wir (wollen)", "right": "wollen" }
+          ]
+        }
+      ]
+    },
+    {
+      "phase_id": "p3-recall-typed-de-fi",
+      "phase_type": "recall_typed_es_to_fi",
+      "title": "Kirjoita oikea muoto",
+      "instruction": "Kirjoita modaaliverbin oikea preesensmuoto.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "ich / können", "accept": ["kann"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "du / können", "accept": ["kannst"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "er / können", "accept": ["kann"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "ich / müssen", "accept": ["muss"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "du / müssen", "accept": ["musst"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "ich / möchten", "accept": ["möchte"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "er / möchten", "accept": ["möchte"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "ich / wollen", "accept": ["will"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "du / wollen", "accept": ["willst"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "wir / können", "accept": ["können"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "ihr / müssen", "accept": ["müsst"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "sie (he) / wollen", "accept": ["wollen"] }
+      ]
+    },
+    {
+      "phase_id": "p4-recall-typed-fi-de",
+      "phase_type": "recall_typed_fi_to_es",
+      "title": "Suomesta saksaksi — modaalit",
+      "instruction": "Kirjoita modaaliverbin oikea muoto.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "minä osaan (können)", "accept": ["kann"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "sinun täytyy (müssen)", "accept": ["musst"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "hän haluaisi (möchten)", "accept": ["möchte"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "me haluamme (wollen)", "accept": ["wollen"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "sinä haluat (wollen)", "accept": ["willst"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "hän osaa (können)", "accept": ["kann"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "me voimme (können)", "accept": ["können"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "meidän täytyy (müssen)", "accept": ["müssen"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "te haluaisitte (möchten)", "accept": ["möchtet"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "minä haluan (wollen, vahva)", "accept": ["will"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "heidän täytyy (müssen)", "accept": ["müssen"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "te voitte (können)", "accept": ["könnt"] }
+      ]
+    },
+    {
+      "phase_id": "p5-application-gap-helppo",
+      "phase_type": "application_gap_fill",
+      "title": "Lauseen täydennys — perustaso",
+      "instruction": "Täydennä modaaliverbi ja tarkista pääverbin paikka.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Ich {1} gut Fahrrad fahren. (osata)", "answers": [["kann"]], "word_bank": ["kann", "kannst", "können"] },
+        { "item_type": "gap_fill", "sentence_template": "Du {1} jetzt schlafen gehen. (täytyä)", "answers": [["musst"]], "word_bank": ["musst", "muss", "müssen"] },
+        { "item_type": "gap_fill", "sentence_template": "Er {1} einen Tee trinken. (haluaisi)", "answers": [["möchte"]], "word_bank": ["möchte", "möchtest", "möchten"] },
+        { "item_type": "gap_fill", "sentence_template": "Wir {1} ins Kino gehen. (haluta)", "answers": [["wollen"]], "word_bank": ["wollen", "will", "willst"] },
+        { "item_type": "gap_fill", "sentence_template": "Ich möchte ins Restaurant ___. (mennä)", "answers": [["gehen"]], "word_bank": ["gehen", "gehe", "geht"] },
+        { "item_type": "gap_fill", "sentence_template": "Er muss die Aufgaben ___. (tehdä)", "answers": [["machen"]], "word_bank": ["machen", "macht", "machst"] },
+        { "item_type": "gap_fill", "sentence_template": "Sie {1} sehr gut singen. (osata, she)", "answers": [["kann"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Ihr {1} morgen früh aufstehen. (täytyä)", "answers": [["müsst"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Wir möchten nach Berlin ___. (matkustaa)", "answers": [["fahren", "reisen"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Du {1} mit mir kommen. (voida)", "answers": [["kannst"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p6-application-gap-vaativa",
+      "phase_type": "application_gap_fill",
+      "title": "Lauseen täydennys — vaativa",
+      "instruction": "Täydennä koko verbirakenne. Tarkista pääverbin paikka.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Ich {1} heute nicht {2}. (voida / tulla)", "answers": [["kann", "kommen"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Er {1} Arzt {2}. (haluaa / tulla joksikin)", "answers": [["will", "werden"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Du {1} diese Aufgabe allein {2}. (täytyy / tehdä)", "answers": [["musst", "machen"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Wir {1} nächste Woche nach Wien {2}. (haluaisimme / matkustaa)", "answers": [["möchten", "fahren"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Kannst du mir {1}? (auttaa)", "answers": [["helfen"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Sie {1} kein Fleisch {2}. (ei halua / syödä)", "answers": [["will", "essen"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Ich {1} heute früher nach Hause {2}. (täytyy / mennä)", "answers": [["muss", "gehen"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Er {1} sehr schnell {2}. (osaa / ajaa)", "answers": [["kann", "fahren"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Was {1} du morgen {2}? (haluta / tehdä)", "answers": [["willst", "machen"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Ihr {1} jetzt ruhig {2}. (voida / olla)", "answers": [["könnt", "sein"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p7-application-sentence-build",
+      "phase_type": "application_sentence_build",
+      "title": "Lauseiden rakentelu",
+      "instruction": "Kirjoita kokonainen lause modaaliverbillä.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Haluaisin juoda kahvin.", "accept": ["Ich möchte einen Kaffee trinken.", "Ich möchte Kaffee trinken."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Sinun täytyy tehdä kotitehtävät.", "accept": ["Du musst die Hausaufgaben machen.", "Du musst Hausaufgaben machen."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Voitko puhua hitaammin?", "accept": ["Kannst du langsamer sprechen?", "Könntest du langsamer sprechen?"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Me haluamme matkustaa Saksaan.", "accept": ["Wir wollen nach Deutschland fahren.", "Wir möchten nach Deutschland fahren."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Hän osaa puhua kolmea kieltä.", "accept": ["Er kann drei Sprachen sprechen.", "Sie kann drei Sprachen sprechen."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Meidän täytyy lähteä nyt.", "accept": ["Wir müssen jetzt gehen.", "Wir müssen jetzt los."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Hän haluaa tulla lääkäriksi.", "accept": ["Er will Arzt werden.", "Sie will Ärztin werden."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Haluaisitteko juoda jotain?", "accept": ["Möchtet ihr etwas trinken?", "Möchten Sie etwas trinken?"] }
+      ]
+    },
+    {
+      "phase_id": "p8-synthesis-translate",
+      "phase_type": "synthesis_translate",
+      "title": "YO-tyylinen käännös",
+      "instruction": "Käännä lauseet saksaksi. Kiinnitä huomiota pääverbin paikkaan.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Haluaisin matkustaa Saksaan ensi kesänä.", "accept": ["Ich möchte nächsten Sommer nach Deutschland fahren.", "Ich möchte nächsten Sommer nach Deutschland reisen."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Voitko auttaa minua tämän tehtävän kanssa?", "accept": ["Kannst du mir bei dieser Aufgabe helfen?", "Kannst du mir mit dieser Aufgabe helfen?"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Meidän täytyy herätä kuudelta huomenna.", "accept": ["Wir müssen morgen um sechs aufstehen.", "Wir müssen morgen um sechs Uhr aufstehen."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Haluatko tulla mukaani elokuviin?", "accept": ["Willst du mit mir ins Kino kommen?", "Möchtest du mit mir ins Kino kommen?"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Hän osaa puhua saksaa, mutta ei osaa kirjoittaa hyvin.", "accept": ["Er kann Deutsch sprechen, aber er kann nicht gut schreiben.", "Sie kann Deutsch sprechen, aber sie kann nicht gut schreiben."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "En halua syödä lihaa, haluaisin salaatin.", "accept": ["Ich will kein Fleisch essen, ich möchte einen Salat.", "Ich möchte kein Fleisch essen, ich möchte lieber einen Salat."] }
+      ]
+    },
+    {
+      "phase_id": "p9-synthesis-short-writing",
+      "phase_type": "synthesis_short_writing",
+      "title": "Lyhyt kirjoitus",
+      "instruction": "Kirjoita teksti käyttäen modaaliverbejä.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C", "M"],
+      "items": [
+        { "item_type": "writing", "prompt": "Kirjoita saksaksi: mitä osaat tehdä (können), mitä sinun täytyy tehdä tällä viikolla (müssen) ja mitä haluaisit tehdä viikonloppuna (möchten). 5–7 lausetta.", "min_words": 40, "max_words": 90, "rubric_focus": ["communication", "structure", "vocab"] },
+        { "item_type": "writing", "prompt": "Kirjoita saksaksi ystävälle: pyydät häntä johonkin (möchtest du...?), kerrot mitä voisitte tehdä yhdessä (wir können...) ja mitä täytyy hoitaa ensin (ich muss...). 5–7 lausetta.", "min_words": 40, "max_words": 90, "rubric_focus": ["communication", "vocab"] },
+        { "item_type": "writing", "prompt": "Kuvaile saksaksi unelmaviikkosi: mitä haluaisit tehdä joka päivä, mitä et haluaisi tehdä. Käytä möchten ja wollen. 5–7 lausetta.", "min_words": 40, "max_words": 90, "rubric_focus": ["communication", "structure"] }
+      ]
+    }
+  ],
+  "vocab": [
+    { "es": "können", "fi": "osata, voida", "example_es": "Ich kann gut Deutsch sprechen.", "example_fi": "Osaan puhua saksaa hyvin.", "gender": null },
+    { "es": "müssen", "fi": "täytyä, pitää", "example_es": "Ich muss jetzt gehen.", "example_fi": "Minun täytyy mennä nyt.", "gender": null },
+    { "es": "möchten", "fi": "haluaisi (kohtelias)", "example_es": "Ich möchte einen Kaffee.", "example_fi": "Haluaisin kahvin.", "gender": null },
+    { "es": "wollen", "fi": "haluta (vahva)", "example_es": "Er will Arzt werden.", "example_fi": "Hän haluaa tulla lääkäriksi.", "gender": null },
+    { "es": "dürfen", "fi": "saada lupa", "example_es": "Darf ich das Fenster öffnen?", "example_fi": "Saanko avata ikkunan?", "gender": null },
+    { "es": "sollen", "fi": "pitää (toisen tahto)", "example_es": "Du sollst das nicht machen.", "example_fi": "Sinun ei pitäisi tehdä niin.", "gender": null },
+    { "es": "kann (ich/er)", "fi": "osaa / voi", "example_es": "Er kann schwimmen.", "example_fi": "Hän osaa uida.", "gender": null },
+    { "es": "muss (ich/er)", "fi": "täytyy (minä/hän)", "example_es": "Ich muss arbeiten.", "example_fi": "Minun täytyy tehdä töitä.", "gender": null },
+    { "es": "möchte (ich/er)", "fi": "haluaisi (minä/hän)", "example_es": "Ich möchte schlafen.", "example_fi": "Haluaisin nukkua.", "gender": null },
+    { "es": "will (ich/er)", "fi": "haluaa (minä/hän)", "example_es": "Er will kommen.", "example_fi": "Hän haluaa tulla.", "gender": null },
+    { "es": "helfen", "fi": "auttaa", "example_es": "Kannst du mir helfen?", "example_fi": "Voitko auttaa minua?", "gender": null },
+    { "es": "aufstehen", "fi": "nousta ylös", "example_es": "Ich muss früh aufstehen.", "example_fi": "Minun täytyy herätä aikaisin.", "gender": null },
+    { "es": "werden", "fi": "tulla joksikin, tulla olemaan", "example_es": "Er will Arzt werden.", "example_fi": "Hän haluaa tulla lääkäriksi.", "gender": null }
+  ],
+  "side_panel": {
+    "tabs": [
+      {
+        "id": "grammar",
+        "title": "Kielioppi",
+        "content_md": "## Modaaliverbit — taivutus\n\n| | können | müssen | möchten | wollen |\n|---|---|---|---|---|\n| ich | **kann** | **muss** | **möchte** | **will** |\n| du | kannst | musst | möchtest | willst |\n| er/sie | **kann** | **muss** | **möchte** | **will** |\n| wir | können | müssen | möchten | wollen |\n| ihr | könnt | müsst | möchtet | wollt |\n| sie/Sie | können | müssen | möchten | wollen |\n\n**Huom:** ich ja er/sie ovat samat!\n\n## Pääverbi lauseen loppuun!\n\n✅ *Ich **möchte** ins Kino **gehen**.*\n❌ *Ich möchte **gehe** ins Kino.*\n\n## Ero möchten vs. wollen\n\n- **möchten** — kohtelias toive (*Ich möchte einen Kaffee*)\n- **wollen** — vahva tahto (*Ich will Arzt werden*)"
+      },
+      {
+        "id": "tips",
+        "title": "YO-vinkki",
+        "content_md": "## YO-koe — modaaliverbit\n\nTeil 3 Rakenne ja sanasto: verbin paikan tunnistaminen lauseessa on klassinen testikohde.\n\n## Yleisin virhe\n\n*Ich möchte **gehe** ins Kino.* ❌\n*Ich möchte ins Kino **gehen**.* ✅\n\nPääverbi on **aina infinitiivinä lauseen loppuun**!\n\n## Teil 4 Kirjoitelmassa\n\nKäytä modaaliverbejä luontevasti:\n- *Ich **möchte** dir schreiben, weil...* (kohtelias)\n- *Ich **kann** nicht kommen, weil...*\n- *Wir **müssen** uns bald treffen.*\n\n## Kohteliaisuus\n\nKirjoitelmassa käytä **möchte** eikä **will** — kuulostaa kohteliaammalta ja YTL-arvostelijat pistävät siitä."
+      }
+    ]
+  }
+}

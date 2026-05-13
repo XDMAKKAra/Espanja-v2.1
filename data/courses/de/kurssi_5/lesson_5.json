@@ -1,0 +1,192 @@
+{
+  "meta": {
+    "course_key": "kurssi_5",
+    "lesson_index": 5,
+    "lesson_type": "grammar",
+    "level": "C",
+    "title": "wenn-sivulause ja V-loppu",
+    "description": "Opit muodostamaan wenn-sivulauseen oikealla V-loppu-sananjärjestyksellä ja erottamaan wenn (kun/jos) wann-sanasta (milloin). Tämä on suomalaisten lukiolaisten yleisin saksan virhetyyppi.",
+    "yo_relevance": "Teil 3 (Struktur): wenn-aukot ovat klassikoita. Teil 4 (Schreiben): kun/jos-lauseet ovat välttämättömiä C-tason kirjoitelmissa. wenn vs. wann -erottelu testataan luetun ymmärtämisessä.",
+    "estimated_minutes_median": 13
+  },
+  "teaching": {
+    "intro_md": "# wenn-sivulause ja V-loppu\n\n## wenn vai wann?\n\nTämä on suomalaisten **yleisin virhe** saksan sivulauseissa:\n\n| Sana | Käyttö | Esimerkki |\n|---|---|---|\n| **wenn** | konditionaali / temporaali: \"kun\", \"jos\" | *Wenn ich Zeit habe, gehe ich ins Kino.* |\n| **wann** | kysymyssana: \"milloin?\" | *Wann kommt er?* / *Ich weiß nicht, wann er kommt.* |\n\n**Muistisääntö:** suomessa \"milloin\" = kysymys → **wann**. Kaikki muut → **wenn**.\n\n## V-loppu wenn-sivulauseessa\n\nSivulauseessa verbi menee AINA loppuun:\n\n✅ *Wenn ich Zeit **habe**, gehe ich ins Kino.*\n❌ *Wenn ich **habe** Zeit, gehe ich ins Kino.*\n\n## Sivulauseen sisäinen järjestys\n\n1. **wenn** (konjunktio)\n2. Subjekti\n3. Objektit, adverbit\n4. **Verbi viimeisenä**\n\n> *Wenn [ich] [morgen] Zeit **habe**...*\n> *Wenn [du] [das Problem] nicht **verstehst**...*\n\n## Modaaliverbit wenn-sivulauseessa\n\nModaaliverbi menee viimeiseksi, infinitiivi sitä ennen:\n\n> *Wenn ich Arzt werden **kann**...* (kann viimeinen, werden ennen)\n> *Wenn er das schaffen **möchte**...*",
+    "key_points": [
+      "wenn = 'kun' tai 'jos' (ei koskaan kysymyssanana).",
+      "wann = 'milloin' (vain kysymyksissä tai epäsuorissa kysymyksissä).",
+      "wenn-sivulauseessa verbi AINA viimeisenä.",
+      "Modaaliverbi myös viimeisenä: Wenn ich kommen kann...",
+      "Pilkku erottaa sivulauseen päälauseesta aina."
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1-recognition-mc-wenn-wann",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista — wenn vai wann?",
+      "instruction": "Valitse oikea sana: wenn tai wann.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "mc", "stem": "___ ich Zeit habe, gehe ich ins Kino.", "choices": ["Wann", "Wenn", "Als", "Ob"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "'Kun minulla on aikaa' = konditionaali → wenn. Wann = milloin (kysymys)." },
+        { "item_type": "mc", "stem": "___ kommt der Zug an?", "choices": ["Wenn", "Wenn auch", "Wann", "Als"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "'Milloin juna tulee?' = kysymys → wann. Wenn ei koskaan kysymyksissä." },
+        { "item_type": "mc", "stem": "Ich weiß nicht, ___ er kommt.", "choices": ["wenn", "ob", "wann", "als"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "Epäsuora kysymys 'en tiedä milloin' → wann. Ydinero: wann = milloin, wenn = kun/jos." },
+        { "item_type": "mc", "stem": "___ es regnet, nehme ich einen Regenschirm.", "choices": ["Wann", "Ob", "Als", "Wenn"], "correct_index": 3, "distractor_difficulty": "easy", "explanation": "'Jos sataa' = ehto → wenn. 'Wann es regnet' olisi väärin — wann on vain kysymyksissä." },
+        { "item_type": "mc", "stem": "Sag mir, ___ du fertig bist.", "choices": ["wenn", "als", "wann", "ob"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "'Kerro minulle milloin olet valmis' = epäsuora kysymys → wann." },
+        { "item_type": "mc", "stem": "___ du das schaffst, bist du wirklich gut.", "choices": ["Wann", "Wenn", "Als", "Ob"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "'Jos onnistut' = ehto → wenn." },
+        { "item_type": "mc", "stem": "___ fängt das Konzert an?", "choices": ["Wenn", "Ob", "Wann", "Als"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "'Milloin konsertti alkaa?' = suora kysymys → wann." },
+        { "item_type": "mc", "stem": "Ich rufe dich an, ___ ich ankomme.", "choices": ["wann", "als", "ob", "wenn"], "correct_index": 3, "distractor_difficulty": "medium", "explanation": "'Kun saavun' = temporaali → wenn. Wann on vain kysymyksissä." },
+        { "item_type": "mc", "stem": "Er fragt, ___ wir essen gehen.", "choices": ["wenn", "ob", "wann", "als"], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "'Hän kysyy milloin menemme syömään' = epäsuora kysymys → wann." },
+        { "item_type": "mc", "stem": "___ ich nach Berlin komme, besuche ich das Museum.", "choices": ["Wann", "Wann auch", "Als", "Wenn"], "correct_index": 3, "distractor_difficulty": "medium", "explanation": "'Kun tulen Berliiniin' = temporaali/ehto → wenn." },
+        { "item_type": "mc", "stem": "Kannst du mir sagen, ___ der Film beginnt?", "choices": ["wenn", "ob", "als", "wann"], "correct_index": 3, "distractor_difficulty": "medium", "explanation": "Epäsuora kysymys 'milloin elokuva alkaa' → wann." }
+      ]
+    },
+    {
+      "phase_id": "p2-recognition-mc-v-loppu",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista — oikea V-loppu wenn-sivulauseessa",
+      "instruction": "Valitse oikein muodostettu wenn-sivulause.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        { "item_type": "mc", "stem": "Mikä on oikein?", "choices": ["Wenn ich habe Zeit, gehe ich raus.", "Wenn ich Zeit habe, gehe ich raus.", "Wenn ich Zeit, habe gehe ich raus.", "Wenn habe ich Zeit, gehe ich raus."], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "V-loppu: verbi 'habe' menee sivulauseen loppuun. 'Wenn ich Zeit habe,...'" },
+        { "item_type": "mc", "stem": "Mikä on oikein?", "choices": ["Wenn du kommst morgen, bin ich zuhause.", "Wenn morgen du kommst, bin ich zuhause.", "Wenn du morgen kommst, bin ich zuhause.", "Wenn kommst du morgen, bin ich zuhause."], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "Sivulause: subjekti (du) + adverbi (morgen) + verbi loppuun (kommst)." },
+        { "item_type": "mc", "stem": "Mikä on väärin?", "choices": ["Wenn es kalt ist, bleibe ich zuhause.", "Wenn ich müde bin, schlafe ich.", "Wenn er kommt morgen, gehe ich weg.", "Wenn wir Zeit haben, kommen wir."], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "'Wenn er kommt morgen' on väärin — verbi ei ole viimeisenä. Oikein: 'Wenn er morgen kommt,...'" },
+        { "item_type": "mc", "stem": "Modaaliverbin kanssa — mikä on oikein?", "choices": ["Wenn ich Arzt werden kann, bin ich glücklich.", "Wenn ich kann Arzt werden, bin ich glücklich.", "Wenn ich werden Arzt kann, bin ich glücklich.", "Wenn kann ich Arzt werden, bin ich glücklich."], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "Modaaliverbi kan on sivulauseessa viimeisenä. Infinitiivi werden on ennen modaaliverbiä." },
+        { "item_type": "mc", "stem": "Mikä on oikein? (Futur I wenn-sivulauseessa)", "choices": ["Wenn ich werde kommen, sage ich dir Bescheid.", "Wenn ich kommen werde, sage ich dir Bescheid.", "Wenn werde ich kommen, sage ich dir Bescheid.", "Wenn ich kommen, sage ich dir Bescheid."], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "Wenn-sivulauseessa Futur I: werden menee loppuun: 'Wenn ich kommen werde,...'" }
+      ]
+    },
+    {
+      "phase_id": "p3-gap-fill-wenn-lauseet",
+      "phase_type": "application_gap_fill",
+      "title": "Täydennä — wenn + oikea verbimuoto",
+      "instruction": "Täydennä sivulause oikealla verbillä oikeassa paikassa.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Wenn ich ___ (haben) Zeit, gehe ich spazieren.", "answers": [["habe"]], "word_bank": ["habe", "hast", "hat", "haben"] },
+        { "item_type": "gap_fill", "sentence_template": "Wenn es ___ (regnen), nehmen wir Regenschirme.", "answers": [["regnet"]], "word_bank": ["regnen", "regnet", "regnest", "geregnet"] },
+        { "item_type": "gap_fill", "sentence_template": "Wenn du morgen ___ (kommen), rufen wir dich an.", "answers": [["kommst"]], "word_bank": ["kommen", "komme", "kommst", "kommt"] },
+        { "item_type": "gap_fill", "sentence_template": "Wenn sie das Vorstellungsgespräch ___ (bestehen), bekommt sie den Job.", "answers": [["besteht"]], "word_bank": ["besteht", "bestehen", "bestehst", "bestand"] },
+        { "item_type": "gap_fill", "sentence_template": "Wenn ich mehr Geld ___ (verdienen), kaufe ich ein Auto.", "answers": [["verdiene"]], "word_bank": ["verdiene", "verdienen", "verdienst", "verdient"] },
+        { "item_type": "gap_fill", "sentence_template": "Wenn er nicht ___ (arbeiten), ist er zuhause.", "answers": [["arbeitet"]], "word_bank": ["arbeitet", "arbeiten", "arbeitest", "gearbeitet"] },
+        { "item_type": "gap_fill", "sentence_template": "Wenn wir früh ___ (aufstehen), schaffen wir es.", "answers": [["aufstehen"]], "word_bank": ["aufstehen", "stehen...auf", "aufstehe", "stehe...auf"] },
+        { "item_type": "gap_fill", "sentence_template": "Wenn du keine Zeit ___ (haben), können wir es verschieben.", "answers": [["hast"]], "word_bank": ["habe", "hast", "hat", "haben"] },
+        { "item_type": "gap_fill", "sentence_template": "Wenn es ___ (sein) kalt, bleiben wir zuhause.", "answers": [["ist"]], "word_bank": ["ist", "sein", "bist", "seid"] },
+        { "item_type": "gap_fill", "sentence_template": "Wenn ich Arzt ___ (werden) möchte, muss ich viel lernen.", "answers": [["werden"]], "word_bank": ["werden", "werde", "wird", "wirst"] }
+      ]
+    },
+    {
+      "phase_id": "p4-gap-fill-wenn-vs-wann-lauseet",
+      "phase_type": "application_gap_fill",
+      "title": "wenn vai wann — täydennä lause",
+      "instruction": "Kirjoita wenn tai wann aukkoon.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "___ ich nach Hause komme, esse ich.", "answers": [["Wenn"]], "word_bank": ["Wenn", "Wann"] },
+        { "item_type": "gap_fill", "sentence_template": "___ fängt die Schule an?", "answers": [["Wann"]], "word_bank": ["Wenn", "Wann"] },
+        { "item_type": "gap_fill", "sentence_template": "Ich weiß nicht, ___ er ankommt.", "answers": [["wann"]], "word_bank": ["wenn", "wann"] },
+        { "item_type": "gap_fill", "sentence_template": "___ ich krank bin, gehe ich nicht zur Schule.", "answers": [["Wenn"]], "word_bank": ["Wenn", "Wann"] },
+        { "item_type": "gap_fill", "sentence_template": "Sag mir bitte, ___ das Konzert beginnt.", "answers": [["wann"]], "word_bank": ["wenn", "wann"] },
+        { "item_type": "gap_fill", "sentence_template": "___ du das schaffst, sind alle glücklich.", "answers": [["Wenn"]], "word_bank": ["Wenn", "Wann"] },
+        { "item_type": "gap_fill", "sentence_template": "Er fragt mich immer, ___ ich komme.", "answers": [["wann"]], "word_bank": ["wenn", "wann"] },
+        { "item_type": "gap_fill", "sentence_template": "___ es warm ist, gehen wir schwimmen.", "answers": [["Wenn"]], "word_bank": ["Wenn", "Wann"] },
+        { "item_type": "gap_fill", "sentence_template": "___ ist das Bewerbungsgespräch?", "answers": [["Wann"]], "word_bank": ["Wenn", "Wann"] },
+        { "item_type": "gap_fill", "sentence_template": "Ich schreibe dir, ___ ich etwas Neues weiß.", "answers": [["wenn"]], "word_bank": ["wenn", "wann"] }
+      ]
+    },
+    {
+      "phase_id": "p5-gap-fill-vaativampi",
+      "phase_type": "application_gap_fill",
+      "title": "Täydennä — kokonainen wenn-lause",
+      "instruction": "Täydennä koko wenn-rakenne oikein.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "___ ich die Stelle ___ (bekommen), freue ich mich sehr.", "answers": [["Wenn", "bekomme"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Ich rufe dich an, ___ ich ___ (ankommen).", "answers": [["wenn", "ankomme"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "___ das Wetter schön ___ (sein), gehen wir in den Park.", "answers": [["Wenn", "ist"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Sie fragt, ___ der Zug ___ (abfahren).", "answers": [["wann", "abfährt"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "___ er mehr ___ (lernen) würde, würde er die Prüfung bestehen.", "answers": [["Wenn", "lernen"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Ich erzähle dir, ___ ich in der neuen Firma ___ (anfangen).", "answers": [["wann", "anfange"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "___ es zu spät ___ (werden), muss ich gehen.", "answers": [["Wenn", "wird"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Kannst du mir sagen, ___ das Vorstellungsgespräch ___ (stattfinden)?", "answers": [["wann", "stattfindet"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p6-sentence-build",
+      "phase_type": "application_sentence_build",
+      "title": "Rakenna — wenn-lauseet",
+      "instruction": "Valitse oikein järjestetty wenn-lause.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "mc", "stem": "Järjestä: 'Zeit / ich / habe / Wenn / gehe / spazieren / ich'", "choices": ["Wenn ich Zeit habe, gehe ich spazieren.", "Wenn ich habe Zeit, gehe ich spazieren.", "Ich gehe spazieren, wenn Zeit ich habe.", "Wenn Zeit ich habe, spazieren ich gehe."], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "V-loppu sivulauseessa: Wenn ich Zeit **habe**. Pilkku, sitten päälause normaalisti." },
+        { "item_type": "mc", "stem": "Järjestä: 'regnet / Wenn / es / nehme / ich / Regenschirm / einen'", "choices": ["Wenn es regnet, nehme ich einen Regenschirm.", "Wenn regnet es, nehme ich einen Regenschirm.", "Ich nehme Regenschirm einen, wenn es regnet.", "Wenn es einen Regenschirm regnet, nehme ich."], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "Wenn es **regnet**, (pilkku) nehme ich... — verbi sivulauseessa loppuun." },
+        { "item_type": "mc", "stem": "Järjestä: 'Wann / das / Konzert / beginnt / ?'", "choices": ["Wann beginnt das Konzert?", "Wann das Konzert beginnt?", "Beginnt das Konzert wann?", "Das Konzert beginnt wann?"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "Suora kysymys: Wann + verbi + subjekti. 'Wann beginnt das Konzert?'" },
+        { "item_type": "mc", "stem": "Järjestä: 'nicht / wann / Ich / weiß / er / kommt'", "choices": ["Ich weiß nicht, wann er kommt.", "Ich weiß nicht wann kommt er.", "Ich nicht weiß, wann er kommt.", "Ich weiß nicht, er wann kommt."], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "Epäsuora kysymys: wann aloittaa sivulauseen, verbi loppuun: wann er **kommt**." },
+        { "item_type": "mc", "stem": "Järjestä: 'schaffen / Wenn / das / du / glücklich / bist / wirklich / du'", "choices": ["Wenn du das schaffst, bist du wirklich glücklich.", "Wenn du schaffst das, bist du wirklich glücklich.", "Du bist wirklich glücklich wenn du das schaffst.", "Wenn das du schaffst, glücklich wirklich du bist."], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "Wenn du das **schaffst**, (pilkku) bist du wirklich glücklich." },
+        { "item_type": "mc", "stem": "Järjestä: 'kommen / ich / wenn / Ich / rufe / an / dich'", "choices": ["Ich rufe dich an, wenn ich komme.", "Ich rufe an dich, wenn komme ich.", "Wenn ich komme, rufe ich an dich.", "Ich an rufe dich, wenn ich komme."], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "Päälause ensin, sitten wenn-sivulause. Separaabeli anrufen: rufe...an." }
+      ]
+    },
+    {
+      "phase_id": "p7-synthesis-translate",
+      "phase_type": "synthesis_translate",
+      "title": "Käännä — wenn-lauseet suomesta saksaksi",
+      "instruction": "Käännä lause saksaksi. Muista V-loppu wenn-sivulauseessa.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Kun minulla on aikaa, menen elokuviin.", "accept": ["Wenn ich Zeit habe, gehe ich ins Kino.", "Ich gehe ins Kino, wenn ich Zeit habe."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Milloin juna lähtee?", "accept": ["Wann fährt der Zug ab?", "Wann fährt der Zug?"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Jos sataa, otamme sateenvarjot.", "accept": ["Wenn es regnet, nehmen wir Regenschirme.", "Wenn es regnet, nehmen wir einen Regenschirm."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "En tiedä milloin hän tulee.", "accept": ["Ich weiß nicht, wann er kommt.", "Ich weiß nicht, wann sie kommt."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Kun tulen kotiin, soitan sinulle.", "accept": ["Wenn ich nach Hause komme, rufe ich dich an.", "Ich rufe dich an, wenn ich nach Hause komme."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Jos se on vaikea, pyydän apua.", "accept": ["Wenn es schwierig ist, bitte ich um Hilfe.", "Wenn das schwierig ist, frage ich."] }
+      ]
+    },
+    {
+      "phase_id": "p8-synthesis-short-writing",
+      "phase_type": "synthesis_short_writing",
+      "title": "Kirjoita — wenn-lauseet käytössä",
+      "instruction": "Kirjoita 4–5 lausetta saksaksi käyttäen wenn-sivulauseita.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C", "M"],
+      "items": [
+        { "item_type": "writing", "prompt": "Kirjoita 4–5 lausetta saksaksi käyttäen wenn-sivulauseita. Kerro: mitä teet kun sinulla on vapaata, kun sää on hyvä ja kun olet sairas.", "min_words": 40, "max_words": 70, "rubric_focus": ["structure", "communication", "vocab"] },
+        { "item_type": "writing", "prompt": "Wenn ich Arbeit finde... — Jatka tätä aloitusta 4–5 lauseella saksaksi. Käytä wenn-sivulauseita ja Futur I:tä.", "min_words": 40, "max_words": 70, "rubric_focus": ["communication", "structure", "vocab"] },
+        { "item_type": "writing", "prompt": "Kirjoita dialogi (4–5 lausetta) jossa yksi henkilö kysyy milloin (wann) toinen tekee jotain, ja toinen vastaa wenn-lauseella. Kirjoita molempien vuorot.", "min_words": 35, "max_words": 65, "rubric_focus": ["communication", "structure", "overall"] }
+      ]
+    }
+  ],
+  "vocab": [
+    { "es": "wenn", "fi": "kun, jos (sivulausekonjunktio)", "example_es": "Wenn ich Zeit habe, gehe ich ins Kino.", "example_fi": "Kun minulla on aikaa, menen elokuviin.", "gender": null },
+    { "es": "wann", "fi": "milloin (kysymyssana)", "example_es": "Wann kommt der Zug?", "example_fi": "Milloin juna tulee?", "gender": null },
+    { "es": "V-loppu sivulauseessa", "fi": "verbi lauseen loppuun", "example_es": "Wenn ich Zeit habe,...", "example_fi": "Kun minulla on aikaa,...", "gender": null },
+    { "es": "regnen", "fi": "sataa (vettä)", "example_es": "Wenn es regnet, bleibe ich drinnen.", "example_fi": "Kun sataa, pysyn sisällä.", "gender": null },
+    { "es": "ankommen", "fi": "saapua, tulla perille", "example_es": "Ich rufe an, wenn ich ankomme.", "example_fi": "Soitan kun saavun.", "gender": null },
+    { "es": "bestehen", "fi": "läpäistä (koe), pysyä", "example_es": "Wenn sie die Prüfung besteht,...", "example_fi": "Jos hän läpäisee kokeen,...", "gender": null },
+    { "es": "verschieben", "fi": "siirtää (ajallisesti)", "example_es": "Wenn du keine Zeit hast, verschieben wir es.", "example_fi": "Jos sinulla ei ole aikaa, siirretään se.", "gender": null },
+    { "es": "stattfinden", "fi": "tapahtua, järjestyä", "example_es": "Wann findet das Konzert statt?", "example_fi": "Milloin konsertti järjestetään?", "gender": null }
+  ],
+  "side_panel": {
+    "tabs": [
+      {
+        "id": "grammar",
+        "title": "Kielioppi",
+        "content_md": "## wenn vs. wann\n\n| Sana | Käyttö |\n|---|---|\n| **wenn** | kun / jos — sivulause |\n| **wann** | milloin? — kysymys |\n\n**Muistisääntö:** wann = W-kysymys (milloin?). wenn = kaikki muut.\n\n## wenn-sivulauseen järjestys\n\n1. wenn (konjunktio)\n2. Subjekti\n3. Objektit, adverbit\n4. **Verbi viimeisenä**\n\n✅ *Wenn ich Zeit **habe**,...*\n❌ *Wenn ich **habe** Zeit,...*\n\n## Modaaliverbin kanssa\n\n✅ *Wenn ich kommen **kann**,...*\n(modaaliverbi loppuun, infinitiivi sitä ennen)\n\n## Futur I wenn-sivulauseessa\n\n✅ *Wenn ich kommen **werde**,...*\n(werden loppuun, infinitiivi sitä ennen)"
+      },
+      {
+        "id": "examples",
+        "title": "Esimerkit",
+        "content_md": "## wenn — esimerkkejä\n\n- *Wenn ich Zeit **habe**, gehe ich ins Kino.* — Kun minulla on aikaa, menen elokuviin.\n- *Wenn es **regnet**, nehmen wir Schirme.* — Jos sataa, otetaan sateenvarjot.\n- *Wenn du die Stelle **bekommst**, bin ich glücklich.* — Jos saat paikan, olen iloinen.\n\n## wann — esimerkkejä\n\n- ***Wann** kommt er?* — Milloin hän tulee?\n- *Ich weiß nicht, **wann** er kommt.* — En tiedä milloin hän tulee.\n- *Sag mir, **wann** das beginnt.* — Kerro milloin se alkaa.\n\n## Klassinen virhe\n\n❌ *Wann ich Zeit habe, gehe ich raus.* (wann sivulauseessa väärä)\n✅ *Wenn ich Zeit habe, gehe ich raus.*"
+      },
+      {
+        "id": "tips",
+        "title": "YO-vinkit",
+        "content_md": "## YO-kokeessa\n\n**Teil 3 (Struktur):** Tyypillinen aukko: '___ ich Zeit habe, gehe ich...' → Wenn (ei Wann).\n\n**Teil 4 (Schreiben):** Käytä wenn-lauseita: *Wenn ich Zeit habe, ... Wenn es möglich ist,...*\n\n## Yleisin virhe\n\n1. wann sivulauseessa (pitäisi olla wenn)\n2. Verbi ei lopussa: *Wenn ich habe Zeit* → *Wenn ich Zeit habe*\n3. Pilkku unohtuu: *Wenn ich Zeit habe gehe ich* → *Wenn ich Zeit habe**,** gehe ich*"
+      }
+    ]
+  }
+}
