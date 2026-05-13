@@ -260,8 +260,18 @@
     .compare-table .yes { color: var(--accent-dark); font-weight: 700; }
     .compare-table .no { color: var(--ink-soft); opacity: 0.4; }
     @media (max-width: 720px) {
+      .compare-section { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+      .compare-table { min-width: 520px; }
       .compare-table thead th,
       .compare-table tbody td { padding: 10px 8px; font-size: 13px; }
+      .compare-table thead th:first-child,
+      .compare-table tbody td:first-child {
+        position: sticky;
+        left: 0;
+        background: var(--surface, #fff);
+        z-index: 1;
+        min-width: 180px;
+      }
     }
 
     .faq-note {
@@ -317,7 +327,7 @@
           <li>1 kirjoitustehtävä</li>
           <li>1 luetun ymmärtäminen</li>
           <li>1 harjoituskoe</li>
-          <li class="muted">Ei AI-trackingia</li>
+          <li class="muted">Ei AI-seurantaa</li>
         </ul>
         <a href="/app.html#/aloitus" class="price-cta free">Aloita ilmaiseksi</a>
         <span class="cta-no-cc">Ei luottokorttia tarvita</span>

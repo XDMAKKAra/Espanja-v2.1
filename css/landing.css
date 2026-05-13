@@ -2334,3 +2334,54 @@
   justify-content: center;
 }
 
+
+/* ============================================================
+   HERO EYEBROW COUNTDOWN — remontti F-01
+   Compact one-line variant that lives inside .hero__eyebrow.
+   Replaces the previous 720px standalone countdown card so the
+   hero H1 is the first visible element on every viewport.
+   ============================================================ */
+.landing .hero__eyebrow.yo-countdown {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px 12px;
+  padding: 6px 14px;
+  background: var(--accent-soft);
+  border: 1px solid var(--border);
+  border-radius: var(--r-pill);
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  margin: 0 0 18px;
+  max-width: 100%;
+}
+.landing .hero__eyebrow-label { white-space: nowrap; }
+.landing .hero__eyebrow-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.5;
+  flex: 0 0 4px;
+}
+.landing .hero__eyebrow-time {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+.landing .hero__eyebrow-time > span {
+  font-weight: 700;
+  letter-spacing: 0;
+}
+.landing .hero__eyebrow-time > em {
+  font-style: normal;
+  font-weight: 600;
+  opacity: 0.7;
+  margin-right: 2px;
+}
