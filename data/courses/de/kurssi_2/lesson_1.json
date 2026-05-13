@@ -1,0 +1,280 @@
+{
+  "meta": {
+    "course_key": "kurssi_2",
+    "lesson_index": 1,
+    "lesson_type": "vocab",
+    "level": "A",
+    "title": "Koti, huoneet ja huonekalut",
+    "description": "Opettelet kodin tilat (das Zimmer, die Küche, das Bad…), tärkeimmät huonekalut (der Tisch, das Bett, der Schrank…) ja asumiseen liittyvät perussanat. Sanasto kattaa YO-kokeessa toistuvat koti-aiheen kuvaukset.",
+    "yo_relevance": "Teil 2 Luetun ymmärtäminen: koti-kuvaukset ja asumistekstit toistuvat lähes joka vuosi. Teil 4 Kirjoitelma: 'Beschreibe deine Wohnung' on klassinen lyhyen kirjoitelman aihe.",
+    "estimated_minutes_median": 12
+  },
+  "teaching": {
+    "intro_md": "# Koti, huoneet ja huonekalut\n\nSaksassa asunto on **die Wohnung** (kerrostaloasunto) tai **das Haus** (talo). Vuokra-asunto on hyvin yleinen: *Ich wohne in einer Wohnung im dritten Stock.* (Asun kolmannessa kerroksessa.)\n\n## Huoneet\n\n| Saksa | Suomi |\n|---|---|\n| das Zimmer | huone |\n| die Küche | keittiö |\n| das Bad / das Badezimmer | kylpyhuone |\n| das Wohnzimmer | olohuone |\n| das Schlafzimmer | makuuhuone |\n| der Flur | eteinen, käytävä |\n\n> *Meine Wohnung hat drei Zimmer, eine Küche und ein Bad.* — Asunnossani on kolme huonetta, keittiö ja kylpyhuone.\n\n## Huonekalut\n\n- **der Tisch** — pöytä\n- **der Stuhl** — tuoli\n- **das Sofa** — sohva\n- **das Bett** — sänky\n- **der Schrank** — kaappi\n- **das Regal** — hylly\n\n## Muista: substantiivit isolla kirjaimella!\n\nSaksassa **kaikki** substantiivit kirjoitetaan isolla alkukirjaimella: *der Tisch*, ei *der tisch*. Tämä on yksi yleisimmistä suomalaisten virheistä.",
+    "key_points": [
+      "die Wohnung = kerrostaloasunto, das Haus = talo.",
+      "das Zimmer = huone (yleinen); das Schlafzimmer = makuuhuone; das Wohnzimmer = olohuone.",
+      "das Bad ja das Badezimmer tarkoittavat samaa — kylpyhuonetta.",
+      "Kaikki substantiivit isolla kirjaimella saksassa.",
+      "wohnen in + paikka = asua jossakin (Ich wohne in Berlin)."
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1-recognition-mc-huoneet",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista — huoneet ja tilat",
+      "instruction": "Valitse oikea suomennos.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "mc", "stem": "das Zimmer", "choices": ["huone", "keittiö", "kylpyhuone", "käytävä"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "das Zimmer = huone. Yleinen sana mille tahansa huoneelle asunnossa." },
+        { "item_type": "mc", "stem": "die Küche", "choices": ["olohuone", "keittiö", "makuuhuone", "ullakko"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "die Küche = keittiö. Verbi kochen = keittää, laittaa ruokaa." },
+        { "item_type": "mc", "stem": "das Bad", "choices": ["kylpy", "kylpyhuone", "sauna", "uima-allas"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "das Bad = kylpyhuone (arkikielessä). Pitkä muoto: das Badezimmer." },
+        { "item_type": "mc", "stem": "das Wohnzimmer", "choices": ["makuuhuone", "kylpyhuone", "olohuone", "ruokasali"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "das Wohnzimmer = olohuone. wohnen = asua + Zimmer = huone." },
+        { "item_type": "mc", "stem": "das Schlafzimmer", "choices": ["olohuone", "makuuhuone", "lasten huone", "vierashuone"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "das Schlafzimmer = makuuhuone. schlafen = nukkua." },
+        { "item_type": "mc", "stem": "die Wohnung", "choices": ["talo", "asunto, kerrostaloasunto", "hotelli", "kylä"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "die Wohnung = asunto (kerrostalossa). wohnen = asua." },
+        { "item_type": "mc", "stem": "das Haus", "choices": ["huone", "asunto", "talo", "rakennus"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "das Haus = talo. Yleensä tarkoittaa omakotitaloa." },
+        { "item_type": "mc", "stem": "der Flur", "choices": ["lattia", "eteinen, käytävä", "ulko-ovi", "porras"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "der Flur = eteinen tai käytävä asunnon sisällä." },
+        { "item_type": "mc", "stem": "der Keller", "choices": ["ullakko", "varasto", "kellari", "autotalli"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "der Keller = kellari. Älä sekoita: der Dachboden = ullakko." },
+        { "item_type": "mc", "stem": "der Balkon", "choices": ["terassi", "parveke", "puutarha", "porras"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "der Balkon = parveke. der Garten = puutarha." },
+        { "item_type": "mc", "stem": "die Garage", "choices": ["varasto", "autotalli", "kellari", "piha"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "die Garage = autotalli." },
+        { "item_type": "mc", "stem": "das Esszimmer", "choices": ["olohuone", "keittiö", "ruokailuhuone", "lastenhuone"], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "das Esszimmer = ruokailuhuone. essen = syödä + Zimmer = huone." },
+        { "item_type": "mc", "stem": "der Garten", "choices": ["parvi", "parveke", "puutarha", "piha"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "der Garten = puutarha tai piha." },
+        { "item_type": "mc", "stem": "das Dachboden", "choices": ["kellari", "ullakko", "katto", "ylinen"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "der Dachboden = ullakko. das Dach = katto + Boden = pohja/lattia." },
+        { "item_type": "mc", "stem": "die Treppe", "choices": ["käytävä", "ovi", "ikkuna", "portaat"], "correct_index": 3, "distractor_difficulty": "medium", "explanation": "die Treppe = portaat. die Tür = ovi, das Fenster = ikkuna." }
+      ]
+    },
+    {
+      "phase_id": "p2-recognition-match-huonekalut",
+      "phase_type": "recognition_match",
+      "title": "Yhdistä — huonekalut",
+      "instruction": "Yhdistä saksan sana ja suomennos.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        {
+          "item_type": "match",
+          "left_label": "Saksa",
+          "right_label": "Suomi",
+          "pairs": [
+            { "left": "der Tisch", "right": "pöytä" },
+            { "left": "der Stuhl", "right": "tuoli" },
+            { "left": "das Sofa", "right": "sohva" },
+            { "left": "das Bett", "right": "sänky" },
+            { "left": "der Schrank", "right": "kaappi" },
+            { "left": "das Regal", "right": "hylly" },
+            { "left": "der Kühlschrank", "right": "jääkaappi" },
+            { "left": "die Lampe", "right": "lamppu" },
+            { "left": "der Teppich", "right": "matto" },
+            { "left": "das Bücherregal", "right": "kirjahylly" },
+            { "left": "der Spiegel", "right": "peili" },
+            { "left": "das Kissen", "right": "tyyny" }
+          ]
+        }
+      ]
+    },
+    {
+      "phase_id": "p3-recall-typed-de-fi",
+      "phase_type": "recall_typed_es_to_fi",
+      "title": "Käännä suomeksi",
+      "instruction": "Kirjoita saksan sanan suomennos (pienellä).",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "das Zimmer", "accept": ["huone"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "die Küche", "accept": ["keittiö"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "das Wohnzimmer", "accept": ["olohuone"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "das Schlafzimmer", "accept": ["makuuhuone"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "das Bad", "accept": ["kylpyhuone"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "der Tisch", "accept": ["pöytä"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "das Bett", "accept": ["sänky", "vuode"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "der Schrank", "accept": ["kaappi", "vaatekaappi"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "der Kühlschrank", "accept": ["jääkaappi"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "das Regal", "accept": ["hylly", "kirjahylly"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "die Wohnung", "accept": ["asunto", "kerrostaloasunto"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "wohnen", "accept": ["asua"] }
+      ]
+    },
+    {
+      "phase_id": "p4-recall-typed-fi-de",
+      "phase_type": "recall_typed_fi_to_es",
+      "title": "Käännä saksaksi",
+      "instruction": "Kirjoita suomennoksen saksaksi (muista iso alkukirjain substantiiveille).",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "keittiö", "accept": ["die Küche", "Küche"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "olohuone", "accept": ["das Wohnzimmer", "Wohnzimmer"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "makuuhuone", "accept": ["das Schlafzimmer", "Schlafzimmer"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "kylpyhuone", "accept": ["das Bad", "das Badezimmer", "Bad", "Badezimmer"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "sänky", "accept": ["das Bett", "Bett"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "pöytä", "accept": ["der Tisch", "Tisch"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "sohva", "accept": ["das Sofa", "Sofa"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "kaappi", "accept": ["der Schrank", "Schrank"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "jääkaappi", "accept": ["der Kühlschrank", "Kühlschrank"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "asunto", "accept": ["die Wohnung", "Wohnung"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "talo", "accept": ["das Haus", "Haus"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "asua", "accept": ["wohnen"] }
+      ]
+    },
+    {
+      "phase_id": "p5-application-gap-helppo",
+      "phase_type": "application_gap_fill",
+      "title": "Lauseen täydennys — perustaso",
+      "instruction": "Täydennä lause oikealla sanalla.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Ich koche in der {1}.", "answers": [["Küche"]], "word_bank": ["Küche", "Wohnzimmer", "Bad"] },
+        { "item_type": "gap_fill", "sentence_template": "Ich schlafe im {1}.", "answers": [["Schlafzimmer", "Bett"]], "word_bank": ["Schlafzimmer", "Küche", "Flur"] },
+        { "item_type": "gap_fill", "sentence_template": "Wir sehen fern im {1}.", "answers": [["Wohnzimmer"]], "word_bank": ["Wohnzimmer", "Keller", "Flur"] },
+        { "item_type": "gap_fill", "sentence_template": "Die Milch steht im {1}.", "answers": [["Kühlschrank"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Ich {1} in einer kleinen Wohnung in Helsinki.", "answers": [["wohne"]], "word_bank": ["wohne", "koche", "schlafe"] },
+        { "item_type": "gap_fill", "sentence_template": "Das {1} hat drei Zimmer und eine Küche.", "answers": [["Haus", "Wohnung"]], "word_bank": ["Haus", "Bett", "Regal"] },
+        { "item_type": "gap_fill", "sentence_template": "Im Schlafzimmer steht ein großes {1}.", "answers": [["Bett"]], "word_bank": ["Bett", "Kühlschrank", "Herd"] },
+        { "item_type": "gap_fill", "sentence_template": "Die Bücher stehen im {1}.", "answers": [["Regal", "Bücherregal"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Im {1} wasche ich mich. (kylpyhuone)", "answers": [["Bad", "Badezimmer"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Am Esstisch gibt es vier {1}.", "answers": [["Stühle"]], "word_bank": ["Stühle", "Betten", "Schränke"] }
+      ]
+    },
+    {
+      "phase_id": "p6-application-gap-vaativa",
+      "phase_type": "application_gap_fill",
+      "title": "Lauseen täydennys — vaativa",
+      "instruction": "Täydennä ilman sanapankkia.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Meine Familie {1} in einem Haus mit Garten. (wohnen)", "answers": [["wohnt"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Der {1} im Wohnzimmer ist sehr bequem. (sohva)", "answers": [["Sofa"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Ich lege meine Kleider in den {1}. (kaappi)", "answers": [["Schrank"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Wir essen am {1} in der Küche. (pöytä)", "answers": [["Tisch"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Das Auto steht in der {1}. (autotalli)", "answers": [["Garage"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Im Sommer sitzen wir auf dem {1}. (parveke)", "answers": [["Balkon"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Die Werkzeuge sind im {1}. (kellari)", "answers": [["Keller"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Ich zünde die {1} an, wenn es dunkel wird. (lamppu)", "answers": [["Lampe"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Der {1} ist alt und muss ersetzt werden. (jääkaappi)", "answers": [["Kühlschrank"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Mein Bett hat zwei weiche {1}. (tyynyt)", "answers": [["Kissen"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p7-application-sentence-build",
+      "phase_type": "application_sentence_build",
+      "title": "Lauseiden rakentelu",
+      "instruction": "Käännä koko lause saksaksi.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Asun pienessä asunnossa.", "accept": ["Ich wohne in einer kleinen Wohnung.", "Ich wohne in einer kleinen Wohnung"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Keittiössä on jääkaappi ja liesi.", "accept": ["In der Küche gibt es einen Kühlschrank und einen Herd.", "In der Küche gibt es einen Kühlschrank und einen Herd"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Makuuhuoneessani on iso sänky.", "accept": ["In meinem Schlafzimmer gibt es ein großes Bett.", "In meinem Schlafzimmer steht ein großes Bett.", "In meinem Schlafzimmer gibt es ein großes Bett"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Olohuoneessa on mukava sohva.", "accept": ["Im Wohnzimmer gibt es ein bequemes Sofa.", "Im Wohnzimmer steht ein bequemes Sofa.", "Im Wohnzimmer gibt es ein bequemes Sofa"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Talossa on puutarha.", "accept": ["Das Haus hat einen Garten.", "Das Haus hat einen Garten"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Kirjat ovat hyllyssä.", "accept": ["Die Bücher stehen im Regal.", "Die Bücher sind im Regal.", "Die Bücher stehen im Regal"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Asumme kerrostalossa.", "accept": ["Wir wohnen in einem Wohnhaus.", "Wir wohnen im Hochhaus.", "Wir wohnen in einem Mehrfamilienhaus."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Parvekkeelta on kaunis näkymä.", "accept": ["Vom Balkon hat man eine schöne Aussicht.", "Der Balkon hat eine schöne Aussicht."] }
+      ]
+    },
+    {
+      "phase_id": "p8-synthesis-translate",
+      "phase_type": "synthesis_translate",
+      "title": "YO-tyylinen käännös",
+      "instruction": "Käännä koko lause saksaksi YO-tasolla.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Asun vanhempieni kanssa pienessä talossa.", "accept": ["Ich wohne mit meinen Eltern in einem kleinen Haus.", "Ich wohne mit meinen Eltern in einem kleinen Haus"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Asunnossani on kaksi huonetta, keittiö ja kylpyhuone.", "accept": ["Meine Wohnung hat zwei Zimmer, eine Küche und ein Bad.", "Meine Wohnung hat zwei Zimmer, eine Küche und ein Badezimmer."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Olohuoneessa on iso sohva ja kirjahylly.", "accept": ["Im Wohnzimmer gibt es ein großes Sofa und ein Bücherregal.", "Im Wohnzimmer stehen ein großes Sofa und ein Bücherregal."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Makuuhuone on keittiön vieressä.", "accept": ["Das Schlafzimmer ist neben der Küche.", "Das Schlafzimmer liegt neben der Küche."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Talolla on iso puutarha ja autotalli.", "accept": ["Das Haus hat einen großen Garten und eine Garage.", "Das Haus hat einen großen Garten und eine Garage"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Kesällä istumme parvekkeella.", "accept": ["Im Sommer sitzen wir auf dem Balkon.", "Im Sommer sind wir auf dem Balkon."] }
+      ]
+    },
+    {
+      "phase_id": "p9-synthesis-short-writing",
+      "phase_type": "synthesis_short_writing",
+      "title": "Lyhyt kirjoitus",
+      "instruction": "Kirjoita lyhyt teksti kodistasi saksaksi.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C", "M"],
+      "items": [
+        { "item_type": "writing", "prompt": "Kuvaile asuntoasi saksaksi 5–7 lauseella: missä se sijaitsee, kuinka monta huonetta on, mitä huonekaluja löytyy. Käytä vähintään 6 oppimaasi sanaa.", "min_words": 40, "max_words": 90, "rubric_focus": ["communication", "vocab", "structure"] },
+        { "item_type": "writing", "prompt": "Esittele oma huoneesi saksaksi: mitä siellä on (Bett, Schrank, Regal…), mistä pidät. 5–7 lausetta.", "min_words": 40, "max_words": 90, "rubric_focus": ["communication", "vocab"] },
+        { "item_type": "writing", "prompt": "Kuvittele unelma-asuntosi: missä se on, millainen se on, mitä huonekaluja siinä on. 5–7 lausetta saksaksi.", "min_words": 40, "max_words": 90, "rubric_focus": ["communication", "structure"] }
+      ]
+    },
+    {
+      "phase_id": "p10-cumulative-review",
+      "phase_type": "application_gap_fill",
+      "title": "Kertaus — koko sanasto",
+      "instruction": "Sekoitettu kertaus. Täydennä sopiva sana.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Meine {1} hat drei Zimmer. (asunto)", "answers": [["Wohnung"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Im {1} stehen Bücher und ein Laptop. (hylly)", "answers": [["Regal", "Bücherregal"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Wir {1} in einem ruhigen Stadtteil. (asua)", "answers": [["wohnen"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Die Katze liegt auf dem {1}. (matto)", "answers": [["Teppich"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Im Wohnzimmer hängt ein großer {1}. (peili)", "answers": [["Spiegel"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Mein {1} ist kaputt — ich brauche einen neuen. (jääkaappi)", "answers": [["Kühlschrank"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Im {1} parke ich das Fahrrad. (kellari)", "answers": [["Keller"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Wir frühstücken am {1} in der Küche. (pöytä)", "answers": [["Tisch"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Das {1} liegt im zweiten Stock. (asunto)", "answers": [["Wohnung"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Im {1} duschen wir jeden Morgen. (kylpyhuone)", "answers": [["Bad", "Badezimmer"]], "word_bank": null }
+      ]
+    }
+  ],
+  "vocab": [
+    { "es": "das Haus", "fi": "talo", "example_es": "Mein Haus ist groß.", "example_fi": "Taloni on iso.", "gender": null },
+    { "es": "die Wohnung", "fi": "asunto, kerrostaloasunto", "example_es": "Ich wohne in einer Wohnung.", "example_fi": "Asun kerrostaloasunnossa.", "gender": "f" },
+    { "es": "das Zimmer", "fi": "huone", "example_es": "Die Wohnung hat drei Zimmer.", "example_fi": "Asunnossa on kolme huonetta.", "gender": null },
+    { "es": "die Küche", "fi": "keittiö", "example_es": "Ich koche in der Küche.", "example_fi": "Laitan ruokaa keittiössä.", "gender": "f" },
+    { "es": "das Wohnzimmer", "fi": "olohuone", "example_es": "Wir sehen fern im Wohnzimmer.", "example_fi": "Katsomme telkkaria olohuoneessa.", "gender": null },
+    { "es": "das Schlafzimmer", "fi": "makuuhuone", "example_es": "Das Schlafzimmer ist ruhig.", "example_fi": "Makuuhuone on hiljainen.", "gender": null },
+    { "es": "das Bad", "fi": "kylpyhuone", "example_es": "Das Bad ist klein aber modern.", "example_fi": "Kylpyhuone on pieni mutta moderni.", "gender": null },
+    { "es": "das Badezimmer", "fi": "kylpyhuone", "example_es": "Das Badezimmer hat eine Dusche.", "example_fi": "Kylpyhuoneessa on suihku.", "gender": null },
+    { "es": "der Flur", "fi": "eteinen, käytävä", "example_es": "Die Jacken hängen im Flur.", "example_fi": "Takit roikkuvat eteisessä.", "gender": "m" },
+    { "es": "der Keller", "fi": "kellari", "example_es": "Die Fahrräder sind im Keller.", "example_fi": "Pyörät ovat kellarissa.", "gender": "m" },
+    { "es": "der Balkon", "fi": "parveke", "example_es": "Im Sommer sitze ich auf dem Balkon.", "example_fi": "Kesällä istun parvekkeella.", "gender": "m" },
+    { "es": "die Garage", "fi": "autotalli", "example_es": "Das Auto steht in der Garage.", "example_fi": "Auto on autotallissa.", "gender": "f" },
+    { "es": "der Garten", "fi": "puutarha, piha", "example_es": "Der Garten ist groß und grün.", "example_fi": "Puutarha on iso ja vihreä.", "gender": "m" },
+    { "es": "das Esszimmer", "fi": "ruokailuhuone", "example_es": "Wir essen im Esszimmer.", "example_fi": "Syömme ruokailuhuoneessa.", "gender": null },
+    { "es": "die Treppe", "fi": "portaat", "example_es": "Die Treppe führt in den zweiten Stock.", "example_fi": "Portaat johtavat toiseen kerrokseen.", "gender": "f" },
+    { "es": "der Tisch", "fi": "pöytä", "example_es": "Das Buch liegt auf dem Tisch.", "example_fi": "Kirja on pöydällä.", "gender": "m" },
+    { "es": "der Stuhl", "fi": "tuoli", "example_es": "Am Tisch stehen vier Stühle.", "example_fi": "Pöydän ääressä on neljä tuolia.", "gender": "m" },
+    { "es": "das Sofa", "fi": "sohva", "example_es": "Das Sofa ist sehr bequem.", "example_fi": "Sohva on todella mukava.", "gender": null },
+    { "es": "das Bett", "fi": "sänky", "example_es": "Mein Bett ist groß.", "example_fi": "Sänkyni on iso.", "gender": null },
+    { "es": "der Schrank", "fi": "kaappi, vaatekaappi", "example_es": "Meine Kleider hängen im Schrank.", "example_fi": "Vaatteeni roikkuvat kaapissa.", "gender": "m" },
+    { "es": "das Regal", "fi": "hylly", "example_es": "Die Bücher stehen im Regal.", "example_fi": "Kirjat ovat hyllyssä.", "gender": null },
+    { "es": "das Bücherregal", "fi": "kirjahylly", "example_es": "Das Bücherregal ist voll.", "example_fi": "Kirjahylly on täynnä.", "gender": null },
+    { "es": "der Kühlschrank", "fi": "jääkaappi", "example_es": "Die Milch steht im Kühlschrank.", "example_fi": "Maito on jääkaapissa.", "gender": "m" },
+    { "es": "die Lampe", "fi": "lamppu", "example_es": "Die Lampe leuchtet hell.", "example_fi": "Lamppu valaisee kirkkaasti.", "gender": "f" },
+    { "es": "der Teppich", "fi": "matto", "example_es": "Der Teppich ist rot.", "example_fi": "Matto on punainen.", "gender": "m" },
+    { "es": "der Spiegel", "fi": "peili", "example_es": "Im Bad hängt ein großer Spiegel.", "example_fi": "Kylpyhuoneessa on iso peili.", "gender": "m" },
+    { "es": "das Kissen", "fi": "tyyny", "example_es": "Das Kissen ist weich.", "example_fi": "Tyyny on pehmeä.", "gender": null },
+    { "es": "die Decke", "fi": "peitto, katto", "example_es": "Die Decke des Zimmers ist weiß.", "example_fi": "Huoneen katto on valkoinen.", "gender": "f" },
+    { "es": "wohnen", "fi": "asua", "example_es": "Ich wohne in Helsinki.", "example_fi": "Asun Helsingissä.", "gender": null },
+    { "es": "mieten", "fi": "vuokrata", "example_es": "Wir mieten eine Wohnung.", "example_fi": "Vuokraamme asunnon.", "gender": null }
+  ],
+  "side_panel": {
+    "tabs": [
+      {
+        "id": "vocab",
+        "title": "Sanasto",
+        "content_md": "## Asunnon tyypit\n\n- **das Haus** — talo\n- **die Wohnung** — asunto (kerrostalossa)\n\n## Huoneet\n\n- **das Zimmer** — huone (yleinen)\n- **das Wohnzimmer** — olohuone\n- **das Schlafzimmer** — makuuhuone\n- **die Küche** — keittiö\n- **das Bad / das Badezimmer** — kylpyhuone\n- **das Esszimmer** — ruokailuhuone\n- **der Flur** — eteinen, käytävä\n- **der Keller** — kellari\n- **der Balkon** — parveke\n- **die Garage** — autotalli\n- **der Garten** — puutarha\n- **die Treppe** — portaat\n\n## Huonekalut\n\n- **der Tisch** — pöytä\n- **der Stuhl** — tuoli\n- **das Sofa** — sohva\n- **das Bett** — sänky\n- **der Schrank** — kaappi\n- **das Regal** — hylly\n- **das Bücherregal** — kirjahylly\n- **der Kühlschrank** — jääkaappi\n- **die Lampe** — lamppu\n- **der Teppich** — matto\n- **der Spiegel** — peili\n- **das Kissen** — tyyny\n\n## Verbit\n\n- **wohnen** — asua\n- **mieten** — vuokrata"
+      },
+      {
+        "id": "grammar",
+        "title": "Kielioppi",
+        "content_md": "## Substantiivit isolla!\n\nSaksassa kaikki substantiivit kirjoitetaan isolla alkukirjaimella:\n- *der Tisch*, *die Küche*, *das Bett*\n\n## Artikkelit Nominativissa\n\n| Suku | Määräinen | Epämääräinen |\n|---|---|---|\n| maskuliini | **der** Tisch | **ein** Tisch |\n| feminiini | **die** Küche | **eine** Küche |\n| neutri | **das** Bett | **ein** Bett |\n\n## Prepositio + Dativ\n\n*in dem* → **im** (sulauma)\n- Ich bin **im** Wohnzimmer.\n- Das Buch liegt **auf dem** Tisch."
+      },
+      {
+        "id": "tips",
+        "title": "YO-vinkki",
+        "content_md": "## YO-koe — koti-aihe\n\nKoti-sanasto toistuu Teil 2:ssa (Luetun ymmärtäminen) lähes joka vuosi: asumiskuvaukset, asunto-ilmoitukset, sähköpostit.\n\n## Yleisimmät ansat\n\n- **das Bad** ja **das Badezimmer** tarkoittavat samaa\n- **das Zimmer** = yleinen huone; lisäosa tarkentaa: *Schlaf*zimmer, *Wohn*zimmer, *Ess*zimmer\n- Muista isot alkukirjaimet substantiiveille — helppo saada pisteitä!\n\n## Teil 4 Kirjoitelmassa\n\nKun kuvaat kotia, käytä:\n- **Es gibt + akkusativ** — *Es gibt ein Sofa im Wohnzimmer*\n- **haben** — *Meine Wohnung hat drei Zimmer*\n- **stehen/liegen** — *Das Buch liegt auf dem Tisch*"
+      }
+    ]
+  }
+}

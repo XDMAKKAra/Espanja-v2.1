@@ -1,0 +1,226 @@
+{
+  "meta": {
+    "course_key": "kurssi_5",
+    "lesson_index": 4,
+    "lesson_type": "grammar",
+    "level": "C",
+    "title": "werden — kolme käyttöä",
+    "description": "werden on saksan monimerkityksisin verbi: (1) Futur I, (2) passiivi-apuverbi, (3) 'tulla joksikin'. Tämä kolmijako on YO:n klassinen distraktori-alue — oppi erottamaan ne toisistaan.",
+    "yo_relevance": "Teil 2 (Lesen): passiivilauseet esiintyvät teksteissä. Teil 3 (Struktur): werden-täydennystehtävät testaavat tätä kolmijakoa. Teil 4 (Schreiben): 'Ich werde Lehrer werden' -rakenne.",
+    "estimated_minutes_median": 14
+  },
+  "teaching": {
+    "intro_md": "# werden — kolme käyttöä\n\nwerden on saksan monikäyttöisin verbi. Se voi merkitä kolmea eri asiaa:\n\n## 1. Futur I — apuverbi\n\n**werden** + infinitiivi = tulevaisuus\n\n> *Ich **werde** morgen **kommen**.* — Tulen huomenna.\n\n## 2. Passiivin apuverbi (Vorgangspassiv)\n\n**werden** + Partizip II = passiivi\n\n> *Das Buch **wird** **gelesen**.* — Kirjaa luetaan. (joku lukee sitä)\n> *Das Haus **wurde** **gebaut**.* — Talo rakennettiin.\n\n## 3. 'Tulla joksikin' — Vollverb\n\n**werden** + substantiivi/adjektiivi = muuttua, tulla\n\n> *Er **wird** Lehrer.* — Hänestä tulee opettaja.\n> *Das Wetter **wird** besser.* — Sää paranee.\n\n## Miten erottaa?\n\n| Rakenne | Tunnistus |\n|---|---|\n| werden + **infinitiivi** | Futur I |\n| werden + **Partizip II** (ge-...-t/en) | Passiivi |\n| werden + **substantiivi/adjektiivi** | Tulla joksikin |\n\n> *Ich werde **arbeiten**.* → infinitiivi → Futur I\n> *Das Buch wird **gelesen**.* → Partizip II (gelesen) → Passiivi\n> *Er wird **Lehrer**.* → substantiivi → Tulla joksikin",
+    "key_points": [
+      "werden + infinitiivi = Futur I (tulevaisuus)",
+      "werden + Partizip II = Vorgangspassiv (passiivi)",
+      "werden + substantiivi/adjektiivi = tulla joksikin / muuttua",
+      "Partizip II tunnistaa: ge- -etuliite ja -t tai -en loppu.",
+      "YO-klassikko: 'Ich werde Arzt werden' = molemmat werden + infinitiivi."
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1-recognition-mc-kolme-kayttoa",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista — minkä käyttö tässä?",
+      "instruction": "Valitse oikea selitys: onko werden Futur I, passiivi vai 'tulla joksikin'?",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "mc", "stem": "Ich werde morgen kommen.", "choices": ["Passiivi", "Futur I", "Tulla joksikin", "Konditionaali"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "kommen on infinitiivi → Futur I. 'Minä tulen huomenna.'" },
+        { "item_type": "mc", "stem": "Das Haus wird gebaut.", "choices": ["Futur I", "Tulla joksikin", "Passiivi", "Pluskvamperfekti"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "gebaut on Partizip II (bauen → gebaut) → Passiivi. 'Taloa rakennetaan.'" },
+        { "item_type": "mc", "stem": "Er wird Lehrer.", "choices": ["Futur I", "Passiivi", "Tulla joksikin", "Konditionaali"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "Lehrer on substantiivi, ei infinitiivi eikä Partizip II → 'tulla joksikin'. Hänestä tulee opettaja." },
+        { "item_type": "mc", "stem": "Die Aufgabe wird erklärt.", "choices": ["Futur I", "Passiivi", "Tulla joksikin", "Präteritum"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "erklärt on Partizip II (erklären → erklärt) → Passiivi. 'Tehtävä selitetään.'" },
+        { "item_type": "mc", "stem": "Das Wetter wird besser.", "choices": ["Futur I", "Passiivi", "Tulla joksikin / muuttua", "Pluskvamperfekti"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "besser on adjektiivi → 'muuttua, tulla'. Sää paranee." },
+        { "item_type": "mc", "stem": "Sie werden nächstes Jahr heiraten.", "choices": ["Passiivi", "Tulla joksikin", "Futur I", "Konditionaali"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "heiraten on infinitiivi → Futur I. 'He menevät naimisiin ensi vuonna.'" },
+        { "item_type": "mc", "stem": "Der Brief wird geschrieben.", "choices": ["Futur I", "Tulla joksikin", "Konditionaali", "Passiivi"], "correct_index": 3, "distractor_difficulty": "medium", "explanation": "geschrieben on Partizip II (schreiben → geschrieben) → Passiivi. 'Kirje kirjoitetaan.'" },
+        { "item_type": "mc", "stem": "Ich werde Arzt werden.", "choices": ["Passiivi + Futur", "Futur I (Ich werde... + tulla joksikin werden)", "Kaksoispassiivi", "Tulla joksikin kahdesti"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "Ensimmäinen werde = Futur I apuverbi. Toinen werden = infinitiivi joka merkitsee 'tulla joksikin'. Kokonaisuus = Futur I 'tulla joksikin'." },
+        { "item_type": "mc", "stem": "Das Auto wird repariert.", "choices": ["Futur I", "Passiivi", "Tulla joksikin", "Imperfekti"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "repariert on Partizip II (reparieren → repariert) → Passiivi. 'Auto korjataan.'" },
+        { "item_type": "mc", "stem": "Sie wird Ärztin.", "choices": ["Futur I", "Passiivi", "Tulla joksikin", "Futur II"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "Ärztin on substantiivi → 'tulla joksikin'. Hänestä tulee lääkäri." },
+        { "item_type": "mc", "stem": "Die Schule wird geöffnet.", "choices": ["Tulla joksikin", "Futur I", "Passiivi", "Konditionaali"], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "geöffnet on Partizip II (öffnen → geöffnet) → Passiivi. 'Koulu avataan.'" }
+      ]
+    },
+    {
+      "phase_id": "p2-recognition-match-kolme-kayttoa",
+      "phase_type": "recognition_match",
+      "title": "Yhdistä — werden-käyttö ja esimerkki",
+      "instruction": "Yhdistä werden-käyttö esimerkkiinsä.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        {
+          "item_type": "match",
+          "left_label": "Lause",
+          "right_label": "Käyttö",
+          "pairs": [
+            { "left": "Ich werde studieren.", "right": "Futur I" },
+            { "left": "Das Buch wird gelesen.", "right": "Passiivi" },
+            { "left": "Er wird Lehrer.", "right": "Tulla joksikin" },
+            { "left": "Sie wird arbeiten.", "right": "Futur I" },
+            { "left": "Das Auto wird repariert.", "right": "Passiivi" },
+            { "left": "Das Wetter wird besser.", "right": "Tulla / muuttua" }
+          ]
+        },
+        {
+          "item_type": "match",
+          "left_label": "Saksa",
+          "right_label": "Suomi",
+          "pairs": [
+            { "left": "Das Haus wird gebaut.", "right": "Taloa rakennetaan." },
+            { "left": "Sie wird Ärztin.", "right": "Hänestä tulee lääkäri." },
+            { "left": "Ich werde kommen.", "right": "Tulen." },
+            { "left": "Der Brief wird geschrieben.", "right": "Kirje kirjoitetaan." },
+            { "left": "Er wird Ingenieur werden.", "right": "Hänestä tulee insinööri." },
+            { "left": "Die Aufgabe wird erklärt.", "right": "Tehtävä selitetään." }
+          ]
+        }
+      ]
+    },
+    {
+      "phase_id": "p3-gap-fill-oikea-muoto",
+      "phase_type": "application_gap_fill",
+      "title": "Täydennä — werden-rakenne",
+      "instruction": "Täydennä lause oikealla werden-rakenteella.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        { "item_type": "mc", "stem": "Das Essen ___ (passiivi, preesensissä) gegessen.", "choices": ["wird", "werde", "wirst", "werden"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "Passiivi preesens, subjekti das Essen → er/sie/es → wird." },
+        { "item_type": "mc", "stem": "Er ___ nächstes Jahr Arzt ___ (Futur I + tulla joksikin).", "choices": ["werde / werden", "wird / werden", "wird / werde", "werden / werden"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "Futur I: er → wird. Infinitiivi 'werden' (tulla joksikin) loppuun: 'Er wird Arzt werden.'" },
+        { "item_type": "mc", "stem": "Die Aufgaben ___ (passiivi) von den Schülern gemacht.", "choices": ["werde", "wird", "werden", "wirst"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "Passiivi, subjekti die Aufgaben (monikko) → werden." },
+        { "item_type": "mc", "stem": "Ich ___ (Futur I) morgen früh aufstehen.", "choices": ["wird", "werden", "werde", "wirst"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "Futur I, ich → werde." },
+        { "item_type": "mc", "stem": "Es ___ (muuttua) dunkler.", "choices": ["werde", "werden", "wirst", "wird"], "correct_index": 3, "distractor_difficulty": "easy", "explanation": "Tulla / muuttua, es → wird. Es wird dunkler = tulee tummemmaksi." },
+        { "item_type": "mc", "stem": "Das Buch ___ (passiivi) von vielen Menschen gelesen.", "choices": ["werde", "wirst", "werden", "wird"], "correct_index": 3, "distractor_difficulty": "medium", "explanation": "Passiivi, das Buch (yksikkö) → wird." },
+        { "item_type": "mc", "stem": "Sie (plural) ___ (Futur I) sicher erfolgreich sein.", "choices": ["wird", "werde", "werden", "werdet"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "Futur I, sie (plural) → werden." },
+        { "item_type": "mc", "stem": "Er ___ (tulla joksikin) ein guter Ingenieur.", "choices": ["werde", "wirst", "werden", "wird"], "correct_index": 3, "distractor_difficulty": "medium", "explanation": "Tulla joksikin, er → wird. 'Er wird ein guter Ingenieur.'" },
+        { "item_type": "mc", "stem": "Die Stadt ___ (passiivi) renoviert.", "choices": ["werde", "wirst", "wird", "werden"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "Passiivi, die Stadt (yksikkö, feminiini) → wird." },
+        { "item_type": "mc", "stem": "Du ___ (Futur I) das schaffen!", "choices": ["werde", "wirst", "wird", "werden"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "Futur I, du → wirst. 'Du wirst das schaffen!'" }
+      ]
+    },
+    {
+      "phase_id": "p4-gap-fill-partizip-tunnistus",
+      "phase_type": "application_gap_fill",
+      "title": "Täydennä — Partizip II passiivilauseissa",
+      "instruction": "Täydennä passiivinen lause oikealla Partizip II -muodolla.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Das Buch wird von Millionen Menschen ___. (lesen)", "answers": [["gelesen"]], "word_bank": ["gelesen", "liest", "gereist", "lesen"] },
+        { "item_type": "gap_fill", "sentence_template": "Das Haus wird von den Arbeitern ___. (bauen)", "answers": [["gebaut"]], "word_bank": ["gebaut", "baut", "gebaten", "bauen"] },
+        { "item_type": "gap_fill", "sentence_template": "Die Aufgabe wird vom Lehrer ___. (erklären)", "answers": [["erklärt"]], "word_bank": ["erklärt", "erklären", "erkläre", "gelernt"] },
+        { "item_type": "gap_fill", "sentence_template": "Das Auto wird in der Garage ___. (reparieren)", "answers": [["repariert"]], "word_bank": ["repariert", "reparieren", "gerepariert", "gefahren"] },
+        { "item_type": "gap_fill", "sentence_template": "Die E-Mail wird morgen ___. (schreiben)", "answers": [["geschrieben"]], "word_bank": ["geschrieben", "schreibt", "schreiben", "geschribt"] },
+        { "item_type": "gap_fill", "sentence_template": "Das Restaurant wird um 18 Uhr ___. (öffnen)", "answers": [["geöffnet"]], "word_bank": ["geöffnet", "öffnet", "geöffnen", "offen"] },
+        { "item_type": "gap_fill", "sentence_template": "Das Projekt wird nächste Woche ___. (beenden)", "answers": [["beendet"]], "word_bank": ["beendet", "beenden", "geendet", "gebeendet"] },
+        { "item_type": "gap_fill", "sentence_template": "Der Film wird im Kino ___. (zeigen)", "answers": [["gezeigt"]], "word_bank": ["gezeigt", "zeigt", "gezeigen", "gezogen"] }
+      ]
+    },
+    {
+      "phase_id": "p5-gap-fill-erottelua",
+      "phase_type": "application_gap_fill",
+      "title": "Erottele — Futur vai passiivi vai tulla joksikin?",
+      "instruction": "Valitse oikea vaihtoehto: mitä werden tarkoittaa tässä lauseessa?",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "mc", "stem": "Das neue Café wird morgen eröffnet.", "choices": ["Futur I: 'avataan huomenna'", "Passiivi: 'uusi kahvila avataan huomenna'", "Tulla joksikin: 'kahvilasta tulee uusi huomenna'", "Präteritum: 'kahvila avattiin'"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "eröffnet on Partizip II (eröffnen → eröffnet) → Passiivi preesens. 'Uusi kahvila avataan huomenna.'" },
+        { "item_type": "mc", "stem": "Er wird in fünf Jahren Direktor.", "choices": ["Futur I: hän johtaa viiden vuoden päästä", "Passiivi: johtaja valitaan viidessä vuodessa", "Tulla joksikin: hänestä tulee johtaja", "Konditionaali: hän olisi johtaja"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "Direktor on substantiivi → tulla joksikin. Hänestä tulee johtaja viidessä vuodessa." },
+        { "item_type": "mc", "stem": "Die Briefe werden morgen geschickt.", "choices": ["Futur I: kirjeet lähetetään huomenna (tulevaisuus)", "Passiivi: kirjeet lähetetään huomenna (toiminto)", "Tulla joksikin: kirjeistä tulee kirjeitä", "Perfekti: kirjeet lähetettiin"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "geschickt on Partizip II (schicken → geschickt) → Passiivi. Monikko Briefe → werden. 'Kirjeet lähetetään huomenna.'" },
+        { "item_type": "mc", "stem": "Ich werde Ingenieur werden.", "choices": ["Passiivi: minut tehdään insinööriksi", "Futur I tulla joksikin: minusta tulee insinööri", "Kaksoispassiivi", "Perfekti + Futur yhdistelmä"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "werde = Futur I apuverbi (ich → werde). werden = infinitiivi 'tulla joksikin'. Kokonaisuus: tulevaisuudessa minusta tulee insinööri." }
+      ]
+    },
+    {
+      "phase_id": "p6-gap-fill-vaativampi",
+      "phase_type": "application_gap_fill",
+      "title": "Täydennä — kaikki kolme käyttöä",
+      "instruction": "Muodosta oikea werden-rakenne kontekstin mukaan.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Das neue Museum ___ nächsten Monat ___ (passiivi preesens, öffnen).", "answers": [["wird", "geöffnet"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "In zehn Jahren ___ ich Ärztin ___. (Futur I + tulla joksikin)", "answers": [["werde", "werden"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Es ___ Herbst. Die Tage ___ kürzer. (tulla joksikin x2)", "answers": [["wird", "werden"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Die Hausaufgaben ___ von den Schülern ___ (passiivi, machen).", "answers": [["werden", "gemacht"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Er ___ nächstes Jahr nach Finnland ___. (Futur I, ziehen)", "answers": [["wird", "ziehen"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Das Problem ___ gelöst — keine Sorge. (passiivi, joku ratkaisee sen)", "answers": [["wird"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Du ___ ein toller Lehrer ___! (Futur I + tulla joksikin)", "answers": [["wirst", "werden"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Der Vertrag ___ nächste Woche ___ (passiivi, unterzeichnen = allekirjoittaa).", "answers": [["wird", "unterzeichnet"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p7-sentence-build",
+      "phase_type": "application_sentence_build",
+      "title": "Rakenna — valitse oikea werden-lause",
+      "instruction": "Valitse oikein muodostettu lause.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "mc", "stem": "Haluat sanoa: 'Kirja kirjoitetaan nopean kirjailijan toimesta.' Valitse oikea lause.", "choices": ["Das Buch wird schreiben von dem schnellen Autor.", "Das Buch wird von dem schnellen Autor geschrieben.", "Das Buch schreiben wird von dem Autor schnell.", "Von dem schnellen Autor das Buch wird geschrieben."], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "Passiivi: werden + Partizip II. Agentti von + Dativ: von dem schnellen Autor. Partizip II loppuun." },
+        { "item_type": "mc", "stem": "Haluat sanoa: 'Hänestä tulee insinööri.' (Futur I)", "choices": ["Sie wird werden Ingenieurin.", "Sie Ingenieurin wird werden.", "Sie wird Ingenieurin werden.", "Ingenieurin wird sie werden."], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "Futur I + tulla joksikin: wird (apuverbi, paikka 2) + werden (infinitiivi, loppuun)." },
+        { "item_type": "mc", "stem": "Haluat sanoa: 'Se tulee olemaan mahdotonta.' Valitse paras vaihtoehto.", "choices": ["Es wird unmöglich sein.", "Es unmöglich sein wird.", "Es wird sein unmöglich.", "Unmöglich wird es sein."], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "Futur I + adjektiivi predikatiivina: Es wird unmöglich sein. (sein-infinitiivi loppuun)" },
+        { "item_type": "mc", "stem": "Passiiviksi: 'Die Schüler machen die Aufgaben.' → '___'", "choices": ["Die Aufgaben werden von den Schülern machen.", "Die Aufgaben werden von den Schülern gemacht.", "Die Schüler werden die Aufgaben machen.", "Die Aufgaben gemacht werden von den Schülern."], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "Passiivi: subjekti = die Aufgaben, werden paikalla 2, Partizip II (gemacht) loppuun, agentti von den Schülern (Dativ monikko)." },
+        { "item_type": "mc", "stem": "Haluat sanoa: 'Yritys perustetaan ensi vuonna.' Valitse oikea.", "choices": ["Die Firma gründet nächstes Jahr.", "Die Firma wird nächstes Jahr gegründet.", "Die Firma wird nächstes Jahr gründen.", "Nächstes Jahr gründen wird die Firma."], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "Passiivi: 'die Firma' on kohde, 'gründen' → Partizip II 'gegründet', werden + Partizip II." },
+        { "item_type": "mc", "stem": "Futur I oikein: 'He opiskelevat ensi vuonna yliopistossa.'", "choices": ["Nächstes Jahr werden sie an der Uni studieren.", "Nächstes Jahr studieren werden sie an der Uni.", "Sie werden an der Uni studieren nächstes Jahr.", "An der Uni nächstes Jahr werden sie studieren."], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "Inversio: Nächstes Jahr → werden heti perässä. Infinitiivi studieren loppuun." }
+      ]
+    },
+    {
+      "phase_id": "p8-synthesis-translate",
+      "phase_type": "synthesis_translate",
+      "title": "Käännä — werden kolmessa käytössä",
+      "instruction": "Käännä lause saksaksi. Tunnista oikea werden-rakenne.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Kirje kirjoitetaan tänään.", "accept": ["Der Brief wird heute geschrieben.", "Heute wird der Brief geschrieben."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Hänestä tulee lääkäri.", "accept": ["Er wird Arzt.", "Sie wird Ärztin.", "Er wird Arzt werden.", "Sie wird Ärztin werden."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Tulen huomenna kotiin.", "accept": ["Ich werde morgen nach Hause kommen.", "Morgen werde ich nach Hause kommen."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Uusi koulu rakennetaan nyt.", "accept": ["Die neue Schule wird jetzt gebaut.", "Jetzt wird die neue Schule gebaut."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Se tulee olemaan mahdollista.", "accept": ["Das wird möglich sein.", "Es wird möglich sein."] }
+      ]
+    },
+    {
+      "phase_id": "p9-synthesis-short-writing",
+      "phase_type": "synthesis_short_writing",
+      "title": "Kirjoita — werden kaikissa käytöissä",
+      "instruction": "Kirjoita 4–5 lausetta saksaksi käyttäen kaikkia kolmea werden-käyttöä.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C", "M"],
+      "items": [
+        { "item_type": "writing", "prompt": "Kirjoita 4–5 lausetta saksaksi käyttäen wurden kolmessa käytössä: (1) Futur I, (2) passiivi, (3) tulla joksikin. Merkitse lauseessa kumpi käyttö on kyseessä.", "min_words": 40, "max_words": 70, "rubric_focus": ["structure", "communication", "vocab"] },
+        { "item_type": "writing", "prompt": "Kuvaile saksaksi: mitä sinulle tapahtuu tulevaisuudessa? Käytä vähintään yksi Futur I, yksi 'tulla joksikin' -rakenne ja yksi passiivilause.", "min_words": 45, "max_words": 75, "rubric_focus": ["communication", "structure", "overall"] },
+        { "item_type": "writing", "prompt": "Kirjoita uutinen saksaksi: kerro mitä uudessa rakennusprojektissa tapahtuu (käytä passiivia) ja mitä tapahtuu myöhemmin (Futur I). 4–5 lausetta.", "min_words": 40, "max_words": 70, "rubric_focus": ["structure", "vocab", "communication"] }
+      ]
+    }
+  ],
+  "vocab": [
+    { "es": "Futur I (werden + Inf.)", "fi": "tulevaisuus-apuverbi", "example_es": "Ich werde kommen.", "example_fi": "Tulen.", "gender": null },
+    { "es": "Vorgangspassiv (werden + Part. II)", "fi": "passiivi", "example_es": "Das Buch wird gelesen.", "example_fi": "Kirjaa luetaan.", "gender": null },
+    { "es": "werden (+ Subst./Adj.)", "fi": "tulla joksikin / muuttua", "example_es": "Er wird Lehrer.", "example_fi": "Hänestä tulee opettaja.", "gender": null },
+    { "es": "gelesen (lesen → gelesen)", "fi": "luettu (Partizip II)", "example_es": "Das wird gelesen.", "example_fi": "Se luetaan.", "gender": null },
+    { "es": "gebaut (bauen → gebaut)", "fi": "rakennettu (Partizip II)", "example_es": "Das Haus wird gebaut.", "example_fi": "Taloa rakennetaan.", "gender": null },
+    { "es": "erklärt (erklären → erklärt)", "fi": "selitetty (Partizip II)", "example_es": "Die Aufgabe wird erklärt.", "example_fi": "Tehtävä selitetään.", "gender": null },
+    { "es": "repariert (reparieren → repariert)", "fi": "korjattu (Partizip II)", "example_es": "Das Auto wird repariert.", "example_fi": "Auto korjataan.", "gender": null },
+    { "es": "geschrieben (schreiben → geschrieben)", "fi": "kirjoitettu (Partizip II)", "example_es": "Der Brief wird geschrieben.", "example_fi": "Kirje kirjoitetaan.", "gender": null },
+    { "es": "geöffnet (öffnen → geöffnet)", "fi": "avattu (Partizip II)", "example_es": "Das Café wird geöffnet.", "example_fi": "Kahvila avataan.", "gender": null },
+    { "es": "von + Dativ (passiivi-agentti)", "fi": "jonkun toimesta", "example_es": "Das Buch wird von Goethe geschrieben.", "example_fi": "Kirja kirjoitetaan Goethen toimesta.", "gender": null }
+  ],
+  "side_panel": {
+    "tabs": [
+      {
+        "id": "grammar",
+        "title": "Kielioppi",
+        "content_md": "## werden — kolme käyttöä\n\n| Käyttö | Rakenne | Esimerkki |\n|---|---|---|\n| **Futur I** | werden + infinitiivi | Ich werde kommen. |\n| **Passiivi** | werden + Partizip II | Das wird gelesen. |\n| **Tulla joksikin** | werden + subst./adj. | Er wird Lehrer. |\n\n## Miten tunnistaa?\n\n- Sana perässä on **infinitiivi** (kommen, arbeiten, lernen) → Futur I\n- Sana perässä on **Partizip II** (gemacht, gelesen, gebaut) → Passiivi\n- Sana perässä on **substantiivi tai adjektiivi** → Tulla joksikin\n\n## Partizip II muodostus\n\n- Heikot: **ge- + verbi + -t**: machen → **gemacht**\n- Vahvat: **ge- + verbi + -en** (+ vokaalimuutos): lesen → **gelesen**"
+      },
+      {
+        "id": "examples",
+        "title": "Esimerkit",
+        "content_md": "## Futur I\n- *Ich **werde** Arzt **werden**.* — Minusta tulee lääkäri.\n- *Das **wird** schwierig **sein**.* — Se tulee olemaan vaikeaa.\n\n## Passiivi\n- *Das Buch **wird** **gelesen**.* — Kirjaa luetaan.\n- *Das Haus **wird** **gebaut**.* — Taloa rakennetaan.\n- *Die Aufgabe **wird** vom Lehrer **erklärt**.* — Opettaja selittää tehtävän.\n\n## Tulla joksikin\n- *Er **wird** Lehrer.* — Hänestä tulee opettaja.\n- *Das Wetter **wird** besser.* — Sää paranee.\n- *Es **wird** dunkel.* — Tulee pimeää."
+      },
+      {
+        "id": "tips",
+        "title": "YO-vinkit",
+        "content_md": "## YO-kokeessa\n\n**Teil 2 (Lesen):** Passiivilauseet esiintyvät teksteissä usein. Tunnista: werden + Partizip II.\n\n**Teil 3 (Struktur):** Tyypillinen tehtävä: 'Das Buch ___ von ihm ___' → wird / gelesen.\n\n**Teil 4 (Schreiben):** Käytä 'Ich werde ... werden' tulevaisuuden kirjoitelmassa.\n\n## Tyypilliset kompastuskivet\n\n- 'Er wird Lehrer **sein**' ≠ 'Er wird Lehrer' — sein-kopula muuttaa merkitystä\n- 'Das Buch wird **lesen**' → VÄÄRIN (infinitiivi passiivin paikalla)\n- 'Das Buch wird **gelesen**' → OIKEIN (Partizip II)"
+      }
+    ]
+  }
+}

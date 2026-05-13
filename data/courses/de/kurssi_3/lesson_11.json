@@ -1,0 +1,81 @@
+{
+  "meta": {
+    "course_key": "kurssi_3",
+    "lesson_index": 11,
+    "lesson_type": "test",
+    "level": "B",
+    "title": "Kertaustesti — Kurssi 3",
+    "description": "Nyt testataan mitä olet oppinut — Kurssi 3: Perfekt (haben/sein), Partizip II (heikot + vahvat), V2-sääntö ja matkasanasto. 30 kysymystä.",
+    "yo_relevance": "Kertaustesti kattaa Teil 3 (Rakenne ja sanasto) ja Teil 4 (Kirjoitelma) -osaamisen: Perfektin rakenteet, haben/sein-valinta, Partizip II -muodot, V2-sääntö ja matkasanasto.",
+    "estimated_minutes_median": 20
+  },
+  "teaching": {
+    "intro_md": "# Kertaustesti — Kurssi 3\n\nTesti kattaa kaikki kurssin 3 aiheet:\n\n- **Matkasanasto** (kulkuvälineet, hotelli, nähtävyydet, ajan ilmaukset)\n- **Perfekti — heikot verbit** (ge- + kanta + -t, poikkeukset)\n- **Perfekti — vahvat verbit** (gegessen, gegangen, gefahren...)\n- **haben vs. sein** (apuverbin valinta)\n- **V2-sääntö** (verbi 2. paikalla, inversio)\n\nTestissä on 30 kysymystä. Jokainen kysymys vastaa YO-kokeen rakenteita.",
+    "key_points": [
+      "Tarkista: haben vai sein? Liikkuminen/tilanmuutos → sein, muut → haben.",
+      "Tarkista: onko Partizip II oikein? Vahvat verbit: gegessen, gegangen, gefahren, gesehen.",
+      "Tarkista: V2-sääntö — ajanilmauksen jälkeen verbi ennen subjektia.",
+      "-ieren-verbit ilman ge-:tä: reserviert, fotografiert.",
+      "Erottumattomat etuliitteet (be-, ver-, er-) ilman ge-:tä: besucht, verkauft, erzählt."
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1-test-kertaus",
+      "phase_type": "recognition_mc",
+      "title": "Kertaustesti — Kurssi 3 (30 kysymystä)",
+      "instruction": "Vastaa jokaiseen kysymykseen. Testi kattaa matkasanaston, Perfektin ja V2-säännön.",
+      "mastery_threshold": { "I": 0.37, "A": 0.49, "B": 0.52, "C": 0.63, "M": 0.71, "E": 0.81, "L": 0.92 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "mc", "stem": "der Zug = ?", "choices": ["bussi", "juna", "raitiovaunu", "metro"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "der Zug = juna." },
+        { "item_type": "mc", "stem": "Perfekt: fahren → Ich ___ gefahren.", "choices": ["habe", "bin", "hatte", "war"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "fahren = liikkumisverbi → sein: Ich BIN gefahren." },
+        { "item_type": "mc", "stem": "Perfekt: essen → Ich ___ gegessen.", "choices": ["bin", "habe", "war", "hatte"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "essen = transitiivi → haben: Ich HABE gegessen." },
+        { "item_type": "mc", "stem": "machen → Partizip II?", "choices": ["gemake", "gemacht", "gemacht haben", "macht"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "machen → gemacht (ge- + mach + t)." },
+        { "item_type": "mc", "stem": "Kumpi on OIKEIN?", "choices": ["Gestern ich habe Pizza gegessen.", "Gestern habe ich Pizza gegessen."], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "V2: Gestern (1.) → habe (V2!) → ich (3.) → gegessen (loppuun)." },
+        { "item_type": "mc", "stem": "reservieren → Partizip II?", "choices": ["gereserviert", "reserviert", "gereseviert", "reservieret"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "-ieren-verbit eivät saa ge-:tä: reservieren → reserviert." },
+        { "item_type": "mc", "stem": "die Sehenswürdigkeit = ?", "choices": ["näköala", "nähtävyys", "matkamuisto", "opas"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "die Sehenswürdigkeit = nähtävyys." },
+        { "item_type": "mc", "stem": "Perfekt: gehen → Wir ___ gegangen.", "choices": ["haben", "sind", "hatten", "waren"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "gehen = liikkuminen → sein: Wir SIND gegangen." },
+        { "item_type": "mc", "stem": "trinken → Partizip II?", "choices": ["getrunkt", "getrinkt", "getrunken", "getrinkten"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "trinken → getrunken (vokaalimuutos i → u)." },
+        { "item_type": "mc", "stem": "letzte Woche = ?", "choices": ["ensi viikolla", "tällä viikolla", "viime viikolla", "kahden viikon päästä"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "letzte Woche = viime viikolla." },
+        { "item_type": "mc", "stem": "Perfekt: bleiben → Er ___ geblieben.", "choices": ["hat", "ist", "hatte", "war"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "bleiben = poikkeus → sein: Er IST geblieben (vaikka ei liiku)." },
+        { "item_type": "mc", "stem": "schreiben → Partizip II?", "choices": ["geschrieben", "geschreibt", "geschreiben", "schrieben"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "schreiben → geschrieben (vokaalimuutos ei → ie)." },
+        { "item_type": "mc", "stem": "Valitse VÄÄRÄ lause:", "choices": ["Gestern habe ich das Hotel reserviert.", "Im Urlaub haben wir das Schloss besichtigt.", "Letzten Sommer ich bin nach Spanien geflogen.", "Am Abend sind wir ins Restaurant gegangen."], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "'Letzten Sommer ich bin' on V2-virhe. Pitää olla: 'Letzten Sommer BIN ICH'." },
+        { "item_type": "mc", "stem": "übernachten = ?", "choices": ["matkustaa", "yöpyä", "saapua", "lähteä"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "übernachten = yöpyä. Nacht = yö." },
+        { "item_type": "mc", "stem": "arbeiten → Partizip II?", "choices": ["gearbeitt", "gearbeitet", "gearbeit", "arbeitete"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "arbeiten → kanta 'arbeit' päättyy -t → gearbeitet (ge- + arbeit + et)." },
+        { "item_type": "mc", "stem": "Perfekt: schwimmen → Ich ___ geschwommen.", "choices": ["habe", "bin", "hatte", "war"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "schwimmen = liikkuminen (vedessä) → sein: Ich BIN geschwommen." },
+        { "item_type": "mc", "stem": "sehen → Partizip II?", "choices": ["gesicht", "gesehn", "gesehen", "gesieht"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "sehen → gesehen." },
+        { "item_type": "mc", "stem": "im Sommer = ?", "choices": ["talvella", "syksyllä", "kesällä", "keväällä"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "im Sommer = kesällä. der Sommer = kesä." },
+        { "item_type": "mc", "stem": "Kumpi on OIKEIN?", "choices": ["Wir haben drei Tage im Hotel gebleibt.", "Wir sind drei Tage im Hotel geblieben."], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "bleiben → sein + geblieben (ei gebleibt). Wir SIND geblieben." },
+        { "item_type": "mc", "stem": "der Bahnhof = ?", "choices": ["lentokenttä", "bussiasema", "juna-asema", "satama"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "der Bahnhof = juna-asema. der Flughafen = lentokenttä." },
+        { "item_type": "mc", "stem": "sprechen → Partizip II?", "choices": ["gesprochen", "gesprecht", "gesprechen", "gespricht"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "sprechen → gesprochen (e → o)." },
+        { "item_type": "mc", "stem": "Perfekt: aufstehen → Sie ___ aufgestanden.", "choices": ["hat", "ist", "hatte", "war"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "aufstehen = tilanmuutos → sein: Sie IST aufgestanden." },
+        { "item_type": "mc", "stem": "Järjestä oikein: [Letzten Sommer] [ich] [bin] [nach Berlin gefahren]", "choices": ["Letzten Sommer ich bin nach Berlin gefahren.", "Letzten Sommer bin ich nach Berlin gefahren.", "Ich bin letzten Sommer gefahren nach Berlin.", "Nach Berlin bin ich letzten Sommer gefahren."], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "V2: Letzten Sommer (1.) → bin (V2!) → ich → gefahren (loppuun)." },
+        { "item_type": "mc", "stem": "besuchen → Partizip II?", "choices": ["gebesucht", "besucht", "besuchen", "besuchtet"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "besuchen → besucht. be- = erottumaton etuliite → ei ge-:tä." },
+        { "item_type": "mc", "stem": "vor zwei Tagen = ?", "choices": ["kahden päivän päästä", "kaksi päivää sitten", "kaksi viikkoa sitten", "toissapäivänä"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "vor + aika = sitten. vor zwei Tagen = kaksi päivää sitten." },
+        { "item_type": "mc", "stem": "Perfekt: kaufen → Er ___ ein Ticket ___.", "choices": ["ist / gekauft", "hat / gekauft", "ist / gekaüft", "hat / gekaufen"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "kaufen = transitiivi → haben + gekauft. Er HAT ein Ticket gekauft." },
+        { "item_type": "mc", "stem": "finden → Partizip II?", "choices": ["gefunden", "geflinden", "gefind", "gefundt"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "finden → gefunden (i → u)." },
+        { "item_type": "mc", "stem": "Kumpi on OIKEIN?", "choices": ["Er hat nach Hause gegangen.", "Er ist nach Hause gegangen."], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "gehen = liikkuminen → sein: Er IST nach Hause gegangen." },
+        { "item_type": "mc", "stem": "die Unterkunft = ?", "choices": ["majoitus", "ruoka", "kuljetus", "vakuutus"], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "die Unterkunft = majoitus (yleistermi, kattaa hotellit, hostellit jne.)." },
+        { "item_type": "mc", "stem": "nehmen → Partizip II?", "choices": ["genommen", "genehmt", "genehmen", "genommt"], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "nehmen → genommen (epäsäännöllinen: nehm → nomm)." }
+      ]
+    }
+  ],
+  "vocab": [
+    { "es": "der Zug", "fi": "juna", "example_es": "Wir fahren mit dem Zug.", "example_fi": "Matkustamme junalla.", "gender": "m" },
+    { "es": "fahren → gefahren (sein)", "fi": "ajaa → ajettu (sein)", "example_es": "Wir sind nach Berlin gefahren.", "example_fi": "Matkustimme Berliiniin.", "gender": null },
+    { "es": "essen → gegessen (haben)", "fi": "syödä → syöty (haben)", "example_es": "Ich habe Pizza gegessen.", "example_fi": "Söin pizzaa.", "gender": null },
+    { "es": "gehen → gegangen (sein)", "fi": "mennä → menty (sein)", "example_es": "Wir sind ins Kino gegangen.", "example_fi": "Menimme elokuvateatteriin.", "gender": null },
+    { "es": "sehen → gesehen (haben)", "fi": "nähdä → nähty (haben)", "example_es": "Ich habe das Schloss gesehen.", "example_fi": "Näin linnan.", "gender": null },
+    { "es": "bleiben → geblieben (sein)", "fi": "jäädä → jääty (sein poikkeus!)", "example_es": "Er ist im Hotel geblieben.", "example_fi": "Hän jäi hotelliin.", "gender": null }
+  ],
+  "side_panel": {
+    "tabs": [
+      {
+        "id": "grammar",
+        "title": "Kertauskortti",
+        "content_md": "## Kurssi 3 — pikakerttaus\n\n**Heikot verbit:**\nge- + kanta + -t: gemacht, gekauft, gelernt\n-t/-d-kanta: gearbeitet, gewartet\n-ieren ilman ge-: reserviert, fotografiert\nbe-/ver-/er- ilman ge-: besucht, verkauft\n\n**Vahvat verbit (ulkoa!):**\n- essen → gegessen\n- trinken → getrunken\n- sehen → gesehen\n- schreiben → geschrieben\n- sprechen → gesprochen\n- finden → gefunden\n- nehmen → genommen\n\n**sein-verbit:**\n- fahren → gefahren\n- gehen → gegangen\n- fliegen → geflogen\n- bleiben → geblieben\n- kommen → gekommen\n\n**V2:**\nGestern **habe** ich... / **bin** ich...\nIm Urlaub **haben** wir... / **sind** wir..."
+      }
+    ]
+  }
+}

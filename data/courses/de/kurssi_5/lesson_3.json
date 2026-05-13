@@ -1,0 +1,233 @@
+{
+  "meta": {
+    "course_key": "kurssi_5",
+    "lesson_index": 3,
+    "lesson_type": "grammar",
+    "level": "C",
+    "title": "Futur I: werden + infinitiivi",
+    "description": "Opit muodostamaan saksan Futur I:n (werden + infinitiivi) ja erottamaan sen Präsens+aikarakenne-vaihtoehdosta. Infinitiivin paikka lauseen lopussa on kriittinen — distraktoirit testaavat sitä.",
+    "yo_relevance": "Teil 3 (Struktur): Futur I -aukot ovat tyypillisiä. Teil 4 (Schreiben): tulevaisuudesta kirjoittaminen vaatii werden-rakennetta tai Präsens+ajan ilmauksen hallintaa.",
+    "estimated_minutes_median": 13
+  },
+  "teaching": {
+    "intro_md": "# Futur I: werden + infinitiivi\n\n## Rakenne\n\n**werden** (taivutettu, paikka 2) + infinitiivi (**lauseen loppuun**)\n\n| Persoona | werden | Esimerkki |\n|---|---|---|\n| ich | **werde** | Ich **werde** morgen **kommen**. |\n| du | **wirst** | Du **wirst** es **schaffen**. |\n| er/sie/es | **wird** | Er **wird** Arzt **werden**. |\n| wir | **werden** | Wir **werden** reisen. |\n| ihr | **werdet** | Ihr **werdet** lernen. |\n| sie/Sie | **werden** | Sie **werden** arbeiten. |\n\n## TÄRKEÄ: infinitiivi loppuun!\n\n❌ *Ich werde **arbeiten** morgen.* — VÄÄRIN\n✅ *Ich werde morgen **arbeiten**.* — OIKEIN\n\n## Milloin Futur I vs. Präsens?\n\nSaksassa lähitulevaisuus ilmaistaan usein **Präsensilllä + ajan ilmauksella**:\n- *Morgen gehe ich ins Kino.* (ei *werde gehen*)\n- *Nächste Woche fange ich an.* (ei *werde anfangen*)\n\n**Futur I** sopii kun:\n1. Tulevaisuus on epävarma / arvaus: *Das wird schwierig sein.*\n2. Lupaukset, uhkaukset: *Ich werde das nie vergessen.*\n3. Kauempi tulevaisuus: *In 10 Jahren werde ich in Berlin wohnen.*",
+    "key_points": [
+      "Futur I = werden (paikalla 2) + infinitiivi LAUSEEN LOPPUUN.",
+      "Infinitiivi ei koskaan werden-verbin vieressä — se hyppää loppuun.",
+      "Lähitulevaisuus = usein Präsens + ajan ilmaus (morgen, nächste Woche).",
+      "werden itse on infinitiivi: Ich werde Lehrer WERDEN (kolmas käyttö = tulla joksikin).",
+      "Taivutus muistisääntö: werde/wirst/wird/werden/werdet/werden."
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1-recognition-mc-futur",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista — oikea Futur I -muoto",
+      "instruction": "Valitse oikein muodostettu Futur I -lause tai oikea taivutusmuoto.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "mc", "stem": "Ich ___ morgen ins Kino gehen.", "choices": ["wird", "werde", "werdet", "werden"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "Ich → werde. Taivutus: ich werde, du wirst, er wird, wir werden, ihr werdet, sie werden." },
+        { "item_type": "mc", "stem": "Er ___ nächstes Jahr studieren.", "choices": ["werde", "werden", "wird", "wirst"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "Er/sie/es → wird. Muista: 3. persoonan muoto on wird (ei werden)." },
+        { "item_type": "mc", "stem": "Mikä lause on OIKEIN muodostettu?", "choices": ["Ich werde arbeiten morgen.", "Ich werde morgen arbeiten.", "Ich morgen werde arbeiten.", "Ich morgen arbeiten werde."], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "Infinitiivi menee lauseen LOPPUUN. 'Ich werde morgen arbeiten' on ainoa oikea järjestys." },
+        { "item_type": "mc", "stem": "Wir ___ nächsten Sommer nach Berlin fahren.", "choices": ["wirst", "wird", "werde", "werden"], "correct_index": 3, "distractor_difficulty": "easy", "explanation": "Wir → werden. Huom: wir werden on sama kuin sie/Sie werden — monikkomuoto." },
+        { "item_type": "mc", "stem": "Mikä lause on VÄÄRIN?", "choices": ["Sie wird Ärztin werden.", "Du wirst es schaffen.", "Er wird kommen morgen.", "Ich werde Deutsch lernen."], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "'Er wird kommen morgen' on väärin — infinitiivi kuuluu loppuun: 'Er wird morgen kommen.'" },
+        { "item_type": "mc", "stem": "In zehn Jahren ___ ich in München wohnen.", "choices": ["wirst", "wird", "werde", "werdet"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "Ich → werde. 'In zehn Jahren werde ich in München wohnen.'" },
+        { "item_type": "mc", "stem": "Das ___ nicht einfach sein.", "choices": ["werde", "wirst", "werden", "wird"], "correct_index": 3, "distractor_difficulty": "easy", "explanation": "Das (= es) → wird. 'Das wird nicht einfach sein.'" },
+        { "item_type": "mc", "stem": "Ihr ___ bald die Ergebnisse bekommen.", "choices": ["werde", "wirst", "wird", "werdet"], "correct_index": 3, "distractor_difficulty": "medium", "explanation": "Ihr → werdet. Usein unohdettava muoto! werdet on 2. monikon muoto." },
+        { "item_type": "mc", "stem": "Miten sanotaan saksaksi: 'Hän tulee asumaan Wienissä'?", "choices": ["Er wohnt in Wien werden.", "Er wird in Wien wohnen.", "Er wird wohnen in Wien.", "Er wohnen wird in Wien."], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "Oikea järjestys: werden paikalla 2, infinitiivi loppuun: Er wird in Wien wohnen." },
+        { "item_type": "mc", "stem": "Du ___ das bestimmt schaffen!", "choices": ["wird", "werden", "wirst", "werde"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "Du → wirst. 'Du wirst das bestimmt schaffen!' — rohkaisulause." },
+        { "item_type": "mc", "stem": "Milloin Futur I on parempi kuin Präsens?", "choices": ["Aina kun kerrot tulevaisuudesta", "Lähitulevaisuudessa aina", "Kun tulevaisuus on epävarma tai kyse on lupauksesta", "Vain kirjallisessa kielessä"], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "Lähitulevaisuus ilmaistaan usein Präsensilllä + ajan ilmauksella. Futur I sopii epävarmuuteen tai lupauksiin." }
+      ]
+    },
+    {
+      "phase_id": "p2-recognition-match-werden",
+      "phase_type": "recognition_match",
+      "title": "Yhdistä — werden-taivutus",
+      "instruction": "Yhdistä persoona ja oikea werden-muoto.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        {
+          "item_type": "match",
+          "left_label": "Persoona",
+          "right_label": "werden-muoto",
+          "pairs": [
+            { "left": "ich", "right": "werde" },
+            { "left": "du", "right": "wirst" },
+            { "left": "er / sie / es", "right": "wird" },
+            { "left": "wir", "right": "werden" },
+            { "left": "ihr", "right": "werdet" },
+            { "left": "sie / Sie", "right": "werden" }
+          ]
+        },
+        {
+          "item_type": "match",
+          "left_label": "Suomi",
+          "right_label": "Saksa (Futur I)",
+          "pairs": [
+            { "left": "Hän tulee opiskelemaan.", "right": "Er wird studieren." },
+            { "left": "Minä tulen matkustamaan.", "right": "Ich werde reisen." },
+            { "left": "Sinä tulet onnistumaan.", "right": "Du wirst es schaffen." },
+            { "left": "Me tulemme työskentelemään.", "right": "Wir werden arbeiten." },
+            { "left": "Se tulee olemaan vaikeaa.", "right": "Das wird schwer sein." },
+            { "left": "Te tulette oppimaan.", "right": "Ihr werdet lernen." }
+          ]
+        }
+      ]
+    },
+    {
+      "phase_id": "p3-gap-fill-futur-lauseet",
+      "phase_type": "application_gap_fill",
+      "title": "Täydennä — werden oikeaan muotoon",
+      "instruction": "Kirjoita oikea werden-muoto aukkoon.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Ich ___ nächstes Jahr Medizin studieren.", "answers": [["werde"]], "word_bank": ["werde", "wirst", "wird", "werden"] },
+        { "item_type": "gap_fill", "sentence_template": "Sie (er) ___ sicher einen guten Job finden.", "answers": [["wird"]], "word_bank": ["werde", "wirst", "wird", "werden"] },
+        { "item_type": "gap_fill", "sentence_template": "Wir ___ das Projekt nächste Woche beenden.", "answers": [["werden"]], "word_bank": ["werde", "wird", "werden", "werdet"] },
+        { "item_type": "gap_fill", "sentence_template": "Du ___ es schaffen — ich bin sicher!", "answers": [["wirst"]], "word_bank": ["werde", "wirst", "wird", "werdet"] },
+        { "item_type": "gap_fill", "sentence_template": "Ihr ___ bald die Ergebnisse sehen.", "answers": [["werdet"]], "word_bank": ["werde", "wird", "werden", "werdet"] },
+        { "item_type": "gap_fill", "sentence_template": "In 10 Jahren ___ ich in Berlin wohnen.", "answers": [["werde"]], "word_bank": ["werde", "wird", "werden", "werdet"] },
+        { "item_type": "gap_fill", "sentence_template": "Das ___ nicht einfach sein.", "answers": [["wird"]], "word_bank": ["werde", "wirst", "wird", "werden"] },
+        { "item_type": "gap_fill", "sentence_template": "Sie (Plural) ___ morgen ankommen.", "answers": [["werden"]], "word_bank": ["werde", "wird", "werden", "werdet"] },
+        { "item_type": "gap_fill", "sentence_template": "Ich ___ morgen früh aufstehen.", "answers": [["werde"]], "word_bank": ["werde", "wirst", "wird", "werden"] },
+        { "item_type": "gap_fill", "sentence_template": "Er ___ Arzt werden — das ist sein Traum.", "answers": [["wird"]], "word_bank": ["werde", "wirst", "wird", "werden"] }
+      ]
+    },
+    {
+      "phase_id": "p4-gap-fill-infinitiivi-paikka",
+      "phase_type": "application_gap_fill",
+      "title": "Täydennä — infinitiivi oikeaan paikkaan",
+      "instruction": "Täydennä lause: kirjoita infinitiivi oikeaan kohtaan (lauseen loppuun).",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Ich werde morgen nach Hause ___.", "answers": [["fahren", "gehen", "kommen"]], "word_bank": ["fahren", "gehen", "kommen", "arbeiten"] },
+        { "item_type": "gap_fill", "sentence_template": "Er wird nächstes Jahr Medizin ___.", "answers": [["studieren"]], "word_bank": ["studieren", "lernen", "arbeiten", "reisen"] },
+        { "item_type": "gap_fill", "sentence_template": "Wir werden das Projekt gemeinsam ___.", "answers": [["beenden", "machen"]], "word_bank": ["beenden", "machen", "beginnen", "planen"] },
+        { "item_type": "gap_fill", "sentence_template": "Das wird sehr interessant ___.", "answers": [["sein"]], "word_bank": ["sein", "werden", "haben", "kommen"] },
+        { "item_type": "gap_fill", "sentence_template": "Sie werden sicher eine gute Stelle ___.", "answers": [["finden", "bekommen"]], "word_bank": ["finden", "bekommen", "suchen", "nehmen"] },
+        { "item_type": "gap_fill", "sentence_template": "Du wirst das bestimmt ___.", "answers": [["schaffen"]], "word_bank": ["schaffen", "machen", "versuchen", "lernen"] },
+        { "item_type": "gap_fill", "sentence_template": "Ich werde ihn morgen früh ___.", "answers": [["anrufen"]], "word_bank": ["anrufen", "treffen", "sehen", "fragen"] },
+        { "item_type": "gap_fill", "sentence_template": "In der Zukunft wird er Journalist ___.", "answers": [["werden"]], "word_bank": ["werden", "sein", "haben", "bleiben"] },
+        { "item_type": "gap_fill", "sentence_template": "Ihr werdet die Ergebnisse bald ___.", "answers": [["sehen", "bekommen"]], "word_bank": ["sehen", "bekommen", "finden", "lernen"] },
+        { "item_type": "gap_fill", "sentence_template": "Sie wird ihren Traum ___.", "answers": [["verwirklichen", "erfüllen"]], "word_bank": ["verwirklichen", "erfüllen", "erreichen", "finden"] }
+      ]
+    },
+    {
+      "phase_id": "p5-gap-fill-futur-vs-praesens",
+      "phase_type": "application_gap_fill",
+      "title": "Futur I vai Präsens? — valitse sopiva",
+      "instruction": "Valitse sopiva rakenne: Futur I (werden) tai Präsens. Molemmat voivat olla oikein, mutta valitse kontekstiin paremmin sopiva.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "mc", "stem": "Tulevaisuudessa (10 vuoden päästä) hän asuu Berliinissä.", "choices": ["In der Zukunft wohnt er in Berlin.", "In der Zukunft wird er in Berlin wohnen.", "Er wohnt in Zukunft in Berlin wird.", "Er wohnen wird in Berlin."], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Kauempi tulevaisuus (10 vuotta) → Futur I sopii paremmin. 'Er wird in Berlin wohnen.'" },
+        { "item_type": "mc", "stem": "Huomenna menen kauppaan. (lähitulevaisuus)", "choices": ["Morgen werde ich in den Supermarkt gehen.", "Morgen gehe ich in den Supermarkt.", "Ich gehe morgen Supermarkt werden.", "Morgen wird ich gehen."], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Lähitulevaisuus + ajan ilmaus 'morgen' → Präsens on luontevin: Morgen gehe ich." },
+        { "item_type": "mc", "stem": "Lupaus: 'En unohda sinua koskaan.'", "choices": ["Ich vergesse dich nie.", "Ich werde dich nie vergessen.", "Ich nie vergessen werde.", "Vergessen werde ich dich nie."], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Lupaus tai vakuutus → Futur I sopii: Ich werde dich nie vergessen." },
+        { "item_type": "mc", "stem": "Arvaus: 'Se tullee olemaan vaikeaa.'", "choices": ["Das ist schwierig.", "Das wird schwierig sein.", "Das schwierig sein wird.", "Das werde schwierig."], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Epävarmuus/arvaus → Futur I: Das wird schwierig sein." }
+      ]
+    },
+    {
+      "phase_id": "p6-gap-fill-vaativampi",
+      "phase_type": "application_gap_fill",
+      "title": "Täydennä — kokonainen Futur I",
+      "instruction": "Muodosta kokonainen Futur I -lause. Kirjoita puuttuva rakenne.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "In zehn Jahren ___ ich als Ärztin in München ___.", "answers": [["werde", "arbeiten"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Nach dem Studium ___ er nach Berlin ___.", "answers": [["wird", "ziehen"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Ich ___ bestimmt eine gute Stelle ___.", "answers": [["werde", "finden"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Sie ___ nächstes Jahr ihr Studium ___.", "answers": [["wird", "beenden"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Wir ___ zusammen eine Firma ___.", "answers": [["werden", "gründen"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Du ___ es sicher ___!", "answers": [["wirst", "schaffen"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Das Vorstellungsgespräch ___ sicher gut ___.", "answers": [["wird", "laufen"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Ihr ___ bald die Ergebnisse ___.", "answers": [["werdet", "bekommen"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p7-sentence-build",
+      "phase_type": "application_sentence_build",
+      "title": "Rakenna — Futur I -lauseet",
+      "instruction": "Valitse oikein järjestetty Futur I -lause.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "mc", "stem": "Järjestä: 'werden / in / werde / ich / Berlin / wohnen / Jahren / zehn'", "choices": ["In zehn Jahren werde ich in Berlin wohnen.", "Ich werde in zehn Jahren wohnen in Berlin.", "In zehn Jahren ich werde in Berlin wohnen.", "Ich in zehn Jahren werde wohnen Berlin."], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "Inversio: ajan ilmaus edessä → werden heti perässä: 'In zehn Jahren werde ich...'" },
+        { "item_type": "mc", "stem": "Järjestä: 'wird / Arzt / Er / werden'", "choices": ["Er wird Arzt werden.", "Er Arzt wird werden.", "Wird er Arzt werden.", "Er wird werden Arzt."], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "werden kolmantena käyttönä: tulla joksikin. Infinitiivi werden lauseen loppuun." },
+        { "item_type": "mc", "stem": "Järjestä: 'schaffen / Du / wirst / es / bestimmt'", "choices": ["Du wirst es bestimmt schaffen.", "Du bestimmt wirst es schaffen.", "Es wirst du bestimmt schaffen.", "Du wirst schaffen es bestimmt."], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "Infinitiivi 'schaffen' loppuun. 'bestimmt' on adverbi ennen infinitiiviä mahdollista, mutta loppuun on parempi." },
+        { "item_type": "mc", "stem": "Järjestä: 'werden / Wir / gründen / Firma / eine / zusammen'", "choices": ["Wir werden zusammen eine Firma gründen.", "Wir werden eine Firma gründen zusammen.", "Zusammen wir werden eine Firma gründen.", "Wir eine Firma gründen werden zusammen."], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "Infinitiivi gründen loppuun, werden paikalla 2." },
+        { "item_type": "mc", "stem": "Järjestä: 'das / Es / sein / wird / schwierig'", "choices": ["Es wird schwierig sein.", "Das wird schwierig sein.", "Es schwierig wird sein.", "Schwierig sein wird es."], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "Sein-infinitiivi loppuun. Muoto 'Es' tai 'Das' molemmat mahdollisia." },
+        { "item_type": "mc", "stem": "Järjestä: 'nächsten / werden / fahren / sie / Sommer / nach / Spanien'", "choices": ["Nächsten Sommer werden sie nach Spanien fahren.", "Sie werden nach Spanien fahren nächsten Sommer.", "Nächsten Sommer sie werden nach Spanien fahren.", "Fahren werden sie nächsten Sommer nach Spanien."], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "Ajan ilmaus edessä → inversio: 'Nächsten Sommer werden sie...'" },
+        { "item_type": "mc", "stem": "Järjestä: 'Ich / vergessen / dich / nie / werde'", "choices": ["Ich werde dich nie vergessen.", "Ich vergessen werde dich nie.", "Nie werde ich dich vergessen.", "Ich werde nie dich vergessen."], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "Infinitiivi 'vergessen' loppuun. 'Nie werde ich...' on myös mahdollinen mutta harvinaisempi." },
+        { "item_type": "mc", "stem": "Järjestä: 'Ihr / Ergebnisse / bald / werdet / die / sehen'", "choices": ["Ihr werdet die Ergebnisse bald sehen.", "Ihr werdet bald sehen die Ergebnisse.", "Die Ergebnisse werdet ihr bald sehen.", "Bald werdet ihr die Ergebnisse sehen."], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "Normaali SVO-järjestys tai inversio ajan ilmauksen kanssa — molemmat oikein." }
+      ]
+    },
+    {
+      "phase_id": "p8-synthesis-translate",
+      "phase_type": "synthesis_translate",
+      "title": "Käännä — Futur I suomesta saksaksi",
+      "instruction": "Käännä lause saksaksi käyttäen Futur I -rakennetta.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Kymmen vuoden päästä asun Berliinissä.", "accept": ["In zehn Jahren werde ich in Berlin wohnen.", "Ich werde in zehn Jahren in Berlin wohnen."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Hän tulee olemaan lääkäri.", "accept": ["Er wird Arzt werden.", "Sie wird Ärztin werden.", "Er/Sie wird Arzt/Ärztin werden."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "En unohda tätä koskaan.", "accept": ["Ich werde das nie vergessen.", "Ich werde es nie vergessen."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Se tulee olemaan vaikeaa.", "accept": ["Das wird schwierig sein.", "Es wird schwierig sein."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Me perustamme yrityksen.", "accept": ["Wir werden eine Firma gründen.", "Wir gründen eine Firma."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Sinä onnistut varmasti!", "accept": ["Du wirst es bestimmt schaffen!", "Du wirst sicher schaffen!", "Du wirst sicher Erfolg haben!"] }
+      ]
+    },
+    {
+      "phase_id": "p9-synthesis-short-writing",
+      "phase_type": "synthesis_short_writing",
+      "title": "Kirjoita — Futur I käytössä",
+      "instruction": "Kirjoita 4–5 lausetta saksaksi tulevaisuudensuunnitelmistasi käyttäen Futur I -rakennetta.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C", "M"],
+      "items": [
+        { "item_type": "writing", "prompt": "Schreib über deine Zukunft! Käytä vähintään 3 Futur I -rakennetta (werden + infinitiivi). Kerro ainakin: missä asut, mitä teet työksesi ja mitä toivot.", "min_words": 40, "max_words": 70, "rubric_focus": ["structure", "communication", "vocab"] },
+        { "item_type": "writing", "prompt": "Ein Brief in die Zukunft: Kirjoita lyhyt kirje itsellesi 10 vuoden päähän (saksaksi). Käytä Futur I:tä ja ajan ilmauksia: in zehn Jahren, nächstes Jahr, bald.", "min_words": 45, "max_words": 75, "rubric_focus": ["communication", "structure", "overall"] },
+        { "item_type": "writing", "prompt": "Was wirst du nach dem Abitur machen? Kirjoita 4–5 lausetta saksaksi. Mainitse opiskelu, työ tai matka.", "min_words": 40, "max_words": 70, "rubric_focus": ["communication", "vocab", "structure"] }
+      ]
+    }
+  ],
+  "vocab": [
+    { "es": "werden (werde/wirst/wird/werden/werdet/werden)", "fi": "tulla (Futur I apuverbi) / tulla joksikin", "example_es": "Ich werde Arzt werden.", "example_fi": "Minusta tulee lääkäri.", "gender": null },
+    { "es": "morgen", "fi": "huomenna", "example_es": "Morgen werde ich lernen.", "example_fi": "Huomenna opiskelen.", "gender": null },
+    { "es": "nächstes Jahr", "fi": "ensi vuonna", "example_es": "Nächstes Jahr studiere ich.", "example_fi": "Ensi vuonna opiskelen.", "gender": null },
+    { "es": "in zehn Jahren", "fi": "kymmenen vuoden päästä", "example_es": "In zehn Jahren werde ich arbeiten.", "example_fi": "Kymmenen vuoden päästä olen töissä.", "gender": null },
+    { "es": "bald", "fi": "pian", "example_es": "Das wird bald passieren.", "example_fi": "Se tapahtuu pian.", "gender": null },
+    { "es": "bestimmt", "fi": "varmasti", "example_es": "Du wirst es bestimmt schaffen.", "example_fi": "Onnistut varmasti.", "gender": null },
+    { "es": "schaffen", "fi": "onnistua, selviytyä", "example_es": "Ich werde es schaffen.", "example_fi": "Onnistun.", "gender": null },
+    { "es": "gründen", "fi": "perustaa (yritys)", "example_es": "Sie wird eine Firma gründen.", "example_fi": "Hän perustaa yrityksen.", "gender": null },
+    { "es": "ziehen (nach)", "fi": "muuttaa (johonkin)", "example_es": "Er wird nach Berlin ziehen.", "example_fi": "Hän muuttaa Berliiniin.", "gender": null },
+    { "es": "beenden", "fi": "lopettaa, päättää", "example_es": "Sie wird das Studium beenden.", "example_fi": "Hän lopettaa opinnot.", "gender": null },
+    { "es": "vergessen", "fi": "unohtaa", "example_es": "Ich werde das nie vergessen.", "example_fi": "En unohda tätä koskaan.", "gender": null },
+    { "es": "in der Zukunft / zukünftig", "fi": "tulevaisuudessa", "example_es": "In der Zukunft werde ich reisen.", "example_fi": "Tulevaisuudessa matkustelen.", "gender": null }
+  ],
+  "side_panel": {
+    "tabs": [
+      {
+        "id": "grammar",
+        "title": "Kielioppi",
+        "content_md": "## Futur I — rakenne\n\n**werden** (paikka 2) + infinitiivi (loppuun)\n\n| Persoona | werden |\n|---|---|\n| ich | **werde** |\n| du | **wirst** |\n| er/sie/es | **wird** |\n| wir | **werden** |\n| ihr | **werdet** |\n| sie/Sie | **werden** |\n\n## Infinitiivin paikka — KRIITTINEN!\n\n✅ Ich werde morgen **arbeiten**.\n❌ Ich werde **arbeiten** morgen.\n\n## Futur I vs. Präsens\n\n- Lähitulevaisuus → **Präsens** + ajan ilmaus: *Morgen gehe ich...*\n- Kauempi tulevaisuus / epävarmuus → **Futur I**: *In zehn Jahren werde ich...*\n- Lupaukset → **Futur I**: *Ich werde dich nie vergessen.*"
+      },
+      {
+        "id": "examples",
+        "title": "Esimerkit",
+        "content_md": "## Futur I esimerkkejä\n\n- *Ich **werde** Arzt **werden**.* — Minusta tulee lääkäri.\n- *Du **wirst** es bestimmt **schaffen**!* — Onnistut varmasti!\n- *Er **wird** nächstes Jahr studieren.* — Hän aloittaa opiskelun ensi vuonna.\n- *In zehn Jahren **werde** ich in Berlin **wohnen**.* — Kymmenen vuoden päästä asun Berliinissä.\n- *Das **wird** schwierig **sein**.* — Se tulee olemaan vaikeaa.\n\n## Tyypilliset virheet\n\n❌ *Ich werde **arbeiten** morgen.* (infinitiivi ei lopussa)\n✅ *Ich werde morgen **arbeiten**.*\n\n❌ *Er **werden** studieren.* (väärä taivutus)\n✅ *Er **wird** studieren.*"
+      },
+      {
+        "id": "tips",
+        "title": "YO-vinkit",
+        "content_md": "## YO-kokeessa\n\n**Teil 3 (Struktur):** Futur I -aukot: 'Ich ___ morgen kommen' → werde.\n\n**Teil 4 (Schreiben):** Tulevaisuuden kirjoitelmassa käytä Futur I:tä: *In der Zukunft werde ich... In zehn Jahren werde ich...*\n\n## Muista nämä\n\n1. Infinitiivi AINA loppuun\n2. werden-taivutus: werde/wirst/**wird**/werden/**werdet**/werden\n3. 'Er wird Arzt werden' — kaksi were-muotoa on oikein (toinen apuverbi, toinen 'tulla joksikin')"
+      }
+    ]
+  }
+}

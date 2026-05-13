@@ -1,0 +1,269 @@
+{
+  "meta": {
+    "course_key": "kurssi_4",
+    "lesson_index": 1,
+    "lesson_type": "vocab",
+    "level": "B",
+    "title": "Luonto, vuodenajat ja sää",
+    "description": "Opit luonnon ydinsanaston saksaksi: metsä, järvi, vuori, joki, meri ja sääilmiöt. Noin 30 sanaa — perusta K4:n ympäristöteksteille ja lapsuusmuistokirjoitukselle.",
+    "yo_relevance": "Teil 2 (Luetun ymmärtäminen): kevään 2025 YO-koe sisälsi ympäristöaiheen tekstin — luonto- ja säätermit ovat kriittisiä tunnistaa. Teil 4 (Kirjoitelma): 'Erzähle von deiner Kindheit' -tehtävässä luonnon kuvaaminen (Wald, Feld, See) on tyypillistä YTL-vastauksissa.",
+    "estimated_minutes_median": 12
+  },
+  "teaching": {
+    "intro_md": "# Luonto, vuodenajat ja sää saksaksi\n\nLuontosanasto on K4:n pohja — lapsuusmuistot tapahtuvat metsissä, järvien rannalla ja kentillä. Huomaa saksan substantiivien isot alkukirjaimet!\n\n## Luonnon paikat\n\n| Suomeksi | Saksaksi | Suku |\n|---|---|---|\n| metsä | **der Wald** | m |\n| järvi | **der See** | m |\n| meri | **das Meer** | n |\n| vuori | **der Berg** | m |\n| joki | **der Fluss** | m |\n| niitty, kenttä | **das Feld** | n |\n| puutarha | **der Garten** | m |\n| puu | **der Baum** | m |\n| kukka | **die Blume** | f |\n| lintu | **der Vogel** | m |\n\n## Vuodenajat\n\n- **der Frühling** = kevät — *Im Frühling blühen die Blumen.*\n- **der Sommer** = kesä — *Im Sommer fahren wir ans Meer.*\n- **der Herbst** = syksy — *Im Herbst fallen die Blätter.*\n- **der Winter** = talvi — *Im Winter schneit es oft.*\n\nPrepositio: **im** + vuodenaika (im Sommer, im Winter).\n\n## Sää\n\n- **das Wetter** = sää\n- **die Sonne** = aurinko; *Es ist sonnig* = on aurinkoista\n- **der Regen** = sade; *Es regnet* = sataa\n- **der Schnee** = lumi; *Es schneit* = sataa lunta\n- **der Wind** = tuuli; *Es ist windig* = on tuulinen\n- **warm / kalt / heiß** = lämmin / kylmä / kuuma\n- **bewölkt** = pilvinen\n\n## Muistisäännöt\n\n> *der See* = järvi (m), mutta *die See* = meri (f) — sama sana, eri suku, eri merkitys!\n> *Wald, Berg, Fluss* — kaikki maskuliini.",
+    "key_points": [
+      "der See = järvi (m), die See = meri (f) — sama sana, eri suku!",
+      "Vuodenaikojen kanssa käytetään im + Dativ: im Sommer, im Winter.",
+      "Sääilmaukset: es regnet, es schneit, es ist kalt — persoonaton es-rakenne.",
+      "Kaikki substantiivit kirjoitetaan isolla: der Wald, die Blume, das Feld.",
+      "der Wald, der Berg, der Fluss, der Garten, der Baum — kaikki maskuliini."
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1-recognition-mc-luonto",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista — luonto ja sää",
+      "instruction": "Valitse oikea suomennos.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "mc", "stem": "der Wald", "choices": ["niitty", "metsä", "puutarha", "suo"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "der Wald = metsä. das Feld = niitty/pelto, der Garten = puutarha." },
+        { "item_type": "mc", "stem": "der See", "choices": ["meri", "järvi", "joki", "lampi"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "der See = järvi. Huom: die See = meri. der Fluss = joki." },
+        { "item_type": "mc", "stem": "der Berg", "choices": ["mäki", "vuori", "laakso", "tasanko"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "der Berg = vuori. das Tal = laakso." },
+        { "item_type": "mc", "stem": "der Fluss", "choices": ["järvi", "puro", "joki", "kanava"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "der Fluss = joki. der Bach = puro." },
+        { "item_type": "mc", "stem": "das Meer", "choices": ["järvi", "meri", "joki", "lampi"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "das Meer = meri (n). Huom: der See (m) = järvi — sukukin vaihtuu!" },
+        { "item_type": "mc", "stem": "der Baum", "choices": ["kukka", "pensas", "puu", "ruoho"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "der Baum = puu. die Blume = kukka, der Strauch = pensas." },
+        { "item_type": "mc", "stem": "der Frühling", "choices": ["syksy", "kevät", "kesä", "talvi"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "der Frühling = kevät. der Herbst = syksy, der Sommer = kesä, der Winter = talvi." },
+        { "item_type": "mc", "stem": "der Herbst", "choices": ["talvi", "kevät", "kesä", "syksy"], "correct_index": 3, "distractor_difficulty": "easy", "explanation": "der Herbst = syksy. Im Herbst fallen die Blätter." },
+        { "item_type": "mc", "stem": "das Wetter", "choices": ["tuuli", "sää", "lämpötila", "ilmasto"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "das Wetter = sää. das Klima = ilmasto." },
+        { "item_type": "mc", "stem": "der Regen", "choices": ["lumi", "tuuli", "sade", "ukkonen"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "der Regen = sade. es regnet = sataa. der Schnee = lumi." },
+        { "item_type": "mc", "stem": "der Schnee", "choices": ["jää", "lumi", "huurre", "rakeet"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "der Schnee = lumi. es schneit = sataa lunta. das Eis = jää." },
+        { "item_type": "mc", "stem": "bewölkt", "choices": ["aurinkoinen", "tuulinen", "pilvinen", "sateinen"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "bewölkt = pilvinen. sonnig = aurinkoinen, windig = tuulinen, regnerisch = sateinen." },
+        { "item_type": "mc", "stem": "die Jahreszeit", "choices": ["sää", "vuodenaika", "ilmasto", "kausi"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "die Jahreszeit = vuodenaika (Jahr = vuosi + Zeit = aika). das Wetter = sää." },
+        { "item_type": "mc", "stem": "der Vogel", "choices": ["kala", "sammakko", "lintu", "perhonen"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "der Vogel = lintu. der Fisch = kala." },
+        { "item_type": "mc", "stem": "die Umwelt", "choices": ["luonto", "ympäristö", "maailma", "luonnonsuojelu"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "die Umwelt = ympäristö (um = ympärillä + Welt = maailma). die Natur = luonto." }
+      ]
+    },
+    {
+      "phase_id": "p2-recognition-match-luonto",
+      "phase_type": "recognition_match",
+      "title": "Yhdistä — luonto ja vuodenajat",
+      "instruction": "Yhdistä saksan sana ja suomennos.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        {
+          "item_type": "match",
+          "left_label": "Luonnon paikat",
+          "right_label": "Suomeksi",
+          "pairs": [
+            { "left": "der Wald", "right": "metsä" },
+            { "left": "der See", "right": "järvi" },
+            { "left": "das Meer", "right": "meri" },
+            { "left": "der Berg", "right": "vuori" },
+            { "left": "der Fluss", "right": "joki" },
+            { "left": "das Feld", "right": "niitty, pelto" },
+            { "left": "der Garten", "right": "puutarha" },
+            { "left": "der Baum", "right": "puu" }
+          ]
+        },
+        {
+          "item_type": "match",
+          "left_label": "Vuodenajat ja sää",
+          "right_label": "Suomeksi",
+          "pairs": [
+            { "left": "der Frühling", "right": "kevät" },
+            { "left": "der Sommer", "right": "kesä" },
+            { "left": "der Herbst", "right": "syksy" },
+            { "left": "der Winter", "right": "talvi" },
+            { "left": "der Regen", "right": "sade" },
+            { "left": "der Schnee", "right": "lumi" },
+            { "left": "die Sonne", "right": "aurinko" },
+            { "left": "der Wind", "right": "tuuli" }
+          ]
+        }
+      ]
+    },
+    {
+      "phase_id": "p3-recall-es-fi",
+      "phase_type": "recall_typed_es_to_fi",
+      "title": "Käännä suomeksi",
+      "instruction": "Kirjoita suomennos pienellä.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "der Wald", "accept": ["metsä"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "der See", "accept": ["järvi"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "der Berg", "accept": ["vuori"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "der Fluss", "accept": ["joki"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "das Wetter", "accept": ["sää"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "der Regen", "accept": ["sade"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "der Schnee", "accept": ["lumi"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "der Frühling", "accept": ["kevät"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "der Herbst", "accept": ["syksy"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "die Umwelt", "accept": ["ympäristö"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "der Baum", "accept": ["puu"] }
+      ]
+    },
+    {
+      "phase_id": "p4-recall-fi-es",
+      "phase_type": "recall_typed_fi_to_es",
+      "title": "Käännä saksaksi",
+      "instruction": "Kirjoita saksaksi (artikkeleineen: der/die/das sana).",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "metsä", "accept": ["der Wald", "Wald"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "järvi", "accept": ["der See", "See"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "vuori", "accept": ["der Berg", "Berg"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "sää", "accept": ["das Wetter", "Wetter"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "kevät", "accept": ["der Frühling", "Frühling"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "kesä", "accept": ["der Sommer", "Sommer"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "talvi", "accept": ["der Winter", "Winter"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "ympäristö", "accept": ["die Umwelt", "Umwelt"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "sade", "accept": ["der Regen", "Regen"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "lumi", "accept": ["der Schnee", "Schnee"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "puu", "accept": ["der Baum", "Baum"] }
+      ]
+    },
+    {
+      "phase_id": "p5-gap-fill-helppo",
+      "phase_type": "application_gap_fill",
+      "title": "Lauseen täydennys — perustaso",
+      "instruction": "Täydennä lause. Sanapankki auttaa.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Im {1} gehen wir oft in den Wald spazieren.", "answers": [["Frühling", "Sommer", "Herbst"]], "word_bank": ["Frühling", "Sommer", "Winter"] },
+        { "item_type": "gap_fill", "sentence_template": "Heute ist das {1} sehr schön — die Sonne scheint.", "answers": [["Wetter"]], "word_bank": ["Wetter", "Wind", "Regen"] },
+        { "item_type": "gap_fill", "sentence_template": "Der {1} war sehr hoch und wir konnten das ganze Tal sehen.", "answers": [["Berg"]], "word_bank": ["Berg", "Wald", "Fluss"] },
+        { "item_type": "gap_fill", "sentence_template": "Im {1} liegt viel Schnee und die Kinder fahren Schlitten.", "answers": [["Winter"]], "word_bank": ["Winter", "Sommer", "Frühling"] },
+        { "item_type": "gap_fill", "sentence_template": "Wir schwimmen im {1} — das Wasser ist so klar.", "answers": [["See", "Meer", "Fluss"]], "word_bank": ["See", "Meer", "Fluss"] },
+        { "item_type": "gap_fill", "sentence_template": "Es {1} heute sehr stark — bring einen Regenschirm mit.", "answers": [["regnet"]], "word_bank": ["regnet", "schneit", "scheint"] },
+        { "item_type": "gap_fill", "sentence_template": "Der {1} ist das Symbol des deutschen Nationalparks.", "answers": [["Wald"]], "word_bank": ["Wald", "Berg", "See"] },
+        { "item_type": "gap_fill", "sentence_template": "Im {1} sind alle Blätter bunt — rot, gelb und orange.", "answers": [["Herbst"]], "word_bank": ["Herbst", "Winter", "Frühling"] },
+        { "item_type": "gap_fill", "sentence_template": "Die {1} schützen wir durch weniger Autos und mehr Recycling.", "answers": [["Umwelt"]], "word_bank": ["Umwelt", "Natur", "Luft"] },
+        { "item_type": "gap_fill", "sentence_template": "Im Garten meiner Oma stand ein alter {1} mit vielen Äpfeln.", "answers": [["Baum"]], "word_bank": ["Baum", "Berg", "Fluss"] }
+      ]
+    },
+    {
+      "phase_id": "p6-gap-fill-vaativa",
+      "phase_type": "application_gap_fill",
+      "title": "Lauseen täydennys — vaativa",
+      "instruction": "Täydennä ilman sanapankkia.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Als Kind liebte ich den {1} — der Geruch nach Kiefern und feuchter Erde.", "answers": [["Wald"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Im {1} fahren meine Eltern immer ans Meer.", "answers": [["Sommer"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Das {1} war gestern so schlecht — Wind und Regen den ganzen Tag.", "answers": [["Wetter"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Die {1} leidet unter Plastikmüll und Klimawandel.", "answers": [["Umwelt", "Natur"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Wir saßen am {1} und sahen die Enten schwimmen.", "answers": [["See", "Fluss"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Im {1} blühen die ersten Blumen und die Vögel singen.", "answers": [["Frühling"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Es {1} so stark, dass wir nicht nach draußen gehen konnten.", "answers": [["regnete", "schneite"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Der alte {1} im Garten meiner Großeltern war über hundert Jahre alt.", "answers": [["Baum"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Die {1} waren immer die schönste Zeit — Sonne, Wasser, keine Schule.", "answers": [["Ferien", "Sommerferien"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "In Deutschland gibt es viele {1} — besonders in Bayern und Österreich.", "answers": [["Berge"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p7-sentence-build",
+      "phase_type": "application_sentence_build",
+      "title": "Lauseiden rakentelua",
+      "instruction": "Käännä koko lause saksaksi. Käytä opittua sanastoa.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Talvella sataa paljon lunta täällä.", "accept": ["Im Winter schneit es hier viel", "Im Winter gibt es hier viel Schnee"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Keväällä kukat kukkivat puutarhassa.", "accept": ["Im Frühling blühen die Blumen im Garten", "Im Frühling blühen Blumen im Garten"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Sää on tänään kaunis — aurinko paistaa.", "accept": ["Das Wetter ist heute schön — die Sonne scheint", "Heute ist das Wetter schön und die Sonne scheint"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Meidän täytyy suojella ympäristöä.", "accept": ["Wir müssen die Umwelt schützen", "Wir müssen die Natur schützen"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Joki virtaa vuorten läpi laaksoon.", "accept": ["Der Fluss fließt durch die Berge ins Tal", "Der Fluss fließt durch den Berg"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Lapsena kävin usein uimassa järvessä.", "accept": ["Als Kind bin ich oft im See geschwommen", "Als Kind habe ich oft im See gebadet"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Syksyllä lehdet muuttuvat keltaisiksi ja punaisiksi.", "accept": ["Im Herbst werden die Blätter gelb und rot", "Im Herbst färben sich die Blätter gelb und rot"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Isovanhempieni talo sijaitsi metsän reunalla.", "accept": ["Das Haus meiner Großeltern stand am Waldrand", "Das Haus meiner Großeltern war am Rand des Waldes"] }
+      ]
+    },
+    {
+      "phase_id": "p8-synthesis-translate",
+      "phase_type": "synthesis_translate",
+      "title": "YO-tason käännös",
+      "instruction": "Käännä koko lause suomi↔saksa. Ei vihjeitä.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Saksassa on paljon metsiä ja vuoria, ja luonto on hyvin kaunista.", "accept": ["In Deutschland gibt es viele Wälder und Berge und die Natur ist sehr schön", "Deutschland hat viele Wälder und Berge und die Natur ist wunderschön"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Kesällä menimme aina järven rannalle uimaan.", "accept": ["Im Sommer sind wir immer an den See zum Schwimmen gefahren", "Im Sommer gingen wir immer zum See um zu schwimmen"] },
+        { "item_type": "translate", "direction": "es_to_fi", "source": "Im Winter schneit es in Bayern fast jeden Tag, und die Berge sehen wunderschön aus.", "accept": ["Talvella Baijerin vuorilla sataa lunta lähes joka päivä ja vuoret näyttävät upealta", "Talvella Baijerissa sataa lunta melkein joka päivä ja vuoret ovat kauniita"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Ympäristönsuojelu on tärkeää — meidän täytyy pitää huolta metsis tä ja joista.", "accept": ["Umweltschutz ist wichtig — wir müssen die Wälder und Flüsse schützen", "Der Schutz der Umwelt ist wichtig — wir müssen Wälder und Flüsse schützen"] },
+        { "item_type": "translate", "direction": "es_to_fi", "source": "Das Wetter im Frühling ist unbeständig — mal regnet es, mal scheint die Sonne.", "accept": ["Keväinen sää on epävakaata — välillä sataa, välillä aurinko paistaa", "Kevään sää vaihtelee — vuoroin sataa, vuoroin paistaa aurinko"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Lapsena istuin usein vanhan puun alla ja katselin lintuja.", "accept": ["Als Kind saß ich oft unter dem alten Baum und beobachtete die Vögel", "Als Kind saß ich oft unter dem Baum und schaute den Vögeln zu"] }
+      ]
+    },
+    {
+      "phase_id": "p9-short-writing",
+      "phase_type": "synthesis_short_writing",
+      "title": "Lyhyt kirjoitus — luonto ja vuodenajat",
+      "instruction": "Kirjoita lyhyt teksti saksaksi. Ei sanavihjeitä.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C", "M"],
+      "items": [
+        { "item_type": "writing", "prompt": "Kuvaile lempiluontopaikkasi saksaksi. Mainitse vähintään: missä se on, miltä siellä näyttää, mikä vuodenaika on paras. 5–7 lausetta.", "min_words": 40, "max_words": 90, "rubric_focus": ["communication", "vocab", "structure"] },
+        { "item_type": "writing", "prompt": "Kirjoita lyhyt teksti lapsuutesi luontokokemuksesta. Käytä Präteritumia (war, hatte) tai Perfektia (bin gegangen, habe gesehen). 5–7 lausetta.", "min_words": 40, "max_words": 90, "rubric_focus": ["communication", "vocab", "structure"] },
+        { "item_type": "writing", "prompt": "Mikä vuodenaika on sinulle mieluisin ja miksi? Mainitse ainakin 3 konkreettista syytä. 5–7 lausetta.", "min_words": 40, "max_words": 90, "rubric_focus": ["communication", "vocab", "overall"] }
+      ]
+    }
+  ],
+  "vocab": [
+    { "es": "der Wald", "fi": "metsä", "example_es": "Als Kind spielten wir im Wald hinter dem Haus.", "example_fi": "Lapsena leikimme talon takana olevassa metsässä.", "gender": "m" },
+    { "es": "der See", "fi": "järvi", "example_es": "Im Sommer schwimmen wir jeden Tag im See.", "example_fi": "Kesällä uimme järvessä joka päivä.", "gender": "m" },
+    { "es": "das Meer", "fi": "meri", "example_es": "Wir fahren ans Meer in den Sommerferien.", "example_fi": "Ajamme merelle kesälomaksi.", "gender": null },
+    { "es": "der Berg", "fi": "vuori", "example_es": "Die Berge in Bayern sind sehr hoch und schön.", "example_fi": "Baijerin vuoret ovat hyvin korkeita ja kauniita.", "gender": "m" },
+    { "es": "der Fluss", "fi": "joki", "example_es": "Der Rhein ist der bekannteste Fluss in Deutschland.", "example_fi": "Rein on Saksan tunnetuin joki.", "gender": "m" },
+    { "es": "das Feld", "fi": "niitty, pelto", "example_es": "Auf dem Feld wachsen Blumen und Gräser.", "example_fi": "Pellolla kasvaa kukkia ja ruohoa.", "gender": null },
+    { "es": "der Garten", "fi": "puutarha", "example_es": "Der Garten meiner Oma war voller Blumen.", "example_fi": "Isoäitini puutarha oli täynnä kukkia.", "gender": "m" },
+    { "es": "der Baum", "fi": "puu", "example_es": "Der alte Baum stand seit hundert Jahren im Garten.", "example_fi": "Vanha puu oli seissyt puutarhassa sata vuotta.", "gender": "m" },
+    { "es": "die Blume", "fi": "kukka", "example_es": "Im Frühling blühen die Blumen überall.", "example_fi": "Keväällä kukat kukkivat kaikkialla.", "gender": "f" },
+    { "es": "der Vogel", "fi": "lintu", "example_es": "Die Vögel singen morgens sehr laut.", "example_fi": "Linnut laulavat aamuisin hyvin kovaan.", "gender": "m" },
+    { "es": "der Frühling", "fi": "kevät", "example_es": "Im Frühling wird es wärmer und die Tage länger.", "example_fi": "Keväällä tulee lämpimämpää ja päivät pitenevät.", "gender": "m" },
+    { "es": "der Sommer", "fi": "kesä", "example_es": "Der Sommer in Deutschland kann sehr heiß sein.", "example_fi": "Kesä Saksassa voi olla hyvin kuuma.", "gender": "m" },
+    { "es": "der Herbst", "fi": "syksy", "example_es": "Im Herbst sind die Wälder besonders schön.", "example_fi": "Syksyllä metsät ovat erityisen kauniit.", "gender": "m" },
+    { "es": "der Winter", "fi": "talvi", "example_es": "Im Winter schneit es oft in den Alpen.", "example_fi": "Talvella Alpeilla sataa usein lunta.", "gender": "m" },
+    { "es": "die Jahreszeit", "fi": "vuodenaika", "example_es": "Welche Jahreszeit magst du am liebsten?", "example_fi": "Mistä vuodenajasta pidät eniten?", "gender": "f" },
+    { "es": "das Wetter", "fi": "sää", "example_es": "Das Wetter ist heute perfekt für einen Spaziergang.", "example_fi": "Sää on tänään täydellinen kävelylle.", "gender": null },
+    { "es": "die Sonne", "fi": "aurinko", "example_es": "Die Sonne scheint und es ist warm.", "example_fi": "Aurinko paistaa ja on lämmin.", "gender": "f" },
+    { "es": "der Regen", "fi": "sade", "example_es": "Im Herbst gibt es in Deutschland viel Regen.", "example_fi": "Syksyllä Saksassa on paljon sadetta.", "gender": "m" },
+    { "es": "der Schnee", "fi": "lumi", "example_es": "Kinder lieben den Schnee — man kann Schneemänner bauen.", "example_fi": "Lapset rakastavat lunta — voi rakentaa lumiukkoja.", "gender": "m" },
+    { "es": "der Wind", "fi": "tuuli", "example_es": "Heute ist es windig — der Wind kommt aus dem Norden.", "example_fi": "Tänään on tuulinen — tuuli tulee pohjoisesta.", "gender": "m" },
+    { "es": "warm", "fi": "lämmin", "example_es": "Im Sommer ist es sehr warm hier.", "example_fi": "Kesällä täällä on hyvin lämmin.", "gender": null },
+    { "es": "kalt", "fi": "kylmä", "example_es": "Es ist so kalt heute — minus zehn Grad!", "example_fi": "On niin kylmä tänään — miinus kymmenen astetta!", "gender": null },
+    { "es": "bewölkt", "fi": "pilvinen", "example_es": "Der Himmel ist bewölkt und es könnte regnen.", "example_fi": "Taivas on pilvinen ja voisi sataa.", "gender": null },
+    { "es": "die Umwelt", "fi": "ympäristö", "example_es": "Wir müssen die Umwelt für künftige Generationen schützen.", "example_fi": "Meidän täytyy suojella ympäristöä tulevia sukupolvia varten.", "gender": "f" },
+    { "es": "die Natur", "fi": "luonto", "example_es": "Die Natur in Finnland ist wunderschön.", "example_fi": "Suomen luonto on upeaa.", "gender": "f" },
+    { "es": "es regnet", "fi": "sataa (vettä)", "example_es": "Es regnet seit drei Tagen.", "example_fi": "On satanut kolmen päivän ajan.", "gender": null },
+    { "es": "es schneit", "fi": "sataa lunta", "example_es": "Schau mal, es schneit! Alles ist weiß.", "example_fi": "Katso, sataa lunta! Kaikki on valkoista.", "gender": null },
+    { "es": "die Luft", "fi": "ilma", "example_es": "Die Luft im Wald riecht frisch und sauber.", "example_fi": "Metsän ilma tuoksuu raikkaalta ja puhtaalta.", "gender": "f" },
+    { "es": "der Weg", "fi": "polku, tie", "example_es": "Wir gingen den Weg durch den Wald entlang.", "example_fi": "Kävelimme metsäpolkua pitkin.", "gender": "m" },
+    { "es": "das Tal", "fi": "laakso", "example_es": "Im Tal liegt ein kleines Dorf.", "example_fi": "Laaksossa on pieni kylä.", "gender": null }
+  ],
+  "side_panel": {
+    "tabs": [
+      {
+        "id": "vocab",
+        "title": "Sanasto",
+        "content_md": "## Luonnon paikat\n\n- **der Wald** — metsä\n- **der See** — järvi (m! ≠ die See = meri f)\n- **das Meer** — meri\n- **der Berg** — vuori\n- **der Fluss** — joki\n- **das Feld** — niitty, pelto\n- **der Garten** — puutarha\n- **das Tal** — laakso\n- **der Weg** — polku, tie\n\n## Kasvit ja eläimet\n\n- **der Baum** — puu\n- **die Blume** — kukka\n- **der Vogel** — lintu\n- **die Luft** — ilma\n\n## Vuodenajat\n\n- **der Frühling** — kevät\n- **der Sommer** — kesä\n- **der Herbst** — syksy\n- **der Winter** — talvi\n- **die Jahreszeit** — vuodenaika\n\n## Sää\n\n- **das Wetter** — sää\n- **die Sonne** — aurinko\n- **der Regen** — sade\n- **der Schnee** — lumi\n- **der Wind** — tuuli\n- **warm / kalt / heiß** — lämmin / kylmä / kuuma\n- **bewölkt** — pilvinen\n- **es regnet** — sataa\n- **es schneit** — sataa lunta\n\n## Ympäristö\n\n- **die Umwelt** — ympäristö\n- **die Natur** — luonto"
+      },
+      {
+        "id": "grammar",
+        "title": "Kielioppi",
+        "content_md": "## Vuodenajat: im + Dativ\n\nVuodenaikojen kanssa käytetään **im** (= in + dem, Dativ):\n\n- **im Frühling** — keväällä\n- **im Sommer** — kesällä\n- **im Herbst** — syksyllä\n- **im Winter** — talvella\n\n## Sääilmaukset\n\nSaksan sääilmaukset käyttävät persoonatonta **es**:\n\n- *Es regnet.* — Sataa.\n- *Es schneit.* — Sataa lunta.\n- *Es ist kalt/warm/heiß.* — On kylmä/lämmin/kuuma.\n- *Die Sonne scheint.* — Aurinko paistaa.\n\n## der See vs die See\n\n⚠️ **der See** (m) = järvi\n⚠️ **die See** (f) = meri\n\nSama kirjoitusasu, eri suku, eri merkitys!"
+      },
+      {
+        "id": "tips",
+        "title": "YO-vinkki",
+        "content_md": "## Luonto- ja säätermit YO-kokeessa\n\n**Teil 2 (Luetun ymmärtäminen):** Ympäristö- ja luontoaiheiset tekstit ovat YTL:n suosikkeja. Kevään 2025 kokeessa oli ympäristöaihe — osaa tunnistaa: *der Klimawandel* (ilmastonmuutos), *die Umwelt* (ympäristö), *schützen* (suojella).\n\n**Teil 4 (Kirjoitelma — lapsuus):** Lapsuusmuistot tapahtuvat luonnossa:\n- *Im Sommer gingen wir in den Wald.* — Kesällä menimme metsään.\n- *Wir schwammen im See.* — Uimme järvessä.\n- *Das Wetter war schön.* — Sää oli kaunis.\n\n## Kirjoitusvirheet joita pitää välttää\n\n- ✗ *das Wald* → ✓ **der Wald** (maskuliini!)\n- ✗ *der See = meri* → ✓ **der See = järvi**, **die See = meri**\n- ✗ *es ist regnen* → ✓ **es regnet** (verbi, ei olla + infinitiivi)"
+      }
+    ]
+  }
+}

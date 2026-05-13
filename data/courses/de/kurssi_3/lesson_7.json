@@ -1,0 +1,255 @@
+{
+  "meta": {
+    "course_key": "kurssi_3",
+    "lesson_index": 7,
+    "lesson_type": "vocab",
+    "level": "B",
+    "title": "Ajan ilmaukset — gestern, letzte Woche, im Sommer",
+    "description": "Opit saksan ajan ilmaukset: menneisyys (gestern, letzte Woche, vor zwei Tagen, im Sommer), nykyisyys (heute, jetzt, gerade) ja tulevaisuus (morgen, nächste Woche, im Herbst). Noin 30 sanaa ja lauseketta.",
+    "yo_relevance": "Teil 4 (Kirjoitelma): matkakertomus vaatii ajanilmauksia lauseiden aloittamiseen ja V2-rakenteen osoittamiseen. Teil 3 (Rakenne): aikamuodon valinta (Perfekti vs. Präsens) liittyy suoraan ajan ilmauksiin.",
+    "estimated_minutes_median": 11
+  },
+  "teaching": {
+    "intro_md": "# Ajan ilmaukset saksaksi\n\nAjan ilmaukset ovat erityisen tärkeitä kahdesta syystä:\n1. Ne aloittavat lauseen → V2-sääntö aktivoituu (inversio!)\n2. Ne kertovat aikamuodon — Perfekti menneen kanssa, Präsens nykytilan kanssa.\n\n## Menneisyys (+ Perfekti)\n\n| Suomeksi | Saksaksi | Esimerkki |\n|---|---|---|\n| eilen | **gestern** | Gestern habe ich Pizza gegessen. |\n| toissapäivänä | **vorgestern** | Vorgestern sind wir angekommen. |\n| viime viikolla | **letzte Woche** | Letzte Woche haben wir Berlin besucht. |\n| viime kesänä | **letzten Sommer** | Letzten Sommer bin ich geflogen. |\n| kaksi päivää sitten | **vor zwei Tagen** | Vor zwei Tagen habe ich das Hotel gebucht. |\n| viime kuussa | **letzten Monat** | Letzten Monat haben wir viel gespart. |\n| viime vuonna | **letztes Jahr** | Letztes Jahr war ich in Spanien. |\n| aiemmin | **früher** | Früher habe ich oft Ski gefahren. |\n\n## Vuodenajat + prepositio im\n\n| Suomeksi | Saksaksi |\n|---|---|\n| talvella | **im Winter** |\n| keväällä | **im Frühling** |\n| kesällä | **im Sommer** |\n| syksyllä | **im Herbst** |\n\n**Huom:** Kuukausien kanssa myös **im**: im Januar, im Juli.\n\n## Nykyisyys ja tulevaisuus\n\n| Suomeksi | Saksaksi |\n|---|---|\n| tänään | **heute** |\n| nyt | **jetzt / gerade** |\n| huomenna | **morgen** |\n| ensi viikolla | **nächste Woche** |\n| ensi vuonna | **nächstes Jahr** |\n\n**Järjestyssääntö inversiolle:**\nAjan ilmaus aloittaa lauseen → verbi 2. paikalle!\n*Gestern **habe** ich..., Letzte Woche **sind** wir...*",
+    "key_points": [
+      "Menneisyyden ajanilmaukset käyttävät Perfektiä: gestern habe ich, letzte Woche sind wir.",
+      "Vuodenajat prepositiolla im: im Sommer, im Winter, im Frühling, im Herbst.",
+      "Kuukaudet myös im: im Januar, im Juli, im Oktober.",
+      "Ajan ilmaus lauseen alussa → V2 inversio: Gestern HABE ICH (ei 'ich habe').",
+      "letzte vs. nächste: letzte Woche = viime viikolla, nächste Woche = ensi viikolla."
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1-recognition-mc-ajan-ilmaukset",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista — ajan ilmaukset",
+      "instruction": "Valitse oikea suomennos.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "mc", "stem": "gestern", "choices": ["huomenna", "tänään", "eilen", "ylihuomenna"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "gestern = eilen. morgen = huomenna, heute = tänään." },
+        { "item_type": "mc", "stem": "morgen", "choices": ["eilen", "huomenna", "myöhemmin", "ensi viikolla"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "morgen = huomenna. Morgen on myös 'aamu' (der Morgen) — kontext ratkaisee." },
+        { "item_type": "mc", "stem": "letzte Woche", "choices": ["ensi viikolla", "tällä viikolla", "viime viikolla", "kahden viikon päästä"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "letzte Woche = viime viikolla. nächste Woche = ensi viikolla." },
+        { "item_type": "mc", "stem": "nächstes Jahr", "choices": ["viime vuonna", "ensi vuonna", "tänä vuonna", "pari vuotta sitten"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "nächstes Jahr = ensi vuonna. letztes Jahr = viime vuonna." },
+        { "item_type": "mc", "stem": "im Sommer", "choices": ["talvella", "syksyllä", "kesällä", "keväällä"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "im Sommer = kesällä. im Winter = talvella, im Frühling = keväällä, im Herbst = syksyllä." },
+        { "item_type": "mc", "stem": "vor zwei Tagen", "choices": ["kahden päivän päästä", "kaksi päivää sitten", "kaksi viikkoa sitten", "toissapäivänä"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "vor + Zeitangabe = sitten. vor zwei Tagen = kaksi päivää sitten. in zwei Tagen = kahden päivän päästä." },
+        { "item_type": "mc", "stem": "vorgestern", "choices": ["ylihuomenna", "toissapäivänä", "eilen", "viime viikolla"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "vorgestern = toissapäivänä. vor + gestern. übermorgen = ylihuomenna." },
+        { "item_type": "mc", "stem": "im Winter", "choices": ["kesällä", "syksyllä", "keväällä", "talvella"], "correct_index": 3, "distractor_difficulty": "easy", "explanation": "im Winter = talvella. im Sommer = kesällä." },
+        { "item_type": "mc", "stem": "früher", "choices": ["myöhemmin", "aikaisemmin, ennen", "nyt", "heti"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "früher = aikaisemmin, ennen. später = myöhemmin." },
+        { "item_type": "mc", "stem": "nächste Woche", "choices": ["viime viikolla", "ensi viikolla", "tällä viikolla", "kahden viikon päästä"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "nächste Woche = ensi viikolla. letzte Woche = viime viikolla." },
+        { "item_type": "mc", "stem": "im Juli", "choices": ["helmikuussa", "tammikuussa", "heinäkuussa", "syyskuussa"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "im Juli = heinäkuussa. Saksan kuukaudet ovat iso kirjain: Januar, Februar, März, April, Mai, Juni, Juli, August, September, Oktober, November, Dezember." },
+        { "item_type": "mc", "stem": "letzten Sommer", "choices": ["ensi kesänä", "viime kesänä", "tänä kesänä", "joka kesä"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "letzten Sommer = viime kesänä. nächsten Sommer = ensi kesänä." }
+      ]
+    },
+    {
+      "phase_id": "p2-recognition-match",
+      "phase_type": "recognition_match",
+      "title": "Yhdistä — ajan ilmaukset",
+      "instruction": "Yhdistä saksan ilmaus ja suomennos.",
+      "mastery_threshold": { "I": 0.6, "A": 0.65, "B": 0.7, "C": 0.75, "M": 0.85, "E": 0.9, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        {
+          "item_type": "match",
+          "left_label": "Menneisyys",
+          "right_label": "Suomeksi",
+          "pairs": [
+            { "left": "gestern", "right": "eilen" },
+            { "left": "vorgestern", "right": "toissapäivänä" },
+            { "left": "letzte Woche", "right": "viime viikolla" },
+            { "left": "letzten Monat", "right": "viime kuussa" },
+            { "left": "letztes Jahr", "right": "viime vuonna" },
+            { "left": "vor zwei Tagen", "right": "kaksi päivää sitten" },
+            { "left": "früher", "right": "aikaisemmin, ennen" },
+            { "left": "damals", "right": "silloin, silloinen" }
+          ]
+        },
+        {
+          "item_type": "match",
+          "left_label": "Vuodenajat ja tulevaisuus",
+          "right_label": "Suomeksi",
+          "pairs": [
+            { "left": "im Sommer", "right": "kesällä" },
+            { "left": "im Winter", "right": "talvella" },
+            { "left": "im Frühling", "right": "keväällä" },
+            { "left": "im Herbst", "right": "syksyllä" },
+            { "left": "morgen", "right": "huomenna" },
+            { "left": "nächste Woche", "right": "ensi viikolla" },
+            { "left": "nächstes Jahr", "right": "ensi vuonna" },
+            { "left": "bald", "right": "pian" }
+          ]
+        }
+      ]
+    },
+    {
+      "phase_id": "p3-recall-de-to-fi",
+      "phase_type": "recall_typed_es_to_fi",
+      "title": "Kirjoita — saksa → suomi",
+      "instruction": "Kirjoita saksan ilmauksen suomennos.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I"],
+      "items": [
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "gestern", "accept": ["eilen"], "hint": "päivä ennen tänään" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "letzte Woche", "accept": ["viime viikolla"], "hint": "letzte = viime, Woche = viikko" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "im Sommer", "accept": ["kesällä"], "hint": "der Sommer = kesä" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "vor zwei Tagen", "accept": ["kaksi päivää sitten", "kaksi vuorokautta sitten"], "hint": "vor = sitten/ennen, Tag = päivä" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "nächstes Jahr", "accept": ["ensi vuonna"], "hint": "nächste = ensi/seuraava" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "im Frühling", "accept": ["keväällä"], "hint": "der Frühling = kevät" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "vorgestern", "accept": ["toissapäivänä"], "hint": "vor + gestern" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "früher", "accept": ["aikaisemmin", "ennen", "aiemmin"], "hint": "früh = aikainen, aikojen..." },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "im Herbst", "accept": ["syksyllä"], "hint": "der Herbst = syksy" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "übermorgen", "accept": ["ylihuomenna"], "hint": "über + morgen" }
+      ]
+    },
+    {
+      "phase_id": "p4-recall-fi-to-de",
+      "phase_type": "recall_typed_fi_to_es",
+      "title": "Kirjoita — suomi → saksa",
+      "instruction": "Kirjoita suomen ilmaus saksaksi.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "eilen", "accept": ["gestern"], "hint": "g...n" },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "viime viikolla", "accept": ["letzte Woche"], "hint": "letzte..." },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "kesällä", "accept": ["im Sommer"], "hint": "im + der Sommer" },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "kolme päivää sitten", "accept": ["vor drei Tagen"], "hint": "vor + numero + Tagen" },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "talvella", "accept": ["im Winter"], "hint": "im + der Winter" },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "ensi vuonna", "accept": ["nächstes Jahr"], "hint": "nächstes..." },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "syksyllä", "accept": ["im Herbst"], "hint": "im + der Herbst" },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "kaksi viikkoa sitten", "accept": ["vor zwei Wochen"], "hint": "vor + zwei + Wochen" },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "keväällä", "accept": ["im Frühling"], "hint": "im + der Frühling" },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "viime kesänä", "accept": ["letzten Sommer"], "hint": "letzten (Akkusativ) + Sommer" }
+      ]
+    },
+    {
+      "phase_id": "p5-gap-fill-ajan-ilmaus",
+      "phase_type": "application_gap_fill",
+      "title": "Täytä aukko — oikea ajan ilmaus",
+      "instruction": "Täytä oikea ajan ilmaus lauseyhteyden perusteella.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "___ habe ich im Restaurant gegessen. (eilen)", "answers": [["Gestern"]], "word_bank": ["Gestern", "Morgen", "Heute", "Bald"] },
+        { "item_type": "gap_fill", "sentence_template": "___ fahren wir nach Wien. (huomenna)", "answers": [["Morgen"]], "word_bank": ["Morgen", "Gestern", "Früher", "Bald"] },
+        { "item_type": "gap_fill", "sentence_template": "___ Sommer bin ich nach Spanien geflogen. (viime)", "answers": [["Letzten"]], "word_bank": ["Letzten", "Nächsten", "Diesen", "Jeden"] },
+        { "item_type": "gap_fill", "sentence_template": "___ Winter gehen wir Ski fahren. (ensi)", "answers": [["Nächsten"]], "word_bank": ["Nächsten", "Letzten", "Diesen", "Jeden"] },
+        { "item_type": "gap_fill", "sentence_template": "___ zwei Wochen habe ich das Hotel gebucht. (sitten)", "answers": [["Vor"]], "word_bank": ["Vor", "In", "Seit", "Nach"] },
+        { "item_type": "gap_fill", "sentence_template": "Wir reisen ___ Sommer ans Meer. (kesällä)", "answers": [["im"]], "word_bank": ["im", "in", "am", "zum"] },
+        { "item_type": "gap_fill", "sentence_template": "___ habe ich meinen Koffer gepackt. (toissapäivänä)", "answers": [["Vorgestern"]], "word_bank": ["Vorgestern", "Gestern", "Heute", "Morgen"] },
+        { "item_type": "gap_fill", "sentence_template": "___ wir viel Sport gemacht — jetzt nicht mehr. (aikaisemmin)", "answers": [["Früher"]], "word_bank": ["Früher", "Später", "Jetzt", "Bald"] },
+        { "item_type": "gap_fill", "sentence_template": "___ Woche sind wir nach Berlin gefahren. (viime)", "answers": [["Letzte"]], "word_bank": ["Letzte", "Nächste", "Diese", "Jede"] },
+        { "item_type": "gap_fill", "sentence_template": "___ bin ich sehr früh aufgestanden. (tänään)", "answers": [["Heute"]], "word_bank": ["Heute", "Gestern", "Morgen", "Früher"] }
+      ]
+    },
+    {
+      "phase_id": "p6-gap-fill-inversio",
+      "phase_type": "application_gap_fill",
+      "title": "Täytä aukko — ajan ilmaus + V2",
+      "instruction": "Ajan ilmaus on jo paikallaan. Täytä oikea apuverbi V2-säännön mukaan.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Gestern ___ ich ins Kino gegangen.", "answers": [["bin"]], "word_bank": ["bin", "habe", "war", "hatte"] },
+        { "item_type": "gap_fill", "sentence_template": "Letzten Sommer ___ wir nach Österreich gefahren.", "answers": [["sind"]], "word_bank": ["sind", "haben", "waren", "hatten"] },
+        { "item_type": "gap_fill", "sentence_template": "Letzte Woche ___ er das Hotel gebucht.", "answers": [["hat"]], "word_bank": ["hat", "ist", "hatte", "war"] },
+        { "item_type": "gap_fill", "sentence_template": "Im Herbst ___ wir in die Schule gegangen.", "answers": [["sind"]], "word_bank": ["sind", "haben", "waren", "hatten"] },
+        { "item_type": "gap_fill", "sentence_template": "Vor zwei Jahren ___ ich Deutsch gelernt.", "answers": [["habe"]], "word_bank": ["habe", "bin", "hatte", "war"] },
+        { "item_type": "gap_fill", "sentence_template": "Früher ___ sie oft Ski gefahren.", "answers": [["ist"]], "word_bank": ["ist", "hat", "war", "hatte"] },
+        { "item_type": "gap_fill", "sentence_template": "Morgen ___ wir nach Hamburg fahren.", "answers": [["fahren"]], "word_bank": ["fahren", "sind gefahren", "fuhren", "fahren werden"] },
+        { "item_type": "gap_fill", "sentence_template": "Letzte Nacht ___ ich sehr gut geschlafen.", "answers": [["habe"]], "word_bank": ["habe", "bin", "hatte", "war"] },
+        { "item_type": "gap_fill", "sentence_template": "Im Winter ___ es oft.", "answers": [["schneit"]], "word_bank": ["schneit", "hat geschneit", "ist geschneit", "war geschneit"] },
+        { "item_type": "gap_fill", "sentence_template": "Gestern Abend ___ wir im Restaurant gegessen.", "answers": [["haben"]], "word_bank": ["haben", "sind", "hatten", "waren"] }
+      ]
+    },
+    {
+      "phase_id": "p7-sentence-build",
+      "phase_type": "application_sentence_build",
+      "title": "Järjestä lause — ajan ilmaus alussa",
+      "instruction": "Ajan ilmaus on ensimmäinen — järjestä lause oikein.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "mc", "stem": "Järjestä: [Letzten Sommer] [wir] [sind] [nach Spanien geflogen]", "choices": ["Letzten Sommer wir sind nach Spanien geflogen.", "Letzten Sommer sind wir nach Spanien geflogen.", "Wir sind letzten Sommer nach Spanien geflogen.", "Nach Spanien geflogen sind wir letzten Sommer."], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "Letzten Sommer (1.) → sind (V2!) → wir → geflogen (loppuun). Vaihtoehto 3 on myös oikein." },
+        { "item_type": "mc", "stem": "Järjestä: [Vor zwei Wochen] [ich] [habe] [das Hotel gebucht]", "choices": ["Vor zwei Wochen ich habe das Hotel gebucht.", "Vor zwei Wochen habe ich das Hotel gebucht.", "Ich habe vor zwei Wochen das Hotel gebucht.", "Das Hotel habe ich vor zwei Wochen gebucht."], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "Vor zwei Wochen (1.) → habe (V2!) → ich (subjekti) → gebucht (loppuun)." },
+        { "item_type": "mc", "stem": "Järjestä: [Im Sommer] [wir] [fahren] [immer ans Meer]", "choices": ["Im Sommer wir fahren immer ans Meer.", "Im Sommer fahren wir immer ans Meer.", "Wir fahren im Sommer immer ans Meer.", "Immer fahren wir im Sommer ans Meer."], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "Im Sommer (1.) → fahren (V2!) → wir → immer ans Meer." },
+        { "item_type": "mc", "stem": "Järjestä: [Früher] [er] [hat] [oft Sport gemacht]", "choices": ["Früher er hat oft Sport gemacht.", "Früher hat er oft Sport gemacht.", "Er hat früher Sport oft gemacht.", "Sport hat er früher oft gemacht."], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "Früher (1.) → hat (V2!) → er → gemacht (loppuun)." }
+      ]
+    },
+    {
+      "phase_id": "p8-synthesis-translate",
+      "phase_type": "synthesis_translate",
+      "title": "Käännä — ajan ilmaukset lauseissa",
+      "instruction": "Käännä lauseet saksaksi. Aloita ajanilmauksella.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Eilen söin saksalaista ruokaa.", "accept": ["Gestern habe ich deutsches Essen gegessen.", "Gestern habe ich deutsche Küche gegessen."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Viime kesänä matkustimme Itävaltaan.", "accept": ["Letzten Sommer sind wir nach Österreich gereist.", "Letzten Sommer sind wir nach Österreich gefahren."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Kolme päivää sitten varattiin hotelli.", "accept": ["Vor drei Tagen haben wir das Hotel gebucht.", "Vor drei Tagen habe ich das Hotel gebucht."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Ensi viikolla matkustamme junalla.", "accept": ["Nächste Woche fahren wir mit dem Zug.", "Nächste Woche reisen wir mit dem Zug."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Talvella hiihdämme Alpeilla.", "accept": ["Im Winter fahren wir Ski in den Alpen.", "Im Winter fahren wir in den Alpen Ski."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Toissapäivänä saavuin Berliiniin.", "accept": ["Vorgestern bin ich in Berlin angekommen.", "Vorgestern bin ich nach Berlin gefahren."] }
+      ]
+    },
+    {
+      "phase_id": "p9-short-writing",
+      "phase_type": "synthesis_short_writing",
+      "title": "Kirjoita — matkakertomus ainoilla ilmauksilla",
+      "instruction": "Kirjoita 5–7 lausetta matkastasi. Aloita ainakin neljä lausetta eri ajan ilmauksella.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I", "A", "B", "C", "M"],
+      "items": [
+        { "item_type": "writing", "prompt": "Kirjoita lomakertomuksen alku saksaksi. Käytä ainakin neljää eri ajan ilmausta (letzten Sommer / gestern / vor zwei Tagen / im Sommer jne.) lauseiden alussa. Muista V2!", "min_words": 40, "max_words": 90, "rubric_focus": ["structure", "communication", "vocab"] },
+        { "item_type": "writing", "prompt": "Kuvaile miten lomasi meni: milloin matkustit, milloin saavuit, mitä teit eri päivinä. Käytä vähintään viittä ajan ilmausta. Perfekti käytössä.", "min_words": 45, "max_words": 100, "rubric_focus": ["communication", "structure", "overall"] },
+        { "item_type": "writing", "prompt": "Vertaa viime lomaa ja ensi lomaa saksaksi: Letzten Sommer... Nächstes Jahr... Käytä Perfektiä (mennyt) ja Präsensiä (tuleva).", "min_words": 35, "max_words": 80, "rubric_focus": ["vocab", "structure", "communication"] }
+      ]
+    }
+  ],
+  "vocab": [
+    { "es": "gestern", "fi": "eilen", "example_es": "Gestern bin ich angekommen.", "example_fi": "Eilen saavuin.", "gender": null },
+    { "es": "heute", "fi": "tänään", "example_es": "Heute haben wir Sightseeing gemacht.", "example_fi": "Tänään teimme kiertoajelun.", "gender": null },
+    { "es": "morgen", "fi": "huomenna", "example_es": "Morgen fahren wir nach Hause.", "example_fi": "Huomenna matkustamme kotiin.", "gender": null },
+    { "es": "vorgestern", "fi": "toissapäivänä", "example_es": "Vorgestern haben wir das Schloss besichtigt.", "example_fi": "Toissapäivänä kävimme katsomassa linnaa.", "gender": null },
+    { "es": "übermorgen", "fi": "ylihuomenna", "example_es": "Übermorgen fliege ich zurück.", "example_fi": "Ylihuomenna lennän takaisin.", "gender": null },
+    { "es": "letzte Woche", "fi": "viime viikolla", "example_es": "Letzte Woche haben wir Berlin besucht.", "example_fi": "Viime viikolla vierailimme Berliinissä.", "gender": null },
+    { "es": "nächste Woche", "fi": "ensi viikolla", "example_es": "Nächste Woche fahren wir ans Meer.", "example_fi": "Ensi viikolla ajamme merelle.", "gender": null },
+    { "es": "letztes Jahr", "fi": "viime vuonna", "example_es": "Letztes Jahr war ich in Österreich.", "example_fi": "Viime vuonna olin Itävallassa.", "gender": null },
+    { "es": "nächstes Jahr", "fi": "ensi vuonna", "example_es": "Nächstes Jahr möchte ich nach Spanien fahren.", "example_fi": "Ensi vuonna haluaisin matkustaa Espanjaan.", "gender": null },
+    { "es": "letzten Sommer", "fi": "viime kesänä", "example_es": "Letzten Sommer sind wir nach Griechenland geflogen.", "example_fi": "Viime kesänä lennoimme Kreikkaan.", "gender": null },
+    { "es": "vor zwei Tagen", "fi": "kaksi päivää sitten", "example_es": "Vor zwei Tagen habe ich das Hotel gebucht.", "example_fi": "Kaksi päivää sitten varasin hotellin.", "gender": null },
+    { "es": "vor einer Woche", "fi": "viikko sitten", "example_es": "Vor einer Woche sind wir abgereist.", "example_fi": "Viikko sitten lähdimme matkaan.", "gender": null },
+    { "es": "im Sommer", "fi": "kesällä", "example_es": "Im Sommer fahren wir immer ans Meer.", "example_fi": "Kesällä ajamme aina merelle.", "gender": null },
+    { "es": "im Winter", "fi": "talvella", "example_es": "Im Winter fahren wir Ski in den Alpen.", "example_fi": "Talvella hiihdämme Alpeilla.", "gender": null },
+    { "es": "im Frühling", "fi": "keväällä", "example_es": "Im Frühling blühen die Blumen.", "example_fi": "Keväällä kukat kukkivat.", "gender": null },
+    { "es": "im Herbst", "fi": "syksyllä", "example_es": "Im Herbst fahren wir nach Bayern.", "example_fi": "Syksyllä ajamme Baijeriin.", "gender": null },
+    { "es": "früher", "fi": "aikaisemmin, ennen", "example_es": "Früher haben wir oft gecampt.", "example_fi": "Aikaisemmin retkeilimme usein.", "gender": null },
+    { "es": "damals", "fi": "silloin, sen aikainen", "example_es": "Damals war alles billiger.", "example_fi": "Silloin kaikki oli halvempaa.", "gender": null },
+    { "es": "zuerst", "fi": "ensin", "example_es": "Zuerst sind wir ins Museum gegangen.", "example_fi": "Ensin menimme museoon.", "gender": null },
+    { "es": "dann / danach", "fi": "sitten / sen jälkeen", "example_es": "Dann haben wir gegessen.", "example_fi": "Sitten söimme.", "gender": null },
+    { "es": "schließlich", "fi": "lopulta", "example_es": "Schließlich haben wir das Hotel gefunden.", "example_fi": "Lopulta löysimme hotellin.", "gender": null },
+    { "es": "bald", "fi": "pian", "example_es": "Bald fahren wir in den Urlaub.", "example_fi": "Pian lähdemme lomalle.", "gender": null },
+    { "es": "jetzt / gerade", "fi": "nyt / juuri nyt", "example_es": "Jetzt sind wir in München.", "example_fi": "Nyt olemme Münchenissä.", "gender": null },
+    { "es": "am Montag", "fi": "maanantaina", "example_es": "Am Montag fahren wir ab.", "example_fi": "Maanantaina lähdemme.", "gender": null },
+    { "es": "am Wochenende", "fi": "viikonloppuna", "example_es": "Am Wochenende machen wir einen Ausflug.", "example_fi": "Viikonloppuna teemme päiväretken.", "gender": null }
+  ],
+  "side_panel": {
+    "tabs": [
+      {
+        "id": "vocab",
+        "title": "Sanasto",
+        "content_md": "## Menneisyys\n\n- **gestern** — eilen\n- **vorgestern** — toissapäivänä\n- **letzte Woche** — viime viikolla\n- **letzten Monat** — viime kuussa\n- **letztes Jahr** — viime vuonna\n- **letzten Sommer** — viime kesänä\n- **vor zwei Tagen** — kaksi päivää sitten\n- **früher** — aikaisemmin\n- **damals** — silloin\n\n## Tänään / tulevaisuus\n\n- **heute** — tänään\n- **jetzt / gerade** — nyt\n- **morgen** — huomenna\n- **übermorgen** — ylihuomenna\n- **nächste Woche** — ensi viikolla\n- **nächstes Jahr** — ensi vuonna\n- **bald** — pian\n\n## Vuodenajat (im + ...)\n\n- **im Sommer** — kesällä\n- **im Winter** — talvella\n- **im Frühling** — keväällä\n- **im Herbst** — syksyllä\n\n## Järjestys kertomuksessa\n\n- **zuerst** — ensin\n- **dann / danach** — sitten / sen jälkeen\n- **schließlich** — lopulta\n- **am Ende** — lopussa"
+      },
+      {
+        "id": "grammar",
+        "title": "Kielioppi",
+        "content_md": "## Ajan ilmaus + V2\n\nKun ajan ilmaus aloittaa lauseen, verbi tulee ennen subjektia:\n\n| Ajan ilmaus (1.) | Verbi (V2!) | Subjekti (3.) |\n|---|---|---|\n| Gestern | **habe** | ich... |\n| Letzte Woche | **sind** | wir... |\n| Im Sommer | **fahren** | wir... |\n| Vor zwei Tagen | **hat** | er... |\n\n❌ *Gestern ich habe...* (V2-virhe!)\n✅ *Gestern **habe** ich...*\n\n## Vuodenajat Akkusatiivissa\n\nKun ei ole prepositiota, käytetään Akkusatiivia:\n- letzten Sommer (m → en)\n- nächsten Winter (m → en)\n- letztes Jahr (n → es)\n- nächste Woche (f → nächste)"
+      },
+      {
+        "id": "tips",
+        "title": "YO-vinkit",
+        "content_md": "## Ajan ilmaukset YO-kokeessa\n\n**Teil 4 (Kirjoitelma):** Aloita lauseet ajan ilmauksilla — se osoittaa V2-osaamisen:\n- *Letzten Sommer **bin** ich nach Berlin geflogen.*\n- *Am ersten Tag **haben** wir das Museum besichtigt.*\n- *Schließlich **sind** wir zum Bahnhof gegangen.*\n\n**Yleisimmät virheet:**\n1. *Gestern ich bin...* ❌ → *Gestern **bin** ich...* ✅\n2. *in Sommer* ❌ → *im Sommer* ✅ (im = in + dem)\n3. *letzte Sommer* ❌ → *letzten Sommer* ✅ (maskuliini Akkusatiivissa: -en)\n\n**Vinkki:** Käytä ajan ilmauksia vaihtelemalla — älä aloita joka lausetta 'Ich'. Se tekee tekstistä eloisampaa ja osoittaa kielitaitoa."
+      }
+    ]
+  }
+}

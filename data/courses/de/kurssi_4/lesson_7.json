@@ -1,0 +1,233 @@
+{
+  "meta": {
+    "course_key": "kurssi_4",
+    "lesson_index": 7,
+    "lesson_type": "grammar",
+    "level": "B",
+    "title": "Dativ-sija ja prepositiot mit/von/zu/bei/nach/aus/seit",
+    "description": "Opit Dativ-sijan perusteet ja tärkeimmät Dativ-prepositiot. Artikkelit Dativissa: dem (m/n), der (f), den+n (mon.).",
+    "yo_relevance": "Teil 3 (Aukkotehtävät): Dativ-prepositiot ja artikkelimuodot esiintyvät aukkotehtävissä. Teil 4 (Kirjoitelma): luonteva saksan kirjoittaminen vaatii mit/von/zu/bei oikein — yleinen virhelähde B-tasolla.",
+    "estimated_minutes_median": 14
+  },
+  "teaching": {
+    "intro_md": "# Dativ-sija — Wem? (kenelle?)\n\nDativ vastaa kysymykseen *Wem?* (kenelle? kenen kanssa? mistä?). Tärkeimmät Dativ-prepositiot on osattava ulkoa.\n\n## Artikkelit Dativissa\n\n| Suku | Nominativ | Dativ |\n|---|---|---|\n| maskuliini | **der** Mann | **dem** Mann |\n| neutri | **das** Kind | **dem** Kind |\n| feminiini | **die** Frau | **der** Frau |\n| monikko | **die** Kinder | **den** Kindern (+n!) |\n\n**Muistisääntö:** *dem, dem, der, den* — tai 'Dativ-dem ei koske feminiiniä (der)'\n\n## Dativ-prepositiot — ulkoa!\n\nNämä 7+1 prepositiota vaativat AINA Datiivin:\n\n| Prepositio | Merkitys | Esimerkki |\n|---|---|---|\n| **mit** | kanssa, välineellä | mit dem Zug (junalla) |\n| **von** | josta, jonkin omistus | von der Schule (koulusta) |\n| **zu** | luo, kohti | zur Schule (kouluun) |\n| **bei** | luona, töissä | bei der Oma (isovanhempien luona) |\n| **nach** | jälkeen, kohti kaupunkia | nach Berlin, nach Hause |\n| **aus** | josta sisältä, mistä kotoisin | aus der Küche (keittiöstä) |\n| **seit** | jostakin ajasta lähtien | seit dem Sommer (kesästä lähtien) |\n| **gegenüber** | vastapäätä | gegenüber dem Bahnhof |\n\n## Tyypilliset lyhenteet\n\n- **zu + dem = zum** (*zum Bahnhof, zum Essen*)\n- **zu + der = zur** (*zur Schule, zur Arbeit*)\n- **von + dem = vom** (*vom Urlaub, vom Wald*)\n- **bei + dem = beim** (*beim Spielen, beim Essen*)\n\n## Monikossa +n!\n\nDatiivin monikossa substantiiviin lisätään **-n** (jos ei jo pääty -n tai -s):\n- die Kinder → mit den Kinder**n**\n- die Freunde → mit den Freunde**n**\n- die Häuser → in den Häuser**n**",
+    "key_points": [
+      "Dativ-artikkelit: dem (m/n), der (f), den + -n (monikko).",
+      "7 Dativ-prepositiota: mit, von, zu, bei, nach, aus, seit (+ gegenüber).",
+      "Lyhenteet: zum (zu+dem), zur (zu+der), vom (von+dem), beim (bei+dem).",
+      "Dativin monikossa: den + substantiivin lopussa -n (den Kindern, den Freunden).",
+      "nach = kohti kaupunkia/maata (nach Berlin, nach Finnland), MUTTA zu = ihmisen luo (zu meiner Mutter)."
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1-recognition-mc-dativ",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista — Dativ-artikkelit ja prepositiot",
+      "instruction": "Valitse oikea muoto.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "mc", "stem": "mit ___ Zug fahren (der Zug = m)", "choices": ["mit der Zug", "mit dem Zug", "mit den Zug", "mit die Zug"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "mit dem Zug — mit vaatii Datiivin. der Zug (m) → Dativ: dem Zug." },
+        { "item_type": "mc", "stem": "Ich komme aus ___ Schule. (die Schule = f)", "choices": ["aus der Schule", "aus dem Schule", "aus die Schule", "aus den Schule"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "aus der Schule — aus vaatii Datiivin. die Schule (f) → Dativ: der Schule." },
+        { "item_type": "mc", "stem": "Ich gehe zu ___ Arzt. (der Arzt = m)", "choices": ["zum Arzt", "zur Arzt", "zu den Arzt", "zu dem Arzt"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "zum Arzt — zu + dem = zum. der Arzt (m) → Dativ: dem Arzt → zum Arzt." },
+        { "item_type": "mc", "stem": "Seit ___ Sommer lerne ich Deutsch. (der Sommer = m)", "choices": ["seit dem Sommer", "seit der Sommer", "seit den Sommer", "seit die Sommer"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "seit dem Sommer — seit + Dativ. der Sommer (m) → dem Sommer." },
+        { "item_type": "mc", "stem": "Ich wohne bei ___ Großeltern. (die Großeltern = Plural)", "choices": ["bei die Großeltern", "bei den Großeltern", "bei dem Großeltern", "bei der Großeltern"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "bei den Großeltern — Dativin monikko: den + substantiivi + -n. Großeltern endet schon auf -n, kein weiteres -n." },
+        { "item_type": "mc", "stem": "Von ___ Schule zum Bahnhof sind es 10 Minuten. (die Schule = f)", "choices": ["von der Schule", "von dem Schule", "von die Schule", "von den Schule"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "von der Schule — von + Dativ. die Schule (f) → der Schule." },
+        { "item_type": "mc", "stem": "Nach ___ Abendessen gehen wir schlafen. (das Abendessen = n)", "choices": ["nach das Abendessen", "nach den Abendessen", "nach dem Abendessen", "nach der Abendessen"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "nach dem Abendessen — nach + Dativ. das Abendessen (n) → dem Abendessen." },
+        { "item_type": "mc", "stem": "Ich spiele mit ___ Kindern. (die Kinder = Plural)", "choices": ["mit der Kinder", "mit die Kinder", "mit dem Kinder", "mit den Kindern"], "correct_index": 3, "distractor_difficulty": "hard", "explanation": "mit den Kindern — Dativin monikko: den + Kindern (-n lisätään: Kinder → Kindern)." },
+        { "item_type": "mc", "stem": "Ich fahre nach ___ . (Suomi → saksaksi)", "choices": ["nach der Finnland", "nach dem Finnland", "nach Finnland", "nach die Finnland"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "nach Finnland — maiden ja kaupunkien kanssa ei artikkelia: nach Berlin, nach Finnland, nach Deutschland." },
+        { "item_type": "mc", "stem": "Gegenüber ___ Park ist ein Café. (der Park = m)", "choices": ["gegenüber dem Park", "gegenüber der Park", "gegenüber den Park", "gegenüber die Park"], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "gegenüber dem Park — gegenüber + Dativ. der Park (m) → dem Park." },
+        { "item_type": "mc", "stem": "Ich bin bei ___ Arbeit. (die Arbeit = f)", "choices": ["bei der Arbeit", "bei dem Arbeit", "bei die Arbeit", "bei den Arbeit"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "bei der Arbeit = töissä. die Arbeit (f) → Dativ: der Arbeit." },
+        { "item_type": "mc", "stem": "Mit ___ Freunden spielen macht Spaß. (die Freunde = Plural)", "choices": ["mit dem Freunden", "mit der Freunde", "mit den Freunden", "mit die Freunde"], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "mit den Freunden — monikko Dativissa: den + Freunden (-n lisätään)." }
+      ]
+    },
+    {
+      "phase_id": "p2-recognition-match-dativ",
+      "phase_type": "recognition_match",
+      "title": "Yhdistä — Dativ-prepositio ja merkitys",
+      "instruction": "Yhdistä prepositio ja sen suomennos.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        {
+          "item_type": "match",
+          "left_label": "Dativ-prepositio",
+          "right_label": "Merkitys",
+          "pairs": [
+            { "left": "mit + Dativ", "right": "kanssa / välineellä" },
+            { "left": "von + Dativ", "right": "josta / jonkin omistus" },
+            { "left": "zu + Dativ", "right": "luo / kohti" },
+            { "left": "bei + Dativ", "right": "luona / töissä" },
+            { "left": "nach + Dativ", "right": "jälkeen / kohti kaupunkia" },
+            { "left": "aus + Dativ", "right": "josta sisältä / mistä kotoisin" },
+            { "left": "seit + Dativ", "right": "jostakin ajasta lähtien" }
+          ]
+        },
+        {
+          "item_type": "match",
+          "left_label": "Lause",
+          "right_label": "Suomennos",
+          "pairs": [
+            { "left": "mit dem Zug", "right": "junalla" },
+            { "left": "bei der Arbeit", "right": "töissä" },
+            { "left": "seit dem Sommer", "right": "kesästä lähtien" },
+            { "left": "aus der Küche", "right": "keittiöstä" },
+            { "left": "zum Bahnhof", "right": "juna-asemalle" },
+            { "left": "von der Schule", "right": "koulusta" },
+            { "left": "nach dem Essen", "right": "ruokailun jälkeen" }
+          ]
+        }
+      ]
+    },
+    {
+      "phase_id": "p3-recall-es-fi",
+      "phase_type": "recall_typed_es_to_fi",
+      "title": "Käännä suomeksi",
+      "instruction": "Kirjoita suomennos.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "mit dem Bus", "accept": ["bussilla"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "bei der Oma", "accept": ["isoäidin luona", "isoäidillä"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "aus dem Wald", "accept": ["metsästä"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "seit dem Winter", "accept": ["talvesta lähtien"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "zur Schule gehen", "accept": ["mennä kouluun"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "von der Arbeit kommen", "accept": ["tulla töistä"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "mit den Freunden", "accept": ["ystävien kanssa"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "nach dem Unterricht", "accept": ["tunnin jälkeen", "oppitunnin jälkeen"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "beim Spielen", "accept": ["leikkimisen aikana", "leikin aikana"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "gegenüber dem Park", "accept": ["puistoa vastapäätä", "puiston vastapäätä"] }
+      ]
+    },
+    {
+      "phase_id": "p4-recall-fi-es",
+      "phase_type": "recall_typed_fi_to_es",
+      "title": "Käännä saksaksi — Dativ",
+      "instruction": "Kirjoita oikea muoto saksaksi.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "junalla (mit + der Zug)", "accept": ["mit dem Zug"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "koulusta (aus + die Schule)", "accept": ["aus der Schule"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "lääkärin luo (zu + der Arzt)", "accept": ["zum Arzt"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "isovanhempien luona (bei + die Großeltern)", "accept": ["bei den Großeltern"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "kesästä lähtien (seit + der Sommer)", "accept": ["seit dem Sommer"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "töistä (von + die Arbeit)", "accept": ["von der Arbeit"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "ystävien kanssa (mit + die Freunde, monikko)", "accept": ["mit den Freunden"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "ruokailun jälkeen (nach + das Essen)", "accept": ["nach dem Essen"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "puiston vastapäätä (gegenüber + der Park)", "accept": ["gegenüber dem Park"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "kouluun (zu + die Schule)", "accept": ["zur Schule"] }
+      ]
+    },
+    {
+      "phase_id": "p5-gap-fill-helppo",
+      "phase_type": "application_gap_fill",
+      "title": "Lauseen täydennys — Dativ",
+      "instruction": "Täydennä oikealla Dativ-muodolla. Sanapankki auttaa.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Ich fahre jeden Tag {1} Zug zur Arbeit.", "answers": [["mit dem"]], "word_bank": ["mit dem", "mit der", "mit den"] },
+        { "item_type": "gap_fill", "sentence_template": "Wir kommen gerade {1} Schule.", "answers": [["aus der", "von der"]], "word_bank": ["aus der", "aus dem", "von der"] },
+        { "item_type": "gap_fill", "sentence_template": "Er geht {1} Arzt.", "answers": [["zum"]], "word_bank": ["zum", "zur", "zu dem"] },
+        { "item_type": "gap_fill", "sentence_template": "Ich lerne Deutsch {1} zwei Jahren.", "answers": [["seit"]], "word_bank": ["seit", "nach", "von"] },
+        { "item_type": "gap_fill", "sentence_template": "Sie wohnt {1} ihrer Schwester.", "answers": [["bei"]], "word_bank": ["bei", "mit", "von"] },
+        { "item_type": "gap_fill", "sentence_template": "Das Café liegt {1} dem Bahnhof.", "answers": [["gegenüber"]], "word_bank": ["gegenüber", "nach", "seit"] },
+        { "item_type": "gap_fill", "sentence_template": "Nach {1} Essen gehen wir spazieren.", "answers": [["dem"]], "word_bank": ["dem", "der", "den"] },
+        { "item_type": "gap_fill", "sentence_template": "Ich spiele {1} meinen Freunden Fußball.", "answers": [["mit"]], "word_bank": ["mit", "von", "bei"] }
+      ]
+    },
+    {
+      "phase_id": "p6-gap-fill-vaativa",
+      "phase_type": "application_gap_fill",
+      "title": "Lauseen täydennys — vaativa",
+      "instruction": "Täydennä oikea Dativ-muoto ilman sanapankkia.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Ich komme aus {1} Küche und das Essen ist fast fertig.", "answers": [["der"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Wir spielten mit {1} Kindern auf dem Schulhof.", "answers": [["den"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Sie arbeitet seit {1} letzten Jahr als Lehrerin.", "answers": [["dem"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Er wohnt bei seinen Großeltern — {2} Haus liegt am Waldrand.", "answers": [["das", "ihr"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Wir fahren nach {1} Unterricht in die Stadt.", "answers": [["dem"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Das Café liegt gegenüber {1} alten Bahnhof.", "answers": [["dem"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Ich gehe mit meiner Mutter {2} Arzt.", "answers": [["zum"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Die Kinder kamen {1} dem Wald — verschmutzt aber glücklich.", "answers": [["aus"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Seit {1} Sommer lerne ich täglich eine Stunde Deutsch.", "answers": [["dem"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Ich helfe {1} alten Frau — sie kann nicht gut laufen.", "answers": [["der"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p7-sentence-build",
+      "phase_type": "application_sentence_build",
+      "title": "Lauseiden rakentelua — Dativ",
+      "instruction": "Käännä lauseet saksaksi oikealla Dativ-muodolla.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Matkustin junalla Berliiniin.", "accept": ["Ich fuhr mit dem Zug nach Berlin", "Ich bin mit dem Zug nach Berlin gefahren"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Tulen koulusta neljältä.", "accept": ["Ich komme um vier Uhr aus der Schule", "Ich komme um 16 Uhr von der Schule"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Hän asuu isovanhempiensa luona jo kolme vuotta.", "accept": ["Er wohnt seit drei Jahren bei seinen Großeltern", "Sie wohnt seit drei Jahren bei ihren Großeltern"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Leikimme lasten kanssa puutarhassa.", "accept": ["Wir spielten mit den Kindern im Garten", "Wir haben mit den Kindern im Garten gespielt"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Ravintola on puistoa vastapäätä.", "accept": ["Das Restaurant liegt gegenüber dem Park", "Das Restaurant ist gegenüber dem Park"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Hän meni lääkäriin huonon flunssan takia.", "accept": ["Er ging wegen einer starken Erkältung zum Arzt", "Sie ging zum Arzt weil sie krank war"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Opiskelen saksaa kesästä lähtien.", "accept": ["Ich lerne seit dem Sommer Deutsch", "Seit dem Sommer lerne ich Deutsch"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Hän tuli metsästä täysin märkänä.", "accept": ["Er kam völlig nass aus dem Wald", "Sie kam völlig durchnässt aus dem Wald"] }
+      ]
+    },
+    {
+      "phase_id": "p8-synthesis-translate",
+      "phase_type": "synthesis_translate",
+      "title": "YO-tason käännös — Dativ",
+      "instruction": "Käännä kokonaiset lauseet. Ei vihjeitä.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Kesällä menimme joka aamu pyörällä järvelle. Olimme siellä isoäidin kanssa ja söimme puiston vastapäätä olevassa kahvilassa.", "accept": ["Im Sommer fuhren wir jeden Morgen mit dem Fahrrad zum See. Wir waren dort mit der Oma und aßen in dem Café gegenüber dem Park.", "Im Sommer fuhren wir jeden Tag mit dem Rad an den See. Wir waren mit Oma da und aßen im Café gegenüber vom Park."] },
+        { "item_type": "translate", "direction": "es_to_fi", "source": "Seit dem letzten Winter wohnt er bei seinen Großeltern auf dem Land. Er kommt mit dem Bus aus der Stadt.", "accept": ["Viime talvesta lähtien hän asuu isovanhempiensa luona maaseudulla. Hän tulee bussilla kaupungista.", "Viime talvesta lähtien hän on asunut isovanhempien luona maaseudulla. Hän tulee bussilla kaupungista."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Tulen koulusta kello kolmelta ja menen sitten ystävieni kanssa puistoon.", "accept": ["Ich komme um drei Uhr aus der Schule und gehe dann mit meinen Freunden in den Park.", "Ich komme um 15 Uhr aus der Schule und gehe danach mit meinen Freunden in den Park."] },
+        { "item_type": "translate", "direction": "es_to_fi", "source": "Nach dem Unterricht geht er immer mit seiner Mutter zum Arzt, weil er seit dem Herbst krank ist.", "accept": ["Tunnin jälkeen hän menee aina äitinsä kanssa lääkärille, koska hän on ollut sairas syksystä lähtien.", "Oppitunnin jälkeen hän menee aina äidin kanssa lääkäriin, koska on ollut sairas syksystä asti."] }
+      ]
+    },
+    {
+      "phase_id": "p9-short-writing",
+      "phase_type": "synthesis_short_writing",
+      "title": "Lyhyt kirjoitus — Dativ-prepositiot",
+      "instruction": "Kirjoita lyhyt teksti käyttäen Dativ-prepositioita.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C", "M"],
+      "items": [
+        { "item_type": "writing", "prompt": "Kuvaile tyypillistä arkeasi käyttäen Dativ-prepositioita. Käytä vähintään 4 eri prepositiota: mit, von, zu/zur/zum, bei, nach, aus, seit. 5–7 lausetta.", "min_words": 40, "max_words": 90, "rubric_focus": ["communication", "structure", "vocab"] },
+        { "item_type": "writing", "prompt": "Kirjoita lapsuuden muisto jossa käyt isovanhempien luona. Käytä: bei den Großeltern, mit dem Zug/Auto, aus dem Garten, nach dem Essen. 5–7 lausetta.", "min_words": 40, "max_words": 90, "rubric_focus": ["communication", "vocab", "overall"] }
+      ]
+    }
+  ],
+  "vocab": [
+    { "es": "mit + Dativ", "fi": "kanssa / välineellä", "example_es": "Ich fahre mit dem Zug nach Berlin.", "example_fi": "Matkustan junalla Berliiniin.", "gender": null },
+    { "es": "von + Dativ", "fi": "josta / jonkin omistus", "example_es": "Ich komme von der Arbeit.", "example_fi": "Tulen töistä.", "gender": null },
+    { "es": "zu + Dativ (zum/zur)", "fi": "luo / kohti", "example_es": "Er geht zum Arzt.", "example_fi": "Hän menee lääkärille.", "gender": null },
+    { "es": "bei + Dativ (beim)", "fi": "luona / töissä", "example_es": "Ich bin bei der Arbeit.", "example_fi": "Olen töissä.", "gender": null },
+    { "es": "nach + Dativ", "fi": "jälkeen / kohti kaupunkia", "example_es": "Nach dem Essen gehen wir spazieren.", "example_fi": "Ruoan jälkeen käymme kävelyllä.", "gender": null },
+    { "es": "aus + Dativ", "fi": "josta sisältä / mistä kotoisin", "example_es": "Ich komme aus der Schule.", "example_fi": "Tulen koulusta.", "gender": null },
+    { "es": "seit + Dativ", "fi": "jostakin ajasta lähtien", "example_es": "Ich lerne seit einem Jahr Deutsch.", "example_fi": "Olen opiskellut saksaa vuoden.", "gender": null },
+    { "es": "gegenüber + Dativ", "fi": "vastapäätä", "example_es": "Das Café liegt gegenüber dem Bahnhof.", "example_fi": "Kahvila on juna-aseman vastapäätä.", "gender": null },
+    { "es": "dem (m/n Dativ)", "fi": "määräinen artikkeli Dativissa, m/n", "example_es": "mit dem Zug, nach dem Essen", "example_fi": "junalla, ruoan jälkeen", "gender": null },
+    { "es": "der (f Dativ)", "fi": "määräinen artikkeli Dativissa, f", "example_es": "aus der Schule, von der Arbeit", "example_fi": "koulusta, töistä", "gender": null },
+    { "es": "den + -n (Plural Dativ)", "fi": "monikko Dativissa + -n substantiiviin", "example_es": "mit den Kindern, bei den Großeltern", "example_fi": "lasten kanssa, isovanhempien luona", "gender": null }
+  ],
+  "side_panel": {
+    "tabs": [
+      {
+        "id": "grammar",
+        "title": "Kielioppi",
+        "content_md": "## Dativ-artikkelit\n\n| Suku | Nominativ | Dativ |\n|---|---|---|\n| m | der | **dem** |\n| n | das | **dem** |\n| f | die | **der** |\n| mon. | die | **den** + -n |\n\n## 7 Dativ-prepositiota\n\n**mit** — kanssa/välineellä\n**von** — josta/jonkin omistus\n**zu** (zum/zur) — luo/kohti\n**bei** (beim) — luona/töissä\n**nach** — jälkeen/kohti kaupunkia\n**aus** — josta sisältä\n**seit** — jostakin lähtien\n\n## Lyhenteet\n\n- zu + dem = **zum**\n- zu + der = **zur**\n- von + dem = **vom**\n- bei + dem = **beim**\n\n## Monikko Dativissa\n\nden + substantiivi + **-n**:\n- Kindern (Kinder → Kindern)\n- Freunden (Freunde → Freunden)\n- Häusern (Häuser → Häusern)"
+      },
+      {
+        "id": "tips",
+        "title": "YO-vinkki",
+        "content_md": "## Dativ YO-kokeessa\n\n**Teil 3 (Aukkotehtävät):** Tyypilliset tehtävät:\n- *Ich fahre ___ dem Zug.* → **mit**\n- *Er kommt ___ der Schule.* → **aus/von**\n- *Seit ___ Sommer wohne ich hier.* → **dem**\n\n**Teil 4 (Kirjoitelma):** Luonteva saksa käyttää Datiivia:\n- *mit meinen Freunden spielen* — leikkiä ystävien kanssa\n- *bei meiner Oma wohnen* — asua isoäidin luona\n- *seit letztem Jahr* — viime vuodesta lähtien\n\n## Yleisimmät virheet\n\n- ✗ *mit mein Freund* → ✓ **mit meinem Freund** (mein → meinem Dativissa)\n- ✗ *mit den Freund* → ✓ **mit dem Freund** (yksikkö, m)\n- ✗ *mit die Kinder* → ✓ **mit den Kindern** (monikko + -n)"
+      }
+    ]
+  }
+}

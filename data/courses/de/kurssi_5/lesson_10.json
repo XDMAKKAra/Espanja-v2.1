@@ -1,0 +1,101 @@
+{
+  "meta": {
+    "course_key": "kurssi_5",
+    "lesson_index": 10,
+    "lesson_type": "writing",
+    "level": "C",
+    "title": "Kirjoitustehtävä — Was ist dein Traumberuf?",
+    "description": "Kirjoitat YO-tyylisen pitkän kirjoitelman aiheesta 'Was ist dein Traumberuf?' sekä lyhyen Anschreiben-kirjeen. AI arvioi tekstisi YTL-rubriikin mukaan.",
+    "yo_relevance": "Teil 4 (Schriftliche Produktion): tämä on suora simulaatio YO-kokeen pitkästä kirjoitelmasta (300–450 merkkiä). Tämän oppitunnin läpikäyminen valmentaa suoraan kokeeseen.",
+    "estimated_minutes_median": 20
+  },
+  "teaching": {
+    "intro_md": "# Kirjoitustehtävä — Was ist dein Traumberuf?\n\nTässä oppitunnissa harjoittelet YO-kokeen kirjoitustehtävää. Kirjoitat pitkän kirjoitelman (300–450 merkkiä välilyönnittä) aiheesta **Was ist dein Traumberuf?**\n\n## YO-pisterajat kirjoitelmassa\n\n- **Lyhyt kirjoitelma** (kurze Aufgabe): 160–240 merkkiä\n- **Pitkä kirjoitelma** (längere Aufgabe): 300–450 merkkiä\n- Ylimäärä = 6 pistevähennys\n\n## Arvostelussa painaa eniten\n\n1. **Viestinnällisyys** — välittyykö viesti?\n2. **Kielen rakenteet** — V2-sääntö, Futur I, wenn-lauseet\n3. **Sanasto** — aiheen sanasto oikein\n4. **Kokonaisuus** — teksti etenee loogisesti\n\n## Vinkkejä\n\n- Aloita selkeällä lauseella: *Mein Traumberuf ist...*\n- Käytä Futur I:tä: *Ich werde... werden*\n- Käytä wenn-lauseita: *Wenn ich bestehe,...*\n- Muista inversio sivulauseen jälkeen\n- Käytä konnektoreita: *deshalb, obwohl, außerdem*\n- Lopeta positiivisesti: *Ich freue mich auf...*",
+    "key_points": [
+      "Pitkä kirjoitelma: 300–450 merkkiä ilman välilyöntejä.",
+      "Aloita selkeästi: Mein Traumberuf ist... / Ich möchte ... werden.",
+      "Käytä Futur I:tä ja wenn-lauseita — ne tuovat pisteitä rakenteista.",
+      "Muista reflektiiviverbit: sich interessieren für, sich freuen auf.",
+      "Konnektorit tekevät tekstistä sujuvaa: deshalb, außerdem, obwohl."
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1-writing-traumberuf-lang",
+      "phase_type": "writing_long",
+      "title": "Pitkä kirjoitelma — Was ist dein Traumberuf?",
+      "instruction": "Kirjoita YO-tyyppinen pitkä kirjoitelma (300–450 merkkiä välilyönnittä). Käytä kurssilla oppimiasi rakenteita.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": [],
+      "items": [
+        {
+          "item_type": "writing",
+          "prompt": "Was ist dein Traumberuf?\n\nKirjoita saksaksi pitkä kirjoitelma (noin 300–450 merkkiä). Käsittele ainakin:\n- mikä on unelma-ammattisi ja miksi\n- miten aiot päästä sinne (opiskelu, harjoittelu)\n- minkälainen tulevaisuus sinulla on mielessäsi\n\nKäytä: Futur I, wenn-sivulause, reflektiiviverbi, konnektori.",
+          "min_words": 50,
+          "max_words": 100,
+          "rubric_focus": ["communication", "structure", "vocab", "overall"]
+        }
+      ]
+    },
+    {
+      "phase_id": "p2-writing-anschreiben",
+      "phase_type": "writing_long",
+      "title": "Lyhyt kirjoitelma — Bewerbungsschreiben",
+      "instruction": "Kirjoita lyhyt motivaatiokirje (Anschreiben) harjoittelupaikkaa varten (160–240 merkkiä).",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        {
+          "item_type": "writing",
+          "prompt": "Schreib eine kurze Bewerbung!\n\nKirjoita lyhyt Anschreiben (noin 160–240 merkkiä) harjoittelupaikkaa varten haluamassasi yrityksessä. Mainitse:\n- miksi haet tätä paikkaa\n- mitä osaat / olet opiskellut\n- mitä odot harjoittelulta\n\nMuista muodollinen kirjerakenne: Sehr geehrte... / Mit freundlichen Grüßen.",
+          "min_words": 30,
+          "max_words": 60,
+          "rubric_focus": ["communication", "structure", "vocab"]
+        }
+      ]
+    },
+    {
+      "phase_id": "p3-writing-zukunft",
+      "phase_type": "writing_long",
+      "title": "Lyhyt kirjoitelma — Meine Zukunft",
+      "instruction": "Kirjoita blogimerkintä tulevaisuudensuunnitelmistasi (160–240 merkkiä).",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        {
+          "item_type": "writing",
+          "prompt": "Wie siehst du deine Zukunft in 10 Jahren?\n\nKirjoita lyhyt blogikirjoitus (noin 160–240 merkkiä). Kerro:\n- missä asut\n- mitä teet työksesi\n- mitkä ovat unelmasi\n\nKäytä: Futur I (in zehn Jahren werde ich...), wenn-lause, reflektiivi.",
+          "min_words": 30,
+          "max_words": 60,
+          "rubric_focus": ["communication", "vocab", "structure"]
+        }
+      ]
+    }
+  ],
+  "vocab": [
+    { "es": "Sehr geehrte Damen und Herren", "fi": "Hyvät naiset ja herrat (muodollinen)", "example_es": "Sehr geehrte Damen und Herren, ich bewerbe mich...", "example_fi": "Hyvät naiset ja herrat, haen...", "gender": null },
+    { "es": "Hallo! / Liebe(r) [Name]", "fi": "Hei! / Rakas [Nimi] (epämuodollinen)", "example_es": "Hallo! Heute schreibe ich über...", "example_fi": "Hei! Tänään kirjoitan...", "gender": null },
+    { "es": "Ich bewerbe mich um...", "fi": "Haen...", "example_es": "Ich bewerbe mich um ein Praktikum.", "example_fi": "Haen harjoittelupaikkaa.", "gender": null },
+    { "es": "Mit freundlichen Grüßen", "fi": "Ystävällisin terveisin", "example_es": "Mit freundlichen Grüßen, Max Müller", "example_fi": "Ystävällisin terveisin, Max Müller", "gender": null },
+    { "es": "Mein Traumberuf ist...", "fi": "Unelma-ammattini on...", "example_es": "Mein Traumberuf ist Arzt.", "example_fi": "Unelma-ammattini on lääkäri.", "gender": null },
+    { "es": "Ich möchte ... werden", "fi": "Haluan tulla...", "example_es": "Ich möchte Lehrerin werden.", "example_fi": "Haluan tulla opettajaksi.", "gender": null },
+    { "es": "In zehn Jahren werde ich...", "fi": "Kymmenen vuoden päästä minä...", "example_es": "In zehn Jahren werde ich in Berlin wohnen.", "example_fi": "Kymmenen vuoden päästä asun Berliinissä.", "gender": null },
+    { "es": "weil ich mich für ... interessiere", "fi": "koska olen kiinnostunut...", "example_es": "Ich wähle diesen Beruf, weil ich mich für Medizin interessiere.", "example_fi": "Valitsen tämän ammatin, koska olen kiinnostunut lääketieteestä.", "gender": null },
+    { "es": "das Krankenhaus", "fi": "sairaala", "example_es": "Nach dem Studium arbeite ich im Krankenhaus.", "example_fi": "Opintojen jälkeen työskentelen sairaalassa.", "gender": null },
+    { "es": "die eigene Praxis", "fi": "oma vastaanotto", "example_es": "Mein Traum ist eine eigene Arztpraxis.", "example_fi": "Unelmani on oma lääkärin vastaanotto.", "gender": "f" }
+  ],
+  "side_panel": {
+    "tabs": [
+      {
+        "id": "vocab",
+        "title": "Sanasto",
+        "content_md": "## Kirjoitelman aloituslauseet\n\n- **Mein Traumberuf ist...** — Unelma-ammattini on...\n- **Ich möchte ... werden** — Haluan tulla...\n- **In der Zukunft werde ich...** — Tulevaisuudessa minä...\n\n## Rakenteet\n\n- **weil ich mich für ... interessiere** — koska olen kiinnostunut...\n- **Wenn ich das Abitur bestehe, werde ich...** — Jos läpäisen yo-kokeet,...\n- **deshalb / außerdem / obwohl** — siksi / lisäksi / vaikka\n\n## Kirjeen rakenne\n\n1. Sehr geehrte Damen und Herren,\n2. [Syy hakemiselle]\n3. [Koulutus ja kokemus]\n4. [Odotukset]\n5. Mit freundlichen Grüßen, [Nimi]"
+      },
+      {
+        "id": "tips",
+        "title": "YO-vinkit",
+        "content_md": "## Teil 4 Schreiben — arvosteluperusteet\n\n**Viestinnällisyys (tärkein)**\n- Vastaatko tehtävänantoon?\n- Onko viesti selkeä?\n\n**Kielen rakenteet**\n- V2-sääntö oikein\n- Futur I: ich werde + infinitiivi loppuun\n- wenn + V-loppu + inversio\n\n**Sanasto**\n- Aiheen sanasto (Beruf, Stelle, Praktikum)\n- Ei toistoja\n\n**Kokonaisuus**\n- Konnektorit: deshalb, außerdem, obwohl\n- Johdanto + sisältö + lopetus\n\n## Merkkimäärä\n\n- Lyhyt: 160–240 merkkiä\n- Pitkä: 300–450 merkkiä\n- Ylimäärä = 6 p vähennys!"
+      }
+    ]
+  }
+}

@@ -1,0 +1,256 @@
+{
+  "meta": {
+    "course_key": "kurssi_2",
+    "lesson_index": 8,
+    "lesson_type": "mixed",
+    "level": "A",
+    "title": "Negaatio (nicht vs. kein) + päivän rutiini",
+    "description": "Harjoittelet negaation kahta muotoa: nicht (verbi/adjektiivi/adverbi) ja kein (substantiivin kielto). Sovellat negaatiota päivän rutiinin kuvaukseen yhdistellen aiempaa sanastoa (ruoka L2, harrastukset L6, huoneet L1).",
+    "yo_relevance": "Teil 3 Rakenne ja sanasto: nicht vs. kein on klassinen virhekohta. Teil 4 Kirjoitelma: päivän rutiini on yksi yleisimmistä kirjoitusaiheista — 'Beschreibe deinen Alltag'.",
+    "estimated_minutes_median": 15
+  },
+  "teaching": {
+    "intro_md": "# Negaatio: nicht vs. kein\n\n## kein — substantiivin kielto\n\n**kein** on epämääräisen artikkelin negaatio. Käytetään kun substantiivilla olisi **ein/eine** tai **ei artikkelia**.\n\n> *Ich habe **einen** Hund.* → *Ich habe **keinen** Hund.* — Minulla ei ole koiraa.\n> *Ich trinke **Kaffee**.* → *Ich trinke **keinen** Kaffee.* — En juo kahvia.\n\nkein taipuu samoin kuin ein:\n- maskuliini Akk.: kein**en**\n- feminiini Akk.: kein**e**\n- neutri Akk.: kein\n\n## nicht — kaikki muut tapaukset\n\n**nicht** kieltää verbin, adjektiivin tai adverbin:\n\n> *Er **kommt nicht**.* — Hän ei tule.\n> *Das ist **nicht** gut.* — Se ei ole hyvää.\n> *Ich gehe **nicht** ins Kino.* — En mene elokuviin.\n\n## Muistisääntö\n\n- Artikkelin tilalle → **kein** (ein → kein)\n- Muuten → **nicht**\n\n## Päivän rutiini\n\n- **aufstehen** — nousta ylös\n- **frühstücken** — syödä aamiainen\n- **zur Schule / Arbeit gehen** — mennä kouluun / töihin\n- **zu Mittag essen** — syödä lounas\n- **nach Hause kommen** — tulla kotiin\n- **Hausaufgaben machen** — tehdä kotitehtävät\n- **schlafen gehen** — mennä nukkumaan",
+    "key_points": [
+      "kein = ein/eine:n kielto: Ich habe keinen Hund (nicht: Ich habe nicht ein Hund).",
+      "kein taipuu: keinen (mask. Akk.), keine (fem.), kein (neutri).",
+      "nicht = verbi/adjektiivi/adverbi: Er kommt nicht. Das ist nicht gut.",
+      "Päivän rutiini: aufstehen → frühstücken → Schule → Mittagessen → Hausaufgaben → schlafen.",
+      "Cross-pollination: ruoka (L2), harrastukset (L6), verbit (L3, L5)."
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1-recognition-mc-negaatio",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista — nicht vai kein",
+      "instruction": "Valitse oikea negaatiomuoto.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "mc", "stem": "Ich habe ___ Hund. (minulla ei ole koiraa)", "choices": ["nicht", "keinen", "kein", "keine"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Hund on maskuliini → kein + Akkusativ = keinen. nicht ei käy artikkelin tilalle." },
+        { "item_type": "mc", "stem": "Er kommt ___ heute. (hän ei tule)", "choices": ["kein", "keine", "keinen", "nicht"], "correct_index": 3, "distractor_difficulty": "easy", "explanation": "kommen on verbi — kieltoon käytetään nicht. kein kieltää substantiivin." },
+        { "item_type": "mc", "stem": "Ich trinke ___ Kaffee. (en juo kahvia, ei artikkelia)", "choices": ["nicht", "kein", "keine", "keinen"], "correct_index": 3, "distractor_difficulty": "medium", "explanation": "Kaffee on maskuliini, ei artikkelia → kieltoon keinen (Akkusativ)." },
+        { "item_type": "mc", "stem": "Das ist ___ gut. (se ei ole hyvää)", "choices": ["kein", "keinen", "nicht", "keine"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "gut on adjektiivi → nicht. kein kieltää vain substantiiveja." },
+        { "item_type": "mc", "stem": "Wir haben ___ Zeit. (meillä ei ole aikaa, feminiini)", "choices": ["nicht", "keinen", "keine", "kein"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "Zeit on feminiini → keine Zeit (Akkusatiivi, feminiini ei muutu)." },
+        { "item_type": "mc", "stem": "Er geht ___ ins Kino. (hän ei mene elokuviin)", "choices": ["kein", "keine", "keinen", "nicht"], "correct_index": 3, "distractor_difficulty": "easy", "explanation": "gehen on verbi — nicht. kein ei sovi tähän koska ei ole substantiiviobjektia." },
+        { "item_type": "mc", "stem": "Ich habe ___ Schwester. (minulla ei ole sisarta)", "choices": ["nicht", "keine", "kein", "keinen"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Schwester on feminiini → keine. keinen on maskuliini Akkusativ." },
+        { "item_type": "mc", "stem": "Das Essen schmeckt ___ gut. (ruoka ei maistu hyvältä)", "choices": ["kein", "keine", "keinen", "nicht"], "correct_index": 3, "distractor_difficulty": "easy", "explanation": "schmecken on verbi + adjektiivi → nicht. kein ei sovi tähän." },
+        { "item_type": "mc", "stem": "Er hat ___ Auto. (hänellä ei ole autoa, neutri)", "choices": ["keinen", "keine", "kein", "nicht"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "Auto on neutri → kein Auto (neutri ei saa -en päätettä)." },
+        { "item_type": "mc", "stem": "Ich stehe ___ früh auf. (en nouse aikaisin)", "choices": ["kein", "keine", "keinen", "nicht"], "correct_index": 3, "distractor_difficulty": "easy", "explanation": "aufstehen on verbi + adverbi früh → nicht." },
+        { "item_type": "mc", "stem": "Sie isst ___ Fleisch. (hän ei syö lihaa, neutri)", "choices": ["nicht", "keinen", "keine", "kein"], "correct_index": 3, "distractor_difficulty": "medium", "explanation": "Fleisch on neutri, ilman artikkelia → kein Fleisch." },
+        { "item_type": "mc", "stem": "Wir machen ___ Hausaufgaben. (teemme läksyt)", "choices": ["keine", "keinen", "kein", "nicht"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "Hausaufgaben on monikko → keine (monikko)." },
+        { "item_type": "mc", "stem": "Er spricht ___ Finnisch. (hän ei puhu suomea)", "choices": ["nicht", "keinen", "keine", "kein"], "correct_index": 3, "distractor_difficulty": "medium", "explanation": "Finnisch on kieli ilman artikkelia → kein Finnisch. Huom: molemmat olisivat mahdollisia mutta kein on idiomattisempi kielinimien kanssa." },
+        { "item_type": "mc", "stem": "Ich bin ___ müde. (en ole väsynyt)", "choices": ["kein", "keine", "keinen", "nicht"], "correct_index": 3, "distractor_difficulty": "easy", "explanation": "müde on adjektiivi → nicht. kein ei koskaan adjektiivin edellä." },
+        { "item_type": "mc", "stem": "Ich habe ___ Hunger. (minulla ei ole nälkä, maskuliini)", "choices": ["nicht", "keine", "kein", "keinen"], "correct_index": 3, "distractor_difficulty": "medium", "explanation": "Hunger on maskuliini, ilman artikkelia → keinen Hunger." }
+      ]
+    },
+    {
+      "phase_id": "p2-recognition-match-rutiini",
+      "phase_type": "recognition_match",
+      "title": "Yhdistä — päivän rutiini",
+      "instruction": "Yhdistä saksan ilmaisu ja suomennos.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        {
+          "item_type": "match",
+          "left_label": "Saksa",
+          "right_label": "Suomi",
+          "pairs": [
+            { "left": "aufstehen", "right": "nousta ylös" },
+            { "left": "frühstücken", "right": "syödä aamiainen" },
+            { "left": "zur Schule gehen", "right": "mennä kouluun" },
+            { "left": "zu Mittag essen", "right": "syödä lounas" },
+            { "left": "nach Hause kommen", "right": "tulla kotiin" },
+            { "left": "Hausaufgaben machen", "right": "tehdä kotitehtävät" },
+            { "left": "duschen", "right": "käydä suihkussa" },
+            { "left": "schlafen gehen", "right": "mennä nukkumaan" },
+            { "left": "sich anziehen", "right": "pukeutua" },
+            { "left": "fernsehen", "right": "katsoa televisiota" }
+          ]
+        }
+      ]
+    },
+    {
+      "phase_id": "p3-recall-typed-de-fi",
+      "phase_type": "recall_typed_es_to_fi",
+      "title": "Kirjoita negaatio oikein",
+      "instruction": "Kirjoita oikea negaatiomuoto (nicht tai kein/keine/keinen).",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Ich habe ___ Hund. (maskuliini → kein?)", "accept": ["keinen"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Er kommt ___ heute. (verbi)", "accept": ["nicht"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Wir haben ___ Zeit. (feminiini)", "accept": ["keine"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Das ist ___ schön. (adjektiivi)", "accept": ["nicht"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Er hat ___ Auto. (neutri)", "accept": ["kein"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Ich stehe ___ früh auf. (adverbi)", "accept": ["nicht"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Sie hat ___ Schwester. (feminiini)", "accept": ["keine"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Wir machen ___ Hausaufgaben. (monikko)", "accept": ["keine"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Er isst ___ Fleisch. (neutri, ilman artikkelia)", "accept": ["kein"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Ich gehe ___ ins Kino. (verbi)", "accept": ["nicht"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Sie trinkt ___ Alkohol. (maskuliini)", "accept": ["keinen"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Das Essen schmeckt ___ gut. (verbi+adj)", "accept": ["nicht"] }
+      ]
+    },
+    {
+      "phase_id": "p4-recall-typed-fi-de",
+      "phase_type": "recall_typed_fi_to_es",
+      "title": "Suomesta saksaksi — negaatio",
+      "instruction": "Käännä negaatio saksaksi.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Minulla ei ole koiraa. (maskuliini)", "accept": ["Ich habe keinen Hund."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Hän ei tule tänään.", "accept": ["Er kommt heute nicht.", "Er kommt nicht heute."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Meillä ei ole aikaa. (feminiini)", "accept": ["Wir haben keine Zeit."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Se ei ole hyvää.", "accept": ["Das ist nicht gut."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Hänellä ei ole autoa. (neutri)", "accept": ["Er hat kein Auto.", "Sie hat kein Auto."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "En syö lihaa. (neutri)", "accept": ["Ich esse kein Fleisch."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "En mene elokuviin.", "accept": ["Ich gehe nicht ins Kino."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Hänellä ei ole sisarta. (feminiini)", "accept": ["Er hat keine Schwester.", "Sie hat keine Schwester."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Emme ole väsyneitä.", "accept": ["Wir sind nicht müde."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Minulla ei ole nälkä. (maskuliini)", "accept": ["Ich habe keinen Hunger."] }
+      ]
+    },
+    {
+      "phase_id": "p5-application-gap-helppo",
+      "phase_type": "application_gap_fill",
+      "title": "Lauseen täydennys — perustaso",
+      "instruction": "Täydennä oikea negaatiomuoto.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Er hat {1} Freunde in der neuen Stadt. (monikko)", "answers": [["keine"]], "word_bank": ["keine", "kein", "nicht"] },
+        { "item_type": "gap_fill", "sentence_template": "Ich stehe morgens {1} gerne früh auf.", "answers": [["nicht"]], "word_bank": ["nicht", "kein", "keine"] },
+        { "item_type": "gap_fill", "sentence_template": "Sie trinkt {1} Kaffee. (maskuliini)", "answers": [["keinen"]], "word_bank": ["keinen", "keine", "nicht"] },
+        { "item_type": "gap_fill", "sentence_template": "Das ist {1} mein Problem.", "answers": [["nicht"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Ich habe {1} Hunger — ich habe gerade gegessen.", "answers": [["keinen"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Er geht {1} schwimmen, weil er müde ist.", "answers": [["nicht"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Wir haben {1} Schule heute.", "answers": [["keine"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Sie isst {1} gerne Gemüse.", "answers": [["nicht"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Er hat {1} Wohnung in München.", "answers": [["keine"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Ich mache morgen {1} Sport — ich bin krank.", "answers": [["keinen"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p6-application-gap-vaativa",
+      "phase_type": "application_gap_fill",
+      "title": "Päivän rutiini + negaatio",
+      "instruction": "Täydennä päivän rutiinia kuvaava lause oikealla negaatiolla.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Heute stehe ich {1} früh auf — es ist Wochenende.", "answers": [["nicht"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Ich frühstücke {1} gerne — ich bin morgens nicht hungrig.", "answers": [["nicht"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Er hat {1} Zeit für Hausaufgaben. (feminiini)", "answers": [["keine"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Am Montag machen wir {1} Sport. (maskuliini: keinen)", "answers": [["keinen"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Sie geht {1} früh schlafen — sie schaut bis Mitternacht fern.", "answers": [["nicht"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Ich esse zum Frühstück {1} Fleisch. (neutri)", "answers": [["kein"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Er kommt {1} pünktlich nach Hause.", "answers": [["nicht"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Wir haben {1} Unterricht am Freitagnachmittag. (maskuliini)", "answers": [["keinen"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Er duscht morgens {1} — er macht das abends.", "answers": [["nicht"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Ich trinke {1} Alkohol. (maskuliini)", "answers": [["keinen"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p7-application-sentence-build",
+      "phase_type": "application_sentence_build",
+      "title": "Lauseiden rakentelu",
+      "instruction": "Käännä koko lause saksaksi oikealla negaatiolla.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Minulla ei ole koiraa.", "accept": ["Ich habe keinen Hund.", "Ich habe keinen Hund"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "En herää aikaisin aamuisin.", "accept": ["Ich stehe morgens nicht früh auf.", "Ich stehe nicht früh auf."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Hän ei syö aamiaisella lihaa.", "accept": ["Er isst zum Frühstück kein Fleisch.", "Zum Frühstück isst er kein Fleisch."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Meillä ei ole aikaa kotitehtäville.", "accept": ["Wir haben keine Zeit für Hausaufgaben.", "Wir haben keine Zeit für die Hausaufgaben."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Se ei ole hyvä idea.", "accept": ["Das ist keine gute Idee.", "Das ist nicht gut."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Hän ei mene kouluun tänään.", "accept": ["Er geht heute nicht zur Schule.", "Heute geht er nicht zur Schule."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "En juo kahvia.", "accept": ["Ich trinke keinen Kaffee.", "Ich trinke kein Kaffee."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Hänellä ei ole auto.", "accept": ["Er hat kein Auto.", "Sie hat kein Auto."] }
+      ]
+    },
+    {
+      "phase_id": "p8-synthesis-translate",
+      "phase_type": "synthesis_translate",
+      "title": "YO-tyylinen käännös",
+      "instruction": "Käännä lauseet saksaksi.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "translate", "direction": "fi_to_es", "source": "En syö mielellään aamiaisella mitään — olen vasta hereillä.", "accept": ["Ich frühstücke nicht gerne — ich bin gerade erst aufgestanden.", "Ich esse morgens nicht gerne, ich bin noch nicht wach."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Hänellä ei ole koiraa, mutta hän rakastaa kissoja.", "accept": ["Er hat keinen Hund, aber er liebt Katzen.", "Sie hat keinen Hund, aber sie liebt Katzen."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Meillä ei ole koulua huomenna — on vapaapäivä.", "accept": ["Wir haben morgen keine Schule — es ist ein Feiertag.", "Morgen haben wir keine Schule, es ist Feiertag."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "En mene nukkumaan ennen kymmentä.", "accept": ["Ich gehe nicht vor zehn Uhr schlafen.", "Ich schlafe nicht vor zehn Uhr ein."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Hän ei pysty tekemään kotitehtäviä illalla — hän on liian väsynyt.", "accept": ["Er kann abends keine Hausaufgaben machen — er ist zu müde.", "Er kann die Hausaufgaben abends nicht machen — er ist zu müde."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Nykyään minulla ei ole enää aikaa harrastuksille.", "accept": ["Heute habe ich keine Zeit mehr für Hobbys.", "Heutzutage habe ich keine Zeit mehr für Hobbys."] }
+      ]
+    },
+    {
+      "phase_id": "p9-synthesis-short-writing",
+      "phase_type": "synthesis_short_writing",
+      "title": "Lyhyt kirjoitus",
+      "instruction": "Kuvaile päivän rutiiniasi saksaksi.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C", "M"],
+      "items": [
+        { "item_type": "writing", "prompt": "Kuvaile tyypillinen koulupäiväsi saksaksi: milloin heräät, mitä teet aamuisin, mitä lounaat, mitä iltaisin. Käytä sekä myönteisiä että kielteisiä lauseita (nicht / kein). 5–7 lausetta.", "min_words": 40, "max_words": 90, "rubric_focus": ["communication", "structure", "vocab"] },
+        { "item_type": "writing", "prompt": "Kirjoita saksaksi kaverillesi: kerro mitä et tykkää tehdä aamuisin ja mitä teet mieluummin iltaisin. Käytä nicht ja kein oikein. 5–7 lausetta.", "min_words": 40, "max_words": 90, "rubric_focus": ["communication", "vocab"] },
+        { "item_type": "writing", "prompt": "Kuvaile ihanteellinen päiväsi saksaksi: mitä tekisit ja mitä ei tarvitsisi tehdä. Käytä nicht ja kein oikein. 5–7 lausetta.", "min_words": 40, "max_words": 90, "rubric_focus": ["communication", "structure"] }
+      ]
+    },
+    {
+      "phase_id": "p10-cumulative-review",
+      "phase_type": "application_gap_fill",
+      "title": "Kertaus — negaatio + rutiini",
+      "instruction": "Sekoitettu kertaus. Täydennä nicht tai kein-muoto.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Ich stehe {1} früh auf.", "answers": [["nicht"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Er hat {1} Zeit für Sport. (feminiini)", "answers": [["keine"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Wir essen {1} Fleisch. (neutri)", "answers": [["kein"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Das ist {1} richtig.", "answers": [["nicht"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Sie hat {1} Geschwister. (monikko)", "answers": [["keine"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Er trinkt morgens {1} Kaffee. (maskuliini)", "answers": [["keinen"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Ich gehe {1} ins Kino — es ist zu teuer.", "answers": [["nicht"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Wir haben {1} Unterricht am Samstag. (maskuliini)", "answers": [["keinen"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Er kommt heute {1} nach Hause.", "answers": [["nicht"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Ich habe {1} Hunger — danke. (maskuliini)", "answers": [["keinen"]], "word_bank": null }
+      ]
+    }
+  ],
+  "vocab": [
+    { "es": "nicht", "fi": "ei (verbi/adjektiivi/adverbi)", "example_es": "Er kommt nicht.", "example_fi": "Hän ei tule.", "gender": null },
+    { "es": "kein / keine / keinen", "fi": "ei yhtään (substantiivin kielto)", "example_es": "Ich habe keinen Hund.", "example_fi": "Minulla ei ole koiraa.", "gender": null },
+    { "es": "aufstehen", "fi": "nousta ylös", "example_es": "Ich stehe um 7 Uhr auf.", "example_fi": "Nousen ylös kello 7.", "gender": null },
+    { "es": "frühstücken", "fi": "syödä aamiainen", "example_es": "Wir frühstücken zusammen.", "example_fi": "Syömme aamiaisen yhdessä.", "gender": null },
+    { "es": "zur Schule gehen", "fi": "mennä kouluun", "example_es": "Er geht um 8 zur Schule.", "example_fi": "Hän menee kouluun kello 8.", "gender": null },
+    { "es": "nach Hause kommen", "fi": "tulla kotiin", "example_es": "Ich komme um 15 Uhr nach Hause.", "example_fi": "Tulen kotiin kello 15.", "gender": null },
+    { "es": "Hausaufgaben machen", "fi": "tehdä kotitehtävät", "example_es": "Er macht Hausaufgaben.", "example_fi": "Hän tekee kotitehtävät.", "gender": null },
+    { "es": "schlafen gehen", "fi": "mennä nukkumaan", "example_es": "Ich gehe um 22 Uhr schlafen.", "example_fi": "Menen nukkumaan kello 22.", "gender": null },
+    { "es": "duschen", "fi": "käydä suihkussa", "example_es": "Ich dusche morgens.", "example_fi": "Käyn suihkussa aamuisin.", "gender": null },
+    { "es": "sich anziehen", "fi": "pukeutua", "example_es": "Ich ziehe mich an.", "example_fi": "Puen vaatteet.", "gender": null },
+    { "es": "der Hunger", "fi": "nälkä", "example_es": "Ich habe Hunger.", "example_fi": "Minulla on nälkä.", "gender": "m" },
+    { "es": "die Zeit", "fi": "aika", "example_es": "Ich habe keine Zeit.", "example_fi": "Minulla ei ole aikaa.", "gender": "f" },
+    { "es": "der Unterricht", "fi": "oppitunti, opetus", "example_es": "Der Unterricht beginnt um 8 Uhr.", "example_fi": "Oppitunti alkaa kello 8.", "gender": "m" },
+    { "es": "pünktlich", "fi": "täsmällinen, ajoissa", "example_es": "Er kommt immer pünktlich.", "example_fi": "Hän tulee aina ajoissa.", "gender": null },
+    { "es": "müde", "fi": "väsynyt", "example_es": "Ich bin so müde.", "example_fi": "Olen niin väsynyt.", "gender": null }
+  ],
+  "side_panel": {
+    "tabs": [
+      {
+        "id": "grammar",
+        "title": "Kielioppi",
+        "content_md": "## nicht vs. kein — milloin kumpi?\n\n### kein — substantiivin kielto\n\nKäytetään kun substantiivilla olisi **ein** tai **ei artikkelia**:\n\n- *Ich habe **einen** Hund.* → *Ich habe **keinen** Hund.*\n- *Er trinkt Kaffee.* → *Er trinkt **keinen** Kaffee.*\n\nTaipuu kuten ein:\n- mask. Akk.: **keinen**\n- fem.: **keine**\n- neutri: **kein**\n- monikko: **keine**\n\n### nicht — kaikki muut\n\n- Verbi: *Er kommt **nicht**.*\n- Adjektiivi: *Das ist **nicht** gut.*\n- Adverbi: *Ich stehe **nicht** früh auf.*\n- Määräinen artikkeli: *Ich nehme **nicht** den Bus.*\n\n## Päivän rutiini\n\n1. aufstehen\n2. duschen / sich anziehen\n3. frühstücken\n4. zur Schule / Arbeit gehen\n5. zu Mittag essen\n6. nach Hause kommen\n7. Hausaufgaben machen / Sport machen\n8. fernsehen / lesen\n9. schlafen gehen"
+      },
+      {
+        "id": "tips",
+        "title": "YO-vinkki",
+        "content_md": "## YO-koe — nicht vs. kein\n\nTeil 3 Rakenne ja sanasto: nicht / kein on yksi yleisimmistä testatuista virhekategorioista.\n\n## Yleisin virhe\n\n*Ich habe **nicht** einen Hund.* ❌\n*Ich habe **keinen** Hund.* ✅\n\n*Ich habe **kein** Hunger.* ❌\n*Ich habe **keinen** Hunger.* ✅ (maskuliini → keinen)\n\n## Kirjoitelmassa — päivän rutiini\n\nTipillinen tehtävä: *'Beschreibe deinen Alltag.'*\n\nHyödyllisiä ilmaisuja:\n- *Morgens stehe ich um 7 Uhr auf.*\n- *Ich frühstücke nicht gerne, aber...*\n- *Nach der Schule mache ich Hausaufgaben.*\n- *Abends sehe ich fern oder lese ein Buch.*\n- *Um 22 Uhr gehe ich schlafen.*"
+      }
+    ]
+  }
+}

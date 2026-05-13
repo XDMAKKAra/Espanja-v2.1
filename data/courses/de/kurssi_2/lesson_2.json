@@ -1,0 +1,277 @@
+{
+  "meta": {
+    "course_key": "kurssi_2",
+    "lesson_index": 2,
+    "lesson_type": "vocab",
+    "level": "A",
+    "title": "Ruoka, ateriat ja mieltymykset",
+    "description": "Opettelet ruoka-aiheisen perussanaston (das Brot, das Fleisch, das Gemüse…), ateria-sanat (das Frühstück, das Mittagessen, das Abendessen) ja mieltymysten ilmaisun (gerne, nicht gerne, lieber). Saksalainen ruokakulttuuri osana YO-koevalmiutta.",
+    "yo_relevance": "Teil 2 Luetun ymmärtäminen: ruoka-aiheiset tekstit ja ravintolakuvaukset toistuvat. Teil 4 Kirjoitelma: 'Was isst du gerne?' on klassinen lyhyt tehtävänanto.",
+    "estimated_minutes_median": 12
+  },
+  "teaching": {
+    "intro_md": "# Ruoka, ateriat ja mieltymykset\n\n## Kolme ateriaa\n\nSaksalaisessa kulttuurissa on perinteisesti kolme ateriaa:\n\n- **das Frühstück** — aamiainen (*Brot, Brötchen, Wurst, Käse* — hyvin erilainen kuin suomalainen puuro!)\n- **das Mittagessen** — lounas (kunnon lämmin ateria päivällä)\n- **das Abendessen** — päivällinen/illallinen (usein kylmä: *Brot und Käse*)\n\n## Ruokasanastoa\n\n> *Zum Frühstück esse ich ein Brötchen mit Butter und Käse.* — Aamiaiseksi syön sämpylän voin ja juuston kanssa.\n\n- **das Brot** — leipä\n- **das Brötchen** — sämpylä\n- **die Wurst** — makkara, leikkele\n- **der Käse** — juusto\n- **das Fleisch** — liha\n- **das Gemüse** — kasvikset, vihannekset\n- **das Obst** — hedelmät\n- **die Milch** — maito\n\n## Mieltymykset\n\n- **gerne** — mielellään: *Ich esse gerne Pizza.*\n- **nicht gerne** — ei mielellään: *Ich esse nicht gerne Fisch.*\n- **lieber** — mieluummin: *Ich esse lieber Nudeln als Reis.*\n- **am liebsten** — kaikkein mieluiten: *Am liebsten esse ich Schokolade.*",
+    "key_points": [
+      "das Frühstück = aamiainen, das Mittagessen = lounas, das Abendessen = illallinen.",
+      "gerne + verbi = mielellään (Ich esse gerne…).",
+      "lieber = mieluummin (vertailu), am liebsten = kaikkein mieluiten.",
+      "Saksalainen aamiainen: Brot, Brötchen, Wurst, Käse — YO-kokeessa kulttuuritieto plussaa.",
+      "das Gemüse (kasvikset) on neutri, ei mon. muutosta: viel Gemüse."
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1-recognition-mc-ruoka",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista — ruokasanasto",
+      "instruction": "Valitse oikea suomennos.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "mc", "stem": "das Brot", "choices": ["sämpylä", "leipä", "kakku", "pulla"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "das Brot = leipä. das Brötchen = sämpylä (diminutiivi Brot-sanasta)." },
+        { "item_type": "mc", "stem": "das Frühstück", "choices": ["lounas", "aamupala, aamiainen", "illallinen", "välipala"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "das Frühstück = aamiainen. früh = aikaisin." },
+        { "item_type": "mc", "stem": "das Mittagessen", "choices": ["aamiainen", "illallinen", "lounas", "välipala"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "das Mittagessen = lounas. Mittag = keskipäivä." },
+        { "item_type": "mc", "stem": "das Abendessen", "choices": ["aamiainen", "lounas", "välipala", "illallinen, päivällinen"], "correct_index": 3, "distractor_difficulty": "easy", "explanation": "das Abendessen = illallinen. Abend = ilta." },
+        { "item_type": "mc", "stem": "das Fleisch", "choices": ["kala", "liha", "kana", "juusto"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "das Fleisch = liha (yleinen sana lihalle)." },
+        { "item_type": "mc", "stem": "das Gemüse", "choices": ["hedelmä", "liha", "kasvikset, vihannekset", "vilja"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "das Gemüse = kasvikset/vihannekset. das Obst = hedelmät." },
+        { "item_type": "mc", "stem": "das Obst", "choices": ["kasvikset", "hedelmät", "marjat", "pähkinät"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "das Obst = hedelmät. Älä sekoita: das Gemüse = kasvikset." },
+        { "item_type": "mc", "stem": "die Wurst", "choices": ["juusto", "kana", "makkara, leikkele", "kala"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "die Wurst = makkara tai leikkele. Perinteinen saksalainen aamiaisaine." },
+        { "item_type": "mc", "stem": "der Käse", "choices": ["kananmuna", "voi", "maito", "juusto"], "correct_index": 3, "distractor_difficulty": "easy", "explanation": "der Käse = juusto. Saksassa on yli 1 000 juustolajiketta." },
+        { "item_type": "mc", "stem": "das Getränk", "choices": ["ruoka", "juoma", "välipala", "resepti"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "das Getränk = juoma. trinken = juoda." },
+        { "item_type": "mc", "stem": "die Nudeln", "choices": ["riisi", "pasta, nuudelit", "perunat", "leipä"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "die Nudeln = pasta, nuudelit (monikkomuoto). Suosittu arkiruoka Saksassa." },
+        { "item_type": "mc", "stem": "der Reis", "choices": ["riisi", "puuro", "leipä", "pasta"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "der Reis = riisi." },
+        { "item_type": "mc", "stem": "gerne", "choices": ["aina", "usein", "mielellään", "harvoin"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "gerne = mielellään. Ich esse gerne Pizza = syön mielelläni pizzaa." },
+        { "item_type": "mc", "stem": "das Brötchen", "choices": ["sämpylä", "leipä", "keksi", "pulla"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "das Brötchen = sämpylä. Pieni Brot — -chen-pääte tekee diminutiivin." },
+        { "item_type": "mc", "stem": "die Butter", "choices": ["margariini", "kerma", "voi", "juusto"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "die Butter = voi." }
+      ]
+    },
+    {
+      "phase_id": "p2-recognition-match-ateriat",
+      "phase_type": "recognition_match",
+      "title": "Yhdistä — ruoat ja juomat",
+      "instruction": "Yhdistä saksan sana ja suomennos.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        {
+          "item_type": "match",
+          "left_label": "Saksa",
+          "right_label": "Suomi",
+          "pairs": [
+            { "left": "das Brot", "right": "leipä" },
+            { "left": "die Milch", "right": "maito" },
+            { "left": "das Ei", "right": "kananmuna" },
+            { "left": "der Fisch", "right": "kala" },
+            { "left": "das Hähnchen", "right": "kana (ruoka)" },
+            { "left": "die Kartoffel", "right": "peruna" },
+            { "left": "die Tomate", "right": "tomaatti" },
+            { "left": "der Apfel", "right": "omena" },
+            { "left": "die Banane", "right": "banaani" },
+            { "left": "der Saft", "right": "mehu" },
+            { "left": "das Wasser", "right": "vesi" },
+            { "left": "der Kuchen", "right": "kakku" }
+          ]
+        }
+      ]
+    },
+    {
+      "phase_id": "p3-recall-typed-de-fi",
+      "phase_type": "recall_typed_es_to_fi",
+      "title": "Käännä suomeksi",
+      "instruction": "Kirjoita saksan sanan suomennos.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "das Frühstück", "accept": ["aamiainen", "aamupala"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "das Mittagessen", "accept": ["lounas"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "das Abendessen", "accept": ["illallinen", "päivällinen"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "das Fleisch", "accept": ["liha"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "das Gemüse", "accept": ["kasvikset", "vihannekset"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "das Obst", "accept": ["hedelmät", "hedelmä"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "essen", "accept": ["syödä"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "trinken", "accept": ["juoda"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "gerne", "accept": ["mielellään"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "die Wurst", "accept": ["makkara", "leikkele"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "der Käse", "accept": ["juusto"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "das Getränk", "accept": ["juoma"] }
+      ]
+    },
+    {
+      "phase_id": "p4-recall-typed-fi-de",
+      "phase_type": "recall_typed_fi_to_es",
+      "title": "Käännä saksaksi",
+      "instruction": "Kirjoita suomennoksen saksaksi.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "aamiainen", "accept": ["das Frühstück", "Frühstück"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "lounas", "accept": ["das Mittagessen", "Mittagessen"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "illallinen", "accept": ["das Abendessen", "Abendessen"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "liha", "accept": ["das Fleisch", "Fleisch"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "kasvikset", "accept": ["das Gemüse", "Gemüse"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "hedelmät", "accept": ["das Obst", "Obst"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "leipä", "accept": ["das Brot", "Brot"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "mielellään", "accept": ["gerne"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "juusto", "accept": ["der Käse", "Käse"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "syödä", "accept": ["essen"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "juoda", "accept": ["trinken"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "maito", "accept": ["die Milch", "Milch"] }
+      ]
+    },
+    {
+      "phase_id": "p5-application-gap-helppo",
+      "phase_type": "application_gap_fill",
+      "title": "Lauseen täydennys — perustaso",
+      "instruction": "Täydennä lause oikealla sanalla.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Zum {1} esse ich ein Brötchen. (aamiainen)", "answers": [["Frühstück"]], "word_bank": ["Frühstück", "Abendessen", "Mittagessen"] },
+        { "item_type": "gap_fill", "sentence_template": "Ich esse gerne {1}. (liha)", "answers": [["Fleisch"]], "word_bank": ["Fleisch", "Gemüse", "Obst"] },
+        { "item_type": "gap_fill", "sentence_template": "Ich trinke zum Frühstück {1}. (maito)", "answers": [["Milch"]], "word_bank": ["Milch", "Saft", "Wasser"] },
+        { "item_type": "gap_fill", "sentence_template": "Das {1} ist frisch und lecker. (leivät, monikko: Brote)", "answers": [["Brot", "Brötchen"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Ich esse nicht {1} Fisch. (mielellään)", "answers": [["gerne"]], "word_bank": ["gerne", "lieber", "am liebsten"] },
+        { "item_type": "gap_fill", "sentence_template": "Zum Mittagessen gibt es {1} und Salat. (liha)", "answers": [["Fleisch"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Er isst {1} Pizza als Nudeln. (mieluummin)", "answers": [["lieber"]], "word_bank": ["lieber", "gerne", "am liebsten"] },
+        { "item_type": "gap_fill", "sentence_template": "Wir {1} immer zusammen. (syödä, wir-muoto)", "answers": [["essen"]], "word_bank": ["essen", "trinken", "kochen"] },
+        { "item_type": "gap_fill", "sentence_template": "Am liebsten {1} ich Schokolade. (syödä, ich-muoto)", "answers": [["esse"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Zum Abendessen essen wir meistens {1} und Käse. (leipä)", "answers": [["Brot"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p6-application-gap-vaativa",
+      "phase_type": "application_gap_fill",
+      "title": "Lauseen täydennys — vaativa",
+      "instruction": "Täydennä ilman sanapankkia.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Ich {1} gerne Kaffee am Morgen. (juoda, ich-muoto)", "answers": [["trinke"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Mein Lieblingsessen ist {1} mit Kartoffeln. (liha)", "answers": [["Fleisch"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Sie {1} viel Obst und Gemüse. (syödä, sie-muoto)", "answers": [["isst"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Das {1} ist typisch deutsch: Wurst, Käse, Brot. (aamiainen)", "answers": [["Frühstück"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Ich koche heute {1}. (pasta: Nudeln)", "answers": [["Nudeln"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Der {1} schmeckt gut. (mehu: Saft)", "answers": [["Saft"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Heute gibt es zum Mittagessen {1} mit Soße. (kana: Hähnchen)", "answers": [["Hähnchen"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Ich esse {1} Pizza als Salat. (mieluummin)", "answers": [["lieber"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Was ist dein {1}? (suosikkiruoka: Lieblingsessen)", "answers": [["Lieblingsessen"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Er {1} nicht gerne Gemüse. (syödä, er-muoto)", "answers": [["isst"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p7-application-sentence-build",
+      "phase_type": "application_sentence_build",
+      "title": "Lauseiden rakentelu",
+      "instruction": "Käännä koko lause saksaksi.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Syön mielelläni pizzaa.", "accept": ["Ich esse gerne Pizza.", "Ich esse gerne Pizza"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Aamiaiseksi juon maitoa.", "accept": ["Zum Frühstück trinke ich Milch.", "Zum Frühstück trinke ich Milch"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "En syö mielelläni kalaa.", "accept": ["Ich esse nicht gerne Fisch.", "Ich esse nicht gerne Fisch"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Lounaaksi syömme usein pastaa.", "accept": ["Zum Mittagessen essen wir oft Nudeln.", "Zum Mittagessen essen wir oft Nudeln"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Syön mieluummin lihaa kuin kalaa.", "accept": ["Ich esse lieber Fleisch als Fisch.", "Ich esse lieber Fleisch als Fisch"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Kaikkein mieluiten syön suklaata.", "accept": ["Am liebsten esse ich Schokolade.", "Am liebsten esse ich Schokolade"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Saksalaiseen aamiaiseen kuuluu leipää ja juustoa.", "accept": ["Zum deutschen Frühstück gehört Brot und Käse.", "Zum deutschen Frühstück gibt es Brot und Käse."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Mikä on suosikkiruokasi?", "accept": ["Was ist dein Lieblingsessen?", "Was ist dein Lieblingsessen"] }
+      ]
+    },
+    {
+      "phase_id": "p8-synthesis-translate",
+      "phase_type": "synthesis_translate",
+      "title": "YO-tyylinen käännös",
+      "instruction": "Käännä koko lause saksaksi YO-tasolla.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Aamiaiseksi syön yleensä sämpylän voin ja juuston kanssa.", "accept": ["Zum Frühstück esse ich meistens ein Brötchen mit Butter und Käse.", "Zum Frühstück esse ich normalerweise ein Brötchen mit Butter und Käse."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "En syö mielelläni vihanneksia, mutta tiedän että ne ovat terveellisiä.", "accept": ["Ich esse nicht gerne Gemüse, aber ich weiß, dass es gesund ist.", "Ich esse nicht gerne Gemüse, aber ich weiß, dass es gesund ist"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Suosikkiruokani on pasta tomaattikastikkeella.", "accept": ["Mein Lieblingsessen ist Nudeln mit Tomatensoße.", "Mein Lieblingsessen sind Nudeln mit Tomatensoße."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Illalliseksi syömme yleensä vain leipää ja juustoa.", "accept": ["Zum Abendessen essen wir meistens nur Brot und Käse.", "Abends essen wir meistens nur Brot und Käse."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Juon mieluummin vettä kuin limonadia.", "accept": ["Ich trinke lieber Wasser als Limonade.", "Ich trinke lieber Wasser als Limonade"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Mitä syöt yleensä lounaaksi koulussa?", "accept": ["Was isst du meistens zum Mittagessen in der Schule?", "Was isst du normalerweise zum Mittagessen in der Schule?"] }
+      ]
+    },
+    {
+      "phase_id": "p9-synthesis-short-writing",
+      "phase_type": "synthesis_short_writing",
+      "title": "Lyhyt kirjoitus",
+      "instruction": "Kirjoita lyhyt teksti ruokatottumuksistasi saksaksi.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C", "M"],
+      "items": [
+        { "item_type": "writing", "prompt": "Kuvaile päivittäiset ateriasi saksaksi: mitä syöt aamiaiseksi, lounaaksi ja illalliseksi. Käytä gerne/lieber/am liebsten. 5–7 lausetta.", "min_words": 40, "max_words": 90, "rubric_focus": ["communication", "vocab", "structure"] },
+        { "item_type": "writing", "prompt": "Kirjoita saksaksi: mikä on suosikkiruokasi ja miksi? Mitä et syö mielellään? 5–7 lausetta.", "min_words": 40, "max_words": 90, "rubric_focus": ["communication", "vocab"] },
+        { "item_type": "writing", "prompt": "Kuvaile saksalainen aamiainen ja vertaa suomalaiseen. Mitä eroja on? 5–7 lausetta saksaksi.", "min_words": 40, "max_words": 90, "rubric_focus": ["communication", "structure"] }
+      ]
+    },
+    {
+      "phase_id": "p10-cumulative-review",
+      "phase_type": "application_gap_fill",
+      "title": "Kertaus — ruoka ja ateriat",
+      "instruction": "Sekoitettu kertaus ruoka- ja ateriasanastosta.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Jeden Morgen esse ich zum {1} ein Ei. (aamiainen)", "answers": [["Frühstück"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Ich esse {1} Fleisch als Fisch. (mieluummin)", "answers": [["lieber"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Das {1} heute ist Hühnersuppe. (lounas)", "answers": [["Mittagessen"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Sie {1} jeden Abend um 19 Uhr. (syödä, sie monikko)", "answers": [["essen"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Er {1} gerne Schokolade. (syödä, er-muoto)", "answers": [["isst"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Zum {1} gibt es Brot, Wurst und Käse. (aamiainen)", "answers": [["Frühstück"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Das {1} ist nicht immer gesund, aber lecker. (leikkele: Wurst)", "answers": [["Wurst"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Ich {1} viel Tee und Wasser. (juoda, ich-muoto)", "answers": [["trinke"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Am {1} esse ich am meisten. (kaikkein mieluiten: liebsten)", "answers": [["liebsten"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Wir haben heute frisches {1} aus dem Garten. (kasvikset)", "answers": [["Gemüse"]], "word_bank": null }
+      ]
+    }
+  ],
+  "vocab": [
+    { "es": "das Frühstück", "fi": "aamiainen", "example_es": "Das Frühstück ist die wichtigste Mahlzeit.", "example_fi": "Aamiainen on tärkein ateria.", "gender": null },
+    { "es": "das Mittagessen", "fi": "lounas", "example_es": "Zum Mittagessen gibt es Suppe.", "example_fi": "Lounaaksi on keittoa.", "gender": null },
+    { "es": "das Abendessen", "fi": "illallinen, päivällinen", "example_es": "Das Abendessen ist um 19 Uhr.", "example_fi": "Illallinen on kello 19.", "gender": null },
+    { "es": "das Brot", "fi": "leipä", "example_es": "Ich esse Brot mit Butter.", "example_fi": "Syön leivän voilla.", "gender": null },
+    { "es": "das Brötchen", "fi": "sämpylä", "example_es": "Zum Frühstück esse ich ein Brötchen.", "example_fi": "Aamiaiseksi syön sämpylän.", "gender": null },
+    { "es": "die Wurst", "fi": "makkara, leikkele", "example_es": "Die Wurst ist typisch deutsch.", "example_fi": "Leikkele on tyypillistä saksalaista.", "gender": "f" },
+    { "es": "der Käse", "fi": "juusto", "example_es": "Ich mag Käse sehr gerne.", "example_fi": "Pidän juustosta kovasti.", "gender": "m" },
+    { "es": "die Butter", "fi": "voi", "example_es": "Ich streiche Butter auf das Brot.", "example_fi": "Levitän voita leivälle.", "gender": "f" },
+    { "es": "das Fleisch", "fi": "liha", "example_es": "Er isst nicht gerne Fleisch.", "example_fi": "Hän ei syö mielellään lihaa.", "gender": null },
+    { "es": "der Fisch", "fi": "kala", "example_es": "Fisch ist gesund.", "example_fi": "Kala on terveellistä.", "gender": "m" },
+    { "es": "das Hähnchen", "fi": "kana (ruoka)", "example_es": "Hähnchen mit Gemüse ist lecker.", "example_fi": "Kana ja kasvikset ovat herkullisia.", "gender": null },
+    { "es": "das Gemüse", "fi": "kasvikset, vihannekset", "example_es": "Ich esse viel Gemüse.", "example_fi": "Syön paljon kasviksia.", "gender": null },
+    { "es": "das Obst", "fi": "hedelmät", "example_es": "Obst ist gesund.", "example_fi": "Hedelmät ovat terveellisiä.", "gender": null },
+    { "es": "die Kartoffel", "fi": "peruna", "example_es": "Kartoffeln sind typisch deutsch.", "example_fi": "Perunat ovat tyypillisiä saksalaisia.", "gender": "f" },
+    { "es": "die Tomate", "fi": "tomaatti", "example_es": "Die Tomate ist rot und rund.", "example_fi": "Tomaatti on punainen ja pyöreä.", "gender": "f" },
+    { "es": "der Apfel", "fi": "omena", "example_es": "Ich esse täglich einen Apfel.", "example_fi": "Syön päivittäin omenan.", "gender": "m" },
+    { "es": "die Banane", "fi": "banaani", "example_es": "Bananen sind süß.", "example_fi": "Banaanit ovat makeita.", "gender": "f" },
+    { "es": "die Nudeln", "fi": "pasta, nuudelit", "example_es": "Ich esse gerne Nudeln mit Soße.", "example_fi": "Syön mielelläni pastaa kastikkeella.", "gender": "f" },
+    { "es": "der Reis", "fi": "riisi", "example_es": "Reis und Gemüse ist gesund.", "example_fi": "Riisi ja kasvikset ovat terveellisiä.", "gender": "m" },
+    { "es": "die Milch", "fi": "maito", "example_es": "Kinder trinken viel Milch.", "example_fi": "Lapset juovat paljon maitoa.", "gender": "f" },
+    { "es": "das Wasser", "fi": "vesi", "example_es": "Ich trinke viel Wasser.", "example_fi": "Juon paljon vettä.", "gender": null },
+    { "es": "der Saft", "fi": "mehu", "example_es": "Apfelsaft ist mein Lieblingsgetränk.", "example_fi": "Omenamehu on suosikkijuomani.", "gender": "m" },
+    { "es": "das Getränk", "fi": "juoma", "example_es": "Was möchtest du als Getränk?", "example_fi": "Mitä haluat juomaksi?", "gender": null },
+    { "es": "der Kuchen", "fi": "kakku", "example_es": "Zum Geburtstag gibt es Kuchen.", "example_fi": "Syntymäpäivänä on kakkua.", "gender": "m" },
+    { "es": "die Schokolade", "fi": "suklaa", "example_es": "Am liebsten esse ich Schokolade.", "example_fi": "Kaikkein mieluiten syön suklaata.", "gender": "f" },
+    { "es": "gerne", "fi": "mielellään", "example_es": "Ich esse gerne Pasta.", "example_fi": "Syön mielelläni pastaa.", "gender": null },
+    { "es": "nicht gerne", "fi": "ei mielellään", "example_es": "Ich esse nicht gerne Spinat.", "example_fi": "En syö mielellään pinaattia.", "gender": null },
+    { "es": "lieber", "fi": "mieluummin", "example_es": "Ich trinke lieber Wasser als Saft.", "example_fi": "Juon mieluummin vettä kuin mehua.", "gender": null },
+    { "es": "am liebsten", "fi": "kaikkein mieluiten", "example_es": "Am liebsten esse ich Pizza.", "example_fi": "Kaikkein mieluiten syön pizzaa.", "gender": null },
+    { "es": "essen", "fi": "syödä", "example_es": "Was isst du zum Frühstück?", "example_fi": "Mitä syöt aamiaiseksi?", "gender": null },
+    { "es": "trinken", "fi": "juoda", "example_es": "Ich trinke Kaffee.", "example_fi": "Juon kahvia.", "gender": null },
+    { "es": "kochen", "fi": "laittaa ruokaa, keittää", "example_es": "Meine Mutter kocht jeden Abend.", "example_fi": "Äitini laittaa ruokaa joka ilta.", "gender": null }
+  ],
+  "side_panel": {
+    "tabs": [
+      {
+        "id": "vocab",
+        "title": "Sanasto",
+        "content_md": "## Ateriat\n\n- **das Frühstück** — aamiainen\n- **das Mittagessen** — lounas\n- **das Abendessen** — illallinen\n\n## Ruoka — perus\n\n- **das Brot** — leipä\n- **das Brötchen** — sämpylä\n- **die Wurst** — makkara, leikkele\n- **der Käse** — juusto\n- **die Butter** — voi\n- **das Ei** — kananmuna\n- **das Fleisch** — liha\n- **der Fisch** — kala\n- **das Hähnchen** — kana\n\n## Kasvikset ja hedelmät\n\n- **das Gemüse** — kasvikset\n- **das Obst** — hedelmät\n- **die Kartoffel** — peruna\n- **die Tomate** — tomaatti\n- **der Apfel** — omena\n- **die Banane** — banaani\n\n## Juomat\n\n- **die Milch** — maito\n- **das Wasser** — vesi\n- **der Saft** — mehu\n- **das Getränk** — juoma\n\n## Mieltymykset\n\n- **gerne** — mielellään\n- **nicht gerne** — ei mielellään\n- **lieber** — mieluummin\n- **am liebsten** — kaikkein mieluiten\n\n## Verbit\n\n- **essen** — syödä\n- **trinken** — juoda\n- **kochen** — laittaa ruokaa"
+      },
+      {
+        "id": "tips",
+        "title": "YO-vinkki",
+        "content_md": "## YO-koe — ruoka-aihe\n\nRuoka-aihe toistuu Teil 2 luetun ymmärtämisessä. Teil 4 kirjoitelmassa tyypillinen aihe: *'Schreib deinem Freund, was du gerne isst.'*\n\n## Mieltymykset — tärkeä rakenne\n\n- *Ich esse **gerne** Fleisch.* (mielellään)\n- *Ich esse **lieber** Fleisch als Fisch.* (mieluummin kuin)\n- *Am **liebsten** esse ich Schokolade.* (kaikkein mieluiten)\n\n## Saksalainen ruokakulttuuri\n\nYO-kokeessa voi tulla kulttuurikysymyksiä:\n- **Brot ja Brötchen** ovat aamiaisessa keskeisiä\n- Illallinen (Abendessen) on perinteisesti kylmä — vain Brot ja Wurst\n- Mittagessen on päivän pääateria\n\n## Essen-verbin taivutus (epäsäännöllinen!)\n\n| Persoona | Muoto |\n|---|---|\n| ich | esse |\n| du | **isst** |\n| er/sie | **isst** |\n| wir | essen |\n| ihr | esst |\n| sie/Sie | essen |"
+      }
+    ]
+  }
+}

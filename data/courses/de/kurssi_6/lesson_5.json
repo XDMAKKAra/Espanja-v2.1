@@ -1,0 +1,416 @@
+{
+  "meta": {
+    "course_key": "kurssi_6",
+    "lesson_index": 5,
+    "lesson_type": "grammar",
+    "level": "C",
+    "title": "Passiv — agentti von+Dativ (tunnistus)",
+    "description": "Harjoittelet agentin tunnistamista passiivilauseessa (von + Dativ) sekä passiivi-imperfektin (wurde + Partizip II) tunnistamista yhteiskunnallisissa teksteissä. Vain tunnistus — ei tuotantoa.",
+    "yo_relevance": "Teil 2 (luetun ymmärtäminen): sanomalehtitekstit mainitsevat agentin von-rakenteella. Teil 3 (rakenne ja sanasto): von + Dativ -tunnistus esiintyy aukkotehtävissä.",
+    "estimated_minutes_median": 12
+  },
+  "teaching": {
+    "intro_md": "# Passiv — agentti von + Dativ\n\nEdellisessä oppitunnissa opimme tunnistamaan passiivin. Nyt tarkastelemme **agenttia** — eli kuka tai mikä toimii tekijänä passiivilauseessa.\n\n## Agentin rakenne: von + Dativ\n\nJos passiivinen tekijä mainitaan, käytetään **von + Dativ**:\n\n| | Aktiv | Passiv |\n|---|---|---|\n| **m** | Der Arzt operiert den Patienten. | Der Patient wird **vom Arzt** (= von dem Arzt) operiert. |\n| **f** | Die Regierung beschließt das Gesetz. | Das Gesetz wird **von der Regierung** beschlossen. |\n| **n** | Das Komitee prüft den Antrag. | Der Antrag wird **vom Komitee** geprüft. |\n| **Pl.** | Die Arbeiter bauen das Haus. | Das Haus wird **von den Arbeitern** gebaut. |\n\n## von + Dativ → Dativ-taivutus\n\n| Artikkeli | Nominativ | von + Dativ |\n|---|---|---|\n| m | der | **vom** (= von dem) |\n| f | die | **von der** |\n| n | das | **vom** (= von dem) |\n| Pl. | die | **von den** |\n\n## durch — väline vs. tekijä\n\n*von* = elollinen tekijä (ihminen, organisaatio)\n*durch* = väline tai syy:\n\n> *Die Umwelt wird **durch** Abgase verschmutzt.* — pakokaasut = syy/väline\n> *Das Gesetz wird **von** der Regierung beschlossen.* — hallitus = tekijä\n\n## Passiv Präteritum\n\n| Preesens | Imperfekti |\n|---|---|\n| wird gebaut | **wurde** gebaut |\n| werden gebaut | **wurden** gebaut |\n\n> *Das Gesetz **wurde** 2022 **beschlossen**.* — Laki hyväksyttiin 2022.",
+    "key_points": [
+      "Agentin prepositio passiivilauseessa on von + Dativ.",
+      "von dem → vom (maskuliini/neutri), von der (feminiini), von den (monikko).",
+      "durch-prepositio ilmaisee välinettä tai syytä — ei elollista tekijää.",
+      "Passiv Präteritum: wurde + Partizip II (imperfekti). Esim. 'wurde gebaut' = rakennettiin.",
+      "YTL-tehtävässä: tunnista von + Dativ -rakenne → kyseessä on passiivilauseen agentti."
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1-recognition-mc-von-dativ",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista — von + Dativ -agentti",
+      "instruction": "Valitse oikea vastaus.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": [],
+      "items": [
+        {
+          "item_type": "mc",
+          "stem": "Mikä on agentina lauseessa: 'Das Abkommen wird von den Politikern unterzeichnet.'?",
+          "context": null,
+          "choices": ["das Abkommen", "den Politikern", "unterzeichnet", "wird"],
+          "correct_index": 1,
+          "distractor_difficulty": "easy",
+          "explanation": "Agentti on 'den Politikern' (von + Dativ monikko). 'das Abkommen' on passiivinen subjekti (sopimus)."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Mikä on oikea von + Dativ maskuliiniselle artikkelille?",
+          "context": "Das Buch wird ___ Autor geschrieben.",
+          "choices": ["von der", "von dem / vom", "von den", "von das"],
+          "correct_index": 1,
+          "distractor_difficulty": "medium",
+          "explanation": "Maskuliini: von dem = vom. 'der Autor' → Dativissa 'dem Autor' → 'vom Autor'."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Mitä tarkoittaa: 'Das Haus wurde von den Arbeitern gebaut.'?",
+          "context": null,
+          "choices": [
+            "Talon rakensivat työläiset.",
+            "Talo rakennettiin työläisten toimesta.",
+            "Talon rakentaminen alkoi.",
+            "Talo oli rakennettu aiemmin."
+          ],
+          "correct_index": 1,
+          "distractor_difficulty": "easy",
+          "explanation": "'wurde gebaut' = Passiv Präteritum. 'von den Arbeitern' = tekijä (agentti). Talo rakennettiin — työläiset tekivät sen."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Kumpi prepositio sopii — von vai durch?",
+          "context": "Die Umwelt wird ___ Abgase verschmutzt.",
+          "choices": ["von", "durch", "mit", "für"],
+          "correct_index": 1,
+          "distractor_difficulty": "medium",
+          "explanation": "'durch' sopii välineelle/syytä varten. 'Abgase' (pakokaasut) on syy, ei elollinen tekijä. Elolliselle tekijälle käytetään 'von'."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Mikä on oikea prepositio lauseessa: 'Das Gesetz wird ___ der Regierung beschlossen.'?",
+          "context": null,
+          "choices": ["durch", "mit", "von", "für"],
+          "correct_index": 2,
+          "distractor_difficulty": "easy",
+          "explanation": "'von + Dativ' = elollinen tekijä (die Regierung = hallitus). 'durch' sopisi vain välineelle tai syytä."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Passiv Präteritum: mikä on oikea muoto?",
+          "context": "Das Gesetz ___ 2020 ___. (beschließen)",
+          "choices": [
+            "ist ... beschlossen",
+            "wurde ... beschlossen",
+            "wird ... beschlossen",
+            "war ... beschlossen"
+          ],
+          "correct_index": 1,
+          "distractor_difficulty": "medium",
+          "explanation": "'wurde beschlossen' = Passiv Präteritum (menneisyys). 'wird beschlossen' on preesens. 'ist beschlossen' on Zustandspassiv."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Mitä tarkoittaa 'vom' passiivissa?",
+          "context": "Die Prüfung wurde vom Lehrer korrigiert.",
+          "choices": ["von die Lehrer", "von der Lehrer", "von dem Lehrer", "von das Lehrer"],
+          "correct_index": 2,
+          "distractor_difficulty": "medium",
+          "explanation": "'vom' = 'von dem'. 'der Lehrer' (maskuliini) Dativissa = 'dem Lehrer' → 'vom Lehrer'."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Mikä Dativ-muoto on oikein? 'Die Schüler werden ___ Lehrerin gelobt.'",
+          "context": null,
+          "choices": ["von die", "von der", "von das", "von dem"],
+          "correct_index": 1,
+          "distractor_difficulty": "medium",
+          "explanation": "'die Lehrerin' (feminiini). Dativissa: 'der Lehrerin'. Yhdessä von = 'von der Lehrerin'."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Mitä tarkoittaa: 'Das Projekt wurde von der EU finanziert.'?",
+          "context": null,
+          "choices": [
+            "EU rahoittaa projektin (nyt)",
+            "EU rahoitti projektin (aiemmin)",
+            "Projekti rahoittaa EU:ta",
+            "Projekti on EU:n rahoittama (tällä hetkellä)"
+          ],
+          "correct_index": 1,
+          "distractor_difficulty": "medium",
+          "explanation": "'wurde finanziert' = Passiv Präteritum → menneisyys. EU toimi tekijänä (agenttina)."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Kumpi lause käyttää von (henkilöagentti), kumpi durch (syy)?",
+          "context": "A) Der Wald wird durch den Sturm zerstört.\nB) Der Wald wird von den Arbeitern gepflegt.",
+          "choices": [
+            "A käyttää von, B käyttää durch",
+            "A käyttää durch, B käyttää von",
+            "Molemmat käyttävät von",
+            "Molemmat käyttävät durch"
+          ],
+          "correct_index": 1,
+          "distractor_difficulty": "hard",
+          "explanation": "A: 'durch den Sturm' = syy (myrsky ei ole elollinen tekijä). B: 'von den Arbeitern' = henkilöagentti (työläiset)."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Miten sanotaan: 'Demokratia perustettiin uudelleen vuonna 1949.'?",
+          "context": null,
+          "choices": [
+            "Die Demokratie wird 1949 wieder eingeführt.",
+            "Die Demokratie wurde 1949 wieder eingeführt.",
+            "Die Demokratie ist 1949 wieder eingeführt.",
+            "Die Demokratie hat 1949 wieder eingeführt."
+          ],
+          "correct_index": 1,
+          "distractor_difficulty": "medium",
+          "explanation": "'wurde...eingeführt' = Passiv Präteritum (menneisyys, 1949). 'wird' on preesens. A on väärä aikamuoto, C on Zustandspassiv."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Mikä on agentteina: 'Das Gesetz wird von der Regierung und dem Parlament beschlossen.'?",
+          "context": null,
+          "choices": [
+            "Vain hallitus",
+            "Vain parlamentti",
+            "Hallitus ja parlamentti",
+            "Ei agenttia"
+          ],
+          "correct_index": 2,
+          "distractor_difficulty": "medium",
+          "explanation": "Kaksi agenttia: 'von der Regierung' + 'dem Parlament'. Molemmat ovat Dativ-muodossa 'von'-preposition jälkeen."
+        }
+      ]
+    },
+    {
+      "phase_id": "p2-gap-fill-von-dativ",
+      "phase_type": "application_gap_fill",
+      "title": "Täydennä — von + Dativ",
+      "instruction": "Täydennä passiivilause oikealla von + Dativ -muodolla.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Das Gesetz wird ___ Regierung (f) beschlossen.", "answers": [["von der"]], "word_bank": ["von der", "vom", "von den", "von dem"] },
+        { "item_type": "gap_fill", "sentence_template": "Das Buch wird ___ Autor (m) geschrieben.", "answers": [["vom", "von dem"]], "word_bank": ["vom", "von der", "von den", "von"] },
+        { "item_type": "gap_fill", "sentence_template": "Die Schüler werden ___ Lehrerin (f) gelobt.", "answers": [["von der"]], "word_bank": ["von der", "vom", "von den", "von dem"] },
+        { "item_type": "gap_fill", "sentence_template": "Das Haus wurde ___ Arbeitern (Pl.) gebaut.", "answers": [["von den"]], "word_bank": ["von den", "von der", "vom", "von dem"] },
+        { "item_type": "gap_fill", "sentence_template": "Der Patient wird ___ Arzt (m) operiert.", "answers": [["vom", "von dem"]], "word_bank": ["vom", "von der", "von den", "von"] },
+        { "item_type": "gap_fill", "sentence_template": "Das Projekt wurde ___ EU (f) finanziert.", "answers": [["von der"]], "word_bank": ["von der", "vom", "von den", "von dem"] },
+        { "item_type": "gap_fill", "sentence_template": "Flüchtlinge werden ___ Hilfsorganisationen (Pl.) unterstützt.", "answers": [["von den"]], "word_bank": ["von den", "von der", "vom", "von dem"] },
+        { "item_type": "gap_fill", "sentence_template": "Das Klimaabkommen wurde ___ Ländern (Pl.) unterzeichnet.", "answers": [["von den"]], "word_bank": ["von den", "von der", "vom", "von dem"] },
+        { "item_type": "gap_fill", "sentence_template": "Die Entscheidung wird ___ Komitee (n) getroffen.", "answers": [["vom", "von dem"]], "word_bank": ["vom", "von der", "von den", "von"] },
+        { "item_type": "gap_fill", "sentence_template": "Die Umwelt wird ___ Industrie (f) verschmutzt.", "answers": [["von der"]], "word_bank": ["von der", "vom", "von den", "von dem"] }
+      ]
+    },
+    {
+      "phase_id": "p3-gap-fill-passiv-praeteritum",
+      "phase_type": "application_gap_fill",
+      "title": "Täydennä — Passiv Präteritum",
+      "instruction": "Täydennä lauseet Passiv Präteritum -muodolla (wurde/wurden + Partizip II).",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Das Grundgesetz ___ 1949 verabschiedet.", "answers": [["wurde"]], "word_bank": ["wurde", "wird", "war", "ist"] },
+        { "item_type": "gap_fill", "sentence_template": "Die Berliner Mauer ___ 1989 geöffnet.", "answers": [["wurde"]], "word_bank": ["wurde", "wird", "ist", "hat"] },
+        { "item_type": "gap_fill", "sentence_template": "Viele Flüchtlinge ___ 2015 in Deutschland aufgenommen.", "answers": [["wurden"]], "word_bank": ["wurden", "werden", "waren", "haben"] },
+        { "item_type": "gap_fill", "sentence_template": "Die Kernkraftwerke ___ 2023 abgeschaltet.", "answers": [["wurden"]], "word_bank": ["wurden", "werden", "waren", "sind"] },
+        { "item_type": "gap_fill", "sentence_template": "Das neue Klimagesetz ___ nach langen Debatten beschlossen.", "answers": [["wurde"]], "word_bank": ["wurde", "wird", "hat", "ist"] },
+        { "item_type": "gap_fill", "sentence_template": "Die Menschenrechte ___ in der Allgemeinen Erklärung festgelegt.", "answers": [["wurden"]], "word_bank": ["wurden", "werden", "haben", "sind"] },
+        { "item_type": "gap_fill", "sentence_template": "Das Klimaabkommen ___ von fast allen Ländern unterzeichnet.", "answers": [["wurde"]], "word_bank": ["wurde", "wird", "ist", "hat"] },
+        { "item_type": "gap_fill", "sentence_template": "Neue Gesetze gegen Diskriminierung ___ vom Bundestag verabschiedet.", "answers": [["wurden"]], "word_bank": ["wurden", "werden", "waren", "haben"] }
+      ]
+    },
+    {
+      "phase_id": "p4-gap-fill-durch-vs-von",
+      "phase_type": "application_gap_fill",
+      "title": "Täydennä — von vai durch?",
+      "instruction": "Valitse von tai durch.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Das Gesetz wird ___ der Regierung beschlossen.", "answers": [["von"]], "word_bank": ["von", "durch"] },
+        { "item_type": "gap_fill", "sentence_template": "Die Umwelt wird ___ Abgase verschmutzt.", "answers": [["durch"]], "word_bank": ["von", "durch"] },
+        { "item_type": "gap_fill", "sentence_template": "Der Flüchtling wird ___ einer Hilfsorganisation unterstützt.", "answers": [["von"]], "word_bank": ["von", "durch"] },
+        { "item_type": "gap_fill", "sentence_template": "Die Ernte wird ___ Trockenheit gefährdet.", "answers": [["durch"]], "word_bank": ["von", "durch"] },
+        { "item_type": "gap_fill", "sentence_template": "Das Buch wurde ___ einem berühmten Autor geschrieben.", "answers": [["von"]], "word_bank": ["von", "durch"] },
+        { "item_type": "gap_fill", "sentence_template": "Das Klimaabkommen wurde ___ harte Verhandlungen erreicht.", "answers": [["durch"]], "word_bank": ["von", "durch"] },
+        { "item_type": "gap_fill", "sentence_template": "Die Gleichberechtigung wird ___ das Grundgesetz garantiert.", "answers": [["durch"]], "word_bank": ["von", "durch"] },
+        { "item_type": "gap_fill", "sentence_template": "Die Stadt wurde ___ einem Erdbeben zerstört.", "answers": [["durch"]], "word_bank": ["von", "durch"] }
+      ]
+    },
+    {
+      "phase_id": "p5-recognition-mc-advanced",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista — monimutkaisia passiivilauseita",
+      "instruction": "Valitse oikea vastaus.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        {
+          "item_type": "mc",
+          "stem": "Mikä on Dativ-muoto: 'von ___ neuen Regierung (f)'?",
+          "context": null,
+          "choices": ["von die neue Regierung", "von der neuen Regierung", "von dem neuen Regierung", "von das neue Regierung"],
+          "correct_index": 1,
+          "distractor_difficulty": "hard",
+          "explanation": "Feminiini Dativissa: 'der' + adjektiivi schwache Deklination: 'neuen'. → 'von der neuen Regierung'."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Mitä tarkoittaa: 'Der Brief wurde vom Direktor unterschrieben.'?",
+          "context": null,
+          "choices": [
+            "Johtaja kirjoitti kirjeen.",
+            "Kirje allekirjoitettiin johtajan toimesta.",
+            "Kirje pitää johtajan allekirjoittaa.",
+            "Johtaja löysi kirjeen."
+          ],
+          "correct_index": 1,
+          "distractor_difficulty": "easy",
+          "explanation": "'wurde unterschrieben' = Passiv Präteritum. 'vom Direktor' = johtaja oli tekijä (agentti)."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Tunnista agentit: 'Das Gesetz wird von Politikern und Bürgern diskutiert.'",
+          "context": null,
+          "choices": [
+            "Vain Politikern on agentti",
+            "Vain Bürgern on agentti",
+            "Molemmat Politikern ja Bürgern ovat agentteja",
+            "Kummallakaan ei ole agenttia — se on Zustandspassiv"
+          ],
+          "correct_index": 2,
+          "distractor_difficulty": "medium",
+          "explanation": "'von Politikern und Bürgern' = kaksi agenttia. Molemmat ovat Dativ-muodossa monikossa."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Onko virhe lauseessa: 'Das Gesetz wird von die Regierung beschlossen.'?",
+          "context": null,
+          "choices": [
+            "Ei, lause on oikein",
+            "Kyllä — von vaatii Dativin: 'von der Regierung'",
+            "Kyllä — pitäisi käyttää durch, ei von",
+            "Kyllä — Partizip II on väärä"
+          ],
+          "correct_index": 1,
+          "distractor_difficulty": "hard",
+          "explanation": "von + Nominativ on virhe. Von vaatii aina Dativin: 'von die' → 'von der' (feminiini Dativissa)."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Miten sanotaan: 'Yhteiskunta on muuttunut maahanmuuton myötä.' (passiivilla)?",
+          "context": null,
+          "choices": [
+            "Die Gesellschaft wird von der Migration geändert.",
+            "Die Gesellschaft wird durch die Migration verändert.",
+            "Die Gesellschaft verändert sich durch die Migration.",
+            "Die Migration ändert von der Gesellschaft."
+          ],
+          "correct_index": 1,
+          "distractor_difficulty": "hard",
+          "explanation": "'durch die Migration' = syy/väline (maahanmuutto ei ole elollinen tekijä). A käyttää 'von' — se sopii elollisille. C on aktiivilause (sich verändern)."
+        }
+      ]
+    },
+    {
+      "phase_id": "p6-gap-fill-passiv-text",
+      "phase_type": "application_gap_fill",
+      "title": "Täydennä — passiivi agenteilla",
+      "instruction": "Täydennä lause oikealla muodolla.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Das Klimaabkommen ___ 2015 ___ fast allen Ländern unterzeichnet.", "answers": [["wurde", "von"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Die Gleichberechtigung ___ ___ der Verfassung garantiert.", "answers": [["wird", "durch"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Flüchtlinge ___ ___ Freiwilligen unterstützt.", "answers": [["werden", "von"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Das Gesetz ___ 1949 ___ den Gründervätern beschlossen.", "answers": [["wurde", "von"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Die Gesellschaft ___ ___ den Klimawandel stark verändert.", "answers": [["wird", "durch"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Neue Schulen ___ ___ der Stadt gebaut.", "answers": [["werden", "von"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Die Demokratie ___ ___ aktive Bürger getragen.", "answers": [["wird", "von"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Der Wald ___ ___ Industrieabgase gefährdet.", "answers": [["wird", "durch"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p7-recognition-mc-passiv-kertaus",
+      "phase_type": "recognition_mc",
+      "title": "Kertaus — passiivin agentti",
+      "instruction": "Valitse oikea vastaus.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        {
+          "item_type": "mc",
+          "stem": "Mitä kuvaa von + Dativ passiivilauseessa?",
+          "context": null,
+          "choices": [
+            "Passiivinen kohde (jolle tapahtuu jotakin)",
+            "Tekijä (agentti, joka tekee)",
+            "Aikamuoto (milloin)",
+            "Tapa (miten)"
+          ],
+          "correct_index": 1,
+          "distractor_difficulty": "easy",
+          "explanation": "von + Dativ = tekijä (agentti). Subjekti on passiivinen kohde. Esim.: 'Das Haus wird von den Arbeitern gebaut.' — talon rakentavat työläiset."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Oikea käännös: 'Das Gesetz wurde vom Parlament verabschiedet.'",
+          "context": null,
+          "choices": [
+            "Laki hyväksyy parlamentin.",
+            "Parlamentti hylkäsi lain.",
+            "Laki hyväksyttiin parlamentin toimesta.",
+            "Parlamentti ottaa lain käyttöön."
+          ],
+          "correct_index": 2,
+          "distractor_difficulty": "easy",
+          "explanation": "'wurde verabschiedet' = Passiv Präteritum. 'vom Parlament' = agentti. Laki on kohde, parlamentti on tekijä."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Mitkä ovat oikeat Dativ-artikkelit passiivissa: 'von ___ Staat (m) / von ___ Organisation (f) / von ___ Komitees (Pl.)'?",
+          "context": null,
+          "choices": [
+            "von der / von der / von den",
+            "von dem / von der / von den",
+            "von dem / von dem / von der",
+            "von der / von dem / von den"
+          ],
+          "correct_index": 1,
+          "distractor_difficulty": "hard",
+          "explanation": "Maskuliini: von dem (=vom). Feminiini: von der. Monikko: von den."
+        }
+      ]
+    },
+    {
+      "phase_id": "p8-gap-fill-news-passiv",
+      "phase_type": "application_gap_fill",
+      "title": "Uutisteksti — passiivi agentilla",
+      "instruction": "Täydennä uutismainen teksti.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I", "A", "B", "C", "M"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Das Gesetz ___ von Bundestag und Bundesrat ___.", "answers": [["wurde", "verabschiedet"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Die Klimaziele ___ von der EU ___ festgelegt.", "answers": [["wurden", "gemeinsam"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Tausende von Flüchtlingen ___ ___ deutschen Behörden registriert.", "answers": [["wurden", "von"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Die neue Demokratie ___ 1990 nach der Wiedervereinigung ___.", "answers": [["wurde", "gebildet"]], "word_bank": null }
+      ]
+    }
+  ],
+  "vocab": [
+    { "es": "von + Dativ", "fi": "passiivin agenttirakenne", "example_es": "Das Gesetz wird von der Regierung beschlossen.", "example_fi": "Laki hyväksytään hallituksen toimesta.", "gender": null },
+    { "es": "durch + Akkusativ", "fi": "passiivissa: väline tai syy", "example_es": "Die Umwelt wird durch Abgase verschmutzt.", "example_fi": "Ympäristö saastuu pakokaasuilta.", "gender": null },
+    { "es": "wurde + Partizip II", "fi": "passiivi imperfekti (mennyt)", "example_es": "Das Gesetz wurde 2020 beschlossen.", "example_fi": "Laki hyväksyttiin 2020.", "gender": null },
+    { "es": "wurden + Partizip II", "fi": "passiivi imperfekti monikko", "example_es": "Neue Schulen wurden gebaut.", "example_fi": "Uusia kouluja rakennettiin.", "gender": null },
+    { "es": "vom = von dem", "fi": "maskuliini/neutri Dativ passiivissa", "example_es": "Das Buch wird vom Autor geschrieben.", "example_fi": "Kirja kirjoitetaan kirjailijan toimesta.", "gender": null },
+    { "es": "verabschieden → verabschiedet", "fi": "hyväksyä (laki) → hyväksytty", "example_es": "Das Gesetz wurde verabschiedet.", "example_fi": "Laki hyväksyttiin.", "gender": null },
+    { "es": "unterzeichnen → unterzeichnet", "fi": "allekirjoittaa → allekirjoitettu", "example_es": "Das Abkommen wurde unterzeichnet.", "example_fi": "Sopimus allekirjoitettiin.", "gender": null },
+    { "es": "finanzieren → finanziert", "fi": "rahoittaa → rahoitettu", "example_es": "Das Projekt wurde von der EU finanziert.", "example_fi": "Projekti rahoitettiin EU:n toimesta.", "gender": null }
+  ],
+  "side_panel": {
+    "tabs": [
+      {
+        "id": "grammar",
+        "title": "Kielioppi",
+        "content_md": "## von + Dativ — passiivin agentti\n\n| Artikkeli | Nominativ | von + Dativ |\n|---|---|---|\n| m (der) | der Arzt | **vom Arzt** |\n| f (die) | die Regierung | **von der Regierung** |\n| n (das) | das Komitee | **vom Komitee** |\n| Pl. (die) | die Arbeiter | **von den Arbeitern** |\n\n## durch = väline tai syy\n\n- Elollinen tekijä → **von**: *von der Regierung*\n- Syy / väline → **durch**: *durch Abgase*\n\n## Passiv Präteritum\n\n| | Preesens | Imperfekti |\n|---|---|---|\n| yks. | wird + P.II | **wurde** + P.II |\n| mon. | werden + P.II | **wurden** + P.II |"
+      },
+      {
+        "id": "examples",
+        "title": "Esimerkkejä",
+        "content_md": "## Agentilla\n\n- *Das Gesetz **wird von der Regierung** beschlossen.*\n  → Laki hyväksytään hallituksen toimesta.\n\n- *Das Abkommen **wurde von den Ländern** unterzeichnet.*\n  → Sopimus allekirjoitettiin maiden toimesta.\n\n- *Der Patient **wird vom Arzt** behandelt.*\n  → Lääkäri hoitaa potilasta.\n\n## durch (syy/väline)\n\n- *Die Umwelt **wird durch Abgase** verschmutzt.*\n  → Pakokaasut saastuttavat ympäristöä.\n\n- *Der Wald **wird durch** den Klimawandel gefährdet.*\n  → Ilmastonmuutos uhkaa metsää."
+      },
+      {
+        "id": "tips",
+        "title": "YO-vihje",
+        "content_md": "## YO-koe — passiivi ja agentti\n\n**Teil 2:** Luetussa ymmärtämisessä näet lauseita kuten:\n- *Das Projekt wurde von der EU finanziert.*\n- *Die Maßnahmen werden durch neue Gesetze unterstützt.*\n\nTunnista: **von** → elollinen tekijä. **durch** → syy tai väline.\n\n**Teil 3:** Aukkotehtävässä saatat täydentää:\n- *Das Gesetz wird ___ der Regierung beschlossen.* → **von**\n- *Die Umwelt wird ___ Abgase verschmutzt.* → **durch**\n\n**Muistisääntö:**\n> von = WHO (kuka teki)\n> durch = WHY/HOW (miksi/millä)"
+      }
+    ]
+  }
+}

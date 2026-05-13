@@ -1,0 +1,295 @@
+{
+  "meta": {
+    "course_key": "kurssi_1",
+    "lesson_index": 1,
+    "lesson_type": "vocab",
+    "level": "A",
+    "title": "Perhe ja kansallisuudet",
+    "description": "Opettelet 30 perheenjäsen- ja kansallisuussanaa saksaksi. Saksan YO-kokeessa nämä toistuvat kirjoitelma- ja luetun ymmärtämisen tehtävissä — esittelytekstit ovat klassinen aloitusaihe.",
+    "yo_relevance": "Teil 4 (Schreiben): itsensä ja perheensä esittely on yksi yleisimmistä kirjoitelma-aiheista lyhyen saksan kokeessa. Teil 2 (Lesen): perhetausta-tekstit toistuvat luetun ymmärtämisessä lähes joka vuosi.",
+    "estimated_minutes_median": 12
+  },
+  "teaching": {
+    "intro_md": "# Perhe ja kansallisuudet saksaksi\n\nSaksassa kaikki substantiivit kirjoitetaan **isolla alkukirjaimella** — tämä erottaa saksan kaikista muista kielistä. Die **Mutter**, der **Vater**, die **Schwester**.\n\n## Suvun merkitseminen\n\nJokaisella substantiivilla on suku: maskuliini (**der**), feminiini (**die**) tai neutri (**das**). Artikkeli kuuluu sanaan — opettele ne pareina:\n\n- **der Vater** — isä\n- **die Mutter** — äiti\n- **das Kind** — lapsi (sukupuolineutraali)\n\n## Esimerkki\n\n> Ich heiße Lena. Meine **Mutter** ist Finnin und mein **Vater** ist Deutscher. Ich habe einen **Bruder** und eine **Schwester**.\n\n## Kansallisuudet\n\nKansallisuuksia ei kirjoiteta isolla kuin artikkelin kuuluessa sanan eteen: *er ist **Finne*** (hän on suomalainen). Naismuoto: *sie ist **Finnin***.",
+    "key_points": [
+      "Kaikki substantiivit isolla alkukirjaimella saksassa.",
+      "Jokaisella substantiivilla on suku: der (m), die (f), das (n).",
+      "Kansallisuudet: miespuolinen Finne/Deutscher, naispuolinen Finnin/Deutsche.",
+      "Perheenjäsenparit erottuvat yleensä viimeisestä tavusta tai liitteestä."
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1-recognition-perhe-ydin",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista — perhesanat (ydin)",
+      "instruction": "Valitse oikea suomenkielinen käännös.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "mc", "stem": "die Mutter", "choices": ["isä", "äiti", "sisko", "isoäiti"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "die Mutter = äiti. Der Vater = isä." },
+        { "item_type": "mc", "stem": "der Vater", "choices": ["isä", "veli", "isoisä", "setä"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "der Vater = isä. Muista: der = maskuliini." },
+        { "item_type": "mc", "stem": "der Bruder", "choices": ["veli", "sisko", "serkku", "poika"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "der Bruder = veli. Die Schwester = sisko." },
+        { "item_type": "mc", "stem": "die Schwester", "choices": ["veli", "sisko", "tytär", "täti"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "die Schwester = sisko. Veli = der Bruder." },
+        { "item_type": "mc", "stem": "der Sohn", "choices": ["setä", "poika (lapsi)", "isoisä", "serkku"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "der Sohn = poika (omasta perheestä). Tytär = die Tochter." },
+        { "item_type": "mc", "stem": "die Tochter", "choices": ["sisko", "tytär", "tyttöystävä", "isoäiti"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "die Tochter = tytär. Poika = der Sohn." },
+        { "item_type": "mc", "stem": "der Großvater", "choices": ["isoisä", "setä", "isä", "isoveli"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "der Großvater = isoisä. Gross = iso/suuri." },
+        { "item_type": "mc", "stem": "die Großmutter", "choices": ["täti", "isoäiti", "äiti", "anoppi"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "die Großmutter = isoäiti." },
+        { "item_type": "mc", "stem": "der Onkel", "choices": ["isoisä", "setä / eno", "serkku", "lanko"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "der Onkel = setä tai eno (vanhemman veli)." },
+        { "item_type": "mc", "stem": "die Tante", "choices": ["sisko", "isoäiti", "täti", "käly"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "die Tante = täti." },
+        { "item_type": "mc", "stem": "die Familie", "choices": ["suku", "perhe", "kumppani", "parisuhde"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "die Familie = perhe. Suku laajemmin = die Verwandten." },
+        { "item_type": "mc", "stem": "das Kind", "choices": ["tyttö", "lapsi", "poika", "nuori"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "das Kind = lapsi (sukupuolineutraali, neutri-suku)." },
+        { "item_type": "mc", "stem": "die Eltern", "choices": ["isovanhemmat", "vanhemmat", "lapset", "sisarukset"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "die Eltern = vanhemmat (monikko, ei yksikkömuotoa)." },
+        { "item_type": "mc", "stem": "der Cousin", "choices": ["serkku (mies)", "veli", "ystävä", "isä"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "der Cousin = miespuolinen serkku. Naispuolinen = die Cousine." }
+      ]
+    },
+    {
+      "phase_id": "p2-recognition-match-perhe",
+      "phase_type": "recognition_match",
+      "title": "Yhdistä — perheenjäsenet",
+      "instruction": "Yhdistä saksan sana ja suomennos.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        {
+          "item_type": "match",
+          "left_label": "Saksa",
+          "right_label": "Suomi",
+          "pairs": [
+            { "left": "der Vater", "right": "isä" },
+            { "left": "die Mutter", "right": "äiti" },
+            { "left": "der Bruder", "right": "veli" },
+            { "left": "die Schwester", "right": "sisko" },
+            { "left": "der Sohn", "right": "poika (lapsi)" },
+            { "left": "die Tochter", "right": "tytär" },
+            { "left": "der Großvater", "right": "isoisä" },
+            { "left": "die Großmutter", "right": "isoäiti" },
+            { "left": "der Onkel", "right": "setä, eno" },
+            { "left": "die Tante", "right": "täti" },
+            { "left": "die Eltern", "right": "vanhemmat" },
+            { "left": "das Kind", "right": "lapsi" }
+          ]
+        },
+        {
+          "item_type": "match",
+          "left_label": "Saksa",
+          "right_label": "Suomi",
+          "pairs": [
+            { "left": "der Cousin", "right": "serkku (mies)" },
+            { "left": "die Cousine", "right": "serkku (nainen)" },
+            { "left": "der Neffe", "right": "veljenpoika, sisarenpoika" },
+            { "left": "die Nichte", "right": "veljentytär, sisarentytär" },
+            { "left": "der Enkel", "right": "lapsenlapsi (poika)" },
+            { "left": "die Enkelin", "right": "lapsenlapsi (tyttö)" },
+            { "left": "der Schwiegervater", "right": "appi" },
+            { "left": "die Schwiegermutter", "right": "anoppi" },
+            { "left": "der Schwager", "right": "lanko" },
+            { "left": "die Schwägerin", "right": "käly" },
+            { "left": "die Geschwister", "right": "sisarukset" },
+            { "left": "das Baby", "right": "vauva, pikkulapsi" }
+          ]
+        }
+      ]
+    },
+    {
+      "phase_id": "p3-recognition-kansallisuudet",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista — kansallisuudet",
+      "instruction": "Valitse oikea suomennos.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        { "item_type": "mc", "stem": "der Finne / die Finnin", "choices": ["suomalainen", "saksalainen", "ruotsalainen", "norjalainen"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "Finne (mies) / Finnin (nainen) = suomalainen. Vertaa: der Deutsche / die Deutsche." },
+        { "item_type": "mc", "stem": "der Deutsche / die Deutsche", "choices": ["itävaltalainen", "sveitsiläinen", "saksalainen", "englantilainen"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "Deutsche = saksalainen — kaikki DACH-maat puhuvat saksaa, mutta kansallisuus eri." },
+        { "item_type": "mc", "stem": "der Österreicher / die Österreicherin", "choices": ["sveitsiläinen", "saksalainen", "itävaltalainen", "belgialainen"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "Österreicher = itävaltalainen. Österreich = Itävalta." },
+        { "item_type": "mc", "stem": "der Schweizer / die Schweizerin", "choices": ["sveitsiläinen", "ruotsalainen", "itävaltalainen", "norjalainen"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "Schweizer = sveitsiläinen. Schweiz = Sveitsi." },
+        { "item_type": "mc", "stem": "der Franzose / die Französin", "choices": ["espanjalainen", "italialainen", "ranskalainen", "portugalilainen"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "Franzose = ranskalainen mies. Nainen: Französin (huomaa erimuoto!)." },
+        { "item_type": "mc", "stem": "der Engländer / die Engländerin", "choices": ["irlantilainen", "skotlantilainen", "englantilainen", "amerikkalainen"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "Engländer = englantilainen (erityisesti Englannista, ei koko UK)." },
+        { "item_type": "mc", "stem": "der Schwede / die Schwedin", "choices": ["sveitsiläinen", "ruotsalainen", "norjalainen", "tanskalainen"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "Schwede = ruotsalainen. Muista: Schweizer = sveitsiläinen — eri sana!" },
+        { "item_type": "mc", "stem": "der Amerikaner / die Amerikanerin", "choices": ["kanadalainen", "australialainen", "yhdysvaltalainen", "argentiinalainen"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "Amerikaner = yhdysvaltalainen (amerikkalaisessa arjessa, vaikka teknisesti laajennettu merkitys)." },
+        { "item_type": "mc", "stem": "die Nationalität", "choices": ["kansallisuus", "kansalaisuus", "maa", "kieli"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "die Nationalität = kansallisuus. Kieli = die Sprache." },
+        { "item_type": "mc", "stem": "das Land", "choices": ["kaupunki", "alue", "maa", "manner"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "das Land = maa (valtio tai maaseutu kontekstin mukaan). Kaupunki = die Stadt." },
+        { "item_type": "mc", "stem": "die Sprache", "choices": ["kieli", "puhe", "ääni", "sana"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "die Sprache = kieli. Sprechen = puhua." },
+        { "item_type": "mc", "stem": "der Russe / die Russin", "choices": ["ukrainalainen", "puolalainen", "venäläinen", "tšekkiläinen"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "Russe = venäläinen. Russland = Venäjä." },
+        { "item_type": "mc", "stem": "der Türke / die Türkin", "choices": ["kreikkalainen", "turkkilainen", "bulgarialainen", "romanialainen"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Türke = turkkilainen. Die Türkei = Turkki." }
+      ]
+    },
+    {
+      "phase_id": "p4-recall-typed-de-fi",
+      "phase_type": "recall_typed_es_to_fi",
+      "title": "Käännä suomeksi",
+      "instruction": "Kirjoita saksan sanan suomennos (pienellä).",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "die Mutter", "accept": ["äiti"], "hint": "artikkelissa die → feminiini" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "der Vater", "accept": ["isä"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "der Bruder", "accept": ["veli"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "die Schwester", "accept": ["sisko", "sisar"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "der Großvater", "accept": ["isoisä"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "die Großmutter", "accept": ["isoäiti"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "die Eltern", "accept": ["vanhemmat"], "hint": "monikkomuoto" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "der Onkel", "accept": ["setä", "eno"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "die Tante", "accept": ["täti"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "der Finne", "accept": ["suomalainen"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "der Deutsche", "accept": ["saksalainen"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "die Sprache", "accept": ["kieli"] }
+      ]
+    },
+    {
+      "phase_id": "p5-recall-typed-fi-de",
+      "phase_type": "recall_typed_fi_to_es",
+      "title": "Käännä saksaksi",
+      "instruction": "Kirjoita saksan sana artikkelin kera (der/die/das + sana).",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "äiti", "accept": ["die Mutter", "Mutter"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "isä", "accept": ["der Vater", "Vater"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "veli", "accept": ["der Bruder", "Bruder"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "sisko", "accept": ["die Schwester", "Schwester"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "isoisä", "accept": ["der Großvater", "Großvater", "der Grossvater", "Grossvater"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "tytär", "accept": ["die Tochter", "Tochter"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "poika (lapsi)", "accept": ["der Sohn", "Sohn"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "täti", "accept": ["die Tante", "Tante"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "perhe", "accept": ["die Familie", "Familie"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "lapsi", "accept": ["das Kind", "Kind"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "vanhemmat", "accept": ["die Eltern", "Eltern"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "saksalainen nainen", "accept": ["die Deutsche", "Deutsche"] }
+      ]
+    },
+    {
+      "phase_id": "p6-application-gap-helppo",
+      "phase_type": "application_gap_fill",
+      "title": "Lauseen täydennys — perustaso",
+      "instruction": "Täydennä lause oikealla sanalla sanapankista.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Meine {1} heißt Anna — sie ist die Mutter meines Vaters.", "answers": [["Großmutter"]], "word_bank": ["Großmutter", "Schwester", "Tante"] },
+        { "item_type": "gap_fill", "sentence_template": "Ich habe zwei {1}: einen Bruder und eine Schwester.", "answers": [["Geschwister"]], "word_bank": ["Geschwister", "Eltern", "Cousins"] },
+        { "item_type": "gap_fill", "sentence_template": "Mein {1} ist aus Deutschland — er ist Deutscher.", "answers": [["Vater"]], "word_bank": ["Vater", "Onkel", "Bruder"] },
+        { "item_type": "gap_fill", "sentence_template": "Die {1} meines Onkels ist meine Cousine.", "answers": [["Tochter"]], "word_bank": ["Tochter", "Schwester", "Mutter"] },
+        { "item_type": "gap_fill", "sentence_template": "Mein {1} ist der Bruder meiner Mutter.", "answers": [["Onkel"]], "word_bank": ["Onkel", "Cousin", "Bruder"] },
+        { "item_type": "gap_fill", "sentence_template": "Der Vater meines Vaters ist mein {1}.", "answers": [["Großvater"]], "word_bank": ["Großvater", "Onkel", "Vater"] },
+        { "item_type": "gap_fill", "sentence_template": "Ich komme aus Helsinki — ich bin {1}.", "answers": [["Finnin", "Finne"]], "word_bank": ["Finnin", "Deutsche", "Schwedin"] },
+        { "item_type": "gap_fill", "sentence_template": "Die {1} meiner Schwester ist meine Nichte.", "answers": [["Tochter"]], "word_bank": ["Tochter", "Mutter", "Cousine"] },
+        { "item_type": "gap_fill", "sentence_template": "Wir sprechen Deutsch — das ist unsere {1}.", "answers": [["Sprache"]], "word_bank": ["Sprache", "Familie", "Nationalität"] },
+        { "item_type": "gap_fill", "sentence_template": "Meine {1} arbeitet als Ärztin in Berlin.", "answers": [["Mutter", "Schwester", "Tante"]], "word_bank": ["Mutter", "Schwester", "Tante"] }
+      ]
+    },
+    {
+      "phase_id": "p7-application-gap-vaativa",
+      "phase_type": "application_gap_fill",
+      "title": "Lauseen täydennys — vaativa (ilman sanapankkia)",
+      "instruction": "Täydennä lause ilman sanapankkia. Kirjoita oikea sana.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.65, "C": 0.75, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Die Mutter meines Vaters ist meine {1}.", "answers": [["Großmutter"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Meine Mutter hat eine Schwester — sie ist meine {1}.", "answers": [["Tante"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Der Mann meiner Schwester ist mein {1}.", "answers": [["Schwager"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Meine Tante wohnt in Wien — sie ist {1}.", "answers": [["Österreicherin"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Die Kinder meines Sohnes sind meine {1}.", "answers": [["Enkelkinder", "Enkel"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Er kommt aus Zürich — er ist {1}.", "answers": [["Schweizer"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Meine Cousine lebt in Paris — sie ist {1}.", "answers": [["Französin"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Die Tochter meiner Schwester ist meine {1}.", "answers": [["Nichte"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p8-application-sentence-build",
+      "phase_type": "application_sentence_build",
+      "title": "Lauseiden rakentelua",
+      "instruction": "Käännä koko lause saksaksi.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.60, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Äitini on suomalainen.", "accept": ["Meine Mutter ist Finnin.", "meine Mutter ist Finnin.", "Meine Mutter ist Finnin"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Isäni on saksalainen.", "accept": ["Mein Vater ist Deutscher.", "mein Vater ist Deutscher.", "Mein Vater ist Deutscher"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Minulla on yksi veli ja kaksi siskoa.", "accept": ["Ich habe einen Bruder und zwei Schwestern.", "Ich habe einen Bruder und zwei Schwestern"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Isoäitini asuu Berliinissä.", "accept": ["Meine Großmutter wohnt in Berlin.", "meine Großmutter wohnt in Berlin.", "Meine Grossmutter wohnt in Berlin."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Hän on setäni poika — siis serkkuni.", "accept": ["Er ist der Sohn meines Onkels — also mein Cousin.", "Er ist der Sohn meines Onkels, also mein Cousin."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Perheessäni on neljä henkilöä.", "accept": ["In meiner Familie gibt es vier Personen.", "Meine Familie hat vier Personen.", "In meiner Familie sind vier Personen."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Olemmeko suomalaisia vai saksalaisia?", "accept": ["Sind wir Finnen oder Deutsche?", "Sind wir Finnen oder Deutsche"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Anoppini puhuu saksaa.", "accept": ["Meine Schwiegermutter spricht Deutsch.", "meine Schwiegermutter spricht Deutsch."] }
+      ]
+    },
+    {
+      "phase_id": "p9-synthesis-translate",
+      "phase_type": "synthesis_translate",
+      "title": "YO-tyylinen käännös",
+      "instruction": "Käännä koko lause saksaksi YO-tasolla.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.60, "C": 0.65, "M": 0.75, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Perheessäni on viisi henkilöä: vanhempani, kaksi veljeäni ja minä.", "accept": ["In meiner Familie gibt es fünf Personen: meine Eltern, meine zwei Brüder und ich.", "Meine Familie besteht aus fünf Personen: meine Eltern, zwei Brüder und ich."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Isoäitini on suomalainen, mutta hän asuu nyt Saksassa.", "accept": ["Meine Großmutter ist Finnin, aber sie wohnt jetzt in Deutschland.", "Meine Grossmutter ist Finnin, aber sie wohnt jetzt in Deutschland."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Serkkuni ja minä opiskelemme samassa koulussa.", "accept": ["Mein Cousin und ich gehen in dieselbe Schule.", "Meine Cousine und ich gehen in dieselbe Schule.", "Mein Cousin und ich lernen in der gleichen Schule."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Tätini ja setäni ovat itävaltalaisia.", "accept": ["Meine Tante und mein Onkel sind Österreicher.", "Meine Tante und mein Onkel sind Österreicher"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Veljeni on kaksi vuotta minua nuorempi.", "accept": ["Mein Bruder ist zwei Jahre jünger als ich.", "mein Bruder ist zwei Jahre jünger als ich."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Lankoni työskentelee opettajana Münchenissä.", "accept": ["Mein Schwager arbeitet als Lehrer in München.", "mein Schwager arbeitet als Lehrer in München."] }
+      ]
+    },
+    {
+      "phase_id": "p10-synthesis-short-writing",
+      "phase_type": "synthesis_short_writing",
+      "title": "Lyhyt kirjoitus",
+      "instruction": "Kirjoita lyhyt esittely perheestäsi saksaksi.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.60, "C": 0.65, "M": 0.70, "E": 0.80, "L": 0.90 },
+      "skip_for_targets": ["I", "A", "B", "C", "M"],
+      "items": [
+        { "item_type": "writing", "prompt": "Kirjoita 4–6 lausetta perheestäsi saksaksi: ketä siihen kuuluu, mistä he ovat kotoisin ja mitä he tekevät. Käytä oppimiasi sanoja (Mutter, Vater, Bruder, Schwester, Finne/Finnin).", "min_words": 35, "max_words": 80, "rubric_focus": ["communication", "vocab", "structure"] },
+        { "item_type": "writing", "prompt": "Esittele yksi sukulainen tarkemmin saksaksi (esim. setä, isovanhempi, serkku): kuka hän on, mistä kotoisin, mitä tekee. 4–6 lausetta.", "min_words": 35, "max_words": 80, "rubric_focus": ["communication", "vocab"] },
+        { "item_type": "writing", "prompt": "Vertaa perheesi kahta jäsentä saksaksi: mitä yhteistä, mitä eroa kansallisuuden tai ammatin suhteen. 4–6 lausetta.", "min_words": 35, "max_words": 80, "rubric_focus": ["communication", "structure"] }
+      ]
+    }
+  ],
+  "vocab": [
+    { "es": "die Mutter", "fi": "äiti", "example_es": "Meine Mutter ist Lehrerin.", "example_fi": "Äitini on opettaja.", "gender": "f" },
+    { "es": "der Vater", "fi": "isä", "example_es": "Mein Vater arbeitet in Helsinki.", "example_fi": "Isäni työskentelee Helsingissä.", "gender": "m" },
+    { "es": "der Bruder", "fi": "veli", "example_es": "Ich habe einen älteren Bruder.", "example_fi": "Minulla on isoveli.", "gender": "m" },
+    { "es": "die Schwester", "fi": "sisko", "example_es": "Meine Schwester studiert Englisch.", "example_fi": "Siskoni opiskelee englantia.", "gender": "f" },
+    { "es": "der Sohn", "fi": "poika (lapsi)", "example_es": "Der Sohn meiner Tante ist mein Cousin.", "example_fi": "Tätini poika on serkkuni.", "gender": "m" },
+    { "es": "die Tochter", "fi": "tytär", "example_es": "Ihre Tochter heißt Lena.", "example_fi": "Hänen tyttärensä on Lena.", "gender": "f" },
+    { "es": "der Großvater", "fi": "isoisä", "example_es": "Mein Großvater ist achtzig Jahre alt.", "example_fi": "Isoisäni on 80-vuotias.", "gender": "m" },
+    { "es": "die Großmutter", "fi": "isoäiti", "example_es": "Meine Großmutter wohnt in Hamburg.", "example_fi": "Isoäitini asuu Hampurissa.", "gender": "f" },
+    { "es": "der Onkel", "fi": "setä, eno", "example_es": "Mein Onkel ist Arzt.", "example_fi": "Setäni on lääkäri.", "gender": "m" },
+    { "es": "die Tante", "fi": "täti", "example_es": "Meine Tante lebt in Wien.", "example_fi": "Tätini asuu Wienissä.", "gender": "f" },
+    { "es": "die Eltern", "fi": "vanhemmat", "example_es": "Meine Eltern kommen aus Finnland.", "example_fi": "Vanhempani ovat Suomesta.", "gender": null },
+    { "es": "die Geschwister", "fi": "sisarukset", "example_es": "Hast du Geschwister?", "example_fi": "Onko sinulla sisaruksia?", "gender": null },
+    { "es": "das Kind", "fi": "lapsi", "example_es": "Das Kind spielt im Garten.", "example_fi": "Lapsi leikkii puutarhassa.", "gender": null },
+    { "es": "die Familie", "fi": "perhe", "example_es": "Meine Familie ist groß.", "example_fi": "Perheeni on iso.", "gender": "f" },
+    { "es": "der Cousin", "fi": "serkku (mies)", "example_es": "Mein Cousin wohnt in Berlin.", "example_fi": "Serkkuni asuu Berliinissä.", "gender": "m" },
+    { "es": "die Cousine", "fi": "serkku (nainen)", "example_es": "Ich habe eine Cousine in München.", "example_fi": "Minulla on serkku Münchenissä.", "gender": "f" },
+    { "es": "der Neffe", "fi": "veljenpoika, sisarenpoika", "example_es": "Mein Neffe ist fünf Jahre alt.", "example_fi": "Veljenpoikani on 5-vuotias.", "gender": "m" },
+    { "es": "die Nichte", "fi": "veljentytär, sisarentytär", "example_es": "Ich besuche meine Nichte am Sonntag.", "example_fi": "Käyn siskontyttäreni luona sunnuntaisin.", "gender": "f" },
+    { "es": "der Enkel", "fi": "lapsenlapsi (poika)", "example_es": "Meine Großmutter hat drei Enkel.", "example_fi": "Isoäidilläni on kolme lapsenlasta.", "gender": "m" },
+    { "es": "die Enkelin", "fi": "lapsenlapsi (tyttö)", "example_es": "Ihre Enkelin studiert Musik.", "example_fi": "Hänen lapsenlapsensa opiskelee musiikkia.", "gender": "f" },
+    { "es": "der Schwiegervater", "fi": "appi", "example_es": "Mein Schwiegervater ist aus München.", "example_fi": "Appiukkoni on Münchenistä.", "gender": "m" },
+    { "es": "die Schwiegermutter", "fi": "anoppi", "example_es": "Meine Schwiegermutter kocht sehr gut.", "example_fi": "Anoppini kokkaa hyvin.", "gender": "f" },
+    { "es": "der Schwager", "fi": "lanko", "example_es": "Mein Schwager arbeitet als Ingenieur.", "example_fi": "Lankoni työskentelee insinöörinä.", "gender": "m" },
+    { "es": "die Schwägerin", "fi": "käly", "example_es": "Meine Schwägerin wohnt in der Nähe.", "example_fi": "Kälyni asuu lähellä.", "gender": "f" },
+    { "es": "der Finne / die Finnin", "fi": "suomalainen", "example_es": "Ich bin Finne. / Ich bin Finnin.", "example_fi": "Olen suomalainen.", "gender": null },
+    { "es": "der Deutsche / die Deutsche", "fi": "saksalainen", "example_es": "Er ist Deutscher. / Sie ist Deutsche.", "example_fi": "Hän on saksalainen.", "gender": null },
+    { "es": "der Österreicher / die Österreicherin", "fi": "itävaltalainen", "example_es": "Meine Tante ist Österreicherin.", "example_fi": "Tätini on itävaltalainen.", "gender": null },
+    { "es": "der Schweizer / die Schweizerin", "fi": "sveitsiläinen", "example_es": "Er ist Schweizer aus Zürich.", "example_fi": "Hän on zürichläinen sveitsiläinen.", "gender": null },
+    { "es": "der Franzose / die Französin", "fi": "ranskalainen", "example_es": "Mein Freund ist Franzose.", "example_fi": "Ystäväni on ranskalainen.", "gender": null },
+    { "es": "die Sprache", "fi": "kieli", "example_es": "Deutsch ist eine schwere Sprache.", "example_fi": "Saksa on vaikea kieli.", "gender": "f" },
+    { "es": "das Land", "fi": "maa (valtio)", "example_es": "Deutschland ist ein großes Land.", "example_fi": "Saksa on iso maa.", "gender": null },
+    { "es": "die Nationalität", "fi": "kansallisuus", "example_es": "Was ist deine Nationalität?", "example_fi": "Mikä on kansallisuutesi?", "gender": "f" }
+  ],
+  "side_panel": {
+    "tabs": [
+      {
+        "id": "vocab",
+        "title": "Sanasto",
+        "content_md": "## Ydinperhe\n\n- **die Mutter** — äiti\n- **der Vater** — isä\n- **der Bruder** — veli\n- **die Schwester** — sisko\n- **der Sohn** — poika (lapsi)\n- **die Tochter** — tytär\n- **die Eltern** — vanhemmat (mon.)\n- **die Geschwister** — sisarukset (mon.)\n- **das Kind** — lapsi\n- **die Familie** — perhe\n\n## Isovanhemmat ja sukulaiset\n\n- **der Großvater** — isoisä\n- **die Großmutter** — isoäiti\n- **der Onkel** — setä, eno\n- **die Tante** — täti\n- **der Cousin** — serkku (mies)\n- **die Cousine** — serkku (nainen)\n- **der Neffe** — veljenpoika, sisarenpoika\n- **die Nichte** — veljentytär, sisarentytär\n- **der Enkel** — lapsenlapsi (poika)\n- **die Enkelin** — lapsenlapsi (tyttö)\n\n## Puolison suku\n\n- **der Schwiegervater** — appi\n- **die Schwiegermutter** — anoppi\n- **der Schwager** — lanko\n- **die Schwägerin** — käly\n\n## Kansallisuudet\n\n- **der Finne / die Finnin** — suomalainen\n- **der Deutsche / die Deutsche** — saksalainen\n- **der Österreicher / die Österreicherin** — itävaltalainen\n- **der Schweizer / die Schweizerin** — sveitsiläinen\n- **der Franzose / die Französin** — ranskalainen\n- **die Nationalität** — kansallisuus\n- **die Sprache** — kieli\n- **das Land** — maa (valtio)"
+      },
+      {
+        "id": "tips",
+        "title": "YO-vinkki",
+        "content_md": "## YO-koe — Teil 4 Kirjoitelma\n\nLyhyen saksan kirjoitelmassa itsensä ja perheensä esittely on yksi klassisimmista tehtävänannoista. Pisteet tulevat viestinnällisyydestä — kirjoita selkeästi, käytä perussanastoa oikein.\n\n**Pakollinen rakenne esittelyssä:**\n- Ich heiße... / Mein Name ist...\n- Ich komme aus...\n- Meine Familie...\n\n## Kansallisuusvikko\n\nYleisin virhe: **der Schweizer** (sveitsiläinen) vs **der Schwede** (ruotsalainen) — eri sana! Ja huomaa: Schweizer-nainen on *die Schweizerin*, muttei *die Schweizerin* vs saksa *die Deutsche* (ei -in-pääte).\n\n## Teil 2 Luetun ymmärtäminen\n\nPerhetausta-tekstit ovat yleisiä — tunnista Geschwister (sisarukset), Eltern (vanhemmat), ja kansallisuudet nopeasti kontekstista."
+      }
+    ]
+  }
+}

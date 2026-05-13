@@ -1,0 +1,296 @@
+{
+  "meta": {
+    "course_key": "kurssi_4",
+    "lesson_index": 11,
+    "lesson_type": "writing",
+    "level": "B",
+    "title": "Kirjoitelma — Erzähle von deiner Kindheit",
+    "description": "Kirjoitat lapsuudestasi saksaksi: aluksi lauseenrakennusta ja sanastovalmistelua, sitten lyhyt kirjoitelma (160–240 merkkiä) Präteritumilla ja weil/dass-sivulauseilla. Rubric-palaute 4 ulottuvuudella.",
+    "yo_relevance": "Teil 4 (Kirjoitelma, kurze Aufgabe): 'Erzähle von deiner Kindheit' on YTL:n klassinen B-tason pitkä tehtävä. Präteritum + weil/dass-sivulauseet ovat kurssin päärakenteet — tässä käytät niitä tuotannossa.",
+    "estimated_minutes_median": 22
+  },
+  "teaching": {
+    "intro_md": "# Kirjoitelma — Lapsuus saksaksi\n\nKirjoittaminen saksaksi on erilaista kuin suomeksi. Tässä rakenteessa pärjäät hyvin YO-kokeessa:\n\n## Rakenne\n\n**1. Taustakuvaus (Präteritum)**\n> *Als ich klein war, wohnten wir in einem kleinen Haus auf dem Land. Der Garten war groß und voller Bäume.*\n\n**2. Muisto — mitä tapahtui**\n> *Jeden Sommer fuhren wir ans Meer. Ich spielte im Sand und badete im Wasser.*\n\n**3. Syy tai selitys (weil/dass)**\n> *Ich liebte diese Sommer, **weil** meine Großeltern immer Zeit für uns **hatten**. Ich denke, **dass** die Kindheit die schönste Zeit **ist**.*\n\n**4. Lopetus — tunne tai arviointi**\n> *Das vergesse ich nie. Diese Erinnerungen sind sehr wertvoll für mich.*\n\n## Tärkeimmät Präteritum-muodot — lapsuuskertomus\n\n| Infinitiivi | Präteritum | Merkitys |\n|---|---|---|\n| sein | war | olla |\n| haben | hatte | omistaa |\n| wohnen | wohnte | asua |\n| spielen | spielte | leikkiä |\n| fahren | fuhr | ajaa, matkustaa |\n| gehen | ging | mennä |\n| kommen | kam | tulla |\n| geben | gab | antaa |\n| sehen | sah | nähdä |\n| können | konnte | voida, osata |\n| müssen | musste | täytyä |\n\n## weil ja dass — V-loppu!\n\n> *Ich ging früh ins Bett, **weil** ich müde **war**.*  \n> *Ich denke, **dass** es schön **war**.*\n\nHuom: verbi menee LOPPUUN sivulauseessa — eri kuin päälauseessa!\n\n## Lapsuussanastoa\n\n| Suomeksi | Saksaksi |\n|---|---|\n| lapsuus | die Kindheit |\n| muisto | die Erinnerung |\n| isovanhemmat | die Großeltern |\n| isoäiti | die Großmutter |\n| isoisä | der Großvater |\n| kesäloma | die Sommerferien |\n| leikkiä | spielen |\n| maaseutu | das Land / auf dem Land |\n| unohda (en ikinä) | vergesse (nie) |\n| tärkeä | wichtig |\n| hauska / kiva | lustig / schön |\n| pelätä | Angst haben |\n| nauttia | genießen |",
+    "key_points": [
+      "Präteritum taustalle ja muistoihin: war, hatte, wohnte, spielte.",
+      "weil + dass → verbi menee sivulauseen LOPPUUN.",
+      "Rakenne: tausta → muisto → syy (weil) → lopetus.",
+      "Huom: 160–240 merkkiä ilman välilyöntejä — laske merkit!",
+      "Substantiivit aina isolla: die Kindheit, der Sommer, das Land."
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1-vocab-recall-kindheit",
+      "phase_type": "recall_typed_fi_to_es",
+      "title": "Lapsuussanasto — kirjoita saksaksi",
+      "instruction": "Kirjoita sana saksaksi (artikkeli + sana).",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "lapsuus", "accept": ["die Kindheit", "Kindheit"], "hint": "die K..." },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "muisto / muistot", "accept": ["die Erinnerung", "die Erinnerungen", "Erinnerung", "Erinnerungen"], "hint": "die E..." },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "isovanhemmat", "accept": ["die Großeltern", "Großeltern"], "hint": "die Gr..." },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "kesäloma / kesälomat", "accept": ["die Sommerferien", "Sommerferien"], "hint": "die S..." },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "maaseutu — auf dem ___", "accept": ["Land", "das Land"], "hint": "das L..." },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "unohda (en ikinä) — ich vergesse ___ nie", "accept": ["das", "es"], "hint": "es tai das" },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "tärkeä", "accept": ["wichtig"], "hint": "w..." },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "hauska / iloinen", "accept": ["lustig", "fröhlich"], "hint": "l... tai fr..." }
+      ]
+    },
+    {
+      "phase_id": "p2-prateritum-forms",
+      "phase_type": "recall_typed_fi_to_es",
+      "title": "Präteritum-muodot — täytä",
+      "instruction": "Kirjoita verbi Präteritumissa (ich-muoto).",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "sein → ich ___ (olin)", "accept": ["war"], "hint": "w..." },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "haben → ich ___ (minulla oli)", "accept": ["hatte"], "hint": "h..." },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "spielen → ich ___ (leikkin)", "accept": ["spielte"], "hint": "spiel..." },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "gehen → ich ___ (menin)", "accept": ["ging"], "hint": "g..." },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "fahren → ich ___ (matkustin)", "accept": ["fuhr"], "hint": "f..." },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "können → ich ___ (saatoin/osasin)", "accept": ["konnte"], "hint": "k..." },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "wohnen → ich ___ (asuin)", "accept": ["wohnte"], "hint": "wohn..." },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "sehen → ich ___ (näin)", "accept": ["sah"], "hint": "s..." }
+      ]
+    },
+    {
+      "phase_id": "p3-weil-dass-gapfill",
+      "phase_type": "application_gap_fill",
+      "title": "weil ja dass — täydennä sivulause",
+      "instruction": "Täydennä lause oikealla verbimuodolla. Muista: verbi menee LOPPUUN weil- ja dass-lauseessa.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": [],
+      "items": [
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "Ich liebte den Sommer, weil wir immer ans Meer ___.",
+          "answers": [["fuhren", "gefahren sind"]],
+          "word_bank": ["fuhren", "fahren", "fuhr", "gefahren sind"]
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "Ich denke, dass die Kindheit sehr schön ___.",
+          "answers": [["war", "gewesen ist"]],
+          "word_bank": ["war", "ist", "war gewesen", "gewesen ist"]
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "Wir spielten draußen, weil es nicht ___ ___.",
+          "answers": [["regnete"], ["geregnet hat"]],
+          "word_bank": ["regnete", "regnet", "geregnet hat", "regnen"]
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "Ich erinnere mich, dass meine Großmutter immer ___ ___.",
+          "answers": [["gekocht hat", "kochte"]],
+          "word_bank": ["kochte", "hat gekocht", "gekocht hat", "kochen"]
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "Er konnte nicht schlafen, weil er Angst ___ ___.",
+          "answers": [["hatte"]],
+          "word_bank": ["hatte", "hat", "gehabt hat", "haben"]
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "Ich glaube, dass das Leben auf dem Land sehr ruhig ___.",
+          "answers": [["war", "gewesen ist"]],
+          "word_bank": ["war", "ist", "sein", "gewesen ist"]
+        }
+      ]
+    },
+    {
+      "phase_id": "p4-sentence-build",
+      "phase_type": "application_sentence_build",
+      "title": "Rakenna lauseet — lapsuuskertomus",
+      "instruction": "Käännä lause saksaksi. Käytä Präteritumia.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": [],
+      "items": [
+        {
+          "item_type": "typed",
+          "direction": "fi_to_es",
+          "prompt": "Kun olin pieni, asuin maaseudulla.",
+          "accept": [
+            "Als ich klein war, wohnte ich auf dem Land.",
+            "Als ich klein war wohnte ich auf dem Land",
+            "Ich wohnte auf dem Land als ich klein war."
+          ],
+          "hint": "Als ich klein war, ..."
+        },
+        {
+          "item_type": "typed",
+          "direction": "fi_to_es",
+          "prompt": "Joka kesä matkustimme järvelle.",
+          "accept": [
+            "Jeden Sommer fuhren wir an den See.",
+            "Jeden Sommer sind wir an den See gefahren.",
+            "Jedes Jahr fuhren wir an den See."
+          ],
+          "hint": "Jeden Sommer fuhren ..."
+        },
+        {
+          "item_type": "typed",
+          "direction": "fi_to_es",
+          "prompt": "Leikimme metsässä, koska sää oli hyvä.",
+          "accept": [
+            "Wir spielten im Wald, weil das Wetter gut war.",
+            "Wir spielten im Wald weil das Wetter gut war."
+          ],
+          "hint": "Wir spielten im Wald, weil ..."
+        },
+        {
+          "item_type": "typed",
+          "direction": "fi_to_es",
+          "prompt": "Minulla oli koira ja kissa.",
+          "accept": [
+            "Ich hatte einen Hund und eine Katze.",
+            "Ich hatte einen Hund und eine Katze"
+          ],
+          "hint": "Ich hatte ..."
+        },
+        {
+          "item_type": "typed",
+          "direction": "fi_to_es",
+          "prompt": "En unohda koskaan noita muistoja.",
+          "accept": [
+            "Diese Erinnerungen vergesse ich nie.",
+            "Ich vergesse diese Erinnerungen nie.",
+            "Die Erinnerungen vergesse ich nie."
+          ],
+          "hint": "Diese Erinnerungen vergesse ich ..."
+        }
+      ]
+    },
+    {
+      "phase_id": "p5-translate-sentences",
+      "phase_type": "synthesis_translate",
+      "title": "Käännä — lapsuus ja luonto",
+      "instruction": "Käännä lauseet saksaksi. Käytä Präteritumia.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": [],
+      "items": [
+        {
+          "item_type": "translate",
+          "direction": "fi_to_es",
+          "source": "Isoisälläni oli suuri puutarha.",
+          "accept": [
+            "Mein Großvater hatte einen großen Garten.",
+            "Mein Opa hatte einen großen Garten."
+          ]
+        },
+        {
+          "item_type": "translate",
+          "direction": "fi_to_es",
+          "source": "Syksy oli kaunis, koska puissa oli keltaisia lehtiä.",
+          "accept": [
+            "Der Herbst war schön, weil die Bäume gelbe Blätter hatten.",
+            "Der Herbst war schön weil die Bäume gelbe Blätter hatten."
+          ]
+        },
+        {
+          "item_type": "translate",
+          "direction": "fi_to_es",
+          "source": "Ajattelen, että lapsuus oli onnellista aikaa.",
+          "accept": [
+            "Ich denke, dass die Kindheit eine glückliche Zeit war.",
+            "Ich glaube, dass die Kindheit eine glückliche Zeit war.",
+            "Ich denke dass die Kindheit eine glückliche Zeit war."
+          ]
+        },
+        {
+          "item_type": "translate",
+          "direction": "fi_to_es",
+          "source": "Täytyi mennä kouluun, vaikka olin väsynyt.",
+          "accept": [
+            "Ich musste in die Schule gehen, obwohl ich müde war.",
+            "Ich musste zur Schule gehen, obwohl ich müde war."
+          ]
+        }
+      ]
+    },
+    {
+      "phase_id": "p6-short-writing",
+      "phase_type": "synthesis_short_writing",
+      "title": "Kirjoita lyhyt lapsuuskertomus (3–5 lausetta)",
+      "instruction": "Kirjoita 3–5 lausetta lapsuudestasi saksaksi. Käytä Präteritumia ja vähintään yhtä weil- tai dass-lausetta.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": [],
+      "items": [
+        {
+          "item_type": "writing",
+          "prompt": "Kirjoita 3–5 lausetta lapsuudestasi. Käytä Präteritumia (war, hatte, spielte, fuhr...) ja vähintään yhtä weil- tai dass-lausetta. Aloita: 'Als ich klein war...'",
+          "min_words": 30,
+          "max_words": 80,
+          "rubric_focus": ["communication", "structure", "vocab", "overall"]
+        }
+      ]
+    },
+    {
+      "phase_id": "p7-writing-long",
+      "phase_type": "writing_long",
+      "title": "YO-kirjoitelma — Erzähle von deiner Kindheit",
+      "instruction": "Kirjoita lyhyt kirjoitelma lapsuudestasi (160–240 merkkiä ilman välilyöntejä). Noudattele tätä rakennetta: 1) tausta Präteritumilla, 2) jokin muisto, 3) weil/dass-sivulause, 4) lopetus. AI arvioi tekstisi 4 ulottuvuudella (V+R+S+K, 0–20).",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": [],
+      "items": [
+        {
+          "item_type": "writing",
+          "prompt": "Tehtävänanto: Schreibe einen kurzen Text über deine Kindheit. Erzähle, wo und wie du als Kind gelebt hast. Schreibe 160–240 Zeichen (ohne Leerzeichen). Käytä: Präteritum (war, hatte, spielte, fuhr...) + vähintään yksi weil/dass-sivulause.",
+          "min_words": 30,
+          "max_words": 120,
+          "rubric_focus": ["communication", "structure", "vocab", "overall"]
+        }
+      ]
+    }
+  ],
+  "vocab": [
+    { "es": "die Kindheit", "fi": "lapsuus", "gender": null, "example_es": "Meine Kindheit war wunderschön.", "example_fi": "Lapsuuteni oli ihana.", "audio_id": null },
+    { "es": "die Erinnerung", "fi": "muisto", "gender": "f", "example_es": "Diese Erinnerung vergesse ich nie.", "example_fi": "Tätä muistoa en ikinä unohda.", "audio_id": null },
+    { "es": "die Großeltern", "fi": "isovanhemmat", "gender": null, "example_es": "Meine Großeltern wohnten auf dem Land.", "example_fi": "Isovanhempani asuivat maaseudulla.", "audio_id": null },
+    { "es": "die Großmutter", "fi": "isoäiti", "gender": "f", "example_es": "Meine Großmutter hatte immer Zeit für uns.", "example_fi": "Isoäitilläni oli aina aikaa meille.", "audio_id": null },
+    { "es": "der Großvater", "fi": "isoisä", "gender": "m", "example_es": "Mein Großvater arbeitete im Garten.", "example_fi": "Isoisäni teki töitä puutarhassa.", "audio_id": null },
+    { "es": "die Sommerferien", "fi": "kesäloma", "gender": null, "example_es": "Die Sommerferien waren immer zu kurz.", "example_fi": "Kesäloma oli aina liian lyhyt.", "audio_id": null },
+    { "es": "das Land / auf dem Land", "fi": "maaseutu / maaseudulla", "gender": null, "example_es": "Wir verbrachten die Ferien auf dem Land.", "example_fi": "Vietimme loman maaseudulla.", "audio_id": null },
+    { "es": "wichtig", "fi": "tärkeä", "gender": null, "example_es": "Familie ist sehr wichtig.", "example_fi": "Perhe on hyvin tärkeä.", "audio_id": null },
+    { "es": "lustig", "fi": "hauska, iloinen", "gender": null, "example_es": "Es war sehr lustig.", "example_fi": "Se oli hyvin hauskaa.", "audio_id": null },
+    { "es": "genießen", "fi": "nauttia", "gender": null, "example_es": "Wir genossen den Sommer.", "example_fi": "Nautimme kesästä.", "audio_id": null },
+    { "es": "vergessen", "fi": "unohtaa", "gender": null, "example_es": "Das vergesse ich nie.", "example_fi": "En ikinä unohda sitä.", "audio_id": null },
+    { "es": "damals", "fi": "silloin, silloinen", "gender": null, "example_es": "Damals gab es kein Internet.", "example_fi": "Silloin ei ollut internetiä.", "audio_id": null },
+    { "es": "die Erinnerungen (pl.)", "fi": "muistot (mon.)", "gender": null, "example_es": "Diese Erinnerungen sind wertvoll.", "example_fi": "Nämä muistot ovat arvokkaita.", "audio_id": null },
+    { "es": "wohnen → wohnte", "fi": "asua → asuin", "gender": null, "example_es": "Ich wohnte in einem kleinen Dorf.", "example_fi": "Asuin pienessä kylässä.", "audio_id": null },
+    { "es": "spielen → spielte", "fi": "leikkiä → leikin", "gender": null, "example_es": "Ich spielte jeden Tag draußen.", "example_fi": "Leikin joka päivä ulkona.", "audio_id": null },
+    { "es": "fahren → fuhr", "fi": "ajaa/matkustaa → matkustin", "gender": null, "example_es": "Wir fuhren jeden Sommer ans Meer.", "example_fi": "Matkustimme joka kesä merelle.", "audio_id": null },
+    { "es": "gehen → ging", "fi": "mennä → menin", "gender": null, "example_es": "Ich ging jeden Morgen in den Wald.", "example_fi": "Menin joka aamu metsään.", "audio_id": null },
+    { "es": "sehen → sah", "fi": "nähdä → näin", "gender": null, "example_es": "Ich sah viele Vögel im Garten.", "example_fi": "Näin monta lintua puutarhassa.", "audio_id": null },
+    { "es": "können → konnte", "fi": "voida/osata → saatoin", "gender": null, "example_es": "Ich konnte nicht schlafen.", "example_fi": "En saanut unta.", "audio_id": null },
+    { "es": "müssen → musste", "fi": "täytyä → piti", "gender": null, "example_es": "Ich musste früh aufstehen.", "example_fi": "Minun piti nousta aikaisin.", "audio_id": null }
+  ],
+  "side_panel": {
+    "tabs": [
+      {
+        "id": "grammar",
+        "title": "Präteritum-kertaus",
+        "content_md": "## Präteritum — tärkeimmät muodot\n\n| Infinitiivi | Präteritum (ich) | Tyyppi |\n|---|---|---|\n| sein | **war** | epäsäännöllinen |\n| haben | **hatte** | epäsäännöllinen |\n| wohnen | **wohnte** | säännöllinen (-te) |\n| spielen | **spielte** | säännöllinen (-te) |\n| fahren | **fuhr** | vahva |\n| gehen | **ging** | vahva |\n| kommen | **kam** | vahva |\n| sehen | **sah** | vahva |\n| können | **konnte** | modaaliverbi |\n| müssen | **musste** | modaaliverbi |\n\n## weil ja dass — muista V-loppu!\n\n> *Ich blieb zu Hause, **weil** es regnete.*  \n> *Ich denke, **dass** es wichtig **ist**.*\n\nPäälauseessa: verbi paikalla 2.  \nSivulauseessa (weil/dass): verbi LOPPUUN."
+      },
+      {
+        "id": "vocab",
+        "title": "Lapsuussanasto",
+        "content_md": "## Lapsuuden ydinleksikko\n\n| Saksaksi | Suomeksi |\n|---|---|\n| die Kindheit | lapsuus |\n| die Erinnerung | muisto |\n| die Großeltern | isovanhemmat |\n| die Großmutter | isoäiti |\n| der Großvater | isoisä |\n| die Sommerferien | kesäloma |\n| auf dem Land | maaseudulla |\n| damals | silloin |\n| wichtig | tärkeä |\n| lustig | hauska |\n| vergessen | unohtaa |\n| genießen | nauttia |"
+      },
+      {
+        "id": "tips",
+        "title": "YO-vinkki",
+        "content_md": "## YO-kirjoitelma — tarkistuslista\n\n✓ **160–240 merkkiä** (ilman välilyöntejä) — laske!\n✓ **Präteritum** taustalle: *war, hatte, spielte, fuhr*\n✓ **Vähintään 1 weil- tai dass-lause** — verbi loppuun!\n✓ **Rakenne:** tausta → muisto → tunne/lopetus\n✓ **Substantiivit isolla:** die Kindheit, der Sommer, das Land\n✓ **Tervehdys/lopetus** jos sähköpostimuoto\n\n## Pisteet rubricissa (0–20)\n- Viestinnällisyys (V) 0–5\n- Kielen rakenteet (R) 0–5\n- Sanasto (S) 0–5\n- Kokonaisuus (K) 0–5\n\nKatso `pedagogy/saksa-RUBRIC.md` tarkemmat kuvaukset."
+      },
+      {
+        "id": "examples",
+        "title": "Mallilauseita",
+        "content_md": "## Mallilauseita — lapsuuskertomus\n\n**Aloitus:**\n> *Als ich klein war, wohnten wir in einem kleinen Haus auf dem Land.*\n\n**Muisto:**\n> *Jeden Sommer fuhren wir an den See. Ich spielte im Wasser und sah viele Vögel.*\n\n**weil-rakenne:**\n> *Ich liebte die Sommerferien, weil meine Großeltern immer Zeit für uns hatten.*\n\n**dass-rakenne:**\n> *Ich denke, dass die Kindheit die schönste Zeit meines Lebens war.*\n\n**Lopetus:**\n> *Diese Erinnerungen vergesse ich nie. Die Kindheit war wirklich wunderschön.*"
+      }
+    ]
+  }
+}

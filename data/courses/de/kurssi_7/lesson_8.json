@@ -1,0 +1,194 @@
+{
+  "meta": {
+    "course_key": "kurssi_7",
+    "lesson_index": 8,
+    "lesson_type": "grammar",
+    "level": "M",
+    "title": "Relatiivilauseet: der/die/das/die + V-loppu",
+    "description": "Relatiivilauseiden rakentaminen saksassa: der/die/das/die-pronominit + V-loppu. Sija määrää pronominin muodon. Tunnistus ja tuotanto Nominatiiv/Akkusatiiv -sijaisilla relatiivilauseilla.",
+    "yo_relevance": "Teil 2 (luetun ymmärtäminen): M-tasoiset tekstit sisältävät relatiivilauseita. Teil 3 (aukkotehtävä): oikean relatiivipronomiinin valinta on tyypillinen tehtävä. Teil 4 (kirjoitelma): relatiivilauseet rikastuttavat tekstiä — M-tason osaamismerkki.",
+    "estimated_minutes_median": 15
+  },
+  "teaching": {
+    "intro_md": "# Relatiivilauseet saksassa\n\nRelatiivipronominit viittaavat aiemmin mainittuun substantiiviin. Saksan relatiivipronomini **mukautuu** pääsubstantiivin sukuun ja sivulauseen sijaan.\n\n## Relatiivipronomini — muodot\n\n| Sija | mask. | neutr. | fem. | Monikko |\n|---|---|---|---|---|\n| Nominatiiv | **der** | **das** | **die** | **die** |\n| Akkusatiiv | **den** | **das** | **die** | **die** |\n| Datiiv | **dem** | **dem** | **der** | **denen** |\n\n**Nyrkkisääntö:** Relatiivipronomini näyttää lähes samalta kuin määräinen artikkeli — paitsi Datiiv monikko (denen) ja Genitiv (dessen/deren).\n\n## Rakenne\n\n> *Der Mann, **der** dort steht, ist mein Vater.*\n> Mies, joka seisoo tuolla, on isäni. (mask. Nom → der)\n\n> *Das Buch, **das** ich lese, ist interessant.*\n> Kirja, jota luen, on kiinnostava. (neutr. Akk → das)\n\n> *Die Frau, **die** ich kenne, ist Schriftstellerin.*\n> Nainen, jonka tunnen, on kirjailija. (fem. Akk → die)\n\n## V-loppu sivulauseessa\n\nRelatiivilause on sivulause — verbi menee **loppuun**:\n\n> *Der Künstler, der in Wien **lebt**, ist berühmt.*\n> Taiteilija, joka asuu Wienissä, on kuuluisa.\n\n## Miten valitaan oikea muoto?\n\n1. Katso pääsubstantiivin **suku** (der/die/das)\n2. Katso relatiivilauseen **sija** (onko pronominilla subjekti vai objekti)\n3. Yhdistä taulukosta",
+    "key_points": [
+      "Relatiivipronomini saa sukun pääsubstantiivista: der Mann → der, die Frau → die, das Kind → das.",
+      "Sija määrää muodon: subjektina Nominatiiv (der/die/das/die), objektina Akkusatiiv (den/das/die/die).",
+      "V-loppu sivulauseessa aina pakollinen: 'der Mann, der dort steht' — ei 'der Mann, der steht dort'.",
+      "Akkusatiiv maskuliini muuttuu: der Mann (Nom) → den Mann (Akk) → relatiivipronomini den.",
+      "Käytännössä: opi ensin Nominatiiv-tapaukset (der/die/das/die) — kattaa useimmat relatiivilauseet."
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1-recognition-mc-relativ",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista — relatiivilauseen rakenne",
+      "instruction": "Valitse oikea relatiivipronomini tai rakenne.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "mc", "stem": "Täydennä: 'Der Künstler, ___ in Berlin lebt, ist bekannt.' (maskuliini, Nominatiiv)", "choices": ["die", "das", "der", "den"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "der Künstler (maskuliini) + Nominatiiv (subjektina relatiivilauseessa) → der. Der Künstler, der lebt..." },
+        { "item_type": "mc", "stem": "Täydennä: 'Das Museum, ___ ich besuche, ist groß.' (neutri, Akkusatiiv)", "choices": ["der", "die", "das", "dem"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "das Museum (neutri) + Akkusatiiv (objektina) → das. Neutri Nom/Akk on sama: das." },
+        { "item_type": "mc", "stem": "Täydennä: 'Die Schriftstellerin, ___ den Roman schrieb, ist berühmt.' (feminiini, Nominatiiv)", "choices": ["der", "die", "das", "den"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "die Schriftstellerin (feminiini) + Nominatiiv → die. Die Schriftstellerin, die schrieb..." },
+        { "item_type": "mc", "stem": "Mikä lauseista on oikein?", "choices": ["Der Mann, der steht dort, ist Schriftsteller.", "Der Mann, der dort steht, ist Schriftsteller.", "Der Mann, der dort ist steht, ist Schriftsteller.", "Der Mann, dort steht der, ist Schriftsteller."], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "V-loppu sivulauseessa: steht loppuun. Der Mann, der dort steht, ist Schriftsteller." },
+        { "item_type": "mc", "stem": "Täydennä: 'Die Bücher, ___ im Museum sind, sind sehr alt.' (Monikko, Nominatiiv)", "choices": ["der", "die", "das", "den"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Monikko Nominatiiv relatiivipronomini = die. Die Bücher, die im Museum sind..." },
+        { "item_type": "mc", "stem": "Täydennä: 'Das Gedicht, ___ Goethe schrieb, ist sehr bekannt.' (neutri, Akkusatiiv)", "choices": ["der", "die", "das", "dem"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "das Gedicht (neutri) + Akkusatiiv (Goethe schrieb das Gedicht → objekti) → das." },
+        { "item_type": "mc", "stem": "Täydennä: 'Der Roman, ___ ich lese, handelt von Berlin.' (maskuliini, Akkusatiiv)", "choices": ["der", "die", "das", "den"], "correct_index": 3, "distractor_difficulty": "hard", "explanation": "der Roman (maskuliini) + Akkusatiiv (ich lese DEN Roman) → den. Maskuliini Akkusatiiv = den." },
+        { "item_type": "mc", "stem": "Mitä relatiivipronomini tarkoittaa lauseessa 'Die Tradition, die in Bayern lebt, ist das Oktoberfest'?", "choices": ["Baijerissa elää perinne", "perinne, joka elää Baijerissa", "perinne on Oktoberfest Baijerissa", "Oktoberfest elää Baijerissa"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "relatiivilause selittää pääsubstantiivista: Die Tradition, die in Bayern lebt = perinne, joka elää Baijerissa." },
+        { "item_type": "mc", "stem": "Missä relatiivilause alkaa lauseessa 'Der Schriftsteller, der in Wien lebte, schrieb viele Romane'?", "choices": ["Der Schriftsteller", "der in Wien lebte", "schrieb viele Romane", "in Wien"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Relatiivilause alkaa relatiivipronominin jälkeen: der in Wien lebte (pilkusta pilkkuun)." },
+        { "item_type": "mc", "stem": "Mikä virhe on lauseessa: 'Die Frau, die spricht laut, ist meine Lehrerin'?", "choices": ["'die' on väärä", "verbi ei mene loppuun: spricht laut → laut spricht", "'die' pitäisi olla 'der'", "'Lehrerin' on väärässä muodossa"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "V-loppu sivulauseessa: 'die laut spricht' on oikein, ei 'die spricht laut'. Verbi sivulauseen loppuun." },
+        { "item_type": "mc", "stem": "Täydennä: 'Die Ausstellung, ___ gestern eröffnet wurde, ist sehr populär.' (feminiini, Nominatiiv, passiivi)", "choices": ["der", "die", "das", "den"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "die Ausstellung (feminiini) + passiivi-sivulause → die. Die Ausstellung, die gestern eröffnet wurde..." }
+      ]
+    },
+    {
+      "phase_id": "p2-recognition-match",
+      "phase_type": "recognition_match",
+      "title": "Yhdistä — relatiivipronomini",
+      "instruction": "Yhdistä substantiivi ja oikea relatiivipronomini (Nominatiiv).",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        {
+          "item_type": "match",
+          "left_label": "Substantiivi",
+          "right_label": "Relatiivipronomini (Nom.)",
+          "pairs": [
+            { "left": "der Mann", "right": "der" },
+            { "left": "das Kind", "right": "das" },
+            { "left": "die Frau", "right": "die" },
+            { "left": "die Kinder (pl.)", "right": "die" },
+            { "left": "das Museum", "right": "das" },
+            { "left": "der Roman", "right": "der" },
+            { "left": "die Schriftstellerin", "right": "die" }
+          ]
+        },
+        {
+          "item_type": "match",
+          "left_label": "Saksaksi",
+          "right_label": "Suomeksi",
+          "pairs": [
+            { "left": "der Mann, der dort steht", "right": "mies, joka seisoo siellä" },
+            { "left": "das Buch, das ich lese", "right": "kirja, jota luen" },
+            { "left": "die Frau, die singt", "right": "nainen, joka laulaa" },
+            { "left": "die Bücher, die interessant sind", "right": "kirjat, jotka ovat kiinnostavia" }
+          ]
+        }
+      ]
+    },
+    {
+      "phase_id": "p3-recall-relativ",
+      "phase_type": "recall_typed_es_to_fi",
+      "title": "Tunnista — relatiivilauseen merkitys",
+      "instruction": "Kirjoita lauseen suomennos.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Der Künstler, der in Berlin lebt, ist berühmt.", "accept": ["Taiteilija, joka asuu Berliinissä, on kuuluisa.", "Berliinissä asuva taiteilija on kuuluisa."], "hint": "Taiteilija, joka..." },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Das Museum, das ich besuche, ist sehr groß.", "accept": ["Museo, jota käyn, on hyvin suuri.", "Museo, jossa käyn, on erittäin suuri."], "hint": "Museo, jota..." },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Die Tradition, die in Bayern lebt, heißt Oktoberfest.", "accept": ["Perinne, joka elää Baijerissa, on nimeltään Oktoberfest.", "Baijerissa elävä perinne on nimeltään Oktoberfest."], "hint": "Perinne, joka..." },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Der Roman, den ich lese, handelt von Wien.", "accept": ["Romaani, jota luen, kertoo Wienistä.", "Romaani jonka luen kertoo Wienistä."], "hint": "Romaani, jota..." }
+      ]
+    },
+    {
+      "phase_id": "p4-gap-fill-relativ-nom",
+      "phase_type": "application_gap_fill",
+      "title": "Täydennä — relatiivipronomini Nominatiiv",
+      "instruction": "Täydennä oikea relatiivipronomini.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Der Schriftsteller, ___ aus Wien kommt, schreibt auf Deutsch.", "answers": [["der"]], "word_bank": ["der", "die", "das", "den"] },
+        { "item_type": "gap_fill", "sentence_template": "Die Ausstellung, ___ im Museum ist, zeigt Bauhaus-Werke.", "answers": [["die"]], "word_bank": ["der", "die", "das", "den"] },
+        { "item_type": "gap_fill", "sentence_template": "Das Gedicht, ___ Goethe geschrieben hat, ist sehr berühmt.", "answers": [["das"]], "word_bank": ["der", "die", "das", "den"] },
+        { "item_type": "gap_fill", "sentence_template": "Die Künstler, ___ in der Galerie ausstellen, sind international bekannt.", "answers": [["die"]], "word_bank": ["der", "die", "das", "den"] },
+        { "item_type": "gap_fill", "sentence_template": "Der Mann, ___ das Buch schrieb, lebt in Zürich.", "answers": [["der"]], "word_bank": ["der", "die", "das", "den"] },
+        { "item_type": "gap_fill", "sentence_template": "Das Konzert, ___ gestern stattfand, war wunderbar.", "answers": [["das"]], "word_bank": ["der", "die", "das", "den"] },
+        { "item_type": "gap_fill", "sentence_template": "Die Dichterin, ___ den Preis gewann, ist aus Österreich.", "answers": [["die"]], "word_bank": ["der", "die", "das", "den"] },
+        { "item_type": "gap_fill", "sentence_template": "Das Museum, ___ neue Exponate zeigt, öffnet täglich.", "answers": [["das"]], "word_bank": ["der", "die", "das", "den"] },
+        { "item_type": "gap_fill", "sentence_template": "Die Tradition, ___ in der Schweiz lebt, heißt Jodeln.", "answers": [["die"]], "word_bank": ["der", "die", "das", "den"] },
+        { "item_type": "gap_fill", "sentence_template": "Der Film, ___ den Krieg zeigt, ist sehr bewegend.", "answers": [["der"]], "word_bank": ["der", "die", "das", "den"] }
+      ]
+    },
+    {
+      "phase_id": "p5-gap-fill-relativ-akk",
+      "phase_type": "application_gap_fill",
+      "title": "Täydennä — Akkusatiiv + V-loppu",
+      "instruction": "Täydennä relatiivipronomini ja varmista V-loppu.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Der Roman, ___ ich lese, ist von Kafka.", "answers": [["den"]], "word_bank": ["der", "die", "das", "den"] },
+        { "item_type": "gap_fill", "sentence_template": "Die Schriftstellerin, ___ ich bewundere, schreibt auf Deutsch.", "answers": [["die"]], "word_bank": ["der", "die", "das", "den"] },
+        { "item_type": "gap_fill", "sentence_template": "Das Gemälde, ___ er kaufte, hängt im Wohnzimmer.", "answers": [["das"]], "word_bank": ["der", "die", "das", "den"] },
+        { "item_type": "gap_fill", "sentence_template": "Der Künstler, ___ du kennst, kommt aus Wien.", "answers": [["den"]], "word_bank": ["der", "die", "das", "den"] },
+        { "item_type": "gap_fill", "sentence_template": "Die Bücher, ___ sie empfiehlt, sind alle auf Deutsch.", "answers": [["die"]], "word_bank": ["der", "die", "das", "den"] },
+        { "item_type": "gap_fill", "sentence_template": "Das Theater, ___ wir besuchen, ist das Burgtheater.", "answers": [["das"]], "word_bank": ["der", "die", "das", "den"] },
+        { "item_type": "gap_fill", "sentence_template": "Der Dichter, ___ wir gestern trafen, ist sehr bekannt.", "answers": [["den"]], "word_bank": ["der", "die", "das", "den"] },
+        { "item_type": "gap_fill", "sentence_template": "Die Tradition, ___ wir feiern, ist sehr alt.", "answers": [["die"]], "word_bank": ["der", "die", "das", "den"] }
+      ]
+    },
+    {
+      "phase_id": "p6-sentence-build",
+      "phase_type": "application_sentence_build",
+      "title": "Rakenna relatiivilause",
+      "instruction": "Järjestä sanat oikeaan järjestykseen.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "mc", "stem": "Järjestä: [Der / Mann, / der / dort / steht, / ist / Schriftsteller]", "choices": ["Der Mann, der steht dort, ist Schriftsteller.", "Der Mann, der dort steht, ist Schriftsteller.", "Der Mann, dort der steht, ist Schriftsteller.", "Der Schriftsteller, ist der Mann der dort steht."], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "V-loppu: steht loppuun sivulauseessa. Der Mann, der dort steht, ist Schriftsteller." },
+        { "item_type": "mc", "stem": "Järjestä: [Die / Ausstellung, / die / wir / besuchen, / ist / sehr / interessant]", "choices": ["Die Ausstellung, wir die besuchen, ist sehr interessant.", "Die Ausstellung, die wir besuchen, ist sehr interessant.", "Die Ausstellung, die besuchen wir, ist sehr interessant.", "Sehr interessant ist die Ausstellung, wir die besuchen."], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "V-loppu: besuchen loppuun. Die Ausstellung, die wir besuchen, ist sehr interessant." },
+        { "item_type": "mc", "stem": "Järjestä: [Das / Gedicht, / das / Goethe / schrieb, / ist / weltbekannt]", "choices": ["Das Gedicht, das schrieb Goethe, ist weltbekannt.", "Das Gedicht, das Goethe schrieb, ist weltbekannt.", "Das weltbekannte Gedicht, Goethe schrieb das.", "Das Gedicht, Goethe schrieb es, ist weltbekannt."], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "V-loppu: schrieb loppuun. Das Gedicht, das Goethe schrieb, ist weltbekannt." },
+        { "item_type": "mc", "stem": "Järjestä: [Der / Roman, / den / ich / gelesen / habe, / handelt / von / Berlin]", "choices": ["Der Roman, den gelesen ich habe, handelt von Berlin.", "Der Roman, den ich gelesen habe, handelt von Berlin.", "Der Roman, den ich habe gelesen, handelt von Berlin.", "Den Roman ich gelesen habe, handelt von Berlin."], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "Perfekt sivulauseessa: den ich gelesen habe. habe menee loppuun sivulauseessa (apuverbi). gelesen ennen habe." },
+        { "item_type": "mc", "stem": "Järjestä: [Die / Dichterin, / die / in / Wien / wohnt, / schreibt / auf / Deutsch]", "choices": ["Die Dichterin, die wohnt in Wien, schreibt auf Deutsch.", "Die Dichterin, die in Wien wohnt, schreibt auf Deutsch.", "Die in Wien Dichterin, die wohnt, schreibt auf Deutsch.", "Die Dichterin, in Wien die wohnt, schreibt auf Deutsch."], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "V-loppu: wohnt loppuun. Die Dichterin, die in Wien wohnt, schreibt auf Deutsch." }
+      ]
+    },
+    {
+      "phase_id": "p7-synthesis-translate",
+      "phase_type": "synthesis_translate",
+      "title": "Käännä — relatiivilause",
+      "instruction": "Käännä suomesta saksaksi käyttäen relatiivilausetta.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Taiteilija, joka asuu Berliinissä, on tunnettu.", "accept": ["Der Künstler, der in Berlin wohnt, ist bekannt.", "Der Künstler, der in Berlin lebt, ist bekannt."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Museo, jota käymme, on suuri.", "accept": ["Das Museum, das wir besuchen, ist groß.", "Das Museum, das wir besuchen, ist sehr groß."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Kirja, jota hän lukee, on saksankielinen.", "accept": ["Das Buch, das er liest, ist auf Deutsch.", "Das Buch, das sie liest, ist deutschsprachig."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Naiset, jotka laulavat, ovat Wienistä.", "accept": ["Die Frauen, die singen, sind aus Wien.", "Die Frauen, die singen, kommen aus Wien."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Romaani, jonka ostin, kertoo Berliinin historiasta.", "accept": ["Der Roman, den ich gekauft habe, handelt von der Geschichte Berlins.", "Der Roman, den ich kaufte, handelt von der Berliner Geschichte."] }
+      ]
+    },
+    {
+      "phase_id": "p8-short-writing",
+      "phase_type": "synthesis_short_writing",
+      "title": "Kirjoita — relatiivilauseet",
+      "instruction": "Kirjoita 2–3 lausetta saksaksi käyttäen relatiivilauseita.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C", "M"],
+      "items": [
+        { "item_type": "writing", "prompt": "Kuvaile joku tuntemasi kirjailija tai taiteilija käyttäen relatiivilausetta. Esim. 'Goethe ist ein Dichter, der...'", "min_words": 25, "max_words": 70, "rubric_focus": ["structure", "communication", "vocab"] },
+        { "item_type": "writing", "prompt": "Kuvaile museo tai galleria jonka tiedät. Käytä relatiivilausetta. Esim. 'Das Museum, das...', 'Die Galerie, die...'", "min_words": 25, "max_words": 70, "rubric_focus": ["structure", "vocab", "overall"] },
+        { "item_type": "writing", "prompt": "Kirjoita 2 lausetta DACH-kulttuurista käyttäen relatiivilausetta kussakin.", "min_words": 25, "max_words": 70, "rubric_focus": ["structure", "communication", "overall"] }
+      ]
+    }
+  ],
+  "vocab": [
+    { "es": "der/die/das/die (Relativpronomen)", "fi": "joka, jonka (relatiivipronomini)", "gender": null, "example_es": "Der Mann, der lacht, ist glücklich.", "example_fi": "Mies, joka nauraa, on onnellinen." },
+    { "es": "den (Relativpronomen, mask. Akk.)", "fi": "jonka (maskuliini Akkusatiiv)", "gender": null, "example_es": "Der Roman, den ich lese, ist interessant.", "example_fi": "Romaani, jota luen, on kiinnostava." },
+    { "es": "sich beziehen auf", "fi": "viitata johonkin", "gender": null, "example_es": "Das Pronomen bezieht sich auf das Substantiv.", "example_fi": "Pronomini viittaa substantiiviin." }
+  ],
+  "side_panel": {
+    "tabs": [
+      {
+        "id": "grammar",
+        "title": "Kielioppi",
+        "content_md": "## Relatiivipronomini\n\n| Sija | mask. | neutr. | fem. | Monikko |\n|---|---|---|---|---|\n| Nom | **der** | **das** | **die** | **die** |\n| Akk | **den** | **das** | **die** | **die** |\n| Dat | **dem** | **dem** | **der** | **denen** |\n\n**Rakenne:**\nSubstantiivi + , + relatiivipronomini + ... + V\n\n**Esimerkit:**\n- *Der Mann, **der** dort steht, ist Arzt.* (mask. Nom)\n- *Das Buch, **das** ich lese, ist gut.* (neutr. Akk)\n- *Die Frau, **die** singt, ist Sängerin.* (fem. Nom)\n- *Der Roman, **den** ich kaufte, ist interessant.* (mask. Akk)"
+      },
+      {
+        "id": "tips",
+        "title": "YO-vinkki",
+        "content_md": "## Relatiivilauseet YO-kokeessa\n\n**Teil 2 (Luetun ymmärtäminen):** M-tason teksteissä on paljon relatiivilauseita. Tunnista pääsubstantiivi → tiedät mihin relatiivilause viittaa.\n\n**Teil 3 (Aukkotehtävä):** Oikean relatiivipronomiinin valinta on tyypillinen tehtävä. Muista: maskuliini Akkusatiivi = den (ei der).\n\n**Teil 4 (Kirjoitelma):** Relatiivilause tekee tekstistä rikkaamman: 'Es ist ein Roman, der...' on parempi kuin kaksi lyhyttä lausetta.\n\n**Yleisin virhe:** Verbi ei mene loppuun: ✗ 'der steht dort' → ✓ 'der dort steht'."
+      }
+    ]
+  }
+}
