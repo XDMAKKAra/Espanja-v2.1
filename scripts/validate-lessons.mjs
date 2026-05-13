@@ -21,10 +21,48 @@ async function loadSchema() {
   return JSON.parse(raw);
 }
 
-async function findLessonFiles() {
-  // L-LANG-INFRA-1: lessons now live under data/courses/${lang}/kurssi_N/.
-  // Iterate all lang subdirs that themselves contain kurssi_N directories.
+function parseLangArg() {
+  const arg = process.argv.find((a) => a.startsWith("--lang="));
+  if (!arg) return null;
+  const v = arg.slice("--lang=".length).trim();
+  if (!v) return null;
+  if (!/^[a-z]{2}$/.test(v)) {
+    console.error(`✗ --lang=${v} invalid (expected 2-letter code like 'de', 'fr', 'es')`);
+    process.exit(1);
+  }
+  return v;
+}
+
+async function findLessonFiles(langFilter) {
+  // L-LANG-INFRA-1: lessons live under data/courses/${lang}/kurssi_N/.
+  // L-VALIDATE-LANG-PARAM: optional --lang=<code> restricts scan to one lang dir.
   const out = [];
+
+  if (langFilter) {
+    const langDir = path.join(DATA_ROOT, langFilter);
+    try {
+      await stat(langDir);
+    } catch {
+      console.error(`✗ data/courses/${langFilter}/ does not exist — run L-COURSE-1 for ${langFilter} first`);
+      process.exit(1);
+    }
+    let courseEntries;
+    try {
+      courseEntries = await readdir(langDir, { withFileTypes: true });
+    } catch { return []; }
+    for (const entry of courseEntries) {
+      if (!entry.isDirectory()) continue;
+      if (!/^kurssi_[1-8]$/.test(entry.name)) continue;
+      const courseDir = path.join(langDir, entry.name);
+      const courseFiles = await readdir(courseDir);
+      for (const f of courseFiles) {
+        if (!f.endsWith(".json")) continue;
+        out.push(path.join(courseDir, f));
+      }
+    }
+    return out.sort();
+  }
+
   let topEntries;
   try {
     topEntries = await readdir(DATA_ROOT, { withFileTypes: true });
@@ -35,7 +73,6 @@ async function findLessonFiles() {
 
   for (const langEntry of topEntries) {
     if (!langEntry.isDirectory()) continue;
-    // Skip legacy flat kurssi_N dirs at the root (already moved to es/).
     if (/^kurssi_/.test(langEntry.name)) continue;
     const langDir = path.join(DATA_ROOT, langEntry.name);
     let courseEntries;
@@ -61,9 +98,12 @@ async function main() {
   const ajv = new Ajv({ allErrors: true, strict: false });
   const validate = ajv.compile(schema);
 
-  const files = await findLessonFiles();
+  const langFilter = parseLangArg();
+  const files = await findLessonFiles(langFilter);
+  const scope = langFilter ? `lang=${langFilter}` : "all langs";
+  console.log(`Validating lessons (${scope}, ${files.length} file(s))`);
   if (files.length === 0) {
-    console.log("0 lessons validated, all OK (data/courses/ is empty).");
+    console.log("0 lessons validated, all OK.");
     return;
   }
 
