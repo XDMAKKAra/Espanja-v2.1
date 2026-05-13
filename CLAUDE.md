@@ -1,3 +1,29 @@
+# 🛑 PAKOLLINEN SKILL-STACK — lue tämä ENSIN
+
+Ennen kuin teet **mitään** Write/Edit/Bash-tool-kutsua (Read/Glob/Grep sallittu lukea ensin), sinun TÄYTYY:
+
+1. **Luokitella tehtävä** ja kutsua sen skill-stack `Skill`-toolilla. Skill-stack on pakollinen, ei vihje. Pelkkä skill-nimien listaus briefiin ei riitä — sinun täytyy oikeasti kutsua `Skill`-toolia.
+
+| Luokka | Mitä se on | Skill-stack (kutsu KAIKKI) |
+|---|---|---|
+| **FRONTEND** | HTML/CSS/JS-UI, landing, app-shell, screen-redesign, animaatio, copy, hero, modaali, nav, layout, visuaalinen korjaus, a11y-fix, mobile-responsive | `frontend-design`, `design-taste-frontend`, `ui-ux-pro-max`, `puheo-screen-template`, `puheo-finnish-voice` |
+| **EXERCISE / LESSON** | oppituntien sisältö, sanasto/kielioppi/luetun-ymmärtäminen/kirjoitustehtävät, monivalinta, tasotesti, adaptiivisuus, pisteytys, rubric, hinttiketju | `practice-problem-sequence-designer`, `variation-theory-task-designer`, `retrieval-practice-generator`, `scaffolded-task-modifier`, `worked-example-fading-designer`, `cognitive-load-analyser`, `criterion-referenced-rubric-generator`, `adaptive-hint-sequence-designer`, `puheo-finnish-voice` |
+| **TESTING** | Playwright, e2e, käyttäjäpolku-audit, bug-scan, regression-spec, screenshot-vertailu | `webapp-testing`, `superpowers:test-driven-development`, `superpowers:verification-before-completion`, `superpowers:systematic-debugging` |
+| **PLANNING / BRIEF** | planner-istunto, brief-kirjoitus, scope-keskustelu, queue-päivitys, audit-suunnittelu | `superpowers:brainstorming`, `superpowers:writing-plans` |
+| **SUPABASE / BACKEND** | migraatio, RLS, taulu-muutos, edge function, API-reitti, palvelinpuolen logiikka | `supabase`, `supabase-postgres-best-practices` |
+
+2. **Aloita vastauksesi rivillä:** `Skills invoked: <pilkulla erotettu lista>`. Jos rivi puuttuu, käyttäjä tietää että skipattiin → työ hylätään.
+
+3. **Useampi luokka samassa loopissa** → kutsu KAIKKIEN luokkien stackit. Esim. fix joka muuttaa frontendin ja lisää Playwright-spec:n = FRONTEND + TESTING.
+
+4. **Ainoa poikkeus — pure-discussion:** jos tehtävä on puhdas kysymys/mielipide/keskustelu/file-katselu ilman koodimuutoksia → kirjoita `Skills: none (pure-discussion)` ja jatka normaalisti.
+
+5. **Tämä ei korvaa briefiin kirjoitettua skill-listaa** — molemmat tarvitaan: brief dokumentoi mitä pitäisi käyttää, ja `Skill`-tool-kutsu lataa skillin sisällön kontekstiisi. Ilman tool-kutsua skillin säännöt eivät vaikuta.
+
+Hook `.claude/settings.json` → `UserPromptSubmit` → `.claude/inject-skill-directive.sh` injektoi tämän direktiivin joka käyttäjäpyynnön alkuun. Älä yritä kiertää.
+
+---
+
 # Puheo — Spanish YO-koe Learning App
 
 ## Project Overview

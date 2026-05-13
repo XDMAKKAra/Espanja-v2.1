@@ -42,6 +42,8 @@
   <link rel="stylesheet" href="/css/components/onboarding-v3.css" />
   <!-- L-LANG-INFRA-1 — coming-soon screen + settings language modal styles. -->
   <link rel="stylesheet" href="/css/components/coming-soon.css" />
+  <!-- L-HERO-COUNTDOWN-AND-OFFCANVAS-1 — off-canvas slide-in sidebar for <1024px. -->
+  <link rel="stylesheet" href="/css/components/off-canvas-nav.css" />
 </head>
 <body>
 
@@ -86,6 +88,17 @@
   </div>
 
   <div class="app-shell" id="app-shell">
+
+  <!-- TOPBAR + HAMBURGER — visible <1024px only (L-HERO-COUNTDOWN-AND-OFFCANVAS-1) -->
+  <header class="app-topbar" role="banner">
+    <button id="menu-toggle" type="button" aria-label="Avaa valikko" aria-controls="app-sidebar" aria-expanded="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <a class="app-topbar__brand" href="/app.html" aria-label="Puheo etusivu">Puhe<span>o</span></a>
+  </header>
+
+  <!-- Backdrop for off-canvas sidebar -->
+  <div class="app-sidebar-backdrop" id="app-sidebar-backdrop" aria-hidden="true"></div>
 
   <!-- SIDEBAR (desktop only) -->
   <aside class="app-sidebar" id="app-sidebar" role="navigation" aria-label="Päävalikko">
@@ -2862,6 +2875,8 @@
 
   <!-- L-LIVE-AUDIT-P2 UPDATE 2 — bundled module replaces js/main.js + 27 transitive imports. -->
   <script type="module" src="/app.bundle.js"></script>
+  <!-- L-HERO-COUNTDOWN-AND-OFFCANVAS-1 — off-canvas slide-in nav controller. -->
+  <script src="/js/features/offCanvasNav.js"></script>
   <!-- SW registration — extracted to /js/sw-register.js in L-SECURITY-3. -->
   <script src="/js/sw-register.js"></script>
 </body>
