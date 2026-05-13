@@ -175,4 +175,4 @@ Kaikkien aikaluokkien kertaus, passiivi (être + partisiippi), gérondif (en + -
 - [Opetushallitus — LOPS 2021](https://www.oph.fi/fi/koulutus-ja-tutkinnot/lukiokoulutus/lops-2021-tukea-lukion-opetussuunnitelman-perusteiden) — B3-oppimäärän moduulit RAB31–RAB38.
 - [Yle Abitreenit — Ranskan kielioppi](https://yle.fi/aihe/artikkeli/2015/12/15/kielioppi-0)
 
-[TBD]: Vahvista lukio-ranskan opettajalta lyhyen ja pitkän kirjoitelman tarkat sanamäärät 2026 määräyksiin pohjautuen — ks. ranska-RUBRIC.md §7.
+**Vahvistettu (2026-05-13):** Lyhyen ja pitkän kirjoitelman pituusrajat YTL "Hyvän vastauksen piirteet" k2024 FC (https://tiedostot.ylioppilastutkinto.fi/kokeet/2024-03-14_FC_fi/grading-instructions.html) ja s2024 FC (https://tiedostot.ylioppilastutkinto.fi/kokeet/2024-09-30_FC_fi/grading-instructions.html) mukaisesti: **lyhyt 160–240 merkkiä, pitkä 300–450 merkkiä** (ilman välilyöntejä ja rivinvaihtoja). Ei sanamäärä — sama merkkilaskenta kuin saksassa ja espanjassa. Aikaisempi olettama "35–50 / 65–100 sanaa" oli sekundaarilähteistä peritty virhe ja on nyt korjattu — ks. ranska-RUBRIC.md §7.

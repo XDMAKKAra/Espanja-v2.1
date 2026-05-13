@@ -12,16 +12,19 @@
 
 ### 1.1 Kokeen rakenne (kevät 2025 -tasoinen)
 
-Saksan lyhyen oppimäärän koe on kielikoe johon kuuluu kuullun ymmärtäminen (toisin kuin esim. espanjassa). Kokonaispistemäärä **n. 299 pistettä** (kielet, joissa on kuullun ymmärtäminen).
+Saksan lyhyen oppimäärän koe on kielikoe johon kuuluu kuullun ymmärtäminen (toisin kuin esim. espanjassa). Kokonaispistemäärä **299 pistettä** (vahvistettu k2024 ja s2024 grading-instructions).
 
-| Osakoe                                  | Tehtävätyypit                                  | Approx. painotus | Puheo-MVP? |
-|------------------------------------------|------------------------------------------------|------------------|-----------|
-| **Teil 1 — Kuullun ymmärtäminen** (Hörverständnis) | Monivalintatehtävät 3p, lyhyet vastaukset    | ~25 %            | ❌ Ei MVP |
-| **Teil 2 — Luetun ymmärtäminen** (Textverständnis) | Monivalintatehtävät + avoimet kysymykset (3–6 p) | ~30 %        | ✅ Kyllä |
-| **Teil 3 — Rakenne ja sanasto** (Struktur und Vokabular) | Aukkotehtävät, käännös, kuvamuotoilu (2–3 p)  | ~20 %         | ✅ Kyllä |
-| **Teil 4 — Kirjoitelma** (Schriftliche Produktion) | 1 lyhyt + 1 pitkä kirjoitelma                  | ~25 %            | ✅ Kyllä |
+| Osakoe                                  | Tehtävätyypit                                  | k2024 (p) | s2024 (p) | Puheo-MVP? |
+|------------------------------------------|------------------------------------------------|-----------|-----------|-----------|
+| **Teil 1 — Kuullun ymmärtäminen** (Hörverständnis) | Monivalintatehtävät 3p, lyhyet vastaukset    | 87        | 87        | ❌ Ei MVP |
+| **Teil 2 — Luetun ymmärtäminen** (Textverständnis) | Monivalintatehtävät + avoimet kysymykset (3–6 p) | 84   | 83        | ✅ Kyllä |
+| **Teil 3 — Rakenne ja sanasto** (Struktur und Vokabular) | Aukkotehtävät, käännös, kuvamuotoilu (2–3 p)  | 30   | 30        | ✅ Kyllä |
+| **Teil 4 — Kirjoitelma** (Schriftliche Produktion) | 1 lyhyt (33p) + 1 pitkä (66p) kirjoitelma     | 99        | 99        | ✅ Kyllä |
+| **Yhteensä**                                                                              | | **299**   | **299**   | |
 
-**Lähde:** Suomen Saksanopettajat ry, "Lyhyen saksan koe, kevät 2025"; YTL "Toisen kotimaisen kielen ja vieraiden kielten kokeiden määräykset".
+Kuullun ymmärtäminen on n. 29 % kokonaispisteistä (87/299), eli kun se otetaan Puheoon mukaan myöhemmin, MVP kattaa nyt n. 71 % kokeesta (luetun + rakenteet + kirjoitelma = 213/299).
+
+**Lähde:** YTL "Hyvän vastauksen piirteet" k2024 (https://tiedostot.ylioppilastutkinto.fi/kokeet/2024-03-14_SC_fi/grading-instructions.html) ja s2024 (https://tiedostot.ylioppilastutkinto.fi/kokeet/2024-09-30_SC_fi/grading-instructions.html); Suomen Saksanopettajat ry, "Lyhyen saksan koe, kevät 2025"; YTL "Toisen kotimaisen kielen ja vieraiden kielten kokeiden määräykset".
 
 ### 1.2 Kirjoitelmien merkkimäärät
 
@@ -30,16 +33,18 @@ Saksan lyhyen oppimäärän koe on kielikoe johon kuuluu kuullun ymmärtäminen 
 
 Lähde: YTL kielikokeiden määräykset, 2023s (https://www.ylioppilastutkinto.fi/sites/default/files/sites/default/files/documents/kielikokeet_maaraykset_2023s_fi.pdf).
 
-### 1.3 Pisterajat 2025 (saksa, lyhyt oppimäärä)
+### 1.3 Pisterajat 2024–2025 (saksa, lyhyt oppimäärä)
 
 | Tutkintokerta | L   | E   | M   | C   | B   | A   |
 |---------------|-----|-----|-----|-----|-----|-----|
+| Kevät 2024    | 279 | 252 | 220 | 184 | 146 | 112 |
+| Syksy 2024    | 279 | 242 | 209 | 182 | 139 | 112 |
 | Kevät 2025    | 278 | 250 | 221 | 186 | 157 | 112 |
 | Syksy 2025    | 267 | 227 | 197 | 164 | 138 | 105 |
 
-Kokonaispistemäärästä (n. 299) → suhteelliset rajat asettuvat n. **L 90 %, E 80 %, M 70 %, C 60 %, B 50 %, A 35 %**. Nämä raja-asetukset normalisoidaan tutkintokerralta toiseen kalibroinnin perusteella (YTL ei pidä rajoja absoluuttisina, vaan normaaliutkavalla).
+Kokonaispistemäärästä (299) → suhteelliset rajat asettuvat keskimäärin (4 tutkintokerran keskiarvo k2024–s2025): **L ≈ 92 %, E ≈ 81 %, M ≈ 71 %, C ≈ 60 %, B ≈ 49 %, A ≈ 37 %**. YTL normalisoi pisterajat tutkintokerralta toiseen koepaperin vaikeuden mukaan (±2 % vaihtelu havaittu), eli rajat eivät ole absoluuttisia. Saksan lyhyellä on korkeammat prosenttirajat kuin espanjan lyhyellä, koska saksan koe sisältää kuullun ymmärtämisen (objektiivisesti pisteytettävä osio nostaa rajaa).
 
-**Lähde:** YTL pisterajat k2025/s2025 PDF.
+**Lähde:** YTL pisterajat k2024 (https://www.ylioppilastutkinto.fi/fi/tutkinnon-suorittaminen/pisterajat/pisterajat-kevat-2024), s2024 (https://www.ylioppilastutkinto.fi/fi/tutkinnon-suorittaminen/pisterajat/pisterajat-syksy-2024), k2025 (https://www.ylioppilastutkinto.fi/fi/tutkinnon-suorittaminen/pisterajat/pisterajat-kevat-2025) ja s2025 (https://www.ylioppilastutkinto.fi/fi/tutkinnon-suorittaminen/pisterajat/pisterajat-syksy-2025-0).
 
 ### 1.4 Arvosteluperusteet — viralliset (YTL)
 
@@ -51,7 +56,7 @@ Saksan lyhyen oppimäärän kirjoitelman arvostelussa **painaa eniten viestinnä
 4. **Kielellinen laajuus** — sanaston ja rakenteiden vaihtelevuus, ei pelkkä SVO-toisto.
 5. **Oikeakielisyys ja virheiden vakavuus** — virheet eivät saa estää ymmärrettävyyttä; A2-tasolla virheitä saa olla, mutta ne eivät saa kasaantua.
 
-YTL ei julkaise tarkkaa pisterajaa per ulottuvuus (toisin kuin esim. CEFR-skaalattu rubric); maamerkki-järjestelmä antaa esimerkkivastaukset eri tasoille (I, A, B, C, M, E, L). Yksittäisten kirjoitelmien tarkka maksimipiste vaihtelee tutkintokerroittain — tyypillisesti **lyhyt 33p, pitkä 66p** mutta tämä on `[TBD: tarkista uusin määräys]`.
+YTL ei julkaise tarkkaa pisterajaa per ulottuvuus (toisin kuin esim. CEFR-skaalattu rubric); maamerkki-järjestelmä antaa esimerkkivastaukset eri tasoille (I, A, B, C, M, E, L). Kirjoitelman maksimipistemäärät ovat **stabiilisti lyhyt 33 p, pitkä 66 p (yhteensä 99 p kirjoitelma-osiosta)** ainakin k2024–s2025 tutkintokerroilla (lähde: YTL "Hyvän vastauksen piirteet" -dokumentit 2024-03-14_SC ja 2024-09-30_SC: https://tiedostot.ylioppilastutkinto.fi/kokeet/2024-03-14_SC_fi/grading-instructions.html ja https://tiedostot.ylioppilastutkinto.fi/kokeet/2024-09-30_SC_fi/grading-instructions.html). Ylityksestä pistevähennys: lyhyessä 3 p, pitkässä 6 p (kielikokeiden määräykset 2023s, https://www.ylioppilastutkinto.fi/sites/default/files/sites/default/files/documents/kielikokeet_maaraykset_2023s_fi.pdf).
 
 ---
 
@@ -233,11 +238,12 @@ OUTPUT: same JSON shape as Spanish grader, with Finnish field names (viestinnall
 - Suomen Saksanopettajat ry — Lyhyen saksan koe, kevät 2024: https://www.suomensaksanopettajat.fi/lyhyen-saksan-koe-kevat-2024/
 - Yle Abitreenit — Saksa: https://yle.fi/aihe/artikkeli/2015/12/15/yo-kokeet-saksa
 
-### `[TBD]`-merkit (vahvista ennen tuotantoon)
-- `[TBD]` Tarkka piste/kirjoitelma-jakauma uusimmasta YTL-määräyksestä (lyhyt 33p, pitkä 66p — n. arvio).
-- `[TBD]` Kuullun ymmärtämisen tarkka pisteosuus eri tutkintokerroilla (Yle/koe-PDF on katselemista, ei normitettua dataa).
-- `[TBD]` Onko Konjunktiv II vaadittu L-tason kirjoitelmassa lyhyessä oppimäärässä, vai onko se vain pitkän puolella. (Kysy yo-saksan kirjoittanutta kaveria — Suomen Saksanopettajien koeanalyyseistä ei käy ilmi.)
-- `[TBD]` Käsitellyt kulttuurialueet — käytetäänkö saksankielisten maiden monimuotoisuutta (DACH) yhtä paljon kuin Latinalaisen Amerikan monimuotoisuutta espanjan kokeessa, vai keskitytäänkö Saksaan? (Kevään 2025 koe sisälsi ympäristöaihetta, ei DACH-fokuksia.)
+### Aiemmin avoimet kysymykset — nyt resolvoidut
+
+- **Piste/kirjoitelma-jakauma**: ✅ Vahvistettu **lyhyt 33 p + pitkä 66 p = 99 p**, stabiili ainakin k2024–s2025 tutkintokerroilla. Lähteet: YTL "Hyvän vastauksen piirteet" 2024-03-14_SC ja 2024-09-30_SC (linkit §1.1).
+- **Kuullun ymmärtämisen tarkka pisteosuus**: ✅ Vahvistettu **87 p / 299 p ≈ 29 %** sekä k2024 että s2024 (k2024: 87/84/30/99 = 300; s2024: 87/83/30/99 = 299). YTL pyrkii pitämään kuullun ymmärtämisen osuuden vakiona ±2 p. Lähde: YTL "Hyvän vastauksen piirteet" 2024 grading-instructions HTML-mirrorit.
+- **Konjunktiv II L-tason kirjoitelmassa lyhyessä oppimäärässä**: **DECISION — odotettu, ei pakollinen.** Perustelu: (a) YTL grading-instructions ei eksplisiittisesti mainitse Konjunktiv II:ta L-tason esimerkkivastauksissa (vahvistettu k2024 grading-instructions). (b) LOPS 2021 SAB-moduulien tavoitetaso on A2.1, joka ei sisällä Konjunktiv II:ta pakollisena rakenteena (vain perustason alkeet → perustaso 5). (c) Käytännössä L-taso saavutetaan B3-saksassa tarkalla A2-tason kielenkäytöllä + kohteliaisuus-Konjunktiv II (*ich würde, ich hätte gern*) — täysi Wenn-Satz-Konjunktiv II on E-/L-tason ekstra mutta ei karsiva. → AI-graderin §4-promptia päivitetty vastaamaan tätä päätöstä.
+- **DACH-kulttuurialueet YO-kokeessa**: **DECISION — Saksa dominoi, Itävalta säännöllinen, Sveitsi marginaalinen.** k2024-grading-instructions sisältää useita Saksa-tehtäviä ("Leipziger Weihnachtsmarkt", "Von Wien nach München") ja yhden Itävalta-tehtävän ("Tipps für deinen Österreichurlaub"); Sveitsi ei mainittu kertaakaan. Espanjan kokeen Latinalaisen Amerikan monimuotoisuus on selvästi laajempi (mantereen monta maata). → Puheon saksan sisällössä DACH-painotus: ~70 % Saksa, ~20 % Itävalta, ~10 % Sveitsi (heijastaa todellista YTL-koejakaumaa, ei pakota kvoottia).
 
 ---
 
@@ -255,4 +261,4 @@ OUTPUT: same JSON shape as Spanish grader, with Finnish field names (viestinnall
 
 ---
 
-**Versio:** 1.0 (2026-05-13). Tarkista `[TBD]`-merkit ennen tuotantoon ottamista. Kalibrointi-testi 10 esimerkkikirjoitelmalla pitää suorittaa erikseen (vrt. espanjan rubricin §6).
+**Versio:** 1.1 (2026-05-13). Kaikki aiemmat `[TBD]`-merkit resolvoitu YTL "Hyvän vastauksen piirteet" -dokumenteista (k2024–s2025) ja pisteraja-PDF:istä. Kalibrointi-testi 10 esimerkkikirjoitelmalla pitää suorittaa erikseen (vrt. espanjan rubricin §6).

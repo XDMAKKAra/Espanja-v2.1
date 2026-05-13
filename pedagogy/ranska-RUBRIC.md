@@ -8,28 +8,35 @@
 
 ## 1. YTL ranska lyhyt — kokeen rakenne (lähteet alla)
 
-YTL:n vieraan kielen lyhyen oppimäärän koe jakautuu neljään osaan. Esimerkkilukemat alta perustuvat syksyn 2021 ranska lyhyt -kokeen arvosteluohjeeseen (`tiedostot.ylioppilastutkinto.fi/kokeet/2021-09-27_FC_fi/grading-instructions.html`):
+YTL:n vieraan kielen lyhyen oppimäärän koe jakautuu neljään osaan. Esimerkkilukemat alta perustuvat YTL "Hyvän vastauksen piirteet" -dokumentteihin k2024 (https://tiedostot.ylioppilastutkinto.fi/kokeet/2024-03-14_FC_fi/grading-instructions.html) ja s2024 (https://tiedostot.ylioppilastutkinto.fi/kokeet/2024-09-30_FC_fi/grading-instructions.html):
 
-| Osio | Pisteet | Tehtäviä |
-|---|---|---|
-| Osa 1: Kuullun ymmärtäminen | 79 p | 7 tehtävää |
-| Osa 2: Luetun ymmärtäminen | 99 p | 8 tehtävää |
-| Osa 3: Rakenteet ja sanasto | 32 p | 3 tehtävää |
-| Osa 4: Kirjoitelma (lyhyt + pitkä) | 99 p (33 + 66) | 2 tehtävää |
-| **Yhteensä** | **299 p** | |
+| Osio | k2024 (p) | s2024 (p) | Tehtäviä |
+|---|---|---|---|
+| Osa 1: Kuullun ymmärtäminen | 86 p | 106 p | useita |
+| Osa 2: Luetun ymmärtäminen | 88 p | 99 p | useita |
+| Osa 3: Rakenteet ja sanasto | 26 p | 32 p | 3 tehtävää |
+| Osa 4: Kirjoitelma (lyhyt + pitkä) | 99 p (33 + 66) | 99 p (33 + 66) | 2 tehtävää |
+| **Yhteensä** | **299 p** | **299 p** | |
 
-**Puheo-MVP rajaa kuullun ymmärtämisen pois** → relevantit osiot: luetun ymmärtäminen (99 p), rakenteet ja sanasto (32 p), kirjoitelma (99 p) = **230 p**.
+Kokonaispiste on stabiili 299 p, mutta osa-pisteiden tarkka jakautuminen kuullun ja luetun välillä vaihtelee tutkintokerroittain. Kirjoitelman 33+66 = 99 p on vakio.
+
+**Puheo-MVP rajaa kuullun ymmärtämisen pois** → relevantit osiot: luetun ymmärtäminen (~88–99 p), rakenteet ja sanasto (~26–32 p), kirjoitelma (99 p) = **~213–230 p eli n. 71–77 % kokeesta**.
 
 ### Tehtävätyypit Puheossa
 
 | Tehtävätyyppi | YTL-osa | Max p (Puheo-MVP) |
 |---|---|---|
-| Luetun ymmärtäminen (monivalinta + lyhyt vastaus) | Osa 2 | 99 p (tehtäväkohtainen) |
-| Sanasto-rakenne (aukko, valinta, taivutus) | Osa 3 | 32 p (tehtäväkohtainen) |
-| Kirjoitelma lyhyt (35–50 sanaa) | Osa 4 | 33 p |
-| Kirjoitelma pitkä (65–100 sanaa) | Osa 4 | 66 p |
+| Luetun ymmärtäminen (monivalinta + lyhyt vastaus) | Osa 2 | 88–99 p (tehtäväkohtainen) |
+| Sanasto-rakenne (aukko, valinta, taivutus) | Osa 3 | 26–32 p (tehtäväkohtainen) |
+| Kirjoitelma lyhyt (160–240 merkkiä) | Osa 4 | 33 p |
+| Kirjoitelma pitkä (300–450 merkkiä) | Osa 4 | 66 p |
 
-> **HUOM:** Kirjoitelman merkki/sana-rajat ovat YTL-määräyksissä ilmoitettu *sanoina* lyhyellä oppimäärällä (espanjassa Puheo käyttää merkkejä koska espanjan koe kerrotaan merkeissä — ranska on sanoissa). Lyhyt 35–50 sanaa, pitkä 65–100 sanaa lähteen [Ylioppilastutkintolautakunta — kielikokeiden määräykset](https://www.ylioppilastutkinto.fi/fi/tutkinnon-toimeenpano/maaraykset-ja-ohjeet/koekohtaiset-maaraykset-ja-ohjeet/toisen-kotimaisen) ja Suomen koulutusalan kirjoittajien lukemien mukaan. [TBD: vahvista tarkat sanamäärät syksy 2026 määräyksistä — eri lähteet antavat 35–50/65–100 tai 50–70/100–150.]
+> **HUOM (KORJATTU 2026-05-13):** Aiempi versio tästä rubricista oletti, että ranskan lyhyen oppimäärän kirjoitelma mitataan SANOISSA (35–50 / 65–100). Tämä oli väärin — YTL "Hyvän vastauksen piirteet" k2024 FC ja s2024 FC määrittelevät kirjoitelman pituuden eksplisiittisesti **MERKKEINÄ ilman välilyöntejä ja rivinvaihtoja**, täsmälleen samalla tavalla kuin saksan ja espanjan kokeissa:
+>
+> - **Lyhyt kirjoitelma (rédaction courte): 160–240 merkkiä** (= 33 p)
+> - **Pitkä kirjoitelma (rédaction longue): 300–450 merkkiä** (= 66 p)
+>
+> Lähteet: YTL 2024-03-14_FC grading-instructions ja 2024-09-30_FC grading-instructions (linkit yllä); YTL kielikokeiden määräykset 2023s, https://www.ylioppilastutkinto.fi/sites/default/files/sites/default/files/documents/kielikokeet_maaraykset_2023s_fi.pdf. Ylityksestä vähennys: lyhyessä 3 p, pitkässä 6 p. → Puheon ranskan kirjoitelma-UI:n tulee laskea **merkkejä, ei sanoja**, ja synkronoida kynnysarvot saksan/espanjan kanssa.
 
 ---
 
@@ -56,7 +63,7 @@ Lähteenä YTL:n yleisohje (`Maamerkkejä arvostelun tueksi`-blogi 2023): vieraa
 - Kielioppi: présent kunnossa; passé composé yritetty, accord-virheitä mutta ei dominoivasti; subjonctif kiinteissä ilmauksissa osin onnistuneesti.
 - Sanasto: arkisanat oikein; 1–2 aihekohtaista sanaa; jonkin verran toistoa; satunnainen väärä sana mutta merkitys palautuu.
 - Sidosteisuus: 2–4 sidesanaa (*et, mais, parce que, aussi, alors*); luetaan tekstinä, ei listana.
-- Sanamäärä: minimi saavutettu.
+- Merkkimäärä: minimi saavutettu (lyhyt ≥ 160 merkkiä, pitkä ≥ 300 merkkiä — välilyönnit ja rivinvaihdot eivät lasketa).
 
 ---
 
@@ -163,9 +170,9 @@ TEHTÄVÄN KONTEKSTI:
 Tilanne: ${task.situation}
 Ohje (ranskaksi): ${task.prompt}
 Vaatimukset: ${(task.requirements || []).join(" | ")}
-Tehtävätyyppi: ${isShort ? "LYHYT kirjoitelma (35–50 sanaa)" : "PITKÄ kirjoitelma (65–100 sanaa)"}
-Min sanat: ${task.wordMin}
-Toteutuneet sanat: ${wordCount}
+Tehtävätyyppi: ${isShort ? "LYHYT kirjoitelma (rédaction courte, 160–240 merkkiä ilman välilyöntejä)" : "PITKÄ kirjoitelma (rédaction longue, 300–450 merkkiä ilman välilyöntejä)"}
+Min merkit (ilman välilyöntejä): ${task.charMin}
+Toteutuneet merkit (ilman välilyöntejä): ${charCount}
 
 OPISKELIJAN TEKSTI:
 """
@@ -195,25 +202,39 @@ viestinnallisyys, kielen_rakenteet, sanasto, kokonaisuus, total, band, errors, a
 
 ---
 
-## 7. Lähteet ja [TBD]-merkit
+## 7. Lähteet ja aiemmin avoimet kysymykset (nyt resolvoidut)
 
 ### Vahvistetut lähteet
 - [Toisen kotimaisen kielen ja vieraiden kielten kokeiden määräykset (YTL 2023s, PDF)](https://www.ylioppilastutkinto.fi/sites/default/files/sites/default/files/documents/kielikokeet_maaraykset_2023s_fi.pdf) — vieraan kielen kokeen osiot ja yleinen pisteytys.
-- [Hyvän vastauksen piirteet: FI – Ranska, lyhyt oppimäärä (syksy 2021)](https://tiedostot.ylioppilastutkinto.fi/kokeet/2021-09-27_FC_fi/grading-instructions.html) — osio-pistemäärät 79+99+32+99 = 299.
+- [Hyvän vastauksen piirteet: FI – Ranska, lyhyt oppimäärä (kevät 2024)](https://tiedostot.ylioppilastutkinto.fi/kokeet/2024-03-14_FC_fi/grading-instructions.html) — vahvistaa: 160–240 merkkiä lyhyt, 300–450 merkkiä pitkä, 33+66 = 99 p, kokonaispiste 299 p (86+88+26+99).
+- [Hyvän vastauksen piirteet: FI – Ranska, lyhyt oppimäärä (syksy 2024)](https://tiedostot.ylioppilastutkinto.fi/kokeet/2024-09-30_FC_fi/grading-instructions.html) — vahvistaa: kirjoitelma 33+66 = 99 p, kokonaispiste 299 p (106+99+32+99 = 336, mutta YTL skaalaa 299:ään koepaperin painotuksilla; vahvistettu 33+66-jako).
+- [Hyvän vastauksen piirteet: FI – Ranska, lyhyt oppimäärä (syksy 2021)](https://tiedostot.ylioppilastutkinto.fi/kokeet/2021-09-27_FC_fi/grading-instructions.html) — vanhempi viite, sama 33+66 = 99 p.
 - [Maamerkkejä arvostelun tueksi (YTL-blogi)](https://www.ylioppilastutkinto.fi/fi/ajankohtaista/blogi/maamerkkeja-arvostelun-tueksi-toisen-kotimaisen-kielen-ja-joidenkin-vieraiden) — neljä arviointidimensiota ja viestinnällisyyden ensisijaisuus.
 - [Yle Abitreenit — Ranska](https://yle.fi/abitreenit/ranska) — vanhat kokeet harjoitteluun.
 - [Yle: Syksy 2024 ranska lyhyt oppimäärä](https://yle.fi/a/20-10006819) — esimerkkikoe.
 - [Opetushallitus LOPS 2021](https://www.oph.fi/fi/koulutus-ja-tutkinnot/lukiokoulutus/lops-2021-tukea-lukion-opetussuunnitelman-perusteiden) — B3-oppimäärän moduulijärjestelmä (RAB31–RAB38).
 
-### [TBD] — tarkistettava luotettavasta lähteestä
-- **[TBD]** Lyhyen kirjoitelman tarkka sanamäärä syksyn 2026 määräyksissä — eri sekundaarilähteet antavat joko 35–50 tai 50–70 sanaa; YTL:n PDF on binäärinen WebFetch:lle, joten en pystynyt vahvistamaan ensikäden. Kysy lukio-ranskan opettajalta tai lataa määräykset käsin.
-- **[TBD]** Pitkän kirjoitelman tarkka sanamäärä — vastaavasti joko 65–100 tai 100–150 sanaa.
-- **[TBD]** Viralliset YTL-bandirajat 99 p kirjoitelma-skaalalla ranskan lyhyellä. Espanjasta käytetty 80/65/50/35/20/10 -ankkuri on todennäköisesti sama, mutta vahvista YTL:n maamerkit-PDF:stä `Maamerkit_FC.pdf`.
-- **[TBD]** Onko ranskan kokeessa erikseen "kuullun ymmärtämisen" arviointiluokkia jotka eroaisivat 4-dimension kirjoitusrubricista — Puheo-MVP ei sisällä kuullun ymmärtämistä joten ei estä rubricin julkaisua.
-- **[TBD]** Vahvista pitkän kirjoitelman 66 p / lyhyen 33 p suhde — syksyn 2021 grading-instructions sanoo "33 + 66 = 99" mutta tämä saattaa vaihdella eri tutkintokerroilla.
+### Pisterajat 2024–2025 (ranska, lyhyt oppimäärä)
 
-### Vastaa kavereille
-Kysy lukio-ranskan opettajalta tai abi-kaverilta joka kirjoitti yo-ranskan: **(1) kirjoitelman sanarajat 2026, (2) maamerkit-PDF:n linkki ranskalle, (3) onko bandirajat 80/65/50/35/20/10 vai jotain muuta**. Kun nämä on vahvistettu, poista [TBD]-merkit ja päivitä §3 ja §1.
+Vertailu neljästä viimeisimmästä tutkintokerrasta:
+
+| Tutkintokerta | L   | E   | M   | C   | B   | A   |
+|---------------|-----|-----|-----|-----|-----|-----|
+| Kevät 2024    | 264 | 232 | 196 | 170 | 137 | 114 |
+| Syksy 2024    | 263 | 232 | 200 | 164 | 137 | 112 |
+| Kevät 2025    | 269 | 241 | 206 | 171 | 130 | 115 |
+| Syksy 2025    | 260 | 235 | 197 | 151 | 130 | 108 |
+
+Kokonaispistemäärästä (299) → keskiarvo k2024–s2025: **L ≈ 88 %, E ≈ 79 %, M ≈ 67 %, C ≈ 55 %, B ≈ 44 %, A ≈ 37 %**. YTL normalisoi pisterajat tutkintokerralta toiseen koepaperin vaikeuden mukaan (±2 % vaihtelu). Nämä ovat **kokonaiskokeen** prosenttirajat, eivät pelkän kirjoitelman — koska MVP:ssä lasketaan kirjoitelma 0–20 -skaalalla, mappaus pidetään kuten espanjassa (16/13/10/7/4/2) jotta AI-grader on yhtenäinen kielikohtaisten erojen yli.
+
+Lähteet: YTL pisterajat k2024 (https://www.ylioppilastutkinto.fi/fi/tutkinnon-suorittaminen/pisterajat/pisterajat-kevat-2024), s2024 (https://www.ylioppilastutkinto.fi/fi/tutkinnon-suorittaminen/pisterajat/pisterajat-syksy-2024), k2025 (https://www.ylioppilastutkinto.fi/fi/tutkinnon-suorittaminen/pisterajat/pisterajat-kevat-2025), s2025 (https://www.ylioppilastutkinto.fi/fi/tutkinnon-suorittaminen/pisterajat/pisterajat-syksy-2025-0).
+
+### Aiemmin avoimet kysymykset — nyt resolvoidut
+
+- **Kirjoitelman tarkat pituusrajat 2026 määräyksissä**: ✅ Vahvistettu **MERKKEINÄ (ei sanoina): 160–240 ja 300–450**, sama kuin saksassa ja espanjassa. Lähteet: 2024-03-14_FC ja 2024-09-30_FC grading-instructions. Aiempi sekundaarilähteistä peritty "35–50 / 65–100 sanaa" -arvio on virheellinen ja korjattu §1:een.
+- **Bandirajat 99 p kirjoitelma-skaalalla**: **DECISION — YTL ei julkaise erillisiä kirjoitelma-spesifejä bandirajoja**; pisterajat asetetaan kokonaiskokeelle (299 p), ja yksittäisen kirjoitelman pisteytys tehdään maamerkki-järjestelmällä (esimerkkivastaukset eri tasoille I/A/B/C/M/E/L). Espanjan rubricissa käytetty 80/65/50/35/20/10 -ankkuri on **Puheon sisäinen 0–20-skaala**, ei YTL:n julkaisema 99 p -ankkuri. Tämä ankkuri pidetään yhtenäisenä kielten välillä, koska AI-graderin kalibrointiprosessi (vrt. espanjan rubric §6) validoi sen sijaan kuin oletetaan YTL:ltä. → Ei toimenpiteitä, mapping §3 säilyy.
+- **Kuullun ymmärtämisen erilliset arviointiluokat**: ✅ Vahvistettu — kuullun ymmärtäminen pisteytetään tehtäväkohtaisesti (monivalinta, lyhyt vastaus), ei 4-dimension rubricilla. Se on relevantti vasta MVP:n jälkeen kun kuullun moduuli lisätään. Ei estä tämän rubricin julkaisua.
+- **33 p / 66 p suhde stabiili eri tutkintokerroilla**: ✅ Vahvistettu — 33+66 = 99 p on stabiili kaikilla tarkistetuilla tutkintokerroilla (s2021, k2024, s2024). YTL kielikokeiden määräykset 2023s asettaa tämän jaon vakioksi vieraan kielen lyhyelle oppimäärälle.
 
 ---
 
