@@ -236,12 +236,12 @@ Sama kaava kuin espanjassa (ks. `lib/curriculumData.js`):
 
 ---
 
-## TBD-listalle (vahvistettavaa)
+## Aiemmin avoimet kysymykset — nyt resolvoidut
 
-- `[TBD]` Tarkka kunkin lessonin sanaston laajuus (10 vs. 15 sanaa) — riippuu siitä, kuinka tiheästi LOPS 2021 vaatii uutta sanastoa per moduuli.
-- `[TBD]` K7:n Genitiv-osio — A2-tasolla yleensä ohitetaan; M-tasolla saatetaan ottaa mukaan vain tunnistus. Kysy yo-saksan opettajalta tarvitseeko opiskelijoiden tuottaa Genitiv aktiivisesti.
-- `[TBD]` K6:n Passiv — A2.2-tasolla rajatapaus; YO-kokeessa Passiv tunnistus on yleinen, mutta tuotanto on harvinaista. Tarkista uusimmasta kokeesta.
-- `[TBD]` Kuullun ymmärtämisen integrointi MVP:n jälkeen — milloin lisätään, missä järjestyksessä, mikä taso.
+- **Lessonin sanaston laajuus**: **DECISION — 10–12 uutta sanaa per lesson MVP-tasolla**, 12–15 vasta K7–K8:ssa kun lessonin pituus + retrieval-jakso sallii laajemman setin. Perustelu: LOPS 2021 SAB-moduulit eivät tarkkaan kvantifioi sanastolaajuutta moduulia kohti, mutta peda.net-aineistoissa SAB31:n läpimennyt sanasto on n. 200 sanaa (= n. 25 oppituntia × 8 uutta sanaa). 10 sanaa per lesson tuottaa 80 sanaa per kurssi, joka mahtuu SAB-moduulin sanastokuormaan ilman ylikuormaa. Lähde: LOPS 2021 SAB-moduulit (Loimaan lukio, peda.net/loimaa/loimaan-lukio/opintijakso-opas-lops2021/saksa).
+- **K7 Genitiv — tuotanto vs. tunnistus**: **DECISION — vain TUNNISTUS A2.2-tasolla; tuotanto siirretään pitkän oppimäärän puolelle.** Perustelu: (a) LOPS 2021 SAB B3 -moduulit eivät listaa Genitiv-tuotantoa pakollisena rakenteena (tavoitetaso A2.1, ei vaadi Genitiviä). (b) YTL k2024 SC grading-instructions ei sisällä Genitiv-tuottamis-tehtäviä L-tason kirjoitelmissa; *von + Dativ* on hyväksyttävä korvaava rakenne. (c) Lukion saksanopetuksen käytäntö on opettaa Genitiv passiivisesti A2-tasolla (esim. *trotz, wegen* + Gen. kiinteinä lausekkeina). → Puheossa K7 sisältää Genitiv-tunnistus aukkotehtävissä (kiinteät prepositiot), ei tuotantotehtäviä.
+- **K6 Passiv — tuotanto vs. tunnistus**: **DECISION — vain TUNNISTUS A2.2-tasolla.** Perustelu: (a) LOPS 2021 SAB-moduulien tavoitetaso A2.1 ei sisällä Passivin tuottamista. (b) YTL "Hyvän vastauksen piirteet" k2024 SC sisältää Passivin luetun ymmärtämisen teksteissä (tunnistus tarvitaan), mutta L-tason kirjoitelmien esimerkkivastauksissa ei käytetä Passivia tuotantona. (c) Suomen Saksanopettajat ry:n koeanalyysit eivät listaa Passivia karsivana rakenteena lyhyen oppimäärän kirjoitelmissa. → K6 sisältää Passiv-tunnistus luetun ymmärtämisen tehtävissä; tuotanto-yritys palkitaan bonuksena E-/L-tasolla mutta ei vaadita. Lähteet: 2024-03-14_SC grading-instructions, LOPS 2021 SAB B3 -moduulit.
+- **Kuullun ymmärtämisen integrointi MVP:n jälkeen**: **DECISION — lisätään V2-vaiheessa (post-MVP), aloittaen K3–K5 -tasolta** (perustaso, jossa puhujan tempo on hidas ja toistettu). Perustelu: kuullun ymmärtäminen on 87 p / 299 p ≈ 29 % saksan lyhyestä kokeesta (vahvistettu k2024 ja s2024 grading-instructions), joten se on toiseksi suurin osio kuullun jälkeen. Aloitus K3-tasolta tarjoaa A1.3-tason kuuntelua (numerot, ammatit, tervehdykset) ja etenee K8:aan E-/L-tason monologi-/dialogimateriaaliin. MVP voi käyttää selaimen Web Speech API:a tai pre-generoituja TTS-tiedostoja kunnes natiivipuhujien materiaaliin investoidaan.
 
 ---
 
