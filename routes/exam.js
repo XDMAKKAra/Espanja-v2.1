@@ -393,8 +393,8 @@ router.post("/submit", requireAuth, async (req, res) => {
     // repeat it here because /submit is independent of /start and a user
     // could theoretically submit an old session after upgrading.
     {
-      const access = await checkFeatureAccess(userId, "exam");
-      if (access.tier === "free") await incrementFreeUsage(userId, "exam");
+      const access = await checkFeatureAccess(req.user.userId, "exam");
+      if (access.tier === "free") await incrementFreeUsage(req.user.userId, "exam");
     }
 
     res.json({ totalPoints, maxPoints: MAX_POINTS, finalGrade, partScores });
