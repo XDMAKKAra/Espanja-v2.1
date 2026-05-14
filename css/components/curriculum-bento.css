@@ -1,0 +1,338 @@
+/* F-CURRICULUM-BENTO-1 — bento grid for the 12-lesson list inside an
+   expanded kurssi. Replaces the flat `.curr-lessons` list. Linear-tier
+   restraint: single-stroke borders, soft accent for next-up, no neon glow.
+   12-column desktop grid, 2-col mobile. */
+
+.curr-bento {
+  /* sits inside .curr-card.is-expanded grid-area: lessons */
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 12px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border, #2a2a2e);
+}
+
+/* ── Progress strip — 12 nodes summarising lesson completion ─────────────── */
+
+.curr-bento-strip {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.curr-bento-strip__label {
+  font-family: var(--font-mono, ui-monospace, SFMono-Regular, monospace);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-soft, var(--text-muted, #a1a1aa));
+  margin: 0;
+}
+.curr-bento-strip__nodes {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: 4px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.curr-bento-strip__nodes li { display: contents; }
+.curr-bento-strip__dot {
+  height: 4px;
+  border-radius: 2px;
+  background: color-mix(in srgb, var(--ink-faint, #71717a) 20%, transparent);
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  transition: background 160ms var(--ease-out, cubic-bezier(.22,.61,.36,1)),
+              transform 160ms var(--ease-out, cubic-bezier(.22,.61,.36,1));
+  /* a11y: enlarge invisible hit-area without changing visual height */
+  position: relative;
+}
+.curr-bento-strip__dot::after {
+  content: "";
+  position: absolute;
+  inset: -10px -2px;
+}
+.curr-bento-strip__dot:hover { transform: translateY(-1px); }
+.curr-bento-strip__dot:focus-visible {
+  outline: 2px solid var(--accent, #2DD4BF);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+.curr-bento-strip__dot--done {
+  background: var(--accent, #2DD4BF);
+}
+.curr-bento-strip__dot--next {
+  background: color-mix(in srgb, var(--accent, #2DD4BF) 55%, transparent);
+}
+
+/* ── The grid ────────────────────────────────────────────────────────────── */
+
+.curr-bento-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 12px;
+  /* DOM order = lesson sortOrder 1→12 (keyboard tab order matches that).
+     The feature card occupies cols 1-6 visually; DOM-wise it is at its
+     real position so screen readers narrate the curriculum in order. */
+}
+
+@media (max-width: 768px) {
+  .curr-bento-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+}
+
+/* ── Card ─────────────────────────────────────────────────────────────────── */
+
+.curr-bento-card {
+  grid-column: span 3;
+  /* baseline: a button reset so the whole tile is clickable + keyboard-operable */
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 10px;
+  min-height: 132px;
+  padding: 14px 14px;
+  background: var(--surface, #161618);
+  border: 1px solid var(--border, #2a2a2e);
+  border-radius: 14px;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  position: relative;
+  isolation: isolate;
+  transition: border-color 160ms var(--ease-out, cubic-bezier(.22,.61,.36,1)),
+              transform 160ms var(--ease-out, cubic-bezier(.22,.61,.36,1)),
+              background 160ms var(--ease-out, cubic-bezier(.22,.61,.36,1));
+}
+
+@media (max-width: 1024px) {
+  .curr-bento-card { grid-column: span 4; }
+}
+@media (max-width: 768px) {
+  .curr-bento-card {
+    grid-column: span 1;
+    min-height: 116px;
+    aspect-ratio: 1 / 1;
+  }
+}
+
+.curr-bento-card:hover {
+  border-color: color-mix(in srgb, var(--accent, #2DD4BF) 35%, var(--border, #2a2a2e));
+  transform: translateY(-2px);
+}
+.curr-bento-card:focus-visible {
+  outline: 2px solid var(--accent, #2DD4BF);
+  outline-offset: 2px;
+}
+.curr-bento-card:active { transform: translateY(0); }
+
+/* ── Feature: next-up — spans half the row, taller, accent-tinted ────────── */
+
+.curr-bento-card--feature {
+  grid-column: span 6;
+  min-height: 188px;
+  background: color-mix(in srgb, var(--accent, #2DD4BF) 6%, var(--surface, #161618));
+  border-color: color-mix(in srgb, var(--accent, #2DD4BF) 38%, var(--border, #2a2a2e));
+  border-left: 3px solid var(--accent, #2DD4BF);
+  padding: 18px 20px;
+  grid-template-rows: auto auto 1fr auto;
+}
+@media (max-width: 1024px) {
+  .curr-bento-card--feature { grid-column: span 4; min-height: 168px; }
+}
+@media (max-width: 768px) {
+  .curr-bento-card--feature {
+    grid-column: span 2;
+    aspect-ratio: 4 / 3;
+    min-height: 140px;
+  }
+}
+.curr-bento-card--feature .curr-bento-title { font-size: 18px; }
+.curr-bento-card--feature .curr-bento-cta { color: var(--accent, #2DD4BF); font-weight: 600; }
+:root:not([data-theme="dark"]) .curr-bento-card--feature .curr-bento-cta,
+[data-theme="light"]            .curr-bento-card--feature .curr-bento-cta {
+  /* mint fails 4.5:1 on white → swap to teal-700 */
+  color: var(--accent-dark, #0F766E);
+}
+
+/* Pulse animation runs once when entering the viewport (via .is-pulsing
+   class added by JS through IntersectionObserver). Not an infinite loop. */
+.curr-bento-card--feature.is-pulsing {
+  animation: curr-bento-pulse 1600ms var(--ease-out, cubic-bezier(.22,.61,.36,1)) 1;
+}
+@keyframes curr-bento-pulse {
+  0%   { box-shadow: 0 0 0 0   color-mix(in srgb, var(--accent, #2DD4BF) 40%, transparent); }
+  60%  { box-shadow: 0 0 0 10px color-mix(in srgb, var(--accent, #2DD4BF) 0%,  transparent); }
+  100% { box-shadow: 0 0 0 0   color-mix(in srgb, var(--accent, #2DD4BF) 0%,  transparent); }
+}
+
+/* ── Done state — muted, kept readable ───────────────────────────────────── */
+
+.curr-bento-card--done {
+  opacity: 0.7;
+  background: var(--surface, #161618);
+}
+.curr-bento-card--done .curr-bento-cta { color: var(--accent, #2DD4BF); }
+:root:not([data-theme="dark"]) .curr-bento-card--done .curr-bento-cta,
+[data-theme="light"]            .curr-bento-card--done .curr-bento-cta {
+  color: var(--accent-dark, #0F766E);
+}
+
+/* ── Locked state — kept for completeness (no lesson-level locks today) ──── */
+
+.curr-bento-card--locked {
+  opacity: 0.55;
+  cursor: not-allowed;
+  background: var(--surface, #161618);
+}
+.curr-bento-card--locked:hover { transform: none; border-color: var(--border, #2a2a2e); }
+
+/* ── Card internals ──────────────────────────────────────────────────────── */
+
+.curr-bento-card__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.curr-bento-card__icon {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--ink-faint, #71717a) 12%, transparent);
+  color: var(--ink-soft, var(--text-muted, #a1a1aa));
+  flex-shrink: 0;
+}
+.curr-bento-card--feature .curr-bento-card__icon {
+  background: color-mix(in srgb, var(--accent, #2DD4BF) 18%, transparent);
+  color: var(--accent, #2DD4BF);
+}
+.curr-bento-card--done .curr-bento-card__icon {
+  color: var(--accent, #2DD4BF);
+  background: color-mix(in srgb, var(--accent, #2DD4BF) 14%, transparent);
+}
+.curr-bento-card__icon svg { width: 18px; height: 18px; }
+
+.curr-bento-difficulty {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  /* a11y: visible difficulty AND aria-label */
+}
+.curr-bento-difficulty__dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--ink-faint, #71717a) 35%, transparent);
+}
+.curr-bento-difficulty__dot--on {
+  background: var(--ink-soft, var(--text-muted, #a1a1aa));
+}
+.curr-bento-card--feature .curr-bento-difficulty__dot--on {
+  background: var(--accent, #2DD4BF);
+}
+
+.curr-bento-num {
+  font-family: var(--font-mono, ui-monospace, SFMono-Regular, monospace);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: var(--ink-faint, var(--text-subtle, #71717a));
+  text-transform: uppercase;
+}
+
+.curr-bento-title {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--ink, var(--text, #fafafa));
+  margin: 0;
+  letter-spacing: -0.01em;
+  /* clamp to 2 lines so tile heights stay even */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.curr-bento-card--done .curr-bento-title {
+  text-decoration: line-through;
+  text-decoration-color: color-mix(in srgb, var(--ink-faint, #71717a) 50%, transparent);
+}
+
+.curr-bento-preview {
+  font-family: var(--font-mono, ui-monospace, SFMono-Regular, monospace);
+  font-size: 11px;
+  line-height: 1.45;
+  color: var(--ink-soft, var(--text-muted, #a1a1aa));
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.curr-bento-card__bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--ink-soft, var(--text-muted, #a1a1aa));
+}
+.curr-bento-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.curr-bento-meta svg { width: 12px; height: 12px; }
+.curr-bento-cta {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink-soft, var(--text-muted, #a1a1aa));
+  white-space: nowrap;
+}
+
+.curr-bento-card--locked .curr-bento-cta { color: var(--ink-faint, var(--text-subtle, #71717a)); }
+
+/* Skeleton — 12 placeholder cards while lessons load */
+.curr-bento-skeleton {
+  grid-column: span 3;
+  min-height: 132px;
+  border-radius: 14px;
+  background: linear-gradient(90deg,
+    color-mix(in srgb, var(--ink-faint, #71717a) 8%, transparent) 0%,
+    color-mix(in srgb, var(--ink-faint, #71717a) 18%, transparent) 50%,
+    color-mix(in srgb, var(--ink-faint, #71717a) 8%, transparent) 100%);
+  background-size: 200% 100%;
+  animation: curr-shimmer 1400ms linear infinite;
+  border: 1px solid var(--border, #2a2a2e);
+}
+.curr-bento-skeleton:first-child { grid-column: span 6; min-height: 188px; }
+@media (max-width: 1024px) { .curr-bento-skeleton { grid-column: span 4; } .curr-bento-skeleton:first-child { grid-column: span 4; } }
+@media (max-width: 768px)  { .curr-bento-skeleton { grid-column: span 1; min-height: 116px; aspect-ratio: 1/1; } .curr-bento-skeleton:first-child { grid-column: span 2; aspect-ratio: 4/3; } }
+
+/* Empty + error states keep the original `.curr-lessons` look — re-use it */
+.curr-bento-error,
+.curr-bento-empty {
+  grid-column: 1 / -1;
+  padding: 20px;
+  text-align: center;
+  border: 1px dashed var(--border, #2a2a2e);
+  border-radius: 12px;
+  color: var(--ink-soft, var(--text-muted, #a1a1aa));
+  font-size: 14px;
+  margin: 0;
+}
+
+/* Reduced motion — strip the pulse + transforms */
+@media (prefers-reduced-motion: reduce) {
+  .curr-bento-card,
+  .curr-bento-strip__dot { transition: none; }
+  .curr-bento-card:hover { transform: none; }
+  .curr-bento-card--feature.is-pulsing { animation: none; }
+  .curr-bento-skeleton { animation: none; }
+}
