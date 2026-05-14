@@ -1,0 +1,231 @@
+{
+  "meta": {
+    "course_key": "kurssi_2",
+    "lesson_index": 4,
+    "lesson_type": "grammar",
+    "level": "A",
+    "title": "Partitiivit: du, de la, de l', des — ja kieltomuoto",
+    "description": "Harjoittelet ranskalaisten partitiivien (du, de la, de l', des) käyttöä ja sitä, miten kieltomuoto muuttaa partitiivit sanaksi 'de'. Tämä on YO-rakennetehtävän vakioansa.",
+    "yo_relevance": "Partitiivit du/de la/des ovat YO-rakennetehtävässä toistuva aukkotyyppi. Kieltomuodossa partitiivi muuttuu 'de':ksi (Je mange du pain → Je ne mange pas de pain) — tämä on YO-klassikoista klassikoin.",
+    "estimated_minutes_median": 14
+  },
+  "teaching": {
+    "intro_md": "# Partitiivit: du, de la, de l', des\n\nPartitiivi kertoo, että puhutaan **jostakin määrästä** aineesta — ei tietystä, ei kaikesta.\n\n> *Je mange **du** pain.* (Syön [jotain] leipää)\n> *Je bois **de la** limonade.* (Juon [jotain] limonadia)\n> *Je bois **de l'**eau.* (Juon [jotain] vettä)\n> *Je mange **des** légumes.* (Syön [joitain] vihanneksia)\n\n## Partitiivi valitaan sukupuolen mukaan\n\n| Sukupuoli | Muoto | Esimerkki |\n|---|---|---|\n| Maskuliini | **du** | du pain, du café, du fromage |\n| Feminiini | **de la** | de la viande, de la limonade |\n| Vokaali/h-alkuinen | **de l'** | de l'eau, de l'huile |\n| Monikko | **des** | des légumes, des fruits |\n\n## KIELTOMUODOSSA partitiivi → de\n\nTämä on YO-klassikko!\n\n> *Je mange du pain.* → *Je **ne** mange **pas de** pain.*\n> *Elle boit de la limonade.* → *Elle **ne** boit **pas de** limonade.*\n> *Ils ont des amis.* → *Ils **n'**ont **pas d'**amis.*\n\n**Sääntö:** kieltomuodossa du / de la / de l' / des → **de** (tai d' ennen vokaalia)\n\n## Huomio: määrälliset ilmaisut\n\nMyös ilmausten beaucoup / un peu / assez / trop de jälkeen käytetään **de** (ei partitiiveja):\n\n> *Il mange **beaucoup de** pain.* (paljon leipää)\n> *Elle boit **un peu de** café.* (vähän kahvia)",
+    "key_points": [
+      "du (m) / de la (f) / de l' (vokaali) / des (pl) = partitiivi",
+      "Kieltomuoto: du/de la/de l'/des → de tai d' — AINA!",
+      "beaucoup de, un peu de, assez de, trop de — jälkeen aina 'de', ei partitiivi.",
+      "Partitiivi vs. määräinen artikkeli: du café (jotain kahvia) vs. le café (se tietty kahvi).",
+      "YO-ansa: *Je ne mange pas du pain* on VÄÄRIN → Je ne mange pas DE pain."
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1-recognition-mc-partitiivi",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista — oikea partitiivi",
+      "instruction": "Valitse oikea partitiivi lauseeseen.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.90 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "mc", "stem": "Je mange ___ pain.", "choices": ["du", "de la", "de l'", "des"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "le pain = maskuliini → du. Partitiivi + maskuliinisubstantiivi." },
+        { "item_type": "mc", "stem": "Je bois ___ eau.", "choices": ["du", "de la", "de l'", "des"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "l'eau alkaa vokaalilla → de l'. Élision tapahtuu myös partitiiveissa." },
+        { "item_type": "mc", "stem": "Il mange ___ viande.", "choices": ["du", "de la", "de l'", "des"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "la viande = feminiini → de la. Muista: la viande, le poulet, le poisson." },
+        { "item_type": "mc", "stem": "Nous mangeons ___ légumes.", "choices": ["du", "de la", "de l'", "des"], "correct_index": 3, "distractor_difficulty": "easy", "explanation": "les légumes = monikko → des. Monikossa aina des." },
+        { "item_type": "mc", "stem": "Elle boit ___ café.", "choices": ["du", "de la", "de l'", "des"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "le café = maskuliini → du." },
+        { "item_type": "mc", "stem": "Je mange ___ fromage.", "choices": ["du", "de la", "de l'", "des"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "le fromage = maskuliini → du." },
+        { "item_type": "mc", "stem": "Tu bois ___ limonade ?", "choices": ["du", "de la", "de l'", "des"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "la limonade = feminiini → de la." },
+        { "item_type": "mc", "stem": "Il mange ___ fruits.", "choices": ["du", "de la", "de l'", "des"], "correct_index": 3, "distractor_difficulty": "easy", "explanation": "les fruits = monikko → des." },
+        { "item_type": "mc", "stem": "Je mange ___ huile d'olive.", "choices": ["du", "de la", "de l'", "des"], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "l'huile alkaa vokaalilla (h mute) → de l'. Muista: h-alkuiset ranskan sanat usein élision kohteita." },
+        { "item_type": "mc", "stem": "Nous buvons ___ vin blanc.", "choices": ["du", "de la", "de l'", "des"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "le vin = maskuliini → du vin." },
+        { "item_type": "mc", "stem": "Elle mange ___ soupe.", "choices": ["du", "de la", "de l'", "des"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "la soupe = feminiini → de la soupe." },
+        { "item_type": "mc", "stem": "Il prend ___ lait.", "choices": ["du", "de la", "de l'", "des"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "le lait = maskuliini → du lait." },
+        { "item_type": "mc", "stem": "Nous mangeons ___ œufs le matin.", "choices": ["du", "de la", "de l'", "des"], "correct_index": 3, "distractor_difficulty": "medium", "explanation": "les œufs = monikko → des œufs." },
+        { "item_type": "mc", "stem": "Je bois ___ jus d'orange.", "choices": ["du", "de la", "de l'", "des"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "le jus = maskuliini → du jus. 'de' on jo 'jus d'orange' -sanassa erillinen." }
+      ]
+    },
+    {
+      "phase_id": "p2-recognition-mc-kielto",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista — kieltomuoto + partitiivi",
+      "instruction": "Valitse oikea kieltomuoto.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.90 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "mc", "stem": "Je mange du pain. → Je ne mange pas ___.", "choices": ["du pain", "de pain", "le pain", "pain"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "Kieltomuodossa du → de. KLASSINEN YO-ansa: *pas du pain* on väärin → pas DE pain." },
+        { "item_type": "mc", "stem": "Il boit de la limonade. → Il ne boit pas ___.", "choices": ["de la limonade", "du limonade", "de limonade", "la limonade"], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "de la → de kieltomuodossa. Sukupuoli katoaa kiellossa: aina 'de'." },
+        { "item_type": "mc", "stem": "Elle mange des fruits. → Elle ne mange pas ___.", "choices": ["des fruits", "de fruits", "les fruits", "du fruits"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "des → de kieltomuodossa. Monikossakin des → de." },
+        { "item_type": "mc", "stem": "Il a des amis. → Il n'a pas ___.", "choices": ["des amis", "d'amis", "de amis", "les amis"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "des → de → d' (élision ennen vokaalia a). Il n'a pas **d'**amis." },
+        { "item_type": "mc", "stem": "Je bois de l'eau. → Je ne bois pas ___.", "choices": ["de l'eau", "de eau", "d'eau", "l'eau"], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "de l' → de → d' (élision ennen vokaalia). Je ne bois pas **d'**eau." },
+        { "item_type": "mc", "stem": "Tu manges beaucoup ___ sucre.", "choices": ["du", "de la", "de", "des"], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "beaucoup de → AINA 'de' ilman artikkelia. beaucoup de sucre, pas de pain — sama sääntö." },
+        { "item_type": "mc", "stem": "Il boit un peu ___ café.", "choices": ["du", "de", "de la", "d'un"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "un peu de → 'de' ilman artikkelia. un peu de café, un peu de lait." },
+        { "item_type": "mc", "stem": "Je mange du fromage. → Kieltomuoto?", "choices": ["Je ne mange pas du fromage.", "Je ne mange pas de fromage.", "Je ne mange de fromage pas.", "Je pas mange du fromage."], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "Kieltomuoto: ne...pas ympäröi verbin, ja partitiivi du → de." },
+        { "item_type": "mc", "stem": "Elle prend de la confiture. → Elle ne prend pas ___.", "choices": ["de la confiture", "de confiture", "du confiture", "confiture"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "de la → de kieltomuodossa. Sukupuoleen perustuva muoto häviää." },
+        { "item_type": "mc", "stem": "Nous avons des légumes. → Nous n'avons pas ___.", "choices": ["des légumes", "de légumes", "les légumes", "du légumes"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "des → de kieltomuodossa. Monikossakin des katoaa ja tilalle tulee de." }
+      ]
+    },
+    {
+      "phase_id": "p3-recall-typed-fr-fi",
+      "phase_type": "recall_typed_es_to_fi",
+      "title": "Partitiivi → merkitys",
+      "instruction": "Kirjoita lauseen merkitys suomeksi.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.90 },
+      "skip_for_targets": ["I"],
+      "items": [
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Je mange du pain.", "accept": ["syön leipää", "minä syön leipää"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Je ne mange pas de pain.", "accept": ["en syö leipää", "minä en syö leipää"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Il boit de la limonade.", "accept": ["hän juo limonadia", "hän juo limonaadia"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Elle ne boit pas de lait.", "accept": ["hän ei juo maitoa"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Nous mangeons des légumes.", "accept": ["syömme vihanneksia", "me syömme vihanneksia"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Ils n'ont pas d'amis.", "accept": ["heillä ei ole ystäviä", "he eivät ole ystäviä"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Il mange beaucoup de pain.", "accept": ["hän syö paljon leipää"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Je bois un peu de café.", "accept": ["juon vähän kahvia", "minä juon vähän kahvia"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Je mange de l'huile d'olive.", "accept": ["syön oliiviöljyä", "minä syön oliiviöljyä"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Il ne mange pas de viande.", "accept": ["hän ei syö lihaa"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Nous ne buvons pas de vin.", "accept": ["emme juo viiniä", "me emme juo viiniä"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Tu prends trop de sucre.", "accept": ["otat liian paljon sokeria", "sinä otat liikaa sokeria"] }
+      ]
+    },
+    {
+      "phase_id": "p4-recall-typed-fi-fr",
+      "phase_type": "recall_typed_fi_to_es",
+      "title": "Suomi → ranska (partitiivi)",
+      "instruction": "Kirjoita lause ranskaksi oikealla partitiivilla.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.60, "C": 0.65, "M": 0.75, "E": 0.85, "L": 0.92 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Syön leipää. (manger / pain)", "accept": ["je mange du pain", "je mange du pain."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "En syö lihaa. (ne manger pas / viande)", "accept": ["je ne mange pas de viande", "je ne mange pas de viande."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Juon vettä. (boire / eau)", "accept": ["je bois de l'eau", "je bois de l'eau."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "En juo kahvia. (ne boire pas / café)", "accept": ["je ne bois pas de café", "je ne bois pas de cafe"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Hän syö vihanneksia. (manger / légumes)", "accept": ["il mange des légumes", "elle mange des légumes", "il mange des legumes"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Heillä ei ole ystäviä. (ne avoir pas / amis)", "accept": ["ils n'ont pas d'amis", "elles n'ont pas d'amis"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Hän juo paljon kahvia. (boire beaucoup / café)", "accept": ["il boit beaucoup de café", "elle boit beaucoup de café"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Syömme vähän juustoa. (manger un peu / fromage)", "accept": ["nous mangeons un peu de fromage", "on mange un peu de fromage"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Juon limonadia. (boire / limonade)", "accept": ["je bois de la limonade"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Hän ei juo limonadia. (ne boire pas / limonade)", "accept": ["il ne boit pas de limonade", "elle ne boit pas de limonade"] }
+      ]
+    },
+    {
+      "phase_id": "p5-application-gap-fill",
+      "phase_type": "application_gap_fill",
+      "title": "Aukkotehtävä — partitiivi tai kieltomuoto",
+      "instruction": "Täydennä oikea artikkeli tai kieltomuoto.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.70, "C": 0.75, "M": 0.85, "E": 0.90, "L": 0.95 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Je mange {1} pain le matin.", "answers": [["du"]], "word_bank": ["du", "de la", "de l'", "des"] },
+        { "item_type": "gap_fill", "sentence_template": "Elle boit {1} eau minérale.", "answers": [["de l'"]], "word_bank": ["du", "de la", "de l'", "des"] },
+        { "item_type": "gap_fill", "sentence_template": "Nous mangeons {1} légumes à chaque repas.", "answers": [["des"]], "word_bank": ["du", "de la", "de l'", "des"] },
+        { "item_type": "gap_fill", "sentence_template": "Il ne mange pas {1} viande.", "answers": [["de"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Ils n'ont pas {1} argent.", "answers": [["d'"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Je bois beaucoup {1} café.", "answers": [["de"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Tu prends {1} fromage avec du pain ?", "answers": [["du"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Elle ne boit pas {1} alcool.", "answers": [["d'"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Il y a trop {1} sucre dans ce gâteau.", "answers": [["de"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Nous mangeons {1} soupe le soir.", "answers": [["de la"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p6-application-gap-vaativa",
+      "phase_type": "application_gap_fill",
+      "title": "Muunna kieltomuotoon",
+      "instruction": "Kirjoita koko lause kieltomuodossa.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.60, "C": 0.70, "M": 0.80, "E": 0.90, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Je mange du pain. → Je {1} mange {2} pain.", "answers": [["ne"], ["pas de"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Il boit de la limonade. → Il {1} boit {2} limonade.", "answers": [["ne"], ["pas de"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Nous mangeons des légumes. → Nous {1} mangeons {2} légumes.", "answers": [["ne"], ["pas de"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Elle a des amis. → Elle {1} a {2} amis.", "answers": [["n'"], ["pas d'"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Je bois de l'eau. → Je {1} bois {2} eau.", "answers": [["ne"], ["pas d'"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Il mange beaucoup de pain. → Oikea rakenne: Il mange {1} de pain.", "answers": [["beaucoup"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Il y a du beurre. → Il {1} y a {2} beurre.", "answers": [["n'"], ["pas de"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Tu prends de la confiture ? → Tu ne prends {1} confiture ?", "answers": [["pas de"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p7-application-sentence-build",
+      "phase_type": "application_sentence_build",
+      "title": "Lauseiden rakentelua",
+      "instruction": "Käännä koko lause ranskaksi. Huomioi partitiivi ja mahdollinen kieltomuoto.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.60, "C": 0.65, "M": 0.78, "E": 0.85, "L": 0.92 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Syön vihanneksia joka päivä.", "accept": ["je mange des légumes tous les jours", "je mange des legumes tous les jours"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "En syö lihaa — olen kasvissyöjä.", "accept": ["je ne mange pas de viande — je suis végétarien", "je ne mange pas de viande, je suis végétarienne", "je ne mange pas de viande — je suis vegetarien"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Hän juo paljon kahvia joka aamu.", "accept": ["il boit beaucoup de café chaque matin", "elle boit beaucoup de café chaque matin"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Meillä ei ole maitoa jääkaapissa.", "accept": ["il n'y a pas de lait dans le réfrigérateur", "nous n'avons pas de lait dans le frigo", "il n'y a pas de lait dans le frigo"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Ranskalaiset syövät paljon juustoa.", "accept": ["les Français mangent beaucoup de fromage", "les francais mangent beaucoup de fromage"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Otan vähän sokeria kahviini.", "accept": ["je prends un peu de sucre dans mon café", "je mets un peu de sucre dans mon café"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Haluatko syödä jotain leipää?", "accept": ["tu veux manger du pain?", "tu veux du pain?", "est-ce que tu veux manger du pain?"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Tässä tortulla on liikaa suolaa.", "accept": ["cette tarte a trop de sel", "il y a trop de sel dans cette tarte", "cette tarte a trop de sel."] }
+      ]
+    },
+    {
+      "phase_id": "p8-synthesis-translate",
+      "phase_type": "synthesis_translate",
+      "title": "YO-tyylinen käännös",
+      "instruction": "Käännä lause ranskaksi. Partitiivi on avain.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.55, "C": 0.60, "M": 0.68, "E": 0.80, "L": 0.92 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "translate", "direction": "fi_to_es", "source": "En juo alkoholia, mutta syön joskus juustoa viinin kanssa.", "accept": ["je ne bois pas d'alcool, mais je mange parfois du fromage avec du vin", "je ne bois pas d'alcool mais je mange quelquefois du fromage avec du vin"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Ranskassa syödään paljon leipää joka aterialla.", "accept": ["en France, on mange beaucoup de pain à chaque repas", "en France on mange beaucoup de pain a chaque repas", "en France les Français mangent beaucoup de pain à chaque repas"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Lääkäri sanoi: ei sokeria, ei rasvaista ruokaa.", "accept": ["le médecin a dit: pas de sucre, pas de nourriture grasse", "le médecin a dit: pas de sucre et pas de graisses", "le docteur a dit: pas de sucre, pas de plats gras"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Haluaisin hieman viiniä, kiitos.", "accept": ["je voudrais un peu de vin, s'il vous plaît", "je voudrais un peu de vin, merci", "je voudrais du vin, s'il vous plaît"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Jääkaapissa on maitoa, juustoa ja vihanneksia.", "accept": ["dans le réfrigérateur, il y a du lait, du fromage et des légumes", "il y a du lait, du fromage et des légumes dans le frigo", "dans le frigo il y a du lait, du fromage et des legumes"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Tarvitsemmeko lisää leipää tai voita?", "accept": ["est-ce qu'on a besoin de plus de pain ou de beurre?", "avons-nous besoin de plus de pain ou de beurre?", "est-ce qu'il faut plus de pain ou de beurre?"] }
+      ]
+    },
+    {
+      "phase_id": "p9-application-gap-kertaus",
+      "phase_type": "application_gap_fill",
+      "title": "Kokoava kertaus — partitiivit ja kieltomuoto",
+      "instruction": "Täydennä oikea muoto. Huomio konteksti: myönteinen vai kielteinen?",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.60, "C": 0.68, "M": 0.80, "E": 0.90, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Je suis végétarien : je ne mange pas {1} viande et je ne mange pas {2} poisson.", "answers": [["de"], ["de"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Il y a {1} fromage, {2} lait et {3} œufs dans le frigo.", "answers": [["du"], ["du"], ["des"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Je mange trop {1} sucre — je dois faire attention.", "answers": [["de"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Tu bois {1} café le matin ? — Non, je ne bois pas {2} café.", "answers": [["du"], ["de"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Nous avons {1} pain mais nous n'avons pas {2} beurre.", "answers": [["du"], ["de"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Elle boit un peu {1} thé et beaucoup {2} eau.", "answers": [["de"], ["d'"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Vous prenez {1} vin avec votre repas ? — Non, je ne prends pas {2} vin.", "answers": [["du"], ["de"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Il n'y a pas {1} légumes frais au marché aujourd'hui.", "answers": [["de"]], "word_bank": null }
+      ]
+    }
+  ],
+  "vocab": [
+    { "es": "du", "fi": "partitiivi (maskuliini)", "example_es": "Je mange du pain.", "example_fi": "Syön leipää.", "gender": null },
+    { "es": "de la", "fi": "partitiivi (feminiini)", "example_es": "Je bois de la limonade.", "example_fi": "Juon limonadia.", "gender": null },
+    { "es": "de l'", "fi": "partitiivi (vokaalialkuinen)", "example_es": "Je bois de l'eau.", "example_fi": "Juon vettä.", "gender": null },
+    { "es": "des", "fi": "partitiivi (monikko)", "example_es": "Je mange des légumes.", "example_fi": "Syön vihanneksia.", "gender": null },
+    { "es": "ne... pas de", "fi": "ei yhtään (kieltomuoto + partitiivi)", "example_es": "Je ne mange pas de viande.", "example_fi": "En syö lihaa.", "gender": null },
+    { "es": "beaucoup de", "fi": "paljon (+ de)", "example_es": "Il mange beaucoup de pain.", "example_fi": "Hän syö paljon leipää.", "gender": null },
+    { "es": "un peu de", "fi": "vähän (+ de)", "example_es": "Je prends un peu de sucre.", "example_fi": "Otan vähän sokeria.", "gender": null },
+    { "es": "trop de", "fi": "liikaa (+ de)", "example_es": "Il y a trop de sel.", "example_fi": "Siinä on liikaa suolaa.", "gender": null },
+    { "es": "assez de", "fi": "tarpeeksi (+ de)", "example_es": "Nous avons assez de nourriture.", "example_fi": "Meillä on tarpeeksi ruokaa.", "gender": null },
+    { "es": "le sucre", "fi": "sokeri", "example_es": "Je ne prends pas de sucre dans mon café.", "example_fi": "En ota sokeria kahviini.", "gender": "m" },
+    { "es": "le sel", "fi": "suola", "example_es": "Il y a trop de sel dans cette soupe.", "example_fi": "Tässä keitos on liikaa suolaa.", "gender": "m" },
+    { "es": "la soupe", "fi": "keitto, soppa", "example_es": "Je mange de la soupe le soir.", "example_fi": "Syön keittoa illalla.", "gender": "f" },
+    { "es": "la limonade", "fi": "limonadi, sitruunamehu", "example_es": "Tu veux de la limonade?", "example_fi": "Haluatko limonadia?", "gender": "f" },
+    { "es": "l'alcool", "fi": "alkoholi", "example_es": "Je ne bois pas d'alcool.", "example_fi": "En juo alkoholia.", "gender": "m" },
+    { "es": "l'huile d'olive", "fi": "oliiviöljy", "example_es": "Je cuisine avec de l'huile d'olive.", "example_fi": "Laitan ruokaa oliiviöljyllä.", "gender": "f" }
+  ],
+  "side_panel": {
+    "tabs": [
+      {
+        "id": "grammar",
+        "title": "Partitiivit",
+        "content_md": "## Partitiivit — muoto sukupuolen mukaan\n\n| Sukupuoli | Artikkeli | Esimerkki |\n|---|---|---|\n| Maskuliini | **du** | du pain, du café, du fromage |\n| Feminiini | **de la** | de la viande, de la soupe |\n| Vokaali/h | **de l'** | de l'eau, de l'huile |\n| Monikko | **des** | des légumes, des fruits |\n\n## Kieltomuodossa: → de / d'\n\n| Myönteinen | Kielteinen |\n|---|---|\n| Je mange **du** pain. | Je ne mange **pas de** pain. |\n| Je bois **de la** limonade. | Je ne bois **pas de** limonade. |\n| Je bois **de l'**eau. | Je ne bois **pas d'**eau. |\n| Il a **des** amis. | Il n'a **pas d'**amis. |\n\n## Määrälliset ilmaisut → aina de\n\n- *beaucoup **de** pain* — paljon\n- *un peu **de** café* — vähän\n- *trop **de** sucre* — liikaa\n- *assez **de** nourriture* — tarpeeksi"
+      },
+      {
+        "id": "tips",
+        "title": "YO-vinkki",
+        "content_md": "## YO-koe — partitiivi on rakennetehtävän ansa\n\nPartitiivit ovat YO-rakennetehtävässä yksi toistuimmista aiheista. Erityisesti:\n\n## Klassikkovirhe\n\n> *Je ne mange pas **du** pain.* — VÄÄRIN!\n> *Je ne mange pas **de** pain.* — OIKEIN!\n\nKieltomuodossa du/de la/de l'/des katoaa ja tilalle tulee pelkkä **de** (tai d' ennen vokaalia).\n\n## Toinen klassikkoansa\n\n> *Il mange beaucoup **du** pain.* — VÄÄRIN!\n> *Il mange beaucoup **de** pain.* — OIKEIN!\n\nbeaucoup / un peu / trop / assez → aina 'de' ilman artikkelia.\n\n## Muistilaatikko\n\n- Myönteinen + ruoka/juoma → du/de la/de l'/des\n- Kielteinen + ruoka/juoma → de / d'\n- Määrälliset ilmaisut (beaucoup, un peu...) → de / d'"
+      }
+    ]
+  }
+}

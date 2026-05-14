@@ -1,0 +1,100 @@
+{
+  "meta": {
+    "course_key": "kurssi_6",
+    "lesson_index": 12,
+    "lesson_type": "test",
+    "level": "C",
+    "title": "Kertaustesti — Kurssi 6",
+    "description": "Kurssi 6 kertaustesti: 30 kysymystä jotka kattavat ympäristö- ja yhteiskuntasanaston sekä subjonctif présentin muodostuksen, epäsäännölliset muodot ja kaikki laukaisijat (indicatif vs subjonctif -valinta mukaan lukien).",
+    "yo_relevance": "Testi simuloi YO-kokeen rakennetehtävää (Osa 3). Erityisfokus subjonctif vs indicatif -valinnassa, joka on C-tason rakennetehtävän tyypillisin kysymystyyppi.",
+    "estimated_minutes_median": 22
+  },
+  "teaching": {
+    "intro_md": "# Kertaustesti — Kurssi 6\n\n**30 kysymystä** — kattaa koko K6:n sisällön:\n\n- **Sanasto** (L1, L3, L5, L9): ympäristö, energia, yhteiskunta, sosiaaliset ongelmat\n- **Subjonctif-muodostus** (L2, L4): säännölliset ja epäsäännölliset\n- **Laukaisijat** (L6, L7): il faut que, bien que, pour que, avant que, j'ai peur que...\n- **Indicatif vs subjonctif** (L8): j'espère que vs j'ai peur que, je pense que vs je ne pense pas que\n\n## Strategia\n\n1. Tarkista aina laukaisija ensin — se kertoo tarvitaanko subjonctif vai indicatif\n2. Epäsäännölliset ulkoa: être → soit, avoir → ait, faire → fasse, aller → aille\n3. J'espère que + indicatif — EI subjonctif!\n4. Kielto (je ne pense pas que) → aina subjonctif",
+    "key_points": [
+      "30 kysymystä kattaa koko K6-sisällön.",
+      "Subjonctif vs indicatif -valinta on tärkein testattava taito.",
+      "Epäsäännölliset muodot (être, avoir, faire, aller) testataan erikseen.",
+      "Sanaston osaaminen testataan kontekstissa (gap fill ja mc)."
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1-test-sanasto",
+      "phase_type": "recognition_mc",
+      "title": "Osa 1 — Sanasto (K6)",
+      "instruction": "Valitse oikea käännös tai täydennä lauseeseen oikea sana.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.75, "E": 0.8, "L": 0.85 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "mc", "stem": "le réchauffement climatique", "choices": ["ilmastonmuutos", "kasvihuoneilmiö", "ilmaston lämpeneminen", "tulva"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "le réchauffement climatique = ilmaston lämpeneminen. Le changement climatique = ilmastonmuutos." },
+        { "item_type": "mc", "stem": "la déforestation", "choices": ["kuivuus", "metsänhakkuu", "aavikoituminen", "eroosio"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "la déforestation = metsänhakkuu." },
+        { "item_type": "mc", "stem": "consommer", "choices": ["säästää", "kierrättää", "kuluttaa", "tuottaa"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "consommer = kuluttaa. Économiser = säästää." },
+        { "item_type": "mc", "stem": "la discrimination", "choices": ["syrjintä", "ennakkoluulo", "rasismi", "syrjäytyminen"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "la discrimination = syrjintä. Le préjugé = ennakkoluulo, le racisme = rasismi." },
+        { "item_type": "mc", "stem": "le réfugié", "choices": ["maahanmuuttaja", "turvapaikanhakija", "pakolainen", "kansalainen"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "le réfugié = pakolainen (virallinen status). L'immigré = maahanmuuttaja." },
+        { "item_type": "mc", "stem": "voter", "choices": ["protestoida", "äänestää", "mielenosoittaa", "militer"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "voter = äänestää. Manifester = mielenosoittaa." },
+        { "item_type": "mc", "stem": "durable", "choices": ["uusiutuva", "luonnollinen", "kestävä", "biologinen"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "durable = kestävä. Le développement durable = kestävä kehitys." },
+        { "item_type": "mc", "stem": "l'énergie éolienne", "choices": ["aurinkoenergia", "ydinvoima", "tuulienergia", "vesivoima"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "l'énergie éolienne = tuulienergia. Éolien = tuuleen liittyvä." },
+        { "item_type": "mc", "stem": "la pauvreté", "choices": ["rikkaus", "eriarvoisuus", "köyhyys", "tasa-arvo"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "la pauvreté = köyhyys. L'inégalité = eriarvoisuus." },
+        { "item_type": "mc", "stem": "l'empreinte carbone", "choices": ["kasvihuonekaasut", "CO2-päästöt", "hiilijalanjälki", "hiilensidonta"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "l'empreinte carbone = hiilijalanjälki." }
+      ]
+    },
+    {
+      "phase_id": "p2-test-subjonctif-muodostus",
+      "phase_type": "recognition_mc",
+      "title": "Osa 2 — Subjonctif-muodostus",
+      "instruction": "Valitse oikea subjonctif présent -muoto.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.75, "E": 0.8, "L": 0.85 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "mc", "stem": "parler — que tu ___", "choices": ["parlais", "parles", "parleras", "parler"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "Subjonctif: kanta parl- + pääte -es → que tu parles. Parlais on imparfait." },
+        { "item_type": "mc", "stem": "finir — que nous ___", "choices": ["finissons", "finissions", "finirons", "finirions"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Subjonctif nous: finiss- + -ions → que nous finissions. Finissons on présent indicatif." },
+        { "item_type": "mc", "stem": "être — qu'il ___", "choices": ["est", "soit", "était", "sera"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "être-subjonctif: qu'il soit. Est on présent indicatif." },
+        { "item_type": "mc", "stem": "avoir — que j'___", "choices": ["ai", "aie", "avais", "aurai"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "avoir-subjonctif: que j'aie. Ai on présent indicatif." },
+        { "item_type": "mc", "stem": "faire — que vous ___", "choices": ["faites", "fassiez", "feriez", "faisiez"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "faire-subjonctif vous: que vous fassiez. Faites on présent indicatif." },
+        { "item_type": "mc", "stem": "aller — que tu ___", "choices": ["vas", "ailles", "irais", "allais"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "aller-subjonctif: que tu ailles. Vas on présent indicatif." },
+        { "item_type": "mc", "stem": "pouvoir — qu'elle ___", "choices": ["peut", "puisse", "pouvait", "pourra"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "pouvoir-subjonctif: qu'elle puisse. Peut on présent indicatif." },
+        { "item_type": "mc", "stem": "vouloir — qu'il ___", "choices": ["veut", "veuille", "voulait", "voudra"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "vouloir-subjonctif: qu'il veuille. Veut on présent indicatif." }
+      ]
+    },
+    {
+      "phase_id": "p3-test-laukaisijat",
+      "phase_type": "application_gap_fill",
+      "title": "Osa 3 — Laukaisijat: subjonctif vai indicatif?",
+      "instruction": "Täydennä lauseeseen oikea muoto. Tunnista laukaisija!",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.75, "E": 0.8, "L": 0.85 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Il faut que tu {1} l'environnement. (protéger: ils protègent → protèg-)", "answers": [["protèges"]], "word_bank": ["protèges", "protèges", "protégeras"] },
+        { "item_type": "gap_fill", "sentence_template": "J'espère que les gouvernements {1} plus vite. (agir — indicatif futur: agiront)", "answers": [["agiront"]], "word_bank": ["agissent", "agiront", "agissaient"] },
+        { "item_type": "gap_fill", "sentence_template": "Bien qu'il {1} difficile, nous devons lutter contre le racisme. (être)", "answers": [["soit"]], "word_bank": ["est", "soit", "sera"] },
+        { "item_type": "gap_fill", "sentence_template": "Je ne pense pas que cette loi {1} suffisante. (être)", "answers": [["soit"]], "word_bank": ["est", "soit", "sera"] },
+        { "item_type": "gap_fill", "sentence_template": "Pour que la planète {1} protégée, il faut agir maintenant. (être)", "answers": [["soit"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Avant qu'il ne {1} trop tard, changeons nos habitudes. (être)", "answers": [["soit"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "J'ai peur que la situation ne {1} pas. (s'améliorer: s'amélior-)", "answers": [["s'améliore"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Je pense qu'il {1} important d'agir maintenant. (être — indicatif!)", "answers": [["est"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Il est nécessaire que chaque citoyen {1} consciencieusement. (voter: ils votent → vot-)", "answers": [["vote"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Il me semble que les jeunes {1} de plus en plus engagés. (être — indicatif!)", "answers": [["sont"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Bien que les réfugiés {1} de l'aide, l'intégration reste difficile. (avoir besoin — subjonctif: ils ont besoin → ils aient besoin)", "answers": [["aient besoin"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Je doute que cette mesure {1} l'inégalité. (réduire: ils réduisent → réduisent-subj: réduise)", "answers": [["réduise"]], "word_bank": null }
+      ]
+    }
+  ],
+  "vocab": [
+    { "es": "la COP21", "fi": "YK:n ilmastokonferenssi Pariisissa (2015)", "example_es": "La COP21 a abouti à l'Accord de Paris.", "example_fi": "COP21 johti Pariisin sopimukseen.", "gender": "f" },
+    { "es": "l'objectif climatique", "fi": "ilmastotavoite", "example_es": "Nous devons atteindre les objectifs climatiques.", "example_fi": "Meidän täytyy saavuttaa ilmastotavoitteet.", "gender": "m" },
+    { "es": "la politique environnementale", "fi": "ympäristöpolitiikka", "example_es": "La France a une politique environnementale ambitieuse.", "example_fi": "Ranskalla on kunnianhimoinen ympäristöpolitiikka.", "gender": "f" },
+    { "es": "les inégalités sociales", "fi": "sosiaaliset epätasa-arvoisuudet", "example_es": "Les inégalités sociales augmentent.", "example_fi": "Sosiaaliset epätasa-arvoisuudet kasvavat.", "gender": "f" },
+    { "es": "la participation citoyenne", "fi": "kansalaisosallistuminen", "example_es": "La participation citoyenne est essentielle.", "example_fi": "Kansalaisosallistuminen on olennaista.", "gender": "f" },
+    { "es": "atteindre", "fi": "saavuttaa", "example_es": "Nous devons atteindre nos objectifs.", "example_fi": "Meidän täytyy saavuttaa tavoitteemme.", "gender": null }
+  ],
+  "side_panel": {
+    "tabs": [
+      {
+        "id": "tips",
+        "title": "Testivinkit",
+        "content_md": "## Kertaustesti — strategia\n\n### Osa 1 — Sanasto\nTunnista avainsanat kontekstista. Jos epävarma, poissulje vaihtoehdot.\n\n### Osa 2 — Subjonctif-muodostus\n**Säännöllinen:**\n1. Ota ils-muoto: ils **parlent** → parl-\n2. Lisää pääte: que je **parle**\n\n**Epäsäännölliset ulkoa:**\n- être → **soit**, soyons, soyez\n- avoir → **ait**, ayons, ayez\n- faire → **fasse**, fassions\n- aller → **aille**, allions\n- pouvoir → **puisse**\n- vouloir → **veuille**\n\n### Osa 3 — Laukaisijat\n**Subjonctif:**\nil faut que, je veux que, pour que, avant que, bien que, j'ai peur que, il est important que, je ne pense pas que\n\n**Indicatif:**\n**j'espère que** ← MUISTA!\nje pense que (myönteinen)\nil me semble que, il paraît que"
+      }
+    ]
+  }
+}

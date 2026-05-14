@@ -1,0 +1,205 @@
+{
+  "meta": {
+    "course_key": "kurssi_5",
+    "lesson_index": 5,
+    "lesson_type": "grammar",
+    "level": "C",
+    "title": "Futur proche vs futur simple — milloin kumpaakin?",
+    "description": "Opit erottamaan futur proche (aller + infinitiivi) ja futur simple. Futur proche = lähellä oleva, varma tai suunniteltu tapahtuma. Futur simple = kaukaisempi, yleisempi tai kirjallisempi tulevaisuus. Harjoittelet molempia kontekstissaan.",
+    "yo_relevance": "YO-kokeessa molempia aikamuotoja esiintyy. Rakennetehtävässä saatetaan testata oikeaa valintaa kontekstin perusteella. Kirjoitelmissa futur proche on arkisempaa, futur simple kirjallisempaa — kummankin oikea käyttö nostaa pisteitä.",
+    "estimated_minutes_median": 12
+  },
+  "teaching": {
+    "intro_md": "# Futur proche vs futur simple\n\n## Futur proche — aller (présent) + infinitiivi\n\nFutur proche muodostetaan: **aller (taipuu) + infinitiivi**\n\n| Persoona | aller | Esimerkki |\n|---|---|---|\n| je | **vais** | je **vais** manger |\n| tu | **vas** | tu **vas** travailler |\n| il/elle | **va** | il **va** partir |\n| nous | **allons** | nous **allons** voir |\n| vous | **allez** | vous **allez** finir |\n| ils/elles | **vont** | ils **vont** vendre |\n\n## Milloin futur proche?\n\n- **Suunniteltu, lähellä oleva tapahtuma:** *Ce soir, je **vais** manger au restaurant.* (tänä iltana — varma)\n- **Aikomus:** *Je **vais** acheter ce livre.* (aion ostaa — päätös tehty)\n- **Arkinen puhekieli:** *Il **va** pleuvoir.* (Sataa varmasti — kuuloennuste)\n\n## Milloin futur simple?\n\n- **Kaukainen tulevaisuus:** *Dans dix ans, je **travaillerai** à Paris.* (kymmenen vuoden päästä)\n- **Yleinen ennuste:** *L'intelligence artificielle **transformera** le monde.* (yleinen tulevaisuusväittämä)\n- **Kirjallinen kieli, kirjoitelmissa:** *La France **jouera** un rôle important.*\n- **Si-lause:** *Si tu **viens**, je **serai** content.* (présent → futur simple)\n\n## Yhteenveto\n\n| | Futur proche | Futur simple |\n|---|---|---|\n| Muodostus | aller + inf. | Infinitiivi + päätteet |\n| Käyttö | Lähellä, suunniteltu | Kaukainen, yleinen, kirjallinen |\n| Esimerkki | Je **vais** partir. | Je **partirai** un jour. |",
+    "key_points": [
+      "Futur proche = aller (présent) + infinitiivi. Je vais manger, tu vas finir, il va partir.",
+      "Futur proche: lähellä oleva tai suunniteltu tapahtuma, aikomus, arkinen.",
+      "Futur simple: kaukaisempi tulevaisuus, yleinen ennuste, kirjallisempi.",
+      "Si-lauseessa: si + présent → futur simple (EI futur proche: si tu iras on virhe!).",
+      "Kielto: futur proche: je NE vais PAS manger. Ne ympäröi 'aller'-verbiä."
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1-recognition-mc-futur-compare",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista — futur proche vai futur simple?",
+      "instruction": "Valitse oikea muoto tai tunnista aikamuoto.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "mc", "stem": "'Ce soir, je ___ au cinéma.' — Mikä aikamuoto on luontevin?", "choices": ["irai (futur simple)", "vais aller (futur proche)", "allais (imparfait)", "suis allé (passé composé)"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Futur proche (je vais aller) — 'ce soir' viittaa läheiseen, suunniteltuun tulevaisuuteen. Futur simple ei ole väärä mutta futur proche on luontevampi arjessa." },
+        { "item_type": "mc", "stem": "'Dans vingt ans, les robots ___ notre travail.' — Mikä aikamuoto?", "choices": ["vont faire (futur proche)", "feront (futur simple)", "faisaient (imparfait)", "ont fait (passé composé)"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Futur simple (feront) — 'dans vingt ans' on kaukainen ennuste, kirjallinen konteksti → futur simple." },
+        { "item_type": "mc", "stem": "Mikä on VIRHEELLINEN futur proche -muoto?", "choices": ["je vais partir", "tu vas finir", "il va vient", "elle va travailler"], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "'il va vient' on VIRHE — infinitiiviin tarvitaan perusmuo venir, ei taivutettu muoto: il va venir." },
+        { "item_type": "mc", "stem": "Si tu ___, je serai content. (venir)", "choices": ["vas venir", "viendras", "viens", "venais"], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "Si + présent → futur simple: 'si tu viens, je serai content'. Si-lauseessa käytetään présenttiä, ei futuurimuotoa!" },
+        { "item_type": "mc", "stem": "'Attention! Il ___ pleuvoir!' — Mikä on luontevin?", "choices": ["pleuvra", "va pleuvoir", "pleuvait", "a plu"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Futur proche (va pleuvoir) — välitön varoitus, varma lähitulevaisuus. Luontevin varoituksessa." },
+        { "item_type": "mc", "stem": "Kieltomuoto futur proche: 'elle ___ plus travailler là-bas.'", "choices": ["ne va pas", "va ne pas", "n'ira pas", "ne va plus"], "correct_index": 3, "distractor_difficulty": "hard", "explanation": "'elle ne va plus travailler' — ne...plus ympäröi 'aller'-verbiä. 'ne va pas' = ei aio, mutta tässä 'enää' = plus." },
+        { "item_type": "mc", "stem": "Futur proche muodostus — 'nous':lle?", "choices": ["nous va étudier", "nous allons étudier", "nous irons étudier", "nous allons étudions"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "'nous allons étudier' = futur proche. aller taipuu (allons) + infinitiivi (étudier), ei konditionaali eikä taivutettu." },
+        { "item_type": "mc", "stem": "'L'année prochaine, nous ___ notre appartement.' (vendre)", "choices": ["vendrons (futur simple)", "allons vendre (futur proche)", "vendons (présent)", "vendrions (conditionnel)"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "Molemmat futur simple ja futur proche käyvät 'l'année prochaine' kanssa. Futur simple on hieman kaukaisempi. Molemmat hyväksyttäviä YO:ssa." },
+        { "item_type": "mc", "stem": "Mikä on oikea futur proche kieltomuoto: 'Je ___ pas y aller.'?", "choices": ["ne vais", "ne vais pas", "vais ne", "n'irai"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "'Je ne vais pas y aller' — ne...pas ympäröi aller-verbiä. Infinitiivi jää sen ulkopuolelle." },
+        { "item_type": "mc", "stem": "Millä ajan ilmauksella futur proche on luontevin?", "choices": ["dans dix ans", "au XXIe siècle", "ce soir", "un jour peut-être"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "'Ce soir' = tänä iltana — lähellä, konkreettinen → futur proche. Muut kuulostavat kaukaisilta tai epävarmoilta." }
+      ]
+    },
+    {
+      "phase_id": "p2-recognition-match",
+      "phase_type": "recognition_match",
+      "title": "Yhdistä — lause ja sen aikamuoto",
+      "instruction": "Yhdistä lause oikeaan selitykseen (futur proche vai futur simple).",
+      "mastery_threshold": { "I": 0.6, "A": 0.65, "B": 0.7, "C": 0.75, "M": 0.85, "E": 0.9, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        {
+          "item_type": "match",
+          "left_label": "Lause",
+          "right_label": "Aikamuoto ja syy",
+          "pairs": [
+            { "left": "Je vais travailler demain.", "right": "futur proche — huominen suunnitelma" },
+            { "left": "Dans 50 ans, les voitures voleront.", "right": "futur simple — kaukainen ennuste" },
+            { "left": "Il va pleuvoir!", "right": "futur proche — välitön varoitus" },
+            { "left": "Nous travaillerons ensemble un jour.", "right": "futur simple — epämääräinen tulevaisuus" },
+            { "left": "Tu vas finir tes devoirs ce soir?", "right": "futur proche — tänä iltana, konkreettinen" },
+            { "left": "Si tu étudies, tu réussiras.", "right": "futur simple — si-lause vaatii futuurin pääkohdassa" }
+          ]
+        }
+      ]
+    },
+    {
+      "phase_id": "p3-recall-fr-to-fi",
+      "phase_type": "recall_typed_es_to_fi",
+      "title": "Kirjoita suomeksi — tunnista ja käännä",
+      "instruction": "Kirjoita lauseen merkitys suomeksi ja mainitse aikamuoto.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I"],
+      "items": [
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Je vais chercher un emploi.", "accept": ["aion etsiä työtä", "olen menossa etsimään työtä", "etsin työtä (pian)"], "hint": "futur proche = aikomus" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Il travaillera à Paris dans cinq ans.", "accept": ["hän työskentelee Pariisissa viiden vuoden kuluttua", "viiden vuoden kuluttua hän on töissä Pariisissa"], "hint": "futur simple = kaukainen" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Ils vont vendre leur maison.", "accept": ["he aikovat myydä talonsa", "he myyvät talonsa (pian)"], "hint": "futur proche; vendre = myydä" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Elle ne va pas aller au travail demain.", "accept": ["hän ei mene töihin huomenna", "hän ei aio mennä töihin huomenna"], "hint": "futur proche kieltomuoto" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Les robots feront notre travail dans le futur.", "accept": ["robotit tekevät työmme tulevaisuudessa", "tulevaisuudessa robotit hoitavat työmme"], "hint": "futur simple; yleinen ennuste" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Vous allez réussir votre examen!", "accept": ["te tulette läpäisemään tenttinne", "te aiotte läpäistä tenttinne", "menestyt tentissä"], "hint": "futur proche, rohkaiseminen" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Si elle travaille dur, elle réussira.", "accept": ["jos hän tekee kovasti töitä, hän menestyy", "jos hän työskentelee kovasti, hän läpäisee"], "hint": "si + présent → futur simple" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Nous allons voir un film ce soir.", "accept": ["menemme katsomaan elokuvan tänä iltana", "aiomme katsoa elokuvan tänä iltana"], "hint": "futur proche; ce soir = tänä iltana" }
+      ]
+    },
+    {
+      "phase_id": "p4-recall-fi-to-fr",
+      "phase_type": "recall_typed_fi_to_es",
+      "title": "Kirjoita — valitse oikea aikamuoto ranskaksi",
+      "instruction": "Käännä lause ranskaksi. Päätä itse: futur proche vai futur simple.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Aion soittaa sinulle tänä iltana. (futur proche)", "accept": ["je vais t'appeler ce soir", "je vais te téléphoner ce soir"], "hint": "aller + infinitiivi" },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Tulevaisuudessa kaikki käyttävät sähköautoja. (futur simple)", "accept": ["à l'avenir tout le monde utilisera des voitures électriques", "dans le futur tous utiliseront des voitures électriques"], "hint": "infinitiivi + -ront" },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Huomenna emme mene töihin. (futur proche, kielto)", "accept": ["demain nous n'allons pas travailler", "nous n'allons pas travailler demain"], "hint": "ne...pas ympäröi aller-verbiä" },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Jos opiskelet, menestyt. (si + présent + futur simple)", "accept": ["si tu étudies tu réussiras", "si vous étudiez vous réussirez"], "hint": "si + présent, pääkohdassa futur simple" },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "He aikovat myydä yrityksen. (futur proche)", "accept": ["ils vont vendre l'entreprise", "elles vont vendre l'entreprise"], "hint": "aller + vendre" },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Sato! (futur proche — varoitus)", "accept": ["il va pleuvoir", "ça va pleuvoir"], "hint": "il va + infinitiivi" }
+      ]
+    },
+    {
+      "phase_id": "p5-gap-fill-helppo",
+      "phase_type": "application_gap_fill",
+      "title": "Täytä aukko — valitse oikea muoto",
+      "instruction": "Täytä aukko futur proche tai futur simple -muodolla. Käytä sanapankkia.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Ce soir, je {1} au cinéma avec mes amis. (aller — futur proche)", "answers": [["vais aller"]], "word_bank": ["vais aller", "irai", "allais", "suis allé"] },
+        { "item_type": "gap_fill", "sentence_template": "Dans cinquante ans, les humains {1} sur Mars. (vivre — futur simple)", "answers": [["vivront"]], "word_bank": ["vivront", "vont vivre", "vivaient", "ont vécu"] },
+        { "item_type": "gap_fill", "sentence_template": "Attention! Il {1} pleuvoir! Prends ton parapluie. (futur proche)", "answers": [["va"]], "word_bank": ["va", "ira", "allait", "est allé"] },
+        { "item_type": "gap_fill", "sentence_template": "Si tu manges bien, tu {1} en bonne santé. (être — futur simple)", "answers": [["seras"]], "word_bank": ["seras", "vas être", "étais", "es"] },
+        { "item_type": "gap_fill", "sentence_template": "Nous {1} notre appartement la semaine prochaine. (chercher — futur proche)", "answers": [["allons chercher"]], "word_bank": ["allons chercher", "chercherons", "cherchions", "avons cherché"] },
+        { "item_type": "gap_fill", "sentence_template": "L'intelligence artificielle {1} tous les secteurs de l'économie. (transformer — futur simple)", "answers": [["transformera"]], "word_bank": ["transformera", "va transformer", "transformait", "a transformé"] },
+        { "item_type": "gap_fill", "sentence_template": "Elle ne {1} pas travailler demain — elle est malade. (futur proche, kielto)", "answers": [["va"]], "word_bank": ["va", "ira", "allait", "est allée"] },
+        { "item_type": "gap_fill", "sentence_template": "Tu {1} ton examen si tu révises bien! (réussir — futur simple)", "answers": [["réussiras"]], "word_bank": ["réussiras", "vas réussir", "réussissais", "as réussi"] }
+      ]
+    },
+    {
+      "phase_id": "p6-gap-fill-vaativa",
+      "phase_type": "application_gap_fill",
+      "title": "Täytä aukko — valitse itse",
+      "instruction": "Täytä aukko ilman sanapankkia. Valitse itse futur proche tai futur simple kontekstin mukaan.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.65, "C": 0.75, "M": 0.85, "E": 0.9, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Je {1} chercher un emploi dès que j'aurai mon diplôme. (vouloir = décision immédiate)", "answers": [["vais", "veux"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Dans cent ans, les océans {1} plus chauds à cause du réchauffement climatique. (enjeu futur lointain)", "answers": [["seront"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Ils {1} vendre leur voiture — ils ont décidé hier soir. (décision récente)", "answers": [["vont"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Si vous {1} bien, vous réussirez l'examen. (préparer — si-lause!)", "answers": [["vous préparez", "préparez"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Attention! Il {1} neiger ce soir — mets ton manteau! (imminent)", "answers": [["va"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Dans le futur, tout le monde {1} à distance grâce à internet. (travailler — kaukainen ennuste)", "answers": [["travaillera"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Je ne {1} pas venir ce soir — j'ai trop de travail. (futur proche kielto)", "answers": [["vais"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Les énergies renouvelables {1} les énergies fossiles d'ici 2050. (remplacer — prévision lointaine)", "answers": [["remplaceront"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p7-sentence-build",
+      "phase_type": "application_sentence_build",
+      "title": "Rakenna lause — valitse aikamuoto",
+      "instruction": "Käännä lause ranskaksi. Valitse futur proche tai futur simple.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.6, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.92 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Aion aloittaa harjoittelun ensi kuussa. (futur proche)", "accept": ["je vais commencer le stage le mois prochain", "je vais faire mon stage le mois prochain"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Tulevaisuudessa robotit tekevät kaiken työn. (futur simple)", "accept": ["dans le futur les robots feront tout le travail", "à l'avenir les robots effectueront tout le travail"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Jos hän tekee kovasti töitä, hän menee hyvään yliopistoon. (si-lause)", "accept": ["si elle travaille dur elle ira dans une bonne université", "si il travaille dur il ira dans une bonne université"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Emme mene tänään töihin — meillä on vapaapäivä. (futur proche, kielto)", "accept": ["nous n'allons pas travailler aujourd'hui nous avons un jour de congé", "on ne va pas travailler aujourd'hui c'est notre jour de repos"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Pian hän saa ensimmäisen palkkansa. (futur proche — imminent)", "accept": ["il va bientôt recevoir son premier salaire", "elle va bientôt toucher son premier salaire"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Teknologia muuttaa maailman täysin 2050 mennessä. (futur simple)", "accept": ["la technologie changera le monde complètement d'ici 2050", "la technologie transformera complètement le monde d'ici 2050"] }
+      ]
+    },
+    {
+      "phase_id": "p8-synthesis-translate",
+      "phase_type": "synthesis_translate",
+      "title": "YO-tyylinen käännös",
+      "instruction": "Käännä kokonaan ranskaksi. Valitse oikea aikamuoto.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.6, "C": 0.65, "M": 0.75, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Minulla on suunnitelma: ensin valmistun lukiosta, sitten teen harjoittelun Pariisissa.", "accept": ["j'ai un plan d'abord je vais finir le lycée puis je vais faire un stage à paris", "j'ai un plan je vais d'abord terminer le lycée et ensuite faire un stage à paris"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Jos emme toimi nyt, ilmastonmuutos tuhoaa planeettamme.", "accept": ["si on n'agit pas maintenant le changement climatique détruira notre planète", "si nous n'agissons pas maintenant le réchauffement climatique détruira la planète"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Tulevaisuudessa ihmiset työskentelevät enemmän kotoa käsin tekoälyn avulla.", "accept": ["dans le futur les gens travailleront davantage depuis chez eux grâce à l'ia", "à l'avenir les personnes travailleront plus souvent de chez elles grâce à l'intelligence artificielle"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "He aikovat avata oman yrityksen heti yo-kokeen jälkeen.", "accept": ["ils vont ouvrir leur propre entreprise juste après le bac", "elles vont créer leur propre entreprise juste après le baccalauréat"] }
+      ]
+    },
+    {
+      "phase_id": "p9-short-writing",
+      "phase_type": "synthesis_short_writing",
+      "title": "Lyhyt kirjoitus — tulevaisuuden suunnitelmat",
+      "instruction": "Kirjoita 4–6 lausetta ranskaksi. Käytä sekä futur proche että futur simple.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.6, "C": 0.65, "M": 0.7, "E": 0.8, "L": 0.9 },
+      "skip_for_targets": ["I", "A", "B", "C", "M"],
+      "items": [
+        { "item_type": "writing", "prompt": "Kuvaile suunnitelmasi yo-kokeen jälkeen lähitulevaisuudelle (futur proche) ja pitkälle tulevaisuudelle (futur simple). Käytä molempia aikamuotoja.", "min_words": 45, "max_words": 90, "rubric_focus": ["communication", "structure", "vocab"] },
+        { "item_type": "writing", "prompt": "Kirjoita lyhyt teksti: mitä teet tänä iltana (futur proche) ja mitä aiot tehdä ammatillisesti kymmenen vuoden kuluttua (futur simple)?", "min_words": 40, "max_words": 85, "rubric_focus": ["communication", "vocab"] },
+        { "item_type": "writing", "prompt": "Kirjoita ennustus: mitä teknologia tulee tekemään maailmalle (futur simple) ja mitä sinä itse aiot tehdä teknologian alalla (futur proche)?", "min_words": 45, "max_words": 90, "rubric_focus": ["communication", "structure", "vocab"] }
+      ]
+    }
+  ],
+  "vocab": [
+    { "es": "aller + infinitiivi", "fi": "futur proche (aikoa, mennä tekemään)", "example_es": "Je vais travailler demain.", "example_fi": "Teen töitä huomenna.", "gender": null },
+    { "es": "bientôt", "fi": "pian", "example_es": "Il va bientôt arriver.", "example_fi": "Hän saapuu pian.", "gender": null },
+    { "es": "demain", "fi": "huomenna", "example_es": "Demain je vais chercher un emploi.", "example_fi": "Huomenna etsin työtä.", "gender": null },
+    { "es": "ce soir", "fi": "tänä iltana", "example_es": "Ce soir nous allons manger au restaurant.", "example_fi": "Tänä iltana syömme ravintolassa.", "gender": null },
+    { "es": "dans cinq ans", "fi": "viiden vuoden kuluttua", "example_es": "Dans cinq ans, je serai médecin.", "example_fi": "Viiden vuoden kuluttua olen lääkäri.", "gender": null },
+    { "es": "à l'avenir", "fi": "tulevaisuudessa", "example_es": "À l'avenir, les robots feront tout.", "example_fi": "Tulevaisuudessa robotit tekevät kaiken.", "gender": null },
+    { "es": "si", "fi": "jos (ehtokonjunktio)", "example_es": "Si tu viens, je serai content.", "example_fi": "Jos tulet, olen iloinen.", "gender": null },
+    { "es": "remplacer", "fi": "korvata", "example_es": "Les robots remplaceront certains emplois.", "example_fi": "Robotit korvaavat tiettyjä töitä.", "gender": null },
+    { "es": "immédiatement", "fi": "heti, välittömästi", "example_es": "Je vais le faire immédiatement.", "example_fi": "Teen sen heti.", "gender": null }
+  ],
+  "side_panel": {
+    "tabs": [
+      {
+        "id": "grammar",
+        "title": "Kielioppi",
+        "content_md": "## Futur proche — muodostus\n\n**aller (présent) + infinitiivi**\n\n| je | tu | il/elle | nous | vous | ils/elles |\n|---|---|---|---|---|---|\n| vais | vas | va | allons | allez | vont |\n\n*Je vais travailler. Tu vas finir. Il va partir.*\n\n**Kielto:** ne...pas ympäröi aller-verbiä:\n*Je ne vais **pas** travailler.* ✓\n\n## Futur simple — muodostus\n\nInfinitiivi + päätteet (-ai/-as/-a/-ons/-ez/-ont)\n- *Je travaillerai. Elle finira. Nous vendrons.*\n\n## Milloin kumpaakin?\n\n| Tilanne | Aikamuoto |\n|---|---|\n| Tänä iltana, huomenna (lähellä) | Futur proche |\n| Kymmenen vuoden kuluttua (kaukana) | Futur simple |\n| Varoitus: 'Il va pleuvoir!' | Futur proche |\n| Yleinen ennuste, kirjoitelma | Futur simple |\n| Si + présent → ___ | Futur simple! |\n\n## Si-lause — kriittinen!\n\n- Si tu **viens** → je **serai** content. ✓\n- EI: Si tu **viendras** → virhe! ✗"
+      },
+      {
+        "id": "tips",
+        "title": "YO-vinkki",
+        "content_md": "## Futur proche vs simple YO-kokeessa\n\nMolemmat ovat hyväksyttäviä monessa kontekstissa, mutta:\n\n**Kirjoitelmassa:** futur simple on kirjallisempi ja nostaa pisteitä\n**Si-lauseessa:** PAKOLLISESTI futur simple pääkohdassa\n**Arjen suunnitelmassa:** futur proche on luonnollisempi\n\n## Yleisin virhe: si-lause!\n\n- ✓ *Si tu **travailles**, tu **réussiras**.* (présent + futur simple)\n- ✗ *Si tu **travailleras**, tu réussiras.* — si-lauseessa ei futuuria!\n- ✗ *Si tu **vas** travailler...* — si-lauseessa ei futur prochea!"
+      }
+    ]
+  }
+}

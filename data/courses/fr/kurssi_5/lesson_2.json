@@ -1,0 +1,252 @@
+{
+  "meta": {
+    "course_key": "kurssi_5",
+    "lesson_index": 2,
+    "lesson_type": "grammar",
+    "level": "C",
+    "title": "Futur simple — säännölliset verbit",
+    "description": "Opit muodostamaan futur simple -muodon säännöllisistä -er-, -ir- ja -re-verbeistä. Päätteet lisätään infinitiiviin (-ai, -as, -a, -ons, -ez, -ont). -re-verbien e putoaa pois ennen päätteitä.",
+    "yo_relevance": "Futur simple on YO-kokeen rakennetehtävän (Osa 3) pakollinen aikamuoto. 'Que ferez-vous?' -kirjoitelmissa futur simple on keskeinen rakenne — konditionaalin kanssa erottaa C-tason M-tasosta.",
+    "estimated_minutes_median": 13
+  },
+  "teaching": {
+    "intro_md": "# Futur simple — säännölliset verbit\n\nFutur simple on ranskan tulevaisuuden aikamuoto. Se muodostetaan lisäämällä päätteet suoraan infinitiiviin.\n\n## Päätteet — kaikille verbeille samat\n\n| Persoona | Pääte | Esimerkki (parler) |\n|---|---|---|\n| je | **-ai** | je parler**ai** |\n| tu | **-as** | tu parler**as** |\n| il/elle | **-a** | il parler**a** |\n| nous | **-ons** | nous parler**ons** |\n| vous | **-ez** | vous parler**ez** |\n| ils/elles | **-ont** | ils parler**ont** |\n\n## Kolme verbityyppiä\n\n### -er-verbit: pääte lisätään infinitiiviin\n\n| Infinitiivi | je | il | nous |\n|---|---|---|---|\n| parler | je parler**ai** | il parler**a** | nous parler**ons** |\n| manger | je manger**ai** | il manger**a** | nous manger**ons** |\n| étudier | j'étudier**ai** | il étudier**a** | nous étudier**ons** |\n\n### -ir-verbit: pääte lisätään infinitiiviin\n\n| Infinitiivi | je | il | nous |\n|---|---|---|---|\n| finir | je finir**ai** | il finir**a** | nous finir**ons** |\n| choisir | je choisir**ai** | il choisir**a** | nous choisir**ons** |\n\n### -re-verbit: e putoaa ennen päätteitä!\n\n| Infinitiivi | Kanta | je | il |\n|---|---|---|---|\n| vendre | vendr- | je vendr**ai** | il vendr**a** |\n| prendre | prendr- | je prendr**ai** | il prendr**a** |\n| répondre | répoundr- | je répoundr**ai** | il répoundr**a** |\n\n> **Muistisääntö:** -re-verbin 'e' ei mahdu mukaan tulevaisuuteen — se putoaa pois!\n\n## Futur simple vs futur proche\n\n- **Futur proche** (aller + inf.): läheinen, varma tulevaisuus — *Je vais manger ce soir.*\n- **Futur simple**: kaukaisempi, abstraktimpi, kirjallisempi — *Dans dix ans, je travaillerai à Paris.*",
+    "key_points": [
+      "Päätteet: -ai, -as, -a, -ons, -ez, -ont — kaikille verbeille samat.",
+      "-er ja -ir: pääte suoraan infinitiivin perään. Esim. je parlerai, je finirai.",
+      "-re-verbeissä viimeinen 'e' putoaa: vendre → je vendrai (EI *je venderai*).",
+      "Futur simple = kaukaisempi tai kirjallisempi kuin futur proche.",
+      "Huom: je parleRAI (futur) vs je parlerAIS (conditionnel) — viimeinen tavu ratkaisee!"
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1-recognition-mc-futur-simple",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista — oikea futur simple -muoto",
+      "instruction": "Valitse oikea futur simple -muoto.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "mc", "stem": "parler — je ___", "choices": ["parlai", "parlerai", "parlerais", "parle"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "je parlerai = futur simple. 'parlai' on passé simple, 'parlerais' on conditionnel, 'parle' on présent." },
+        { "item_type": "mc", "stem": "finir — il ___", "choices": ["finit", "finira", "finirait", "finissait"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "il finira = futur simple. 'finit' on présent, 'finirait' on conditionnel, 'finissait' on imparfait." },
+        { "item_type": "mc", "stem": "vendre — nous ___", "choices": ["vendrons", "vendrons", "venderons", "vendions"], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "nous vendrons = futur simple. -re-verbeistä e putoaa: vendre → vendr + ons. *venderons on VIRHE." },
+        { "item_type": "mc", "stem": "travailler — tu ___", "choices": ["travailleras", "travaillais", "travaillerais", "travailles"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "tu travailleras = futur simple. 'travaillais' on imparfait, 'travaillerais' on conditionnel." },
+        { "item_type": "mc", "stem": "choisir — vous ___", "choices": ["choisissiez", "choisirez", "choisirait", "choisissez"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "vous choisirez = futur simple. 'choisirait' on conditionnel (väärä persoona myös)." },
+        { "item_type": "mc", "stem": "répondre — ils ___", "choices": ["répondront", "répondiront", "répondraient", "répondent"], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "ils répondront = futur simple. -re-verbeistä e putoaa: répondre → répondr + ont. *répondiront on VIRHE." },
+        { "item_type": "mc", "stem": "étudier — elle ___", "choices": ["étudierait", "étudiera", "étudiait", "étudie"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "elle étudiera = futur simple. 'étudierait' on conditionnel (vain yksi kirjain ero!)." },
+        { "item_type": "mc", "stem": "manger — nous ___", "choices": ["mangerons", "mangeront", "mangeons", "mangerions"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "nous mangerons = futur simple. 'mangeront' on ils-muoto, 'mangeons' on présent." },
+        { "item_type": "mc", "stem": "prendre — tu ___", "choices": ["prendras", "prendreras", "prends", "prendrais"], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "tu prendras = futur simple. -re-verbeistä e putoaa: prendre → prendr + as. *prendreras on VIRHE (liian monta r)." },
+        { "item_type": "mc", "stem": "parler — ils ___", "choices": ["parlent", "parleront", "parleraient", "parlerons"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "ils parleront = futur simple (huom: -ont eikä -ons). 'parlerons' on nous-muoto." },
+        { "item_type": "mc", "stem": "finir — je ___", "choices": ["finis", "finissais", "finirai", "finirais"], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "je finirai = futur simple. 'finirais' on conditionnel — ero viimeisessä tavussa: -rai vs -rais." },
+        { "item_type": "mc", "stem": "vendre — il ___", "choices": ["vend", "vendra", "vendrait", "vendait"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "il vendra = futur simple (-re-verbi, e putoaa). 'vendrait' on conditionnel." }
+      ]
+    },
+    {
+      "phase_id": "p2-recognition-match",
+      "phase_type": "recognition_match",
+      "title": "Yhdistä — futur simple -muodot",
+      "instruction": "Yhdistä verbi oikeaan futur simple -muotoon.",
+      "mastery_threshold": { "I": 0.6, "A": 0.65, "B": 0.7, "C": 0.75, "M": 0.85, "E": 0.9, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        {
+          "item_type": "match",
+          "left_label": "Infinitiivi",
+          "right_label": "Futur simple (je)",
+          "pairs": [
+            { "left": "parler", "right": "je parlerai" },
+            { "left": "finir", "right": "je finirai" },
+            { "left": "vendre", "right": "je vendrai" },
+            { "left": "manger", "right": "je mangerai" },
+            { "left": "choisir", "right": "je choisirai" },
+            { "left": "prendre", "right": "je prendrai" },
+            { "left": "répondre", "right": "je répondrai" },
+            { "left": "étudier", "right": "j'étudierai" }
+          ]
+        },
+        {
+          "item_type": "match",
+          "left_label": "Persoona + verbi",
+          "right_label": "Futur simple -muoto",
+          "pairs": [
+            { "left": "tu / travailler", "right": "tu travailleras" },
+            { "left": "il / finir", "right": "il finira" },
+            { "left": "nous / vendre", "right": "nous vendrons" },
+            { "left": "vous / choisir", "right": "vous choisirez" },
+            { "left": "ils / parler", "right": "ils parleront" },
+            { "left": "elle / prendre", "right": "elle prendra" },
+            { "left": "je / étudier", "right": "j'étudierai" },
+            { "left": "nous / manger", "right": "nous mangerons" }
+          ]
+        }
+      ]
+    },
+    {
+      "phase_id": "p3-recall-fr-to-fi",
+      "phase_type": "recall_typed_es_to_fi",
+      "title": "Tunnista aikamuoto — kirjoita suomeksi",
+      "instruction": "Mikä on alleviivatun verbin aikamuoto ja merkitys suomeksi?",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I"],
+      "items": [
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "je parlerai", "accept": ["puhun (tulevaisuudessa)", "tulen puhumaan", "puhun"], "hint": "futur simple, je-muoto" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "il finira", "accept": ["hän lopettaa (tulevaisuudessa)", "hän tulee lopettamaan", "hän lopettaa"], "hint": "futur simple, il-muoto" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "nous vendrons", "accept": ["myymme (tulevaisuudessa)", "tulemme myymään", "myymme"], "hint": "futur simple, nous-muoto; vendre = myydä" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "vous choisirez", "accept": ["valitsette", "tulettet valitsemaan", "valitsette (tulevaisuudessa)"], "hint": "futur simple, vous-muoto; choisir = valita" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "ils parleront", "accept": ["he puhuvat (tulevaisuudessa)", "he tulevat puhumaan"], "hint": "futur simple, ils-muoto; parler = puhua" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "elle prendra", "accept": ["hän ottaa (tulevaisuudessa)", "hän tulee ottamaan"], "hint": "futur simple, elle-muoto; prendre → prendr-" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "je répondrai", "accept": ["vastaan (tulevaisuudessa)", "tulen vastaamaan"], "hint": "futur simple; répondre → répoundr-" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "tu travailleras", "accept": ["teet töitä (tulevaisuudessa)", "tulet tekemään töitä"], "hint": "futur simple, tu-muoto; travailler = tehdä töitä" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "nous étudierons", "accept": ["opiskelemme (tulevaisuudessa)", "tulemme opiskelemaan"], "hint": "futur simple, nous-muoto; étudier = opiskella" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "il mangera", "accept": ["hän syö (tulevaisuudessa)", "hän tulee syömään"], "hint": "futur simple; manger = syödä" }
+      ]
+    },
+    {
+      "phase_id": "p4-recall-fi-to-fr",
+      "phase_type": "recall_typed_fi_to_es",
+      "title": "Kirjoita — futur simple ranskaksi",
+      "instruction": "Kirjoita verbi futur simple -muotoon. Muista: -re-verbistä e putoaa!",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "parler — je", "accept": ["je parlerai"], "hint": "infinitiivi + -ai" },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "finir — il", "accept": ["il finira"], "hint": "infinitiivi + -a" },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "vendre — nous", "accept": ["nous vendrons"], "hint": "-re: e putoaa → vendr + ons" },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "choisir — vous", "accept": ["vous choisirez"], "hint": "infinitiivi + -ez" },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "prendre — je", "accept": ["je prendrai"], "hint": "-re: e putoaa → prendr + ai" },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "manger — ils", "accept": ["ils mangeront"], "hint": "infinitiivi + -ont" },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "étudier — tu", "accept": ["tu étudieras"], "hint": "infinitiivi + -as" },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "répondre — elle", "accept": ["elle répondra"], "hint": "-re: e putoaa → répoundr + a" },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "travailler — nous", "accept": ["nous travaillerons"], "hint": "infinitiivi + -ons" },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "vendre — ils", "accept": ["ils vendront"], "hint": "-re: e putoaa → vendr + ont" }
+      ]
+    },
+    {
+      "phase_id": "p5-gap-fill-helppo",
+      "phase_type": "application_gap_fill",
+      "title": "Täytä aukko — futur simple lauseissa",
+      "instruction": "Täytä aukko oikealla futur simple -muodolla. Käytä sanapankkia.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Demain, je {1} avec mon patron à 10h. (parler)", "answers": [["parlerai"]], "word_bank": ["parlerai", "parlerais", "parlais", "parlerons"] },
+        { "item_type": "gap_fill", "sentence_template": "Elle {1} ses études l'année prochaine. (finir)", "answers": [["finira"]], "word_bank": ["finira", "finirait", "finissait", "finit"] },
+        { "item_type": "gap_fill", "sentence_template": "Nous {1} notre appartement quand on aura besoin d'argent. (vendre)", "answers": [["vendrons"]], "word_bank": ["vendrons", "venderons", "vendions", "vendrions"] },
+        { "item_type": "gap_fill", "sentence_template": "Vous {1} votre spécialité l'année prochaine. (choisir)", "answers": [["choisirez"]], "word_bank": ["choisirez", "choisissez", "choisiriez", "choisissiez"] },
+        { "item_type": "gap_fill", "sentence_template": "Dans dix ans, ils {1} dans une grande ville. (travailler)", "answers": [["travailleront"]], "word_bank": ["travailleront", "travaillent", "travailleraient", "travaillerons"] },
+        { "item_type": "gap_fill", "sentence_template": "Il {1} sa réponse dans la lettre. (écrire)", "answers": [["écrira"]], "word_bank": ["écrira", "écrit", "écrirait", "écrira"] },
+        { "item_type": "gap_fill", "sentence_template": "Tu {1} une bonne carrière si tu travailles bien. (réussir)", "answers": [["réussiras"]], "word_bank": ["réussiras", "réussis", "réussirais", "réussiras"] },
+        { "item_type": "gap_fill", "sentence_template": "Je {1} à votre message dès que possible. (répondre)", "answers": [["répondrai"]], "word_bank": ["répondrai", "réponds", "répondrais", "répondais"] },
+        { "item_type": "gap_fill", "sentence_template": "Elle {1} le droit à l'université de Bordeaux. (étudier)", "answers": [["étudiera"]], "word_bank": ["étudiera", "étudie", "étudierait", "étudiait"] },
+        { "item_type": "gap_fill", "sentence_template": "Nous {1} ensemble ce problème. (discuter)", "answers": [["discuterons"]], "word_bank": ["discuterons", "discutons", "discuterions", "discutant"] }
+      ]
+    },
+    {
+      "phase_id": "p6-gap-fill-vaativa",
+      "phase_type": "application_gap_fill",
+      "title": "Täytä aukko — futur simple ilman sanapankkia",
+      "instruction": "Muodosta futur simple -muoto sulkeissa olevasta verbistä.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.65, "C": 0.75, "M": 0.85, "E": 0.9, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "L'année prochaine, je {1} mes études de médecine. (commencer)", "answers": [["commencerai"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Quand tu {1} tes études, tu trouveras un bon travail. (finir)", "answers": [["finiras"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Ils {1} leur maison pour acheter un appartement en ville. (vendre)", "answers": [["vendront"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Dans le futur, tout le monde {1} des langues étrangères. (apprendre)", "answers": [["apprendra"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Nous {1} à vos questions pendant la conférence. (répondre)", "answers": [["répondrons"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Le gouvernement {1} de nouvelles lois sur l'environnement. (voter)", "answers": [["votera"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Si tu étudies, tu {1} ton examen. (réussir)", "answers": [["réussiras"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Vous {1} ce livre très intéressant. (trouver)", "answers": [["trouverez"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Elle {1} un emploi grâce à son expérience. (chercher)", "answers": [["cherchera"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Demain, nous {1} notre décision à toute l'équipe. (annoncer)", "answers": [["annoncerons"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p7-sentence-build",
+      "phase_type": "application_sentence_build",
+      "title": "Rakenna lause — futur simple",
+      "instruction": "Käännä lause ranskaksi futur simple -muodossa.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.6, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.92 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Puhumme ranskan opettajan kanssa huomenna.", "accept": ["nous parlerons avec le professeur de français demain", "demain nous parlerons avec notre professeur de français"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Hän valitsee erikoistumisalansa ensi vuonna.", "accept": ["il choisira sa spécialité l'année prochaine", "elle choisira sa spécialisation l'année prochaine"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "He myyvät talons rakentaakseen uuden.", "accept": ["ils vendront leur maison pour en construire une nouvelle", "elles vendront leur maison pour construire une autre"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Vastasin kirjeeseen heti kun luen sen.", "accept": ["je répondrai à la lettre dès que je la lirai", "je répondrai au message dès que possible"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Kymmenen vuoden kuluttua he työskentelevät ulkomailla.", "accept": ["dans dix ans ils travailleront à l'étranger", "dans dix ans elles travailleront à l'étranger"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Opiskelen lääketiedettä Pariisin yliopistossa.", "accept": ["j'étudierai la médecine à l'université de paris", "j'étudierai la médecine à paris"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Löydätte hyvän työn jos työskentelette kovasti.", "accept": ["vous trouverez un bon travail si vous travaillez dur", "vous trouverez un emploi si vous faites des efforts"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Hän onnistuu tentissä, olen varma siitä.", "accept": ["elle réussira à l'examen j'en suis sûr", "il réussira l'examen j'en suis certain"] }
+      ]
+    },
+    {
+      "phase_id": "p8-synthesis-translate",
+      "phase_type": "synthesis_translate",
+      "title": "YO-tyylinen käännös",
+      "instruction": "Käännä kokonaan ranskaksi. Käytä futur simple -muotoa.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.6, "C": 0.65, "M": 0.75, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Kymmenen vuoden kuluttua työskentelen lääkärinä suuressa sairaalassa.", "accept": ["dans dix ans je travaillerai comme médecin dans un grand hôpital", "dans dix ans je serai médecin dans un grand hôpital"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "He valitsevat ammattinsa vasta yliopistossa.", "accept": ["ils choisiront leur métier seulement à l'université", "elles choisiront leur profession à l'université"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Jos opit hyvin, läpäiset kokeen.", "accept": ["si tu apprends bien tu réussiras l'examen", "si vous étudiez bien vous réussirez l'examen"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Yritys myy toimistonsa ja muuttaa Lyoniin.", "accept": ["l'entreprise vendra son bureau et déménagera à lyon", "la société vendra ses bureaux et s'installera à lyon"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Vastaan kaikkiin kysymyksiinne kokouksen jälkeen.", "accept": ["je répondrai à toutes vos questions après la réunion", "je répondrai à toutes les questions après la réunion"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Tulevaisuudessa kaikki opiskelevat vähintään kahta vierasta kieltä.", "accept": ["à l'avenir tout le monde étudiera au moins deux langues étrangères", "dans le futur tout le monde apprendra au moins deux langues étrangères"] }
+      ]
+    },
+    {
+      "phase_id": "p9-short-writing",
+      "phase_type": "synthesis_short_writing",
+      "title": "Lyhyt kirjoitus — tulevaisuudensuunnitelmat",
+      "instruction": "Kirjoita 3–5 lausetta ranskaksi käyttäen futur simple -muotoa.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.6, "C": 0.65, "M": 0.7, "E": 0.8, "L": 0.9 },
+      "skip_for_targets": ["I", "A", "B", "C", "M"],
+      "items": [
+        { "item_type": "writing", "prompt": "Kerro ranskaksi mitä teet lukion jälkeen. Käytä futur simple -muotoa vähintään kolmessa lauseessa. Käytä sanoja: étudier, travailler, choisir.", "min_words": 35, "max_words": 80, "rubric_focus": ["communication", "structure", "vocab"] },
+        { "item_type": "writing", "prompt": "Kuvaa tulevaisuuden ihannepäiväsi ranskaksi futur simple -muodossa. Mainitse ammatti, mitä teet ja missä asut.", "min_words": 35, "max_words": 75, "rubric_focus": ["communication", "vocab"] },
+        { "item_type": "writing", "prompt": "Kirjoita lyhyt tarina henkilöstä joka löytää unelmatyönsä tulevaisuudessa. Käytä futur simple -muotoa.", "min_words": 40, "max_words": 85, "rubric_focus": ["communication", "structure", "vocab"] }
+      ]
+    }
+  ],
+  "vocab": [
+    { "es": "parler", "fi": "puhua", "example_es": "Je parlerai français dans mon travail.", "example_fi": "Puhun ranskaa työssäni.", "gender": null },
+    { "es": "finir", "fi": "lopettaa, päättää", "example_es": "Elle finira ses études en juin.", "example_fi": "Hän päättää opinnot kesäkuussa.", "gender": null },
+    { "es": "vendre", "fi": "myydä", "example_es": "Ils vendront leur voiture.", "example_fi": "He myyvät autonsa.", "gender": null },
+    { "es": "choisir", "fi": "valita", "example_es": "Tu choisiras ton métier plus tard.", "example_fi": "Valitset ammattisi myöhemmin.", "gender": null },
+    { "es": "travailler", "fi": "tehdä töitä", "example_es": "Je travaillerai dans une grande entreprise.", "example_fi": "Teen töitä suuressa yrityksessä.", "gender": null },
+    { "es": "répondre", "fi": "vastata", "example_es": "Nous répondrons à votre message.", "example_fi": "Vastaamme viestiinne.", "gender": null },
+    { "es": "étudier", "fi": "opiskella", "example_es": "Elle étudiera à Paris.", "example_fi": "Hän opiskelee Pariisissa.", "gender": null },
+    { "es": "réussir", "fi": "onnistua, menestyä", "example_es": "Il réussira son examen.", "example_fi": "Hän läpäisee tenttinsä.", "gender": null },
+    { "es": "manger", "fi": "syödä", "example_es": "Nous mangerons ensemble ce soir.", "example_fi": "Syömme yhdessä tänä iltana.", "gender": null },
+    { "es": "trouver", "fi": "löytää", "example_es": "Tu trouveras un bon emploi.", "example_fi": "Löydät hyvän työn.", "gender": null },
+    { "es": "prendre", "fi": "ottaa; ottaa (väline)", "example_es": "Elle prendra le train demain.", "example_fi": "Hän ottaa junan huomenna.", "gender": null },
+    { "es": "apprendre", "fi": "oppia", "example_es": "Ils apprendront le français en voyageant.", "example_fi": "He oppivat ranskan matkustamalla.", "gender": null },
+    { "es": "annoncer", "fi": "ilmoittaa", "example_es": "Il annoncera sa décision demain.", "example_fi": "Hän ilmoittaa päätöksestään huomenna.", "gender": null },
+    { "es": "le futur", "fi": "tulevaisuus", "example_es": "Dans le futur, les robots travailleront.", "example_fi": "Tulevaisuudessa robotit tekevät töitä.", "gender": "m" },
+    { "es": "l'avenir", "fi": "tulevaisuus (henkilökohtainen)", "example_es": "Quel avenir pour nos enfants?", "example_fi": "Millainen tulevaisuus lapsillemme?", "gender": "m" },
+    { "es": "l'année prochaine", "fi": "ensi vuonna", "example_es": "L'année prochaine, je commencerai mes études.", "example_fi": "Ensi vuonna aloitan opintoini.", "gender": "f" },
+    { "es": "demain", "fi": "huomenna", "example_es": "Demain, je parlerai au directeur.", "example_fi": "Huomenna puhun johtajalle.", "gender": null },
+    { "es": "dans dix ans", "fi": "kymmenen vuoden kuluttua", "example_es": "Dans dix ans, je serai médecin.", "example_fi": "Kymmenen vuoden kuluttua olen lääkäri.", "gender": null }
+  ],
+  "side_panel": {
+    "tabs": [
+      {
+        "id": "grammar",
+        "title": "Kielioppi",
+        "content_md": "## Futur simple — päätteet\n\n| Persoona | Pääte | parler | finir | vendre |\n|---|---|---|---|---|\n| je | -ai | parlerai | finirai | vendrai |\n| tu | -as | parleras | finiras | vendras |\n| il/elle | -a | parlera | finira | vendra |\n| nous | -ons | parlerons | finirons | vendrons |\n| vous | -ez | parlerez | finirez | vendrez |\n| ils/elles | -ont | parleront | finiront | vendront |\n\n## -re-verbien tärkeä sääntö\n\n**e putoaa pois ennen futur simple -päätteitä:**\n- vendre → **vendr** + ai = je **vendrai** ✓\n- ~~venderai~~ ✗\n- prendre → **prendr** + a = il **prendra** ✓\n- répondre → **répondr** + ons = nous **répondrons** ✓\n\n## Futur vs conditionnel — KRIITTINEN!\n\nYhden tavun ero:\n- **je parler-AI** (futur) = puhun\n- **je parler-AIS** (conditionnel) = puhuisin\n\nÄLÄ sekoita näitä!"
+      },
+      {
+        "id": "examples",
+        "title": "Esimerkit",
+        "content_md": "## Futur simple lauseissa\n\n- *Demain, **je parlerai** avec mon patron.* — Huomenna puhun pomolleni.\n- *Elle **finira** ses études en juin.* — Hän päättää opinnot kesäkuussa.\n- *Nous **vendrons** notre maison l'été prochain.* — Myymme talomme ensi kesänä.\n- *Dans dix ans, **j'aurai** mon propre cabinet médical.* — Kymmenen vuoden kuluttua minulla on oma lääkärin vastaanotto.\n- *Tu **choisiras** ta spécialité à l'université.* — Valitset erikoistumisalasi yliopistossa.\n- *Ils **répondront** à votre lettre.* — He vastaavat kirjeeseenne."
+      },
+      {
+        "id": "tips",
+        "title": "YO-vinkki",
+        "content_md": "## Futur simple YO-kokeessa\n\nFutur simple on **Osan 3 (rakenteet)** yleisin testattava aikamuoto C-tasolla. Tyypillinen tehtävä: taivuta sulkeissa oleva verbi oikeaan muotoon.\n\n## Tärkeimmät ansat\n\n- **-re-verbien e putoaa!** je vendrai (ei *je venderai*), il prendra (ei *il prendra*)\n- **futur vs conditionnel:** je parlerai vs je parlerais — ero vain viimeisessä kirjaimessa!\n- Äänneoppimisesta: futur simple kuulostaa '-rai/-ra/-ront', conditionnel '-rais/-rait/-raient'\n\n## Si-lause (perustaso)\n\nK5 L8:ssa syvennyt, mutta jo nyt: **Si + présent + futur simple**\n- *Si tu **travailles** bien, tu **réussiras**.* — Jos teet töitä hyvin, menestyt.\n- EI: ~~Si tu travailleras~~ — si-lauseen jälkeen présent, ei futur!\n\n## Käteviä ajan ilmaisuja\n\n- *demain* — huomenna\n- *l'année prochaine* — ensi vuonna\n- *dans dix ans* — kymmenen vuoden kuluttua\n- *à l'avenir* — tulevaisuudessa"
+      }
+    ]
+  }
+}

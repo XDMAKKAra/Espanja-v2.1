@@ -1,0 +1,281 @@
+{
+  "meta": {
+    "course_key": "kurssi_3",
+    "lesson_index": 1,
+    "lesson_type": "vocab",
+    "level": "B",
+    "title": "Kulkuvälineet ja matkustaminen",
+    "description": "Opit ranskan matkustamisen ydinsanaston: kulkuvälineet (le train, l'avion, la voiture, le bus, le métro, le bateau, le vélo), lentokenttä- ja asematermit (le billet, la gare, l'aéroport, l'arrêt) sekä matkaverbit (voyager, partir, arriver). Noin 30 sanaa jotka kattavat YO-kokeen matkakirjoitelman perussanaston.",
+    "yo_relevance": "Matka-aihe on YO-kokeen kirjoitelman vakioaihe (Osa 4). Kulkuvälineiden nimet ja matkasanasto esiintyvät myös luetun ymmärtämisen teksteissä (Osa 2) ja rakennetehtävissä (Osa 3) — erityisesti passé composé -rakenteen kanssa ('je suis allé(e) en train').",
+    "estimated_minutes_median": 12
+  },
+  "teaching": {
+    "intro_md": "# Kulkuvälineet ja matkustaminen ranskaksi\n\nRanskan matkasanasto on YO-kokeen vakioteema. Kaksi tärkeää eroa espanjaan:\n\n## Kulkuvälineet — prepositio *en* tai *à*\n\n| Suomeksi | Ranskaksi | Esimerkki |\n|---|---|---|\n| junalla | **en train** | Je vais à Paris en train. |\n| autolla | **en voiture** | Nous partons en voiture. |\n| lentokoneella | **en avion** | Elle voyage en avion. |\n| bussilla | **en bus** | Je prends le bus. |\n| metrolla | **en métro** | Il va en métro. |\n| polkupyörällä | **à vélo** | Je vais à vélo. |\n| jalan | **à pied** | On y va à pied? |\n\n**Muistisääntö:** Moottoroidut kulkuvälineet → **en**. Ihmisvoiman käyttö (vélo, pied) → **à**.\n\n## Asema ja lentokenttä\n\n- **la gare** = juna-asema\n- **l'aéroport** = lentokenttä\n- **le billet** = matkalippu (myös seteli)\n- **l'arrêt** = pysäkki (bussi, metro)\n- **le quai** = laituri (juna-asema)\n- **le vol** = lento\n- **le retard** = myöhästyminen (*avoir du retard* = olla myöhässä)\n\n## Tärkeät verbit\n\n- **partir** = lähteä → *être*-verbi passé composé:ssa\n- **arriver** = saapua → *être*-verbi\n- **voyager** = matkustaa → *avoir*-verbi\n- **prendre** = ottaa (bussi, juna) → *avoir*-verbi",
+    "key_points": [
+      "Moottoroiduilla kulkuvälineillä preposio on en (en train, en avion, en voiture). Polkupyörällä à vélo, jalan à pied.",
+      "la gare = juna-asema, l'aéroport = lentokenttä — älä sekoita.",
+      "le billet tarkoittaa sekä matkalippua että seteliä — konteksti ratkaisee.",
+      "partir ja arriver ovat être-verbejä passé composé:ssa (tähän palataan L2 ja L4).",
+      "avoir du retard = olla myöhässä (ei *être en retard* kulkuneuvosta)."
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1-recognition-mc-kulkuvalineet",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista — kulkuvälineet",
+      "instruction": "Valitse oikea suomennos.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "mc", "stem": "le train", "choices": ["bussi", "juna", "raitiovaunu", "metro"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "le train = juna. le bus = bussi, le métro = metro, le tramway = raitiovaunu." },
+        { "item_type": "mc", "stem": "l'avion", "choices": ["laiva", "lentokone", "helikopteri", "purjekone"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "l'avion = lentokone. l'article 'l'' koska sana alkaa vokaalilla." },
+        { "item_type": "mc", "stem": "la voiture", "choices": ["polkupyörä", "moottoripyörä", "auto", "rekka"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "la voiture = auto. la bicyclette / le vélo = polkupyörä." },
+        { "item_type": "mc", "stem": "le bus", "choices": ["taksi", "bussi", "auto", "pakettiauto"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "le bus = bussi. le taxi = taksi." },
+        { "item_type": "mc", "stem": "le métro", "choices": ["raitiovaunu", "linja-auto", "metro", "kaupunkijuna"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "le métro = metro. Pariisissa 16 linjaa, YO-tekstien klassikko." },
+        { "item_type": "mc", "stem": "le bateau", "choices": ["laiva, vene", "satama", "laituri", "purje"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "le bateau = laiva tai vene. le port = satama." },
+        { "item_type": "mc", "stem": "le vélo", "choices": ["mopo", "polkupyörä", "skootteri", "potkulauta"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "le vélo = polkupyörä (lyhenne: la bicyclette). à vélo = polkupyörällä." },
+        { "item_type": "mc", "stem": "le taxi", "choices": ["taksi", "bussi", "vuokra-auto", "pikaruokakuljetus"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "le taxi = taksi. prendre un taxi = ottaa taksi." },
+        { "item_type": "mc", "stem": "le billet", "choices": ["passi", "matkalippu; seteli", "varaus", "aikataulu"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "le billet = matkalippu TAI seteli — konteksti ratkaisee. le billet de train = junalippu, un billet de 50 euros = 50 euron seteli." },
+        { "item_type": "mc", "stem": "la gare", "choices": ["lentokenttä", "satama", "juna-asema", "bussiasema"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "la gare = juna-asema. l'aéroport = lentokenttä. Ne sekoita!" },
+        { "item_type": "mc", "stem": "l'aéroport", "choices": ["juna-asema", "satama", "lentokenttä", "bussiasema"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "l'aéroport = lentokenttä. la gare = juna-asema." },
+        { "item_type": "mc", "stem": "l'arrêt", "choices": ["pysäkki", "laituri", "portti", "tulo-/lähtöhalli"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "l'arrêt = pysäkki (bussi, metro). l'arrêt de bus = bussipysäkki." }
+      ]
+    },
+    {
+      "phase_id": "p2-recognition-match",
+      "phase_type": "recognition_match",
+      "title": "Yhdistä — matkasanasto",
+      "instruction": "Yhdistä ranskan sana ja suomennos.",
+      "mastery_threshold": { "I": 0.6, "A": 0.65, "B": 0.7, "C": 0.75, "M": 0.85, "E": 0.9, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        {
+          "item_type": "match",
+          "left_label": "Asema ja lentokenttä",
+          "right_label": "Suomeksi",
+          "pairs": [
+            { "left": "la gare", "right": "juna-asema" },
+            { "left": "l'aéroport", "right": "lentokenttä" },
+            { "left": "le quai", "right": "laituri" },
+            { "left": "le vol", "right": "lento" },
+            { "left": "le billet", "right": "matkalippu" },
+            { "left": "le retard", "right": "myöhästyminen" },
+            { "left": "l'arrêt", "right": "pysäkki" },
+            { "left": "le départ", "right": "lähtö" }
+          ]
+        },
+        {
+          "item_type": "match",
+          "left_label": "Matkaverbit",
+          "right_label": "Suomeksi",
+          "pairs": [
+            { "left": "voyager", "right": "matkustaa" },
+            { "left": "partir", "right": "lähteä" },
+            { "left": "arriver", "right": "saapua" },
+            { "left": "prendre", "right": "ottaa (bussi, juna)" },
+            { "left": "réserver", "right": "varata" },
+            { "left": "rater", "right": "myöhästyä (junasta)" },
+            { "left": "rentrer", "right": "palata kotiin" },
+            { "left": "visiter", "right": "vierailla, tutustua" }
+          ]
+        },
+        {
+          "item_type": "match",
+          "left_label": "Yleistä matkasanastoa",
+          "right_label": "Suomeksi",
+          "pairs": [
+            { "left": "le voyage", "right": "matka" },
+            { "left": "les vacances", "right": "loma" },
+            { "left": "la valise", "right": "matkalaukku" },
+            { "left": "le passeport", "right": "passi" },
+            { "left": "la destination", "right": "määränpää" },
+            { "left": "le tourisme", "right": "matkailu" },
+            { "left": "le touriste", "right": "turisti" },
+            { "left": "la frontière", "right": "raja" }
+          ]
+        }
+      ]
+    },
+    {
+      "phase_id": "p3-recall-fr-to-fi",
+      "phase_type": "recall_typed_es_to_fi",
+      "title": "Kirjoita — ranska → suomi",
+      "instruction": "Kirjoita ranskan sanan suomennos.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I"],
+      "items": [
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "le train", "accept": ["juna"], "hint": "kulkee raiteilla" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "la gare", "accept": ["juna-asema", "asema"], "hint": "missä junat pysähtyvät" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "l'aéroport", "accept": ["lentokenttä"], "hint": "missä lennot lähtevät" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "le billet", "accept": ["matkalippu", "lippu", "seteli"], "hint": "ostat tämän matkalle lähtiessä" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "la valise", "accept": ["matkalaukku", "laukku"], "hint": "pakataan ennen matkaa" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "le voyage", "accept": ["matka"], "hint": "faire un voyage = tehdä..." },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "partir", "accept": ["lähteä"], "hint": "être-apuverbi passé composé:ssa" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "arriver", "accept": ["saapua", "tulla perille"], "hint": "être-apuverbi, vastakohtapari: partir" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "le retard", "accept": ["myöhästyminen", "viivästys"], "hint": "avoir du retard = olla myöhässä" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "les vacances", "accept": ["loma"], "hint": "aina monikossa ranskassa" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "le bateau", "accept": ["laiva", "vene"], "hint": "kulkee vedessä" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "voyager", "accept": ["matkustaa"], "hint": "avoir-verbi passé composé:ssa" }
+      ]
+    },
+    {
+      "phase_id": "p4-recall-fi-to-fr",
+      "phase_type": "recall_typed_fi_to_es",
+      "title": "Kirjoita — suomi → ranska",
+      "instruction": "Kirjoita suomen sana ranskaksi. Muista aksentit (é, è, â jne.).",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "juna", "accept": ["le train", "train"], "hint": "maskuliini" },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "lentokenttä", "accept": ["l'aéroport", "aéroport", "l'aeroport", "aeroport"], "hint": "l' + aéroport (é-aksentti!)" },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "matkalippu", "accept": ["le billet", "billet"], "hint": "myös seteli" },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "matkustaa", "accept": ["voyager"], "hint": "avoir-verbi passé composé:ssa" },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "loma", "accept": ["les vacances", "vacances"], "hint": "aina monikossa!" },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "juna-asema", "accept": ["la gare", "gare"], "hint": "feminiini" },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "lähteä", "accept": ["partir"], "hint": "être-verbi passé composé:ssa" },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "saapua", "accept": ["arriver"], "hint": "être-verbi, pari: partir" },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "matkalaukku", "accept": ["la valise", "valise"], "hint": "feminiini" },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "varata", "accept": ["réserver"], "hint": "réservation = varaus" }
+      ]
+    },
+    {
+      "phase_id": "p5-gap-fill-helppo",
+      "phase_type": "application_gap_fill",
+      "title": "Täytä aukko — kulkuvälineet",
+      "instruction": "Täytä aukko oikealla ranskan sanalla. Muista: en + moottoriajoneuvo, à + polkupyörä/jalan.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Je vais à Paris {1} train.", "answers": [["en"]], "word_bank": ["en", "à", "par", "avec"] },
+        { "item_type": "gap_fill", "sentence_template": "Elle prend le {1} pour aller au travail.", "answers": [["métro", "bus", "train"]], "word_bank": ["métro", "bus", "train", "vélo"] },
+        { "item_type": "gap_fill", "sentence_template": "Mon {1} pour Lyon coûte 45 euros.", "answers": [["billet"]], "word_bank": ["billet", "passeport", "retard"] },
+        { "item_type": "gap_fill", "sentence_template": "Le train arrive à la {1} à 18h30.", "answers": [["gare"]], "word_bank": ["gare", "aéroport", "arrêt"] },
+        { "item_type": "gap_fill", "sentence_template": "Nous {1} en vacances au bord de la mer.", "answers": [["partons", "allons"]], "word_bank": ["partons", "arrivons", "restons"] },
+        { "item_type": "gap_fill", "sentence_template": "Il y a un {1} de dix minutes sur le vol.", "answers": [["retard"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Ma sœur va à l'école {1} vélo.", "answers": [["à"]], "word_bank": ["à", "en", "par", "avec"] },
+        { "item_type": "gap_fill", "sentence_template": "L'{1} de Paris s'appelle Charles de Gaulle.", "answers": [["aéroport"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Ils font un {1} en Espagne cet été.", "answers": [["voyage"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Où est l'{1} de bus pour le centre-ville?", "answers": [["arrêt"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p6-gap-fill-vaativa",
+      "phase_type": "application_gap_fill",
+      "title": "Täytä aukko — vaativampi",
+      "instruction": "Täytä aukko ilman sanapankkia. Huomio konteksti.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.65, "C": 0.75, "M": 0.85, "E": 0.9, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Si on rate le train, on doit prendre le {1} suivant.", "answers": [["train"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Pour aller en Angleterre depuis Paris, on peut prendre l'Eurostar — c'est un {1} sous la Manche.", "answers": [["train", "tunnel"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Le {1} numéro 7 va directement à la Tour Eiffel.", "answers": [["métro", "bus"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Les touristes louent souvent une {1} pour visiter la Provence.", "answers": [["voiture"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Mon vol a du {1} — l'avion part avec deux heures de retard.", "answers": [["retard"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Pour traverser la Méditerranée, nous prenons le {1} depuis Marseille.", "answers": [["bateau", "ferry"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "J'ai {1} mon billet de train sur Internet.", "answers": [["réservé", "acheté", "commandé"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Il faut arriver à l'aéroport deux heures avant le {1}.", "answers": [["vol", "départ"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Quand on voyage en Europe, on n'a pas besoin de {1}.", "answers": [["passeport", "visa"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Le TGV est un {1} très rapide — il roule à 300 km/h.", "answers": [["train"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p7-sentence-build",
+      "phase_type": "application_sentence_build",
+      "title": "Rakenna lause",
+      "instruction": "Käännä lause ranskaksi.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.6, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.92 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Menen Lyoniin junalla.", "accept": ["je vais à lyon en train", "je vais à lyon en train.", "je prends le train pour aller à lyon"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Ostan lipun lentokentältä.", "accept": ["j'achète un billet à l'aéroport", "j'achète mon billet à l'aéroport"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Juna on kymmenen minuuttia myöhässä.", "accept": ["le train a dix minutes de retard", "le train a 10 minutes de retard"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "He lähtevät lomalle huomenna.", "accept": ["ils partent en vacances demain", "elles partent en vacances demain"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Halusin varata hotellihuoneen.", "accept": ["je voulais réserver une chambre d'hôtel", "je veux réserver une chambre d'hôtel"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Missä on lähin bussipysäkki?", "accept": ["où est l'arrêt de bus le plus proche", "où est l'arrêt de bus le plus proche?"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Matkustamme laivalla Korsikaan.", "accept": ["nous voyageons en bateau en corse", "nous prenons le bateau pour aller en corse"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Hän saapuu lentokentälle kahteen.", "accept": ["il arrive à l'aéroport à deux heures", "elle arrive à l'aéroport à deux heures", "il arrive à l'aéroport à 14h"] }
+      ]
+    },
+    {
+      "phase_id": "p8-synthesis-translate",
+      "phase_type": "synthesis_translate",
+      "title": "YO-tyylinen käännös",
+      "instruction": "Käännä koko lause ranskaksi YO-tasolla.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.6, "C": 0.65, "M": 0.75, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Lentomme Barcelonaan on tunnin myöhässä huonon sään takia.", "accept": ["notre vol pour barcelone a une heure de retard à cause du mauvais temps", "notre vol pour barcelone a une heure de retard en raison du mauvais temps"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Kun saavumme juna-asemalle, ostamme liput ja etsimme laiturin.", "accept": ["quand nous arrivons à la gare, nous achetons les billets et nous cherchons le quai", "quand on arrive à la gare, on achète les billets et on cherche le quai"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Tänä kesänä haluamme tehdä matkan Etelä-Ranskaan.", "accept": ["cet été, nous voulons faire un voyage dans le sud de la france", "cet été nous voulons faire un voyage en provence"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Jos myöhästyt junasta, voit ottaa seuraavan puolen tunnin kuluttua.", "accept": ["si tu rates le train, tu peux prendre le suivant dans une demi-heure", "si vous ratez le train, vous pouvez prendre le suivant dans une demi-heure"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Matkustaminen junalla on mukavampaa kuin lentäminen.", "accept": ["voyager en train est plus agréable qu'en avion", "voyager en train est plus confortable que voyager en avion"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Meidän täytyy varata liput etukäteen, koska TGV on usein täynnä.", "accept": ["nous devons réserver les billets à l'avance car le tgv est souvent complet", "il faut réserver les billets à l'avance parce que le tgv est souvent plein"] }
+      ]
+    },
+    {
+      "phase_id": "p9-short-writing",
+      "phase_type": "synthesis_short_writing",
+      "title": "Lyhyt kirjoitus — matka",
+      "instruction": "Kirjoita 3–5 lausetta ranskaksi. Käytä matkasanastoa.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.6, "C": 0.65, "M": 0.7, "E": 0.8, "L": 0.9 },
+      "skip_for_targets": ["I", "A", "B", "C", "M"],
+      "items": [
+        { "item_type": "writing", "prompt": "Kerro lyhyesti lempikulkuvälineestäsi ranskaksi. Miksi pidät siitä? Käytä sanoja voyager, préférer ja vähintään kahta kulkuvälineen nimeä.", "min_words": 30, "max_words": 70, "rubric_focus": ["communication", "vocab", "structure"] },
+        { "item_type": "writing", "prompt": "Kuvaa unelmamatkaa Ranskassa. Minne haluaisit mennä? Millä kulkuvälineellä? Mainitse vähintään kolme matkasanaa.", "min_words": 35, "max_words": 75, "rubric_focus": ["communication", "vocab"] },
+        { "item_type": "writing", "prompt": "Kirjoita lyhyt dialogi (4–6 vuoroa) juna-asemalla: ostat menolipun Pariisiin, kysyt lähtöajan ja laiturin numeron.", "min_words": 40, "max_words": 80, "rubric_focus": ["communication", "vocab"] }
+      ]
+    }
+  ],
+  "vocab": [
+    { "es": "le train", "fi": "juna", "example_es": "Je prends le train pour aller à Paris.", "example_fi": "Otan junan Pariisiin.", "gender": "m" },
+    { "es": "l'avion", "fi": "lentokone", "example_es": "L'avion part dans une heure.", "example_fi": "Lentokone lähtee tunnin kuluttua.", "gender": "m" },
+    { "es": "la voiture", "fi": "auto", "example_es": "Nous voyageons en voiture.", "example_fi": "Matkustamme autolla.", "gender": "f" },
+    { "es": "le bus", "fi": "bussi", "example_es": "Je prends le bus pour aller au lycée.", "example_fi": "Otan bussin lukioon.", "gender": "m" },
+    { "es": "le métro", "fi": "metro", "example_es": "À Paris, on prend le métro.", "example_fi": "Pariisissa ottaa metron.", "gender": "m" },
+    { "es": "le bateau", "fi": "laiva, vene", "example_es": "Le bateau arrive au port.", "example_fi": "Laiva saapuu satamaan.", "gender": "m" },
+    { "es": "le vélo", "fi": "polkupyörä", "example_es": "Elle va au travail à vélo.", "example_fi": "Hän menee töihin polkupyörällä.", "gender": "m" },
+    { "es": "le taxi", "fi": "taksi", "example_es": "Nous prenons un taxi à l'aéroport.", "example_fi": "Otamme taksin lentokentälle.", "gender": "m" },
+    { "es": "la gare", "fi": "juna-asema", "example_es": "La gare de Lyon est grande.", "example_fi": "Gare de Lyon on suuri.", "gender": "f" },
+    { "es": "l'aéroport", "fi": "lentokenttä", "example_es": "L'aéroport Charles de Gaulle est le plus grand.", "example_fi": "Charles de Gaullen lentokenttä on suurin.", "gender": "m" },
+    { "es": "le billet", "fi": "matkalippu; seteli", "example_es": "J'achète un billet aller-retour.", "example_fi": "Ostan meno-paluulipun.", "gender": "m" },
+    { "es": "l'arrêt", "fi": "pysäkki", "example_es": "L'arrêt de bus est au coin de la rue.", "example_fi": "Bussipysäkki on kadun kulmassa.", "gender": "m" },
+    { "es": "le quai", "fi": "laituri (asema)", "example_es": "Le train part du quai numéro 5.", "example_fi": "Juna lähtee laiturilta 5.", "gender": "m" },
+    { "es": "la valise", "fi": "matkalaukku", "example_es": "J'ai une grande valise rouge.", "example_fi": "Minulla on iso punainen matkalaukku.", "gender": "f" },
+    { "es": "le voyage", "fi": "matka", "example_es": "Nous faisons un voyage en Italie.", "example_fi": "Teemme matkan Italiaan.", "gender": "m" },
+    { "es": "les vacances", "fi": "loma", "example_es": "Je pars en vacances en août.", "example_fi": "Lähden lomalle elokuussa.", "gender": "f" },
+    { "es": "le vol", "fi": "lento", "example_es": "Mon vol pour Rome est direct.", "example_fi": "Lentoni Roomaan on suora.", "gender": "m" },
+    { "es": "le retard", "fi": "myöhästyminen, viivästys", "example_es": "L'avion a du retard.", "example_fi": "Lentokoneella on myöhästymistä.", "gender": "m" },
+    { "es": "le départ", "fi": "lähtö", "example_es": "Le départ est à 9h30.", "example_fi": "Lähtö on klo 9.30.", "gender": "m" },
+    { "es": "l'arrivée", "fi": "saapuminen", "example_es": "L'arrivée du train est à 14h.", "example_fi": "Junan saapuminen on klo 14.", "gender": "f" },
+    { "es": "le passeport", "fi": "passi", "example_es": "N'oublie pas ton passeport!", "example_fi": "Älä unohda passiasi!", "gender": "m" },
+    { "es": "la destination", "fi": "määränpää, kohde", "example_es": "Ma destination préférée est la Bretagne.", "example_fi": "Suosikkikohteeni on Bretagne.", "gender": "f" },
+    { "es": "le tourisme", "fi": "matkailu, turismi", "example_es": "Le tourisme est important en France.", "example_fi": "Matkailu on tärkeää Ranskassa.", "gender": "m" },
+    { "es": "voyager", "fi": "matkustaa", "example_es": "J'aime voyager en Europe.", "example_fi": "Pidän matkustamisesta Euroopassa.", "gender": null },
+    { "es": "partir", "fi": "lähteä", "example_es": "On part demain matin.", "example_fi": "Lähdemme huomenna aamulla.", "gender": null },
+    { "es": "arriver", "fi": "saapua", "example_es": "Le bus arrive dans cinq minutes.", "example_fi": "Bussi saapuu viiden minuutin kuluttua.", "gender": null },
+    { "es": "réserver", "fi": "varata", "example_es": "J'ai réservé un hôtel en ligne.", "example_fi": "Varasin hotellin netistä.", "gender": null },
+    { "es": "rater", "fi": "myöhästyä (junasta/lennolta)", "example_es": "Elle a raté son train.", "example_fi": "Hän myöhästyi junastaan.", "gender": null },
+    { "es": "visiter", "fi": "vierailla, tutustua", "example_es": "Nous voulons visiter le Louvre.", "example_fi": "Haluamme tutustua Louvrehen.", "gender": null },
+    { "es": "rentrer", "fi": "palata kotiin", "example_es": "Je rentre chez moi dimanche.", "example_fi": "Palaan kotiin sunnuntaina.", "gender": null }
+  ],
+  "side_panel": {
+    "tabs": [
+      {
+        "id": "vocab",
+        "title": "Sanasto",
+        "content_md": "## Kulkuvälineet\n\n- **le train** — juna\n- **l'avion** — lentokone\n- **la voiture** — auto\n- **le bus** — bussi\n- **le métro** — metro\n- **le bateau** — laiva, vene\n- **le vélo** — polkupyörä\n- **le taxi** — taksi\n\n## Asema ja lentokenttä\n\n- **la gare** — juna-asema\n- **l'aéroport** — lentokenttä\n- **le billet** — matkalippu (myös seteli)\n- **l'arrêt** — pysäkki (bussi, metro)\n- **le quai** — laituri (juna-asema)\n- **le vol** — lento\n- **le retard** — myöhästyminen\n- **le départ** — lähtö\n- **l'arrivée** — saapuminen\n\n## Matkaverbit\n\n- **voyager** — matkustaa\n- **partir** — lähteä (être-verbi!)\n- **arriver** — saapua (être-verbi!)\n- **réserver** — varata\n- **rater** — myöhästyä\n- **visiter** — vierailla, tutustua\n- **rentrer** — palata kotiin (être-verbi!)\n\n## Muu matkasanasto\n\n- **le voyage** — matka\n- **les vacances** — loma (aina monikossa!)\n- **la valise** — matkalaukku\n- **le passeport** — passi\n- **la destination** — määränpää"
+      },
+      {
+        "id": "grammar",
+        "title": "Kielioppi",
+        "content_md": "## Kulkuvälineen kanssa: en vai à?\n\n**en** = moottoroidut kulkuneuvot:\n- en train — junalla\n- en avion — lentokoneella\n- en voiture — autolla\n- en bus / en métro — bussilla / metrolla\n- en bateau — laivalla\n\n**à** = ihmisvoima tai yksittäinen kulkuneuvo:\n- à vélo — polkupyörällä\n- à pied — jalan\n- à moto — moottoripyörällä\n\n## Passé composé — tulee L2 ja L4:ssä!\n\nKulkuvälineverbeistä **être**-verbejä:\n- partir → je suis parti(e)\n- arriver → je suis arrivé(e)\n- rentrer → je suis rentré(e)\n\n**Avoir**-verbejä:\n- voyager → j'ai voyagé\n- réserver → j'ai réservé\n- visiter → j'ai visité"
+      },
+      {
+        "id": "tips",
+        "title": "YO-vinkki",
+        "content_md": "## Matka-aihe YO-kokeessa\n\nMatkailu on Osan 4 (kirjoitelma) suosituimpia aiheita. Tyypillinen tehtävä:\n*'Décrivez votre dernier voyage. Où êtes-vous allé(e)? Comment?'*\n\n## Tärkeimmät ansat\n\n- **la gare** (juna-asema) ≠ **l'aéroport** (lentokenttä)\n- **le billet** = matkalippu TAI seteli — lue konteksti!\n- **les vacances** on AINA monikossa: *en vacances*, *mes vacances*\n- **avoir du retard** = olla myöhässä (kulkuneuvo)\n- **rater** le train = myöhästyä junasta (ei 'kadottaa'!)\n\n## Käteviä lauseaihioita\n\n- *Un aller-retour pour Lyon, s'il vous plaît.* — Meno-paluu Lyoniin, kiitos.\n- *À quelle heure part le prochain train?* — Mihin aikaan seuraava juna lähtee?\n- *De quel quai?* — Miltä laiturilta?\n- *Le vol a deux heures de retard.* — Lennolla on kaksi tuntia myöhästymistä.\n\n## YO-rakenne: être-verbit passé composé:ssa\n\n'Je suis allé(e) en France en avion' — tähän rakenteeseen palataan tarkemmin L2 ja L4:ssä."
+      }
+    ]
+  }
+}

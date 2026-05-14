@@ -1,0 +1,241 @@
+{
+  "meta": {
+    "course_key": "kurssi_2",
+    "lesson_index": 2,
+    "lesson_type": "grammar",
+    "level": "A",
+    "title": "Epäsäännölliset preesens-verbit: être, avoir, aller, faire, venir, prendre",
+    "description": "Harjoittelet ranskan kuutta tärkeintä epäsäännöllistä verbiä: être (olla), avoir (omistaa/olla), aller (mennä), faire (tehdä), venir (tulla) ja prendre (ottaa). Nämä ovat YO-kokeessa toistuvia arkiverbejä.",
+    "yo_relevance": "Nämä kuusi verbiä ovat YO-rakennetehtävässä pakollisia — taivutusvirhe niissä on vakava. Lähes jokainen aukkotehtävä sisältää vähintään yhden näistä. Faire-rakenteet (faire du sport, faire la cuisine) ovat tyypillisiä kirjoitelmissa.",
+    "estimated_minutes_median": 13
+  },
+  "teaching": {
+    "intro_md": "# Epäsäännölliset preesens-verbit\n\nNämä kuusi verbiä ovat ranskan yleisimmät — ja epäsäännöllisimmät. Ne täytyy opetella ulkoa.\n\n## être — olla\n\n| Persoona | Muoto |\n|---|---|\n| je | **suis** |\n| tu | **es** |\n| il/elle | **est** |\n| nous | **sommes** |\n| vous | **êtes** |\n| ils/elles | **sont** |\n\n> *Je suis finlandais. — Il est médecin.* \n\n## avoir — omistaa / olla (ikä, nälkä, jano)\n\n| je | tu | il/elle | nous | vous | ils/elles |\n|---|---|---|---|---|---|\n| **ai** | **as** | **a** | **avons** | **avez** | **ont** |\n\n> *J'ai faim. (Minulla on nälkä.) — Ils ont un chien.*\n\n## aller — mennä\n\n| je | tu | il/elle | nous | vous | ils/elles |\n|---|---|---|---|---|---|\n| **vais** | **vas** | **va** | **allons** | **allez** | **vont** |\n\n> *Je vais à l'école. — Nous allons au cinéma.*\n\n## faire — tehdä\n\n| je | tu | il/elle | nous | vous | ils/elles |\n|---|---|---|---|---|---|\n| **fais** | **fais** | **fait** | **faisons** | **faites** | **font** |\n\n> *Je fais du sport. — Vous faites quoi ce soir?*\n\n## venir — tulla\n\n| je | tu | il/elle | nous | vous | ils/elles |\n|---|---|---|---|---|---|\n| **viens** | **viens** | **vient** | **venons** | **venez** | **viennent** |\n\n> *Tu viens d'où ? — Ils viennent de France.*\n\n## prendre — ottaa\n\n| je | tu | il/elle | nous | vous | ils/elles |\n|---|---|---|---|---|---|\n| **prends** | **prends** | **prend** | **prenons** | **prenez** | **prennent** |\n\n> *Je prends le bus. — Nous prenons un café.*",
+    "key_points": [
+      "être: suis/es/est/sommes/êtes/sont — muista étes aksentilla.",
+      "avoir: ai/as/a/avons/avez/ont — J'ai faim (nälkä), J'ai soif (jano), J'ai 17 ans.",
+      "aller: vais/vas/va/allons/allez/vont — va + à = aller à l'école.",
+      "faire: fais/fais/fait/faisons/faites/font — faites (ei *faisez!) on poikkeuksellinen.",
+      "venir: viens/viens/vient/venons/venez/viennent — ils viennent (kaksi n:ää).",
+      "prendre: prends/prends/prend/prenons/prenez/prennent — ils prennent (kaksi n:ää)."
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1-recognition-mc-etre-avoir",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista — être ja avoir",
+      "instruction": "Valitse oikea muoto.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.90 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "mc", "stem": "Je ___ finlandais.", "choices": ["suis", "est", "sommes", "ai"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "être: je → suis. 'est' on il/elle-muoto." },
+        { "item_type": "mc", "stem": "Il ___ médecin.", "choices": ["suis", "est", "sont", "êtes"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "être: il → est. Muista: é-muodot (êtes) ovat vous-muotoja." },
+        { "item_type": "mc", "stem": "Nous ___ français.", "choices": ["êtes", "sont", "sommes", "suis"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "être: nous → sommes. Tyypillinen sekaannus: êtes on vous-muoto." },
+        { "item_type": "mc", "stem": "Vous ___ professeurs ?", "choices": ["sommes", "sont", "suis", "êtes"], "correct_index": 3, "distractor_difficulty": "medium", "explanation": "être: vous → êtes. Muista aksentti: êtes, ei *etes." },
+        { "item_type": "mc", "stem": "J'___ faim.", "choices": ["suis", "ai", "est", "vais"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "avoir: j'ai faim = minulla on nälkä. Ranskassa nälkä 'omistetaan', ei 'ollaan'." },
+        { "item_type": "mc", "stem": "Tu ___ quel âge ?", "choices": ["est", "ai", "as", "avez"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "avoir: tu → as. Ikä ilmaistaan avoir-verbillä: 'Tu as 17 ans?'" },
+        { "item_type": "mc", "stem": "Ils ___ un grand appartement.", "choices": ["avons", "ont", "as", "a"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "avoir: ils → ont. 'avons' on nous-muoto." },
+        { "item_type": "mc", "stem": "Elle ___ soif.", "choices": ["ai", "avez", "a", "ont"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "avoir: elle → a. 'soif' = jano — avoir soif = minulla on jano." },
+        { "item_type": "mc", "stem": "Ils ___ étudiants.", "choices": ["est", "suis", "sommes", "sont"], "correct_index": 3, "distractor_difficulty": "easy", "explanation": "être: ils → sont. Huomaa: 'étudiants' — monikko, koska ils." },
+        { "item_type": "mc", "stem": "Nous ___ deux chiens.", "choices": ["ont", "avons", "a", "avez"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "avoir: nous → avons. 'ont' on ils/elles-muoto." },
+        { "item_type": "mc", "stem": "Vous ___ beaucoup de chance.", "choices": ["ont", "a", "avons", "avez"], "correct_index": 3, "distractor_difficulty": "medium", "explanation": "avoir: vous → avez. 'avez de la chance' = teillä on onnea." },
+        { "item_type": "mc", "stem": "Elles ___ très contentes.", "choices": ["sont", "est", "sommes", "suis"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "être: elles → sont. Muista: ils/elles käyttävät samaa muotoa." },
+        { "item_type": "mc", "stem": "On ___ en retard.", "choices": ["suis", "sont", "est", "êtes"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "être: on → est (on toimii kuten il/elle). 'en retard' = myöhässä." },
+        { "item_type": "mc", "stem": "J'___ 18 ans.", "choices": ["suis", "ai", "est", "ont"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "Ikä ilmaistaan avoir-verbillä: J'ai 18 ans. Virhe *Je suis 18 ans on hyvin yleinen." }
+      ]
+    },
+    {
+      "phase_id": "p2-recognition-mc-aller-faire",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista — aller ja faire",
+      "instruction": "Valitse oikea verbimuoto.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.90 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "mc", "stem": "Je ___ au cinéma ce soir.", "choices": ["vais", "vas", "va", "allons"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "aller: je → vais. Huomaa: kaikki aller-muodot ovat poikkeuksellisia." },
+        { "item_type": "mc", "stem": "Tu ___ bien ?", "choices": ["vais", "va", "vas", "allez"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "aller: tu → vas. 'Tu vas bien?' = Meneekö sinulla hyvin?" },
+        { "item_type": "mc", "stem": "Ils ___ à Paris demain.", "choices": ["allons", "allez", "vont", "va"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "aller: ils → vont. Muista: 'vont' ei muistuta infinitiiviä 'aller'." },
+        { "item_type": "mc", "stem": "Nous ___ au marché le samedi.", "choices": ["vont", "allez", "allons", "vas"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "aller: nous → allons. Torilla käynti = aller au marché." },
+        { "item_type": "mc", "stem": "Je ___ du sport tous les jours.", "choices": ["fais", "fait", "faites", "faisons"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "faire: je → fais. 'faire du sport' = harrastaa liikuntaa." },
+        { "item_type": "mc", "stem": "Qu'est-ce que tu ___ ce week-end ?", "choices": ["fait", "fais", "faites", "font"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "faire: tu → fais. Kysymys 'mitä teet?' on erittäin yleinen." },
+        { "item_type": "mc", "stem": "Ils ___ la cuisine ensemble.", "choices": ["fais", "fait", "faisons", "font"], "correct_index": 3, "distractor_difficulty": "medium", "explanation": "faire: ils → font. 'faire la cuisine' = laittaa ruokaa." },
+        { "item_type": "mc", "stem": "Vous ___ du vélo ?", "choices": ["font", "fais", "faites", "fait"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "faire: vous → faites. HUOM: *faisez ei ole oikein — faites on poikkeuksellinen." },
+        { "item_type": "mc", "stem": "Elle ___ ses devoirs avant le dîner.", "choices": ["fais", "font", "faites", "fait"], "correct_index": 3, "distractor_difficulty": "easy", "explanation": "faire: elle → fait. 'faire ses devoirs' = tehdä läksyt." },
+        { "item_type": "mc", "stem": "Nous ___ une promenade.", "choices": ["font", "faites", "faisons", "fait"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "faire: nous → faisons. 'faire une promenade' = käydä kävelyllä." },
+        { "item_type": "mc", "stem": "Vous ___ à quelle heure ?", "choices": ["vont", "vas", "allez", "allons"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "aller: vous → allez. Muistisääntö: vous-muodot päättyvät usein -ez." },
+        { "item_type": "mc", "stem": "Il ___ du jogging le matin.", "choices": ["fais", "font", "faites", "fait"], "correct_index": 3, "distractor_difficulty": "easy", "explanation": "faire: il → fait. Aamujuoksu = faire du jogging le matin." }
+      ]
+    },
+    {
+      "phase_id": "p3-recognition-mc-venir-prendre",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista — venir ja prendre",
+      "instruction": "Valitse oikea verbimuoto.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.90 },
+      "skip_for_targets": ["I"],
+      "items": [
+        { "item_type": "mc", "stem": "Je ___ de Finlande.", "choices": ["viens", "vient", "venons", "viennent"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "venir: je → viens. 'venir de' = olla kotoisin jostakin." },
+        { "item_type": "mc", "stem": "Tu ___ avec nous ce soir ?", "choices": ["vient", "venez", "viens", "venons"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "venir: tu → viens. Kysytään mukaan: 'Tu viens ?'" },
+        { "item_type": "mc", "stem": "Ils ___ chez moi demain.", "choices": ["vient", "venons", "venez", "viennent"], "correct_index": 3, "distractor_difficulty": "medium", "explanation": "venir: ils → viennent. Huomaa kaksi n:ää: viennent, ei *vienent." },
+        { "item_type": "mc", "stem": "Nous ___ de rentrer.", "choices": ["vient", "venez", "viennent", "venons"], "correct_index": 3, "distractor_difficulty": "medium", "explanation": "venir: nous → venons. 'venir de + infinitiivi' = juuri tehdä jotain." },
+        { "item_type": "mc", "stem": "Je ___ le bus pour aller à l'école.", "choices": ["prend", "prenons", "prends", "prennent"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "prendre: je → prends. 'prendre le bus' = ottaa bussi." },
+        { "item_type": "mc", "stem": "Nous ___ le train à 8 heures.", "choices": ["prend", "prennent", "prenez", "prenons"], "correct_index": 3, "distractor_difficulty": "medium", "explanation": "prendre: nous → prenons. Junan ottaminen = prendre le train." },
+        { "item_type": "mc", "stem": "Ils ___ un café après le repas.", "choices": ["prend", "prenons", "prenez", "prennent"], "correct_index": 3, "distractor_difficulty": "medium", "explanation": "prendre: ils → prennent. Kaksi n:ää! Sama kuin viennent." },
+        { "item_type": "mc", "stem": "Elle ___ un croissant au petit-déjeuner.", "choices": ["prends", "prenons", "prend", "prennent"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "prendre: elle → prend. Aamupala ranskalaisittain!" },
+        { "item_type": "mc", "stem": "Vous ___ d'où ?", "choices": ["viens", "vient", "venez", "venons"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "venir: vous → venez. Kysytään kotiseutua kohteliaasti." },
+        { "item_type": "mc", "stem": "On ___ quel chemin ?", "choices": ["prenons", "prend", "prends", "prennent"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "prendre: on → prend (on toimii kuin il/elle). 'chemin' = reitti, polku." }
+      ]
+    },
+    {
+      "phase_id": "p4-recall-typed-fr-fi",
+      "phase_type": "recall_typed_es_to_fi",
+      "title": "Verbimuodot → suomennos",
+      "instruction": "Kirjoita verbimuodon merkitys suomeksi (persoona + käännös, esim. 'minä olen').",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.90 },
+      "skip_for_targets": ["I"],
+      "items": [
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "je suis", "accept": ["minä olen", "olen"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "nous sommes", "accept": ["me olemme", "olemme"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "j'ai", "accept": ["minulla on", "minä omistan"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "ils ont", "accept": ["heillä on", "he omistavat"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "je vais", "accept": ["minä menen", "menen"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "ils vont", "accept": ["he menevät", "menevät"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "je fais", "accept": ["minä teen", "teen"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "vous faites", "accept": ["te teette", "teette"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "je viens", "accept": ["minä tulen", "tulen"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "ils viennent", "accept": ["he tulevat", "tulevat"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "je prends", "accept": ["minä otan", "otan"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "ils prennent", "accept": ["he ottavat", "ottavat"] }
+      ]
+    },
+    {
+      "phase_id": "p5-recall-typed-fi-fr",
+      "phase_type": "recall_typed_fi_to_es",
+      "title": "Taivuta oikein",
+      "instruction": "Kirjoita oikea verbimuoto ranskaksi.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.60, "C": 0.65, "M": 0.75, "E": 0.85, "L": 0.92 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "être, vous", "accept": ["êtes"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "avoir, nous", "accept": ["avons"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "aller, ils", "accept": ["vont"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "faire, vous", "accept": ["faites"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "venir, ils", "accept": ["viennent"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "prendre, ils", "accept": ["prennent"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "être, elle", "accept": ["est"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "avoir, tu", "accept": ["as"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "aller, nous", "accept": ["allons"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "faire, ils", "accept": ["font"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "venir, vous", "accept": ["venez"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "prendre, nous", "accept": ["prenons"] }
+      ]
+    },
+    {
+      "phase_id": "p6-application-gap-fill",
+      "phase_type": "application_gap_fill",
+      "title": "Aukkotehtävä — taivuta verbi",
+      "instruction": "Kirjoita verbi oikeaan muotoon. Verbi annettu sulkeissa.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.90, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Je {1} à l'école en bus. (aller)", "answers": [["vais"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Nous {1} du vélo le week-end. (faire)", "answers": [["faisons"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Ils {1} de Paris. (venir)", "answers": [["viennent"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Elle {1} un café le matin. (prendre)", "answers": [["prend"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Tu {1} combien d'années ? (avoir)", "answers": [["as"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Vous {1} où ce soir ? (aller)", "answers": [["allez"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Je {1} mes devoirs après l'école. (faire)", "answers": [["fais"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Ils {1} le métro pour aller au travail. (prendre)", "answers": [["prennent"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Nous {1} finlandais. (être)", "answers": [["sommes"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Elle {1} chez ses amis demain. (venir)", "answers": [["vient"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p7-application-sentence-build",
+      "phase_type": "application_sentence_build",
+      "title": "Lauseiden rakentelua — verbirakenteet",
+      "instruction": "Käännä koko lause ranskaksi.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.60, "C": 0.65, "M": 0.78, "E": 0.85, "L": 0.92 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Minulla on nälkä.", "accept": ["j'ai faim", "j'ai faim."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Menen kouluun bussilla.", "accept": ["je vais à l'école en bus", "je vais à l'école par le bus"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "He tulevat Ranskasta.", "accept": ["ils viennent de france", "ils viennent de France", "elles viennent de France"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Otan kahvin aamupalalla.", "accept": ["je prends un café au petit-déjeuner", "je prends un cafe au petit-dejeuner"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Harrastamme liikuntaa joka päivä.", "accept": ["nous faisons du sport tous les jours", "on fait du sport tous les jours"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Olet väsynyt tänään.", "accept": ["tu es fatigué aujourd'hui", "tu es fatiguée aujourd'hui", "vous êtes fatigué aujourd'hui"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Menemme elokuviin tänä iltana.", "accept": ["nous allons au cinéma ce soir", "on va au cinéma ce soir", "nous allons au cinema ce soir"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Hän tekee läksyt ennen illallista.", "accept": ["il fait ses devoirs avant le dîner", "elle fait ses devoirs avant le diner", "il fait ses devoirs avant le diner"] }
+      ]
+    },
+    {
+      "phase_id": "p8-synthesis-translate",
+      "phase_type": "synthesis_translate",
+      "title": "YO-tyylinen käännös",
+      "instruction": "Käännä koko lause ranskaksi. Kiinnitä huomiota verbimuotoon.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.55, "C": 0.60, "M": 0.68, "E": 0.80, "L": 0.92 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Veli on 20-vuotias ja opiskelee Pariisissa.", "accept": ["mon frère a 20 ans et il étudie à Paris", "mon frère a 20 ans et étudie à Paris", "le frère a 20 ans et étudie à Paris"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "He menevät töihin junalla joka aamu.", "accept": ["ils vont au travail en train chaque matin", "elles vont au travail en train chaque matin", "ils prennent le train pour aller au travail chaque matin"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Teette urheilua joka päivä — se on hienoa!", "accept": ["vous faites du sport tous les jours — c'est bien!", "vous faites du sport chaque jour, c'est super!", "vous faites du sport tous les jours, c'est formidable!"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Otan metroa töihin, koska se on nopeampaa.", "accept": ["je prends le métro pour aller au travail parce que c'est plus rapide", "je prends le metro pour aller au travail parce que c'est plus rapide", "je prends le métro car c'est plus rapide"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Ystäväni tulee Suomesta ja hän asuu nyt Pariisissa.", "accept": ["mon ami vient de Finlande et il habite maintenant à Paris", "mon amie vient de Finlande et elle habite maintenant à Paris", "mon ami vient de la Finlande et habite à Paris maintenant"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Mitä teette viikonloppuna?", "accept": ["qu'est-ce que vous faites le week-end?", "que faites-vous le week-end?", "qu'est-ce que vous faites le weekend?"] }
+      ]
+    },
+    {
+      "phase_id": "p9-application-gap-mixed",
+      "phase_type": "application_gap_fill",
+      "title": "Kertaus — kaikki kuusi verbiä",
+      "instruction": "Valitse ja taivuta oikea verbi kontekstin perusteella.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.60, "C": 0.65, "M": 0.78, "E": 0.88, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Je {1} finlandais et j'{2} 17 ans. (être / avoir)", "answers": [["suis"], ["ai"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Ils {1} au stade pour {2} du sport. (aller / faire)", "answers": [["vont"], ["faire"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Elle {1} un taxi parce qu'elle {2} pressée. (prendre / être)", "answers": [["prend"], ["est"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Nous {1} de Paris et nous {2} à Helsinki. (venir / habiter)", "answers": [["venons"], ["habitons"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Vous {1} où ? Nous {2} au restaurant. (aller / aller)", "answers": [["allez"], ["allons"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Tu {1} du café ou du thé ? (prendre)", "answers": [["prends"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Ils {1} très sympas — ils {2} souvent chez nous. (être / venir)", "answers": [["sont"], ["viennent"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "J'{1} soif. Je {2} un verre d'eau. (avoir / prendre)", "answers": [["ai"], ["prends"]], "word_bank": null }
+      ]
+    }
+  ],
+  "vocab": [
+    { "es": "être", "fi": "olla", "example_es": "Je suis finlandais.", "example_fi": "Olen suomalainen.", "gender": null },
+    { "es": "avoir", "fi": "omistaa, olla (nälkä/jano/ikä)", "example_es": "J'ai faim et j'ai soif.", "example_fi": "Minulla on nälkä ja jano.", "gender": null },
+    { "es": "aller", "fi": "mennä", "example_es": "Je vais à l'école en bus.", "example_fi": "Menen kouluun bussilla.", "gender": null },
+    { "es": "faire", "fi": "tehdä", "example_es": "Je fais du sport tous les jours.", "example_fi": "Harrastan liikuntaa joka päivä.", "gender": null },
+    { "es": "venir", "fi": "tulla", "example_es": "Tu viens d'où?", "example_fi": "Mistä sinä tulet?", "gender": null },
+    { "es": "prendre", "fi": "ottaa", "example_es": "Je prends le bus pour aller au travail.", "example_fi": "Otan bussin töihin mennessäni.", "gender": null },
+    { "es": "je suis", "fi": "minä olen", "example_es": "Je suis étudiant.", "example_fi": "Olen opiskelija.", "gender": null },
+    { "es": "tu es", "fi": "sinä olet", "example_es": "Tu es prêt?", "example_fi": "Oletko valmis?", "gender": null },
+    { "es": "il/elle est", "fi": "hän on", "example_es": "Elle est médecin.", "example_fi": "Hän on lääkäri.", "gender": null },
+    { "es": "nous sommes", "fi": "me olemme", "example_es": "Nous sommes finlandais.", "example_fi": "Olemme suomalaisia.", "gender": null },
+    { "es": "vous êtes", "fi": "te olette", "example_es": "Vous êtes professeurs?", "example_fi": "Oletteko opettajia?", "gender": null },
+    { "es": "ils/elles sont", "fi": "he ovat", "example_es": "Ils sont contents.", "example_fi": "He ovat tyytyväisiä.", "gender": null },
+    { "es": "j'ai faim", "fi": "minulla on nälkä", "example_es": "J'ai très faim après le sport.", "example_fi": "Minulla on suuri nälkä liikunnan jälkeen.", "gender": null },
+    { "es": "j'ai soif", "fi": "minulla on jano", "example_es": "J'ai soif — je prends de l'eau.", "example_fi": "Minulla on jano — otan vettä.", "gender": null },
+    { "es": "avoir X ans", "fi": "olla X vuotta vanha", "example_es": "J'ai 17 ans.", "example_fi": "Olen 17-vuotias.", "gender": null },
+    { "es": "faire du sport", "fi": "harrastaa liikuntaa", "example_es": "Nous faisons du sport trois fois par semaine.", "example_fi": "Harrastamme liikuntaa kolme kertaa viikossa.", "gender": null },
+    { "es": "faire la cuisine", "fi": "laittaa ruokaa", "example_es": "Il fait la cuisine tous les soirs.", "example_fi": "Hän laittaa ruokaa joka ilta.", "gender": null },
+    { "es": "faire ses devoirs", "fi": "tehdä läksyt", "example_es": "Je fais mes devoirs après l'école.", "example_fi": "Teen läksyt koulun jälkeen.", "gender": null }
+  ],
+  "side_panel": {
+    "tabs": [
+      {
+        "id": "grammar",
+        "title": "Taivutustaulukot",
+        "content_md": "## être — olla\n\n| | |\n|---|---|\n| je **suis** | nous **sommes** |\n| tu **es** | vous **êtes** |\n| il/elle **est** | ils/elles **sont** |\n\n## avoir — omistaa\n\n| | |\n|---|---|\n| j'**ai** | nous **avons** |\n| tu **as** | vous **avez** |\n| il/elle **a** | ils/elles **ont** |\n\n## aller — mennä\n\n| | |\n|---|---|\n| je **vais** | nous **allons** |\n| tu **vas** | vous **allez** |\n| il/elle **va** | ils/elles **vont** |\n\n## faire — tehdä\n\n| | |\n|---|---|\n| je **fais** | nous **faisons** |\n| tu **fais** | vous **faites** |\n| il/elle **fait** | ils/elles **font** |\n\n## venir — tulla\n\n| | |\n|---|---|\n| je **viens** | nous **venons** |\n| tu **viens** | vous **venez** |\n| il/elle **vient** | ils/elles **viennent** |\n\n## prendre — ottaa\n\n| | |\n|---|---|\n| je **prends** | nous **prenons** |\n| tu **prends** | vous **prenez** |\n| il/elle **prend** | ils/elles **prennent** |"
+      },
+      {
+        "id": "tips",
+        "title": "YO-vinkki",
+        "content_md": "## YO-rakennetehtävä — verbimuodot\n\nNämä kuusi verbiä esiintyvät lähes joka tutkintokerralla rakennetehtävässä.\n\n## Yleisimmät virheet\n\n- **être**: *vous faites* (oikein) — virhe: *vous faisez* EI OLE OIKEIN\n- **avoir**: ikä ilmaistaan avoir-verbillä: *J'ai 17 ans* — EI *Je suis 17 ans*\n- **venir/prendre**: ils-muodoissa kaksi n:ää: **viennent**, **prennent** — ei *vienent, prenent*\n\n## Faire-rakenteet YO-kirjoitelmassa\n\nNämä faire-yhdistelmät ovat kirjoitelmassa hyödyllisiä:\n- *faire du sport / du vélo / du jogging* — liikunta\n- *faire la cuisine* — ruoanlaitto\n- *faire ses devoirs* — läksyjen teko\n- *faire une promenade* — kävelyretki\n- *faire un voyage* — tehdä matka\n\n## avoir-rakenteet\n\n- *avoir faim* — olla nälkä\n- *avoir soif* — olla jano\n- *avoir chaud/froid* — olla kuuma/kylmä\n- *avoir peur* — pelätä\n- *avoir X ans* — olla X vuotta vanha\n\nNäissä rakenteissa EI käytetä artikkelia!"
+      }
+    ]
+  }
+}

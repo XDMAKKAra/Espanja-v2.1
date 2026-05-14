@@ -1,0 +1,239 @@
+{
+  "meta": {
+    "course_key": "kurssi_7",
+    "lesson_index": 9,
+    "lesson_type": "mixed",
+    "level": "M",
+    "title": "Mixed: Plus-que-parfait + pronoms relatifs + kulttuuri",
+    "description": "K7:n rakenteiden yhdistäminen: plus-que-parfait + qui/que/dont/où + subjonctif. Kulttuurisanasto L1–L5:stä (musique, cinéma, peinture, littérature, théâtre) distractoreina.",
+    "yo_relevance": "YO-rakennetehtävässä ja pitkässä kirjoitelmassa yhdistyvät kaikki K7:n rakenteet. Tämä mixed-oppitunti simuloi ko. tilannetta: lause vaatii sekä oikean aikamuodon valintaa (plus-que-parfait vs passé composé) että oikean pronominin (dont vs où).",
+    "estimated_minutes_median": 16
+  },
+  "teaching": {
+    "intro_md": "# Mixed: Plus-que-parfait + pronoms relatifs + kulttuuri\n\nTässä oppitunnissa yhdistät K7:n kaikki kielioppirakenteet kulttuuriteemaan.\n\n## Mitä opittiin K7:ssä?\n\n| Rakenne | Esimerkki |\n|---|---|\n| Plus-que-parfait | *Il avait déjà vu ce film quand j'ai appelé.* |\n| Qui/que | *L'acteur qui joue le rôle, la chanson qu'on aime.* |\n| Dont | *Le film dont je parle est célèbre.* |\n| Où | *La ville où il est né, l'époque où...* |\n| Subjonctif (bien que, pour que) | *Bien qu'il soit long, le film est beau.* |\n| Subjonctif passé | *Je suis content qu'elle ait gagné le prix.* |\n\n## Rakenteiden yhdistäminen\n\n> *Le réalisateur **dont** j'admire les films **avait déjà tourné** trois œuvres avant de recevoir la Palme d'Or.*\n> Ohjaaja, jonka elokuvia ihailin, oli jo kuvannut kolme teosta ennen kuin sai Kultaisen palmun.\n\n> *C'est l'époque **où** la Nouvelle Vague **avait transformé** le cinéma français, bien **qu'elle soit** encore peu connue à l'étranger.*\n> Se oli aika, jolloin Nouvelle Vague oli muuttanut ranskalaisen elokuvan, vaikka se tunnetaan vielä heikosti ulkomailla.\n\n## Cross-pollination — K7 sanasto\n\n- **L1–L2:** la peinture, le tableau, l'exposition, le musée, la littérature, l'écrivain\n- **L3:** la tradition, l'héritage, la diversité, la francophonie\n- **L4–L5:** le cinéma, la chanson, le réalisateur, la représentation\n- **L6–L8:** dont, où, subjonctif, bien que, il est dommage que",
+    "key_points": [
+      "Plus-que-parfait + pronoms relatifs: rakenteet toimivat itsenäisesti, mutta ne voidaan yhdistää. 'Le film dont j'avais parlé était magnifique.'",
+      "Dont vs où: dont = de-rakenne/omistus, où = paikka/aika. Tunnista kumpi sopii kontekstiin ennen kuin kirjoitat.",
+      "Bien que + subjonctif on eri rakenne kuin parce que + indikatiivi — molemmat voivat esiintyä samassa lauseessa.",
+      "Cross-pollination: K7 L1–L5 kulttuurisanasto on fioina distractor-aineksena — ne testattavat sanat voivat esiintyä sekarakennelauseissa.",
+      "YO-ansat: älä sekoita plus-que-parfait (avait fait) ja passé composé (a fait). Aikajärjestys ratkaisee."
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1-recognition-mc-mixed",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista — yhdistetyt rakenteet",
+      "instruction": "Valitse oikea muoto tai pronomini.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "mc", "stem": "Le réalisateur ___ j'admire les films avait déjà gagné la Palme d'Or.", "choices": ["que", "qui", "dont", "où"], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "dont — j'admire les films **de** ce réalisateur → dont. Omistuspositio." },
+        { "item_type": "mc", "stem": "Quand nous sommes arrivés au festival, le film _______ déjà commencé. (commencer)", "choices": ["a commencé", "avait commencé", "commence", "commençait"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "avait commencé — plus-que-parfait. Quand nous sommes arrivés = passé composé. Le film avait commencé avant notre arrivée." },
+        { "item_type": "mc", "stem": "C'est la chanson ___ Édith Piaf avait enregistrée avant de devenir célèbre.", "choices": ["qui", "dont", "où", "que"], "correct_index": 3, "distractor_difficulty": "medium", "explanation": "que — objecti. Édith Piaf avait enregistrée = subjekti + verbi → chanson on objekti. Accord: enregistrée (feminiini)." },
+        { "item_type": "mc", "stem": "La ville ___ Victor Hugo est né a été transformée au XIXe siècle.", "choices": ["que", "dont", "où", "qui"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "où — paikka. Hugo est né à cette ville → où." },
+        { "item_type": "mc", "stem": "Bien que cet artiste ___ du talent, il n'avait pas encore exposé ses tableaux.", "choices": ["a", "ait", "avait", "aura"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "ait — bien que + subjonctif présent (avoir → ait). Le reste de la phrase est au plus-que-parfait." },
+        { "item_type": "mc", "stem": "L'exposition ___ nous avions visitée avant de partir était impressionnante.", "choices": ["qui", "dont", "où", "que"], "correct_index": 3, "distractor_difficulty": "medium", "explanation": "que — objekti. nous avions visitée = subjekti + verbi (plus-que-parfait) → exposition on objekti → que. Accord: visitée (feminiini)." },
+        { "item_type": "mc", "stem": "Il est dommage que vous n'___ pas vu ce tableau avant la fermeture du musée.", "choices": ["avez", "ayez", "soyez", "aient"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "ayez — il est dommage que + subjonctif passé. voir = avoir-verbi → ayez (vous)." },
+        { "item_type": "mc", "stem": "Aimé Césaire est le poète ___ l'œuvre a inspiré toute la littérature africaine francophone.", "choices": ["que", "qui", "dont", "où"], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "dont — omistuspositio: l'œuvre **de** ce poète → dont." },
+        { "item_type": "mc", "stem": "Avant que l'actrice ___, elle avait déjà préparé son rôle pendant six mois.", "choices": ["joue", "jouerait", "joue la pièce", "soit jouée"], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "joue — avant que + subjonctif présent. L'action principale (préparé, plus-que-parfait) est déjà mentionnée." },
+        { "item_type": "mc", "stem": "C'était l'époque ___ le cinéma noir et blanc ___ révolutionné la culture populaire.", "choices": ["où / avait", "dont / avait", "que / avait", "où / a"], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "où / avait — l'époque où = aika, jolloin. avait révolutionné = plus-que-parfait (ennen toista menneisyyden tapahtumaa)." },
+        { "item_type": "mc", "stem": "La pièce de théâtre ___ nous sommes allés hier soir avait reçu d'excellentes critiques.", "choices": ["que", "dont", "où", "qui"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "que — nous sommes allés... mais ici il faut 'voir' la pièce = objekti → que. Mais normalement 'aller voir une pièce' → que. Accord possible: 'que nous avions vue'." },
+        { "item_type": "mc", "stem": "Je suis fier que mon pays ___ sa tradition musicale à travers les siècles.", "choices": ["preservait", "ait préservé", "a préservé", "préserve"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "ait préservé — je suis fier que + subjonctif passé (action accomplie dans le passé)." }
+      ]
+    },
+    {
+      "phase_id": "p2-recognition-match",
+      "phase_type": "recognition_match",
+      "title": "Yhdistä — rakenteet ja merkitykset",
+      "instruction": "Yhdistä lause oikeaan kielioppiselitykseen.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        {
+          "item_type": "match",
+          "left_label": "Lause",
+          "right_label": "Rakenne",
+          "pairs": [
+            { "left": "Le tableau dont je parle...", "right": "dont = de-rakenne (parler de)" },
+            { "left": "La ville où il est né...", "right": "où = paikka" },
+            { "left": "Il avait déjà vu le film...", "right": "plus-que-parfait" },
+            { "left": "Bien qu'il soit fatigué...", "right": "bien que + subjonctif présent" },
+            { "left": "Je suis content qu'elle ait gagné.", "right": "subjonctif passé (avoir)" },
+            { "left": "L'actrice qui joue le rôle...", "right": "qui = subjekti" }
+          ]
+        },
+        {
+          "item_type": "match",
+          "left_label": "Ranskaksi",
+          "right_label": "Suomeksi",
+          "pairs": [
+            { "left": "la peinture", "right": "maalaus" },
+            { "left": "l'exposition", "right": "näyttely" },
+            { "left": "le tableau", "right": "taulu, maalaus" },
+            { "left": "l'héritage culturel", "right": "kulttuuriperintö" },
+            { "left": "la diversité", "right": "monimuotoisuus" },
+            { "left": "la représentation", "right": "esitys" }
+          ]
+        }
+      ]
+    },
+    {
+      "phase_id": "p3-application-gap-mixed",
+      "phase_type": "application_gap_fill",
+      "title": "Lauseen täydennys — sekarakenteet",
+      "instruction": "Täydennä: pronomini, plus-que-parfait tai subjonctif. Sanapankki auttaa.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "L'actrice {1} j'admire le jeu avait déjà joué dans trois films avant ce chef-d'œuvre.", "answers": [["dont"]], "word_bank": ["dont", "que", "qui", "où"] },
+        { "item_type": "gap_fill", "sentence_template": "Quand il est arrivé au musée, l'exposition {1} déjà commencé. (commencer)", "answers": [["avait commencé"]], "word_bank": ["avait commencé", "a commencé", "commence", "avait commencer"] },
+        { "item_type": "gap_fill", "sentence_template": "C'est la ville {1} Camus a passé son enfance.", "answers": [["où"]], "word_bank": ["dont", "où", "que", "qui"] },
+        { "item_type": "gap_fill", "sentence_template": "Bien que ce roman {1} publié en 1942, il est toujours actuel. (être)", "answers": [["ait été"]], "word_bank": ["ait été", "soit", "soit été", "a été"] },
+        { "item_type": "gap_fill", "sentence_template": "La chanson {1} Édith Piaf avait enregistrée est devenue un symbole de la France.", "answers": [["que", "qu'"]], "word_bank": ["dont", "où", "que", "qui"] },
+        { "item_type": "gap_fill", "sentence_template": "Je suis triste que vous n'{1} pas visité ce musée avant la fermeture. (visiter)", "answers": [["ayez visité"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Le réalisateur {1} les films ont transformé le cinéma mondial {2} déjà réalisé dix films avant de devenir célèbre.", "answers": [["dont"], ["avait"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Avant que la représentation {1} (commencer), les acteurs avaient répété pendant trois mois.", "answers": [["commence"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "L'époque {1} la peinture impressionniste révolutionnait l'art était à la fin du XIXe siècle.", "answers": [["où"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Il est important que les jeunes {1} (connaître) la littérature francophone.", "answers": [["connaissent"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p4-application-sentence-build",
+      "phase_type": "application_sentence_build",
+      "title": "Lauseiden rakentelua — kaikki K7-rakenteet",
+      "instruction": "Käännä lause ranskaksi. Käytä annettua rakennetta.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.60, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.92 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Kun saavuimme Louvreen, näyttely oli jo alkanut. (plus-que-parfait)", "accept": ["quand nous sommes arrivés au louvre, l'exposition avait déjà commencé", "quand on est arrivé au louvre, l'exposition avait déjà commencé"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Ohjaaja, jonka elokuvia olin katsonut vuosia, voitti Kultaisen palmun. (dont + plus-que-parfait)", "accept": ["le réalisateur dont j'avais regardé les films pendant des années a gagné la palme d'or", "le réalisateur dont j'avais vu les films a remporté la palme d'or"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Vaikka hän on nuori kirjailija, hän on jo kirjoittanut kolme romaania. (bien que + subjonctif)", "accept": ["bien qu'il soit jeune écrivain, il a déjà écrit trois romans", "bien qu'elle soit jeune romancière, elle a déjà écrit trois romans"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Pariisi on kaupunki, jossa Picasso oli elänyt ennen lähtöään Espanjaan. (où + plus-que-parfait)", "accept": ["paris est la ville où picasso avait vécu avant de partir en espagne", "paris est la ville où picasso avait habité avant de retourner en espagne"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "On sääli, että emme nähneet tätä näyttelyä ennen kuin se sulkeutui. (il est dommage que + subjonctif passé)", "accept": ["il est dommage que nous n'ayons pas vu cette exposition avant qu'elle ferme", "c'est dommage que nous n'ayons pas visité cette exposition avant sa fermeture"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Ranskalainen kulttuuri, josta olemme ylpeitä, on perinteisesti hyvin monimuotoinen. (dont)", "accept": ["la culture française dont nous sommes fiers est traditionnellement très diverse", "la culture française dont on est fier est traditionnellement très riche et diverse"] }
+      ]
+    },
+    {
+      "phase_id": "p5-synthesis-translate",
+      "phase_type": "synthesis_translate",
+      "title": "YO-tason käännös — sekarakenteet",
+      "instruction": "Käännä ranskaksi. Yhdistä useita K7-rakenteita.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.60, "C": 0.65, "M": 0.75, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Kun saavuin Pariisiin, olin jo lukenut kaikki Camusin romaanit, joita piti tuntea.", "accept": ["quand je suis arrivé à paris, j'avais déjà lu tous les romans de camus qu'il fallait connaître", "quand je suis arrivé/e à paris, j'avais déjà lu tous les romans de camus dont il fallait connaître le contenu"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Vaikka frankofonia on laaja ilmiö, harvat ihmiset tietävät kaikista kulttuureista, joita se kattaa.", "accept": ["bien que la francophonie soit un phénomène vaste, peu de gens connaissent toutes les cultures qu'elle couvre", "bien que la francophonie soit large, peu de gens connaissent toutes les cultures dont elle est composée"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Olen iloinen, että opiskelin ranskaa: nyt voin lukea Aimé Césairen runoja, jotka ovat hyvin tärkeitä.", "accept": ["je suis content/e d'avoir étudié le français : maintenant je peux lire les poèmes d'aimé césaire qui sont très importants", "je suis heureux/heureuse que j'aie étudié le français : je peux maintenant lire les poèmes de césaire qui sont très importants"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Kulttuuri, josta olen eniten ylpeä, on ranskankielinen kirjallisuus, jonka olin löytänyt jo lapsena.", "accept": ["la culture dont je suis le plus fier/fière est la littérature francophone que j'avais découverte dès l'enfance", "la culture dont je suis le plus fière est la littérature française que j'avais trouvée quand j'étais enfant"] }
+      ]
+    },
+    {
+      "phase_id": "p6-synthesis-short-writing",
+      "phase_type": "synthesis_short_writing",
+      "title": "Lyhyt kirjoitus — K7 rakenteet yhdistettynä",
+      "instruction": "Kirjoita 6–8 lausetta. Käytä vähintään: plus-que-parfait, dont tai où, subjonctif (présent tai passé).",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.60, "C": 0.65, "M": 0.70, "E": 0.80, "L": 0.90 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "writing", "prompt": "Décris en 6–8 phrases un artiste ou un événement culturel important pour toi. Exigences : (1) plus-que-parfait au moins une fois, (2) dont ou où au moins une fois, (3) bien que ou il est dommage que + subjonctif au moins une fois. Vocabulaire K7 : la peinture, le tableau, l'exposition, la littérature, le réalisateur, la chanson.", "min_words": 55, "max_words": 115, "rubric_focus": ["communication", "structure", "vocab", "overall"] }
+      ]
+    },
+    {
+      "phase_id": "p7-cumulative-review",
+      "phase_type": "recognition_mc",
+      "title": "Kertaus — K7 kaikki rakenteet",
+      "instruction": "Valitse oikea vaihtoehto. Kaikki K7-rakenteet sekoitettuna.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "mc", "stem": "Quand le réalisateur a reçu son prix, il _______ déjà trois films. (tourner)", "choices": ["a tourné", "tournait", "avait tourné", "avait tourner"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "avait tourné — plus-que-parfait. Ennen palkinnon saamista (passé composé) hän oli jo kuvannut kolme elokuvaa." },
+        { "item_type": "mc", "stem": "La chanson ___ Édith Piaf est née reste la plus connue.", "choices": ["dont", "où", "que", "qui"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "où — paikka. Édith Piaf est née dans cette ville → où." },
+        { "item_type": "mc", "stem": "Bien que ce roman ___ en 1957, il reste d'une actualité surprenante. (écrire)", "choices": ["a été écrit", "ait été écrit", "avait été écrit", "était écrit"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "ait été écrit — bien que + subjonctif (passif: être + écrit = été écrit, subjonctif: ait été écrit)." },
+        { "item_type": "mc", "stem": "Je suis content(e) que tu ___ l'exposition avant sa fermeture. (voir)", "choices": ["voies", "aies vu", "as vu", "voyais"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "aies vu — subjonctif passé. La fermeture est passée → subjonctif passé." },
+        { "item_type": "mc", "stem": "L'écrivain ___ les œuvres ont influencé Aimé Césaire est Rimbaud.", "choices": ["que", "qui", "dont", "où"], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "dont — omistuspositio: les œuvres **de** cet écrivain → dont." },
+        { "item_type": "mc", "stem": "Avant qu'il ___ son roman, il avait travaillé pendant dix ans. (finir)", "choices": ["finisse", "ait fini", "finissait", "finirait"], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "finisse — avant que + subjonctif présent. 'ait fini' serait subjonctif passé, mais avant que + présent est standard." },
+        { "item_type": "mc", "stem": "La Martinique est l'île ___ Aimé Césaire est né et ___ la littérature est marquée par ses idées.", "choices": ["où / dont", "dont / où", "que / dont", "où / que"], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "où / dont — l'île où il est né (paikka) + la littérature dont la Martinique... la littérature **de** la Martinique → dont." },
+        { "item_type": "mc", "stem": "Il est dommage que nous n'___ pas étudié la francophonie plus tôt. (étudier)", "choices": ["avons", "ayons", "soyons", "aurions"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "ayons — il est dommage que + subjonctif passé. étudier = avoir-verbi → ayons (nous)." }
+      ]
+    },
+    {
+      "phase_id": "p8-cumulative-vocab",
+      "phase_type": "recall_typed_fi_to_es",
+      "title": "Sanastokertaus — K7 L1–L5",
+      "instruction": "Kirjoita ranskankielinen sana. Cross-pollination: L1–L5 sanasto.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "maalaus (taidemaalauksena)", "accept": ["la peinture", "peinture"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "taulu (konkreettinen maalaus)", "accept": ["le tableau", "tableau"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "näyttely", "accept": ["l'exposition", "exposition"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "kirjailija", "accept": ["l'écrivain", "l'écrivaine", "écrivain", "écrivaine"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "kulttuuriperintö", "accept": ["l'héritage", "l'héritage culturel", "héritage"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "frankofonia", "accept": ["la francophonie", "francophonie"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "monimuotoisuus", "accept": ["la diversité", "diversité"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "ohjaaja (elokuva)", "accept": ["le réalisateur", "la réalisatrice", "réalisateur", "réalisatrice"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "esitys (teatteri)", "accept": ["la représentation", "représentation"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "runoilija", "accept": ["le poète", "la poète", "poète"] }
+      ]
+    },
+    {
+      "phase_id": "p9-application-gap-vaativa",
+      "phase_type": "application_gap_fill",
+      "title": "Vaativa täydennys — sekarakenteet kulttuuritekstissä",
+      "instruction": "Täydennä oikea muoto: pronomini, verbimuoto tai konjunktio.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "La Nouvelle Vague est un mouvement cinématographique {1} a révolutionné le cinéma mondial.", "answers": [["qui"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Les films {1} Godard avait réalisés avant 1965 sont considérés comme des chefs-d'œuvre.", "answers": [["que", "qu'"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "C'est l'époque {1} Paris était la capitale mondiale de l'art.", "answers": [["où"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Bien que la peinture impressionniste {1} très connue aujourd'hui, elle était critiquée à son époque.", "answers": [["soit"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Je suis content {1} Aimé Césaire {2} recevoir la reconnaissance internationale. (que, avoir)", "answers": [["que", "qu'"], ["ait reçu"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Avant que le festival de Cannes {1} (commencer), les cinéastes avaient soumis leurs films.", "answers": [["commence"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p10-synthesis-final",
+      "phase_type": "synthesis_translate",
+      "title": "Loppukäännös — K7 kaikki yhdistettynä",
+      "instruction": "Käännä ranskaksi. Pitkä lause, useita rakenteita.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.60, "C": 0.65, "M": 0.75, "E": 0.85, "L": 0.92 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "translate", "direction": "fi_to_es", "source": "On tärkeää, että nuoret tuntevat ranskalaiset kirjailijat, jotka olivat jo kirjoittaneet merkittäviä teoksia ennen kuin saivat tunnustusta.", "accept": ["il est important que les jeunes connaissent les écrivains français qui avaient déjà écrit des œuvres importantes avant de recevoir une reconnaissance", "il est important que les jeunes découvrent les auteurs français dont les œuvres importantes avaient été écrites avant qu'ils soient reconnus"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Vaikka ranskalainen kulttuuri, josta olemme ylpeitä, on pitkä ja rikas, se on myös avoin muulle maailmalle.", "accept": ["bien que la culture française dont nous sommes fiers soit longue et riche, elle est aussi ouverte au reste du monde", "bien que la culture française dont on est fier soit ancienne et riche, elle reste ouverte aux autres cultures"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Olen iloinen, että olin tutustunut Aimé Césaireen ennen kuin menin Martiniquelle — se muutti kaiken.", "accept": ["je suis content/e que j'aie découvert aimé césaire avant d'aller à la martinique, ça a tout changé", "je suis heureux/heureuse d'avoir lu aimé césaire avant de voyager à la martinique, cela a tout changé"] }
+      ]
+    }
+  ],
+  "vocab": [
+    { "es": "la peinture", "fi": "maalaus, maalaustaide", "example_es": "La peinture impressionniste a révolutionné l'art occidental.", "example_fi": "Impressionistinen maalaustaide mullisti länsimaisen taiteen.", "gender": "f" },
+    { "es": "le tableau", "fi": "taulu, maalaus (konkreettinen teos)", "example_es": "Le tableau dont je parle est exposé au Louvre.", "example_fi": "Taulu, josta puhun, on esillä Louvressa.", "gender": "m" },
+    { "es": "l'exposition", "fi": "näyttely", "example_es": "L'exposition que nous avions visitée était impressionnante.", "example_fi": "Näyttely, jossa kävimme, oli vaikuttava.", "gender": "f" },
+    { "es": "la littérature", "fi": "kirjallisuus", "example_es": "La littérature francophone est riche et diverse.", "example_fi": "Frankofonilainen kirjallisuus on rikas ja monimuotoinen.", "gender": "f" },
+    { "es": "l'écrivain / l'écrivaine", "fi": "kirjailija", "example_es": "Victor Hugo est un écrivain dont les romans sont toujours lus.", "example_fi": "Victor Hugo on kirjailija, jonka romaaneja luetaan yhä.", "gender": "m" },
+    { "es": "l'impressionnisme", "fi": "impressionismi", "example_es": "L'impressionnisme est un mouvement pictural né en France au XIXe siècle.", "example_fi": "Impressionismi on Ranskassa 1800-luvulla syntynyt taidesuuntaus.", "gender": "m" },
+    { "es": "le mouvement (artistique)", "fi": "suuntaus, liike (taiteellinen)", "example_es": "La Nouvelle Vague est un mouvement qui a transformé le cinéma.", "example_fi": "Nouvelle Vague on suuntaus, joka muutti elokuvan.", "gender": "m" },
+    { "es": "reconnaître / la reconnaissance", "fi": "tunnistaa, tunnustus", "example_es": "Cet artiste a reçu la reconnaissance internationale après sa mort.", "example_fi": "Tämä taiteilija sai kansainvälisen tunnustuksen vasta kuolemansa jälkeen.", "gender": null }
+  ],
+  "side_panel": {
+    "tabs": [
+      {
+        "id": "grammar",
+        "title": "Kielioppi",
+        "content_md": "## K7 rakenteet — yhteenveto\n\n### Plus-que-parfait\n- avoir/être (imparfait) + participe passé\n- *j'avais mangé, elle était partie*\n- Käyttö: ennen toista mennyttä tapahtumaa\n\n### Pronoms relatifs\n| Pronomini | Käyttö |\n|---|---|\n| **qui** | subjekti (qui + verbi) |\n| **que/qu'** | objekti (que + subj + verbi) |\n| **dont** | de-rakenne tai omistus |\n| **où** | paikka tai aika |\n\n### Subjonctif\n- **bien que** + subjonctif présent/passé\n- **pour que** + subjonctif présent\n- **avant que** + subjonctif présent\n- **il est dommage/important que** + subjonctif présent/passé\n\n### Subjonctif passé\n- avoir/être (subjonctif) + participe passé\n- *que j'aie vu, qu'elle soit venue*"
+      },
+      {
+        "id": "vocab",
+        "title": "Sanasto",
+        "content_md": "## K7 kulttuurisanasto — kertaus\n\n### Taidekuvaus\n- **la peinture** — maalaus\n- **le tableau** — taulu\n- **l'exposition** — näyttely\n- **le musée** — museo\n- **le chef-d'œuvre** — mestariteos\n- **l'œuvre** — teos\n\n### Kirjallisuus\n- **la littérature** — kirjallisuus\n- **l'écrivain/l'écrivaine** — kirjailija\n- **le poète** — runoilija\n- **le roman** — romaani\n\n### Elokuva\n- **le cinéma** — elokuva (taidemuoto)\n- **le réalisateur/la réalisatrice** — ohjaaja\n- **la Palme d'Or** — Kultainen palmu\n- **la Nouvelle Vague** — ranskalainen elokuvasuuntaus\n\n### Frankofonia\n- **la francophonie** — frankofonia\n- **l'héritage culturel** — kulttuuriperintö\n- **la diversité** — monimuotoisuus\n- **Aimé Césaire** — martiniquelais, poète et homme politique"
+      },
+      {
+        "id": "tips",
+        "title": "YO-vinkki",
+        "content_md": "## Sekarakenteet YO-kokeessa\n\nYO-rakennetehtävässä voi esiintyä aukko, jossa on valittava:\n- pronomini (qui/que/dont/où) TAI\n- aikamuoto (passé composé vs plus-que-parfait) TAI\n- konjunktio (parce que vs pour que vs bien que)\n\n**Tunnistusjärjestys:**\n1. Onko laukaisija (bien que, pour que, il est important que)? → subjonctif\n2. Onko kaksi mennyttä tapahtumaa? → plus-que-parfait vanhemmalle\n3. Onko pronominipaikka? → tunnista subjekti/objekti/de-rakenne/paikka\n\n## Kirjoitustehtävässä\n\nKäytä useita K7-rakenteita samassa lauseessa:\n> *Bien qu'il **ait** déjà **tourné** plusieurs films **dont** on parlait beaucoup, il n'était pas encore célèbre.*\n> Vaikka hän oli jo kuvannut useita elokuvia, joista puhuttiin paljon, hän ei ollut vielä kuuluisa."
+      }
+    ]
+  }
+}

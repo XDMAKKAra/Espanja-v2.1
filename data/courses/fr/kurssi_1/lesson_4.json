@@ -1,0 +1,265 @@
+{
+  "meta": {
+    "course_key": "kurssi_1",
+    "lesson_index": 4,
+    "lesson_type": "grammar",
+    "level": "A",
+    "title": "Määräiset artikkelit le/la/les + élision l'",
+    "description": "Opettelet ranskan määräiset artikkelit le (m), la (f), les (mon.) ja élision l' ennen vokaalia tai mykää h:ta. Artikkelivirheet ovat suomalaisten yleisin ranskankielinen virhe — ne erottavat A-tason M-tasosta.",
+    "yo_relevance": "Artikkelivalinta esiintyy YTL:n aukkotehtävissä (Osa 3) ja kirjoitelman arvostelussa. 'Le/la sekoitus' on listattuna YTL:n yleisimpiin virheisiin ranska lyhyt -kokeessa.",
+    "estimated_minutes_median": 14
+  },
+  "teaching": {
+    "intro_md": "# Määräiset artikkelit ranskassa\n\nRanskassa **kaikilla** substantiiveilla on artikkeli. Määräinen artikkeli vastaa suomen -lla-päätettä tai tunnettua asiaa.\n\n## Neljä muotoa\n\n| Suku/luku | Artikkeli | Esimerkki |\n|---|---|---|\n| Maskuliini | **le** | le père, le frère |\n| Feminiini | **la** | la mère, la sœur |\n| Vokaali/mykkä h (m tai f) | **l'** | l'ami, l'oncle, l'heure |\n| Monikko | **les** | les parents, les enfants |\n\n## Milloin käytetään?\n\n- Tunnettu tai ainutlaatuinen asia: *Le soleil brille.* (Aurinko paistaa.)\n- Yleinen kategoria: *J'aime la musique.* (Pidän musiikista — yleensä.)\n- Omistussuhdetta sisältävä: *la mère de Marie* (Marien äiti)\n\n## Élision — pakollinen ennen vokaalia!\n\n- le ami → **l'ami**\n- la école → **l'école**\n- le hôpital → **l'hôpital** (h on mykkä)\n\n**Mutta:** le hibou (pöllö) — h ei ole mykkä, ei élisoida!\n\n## Kongruenssi adjektiivien kanssa\n\n- *le grand-père* → *les grands-pères* (monikko lisää s)\n- *la belle maison* → *les belles maisons*",
+    "key_points": [
+      "le (m), la (f), l' (vokaali tai mykkä h), les (monikko) — neljä muotoa.",
+      "Élision pakollinen: le ami → l'ami, la école → l'école.",
+      "J'aime la musique = pidän musiikista yleensä — ranskan rakenne poikkeaa suomesta.",
+      "les-muodossa sukua ei näe — on muistettava yksikkömuoto."
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1-recognition-mc-artikkeli",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista — oikea artikkeli",
+      "instruction": "Valitse oikea määräinen artikkeli.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "mc", "stem": "___ père", "choices": ["la", "le", "l'", "les"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "Le père — maskuliini, alkaa konsonantilla p → le." },
+        { "item_type": "mc", "stem": "___ mère", "choices": ["le", "la", "l'", "les"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "La mère — feminiini, alkaa konsonantilla m → la." },
+        { "item_type": "mc", "stem": "___ ami (ystävä, mies)", "choices": ["le", "la", "l'", "les"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "L'ami — maskuliini, alkaa vokaalilla a → élision l'." },
+        { "item_type": "mc", "stem": "___ école (koulu)", "choices": ["le", "la", "l'", "les"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "L'école — feminiini, alkaa vokaalilla é → élision l'." },
+        { "item_type": "mc", "stem": "___ enfants (lapset)", "choices": ["le", "la", "l'", "les"], "correct_index": 3, "distractor_difficulty": "easy", "explanation": "Les enfants — monikko → les. Huom: vaikka alkaa vokaalilla, monikko on les (ei *l'enfants)." },
+        { "item_type": "mc", "stem": "___ hôpital (sairaala)", "choices": ["le", "la", "l'", "les"], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "L'hôpital — maskuliini, alkaa mykällä h:lla → élision l'. Ei *le hôpital." },
+        { "item_type": "mc", "stem": "___ université (yliopisto)", "choices": ["le", "la", "l'", "les"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "L'université — feminiini, alkaa vokaalilla u → élision l'." },
+        { "item_type": "mc", "stem": "___ frère", "choices": ["la", "le", "l'", "les"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Le frère — maskuliini, alkaa konsonantilla f → le." },
+        { "item_type": "mc", "stem": "___ sœur", "choices": ["le", "la", "l'", "les"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "La sœur — feminiini, alkaa konsonantilla s → la." },
+        { "item_type": "mc", "stem": "___ musique", "choices": ["le", "la", "l'", "les"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "La musique — feminiini (muista: la musique, la culture, la langue)." },
+        { "item_type": "mc", "stem": "___ livre (kirja)", "choices": ["le", "la", "l'", "les"], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "Le livre — maskuliini. Huom: la livre = punta (valuutta). Konteksti ratkaisee, mutta kirja = le livre." },
+        { "item_type": "mc", "stem": "___ histoire (tarina; historia)", "choices": ["le", "la", "l'", "les"], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "L'histoire — feminiini, alkaa vokaalilla h (mykkä h) → élision l'. Muista: h est muet." },
+        { "item_type": "mc", "stem": "___ langues (kielet)", "choices": ["le", "la", "l'", "les"], "correct_index": 3, "distractor_difficulty": "easy", "explanation": "Les langues — monikko → les." },
+        { "item_type": "mc", "stem": "___ hibou (pöllö — h aspiré!)", "choices": ["le", "la", "l'", "les"], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "Le hibou — maskuliini, h aspiré (ei mykkä) → le, ei l'. Tämä on poikkeus: le/la + h aspiré, ei élisoida." }
+      ]
+    },
+    {
+      "phase_id": "p2-recognition-match-artikkeli",
+      "phase_type": "recognition_match",
+      "title": "Yhdistä — artikkeli ja sana",
+      "instruction": "Yhdistä oikea artikkeli ja substantiivi.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        {
+          "item_type": "match",
+          "left_label": "Artikkeli",
+          "right_label": "Substantiivi",
+          "pairs": [
+            { "left": "le", "right": "père" },
+            { "left": "la", "right": "mère" },
+            { "left": "l'", "right": "ami" },
+            { "left": "les", "right": "enfants" },
+            { "left": "le", "right": "frère" },
+            { "left": "la", "right": "sœur" }
+          ]
+        },
+        {
+          "item_type": "match",
+          "left_label": "Substantiivi",
+          "right_label": "Oikea artikkeli",
+          "pairs": [
+            { "left": "école (koulu, f)", "right": "l'" },
+            { "left": "hôpital (sairaala, m)", "right": "l'" },
+            { "left": "université (yliopisto, f)", "right": "l'" },
+            { "left": "musique (f)", "right": "la" },
+            { "left": "livre (kirja, m)", "right": "le" },
+            { "left": "langues (mon.)", "right": "les" },
+            { "left": "histoire (f, h mykkä)", "right": "l'" },
+            { "left": "hibou (pöllö, m, h aspiré)", "right": "le" }
+          ]
+        }
+      ]
+    },
+    {
+      "phase_id": "p3-recognition-mc-kaytto",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista — milloin käytetään määräistä artikkelia?",
+      "instruction": "Valitse oikea muoto tai selitys.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        { "item_type": "mc", "stem": "J'aime ___ musique. (pidän musiikista yleensä)", "choices": ["une musique", "la musique", "de musique", "musique"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "La musique — yleinen kategoria ranskassa vaatii määräisen artikkelin. Suomessa ei artikkelia, mutta ranskassa: j'aime LA musique." },
+        { "item_type": "mc", "stem": "Mikä on oikein?", "choices": ["le ami de Pierre", "l'ami de Pierre", "la ami de Pierre", "les ami de Pierre"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "L'ami de Pierre — ami alkaa vokaalilla, élision pakollinen. le ami on väärin." },
+        { "item_type": "mc", "stem": "Mikä on oikein? (hôpital on maskuliini, mykkä h)", "choices": ["le hôpital", "la hôpital", "l'hôpital", "les hôpital"], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "L'hôpital — h on mykkä (h muet) → élision pakollinen. le hôpital on väärin." },
+        { "item_type": "mc", "stem": "Missä lauseessa artikkeli on VÄÄRIN?", "choices": ["J'aime la France.", "Le soleil brille.", "Je parle le français.", "La musique, c'est bien."], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "Je parle le français on väärin — verbin parler kanssa ei käytetä artikkelia: je parle français. Muissa lauseissa artikkeli on oikein." },
+        { "item_type": "mc", "stem": "Les parents — miksi les eikä le tai la?", "choices": ["Koska se on neutraali", "Koska se on monikko", "Koska se alkaa konsonantilla", "Koska se on feminiini"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "Les on monikkoartikkeli (eikä se kerro sukua). Les parents = vanhemmat (mon.)." },
+        { "item_type": "mc", "stem": "J'aime ___ français. (pidän ranskan kielestä)", "choices": ["un français", "le français", "la français", "de français"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Le français — kielen nimi on maskuliini: le français, l'anglais, le finnois. Rakastan kieltä yleensä → le." },
+        { "item_type": "mc", "stem": "Mikä on oikein: hôtel (maskuliini, h aspiré)?", "choices": ["l'hôtel", "le hôtel", "la hôtel", "les hôtel"], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "L'hôtel — hôtel alkaa mykällä h:lla (h muet), joten élision tapahtuu. Vertaa: le hibou (h aspiré, ei élisoida)." }
+      ]
+    },
+    {
+      "phase_id": "p4-recall-typed-fr-fi",
+      "phase_type": "recall_typed_es_to_fi",
+      "title": "Käännä suomeksi",
+      "instruction": "Kirjoita ilmauksen suomennos.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "le père", "accept": ["isä"], "hint": "le = maskuliini" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "la mère", "accept": ["äiti"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "l'ami", "accept": ["ystävä (mies)", "ystävä"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "l'école", "accept": ["koulu"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "les enfants", "accept": ["lapset"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "l'hôpital", "accept": ["sairaala"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "la musique", "accept": ["musiikki", "musiikki (yleensä)"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "l'université", "accept": ["yliopisto"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "le français", "accept": ["ranskan kieli", "ranska"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "les langues", "accept": ["kielet"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "l'histoire", "accept": ["historia; tarina"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "le livre", "accept": ["kirja"] }
+      ]
+    },
+    {
+      "phase_id": "p5-recall-typed-fi-fr",
+      "phase_type": "recall_typed_fi_to_es",
+      "title": "Lisää oikea artikkeli",
+      "instruction": "Kirjoita sana oikealla määräisellä artikkelilla (le/la/l'/les).",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "isä (artikkelin kera)", "accept": ["le père"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "äiti (artikkelin kera)", "accept": ["la mère"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "ystävä (mies, artikkelin kera)", "accept": ["l'ami"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "koulu (artikkelin kera)", "accept": ["l'école"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "lapset (artikkelin kera)", "accept": ["les enfants"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "sairaala (artikkelin kera)", "accept": ["l'hôpital"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "musiikki (artikkelin kera)", "accept": ["la musique"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "ranskan kieli (artikkelin kera)", "accept": ["le français"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "yliopisto (artikkelin kera)", "accept": ["l'université"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "kirja (artikkelin kera)", "accept": ["le livre"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "kielet (monikko, artikkelin kera)", "accept": ["les langues"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "historia (artikkelin kera, h mykkä)", "accept": ["l'histoire"] }
+      ]
+    },
+    {
+      "phase_id": "p6-application-gap-helppo",
+      "phase_type": "application_gap_fill",
+      "title": "Lauseen täydennys — oikea artikkeli",
+      "instruction": "Täydennä oikealla artikkelilla.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "J'aime {1} musique classique.", "answers": [["la"]], "word_bank": ["la", "le", "l'"] },
+        { "item_type": "gap_fill", "sentence_template": "{1} père de Marie est médecin.", "answers": [["Le"]], "word_bank": ["Le", "La", "L'"] },
+        { "item_type": "gap_fill", "sentence_template": "Il travaille à {1} hôpital de Lyon.", "answers": [["l'"]], "word_bank": ["l'", "le", "la"] },
+        { "item_type": "gap_fill", "sentence_template": "{1} enfants jouent dans le jardin.", "answers": [["Les"]], "word_bank": ["Les", "Le", "La"] },
+        { "item_type": "gap_fill", "sentence_template": "J'étudie {1} français depuis deux ans.", "answers": [["le"]], "word_bank": ["le", "la", "l'"] },
+        { "item_type": "gap_fill", "sentence_template": "{1} sœur de Thomas habite à Bordeaux.", "answers": [["La"]], "word_bank": ["La", "Le", "L'"] },
+        { "item_type": "gap_fill", "sentence_template": "Mon ami va à {1} université de Paris.", "answers": [["l'"]], "word_bank": ["l'", "le", "la"] },
+        { "item_type": "gap_fill", "sentence_template": "Je préfère {1} sport à {1} musique.", "answers": [["le", "la"]], "word_bank": ["le", "la", "l'", "les"] },
+        { "item_type": "gap_fill", "sentence_template": "{1} histoire de France est fascinante.", "answers": [["L'"]], "word_bank": ["L'", "Le", "La"] },
+        { "item_type": "gap_fill", "sentence_template": "Nous aimons {1} langues étrangères.", "answers": [["les"]], "word_bank": ["les", "le", "la"] }
+      ]
+    },
+    {
+      "phase_id": "p7-application-gap-vaativa",
+      "phase_type": "application_gap_fill",
+      "title": "Lauseen täydennys — vaativa",
+      "instruction": "Täydennä ilman sanapankkia.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "J'adore {1} cinéma français.", "answers": [["le"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "{1} amie de ma sœur s'appelle Léa.", "answers": [["L'"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Elle étudie à {1} école de commerce.", "answers": [["l'"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Il parle {1} anglais et {1} français.", "answers": [["l'", "le"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "{1} parents de Julien habitent au Maroc.", "answers": [["Les"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "J'aime {1} littérature française.", "answers": [["la"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "{1} hôtel est complet ce soir.", "answers": [["L'"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Nous étudions {1} histoire de France.", "answers": [["l'"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p8-application-sentence-build",
+      "phase_type": "application_sentence_build",
+      "title": "Lauseiden rakentelua",
+      "instruction": "Käännä koko lause ranskaksi oikealla artikkelilla.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.60, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Pidän ranskalaisesta musiikista.", "accept": ["J'aime la musique française.", "j'aime la musique française."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Marien isä on lääkäri.", "accept": ["Le père de Marie est médecin.", "le père de Marie est médecin."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Hän työskentelee sairaalassa.", "accept": ["Il travaille à l'hôpital.", "Elle travaille à l'hôpital."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Opiskelen ranskaa yliopistossa.", "accept": ["J'étudie le français à l'université.", "j'étudie le français à l'université."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Lapset pelaavat puistossa.", "accept": ["Les enfants jouent dans le parc.", "les enfants jouent dans le parc."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Ranskan historia on mielenkiintoinen.", "accept": ["L'histoire de France est intéressante.", "L'histoire de la France est intéressante."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Rakastan kirjoja ja musiikkia.", "accept": ["J'aime les livres et la musique.", "j'aime les livres et la musique."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Puhumme englantia ja ranskaa.", "accept": ["Nous parlons l'anglais et le français.", "Nous parlons anglais et français."] }
+      ]
+    },
+    {
+      "phase_id": "p9-synthesis-translate",
+      "phase_type": "synthesis_translate",
+      "title": "YO-tyylinen käännös",
+      "instruction": "Käännä virke ranskaksi YO-tasolla oikeilla artikkeleilla.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.60, "C": 0.65, "M": 0.75, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Opiskelen ranskaa ja englantia yliopistossa Helsingissä.", "accept": ["J'étudie le français et l'anglais à l'université d'Helsinki.", "J'étudie le français et l'anglais à l'université de Helsinki."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Ranskan historia on hyvin pitkä ja rikas.", "accept": ["L'histoire de France est très longue et riche.", "L'histoire de la France est très longue et riche."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Pidän musiikista, kirjoista ja elokuvista.", "accept": ["J'aime la musique, les livres et les films.", "j'aime la musique, les livres et les films."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Lapset menevät kouluun joka aamulla.", "accept": ["Les enfants vont à l'école chaque matin.", "Les enfants vont à l'école tous les matins."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Hänen ystävänsä työskentelee sairaalassa Lyonissa.", "accept": ["Son ami travaille à l'hôpital de Lyon.", "Son amie travaille à l'hôpital de Lyon."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Kieliä opiskelemalla oppii kulttuurin.", "accept": ["En étudiant les langues, on apprend la culture.", "En étudiant les langues, on découvre la culture."] }
+      ]
+    },
+    {
+      "phase_id": "p10-synthesis-short-writing",
+      "phase_type": "synthesis_short_writing",
+      "title": "Lyhyt kirjoitus — artikkelin hallinta",
+      "instruction": "Kirjoita lyhyt teksti ranskaksi oikeilla artikkeleilla.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.60, "C": 0.65, "M": 0.70, "E": 0.80, "L": 0.90 },
+      "skip_for_targets": ["I", "A", "B", "C", "M"],
+      "items": [
+        { "item_type": "writing", "prompt": "Kirjoita 4–6 lausetta mistä pidät (la musique, le sport, les livres, le cinéma jne.). Käytä j'aime + artikkeli -rakennetta oikein. Kokeile myös j'adore, je préfère.", "min_words": 30, "max_words": 75, "rubric_focus": ["communication", "vocab", "structure"] },
+        { "item_type": "writing", "prompt": "Kuvaile koulupäivääsi ranskaksi (4–5 lausetta). Mainitse l'école, les professeurs, les matières (aineet). Käytä oikeita artikkeleita.", "min_words": 30, "max_words": 75, "rubric_focus": ["communication", "vocab"] },
+        { "item_type": "writing", "prompt": "Kirjoita 4–6 lausetta Ranskasta tai jostain muusta frankofoonisesta maasta. Mitä tiedät sen kulttuurista, kielestä tai historiasta? Käytä le/la/l'/les oikein.", "min_words": 30, "max_words": 75, "rubric_focus": ["communication", "structure"] }
+      ]
+    }
+  ],
+  "vocab": [
+    { "es": "le père", "fi": "isä", "example_es": "Le père de Marie est professeur.", "example_fi": "Marien isä on opettaja.", "gender": "m" },
+    { "es": "la mère", "fi": "äiti", "example_es": "La mère travaille à l'hôpital.", "example_fi": "Äiti työskentelee sairaalassa.", "gender": "f" },
+    { "es": "l'ami", "fi": "ystävä (mies)", "example_es": "L'ami de Paul s'appelle Hugo.", "example_fi": "Paulin ystävä on Hugo.", "gender": "m" },
+    { "es": "l'amie", "fi": "ystävä (nainen)", "example_es": "L'amie de Sophie habite à Lyon.", "example_fi": "Sophien ystävä asuu Lyonissa.", "gender": "f" },
+    { "es": "l'école", "fi": "koulu", "example_es": "Les enfants vont à l'école.", "example_fi": "Lapset menevät kouluun.", "gender": "f" },
+    { "es": "l'université", "fi": "yliopisto", "example_es": "J'étudie à l'université.", "example_fi": "Opiskelen yliopistossa.", "gender": "f" },
+    { "es": "l'hôpital", "fi": "sairaala", "example_es": "Il travaille à l'hôpital.", "example_fi": "Hän työskentelee sairaalassa.", "gender": "m" },
+    { "es": "le livre", "fi": "kirja", "example_es": "J'aime les livres.", "example_fi": "Pidän kirjoista.", "gender": "m" },
+    { "es": "la musique", "fi": "musiikki", "example_es": "J'adore la musique française.", "example_fi": "Rakastan ranskalaista musiikkia.", "gender": "f" },
+    { "es": "le cinéma", "fi": "elokuva; elokuvateatteri", "example_es": "J'aime le cinéma français.", "example_fi": "Pidän ranskalaisista elokuvista.", "gender": "m" },
+    { "es": "le sport", "fi": "urheilu", "example_es": "Le sport est important.", "example_fi": "Urheilu on tärkeää.", "gender": "m" },
+    { "es": "la langue", "fi": "kieli", "example_es": "Le français est une belle langue.", "example_fi": "Ranska on kaunis kieli.", "gender": "f" },
+    { "es": "le français", "fi": "ranskan kieli; ranskalainen (mies)", "example_es": "J'étudie le français.", "example_fi": "Opiskelen ranskaa.", "gender": "m" },
+    { "es": "l'histoire", "fi": "historia; tarina", "example_es": "L'histoire de France est fascinante.", "example_fi": "Ranskan historia on kiehtova.", "gender": "f" },
+    { "es": "la culture", "fi": "kulttuuri", "example_es": "La culture française est connue dans le monde entier.", "example_fi": "Ranskalainen kulttuuri tunnetaan koko maailmassa.", "gender": "f" },
+    { "es": "le monde", "fi": "maailma", "example_es": "Le français est parlé dans le monde entier.", "example_fi": "Ranskaa puhutaan koko maailmassa.", "gender": "m" },
+    { "es": "la France", "fi": "Ranska", "example_es": "La France est un grand pays.", "example_fi": "Ranska on iso maa.", "gender": "f" },
+    { "es": "l'hôtel", "fi": "hotelli", "example_es": "L'hôtel est complet.", "example_fi": "Hotelli on täynnä.", "gender": "m" }
+  ],
+  "side_panel": {
+    "tabs": [
+      {
+        "id": "grammar",
+        "title": "Artikkelit",
+        "content_md": "## Määräinen artikkeli — neljä muotoa\n\n| Suku/luku | Artikkeli | Esimerkki |\n|---|---|---|\n| Maskuliini | **le** | le père, le livre |\n| Feminiini | **la** | la mère, la musique |\n| Vokaali/mykkä h | **l'** | l'ami, l'école, l'hôpital |\n| Monikko | **les** | les enfants, les parents |\n\n## Élision — pakollinen!\n\nKun seuraava sana alkaa vokaalilla tai mykällä h:lla:\n- le + ami → **l'ami**\n- la + école → **l'école**\n- le + hôpital → **l'hôpital**\n\n**Poikkeus:** h aspiré ei élisoida:\n- le hibou (pöllö), le haricot (papu), la honte (häpeä)\n\n## Käyttö — eroaa suomesta!\n\n- **J'aime la musique** = pidän musiikista (yleensä) ← artikkeli pakollinen\n- **Le français est beau** = ranska on kaunis (katu-nimi) ← artikkeli pakollinen\n- **Je parle français** = puhun ranskaa ← EI artikkelia verbin parler jälkeen"
+      },
+      {
+        "id": "tips",
+        "title": "YO-vinkki",
+        "content_md": "## YO-koe — artikkelivirheet\n\nArtikkelivirheet ovat suomalaisten yleisin ranskankielinen virhe. YTL listaa:\n\n**Tyypillisin virhe:**\n- *le école* → pitää olla **l'école** (élision!)\n- *la hôpital* → pitää olla **l'hôpital** (mykkä h + feminiini on la, mutta élision silti)\n\n**Älä sekoita:**\n- *le* (määräinen) vs *un* (epämääräinen)\n- Ranskassa J'AIME LA MUSIQUE — ei vain 'J'aime musique'\n\n## Muistisääntö élisionille\n\nÄännetäänkö se 'l voyelle' — eli kuuluuko vokaali välittömästi l-äänteen jälkeen? Jos kyllä → l'. Jos konsonantti välissä → le/la.\n\n## Kielten nimet = maskuliini\n\nle français, l'anglais (m), le finnois, l'espagnol (m), l'allemand (m), l'italien (m) — kaikki maskuliineja."
+      }
+    ]
+  }
+}

@@ -1,0 +1,284 @@
+{
+  "meta": {
+    "course_key": "kurssi_1",
+    "lesson_index": 2,
+    "lesson_type": "grammar",
+    "level": "A",
+    "title": "Présent — säännölliset -er-verbit",
+    "description": "Opettelet présent-aikamuodon säännölliset -er-verbit: taivutus, persoonapronominit ja peruslauseen rakenne. Nämä ovat ranskan yleisimpiä verbejä — parler, habiter, aimer, étudier esiintyvät lähes joka YO-kokeessa.",
+    "yo_relevance": "Présent-taivutus on YTL:n Osa 3 (rakenteet ja sanasto) perustehtävä — aukkoihin täytetään oikea verbimuoto. Persoonapronominit (je/tu/il/elle) ovat myös luetun ymmärtämisen avain.",
+    "estimated_minutes_median": 14
+  },
+  "teaching": {
+    "intro_md": "# Présent — säännölliset -er-verbit\n\nRanskan yleisin verbityyppi päättyy infinitiivissä **-er**: parler (puhua), habiter (asua), aimer (rakastaa), étudier (opiskella).\n\n## Taivutus — poista -er, lisää pääte\n\n| Pronomini | Pääte | Esimerkki (parler) |\n|---|---|---|\n| **je** | -e | je parl**e** |\n| **tu** | -es | tu parl**es** |\n| **il / elle / on** | -e | il parl**e** |\n| **nous** | -ons | nous parl**ons** |\n| **vous** | -ez | vous parl**ez** |\n| **ils / elles** | -ent | ils parl**ent** |\n\n**Huomio:** je/il/elle-muodot kuulostavat samalta puhutussa kielessä — ero kirjoitetussa on -e vs -e (sama!). Ils parlent: -ent on **mykkä** (ei äännetä).\n\n## Élision je:ssä\n\nKun verbi alkaa vokaalilla: **j'aime**, **j'habite**, **j'étudie** — ei \"je aime\".\n\n## Persoonapronominit\n\n- **on** = epämuodollinen \"me\" tai yleinen \"man\" — *On parle français ici.*\n- **vous** = te (yksikkö muodollinen) TAI te (monikko)\n- **ils** = miehet tai sekaryhm; **elles** = vain naisia",
+    "key_points": [
+      "-er-verbien pääte: -e, -es, -e, -ons, -ez, -ent. -ent on aina mykkä.",
+      "Je + vokaali → élision: j'aime, j'habite, j'étudie.",
+      "On = epämuodollinen 'me' tai yleinen 'man' — hyvin yleinen puhutussa ranskassa.",
+      "Ils parlent ja il parle kuulostavat samalta — ero vain kirjoitetussa."
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1-recognition-mc-taivutus",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista — oikea verbimuoto",
+      "instruction": "Valitse oikea présent-muoto.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "mc", "stem": "Je ___ français. (parler)", "choices": ["parles", "parlons", "parle", "parlent"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "Je + parler → je parle (pääte -e). Parles = tu, parlons = nous, parlent = ils/elles." },
+        { "item_type": "mc", "stem": "Tu ___ à Paris. (habiter)", "choices": ["habite", "habites", "habitons", "habitez"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Tu + habiter → tu habites (pääte -es). Habite = je/il/elle." },
+        { "item_type": "mc", "stem": "Il ___ le football. (aimer)", "choices": ["aimes", "aimez", "aime", "aimons"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "Il + aimer → il aime (pääte -e). Muista: il/elle/je kaikki päättyvät -e." },
+        { "item_type": "mc", "stem": "Nous ___ le français. (étudier)", "choices": ["étudions", "étudiez", "étudient", "étudies"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "Nous + étudier → nous étudions (pääte -ons). Nous-muoto on poikkeus: nous + ons." },
+        { "item_type": "mc", "stem": "Vous ___ en classe. (écouter)", "choices": ["écoutes", "écoutent", "écoutons", "écoutez"], "correct_index": 3, "distractor_difficulty": "medium", "explanation": "Vous + écouter → vous écoutez (pääte -ez). Vous-muoto on aina -ez." },
+        { "item_type": "mc", "stem": "Ils ___ la télévision. (regarder)", "choices": ["regarde", "regardes", "regardent", "regardons"], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "Ils + regarder → ils regardent (pääte -ent, mykkä). Ero il regarde (yksikkö) — -ent ei kuulu äänessä!" },
+        { "item_type": "mc", "stem": "Elle ___ dans un bureau. (travailler)", "choices": ["travailles", "travaille", "travaillez", "travaillent"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Elle + travailler → elle travaille. Huomaa: ll-kirjainpari, mutta taivutus normaali." },
+        { "item_type": "mc", "stem": "On ___ du café en France. (boire → ei -er! Oikea: prendre)", "choices": ["prenons", "prennent", "prend", "prends"], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "Prendre ei ole -er-verbi (epäsäännöllinen). On + prendre → on prend. Tämä on K1 -poikkeustapaus — palataan myöhemmin." },
+        { "item_type": "mc", "stem": "J'___ la musique. (aimer)", "choices": ["aimes", "aimez", "aime", "aimons"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "Je + aimer → j'aime (élision: je aime → j'aime). Alkaa vokaalilla, apostrofi pakollinen." },
+        { "item_type": "mc", "stem": "Nous ___ la télé. (regarder)", "choices": ["regardez", "regardent", "regardons", "regarde"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "Nous + regarder → nous regardons (-ons-pääte)." },
+        { "item_type": "mc", "stem": "Tu ___ avec tes amis? (chanter)", "choices": ["chantez", "chante", "chantes", "chantons"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "Tu + chanter → tu chantes (-es-pääte)." },
+        { "item_type": "mc", "stem": "Ils ___ au parc le dimanche. (jouer)", "choices": ["joue", "jouons", "jouez", "jouent"], "correct_index": 3, "distractor_difficulty": "hard", "explanation": "Ils + jouer → ils jouent (-ent, mykkä). Joue = il/elle yksikkö." },
+        { "item_type": "mc", "stem": "J'___ à l'université. (étudier)", "choices": ["études", "étudies", "étudie", "étudions"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "Je + étudier → j'étudie (élision). Pääte -e." },
+        { "item_type": "mc", "stem": "Elles ___ français et anglais. (parler)", "choices": ["parle", "parles", "parlons", "parlent"], "correct_index": 3, "distractor_difficulty": "hard", "explanation": "Elles + parler → elles parlent. Elles (kaikki naisia) = sama taivutus kuin ils." }
+      ]
+    },
+    {
+      "phase_id": "p2-recognition-match-pronominit",
+      "phase_type": "recognition_match",
+      "title": "Yhdistä — pronomiini ja verbimuoto",
+      "instruction": "Yhdistä pronomini ja oikea verbimuoto (verbi: parler).",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        {
+          "item_type": "match",
+          "left_label": "Pronomini",
+          "right_label": "Verbi (parler)",
+          "pairs": [
+            { "left": "je", "right": "parle" },
+            { "left": "tu", "right": "parles" },
+            { "left": "il / elle", "right": "parle" },
+            { "left": "nous", "right": "parlons" },
+            { "left": "vous", "right": "parlez" },
+            { "left": "ils / elles", "right": "parlent" }
+          ]
+        },
+        {
+          "item_type": "match",
+          "left_label": "Pronomini",
+          "right_label": "Verbi (habiter)",
+          "pairs": [
+            { "left": "je", "right": "habite" },
+            { "left": "tu", "right": "habites" },
+            { "left": "elle", "right": "habite" },
+            { "left": "nous", "right": "habitons" },
+            { "left": "vous", "right": "habitez" },
+            { "left": "ils", "right": "habitent" }
+          ]
+        },
+        {
+          "item_type": "match",
+          "left_label": "Suomi",
+          "right_label": "Pronomini ranskaksi",
+          "pairs": [
+            { "left": "minä", "right": "je" },
+            { "left": "sinä", "right": "tu" },
+            { "left": "hän (mies)", "right": "il" },
+            { "left": "hän (nainen)", "right": "elle" },
+            { "left": "me", "right": "nous" },
+            { "left": "te (monikko)", "right": "vous" },
+            { "left": "he (miehet/sekajoukko)", "right": "ils" },
+            { "left": "he (vain naisia)", "right": "elles" }
+          ]
+        }
+      ]
+    },
+    {
+      "phase_id": "p3-recognition-mc-pronominit",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista — pronominit ja élision",
+      "instruction": "Valitse oikea muoto.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        { "item_type": "mc", "stem": "Mikä on oikein?", "choices": ["Je aime la musique", "J'aime la musique", "Ji'aime la musique", "Jaime la musique"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Je + aimer (alkaa vokaalilla a) → j'aime. Élision on pakollinen." },
+        { "item_type": "mc", "stem": "Mikä on oikein?", "choices": ["Je habite à Paris", "J'habite à Paris", "Jhabite à Paris", "Je'habite à Paris"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Je + habiter (alkaa vokaalilla h muuta) → j'habite. h on mykkä ranskassa — élision pakollinen." },
+        { "item_type": "mc", "stem": "'On' ranskalaisessa puhutussa kielessä tarkoittaa yleensä:", "choices": ["vain 'man'", "vain 'me'", "sekä 'me' että yleinen 'man'", "vain 'he'"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "On on hyvin joustava: On parle français = puhutaan ranskaa (man), mutta myös Ce soir, on va au cinéma = tänä iltana me menee elokuviin (me)." },
+        { "item_type": "mc", "stem": "Miksi 'ils parlent' ja 'il parle' kuulostavat puhuessa samalta?", "choices": ["Koska ils on epämuodollinen il", "-ent-pääte on aina mykkä", "Koska il on monikko", "Ranskan aksentti muuttaa ääntämistä"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "-ent-pääte ranskan verbeissä on aina mykkä. Ilman kirjoitettua kontekstia ne ovat homofoneeja — YO-kokeessa kirjoitettua tekstiä, joten ero on selvä." },
+        { "item_type": "mc", "stem": "Vous parlez — kuka puhuu?", "choices": ["Vain yksi muodollinen henkilö", "Vain monta henkilöä", "Yksi muodollinen TAI monta henkilöä", "Vain naisia"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "Vous = te (monikko) TAI te (yksikkö muodollinen). Konteksti ratkaisee." },
+        { "item_type": "mc", "stem": "Mikä verbeistä EI ole -er-verbi?", "choices": ["parler", "habiter", "être", "chanter"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "Être (olla) on epäsäännöllinen, ei -er-verbi. Parler, habiter, chanter ovat kaikki säännöllisiä -er-verbejä." },
+        { "item_type": "mc", "stem": "Ils écoutent — mikä on kantaverbi?", "choices": ["écoute", "écouter", "écoutent", "écoutons"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "Kantaverbi on écouter (infinitiivi). Ils écoutent = he kuuntelevat (-ent-pääte poistetaan → kanta écoute + r = écouter)." }
+      ]
+    },
+    {
+      "phase_id": "p4-recall-typed-fr-fi",
+      "phase_type": "recall_typed_es_to_fi",
+      "title": "Käännä suomeksi",
+      "instruction": "Kirjoita lausuman suomennos.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "je parle", "accept": ["minä puhun", "puhun"], "hint": "je = minä" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "tu habites", "accept": ["sinä asut", "asut"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "il aime", "accept": ["hän rakastaa", "hän pitää", "hän tykkää"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "nous étudions", "accept": ["me opiskelemme", "opiskelemme"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "vous travaillez", "accept": ["te työskentelette", "työskentelette"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "ils écoutent", "accept": ["he kuuntelevat", "kuuntelevat"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "j'aime", "accept": ["minä rakastan", "rakastan", "pidän", "tykkään"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "elle chante", "accept": ["hän laulaa"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "on parle français ici", "accept": ["täällä puhutaan ranskaa", "me puhutaan ranskaa täällä"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "elles jouent", "accept": ["he pelaavat", "he leikkivät", "pelaavat"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "je regarde la télé", "accept": ["katson televisiota", "minä katson televisiota"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "tu manges", "accept": ["sinä syöt", "syöt"] }
+      ]
+    },
+    {
+      "phase_id": "p5-recall-typed-fi-fr",
+      "phase_type": "recall_typed_fi_to_es",
+      "title": "Taivuta ranskaksi",
+      "instruction": "Kirjoita oikea présent-muoto ranskaksi.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "minä puhun (parler)", "accept": ["je parle"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "sinä asut (habiter)", "accept": ["tu habites"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "hän rakastaa / tykkää (aimer) — nainen", "accept": ["elle aime"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "me opiskelemme (étudier)", "accept": ["nous étudions"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "te työskentelette (travailler)", "accept": ["vous travaillez"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "he kuuntelevat (écouter)", "accept": ["ils écoutent", "elles écoutent"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "minä rakastan (aimer) — élision!", "accept": ["j'aime"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "minä asun (habiter) — élision!", "accept": ["j'habite"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "hän laulaa (chanter) — mies", "accept": ["il chante"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "me katsomme (regarder)", "accept": ["nous regardons"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "he pelaavat (jouer)", "accept": ["ils jouent", "elles jouent"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "sinä laulat (chanter)", "accept": ["tu chantes"] }
+      ]
+    },
+    {
+      "phase_id": "p6-application-gap-helppo",
+      "phase_type": "application_gap_fill",
+      "title": "Lauseen täydennys — oikea verbimuoto",
+      "instruction": "Täydennä lause oikealla présent-muodolla.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Nous {1} le français à l'école. (étudier)", "answers": [["étudions"]], "word_bank": ["étudions", "étudient", "étudiez"] },
+        { "item_type": "gap_fill", "sentence_template": "Tu {1} dans un appartement à Lyon ? (habiter)", "answers": [["habites"]], "word_bank": ["habites", "habitons", "habitent"] },
+        { "item_type": "gap_fill", "sentence_template": "J'{1} le rock. (aimer)", "answers": [["aime"]], "word_bank": ["aime", "aimes", "aimez"] },
+        { "item_type": "gap_fill", "sentence_template": "Ils {1} de la guitare le week-end. (jouer)", "answers": [["jouent"]], "word_bank": ["jouent", "joue", "jouons"] },
+        { "item_type": "gap_fill", "sentence_template": "Vous {1} bien le français ! (parler)", "answers": [["parlez"]], "word_bank": ["parlez", "parlent", "parles"] },
+        { "item_type": "gap_fill", "sentence_template": "Elle {1} dans une école primaire. (travailler)", "answers": [["travaille"]], "word_bank": ["travaille", "travaillez", "travaillons"] },
+        { "item_type": "gap_fill", "sentence_template": "On {1} beaucoup de café en France. (boire → utilise: consommer)", "answers": [["consomme"]], "word_bank": ["consomme", "consomment", "consommons"] },
+        { "item_type": "gap_fill", "sentence_template": "Je {1} la radio tous les matins. (écouter)", "answers": [["écoute"]], "word_bank": ["écoute", "écoutes", "écoutons"] },
+        { "item_type": "gap_fill", "sentence_template": "Nous {1} en France. (habiter)", "answers": [["habitons"]], "word_bank": ["habitons", "habitez", "habitent"] },
+        { "item_type": "gap_fill", "sentence_template": "Tu {1} avec tes amis ce soir ? (dîner)", "answers": [["dînes"]], "word_bank": ["dînes", "dîne", "dînons"] }
+      ]
+    },
+    {
+      "phase_id": "p7-application-gap-vaativa",
+      "phase_type": "application_gap_fill",
+      "title": "Lauseen täydennys — vaativa (ilman sanapankkia)",
+      "instruction": "Täydennä oikealla présent-muodolla ilman sanapankkia.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Ma sœur {1} dans une université à Paris. (étudier)", "answers": [["étudie"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Mes parents {1} à Bordeaux. (habiter)", "answers": [["habitent"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "J'{1} la cuisine française. (adorer)", "answers": [["adore"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "En France, on {1} beaucoup. (manger)", "answers": [["mange"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Vous {1} avec votre équipe tous les jours ? (travailler)", "answers": [["travaillez"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Elles {1} de la musique classique. (écouter)", "answers": [["écoutent"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Tu {1} souvent tes grands-parents ? (visiter)", "answers": [["visites"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Nous {1} au foot le samedi. (jouer)", "answers": [["jouons"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p8-application-sentence-build",
+      "phase_type": "application_sentence_build",
+      "title": "Lauseiden rakentelua",
+      "instruction": "Käännä koko lause ranskaksi oikealla présent-muodolla.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.60, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Minä puhun ranskaa ja englantia.", "accept": ["Je parle français et anglais.", "je parle français et anglais."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Hän asuu Pariisissa.", "accept": ["Il habite à Paris.", "Elle habite à Paris.", "il habite à Paris.", "elle habite à Paris."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Me opiskelemme ranskaa koulussa.", "accept": ["Nous étudions le français à l'école.", "Nous étudions le français à l'école"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "He työskentelevät yhdessä.", "accept": ["Ils travaillent ensemble.", "Elles travaillent ensemble."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Rakastatko musiikkia?", "accept": ["Tu aimes la musique ?", "Est-ce que tu aimes la musique ?"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Minä pidän ranskalaista ruokaa.", "accept": ["J'aime la cuisine française.", "j'aime la cuisine française."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Te laulatte hyvin!", "accept": ["Vous chantez bien !", "vous chantez bien !"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Hän kuuntelee musiikkia joka päivä.", "accept": ["Elle écoute de la musique tous les jours.", "Il écoute de la musique tous les jours."] }
+      ]
+    },
+    {
+      "phase_id": "p9-synthesis-translate",
+      "phase_type": "synthesis_translate",
+      "title": "YO-tyylinen käännös",
+      "instruction": "Käännä virke ranskaksi YO-tasolla.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.60, "C": 0.65, "M": 0.75, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Minun vanhempani asuvat Helsingissä ja puhuvat suomea.", "accept": ["Mes parents habitent à Helsinki et parlent finnois.", "Mes parents habitent à Helsinki et ils parlent finnois."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Me opiskelemme ranskaa, koska rakastamme kulttuuria.", "accept": ["Nous étudions le français parce que nous aimons la culture.", "Nous étudions le français car nous aimons la culture."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Hän työskentelee toimistossa ja kuuntelee musiikkia töissä.", "accept": ["Il travaille dans un bureau et écoute de la musique au travail.", "Elle travaille dans un bureau et écoute de la musique au travail."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Puhuuko hän ranskaa vai englantia?", "accept": ["Est-ce qu'il parle français ou anglais ?", "Il parle français ou anglais ?", "Parle-t-il français ou anglais ?"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Täällä puhutaan ranskaa.", "accept": ["On parle français ici.", "Ici on parle français."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "He pelaavat jalkapalloa joka lauantai.", "accept": ["Ils jouent au football chaque samedi.", "Ils jouent au foot chaque samedi.", "Ils jouent au football tous les samedis."] }
+      ]
+    },
+    {
+      "phase_id": "p10-synthesis-short-writing",
+      "phase_type": "synthesis_short_writing",
+      "title": "Lyhyt kirjoitus — présent-verbeillä",
+      "instruction": "Kirjoita lyhyt kuvaus ranskaksi présent-aikamuodossa.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.60, "C": 0.65, "M": 0.70, "E": 0.80, "L": 0.90 },
+      "skip_for_targets": ["I", "A", "B", "C", "M"],
+      "items": [
+        { "item_type": "writing", "prompt": "Kirjoita 4–6 lausetta itsestäsi ranskaksi présent-aikamuodossa: missä asut, mitä opiskelet, mitä pidät, mitä teet vapaa-ajalla. Käytä vähintään 4 eri -er-verbiä.", "min_words": 35, "max_words": 80, "rubric_focus": ["communication", "vocab", "structure"] },
+        { "item_type": "writing", "prompt": "Kuvaile ystävääsi tai perheenjäsentäsi ranskaksi (4–5 lausetta): mitä hän tekee, missä asuu, mistä pitää. Käytä il/elle-muotoja.", "min_words": 30, "max_words": 75, "rubric_focus": ["communication", "vocab"] },
+        { "item_type": "writing", "prompt": "Kirjoita 4–6 lausetta ranskalaisen koulupäivästäsi (tai kuvitellusta sellaisesta). Mitä opiskelet, milloin syöt, mitä teet välitunnilla? Présent-muoto.", "min_words": 35, "max_words": 80, "rubric_focus": ["communication", "structure"] }
+      ]
+    }
+  ],
+  "vocab": [
+    { "es": "parler", "fi": "puhua", "example_es": "Je parle français et anglais.", "example_fi": "Puhun ranskaa ja englantia.", "gender": null },
+    { "es": "habiter", "fi": "asua", "example_es": "J'habite à Helsinki.", "example_fi": "Asun Helsingissä.", "gender": null },
+    { "es": "aimer", "fi": "rakastaa; pitää jostakin", "example_es": "J'aime la musique française.", "example_fi": "Pidän ranskalaisesta musiikista.", "gender": null },
+    { "es": "étudier", "fi": "opiskella", "example_es": "Nous étudions le français.", "example_fi": "Opiskelemme ranskaa.", "gender": null },
+    { "es": "travailler", "fi": "työskennellä", "example_es": "Elle travaille dans un bureau.", "example_fi": "Hän työskentelee toimistossa.", "gender": null },
+    { "es": "écouter", "fi": "kuunnella", "example_es": "J'écoute de la musique.", "example_fi": "Kuuntelen musiikkia.", "gender": null },
+    { "es": "regarder", "fi": "katsoa", "example_es": "Il regarde la télévision.", "example_fi": "Hän katsoo televisiota.", "gender": null },
+    { "es": "manger", "fi": "syödä", "example_es": "On mange à midi.", "example_fi": "Syödään puoleltapäivin.", "gender": null },
+    { "es": "jouer", "fi": "pelata; leikkiä; soittaa (instrumenttia)", "example_es": "Ils jouent au football.", "example_fi": "He pelaavat jalkapalloa.", "gender": null },
+    { "es": "chanter", "fi": "laulaa", "example_es": "Elle chante très bien.", "example_fi": "Hän laulaa erittäin hyvin.", "gender": null },
+    { "es": "visiter", "fi": "vierailla; käydä katsomassa", "example_es": "Nous visitons Paris.", "example_fi": "Käymme Pariisissa.", "gender": null },
+    { "es": "dîner", "fi": "syödä illallista", "example_es": "On dîne à 19 heures.", "example_fi": "Syödään illallista kello 19.", "gender": null },
+    { "es": "adorer", "fi": "rakastaa kovasti; ihailla", "example_es": "J'adore la cuisine française !", "example_fi": "Rakastan ranskalaista ruokaa!", "gender": null },
+    { "es": "chercher", "fi": "etsiä", "example_es": "Je cherche un appartement.", "example_fi": "Etsin asuntoa.", "gender": null },
+    { "es": "rentrer", "fi": "palata kotiin", "example_es": "Je rentre à la maison à 17h.", "example_fi": "Palaan kotiin kello 17.", "gender": null },
+    { "es": "je", "fi": "minä", "example_es": "Je parle français.", "example_fi": "Minä puhun ranskaa.", "gender": null },
+    { "es": "tu", "fi": "sinä (epämuodollinen)", "example_es": "Tu habites où ?", "example_fi": "Missä sinä asut?", "gender": null },
+    { "es": "il", "fi": "hän (mies); se", "example_es": "Il travaille à Paris.", "example_fi": "Hän työskentelee Pariisissa.", "gender": null },
+    { "es": "elle", "fi": "hän (nainen); se", "example_es": "Elle étudie à l'université.", "example_fi": "Hän opiskelee yliopistossa.", "gender": null },
+    { "es": "on", "fi": "me (epämuodollinen); man; jotkut", "example_es": "On parle français ici.", "example_fi": "Täällä puhutaan ranskaa.", "gender": null },
+    { "es": "nous", "fi": "me", "example_es": "Nous aimons la France.", "example_fi": "Me rakastamme Ranskaa.", "gender": null },
+    { "es": "vous", "fi": "te (muodollinen yks. tai mon.)", "example_es": "Vous parlez bien français !", "example_fi": "Te puhutte ranskaa hyvin!", "gender": null },
+    { "es": "ils", "fi": "he (miehet tai sekajoukko)", "example_es": "Ils jouent au parc.", "example_fi": "He pelaavat puistossa.", "gender": null },
+    { "es": "elles", "fi": "he (vain naisia)", "example_es": "Elles étudient ensemble.", "example_fi": "He opiskelevat yhdessä.", "gender": null }
+  ],
+  "side_panel": {
+    "tabs": [
+      {
+        "id": "grammar",
+        "title": "Kielioppi",
+        "content_md": "## -er-verbin taivutus (présent)\n\n| Pronomini | Pääte | parler |\n|---|---|---|\n| je | -e | parle |\n| tu | -es | parles |\n| il/elle/on | -e | parle |\n| nous | -ons | parlons |\n| vous | -ez | parlez |\n| ils/elles | -ent (mykkä) | parlent |\n\n## Élision — pakollinen!\n\nKun verbi alkaa vokaalilla tai mykällä h:lla:\n- **je aime** → **j'aime**\n- **je habite** → **j'habite**\n- **je étudie** → **j'étudie**\n\n## Pronominit\n\n- **je** — minä\n- **tu** — sinä (epämuodollinen)\n- **il / elle** — hän (mies/nainen)\n- **on** — me (epämuodollinen) tai man\n- **nous** — me\n- **vous** — te (yks. muodollinen tai mon.)\n- **ils** — he (miehet tai sekajoukko)\n- **elles** — he (vain naisia)\n\n## -ent on aina mykkä!\n\n*ils parlent* = [parl] — loppu -ent ei äänny"
+      },
+      {
+        "id": "tips",
+        "title": "YO-vinkki",
+        "content_md": "## YO-koe — Osa 3 (Rakenteet)\n\nAukkotehtävässä pitää valita oikea verbimuoto. Yleisimmät ansat:\n\n**Ansa 1: ils parlent vs il parle**\nKirjoitetussa ero on -ent. Lue pronomini huolellisesti.\n\n**Ansa 2: Élision unohtuu**\n*Je aime* on väärin — kirjoita **j'aime**. YTL huomaa tämän.\n\n**Ansa 3: nous-muoto -ions**\nÉtudier-verbissä nous étudi**ons** — älä kirjoita *étudions* (oikein!) vai *étudents* (väärin).\n\n**Ansa 4: vous-muoto päättyy AINA -ez**\nVous parlez, vous habitez, vous aimez — poikkeus: vous êtes (olla-verbi).\n\n## Kirjoitelmassa\n\nKäytä eri -er-verbejä — älä toista parler 5 kertaa. Pisteet sanastosta paranee kun käytät myös: habiter, travailler, écouter, adorer."
+      }
+    ]
+  }
+}

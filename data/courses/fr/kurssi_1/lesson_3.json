@@ -1,0 +1,292 @@
+{
+  "meta": {
+    "course_key": "kurssi_1",
+    "lesson_index": 3,
+    "lesson_type": "vocab",
+    "level": "A",
+    "title": "Perhe ja sukulaiset",
+    "description": "Opettelet 30 perhe- ja sukulaissanaa ranskaksi artikkelin kera. Ranskassa kaikki substantiivit ovat joko maskuliineja (le/un) tai feminiinejä (la/une) — neutraalia sukua ei ole. Famille-sanasto on YO-kokeessa erittäin yleinen.",
+    "yo_relevance": "Perheenjäsenistä kirjoittaminen on lyhyen kirjoitelman klassikkoaihe ('Présentez votre famille'). Luetun ymmärtämisessä perhesuhteet esiintyvät usein — on tunnistettava la mère, le père, la sœur jne.",
+    "estimated_minutes_median": 12
+  },
+  "teaching": {
+    "intro_md": "# Perhe ranskaksi\n\nRanskassa jokaisella substantiivilla on suku: **maskuliini** (le/un) tai **feminiini** (la/une). Neutraalia ei ole — ero on opeteltava sanan mukana.\n\n## Perheen ydinrakenne\n\n- **le père** — isä (maskuliini)\n- **la mère** — äiti (feminiini)\n- **le frère** — veli\n- **la sœur** — sisko\n\n## Miten artikkeli valitaan?\n\n- **le / un** → maskuliini\n- **la / une** → feminiini\n- **l'** → ennen vokaalia tai mykää h-kirjainta (l'oncle, l'ami)\n- **les / des** → monikko (ei sukua)\n\n## Esimerkki\n\n> J'ai un frère et une sœur. Mon père est médecin et ma mère travaille à l'hôpital. Mes grands-parents habitent en Bretagne.\n\n## Huomio: omistuspronominit\n\n- mon (maskuliini tai vokaali) / ma (feminiini) / mes (monikko)\n- ton / ta / tes — sinun\n- son / sa / ses — hänen",
+    "key_points": [
+      "Jokainen substantiivi on m tai f — opettele artikkeli sanan kanssa: le père, la mère.",
+      "L' ennen vokaalia tai mykää h:ta: l'oncle, l'ami, l'hôpital.",
+      "Mon ennen maskuliinia JA ennen vokaalia (mon amie — ei ma amie, koska ääntäminen).",
+      "Les parents = vanhemmat; les grands-parents = isovanhemmat (monikko aina yhdistetty)."
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1-recognition-mc-perhe-ydin",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista — ydinperhe",
+      "instruction": "Valitse oikea suomennos.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "mc", "stem": "la mère", "choices": ["isä", "äiti", "sisko", "isoäiti"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "La mère = äiti (feminiini, la). Le père = isä." },
+        { "item_type": "mc", "stem": "le père", "choices": ["isä", "veli", "isoisä", "setä"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "Le père = isä (maskuliini, le). La mère = äiti." },
+        { "item_type": "mc", "stem": "le frère", "choices": ["veli", "sisko", "serkku", "poika"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "Le frère = veli. La sœur = sisko. Molemmat maskuliini/feminiini-pari." },
+        { "item_type": "mc", "stem": "la sœur", "choices": ["veli", "sisko", "tytär", "täti"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "La sœur = sisko (feminiini). Le frère = veli. Oe-digraafi on ranskan erikoispiirre." },
+        { "item_type": "mc", "stem": "le fils", "choices": ["tytär", "poika (lapsi)", "veli", "isä"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Le fils = poika (maskuliini). La fille = tytär. Fils äännetään [fis] — s kuuluu!" },
+        { "item_type": "mc", "stem": "la fille", "choices": ["sisko", "tyttöystävä", "tytär", "äiti"], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "La fille = tytär TAI tyttö (kontekstista riippuen). La petite fille = tyttö (lapsi). La fille de ma tante = serkkuni." },
+        { "item_type": "mc", "stem": "les parents", "choices": ["vanhemmat", "isovanhemmat", "sukulaiset", "lapset"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "Les parents = vanhemmat (monikko). Les grands-parents = isovanhemmat." },
+        { "item_type": "mc", "stem": "le mari", "choices": ["poikaystävä", "mies (aviomies)", "lanko", "appi"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Le mari = aviomies (maskuliini). La femme = vaimo/nainen." },
+        { "item_type": "mc", "stem": "la femme", "choices": ["tyttöystävä", "nainen; vaimo", "tytär", "käly"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "La femme = nainen TAI vaimo (kontekstista riippuen). Ma femme = vaimoni. Une femme = nainen." },
+        { "item_type": "mc", "stem": "les enfants", "choices": ["lapset", "vanhemmat", "sisarukset", "lapsenlapset"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "Les enfants = lapset (monikko, l'enfant yksikkö). Enfant voi tarkoittaa poikaa tai tyttöä." },
+        { "item_type": "mc", "stem": "le grand-père", "choices": ["isoisä", "setä", "isä", "appi"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "Le grand-père = isoisä (grand = iso/suuri). La grand-mère = isoäiti." },
+        { "item_type": "mc", "stem": "la grand-mère", "choices": ["täti", "isoäiti", "äiti", "anoppi"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "La grand-mère = isoäiti. Lyhennys: mamie (tuttu)." },
+        { "item_type": "mc", "stem": "l'oncle", "choices": ["isoisä", "setä / eno", "serkku", "lanko"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "L'oncle = setä tai eno (maskuliini, alkaa vokaalilla → l'). La tante = täti." },
+        { "item_type": "mc", "stem": "la tante", "choices": ["sisko", "isoäiti", "täti", "anoppi"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "La tante = täti (feminiini). L'oncle = setä." }
+      ]
+    },
+    {
+      "phase_id": "p2-recognition-mc-suku-laajempi",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista — laajempi suku",
+      "instruction": "Valitse oikea suomennos.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        { "item_type": "mc", "stem": "le cousin", "choices": ["serkku (mies)", "veli", "ystävä", "lanko"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "Le cousin = miespuolinen serkku. La cousine = naispuolinen serkku." },
+        { "item_type": "mc", "stem": "la cousine", "choices": ["serkku (nainen)", "sisko", "tyttöystävä", "käly"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "La cousine = naispuolinen serkku." },
+        { "item_type": "mc", "stem": "le neveu", "choices": ["veljenpoika / sisarenpoika", "serkku", "lapsenlapsi", "vävy"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "Le neveu = veljenpoika tai sisarenpoika. La nièce = veljentytär / sisarentytär." },
+        { "item_type": "mc", "stem": "la nièce", "choices": ["serkku (nainen)", "veljentytär / sisarentytär", "anoppi", "tyttärentytär"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "La nièce = veljentytär / sisarentytär. Le neveu = veljenpoika." },
+        { "item_type": "mc", "stem": "le beau-père", "choices": ["isäpuoli; appi", "isoisä", "isä", "kummi"], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "Le beau-père = isäpuoli TAI appi (puolison isä) — kontekstista riippuen. La belle-mère = äitipuoli / anoppi." },
+        { "item_type": "mc", "stem": "la belle-mère", "choices": ["äiti", "äitipuoli; anoppi", "isoäiti", "täti"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "La belle-mère = äitipuoli TAI anoppi. Beau/belle = kaunis mutta myös laki-perheessä." },
+        { "item_type": "mc", "stem": "le petit-fils", "choices": ["poika", "lapsenlapsi (poika)", "veljenpoika", "serkku"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Le petit-fils = lapsenlapsi (poika). La petite-fille = lapsenlapsi (tyttö)." },
+        { "item_type": "mc", "stem": "la petite-fille", "choices": ["tyttöystävä", "lapsenlapsi (tyttö)", "tytär", "serkku"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "La petite-fille = lapsenlapsi (tyttö). Ei tarkoita 'pientä tyttöä' — se on une petite fille (erikseen)." },
+        { "item_type": "mc", "stem": "le beau-frère", "choices": ["lanko", "veli", "serkku", "appi"], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "Le beau-frère = lanko (puolison veli tai sisaren mies). La belle-sœur = käly." },
+        { "item_type": "mc", "stem": "la belle-sœur", "choices": ["käly", "sisko", "nainen", "serkku"], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "La belle-sœur = käly (puolison sisar tai veljen vaimo)." },
+        { "item_type": "mc", "stem": "les grands-parents", "choices": ["isovanhemmat", "vanhemmat", "lapset", "sukulaiset"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "Les grands-parents = isovanhemmat (le grand-père + la grand-mère yhdessä)." },
+        { "item_type": "mc", "stem": "la famille", "choices": ["suku", "perhe", "kotitalous", "ystävät"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "La famille = perhe (feminiini). Ma famille = perheeni." }
+      ]
+    },
+    {
+      "phase_id": "p3-recognition-match-perhe",
+      "phase_type": "recognition_match",
+      "title": "Yhdistä — perheenjäsenet",
+      "instruction": "Yhdistä ranskan sana ja suomennos.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        {
+          "item_type": "match",
+          "left_label": "Ranska",
+          "right_label": "Suomi",
+          "pairs": [
+            { "left": "le père", "right": "isä" },
+            { "left": "la mère", "right": "äiti" },
+            { "left": "le frère", "right": "veli" },
+            { "left": "la sœur", "right": "sisko" },
+            { "left": "le fils", "right": "poika (lapsi)" },
+            { "left": "la fille", "right": "tytär; tyttö" },
+            { "left": "le grand-père", "right": "isoisä" },
+            { "left": "la grand-mère", "right": "isoäiti" },
+            { "left": "l'oncle", "right": "setä, eno" },
+            { "left": "la tante", "right": "täti" },
+            { "left": "les parents", "right": "vanhemmat" },
+            { "left": "les enfants", "right": "lapset" }
+          ]
+        },
+        {
+          "item_type": "match",
+          "left_label": "Ranska",
+          "right_label": "Suomi",
+          "pairs": [
+            { "left": "le cousin", "right": "serkku (mies)" },
+            { "left": "la cousine", "right": "serkku (nainen)" },
+            { "left": "le neveu", "right": "veljenpoika, sisarenpoika" },
+            { "left": "la nièce", "right": "veljentytär, sisarentytär" },
+            { "left": "le beau-père", "right": "isäpuoli; appi" },
+            { "left": "la belle-mère", "right": "äitipuoli; anoppi" },
+            { "left": "le beau-frère", "right": "lanko" },
+            { "left": "la belle-sœur", "right": "käly" },
+            { "left": "le petit-fils", "right": "lapsenlapsi (poika)" },
+            { "left": "la petite-fille", "right": "lapsenlapsi (tyttö)" },
+            { "left": "le mari", "right": "aviomies" },
+            { "left": "la femme", "right": "nainen; vaimo" }
+          ]
+        }
+      ]
+    },
+    {
+      "phase_id": "p4-recall-typed-fr-fi",
+      "phase_type": "recall_typed_es_to_fi",
+      "title": "Käännä suomeksi",
+      "instruction": "Kirjoita ranskan sanan suomennos.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "la mère", "accept": ["äiti"], "hint": "la = feminiini" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "le père", "accept": ["isä"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "le frère", "accept": ["veli"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "la sœur", "accept": ["sisko", "sisar"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "le fils", "accept": ["poika", "poika (lapsi)"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "la fille", "accept": ["tytär", "tyttö"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "l'oncle", "accept": ["setä", "eno"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "la tante", "accept": ["täti"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "les parents", "accept": ["vanhemmat"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "les grands-parents", "accept": ["isovanhemmat"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "le cousin", "accept": ["serkku", "miesserkku"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "la famille", "accept": ["perhe"] }
+      ]
+    },
+    {
+      "phase_id": "p5-recall-typed-fi-fr",
+      "phase_type": "recall_typed_fi_to_es",
+      "title": "Käännä ranskaksi (artikkelin kera)",
+      "instruction": "Kirjoita ranskan sana artikkelin kera (le/la/l'/les).",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "äiti (artikkelin kera)", "accept": ["la mère"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "isä (artikkelin kera)", "accept": ["le père"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "veli (artikkelin kera)", "accept": ["le frère"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "sisko (artikkelin kera)", "accept": ["la sœur", "la soeur"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "isoisä (artikkelin kera)", "accept": ["le grand-père", "le grand-pere"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "tytär (artikkelin kera)", "accept": ["la fille"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "poika/lapsi (artikkelin kera)", "accept": ["le fils"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "setä (artikkelin kera)", "accept": ["l'oncle"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "täti (artikkelin kera)", "accept": ["la tante"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "vanhemmat (artikkelin kera, mon.)", "accept": ["les parents"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "perhe (artikkelin kera)", "accept": ["la famille"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "aviomies (artikkelin kera)", "accept": ["le mari"] }
+      ]
+    },
+    {
+      "phase_id": "p6-application-gap-helppo",
+      "phase_type": "application_gap_fill",
+      "title": "Lauseen täydennys — perustaso",
+      "instruction": "Täydennä lause oikealla perheenjäsen-sanalla sanapankista.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Ma {1} s'appelle Marie — c'est la mère de mon père.", "answers": [["grand-mère"]], "word_bank": ["grand-mère", "sœur", "tante"] },
+        { "item_type": "gap_fill", "sentence_template": "J'ai deux {1} : un garçon et une fille.", "answers": [["enfants"]], "word_bank": ["enfants", "parents", "cousins"] },
+        { "item_type": "gap_fill", "sentence_template": "Mon {1} est le frère de ma mère.", "answers": [["oncle"]], "word_bank": ["oncle", "cousin", "frère"] },
+        { "item_type": "gap_fill", "sentence_template": "La {1} de mon oncle est ma cousine.", "answers": [["fille"]], "word_bank": ["fille", "sœur", "mère"] },
+        { "item_type": "gap_fill", "sentence_template": "Le père de mon père est mon {1}.", "answers": [["grand-père"]], "word_bank": ["grand-père", "oncle", "père"] },
+        { "item_type": "gap_fill", "sentence_template": "Mon {1} et ma femme ont deux enfants.", "answers": [["frère"]], "word_bank": ["frère", "fils", "cousin"] },
+        { "item_type": "gap_fill", "sentence_template": "Ma {1} habite à Lyon — elle est la sœur de mon père.", "answers": [["tante"]], "word_bank": ["tante", "cousine", "sœur"] },
+        { "item_type": "gap_fill", "sentence_template": "Nous sommes une grande {1} : cinq personnes.", "answers": [["famille"]], "word_bank": ["famille", "maison", "groupe"] },
+        { "item_type": "gap_fill", "sentence_template": "Mes {1} habitent à la campagne en Bretagne.", "answers": [["grands-parents"]], "word_bank": ["grands-parents", "parents", "enfants"] },
+        { "item_type": "gap_fill", "sentence_template": "Le {1} de ma sœur s'appelle Thomas — ils sont mariés.", "answers": [["mari"]], "word_bank": ["mari", "frère", "père"] }
+      ]
+    },
+    {
+      "phase_id": "p7-application-gap-vaativa",
+      "phase_type": "application_gap_fill",
+      "title": "Lauseen täydennys — vaativa (ilman sanapankkia)",
+      "instruction": "Täydennä ilman sanapankkia. Kirjoita oikea ranskan sana.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "La mère de mon père est ma {1}.", "answers": [["grand-mère"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Mon père a un frère — c'est mon {1}.", "answers": [["oncle"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Le mari de ma sœur est mon {1}.", "answers": [["beau-frère"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "La fille de mon fils est ma {1}.", "answers": [["petite-fille"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Mes {1} s'appellent Jean et Marie — ce sont les parents de mon père.", "answers": [["grands-parents"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "La femme de mon père (pas ma mère) est ma {1}.", "answers": [["belle-mère"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Le {1} de mon oncle est mon cousin.", "answers": [["fils"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Ma sœur et son {1} ont un appartement à Paris.", "answers": [["mari"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p8-application-sentence-build",
+      "phase_type": "application_sentence_build",
+      "title": "Lauseiden rakentelua",
+      "instruction": "Käännä koko lause ranskaksi.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.60, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Minulla on yksi veli ja kaksi siskoa.", "accept": ["J'ai un frère et deux sœurs.", "j'ai un frère et deux sœurs."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Äitini on suomalainen ja isäni on ranskalainen.", "accept": ["Ma mère est finlandaise et mon père est français.", "ma mère est finlandaise et mon père est français."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Isovanhempani asuvat Bretagnessa.", "accept": ["Mes grands-parents habitent en Bretagne.", "Mes grands-parents habitent à Bretagne."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Onko sinulla sisaruksia?", "accept": ["Tu as des frères et sœurs ?", "Est-ce que tu as des frères et sœurs ?"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Setäni on Belgian ranskalainen.", "accept": ["Mon oncle est belge francophone.", "Mon oncle est français de Belgique."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Perheessäni on viisi henkilöä.", "accept": ["Dans ma famille, il y a cinq personnes.", "Ma famille est composée de cinq personnes."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Lankoni työskentelee Pariisissa.", "accept": ["Mon beau-frère travaille à Paris.", "mon beau-frère travaille à Paris."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Lapsenlapseni asuvat Québecissä.", "accept": ["Mes petits-enfants habitent au Québec.", "Mes petits-enfants habitent à Québec."] }
+      ]
+    },
+    {
+      "phase_id": "p9-synthesis-translate",
+      "phase_type": "synthesis_translate",
+      "title": "YO-tyylinen käännös",
+      "instruction": "Käännä virke ranskaksi YO-tasolla.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.60, "C": 0.65, "M": 0.75, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Perheessäni on kuusi henkilöä: vanhempani, kaksi veljeäni, yksi siskoni ja minä.", "accept": ["Dans ma famille, il y a six personnes : mes parents, deux frères, une sœur et moi.", "Ma famille est composée de six personnes : mes parents, mes deux frères, ma sœur et moi."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Isoäitini on kotoisin Québecistä mutta asuu nyt Ranskassa.", "accept": ["Ma grand-mère vient du Québec mais elle habite maintenant en France.", "Ma grand-mère est du Québec mais elle habite en France maintenant."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Serkkuni ja minä opiskelemme samassa lukiossa Lyonissa.", "accept": ["Mon cousin et moi, nous étudions dans le même lycée à Lyon.", "Ma cousine et moi étudions dans le même lycée à Lyon."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Tätini ja setäni ovat belgialaisia — he asuvat Brysselissä.", "accept": ["Ma tante et mon oncle sont belges — ils habitent à Bruxelles.", "Ma tante et mon oncle sont belges et ils habitent à Bruxelles."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Veljeni on kaksi vuotta minua nuorempi.", "accept": ["Mon frère a deux ans de moins que moi.", "Mon frère est deux ans plus jeune que moi."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Lankoni työskentelee opettajana Montréalissa.", "accept": ["Mon beau-frère travaille comme professeur à Montréal.", "Mon beau-frère est professeur à Montréal."] }
+      ]
+    },
+    {
+      "phase_id": "p10-synthesis-short-writing",
+      "phase_type": "synthesis_short_writing",
+      "title": "Lyhyt kirjoitus — perheestäni",
+      "instruction": "Kirjoita lyhyt esittely perheestäsi ranskaksi.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.60, "C": 0.65, "M": 0.70, "E": 0.80, "L": 0.90 },
+      "skip_for_targets": ["I", "A", "B", "C", "M"],
+      "items": [
+        { "item_type": "writing", "prompt": "Kirjoita 4–6 lausetta perheestäsi ranskaksi: ketä siihen kuuluu, mistä he ovat kotoisin ja mitä he tekevät. Käytä oppimiasi sanoja (la mère, le père, le frère, la sœur jne.).", "min_words": 35, "max_words": 80, "rubric_focus": ["communication", "vocab", "structure"] },
+        { "item_type": "writing", "prompt": "Esittele yksi sukulainen tarkemmin ranskaksi (4–5 lausetta): kuka hän on, mistä kotoisin, mitä tekee. Käytä l'oncle, la tante, le cousin tai muu sukulaissana.", "min_words": 30, "max_words": 75, "rubric_focus": ["communication", "vocab"] },
+        { "item_type": "writing", "prompt": "Vertaa perheesi kahta jäsentä ranskaksi: mitä yhteistä, mitä eroa kansallisuuden tai ammatin suhteen. 4–6 lausetta présent-aikamuodossa.", "min_words": 35, "max_words": 80, "rubric_focus": ["communication", "structure"] }
+      ]
+    }
+  ],
+  "vocab": [
+    { "es": "la mère", "fi": "äiti", "example_es": "Ma mère s'appelle Sophie.", "example_fi": "Äitini nimi on Sophie.", "gender": "f" },
+    { "es": "le père", "fi": "isä", "example_es": "Mon père travaille à Paris.", "example_fi": "Isäni työskentelee Pariisissa.", "gender": "m" },
+    { "es": "le frère", "fi": "veli", "example_es": "J'ai un grand frère.", "example_fi": "Minulla on isoveli.", "gender": "m" },
+    { "es": "la sœur", "fi": "sisko", "example_es": "Ma sœur étudie la médecine.", "example_fi": "Siskoni opiskelee lääketiedettä.", "gender": "f" },
+    { "es": "le fils", "fi": "poika (lapsi)", "example_es": "Le fils de ma tante est mon cousin.", "example_fi": "Tätini poika on serkkuni.", "gender": "m" },
+    { "es": "la fille", "fi": "tytär; tyttö", "example_es": "Sa fille s'appelle Lucie.", "example_fi": "Hänen tyttärensä on Lucie.", "gender": "f" },
+    { "es": "les parents", "fi": "vanhemmat", "example_es": "Mes parents viennent de Finlande.", "example_fi": "Vanhempani ovat Suomesta.", "gender": null },
+    { "es": "les enfants", "fi": "lapset", "example_es": "Ils ont trois enfants.", "example_fi": "Heillä on kolme lasta.", "gender": null },
+    { "es": "le grand-père", "fi": "isoisä", "example_es": "Mon grand-père a quatre-vingts ans.", "example_fi": "Isoisäni on 80-vuotias.", "gender": "m" },
+    { "es": "la grand-mère", "fi": "isoäiti", "example_es": "Ma grand-mère habite en Bretagne.", "example_fi": "Isoäitini asuu Bretagnessa.", "gender": "f" },
+    { "es": "les grands-parents", "fi": "isovanhemmat", "example_es": "Mes grands-parents sont retraités.", "example_fi": "Isovanhempani ovat eläkkeellä.", "gender": null },
+    { "es": "l'oncle", "fi": "setä, eno", "example_es": "Mon oncle est médecin.", "example_fi": "Setäni on lääkäri.", "gender": "m" },
+    { "es": "la tante", "fi": "täti", "example_es": "Ma tante habite à Bruxelles.", "example_fi": "Tätini asuu Brysselissä.", "gender": "f" },
+    { "es": "le cousin", "fi": "serkku (mies)", "example_es": "Mon cousin habite à Montréal.", "example_fi": "Serkkuni asuu Montréalissa.", "gender": "m" },
+    { "es": "la cousine", "fi": "serkku (nainen)", "example_es": "J'ai une cousine à Genève.", "example_fi": "Minulla on serkku Genevessä.", "gender": "f" },
+    { "es": "le neveu", "fi": "veljenpoika; sisarenpoika", "example_es": "Mon neveu a cinq ans.", "example_fi": "Veljenpoikani on 5-vuotias.", "gender": "m" },
+    { "es": "la nièce", "fi": "veljentytär; sisarentytär", "example_es": "Je visite ma nièce le dimanche.", "example_fi": "Käyn veljentyttäreni luona sunnuntaisin.", "gender": "f" },
+    { "es": "le mari", "fi": "aviomies", "example_es": "Son mari est ingénieur.", "example_fi": "Hänen miehensä on insinööri.", "gender": "m" },
+    { "es": "la femme", "fi": "nainen; vaimo", "example_es": "Sa femme travaille à l'hôpital.", "example_fi": "Hänen vaimonsa työskentelee sairaalassa.", "gender": "f" },
+    { "es": "le beau-père", "fi": "isäpuoli; appi", "example_es": "Mon beau-père est très gentil.", "example_fi": "Appeni on erittäin mukava.", "gender": "m" },
+    { "es": "la belle-mère", "fi": "äitipuoli; anoppi", "example_es": "Ma belle-mère cuisine bien.", "example_fi": "Anoppini kokkaa hyvin.", "gender": "f" },
+    { "es": "le beau-frère", "fi": "lanko", "example_es": "Mon beau-frère travaille à Paris.", "example_fi": "Lankoni työskentelee Pariisissa.", "gender": "m" },
+    { "es": "la belle-sœur", "fi": "käly", "example_es": "Ma belle-sœur habite près de chez moi.", "example_fi": "Kälyni asuu lähellä.", "gender": "f" },
+    { "es": "le petit-fils", "fi": "lapsenlapsi (poika)", "example_es": "Ma grand-mère a trois petits-fils.", "example_fi": "Isoäidilläni on kolme lapsenlasta.", "gender": "m" },
+    { "es": "la petite-fille", "fi": "lapsenlapsi (tyttö)", "example_es": "Sa petite-fille étudie la musique.", "example_fi": "Hänen lapsenlapsensa opiskelee musiikkia.", "gender": "f" },
+    { "es": "la famille", "fi": "perhe", "example_es": "Ma famille est grande.", "example_fi": "Perheeni on iso.", "gender": "f" },
+    { "es": "les frères et sœurs", "fi": "sisarukset", "example_es": "Tu as des frères et sœurs ?", "example_fi": "Onko sinulla sisaruksia?", "gender": null },
+    { "es": "le demi-frère", "fi": "velipuoli", "example_es": "Mon demi-frère vit avec son père.", "example_fi": "Velipuoleni asuu isänsä kanssa.", "gender": "m" },
+    { "es": "la demi-sœur", "fi": "siskopuoli", "example_es": "J'ai une demi-sœur de vingt ans.", "example_fi": "Minulla on 20-vuotias siskopuoli.", "gender": "f" },
+    { "es": "les petits-enfants", "fi": "lapsenlapset", "example_es": "Ils ont six petits-enfants.", "example_fi": "Heillä on kuusi lapsenlasta.", "gender": null }
+  ],
+  "side_panel": {
+    "tabs": [
+      {
+        "id": "vocab",
+        "title": "Sanasto",
+        "content_md": "## Ydinperhe\n\n- **la mère** — äiti\n- **le père** — isä\n- **le frère** — veli\n- **la sœur** — sisko\n- **le fils** — poika (lapsi)\n- **la fille** — tytär; tyttö\n- **les parents** — vanhemmat\n- **les enfants** — lapset\n- **la famille** — perhe\n- **les frères et sœurs** — sisarukset\n\n## Isovanhemmat ja laajempi suku\n\n- **le grand-père** — isoisä\n- **la grand-mère** — isoäiti\n- **les grands-parents** — isovanhemmat\n- **l'oncle** — setä, eno\n- **la tante** — täti\n- **le cousin** — serkku (mies)\n- **la cousine** — serkku (nainen)\n- **le neveu** — veljenpoika, sisarenpoika\n- **la nièce** — veljentytär, sisarentytär\n- **le petit-fils** — lapsenlapsi (poika)\n- **la petite-fille** — lapsenlapsi (tyttö)\n- **les petits-enfants** — lapsenlapset\n\n## Puolison suku ja uusperhe\n\n- **le mari** — aviomies\n- **la femme** — nainen; vaimo\n- **le beau-père** — isäpuoli; appi\n- **la belle-mère** — äitipuoli; anoppi\n- **le beau-frère** — lanko\n- **la belle-sœur** — käly\n- **le demi-frère** — velipuoli\n- **la demi-sœur** — siskopuoli"
+      },
+      {
+        "id": "tips",
+        "title": "YO-vinkki",
+        "content_md": "## YO-koe — perhe kirjoitelmassa\n\nLyhyessä kirjoitelmassa 'Présentez votre famille' tai 'Décrivez votre famille' on klassikkoaihe. Pisteytys paranee kun käytät:\n- Artikkeli oikein: **le** père, **la** mère, **l'**oncle\n- Omistuspronomiini oikein: **mon** père (m), **ma** mère (f), **mes** parents (mon.)\n\n**Huom:** mon ennen vokaalia myös feminiinillä!\n- **mon** amie (ei ma amie — ääntäminen e+a törmää)\n\n## Beau/belle-perhe\n\n- **beau-père** = appi TAI isäpuoli\n- **belle-mère** = anoppi TAI äitipuoli\n- Sama sana — konteksti ratkaisee\n\n## Yleisin virhe\n\n*Le sœur* (VÄÄRIN) → **La sœur** (oikein, feminiini)\n*La frère* (VÄÄRIN) → **Le frère** (oikein, maskuliini)"
+      }
+    ]
+  }
+}

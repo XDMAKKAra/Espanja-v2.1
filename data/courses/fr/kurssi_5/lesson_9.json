@@ -1,0 +1,229 @@
+{
+  "meta": {
+    "course_key": "kurssi_5",
+    "lesson_index": 9,
+    "lesson_type": "mixed",
+    "level": "C",
+    "title": "Kertaus — Kurssi 5 kokonaisuus",
+    "description": "Kertaat koko Kurssi 5:n sisällön: työ- ja teknologiasanasto (L1, L4, L6), futur simple säännölliset ja epäsäännölliset (L2, L3), futur proche vs futur simple (L5), conditionnel présent ja kohteliaisuus (L7), si-lauseet (L8). Sekoitettu harjoittelu vahvistaa oppimista.",
+    "yo_relevance": "Kertaukset ovat YO-valmentelun tehokkain työkalu — sekoitettu harjoittelu (interleaving) siirtää tiedot pitkäkestoiseen muistiin paremmin kuin toistaminen. Tämä oppitunti simuloi YO-kokeen rakennetehtävien monipuolisuutta.",
+    "estimated_minutes_median": 16
+  },
+  "teaching": {
+    "intro_md": "# Kurssi 5 kertaus\n\nTässä oppitunnissa harjoitellaan kaikki K5:n aiheet sekoitetusti. Tämä on tehokkaampaa kuin yhtä aihetta toistaminen.\n\n## Mitä kertaamme?\n\n1. **Sanasto** — työ, ammatit, teknologia, tulevaisuusverbit (L1, L4, L6)\n2. **Futur simple** — säännölliset + epäsäännölliset (L2, L3)\n3. **Futur proche** — aller + infinitiivi (L5)\n4. **Futur proche vs futur simple** — milloin kumpaakin (L5)\n5. **Conditionnel présent** — muodostus + kohteliaisuus (L7)\n6. **Si-lauseet** — Tyyppi 1 ja Tyyppi 2 (L8)\n\n## Nopea muistinvirkistys\n\n| Rakenne | Muodostus | Esimerkki |\n|---|---|---|\n| Futur simple | inf + -ai/-as/-a/-ons/-ez/-ont | je parlerai |\n| Futur proche | aller + inf | je vais parler |\n| Conditionnel | futur-kanta + -ais/-ais/-ait/-ions/-iez/-aient | je parlerais |\n| Si Tyyppi 1 | si + présent → futur | Si tu viens, je serai là. |\n| Si Tyyppi 2 | si + imparfait → conditionnel | Si j'avais le temps... |\n\n## Epäsäännölliset futur-kannat\n\nétre→ser, avoir→aur, aller→ir, faire→fer, venir→viendr, voir→verr, pouvoir→pourr, devoir→devr, savoir→saur, vouloir→voudr, falloir→faudr",
+    "key_points": [
+      "Futur simple vs conditionnel: -rai (futur) vs -rais (conditionnel) — yksi s!",
+      "Si-lauseessa AINA présent (Tyyppi 1) tai imparfait (Tyyppi 2) — ei koskaan futuria tai conditionnelia.",
+      "Kohteliaisuus: je voudrais, j'aimerais, pourriez-vous — conditionnel-muotoja.",
+      "aller → futurissa ir- (j'irai), EI *j'allerai.",
+      "Futur proche: lähellä, suunniteltu. Futur simple: kaukainen, kirjallinen."
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1-mixed-mc-sanasto",
+      "phase_type": "recognition_mc",
+      "title": "Sanastokertaus — työ ja teknologia",
+      "instruction": "Valitse oikea suomennos tai selitys.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "mc", "stem": "le chômage", "choices": ["palkka", "eläke", "työttömyys", "harjoittelu"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "le chômage = työttömyys. le salaire = palkka, la retraite = eläke, le stage = harjoittelu." },
+        { "item_type": "mc", "stem": "télécharger", "choices": ["tallentaa", "ladata netistä", "jakaa", "poistaa"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "télécharger = ladata netistä. sauvegarder = tallentaa." },
+        { "item_type": "mc", "stem": "rêver de", "choices": ["toivoa", "haaveilla jostakin", "suunnitella", "saavuttaa"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "rêver de = haaveilla jostakin. espérer = toivoa, planifier = suunnitella, atteindre = saavuttaa." },
+        { "item_type": "mc", "stem": "l'entreprise", "choices": ["toimisto", "yritys", "pomo", "työsopimus"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "l'entreprise = yritys. le bureau = toimisto, le patron = pomo, le contrat = työsopimus." },
+        { "item_type": "mc", "stem": "le réseau social", "choices": ["nettisivusto", "hakukone", "sosiaalinen media", "sähköposti"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "le réseau social = sosiaalinen media (monikko: les réseaux sociaux)." },
+        { "item_type": "mc", "stem": "devenir", "choices": ["lähteä", "tulla joksikin", "löytää", "onnistua"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "devenir = tulla joksikin (esim. devenir médecin = tulla lääkäriksi)." },
+        { "item_type": "mc", "stem": "le stage", "choices": ["palkka", "harjoittelu", "työsopimus", "yritys"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "le stage = harjoittelu. faire un stage = tehdä harjoittelu." },
+        { "item_type": "mc", "stem": "espérer + rakenne", "choices": ["espérer de + inf.", "espérer à + inf.", "espérer + suora inf.", "espérer que + inf."], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "espérer + suora infinitiivi: j'espère réussir (ei de, ei à)." },
+        { "item_type": "mc", "stem": "le mot de passe", "choices": ["tili", "käyttäjätunnus", "salasana", "sähköposti"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "le mot de passe = salasana." },
+        { "item_type": "mc", "stem": "gagner", "choices": ["menettää", "ansaita; voittaa", "suunnitella", "läpäistä"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "gagner = ansaita tai voittaa. perdre = menettää." },
+        { "item_type": "mc", "stem": "atteindre", "choices": ["hakea", "tavoitella", "saavuttaa", "löytää"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "atteindre = saavuttaa (tavoite). atteindre son objectif = saavuttaa tavoitteensa." },
+        { "item_type": "mc", "stem": "se connecter", "choices": ["kirjautua ulos", "kirjautua sisään, yhdistää", "jakaa", "seurata"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "se connecter = kirjautua sisään tai yhdistää. se déconnecter = kirjautua ulos." }
+      ]
+    },
+    {
+      "phase_id": "p2-mixed-mc-kielioppi",
+      "phase_type": "recognition_mc",
+      "title": "Kielioppia — tunnista oikea rakenne",
+      "instruction": "Valitse oikea muoto tai rakenne.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I"],
+      "items": [
+        { "item_type": "mc", "stem": "être — futur simple je", "choices": ["je serai", "je serais", "j'étais", "je suis"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "je serai = futur simple (kanta: ser-). je serais = conditionnel." },
+        { "item_type": "mc", "stem": "aller — futur simple il", "choices": ["il allera", "il ira", "il irait", "il allait"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "il ira = futur simple. Kanta: ir-. *il allera on KLASSINEN VIRHE!" },
+        { "item_type": "mc", "stem": "faire — conditionnel vous", "choices": ["vous ferez", "vous feriez", "vous faisiez", "vous fassiez"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "vous feriez = conditionnel. vous ferez = futur simple." },
+        { "item_type": "mc", "stem": "Si tu ___, tu réussiras. (Tyyppi 1: présent)", "choices": ["travailleras", "travaillerais", "travailles", "travaillais"], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "si + présent (Tyyppi 1). 'si tu travailles' ✓. EI futuria si-lauseessa!" },
+        { "item_type": "mc", "stem": "Si j'avais le temps, je ___. (Tyyppi 2: conditionnel)", "choices": ["lirai", "lirais", "lisais", "lise"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Tyyppi 2 päälause: conditionnel. 'je lirais'." },
+        { "item_type": "mc", "stem": "Kohteliain pyyntö:", "choices": ["Tu peux m'aider?", "Vous pouvez m'aider?", "Pourriez-vous m'aider?", "Aide-moi!"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "'Pourriez-vous m'aider?' = kohteliain (conditionnel + vous)." },
+        { "item_type": "mc", "stem": "Futur proche — he menevät töihin", "choices": ["ils iront au travail", "ils vont aller au travail", "ils allaient au travail", "ils sont allés au travail"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "'ils vont aller au travail' = futur proche (aller présent + infinitiivi)." },
+        { "item_type": "mc", "stem": "vendre — conditionnel je", "choices": ["je vendrai", "je vendrais", "je vendais", "je vende"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "je vendrais = conditionnel (-re-verbi: e putoaa → vendr + ais)." },
+        { "item_type": "mc", "stem": "vouloir — futur simple je", "choices": ["je veux", "je voudrai", "je voudrais", "je voulus"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "je voudrai = futur simple. je voudrais = conditionnel (kohteliaisuus)." },
+        { "item_type": "mc", "stem": "Mikä lause on oikein?", "choices": ["Si tu viendras, je serai heureux.", "Si tu viens, je serai heureux.", "Si tu viens, je serais heureux.", "Si tu venais, je serai heureux."], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "'Si tu viens, je serai heureux.' = Tyyppi 1 ✓. Muut sekoittavat aikamuotoja." }
+      ]
+    },
+    {
+      "phase_id": "p3-recall-match",
+      "phase_type": "recognition_match",
+      "title": "Yhdistä — koko K5 kertaus",
+      "instruction": "Yhdistä ranskan ilmaisu ja suomennos tai selitys.",
+      "mastery_threshold": { "I": 0.6, "A": 0.65, "B": 0.7, "C": 0.75, "M": 0.85, "E": 0.9, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        {
+          "item_type": "match",
+          "left_label": "Rakenne tai ilmaisu",
+          "right_label": "Selitys tai käännös",
+          "pairs": [
+            { "left": "je parlerai", "right": "futur simple" },
+            { "left": "je parlerais", "right": "conditionnel" },
+            { "left": "je vais parler", "right": "futur proche" },
+            { "left": "si + présent → futur", "right": "Si-tyyppi 1 (todellinen)" },
+            { "left": "si + imparfait → cond.", "right": "Si-tyyppi 2 (hypoteettinen)" },
+            { "left": "je voudrais", "right": "kohteliaisuusmuoto (haluaisin)" },
+            { "left": "pourriez-vous", "right": "kohteliain pyyntö (voisitteko)" },
+            { "left": "être → ser-", "right": "futur simple / conditionnel kanta" }
+          ]
+        }
+      ]
+    },
+    {
+      "phase_id": "p4-recall-typed",
+      "phase_type": "recall_typed_es_to_fi",
+      "title": "Kirjoita — K5 sanasto ranskasta suomeksi",
+      "instruction": "Kirjoita ranskan sanan tai ilmaisun suomennos.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I"],
+      "items": [
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "le salaire", "accept": ["palkka"], "hint": "maksetaan kuukausittain" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "télécharger", "accept": ["ladata netistä", "ladata"], "hint": "ei sauvegarder!" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "je serai", "accept": ["olen (tulevaisuudessa)", "tulen olemaan"], "hint": "être futur simple" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "je serais", "accept": ["olisin", "olisin (jos...)"], "hint": "être conditionnel" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "il faudra", "accept": ["täytyy (tulevaisuudessa)", "on pakko"], "hint": "falloir futur simple" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "il faudrait", "accept": ["pitäisi", "täytyisi"], "hint": "falloir conditionnel" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "rêver de devenir", "accept": ["haaveilla tulemisesta", "haaveilla jokin olemisesta"], "hint": "rêver de + infinitiivi" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "le chômage", "accept": ["työttömyys"], "hint": "être au chômage = olla työtön" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "réussir un examen", "accept": ["läpäistä tentti", "onnistua tentissä"], "hint": "réussir + nom (ei à)" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "nous vendrons", "accept": ["myymme (tulevaisuudessa)", "tulemme myymään"], "hint": "vendre futur simple; -re: e putoaa" }
+      ]
+    },
+    {
+      "phase_id": "p5-gap-fill-mixed",
+      "phase_type": "application_gap_fill",
+      "title": "Täytä aukko — sekoitettu K5 harjoittelu",
+      "instruction": "Täytä aukko oikealla muodolla. Huomio konteksti — mikä rakenne tarvitaan?",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Dans dix ans, je {1} directeur d'une grande entreprise. (être — futur simple)", "answers": [["serai"]], "word_bank": ["serai", "serais", "était", "suis"] },
+        { "item_type": "gap_fill", "sentence_template": "Je {1} un café, s'il vous plaît. (vouloir — kohteliaisuus)", "answers": [["voudrais"]], "word_bank": ["voudrais", "veux", "voudrai", "voulus"] },
+        { "item_type": "gap_fill", "sentence_template": "Si tu {1} bien, tu obtiendras ton diplôme. (travailler — Tyyppi 1)", "answers": [["travailles"]], "word_bank": ["travailleras", "travaillerais", "travailles", "travaillais"] },
+        { "item_type": "gap_fill", "sentence_template": "Nous {1} visiter la Tour Eiffel demain. (futur proche)", "answers": [["allons"]], "word_bank": ["allons", "irons", "irions", "sommes allés"] },
+        { "item_type": "gap_fill", "sentence_template": "Elle rêve {1} devenir journaliste internationale.", "answers": [["de", "d'"]], "word_bank": ["de", "à", "pour", "que"] },
+        { "item_type": "gap_fill", "sentence_template": "Si j'avais plus d'expérience, je {1} ce poste. (obtenir — conditionnel)", "answers": [["obtiendrais"]], "word_bank": ["obtiendrais", "obtiendrai", "obtenais", "obtiens"] },
+        { "item_type": "gap_fill", "sentence_template": "Il {1} apprendre le code pour travailler dans la tech. (falloir — futur)", "answers": [["faudra"]], "word_bank": ["faudra", "faudrait", "faut", "fallait"] },
+        { "item_type": "gap_fill", "sentence_template": "Ils ont {1} leur emploi à cause de la crise. (perdre — passé composé)", "answers": [["perdu"]], "word_bank": ["perdu", "perdus", "perdre", "perdait"] },
+        { "item_type": "gap_fill", "sentence_template": "{1}-vous me montrer ce document? (pouvoir — conditionnel, kohteliaisuus)", "answers": [["Pourriez"]], "word_bank": ["Pourriez", "Pouvez", "Pourrez", "Puissiez"] },
+        { "item_type": "gap_fill", "sentence_template": "Elle {1} bientôt son salaire — elle vient de signer son contrat. (recevoir — futur proche)", "answers": [["va recevoir"]], "word_bank": ["va recevoir", "recevra", "reçoit", "recevrait"] }
+      ]
+    },
+    {
+      "phase_id": "p6-gap-fill-vaativa",
+      "phase_type": "application_gap_fill",
+      "title": "Täytä aukko — YO-tyyliset lauseet",
+      "instruction": "Täytä aukko ilman sanapankkia. Huomio koko lause.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.65, "C": 0.75, "M": 0.85, "E": 0.9, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Si les entreprises {1} plus dans la technologie, elles seraient plus compétitives. (investir — Tyyppi 2)", "answers": [["investissaient"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Dans l'avenir, les robots {1} des tâches répétitives à notre place. (effectuer — futur simple)", "answers": [["effectueront"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "J'{1} beaucoup de choses si j'avais vécu à Paris. (apprendre — conditionnel)", "answers": [["apprendrais"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Le taux de {1} chez les jeunes est trop élevé — il faut agir.", "answers": [["chômage"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Elle espère {1} son objectif professionnel avant 35 ans. (atteindre)", "answers": [["atteindre"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Il {1} travailler plus tôt si il voulait finir avant midi. (devoir — conditionnel)", "answers": [["devrait"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Ce {1} une excellente opportunité de faire un stage à Montréal. (être — conditionnel)", "answers": [["serait"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "N'oublie pas de {1} ton travail avant de fermer l'ordinateur.", "answers": [["sauvegarder"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p7-sentence-build",
+      "phase_type": "application_sentence_build",
+      "title": "Rakenna lause — K5 sekoitettu",
+      "instruction": "Käännä lause ranskaksi.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.6, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.92 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Haluaisin harjoitella insinööriyrityksen kanssa ensi kesänä.", "accept": ["je voudrais faire un stage dans une entreprise d'ingénierie l'été prochain", "j'aimerais faire un stage dans une entreprise ingénierie l'été prochain"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Jos hän opiskelee kovemmin, hän läpäisee yo-kokeen.", "accept": ["s'il étudie plus il réussira le bac", "si elle étudie davantage elle réussira son baccalauréat"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Tulevaisuudessa ihmiset työskentelevät enemmän etänä tekoälyn avulla.", "accept": ["à l'avenir les gens travailleront davantage à distance grâce à l'ia", "dans le futur les gens travailleront plus souvent en télétravail grâce à l'intelligence artificielle"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "He haaveilevat omasta yrityksestä tulevaisuudessa.", "accept": ["ils rêvent d'avoir leur propre entreprise dans le futur", "elles rêvent de créer leur propre entreprise à l'avenir"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Voisitteko lähettää minulle tämän tiedoston?", "accept": ["pourriez-vous m'envoyer ce fichier", "pourriez-vous m'envoyer ce document s'il vous plaît"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Jos minulla olisi parempi palkka, olisin onnellisempi.", "accept": ["si j'avais un meilleur salaire je serais plus heureux", "si j'avais un salaire plus élevé je serais plus heureux"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Nuoret käyttävät liikaa aikaa sosiaalisessa mediassa.", "accept": ["les jeunes passent trop de temps sur les réseaux sociaux", "les jeunes utilisent trop les réseaux sociaux"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Hän aikoo aloittaa työnhaun heti yo-kokeen jälkeen.", "accept": ["il va commencer à chercher un emploi juste après le bac", "elle va se mettre à chercher un travail juste après le baccalauréat"] }
+      ]
+    },
+    {
+      "phase_id": "p8-synthesis-translate",
+      "phase_type": "synthesis_translate",
+      "title": "YO-tyylinen käännös — K5 kertaus",
+      "instruction": "Käännä kokonaan ranskaksi.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.6, "C": 0.65, "M": 0.75, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Haaveilen tulemisesta toimittajaksi ja toivon saavuttavani tavoitteeni kymmenen vuoden kuluessa.", "accept": ["je rêve de devenir journaliste et j'espère atteindre mon objectif dans dix ans", "je rêve d'être journaliste et j'espère y parvenir dans dix ans"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Jos talous paranee, yrityksillä on enemmän rahaa palkata nuoria.", "accept": ["si l'économie s'améliore les entreprises auront plus d'argent pour embaucher des jeunes", "si la croissance économique reprend les sociétés pourront recruter davantage de jeunes"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Teknologian nopea kehitys muuttaa tapaa jolla työskentelemme.", "accept": ["l'évolution rapide de la technologie changera la façon dont nous travaillons", "le développement rapide des technologies transformera notre manière de travailler"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Haluaisin tietää enemmän teidän yrityksestänne ennen kuin allekirjoitan työsopimuksen.", "accept": ["je voudrais en savoir plus sur votre entreprise avant de signer le contrat de travail", "j'aimerais mieux connaître votre société avant de signer le contrat"] }
+      ]
+    },
+    {
+      "phase_id": "p9-short-writing",
+      "phase_type": "synthesis_short_writing",
+      "title": "Lyhyt kirjoitus — koko K5",
+      "instruction": "Kirjoita 4–6 lausetta ranskaksi käyttäen K5:n rakenteita.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.6, "C": 0.65, "M": 0.7, "E": 0.8, "L": 0.9 },
+      "skip_for_targets": ["I", "A", "B", "C", "M"],
+      "items": [
+        { "item_type": "writing", "prompt": "Kirjoita tulevaisuudensuunnitelmistasi ranskaksi. Käytä futur simple, futur proche, conditionnel ja vähintään yksi si-lause.", "min_words": 50, "max_words": 100, "rubric_focus": ["communication", "structure", "vocab"] },
+        { "item_type": "writing", "prompt": "Kirjoita lyhyt essee: 'La technologie et l'avenir du travail'. Käytä K5:n sanastoa ja ainakin kahta eri aikamuotoa.", "min_words": 55, "max_words": 105, "rubric_focus": ["communication", "structure", "vocab"] },
+        { "item_type": "writing", "prompt": "Kirjoita sähköposti ranskaksi: haet harjoittelupaikkaa ranskalaisessa startup-yrityksessä. Käytä kohteliaisuutta (je voudrais, j'aimerais, pourriez-vous) ja kerro miksi haluat töihin.", "min_words": 55, "max_words": 110, "rubric_focus": ["communication", "structure", "vocab"] }
+      ]
+    },
+    {
+      "phase_id": "p10-cumulative-review",
+      "phase_type": "application_gap_fill",
+      "title": "Kumulatiivinen kertaus — K1–K5",
+      "instruction": "Cross-pollination: käytetään K1–K4 sanastoa. Täytä aukko oikealla muodolla.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.6, "C": 0.65, "M": 0.75, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Quand j'étais petit, je {1} souvent avec mes amis dans la forêt. (jouer — imparfait, K4)", "answers": [["jouais"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "L'été prochain, nous {1} en train à Lyon. (aller — futur simple, K3 sanasto)", "answers": [["irons"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Si j'avais voyagé en France, j'aurais visité la {1}. (Tour Eiffel — K3 sanasto)", "answers": [["Tour Eiffel"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Il a {1} son billet de train hier — il part demain. (réserver — passé composé, K3)", "answers": [["réservé"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Ma sœur {1} médecin dans cinq ans — elle étudie la médecine. (devenir — futur simple)", "answers": [["deviendra"]], "word_bank": null }
+      ]
+    }
+  ],
+  "vocab": [
+    { "es": "le bilan", "fi": "yhteenveto, tase", "example_es": "Faisons le bilan de ce que nous avons appris.", "example_fi": "Tehdään yhteenveto siitä mitä olemme oppineet.", "gender": "m" },
+    { "es": "réviser", "fi": "kerrata, tarkistaa", "example_es": "Je dois réviser avant l'examen.", "example_fi": "Minun täytyy kerrata ennen tenttiä.", "gender": null },
+    { "es": "maîtriser", "fi": "hallita (taito)", "example_es": "Il maîtrise parfaitement le futur simple.", "example_fi": "Hän hallitsee futur simplen täydellisesti.", "gender": null },
+    { "es": "renforcer", "fi": "vahvistaa", "example_es": "Ces exercices vont renforcer vos connaissances.", "example_fi": "Nämä harjoitukset vahvistavat tietämystäsi.", "gender": null }
+  ],
+  "side_panel": {
+    "tabs": [
+      {
+        "id": "grammar",
+        "title": "Kielioppi",
+        "content_md": "## K5 rakenteet — pikaopas\n\n**Futur simple:** infinitiivi + -ai/-as/-a/-ons/-ez/-ont\n- je parlerai, il sera, nous ferons\n\n**Futur proche:** aller + infinitiivi\n- je vais travailler, elle va partir\n\n**Conditionnel:** futur-kanta + -ais/-ais/-ait/-ions/-iez/-aient\n- je parlerais, il serait, vous feriez\n\n**Si-lauseet:**\n- Tyyppi 1: si + présent → futur\n- Tyyppi 2: si + imparfait → conditionnel\n- EI koskaan: si + futur/conditionnel!\n\n**Kohteliaisuus:** je voudrais, j'aimerais, pourriez-vous\n\n## Epäsäännölliset kannat\n\nétre→ser, avoir→aur, aller→ir, faire→fer, venir→viendr, voir→verr, pouvoir→pourr, devoir→devr, savoir→saur, vouloir→voudr, falloir→faudr"
+      },
+      {
+        "id": "tips",
+        "title": "YO-vinkki",
+        "content_md": "## K5 YO-kokeessa\n\nNämä rakenteet kattavat YO-kokeen C-tason perusvaatimukset:\n\n**Rakennetehtävä (Osa 3):**\n- Futur simple (säännölliset + epäsäännölliset)\n- Conditionnel présent\n- Si-lauseiden aikamuotokongruenssi\n\n**Kirjoitelma (Osa 4):**\n- Futur simple: 'Dans dix ans, je travaillerai...'\n- Conditionnel: 'Si j'avais..., je voudrais...'\n- Kohteliaisuus: 'Je voudrais vous informer que...'\n\n## Top 3 virhettä\n\n1. Si + futur (*si tu viendras*) → AINA si + présent\n2. *j'allerai* → j'irai (aller futur = ir-)\n3. Futur -rai vs conditionnel -rais — yksi kirjain!"
+      }
+    ]
+  }
+}

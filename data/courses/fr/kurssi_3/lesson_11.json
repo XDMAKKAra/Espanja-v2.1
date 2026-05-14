@@ -1,0 +1,292 @@
+{
+  "meta": {
+    "course_key": "kurssi_3",
+    "lesson_index": 11,
+    "lesson_type": "test",
+    "level": "B",
+    "title": "Kertaustesti — Kurssi 3",
+    "description": "Kurssi 3:n kumulatiivinen kertaustesti. 30 kysymystä jotka kattavat kulkuvälineet, passé composé (avoir + être), partisiipin accordin, maille-prepositiot, depuis-rakenteen, majoitussanaston ja matkasanaston.",
+    "yo_relevance": "Kertaustesti simuloi YTL Osan 3 (rakenteet ja sanasto) testauslogiikkaa: sekoitettuja rakenne- ja sanastotehtäviä yhden testin sisällä. Painottuu eniten être/avoir-valintaan ja partisiipin accordiin — K3:n suurimpiin YO-ansioihin.",
+    "estimated_minutes_median": 22
+  },
+  "teaching": {
+    "intro_md": "# Kertaustesti — Kurssi 3\n\nTässä testissä kaikki kurssi 3:n aiheet ovat mukana. Strategia:\n\n1. Passé composé: onko verbi DR MRS VANDERTRAMP -listalla? → être\n2. Accord être-verbillä: -e (fem.), -s (m.pl.), -es (f.pl.)\n3. Maille-prepositiot: feminiini → en, maskuliini → au, monikko → aux\n4. Depuis + présent (ei passé composé)\n5. Epäsäännölliset: pris, vu, fait, écrit, mis\n\nOnnea testiin!",
+    "key_points": [
+      "Passé composé: être vai avoir — tärkeintä muistaa.",
+      "Accord: elle est allée, elles sont parties — -e/-s/-es.",
+      "Maille: en France, au Maroc, aux États-Unis.",
+      "Epäsäännölliset: pris, vu, fait, écrit, mis.",
+      "Depuis + présent (toiminta jatkuu)."
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1-test-kurssi3",
+      "phase_type": "recognition_mc",
+      "title": "Kertaustesti — Kurssi 3 (30 kysymystä)",
+      "instruction": "Valitse oikea vaihtoehto. Huomio rakenne ja sanasto.",
+      "mastery_threshold": { "I": 0.3, "A": 0.38, "B": 0.52, "C": 0.63, "M": 0.75, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": [],
+      "items": [
+        {
+          "item_type": "mc",
+          "stem": "Je vais à Paris ___ train.",
+          "choices": ["en", "à", "par", "avec"],
+          "correct_index": 0,
+          "distractor_difficulty": "easy",
+          "explanation": "en train — moottoroitu kulkuväline → en."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Elle ___ (aller) en Espagne l'été dernier.",
+          "choices": ["est allée", "a allée", "est allé", "a allé"],
+          "correct_index": 0,
+          "distractor_difficulty": "hard",
+          "explanation": "est allée — aller on être-verbi, elle → accord → allée."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Nous ___ (prendre) l'avion pour aller à Nice.",
+          "choices": ["avons pris", "sommes pris", "avons prendu", "sommes prendu"],
+          "correct_index": 0,
+          "distractor_difficulty": "hard",
+          "explanation": "avons pris — prendre on avoir-verbi. Epäsäännöllinen: pris."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Il habite ___ Japon depuis cinq ans.",
+          "choices": ["au", "en", "aux", "à"],
+          "correct_index": 0,
+          "distractor_difficulty": "medium",
+          "explanation": "au Japon — Japon on maskuliininen → au."
+        },
+        {
+          "item_type": "mc",
+          "stem": "J'apprends le français ___ deux ans.",
+          "choices": ["depuis", "pendant", "il y a", "pour"],
+          "correct_index": 0,
+          "distractor_difficulty": "medium",
+          "explanation": "depuis — toiminta jatkuu → présent + depuis."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Les filles ___ (partir) tôt ce matin.",
+          "choices": ["sont parties", "ont parties", "sont partis", "ont parti"],
+          "correct_index": 0,
+          "distractor_difficulty": "hard",
+          "explanation": "sont parties — partir on être-verbi. Les filles (feminiini monikko) → -es: parties."
+        },
+        {
+          "item_type": "mc",
+          "stem": "J'ai fait une ___ pour une chambre double.",
+          "choices": ["réservation", "valise", "clé", "étage"],
+          "correct_index": 0,
+          "distractor_difficulty": "easy",
+          "explanation": "réservation = varaus. réserver = varata."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Ils ___ (voir) le château de Versailles.",
+          "choices": ["ont vu", "sont vus", "ont vué", "sont vu"],
+          "correct_index": 0,
+          "distractor_difficulty": "hard",
+          "explanation": "ont vu — voir on avoir-verbi. Epäsäännöllinen: vu. Ei accordia avoir-verbillä."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Elle voyage ___ vélo sur la Côte d'Azur.",
+          "choices": ["à", "en", "par", "avec"],
+          "correct_index": 0,
+          "distractor_difficulty": "easy",
+          "explanation": "à vélo — ihmisvoima → à (ei en)."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Ma chambre est au deuxième ___.",
+          "choices": ["étage", "ascenseur", "couloir", "réception"],
+          "correct_index": 0,
+          "distractor_difficulty": "easy",
+          "explanation": "étage = kerros. au deuxième étage = kolmannessa kerroksessa (ranskalainen tapa)."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Nous ___ (rester) trois nuits à Lyon.",
+          "choices": ["sommes restés", "avons restés", "sommes resté", "avons resté"],
+          "correct_index": 0,
+          "distractor_difficulty": "hard",
+          "explanation": "sommes restés — rester on être-verbi. Nous → -s: restés."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Elle a ___ une carte postale à ses parents.",
+          "choices": ["écrit", "écris", "écrire", "écrivé"],
+          "correct_index": 0,
+          "distractor_difficulty": "hard",
+          "explanation": "écrit — écrire on epäsäännöllinen. Partisiippi: écrit. *Écris on présentin muoto."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Je suis allé(e) ___ États-Unis l'année dernière.",
+          "choices": ["aux", "en", "au", "à les"],
+          "correct_index": 0,
+          "distractor_difficulty": "medium",
+          "explanation": "aux États-Unis — monikkomaa → aux."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Le ___ est compris dans le prix de la chambre.",
+          "choices": ["petit-déjeuner", "déjeuner", "dîner", "dessert"],
+          "correct_index": 0,
+          "distractor_difficulty": "easy",
+          "explanation": "petit-déjeuner = aamuiainen. Compris = sisältyy."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Ils ___ (faire) beaucoup de randonnées.",
+          "choices": ["ont fait", "sont faits", "ont faisé", "sont faisé"],
+          "correct_index": 0,
+          "distractor_difficulty": "hard",
+          "explanation": "ont fait — faire on avoir-verbi. Epäsäännöllinen: fait. *Faisé ei ole sana!"
+        },
+        {
+          "item_type": "mc",
+          "stem": "Elle est née ___ France mais vit ___ Maroc.",
+          "choices": ["en / au", "au / en", "en / en", "au / au"],
+          "correct_index": 0,
+          "distractor_difficulty": "hard",
+          "explanation": "en France (feminiini) + au Maroc (maskuliini)."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Nous ___ (partir) en vacances demain.",
+          "choices": ["partons", "sommes partis", "avons parti", "partirons"],
+          "correct_index": 0,
+          "distractor_difficulty": "hard",
+          "explanation": "partons — 'demain' = tulevaisuus, présent tai futur. Partons (présent) on yleisin arkipuheessa."
+        },
+        {
+          "item_type": "mc",
+          "stem": "J'ai ___ mon billet de train en ligne.",
+          "choices": ["réservé", "réserve", "réserver", "réservée"],
+          "correct_index": 0,
+          "distractor_difficulty": "medium",
+          "explanation": "réservé — réserver on -er-verbi, partisiippi: réservé. Avoir-verbillä ei accordia."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Elles ___ (arriver) à la gare juste à l'heure.",
+          "choices": ["sont arrivées", "ont arrivées", "sont arrivés", "ont arrivé"],
+          "correct_index": 0,
+          "distractor_difficulty": "hard",
+          "explanation": "sont arrivées — arriver on être-verbi. Elles → feminiini monikko → -es: arrivées."
+        },
+        {
+          "item_type": "mc",
+          "stem": "La ___ de mon voyage préféré est la Bretagne.",
+          "choices": ["destination", "valise", "réservation", "chambre"],
+          "correct_index": 0,
+          "distractor_difficulty": "easy",
+          "explanation": "destination = määränpää, kohde. Ma destination préférée = suosikkikohteeni."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Mon ami ___ (rester) à Paris ___ son mariage.",
+          "choices": ["habite / depuis", "est resté / depuis", "habite / pendant", "a habité / depuis"],
+          "correct_index": 0,
+          "distractor_difficulty": "hard",
+          "explanation": "habite depuis — jatkuva toiminta → présent + depuis. *Est resté depuis on väärä."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Elle a ___ sa valise et est partie à l'aéroport.",
+          "choices": ["fait", "pris", "mis", "vu"],
+          "correct_index": 0,
+          "distractor_difficulty": "hard",
+          "explanation": "faire sa valise = pakata matkalaukku. C'est une expression idiomatique!"
+        },
+        {
+          "item_type": "mc",
+          "stem": "Il y a eu ___ de dix minutes sur le vol.",
+          "choices": ["un retard", "une valise", "un billet", "un quai"],
+          "correct_index": 0,
+          "distractor_difficulty": "medium",
+          "explanation": "un retard = myöhästyminen. Avoir du retard = olla myöhässä. Il y a eu un retard = oli myöhästymistä."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Ma mère est ___ (naître) au Portugal.",
+          "choices": ["née", "né", "naissée", "nait"],
+          "correct_index": 0,
+          "distractor_difficulty": "hard",
+          "explanation": "née — naître on être-verbi. Ma mère → feminiini → accord → née."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Ils ont ___ beaucoup de photos de leur voyage.",
+          "choices": ["pris", "prendu", "prises", "pis"],
+          "correct_index": 0,
+          "distractor_difficulty": "hard",
+          "explanation": "pris — prendre on avoir-verbi. Partisiippi: pris. Ei accordia avoir-verbillä. *Prendu ei ole sana!"
+        },
+        {
+          "item_type": "mc",
+          "stem": "On voyage ___ Australie si on prend l'avion.",
+          "choices": ["en", "au", "aux", "à l'"],
+          "correct_index": 0,
+          "distractor_difficulty": "medium",
+          "explanation": "en Australie — Australie on feminiini (-ie lopussa) → en."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Nous ___ (visiter) le musée Picasso et ___ (manger) des tapas.",
+          "choices": ["avons visité / avons mangé", "sommes visités / sommes mangés", "avons visitée / avons mangé", "sommes visités / avons mangé"],
+          "correct_index": 0,
+          "distractor_difficulty": "hard",
+          "explanation": "avons visité + avons mangé — molemmat avoir-verbejä, ei accordia. Visiter et manger eivät ole être-verbeillä."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Elle ___ (mettre) son passeport dans son sac.",
+          "choices": ["a mis", "est mise", "a mit", "a mettu"],
+          "correct_index": 0,
+          "distractor_difficulty": "hard",
+          "explanation": "a mis — mettre on avoir-verbi. Epäsäännöllinen: mis. *Mit ja *mettu eivät ole sanoja."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Je vais à l'{1} pour prendre l'avion.",
+          "choices": ["aéroport", "gare", "arrêt de bus", "quai"],
+          "correct_index": 0,
+          "distractor_difficulty": "medium",
+          "explanation": "l'aéroport = lentokenttä. la gare = juna-asema. Avion → aéroport."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Cet hôtel est ___ — il n'y a plus de chambres.",
+          "choices": ["complet", "compris", "disponible", "réservé"],
+          "correct_index": 0,
+          "distractor_difficulty": "hard",
+          "explanation": "complet = täynnä (hotelli). compris = sisältyvä. disponible = vapaa, saatavilla."
+        }
+      ]
+    }
+  ],
+  "vocab": [
+    { "es": "le bilan", "fi": "yhteenveto, loppuarvio", "example_es": "Le bilan de mon voyage.", "example_fi": "Matkani yhteenveto.", "gender": "m" },
+    { "es": "réviser", "fi": "kerrata, tarkistaa", "example_es": "Je révise mon vocabulaire.", "example_fi": "Kertaan sanastoa.", "gender": null }
+  ],
+  "side_panel": {
+    "tabs": [
+      {
+        "id": "grammar",
+        "title": "Kertaus — K3 pähkinäkuoressa",
+        "content_md": "## Passé composé\n\n**ÊTRE (DR MRS VANDERTRAMP):**\naller → allé(e)(s), venir → venu(e)(s), partir → parti(e)(s), arriver → arrivé(e)(s), entrer, sortir, monter, descendre, rester → resté(e)(s), tomber, naître → né(e)(s), mourir → mort(e)(s), devenir, retourner, rentrer\n\n**Partisiippi taipuu:** elle est allée, ils sont arrivés, elles sont parties\n\n**AVOIR (kaikki muut):**\nfaire → fait, voir → vu, prendre → pris, écrire → écrit, mettre → mis, lire → lu, manger → mangé, visiter → visité\n\n**Partisiippi EI taivu**\n\n## Maille-prepositiot\n- **en** + feminiini/vokaali: en France, en Iran\n- **au** + maskuliini: au Japon, au Maroc\n- **aux** + monikko: aux États-Unis\n- **à** + kaupunki: à Paris\n\n## Depuis\n- Présent + depuis: J'habite ici depuis 5 ans. ✅\n- ❌ Passé composé + depuis\n\n## Kulkuvälineet\n- en: train, avion, voiture, bus\n- à: vélo, pied, moto"
+      },
+      {
+        "id": "tips",
+        "title": "Top 10 YO-ansaa",
+        "content_md": "## K3:n suurimmat YO-ansat\n\n1. ❌ *J'ai allé* → ✅ **Je suis allé(e)**\n2. ❌ *J'ai parti* → ✅ **Je suis parti(e)**\n3. ❌ *Elle est allé* → ✅ **Elle est allée** (accord!)\n4. ❌ *Elles sont arrivé* → ✅ **Elles sont arrivées**\n5. ❌ *J'ai prendu* → ✅ **J'ai pris**\n6. ❌ *J'ai faisé* → ✅ **J'ai fait**\n7. ❌ *au France* → ✅ **en France**\n8. ❌ *en Japon* → ✅ **au Japon**\n9. ❌ *J'ai habité depuis 5 ans* → ✅ **J'habite depuis 5 ans**\n10. ❌ *en vélo* → ✅ **à vélo**\n\nMuista nämä → vältät K-B pistemenetykset Osassa 3!"
+      }
+    ]
+  }
+}
