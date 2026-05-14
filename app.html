@@ -34,6 +34,11 @@
        landing page (index.html) still uses Google Fonts for Geist family. -->
   <link rel="preload" href="/fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="/fonts/inter-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <!-- F-ARCH-1 §B — design tokens loaded FIRST so aliases (--text, --space-N,
+       --radius-md, --z-modal, --focus-ring, --ease-spring) are resolvable
+       everywhere downstream. File is additive and does NOT redefine the
+       canonical Puheo tokens declared in style.css. -->
+  <link rel="stylesheet" href="/css/tokens.css" />
   <!-- L-LIVE-AUDIT-P2 UPDATE 1 — single bundle replaces 16 separate CSS requests.
        Source files remain in repo; bundle produced by `npm run build`. -->
   <link rel="stylesheet" href="/app.bundle.css" />
