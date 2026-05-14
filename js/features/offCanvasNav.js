@@ -54,12 +54,22 @@
     }
   }
 
+  // Hide the main app surface from AT while the drawer is open so screen-readers
+  // don't read both at once. F-MICROPOLISH-1 Item C.
+  function setMainInert(hide) {
+    var main = document.querySelector(".app-main") || document.querySelector("main");
+    if (!main) return;
+    if (hide) main.setAttribute("aria-hidden", "true");
+    else main.removeAttribute("aria-hidden");
+  }
+
   function open(toggleBtn, sidebar) {
     if (!isMobile()) return;
     document.body.classList.add("sidebar-open");
     toggleBtn.setAttribute("aria-expanded", "true");
     sidebar.setAttribute("role", "dialog");
     sidebar.setAttribute("aria-modal", "true");
+    setMainInert(true);
     // Focus first focusable in panel
     var f = getFocusable(sidebar);
     if (f.length) f[0].focus();
@@ -71,6 +81,7 @@
     toggleBtn.setAttribute("aria-expanded", "false");
     sidebar.removeAttribute("role");
     sidebar.removeAttribute("aria-modal");
+    setMainInert(false);
     if (restoreFocus && toggleBtn && toggleBtn.offsetParent !== null) {
       toggleBtn.focus();
     }

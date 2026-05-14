@@ -436,14 +436,31 @@ function wireMatch(root, state, item) {
   });
 }
 
+// Lucide-style SVG icons — keep file-local so we don't pull a runtime dep.
+// scale-0.6→1 spring + (wrong-only) shake is handled in lesson-runner.css.
+const FB_ICON_CHECK =
+  '<svg class="lr-feedback__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>';
+const FB_ICON_CROSS =
+  '<svg class="lr-feedback__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>';
+
 function showItemFeedback(root, correct, msg) {
   const fb = root.querySelector("#lr-feedback");
   if (!fb) return;
   fb.hidden = false;
   fb.className = `lr-feedback ${correct ? "is-correct" : "is-wrong"}`;
-  fb.textContent = correct
-    ? (msg || "Oikein.")
-    : (msg || "Ei aivan.");
+  // aria-live ensures screen-readers announce both icon-bearing states.
+  fb.setAttribute("role", "status");
+  fb.setAttribute("aria-live", correct ? "polite" : "assertive");
+  const text = correct ? (msg || "Hyvin meni!") : (msg || "Melkein — yritä uudelleen.");
+  fb.innerHTML =
+    `${correct ? FB_ICON_CHECK : FB_ICON_CROSS}` +
+    `<span class="lr-feedback__text">${escapeHtml(text)}</span>`;
+  // Retrigger the keyframe even when the same element is reused between items.
+  fb.classList.remove("lr-feedback--animate");
+  // Force reflow so the next class add restarts the animation.
+  // eslint-disable-next-line no-unused-expressions
+  void fb.offsetWidth;
+  fb.classList.add("lr-feedback--animate");
 }
 
 function markChoices(root, correctIdx, pickedIdx) {

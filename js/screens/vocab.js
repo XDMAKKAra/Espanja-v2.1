@@ -452,7 +452,7 @@ function showSkeletonIntoExercise() {
   if (opts) opts.classList.add("hidden");
   if (slot) {
     slot.classList.remove("hidden");
-    showSkeleton(slot, "exercise");
+    showSkeleton(slot, "vocab");
   }
 }
 function hideExerciseSkeleton() {

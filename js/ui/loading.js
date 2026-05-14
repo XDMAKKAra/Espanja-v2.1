@@ -33,9 +33,14 @@ export function showLoadingError(errorMsg, retryFn) {
 // mode-page icon, back button) stays visible. The student keeps their
 // orientation while the next exercise is fetched or while they retry.
 
+// Skeleton variants mirror the shape of the real component so the
+// student's eye is already parked where the answer will appear.
+// New variants (vocab/grammar/reading) preserve the same .skeleton-*
+// classnames the legacy "exercise" variant uses — the shimmer CSS is
+// already gated on prefers-reduced-motion in skeleton.css.
 const SKELETON_MARKUP = {
   "exercise": `
-    <div class="skeleton-exercise" data-testid="skeleton-exercise">
+    <div class="skeleton-exercise" data-testid="skeleton-exercise" aria-hidden="true">
       <div class="skeleton-bar skeleton-bar-wide"></div>
       <div class="skeleton-bar skeleton-bar-medium"></div>
       <div class="skeleton-options">
@@ -44,14 +49,56 @@ const SKELETON_MARKUP = {
         <div class="skeleton-option"></div>
         <div class="skeleton-option"></div>
       </div>
-      <div class="skeleton-hint">Ladataan tehtävää…</div>
+      <div class="skeleton-hint">Etsitään sopivaa tehtävää sinulle…</div>
     </div>`,
-  "writing-task": `
-    <div class="skeleton-exercise" data-testid="skeleton-exercise">
+  // Sanasto: lyhyt prompt + 4 isoa monivalintapainiketta.
+  "vocab": `
+    <div class="skeleton-exercise skeleton-exercise--vocab" data-testid="skeleton-exercise" aria-hidden="true">
+      <div class="skeleton-bar skeleton-bar-eyebrow"></div>
+      <div class="skeleton-bar skeleton-bar-prompt"></div>
+      <div class="skeleton-options">
+        <div class="skeleton-option"></div>
+        <div class="skeleton-option"></div>
+        <div class="skeleton-option"></div>
+        <div class="skeleton-option"></div>
+      </div>
+      <div class="skeleton-hint">Etsitään sopivia sanoja sinulle…</div>
+    </div>`,
+  // Puheoppi: sääntölappu + lause + 4 vaihtoehtoa.
+  "grammar": `
+    <div class="skeleton-exercise skeleton-exercise--grammar" data-testid="skeleton-exercise" aria-hidden="true">
+      <div class="skeleton-bar skeleton-bar-rulechip"></div>
+      <div class="skeleton-bar skeleton-bar-wide"></div>
+      <div class="skeleton-bar skeleton-bar-medium"></div>
+      <div class="skeleton-options">
+        <div class="skeleton-option"></div>
+        <div class="skeleton-option"></div>
+        <div class="skeleton-option"></div>
+        <div class="skeleton-option"></div>
+      </div>
+      <div class="skeleton-hint">Mietitään seuraavaa rakennetta…</div>
+    </div>`,
+  // Luetun ymmärtäminen: otsikko + ~6 tekstiriviä + 3 kysymyslohkoa.
+  "reading": `
+    <div class="skeleton-exercise skeleton-exercise--reading" data-testid="skeleton-exercise" aria-hidden="true">
+      <div class="skeleton-bar skeleton-bar-title"></div>
+      <div class="skeleton-bar skeleton-bar-wide"></div>
       <div class="skeleton-bar skeleton-bar-wide"></div>
       <div class="skeleton-bar skeleton-bar-wide"></div>
       <div class="skeleton-bar skeleton-bar-medium"></div>
-      <div class="skeleton-hint">Ladataan tehtävää…</div>
+      <div class="skeleton-bar skeleton-bar-wide"></div>
+      <div class="skeleton-bar skeleton-bar-medium"></div>
+      <div class="skeleton-reading-q"></div>
+      <div class="skeleton-reading-q"></div>
+      <div class="skeleton-reading-q"></div>
+      <div class="skeleton-hint">Luetaan teksti valmiiksi sinulle…</div>
+    </div>`,
+  "writing-task": `
+    <div class="skeleton-exercise" data-testid="skeleton-exercise" aria-hidden="true">
+      <div class="skeleton-bar skeleton-bar-wide"></div>
+      <div class="skeleton-bar skeleton-bar-wide"></div>
+      <div class="skeleton-bar skeleton-bar-medium"></div>
+      <div class="skeleton-hint">Generoidaan kirjoitustehtävää…</div>
     </div>`,
 };
 
