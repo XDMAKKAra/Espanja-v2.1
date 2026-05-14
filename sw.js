@@ -1,4 +1,4 @@
-const CACHE_VERSION = "puheo-v155";
+const CACHE_VERSION = "puheo-v156";
 const STATIC_ASSETS = [
   "/app.html",
   "/index.html",
@@ -56,6 +56,7 @@ const STATIC_ASSETS = [
   "/js/screens/onboardingV3.js",
   "/js/lib/studyPlan.js",
   "/css/components/curriculum.css",
+  "/css/components/curriculum-bento.css",
   "/css/components/lesson-runner.css",
   "/js/screens/curriculum.js",
   "/js/screens/lessonRunner.js",

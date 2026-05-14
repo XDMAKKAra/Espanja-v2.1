@@ -62,7 +62,9 @@ Mappäys aiheittain:
 - `design:design-system` — KÄYTÄ kun audit naming-inkonsistensseja TAI lisäät uutta komponenttia design-systemiin
 - `design:design-handoff` — KÄYTÄ kun screen on valmis ja menee dev-handoffiin (ei tämän projektin oma vaihe, mutta käytettävissä)
 - `design:research-synthesis` — KÄYTÄ jos käyttäjä antaa research-dataa (NPS, haastattelu, support tickets)
-- `design:user-research` — KÄYTÄ jos suunnitellaan uutta featurea jonka pohjaksi tarvitaan käyttäjäymmärrys
+- `design:user-research` — KÄYTÄ jos suunnitellaan uutta featurea jonka pohjaksi tarvitaan 
+Ui-ux-pro-max
+frontend-design
 
 **Käyttäjän erityispyyntö:** jos `design:taste-frontend` -niminen skilli on saatavilla (osa käyttäjän asentamia plugineja), käytä sitä KAIKEEN frontend-uudistukseen. Jos sitä ei ole, käytä `design:design-critique` + `ui-ux-pro-max` -yhdistelmää saman vaikutuksen saavuttamiseksi.
 

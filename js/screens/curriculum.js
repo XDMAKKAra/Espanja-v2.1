@@ -20,14 +20,68 @@ const LESSON_INNER_ID = "curr-lesson-root";
 let _state = { kurssit: null, expanded: null };
 
 const TYPE_ICONS = {
-  // Lucide-style 24x24 path d's, single-stroke, currentColor
+  // F-CURRICULUM-BENTO-1 — Lucide 24x24 strokes, currentColor.
   vocab:   '<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>',          // BookOpen
-  grammar: '<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>', // Wrench
-  reading: '<path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>', // BookText
-  writing: '<path d="M21 14H3"/><path d="M12 17v4"/><path d="M7 17v4"/><path d="M17 17v4"/><path d="M2 7l10-5 10 5"/>', // PenLine simplified — fall through to a pencil
-  mixed:   '<path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>', // BookText
-  test:    '<path d="m9 12 2 2 4-4"/><path d="M21 8v13H3V8"/><path d="M1 3h22v5H1z"/>', // CheckSquare-ish
+  grammar: '<path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/>',                                       // Pencil
+  reading: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>',                       // FileText
+  writing: '<path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 1 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/>',                                        // PenLine
+  mixed:   '<polyline points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/>',         // Layers
+  test:    '<path d="m9 12 2 2 4-4"/><path d="M21 8v13H3V8"/><path d="M1 3h22v5H1z"/>',                                                       // CheckSquare
 };
+
+const META_ICONS = {
+  clock: '<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>',
+  lock:  '<rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>',
+  check: '<polyline points="20 6 9 17 4 12"/>',
+};
+
+function svgIcon(d, extraCls = "") {
+  return `<svg class="${extraCls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg>`;
+}
+
+function typeLabelFi(type) {
+  return {
+    vocab:   "Sanasto",
+    grammar: "Kielioppi",
+    reading: "Luetun ymmärtäminen",
+    writing: "Kirjoittaminen",
+    mixed:   "Yhdistelmä",
+    test:    "Kertaustesti",
+  }[type] || "Harjoitus";
+}
+
+function lessonDifficulty(l) {
+  // No backend field exists today — derive 1-3 from sortOrder so the curve
+  // visibly steepens across the 12-lesson arc (1-4 easy, 5-8 med, 9-12 hard).
+  const n = Number(l && l.sortOrder) || 1;
+  if (n <= 4) return 1;
+  if (n <= 8) return 2;
+  return 3;
+}
+
+function lessonDurationMin(l) {
+  const ex = Number(l && l.exerciseCount) || 8;
+  return Math.max(2, Math.round((ex * 90) / 60));
+}
+
+function lessonPreview(l) {
+  // Use teachingSnippet when present; trim to ~70 chars. No snippet → ""
+  const s = (l && l.teachingSnippet ? String(l.teachingSnippet) : "").trim();
+  if (!s) return "";
+  if (s.length <= 70) return s;
+  return s.slice(0, 67).replace(/\s+\S*$/, "") + "…";
+}
+
+function difficultyDots(level, totalDots = 3) {
+  // role="img" lets the span legitimately carry aria-label (passes axe
+  // aria-prohibited-attr); the dots inside are decorative.
+  let html = `<span class="curr-bento-difficulty" role="img" aria-label="Vaikeustaso ${level} / ${totalDots}">`;
+  for (let i = 1; i <= totalDots; i++) {
+    html += `<span class="curr-bento-difficulty__dot${i <= level ? " curr-bento-difficulty__dot--on" : ""}" aria-hidden="true"></span>`;
+  }
+  html += '</span>';
+  return html;
+}
 
 function escapeHtml(s) {
   return String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ({
@@ -253,7 +307,7 @@ function renderCard(k, stepNumber) {
         </div>
       </div>
       <div class="curr-status">${escapeHtml(status.label)}</div>
-      ${isExpanded ? `<ul class="curr-lessons" data-kurssi="${escapeHtml(k.key)}" aria-label="Oppitunnit"><li class="curr-lesson" aria-busy="true"><span class="curr-lesson-focus">Ladataan oppitunteja…</span></li></ul>` : ""}
+      ${isExpanded ? renderBentoSkeleton(k.key) : ""}
     </li>`;
 }
 
@@ -288,24 +342,18 @@ async function toggleKurssi(kurssiKey) {
 }
 
 async function fetchAndRenderLessons(kurssiKey) {
-  const ul = document.querySelector(`.curr-lessons[data-kurssi="${cssEscape(kurssiKey)}"]`);
-  if (!ul) return;
+  const host = document.querySelector(`.curr-bento[data-kurssi="${cssEscape(kurssiKey)}"]`);
+  if (!host) return;
   try {
     const res = await apiFetch(`${API}/api/curriculum/${encodeURIComponent(kurssiKey)}`, {
       headers: { ...authHeader() },
     });
     if (!res.ok) throw new Error("Oppituntien lataus epäonnistui");
     const data = await res.json();
-    ul.innerHTML = (data.lessons || []).map((l) => renderLessonRow(kurssiKey, l)).join("");
-    ul.querySelectorAll(".curr-lesson").forEach((btn) => {
-      const idx = Number(btn.dataset.lesson);
-      btn.addEventListener("click", (e) => {
-        e.stopPropagation();
-        openLesson(kurssiKey, idx);
-      });
-    });
+    const lessons = Array.isArray(data.lessons) ? data.lessons : [];
+    renderBento(host, kurssiKey, lessons);
   } catch (err) {
-    ul.innerHTML = `<li class="curr-lesson"><span class="curr-lesson-focus">${escapeHtml(err.message || "Ei yhteyttä")}</span></li>`;
+    host.innerHTML = `<p class="curr-bento-error" role="alert">${escapeHtml(err.message || "Ei yhteyttä — yritä uudelleen.")}</p>`;
   }
 }
 
@@ -313,18 +361,135 @@ function cssEscape(s) {
   return String(s).replace(/"/g, '\\"');
 }
 
-function renderLessonRow(kurssiKey, l) {
+function renderBentoSkeleton(kurssiKey) {
+  const cards = Array.from({ length: 12 }, () => '<div class="curr-bento-skeleton" aria-hidden="true"></div>').join("");
+  return `<div class="curr-bento" data-kurssi="${escapeHtml(kurssiKey)}" aria-busy="true" aria-label="Ladataan oppitunteja">
+    <div class="curr-bento-grid">${cards}</div>
+  </div>`;
+}
+
+function renderBento(host, kurssiKey, lessons) {
+  if (!lessons || lessons.length === 0) {
+    host.removeAttribute("aria-busy");
+    host.innerHTML = `<p class="curr-bento-empty">Oppitunteja ei vielä julkaistu tälle kurssille.</p>`;
+    return;
+  }
+
+  // Next-up = first non-completed lesson (sortOrder asc). All lessons share
+  // an unlocked kurssi, so no lesson-level lock exists today.
+  const sorted = lessons.slice().sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0));
+  const nextUp = sorted.find((l) => !l.completed) || null;
+  const doneCount = sorted.filter((l) => l.completed).length;
+  const totalCount = sorted.length;
+
+  const strip = renderProgressStrip(sorted, nextUp, doneCount, totalCount);
+  const grid = `<div class="curr-bento-grid" role="list">${sorted.map((l) => renderBentoCard(kurssiKey, l, nextUp)).join("")}</div>`;
+
+  host.removeAttribute("aria-busy");
+  host.innerHTML = strip + grid;
+
+  // Wire card clicks
+  host.querySelectorAll(".curr-bento-card").forEach((btn) => {
+    if (btn.getAttribute("aria-disabled") === "true") return;
+    const idx = Number(btn.dataset.lesson);
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      if (Number.isFinite(idx)) openLesson(kurssiKey, idx);
+    });
+  });
+
+  // Wire progress-strip nodes — clicking node N scrolls the matching card.
+  host.querySelectorAll(".curr-bento-strip__dot").forEach((dot) => {
+    dot.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const target = host.querySelector(`.curr-bento-card[data-lesson="${dot.dataset.lesson}"]`);
+      if (target) {
+        target.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        target.focus({ preventScroll: true });
+      }
+    });
+  });
+
+  // One-shot pulse on the next-up feature card when it enters the viewport.
+  const feature = host.querySelector(".curr-bento-card--feature");
+  if (feature && "IntersectionObserver" in window) {
+    const obs = new IntersectionObserver((entries, o) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          feature.classList.add("is-pulsing");
+          o.disconnect();
+        }
+      });
+    }, { threshold: 0.4 });
+    obs.observe(feature);
+  }
+}
+
+function renderProgressStrip(sorted, nextUp, doneCount, totalCount) {
+  const nodes = sorted.map((l) => {
+    const done = !!l.completed;
+    const isNext = nextUp && l.sortOrder === nextUp.sortOrder;
+    const cls = ["curr-bento-strip__dot"];
+    if (done) cls.push("curr-bento-strip__dot--done");
+    else if (isNext) cls.push("curr-bento-strip__dot--next");
+    const label = `Oppitunti ${l.sortOrder}${done ? " — suoritettu" : isNext ? " — vuorossa" : " — tulossa"}`;
+    return `<li><button type="button" class="${cls.join(" ")}" data-lesson="${l.sortOrder}" aria-label="${escapeHtml(label)}"></button></li>`;
+  }).join("");
+  return `<div class="curr-bento-strip">
+    <p class="curr-bento-strip__label">${escapeHtml(`Edistyminen · ${doneCount} / ${totalCount} suoritettu`)}</p>
+    <ol class="curr-bento-strip__nodes" aria-label="Oppituntien edistymispalkki">${nodes}</ol>
+  </div>`;
+}
+
+function renderBentoCard(kurssiKey, l, nextUp) {
   const done = !!l.completed;
+  const isNext = nextUp && l.sortOrder === nextUp.sortOrder;
+  const cls = ["curr-bento-card"];
+  if (isNext) cls.push("curr-bento-card--feature");
+  else if (done) cls.push("curr-bento-card--done");
+
   const num = String(l.sortOrder).padStart(2, "0");
-  const cta = done ? "Suoritettu ✓" : "Aloita →";
+  const focus = String(l.focus || `Oppitunti ${l.sortOrder}`);
+  const typeName = typeLabelFi(l.type);
+  const minutes = lessonDurationMin(l);
+  const diff = lessonDifficulty(l);
+  const preview = lessonPreview(l);
+
+  const cta = done
+    ? "Suoritettu"
+    : isNext
+      ? "Jatka tästä →"
+      : "Aloita →";
+
+  // Aria-label combines all signals so screen readers get the full picture.
+  const ariaState = done ? "suoritettu" : isNext ? "vuorossa" : "tulossa";
+  const ariaLabel = `Oppitunti ${l.sortOrder}: ${focus}. ${typeName}. Kesto noin ${minutes} minuuttia. Vaikeustaso ${diff} / 3. Tila: ${ariaState}.`;
+
+  const iconD = TYPE_ICONS[l.type] || TYPE_ICONS.mixed;
+  const cornerIcon = done
+    ? svgIcon(META_ICONS.check, "curr-bento-card__corner")
+    : difficultyDots(diff);
+
   return `
-    <li>
-      <button type="button" class="curr-lesson${done ? " is-done" : ""}" data-lesson="${l.sortOrder}" aria-label="${escapeHtml(`Oppitunti ${l.sortOrder}: ${l.focus}`)}">
-        ${lessonIcon(l.type)}
-        <span class="curr-lesson-focus"><span class="curr-lesson-num">${num}</span>${escapeHtml(l.focus)}</span>
-        <span class="curr-lesson-cta">${escapeHtml(cta)}</span>
-      </button>
-    </li>`;
+    <button type="button"
+            class="${cls.join(" ")}"
+            data-lesson="${l.sortOrder}"
+            role="listitem"
+            aria-label="${escapeHtml(ariaLabel)}">
+      <div class="curr-bento-card__top">
+        <span class="curr-bento-card__icon" aria-hidden="true">${svgIcon(iconD)}</span>
+        ${cornerIcon}
+      </div>
+      <div class="curr-bento-card__mid">
+        <span class="curr-bento-num">${escapeHtml(num)} · ${escapeHtml(typeName)}</span>
+        <h4 class="curr-bento-title">${escapeHtml(focus)}</h4>
+        ${preview ? `<p class="curr-bento-preview">${escapeHtml(preview)}</p>` : ""}
+      </div>
+      <div class="curr-bento-card__bottom">
+        <span class="curr-bento-meta" aria-hidden="true">${svgIcon(META_ICONS.clock)}<span>~${minutes} min</span></span>
+        <span class="curr-bento-cta">${escapeHtml(cta)}</span>
+      </div>
+    </button>`;
 }
 
 // ── Public: load main curriculum screen ────────────────────────────────────
