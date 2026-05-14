@@ -1,0 +1,93 @@
+/* =======================================================================
+   Puheo design tokens — single source of truth (F-ARCH-1 §B)
+   -----------------------------------------------------------------------
+   This file is **additive**. It does not redefine existing canonical
+   tokens (--accent, --ink, --surface, --r-md, --s-1..10, --dur-*, --ease-*)
+   already declared in style.css. Instead it:
+
+     1. Introduces NEW system tokens that didn't exist before
+        (z-index scale, --focus-ring, --ease-spring, --duration-reveal).
+     2. Publishes SEMANTIC ALIASES so future code can use the names from
+        the F-ARCH-1 spec (`--text`, `--space-1..8`, `--radius-md`) and
+        still resolve to the Puheo canonical tokens — letting us migrate
+        usage incrementally without a big-bang rewrite.
+     3. Reserves the `[data-theme="dark"]` selector. Dark mode is out of
+        scope for this loop; this is the hook future loops bolt onto.
+
+   Load order: import this file FIRST, before `style.css` and component
+   CSS, so the aliases are resolvable everywhere downstream.
+   ======================================================================= */
+
+:root {
+  /* ── Z-index scale ────────────────────────────────────────────────
+     Was missing — components hardcoded `z-index: 50/100/999`. Anchor
+     every new layered element to one of these names.
+  */
+  --z-base:      1;
+  --z-dropdown: 10;
+  --z-sticky:   20;
+  --z-drawer:   30;
+  --z-modal:    40;
+  --z-toast:    50;
+  --z-confetti: 60;  /* pointer-events: none */
+
+  /* ── Focus ring ───────────────────────────────────────────────────
+     Components paste their own `outline: 2px solid var(--accent)` rule.
+     Use this token instead so a brand-colour change ripples through
+     every focus state in one edit.
+  */
+  --focus-ring: 0 0 0 2px var(--accent);
+  --focus-ring-offset: 2px;
+
+  /* ── Motion extras ────────────────────────────────────────────────
+     style.css defines --dur-fast/base/slow + --ease-in/out/inout.
+     Add the missing spring curve + a slower duration for content
+     reveals (count-up, sparkline draw, results-card stagger).
+  */
+  --ease-spring:    cubic-bezier(.34, 1.56, .64, 1);
+  --duration-reveal: 600ms;
+
+  /* ── Semantic aliases ─────────────────────────────────────────────
+     Brief-spec names → canonical Puheo tokens. Either name works in
+     new code; existing CSS that already uses --ink/--surface/--r-md
+     does NOT need to change.
+  */
+  --text:         var(--ink);
+  --text-muted:   var(--ink-soft);
+  --text-faint:   var(--ink-faint);
+  --surface-hover: var(--surface-2);
+
+  --space-1:  var(--s-1);  /* 4px */
+  --space-2:  var(--s-2);  /* 8px */
+  --space-3:  var(--s-3);  /* 12px */
+  --space-4:  var(--s-4);  /* 16px */
+  --space-5:  var(--s-5);  /* 24px */
+  --space-6:  var(--s-6);  /* 32px */
+  --space-7:  var(--s-8);  /* 48px */
+  --space-8:  var(--s-10); /* 64px */
+
+  --radius-sm:  var(--r-sm);   /* 6px  */
+  --radius-md:  var(--r-md);   /* 10px */
+  --radius-lg:  var(--r-lg);   /* 16px */
+  --radius-full: var(--r-full);
+
+  --shadow-sm:  var(--sh-rest);
+  --shadow-md:  var(--sh-hover);
+  --shadow-lg:  var(--sh-lift);
+
+  /* Motion duration aliases (brief names) */
+  --duration-fast:  var(--dur-fast);
+  --duration-base:  var(--dur-base);
+  --duration-slow:  var(--dur-slow);
+}
+
+/* ── Dark theme placeholder ────────────────────────────────────────
+   Reserved selector for a future dark-mode loop. Leave empty so any
+   stylesheet that opts into `data-theme="dark"` has a single override
+   point to flip the semantic tokens above (--text, --surface,
+   --border, --accent, --shadow-*). Component-level dark overrides
+   should target the semantic alias, never the raw --ink/--r-md.
+   ─────────────────────────────────────────────────────────────── */
+:root[data-theme="dark"] {
+  /* TODO F-ARCH-2: enumerate dark palette + flip semantic aliases. */
+}

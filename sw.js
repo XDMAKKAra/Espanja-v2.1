@@ -1,8 +1,10 @@
-const CACHE_VERSION = "puheo-v152";
+const CACHE_VERSION = "puheo-v153";
 const STATIC_ASSETS = [
   "/app.html",
   "/index.html",
   "/pricing.html",
+  // F-ARCH-1 §B — design tokens single source of truth.
+  "/css/tokens.css",
   // L-LANG-LANDINGS-1 — per-language SEO landing pages.
   "/public/landing/espanja.html",
   "/public/landing/saksa.html",
