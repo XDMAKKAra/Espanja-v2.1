@@ -16,7 +16,10 @@ import { initGrammar, loadGrammarDrill } from "./screens/grammar.js";
 import { initReading, loadReadingTask } from "./screens/reading.js";
 import { initWriting, showProUpsell, startCheckout, openBillingPortal, loadWritingTask, wireAppWaitlist, hydrateConfig } from "./screens/writing.js";
 import { initExam, startMockExam } from "./screens/exam.js";
-import { initFullExam, startFullExam } from "./screens/fullExam.js";
+// F-ARCH-1 §A — fullExam, settings, profile, verbSprint, verbReference moved
+// behind makeLazyScreen() so they don't ship with the initial bundle. See
+// `js/lib/lazyScreen.js` for the cache + once-init contract.
+import { makeLazyScreen } from "./lib/lazyScreen.js";
 import { initAdaptive, masteryNext, masteryDone } from "./screens/adaptive.js";
 import { initOnboarding, checkOnboarding } from "./screens/onboarding.js";
 import { initOnboardingV2, showOnboardingV2 } from "./screens/onboardingV2.js";
@@ -25,10 +28,8 @@ import { initPlacement, checkPlacementNeeded, showPlacementIntro, startPlacement
 import { initLearningPath, submitMasteryResult } from "./screens/learningPath.js";
 import { loadCurriculum } from "./screens/curriculum.js";
 import { initQuickReview } from "./screens/quickReview.js";
-import { initVerbSprint } from "./screens/verbSprint.js";
-import { initVerbReference } from "./screens/verbReference.js";
-import { initSettings, showSettings } from "./screens/settings.js";
-import { initProfile, loadProfile } from "./screens/profile.js";
+// F-ARCH-1 §A — these screens are lazy. Their static imports moved out.
+// See makeLazyScreen wrappers below (lazyFullExam, lazySettings, …).
 import { wireTopicPicker, topicLabel, loadBriefing } from "./screens/mode-page.js";
 import { initAnalytics } from "./analytics.js";
 // L-PLAN-4 UPDATE 4 — floating profile button (replaces the right rail).
@@ -115,8 +116,34 @@ initWriting({ loadDashboard, saveProgress });
 wireAppWaitlist();
 if (isLoggedIn()) hydrateConfig();
 initExam({ loadDashboard, saveProgress, shareResult });
-initFullExam({ loadDashboard, saveProgress, shareResult });
 initAdaptive({ loadDashboard });
+
+// ── F-ARCH-1 §A — lazy screens (loaded on first navigation) ────────────────
+const lazyFullExam = makeLazyScreen({
+  key: "fullExam",
+  factory: () => import("./screens/fullExam.js"),
+  init: (m) => m.initFullExam({ loadDashboard, saveProgress, shareResult }),
+});
+const lazySettings = makeLazyScreen({
+  key: "settings",
+  factory: () => import("./screens/settings.js"),
+  init: (m) => m.initSettings({ loadDashboard }),
+});
+const lazyProfile = makeLazyScreen({
+  key: "profile",
+  factory: () => import("./screens/profile.js"),
+  init: (m) => m.initProfile(),
+});
+const lazyVerbSprint = makeLazyScreen({
+  key: "verbSprint",
+  factory: () => import("./screens/verbSprint.js"),
+  init: (m) => m.initVerbSprint({ saveProgress }),
+});
+const lazyVerbReference = makeLazyScreen({
+  key: "verbReference",
+  factory: () => import("./screens/verbReference.js"),
+  init: (m) => m.initVerbReference(),
+});
 initOnboarding({ loadDashboard, loadNextBatch });
 initOnboardingV2({ loadDashboard });
 initOnboardingV3({ loadDashboard });
@@ -173,9 +200,11 @@ function navigateTo(nav, { updateHash = true } = {}) {
     history.replaceState(null, "", NAV_HASH[nav]);
   }
 
-  if (nav === "exam") startFullExam("demo");
-  else if (nav === "settings") showSettings();
-  else if (nav === "profile") loadProfile();
+  if (nav === "exam")          lazyFullExam().then((m) => m.startFullExam("demo"));
+  else if (nav === "settings") lazySettings().then((m) => m.showSettings());
+  else if (nav === "profile")  lazyProfile().then((m) => m.loadProfile());
+  else if (nav === "verbsprint") lazyVerbSprint();
+  else if (nav === "verbreference") lazyVerbReference();
   else if (nav === "path") {
     // Merged home: loadDashboard now also kicks off loadCurriculum after
     // rendering, so a single call populates greeting + day-CTA + readiness +
@@ -342,10 +371,8 @@ async function startGrammarDrill() {
 if ($("btn-start-grammar")) $("btn-start-grammar").addEventListener("click", startGrammarDrill);
 
 initQuickReview({ startGrammarDrill });
-initVerbSprint({ saveProgress });
-initVerbReference();
-initSettings({ loadDashboard });
-initProfile();
+// F-ARCH-1 §A — initVerbSprint / initVerbReference / initSettings / initProfile
+// moved into makeLazyScreen wrappers; they self-init on first navigation.
 // Profile menu wires globally — its DOM is mounted once in app.html and
 // survives screen changes. Pass the deps it needs to drive checkout + sidebar.
 initProfileMenu({ startCheckout, updateSidebarState });
@@ -405,7 +432,7 @@ if ($("writing-upgrade-btn")) $("writing-upgrade-btn").addEventListener("click",
 // Full exam start button
 const fullExamBtn = $("btn-start-full-exam");
 if (fullExamBtn) {
-  fullExamBtn.addEventListener("click", () => startFullExam("demo"));
+  fullExamBtn.addEventListener("click", () => lazyFullExam().then((m) => m.startFullExam("demo")));
 }
 
 // SR review buttons (legacy + new top bar)
