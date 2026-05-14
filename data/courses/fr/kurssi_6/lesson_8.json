@@ -1,0 +1,207 @@
+{
+  "meta": {
+    "course_key": "kurssi_6",
+    "lesson_index": 8,
+    "lesson_type": "grammar",
+    "level": "C",
+    "title": "Mielipide-ilmaisut — indicatif vs subjonctif",
+    "description": "Harjoittelet kriittistä eroa mielipide-ilmaisuissa: milloin indicatif (je pense que, j'espère que, il me semble que) ja milloin subjonctif (je ne pense pas que, bien que, douter que). Fokus YO-kokeessa toistuvissa ansatyypeissä.",
+    "yo_relevance": "Tämä on yksi hankalimmista YTL-rakennetehtävän alueista. J'espère que -ansa (indicatif, ei subjonctif) toistuu joka vuosi. Kieltomuodon laukaisema subjonctif on E-tason merkki.",
+    "estimated_minutes_median": 14
+  },
+  "teaching": {
+    "intro_md": "# Mielipide-ilmaisut — indicatif vai subjonctif?\n\nTämä on K6:n tärkein kieliopillinen ansa. Osa mielipide-ilmaisuista vaatii subjonctifin, osa indicatifin.\n\n## Indicatif (EI subjonctif)\n\n| Rakenne | Esimerkki |\n|---|---|\n| **je pense que** | *Je pense qu'il a raison.* |\n| **je crois que** | *Je crois qu'elle viendra.* |\n| **j'espère que** | *J'espère qu'il fera beau.* |\n| **il me semble que** | *Il me semble que c'est vrai.* |\n| **il paraît que** | *Il paraît qu'il va pleuvoir.* |\n\n## Subjonctif (kielto tai epäily)\n\n| Rakenne | Esimerkki |\n|---|---|\n| **je ne pense pas que** | *Je ne pense pas qu'il **ait** raison.* |\n| **je ne crois pas que** | *Je ne crois pas qu'elle **vienne**.* |\n| **je doute que** | *Je doute que ce **soit** vrai.* |\n| **il est douteux que** | *Il est douteux qu'il **fasse** beau.* |\n\n## Sääntö\n\n**Varmuus → indicatif. Epäily/kielto → subjonctif.**\n\n> *Je pense qu'il **est** là.* (olen varma)\n> *Je ne pense pas qu'il **soit** là.* (epäilen)",
+    "key_points": [
+      "j'espère que + indicatif — EI subjonctif. Tämä on yleisin ansa YO-kokeessa.",
+      "je pense que / je crois que + indicatif (myönteinen). Myönteiset mielipide-ilmaisut = varmuus = indicatif.",
+      "je ne pense pas que / je ne crois pas que + subjonctif. Kieltomuoto = epäily = subjonctif!",
+      "je doute que + subjonctif. Douter = epäillä → laukaisee subjonctifin.",
+      "il me semble que + indicatif. Il paraît que + indicatif. Vaikuttaa-rakenteet = indicatif."
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1-recognition-mc-mielipide",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista — indicatif vai subjonctif?",
+      "instruction": "Valitse oikea muoto mielipide-ilmaisun jälkeen.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.7, "C": 0.75, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "mc", "stem": "J'espère qu'il ___ beau demain. (faire)", "choices": ["fasse", "fera", "fait", "ferait"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "J'espère que + indicatif (futur). Fera on futur — oikein. Fasse on subjonctif — väärä, tyyppiansa!" },
+        { "item_type": "mc", "stem": "Je pense qu'elle ___ raison. (avoir)", "choices": ["ait", "a", "aurait", "avait"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Je pense que + indicatif (présent). A on présent indicatif — oikein. Ait on subjonctif — väärä!" },
+        { "item_type": "mc", "stem": "Je ne pense pas qu'il ___ raison. (avoir)", "choices": ["a", "ait", "aura", "avait"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Je ne pense pas que + subjonctif. Kieltomuoto laukaisee subjonctifin → qu'il ait." },
+        { "item_type": "mc", "stem": "Je crois qu'il ___ correct. (être)", "choices": ["soit", "est", "sera", "était"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Je crois que + indicatif. Est on présent indicatif — oikein. Soit on subjonctif — väärä!" },
+        { "item_type": "mc", "stem": "Je ne crois pas qu'elle ___ là. (être)", "choices": ["est", "soit", "sera", "était"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Je ne crois pas que + subjonctif → qu'elle soit. Est on présent indicatif — väärä!" },
+        { "item_type": "mc", "stem": "Il me semble que c'___ vrai. (être)", "choices": ["soit", "est", "sera", "serait"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Il me semble que + indicatif. Est on présent indicatif — oikein. Soit on subjonctif — väärä!" },
+        { "item_type": "mc", "stem": "Je doute qu'il ___ assez de temps. (avoir)", "choices": ["a", "aura", "ait", "avait"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "Je doute que + subjonctif. Douter = epäillä → laukaisee subjonctifin → qu'il ait." },
+        { "item_type": "mc", "stem": "Il paraît qu'il ___ des problèmes. (avoir)", "choices": ["ait", "a", "aura", "avait"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "Il paraît que + indicatif. Tuntuu siltä, että = vaikuttaa = ei epäily → indicatif." },
+        { "item_type": "mc", "stem": "J'espère qu'ils ___ venir. (pouvoir)", "choices": ["puissent", "pourront", "peuvent", "pourraient"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "J'espère que + indicatif (futur). Pourront on futur — oikein. Puissent on subjonctif — väärä!" },
+        { "item_type": "mc", "stem": "Il est douteux qu'elle ___ finir à temps. (pouvoir)", "choices": ["peut", "pourra", "puisse", "pouvait"], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "Il est douteux que + subjonctif. Douteux = epävarma → subjonctif → qu'elle puisse." },
+        { "item_type": "mc", "stem": "Je pense qu'il ___ une bonne idée. (avoir)", "choices": ["ait", "ait", "a", "aurait"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "Je pense que + indicatif (myönteinen). A on présent indicatif — oikein." },
+        { "item_type": "mc", "stem": "Je ne crois pas que ce ___ la bonne solution. (être)", "choices": ["est", "était", "soit", "sera"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "Je ne crois pas que + subjonctif → que ce soit. Est on présent indicatif — väärä!" }
+      ]
+    },
+    {
+      "phase_id": "p2-recognition-match",
+      "phase_type": "recognition_match",
+      "title": "Yhdistä — indicatif vai subjonctif?",
+      "instruction": "Yhdistä rakenne oikeaan muotoon (indicatif / subjonctif).",
+      "mastery_threshold": { "I": 0.6, "A": 0.65, "B": 0.75, "C": 0.8, "M": 0.85, "E": 0.9, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        {
+          "item_type": "match",
+          "left_label": "Rakenne",
+          "right_label": "Seuraa",
+          "pairs": [
+            { "left": "j'espère que", "right": "indicatif (ei subjonctif!)" },
+            { "left": "je pense que (myönteinen)", "right": "indicatif" },
+            { "left": "je ne pense pas que", "right": "subjonctif" },
+            { "left": "je doute que", "right": "subjonctif" },
+            { "left": "il me semble que", "right": "indicatif" },
+            { "left": "je ne crois pas que", "right": "subjonctif" },
+            { "left": "il est douteux que", "right": "subjonctif" },
+            { "left": "il paraît que", "right": "indicatif" }
+          ]
+        }
+      ]
+    },
+    {
+      "phase_id": "p3-recognition-mc-ansa-fokus",
+      "phase_type": "recognition_mc",
+      "title": "Ansa-fokus — j'espère que vs j'ai peur que",
+      "instruction": "Tunnista selkeästi: j'espère = indicatif, j'ai peur = subjonctif.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.7, "C": 0.75, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I"],
+      "items": [
+        { "item_type": "mc", "stem": "J'espère que la situation ___ s'améliorer. (va — futur proche, indicatif)", "choices": ["se soit améliorée", "va", "s'améliore", "aille"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "J'espère que + indicatif. Va on présent indicatif (futur proche) — oikein. S'améliore on subjonctif — väärä." },
+        { "item_type": "mc", "stem": "J'ai peur que la situation ne ___ pas s'améliorer. (pouvoir)", "choices": ["puisse", "peut", "pourra", "pouvait"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "J'ai peur que + subjonctif → qu'elle ne puisse pas. Peut on présent indicatif." },
+        { "item_type": "mc", "stem": "J'espère que nous ___ une solution. (trouver — futur)", "choices": ["trouvions", "trouvons", "trouverons", "trouvassions"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "J'espère que + indicatif (futur). Trouverons on futur — oikein. Trouvions on subjonctif — väärä." },
+        { "item_type": "mc", "stem": "J'ai peur que nous ne ___ pas de solution. (trouver)", "choices": ["trouverons", "trouvions", "trouvons", "trouverions"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "J'ai peur que + subjonctif → que nous ne trouvions pas. Trouvions on oikein." },
+        { "item_type": "mc", "stem": "Je pense que l'accord ___ un succès. (être)", "choices": ["soit", "est", "sera", "serait"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "Je pense que + indicatif. Sera on futur — oikein. Soit on subjonctif — väärä!" },
+        { "item_type": "mc", "stem": "Je ne pense pas que l'accord ___ suffisant. (être)", "choices": ["est", "sera", "soit", "serait"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "Je ne pense pas que + subjonctif → qu'il soit. Est on présent indicatif — väärä." }
+      ]
+    },
+    {
+      "phase_id": "p4-recall-typed-mielipiteet",
+      "phase_type": "recall_typed_es_to_fi",
+      "title": "Kirjoita oikea muoto mielipide-ilmaisun jälkeen",
+      "instruction": "Täydennä lause oikealla muodolla — indicatif tai subjonctif.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.7, "C": 0.75, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "J'espère qu'il ___ (venir — indicatif futur)", "accept": ["qu'il viendra", "il viendra", "viendra"], "hint": "j'espère que + futur indicatif" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Je pense qu'elle ___ (avoir raison — indicatif présent)", "accept": ["qu'elle a raison", "elle a raison", "a raison", "a"], "hint": "je pense que + présent indicatif" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Je ne pense pas qu'il ___ (avoir raison — subjonctif)", "accept": ["qu'il ait raison", "il ait raison", "ait raison", "ait"], "hint": "je ne pense pas que + subjonctif: avoir → ait" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Je doute qu'elle ___ (être là — subjonctif)", "accept": ["qu'elle soit là", "elle soit là", "soit là", "soit"], "hint": "douter que + subjonctif: être → soit" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Il me semble que c'___ (être difficile — indicatif)", "accept": ["c'est difficile", "est difficile", "est"], "hint": "il me semble que + indicatif" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Je crois qu'ils ___ (avoir tort — indicatif)", "accept": ["qu'ils ont tort", "ils ont tort", "ont tort", "ont"], "hint": "je crois que + indicatif" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Je ne crois pas qu'ils ___ (avoir raison — subjonctif)", "accept": ["qu'ils aient raison", "ils aient raison", "aient raison", "aient"], "hint": "je ne crois pas que + subjonctif: avoir → aient" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Il est douteux qu'il ___ (pouvoir venir — subjonctif)", "accept": ["qu'il puisse venir", "il puisse venir", "puisse venir", "puisse"], "hint": "il est douteux que + subjonctif: pouvoir → puisse" }
+      ]
+    },
+    {
+      "phase_id": "p5-application-gap-fill",
+      "phase_type": "application_gap_fill",
+      "title": "Täydennä — indicatif vai subjonctif? (ympäristökonteksti)",
+      "instruction": "Täydennä lause oikealla muodolla. Tunnista rakenne.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.75, "C": 0.8, "M": 0.85, "E": 0.9, "L": 0.92 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "J'espère que les gouvernements {1} agir plus rapidement. (vouloir — indicatif futur: voudront)", "answers": [["voudront"]], "word_bank": ["voudront", "veuillent", "voulaient"] },
+        { "item_type": "gap_fill", "sentence_template": "Je ne pense pas que cette solution {1} suffisante. (être — subjonctif)", "answers": [["soit"]], "word_bank": ["est", "soit", "sera"] },
+        { "item_type": "gap_fill", "sentence_template": "Il me semble que les émissions {1} en train d'augmenter encore. (être — indicatif)", "answers": [["sont"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Je doute que nous {1} atteindre les objectifs climatiques de 2030. (pouvoir — subjonctif)", "answers": [["puissions"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Je pense que la France {1} un bon exemple en matière d'énergie nucléaire. (donner — indicatif)", "answers": [["donne", "donnera"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Je ne crois pas que le problème {1} aussi simple. (être — subjonctif)", "answers": [["soit"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "J'espère que les prochaines élections {1} un changement positif. (apporter — indicatif futur)", "answers": [["apporteront"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Il est douteux que les actions individuelles {1} suffisantes pour résoudre le problème. (être — subjonctif)", "answers": [["soient"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Je crois que tout le monde {1} faire quelque chose pour l'environnement. (pouvoir — indicatif: peut)", "answers": [["peut"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Je ne pense pas que les entreprises {1} agir sans pression politique. (vouloir — subjonctif)", "answers": [["veuillent"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p6-application-gap-fill-kaikki",
+      "phase_type": "application_gap_fill",
+      "title": "Sekoitettu kertaus — kaikki K6-laukaisijat",
+      "instruction": "Täydennä oikealla muodolla. Tunnista laukaisija ensin.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.65, "C": 0.75, "M": 0.85, "E": 0.9, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Il faut que tu {1} maintenant. (partir — subjonctif: part-)", "answers": [["partes"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "J'espère que tu {1} bientôt. (partir — indicatif futur: partiras)", "answers": [["partiras"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Bien qu'il {1} froid, les enfants jouent dehors. (faire — subjonctif)", "answers": [["fasse"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "J'ai peur qu'il ne {1} pas assez d'eau douce dans le futur. (y avoir — subjonctif: y ait)", "answers": [["y ait"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Je pense qu'il {1} plus de transport en commun dans les villes. (falloir — indicatif: faut)", "answers": [["faut", "faudra"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Je ne pense pas qu'il {1} assez de transport en commun dans les villes. (y avoir — subjonctif)", "answers": [["y ait"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Pour que la planète {1}, nous devons agir maintenant. (survivre: ils survivent → surviv-)", "answers": [["survive"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Avant qu'il ne {1} trop tard, changeons nos habitudes. (être — subjonctif)", "answers": [["soit"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p7-application-sentence-build",
+      "phase_type": "application_sentence_build",
+      "title": "Muodosta lauseet — mielipide-ilmaisut",
+      "instruction": "Käännä lause ranskaksi käyttäen oikeaa rakennetta.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.6, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.92 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Toivon, että seuraava sukupolvi löytää ratkaisun. (j'espère que + futur)", "accept": ["j'espère que la prochaine génération trouvera une solution", "j'espère que la génération suivante trouvera une solution"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "En ajattele, että tilanne on toivoton. (je ne pense pas que + être — subjonctif)", "accept": ["je ne pense pas que la situation soit désespérée", "je ne pense pas que la situation soit sans espoir"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Minusta tuntuu, että tarvitsemme nopeampia toimia. (il me semble que + indicatif)", "accept": ["il me semble que nous avons besoin d'actions plus rapides", "il me semble que nous devons agir plus vite"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Epäilen, onko tällä riittävästi poliittista tahtoa. (je doute que + subjonctif)", "accept": ["je doute qu'il y ait assez de volonté politique", "je doute que la volonté politique soit suffisante"] }
+      ]
+    },
+    {
+      "phase_id": "p8-synthesis-translate",
+      "phase_type": "synthesis_translate",
+      "title": "Käännä — mielipide-ilmaisut YO-tasolla",
+      "instruction": "Käännä lause ranskaksi. Valitse oikea rakenne.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.6, "C": 0.65, "M": 0.75, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Toivon, että kansainvälinen yhteisö löytää ratkaisun ennen kuin on liian myöhäistä.", "accept": ["j'espère que la communauté internationale trouvera une solution avant qu'il soit trop tard", "j'espère que la communauté internationale trouvera une solution avant qu'il ne soit trop tard"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "En usko, että muutamat yksilölliset eleet riittävät ratkaisemaan globaalin ongelman.", "accept": ["je ne crois pas que quelques gestes individuels soient suffisants pour résoudre un problème mondial", "je ne pense pas que quelques gestes individuels suffisent à résoudre un problème mondial"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Minusta tuntuu, että yhteiskuntamme ei vielä ymmärrä ympäristökriisin vakavuutta.", "accept": ["il me semble que notre société ne comprend pas encore la gravité de la crise environnementale", "il me semble que notre société ne prend pas encore conscience de la gravité de la crise climatique"] }
+      ]
+    },
+    {
+      "phase_id": "p9-synthesis-short-writing",
+      "phase_type": "synthesis_short_writing",
+      "title": "Kirjoita — argumentoi mielipide-ilmaisuilla",
+      "instruction": "Kirjoita 4–6 lausetta käyttäen eri mielipide-ilmaisuja.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.6, "C": 0.65, "M": 0.7, "E": 0.8, "L": 0.9 },
+      "skip_for_targets": ["I", "A", "B", "C", "M"],
+      "items": [
+        { "item_type": "writing", "prompt": "Écris 4–6 phrases sur la politique environnementale en utilisant : j'espère que (indicatif), je ne pense pas que (subjonctif), il me semble que (indicatif), je doute que (subjonctif). Varie les structures.", "min_words": 45, "max_words": 85, "rubric_focus": ["communication", "structure", "vocab"] },
+        { "item_type": "writing", "prompt": "Donne ton opinion sur les réseaux sociaux et leur rôle dans la société. Utilise : je pense que, je ne crois pas que, j'espère que, je doute que. 4–6 phrases.", "min_words": 45, "max_words": 85, "rubric_focus": ["communication", "vocab"] }
+      ]
+    }
+  ],
+  "vocab": [
+    { "es": "j'espère que + indicatif", "fi": "toivon, että (+ indicatif!)", "example_es": "J'espère qu'il viendra.", "example_fi": "Toivon, että hän tulee. (EI subjonctif!)", "gender": null },
+    { "es": "je pense que + indicatif", "fi": "ajattelen, että (+ indicatif)", "example_es": "Je pense qu'il a raison.", "example_fi": "Ajattelen, että hänellä on oikeus.", "gender": null },
+    { "es": "je crois que + indicatif", "fi": "uskon, että (+ indicatif)", "example_es": "Je crois que c'est vrai.", "example_fi": "Uskon, että se on totta.", "gender": null },
+    { "es": "je ne pense pas que + subj.", "fi": "en ajattele, että (+ subjonctif)", "example_es": "Je ne pense pas qu'il ait raison.", "example_fi": "En ajattele, että hänellä on oikeus.", "gender": null },
+    { "es": "je ne crois pas que + subj.", "fi": "en usko, että (+ subjonctif)", "example_es": "Je ne crois pas que ce soit vrai.", "example_fi": "En usko, että se on totta.", "gender": null },
+    { "es": "je doute que + subj.", "fi": "epäilen, että (+ subjonctif)", "example_es": "Je doute que ce soit possible.", "example_fi": "Epäilen, että se on mahdollista.", "gender": null },
+    { "es": "il me semble que + indicatif", "fi": "minusta tuntuu, että (+ indicatif)", "example_es": "Il me semble que c'est correct.", "example_fi": "Minusta tuntuu, että se on oikein.", "gender": null },
+    { "es": "il paraît que + indicatif", "fi": "kuuluu, että; tuntuu siltä että (+ indicatif)", "example_es": "Il paraît qu'il va pleuvoir.", "example_fi": "Näyttää siltä, että tulee satamaan.", "gender": null },
+    { "es": "il est douteux que + subj.", "fi": "on epätodennäköistä, että (+ subjonctif)", "example_es": "Il est douteux qu'il réussisse.", "example_fi": "On epätodennäköistä, että hän onnistuu.", "gender": null }
+  ],
+  "side_panel": {
+    "tabs": [
+      {
+        "id": "grammar",
+        "title": "Kielioppi",
+        "content_md": "## Mielipide-ilmaisut — indicatif vs subjonctif\n\n### INDICATIF (varmuus, toivo)\n- **j'espère que** + indicatif ← TÄRKEIN ANSA!\n- **je pense que** + indicatif\n- **je crois que** + indicatif\n- **il me semble que** + indicatif\n- **il paraît que** + indicatif\n\n### SUBJONCTIF (epäily, kielto)\n- **je ne pense pas que** + subjonctif\n- **je ne crois pas que** + subjonctif\n- **je doute que** + subjonctif\n- **il est douteux que** + subjonctif\n\n### SÄÄNTÖ\n**Varmuus / Toivo → indicatif**\n**Epäily / Kielto → subjonctif**\n\n### Muista\n*Je pense qu'il **est** là.* ✓ (indicatif)\n*Je ne pense pas qu'il **soit** là.* ✓ (subjonctif)\n*J'espère qu'il **viendra**.* ✓ (futur — ei subjonctif!)"
+      },
+      {
+        "id": "tips",
+        "title": "YO-vinkki",
+        "content_md": "## Tärkein sääntö YO-kokeessa\n\n**J'espère que + indicatif** — ei subjonctif!\n- *J'espère qu'il **viendra*** ✓\n- *J'espère qu'il **vienne*** ✗\n\n**Kielto laukaisee subjonctifin:**\n- *Je pense qu'il **a** raison.* (indicatif)\n- *Je ne pense pas qu'il **ait** raison.* (subjonctif!)\n\n**Kirjoitustehtävässä:**\nVaihtelemalla rakenteita osoitat kielen monipuolisuuden:\n1. *J'espère que...* (toivo)\n2. *Il me semble que...* (arvio)\n3. *Je doute que...* (epäily)\n4. *Je ne pense pas que...* (kielto)\nNäiden vaihteleminen nostaa kielen rakenteiden (R) pisteitä!"
+      }
+    ]
+  }
+}

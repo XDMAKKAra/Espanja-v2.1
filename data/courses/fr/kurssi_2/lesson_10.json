@@ -1,0 +1,92 @@
+{
+  "meta": {
+    "course_key": "kurssi_2",
+    "lesson_index": 10,
+    "lesson_type": "test",
+    "level": "A",
+    "title": "Kertaustesti — Kurssi 2",
+    "description": "Kurssin 2 kumulatiivinen kertaustesti: epäsäännölliset verbit, partitiivit, accord, omistuspronominit, koti- ja ruokasanasto sekä vapaa-aika. 30 kysymystä.",
+    "yo_relevance": "Testi simuloi YO-rakennetehtävää ja sanastotehtävää. Kaikki K2-rakenteet testataan: epäsäännölliset verbit, partitiivit (myönteinen/kielteinen), adjektiivin accord ja omistuspronominit.",
+    "estimated_minutes_median": 20
+  },
+  "teaching": {
+    "intro_md": "# Kertaustesti — Kurssi 2\n\nTässä testissä kerrataan kaikki Kurssi 2:n rakenteet:\n\n- **K2L1**: koti- ja huonekalusanasto\n- **K2L2**: épäsäännölliset verbit (être/avoir/aller/faire/venir/prendre)\n- **K2L3**: ruoka- ja ateriastoasto\n- **K2L4**: partitiivit du/de la/de l'/des ja kieltomuoto\n- **K2L5**: vapaa-aika (jouer à/jouer de/faire du)\n- **K2L6**: accord en genre/nombre ja omistuspronominit\n\nTestaa mitä muistat — kaikki rakenteet ovat tässä mukana.\n\n**Muista:** mastery_threshold kertoo tavoitetason — et tarvitse 100% jatkaaksesi.",
+    "key_points": [
+      "Kaikki K2 rakenteet yhdessä testissä.",
+      "Lue tehtävä tarkasti — konteksti auttaa.",
+      "Partitiivi: myönteinen vs kielteinen.",
+      "Accord: tarkista substantiivin sukupuoli.",
+      "Jouer à (laji) vs jouer de (soitin)."
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1-test-kertaus",
+      "phase_type": "recognition_mc",
+      "title": "Kertaustesti — Kurssi 2",
+      "instruction": "Valitse oikea vaihtoehto. 30 kysymystä, kaikki K2-rakenteet.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.87, "L": 0.95 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "mc", "stem": "Pièce où on fait la cuisine :", "choices": ["le salon", "la cuisine", "la chambre", "le couloir"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "la cuisine = keittiö. le salon = olohuone." },
+        { "item_type": "mc", "stem": "Meuble pour dormir :", "choices": ["la chaise", "la table", "le lit", "l'étagère"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "le lit = sänky. la chaise = tuoli, la table = pöytä." },
+        { "item_type": "mc", "stem": "Je ___ finlandais. (être)", "choices": ["suis", "est", "sommes", "ai"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "être: je → suis." },
+        { "item_type": "mc", "stem": "Ils ___ beaucoup d'amis. (avoir)", "choices": ["a", "avons", "ont", "avez"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "avoir: ils → ont." },
+        { "item_type": "mc", "stem": "Nous ___ au cinéma ce soir. (aller)", "choices": ["vont", "allez", "allons", "vas"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "aller: nous → allons." },
+        { "item_type": "mc", "stem": "Vous ___ du sport ? (faire)", "choices": ["font", "faites", "faisez", "faisons"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "faire: vous → faites. *faisez n'existe pas." },
+        { "item_type": "mc", "stem": "Ils ___ de Paris. (venir)", "choices": ["venons", "vient", "venez", "viennent"], "correct_index": 3, "distractor_difficulty": "medium", "explanation": "venir: ils → viennent (deux n)." },
+        { "item_type": "mc", "stem": "Je ___ le bus tous les matins. (prendre)", "choices": ["prend", "prenons", "prends", "prennent"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "prendre: je → prends." },
+        { "item_type": "mc", "stem": "Je mange ___ pain. (partitiivi myönteinen)", "choices": ["de la", "de l'", "du", "des"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "le pain = maskuliini → du." },
+        { "item_type": "mc", "stem": "Elle boit ___ eau. (partitiivi myönteinen)", "choices": ["du", "de la", "de l'", "des"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "l'eau alkaa vokaalilla → de l'." },
+        { "item_type": "mc", "stem": "Nous mangeons ___ légumes.", "choices": ["du", "de la", "de l'", "des"], "correct_index": 3, "distractor_difficulty": "easy", "explanation": "les légumes = monikko → des." },
+        { "item_type": "mc", "stem": "Il ne mange pas ___ viande.", "choices": ["du", "de la", "de", "des"], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "Kieltomuodossa de la → de. Il ne mange pas DE viande." },
+        { "item_type": "mc", "stem": "Nous n'avons pas ___ amis.", "choices": ["des", "d'", "de l'", "des"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "des → de → d' (élision ennen vokaalia). Nous n'avons pas D'amis." },
+        { "item_type": "mc", "stem": "Il boit beaucoup ___ café.", "choices": ["du", "de", "de la", "d'un"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "beaucoup de → aina 'de'. beaucoup DE café." },
+        { "item_type": "mc", "stem": "Verbe pour 'soittaa kitaraa':", "choices": ["jouer au guitare", "jouer de la guitare", "faire de la guitare", "prendre la guitare"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "jouer DE + soitin. La guitare = feminiini → jouer DE LA guitare." },
+        { "item_type": "mc", "stem": "Verbe pour 'pelata jalkapalloa':", "choices": ["jouer de football", "faire du football", "jouer au football", "aller au football"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "jouer À + laji. Le football → jouer AU football." },
+        { "item_type": "mc", "stem": "une histoire ___ (intéressant)", "choices": ["intéressant", "intéressante", "intéressants", "intéressantes"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "une histoire = feminiini → intéressante. Klassinen YO-ansa!" },
+        { "item_type": "mc", "stem": "des livres ___ (intéressant)", "choices": ["intéressant", "intéressante", "intéressants", "intéressantes"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "des livres = maskuliini monikko → intéressants." },
+        { "item_type": "mc", "stem": "___ amie est sympa. (mon/ma = minun)", "choices": ["Ma", "Mon", "Mes", "Sa"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "amie alkaa vokaalilla → mon. Vaikka feminiini, vokaali → mon amie." },
+        { "item_type": "mc", "stem": "___ parents sont gentils. (minun)", "choices": ["Mon", "Ma", "Mes", "Ses"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "les parents = monikko → mes." },
+        { "item_type": "mc", "stem": "___ frère habite à Lyon. (hänen)", "choices": ["Sa", "Son", "Ses", "Mon"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "le frère = maskuliini → son. son/sa per seuraava sana." },
+        { "item_type": "mc", "stem": "___ sœur est médecin. (hänen)", "choices": ["Sa", "Son", "Ses", "Ma"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "la sœur = feminiini → sa." },
+        { "item_type": "mc", "stem": "une ___ maison (beau)", "choices": ["beau", "belle", "beaux", "belles"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "beau → belle (feminiini). une belle maison." },
+        { "item_type": "mc", "stem": "un homme ___ (heureux)", "choices": ["heureux", "heureuse", "heureux", "heureuses"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "un homme = maskuliini → heureux (perusmuoto)." },
+        { "item_type": "mc", "stem": "Repas du soir :", "choices": ["le petit-déjeuner", "le déjeuner", "le dîner", "le goûter"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "le dîner = illallinen. le déjeuner = lounas, le petit-déjeuner = aamiainen." },
+        { "item_type": "mc", "stem": "Boisson pour la matinée :", "choices": ["le vin", "le café au lait", "la bière", "le thé glacé"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "le café au lait on tyypillinen ranskalainen aamiaisjuoma. le vin = viini (illalliselle)." },
+        { "item_type": "mc", "stem": "Je ___ dans un appartement à Helsinki. (habiter)", "choices": ["vis", "habite", "suis", "vais"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "habiter à + kaupunki = asua jossakin. J'habite à Helsinki." },
+        { "item_type": "mc", "stem": "En France, le fromage se mange :", "choices": ["avant le plat principal", "avec le plat principal", "après le plat principal", "comme dessert"], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "Ranskassa juusto syödään pääruoan JÄLKEEN ja ennen jälkiruokaa. K2L8 kulttuuritieto." },
+        { "item_type": "mc", "stem": "Après l'école, je ___ chez moi. (rentrer)", "choices": ["retourne", "reviens", "rentre", "revenir"], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "rentrer (chez soi) = palata kotiin. 'je rentre' on oikea arjessa käytetty muoto." },
+        { "item_type": "mc", "stem": "La ___ est un symbole culinaire français. (baguette)", "choices": ["tartine", "baguette", "croissant", "madeleine"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "la baguette on ranskalaisen leivontakulttuurin symboli, UNESCO-perintö 2022. K2L3 + K2L8." }
+      ]
+    }
+  ],
+  "vocab": [
+    { "es": "l'appartement", "fi": "kerrostaloasunto", "example_es": "J'habite dans un appartement.", "example_fi": "Asun kerrostaloasunnossa.", "gender": "m" },
+    { "es": "être", "fi": "olla", "example_es": "Je suis finlandais.", "example_fi": "Olen suomalainen.", "gender": null },
+    { "es": "avoir", "fi": "omistaa", "example_es": "J'ai 17 ans.", "example_fi": "Olen 17-vuotias.", "gender": null },
+    { "es": "aller", "fi": "mennä", "example_es": "Je vais à l'école.", "example_fi": "Menen kouluun.", "gender": null },
+    { "es": "faire", "fi": "tehdä", "example_es": "Je fais du sport.", "example_fi": "Harrastan urheilua.", "gender": null },
+    { "es": "venir", "fi": "tulla", "example_es": "Je viens de Finlande.", "example_fi": "Tulen Suomesta.", "gender": null },
+    { "es": "prendre", "fi": "ottaa", "example_es": "Je prends le bus.", "example_fi": "Otan bussin.", "gender": null },
+    { "es": "du / de la / de l' / des", "fi": "partitiivi", "example_es": "Je mange du pain.", "example_fi": "Syön leipää.", "gender": null },
+    { "es": "ne...pas de", "fi": "kieltomuoto + partitiivi", "example_es": "Je ne mange pas de viande.", "example_fi": "En syö lihaa.", "gender": null },
+    { "es": "jouer à", "fi": "pelata (laji)", "example_es": "Je joue au football.", "example_fi": "Pelaan jalkapalloa.", "gender": null },
+    { "es": "jouer de", "fi": "soittaa (soitin)", "example_es": "Je joue de la guitare.", "example_fi": "Soitan kitaraa.", "gender": null },
+    { "es": "accord", "fi": "sukupuolen/luvun sopeutus", "example_es": "une histoire intéressante", "example_fi": "kiinnostava tarina (feminiini)", "gender": null }
+  ],
+  "side_panel": {
+    "tabs": [
+      {
+        "id": "grammar",
+        "title": "K2 Pikaopas",
+        "content_md": "## Verbit — ydinmuodot\n\n| Verbi | je | nous | ils |\n|---|---|---|---|\n| être | suis | sommes | sont |\n| avoir | ai | avons | ont |\n| aller | vais | allons | vont |\n| faire | fais | faisons | font |\n| venir | viens | venons | viennent |\n| prendre | prends | prenons | prennent |\n\n## Partitiivit\n\n- du (m) / de la (f) / de l' (vokaali) / des (pl)\n- Kielto: → **de** / **d'**\n- beaucoup: → **de** (ei artikkelia)\n\n## Accord\n\n- beau → belle, vieux → vieille\n- heureux → heureuse\n- adj + -e = feminiini\n- adj + -s = monikko\n\n## Omistuspronominit\n\n- mon/ma/mes, ton/ta/tes, son/sa/ses\n- vokaali: **mon** amie (ei ma!)"
+      },
+      {
+        "id": "tips",
+        "title": "YO-vinkki",
+        "content_md": "## K2 Top 5 YO-ansaa\n\n1. **Kieltomuoto**: *pas du pain* → VÄÄRIN → *pas **de** pain*\n\n2. **Accord**: *une histoire intéressant* → VÄÄRIN → *intéressante*\n\n3. **mon amie** (ei ma amie) — vokaali pakottaa mon\n\n4. **jouer de la guitare** (ei *jouer à la guitare*) — soitin = DE\n\n5. **vous faites** (ei *faisez*) — epäsäännöllinen muoto\n\n## K2 kulttuuritieto YO-kokeessa\n\n- Ranskalainen gastronomia UNESCO-perintöä vuodesta **2010**\n- Baguette UNESCO-perintöä vuodesta **2022**\n- Juusto syödään ennen jälkiruokaa\n- Lounas kestää 1–2 tuntia\n- yli **300** juustolajiketta"
+      }
+    ]
+  }
+}

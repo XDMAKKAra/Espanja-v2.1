@@ -1,0 +1,207 @@
+{
+  "meta": {
+    "course_key": "kurssi_8",
+    "lesson_index": 5,
+    "lesson_type": "grammar",
+    "level": "E",
+    "title": "Kolme si-tyyppiä — erottelu ja ansa-fokus",
+    "description": "Kolmen si-lausetyypin systemaattinen erottelu: tunnista tyyppi kontekstista, korjaa tyypilliset ansat. Fokus: ei futuria / ei conditionnelia si-lauseessa; ei sekoiteta T2 ja T3 päälauseita.",
+    "yo_relevance": "Tämä oppitunti simuloi YO-rakennetehtävää (Osa 3) — valitse oikea muoto / korjaa virhe. Kolmen tyypin sekoittaminen on YO:n yleisin yksittäinen virhetyyppi si-lauseissa E-tason kirjoitelmissa.",
+    "estimated_minutes_median": 15
+  },
+  "teaching": {
+    "intro_md": "# Kolme si-lausetyyppiä — erottelu\n\nL2 ja L3 käsittelivät tyypit erikseen. Tässä oppitunnissa harjoitellaan niiden **erottamista** kontekstista — juuri kuten YO-kokeessa.\n\n## Kertaus — kolme tyyppiä\n\n| Tyyppi | Si-lause | Päälause | Merkitys |\n|---|---|---|---|\n| **1** | présent | futur/présent/impératif | Mahdollinen |\n| **2** | imparfait | conditionnel présent | Hypoteettinen nykyhetki |\n| **3** | plus-que-parfait | conditionnel passé | Mahdoton mennyt |\n\n## Erottelun avain\n\n1. **Lue si-lauseen aikamuoto** ensin:\n   - présent → Tyyppi 1\n   - imparfait → Tyyppi 2\n   - plus-que-parfait → Tyyppi 3\n\n2. **Tarkista päälause:**\n   - T1: futur/présent/impératif ✓\n   - T2: conditionnel présent ✓\n   - T3: conditionnel passé ✓\n\n## Tunnistusesimerkkejä\n\n*Si tu **viens**, je **serai** content.*\n→ Si + présent → futur = **Tyyppi 1** ✓\n\n*Si tu **venais**, je **serais** content.*\n→ Si + imparfait → conditionnel = **Tyyppi 2** ✓\n\n*Si tu **étais venu**, je **aurais été** content.*\n→ Si + PQP → conditionnel passé = **Tyyppi 3** ✓\n\n## Ansalista — yleisimmät YO-virheet\n\n| Virhe | Oikein | Selitys |\n|---|---|---|\n| *Si tu **viendras**...* | Si tu **viens**... | Ei futuria si-lauseessa |\n| *Si j'**aurais** eu...* | Si j'**avais** eu... | Ei conditionnelia si-lauseessa |\n| *Si j'avais..., je **réussirais**...* | ...j'**aurais réussi** | T3 päälause: conditionnel passé! |\n| *Si elle **était**..., elle **aurait aidé**...* | T2: ...elle **aiderait**; T3: Si elle **avait été**... | Ei sekoita! |\n\n## Kontekstivihjeet\n\n- *hier, la semaine dernière, en 2020* → yleensä Tyyppi 3 (mennyt)\n- *maintenant, en ce moment, aujourd'hui (hypoteesi)* → Tyyppi 2\n- *demain, l'année prochaine, un jour* → yleensä Tyyppi 1",
+    "key_points": [
+      "Lue si-lauseen aikamuoto ensin: présent=T1, imparfait=T2, plus-que-parfait=T3.",
+      "Ei futuria eikä conditionnelia si-lauseessa — koskaan.",
+      "T2 päälause: conditionnel présent (je ferais). T3 päälause: conditionnel passé (j'aurais fait).",
+      "Sekoitus T2+T3 on YO:n yleisin ansa: 'si elle était → elle aurait aidé' = VIRHE.",
+      "Kontekstivihjeet: menneisyysadverbi → T3; nykyinen hypoteesi → T2; todennäköinen tulevaisuus → T1."
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1-recognition-mc-tyyppi",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista si-lauseen tyyppi",
+      "instruction": "Mikä tyyppi on kyseessä? Valitse oikea.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "mc", "stem": "'Si tu viens, je serai content.' — Tyyppi?", "choices": ["Tyyppi 1 (présent + futur)", "Tyyppi 2 (imparfait + conditionnel)", "Tyyppi 3 (PQP + cond. passé)", "Virheellinen rakenne"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "Si + présent (viens) → futur (serai) = Tyyppi 1. Mahdollinen, todellinen ehto." },
+        { "item_type": "mc", "stem": "'Si j'avais le temps, je lirais plus.' — Tyyppi?", "choices": ["Tyyppi 1", "Tyyppi 2 (imparfait + conditionnel)", "Tyyppi 3 (PQP + cond. passé)", "Virheellinen"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "Si + imparfait (avais) → conditionnel (lirais) = Tyyppi 2. Hypoteettinen nykyehto." },
+        { "item_type": "mc", "stem": "'Si elle avait su, elle n'aurait pas agi ainsi.' — Tyyppi?", "choices": ["Tyyppi 1", "Tyyppi 2", "Tyyppi 3 (PQP + cond. passé)", "Virheellinen"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "Si + plus-que-parfait (avait su) → conditionnel passé (aurait agi) = Tyyppi 3. Mahdoton mennyt." },
+        { "item_type": "mc", "stem": "'Si tu viendras, je serai content.' — Tässä on virhe. Mikä on oikein?", "choices": ["Si tu viendras, je serais content.", "Si tu viens, je serai content.", "Si tu venais, je serais content.", "Si tu es venu, je serai content."], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "Ei futuria si-lauseessa! 'Si tu viendras' = VIRHE. Tyyppi 1: 'Si tu viens, je serai content.' ✓" },
+        { "item_type": "mc", "stem": "'Si j'aurais su, j'aurais agi différemment.' — Virhe?", "choices": ["Ei virhettä — Tyyppi 3 oikein.", "Si-lauseessa on virhe: 'si j'avais su'.", "Päälauseessa on virhe: 'j'aurais dû agir'.", "Molemmat virheellisiä."], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "'Si j'aurais su' = VIRHE — conditionnel ei kuulu si-lauseeseen. Oikein: 'Si j'avais su, j'aurais agi.' (Tyyppi 3: PQP + cond. passé)" },
+        { "item_type": "mc", "stem": "'Si elle était là, elle aurait aidé.' — Tässä on sekoitus. Mikä on oikein?", "choices": ["Si elle était là, elle aiderait. (T2 puhtaana)", "Si elle avait été là, elle aurait aidé. (T3 puhtaana)", "Si elle serait là, elle aurait aidé.", "Molemmat A ja B ovat oikein."], "correct_index": 3, "distractor_difficulty": "hard", "explanation": "Sekä A että B ovat oikein — ne ovat eri tyypit: A = Tyyppi 2 (nykyinen hypoteesi), B = Tyyppi 3 (mennyt hypoteesi). Sekoitus (T2 si-lause + T3 päälause) on VIRHE." },
+        { "item_type": "mc", "stem": "'Si tu avais étudié hier, tu réussiras demain.' — Virhe?", "choices": ["Ei virhettä.", "Si-lauseessa virhe: 'si tu étudie hier'.", "Päälauseessa virhe: 'tu aurais réussi'.", "Aikamuotoja ei voi yhdistää näin."], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "Si + PQP (avais étudié) → päälause pitää olla conditionnel passé (aurais réussi). 'tu réussiras' = futur = VIRHE Tyypissä 3. Oikein: 'Si tu avais étudié, tu aurais réussi.'" },
+        { "item_type": "mc", "stem": "Kontekstivihje: 'hier, à ce moment-là' → si-lauseessa...?", "choices": ["présent (Tyyppi 1)", "imparfait (Tyyppi 2)", "plus-que-parfait (Tyyppi 3)", "conditionnel passé"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "Mennyt aikamäärite (hier = eilen) + hypoteettinen ehto → Tyyppi 3 (plus-que-parfait si-lauseessa)." },
+        { "item_type": "mc", "stem": "'Si nous avions réagi, la situation ne serait pas si grave.' — Tyyppi? Virheetön?", "choices": ["Tyyppi 2, virheetön.", "Tyyppi 3, mutta päälauseessa virhe.", "Tyyppi 3, virheetön.", "Sekoitus — virheellinen."], "correct_index": 3, "distractor_difficulty": "hard", "explanation": "Si + PQP (avions réagi) = Tyyppi 3 si-lause. Mutta päälause 'ne serait pas' = conditionnel présent = VIRHE Tyypissä 3! Oikein: 'la situation n'aurait pas été si grave'. Tai si-lause imparfait: 'Si nous réagissions, la situation ne serait pas si grave' (T2)." },
+        { "item_type": "mc", "stem": "Mikä lause on täysin oikea?", "choices": ["Si tu aurais su, tu n'aurais pas agi.", "Si tu venais demain, tu aurais vu.", "Si tu étudies, tu réussiras.", "Si elle était venue, elle aiderait."], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "'Si tu étudies, tu réussiras.' = Tyyppi 1. ✓ Muut: 1) conditionnel si-lauseessa = VIRHE, 2) T2+T3 sekoitus, 4) T3 si-lause + T2 päälause = sekoitus." },
+        { "item_type": "mc", "stem": "'Si l'accord avait été signé plus tôt, les émissions auraient été réduites.' — Tyyppi?", "choices": ["Tyyppi 1", "Tyyppi 2", "Tyyppi 3 ✓", "Virheellinen"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "Si + PQP (avait été signé) → cond. passé (auraient été réduites) = Tyyppi 3. ✓ Myös passiivirakenne oikein." },
+        { "item_type": "mc", "stem": "Täydennä: Si tu ___ là-bas, tu ___ quelque chose d'incroyable. (aller + voir, Tyyppi 1)", "choices": ["vas / verras", "allais / verrais", "étais allé / aurais vu", "iras / verras"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "Tyyppi 1: si + présent (vas) → futur (verras). ✓" }
+      ]
+    },
+    {
+      "phase_id": "p2-recognition-match",
+      "phase_type": "recognition_match",
+      "title": "Yhdistä — si-lause ja oikea päälause",
+      "instruction": "Yhdistä si-lause oikeaan päälauseeseen.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        {
+          "item_type": "match",
+          "left_label": "Si-lause",
+          "right_label": "Oikea päälause",
+          "pairs": [
+            { "left": "Si tu travailles bien,", "right": "tu réussiras. (T1)" },
+            { "left": "Si j'avais le temps,", "right": "je lirais plus. (T2)" },
+            { "left": "Si elle avait su,", "right": "elle n'aurait pas agi ainsi. (T3)" },
+            { "left": "Si nous habitions à Paris,", "right": "nous irions au musée. (T2)" },
+            { "left": "Si tu as faim,", "right": "mange quelque chose ! (T1)" },
+            { "left": "Si l'accord avait été signé,", "right": "les émissions auraient baissé. (T3)" }
+          ]
+        },
+        {
+          "item_type": "match",
+          "left_label": "Virheellinen lause",
+          "right_label": "Korjattu versio",
+          "pairs": [
+            { "left": "Si tu viendras, je serai content.", "right": "Si tu viens, je serai content." },
+            { "left": "Si j'aurais étudié, j'aurais réussi.", "right": "Si j'avais étudié, j'aurais réussi." },
+            { "left": "Si elle était là, elle aurait aidé.", "right": "Si elle avait été là, elle aurait aidé." },
+            { "left": "Si j'avais su, je réussirais.", "right": "Si j'avais su, j'aurais réussi." }
+          ]
+        }
+      ]
+    },
+    {
+      "phase_id": "p3-recall-fr-to-fi",
+      "phase_type": "recall_typed_es_to_fi",
+      "title": "Käännä — tunnista tyyppi ja käännä",
+      "instruction": "Käännä si-lause suomeksi. Mieti myös mikä tyyppi se on.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Si tu étudies chaque jour, tu réussiras. (Tyyppi?)", "accept": ["jos opiskelet joka päivä, menestyt", "jos opiskelet päivittäin, onnistut"], "hint": "Tyyppi 1 — présent + futur" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Si j'avais une voiture, je pourrais aller au travail plus facilement.", "accept": ["jos minulla olisi auto, voisin mennä töihin helpommin", "jos olisi auto, pääsisin töihin helpommin"], "hint": "Tyyppi 2 — imparfait + conditionnel" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Si les politiciens avaient écouté les experts, la crise aurait pu être évitée.", "accept": ["jos poliitikot olisivat kuunnelleet asiantuntijoita, kriisi olisi voitu välttää", "jos poliitikot olisivat kuunnelleet, kriisi olisi ehkä vältetty"], "hint": "Tyyppi 3 — PQP + conditionnel passé" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Si elle prenait ce médicament régulièrement, elle guérirait plus vite.", "accept": ["jos hän ottaisi tätä lääkettä säännöllisesti, hän paranisi nopeammin", "jos hän söisi tätä lääkettä säännöllisesti, toipuminen olisi nopeampaa"], "hint": "Tyyppi 2" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Si vous avez des questions, n'hésitez pas à me contacter.", "accept": ["jos teillä on kysymyksiä, ottakaa yhteyttä", "jos sinulla on kysymyksiä, älä epäröi ottaa yhteyttä"], "hint": "Tyyppi 1 — présent + impératif" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Si j'avais été là, j'aurais tout expliqué.", "accept": ["jos olisin ollut paikalla, olisin selittänyt kaiken", "jos olisin ollut siellä, olisin selittänyt kaiken"] }
+      ]
+    },
+    {
+      "phase_id": "p4-recall-fi-to-fr",
+      "phase_type": "recall_typed_fi_to_es",
+      "title": "Kirjoita si-lause — valitse oikea tyyppi",
+      "instruction": "Kirjoita si-lause ranskaksi. Tyyppi on merkitty.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.92 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Jos tulet huomenna, olemme iloisia. (Tyyppi 1)", "accept": ["si tu viens demain nous serons contents", "si vous venez demain nous serons heureux"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Jos hallitus investoisi enemmän, epätasa-arvo vähenisi. (Tyyppi 2)", "accept": ["si le gouvernement investissait davantage les inégalités diminueraient", "si l'état investissait plus les inégalités réduiraient"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Jos olisimme toimineet aikaisemmin, kriisi olisi voitu välttää. (Tyyppi 3)", "accept": ["si nous avions agi plus tôt la crise aurait pu être évitée", "si on avait agi plus tôt la crise aurait été évitée"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Jos sinulla on nälkä, syö jotain. (Tyyppi 1 — impératif)", "accept": ["si tu as faim mange quelque chose", "si vous avez faim mangez quelque chose"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Jos hän olisi tullut kokoukseen, hän olisi kuullut uutiset. (Tyyppi 3)", "accept": ["s'il était venu à la réunion il aurait entendu les nouvelles", "si elle était venue à la réunion elle aurait appris la nouvelle"] }
+      ]
+    },
+    {
+      "phase_id": "p5-gap-fill-helppo",
+      "phase_type": "application_gap_fill",
+      "title": "Täytä aukko — tunnista tyyppi ja täytä",
+      "instruction": "Täytä aukko. Lue ensin koko lause — mikä tyyppi?",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Si tu travailles, tu {1}. (réussir — T1)", "answers": [["réussiras"]], "word_bank": ["réussiras", "réussirais", "aurais réussi", "réussis"] },
+        { "item_type": "gap_fill", "sentence_template": "Si j'avais le temps, je {1} plus souvent. (lire — T2)", "answers": [["lirais"]], "word_bank": ["lirai", "lirais", "aurais lu", "lis"] },
+        { "item_type": "gap_fill", "sentence_template": "Si elle avait étudié, elle {1} l'examen. (réussir — T3)", "answers": [["aurait réussi"]], "word_bank": ["réussira", "réussirait", "aurait réussi", "avait réussi"] },
+        { "item_type": "gap_fill", "sentence_template": "Si tu {1} là, je t'aurais demandé de l'aide. (être — T3, si-lause)", "answers": [["avais été"]], "word_bank": ["étais", "avais été", "aurais été", "es"] },
+        { "item_type": "gap_fill", "sentence_template": "Si nous {1} davantage de ressources, nous réussirions. (avoir — T2)", "answers": [["avions"]], "word_bank": ["avons", "aurions", "avions", "aurons"] },
+        { "item_type": "gap_fill", "sentence_template": "Si l'accord avait été signé, les émissions {1} réduites. (avoir — T3, passif)", "answers": [["auraient été"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Si tu {1} faim, prends une pomme ! (avoir — T1)", "answers": [["as"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Si les températures {1} de 2°C, les écosystèmes en seraient affectés. (augmenter — T2)", "answers": [["augmentaient"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p6-gap-fill-vaativa",
+      "phase_type": "application_gap_fill",
+      "title": "Korjaa virhe — si-lauseen ansat",
+      "instruction": "Lause sisältää virheen. Kirjoita koko virheellinen osa oikein.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.65, "C": 0.75, "M": 0.85, "E": 0.90, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "VIRHE: 'Si tu viendras demain, je serai content.' → Korjaa si-lause: 'Si tu {1} demain...'", "answers": [["viens"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "VIRHE: 'Si j'aurais su, j'aurais agi.' → Korjaa si-lause: 'Si j'{1} su...'", "answers": [["avais"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "VIRHE: 'Si j'avais le temps, je réussirai.' → Korjaa päälause: '...je {1}'", "answers": [["réussirais"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "VIRHE: 'Si elle était là, elle aurait aidé.' → Tyyppi 3: 'Si elle {1} là, elle aurait aidé.'", "answers": [["avait été"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "VIRHE: 'Si j'avais étudié, je réussissais.' → Korjaa päälause: '...j'{1}'", "answers": [["aurais réussi"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "VIRHE: 'Si tu venais hier, tu aurais vu.' → Korjaa si-lause (PQP): 'Si tu {1} hier, tu aurais vu.'", "answers": [["étais venu", "étais venue"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p7-application-sentence-build",
+      "phase_type": "application_sentence_build",
+      "title": "Kirjoita — kaikki kolme tyyppiä",
+      "instruction": "Käännä si-lause ranskaksi. Lue konteksti ja valitse oikea tyyppi.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.60, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.92 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Jos tulet huomenna, me syömme yhdessä. (T1)", "accept": ["si tu viens demain nous dînerons ensemble", "si vous venez demain nous pourrons manger ensemble"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Jos asut Pariisissa, voisit käydä Louvressa joka viikko. (T2)", "accept": ["si tu habitais à paris tu pourrais aller au louvre chaque semaine", "si vous habitiez à paris vous pourriez visiter le louvre toutes les semaines"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Jos olisimme lähteneet aikaisemmin, olisimme olleet ajoissa. (T3)", "accept": ["si nous étions partis plus tôt nous serions arrivés à temps", "si on était parti plus tôt on aurait été à l'heure"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Jos yritykset toimisivat vastuullisemmin, ympäristö olisi paremmassa tilassa. (T2)", "accept": ["si les entreprises agissaient de façon plus responsable l'environnement serait en meilleur état", "si les entreprises étaient plus responsables l'environnement irait mieux"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Jos Pariisin sopimus olisi allekirjoitettu aikaisemmin, päästöt olisivat jo laskeneet merkittävästi. (T3)", "accept": ["si l'accord de paris avait été signé plus tôt les émissions auraient déjà diminué significativement", "si l'accord avait été conclu plus tôt les émissions auraient considérablement baissé"] }
+      ]
+    },
+    {
+      "phase_id": "p8-synthesis-translate",
+      "phase_type": "synthesis_translate",
+      "title": "YO-tason käännös — kolme tyyppiä",
+      "instruction": "Käännä ranskaksi. Tunnista oikea tyyppi kontekstista.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.60, "C": 0.65, "M": 0.75, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Jos jatkat harjoittelemista, sinusta tulee todella hyvä muusikko. (T1)", "accept": ["si tu continues à t'entraîner tu deviendras un très bon musicien", "si vous continuez à vous entraîner vous deviendrez un excellent musicien"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Jos minulla olisi enemmän rohkeutta, kirjoittaisin kirjan omista kokemuksistani. (T2)", "accept": ["si j'avais plus de courage j'écrirais un livre sur mes expériences", "si j'avais davantage de courage je rédigerais un livre sur mes expériences personnelles"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Jos eurooppalaiset johtajat olisivat yhteistyössä paremmin, talouskriisi olisi voitu välttää. (T3)", "accept": ["si les dirigeants européens avaient mieux coopéré la crise économique aurait pu être évitée", "si les leaders européens avaient coopéré davantage la crise aurait pu être évitée"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Jos sinulla on kysyttävää, lähetä minulle sähköposti. (T1)", "accept": ["si tu as des questions envoie-moi un email", "si vous avez des questions envoyez-moi un courriel"] }
+      ]
+    },
+    {
+      "phase_id": "p9-synthesis-short-writing",
+      "phase_type": "synthesis_short_writing",
+      "title": "Lyhyt kirjoitus — kaikki kolme si-tyyppiä",
+      "instruction": "Kirjoita 7–9 lausetta ranskaksi. Käytä kaikkia kolmea si-lausetyyppiä.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.60, "C": 0.65, "M": 0.70, "E": 0.80, "L": 0.90 },
+      "skip_for_targets": ["I", "A", "B", "C", "M"],
+      "items": [
+        { "item_type": "writing", "prompt": "YO-tyyppinen kirjoitelma (7–9 lausetta): 'Parlez de vos projets pour l'avenir et des leçons tirées du passé.' Käytä: (1) T1 = konkreettinen suunnitelma, (2) T2 = nykyinen haave, (3) T3 = menneisyydestä opittu. Selitä itsellesi mikä tyyppi on missäkin lauseessa.", "min_words": 65, "max_words": 130, "rubric_focus": ["communication", "structure", "vocab", "overall"] }
+      ]
+    }
+  ],
+  "vocab": [
+    { "es": "distinguer", "fi": "erottaa, tunnistaa", "example_es": "Il faut distinguer les trois types de phrases hypothétiques.", "example_fi": "On erotettava kolme hypoteettista lausetyyppiä.", "gender": null },
+    { "es": "hypothétique", "fi": "hypoteettinen", "example_es": "Cette situation est purement hypothétique.", "example_fi": "Tämä tilanne on täysin hypoteettinen.", "gender": null },
+    { "es": "corriger", "fi": "korjata", "example_es": "Il faut corriger cette erreur dans la phrase.", "example_fi": "Tämä virhe lauseessa on korjattava.", "gender": null },
+    { "es": "la concordance des temps", "fi": "aikamuotojen kongruenssi", "example_es": "La concordance des temps dans les phrases en si est stricte.", "example_fi": "Aikamuotojen kongruenssi si-lauseissa on tiukka.", "gender": "f" },
+    { "es": "coopérer", "fi": "tehdä yhteistyötä", "example_es": "Si les pays avaient coopéré, la crise aurait été évitée.", "example_fi": "Jos maat olisivat tehneet yhteistyötä, kriisi olisi vältetty.", "gender": null },
+    { "es": "la leçon", "fi": "oppi, oppitunti, opetus", "example_es": "La leçon à tirer de cette crise est claire.", "example_fi": "Tästä kriisistä opittava opetus on selvä.", "gender": "f" }
+  ],
+  "side_panel": {
+    "tabs": [
+      {
+        "id": "grammar",
+        "title": "Kielioppi",
+        "content_md": "## Kolme si-tyyppiä — pikataulukko\n\n| Tyyppi | Si-lause | Päälause |\n|---|---|---|\n| **T1** | présent | futur/présent/impératif |\n| **T2** | imparfait | conditionnel présent |\n| **T3** | plus-que-parfait | conditionnel passé |\n\n## Tunnistusohje\n\n1. Lue si-lauseen aikamuoto\n2. Valitse oikea päälause\n\n## Ansalista — vältä!\n\n| Virhe | Oikein |\n|---|---|\n| Si tu **viendras**... | Si tu **viens**... |\n| Si j'**aurais**... | Si j'**avais**... |\n| Si elle **était**, ...elle **aurait** aidé. | T2: ...elle **aiderait** OR T3: Si elle **avait été**... |\n| Si j'avais su, je **réussirais**. | Si j'avais su, j'**aurais réussi**. |\n\n## Kontekstivihjeet\n\n- *hier, la semaine dernière* → T3\n- *maintenant (hypoteesi)* → T2\n- *demain, bientôt* → T1"
+      },
+      {
+        "id": "tips",
+        "title": "YO-vinkki",
+        "content_md": "## Si-lauseet YO-rakennetehtävässä\n\nYO:n Osa 3 (rakenteet) testaa usein: 'Mettez le verbe entre parenthèses à la forme correcte.'\n\n**Strategia:**\n1. Onko si-lauseessa futuri? → Vaihda présent-muotoon (T1)\n2. Onko si-lauseessa conditionnel? → Vaihda imparfait (T2) tai PQP (T3)\n3. Mikä on päälauseen muoto? → Vastaa tyypin mukaan\n\n## Kirjoitelmaan\n\nKäytä kaikkia kolmea tyyppiä — se osoittaa E-tason hallinnan:\n- T1: tulevaisuudensuunnitelmat\n- T2: nykyiset unelmat\n- T3: menneisyydestä opittu\n\n**Pisteet nousevat** kun si-lauseet ovat oikein — erityisesti T3 on E-tason merkki."
+      }
+    ]
+  }
+}

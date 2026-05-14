@@ -1,0 +1,214 @@
+{
+  "meta": {
+    "course_key": "kurssi_5",
+    "lesson_index": 8,
+    "lesson_type": "grammar",
+    "level": "C",
+    "title": "Si-lauseet — présent+futur ja imparfait+conditionnel",
+    "description": "Opit kaksi perustason si-lausetyyppiä: Tyyppi 1 (si + présent → futur simple, todellinen tulevaisuus) ja Tyyppi 2 (si + imparfait → conditionnel, epätodellinen nykyhetki). Syvempi kolmas tyyppi käsitellään K8:ssa.",
+    "yo_relevance": "Si-hypoteesilauseet ovat YO-kokeen rakennetehtävässä ja kirjoitelmissa pakollisia C-tasolta ylöspäin. Tyyppi 2 erottaa C-tason M-tasosta kirjoitelmassa. Yleisin virhe: si-lauseen väärä aikamuotokongruenssi.",
+    "estimated_minutes_median": 14
+  },
+  "teaching": {
+    "intro_md": "# Si-lauseet — kaksi perustyyppiä\n\n## Tyyppi 1: Todellinen tulevaisuus\n\n**Si + présent → futur simple**\n\nKäyttö: Kun tulevaisuus on todellinen tai mahdollinen — jos teet X, niin Y tapahtuu.\n\n| Si-lause (ehto) | Päälause (seuraus) |\n|---|---|\n| Si tu **travailles** bien, | tu **réussiras**. |\n| Si elle **part** maintenant, | elle **arrivera** à temps. |\n| Si vous **avez** le temps, | vous **viendrez** ? |\n\n> **Muistisääntö:** Si + présent → futur. Todellisuus.\n\n## Tyyppi 2: Epätodellinen nykyhetki\n\n**Si + imparfait → conditionnel présent**\n\nKäyttö: Kun tilanne on hypoteettinen tai epätodennäköinen — jos X olisi totta, niin Y tapahtuisi.\n\n| Si-lause (ehto) | Päälause (seuraus) |\n|---|---|\n| Si j'**avais** plus d'argent, | je **voyagerais**. |\n| Si elle **était** médecin, | elle **travaillerait** à l'hôpital. |\n| Si nous **pouvions**, | nous **viendrions**. |\n\n> **Muistisääntö:** Si + imparfait → conditionnel. Unelma tai hypoteesi.\n\n## KRIITTINEN: EI futuria si-lauseessa!\n\n- ✓ Si tu **travailles** → tu **réussiras** (présent + futur)\n- ✗ Si tu **travailleras** → tu réussiras (VIRHE: futuuria ei si-lauseessa!)\n- ✓ Si j'**avais** → je **voyagerais** (imparfait + conditionnel)\n- ✗ Si j'**aurais** → VIRHE (conditionnelia ei si-lauseessa!)\n\n## Tyyppi 1 vs Tyyppi 2 — milloin kumpaakin?\n\n| | Tyyppi 1 | Tyyppi 2 |\n|---|---|---|\n| Todennäköisyys | Mahdollinen | Epätodennäköinen/kuvitteellinen |\n| Si-lause | présent | imparfait |\n| Päälause | futur simple | conditionnel |\n| Esimerkki | Si tu étudies, tu réussiras. | Si j'étais riche, j'achèterais une villa. |",
+    "key_points": [
+      "Tyyppi 1: si + présent → futur simple. Todellinen, mahdollinen ehto.",
+      "Tyyppi 2: si + imparfait → conditionnel. Hypoteettinen, epätodennäköinen.",
+      "EI koskaan futuria si-lauseessa: si tu viendras = VIRHE.",
+      "EI koskaan conditionnelia si-lauseessa: si j'aurais = VIRHE.",
+      "Kolmas tyyppi (si + plus-que-parfait → conditionnel passé) käsitellään K8:ssa."
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1-recognition-mc-si",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista — si-lauseen oikea rakenne",
+      "instruction": "Valitse oikea muoto si-lauseeseen.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "mc", "stem": "Si tu ___ bien, tu réussiras. (Tyyppi 1)", "choices": ["travailleras", "travaillerais", "travailles", "travaillais"], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "'Si tu travailles' = présent. Tyyppi 1: si + présent → futur. EI futuria si-lauseessa!" },
+        { "item_type": "mc", "stem": "Si j'___ plus d'argent, je voyagerais. (Tyyppi 2)", "choices": ["aurai", "aurais", "avais", "ai"], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "'si j'avais' = imparfait. Tyyppi 2: si + imparfait → conditionnel. EI conditionnelia si-lauseessa!" },
+        { "item_type": "mc", "stem": "Si elle part maintenant, elle ___ à temps. (Tyyppi 1)", "choices": ["arrivera", "arriverait", "arrivait", "arrive"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "Päälauseen aikamuoto Tyypissä 1 on futur simple: 'elle arrivera'." },
+        { "item_type": "mc", "stem": "Si nous ___ le temps, nous viendrions. (Tyyppi 2)", "choices": ["avons", "aurons", "avions", "aurions"], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "'si nous avions' = imparfait. Tyyppi 2 si-lauseessa: imparfait. 'aurions' = conditionnel = VIRHE si-lauseessa." },
+        { "item_type": "mc", "stem": "Mikä on VIRHE si-lauseessa?", "choices": ["Si tu viens, je serai content.", "Si j'avais du temps, je lirais.", "Si tu viendras, je serai content.", "Si elle travaillait moins, elle serait heureuse."], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "'Si tu viendras' on VIRHE — si-lauseessa ei käytetä futuria. Oikein: 'Si tu viens' (présent)." },
+        { "item_type": "mc", "stem": "Si j'___ riche, j'achèterais une villa. (Tyyppi 2)", "choices": ["suis", "serais", "serai", "étais"], "correct_index": 3, "distractor_difficulty": "hard", "explanation": "'si j'étais' = imparfait. Tyyppi 2: si + imparfait. 'serais' = conditionnel = VIRHE si-lauseessa." },
+        { "item_type": "mc", "stem": "Si vous étudiez, vous ___. Mikä Tyyppi 1:n päälause?", "choices": ["réussissiez", "réussirez", "réussiriez", "réussissez"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Tyyppi 1 päälause: futur simple. 'vous réussirez'." },
+        { "item_type": "mc", "stem": "Si j'avais le choix, je ___ à Paris. (Tyyppi 2)", "choices": ["resterai", "reste", "resterais", "restais"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "Tyyppi 2 päälause: conditionnel. 'je resterais'." },
+        { "item_type": "mc", "stem": "Mikä si-lause on täysin oikea?", "choices": ["Si tu aurais faim, tu mangerais.", "Si tu as faim, tu mangeras.", "Si tu auras faim, tu mangeras.", "Si tu mangerais, tu serais content."], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "'Si tu as faim, tu mangeras.' = Tyyppi 1. Si + présent → futur. Muut ovat kaikki vääriä." },
+        { "item_type": "mc", "stem": "Si elle ___ moins, elle serait moins fatiguée. (Tyyppi 2)", "choices": ["travaille", "travaillera", "travaillerait", "travaillait"], "correct_index": 3, "distractor_difficulty": "medium", "explanation": "'si elle travaillait' = imparfait. Tyyppi 2. 'travaillerait' = conditionnel = EI si-lauseessa." }
+      ]
+    },
+    {
+      "phase_id": "p2-recognition-match",
+      "phase_type": "recognition_match",
+      "title": "Yhdistä — si-lauseen osat",
+      "instruction": "Yhdistä si-lauseen alkupuoli ja loppupuoli.",
+      "mastery_threshold": { "I": 0.6, "A": 0.65, "B": 0.7, "C": 0.75, "M": 0.85, "E": 0.9, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        {
+          "item_type": "match",
+          "left_label": "Si-lause (ehto)",
+          "right_label": "Päälause (seuraus)",
+          "pairs": [
+            { "left": "Si tu travailles bien,", "right": "tu réussiras." },
+            { "left": "Si j'avais plus d'argent,", "right": "je voyagerais." },
+            { "left": "Si elle part maintenant,", "right": "elle arrivera à temps." },
+            { "left": "Si nous pouvions,", "right": "nous viendrions." },
+            { "left": "Si vous avez le temps,", "right": "venez nous voir!" },
+            { "left": "Si j'étais riche,", "right": "j'achèterais une maison." }
+          ]
+        },
+        {
+          "item_type": "match",
+          "left_label": "Lause",
+          "right_label": "Si-tyyppi",
+          "pairs": [
+            { "left": "Si tu viens, je serai content.", "right": "Tyyppi 1 (présent + futur)" },
+            { "left": "Si j'avais un chien, je serais plus heureux.", "right": "Tyyppi 2 (imparfait + conditionnel)" },
+            { "left": "Si elle étudie, elle réussira.", "right": "Tyyppi 1 (présent + futur)" },
+            { "left": "Si nous habitions à Paris, nous irions au musée chaque semaine.", "right": "Tyyppi 2 (imparfait + conditionnel)" }
+          ]
+        }
+      ]
+    },
+    {
+      "phase_id": "p3-recall-fr-to-fi",
+      "phase_type": "recall_typed_es_to_fi",
+      "title": "Käännä si-lause suomeksi",
+      "instruction": "Käännä si-lause suomeksi.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I"],
+      "items": [
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Si tu travailles, tu réussiras.", "accept": ["jos teet töitä, menestyt", "jos työskentelet hyvin, onnistut"], "hint": "Tyyppi 1: todellinen tulevaisuus" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Si j'avais le temps, je voyagerais.", "accept": ["jos minulla olisi aikaa, matkustaisin", "jos olisi aikaa, matkustaisin"], "hint": "Tyyppi 2: hypoteettinen" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Si elle part à 8h, elle arrivera à 10h.", "accept": ["jos hän lähtee kahdeksalta, hän saapuu kymmeneltä", "jos hän lähtee klo 8, hän saapuu klo 10"], "hint": "Tyyppi 1; part = présent, arrivera = futur" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Si nous avions plus d'argent, nous achèterions une voiture.", "accept": ["jos meillä olisi enemmän rahaa, ostaisimme auton", "jos meillä olisi varaa, ostaisimme auton"], "hint": "Tyyppi 2; avions = imparfait, achèterions = conditionnel" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Si vous avez faim, il y a des sandwichs.", "accept": ["jos teillä on nälkä, tarjolla on voileipiä", "jos olet nälkäinen, voileipiä on tarjolla"], "hint": "Tyyppi 1; présent + présent (nopea seuraus)" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "Si elle était ingénieure, elle gagnerait mieux.", "accept": ["jos hän olisi insinööri, hän ansaitsisi enemmän", "jos hän olisi insinööri, hänen palkkansa olisi parempi"], "hint": "Tyyppi 2; hypothèse" }
+      ]
+    },
+    {
+      "phase_id": "p4-recall-fi-to-fr",
+      "phase_type": "recall_typed_fi_to_es",
+      "title": "Kirjoita si-lause ranskaksi",
+      "instruction": "Kirjoita si-lause ranskaksi. Valitse oikea tyyppi!",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Jos opiskelet, menestyt. (Tyyppi 1)", "accept": ["si tu étudies tu réussiras", "si vous étudiez vous réussirez"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Jos minulla olisi enemmän rahaa, matkustaisin. (Tyyppi 2)", "accept": ["si j'avais plus d'argent je voyagerais", "si j'avais davantage d'argent je partirais en voyage"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Jos hän lähtee nyt, hän saapuu ajoissa. (Tyyppi 1)", "accept": ["s'il part maintenant il arrivera à temps", "si elle part maintenant elle arrivera à l'heure"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Jos hänellä olisi koira, hän olisi onnellisempi. (Tyyppi 2)", "accept": ["s'il avait un chien il serait plus heureux", "si elle avait un chien elle serait plus heureuse"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Jos haluat apua, soita minulle. (Tyyppi 1 — présent + impératif)", "accept": ["si tu veux de l'aide appelle-moi", "si vous voulez de l'aide appelez-moi"] }
+      ]
+    },
+    {
+      "phase_id": "p5-gap-fill-helppo",
+      "phase_type": "application_gap_fill",
+      "title": "Täytä aukko — si-lauseen oikeat aikamuodot",
+      "instruction": "Täytä aukko oikealla muodolla. Huomio si-lauseen tyyppi!",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Si tu {1} bien, tu auras de bonnes notes. (travailler — Tyyppi 1)", "answers": [["travailles"]], "word_bank": ["travailles", "travailleras", "travaillerais", "travaillais"] },
+        { "item_type": "gap_fill", "sentence_template": "Si j'avais le temps, je {1} plus souvent. (lire — Tyyppi 2)", "answers": [["lirais"]], "word_bank": ["lirai", "lirais", "lisais", "lis"] },
+        { "item_type": "gap_fill", "sentence_template": "Si elle {1} médecin, elle aiderait beaucoup de gens. (être — Tyyppi 2)", "answers": [["était"]], "word_bank": ["est", "sera", "serait", "était"] },
+        { "item_type": "gap_fill", "sentence_template": "Si vous venez, nous {1} ensemble. (dîner — Tyyppi 1)", "answers": [["dînerons"]], "word_bank": ["dînerons", "dînerions", "dînions", "dînons"] },
+        { "item_type": "gap_fill", "sentence_template": "Si on avait plus d'argent, on {1} une voiture électrique. (acheter — Tyyppi 2)", "answers": [["achèterait"]], "word_bank": ["achèterait", "achètera", "achetait", "achète"] },
+        { "item_type": "gap_fill", "sentence_template": "Si tu {1} plus tôt, tu ne seras pas en retard. (partir — Tyyppi 1)", "answers": [["pars"]], "word_bank": ["pars", "partiras", "partirais", "partais"] },
+        { "item_type": "gap_fill", "sentence_template": "Si nous {1} à Paris, nous irions au Louvre chaque semaine. (habiter — Tyyppi 2)", "answers": [["habitions"]], "word_bank": ["habitons", "habiterons", "habiterions", "habitions"] },
+        { "item_type": "gap_fill", "sentence_template": "Si elle reçoit la bourse, elle {1} à l'étranger. (étudier — Tyyppi 1)", "answers": [["étudiera"]], "word_bank": ["étudiera", "étudierait", "étudie", "étudiait"] }
+      ]
+    },
+    {
+      "phase_id": "p6-gap-fill-vaativa",
+      "phase_type": "application_gap_fill",
+      "title": "Täytä aukko — si-lauseet ilman sanapankkia",
+      "instruction": "Muodosta oikea muoto si-lauseeseen. Tyyppi on merkitty.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.65, "C": 0.75, "M": 0.85, "E": 0.9, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Si tu {1} tes études, tu trouveras un bon emploi. (finir — Tyyppi 1)", "answers": [["finis"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Si j'étais toi, je {1} ce poste. (accepter — Tyyppi 2)", "answers": [["accepterais"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Si vous {1} de l'aide, n'hésitez pas à demander. (avoir — Tyyppi 1)", "answers": [["avez"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Si nous {1} plus de temps, nous apprendrions le japonais. (avoir — Tyyppi 2)", "answers": [["avions"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Si elle {1} plus tôt, elle arrivera avant nous. (partir — Tyyppi 1)", "answers": [["part"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Si le chômage {1} en baisse, l'économie irait mieux. (être — Tyyppi 2)", "answers": [["était"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Si tu {1} cet article, tu comprendras mieux le sujet. (lire — Tyyppi 1)", "answers": [["lis"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Si j'avais su, je {1} un autre choix. (faire — Tyyppi 2)", "answers": [["ferais"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Si vous {1} prêts à 9h, nous pourrons commencer à l'heure. (être — Tyyppi 1)", "answers": [["êtes"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Si les entreprises {1} mieux, les employés seraient plus heureux. (diriger — Tyyppi 2)", "answers": [["dirigeaient"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p7-sentence-build",
+      "phase_type": "application_sentence_build",
+      "title": "Rakenna si-lause",
+      "instruction": "Käännä si-lause ranskaksi. Merkitty tyyppi antaa vihjeen.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.6, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.92 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Jos saat stipendin, opiskelet ulkomailla. (Tyyppi 1)", "accept": ["si tu obtiens la bourse tu étudieras à l'étranger", "si vous obtenez la bourse vous étudierez à l'étranger"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Jos voisin, auttaisin sinua enemmän. (Tyyppi 2)", "accept": ["si je pouvais je t'aiderais davantage", "si je pouvais je vous aiderais davantage"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Jos hänellä olisi parempi palkka, hän olisi tyytyväisempi. (Tyyppi 2)", "accept": ["s'il avait un meilleur salaire il serait plus content", "si elle avait un meilleur salaire elle serait plus heureuse"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Jos talous paranee, yritykset palkkaavat enemmän. (Tyyppi 1)", "accept": ["si l'économie s'améliore les entreprises recruteront davantage", "si l'économie va mieux les entreprises embaucheront plus"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Jos asuisin Pariisissa, kävisin Louvressa joka viikko. (Tyyppi 2)", "accept": ["si j'habitais à paris j'irais au louvre chaque semaine", "si je vivais à paris je visiterais le louvre toutes les semaines"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Jos sinulla on kysymyksiä, kysy opettajalta. (Tyyppi 1 — présent + impératif)", "accept": ["si tu as des questions demande au professeur", "si vous avez des questions posez-les au professeur"] }
+      ]
+    },
+    {
+      "phase_id": "p8-synthesis-translate",
+      "phase_type": "synthesis_translate",
+      "title": "YO-tyylinen käännös — si-lauseet",
+      "instruction": "Käännä kokonaan ranskaksi. Muista oikea aikamuotokongruenssi!",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.6, "C": 0.65, "M": 0.75, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Jos teet kovasti töitä, löydät hyvän työn tulevaisuudessa.", "accept": ["si tu travailles dur tu trouveras un bon emploi dans le futur", "si vous travaillez dur vous trouverez un bon emploi à l'avenir"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Jos minulla olisi enemmän vapaa-aikaa, oppisin kitaran soittamista.", "accept": ["si j'avais plus de temps libre j'apprendrais à jouer de la guitare", "si j'avais plus de loisirs j'apprendrais la guitare"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Jos talouskasvua ei tule, nuorisotyöttömyys kasvaa entisestään.", "accept": ["si la croissance économique ne reprend pas le chômage des jeunes augmentera encore", "si l'économie ne repart pas le taux de chômage chez les jeunes continuera à croître"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Jos he investoisivat teknologiaan, heidän yrityksensä menestyisi paremmin.", "accept": ["s'ils investissaient dans la technologie leur entreprise réussirait mieux", "si elles investissaient dans les nouvelles technologies leur entreprise se porterait mieux"] }
+      ]
+    },
+    {
+      "phase_id": "p9-short-writing",
+      "phase_type": "synthesis_short_writing",
+      "title": "Lyhyt kirjoitus — si-lauseilla",
+      "instruction": "Kirjoita 4–5 lausetta ranskaksi käyttäen si-lauseita.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.6, "C": 0.65, "M": 0.7, "E": 0.8, "L": 0.9 },
+      "skip_for_targets": ["I", "A", "B", "C", "M"],
+      "items": [
+        { "item_type": "writing", "prompt": "Kirjoita kolme si-lausetta Tyypistä 1 ja kaksi Tyypistä 2 liittyen tulevaisuudensuunnitelmiisi.", "min_words": 45, "max_words": 90, "rubric_focus": ["communication", "structure", "vocab"] },
+        { "item_type": "writing", "prompt": "Kirjoita lyhyt essee: 'Si j'avais un million d'euros...' Käytä Tyyppi 2 si-lauseita kuvaamaan mitä tekisit.", "min_words": 50, "max_words": 95, "rubric_focus": ["communication", "vocab", "structure"] },
+        { "item_type": "writing", "prompt": "Kirjoita työnhakukirjeen kappale jossa käytät molempia si-lausetyyppejä: mitä teet jos saat töitä (Tyyppi 1) ja mitä tekisit jos sinulla olisi enemmän kokemusta (Tyyppi 2).", "min_words": 45, "max_words": 90, "rubric_focus": ["communication", "structure", "vocab"] }
+      ]
+    }
+  ],
+  "vocab": [
+    { "es": "si (+ présent)", "fi": "jos (Tyyppi 1 — todellinen ehto)", "example_es": "Si tu travailles, tu réussiras.", "example_fi": "Jos teet töitä, menestyt.", "gender": null },
+    { "es": "si (+ imparfait)", "fi": "jos (Tyyppi 2 — hypoteettinen)", "example_es": "Si j'avais le temps, je lirais.", "example_fi": "Jos minulla olisi aikaa, lukisin.", "gender": null },
+    { "es": "la condition", "fi": "ehto", "example_es": "La condition pour réussir est de travailler.", "example_fi": "Menestyksen ehto on tehdä töitä.", "gender": "f" },
+    { "es": "sinon", "fi": "muuten, tai muuten", "example_es": "Pars maintenant, sinon tu seras en retard.", "example_fi": "Lähde nyt, muuten tulet myöhässä.", "gender": null },
+    { "es": "autrement", "fi": "muuten, toisella tavoin", "example_es": "Si tu ne travailles pas, tu échoueras — il n'y a pas autrement.", "example_fi": "Jos et tee töitä, epäonnistut — ei ole muuta tietä.", "gender": null },
+    { "es": "en cas de", "fi": "siinä tapauksessa jos, jos...", "example_es": "En cas de problème, appelez-moi.", "example_fi": "Jos tulee ongelma, soita minulle.", "gender": null },
+    { "es": "à condition que", "fi": "sillä ehdolla että (+ subjonctif)", "example_es": "Je viendrai à condition que tu sois là.", "example_fi": "Tulen sillä ehdolla, että olet paikalla.", "gender": null },
+    { "es": "sinon", "fi": "muuten", "example_es": "Dépêche-toi, sinon on va rater le bus.", "example_fi": "Kiirehdi, muuten myöhästymme bussista.", "gender": null }
+  ],
+  "side_panel": {
+    "tabs": [
+      {
+        "id": "grammar",
+        "title": "Kielioppi",
+        "content_md": "## Si-lausetyypit — yhteenveto\n\n| Tyyppi | Si-lause | Päälause | Käyttö |\n|---|---|---|---|\n| **1** | si + **présent** | **futur simple** | Todellinen, mahdollinen ehto |\n| **2** | si + **imparfait** | **conditionnel** | Hypoteettinen, epätodennäköinen |\n| **3** (K8!) | si + plus-que-parfait | conditionnel passé | Mennyt hypoteesi |\n\n## Esimerkit\n\n**Tyyppi 1:**\n- *Si tu **viens**, je **serai** content.* ✓\n\n**Tyyppi 2:**\n- *Si j'**avais** du temps, je **lirais**.* ✓\n\n## KRIITTISET VIRHEET — älä tee!\n\n- ✗ Si tu **viendras** → VIRHE (ei futuria si-lauseessa!)\n- ✗ Si j'**aurais** → VIRHE (ei conditionnelia si-lauseessa!)\n- ✓ Si + présent → futur\n- ✓ Si + imparfait → conditionnel"
+      },
+      {
+        "id": "tips",
+        "title": "YO-vinkki",
+        "content_md": "## Si-lauseet YO-kokeessa\n\nSi-lauseet esiintyvät Osassa 3 (rakenteet) ja Osassa 4 (kirjoitelma). Tyypillinen rakennetehtävä: 'Taivuta sulkeissa oleva verbi.'\n\n## Muistisääntö\n\n**Si = aina présent tai imparfait** (ei koskaan futuria tai conditionnelia)\n- Si + présent → futur ✓\n- Si + imparfait → conditionnel ✓\n- Si + futur → EI KOSKAAN ✗\n- Si + conditionnel → EI KOSKAAN ✗\n\n## Pisteytysnäkökulma\n\n- Tyyppi 1 (présent + futur) = C-taso\n- Tyyppi 2 (imparfait + conditionnel) = M-taso\n- Molemmat oikein kirjoitelmassa = merkittävä pisteiden nosto"
+      }
+    ]
+  }
+}

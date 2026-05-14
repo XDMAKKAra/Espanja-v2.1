@@ -1,0 +1,263 @@
+{
+  "meta": {
+    "course_key": "kurssi_1",
+    "lesson_index": 6,
+    "lesson_type": "grammar",
+    "level": "A",
+    "title": "Kielto ne...pas + persoonapronominit",
+    "description": "Opettelet ranskan kieltolauseen rakenteen (ne...pas) ja persoonapronominit kaikissa muodoissa. Ne...pas on perustavanlaatuinen rakenne — se ympäröi taipuvan verbin. Kielto kirjoitelmassa ja aukkotehtävässä on pakollinen YO-koetaito.",
+    "yo_relevance": "Ne-puuttuminen kirjoitelmasta on yksi YTL:n yleisimmistä merkityistä virheistä (Osa 4). Osa 3:n aukkotehtävissä kieltorakenne on tyypillinen testattava kohta.",
+    "estimated_minutes_median": 14
+  },
+  "teaching": {
+    "intro_md": "# Kielto ranskassa — ne...pas\n\nRanskan kieltorakenne eroaa suomesta: verbi **ympäröidään** kahdella sanalla:\n\n**ne + [verbi] + pas**\n\n## Esimerkkejä\n\n| Myöntö | Kielto |\n|---|---|\n| Je parle français. | Je **ne** parle **pas** français. |\n| Tu habites à Paris. | Tu **ne** habites **pas** à Paris. |\n| Il aime la musique. | Il **n'**aime **pas** la musique. |\n\n## Élision ne:ssä!\n\nKun verbi alkaa vokaalilla: **ne → n'**\n- Je **n'**aime pas.\n- Je **n'**habite pas à Paris.\n- Il **n'**étudie pas.\n\n## Puhutussa kielessä\n\nPuhutussa ranskassa **ne usein jätetään pois**: *J'aime pas* = *Je n'aime pas*. **Kirjoitelmassa ne on pakollinen** — YTL arvostelee puuttuvan ne:n!\n\n## Persoonapronominit kertauksena\n\n| Suomi | Ranska |\n|---|---|\n| minä | je (j' vokaalia ennen) |\n| sinä | tu |\n| hän (m) | il |\n| hän (f) | elle |\n| me (epäm.) | on |\n| me | nous |\n| te | vous |\n| he (sekajoukko) | ils |\n| he (vain naiset) | elles |",
+    "key_points": [
+      "Kielto = ne + verbi + pas. Ne koskaan verbin jälkeen, pas koskaan verbin edessä.",
+      "Ne → n' ennen vokaalia: je n'aime pas, il n'habite pas.",
+      "Puhutussa ne poistetaan, kirjoitelmassa se on pakollinen!",
+      "Passé composé:ssa kielto: je n'ai pas mangé (ne ympäröi apuverbin)."
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1-recognition-mc-kielto",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista — oikea kieltolause",
+      "instruction": "Valitse oikea kieltolause.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "mc", "stem": "Muuta myönteisestä kieltomuotoon: Je parle français.", "choices": ["Je parle pas français.", "Je ne parle pas français.", "Je pas parle français.", "Ne je parle pas français."], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Je ne parle pas français — ne ennen verbiä, pas verbin jälkeen. Järjestys: pronomini + ne + verbi + pas." },
+        { "item_type": "mc", "stem": "Muuta kieltomuotoon: Tu habites à Lyon.", "choices": ["Tu ne habites pas à Lyon.", "Tu n'habites pas à Lyon.", "Tu habites ne pas à Lyon.", "Tu pas habites à Lyon."], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "Tu n'habites pas à Lyon — habiter alkaa vokaalilla h (mykkä) → élision ne → n'. Ei tu ne habites pas (väärin vaikka lähellä, élision puuttuu)." },
+        { "item_type": "mc", "stem": "Muuta kieltomuotoon: Il aime la musique.", "choices": ["Il ne aime pas la musique.", "Il n'aime pas la musique.", "Il aime ne pas la musique.", "Il pas aime la musique."], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Il n'aime pas la musique — aimer alkaa vokaalilla a → ne → n'." },
+        { "item_type": "mc", "stem": "Mikä on oikein? (nous)", "choices": ["Nous pas étudions le français.", "Nous n'étudions pas le français.", "Nous ne pas étudions le français.", "Nous étudions pas le français."], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Nous n'étudions pas le français — étudier alkaa vokaalilla é → n'." },
+        { "item_type": "mc", "stem": "Mikä on oikein? (vous)", "choices": ["Vous ne travaillez pas.", "Vous travaillez ne pas.", "Vous pas travaillez.", "Ne vous travaillez pas."], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "Vous ne travaillez pas — travailler alkaa konsonantilla t → ne (ei n')." },
+        { "item_type": "mc", "stem": "Mikä on oikein? (ils)", "choices": ["Ils parlent ne pas.", "Ils ne parlent pas.", "Ils pas ne parlent.", "Ne ils parlent pas."], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "Ils ne parlent pas — parler alkaa konsonantilla p → ne (ei n')." },
+        { "item_type": "mc", "stem": "Muuta kieltomuotoon: J'étudie le français.", "choices": ["Je n'étudie pas le français.", "Je ne étudie pas le français.", "J'étudie ne pas le français.", "Pas j'étudie le français."], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "Je n'étudie pas le français — j' on jo élisoitunut (j'étudie), joten kielto: je + n' + étudie + pas." },
+        { "item_type": "mc", "stem": "Mikä on VÄÄRIN ranskaksi?", "choices": ["Je ne parle pas.", "Il n'aime pas.", "Elle ne habite pas.", "Nous ne travaillons pas."], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "Elle ne habite pas on väärin — habiter alkaa mykällä h:lla, joten élision pakollinen: elle n'habite pas." },
+        { "item_type": "mc", "stem": "Mitä tarkoittaa 'Je ne sais pas'?", "choices": ["En tiedä.", "Tiedän.", "En tule.", "En pidä."], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "Je ne sais pas = en tiedä. Savoir = tietää. Tämä on erittäin yleinen lausuma!" },
+        { "item_type": "mc", "stem": "Missä on ne...pas myönteisen verbin ympärillä oikein?", "choices": ["Il ne mange pas de pizza.", "Il mange ne pas de pizza.", "Il ne mange de pizza pas.", "Il ne pas mange de pizza."], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "Il ne mange pas de pizza — ne suoraan ennen verbiä, pas suoraan verbin jälkeen. Muu järjestys on väärin." },
+        { "item_type": "mc", "stem": "Muuta kieltomuotoon: Elles jouent au foot.", "choices": ["Elles ne jouent pas au foot.", "Elles jouent ne pas au foot.", "Elles n'jouent pas au foot.", "Elles ne pas jouent au foot."], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "Elles ne jouent pas au foot — jouer alkaa konsonantilla j → ne (ei n')." },
+        { "item_type": "mc", "stem": "Puhutussa ranskassa 'J'aime pas' tarkoittaa:", "choices": ["Pidän kovasti.", "En pidä.", "Pidän vähän.", "En tiedä pidänkö."], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "J'aime pas = je n'aime pas (puhuttu kielto, ne jätetty pois). Kirjoitelmassa PAKOLLINEN kirjoittaa ne." },
+        { "item_type": "mc", "stem": "Muuta kieltomuotoon: On parle français ici.", "choices": ["On ne parle pas français ici.", "On parle pas français ici.", "On n'parle pas français ici.", "Ne on parle pas français ici."], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "On ne parle pas français ici — parler alkaa konsonantilla p → ne (ei n')." },
+        { "item_type": "mc", "stem": "Mikä pronomini puuttuu? ___ ne travaille pas.", "choices": ["Je", "Il / Elle / On", "Tu", "Kaikki käyvät"], "correct_index": 3, "distractor_difficulty": "medium", "explanation": "Kaikki pronominit käyvät — je ne travaille pas, tu ne travailles pas, il/elle/on ne travaille pas. Taivutus muuttuu mutta ne...pas-rakenne pysyy." }
+      ]
+    },
+    {
+      "phase_id": "p2-recognition-match-kielto",
+      "phase_type": "recognition_match",
+      "title": "Yhdistä — myöntö ja kielto",
+      "instruction": "Yhdistä myönteinen lause sen kieltovastineeseen.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        {
+          "item_type": "match",
+          "left_label": "Myöntö",
+          "right_label": "Kielto",
+          "pairs": [
+            { "left": "Je parle français.", "right": "Je ne parle pas français." },
+            { "left": "Il aime la musique.", "right": "Il n'aime pas la musique." },
+            { "left": "Tu habites à Paris.", "right": "Tu n'habites pas à Paris." },
+            { "left": "Elle étudie le français.", "right": "Elle n'étudie pas le français." },
+            { "left": "Nous travaillons.", "right": "Nous ne travaillons pas." },
+            { "left": "Ils jouent au foot.", "right": "Ils ne jouent pas au foot." }
+          ]
+        },
+        {
+          "item_type": "match",
+          "left_label": "Pronomini",
+          "right_label": "Merkitys",
+          "pairs": [
+            { "left": "je / j'", "right": "minä" },
+            { "left": "tu", "right": "sinä" },
+            { "left": "il", "right": "hän (mies)" },
+            { "left": "elle", "right": "hän (nainen)" },
+            { "left": "nous", "right": "me" },
+            { "left": "vous", "right": "te (muodollinen tai monikko)" },
+            { "left": "ils", "right": "he (miehet tai sekajoukko)" },
+            { "left": "elles", "right": "he (vain naisia)" }
+          ]
+        }
+      ]
+    },
+    {
+      "phase_id": "p3-recognition-mc-pronominit",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista — pronominit ja kielto yhdessä",
+      "instruction": "Valitse oikea muoto.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        { "item_type": "mc", "stem": "Mikä on oikein: 'hän ei puhu ranskaa' (nainen)?", "choices": ["Elle ne parle pas français.", "Il ne parle pas français.", "Elle pas parle français.", "Elle n'parle pas français."], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "Elle ne parle pas français — nainen = elle, parler alkaa konsonantilla → ne (ei n')." },
+        { "item_type": "mc", "stem": "'Me emme asu Pariisissa' ranskaksi:", "choices": ["Nous pas habitons à Paris.", "Nous n'habitons pas à Paris.", "Nous ne habitons pas à Paris.", "Nous habitons ne pas à Paris."], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "Nous n'habitons pas à Paris — habiter mykkä h → n'. Nous ne habitons pas on väärin (élision puuttuu)." },
+        { "item_type": "mc", "stem": "'He eivät opiskele' (sekajoukko) ranskaksi:", "choices": ["Elles n'étudient pas.", "Ils n'étudient pas.", "Ils ne étudient pas.", "Ils étudient ne pas."], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Ils n'étudient pas — sekajoukko tai miehet = ils, étudier alkaa vokaalilla → n'." },
+        { "item_type": "mc", "stem": "Mikä pronomini sopii: '___ ne chantons pas'?", "choices": ["Tu", "Vous", "Nous", "Ils"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "Nous ne chantons pas — chanter-verbi muodossa nous: nous chantons. Nous + kielto = nous ne chantons pas." },
+        { "item_type": "mc", "stem": "Mikä on oikein: 'te ette rakasta ranskalaista musiikkia'?", "choices": ["Vous n'aimez pas la musique française.", "Vous ne aimez pas la musique française.", "Vous pas aimez la musique française.", "Vous n'aimons pas la musique française."], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "Vous n'aimez pas la musique française — aimer alkaa vokaalilla → n'. Muoto vous aimez." },
+        { "item_type": "mc", "stem": "Miksi 'Je ne sais pas' on tärkeä lausuma?", "choices": ["Se on muodollinen tervehdys", "Se tarkoittaa 'en tiedä' — erittäin yleinen", "Se tarkoittaa 'en pidä'", "Se on vain puhutussa kielessä"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "Je ne sais pas = en tiedä — yksi ranskan yleisimmistä lausumista. Savoir = tietää (tietoa/taitoa)." }
+      ]
+    },
+    {
+      "phase_id": "p4-recall-typed-fr-fi",
+      "phase_type": "recall_typed_es_to_fi",
+      "title": "Käännä suomeksi",
+      "instruction": "Käännä kieltolause suomeksi.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "je ne parle pas", "accept": ["en puhu", "minä en puhu"], "hint": "ne...pas = kielto" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "il n'aime pas", "accept": ["hän ei pidä", "hän ei rakasta"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "nous n'habitons pas à Paris", "accept": ["emme asu Pariisissa", "me emme asu Pariisissa"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "tu ne travailles pas", "accept": ["et työskentele", "sinä et työskentele"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "ils ne parlent pas français", "accept": ["he eivät puhu ranskaa"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "je ne sais pas", "accept": ["en tiedä", "minä en tiedä"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "elle n'étudie pas", "accept": ["hän ei opiskele"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "vous ne comprenez pas", "accept": ["te ette ymmärrä", "ette ymmärrä"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "on n'habite pas ici", "accept": ["me ei asuta täällä", "täällä ei asuta"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "elles n'écoutent pas", "accept": ["he eivät kuuntele"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "je ne mange pas de viande", "accept": ["en syö lihaa", "minä en syö lihaa"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "il ne comprend pas", "accept": ["hän ei ymmärrä"] }
+      ]
+    },
+    {
+      "phase_id": "p5-recall-typed-fi-fr",
+      "phase_type": "recall_typed_fi_to_es",
+      "title": "Kirjoita kieltolause ranskaksi",
+      "instruction": "Kirjoita kieltolause ranskaksi (ne...pas).",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "en puhu (parler)", "accept": ["je ne parle pas"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "hän ei pidä (aimer) — nainen, élision!", "accept": ["elle n'aime pas"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "emme asu (habiter) — élision!", "accept": ["nous n'habitons pas"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "he eivät opiskele (étudier) — miehet, élision!", "accept": ["ils n'étudient pas"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "sinä et pidä (aimer) — élision!", "accept": ["tu n'aimes pas"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "te ette työskentelette (travailler)", "accept": ["vous ne travaillez pas"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "hän ei puhu (parler) — mies", "accept": ["il ne parle pas"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "en tiedä (savoir)", "accept": ["je ne sais pas"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "täällä ei puhuta ranskaa (parler)", "accept": ["on ne parle pas français ici"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "he eivät kuuntele (écouter) — vain naisia, élision!", "accept": ["elles n'écoutent pas"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "en syö lihaa (manger)", "accept": ["je ne mange pas de viande"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "hän ei ymmärrä (comprendre) — nainen", "accept": ["elle ne comprend pas"] }
+      ]
+    },
+    {
+      "phase_id": "p6-application-gap-helppo",
+      "phase_type": "application_gap_fill",
+      "title": "Lauseen täydennys — kieltorakenne",
+      "instruction": "Täydennä puuttuva osa kieltolauseesta.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Je {1} parle {2} anglais.", "answers": [["ne"], ["pas"]], "word_bank": ["ne", "pas", "n'", "plus"] },
+        { "item_type": "gap_fill", "sentence_template": "Il {1}aime {2} la musique classique.", "answers": [["n'"], ["pas"]], "word_bank": ["ne", "n'", "pas", "jamais"] },
+        { "item_type": "gap_fill", "sentence_template": "Nous {1} habitons {2} à Montréal.", "answers": [["n'"], ["pas"]], "word_bank": ["ne", "n'", "pas", "plus"] },
+        { "item_type": "gap_fill", "sentence_template": "Tu {1} travailles {2} le week-end ?", "answers": [["ne"], ["pas"]], "word_bank": ["ne", "n'", "pas"] },
+        { "item_type": "gap_fill", "sentence_template": "Vous {1} comprenez {2} ?", "answers": [["ne"], ["pas"]], "word_bank": ["ne", "n'", "pas"] },
+        { "item_type": "gap_fill", "sentence_template": "Elle {1}étudie {2} le soir.", "answers": [["n'"], ["pas"]], "word_bank": ["ne", "n'", "pas"] },
+        { "item_type": "gap_fill", "sentence_template": "Ils {1} parlent {2} français à la maison.", "answers": [["ne"], ["pas"]], "word_bank": ["ne", "n'", "pas"] },
+        { "item_type": "gap_fill", "sentence_template": "Je {1} sais {2}.", "answers": [["ne"], ["pas"]], "word_bank": ["ne", "n'", "pas"] },
+        { "item_type": "gap_fill", "sentence_template": "On {1} mange {2} de viande ici.", "answers": [["ne"], ["pas"]], "word_bank": ["ne", "n'", "pas"] },
+        { "item_type": "gap_fill", "sentence_template": "Elles {1}écoutent {2} la radio.", "answers": [["n'"], ["pas"]], "word_bank": ["ne", "n'", "pas"] }
+      ]
+    },
+    {
+      "phase_id": "p7-application-gap-vaativa",
+      "phase_type": "application_gap_fill",
+      "title": "Lauseen täydennys — vaativa",
+      "instruction": "Muuta myönteinen lause kieltomuotoon ilman sanapankkia.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Myöntö: Elle aime le sport. → Kielto: Elle {1} sport.", "answers": [["n'aime pas le"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Myöntö: Nous étudions. → Kielto: Nous {1}.", "answers": [["n'étudions pas"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Myöntö: Tu parles français. → Kielto: Tu {1} français.", "answers": [["ne parles pas"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Myöntö: Il habite à Paris. → Kielto: Il {1} à Paris.", "answers": [["n'habite pas"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Myöntö: Je comprends. → Kielto: Je {1}.", "answers": [["ne comprends pas"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Myöntö: Ils jouent au foot. → Kielto: Ils {1} au foot.", "answers": [["ne jouent pas"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Myöntö: Vous aimez la France. → Kielto: Vous {1} la France.", "answers": [["n'aimez pas"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Myöntö: On parle anglais ici. → Kielto: On {1} anglais ici.", "answers": [["ne parle pas"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p8-application-sentence-build",
+      "phase_type": "application_sentence_build",
+      "title": "Lauseiden rakentelua",
+      "instruction": "Käännä koko lause ranskaksi kieltorakenteella.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.60, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "En puhu ranskaa hyvin.", "accept": ["Je ne parle pas bien français.", "je ne parle pas bien français."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Hän ei pidä ranskalaisesta musiikista.", "accept": ["Il n'aime pas la musique française.", "Elle n'aime pas la musique française."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Me emme asu Pariisissa.", "accept": ["Nous n'habitons pas à Paris.", "nous n'habitons pas à Paris."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "He eivät ymmärrä ranskaa.", "accept": ["Ils ne comprennent pas le français.", "Elles ne comprennent pas le français."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "En tiedä missä hän asuu.", "accept": ["Je ne sais pas où il habite.", "Je ne sais pas où elle habite."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Täällä ei puhuta englantia.", "accept": ["On ne parle pas anglais ici.", "Ici, on ne parle pas anglais."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Sinä et opiskele ranskaa?", "accept": ["Tu n'études pas le français ?", "Tu n'étudies pas le français ?"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Te ette työskentelette viikonloppuna.", "accept": ["Vous ne travaillez pas le week-end.", "vous ne travaillez pas le week-end."] }
+      ]
+    },
+    {
+      "phase_id": "p9-synthesis-translate",
+      "phase_type": "synthesis_translate",
+      "title": "YO-tyylinen käännös",
+      "instruction": "Käännä virke ranskaksi YO-tasolla.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.60, "C": 0.65, "M": 0.75, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "translate", "direction": "fi_to_es", "source": "En puhu ranskaa kotona, mutta opiskelen sitä koulussa.", "accept": ["Je ne parle pas français à la maison, mais je l'étudie à l'école.", "Je ne parle pas français chez moi, mais je l'apprends à l'école."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "He eivät asu Pariisissa vaan Lyonissa.", "accept": ["Ils n'habitent pas à Paris mais à Lyon.", "Ils n'habitent pas à Paris, ils habitent à Lyon."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Täällä ei puhuta vain ranskaa — myös englantia ja arabiaa.", "accept": ["Ici, on ne parle pas seulement français — aussi anglais et arabe.", "On ne parle pas uniquement français ici — on parle aussi anglais et arabe."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "En tiedä missä he asuvat, mutta he eivät asu Belgiassa.", "accept": ["Je ne sais pas où ils habitent, mais ils n'habitent pas en Belgique.", "Je ne sais pas où ils vivent, mais ils ne vivent pas en Belgique."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Hän ei pidä ranskasta mutta opiskelee sitä silti.", "accept": ["Il n'aime pas le français mais il l'étudie quand même.", "Elle n'aime pas le français mais elle l'étudie quand même."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Me emme puhu englantia — me opiskelemme ranskaa.", "accept": ["Nous ne parlons pas anglais — nous étudions le français.", "On ne parle pas anglais — on étudie le français."] }
+      ]
+    },
+    {
+      "phase_id": "p10-synthesis-short-writing",
+      "phase_type": "synthesis_short_writing",
+      "title": "Lyhyt kirjoitus — kieltorakenne",
+      "instruction": "Kirjoita lyhyt teksti ranskaksi käyttäen kieltorakennetta.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.60, "C": 0.65, "M": 0.70, "E": 0.80, "L": 0.90 },
+      "skip_for_targets": ["I", "A", "B", "C", "M"],
+      "items": [
+        { "item_type": "writing", "prompt": "Kirjoita 4–6 lausetta itsestäsi: mitä ET tee, mistä ET pidä, missä ET asu jne. Käytä ne...pas vähintään 3 kertaa oikein. Voit yhdistää myöntöihin: 'J'aime... mais je n'aime pas...'", "min_words": 30, "max_words": 75, "rubric_focus": ["communication", "vocab", "structure"] },
+        { "item_type": "writing", "prompt": "Kirjoita lyhyt teksti (4–5 lausetta) vertailemalla kahta paikkaa ranskaksi. Mitä siellä puhutaan ja mitä ei? Käytä on ne parle pas... / on parle... -rakennetta.", "min_words": 30, "max_words": 70, "rubric_focus": ["communication", "structure"] },
+        { "item_type": "writing", "prompt": "Kirjoita 4–6 lausetta ranskaksi kuvitteellisesta henkilöstä joka ei pidä kielistä, mutta yrittää silti. Käytä kieltorakennetta ja myönteisiä lauseita kontrastina.", "min_words": 30, "max_words": 75, "rubric_focus": ["communication", "vocab"] }
+      ]
+    }
+  ],
+  "vocab": [
+    { "es": "ne...pas", "fi": "ei (kieltorakenne)", "example_es": "Je ne parle pas français.", "example_fi": "En puhu ranskaa.", "gender": null },
+    { "es": "ne...jamais", "fi": "ei koskaan", "example_es": "Il ne mange jamais de viande.", "example_fi": "Hän ei syö koskaan lihaa.", "gender": null },
+    { "es": "ne...plus", "fi": "ei enää", "example_es": "Elle n'habite plus à Paris.", "example_fi": "Hän ei enää asu Pariisissa.", "gender": null },
+    { "es": "ne...rien", "fi": "ei mitään", "example_es": "Je ne comprends rien.", "example_fi": "En ymmärrä mitään.", "gender": null },
+    { "es": "ne...personne", "fi": "ei ketään", "example_es": "Il ne connaît personne ici.", "example_fi": "Hän ei tunne täällä ketään.", "gender": null },
+    { "es": "comprendre", "fi": "ymmärtää", "example_es": "Je ne comprends pas.", "example_fi": "En ymmärrä.", "gender": null },
+    { "es": "savoir", "fi": "tietää; osata", "example_es": "Je ne sais pas.", "example_fi": "En tiedä.", "gender": null },
+    { "es": "connaître", "fi": "tuntea (henkilö tai paikka)", "example_es": "Je ne connais pas Paris.", "example_fi": "En tunne Pariisia.", "gender": null },
+    { "es": "je", "fi": "minä", "example_es": "Je ne parle pas.", "example_fi": "En puhu.", "gender": null },
+    { "es": "tu", "fi": "sinä", "example_es": "Tu ne parles pas.", "example_fi": "Et puhu.", "gender": null },
+    { "es": "il", "fi": "hän (mies)", "example_es": "Il ne parle pas.", "example_fi": "Hän ei puhu.", "gender": null },
+    { "es": "elle", "fi": "hän (nainen)", "example_es": "Elle ne parle pas.", "example_fi": "Hän ei puhu.", "gender": null },
+    { "es": "on", "fi": "me; man", "example_es": "On ne parle pas français ici.", "example_fi": "Täällä ei puhuta ranskaa.", "gender": null },
+    { "es": "nous", "fi": "me", "example_es": "Nous ne travaillons pas.", "example_fi": "Emme työskentele.", "gender": null },
+    { "es": "vous", "fi": "te", "example_es": "Vous ne comprenez pas ?", "example_fi": "Ette ymmärrä?", "gender": null },
+    { "es": "ils", "fi": "he (miehet/sekajoukko)", "example_es": "Ils ne jouent pas.", "example_fi": "He eivät pelaa.", "gender": null },
+    { "es": "elles", "fi": "he (vain naisia)", "example_es": "Elles n'écoutent pas.", "example_fi": "He eivät kuuntele.", "gender": null }
+  ],
+  "side_panel": {
+    "tabs": [
+      {
+        "id": "grammar",
+        "title": "Kielioppi",
+        "content_md": "## Kielto ranskassa\n\n**ne + verbi + pas**\n\n| Myöntö | Kielto |\n|---|---|\n| Je parle | Je **ne** parle **pas** |\n| Il aime | Il **n'**aime **pas** |\n| Nous habitons | Nous **n'**habitons **pas** |\n\n## Élision ne → n'\n\nKun verbi alkaa vokaalilla tai mykällä h:lla:\n- je n'**a**ime pas\n- il n'**h**abite pas\n- elle n'**é**tudie pas\n\n## Muita kieltomuotoja\n\n- **ne...jamais** — ei koskaan\n- **ne...plus** — ei enää\n- **ne...rien** — ei mitään\n- **ne...personne** — ei ketään\n\n## KIRJOITELMASSA: ne on pakollinen!\n\nPuhutussa: *J'aime pas* (ok puhuessa)\nKirjoitelmassa: **Je n'aime pas** (ne pakollinen!)\n\n## Pronominit\n\n- je / j' — minä\n- tu — sinä\n- il / elle / on — hän / se / me\n- nous — me\n- vous — te\n- ils / elles — he"
+      },
+      {
+        "id": "tips",
+        "title": "YO-vinkki",
+        "content_md": "## YO-koe — ne puuttuu = pistemenetys\n\nYTL:n arviointiohjeen mukaan 'ne-puuttuminen' on merkittävä kielivirhe. Kirjoitelmassa:\n\n**Väärin:** *J'aime pas le sport.*\n**Oikein:** *Je n'aime pas le sport.*\n\n## Élision kiellon kanssa\n\nKun verbi alkaa vokaalilla:\n- Je **n'**aime pas ✓\n- Je **ne** aime pas ✗ (puuttuu élision)\n\n## Osa 3 — aukkotehtävä\n\nTyypillinen aukkotehtävä: 'Je ___ mange ___ de viande' → täytä ne ja pas. Muista järjestys: ne AINA ennen verbiä, pas AINA verbin jälkeen.\n\n## Käytännöllinen lausuma\n\n- **Je ne sais pas.** — En tiedä. (yleisin!)\n- **Je ne comprends pas.** — En ymmärrä.\n- **Je ne parle pas bien français.** — En puhu ranskaa hyvin."
+      }
+    ]
+  }
+}

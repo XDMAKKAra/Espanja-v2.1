@@ -1,0 +1,115 @@
+{
+  "meta": {
+    "course_key": "kurssi_8",
+    "lesson_index": 9,
+    "lesson_type": "writing",
+    "level": "E",
+    "title": "Kirjoittaminen — täysi YO-kirjoitelma (argumentoiva, 300–450 merkkiä)",
+    "description": "E-tason pitkä argumentoiva kirjoitelma kolmella YO-tyyppisellä aiheella: kulttuuri, ympäristö, frankofonia. Rubric: viestinnällisyys, rakenteet, sanasto, kokonaisuus (pedagogy/ranska-RUBRIC.md §4). AI-grading.",
+    "yo_relevance": "Osa 4 (rédaction longue): pitkä kirjoitelma 300–450 merkkiä (ilman välilyöntejä) = 66 pistettä. E-tasolla edellytetään si-lauseiden (T2/T3), subjonctifin, konditionaalin ja abstraktion sanaoston käyttöä. Tämä oppitunti simuloi täyttä YTL-kirjoitelmatehtävää.",
+    "estimated_minutes_median": 22
+  },
+  "teaching": {
+    "intro_md": "# Pitkä argumentoiva kirjoitelma ranskaksi\n\nYO:n pitkä kirjoitelma (rédaction longue) = **300–450 merkkiä ilman välilyöntejä** = 66 pistettä.\n\n## Argumentoivan kirjoitelman rakenne\n\n```\n[Johdanto: esitä teema + oma kanta]\n → À mon avis, / Selon moi, / Il me semble que...\n\n[Argumentti 1: syy + esimerkki]\n → D'abord / Premièrement...\n → Par exemple, en France...\n\n[Argumentti 2 / Vastaargumentti]\n → Cependant / Néanmoins / En revanche...\n → D'un côté... de l'autre côté...\n\n[Yhteenveto: toista kanta + tulevaisuusnäkymä]\n → En conclusion / Pour conclure...\n → Si + si-lause (T1/T2/T3)\n```\n\n## E-tason rakenteiden muistilista\n\n| Rakenne | Esimerkki | Tärkeys |\n|---|---|---|\n| Si Tyyppi 2 | *Si les gouvernements agissaient, la situation s'améliorerait.* | ★★★ |\n| Si Tyyppi 3 | *Si l'accord avait été signé plus tôt, les émissions auraient baissé.* | ★★★ |\n| Subjonctif | *Il est essentiel que les citoyens s'engagent.* | ★★★ |\n| Conditionnel | *Je voudrais vivre dans un monde plus juste.* | ★★ |\n| Plus-que-parfait | *Quand je suis arrivé, ils avaient déjà décidé.* | ★★ |\n| Konnektorit | *cependant, néanmoins, par conséquent, en outre* | ★★★ |\n\n## Merkkimäärä\n\n**300–450 merkkiä ilman välilyöntejä.** Ylityksestä -6 pistettä. Alityksesta suuri rangaistus. Tähtää 380:aan.",
+    "key_points": [
+      "Pitkä kirjoitelma: 300–450 merkkiä ilman välilyöntejä. Ylitys = -6 pistettä.",
+      "Si-tyyppi 2 ja 3 ovat E-tason tunnusmerkit kirjoitelmassa — käytä molempia.",
+      "Subjonctif laukaisijoineen (il est essentiel que + subjonctif) nostaa arvosanaa.",
+      "Konnektorit: cependant, néanmoins, par conséquent, en outre — ei pelkästään 'mais' ja 'et'.",
+      "Johdanto: esitä teema + kanta. Lopetus: toista kanta + tulevaisuusnäkymä."
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1-recognition-mc-structure",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista — argumentoivan kirjoitelman rakenne",
+      "instruction": "Valitse oikea vastaus.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "mc", "stem": "Pitkän kirjoitelman merkkimäärä YO:ssa (rédaction longue)?", "choices": ["160–240 merkkiä", "300–450 merkkiä", "500–700 merkkiä", "alle 200 merkkiä"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "YTL: pitkä kirjoitelma (rédaction longue) = 300–450 merkkiä ilman välilyöntejä = 66 pistettä. Ylityksestä -6 pistettä." },
+        { "item_type": "mc", "stem": "E-tason kirjoitelmaa erottava rakenne M-tasosta?", "choices": ["Pelkkä présent kaikissa lauseissa.", "Si Tyyppi 2 tai 3 + subjonctif kiinteissä ilmauksissa.", "Lyhyet yksinkertaiset lauseet.", "Vain passé composé -muodot."], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "E-tasolla: si T2/T3 + subjonctif (il est essentiel que) + abstrakti sanasto + monipuoliset konnektorit. M-tasolla nämä ovat vielä kehittymässä." },
+        { "item_type": "mc", "stem": "Mikä konnektori sopii vastaväitteen esittämiseen?", "choices": ["De plus", "En effet", "Cependant / Néanmoins", "Par exemple"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "Cependant / Néanmoins = kuitenkin (vastaväite). De plus = lisäksi (sama suunta). En effet = itse asiassa (vahvistus). Par exemple = esimerkiksi." },
+        { "item_type": "mc", "stem": "Mikä rakenne sopii kirjoitelman lopetukseen?", "choices": ["C'est fini.", "En conclusion, il est indispensable que les gouvernements agissent.", "Voilà, j'ai tout dit.", "Le thème est difficile."], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "En conclusion + subjonctif (il est indispensable que + agissent) = E-tason formaali lopetus. Muut ovat liian epämuodollisia tai tyhjänpäiväisiä." },
+        { "item_type": "mc", "stem": "Mikä si-lause on kirjoitelmaan paras E-tason osoitin (K8 kontekstissa)?", "choices": ["Si tu viens, je serai content.", "Si les pays avaient coopéré plus tôt, la crise aurait été évitée.", "S'il fait beau, on ira à la mer.", "Si j'aurais le temps, je lirais."], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "Si Tyyppi 3 (PQP + conditionnel passé) = E-tason merkki. Vaihtoehto 0 on T1 (perustaso). Vaihtoehto 3 on virheellinen (conditionnelia ei si-lauseessa)." },
+        { "item_type": "mc", "stem": "Subjonctif-laukaisija mielipidekirjoitelmassa?", "choices": ["Je pense que l'environnement est important.", "Il est essentiel que les citoyens s'engagent.", "Je crois que nous devons agir.", "Je sais que le problème existe."], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "Il est essentiel que + subjonctif (s'engagent). je pense que + indicatif, je crois que + indicatif, je sais que + indicatif — subjonctif tulee vain tietyistä laukaisijailmauksista." },
+        { "item_type": "mc", "stem": "Mikä konnektori tarkoittaa 'lisäksi, myös'?", "choices": ["Cependant", "En outre / De plus", "En revanche", "Par conséquent"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "En outre / De plus = lisäksi. Cependant = kuitenkin. En revanche = sitä vastoin. Par conséquent = näin ollen." }
+      ]
+    },
+    {
+      "phase_id": "p2-gap-fill-konnektorit",
+      "phase_type": "application_gap_fill",
+      "title": "Täytä aukko — konnektorit ja rakenteet",
+      "instruction": "Täytä oikea konnektori tai rakenne aukkoon.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Il est essentiel que les gouvernements ___ (agir — subjonctif) dès maintenant.", "answers": [["agissent"]], "word_bank": ["agissent", "agissons", "agissant", "agir", "ont agi"] },
+        { "item_type": "gap_fill", "sentence_template": "D'un côté, la laïcité protège la neutralité. ___, certains la trouvent trop restrictive.", "answers": [["De l'autre côté", "Cependant", "En revanche", "Néanmoins"]], "word_bank": ["De l'autre côté", "Et aussi", "Par exemple", "D'abord"] },
+        { "item_type": "gap_fill", "sentence_template": "Si les jeunes s'___ (engager — T1) davantage, la situation ___ (changer — futur).", "answers": [["engagent"], ["changera"]], "word_bank": ["engagent", "engageraient", "se sont engagés", "changera", "changerait", "aurait changé"] },
+        { "item_type": "gap_fill", "sentence_template": "En ___, il est indispensable de protéger l'environnement pour les générations futures.", "answers": [["conclusion"]], "word_bank": ["conclusion", "bref", "résumé", "finissant"] },
+        { "item_type": "gap_fill", "sentence_template": "___ les pays avaient signé l'accord plus tôt, les émissions auraient déjà baissé.", "answers": [["Si"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "À mon ___, la culture francophone est une richesse mondiale.", "answers": [["avis"]], "word_bank": ["avis", "opinion", "idée", "pensée"] },
+        { "item_type": "gap_fill", "sentence_template": "La situation est grave ; ___, des solutions existent.", "answers": [["cependant", "néanmoins", "pourtant"]], "word_bank": ["cependant", "et", "aussi", "car"] }
+      ]
+    },
+    {
+      "phase_id": "p3-writing-yo-kirjoitelma",
+      "phase_type": "writing_long",
+      "title": "Kirjoita — täysi YO-kirjoitelma (pitkä tehtävä)",
+      "instruction": "Kirjoita argumentoiva kirjoitelma ranskaksi. Tavoite: 300–450 merkkiä. Käytä: si-lauseet (T2 tai T3), subjonctif, konnektorit, abstraktia sanastoa.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": [],
+      "items": [
+        {
+          "item_type": "writing",
+          "prompt": "YO-kirjoitelma aihe 1 — Kulttuuri: 'La culture francophone, est-elle encore une force dans le monde moderne ?' Kirjoita argumentoiva kirjoitelma. Käytä vähintään: (1) si-lause T2 tai T3, (2) subjonctif kiinteässä ilmauksessa (il est essentiel que / il faut que), (3) kaksi konnektoria (cependant, en outre, par conséquent, néanmoins). Tavoite: 300–450 merkkiä ilman välilyöntejä.",
+          "min_words": 80,
+          "max_words": 250,
+          "rubric_focus": ["communication", "structure", "vocab", "overall"]
+        },
+        {
+          "item_type": "writing",
+          "prompt": "YO-kirjoitelma aihe 2 — Ympäristö: 'Les jeunes peuvent-ils vraiment changer le monde face à la crise climatique ?' Kirjoita argumentoiva kirjoitelma. Käytä vähintään: (1) si-lause T2 tai T3, (2) subjonctif (il est nécessaire que, il faut que), (3) abstraktia sanastoa (militantisme, sobriété, transition énergétique, empreinte carbone). Tavoite: 300–450 merkkiä ilman välilyöntejä.",
+          "min_words": 80,
+          "max_words": 250,
+          "rubric_focus": ["communication", "structure", "vocab", "overall"]
+        },
+        {
+          "item_type": "writing",
+          "prompt": "YO-kirjoitelma aihe 3 — Frankofonia: 'La francophonie représente-t-elle une richesse culturelle ou un héritage colonial ?' Kirjoita argumentoiva kirjoitelma. Käytä vähintään: (1) plus-que-parfait kerran (K7 rakenne), (2) si-lause T2 tai T3, (3) kolme konnektoria (d'un côté, de l'autre côté, en revanche, par conséquent, cependant). Tavoite: 300–450 merkkiä ilman välilyöntejä.",
+          "min_words": 80,
+          "max_words": 250,
+          "rubric_focus": ["communication", "structure", "vocab", "overall"]
+        }
+      ]
+    }
+  ],
+  "vocab": [
+    { "es": "par conséquent", "fi": "näin ollen, siksi", "example_es": "La population augmente ; par conséquent, les ressources sont sous pression.", "example_fi": "Väestö kasvaa; näin ollen resurssit ovat paineessa.", "gender": null },
+    { "es": "en outre", "fi": "lisäksi, sen lisäksi", "example_es": "En outre, la culture francophone rayonne dans le monde entier.", "example_fi": "Lisäksi ranskankielinen kulttuuri säteilee koko maailmaan.", "gender": null },
+    { "es": "néanmoins", "fi": "siitä huolimatta, kuitenkin", "example_es": "La situation est difficile ; néanmoins, des solutions existent.", "example_fi": "Tilanne on vaikea; siitä huolimatta ratkaisuja on olemassa.", "gender": null },
+    { "es": "il est indispensable que + subjonctif", "fi": "on välttämätöntä, että + subjunktiivi", "example_es": "Il est indispensable que les pays coopèrent.", "example_fi": "On välttämätöntä, että maat tekevät yhteistyötä.", "gender": null },
+    { "es": "il me semble que", "fi": "minusta tuntuu, että / se tuntuu minusta", "example_es": "Il me semble que la laïcité est essentielle pour la cohésion sociale.", "example_fi": "Minusta tuntuu, että laïcité on olennainen sosiaalisen yhteenkuuluvuuden kannalta.", "gender": null },
+    { "es": "la richesse", "fi": "rikkaus (myös kuvaannollinen)", "example_es": "La diversité culturelle est une richesse pour la société.", "example_fi": "Kulttuurinen monimuotoisuus on yhteiskunnan rikkaus.", "gender": "f" },
+    { "es": "l'héritage", "fi": "perintö, perimys", "example_es": "La langue française est un héritage culturel précieux.", "example_fi": "Ranskan kieli on arvokas kulttuurinen perintö.", "gender": "m" },
+    { "es": "s'engager", "fi": "sitoutua, osallistua, ryhtyä toimeen", "example_es": "Il est essentiel que les citoyens s'engagent pour l'environnement.", "example_fi": "On olennaista, että kansalaiset sitoutuvat ympäristön puolesta.", "gender": null },
+    { "es": "la cohésion sociale", "fi": "sosiaalinen yhteenkuuluvuus", "example_es": "La cohésion sociale est menacée par les inégalités.", "example_fi": "Sosiaalista yhteenkuuluvuutta uhkaavat eriarvoisuudet.", "gender": "f" },
+    { "es": "rayonner", "fi": "säteillä, loistaa", "example_es": "La culture francophone rayonne dans le monde entier.", "example_fi": "Ranskankielinen kulttuuri säteilee koko maailmaan.", "gender": null }
+  ],
+  "side_panel": {
+    "tabs": [
+      {
+        "id": "grammar",
+        "title": "Rakenne",
+        "content_md": "## Argumentoivan kirjoitelman rakenne\n\n**1. Johdanto**\n- *À mon avis, / Il me semble que / Selon moi,...*\n\n**2. Argumentti 1**\n- *D'abord / Premièrement / D'un côté...*\n- *Par exemple,...*\n\n**3. Argumentti 2 / Vastaargumentti**\n- *Cependant / Néanmoins / En revanche...*\n- *De l'autre côté / D'autre part...*\n\n**4. Yhteenveto**\n- *En conclusion / Pour conclure,...*\n- *Il est essentiel que + subjonctif*\n- Si-lause T1 / T2 / T3\n\n## Konnektorit — taulukko\n\n| Toiminto | Konnektori |\n|---|---|\n| Lisäys | en outre, de plus, également |\n| Vastaväite | cependant, néanmoins, en revanche |\n| Syy | car, parce que, puisque |\n| Seuraus | par conséquent, donc, ainsi |\n| Esimerkki | par exemple, notamment, ainsi |\n| Lopetus | en conclusion, pour conclure |"
+      },
+      {
+        "id": "tips",
+        "title": "YO-vinkki",
+        "content_md": "## Osa 4 — pitkä kirjoitelma\n\n**Formaatti:**\n- 300–450 merkkiä (ilman välilyöntejä)\n- Ylitys: -6 pistettä\n- Alitus: suurempi rangaistus\n- Tähtää noin 380 merkkiin\n\n**E-tason rakenteiden muistilista:**\n\n☐ Si Tyyppi 2: *Si + imparfait → conditionnel*\n> *Si les gouvernements agissaient, la situation s'améliorerait.*\n\n☐ Si Tyyppi 3: *Si + PQP → conditionnel passé*\n> *Si l'accord avait été signé plus tôt, les émissions auraient baissé.*\n\n☐ Subjonctif: *il est essentiel que / il faut que + subjonctif*\n> *Il est essentiel que les citoyens s'engagent.*\n\n☐ Konnektorit E-tasolla:\n> cependant, néanmoins, par conséquent, en outre, d'ailleurs, en revanche\n\n**Sanaston E-taso:**\n> *la sobriété, le militantisme, la cohésion sociale, l'héritage, rayonner*\n\n**VARO:**\n> ❌ Si-lauseessa futuri tai conditionnel = automaattivirhe\n> ❌ Pelkkä 'mais' ja 'et' konnektoreina = M-taso, ei E"
+      }
+    ]
+  }
+}

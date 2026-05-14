@@ -1,0 +1,274 @@
+{
+  "meta": {
+    "course_key": "kurssi_5",
+    "lesson_index": 4,
+    "lesson_type": "vocab",
+    "level": "C",
+    "title": "Teknologia ja digitaalinen maailma",
+    "description": "Opit modernin teknologiasanaston ranskaksi: laitteet (l'ordinateur, le téléphone portable, l'écran), internet (le site web, le réseau social, internet), toiminnot (télécharger, se connecter, envoyer) ja digitaalinen turvallisuus (le mot de passe, la sécurité). Noin 30 sanaa jotka esiintyvät YO-tekstissä.",
+    "yo_relevance": "Teknologia-aihe on C-tason YO-tekstien ja kirjoitelmien nouseva teema. 'La révolution numérique' -tyyppiset tekstit esiintyvät luetun ymmärtämisessä, ja kirjoitelmassa saatetaan pyytää mielipidettä teknologian vaikutuksista.",
+    "estimated_minutes_median": 11
+  },
+  "teaching": {
+    "intro_md": "# Teknologia ja digitaalinen maailma ranskaksi\n\nDigitaalinen sanasto on C-tason YO-tekstien vakioaihe. Moni englannin sana on lainautunut ranskaan suoraan tai lähes sellaisenaan.\n\n## Laitteet — les appareils\n\n- **l'ordinateur** (m) — tietokone\n- **l'ordinateur portable** (m) — kannettava tietokone\n- **le téléphone portable** (m) — matkapuhelin (myös: le portable, le smartphone)\n- **la tablette** (f) — tabletti\n- **l'écran** (m) — näyttö\n- **l'imprimante** (f) — tulostin\n- **les écouteurs** (m, monikko) — kuulokkeet\n\n## Internet ja some — le web\n\n- **internet** — internet (ei artikkelia tai: sur internet)\n- **le site web** — verkkosivusto\n- **le réseau social** — sosiaalinen media (monikko: les réseaux sociaux)\n- **l'application** (f) — sovellus, applikaatio\n- **le logiciel** (m) — ohjelmisto\n- **le mot de passe** (m) — salasana\n- **le compte** (m) — tili (nettitili)\n\n## Toiminnot — les actions\n\n- **télécharger** — ladata (tiedosto)\n- **se connecter** — kirjautua sisään, yhdistää\n- **envoyer** — lähettää\n- **partager** — jakaa (some)\n- **chercher** — hakea (netistä)\n- **sauvegarder** — tallentaa\n\n> *Je **télécharge** de la musique sur mon application préférée.* — Lataan musiikkia suosikkisovellukseltani.",
+    "key_points": [
+      "l'ordinateur = tietokone; le portable = matkapuhelin (molemmat saavat artikkelit).",
+      "le réseau social (yksikkö) → les réseaux sociaux (monikko, x vaihtuu x:ksi!).",
+      "télécharger = ladata (tiedostoa netistä); sauvegarder = tallentaa (tiedostoa koneelle).",
+      "le mot de passe = salasana — compound-sana, molemmat osat taipuvat.",
+      "internet ei yleensä saa artikkelia: sur internet, naviguer sur internet."
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1-recognition-mc-tech",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista — teknologiasanasto",
+      "instruction": "Valitse oikea suomennos.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "mc", "stem": "l'ordinateur", "choices": ["tabletti", "tietokone", "puhelin", "näyttö"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "l'ordinateur = tietokone. la tablette = tabletti, le téléphone = puhelin, l'écran = näyttö." },
+        { "item_type": "mc", "stem": "le réseau social", "choices": ["nettisivusto", "sosiaalinen media", "sovellus", "verkkokauppa"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "le réseau social = sosiaalinen media. le site web = nettisivusto, l'application = sovellus." },
+        { "item_type": "mc", "stem": "télécharger", "choices": ["tallentaa", "jakaa", "ladata (tiedosto)", "lähettää"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "télécharger = ladata netistä. sauvegarder = tallentaa, partager = jakaa, envoyer = lähettää." },
+        { "item_type": "mc", "stem": "le mot de passe", "choices": ["käyttäjätunnus", "salasana", "turvallisuus", "tili"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "le mot de passe = salasana. le nom d'utilisateur = käyttäjätunnus, le compte = tili." },
+        { "item_type": "mc", "stem": "l'application", "choices": ["sovellus", "ohjelmisto", "nettisivu", "tietokone"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "l'application = sovellus. le logiciel = ohjelmisto (laajempi ohjelma, ei mobiilisovellus)." },
+        { "item_type": "mc", "stem": "se connecter", "choices": ["kirjautua ulos", "kirjautua sisään, yhdistää", "jakaa", "hakea"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "se connecter = kirjautua sisään tai yhdistää. se déconnecter = kirjautua ulos." },
+        { "item_type": "mc", "stem": "le logiciel", "choices": ["kovalevy", "ohjelmisto", "sovellus", "verkkokauppa"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "le logiciel = ohjelmisto (kuten Windows, Adobe). l'application = tyypillisesti mobiilisovellus." },
+        { "item_type": "mc", "stem": "l'écran", "choices": ["näppäimistö", "hiiri", "näyttö", "kamera"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "l'écran = näyttö. le clavier = näppäimistö, la souris = hiiri." },
+        { "item_type": "mc", "stem": "partager", "choices": ["jakaa", "lähettää", "hakea", "tallentaa"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "partager = jakaa (some, tiedosto). envoyer = lähettää, chercher = hakea, sauvegarder = tallentaa." },
+        { "item_type": "mc", "stem": "le site web", "choices": ["verkkosivusto", "sovellus", "sähköposti", "hakukone"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "le site web = verkkosivusto. l'application = sovellus, le courriel = sähköposti, le moteur de recherche = hakukone." },
+        { "item_type": "mc", "stem": "sauvegarder", "choices": ["ladata netistä", "jakaa", "poistaa", "tallentaa (koneelle)"], "correct_index": 3, "distractor_difficulty": "hard", "explanation": "sauvegarder = tallentaa. Ei pidä sekoittaa télécharger (ladata netistä) ja sauvegarder (tallentaa koneelle)." },
+        { "item_type": "mc", "stem": "le compte", "choices": ["lasku", "nettitili", "käyttäjätunnus", "maksu"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "le compte = tili (pankki- tai nettitili). avoir un compte = omistaa tili. la facture = lasku." },
+        { "item_type": "mc", "stem": "les écouteurs", "choices": ["kaiuttimet", "mikrofoni", "kuulokkeet", "webkamera"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "les écouteurs = kuulokkeet. les haut-parleurs = kaiuttimet, le microphone = mikrofoni." }
+      ]
+    },
+    {
+      "phase_id": "p2-recognition-match",
+      "phase_type": "recognition_match",
+      "title": "Yhdistä — teknologiasanasto",
+      "instruction": "Yhdistä ranskan sana ja suomennos.",
+      "mastery_threshold": { "I": 0.6, "A": 0.65, "B": 0.7, "C": 0.75, "M": 0.85, "E": 0.9, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        {
+          "item_type": "match",
+          "left_label": "Laitteet",
+          "right_label": "Suomeksi",
+          "pairs": [
+            { "left": "l'ordinateur", "right": "tietokone" },
+            { "left": "le téléphone portable", "right": "matkapuhelin" },
+            { "left": "la tablette", "right": "tabletti" },
+            { "left": "l'écran", "right": "näyttö" },
+            { "left": "l'imprimante", "right": "tulostin" },
+            { "left": "les écouteurs", "right": "kuulokkeet" },
+            { "left": "le clavier", "right": "näppäimistö" },
+            { "left": "la souris", "right": "hiiri (tietokonehiiri)" }
+          ]
+        },
+        {
+          "item_type": "match",
+          "left_label": "Internet ja some",
+          "right_label": "Suomeksi",
+          "pairs": [
+            { "left": "le réseau social", "right": "sosiaalinen media" },
+            { "left": "le site web", "right": "verkkosivusto" },
+            { "left": "l'application", "right": "sovellus" },
+            { "left": "le mot de passe", "right": "salasana" },
+            { "left": "le logiciel", "right": "ohjelmisto" },
+            { "left": "le compte", "right": "tili" },
+            { "left": "le courriel", "right": "sähköposti" },
+            { "left": "le moteur de recherche", "right": "hakukone" }
+          ]
+        },
+        {
+          "item_type": "match",
+          "left_label": "Digiverbit",
+          "right_label": "Suomeksi",
+          "pairs": [
+            { "left": "télécharger", "right": "ladata (netistä)" },
+            { "left": "sauvegarder", "right": "tallentaa" },
+            { "left": "partager", "right": "jakaa" },
+            { "left": "se connecter", "right": "kirjautua sisään" },
+            { "left": "envoyer", "right": "lähettää" },
+            { "left": "supprimer", "right": "poistaa" },
+            { "left": "cliquer", "right": "klikata" },
+            { "left": "naviguer", "right": "selata (nettiä)" }
+          ]
+        }
+      ]
+    },
+    {
+      "phase_id": "p3-recall-fr-to-fi",
+      "phase_type": "recall_typed_es_to_fi",
+      "title": "Kirjoita — ranska → suomi",
+      "instruction": "Kirjoita ranskan sanan suomennos.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I"],
+      "items": [
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "l'ordinateur", "accept": ["tietokone"], "hint": "maskuliini" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "télécharger", "accept": ["ladata", "ladata netistä"], "hint": "tiedoston saaminen netistä" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "le réseau social", "accept": ["sosiaalinen media", "somekanava"], "hint": "monikko: les réseaux sociaux" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "le mot de passe", "accept": ["salasana"], "hint": "compound-sana: 'salauksen sana'" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "l'application", "accept": ["sovellus", "applikaatio", "appi"], "hint": "lyhennettynä: l'appli" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "se connecter", "accept": ["kirjautua sisään", "yhdistää", "liittyä verkkoon"], "hint": "vastakohtapari: se déconnecter" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "partager", "accept": ["jakaa"], "hint": "somessa: 'share'" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "sauvegarder", "accept": ["tallentaa"], "hint": "ei pidä sekoittaa télécharger-verbiin!" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "le logiciel", "accept": ["ohjelmisto"], "hint": "suurempi kuin applikaatio" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "l'écran", "accept": ["näyttö", "ruutu"], "hint": "maskuliini" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "le compte", "accept": ["tili", "nettitili", "käyttäjätili"], "hint": "avoir un compte = omistaa tili" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "envoyer", "accept": ["lähettää"], "hint": "je t'envoie un message = lähetän sinulle viestin" }
+      ]
+    },
+    {
+      "phase_id": "p4-recall-fi-to-fr",
+      "phase_type": "recall_typed_fi_to_es",
+      "title": "Kirjoita — suomi → ranska",
+      "instruction": "Kirjoita suomen sana ranskaksi.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "tietokone", "accept": ["l'ordinateur", "ordinateur", "un ordinateur"], "hint": "maskuliini, alkaa vokaalilla" },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "sosiaalinen media", "accept": ["le réseau social", "réseau social", "les réseaux sociaux"], "hint": "maskuliini; monikko vaihtaa x:n: réseaux" },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "salasana", "accept": ["le mot de passe", "mot de passe"], "hint": "compound: kolme sanaa" },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "ladata (netistä)", "accept": ["télécharger"], "hint": "ei pidä sekoittaa: sauvegarder = tallentaa" },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "sovellus", "accept": ["l'application", "application", "l'appli", "appli"], "hint": "feminiini" },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "jakaa (some)", "accept": ["partager"], "hint": "nous partageons; partager un post" },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "näyttö", "accept": ["l'écran", "écran"], "hint": "maskuliini" },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "kirjautua sisään", "accept": ["se connecter"], "hint": "refleksiiviverbi" },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "lähettää", "accept": ["envoyer"], "hint": "j'envoie, tu envoies (y → i!)" }
+      ]
+    },
+    {
+      "phase_id": "p5-gap-fill-helppo",
+      "phase_type": "application_gap_fill",
+      "title": "Täytä aukko — teknologiakonteksti",
+      "instruction": "Täytä aukko oikealla sanalla. Käytä sanapankkia.",
+      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Tu peux {1} cette appli gratuitement sur ton téléphone.", "answers": [["télécharger"]], "word_bank": ["télécharger", "partager", "sauvegarder", "supprimer"] },
+        { "item_type": "gap_fill", "sentence_template": "N'oublie pas de {1} ton travail avant de fermer l'ordinateur.", "answers": [["sauvegarder"]], "word_bank": ["sauvegarder", "télécharger", "partager", "supprimer"] },
+        { "item_type": "gap_fill", "sentence_template": "Elle a créé un {1} sur ce réseau social.", "answers": [["compte"]], "word_bank": ["compte", "logiciel", "site web", "mot de passe"] },
+        { "item_type": "gap_fill", "sentence_template": "Le {1} de cette application est très pratique.", "answers": [["logiciel"]], "word_bank": ["logiciel", "écran", "compte", "clavier"] },
+        { "item_type": "gap_fill", "sentence_template": "Il faut choisir un {1} difficile avec des lettres, des chiffres et des symboles.", "answers": [["mot de passe"]], "word_bank": ["mot de passe", "compte", "logiciel", "réseau"] },
+        { "item_type": "gap_fill", "sentence_template": "Je me {1} à mon compte chaque matin.", "answers": [["connecte"]], "word_bank": ["connecte", "télécharge", "partage", "sauvegarde"] },
+        { "item_type": "gap_fill", "sentence_template": "Elle a {1} ses photos de vacances sur Instagram.", "answers": [["partagé"]], "word_bank": ["partagé", "téléchargé", "supprimé", "sauvegardé"] },
+        { "item_type": "gap_fill", "sentence_template": "Mon {1} est cassé — je ne vois plus rien sur mon ordinateur.", "answers": [["écran"]], "word_bank": ["écran", "clavier", "logiciel", "compte"] },
+        { "item_type": "gap_fill", "sentence_template": "Les {1} comme Instagram, TikTok et Snapchat sont très populaires chez les jeunes.", "answers": [["réseaux sociaux"]], "word_bank": ["réseaux sociaux", "logiciels", "ordinateurs", "sites web"] },
+        { "item_type": "gap_fill", "sentence_template": "Il a trouvé un emploi grâce à un {1} de recrutement professionnel.", "answers": [["site web"]], "word_bank": ["site web", "logiciel", "réseau social", "compte"] }
+      ]
+    },
+    {
+      "phase_id": "p6-gap-fill-vaativa",
+      "phase_type": "application_gap_fill",
+      "title": "Täytä aukko — vaativampi ilman sanapankkia",
+      "instruction": "Täytä aukko ilman sanapankkia. Huomio konteksti.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.65, "C": 0.75, "M": 0.85, "E": 0.9, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Les jeunes passent trop de temps sur les {1} — il faut limiter l'usage.", "answers": [["réseaux sociaux"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Je dois {1} ce document avant de l'envoyer par e-mail.", "answers": [["télécharger", "sauvegarder"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Il a oublié son {1} et ne peut plus {1} à son compte.", "answers": [["mot de passe"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Mon {1} est trop lent — il faut en acheter un nouveau.", "answers": [["ordinateur"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Cette {1} te permet de gérer tes finances depuis ton téléphone.", "answers": [["application", "appli"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "La protection des données personnelles sur {1} est un enjeu important.", "answers": [["internet"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Clique sur '{1}' pour enregistrer le fichier sur ton disque dur.", "answers": [["sauvegarder", "enregistrer"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Les pirates informatiques essaient de voler nos {1} pour accéder à nos comptes.", "answers": [["mots de passe"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Il travaille dans une startup qui développe des {1} pour les entreprises.", "answers": [["logiciels", "applications"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Le {1} de mon ordinateur s'est cassé — je ne vois que la moitié de l'image.", "answers": [["écran"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p7-sentence-build",
+      "phase_type": "application_sentence_build",
+      "title": "Rakenna lause — teknologia",
+      "instruction": "Käännä lause ranskaksi.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.6, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.92 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Nuoret käyttävät liikaa aikaa sosiaalisessa mediassa.", "accept": ["les jeunes passent trop de temps sur les réseaux sociaux", "les jeunes utilisent trop les réseaux sociaux"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Lataa tämä sovellus ilmaiseksi puhelimellesi.", "accept": ["télécharge cette application gratuitement sur ton téléphone", "télécharge cette appli gratuitement"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Unohdin salasanani enkä pysty kirjautumaan sisään.", "accept": ["j'ai oublié mon mot de passe et je ne peux pas me connecter", "j'ai oublié mon mot de passe je ne peux plus me connecter"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Hän työskentelee ohjelmistokehittäjänä Pariisin teknologiakeskuksessa.", "accept": ["il travaille comme développeur de logiciels à paris", "elle travaille dans le développement de logiciels à paris"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Tallenna tiedosto ennen kuin suljet tietokoneen.", "accept": ["sauvegarde le fichier avant de fermer l'ordinateur", "n'oublie pas de sauvegarder avant de fermer l'ordinateur"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Jaoin lomakuvani somessa.", "accept": ["j'ai partagé mes photos de vacances sur les réseaux sociaux", "j'ai partagé mes photos de vacances sur instagram"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Internet on muuttanut tapaa jolla löydämme töitä.", "accept": ["internet a changé la façon dont on trouve du travail", "internet a transformé la manière dont on cherche un emploi"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Hänen tilinsä hakkeroitiin koska salasana oli liian yksinkertainen.", "accept": ["son compte a été piraté parce que son mot de passe était trop simple", "son compte a été hacké car le mot de passe était trop simple"] }
+      ]
+    },
+    {
+      "phase_id": "p8-synthesis-translate",
+      "phase_type": "synthesis_translate",
+      "title": "YO-tyylinen käännös",
+      "instruction": "Käännä kokonaan ranskaksi.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.6, "C": 0.65, "M": 0.75, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Digitaalinen vallankumous on muuttanut tapaa jolla työskentelemme ja kommunikoimme.", "accept": ["la révolution numérique a changé la façon dont nous travaillons et communiquons", "la révolution digitale a transformé notre façon de travailler et de communiquer"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Nuoret viettävät keskimäärin neljä tuntia päivässä puhelimellaan.", "accept": ["les jeunes passent en moyenne quatre heures par jour sur leur téléphone", "les jeunes passent en moyenne 4 heures par jour sur leur portable"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "On tärkeää käyttää vahvaa salasanaa ja vaihtaa se säännöllisesti.", "accept": ["il est important d'utiliser un mot de passe fort et de le changer régulièrement", "c'est important d'avoir un mot de passe sécurisé et de le modifier régulièrement"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Ohjelmistokehittäjillä on paljon töitä tulevaisuudessa.", "accept": ["les développeurs de logiciels auront beaucoup de travail dans le futur", "il y aura beaucoup d'emplois pour les développeurs de logiciels à l'avenir"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Tulevaisuudessa kaikki yritykset käyttävät tekoälyä asiakaspalvelussaan.", "accept": ["à l'avenir toutes les entreprises utiliseront l'intelligence artificielle dans leur service client", "dans le futur toutes les entreprises useront de l'ia dans leur service clientèle"] }
+      ]
+    },
+    {
+      "phase_id": "p9-short-writing",
+      "phase_type": "synthesis_short_writing",
+      "title": "Lyhyt kirjoitus — teknologia ja nuoret",
+      "instruction": "Kirjoita 3–5 lausetta ranskaksi.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.6, "C": 0.65, "M": 0.7, "E": 0.8, "L": 0.9 },
+      "skip_for_targets": ["I", "A", "B", "C", "M"],
+      "items": [
+        { "item_type": "writing", "prompt": "Kirjoita lyhyesti teknologian vaikutuksista nuorten elämään. Käytä sanoja: les réseaux sociaux, télécharger tai le téléphone portable.", "min_words": 35, "max_words": 75, "rubric_focus": ["communication", "vocab", "structure"] },
+        { "item_type": "writing", "prompt": "Kuvaile unelmatyötäsi teknologian alalla. Millainen yritys? Mitä tekisit? Käytä vähintään kolmea teknologiasanaa.", "min_words": 35, "max_words": 75, "rubric_focus": ["communication", "vocab"] },
+        { "item_type": "writing", "prompt": "Mitkä ovat sosiaalisen median hyödyt ja haitat? Kirjoita mielipiteesi ranskaksi lyhyesti.", "min_words": 40, "max_words": 80, "rubric_focus": ["communication", "structure", "vocab"] }
+      ]
+    }
+  ],
+  "vocab": [
+    { "es": "l'ordinateur", "fi": "tietokone", "example_es": "J'ai un ordinateur portable pour le lycée.", "example_fi": "Minulla on kannettava tietokone lukioon.", "gender": "m" },
+    { "es": "l'ordinateur portable", "fi": "kannettava tietokone", "example_es": "Mon ordinateur portable est très léger.", "example_fi": "Kannettavani on hyvin kevyt.", "gender": "m" },
+    { "es": "le téléphone portable", "fi": "matkapuhelin", "example_es": "Elle ne quitte jamais son téléphone portable.", "example_fi": "Hän ei koskaan eroa matkapuhelimestaan.", "gender": "m" },
+    { "es": "la tablette", "fi": "tabletti", "example_es": "Il lit des livres sur sa tablette.", "example_fi": "Hän lukee kirjoja tabletillaan.", "gender": "f" },
+    { "es": "l'écran", "fi": "näyttö, ruutu", "example_es": "L'écran de mon téléphone est cassé.", "example_fi": "Puhelimeni näyttö on rikki.", "gender": "m" },
+    { "es": "l'imprimante", "fi": "tulostin", "example_es": "Il faut imprimer le document — où est l'imprimante?", "example_fi": "Täytyy tulostaa dokumentti — missä tulostin on?", "gender": "f" },
+    { "es": "les écouteurs", "fi": "kuulokkeet", "example_es": "J'écoute de la musique avec mes écouteurs.", "example_fi": "Kuuntelen musiikkia kuulokkeillani.", "gender": "m" },
+    { "es": "le clavier", "fi": "näppäimistö", "example_es": "Mon clavier est en AZERTY, pas QWERTY.", "example_fi": "Näppäimistöni on AZERTY, ei QWERTY.", "gender": "m" },
+    { "es": "la souris", "fi": "tietokonehiiri", "example_es": "La souris sans fil est très pratique.", "example_fi": "Langaton hiiri on hyvin kätevä.", "gender": "f" },
+    { "es": "le réseau social", "fi": "sosiaalinen media", "example_es": "Les réseaux sociaux changent nos habitudes.", "example_fi": "Sosiaalinen media muuttaa tapojamme.", "gender": "m" },
+    { "es": "le site web", "fi": "verkkosivusto", "example_es": "Elle a créé un site web pour son entreprise.", "example_fi": "Hän loi verkkosivuston yritykselleen.", "gender": "m" },
+    { "es": "l'application", "fi": "sovellus, applikaatio", "example_es": "Cette application est gratuite sur iOS.", "example_fi": "Tämä sovellus on ilmainen iOS:lle.", "gender": "f" },
+    { "es": "le logiciel", "fi": "ohjelmisto", "example_es": "Il développe des logiciels pour les banques.", "example_fi": "Hän kehittää ohjelmistoja pankeille.", "gender": "m" },
+    { "es": "le mot de passe", "fi": "salasana", "example_es": "Choisissez un mot de passe sécurisé.", "example_fi": "Valitse turvallinen salasana.", "gender": "m" },
+    { "es": "le compte", "fi": "tili (netti- tai pankkitili)", "example_es": "J'ai un compte sur ce réseau social.", "example_fi": "Minulla on tili tällä somekanavalla.", "gender": "m" },
+    { "es": "le courriel", "fi": "sähköposti", "example_es": "Envoyez-moi un courriel avec votre CV.", "example_fi": "Lähettäkää minulle sähköposti ansioluettelonne kanssa.", "gender": "m" },
+    { "es": "le moteur de recherche", "fi": "hakukone", "example_es": "Google est le moteur de recherche le plus utilisé.", "example_fi": "Google on eniten käytetty hakukone.", "gender": "m" },
+    { "es": "internet", "fi": "internet", "example_es": "Je cherche des informations sur internet.", "example_fi": "Haen tietoa internetistä.", "gender": null },
+    { "es": "télécharger", "fi": "ladata (netistä)", "example_es": "Télécharge l'application sur ton téléphone.", "example_fi": "Lataa sovellus puhelimellesi.", "gender": null },
+    { "es": "sauvegarder", "fi": "tallentaa (tiedostoa)", "example_es": "Sauvegarde ton travail régulièrement.", "example_fi": "Tallenna työtäsi säännöllisesti.", "gender": null },
+    { "es": "partager", "fi": "jakaa (some)", "example_es": "Elle partage ses recettes sur son compte.", "example_fi": "Hän jakaa reseptejään tilillään.", "gender": null },
+    { "es": "se connecter", "fi": "kirjautua sisään, yhdistää", "example_es": "Je me connecte à mon compte le matin.", "example_fi": "Kirjaudun tililleni aamulla.", "gender": null },
+    { "es": "envoyer", "fi": "lähettää", "example_es": "Envoie-moi un message.", "example_fi": "Lähetä minulle viesti.", "gender": null },
+    { "es": "supprimer", "fi": "poistaa", "example_es": "J'ai supprimé cette application inutile.", "example_fi": "Poistin tämän tarpeettoman sovelluksen.", "gender": null },
+    { "es": "naviguer", "fi": "selata (nettiä)", "example_es": "Il passe ses soirées à naviguer sur internet.", "example_fi": "Hän viettää iltansa selailemalla nettiä.", "gender": null },
+    { "es": "cliquer", "fi": "klikata", "example_es": "Clique sur ce lien pour accéder au site.", "example_fi": "Klikkaa tätä linkkiä päästäksesi sivustolle.", "gender": null },
+    { "es": "la sécurité", "fi": "turvallisuus", "example_es": "La sécurité en ligne est très importante.", "example_fi": "Verkon turvallisuus on erittäin tärkeää.", "gender": "f" },
+    { "es": "numérique", "fi": "digitaalinen", "example_es": "La révolution numérique a tout changé.", "example_fi": "Digitaalinen vallankumous on muuttanut kaiken.", "gender": null },
+    { "es": "la donnée", "fi": "tieto, data (monikko: les données)", "example_es": "La protection des données personnelles est essentielle.", "example_fi": "Henkilötietojen suoja on olennaista.", "gender": "f" }
+  ],
+  "side_panel": {
+    "tabs": [
+      {
+        "id": "vocab",
+        "title": "Sanasto",
+        "content_md": "## Laitteet\n\n- **l'ordinateur** (m) — tietokone\n- **l'ordinateur portable** (m) — kannettava\n- **le téléphone portable** (m) — matkapuhelin\n- **la tablette** (f) — tabletti\n- **l'écran** (m) — näyttö\n- **l'imprimante** (f) — tulostin\n- **les écouteurs** (m) — kuulokkeet\n- **le clavier** (m) — näppäimistö\n- **la souris** (f) — tietokonehiiri\n\n## Internet ja some\n\n- **internet** — internet (ei artikkelia!)\n- **le réseau social** — some (monikko: les réseaux sociaux)\n- **le site web** — verkkosivusto\n- **l'application** (f) — sovellus\n- **le logiciel** (m) — ohjelmisto\n- **le mot de passe** (m) — salasana\n- **le compte** (m) — tili\n- **le courriel** (m) — sähköposti\n- **le moteur de recherche** (m) — hakukone\n\n## Digiverbit\n\n- **télécharger** — ladata (netistä)\n- **sauvegarder** — tallentaa\n- **partager** — jakaa\n- **se connecter** — kirjautua sisään\n- **envoyer** — lähettää\n- **supprimer** — poistaa\n- **naviguer** — selata\n- **cliquer** — klikata\n\n## Muut\n\n- **numérique** — digitaalinen\n- **la sécurité** — turvallisuus\n- **les données** — tiedot, data"
+      },
+      {
+        "id": "tips",
+        "title": "YO-vinkki",
+        "content_md": "## Teknologia YO-kokeessa\n\nTulevaisuus + teknologia on C-tason kirjoitelmien suosikkiaihe. Tyypillinen tehtävä: 'Les technologies numériques — avantages ou inconvénients?'\n\n## Tärkeimmät ansat\n\n- **les réseaux sociaux** (monikko) — älä kirjoita *les réseau social*\n- **télécharger** (ladata netistä) vs **sauvegarder** (tallentaa koneelle) — älä sekoita!\n- **internet** ei saa artikkelia: *sur internet* ✓ (ei *sur l'internet* ✗)\n- **le logiciel** (ohjelmisto) vs **l'application** (sovellus) — ero: sovellus = mobiili, logiciel = desktop-ohjelma\n\n## Hyödyllisiä lauserakenteita\n\n- *Les réseaux sociaux ont des avantages et des inconvénients.* — Somella on etuja ja haittoja.\n- *À l'avenir, nous utiliserons de plus en plus d'applications.* — Tulevaisuudessa käytämme yhä enemmän sovelluksia.\n- *Il faut protéger nos données personnelles sur internet.* — Meidän täytyy suojata henkilötietomme netissä."
+      }
+    ]
+  }
+}

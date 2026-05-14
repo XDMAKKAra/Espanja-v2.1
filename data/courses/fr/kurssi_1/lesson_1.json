@@ -1,0 +1,291 @@
+{
+  "meta": {
+    "course_key": "kurssi_1",
+    "lesson_index": 1,
+    "lesson_type": "vocab",
+    "level": "A",
+    "title": "Tervehdykset ja kohteliaisuudet",
+    "description": "Opettelet 28 tervehdys- ja kohteliaisuussanaa ranskaksi. YO-kokeessa nämä toistuvat kirjoitelmien avauksessa ja tekstiymmärrystehtävissä — jokainen lyhyt kirjoitelma alkaa ranskalaisella tervehdyksellä.",
+    "yo_relevance": "Kirjoitelman tekstilajin konventiot (tervehdys, lopetus) ovat yksi YTL:n arviointidimensioista. Bonjour/Bonsoir-ero ja tu/vous-rekisteri arvioidaan osana viestinnällisyyttä.",
+    "estimated_minutes_median": 12
+  },
+  "teaching": {
+    "intro_md": "# Tervehdykset ranskaksi\n\nRanskassa tervehdys vaihtelee kellonajan, tilanteen ja suhteen mukaan. Tärkeimmät jaot:\n\n## Muodollinen vai epämuodollinen?\n\n- **Vous** (te-muoto) — vieraalle, opettajalle, vanhemmalle. *Bonjour, madame !*\n- **Tu** (sinä-muoto) — kaverille, perheelle. *Salut, ça va ?*\n\nYO-kokeessa kirjoitelma on lähes aina **vous-rekisterissä** ellei tehtävänanto eksplisiittisesti sano tuttu/kaveri.\n\n## Päiväjärjestys\n\n- **Bonjour** — aamusta iltapäivään\n- **Bonsoir** — illalla\n- **Bonne nuit** — nukkumaan mennessä\n\n## Esimerkki\n\n> — *Bonjour, madame ! Comment allez-vous ?*\n> — *Très bien, merci. Et vous ?*\n\nÉlision = kun sana päättyy vokaaliin ja seuraava alkaa vokaalilla, kirjain sulautuu: **je → j'**, **ne → n'**, **que → qu'**.",
+    "key_points": [
+      "Tu = kaverille, vous = muodollinen — YO-kokeessa vous ellei toisin sanota.",
+      "Bonjour päivällä, bonsoir illalla — yksi kirjain ratkaisee.",
+      "Élision: j'ai, c'est, qu'est-ce, n'est-ce pas — apostrofi pakollinen.",
+      "Merci → De rien / Je vous en prie (muodollinen) — molemmat hyväksytään."
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1-recognition-tervehdykset-ydin",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista — tervehdykset (ydin)",
+      "instruction": "Valitse oikea suomenkielinen käännös.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "mc", "stem": "bonjour", "choices": ["hyvää yötä", "hyvää päivää / hei", "näkemiin", "hyvää iltaa"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "Bonjour = hyvää päivää / hei (aamusta iltapäivään). Bonsoir = hyvää iltaa." },
+        { "item_type": "mc", "stem": "bonsoir", "choices": ["hyvää päivää", "hyvää yötä", "hyvää iltaa", "näkemiin"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "Bonsoir = hyvää iltaa. Muista: bon + soir (ilta)." },
+        { "item_type": "mc", "stem": "salut", "choices": ["kiitos", "hei / moikka", "anteeksi", "ole hyvä"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "Salut = hei tai moikka (epämuodollinen). Ei sopiva vous-rekisteriin." },
+        { "item_type": "mc", "stem": "au revoir", "choices": ["nähdään pian", "näkemiin", "hyvää yötä", "tervetuloa"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Au revoir = näkemiin (muodollinen hyvästi). À bientôt = nähdään pian." },
+        { "item_type": "mc", "stem": "merci", "choices": ["ole hyvä", "anteeksi", "kiitos", "tervetuloa"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "Merci = kiitos. Vastaus: de rien tai je vous en prie." },
+        { "item_type": "mc", "stem": "s'il vous plaît", "choices": ["kiitos", "ole hyvä / pyydän", "anteeksi", "ei mitään"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "S'il vous plaît = ole hyvä / pyydän (vous-muoto). Epämuodollinen: s'il te plaît." },
+        { "item_type": "mc", "stem": "à bientôt", "choices": ["näkemiin", "nähdään pian", "hyvää yötä", "tervetuloa"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "À bientôt = nähdään pian. Au revoir = näkemiin (ei välttämättä pian)." },
+        { "item_type": "mc", "stem": "enchanté", "choices": ["hauska tutustua", "kiitos", "anteeksi", "tervetuloa"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "Enchanté = hauska tutustua (mies puhuu). Nainen: enchantée (kaksi e:tä)." },
+        { "item_type": "mc", "stem": "comment ça va ?", "choices": ["kuka olet?", "mitä se maksaa?", "miten menee?", "mistä olet kotoisin?"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "Comment ça va ? = miten menee? (epämuodollinen). Muodollinen: Comment allez-vous ?" },
+        { "item_type": "mc", "stem": "je vais bien", "choices": ["minulla on nälkä", "olen väsynyt", "voin hyvin", "olen kotona"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "Je vais bien = voin hyvin. Je vais = menen/voin (verbi aller)." },
+        { "item_type": "mc", "stem": "bonne nuit", "choices": ["hyvää iltaa", "hyvää päivää", "hyvää yötä", "näkemiin"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "Bonne nuit = hyvää yötä (nukkumaan mennessä). Bonsoir = hyvää iltaa." },
+        { "item_type": "mc", "stem": "de rien", "choices": ["kiitos", "anteeksi", "ei mitään (ole hyvä)", "ei koskaan"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "De rien = ei mitään / ole hyvä (vastaus kiitokseen). Myös: je vous en prie." },
+        { "item_type": "mc", "stem": "pardon", "choices": ["kiitos", "anteeksi / anteeksi?", "ole hyvä", "tervetuloa"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "Pardon = anteeksi tai anteeksi? (kun ei kuullut). Excusez-moi = anteeksi (pyydetään tietä)." },
+        { "item_type": "mc", "stem": "bienvenue", "choices": ["hyvää päivää", "näkemiin", "tervetuloa", "hauska tutustua"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "Bienvenue = tervetuloa. Muista myös: soyez les bienvenus (monikko muodollinen)." }
+      ]
+    },
+    {
+      "phase_id": "p2-recognition-match-tervehdykset",
+      "phase_type": "recognition_match",
+      "title": "Yhdistä — tervehdykset ja vastaukset",
+      "instruction": "Yhdistä ranskan lausuma ja suomennos.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        {
+          "item_type": "match",
+          "left_label": "Ranska",
+          "right_label": "Suomi",
+          "pairs": [
+            { "left": "bonjour", "right": "hyvää päivää" },
+            { "left": "bonsoir", "right": "hyvää iltaa" },
+            { "left": "bonne nuit", "right": "hyvää yötä" },
+            { "left": "salut", "right": "hei (epämuodollinen)" },
+            { "left": "au revoir", "right": "näkemiin" },
+            { "left": "à bientôt", "right": "nähdään pian" },
+            { "left": "merci", "right": "kiitos" },
+            { "left": "de rien", "right": "ole hyvä (vastaus kiitokseen)" },
+            { "left": "s'il vous plaît", "right": "ole hyvä (pyyntö, muodollinen)" },
+            { "left": "pardon", "right": "anteeksi" },
+            { "left": "enchanté", "right": "hauska tutustua" },
+            { "left": "bienvenue", "right": "tervetuloa" }
+          ]
+        },
+        {
+          "item_type": "match",
+          "left_label": "Ranska",
+          "right_label": "Suomi",
+          "pairs": [
+            { "left": "comment ça va ?", "right": "miten menee?" },
+            { "left": "je vais bien", "right": "voin hyvin" },
+            { "left": "comme ci, comme ça", "right": "ihan ok / niin ja näin" },
+            { "left": "pas mal", "right": "ei huono / aika hyvin" },
+            { "left": "comment allez-vous ?", "right": "kuinka voitte? (muodollinen)" },
+            { "left": "très bien, merci", "right": "erittäin hyvin, kiitos" },
+            { "left": "excusez-moi", "right": "anteeksi (muodollinen)" },
+            { "left": "je vous en prie", "right": "ole hyvä (muodollinen vastaus)" },
+            { "left": "s'il te plaît", "right": "ole hyvä (pyyntö, epämuodollinen)" },
+            { "left": "à tout à l'heure", "right": "nähdään kohta" },
+            { "left": "bonne journée", "right": "hyvää päivänjatkoa" },
+            { "left": "bonne soirée", "right": "hyvää iltaa (toivotuksena)" }
+          ]
+        }
+      ]
+    },
+    {
+      "phase_id": "p3-recognition-mc-rekisteri",
+      "phase_type": "recognition_mc",
+      "title": "Tunnista — muodollinen vai epämuodollinen?",
+      "instruction": "Valitse oikea tieto tervehdyksestä.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        { "item_type": "mc", "stem": "Mikä tervehdys on epämuodollinen?", "choices": ["bonjour, madame", "salut !", "comment allez-vous ?", "je vous en prie"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Salut on epämuodollinen (tu-rekisteri). Bonjour madame, comment allez-vous ja je vous en prie ovat kaikki muodollisia (vous-rekisteri)." },
+        { "item_type": "mc", "stem": "Miten vastaat muodollisesti kun joku sanoo 'Merci' ?", "choices": ["de rien", "pas de problème", "je vous en prie", "c'est rien"], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "Je vous en prie on muodollisin vastaus kiitokseen (vous-rekisteri). De rien on arkisempi, pas de problème epämuodollinen." },
+        { "item_type": "mc", "stem": "Milloin sanotaan 'bonsoir' eikä 'bonjour'?", "choices": ["aamulla", "iltapäivällä", "illalla", "yöllä"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "Bonsoir = illalla (noin klo 18 eteenpäin). Bonjour = aamusta iltapäivään. Bonne nuit vasta nukkumaan mennessä." },
+        { "item_type": "mc", "stem": "Mitä tarkoittaa 'enchanté' ?", "choices": ["hauska tutustua (mies puhuu)", "hauska tutustua (nainen puhuu)", "tervetuloa", "kiitos kovasti"], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "Enchanté = hauska tutustua, mies puhujana. Nainen sanoo enchantée (kaksi e:tä). Molemmat ovat oikeita muotoja, sukupuoli vaihtelee puhujan mukaan." },
+        { "item_type": "mc", "stem": "S'il vous plaît vs s'il te plaît — ero?", "choices": ["sama asia eri aksentilla", "vous = muodollinen, te = epämuodollinen", "vous = yksi henkilö, te = monta", "te on vanhahtava muoto"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "S'il vous plaît = muodollinen (vous = te/teidät), s'il te plaît = epämuodollinen (te = sinua). Vous voi viitata yhteen henkilöön muodollisesti tai useampaan." },
+        { "item_type": "mc", "stem": "Mikä näistä on oikea vastaus kysymykseen 'Comment ça va?'", "choices": ["bonsoir, merci", "pas mal, et toi ?", "au revoir", "s'il vous plaît"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Pas mal, et toi ? = aika hyvin, entä sinä? — luonnollinen vastaus miten menee -kysymykseen. Muut eivät vastaa kysymykseen." },
+        { "item_type": "mc", "stem": "Mitä tarkoittaa 'comme ci, comme ça'?", "choices": ["erittäin hyvin", "ihan ok / niin ja näin", "ei lainkaan hyvin", "en tiedä"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "Comme ci, comme ça = ihan ok / niin ja näin — neutraali vastaus miten menee -kysymykseen." },
+        { "item_type": "mc", "stem": "Mikä tervehdys sopii sähköpostin alkuun ranskalaiselle opettajalle?", "choices": ["salut !", "coucou !", "bonjour, madame,", "hey !"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "Bonjour, madame, on muodollinen kirjallinen tervehdys. Salut, coucou ja hey ovat epämuodollisia eikä sovi opettajalle." },
+        { "item_type": "mc", "stem": "'À tout à l'heure' tarkoittaa:", "choices": ["nähdään ensi vuonna", "nähdään kohta / pian", "näkemiin (ei ehkä pian)", "hyvää huomenta"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "À tout à l'heure = nähdään kohta (saman päivän aikana). À bientôt = nähdään pian (yleisempi). Au revoir = näkemiin (ei viittaa milloin)." },
+        { "item_type": "mc", "stem": "'Bonne journée' sanotaan:", "choices": ["kun tullaan", "kun lähdetään päivällä", "kun mennään nukkumaan", "puhelimeen vastatessa"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Bonne journée = hyvää päivänjatkoa — sanotaan lähtiessä päivällä. Bonne soirée = hyvää iltaa lähtiessä illalla." },
+        { "item_type": "mc", "stem": "Excusez-moi vs pardon — ero?", "choices": ["sama merkitys eri konteksteissa", "excusez = pyydän tietä/huomiota, pardon = anteeksi virheestä tai en kuullut", "pardon on muodollinen, excusez epämuodollinen", "pardon on vain vanhaa ranskaa"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "Excusez-moi = pyydän anteeksi/huomiota (pyytää päästä ohi, keskeyttää). Pardon = anteeksi (virheestä) tai 'mitä sanoit?' (ei kuullut)." },
+        { "item_type": "mc", "stem": "'Très bien, merci. Et vous ?' on vastaus kysymykseen:", "choices": ["Où habitez-vous ?", "Comment allez-vous ?", "Quel âge avez-vous ?", "Comment vous appelez-vous ?"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "Comment allez-vous = kuinka voitte (muodollinen). Vastaus: Très bien, merci. Et vous = entä te? Tämä on klassinen muodollinen dialogikaava." }
+      ]
+    },
+    {
+      "phase_id": "p4-recall-typed-fr-fi",
+      "phase_type": "recall_typed_es_to_fi",
+      "title": "Käännä suomeksi",
+      "instruction": "Kirjoita ranskan lausuman suomennos.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I"],
+      "items": [
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "bonjour", "accept": ["hyvää päivää", "hei", "päivää"], "hint": "käytetään aamusta iltapäivään" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "bonsoir", "accept": ["hyvää iltaa", "iltaa"], "hint": "bon = hyvä, soir = ilta" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "au revoir", "accept": ["näkemiin", "hyvästi"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "merci", "accept": ["kiitos"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "s'il vous plaît", "accept": ["ole hyvä", "pyydän", "ole hyvä / pyydän"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "enchanté", "accept": ["hauska tutustua"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "comment ça va ?", "accept": ["miten menee", "miten menee?", "miten voit"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "je vais bien", "accept": ["voin hyvin", "menen hyvin", "olen hyvin"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "à bientôt", "accept": ["nähdään pian", "pian näkemiin"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "de rien", "accept": ["ei mitään", "ole hyvä", "ei kestä"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "bonne nuit", "accept": ["hyvää yötä"] },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "pardon", "accept": ["anteeksi", "mitä sanoit"] }
+      ]
+    },
+    {
+      "phase_id": "p5-recall-typed-fi-fr",
+      "phase_type": "recall_typed_fi_to_es",
+      "title": "Käännä ranskaksi",
+      "instruction": "Kirjoita ranskan tervehdys (aksentteineen).",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "hyvää päivää", "accept": ["bonjour"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "hyvää iltaa", "accept": ["bonsoir"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "näkemiin", "accept": ["au revoir"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "kiitos", "accept": ["merci"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "hei (epämuodollinen)", "accept": ["salut"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "nähdään pian", "accept": ["à bientôt", "a bientot"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "hauska tutustua (mies puhuu)", "accept": ["enchanté", "enchante"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "miten menee? (epämuodollinen)", "accept": ["comment ça va", "comment ca va", "comment ça va ?"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "voin hyvin", "accept": ["je vais bien"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "ole hyvä (vastaus kiitokseen)", "accept": ["de rien", "je vous en prie"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "anteeksi (muodollinen)", "accept": ["excusez-moi", "pardon"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "hyvää yötä", "accept": ["bonne nuit"] }
+      ]
+    },
+    {
+      "phase_id": "p6-application-gap-helppo",
+      "phase_type": "application_gap_fill",
+      "title": "Lauseen täydennys — perustaso",
+      "instruction": "Täydennä lause oikealla tervehdyksellä sanapankista.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "— {1}, madame Dupont ! Comment allez-vous ?", "answers": [["Bonjour"]], "word_bank": ["Bonjour", "Salut", "Bonsoir"] },
+        { "item_type": "gap_fill", "sentence_template": "— Merci beaucoup ! — {1}, c'est normal.", "answers": [["De rien"]], "word_bank": ["De rien", "Pardon", "Merci"] },
+        { "item_type": "gap_fill", "sentence_template": "Il est 20h. Je dis {1} à mes voisins.", "answers": [["bonsoir"]], "word_bank": ["bonsoir", "bonjour", "bonne nuit"] },
+        { "item_type": "gap_fill", "sentence_template": "— Comment ça va ? — {1}, et toi ?", "answers": [["Très bien", "Pas mal", "Bien"]], "word_bank": ["Très bien", "Au revoir", "Bonsoir"] },
+        { "item_type": "gap_fill", "sentence_template": "Je quitte l'école. Je dis {1} à mon prof.", "answers": [["au revoir"]], "word_bank": ["au revoir", "bonjour", "merci"] },
+        { "item_type": "gap_fill", "sentence_template": "Nous nous rencontrons pour la première fois. — {1} !", "answers": [["Enchanté", "Enchantée"]], "word_bank": ["Enchanté", "Bonjour", "Salut"] },
+        { "item_type": "gap_fill", "sentence_template": "— Un café, {1} ! — Bien sûr, monsieur.", "answers": [["s'il vous plaît"]], "word_bank": ["s'il vous plaît", "merci", "pardon"] },
+        { "item_type": "gap_fill", "sentence_template": "Il est minuit. Ma mère dit {1} et elle va dormir.", "answers": [["bonne nuit"]], "word_bank": ["bonne nuit", "bonsoir", "bonne journée"] },
+        { "item_type": "gap_fill", "sentence_template": "— Je n'ai pas entendu. {1} ?", "answers": [["Pardon"]], "word_bank": ["Pardon", "Merci", "Excusez-moi"] },
+        { "item_type": "gap_fill", "sentence_template": "— À {1} ! On se voit à 14h.", "answers": [["bientôt", "tout à l'heure"]], "word_bank": ["bientôt", "revoir", "demain"] }
+      ]
+    },
+    {
+      "phase_id": "p7-application-gap-vaativa",
+      "phase_type": "application_gap_fill",
+      "title": "Lauseen täydennys — vaativa (ilman sanapankkia)",
+      "instruction": "Täydennä lause ilman sanapankkia. Kirjoita oikea ranskan sana tai ilmaus.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B"],
+      "items": [
+        { "item_type": "gap_fill", "sentence_template": "Le soir, on dit {1} et non bonjour.", "answers": [["bonsoir"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Je rencontre une nouvelle collègue. Elle dit : « {1}, je m'appelle Sophie. »", "answers": [["Enchantée", "Enchanté", "Bonjour"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "— Merci pour votre aide ! — {1}, monsieur.", "answers": [["Je vous en prie", "De rien"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Dans un email formel, on commence toujours par « {1}, madame, ».", "answers": [["Bonjour"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "— Comment {1} va ? — Très bien, merci !", "answers": [["ça"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Avant de dormir, je dis {1} à mes parents.", "answers": [["bonne nuit"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "— Excusez-moi, où est la gare ? — {1}, je ne sais pas.", "answers": [["Pardon", "Désolé", "Je suis désolé"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "— {1}, madame ! Bonne journée ! — Merci, vous aussi !", "answers": [["Au revoir"]], "word_bank": null }
+      ]
+    },
+    {
+      "phase_id": "p8-application-sentence-build",
+      "phase_type": "application_sentence_build",
+      "title": "Lauseiden rakentelua",
+      "instruction": "Käännä koko lause ranskaksi.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.60, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Hyvää päivää, rouva Martin!", "accept": ["Bonjour, madame Martin !", "Bonjour, madame Martin"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Miten menee? — Voin hyvin, kiitos.", "accept": ["Comment ça va ? — Je vais bien, merci.", "Comment ça va ? Je vais bien, merci."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Hauska tutustua! (mies puhuu)", "accept": ["Enchanté !", "Enchanté"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Nähdään pian! Hyvää päivänjatkoa!", "accept": ["À bientôt ! Bonne journée !", "A bientot ! Bonne journée !"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Ole hyvä, yksi kahvi.", "accept": ["Un café, s'il vous plaît.", "Un café, s'il vous plaît"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Anteeksi, missä on juna-asema?", "accept": ["Excusez-moi, où est la gare ?", "Pardon, où est la gare ?"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Hyvää yötä, äiti!", "accept": ["Bonne nuit, maman !", "Bonne nuit, maman"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Kiitos kovasti! — Ole hyvä.", "accept": ["Merci beaucoup ! — De rien.", "Merci beaucoup — De rien."] }
+      ]
+    },
+    {
+      "phase_id": "p9-synthesis-translate",
+      "phase_type": "synthesis_translate",
+      "title": "YO-tyylinen käännös",
+      "instruction": "Käännä koko virke ranskaksi YO-tasolla.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.60, "C": 0.65, "M": 0.75, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": ["I", "A", "B", "C"],
+      "items": [
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Hyvää päivää, rouva Leblanc! Kuinka voitte?", "accept": ["Bonjour, madame Leblanc ! Comment allez-vous ?", "Bonjour, madame Leblanc ! Comment allez-vous?"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Erittäin hyvin, kiitos. Entä te?", "accept": ["Très bien, merci. Et vous ?", "Tres bien, merci. Et vous ?"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Hauska tutustua — minä olen Erika, suomalainen opiskelija.", "accept": ["Enchantée — je suis Erika, une étudiante finlandaise.", "Enchanté — je suis Erika, étudiante finlandaise."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Anteeksi, voisitteko auttaa minua?", "accept": ["Excusez-moi, pourriez-vous m'aider ?", "Pardon, pourriez-vous m'aider ?"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Näkemiin ja hyvää iltaa jatkoa!", "accept": ["Au revoir et bonne soirée !", "Au revoir et bonne soirée"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Sähköpostissa kirjoitan: Hyvää päivää, herra Dupont.", "accept": ["Dans mon email, j'écris : Bonjour, monsieur Dupont.", "Je commence mon email : Bonjour, monsieur Dupont."] }
+      ]
+    },
+    {
+      "phase_id": "p10-synthesis-short-writing",
+      "phase_type": "synthesis_short_writing",
+      "title": "Lyhyt kirjoitus — dialogi",
+      "instruction": "Kirjoita lyhyt dialogi tai aloita sähköposti ranskaksi.",
+      "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.60, "C": 0.65, "M": 0.70, "E": 0.80, "L": 0.90 },
+      "skip_for_targets": ["I", "A", "B", "C", "M"],
+      "items": [
+        { "item_type": "writing", "prompt": "Kirjoita lyhyt dialogi (4–6 virkettä) jossa tapaat uuden ranskalaisen opiskelijan. Käytä tervehdyksiä, esittäydy ja kysy miten menee. Käytä sopivaa rekisteriä (tu tai vous).", "min_words": 30, "max_words": 80, "rubric_focus": ["communication", "vocab", "structure"] },
+        { "item_type": "writing", "prompt": "Kirjoita sähköpostin alkuosa (3–5 virkettä) ranskalaiselle opettajallesi. Tervehdys, kysy kuinka opettaja voi, esittele itsesi lyhyesti. Muista muodollinen rekisteri.", "min_words": 30, "max_words": 80, "rubric_focus": ["communication", "structure"] },
+        { "item_type": "writing", "prompt": "Olet Pariisissa kahvilassa. Kirjoita 4–6 virkettä kuinka tilaat kahvin, sanot kiitos ja hyvästelit. Käytä oikeita tervehdyksiä ja kohteliaisuuksia.", "min_words": 25, "max_words": 70, "rubric_focus": ["communication", "vocab"] }
+      ]
+    }
+  ],
+  "vocab": [
+    { "es": "bonjour", "fi": "hyvää päivää; hei", "example_es": "Bonjour, madame !", "example_fi": "Hyvää päivää, rouva!", "gender": null },
+    { "es": "bonsoir", "fi": "hyvää iltaa", "example_es": "Bonsoir, monsieur Dupont.", "example_fi": "Hyvää iltaa, herra Dupont.", "gender": null },
+    { "es": "bonne nuit", "fi": "hyvää yötä", "example_es": "Bonne nuit, dors bien !", "example_fi": "Hyvää yötä, nuku hyvin!", "gender": null },
+    { "es": "salut", "fi": "hei; moikka (epämuodollinen)", "example_es": "Salut, ça va ?", "example_fi": "Hei, miten menee?", "gender": null },
+    { "es": "au revoir", "fi": "näkemiin", "example_es": "Au revoir, à demain !", "example_fi": "Näkemiin, huomiseen!", "gender": null },
+    { "es": "à bientôt", "fi": "nähdään pian", "example_es": "À bientôt, bonne journée !", "example_fi": "Nähdään pian, hyvää päivää!", "gender": null },
+    { "es": "merci", "fi": "kiitos", "example_es": "Merci beaucoup pour votre aide.", "example_fi": "Kiitos kovasti avusta.", "gender": null },
+    { "es": "de rien", "fi": "ole hyvä; ei mitään (vastaus kiitokseen)", "example_es": "— Merci ! — De rien.", "example_fi": "— Kiitos! — Ole hyvä.", "gender": null },
+    { "es": "je vous en prie", "fi": "ole hyvä (muodollinen)", "example_es": "— Merci, madame. — Je vous en prie.", "example_fi": "— Kiitos, rouva. — Ole hyvä.", "gender": null },
+    { "es": "s'il vous plaît", "fi": "ole hyvä; pyydän (muodollinen)", "example_es": "Un café, s'il vous plaît.", "example_fi": "Yksi kahvi, ole hyvä.", "gender": null },
+    { "es": "s'il te plaît", "fi": "ole hyvä; pyydän (epämuodollinen)", "example_es": "Aide-moi, s'il te plaît !", "example_fi": "Auta minua, ole hyvä!", "gender": null },
+    { "es": "enchanté / enchantée", "fi": "hauska tutustua", "example_es": "Je suis Lucie, enchantée !", "example_fi": "Olen Lucie, hauska tutustua!", "gender": null },
+    { "es": "comment ça va ?", "fi": "miten menee? (epämuodollinen)", "example_es": "Salut ! Comment ça va ?", "example_fi": "Hei! Miten menee?", "gender": null },
+    { "es": "comment allez-vous ?", "fi": "kuinka voitte? (muodollinen)", "example_es": "Bonjour, comment allez-vous aujourd'hui ?", "example_fi": "Hyvää päivää, kuinka voitte tänään?", "gender": null },
+    { "es": "je vais bien", "fi": "voin hyvin", "example_es": "Je vais bien, merci, et vous ?", "example_fi": "Voin hyvin, kiitos, entä te?", "gender": null },
+    { "es": "très bien", "fi": "erittäin hyvin", "example_es": "Très bien, merci !", "example_fi": "Erittäin hyvin, kiitos!", "gender": null },
+    { "es": "pas mal", "fi": "ei huono; aika hyvin", "example_es": "Pas mal, et toi ?", "example_fi": "Aika hyvin, entä sinä?", "gender": null },
+    { "es": "comme ci, comme ça", "fi": "niin ja näin; ihan ok", "example_es": "Comme ci, comme ça — je suis un peu fatigué.", "example_fi": "Niin ja näin — olen vähän väsynyt.", "gender": null },
+    { "es": "pardon", "fi": "anteeksi; mitä sanoit?", "example_es": "Pardon, je n'ai pas compris.", "example_fi": "Anteeksi, en ymmärtänyt.", "gender": null },
+    { "es": "excusez-moi", "fi": "anteeksi; pyydän huomiota (muodollinen)", "example_es": "Excusez-moi, où est la gare ?", "example_fi": "Anteeksi, missä on juna-asema?", "gender": null },
+    { "es": "bienvenue", "fi": "tervetuloa", "example_es": "Bienvenue en France !", "example_fi": "Tervetuloa Ranskaan!", "gender": null },
+    { "es": "bonne journée", "fi": "hyvää päivänjatkoa", "example_es": "Au revoir, bonne journée !", "example_fi": "Näkemiin, hyvää päivänjatkoa!", "gender": null },
+    { "es": "bonne soirée", "fi": "hyvää iltaa (toivotus lähtiessä)", "example_es": "Bonne soirée, à demain !", "example_fi": "Hyvää iltaa, huomiseen!", "gender": null },
+    { "es": "à tout à l'heure", "fi": "nähdään kohta", "example_es": "À tout à l'heure, je reviens dans dix minutes.", "example_fi": "Nähdään kohta, tulen takaisin kymmenessä minuutissa.", "gender": null },
+    { "es": "madame", "fi": "rouva (muodollinen puhuttelu naiselle)", "example_es": "Bonjour, madame Leroy.", "example_fi": "Hyvää päivää, rouva Leroy.", "gender": "f" },
+    { "es": "monsieur", "fi": "herra (muodollinen puhuttelu miehelle)", "example_es": "Bonsoir, monsieur Dupont.", "example_fi": "Hyvää iltaa, herra Dupont.", "gender": "m" },
+    { "es": "mademoiselle", "fi": "neiti (epämuodollisempi naiselle)", "example_es": "Bonjour, mademoiselle !", "example_fi": "Hyvää päivää, neiti!", "gender": "f" },
+    { "es": "oui", "fi": "kyllä", "example_es": "Oui, je parle français.", "example_fi": "Kyllä, puhun ranskaa.", "gender": null },
+    { "es": "non", "fi": "ei", "example_es": "Non, je ne comprends pas.", "example_fi": "Ei, en ymmärrä.", "gender": null }
+  ],
+  "side_panel": {
+    "tabs": [
+      {
+        "id": "vocab",
+        "title": "Sanasto",
+        "content_md": "## Tervehdykset — kellonajan mukaan\n\n- **bonjour** — hyvää päivää; hei (aamusta iltapäivään)\n- **bonsoir** — hyvää iltaa (illalla)\n- **bonne nuit** — hyvää yötä (nukkumaan mennessä)\n- **salut** — hei; moikka (epämuodollinen)\n\n## Hyvästeleminen\n\n- **au revoir** — näkemiin\n- **à bientôt** — nähdään pian\n- **à tout à l'heure** — nähdään kohta\n- **bonne journée** — hyvää päivänjatkoa\n- **bonne soirée** — hyvää iltaa (lähtiessä)\n\n## Kiitos ja ole hyvä\n\n- **merci** — kiitos\n- **de rien** — ole hyvä; ei mitään\n- **je vous en prie** — ole hyvä (muodollinen)\n- **s'il vous plaît** — ole hyvä / pyydän (muodollinen)\n- **s'il te plaît** — ole hyvä / pyydän (epämuodollinen)\n\n## Vointi\n\n- **comment ça va ?** — miten menee? (epämuodollinen)\n- **comment allez-vous ?** — kuinka voitte? (muodollinen)\n- **je vais bien** — voin hyvin\n- **très bien** — erittäin hyvin\n- **pas mal** — aika hyvin\n- **comme ci, comme ça** — niin ja näin\n\n## Anteeksi ja huomio\n\n- **pardon** — anteeksi; mitä sanoit?\n- **excusez-moi** — anteeksi (muodollinen)\n- **bienvenue** — tervetuloa\n- **enchanté / enchantée** — hauska tutustua\n\n## Puhuttelu\n\n- **madame** — rouva\n- **monsieur** — herra\n- **mademoiselle** — neiti"
+      },
+      {
+        "id": "tips",
+        "title": "YO-vinkki",
+        "content_md": "## YO-koe — kirjoitelman tekstilajisäännöt\n\nKirjoitelman aloitus ja lopetus ovat osa arviointia. Muodollisessa kirjoitelmassa:\n\n**Sähköpostin rakenne:**\n- Aloitus: *Bonjour, madame/monsieur,*\n- Lopetus: *Au revoir, bonne journée.*\n- Allekirjoitus: *Cordialement, Erika*\n\n**Vous vai tu?**\nYO-kokeessa lähes aina **vous** — ellei tehtävänanto sano \"ystävälle\" tai \"kaverille\".\n\n## Yleisimmät pistejättäjät\n\n- Kirjoitat *bonjour* kun pitäisi olla *bonsoir* → rekisterivirhe, vähentää pisteitä\n- *Salut* muodollisessa kirjoitelmassa → merkittävä rekisterivirhe\n- *Excusez-moi* vs *pardon*: molemmat hyväksytään, mutta *excusez-moi* on muodollisempi\n\n## Élision-muistisääntö\n\nKun sana päättyy vokaaliin ja seuraava alkaa vokaalilla → apostrofi:\n- je → **j'**aime, **j'**habite\n- ne → **n'**est pas, **n'**habite pas\n- que → **qu'**est-ce, **qu'**il"
+      }
+    ]
+  }
+}

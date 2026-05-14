@@ -1,0 +1,99 @@
+{
+  "meta": {
+    "course_key": "kurssi_1",
+    "lesson_index": 10,
+    "lesson_type": "test",
+    "level": "A",
+    "title": "Kertaustesti — Kurssi 1",
+    "description": "Kumulatiivinen kertaustesti koko Kurssi 1:stä. Tehtävät sekoittavat tervehdykset, -er-verbit, perhesanaston, artikkelit, kansallisuudet ja kieltorakenteen — kuten YO-kokeessa.",
+    "yo_relevance": "Tämä testi simuloi YO-kokeen Osa 3:n rakenne- ja sanastotehtäviä A-tasolla. Oikein tehty testi ennustaa vähintään A-arvosanaa ranska lyhyt -kokeessa.",
+    "estimated_minutes_median": 20
+  },
+  "teaching": {
+    "intro_md": "# Kertaustesti — Kurssi 1\n\nTässä testissä käydään läpi kaikki Kurssi 1:n aiheet. Jokainen kysymys on itsenäinen — ei aikarajaa, ei sanapankkia.\n\n## Mitä testataan\n\n- L1: Tervehdykset ja kohteliaisuudet\n- L2: Présent -er-verbit\n- L3: Perhe ja sukulaiset\n- L4: Artikkelit le/la/l'/les\n- L5: Kansallisuudet\n- L6: Kieltorakenne ne...pas\n\n## Vinkki\n\nLue jokainen kysymys rauhassa — moni virhe syntyy kiireestä.",
+    "key_points": [
+      "Tarkista artikkeli: le/la/l'/les — vokaali tai mykkä h → l'.",
+      "Kielto: ne + verbi + pas, ne → n' ennen vokaalia.",
+      "Kansallisuus pienellä: je suis finlandais(e), ei Finlandais.",
+      "-er-verbin päätteet: -e, -es, -e, -ons, -ez, -ent (mykkä)."
+    ]
+  },
+  "phases": [
+    {
+      "phase_id": "p1-test-kurssi1",
+      "phase_type": "recognition_mc",
+      "title": "Kertaustesti — Kurssi 1 (30 kysymystä)",
+      "instruction": "Valitse oikea vastaus. Kaikki K1-aiheet sekaisin.",
+      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "skip_for_targets": [],
+      "items": [
+        { "item_type": "mc", "stem": "Mikä tervehdys sopii illalla?", "choices": ["Bonjour", "Bonsoir", "Salut", "Bonne nuit"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "Bonsoir = hyvää iltaa. Bonjour = päivällä, bonne nuit = nukkumaan mennessä." },
+        { "item_type": "mc", "stem": "Je ___ à Helsinki. (habiter)", "choices": ["habites", "habitons", "habite", "habitent"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "Je + habiter → je habite (tai j'habite élisionilla). Pääte -e." },
+        { "item_type": "mc", "stem": "Mikä on oikein?", "choices": ["le mère", "la père", "la mère", "le sœur"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "La mère — mère on feminiini → la. Le père, la sœur ovat muut parit." },
+        { "item_type": "mc", "stem": "Il ___ la musique. (ne pas aimer)", "choices": ["n'aime pas", "ne aime pas", "n'aime ne pas", "aime ne pas"], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "Il n'aime pas — aimer alkaa vokaalilla a → ne → n'. Kielto ympäröi verbin." },
+        { "item_type": "mc", "stem": "Emma est de Paris — elle est ___.", "choices": ["française", "français", "france", "Française"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "Elle est française — nainen → naismuoto, pienellä kirjaimella." },
+        { "item_type": "mc", "stem": "Mon ___ est le frère de ma mère. (setä)", "choices": ["cousin", "oncle", "frère", "grand-père"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "L'oncle = setä tai eno — äidin tai isän veli." },
+        { "item_type": "mc", "stem": "___ hôpital est grand.", "choices": ["Le", "La", "L'", "Les"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "L'hôpital — hôpital on maskuliini, alkaa mykällä h:lla → élision l'." },
+        { "item_type": "mc", "stem": "Vous ___ bien le français. (parler)", "choices": ["parles", "parlent", "parlez", "parlons"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "Vous + parler → vous parlez (-ez aina vous:n kanssa)." },
+        { "item_type": "mc", "stem": "Mikä tarkoittaa 's'il vous plaît'?", "choices": ["Kiitos", "Ole hyvä / pyydän (muodollinen)", "Näkemiin", "Hauska tutustua"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "S'il vous plaît = ole hyvä / pyydän — muodollinen (vous). Epämuodollinen: s'il te plaît." },
+        { "item_type": "mc", "stem": "Ils ___ dans un appartement. (habiter)", "choices": ["habite", "habitons", "habitez", "habitent"], "correct_index": 3, "distractor_difficulty": "hard", "explanation": "Ils + habiter → ils habitent (-ent, mykkä). Yksikkö olisi il habite." },
+        { "item_type": "mc", "stem": "Ma ___ s'appelle Léa — c'est la fille de mon oncle.", "choices": ["nièce", "cousine", "sœur", "belle-sœur"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "La cousine de mon oncle = mon cousin(e). Tätini tai setäni tytär = serkkuni (cousine)." },
+        { "item_type": "mc", "stem": "J'___ la cuisine française. (adorer, élision!)", "choices": ["adore", "adores", "adorons", "adorez"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "J'adore — je + adorer (alkaa vokaalilla) → j'adore. Pääte -e je:lle." },
+        { "item_type": "mc", "stem": "Mon cousin est de Bruxelles — il est ___.", "choices": ["français", "belge", "suisse", "belgien"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Il est belge — Bruxelles on Belgian pääkaupunki. Belge sama muoto molemmille." },
+        { "item_type": "mc", "stem": "Nous ne ___ pas le week-end. (travailler)", "choices": ["travaille", "travaillons", "travaillez", "travaillent"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Nous ne travaillons pas — nous + travailler → travaillons." },
+        { "item_type": "mc", "stem": "Mikä on oikein: 'rakastan musiikista' ranskaksi?", "choices": ["J'aime musique", "J'aime de la musique", "J'aime la musique", "J'aime une musique"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "J'aime la musique — yleinen kategoria (musiikki yleensä) vaatii määräisen artikkelin la." },
+        { "item_type": "mc", "stem": "Le ___ de mon oncle s'appelle Marc.", "choices": ["fils", "fille", "sœur", "mère"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "Le fils de mon oncle — oncle on mies, hänen lapsensa (poika) = le fils. La fille olisi tyttärestä." },
+        { "item_type": "mc", "stem": "Comment ___ vous? (aller, muodollinen kysymys)", "choices": ["allez", "allons", "vont", "va"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "Comment allez-vous ? — vous + aller → allez. Muodollinen vointi-kysymys." },
+        { "item_type": "mc", "stem": "___ enfants jouent dans le jardin.", "choices": ["Le", "La", "L'", "Les"], "correct_index": 3, "distractor_difficulty": "easy", "explanation": "Les enfants — monikko → les." },
+        { "item_type": "mc", "stem": "Mikä on oikein: 'hän ei asu Pariisissa' (nainen)?", "choices": ["Elle ne habite pas à Paris.", "Elle n'habite pas à Paris.", "Elle habite ne pas à Paris.", "Elle pas habite à Paris."], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "Elle n'habite pas à Paris — habiter mykkä h → élision n'. elle ne habite pas on väärin." },
+        { "item_type": "mc", "stem": "Mon ami est de Genève — il est ___.", "choices": ["suisse", "français", "belge", "québécois"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "Il est suisse — Genève on Sveitsin ranskankielinen kaupunki. Suisse sama muoto molemmille." },
+        { "item_type": "mc", "stem": "Tu ___ au football? (jouer)", "choices": ["joue", "joues", "jouons", "jouent"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Tu + jouer → tu joues (-es-pääte)." },
+        { "item_type": "mc", "stem": "Hauska tutustua — nainen puhuu:", "choices": ["Enchanté", "Enchantée", "Bienvenue", "Enchanté(e)"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Enchantée — nainen puhuu, kaksi e:tä. Mies sanoisi enchanté (yksi e)." },
+        { "item_type": "mc", "stem": "___ université de Paris est célèbre.", "choices": ["Le", "La", "L'", "Les"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "L'université — feminiini, alkaa vokaalilla u → l'." },
+        { "item_type": "mc", "stem": "Elles ___ la radio. (ne pas écouter)", "choices": ["n'écoutent pas", "ne écoutent pas", "écoutent ne pas", "n'écoute pas"], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "Elles n'écoutent pas — écouter alkaa vokaalilla é → n'. Muoto elles → -ent." },
+        { "item_type": "mc", "stem": "La fille de ma tante est ma ___.", "choices": ["nièce", "cousine", "belle-sœur", "petite-fille"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "La cousine — tätini tytär on serkkuni (féminin). Nièce olisi siskoni/veljeni tytär." },
+        { "item_type": "mc", "stem": "Je ne ___ pas. (savoir)", "choices": ["savoir", "sait", "savez", "sais"], "correct_index": 3, "distractor_difficulty": "medium", "explanation": "Je ne sais pas — savoir on epäsäännöllinen verbi, je-muoto on sais." },
+        { "item_type": "mc", "stem": "Mikä lause on KOKONAAN oikein?", "choices": ["Je habite à Paris et j'aime la musique.", "J'habite à Paris et j'aime la musique.", "J'habite à Paris et j'aime musique.", "J'habite à Paris et je n'aime la musique."], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "J'habite à Paris et j'aime la musique — élision j' oikein, artikkeli la musique oikein." },
+        { "item_type": "mc", "stem": "Fatima est de Casablanca — elle est ___.", "choices": ["marocain", "marocaine", "maroc", "marocains"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Elle est marocaine — nainen → naismuoto marocaine (+ e). Casablanca on Marokossa." },
+        { "item_type": "mc", "stem": "On ___ français au Québec. (parler)", "choices": ["parle", "parles", "parlons", "parlent"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "On + parler → on parle (-e-pääte, sama kuin il/elle)." },
+        { "item_type": "mc", "stem": "Mikä on VIRHE tässä lauseessa: 'Mon grand-père et ma grand-mère sont les grands-parents de mon père et de ma mère.' ?", "choices": ["Ei virhettä — lause on oikein.", "grand-père pitäisi olla le grand-père.", "grands-parents pitäisi olla grand-parents.", "père ja mère tarvitsevat artikkelin."], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "Ei virhettä — lause on oikein. Mon/ma/mes ovat omistuspronomineja (artikkelin sijaan). Les grands-parents on oikein (mon. artikkeli)." }
+      ]
+    }
+  ],
+  "vocab": [
+    { "es": "bonjour", "fi": "hyvää päivää", "example_es": "Bonjour, madame !", "example_fi": "Hyvää päivää, rouva!", "gender": null },
+    { "es": "bonsoir", "fi": "hyvää iltaa", "example_es": "Bonsoir, monsieur.", "example_fi": "Hyvää iltaa, herra.", "gender": null },
+    { "es": "parler", "fi": "puhua", "example_es": "Je parle français.", "example_fi": "Puhun ranskaa.", "gender": null },
+    { "es": "habiter", "fi": "asua", "example_es": "Il habite à Paris.", "example_fi": "Hän asuu Pariisissa.", "gender": null },
+    { "es": "aimer", "fi": "pitää; rakastaa", "example_es": "J'aime la musique.", "example_fi": "Pidän musiikista.", "gender": null },
+    { "es": "la mère", "fi": "äiti", "example_es": "Ma mère est professeure.", "example_fi": "Äitini on opettaja.", "gender": "f" },
+    { "es": "le père", "fi": "isä", "example_es": "Mon père est médecin.", "example_fi": "Isäni on lääkäri.", "gender": "m" },
+    { "es": "le frère", "fi": "veli", "example_es": "Mon frère s'appelle Léo.", "example_fi": "Veljeni on Léo.", "gender": "m" },
+    { "es": "la sœur", "fi": "sisko", "example_es": "Ma sœur étudie à Lyon.", "example_fi": "Siskoni opiskelee Lyonissa.", "gender": "f" },
+    { "es": "l'oncle", "fi": "setä, eno", "example_es": "Mon oncle est belge.", "example_fi": "Setäni on belgialainen.", "gender": "m" },
+    { "es": "la cousine", "fi": "serkku (nainen)", "example_es": "Ma cousine habite à Genève.", "example_fi": "Serkkuni asuu Genevessä.", "gender": "f" },
+    { "es": "le grand-père", "fi": "isoisä", "example_es": "Mon grand-père a quatre-vingts ans.", "example_fi": "Isoisäni on 80-vuotias.", "gender": "m" },
+    { "es": "l'hôpital", "fi": "sairaala", "example_es": "Elle travaille à l'hôpital.", "example_fi": "Hän työskentelee sairaalassa.", "gender": "m" },
+    { "es": "l'université", "fi": "yliopisto", "example_es": "J'étudie à l'université.", "example_fi": "Opiskelen yliopistossa.", "gender": "f" },
+    { "es": "française", "fi": "ranskalainen (nainen)", "example_es": "Elle est française.", "example_fi": "Hän on ranskalainen.", "gender": "f" },
+    { "es": "finlandais", "fi": "suomalainen (mies)", "example_es": "Je suis finlandais.", "example_fi": "Olen suomalainen.", "gender": "m" },
+    { "es": "belge", "fi": "belgialainen (sama m/f)", "example_es": "Il est belge.", "example_fi": "Hän on belgialainen.", "gender": null },
+    { "es": "suisse", "fi": "sveitsiläinen (sama m/f)", "example_es": "Elle est suisse.", "example_fi": "Hän on sveitsiläinen.", "gender": null },
+    { "es": "ne...pas", "fi": "ei (kieltorakenne)", "example_es": "Je ne parle pas anglais.", "example_fi": "En puhu englantia.", "gender": null },
+    { "es": "je ne sais pas", "fi": "en tiedä", "example_es": "Je ne sais pas où il habite.", "example_fi": "En tiedä missä hän asuu.", "gender": null }
+  ],
+  "side_panel": {
+    "tabs": [
+      {
+        "id": "grammar",
+        "title": "K1-kertaus",
+        "content_md": "## Kurssi 1 — kaikki rakenteet\n\n### Artikkelit\n- **le** (m) / **la** (f) / **l'** (vokaali/h muet) / **les** (mon.)\n\n### -er-verbin taivutus\n| Pronomini | Pääte |\n|---|---|\n| je | -e |\n| tu | -es |\n| il/elle/on | -e |\n| nous | -ons |\n| vous | -ez |\n| ils/elles | -ent (mykkä!) |\n\n### Kielto\n- **ne + verbi + pas**\n- ne → **n'** ennen vokaalia/mykää h:ta\n\n### Kansallisuudet\n- Pienellä alkukirjaimella!\n- Naismuoto: français → **e** → française\n- Sama muoto: belge, suisse, russe\n\n### Perhe\n- **le père** / **la mère**\n- **le frère** / **la sœur**\n- **l'oncle** / **la tante** (élision!)\n- **le grand-père** / **la grand-mère**\n- **le cousin** / **la cousine**"
+      },
+      {
+        "id": "tips",
+        "title": "YO-vinkki",
+        "content_md": "## YO-koe A-taso — mitä pitää hallita\n\n**I-taso (tunnistaminen):**\n- Tunnistaa la mère, le père, bonjour, au revoir\n- Ymmärtää yksinkertaisen esittelytekstin\n\n**A-taso (perustuottaminen):**\n- Taivuttaa -er-verbit oikein kaikissa persoonissa\n- Artikkeli le/la/l'/les oikein\n- Kielto ne...pas oikein\n- Kansallisuus oikeassa muodossa\n\n**B–C-taso:**\n- Yhdistää rakenteet sujuvasti lauseessa\n- Käyttää sidesanoja\n- Tunnistaa kontekstista oikea muoto\n\n## Muistisäännöt YO:hon\n\n1. **Artikkeli + vokaali → l'** : l'ami, l'école, l'hôpital\n2. **Kielto → n'** ennen vokaalia: je n'aime pas\n3. **Kansallisuus pienellä**: je suis finlandais(e)\n4. **-ent on mykkä**: ils parlent = [ilparl]\n5. **ne kirjoitelmassa pakollinen** — älä kirjoita 'j'aime pas'"
+      }
+    ]
+  }
+}
