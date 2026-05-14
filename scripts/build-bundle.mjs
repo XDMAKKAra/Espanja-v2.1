@@ -20,14 +20,20 @@ await build({
   external: ["/fonts/*"],
 });
 
+// F-ARCH-1 §A — code-splitting. Dynamic `import("./screens/...")` calls in
+// main.js produce separate chunks under /chunks/, fetched on demand. The
+// entry stays at /app.bundle.js so app.html doesn't change.
 await build({
   ...sharedCommon,
   entryPoints: ["js/main.js"],
-  outfile: "app.bundle.js",
+  outdir: ".",
+  entryNames: "app.bundle",
+  chunkNames: "chunks/app-[name]-[hash]",
   format: "esm",
+  splitting: true,
   target: "es2020",
   // posthog is loaded via absolute https URL in analytics.js — keep external.
   external: ["https://*"],
 });
 
-console.log("✓ bundles built: /app.bundle.css + /app.bundle.js");
+console.log("✓ bundles built: /app.bundle.css + /app.bundle.js + /chunks/*");

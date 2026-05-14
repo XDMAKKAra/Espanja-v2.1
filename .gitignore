@@ -11,6 +11,9 @@ node_modules/
 # L-LIVE-AUDIT-P2 — sourcemaps for bundles (committed bundles serve from repo root)
 app.bundle.js.map
 app.bundle.css.map
+# F-ARCH-1 §A — code-split chunk sourcemaps (chunks themselves are committed
+# so `npm run build` → deploy works, but their maps stay local).
+chunks/*.map
 *.db
 *.db-shm
 *.db-wal
