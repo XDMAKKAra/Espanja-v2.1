@@ -1,0 +1,916 @@
+<!doctype html>
+<html lang="fi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Puheo · Styleguide</title>
+
+  <!--
+    F-ARCH-1 §C — Puheo styleguide.
+    Loads tokens.css + app.bundle.css so every swatch and component matches
+    production exactly — no parallel hand-rolled CSS that can drift.
+
+    Access gate: must be on localhost OR include ?dev=1 in the URL.
+    Gate logic is in an external file because the production CSP rejects
+    inline <script>.
+  -->
+  <script src="/js/styleguide-gate.js"></script>
+
+  <link rel="stylesheet" href="/css/tokens.css" />
+  <link rel="stylesheet" href="/app.bundle.css" />
+
+  <style>
+    /* Styleguide-local layout — kept inline so the page is one-file portable. */
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      margin: 0;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Page shell ─────────────────────────────────────────────── */
+    .sg-shell {
+      display: grid;
+      grid-template-columns: 1fr;
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: clamp(24px, 4vw, 56px) clamp(20px, 4vw, 48px);
+      gap: clamp(32px, 4vw, 56px);
+    }
+    @media (min-width: 1024px) {
+      .sg-shell {
+        grid-template-columns: 220px minmax(0, 1fr);
+      }
+    }
+
+    /* ── Header strip ───────────────────────────────────────────── */
+    .sg-head {
+      grid-column: 1 / -1;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      padding-bottom: var(--space-5);
+      border-bottom: 1px solid var(--border);
+    }
+    .sg-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin: 0 0 var(--space-2);
+    }
+    .sg-title {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 4vw, 40px);
+      line-height: 1.05;
+      letter-spacing: -0.025em;
+      font-weight: 700;
+      margin: 0;
+      color: var(--text);
+    }
+    .sg-title em {
+      font-style: normal;
+      background: var(--grad-hero);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .sg-meta {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 6px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .sg-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      background: var(--accent-soft);
+      color: var(--accent-dark);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+    .sg-pill::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent-dark);
+    }
+
+    /* ── Sticky TOC ─────────────────────────────────────────────── */
+    .sg-toc {
+      position: sticky;
+      top: var(--space-5);
+      align-self: start;
+      display: none;
+    }
+    @media (min-width: 1024px) {
+      .sg-toc { display: block; }
+    }
+    .sg-toc__title {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin: 0 0 var(--space-3);
+    }
+    .sg-toc ol {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      counter-reset: sg;
+    }
+    .sg-toc a {
+      display: flex;
+      gap: 10px;
+      align-items: baseline;
+      padding: 6px 10px;
+      border-radius: var(--radius-sm);
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 13px;
+      transition: background var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out);
+    }
+    .sg-toc a::before {
+      counter-increment: sg;
+      content: counter(sg, decimal-leading-zero);
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text-faint);
+    }
+    .sg-toc a:hover { background: var(--surface-2); color: var(--text); }
+    .sg-toc a:focus-visible {
+      outline: none;
+      box-shadow: var(--focus-ring);
+      outline-offset: var(--focus-ring-offset);
+    }
+
+    /* ── Section + cards ────────────────────────────────────────── */
+    .sg-main {
+      display: flex;
+      flex-direction: column;
+      gap: clamp(40px, 5vw, 72px);
+      min-width: 0;
+    }
+    .sg-section {
+      scroll-margin-top: var(--space-5);
+    }
+    .sg-section__head {
+      display: flex;
+      align-items: baseline;
+      gap: var(--space-3);
+      margin-bottom: var(--space-5);
+      padding-bottom: var(--space-3);
+      border-bottom: 1px solid var(--border);
+    }
+    .sg-section__num {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-faint);
+      letter-spacing: 0.12em;
+    }
+    .sg-section__title {
+      font-size: 22px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      margin: 0;
+      color: var(--text);
+    }
+    .sg-section__lede {
+      margin: 4px 0 0 auto;
+      max-width: 36ch;
+      color: var(--text-muted);
+      font-size: 13px;
+      text-align: right;
+    }
+
+    /* ── Spec grid (used everywhere) ────────────────────────────── */
+    .sg-grid {
+      display: grid;
+      gap: var(--space-3);
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    }
+    .sg-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: var(--space-4);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+      min-width: 0;
+    }
+    .sg-token {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.02em;
+      word-break: break-word;
+    }
+    .sg-value {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-faint);
+      letter-spacing: 0.02em;
+    }
+
+    /* ── Swatch ─────────────────────────────────────────────────── */
+    .sg-swatch {
+      aspect-ratio: 4 / 3;
+      border-radius: var(--radius-sm);
+      border: 1px solid color-mix(in srgb, var(--ink) 6%, transparent);
+    }
+
+    /* ── Spacing scale visualiser ───────────────────────────────── */
+    .sg-space-row {
+      display: grid;
+      grid-template-columns: 80px 1fr 80px;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-2) 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .sg-space-row:last-child { border-bottom: 0; }
+    .sg-space-bar {
+      height: 10px;
+      border-radius: var(--radius-full);
+      background: var(--accent);
+    }
+
+    /* ── Radius preview ─────────────────────────────────────────── */
+    .sg-radius {
+      height: 72px;
+      background: var(--accent-soft);
+      border: 1px solid var(--border-strong);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent-dark);
+      font-family: var(--font-mono);
+      font-size: 11px;
+    }
+
+    /* ── Shadow preview ─────────────────────────────────────────── */
+    .sg-shadow {
+      height: 96px;
+      border-radius: var(--radius-md);
+      background: var(--surface);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* ── Type ───────────────────────────────────────────────────── */
+    .sg-type-row {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: var(--space-4);
+      align-items: baseline;
+      padding: var(--space-4) 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .sg-type-row:last-child { border-bottom: 0; }
+    .sg-type-row__label { font-family: var(--font-mono); font-size: 11px; color: var(--text-faint); }
+    .sg-type-row__sample { color: var(--text); }
+    .sg-type-display { font-size: var(--fs-h1); line-height: 1.05; font-weight: 700; letter-spacing: -0.025em; }
+    .sg-type-h2      { font-size: var(--fs-h2); line-height: 1.15; font-weight: 600; letter-spacing: -0.015em; }
+    .sg-type-h3      { font-size: var(--fs-h3); line-height: 1.3;  font-weight: 600; }
+    .sg-type-body    { font-size: var(--fs-body); line-height: 1.55; }
+    .sg-type-sm      { font-size: var(--fs-body-sm); line-height: 1.5;  color: var(--text-muted); }
+    .sg-type-mono    { font-family: var(--font-mono); font-size: var(--fs-mono); color: var(--text); letter-spacing: 0.02em; }
+
+    /* ── State row (button states laid out left→right) ──────────── */
+    .sg-state-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: var(--space-3);
+      padding: var(--space-3);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+    }
+    .sg-state {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 6px;
+    }
+    .sg-state__label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+    }
+
+    /* ── Demo button (mini, kept independent of app .btn styles to
+         showcase what tokens produce when used directly) ─────────── */
+    .sg-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      border-radius: var(--radius-md);
+      border: 1px solid transparent;
+      font: inherit;
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 1.2;
+      cursor: pointer;
+      transition: background var(--duration-fast) var(--ease-out),
+                  color      var(--duration-fast) var(--ease-out),
+                  box-shadow var(--duration-fast) var(--ease-out),
+                  transform  var(--duration-fast) var(--ease-out);
+      background: var(--accent-dark);
+      color: #fff;
+    }
+    .sg-btn:hover { background: var(--accent-hover); }
+    .sg-btn:active { transform: scale(0.97); }
+    .sg-btn:focus-visible {
+      outline: none;
+      box-shadow: var(--focus-ring);
+      outline-offset: var(--focus-ring-offset);
+    }
+    .sg-btn[disabled] {
+      background: var(--surface-2);
+      color: var(--text-faint);
+      cursor: not-allowed;
+      border-color: var(--border);
+    }
+    .sg-btn--ghost {
+      background: transparent;
+      color: var(--accent-dark);
+      border-color: var(--border-strong);
+    }
+    .sg-btn--ghost:hover { background: var(--accent-soft); }
+    .sg-btn--quiet {
+      background: transparent;
+      color: var(--text-muted);
+      border-color: transparent;
+    }
+    .sg-btn--quiet:hover { background: var(--surface-2); color: var(--text); }
+    .sg-btn--icon {
+      width: 44px;
+      height: 44px;
+      padding: 0;
+      justify-content: center;
+      background: var(--surface);
+      color: var(--text);
+      border-color: var(--border);
+    }
+    .sg-btn--icon:hover { background: var(--surface-2); }
+    .sg-btn__spinner {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: 2px solid color-mix(in srgb, currentColor 25%, transparent);
+      border-top-color: currentColor;
+      animation: sg-spin 700ms linear infinite;
+    }
+    @keyframes sg-spin { to { transform: rotate(360deg); } }
+    @media (prefers-reduced-motion: reduce) {
+      .sg-btn__spinner { animation: none; opacity: 0.8; }
+    }
+
+    /* ── Input ──────────────────────────────────────────────────── */
+    .sg-field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .sg-field__label {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text);
+    }
+    .sg-field__hint {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .sg-input,
+    .sg-textarea {
+      font: inherit;
+      font-size: 15px;
+      padding: 10px 12px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-strong);
+      background: var(--surface);
+      color: var(--text);
+      transition: border-color var(--duration-fast) var(--ease-out),
+                  box-shadow var(--duration-fast) var(--ease-out);
+    }
+    .sg-input:focus-visible,
+    .sg-textarea:focus-visible {
+      outline: none;
+      border-color: var(--accent-dark);
+      box-shadow: var(--focus-ring);
+    }
+    .sg-input[aria-invalid="true"] {
+      border-color: var(--error);
+    }
+    .sg-textarea { min-height: 96px; resize: vertical; }
+
+    /* ── Tiny inline card (component preview) ───────────────────── */
+    .sg-preview {
+      padding: var(--space-4);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+    }
+    .sg-preview--elev { box-shadow: var(--shadow-lg); }
+
+    /* ── Motion preview cards (pure-CSS :hover; no inline JS) ──── */
+    .sg-motion-card { cursor: pointer; }
+    .sg-motion-track {
+      position: relative;
+      height: 24px;
+      background: var(--surface-2);
+      border-radius: var(--radius-full);
+    }
+    .sg-motion-dot {
+      position: absolute;
+      left: 6px;
+      top: 5px;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--accent-dark);
+      transition: transform var(--duration-fast) var(--ease-out);
+      will-change: transform;
+    }
+    .sg-motion-card--spring .sg-motion-dot { transition: transform 320ms var(--ease-spring); }
+    .sg-motion-card--reveal .sg-motion-dot { transition: transform var(--duration-reveal) var(--ease-out); }
+    .sg-motion-card:hover .sg-motion-dot,
+    .sg-motion-card:focus-within .sg-motion-dot { transform: translateX(140px); }
+    @media (prefers-reduced-motion: reduce) {
+      .sg-motion-dot { transition: none; }
+    }
+
+    /* ── Z-index demo stack ─────────────────────────────────────── */
+    .sg-stack {
+      position: relative;
+      height: 220px;
+      background:
+        repeating-linear-gradient(
+          135deg,
+          var(--surface) 0 8px,
+          var(--surface-2) 8px 16px
+        );
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .sg-stack__layer {
+      position: absolute;
+      padding: 8px 12px;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      background: var(--surface);
+      border: 1px solid var(--border-strong);
+      box-shadow: var(--shadow-sm);
+      color: var(--text);
+    }
+
+    /* ── Skeleton wall (re-uses production .skeleton-* tokens) ── */
+    .sg-skeleton-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: var(--space-4);
+    }
+
+    /* ── Badges (echoes grade + sr-* + cat-* tokens) ───────────── */
+    .sg-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      background: color-mix(in srgb, currentColor 14%, transparent);
+    }
+
+    /* ── Footer ─────────────────────────────────────────────────── */
+    .sg-foot {
+      grid-column: 1 / -1;
+      margin-top: var(--space-6);
+      padding-top: var(--space-5);
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 12px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .sg-foot code {
+      font-family: var(--font-mono);
+      background: var(--surface-2);
+      padding: 2px 6px;
+      border-radius: var(--radius-sm);
+      color: var(--text);
+    }
+  </style>
+</head>
+<body>
+  <div class="sg-shell">
+
+    <!-- ─── Header ─────────────────────────────────────────────── -->
+    <header class="sg-head">
+      <div>
+        <p class="sg-eyebrow">Puheo · sisäinen referenssi</p>
+        <h1 class="sg-title">Styleguide<em>.</em></h1>
+      </div>
+      <div class="sg-meta">
+        <span class="sg-pill" aria-live="polite">Dev-tila</span>
+        <span>F-ARCH-1 §C · v153</span>
+        <span>Token-lähde: <code style="font-family:var(--font-mono)">/css/tokens.css</code></span>
+      </div>
+    </header>
+
+    <!-- ─── Sticky TOC ─────────────────────────────────────────── -->
+    <nav class="sg-toc" aria-label="Styleguide-osiot">
+      <p class="sg-toc__title">Sisällys</p>
+      <ol>
+        <li><a href="#varit">Värit</a></li>
+        <li><a href="#tila">Spacing</a></li>
+        <li><a href="#kulmat">Kulmat</a></li>
+        <li><a href="#kerrokset">Varjot</a></li>
+        <li><a href="#typo">Typografia</a></li>
+        <li><a href="#motion">Motion</a></li>
+        <li><a href="#zindex">Z-index</a></li>
+        <li><a href="#napit">Napit</a></li>
+        <li><a href="#kentat">Kentät</a></li>
+        <li><a href="#kortit">Kortit</a></li>
+        <li><a href="#tilat">Skeletonit</a></li>
+        <li><a href="#merkit">Merkit</a></li>
+        <li><a href="#palaute">Palaute</a></li>
+      </ol>
+    </nav>
+
+    <main class="sg-main">
+
+      <!-- ── 01 Värit ──────────────────────────────────────────── -->
+      <section id="varit" class="sg-section">
+        <div class="sg-section__head">
+          <span class="sg-section__num">01</span>
+          <h2 class="sg-section__title">Värit</h2>
+          <p class="sg-section__lede">Mint-pohja, syvä teal aksentti. Tekstinä käytetään aina <code>--accent-dark</code>:ia (5.47 : 1).</p>
+        </div>
+
+        <h3 class="sg-type-h3" style="margin:0 0 12px">Pohjat & musteet</h3>
+        <div class="sg-grid" style="margin-bottom:32px">
+          <div class="sg-card"><div class="sg-swatch" style="background:var(--bg)"></div><div class="sg-token">--bg</div><div class="sg-value">#F0FDF9</div></div>
+          <div class="sg-card"><div class="sg-swatch" style="background:var(--surface)"></div><div class="sg-token">--surface</div><div class="sg-value">#FFFFFF</div></div>
+          <div class="sg-card"><div class="sg-swatch" style="background:var(--surface-2)"></div><div class="sg-token">--surface-2 / --surface-hover</div><div class="sg-value">#ECFDF5</div></div>
+          <div class="sg-card"><div class="sg-swatch" style="background:var(--border)"></div><div class="sg-token">--border</div><div class="sg-value">#D1FAE5</div></div>
+          <div class="sg-card"><div class="sg-swatch" style="background:var(--border-strong)"></div><div class="sg-token">--border-strong</div><div class="sg-value">#A7F3D0</div></div>
+          <div class="sg-card"><div class="sg-swatch" style="background:var(--ink)"></div><div class="sg-token">--text / --ink</div><div class="sg-value">#111827</div></div>
+          <div class="sg-card"><div class="sg-swatch" style="background:var(--ink-soft)"></div><div class="sg-token">--text-muted / --ink-soft</div><div class="sg-value">#374151</div></div>
+          <div class="sg-card"><div class="sg-swatch" style="background:var(--ink-faint)"></div><div class="sg-token">--text-faint / --ink-faint</div><div class="sg-value">#6B7280</div></div>
+        </div>
+
+        <h3 class="sg-type-h3" style="margin:0 0 12px">Aksentti & palaute</h3>
+        <div class="sg-grid" style="margin-bottom:32px">
+          <div class="sg-card"><div class="sg-swatch" style="background:var(--accent)"></div><div class="sg-token">--accent</div><div class="sg-value">#2DD4BF</div></div>
+          <div class="sg-card"><div class="sg-swatch" style="background:var(--accent-hover)"></div><div class="sg-token">--accent-hover</div><div class="sg-value">#14B8A6</div></div>
+          <div class="sg-card"><div class="sg-swatch" style="background:var(--accent-soft)"></div><div class="sg-token">--accent-soft</div><div class="sg-value">#CCFBF1</div></div>
+          <div class="sg-card"><div class="sg-swatch" style="background:var(--accent-dark)"></div><div class="sg-token">--accent-dark (text-safe)</div><div class="sg-value">#0F766E</div></div>
+          <div class="sg-card"><div class="sg-swatch" style="background:var(--success)"></div><div class="sg-token">--success</div><div class="sg-value">#059669</div></div>
+          <div class="sg-card"><div class="sg-swatch" style="background:var(--warn)"></div><div class="sg-token">--warn</div><div class="sg-value">#D97706</div></div>
+          <div class="sg-card"><div class="sg-swatch" style="background:var(--error)"></div><div class="sg-token">--error</div><div class="sg-value">#DC2626</div></div>
+          <div class="sg-card"><div class="sg-swatch" style="background:var(--info)"></div><div class="sg-token">--info</div><div class="sg-value">#2563EB</div></div>
+        </div>
+
+        <h3 class="sg-type-h3" style="margin:0 0 12px">YO-arvosanat (L → I)</h3>
+        <div class="sg-grid">
+          <div class="sg-card"><div class="sg-swatch" style="background:var(--grade-l)"></div><div class="sg-token">--grade-l · Laudatur</div></div>
+          <div class="sg-card"><div class="sg-swatch" style="background:var(--grade-e)"></div><div class="sg-token">--grade-e · Eximia</div></div>
+          <div class="sg-card"><div class="sg-swatch" style="background:var(--grade-m)"></div><div class="sg-token">--grade-m · Magna</div></div>
+          <div class="sg-card"><div class="sg-swatch" style="background:var(--grade-c)"></div><div class="sg-token">--grade-c · Cum laude</div></div>
+          <div class="sg-card"><div class="sg-swatch" style="background:var(--grade-b)"></div><div class="sg-token">--grade-b · Lubenter</div></div>
+          <div class="sg-card"><div class="sg-swatch" style="background:var(--grade-a)"></div><div class="sg-token">--grade-a · Approbatur</div></div>
+          <div class="sg-card"><div class="sg-swatch" style="background:var(--grade-i)"></div><div class="sg-token">--grade-i · Improbatur</div></div>
+        </div>
+      </section>
+
+      <!-- ── 02 Spacing ────────────────────────────────────────── -->
+      <section id="tila" class="sg-section">
+        <div class="sg-section__head">
+          <span class="sg-section__num">02</span>
+          <h2 class="sg-section__title">Spacing</h2>
+          <p class="sg-section__lede">4 px:n perusyksikkö. Aliakset <code>--space-1..8</code> mappautuvat kanonisiin <code>--s-N</code>-tokeneihin.</p>
+        </div>
+        <div class="sg-preview" style="padding:24px">
+          <div class="sg-space-row"><span class="sg-token">--space-1</span><div class="sg-space-bar" style="width:var(--space-1)"></div><span class="sg-value">4 px</span></div>
+          <div class="sg-space-row"><span class="sg-token">--space-2</span><div class="sg-space-bar" style="width:var(--space-2)"></div><span class="sg-value">8 px</span></div>
+          <div class="sg-space-row"><span class="sg-token">--space-3</span><div class="sg-space-bar" style="width:var(--space-3)"></div><span class="sg-value">12 px</span></div>
+          <div class="sg-space-row"><span class="sg-token">--space-4</span><div class="sg-space-bar" style="width:var(--space-4)"></div><span class="sg-value">16 px</span></div>
+          <div class="sg-space-row"><span class="sg-token">--space-5</span><div class="sg-space-bar" style="width:var(--space-5)"></div><span class="sg-value">24 px</span></div>
+          <div class="sg-space-row"><span class="sg-token">--space-6</span><div class="sg-space-bar" style="width:var(--space-6)"></div><span class="sg-value">32 px</span></div>
+          <div class="sg-space-row"><span class="sg-token">--space-7</span><div class="sg-space-bar" style="width:var(--space-7)"></div><span class="sg-value">48 px</span></div>
+          <div class="sg-space-row"><span class="sg-token">--space-8</span><div class="sg-space-bar" style="width:var(--space-8)"></div><span class="sg-value">64 px</span></div>
+        </div>
+      </section>
+
+      <!-- ── 03 Kulmat ─────────────────────────────────────────── -->
+      <section id="kulmat" class="sg-section">
+        <div class="sg-section__head">
+          <span class="sg-section__num">03</span>
+          <h2 class="sg-section__title">Kulmat</h2>
+        </div>
+        <div class="sg-grid">
+          <div class="sg-card"><div class="sg-radius" style="border-radius:var(--radius-sm)">--radius-sm · 6 px</div></div>
+          <div class="sg-card"><div class="sg-radius" style="border-radius:var(--radius-md)">--radius-md · 10 px</div></div>
+          <div class="sg-card"><div class="sg-radius" style="border-radius:var(--radius-lg)">--radius-lg · 16 px</div></div>
+          <div class="sg-card"><div class="sg-radius" style="border-radius:var(--radius-full)">--radius-full · pill</div></div>
+        </div>
+      </section>
+
+      <!-- ── 04 Varjot ─────────────────────────────────────────── -->
+      <section id="kerrokset" class="sg-section">
+        <div class="sg-section__head">
+          <span class="sg-section__num">04</span>
+          <h2 class="sg-section__title">Varjot</h2>
+          <p class="sg-section__lede">Käytä vain kun nostat elementin pintatasolta — älä koristeena.</p>
+        </div>
+        <div class="sg-grid">
+          <div class="sg-card"><div class="sg-shadow" style="box-shadow:var(--shadow-sm)">--shadow-sm</div></div>
+          <div class="sg-card"><div class="sg-shadow" style="box-shadow:var(--shadow-md)">--shadow-md</div></div>
+          <div class="sg-card"><div class="sg-shadow" style="box-shadow:var(--shadow-lg)">--shadow-lg</div></div>
+        </div>
+      </section>
+
+      <!-- ── 05 Typografia ─────────────────────────────────────── -->
+      <section id="typo" class="sg-section">
+        <div class="sg-section__head">
+          <span class="sg-section__num">05</span>
+          <h2 class="sg-section__title">Typografia</h2>
+          <p class="sg-section__lede">Inter ruudulle, DM Mono dataan ja kelloihin.</p>
+        </div>
+        <div class="sg-preview" style="padding:24px">
+          <div class="sg-type-row"><span class="sg-type-row__label">Display · h1</span><div class="sg-type-row__sample sg-type-display">Yo-koe lähestyy.</div></div>
+          <div class="sg-type-row"><span class="sg-type-row__label">h2</span><div class="sg-type-row__sample sg-type-h2">Tämän päivän haaste</div></div>
+          <div class="sg-type-row"><span class="sg-type-row__label">h3</span><div class="sg-type-row__sample sg-type-h3">Sanasto · K3 · oppitunti 4</div></div>
+          <div class="sg-type-row"><span class="sg-type-row__label">Body</span><div class="sg-type-row__sample sg-type-body">Pitkät tekstit asettuvat 60–72 ch leveydelle. Mobiilissa minimi 16 px, koska sitä pienempi ei ole luettava.</div></div>
+          <div class="sg-type-row"><span class="sg-type-row__label">Small</span><div class="sg-type-row__sample sg-type-sm">Kontekstin lisä — esim. metadata, alaviite, tooltip.</div></div>
+          <div class="sg-type-row"><span class="sg-type-row__label">Mono</span><div class="sg-type-row__sample sg-type-mono">tabular-nums: 1 234 · 47,2 % · 03:42</div></div>
+        </div>
+      </section>
+
+      <!-- ── 06 Motion ─────────────────────────────────────────── -->
+      <section id="motion" class="sg-section">
+        <div class="sg-section__head">
+          <span class="sg-section__num">06</span>
+          <h2 class="sg-section__title">Motion</h2>
+          <p class="sg-section__lede">Mouse-overaa korttia nähdäksesi käyrän — käyttöliittymässä animoidaan vain transform + opacity.</p>
+        </div>
+        <div class="sg-grid">
+          <div class="sg-card sg-motion-card sg-motion-card--out">
+            <div class="sg-token">--ease-out · --duration-fast</div>
+            <div class="sg-value">120 ms · cubic-bezier(0,0,.2,1)</div>
+            <div class="sg-motion-track"><div class="sg-motion-dot"></div></div>
+          </div>
+          <div class="sg-card sg-motion-card sg-motion-card--spring">
+            <div class="sg-token">--ease-spring · 320 ms</div>
+            <div class="sg-value">cubic-bezier(.34, 1.56, .64, 1)</div>
+            <div class="sg-motion-track"><div class="sg-motion-dot"></div></div>
+          </div>
+          <div class="sg-card sg-motion-card sg-motion-card--reveal">
+            <div class="sg-token">--duration-reveal · ease-out</div>
+            <div class="sg-value">600 ms · count-up, sparkline</div>
+            <div class="sg-motion-track"><div class="sg-motion-dot"></div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── 07 Z-index ────────────────────────────────────────── -->
+      <section id="zindex" class="sg-section">
+        <div class="sg-section__head">
+          <span class="sg-section__num">07</span>
+          <h2 class="sg-section__title">Z-index</h2>
+          <p class="sg-section__lede">Älä keksi numeroita. Jokaisella pinotasolla on tokeninsa.</p>
+        </div>
+        <div class="sg-stack">
+          <div class="sg-stack__layer" style="z-index:var(--z-base);    left:24px; top:24px;">--z-base · 1</div>
+          <div class="sg-stack__layer" style="z-index:var(--z-dropdown); left:64px; top:54px;">--z-dropdown · 10</div>
+          <div class="sg-stack__layer" style="z-index:var(--z-sticky);  left:104px; top:84px;">--z-sticky · 20</div>
+          <div class="sg-stack__layer" style="z-index:var(--z-drawer);  left:144px; top:114px;">--z-drawer · 30</div>
+          <div class="sg-stack__layer" style="z-index:var(--z-modal);   left:184px; top:144px; background:var(--accent-soft); border-color:var(--accent-dark); color:var(--accent-dark);">--z-modal · 40</div>
+          <div class="sg-stack__layer" style="z-index:var(--z-toast);   left:24px; bottom:24px; top:auto;">--z-toast · 50</div>
+        </div>
+      </section>
+
+      <!-- ── 08 Napit ──────────────────────────────────────────── -->
+      <section id="napit" class="sg-section">
+        <div class="sg-section__head">
+          <span class="sg-section__num">08</span>
+          <h2 class="sg-section__title">Napit</h2>
+          <p class="sg-section__lede">Verbi edellä, sinä-imperatiivi. Yksi nuoli (→) per näkymä, vain ensisijaisessa CTA:ssa.</p>
+        </div>
+
+        <h3 class="sg-type-h3" style="margin:0 0 12px">Primary · kaikki tilat</h3>
+        <div class="sg-state-row" style="margin-bottom:24px">
+          <div class="sg-state"><span class="sg-state__label">Default</span><button class="sg-btn" type="button">Aloita harjoitus →</button></div>
+          <div class="sg-state"><span class="sg-state__label">Hover</span><button class="sg-btn" type="button" style="background:var(--accent-hover)">Aloita harjoitus →</button></div>
+          <div class="sg-state"><span class="sg-state__label">Focus</span><button class="sg-btn" type="button" style="box-shadow:var(--focus-ring);outline-offset:var(--focus-ring-offset)">Aloita harjoitus →</button></div>
+          <div class="sg-state"><span class="sg-state__label">Active</span><button class="sg-btn" type="button" style="transform:scale(0.97)">Aloita harjoitus →</button></div>
+          <div class="sg-state"><span class="sg-state__label">Disabled</span><button class="sg-btn" type="button" disabled>Aloita harjoitus →</button></div>
+          <div class="sg-state"><span class="sg-state__label">Loading</span>
+            <button class="sg-btn" type="button" aria-busy="true"><span class="sg-btn__spinner" aria-hidden="true"></span>Tarkistan…</button>
+          </div>
+        </div>
+
+        <h3 class="sg-type-h3" style="margin:0 0 12px">Ghost · Quiet · Icon</h3>
+        <div class="sg-state-row">
+          <div class="sg-state"><span class="sg-state__label">Ghost</span><button class="sg-btn sg-btn--ghost" type="button">Avaa profiili</button></div>
+          <div class="sg-state"><span class="sg-state__label">Quiet</span><button class="sg-btn sg-btn--quiet" type="button">Peruuta</button></div>
+          <div class="sg-state"><span class="sg-state__label">Icon (44 × 44)</span>
+            <button class="sg-btn sg-btn--icon" type="button" aria-label="Sulje">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── 09 Kentät ─────────────────────────────────────────── -->
+      <section id="kentat" class="sg-section">
+        <div class="sg-section__head">
+          <span class="sg-section__num">09</span>
+          <h2 class="sg-section__title">Kentät</h2>
+          <p class="sg-section__lede">Label aina inputin yläpuolella. Virhe inputin alla, aina konkreettinen.</p>
+        </div>
+        <div class="sg-grid" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr))">
+          <div class="sg-preview">
+            <div class="sg-field">
+              <label class="sg-field__label" for="sg-i1">Sähköposti</label>
+              <input class="sg-input" id="sg-i1" type="email" placeholder="nimi@oppilaitos.fi" autocomplete="email" />
+              <span class="sg-field__hint">Käytämme tätä vain unohtuneen salasanan palauttamiseen.</span>
+            </div>
+          </div>
+          <div class="sg-preview">
+            <div class="sg-field">
+              <label class="sg-field__label" for="sg-i2">Salasana</label>
+              <input class="sg-input" id="sg-i2" type="password" aria-invalid="true" value="abc" />
+              <span class="sg-field__hint" style="color:var(--error)">Salasana kaipaa numeron.</span>
+            </div>
+          </div>
+          <div class="sg-preview">
+            <div class="sg-field">
+              <label class="sg-field__label" for="sg-t1">Kirjoitelma</label>
+              <textarea class="sg-textarea" id="sg-t1" placeholder="Aloita kirjoittaminen kun olet valmis…"></textarea>
+              <span class="sg-field__hint">300–450 merkkiä · YTL lyhyt oppimäärä, tehtävä 2.</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── 10 Kortit ─────────────────────────────────────────── -->
+      <section id="kortit" class="sg-section">
+        <div class="sg-section__head">
+          <span class="sg-section__num">10</span>
+          <h2 class="sg-section__title">Kortit</h2>
+        </div>
+        <div class="sg-grid" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr))">
+          <div class="sg-preview">
+            <p class="sg-eyebrow" style="margin:0 0 6px">Lepotila</p>
+            <h3 class="sg-type-h3" style="margin:0">Sanasto · K3</h3>
+            <p class="sg-type-sm" style="margin:8px 0 0">12 sanaa kertaukseen — viimeisin sessio 2 päivää sitten.</p>
+          </div>
+          <div class="sg-preview sg-preview--elev">
+            <p class="sg-eyebrow" style="margin:0 0 6px">Nostettu (modaali, popover)</p>
+            <h3 class="sg-type-h3" style="margin:0">Tämän päivän haaste</h3>
+            <p class="sg-type-sm" style="margin:8px 0 0">Käännä 8 lausetta — kesto noin 6 minuuttia.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── 11 Skeletonit ─────────────────────────────────────── -->
+      <section id="tilat" class="sg-section">
+        <div class="sg-section__head">
+          <span class="sg-section__num">11</span>
+          <h2 class="sg-section__title">Skeletonit</h2>
+          <p class="sg-section__lede">Spinneriä ei käytetä paitsi nappien sisällä — ladonta on aina hahmona, ei pyörivänä renkaana.</p>
+        </div>
+        <div class="sg-skeleton-grid">
+          <div class="sg-card" style="padding:0;overflow:hidden">
+            <div style="padding:14px 16px;border-bottom:1px solid var(--border)">
+              <span class="sg-token">vocab</span>
+            </div>
+            <div class="skeleton-exercise skeleton-exercise--vocab" aria-hidden="true">
+              <div class="skeleton-bar skeleton-bar-eyebrow"></div>
+              <div class="skeleton-bar skeleton-bar-prompt"></div>
+              <div class="skeleton-options">
+                <div class="skeleton-option"></div>
+                <div class="skeleton-option"></div>
+                <div class="skeleton-option"></div>
+                <div class="skeleton-option"></div>
+              </div>
+              <div class="skeleton-hint">Etsitään sopivia sanoja sinulle…</div>
+            </div>
+          </div>
+          <div class="sg-card" style="padding:0;overflow:hidden">
+            <div style="padding:14px 16px;border-bottom:1px solid var(--border)">
+              <span class="sg-token">grammar</span>
+            </div>
+            <div class="skeleton-exercise skeleton-exercise--grammar" aria-hidden="true">
+              <div class="skeleton-bar skeleton-bar-rulechip"></div>
+              <div class="skeleton-bar skeleton-bar-wide"></div>
+              <div class="skeleton-bar skeleton-bar-medium"></div>
+              <div class="skeleton-options">
+                <div class="skeleton-option"></div>
+                <div class="skeleton-option"></div>
+                <div class="skeleton-option"></div>
+                <div class="skeleton-option"></div>
+              </div>
+              <div class="skeleton-hint">Mietitään seuraavaa rakennetta…</div>
+            </div>
+          </div>
+          <div class="sg-card" style="padding:0;overflow:hidden">
+            <div style="padding:14px 16px;border-bottom:1px solid var(--border)">
+              <span class="sg-token">reading</span>
+            </div>
+            <div class="skeleton-exercise skeleton-exercise--reading" aria-hidden="true">
+              <div class="skeleton-bar skeleton-bar-title"></div>
+              <div class="skeleton-bar skeleton-bar-wide"></div>
+              <div class="skeleton-bar skeleton-bar-medium"></div>
+              <div class="skeleton-reading-q"></div>
+              <div class="skeleton-reading-q"></div>
+              <div class="skeleton-hint">Luetaan teksti valmiiksi sinulle…</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── 12 Merkit ─────────────────────────────────────────── -->
+      <section id="merkit" class="sg-section">
+        <div class="sg-section__head">
+          <span class="sg-section__num">12</span>
+          <h2 class="sg-section__title">Merkit</h2>
+        </div>
+        <div class="sg-preview" style="display:flex;flex-wrap:wrap;gap:10px">
+          <span class="sg-badge" style="color:var(--success)">Suoritettu</span>
+          <span class="sg-badge" style="color:var(--warn)">Kertaa pian</span>
+          <span class="sg-badge" style="color:var(--error)">Putki katkeaa tänään</span>
+          <span class="sg-badge" style="color:var(--info)">Beta</span>
+          <span class="sg-badge" style="color:var(--accent-dark)">Pro</span>
+          <span class="sg-badge" style="color:var(--grade-l)">L · 99 p</span>
+          <span class="sg-badge" style="color:var(--grade-m)">M · 78 p</span>
+          <span class="sg-badge" style="color:var(--grade-c)">C · 55 p</span>
+          <span class="sg-badge" style="color:var(--grade-i)">I · 12 p</span>
+        </div>
+      </section>
+
+      <!-- ── 13 Palaute ────────────────────────────────────────── -->
+      <section id="palaute" class="sg-section">
+        <div class="sg-section__head">
+          <span class="sg-section__num">13</span>
+          <h2 class="sg-section__title">Palaute</h2>
+          <p class="sg-section__lede">Ikoni + teksti + role=status — ei pelkkä väri-indikaattori.</p>
+        </div>
+        <div class="sg-grid" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr))">
+          <div class="lr-feedback is-correct lr-feedback--animate" role="status" style="background:color-mix(in srgb, var(--success) 14%, transparent)">
+            <svg class="lr-feedback__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:var(--success)"><path d="M20 6 9 17l-5-5"/></svg>
+            <span class="lr-feedback__text">Hyvin meni! Tämä alkaa olla rutiinia.</span>
+          </div>
+          <div class="lr-feedback is-wrong lr-feedback--animate" role="status" style="background:color-mix(in srgb, var(--error) 14%, transparent)">
+            <svg class="lr-feedback__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:var(--error)"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+            <span class="lr-feedback__text">Melkein — tarkista artikkelin sukupuoli.</span>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <footer class="sg-foot">
+      <span>Päivitetty F-ARCH-1 §C · token-lähde <code>/css/tokens.css</code></span>
+      <span>Älä linkkaa tätä tuotannosta — gate <code>?dev=1</code></span>
+    </footer>
+  </div>
+</body>
+</html>

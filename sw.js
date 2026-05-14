@@ -1,4 +1,4 @@
-const CACHE_VERSION = "puheo-v153";
+const CACHE_VERSION = "puheo-v154";
 const STATIC_ASSETS = [
   "/app.html",
   "/index.html",
@@ -140,6 +140,12 @@ self.addEventListener("fetch", (e) => {
   // Skip non-GET and cross-origin
   if (e.request.method !== "GET") return;
   if (url.origin !== self.location.origin) return;
+
+  // F-ARCH-1 §C — never cache the styleguide. It's dev-only, gated, and we
+  // don't want stale token previews after a tokens.css edit.
+  if (url.pathname === "/styleguide" || url.pathname === "/styleguide.html") {
+    return;
+  }
 
   // API calls: network-first, no cache
   if (url.pathname.startsWith("/api/")) {
