@@ -41,7 +41,7 @@ function showGramSkeleton() {
   if (opts) opts.classList.add("hidden");
   if (slot) {
     slot.classList.remove("hidden");
-    showSkeleton(slot, "exercise");
+    showSkeleton(slot, "grammar");
   }
 }
 function hideGramSkeleton() {

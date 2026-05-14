@@ -337,15 +337,77 @@
 .lr-reading-q legend { font-weight: 600; padding: 0; margin-bottom: 8px; }
 .lr-reading-choice { display: flex; align-items: center; gap: 8px; padding: 6px 0; }
 
-/* Feedback */
+/* Feedback — F-MICROPOLISH-1 Item B
+   Icon + text, spring-in on success (over-shoot ~1.08), shake on wrong.
+   Color alone is never the only indicator: icon + text + role="status". */
 .lr-feedback {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   padding: 12px 14px;
   border-radius: 10px;
   font-size: 14px;
   line-height: 1.5;
 }
-.lr-feedback.is-correct { background: color-mix(in srgb, var(--success, var(--accent)) 14%, transparent); color: var(--ink); }
-.lr-feedback.is-wrong { background: color-mix(in srgb, var(--error, #b91c1c) 14%, transparent); color: var(--ink); }
+.lr-feedback__icon {
+  flex: 0 0 24px;
+  width: 24px;
+  height: 24px;
+  transform-origin: center;
+  transform: scale(0.6);
+  opacity: 0;
+}
+.lr-feedback__text { min-width: 0; }
+
+.lr-feedback.is-correct {
+  background: color-mix(in srgb, var(--success, var(--accent)) 14%, transparent);
+  color: var(--ink);
+}
+.lr-feedback.is-correct .lr-feedback__icon { color: var(--success, var(--accent)); }
+.lr-feedback.is-wrong {
+  background: color-mix(in srgb, var(--error, #b91c1c) 14%, transparent);
+  color: var(--ink);
+}
+.lr-feedback.is-wrong .lr-feedback__icon { color: var(--error, #b91c1c); }
+
+/* Spring-in for icon, gentle fade for the text. */
+.lr-feedback--animate .lr-feedback__icon {
+  animation: lr-fb-pop 320ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+.lr-feedback--animate .lr-feedback__text {
+  animation: lr-fb-fadein 220ms ease-out 60ms both;
+}
+/* Wrong answers: add a short shake after the icon settles. */
+.lr-feedback.is-wrong.lr-feedback--animate {
+  animation: lr-fb-shake 220ms ease-in-out 280ms 1;
+}
+
+@keyframes lr-fb-pop {
+  0%   { transform: scale(0.6); opacity: 0; }
+  60%  { transform: scale(1.12); opacity: 1; }
+  100% { transform: scale(1);    opacity: 1; }
+}
+@keyframes lr-fb-fadein {
+  from { opacity: 0; transform: translateX(-2px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes lr-fb-shake {
+  0%, 100% { transform: translateX(0); }
+  25%      { transform: translateX(-4px); }
+  50%      { transform: translateX(4px); }
+  75%      { transform: translateX(-2px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lr-feedback--animate .lr-feedback__icon,
+  .lr-feedback--animate .lr-feedback__text,
+  .lr-feedback.is-wrong.lr-feedback--animate {
+    animation: lr-fb-rm-fade 150ms ease-out forwards;
+  }
+  @keyframes lr-fb-rm-fade {
+    from { opacity: 0; }
+    to   { opacity: 1; transform: none; }
+  }
+}
 
 /* Phase banner */
 .lr-shell--banner { padding-top: 64px; }
