@@ -333,6 +333,21 @@ function renderDashboard({
       heroHeader.classList.add("dash-greeting--in");
     }));
   }
+  // KPI tiles share the same blur-fade arrival, staggered after the hero
+  // greeting completes (see --kpi-delay in dashboard.css).
+  const kpiRow = document.querySelector(".dash-kpi-row");
+  if (kpiRow) {
+    kpiRow.classList.remove("dash-kpi-row--in");
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      kpiRow.classList.add("dash-kpi-row--in");
+    }));
+  }
+  // Dim the streak flame when the user has no active streak — a tiny
+  // 18 px flame next to a zero counter just adds noise.
+  const streakIcon = document.querySelector(".dash-kpi-tile--1 .dash-kpi-tile__icon");
+  if (streakIcon) {
+    streakIcon.classList.toggle("is-dim", !((streak ?? 0) >= 1));
+  }
 
   renderGradeWidget(gradeEstimate || { tier: "none", grade: null, confidence: 0, coverage: {}, total: totalSessions || 0 });
 

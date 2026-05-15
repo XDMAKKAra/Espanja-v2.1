@@ -4,13 +4,43 @@
    They will be progressively rewritten in subsequent tasks (T7-T10). */
 
 /* ── KPI STAT ROW (L-FRONTEND-POLISH-1) ── */
-/* Four tiles: Putki / Yhteensä / Tällä viikolla / YO-valmius.
-   Mono numerals, varied surface tokens per tile, 16-20px gap. */
+/* Four tiles: Putki / Harjoituksia / Tällä viikolla / YO-valmius.
+   Mono numerals, varied surface tokens per tile, 16-20px gap.
+   Staggered blur-fade arrival mirrors the .dash-greeting--in pattern
+   so the KPI row doesn't pop after the hero fades in. */
 .dash-kpi-row {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 12px;
   margin: 0 0 20px;
+}
+.dash-kpi-row > .dash-kpi-tile {
+  opacity: 0;
+  transform: translateY(8px);
+  filter: blur(4px);
+  transition:
+    opacity 420ms cubic-bezier(0.22, 0.61, 0.36, 1),
+    transform 460ms cubic-bezier(0.22, 0.61, 0.36, 1),
+    filter 460ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  transition-delay: var(--kpi-delay, 0ms);
+  will-change: opacity, transform, filter;
+}
+.dash-kpi-row--in > .dash-kpi-tile {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+.dash-kpi-row > .dash-kpi-tile--1 { --kpi-delay: 220ms; }
+.dash-kpi-row > .dash-kpi-tile--2 { --kpi-delay: 300ms; }
+.dash-kpi-row > .dash-kpi-tile--3 { --kpi-delay: 380ms; }
+.dash-kpi-row > .dash-kpi-tile--4 { --kpi-delay: 460ms; }
+@media (prefers-reduced-motion: reduce) {
+  .dash-kpi-row > .dash-kpi-tile {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    transition: none;
+  }
 }
 @media (max-width: 540px) {
   .dash-kpi-row {
@@ -49,8 +79,10 @@
   color: var(--ink-faint);
   line-height: 1;
   margin-bottom: 2px;
+  transition: opacity 220ms ease;
 }
-.dash-kpi-tile--hot .dash-kpi-tile__icon { color: var(--warn, #D97706); }
+.dash-kpi-tile__icon.is-dim { opacity: 0.32; }
+.dash-kpi-tile--hot .dash-kpi-tile__icon { color: var(--warn, #D97706); opacity: 1; }
 .dash-kpi-tile__val {
   font-family: var(--font-mono);
   font-feature-settings: "tnum" 1;
