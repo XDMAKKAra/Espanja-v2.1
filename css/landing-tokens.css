@@ -18,10 +18,14 @@
 }
 
 .landing {
-  /* ─── Surfaces — deep near-black with subtle radial gradient ──── */
-  --bg:            #0a0a0a;
-  --bg-elevated:   #141414;
-  --bg-gradient:   radial-gradient(ellipse at top, #1a1a2e 0%, #0a0a0a 60%);
+  /* ─── Surfaces — Zinc-950 base tinted toward the teal accent.
+     Pure #0a0a0a + a violet `#1a1a2e` top-bloom read as the standard
+     "AI/SaaS dark template" — replaced with a charcoal base biased
+     ~3 % toward brand hue and an accent-soft top-bloom so the gradient
+     feels like brand light instead of a stock template. */
+  --bg:            #0B0E0D;
+  --bg-elevated:   #131818;
+  --bg-gradient:   radial-gradient(ellipse 80% 60% at 50% -10%, rgba(45, 212, 191, 0.10) 0%, transparent 55%);
   --surface:       rgba(255, 255, 255, 0.04);
   --surface-hover: rgba(255, 255, 255, 0.06);
   --border:        rgba(255, 255, 255, 0.08);
