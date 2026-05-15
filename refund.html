@@ -3,119 +3,212 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>Puheo — Palautuskäytäntö</title>
+  <meta name="description" content="Puheon palautuskäytäntö: 14 päivän rahat takaisin -takuu uusille tilauksille, peruutus laskutusjakson loppuun, ja kuinka palautusta pyydetään." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://puheo.fi/refund.html" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap&subset=latin,latin-ext" rel="stylesheet" />
-  <link rel="stylesheet" href="landing.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&family=Inter:wght@400;500;600;700&display=swap&subset=latin,latin-ext" rel="stylesheet" />
+
+  <link rel="stylesheet" href="/css/landing-tokens.css" />
+  <link rel="stylesheet" href="/css/landing.css" />
+  <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
+  <meta name="theme-color" content="#0B0E0D" />
+
   <style>
-    .page-content {
+    .legal-shell {
       position: relative;
       z-index: 1;
       max-width: 720px;
       margin: 0 auto;
-      padding: 120px 32px 80px;
+      padding: clamp(96px, 14vw, 144px) var(--sp-3) clamp(64px, 10vw, 112px);
     }
-    .page-content h1 {
-      font-size: clamp(2rem, 5vw, 3rem);
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      margin-bottom: 8px;
-    }
-    .page-date {
-      font-family: var(--mono);
+    .legal-shell .eyebrow {
+      font-family: var(--font-mono);
       font-size: 12px;
-      color: var(--ink-soft);
-      margin-bottom: 48px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-subtle);
+      margin: 0 0 12px;
     }
-    .page-content h2 {
-      font-size: 18px;
+    .legal-shell h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 3rem);
       font-weight: 700;
-      margin-top: 40px;
-      margin-bottom: 12px;
+      letter-spacing: var(--tracking-tight);
+      line-height: var(--lh-tight);
+      margin: 0 0 12px;
+      color: var(--text);
     }
-    .page-content p, .page-content li {
-      font-size: 14px;
-      font-family: var(--mono);
-      color: var(--ink-soft);
-      line-height: 1.8;
-      margin-bottom: 12px;
+    .legal-shell__updated {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--text-muted);
+      margin: 0 0 40px;
     }
-    .page-content ul {
+    .legal-shell h2 {
+      font-family: var(--font-display);
+      font-size: 1.125rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      margin: 40px 0 12px;
+      color: var(--text);
+    }
+    .legal-shell p,
+    .legal-shell li {
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--text-muted);
+    }
+    .legal-shell p { margin: 0 0 14px; }
+    .legal-shell ul {
       list-style: disc;
-      padding-left: 20px;
-      margin-bottom: 16px;
+      padding-left: 22px;
+      margin: 0 0 16px;
     }
-    .page-content a { color: var(--accent-dark); }
-    .refund-highlight {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--r-lg);
-      padding: 24px;
-      margin: 32px 0;
+    .legal-shell li { margin-bottom: 6px; }
+    .legal-shell a { color: var(--accent); text-decoration: none; }
+    .legal-shell a:hover { text-decoration: underline; }
+    .legal-shell strong { color: var(--text); font-weight: 600; }
+
+    .refund-badge {
+      display: grid;
+      gap: 6px;
+      padding: 28px;
+      margin: 8px 0 40px;
+      border: 1px solid color-mix(in srgb, var(--accent) 28%, var(--border));
+      border-radius: var(--r-xl, 24px);
+      background:
+        radial-gradient(80% 60% at 0% 0%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 60%),
+        var(--surface);
       text-align: center;
     }
-    .refund-highlight .big {
-      font-size: 36px;
-      font-weight: 800;
-      color: var(--accent-dark);
-      margin-bottom: 8px;
+    .refund-badge__num {
+      font-family: var(--font-display);
+      font-size: clamp(2.2rem, 5vw, 3rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--accent);
+      line-height: 1;
+    }
+    .refund-badge__sub {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin: 4px 0 0;
     }
   </style>
 </head>
-<body>
+<body class="landing">
 
-  <nav class="nav">
-    <a href="/" class="nav-logo">Puhe<span>o</span></a>
-    <div class="nav-links">
-      <a href="/pricing.html">Hinnoittelu</a>
-    </div>
-    <div class="nav-right">
-      <a href="app.html?mode=login" class="nav-login">Kirjaudu sisään</a>
-      <a href="app.html" class="nav-cta">Aloita harjoittelu</a>
-    </div>
-  </nav>
+  <a href="#legal" class="skip-link">Siirry sisältöön</a>
 
-  <div class="page-content">
+  <header class="nav" id="nav" data-scrolled="false">
+    <div class="nav__inner">
+      <a class="nav__brand" href="/" aria-label="Puheo etusivu">Puhe<span class="nav__brand-o" aria-hidden="true">o</span></a>
+      <nav class="nav__links" aria-label="Sivun osiot">
+        <a class="nav__link" href="/#tuote">Tuote</a>
+        <a class="nav__link" href="/#kurssit">Kurssit</a>
+        <a class="nav__link" href="/#hinnoittelu">Hinnoittelu</a>
+        <a class="nav__link" href="/blog/">Blogi</a>
+      </nav>
+      <div class="nav__cta">
+        <a class="btn btn--quiet" href="/app.html#kirjaudu">Kirjaudu</a>
+        <a class="btn btn--primary" href="/app.html#rekisteroidy">Aloita ilmaiseksi</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="legal-shell" id="legal">
+    <p class="eyebrow">Lakisivut</p>
     <h1>Palautuskäytäntö</h1>
-    <p class="page-date">Päivitetty: 16. huhtikuuta 2026</p>
+    <p class="legal-shell__updated">Päivitetty 15.5.2026</p>
 
-    <div class="refund-highlight">
-      <div class="big">14 päivää</div>
-      <p style="margin:0">Täysi rahat takaisin -takuu, ei kysymyksiä.</p>
+    <div class="refund-badge" aria-label="Palautusoikeuden tiivistelmä">
+      <div class="refund-badge__num">14 päivää</div>
+      <p class="refund-badge__sub">Rahat takaisin · uudet tilaukset · ei kysymyksiä</p>
     </div>
 
     <h2>1. Palautusoikeus</h2>
-    <p>Jos et ole tyytyväinen Pro-tiliin, voit pyytää täyttä palautusta 14 päivän kuluessa ostoksesta. Palautamme koko summan ilman lisäkysymyksiä.</p>
+    <p>Uudella Treeni- tai Mestari-tilauksella on <strong>14 päivän rahat takaisin -takuu</strong>: jos palvelu ei toimi sinulle, palautamme koko ensimmäisen laskutusjakson summan ilman lisäkysymyksiä.</p>
+    <p>Takuu koskee jokaisen käyttäjän <em>ensimmäistä</em> tilausta. Jos olet jo aiemmin saanut palautuksen ja palaat asiakkaaksi, takuu ei uusiudu.</p>
 
-    <h2>2. Palautuksen pyytäminen</h2>
-    <p>Pyydä palautusta lähettämällä sähköposti osoitteeseen <a href="mailto:marcel.catchot@gmail.com">marcel.catchot@gmail.com</a> seuraavilla tiedoilla:</p>
+    <h2>2. Miten palautusta pyydetään</h2>
+    <p>Lähetä sähköposti osoitteeseen <a href="mailto:tuki@puheo.fi">tuki@puheo.fi</a> seuraavilla tiedoilla:</p>
     <ul>
-      <li>Tilisi sähköpostiosoite</li>
-      <li>Ostopäivämäärä</li>
+      <li>Tilisi sähköpostiosoite.</li>
+      <li>Ostopäivä tai Stripeltä saamasi kuitin viitenumero.</li>
+      <li>Lyhyt vapaamuotoinen kommentti — autat meitä parantamaan palvelua, mutta sitä ei vaadita palautuksen saamiseksi.</li>
     </ul>
 
-    <h2>3. Palautuksen käsittely</h2>
-    <p>Käsittelemme palautuspyynnöt 3 arkipäivän kuluessa. Palautus tapahtuu samalla maksutavalla, jolla alkuperäinen ostos tehtiin.</p>
+    <h2>3. Käsittelyaika</h2>
+    <p>Käsittelemme palautuspyynnöt kolmen arkipäivän kuluessa. Palautus suoritetaan samalle maksutavalle, jolla alkuperäinen maksu tehtiin. Stripe tilittää summan kortille tyypillisesti 5–10 arkipäivässä — pankkikäsittely on viimeistään kahdessa viikossa.</p>
 
-    <h2>4. Tilauksen peruutus</h2>
-    <p>Voit peruuttaa Pro-tilauksesi milloin tahansa. Peruutuksen jälkeen Pro-ominaisuudet pysyvät käytössä laskutuskauden loppuun asti.</p>
+    <h2>4. Tilauksen peruuttaminen</h2>
+    <p>Tilauksen voi peruuttaa milloin tahansa sovelluksen Asetukset → "Hallinnoi tilausta" -kautta. Peruutus astuu voimaan kuluvan laskutusjakson päättyessä — käytät ostamasi jakson loppuun, eikä uutta veloitusta tehdä. Tämä on tavallisin tilanne 14 päivän jälkeen.</p>
 
     <h2>5. 14 päivän jälkeen</h2>
-    <p>14 päivän jälkeen emme tarjoa palautuksia. Voit kuitenkin peruuttaa tilauksesi estääksesi tulevia veloituksia.</p>
+    <p>Takuujakson päätyttyä yksittäisiä laskutusjaksoja ei lähtökohtaisesti palauteta. Jos kohtaat teknisen ongelman, jonka takia palvelu ei ole toiminut sinulle, ota silti yhteyttä — käsittelemme tapaukset yksilöllisesti.</p>
 
-    <h2>6. Yhteystiedot</h2>
-    <p>Palautuksiin liittyvät kysymykset: <a href="mailto:marcel.catchot@gmail.com">marcel.catchot@gmail.com</a></p>
-  </div>
+    <h2>6. Vuosihinta ja kampanjat</h2>
+    <p>Jos olemme tarjonneet erikseen alennettua vuosi- tai kampanjahintaa, sen palautusehto ilmoitetaan tarjouksen yhteydessä. Erikseen merkitsemättömissä kampanjoissa noudatetaan tämän sivun yleistä 14 päivän takuuta.</p>
 
-  <footer>
-    <div class="footer-logo">Puhe<span>o</span></div>
-    <div class="footer-text">
-      <a href="/terms.html" class="footer-link">Käyttöehdot</a> &middot;
-      <a href="/privacy.html" class="footer-link">Tietosuoja</a> &middot;
-      <a href="/refund.html" class="footer-link">Palautukset</a>
+    <h2>7. Yhteystiedot</h2>
+    <p>Palautuksiin ja laskutukseen liittyvät kysymykset: <a href="mailto:tuki@puheo.fi">tuki@puheo.fi</a></p>
+  </main>
+
+  <footer class="landing-footer" role="contentinfo">
+    <div class="landing-footer__inner">
+      <div class="landing-footer__brand">
+        <a class="landing-footer__brandmark" href="/" aria-label="Puheo etusivu">
+          <span class="landing-footer__brand-dot" aria-hidden="true"></span>
+          Puheo
+        </a>
+        <p class="landing-footer__tagline">
+          YO-koe valmennus espanjaan, saksaan ja ranskaan.
+          Tekoälyvalmentaja, joka tuntee YTL:n rubriikin.
+        </p>
+      </div>
+      <div class="landing-footer__cols">
+        <nav class="landing-footer__col" aria-label="Tuote">
+          <h3 class="landing-footer__col-title">Tuote</h3>
+          <ul class="landing-footer__links">
+            <li><a href="/#tuote">Ominaisuudet</a></li>
+            <li><a href="/#kurssit">Kurssit</a></li>
+            <li><a href="/#hinnoittelu">Hinnoittelu</a></li>
+            <li><a href="/#faq">UKK</a></li>
+          </ul>
+        </nav>
+        <nav class="landing-footer__col" aria-label="Tili">
+          <h3 class="landing-footer__col-title">Tili</h3>
+          <ul class="landing-footer__links">
+            <li><a href="/app.html#kirjaudu">Kirjaudu</a></li>
+            <li><a href="/app.html#rekisteroidy">Aloita ilmaiseksi</a></li>
+            <li><a href="/pricing.html">Hinnoittelu</a></li>
+          </ul>
+        </nav>
+        <nav class="landing-footer__col" aria-label="Tieto">
+          <h3 class="landing-footer__col-title">Tieto</h3>
+          <ul class="landing-footer__links">
+            <li><a href="/privacy.html">Tietosuoja</a></li>
+            <li><a href="/terms.html">Käyttöehdot</a></li>
+            <li><a href="/refund.html">Palautukset</a></li>
+            <li><a href="/blog/">Blogi</a></li>
+            <li><a href="mailto:tuki@puheo.fi">Ota yhteyttä</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="landing-footer__bottom">
+        <p class="landing-footer__copy">© 2026 Puheo · Tehty Suomessa</p>
+      </div>
     </div>
   </footer>
 
+  <script src="/js/landing-nav.js" defer></script>
 </body>
 </html>

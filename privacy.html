@@ -3,127 +3,207 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>Puheo — Tietosuojaseloste</title>
+  <meta name="description" content="Puheon tietosuojaseloste: mitä tietoja kerätään, miten niitä käsitellään ja kuinka käyttäjän oikeudet toteutuvat." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://puheo.fi/privacy.html" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap&subset=latin,latin-ext" rel="stylesheet" />
-  <link rel="stylesheet" href="landing.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&family=Inter:wght@400;500;600;700&display=swap&subset=latin,latin-ext" rel="stylesheet" />
+
+  <link rel="stylesheet" href="/css/landing-tokens.css" />
+  <link rel="stylesheet" href="/css/landing.css" />
+  <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
+  <meta name="theme-color" content="#0B0E0D" />
+
   <style>
-    .page-content {
+    /* Legal page — uses landing tokens so it matches the rest of the
+       marketing surface (Geist + accent palette). Self-contained styles
+       so /privacy.html and /terms.html can share the recipe. */
+    .legal-shell {
       position: relative;
       z-index: 1;
       max-width: 720px;
       margin: 0 auto;
-      padding: 120px 32px 80px;
+      padding: clamp(96px, 14vw, 144px) var(--sp-3) clamp(64px, 10vw, 112px);
     }
-    .page-content h1 {
-      font-size: clamp(2rem, 5vw, 3rem);
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      margin-bottom: 8px;
-    }
-    .page-date {
-      font-family: var(--mono);
+    .legal-shell .eyebrow {
+      font-family: var(--font-mono);
       font-size: 12px;
-      color: var(--ink-soft);
-      margin-bottom: 48px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-subtle);
+      margin: 0 0 12px;
     }
-    .page-content h2 {
-      font-size: 18px;
+    .legal-shell h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 3rem);
       font-weight: 700;
-      margin-top: 40px;
-      margin-bottom: 12px;
+      letter-spacing: var(--tracking-tight);
+      line-height: var(--lh-tight);
+      margin: 0 0 12px;
+      color: var(--text);
     }
-    .page-content p, .page-content li {
-      font-size: 14px;
-      font-family: var(--mono);
-      color: var(--ink-soft);
-      line-height: 1.8;
-      margin-bottom: 12px;
+    .legal-shell__updated {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--text-muted);
+      margin: 0 0 48px;
     }
-    .page-content ul {
+    .legal-shell h2 {
+      font-family: var(--font-display);
+      font-size: 1.125rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      margin: 40px 0 12px;
+      color: var(--text);
+    }
+    .legal-shell p,
+    .legal-shell li {
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--text-muted);
+    }
+    .legal-shell p { margin: 0 0 14px; }
+    .legal-shell ul {
       list-style: disc;
-      padding-left: 20px;
-      margin-bottom: 16px;
+      padding-left: 22px;
+      margin: 0 0 16px;
     }
-    .page-content a { color: var(--accent-dark); }
+    .legal-shell li { margin-bottom: 6px; }
+    .legal-shell a { color: var(--accent); text-decoration: none; }
+    .legal-shell a:hover { text-decoration: underline; }
+    .legal-shell strong { color: var(--text); font-weight: 600; }
   </style>
 </head>
-<body>
+<body class="landing">
 
-  <nav class="nav">
-    <a href="/" class="nav-logo">Puhe<span>o</span></a>
-    <div class="nav-links">
-      <a href="/pricing.html">Hinnoittelu</a>
-    </div>
-    <div class="nav-right">
-      <a href="app.html?mode=login" class="nav-login">Kirjaudu sisään</a>
-      <a href="app.html" class="nav-cta">Aloita harjoittelu</a>
-    </div>
-  </nav>
+  <a href="#legal" class="skip-link">Siirry sisältöön</a>
 
-  <div class="page-content">
+  <header class="nav" id="nav" data-scrolled="false">
+    <div class="nav__inner">
+      <a class="nav__brand" href="/" aria-label="Puheo etusivu">Puhe<span class="nav__brand-o" aria-hidden="true">o</span></a>
+      <nav class="nav__links" aria-label="Sivun osiot">
+        <a class="nav__link" href="/#tuote">Tuote</a>
+        <a class="nav__link" href="/#kurssit">Kurssit</a>
+        <a class="nav__link" href="/#hinnoittelu">Hinnoittelu</a>
+        <a class="nav__link" href="/blog/">Blogi</a>
+      </nav>
+      <div class="nav__cta">
+        <a class="btn btn--quiet" href="/app.html#kirjaudu">Kirjaudu</a>
+        <a class="btn btn--primary" href="/app.html#rekisteroidy">Aloita ilmaiseksi</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="legal-shell" id="legal">
+    <p class="eyebrow">Lakisivut</p>
     <h1>Tietosuojaseloste</h1>
-    <p class="page-date">Päivitetty: 16. huhtikuuta 2026</p>
+    <p class="legal-shell__updated">Päivitetty 15.5.2026</p>
 
     <h2>1. Rekisterinpitäjä</h2>
-    <p>Puheo<br/>Sähköposti: <a href="mailto:marcel.catchot@gmail.com">marcel.catchot@gmail.com</a></p>
+    <p>Puheo — yksityishenkilön ylläpitämä palvelu.<br/>Yhteydenotot: <a href="mailto:tuki@puheo.fi">tuki@puheo.fi</a></p>
 
-    <h2>2. Kerättyjen tietojen tarkoitus</h2>
-    <p>Keräämme tietoja Palvelun tarjoamiseksi, käyttäjakokemuksen parantamiseksi ja maksujen käsittelemiseksi.</p>
+    <h2>2. Tietojen keräämisen tarkoitus</h2>
+    <p>Käsittelemme henkilötietoja palvelun toimittamiseen, käyttäjäkokemuksen parantamiseen, oppimispolun adaptiiviseen kohdentamiseen sekä maksullisten ominaisuuksien laskutukseen.</p>
 
     <h2>3. Kerättävät tiedot</h2>
-    <p>Voimme kerätä seuraavia tietoja:</p>
     <ul>
-      <li><strong>Tilin tiedot:</strong> sähköpostiosoite ja salattu salasana</li>
-      <li><strong>Käyttötiedot:</strong> harjoitushistoria, pisteet, taso ja edistyminen</li>
-      <li><strong>Maksutiedot:</strong> maksujen käsittelyyn tarvittavat tiedot (käsittelee kolmas osapuoli, Paddle)</li>
-      <li><strong>Tekniset tiedot:</strong> IP-osoite, selaintyyppi ja käyttöjärjestelmä</li>
+      <li><strong>Tilin tiedot:</strong> sähköpostiosoite ja palvelimella suolatusti hashattu salasana.</li>
+      <li><strong>Oppimisdata:</strong> harjoitushistoria, vastausten oikeellisuus, hallintatasot kurssikohtaisesti, YO-valmius-arvio.</li>
+      <li><strong>Tilauksen tiedot:</strong> aktiivisen Treeni- tai Mestari-tilauksen tieto ja laskutusjaksot. Korttitietoja Puheo ei näe — ne menevät suoraan Stripelle.</li>
+      <li><strong>Tekniset tiedot:</strong> IP-osoite, selaintyyppi, käyttöjärjestelmä ja palvelimen virhelokit virheenkorjausta varten.</li>
     </ul>
 
     <h2>4. Tietojen käsittelyn peruste</h2>
-    <p>Tietoja käsitellään:</p>
     <ul>
-      <li>Sopimuksen toteuttamiseksi (tilin hallinta, palvelun tarjoaminen)</li>
-      <li>Oikeutetun edun perusteella (palvelun kehittäminen)</li>
-      <li>Suostumuksen perusteella (markkinointiviestit, jos käyttäjä on antanut luvan)</li>
+      <li>Sopimuksen toteuttaminen (tilin hallinta, palvelun tarjoaminen).</li>
+      <li>Oikeutettu etu (palvelun kehittäminen, tekninen ylläpito, turvallisuus).</li>
+      <li>Suostumus (mahdolliset uutiskirjeet — vain jos käyttäjä on antanut nimenomaisen luvan).</li>
     </ul>
 
-    <h2>5. Tietojen jakaminen</h2>
-    <p>Emme myy henkilötietojasi. Jaamme tietoja ainoastaan:</p>
+    <h2>5. Kenelle tietoja jaetaan</h2>
+    <p>Henkilötietoja ei myydä. Käytämme seuraavia tunnistettuja käsittelijöitä:</p>
     <ul>
-      <li><strong>Paddle:</strong> maksujen käsittely (Merchant of Record)</li>
-      <li><strong>Supabase:</strong> tietojen tallennus (EU-palvelimet)</li>
-      <li><strong>OpenAI/Anthropic:</strong> tekoälypalvelut (harjoitusten luonti ja arviointi — henkilötietoja ei lähetetä)</li>
+      <li><strong>Supabase</strong> — tietokanta ja autentikaatio (EU-palvelimet, Frankfurt).</li>
+      <li><strong>Stripe</strong> — maksunkäsittely ja tilausten hallinta. Stripe näkee korttitiedot, Puheo ei.</li>
+      <li><strong>OpenAI / Anthropic</strong> — tekoälypalvelut, joilla luodaan ja arvioidaan harjoituksia. Pyynnöissä ei lähetetä käyttäjän sähköpostia, nimeä tai muita tunnistetietoja — vain tehtävän sisältö.</li>
+      <li><strong>Resend</strong> — transaktiosähköpostit (kirjautumislinkit, kuittauset).</li>
+      <li><strong>Vercel</strong> — palvelinkäyttö ja CDN.</li>
     </ul>
 
     <h2>6. Tietojen säilytys</h2>
-    <p>Säilytämme tietoja niin kauan kuin tilisi on aktiivinen. Voit pyytää tietojesi poistamista milloin tahansa lähettämällä sähköpostia osoitteeseen <a href="mailto:marcel.catchot@gmail.com">marcel.catchot@gmail.com</a>.</p>
+    <p>Säilytämme käyttäjän oppimisdataa niin kauan kuin tili on aktiivinen. Käyttäjä voi pyytää tilin ja kaiken siihen liittyvän datan poistamista milloin tahansa kirjoittamalla osoitteeseen <a href="mailto:tuki@puheo.fi">tuki@puheo.fi</a> — poisto suoritetaan 30 päivän kuluessa.</p>
+    <p>Laskutustiedot säilytetään kirjanpitolain edellyttämän ajan, kuusi vuotta.</p>
 
-    <h2>7. Käyttäjän oikeudet</h2>
-    <p>GDPR:n mukaisesti sinulla on oikeus:</p>
+    <h2>7. Käyttäjän oikeudet (GDPR)</h2>
     <ul>
-      <li>Saada pääsy tietoihisi</li>
-      <li>Pyytää tietojen oikaisua tai poistoa</li>
-      <li>Rajoittaa käsittelyä tai vastustaa sitä</li>
-      <li>Siirtää tietosi toiseen palveluun</li>
+      <li>Oikeus tarkastaa, mitä tietoja itsestäsi on tallennettu.</li>
+      <li>Oikeus pyytää tietojen oikaisua tai poistoa.</li>
+      <li>Oikeus rajoittaa käsittelyä tai vastustaa sitä.</li>
+      <li>Oikeus siirtää tietosi toiseen palveluun (data export).</li>
+      <li>Oikeus tehdä valitus tietosuojavaltuutetun toimistolle (tietosuoja.fi).</li>
     </ul>
 
     <h2>8. Evästeet</h2>
-    <p>Käytämme välttämättömiä evästeitä Palvelun toiminnan turvaamiseksi (esim. kirjautuminen). Emme käytä kolmannen osapuolen seurantaevästeitä.</p>
+    <p>Käytämme välttämättömiä evästeitä kirjautumistilan ylläpitoon ja CSRF-suojaukseen. Käyttäjän mieltymyksiä (teema, kieli) tallennetaan selaimen localStorage-tilaan. Kolmannen osapuolen markkinointi- tai seurantaevästeitä emme käytä.</p>
 
-    <h2>9. Yhteystiedot</h2>
-    <p>Tietosuojaan liittyvät kysymykset: <a href="mailto:marcel.catchot@gmail.com">marcel.catchot@gmail.com</a></p>
-  </div>
+    <h2>9. Tietoturva</h2>
+    <p>Yhteydet kulkevat HTTPS-salauksella. Salasanat hashataan bcrypt-algoritmilla. Tietokantapääsy on suojattu Supabase Row Level Security -säännöillä — käyttäjä näkee vain oman datansa.</p>
 
-  <footer>
-    <div class="footer-logo">Puhe<span>o</span></div>
-    <div class="footer-text">
-      <a href="/terms.html" class="footer-link">Käyttöehdot</a> &middot;
-      <a href="/privacy.html" class="footer-link">Tietosuoja</a> &middot;
-      <a href="/refund.html" class="footer-link">Palautukset</a>
+    <h2>10. Yhteystiedot</h2>
+    <p>Tietosuojaan liittyvät kysymykset ja oikeuksien käyttö: <a href="mailto:tuki@puheo.fi">tuki@puheo.fi</a></p>
+  </main>
+
+  <footer class="landing-footer" role="contentinfo">
+    <div class="landing-footer__inner">
+      <div class="landing-footer__brand">
+        <a class="landing-footer__brandmark" href="/" aria-label="Puheo etusivu">
+          <span class="landing-footer__brand-dot" aria-hidden="true"></span>
+          Puheo
+        </a>
+        <p class="landing-footer__tagline">
+          YO-koe valmennus espanjaan, saksaan ja ranskaan.
+          Tekoälyvalmentaja, joka tuntee YTL:n rubriikin.
+        </p>
+      </div>
+      <div class="landing-footer__cols">
+        <nav class="landing-footer__col" aria-label="Tuote">
+          <h3 class="landing-footer__col-title">Tuote</h3>
+          <ul class="landing-footer__links">
+            <li><a href="/#tuote">Ominaisuudet</a></li>
+            <li><a href="/#kurssit">Kurssit</a></li>
+            <li><a href="/#hinnoittelu">Hinnoittelu</a></li>
+            <li><a href="/#faq">UKK</a></li>
+          </ul>
+        </nav>
+        <nav class="landing-footer__col" aria-label="Tili">
+          <h3 class="landing-footer__col-title">Tili</h3>
+          <ul class="landing-footer__links">
+            <li><a href="/app.html#kirjaudu">Kirjaudu</a></li>
+            <li><a href="/app.html#rekisteroidy">Aloita ilmaiseksi</a></li>
+            <li><a href="/pricing.html">Hinnoittelu</a></li>
+          </ul>
+        </nav>
+        <nav class="landing-footer__col" aria-label="Tieto">
+          <h3 class="landing-footer__col-title">Tieto</h3>
+          <ul class="landing-footer__links">
+            <li><a href="/privacy.html">Tietosuoja</a></li>
+            <li><a href="/terms.html">Käyttöehdot</a></li>
+            <li><a href="/refund.html">Palautukset</a></li>
+            <li><a href="/blog/">Blogi</a></li>
+            <li><a href="mailto:tuki@puheo.fi">Ota yhteyttä</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="landing-footer__bottom">
+        <p class="landing-footer__copy">© 2026 Puheo · Tehty Suomessa</p>
+      </div>
     </div>
   </footer>
 
+  <script src="/js/landing-nav.js" defer></script>
 </body>
 </html>

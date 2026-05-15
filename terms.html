@@ -3,115 +3,202 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>Puheo — Käyttöehdot</title>
+  <meta name="description" content="Puheon käyttöehdot: palvelun kuvaus, maksulliset tasot (Free / Treeni / Mestari), tilauksen peruutus ja vastuunrajoitukset." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://puheo.fi/terms.html" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap&subset=latin,latin-ext" rel="stylesheet" />
-  <link rel="stylesheet" href="landing.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&family=Inter:wght@400;500;600;700&display=swap&subset=latin,latin-ext" rel="stylesheet" />
+
+  <link rel="stylesheet" href="/css/landing-tokens.css" />
+  <link rel="stylesheet" href="/css/landing.css" />
+  <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
+  <meta name="theme-color" content="#0B0E0D" />
+
   <style>
-    .page-content {
+    .legal-shell {
       position: relative;
       z-index: 1;
       max-width: 720px;
       margin: 0 auto;
-      padding: 120px 32px 80px;
+      padding: clamp(96px, 14vw, 144px) var(--sp-3) clamp(64px, 10vw, 112px);
     }
-    .page-content h1 {
-      font-size: clamp(2rem, 5vw, 3rem);
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      margin-bottom: 8px;
-    }
-    .page-date {
-      font-family: var(--mono);
+    .legal-shell .eyebrow {
+      font-family: var(--font-mono);
       font-size: 12px;
-      color: var(--ink-soft);
-      margin-bottom: 48px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-subtle);
+      margin: 0 0 12px;
     }
-    .page-content h2 {
-      font-size: 18px;
+    .legal-shell h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 3rem);
       font-weight: 700;
-      margin-top: 40px;
-      margin-bottom: 12px;
+      letter-spacing: var(--tracking-tight);
+      line-height: var(--lh-tight);
+      margin: 0 0 12px;
+      color: var(--text);
     }
-    .page-content p, .page-content li {
-      font-size: 14px;
-      font-family: var(--mono);
-      color: var(--ink-soft);
-      line-height: 1.8;
-      margin-bottom: 12px;
+    .legal-shell__updated {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--text-muted);
+      margin: 0 0 48px;
     }
-    .page-content ul {
+    .legal-shell h2 {
+      font-family: var(--font-display);
+      font-size: 1.125rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      margin: 40px 0 12px;
+      color: var(--text);
+    }
+    .legal-shell p,
+    .legal-shell li {
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--text-muted);
+    }
+    .legal-shell p { margin: 0 0 14px; }
+    .legal-shell ul {
       list-style: disc;
-      padding-left: 20px;
-      margin-bottom: 16px;
+      padding-left: 22px;
+      margin: 0 0 16px;
     }
-    .page-content a { color: var(--accent-dark); }
+    .legal-shell li { margin-bottom: 6px; }
+    .legal-shell a { color: var(--accent); text-decoration: none; }
+    .legal-shell a:hover { text-decoration: underline; }
+    .legal-shell strong { color: var(--text); font-weight: 600; }
   </style>
 </head>
-<body>
+<body class="landing">
 
-  <nav class="nav">
-    <a href="/" class="nav-logo">Puhe<span>o</span></a>
-    <div class="nav-links">
-      <a href="/pricing.html">Hinnoittelu</a>
-    </div>
-    <div class="nav-right">
-      <a href="app.html?mode=login" class="nav-login">Kirjaudu sisään</a>
-      <a href="app.html" class="nav-cta">Aloita harjoittelu</a>
-    </div>
-  </nav>
+  <a href="#legal" class="skip-link">Siirry sisältöön</a>
 
-  <div class="page-content">
+  <header class="nav" id="nav" data-scrolled="false">
+    <div class="nav__inner">
+      <a class="nav__brand" href="/" aria-label="Puheo etusivu">Puhe<span class="nav__brand-o" aria-hidden="true">o</span></a>
+      <nav class="nav__links" aria-label="Sivun osiot">
+        <a class="nav__link" href="/#tuote">Tuote</a>
+        <a class="nav__link" href="/#kurssit">Kurssit</a>
+        <a class="nav__link" href="/#hinnoittelu">Hinnoittelu</a>
+        <a class="nav__link" href="/blog/">Blogi</a>
+      </nav>
+      <div class="nav__cta">
+        <a class="btn btn--quiet" href="/app.html#kirjaudu">Kirjaudu</a>
+        <a class="btn btn--primary" href="/app.html#rekisteroidy">Aloita ilmaiseksi</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="legal-shell" id="legal">
+    <p class="eyebrow">Lakisivut</p>
     <h1>Käyttöehdot</h1>
-    <p class="page-date">Päivitetty: 16. huhtikuuta 2026</p>
+    <p class="legal-shell__updated">Päivitetty 15.5.2026</p>
 
     <h2>1. Palvelun kuvaus</h2>
-    <p>Puheo ("Palvelu") on verkkopohjainen kieltenopiskelusovellus, joka tarjoaa tekoälypohjaisia harjoituksia ylioppilaskirjoituksiin valmistautumiseen. Palvelua ylläpitää yksityishenkilö ("me", "Puheo").</p>
+    <p>Puheo (jäljempänä "Palvelu") on tekoälypohjainen verkkosovellus, joka valmentaa käyttäjää suomalaiseen ylioppilastutkinnon vieraan kielen lyhyen oppimäärän kokeeseen — espanja, saksa ja ranska. Palvelua tarjoaa yksityishenkilö (jäljempänä "Puheo" tai "me").</p>
 
     <h2>2. Tilin luominen</h2>
-    <p>Voit käyttää Palvelua ilman tiliä. Halutessasi voit luoda tilin edistymisen seurantaa varten. Olet vastuussa tilisi tietojen oikeellisuudesta ja salasanasi turvallisuudesta.</p>
+    <p>Voit tutustua julkisiin sivuihin ilman tiliä. Harjoittelu edellyttää tilin luomista. Olet itse vastuussa antamiesi tietojen oikeellisuudesta sekä salasanasi turvaamisesta. Yksi tili on tarkoitettu yhden henkilön käyttöön.</p>
 
-    <h2>3. Ilmainen ja maksullinen käyttö</h2>
-    <p>Palvelu tarjoaa ilmaisia ja maksullisia ominaisuuksia:</p>
+    <h2>3. Tasot ja hinnoittelu</h2>
+    <p>Palvelu tarjotaan kolmessa tasossa:</p>
     <ul>
-      <li><strong>Ilmainen:</strong> sanastoharjoittelu ja kielioppiharjoitukset</li>
-      <li><strong>Pro:</strong> luetun ymmärtäminen, kirjoittaminen AI-arvioinnilla, koeharjoitus ja edistymisraportti</li>
+      <li><strong>Free (0 €/kk):</strong> rajoitettu määrä harjoituksia eri tyypeistä, jotta voit kokeilla palvelua ennen sitoutumista.</li>
+      <li><strong>Treeni (9 €/kk):</strong> rajaton harjoittelu — sanasto, kielioppi, luetun ymmärtäminen, kirjoittaminen AI-arvioinnilla ja harjoituskokeet.</li>
+      <li><strong>Mestari (19 €/kk):</strong> kaikki Treenin ominaisuudet sekä rakennettu 8-kurssin oppimispolku, adaptiivinen vaikeustaso, YO-valmiusmittari ja henkilökohtainen lukusuunnitelma.</li>
     </ul>
-    <p>Pro-tilin hinnoittelu löytyy <a href="/pricing.html">hinnoittelusivulta</a>. Pidätämme oikeuden muuttaa hintoja ilmoittamalla siitä etukäteen.</p>
+    <p>Ajantasainen hinnasto on aina sivulla <a href="/pricing.html">/pricing.html</a>. Pidätämme oikeuden muuttaa hintoja ilmoittamalla siitä rekisteröidyille käyttäjille vähintään 14 päivää ennen muutoksen voimaantuloa.</p>
 
-    <h2>4. Tekoälyn käyttö</h2>
-    <p>Palvelu käyttää tekoälyä (AI) tehtävien luomiseen ja arviointiin. AI-arviointi on suuntaa-antava eikä vastaa virallista YTL:n arviointia. Emme takaa, että AI-palaute on aina virheetonta.</p>
+    <h2>4. Tilauksen peruuttaminen ja palautukset</h2>
+    <p>Tilauksen voi peruuttaa milloin tahansa Asetukset-sivun "Hallinnoi tilausta" -linkin kautta. Peruutus astuu voimaan kuluvan laskutusjakson päättyessä — käytät ostamasi jakson loppuun. Suomen kuluttajansuojalain mukaisesti digitaalisen palvelun palautusoikeudesta säädetään erikseen sivulla <a href="/refund.html">/refund.html</a>.</p>
 
-    <h2>5. Käyttäjän velvollisuudet</h2>
-    <p>Sitoudut käyttämään Palvelua laillisesti eikä väärin. Et saa:</p>
+    <h2>5. Maksunkäsittely</h2>
+    <p>Maksut hoitaa <strong>Stripe</strong>. Puheo ei näe eikä tallenna korttitietoja. Stripe noudattaa PCI-DSS-standardia.</p>
+
+    <h2>6. Tekoälyn käyttö ja arvioinnin luonne</h2>
+    <p>Palvelu hyödyntää tekoälyä harjoitusten generointiin ja kirjoitelmien sekä luetun ymmärtämisen arviointiin. Arviointi mallintaa YTL:n virallista rubriikkia, mutta <strong>ei korvaa virallista YTL-arviointia</strong>. Emme takaa yksittäisen palautteen virheettömyyttä — suosittelemme kriittistä lukutapaa ja oman opettajan konsultaatiota kirjoitelmien syvällisessä analyysissä.</p>
+
+    <h2>7. Käyttäjän velvollisuudet</h2>
+    <p>Sitoudut käyttämään Palvelua lain ja näiden ehtojen mukaisesti. Erityisesti et saa:</p>
     <ul>
-      <li>Kopioida tai jakaa Palvelun sisältöä ilman lupaa</li>
-      <li>Yrittää kiertää maksullisten ominaisuuksien rajoituksia</li>
-      <li>Käyttää Palvelua tavalla, joka haittaa muita käyttäjiä tai Palvelun toimintaa</li>
+      <li>Kopioida, jakaa tai myydä Palvelun sisältöä, kursseja, oppitunteja tai harjoituksia ilman lupaa.</li>
+      <li>Yrittää kiertää maksullisten tasojen rajoituksia (esim. useita tilejä).</li>
+      <li>Lähettää automatisoitua liikennettä, joka haittaa Palvelun toimintaa muille käyttäjille.</li>
+      <li>Käyttää Palvelua oppilaitoksen kokeen aikana tai muulla tavalla, joka rikkoo ylioppilastutkintolautakunnan sääntöjä.</li>
     </ul>
 
-    <h2>6. Immateriaalioikeudet</h2>
-    <p>Kaikki Palvelun sisältö, koodi ja ulkoasu ovat Puheon omaisuutta. Käyttäjällä on oikeus käyttää Palvelua näiden ehtojen mukaisesti.</p>
+    <h2>8. Immateriaalioikeudet</h2>
+    <p>Kaikki Palvelun sisältö — kurssi-rakenteet, oppituntien sanastot ja kielioppi-selitykset, koodi, ulkoasu sekä YTL-rubriikin mallinnus — ovat Puheon omaisuutta tai käytetään asianmukaisin lisenssein. Käyttäjälle myönnetään rajoitettu, henkilökohtainen, ei-siirrettävä käyttöoikeus näiden ehtojen mukaisesti.</p>
 
-    <h2>7. Vastuunrajoitus</h2>
-    <p>Palvelu tarjotaan "sellaisenaan". Emme takaa keskeytyksetonta tai virheetonta palvelua. Emme ole vastuussa välillisistä vahingoista, kuten yo-kokeen tuloksista.</p>
+    <h2>9. Vastuunrajoitus</h2>
+    <p>Palvelu tarjotaan "sellaisenaan" ilman nimenomaisia tai oletettuja takuita. Emme takaa keskeytyksetöntä, virheetöntä tai tietyn YO-arvosanan tuottavaa palvelua. Emme ole vastuussa välillisistä vahingoista, kuten menetetyistä YO-kokeen pisteistä tai jatko-opintojen valinnoista.</p>
 
-    <h2>8. Ehtojen muuttaminen</h2>
-    <p>Voimme päivittää näitä ehtoja. Jatkamalla Palvelun käyttöä ehtojen päivityksen jälkeen hyväksyt uudet ehdot.</p>
+    <h2>10. Tietosuoja</h2>
+    <p>Henkilötietojen käsittelystä on erillinen seloste sivulla <a href="/privacy.html">/privacy.html</a>.</p>
 
-    <h2>9. Yhteystiedot</h2>
-    <p>Kysymyksiä? Ota yhteyttä: <a href="mailto:marcel.catchot@gmail.com">marcel.catchot@gmail.com</a></p>
-  </div>
+    <h2>11. Ehtojen muuttaminen</h2>
+    <p>Voimme päivittää näitä ehtoja palvelun kehittyessä. Olennaisista muutoksista ilmoitamme sähköpostitse rekisteröidyille käyttäjille vähintään 14 päivää ennen voimaantuloa. Jatkamalla Palvelun käyttöä ilmoituksen jälkeen hyväksyt uudet ehdot.</p>
 
-  <footer>
-    <div class="footer-logo">Puhe<span>o</span></div>
-    <div class="footer-text">
-      <a href="/terms.html" class="footer-link">Käyttöehdot</a> &middot;
-      <a href="/privacy.html" class="footer-link">Tietosuoja</a> &middot;
-      <a href="/refund.html" class="footer-link">Palautukset</a>
+    <h2>12. Sovellettava laki ja erimielisyydet</h2>
+    <p>Näihin ehtoihin sovelletaan Suomen lakia. Mahdolliset erimielisyydet pyritään ensisijaisesti ratkaisemaan neuvottelemalla. Mikäli sopuun ei päästä, asia ratkaistaan Helsingin käräjäoikeudessa. Kuluttajalla on aina oikeus saattaa asia kuluttajariitalautakunnan käsiteltäväksi (kuluttajariita.fi).</p>
+
+    <h2>13. Yhteystiedot</h2>
+    <p>Kysymyksiä ehdoista tai palvelusta: <a href="mailto:tuki@puheo.fi">tuki@puheo.fi</a></p>
+  </main>
+
+  <footer class="landing-footer" role="contentinfo">
+    <div class="landing-footer__inner">
+      <div class="landing-footer__brand">
+        <a class="landing-footer__brandmark" href="/" aria-label="Puheo etusivu">
+          <span class="landing-footer__brand-dot" aria-hidden="true"></span>
+          Puheo
+        </a>
+        <p class="landing-footer__tagline">
+          YO-koe valmennus espanjaan, saksaan ja ranskaan.
+          Tekoälyvalmentaja, joka tuntee YTL:n rubriikin.
+        </p>
+      </div>
+      <div class="landing-footer__cols">
+        <nav class="landing-footer__col" aria-label="Tuote">
+          <h3 class="landing-footer__col-title">Tuote</h3>
+          <ul class="landing-footer__links">
+            <li><a href="/#tuote">Ominaisuudet</a></li>
+            <li><a href="/#kurssit">Kurssit</a></li>
+            <li><a href="/#hinnoittelu">Hinnoittelu</a></li>
+            <li><a href="/#faq">UKK</a></li>
+          </ul>
+        </nav>
+        <nav class="landing-footer__col" aria-label="Tili">
+          <h3 class="landing-footer__col-title">Tili</h3>
+          <ul class="landing-footer__links">
+            <li><a href="/app.html#kirjaudu">Kirjaudu</a></li>
+            <li><a href="/app.html#rekisteroidy">Aloita ilmaiseksi</a></li>
+            <li><a href="/pricing.html">Hinnoittelu</a></li>
+          </ul>
+        </nav>
+        <nav class="landing-footer__col" aria-label="Tieto">
+          <h3 class="landing-footer__col-title">Tieto</h3>
+          <ul class="landing-footer__links">
+            <li><a href="/privacy.html">Tietosuoja</a></li>
+            <li><a href="/terms.html">Käyttöehdot</a></li>
+            <li><a href="/refund.html">Palautukset</a></li>
+            <li><a href="/blog/">Blogi</a></li>
+            <li><a href="mailto:tuki@puheo.fi">Ota yhteyttä</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="landing-footer__bottom">
+        <p class="landing-footer__copy">© 2026 Puheo · Tehty Suomessa</p>
+      </div>
     </div>
   </footer>
 
+  <script src="/js/landing-nav.js" defer></script>
 </body>
 </html>
