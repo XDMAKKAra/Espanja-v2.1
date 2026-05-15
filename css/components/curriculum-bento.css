@@ -129,6 +129,36 @@
   }
 }
 
+/* Staggered fade-in when the kurssi card expands. CSS-only — the parent's
+   `.is-expanded` is the trigger, and the cards each pick up their slot
+   number from --bento-i (set via inline style in curriculum.js renderer
+   or implicitly via :nth-child below). */
+.curr-bento-card,
+.curr-bento-skeleton {
+  animation: bento-rise 380ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  animation-delay: calc((var(--bento-i, 0) + 1) * 50ms);
+}
+@keyframes bento-rise {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.curr-bento-card:nth-child(1) { --bento-i: 0; }
+.curr-bento-card:nth-child(2) { --bento-i: 1; }
+.curr-bento-card:nth-child(3) { --bento-i: 2; }
+.curr-bento-card:nth-child(4) { --bento-i: 3; }
+.curr-bento-card:nth-child(5) { --bento-i: 4; }
+.curr-bento-card:nth-child(6) { --bento-i: 5; }
+.curr-bento-card:nth-child(7) { --bento-i: 6; }
+.curr-bento-card:nth-child(8) { --bento-i: 7; }
+.curr-bento-card:nth-child(9) { --bento-i: 8; }
+.curr-bento-card:nth-child(10) { --bento-i: 9; }
+.curr-bento-card:nth-child(11) { --bento-i: 10; }
+.curr-bento-card:nth-child(12) { --bento-i: 11; }
+@media (prefers-reduced-motion: reduce) {
+  .curr-bento-card,
+  .curr-bento-skeleton { animation: none; }
+}
+
 .curr-bento-card:hover {
   border-color: color-mix(in srgb, var(--accent, #2DD4BF) 35%, var(--border, #2a2a2e));
   transform: translateY(-2px);
