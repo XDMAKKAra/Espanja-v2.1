@@ -268,10 +268,18 @@
       .compare-table tbody td:first-child {
         position: sticky;
         left: 0;
-        background: var(--surface, #fff);
+        /* Must be fully opaque so horizontally-scrolled cells don't bleed through */
+        background: var(--bg-elevated, #141414);
         z-index: 1;
-        min-width: 180px;
+        min-width: 160px;
       }
+    }
+    /* The compare table is the only horizontally-scrollable element on the page.
+       Guard the rest of the page from horizontal overflow on narrow viewports. */
+    html, body { overflow-x: hidden; }
+    .page-content { max-width: 100%; }
+    @media (max-width: 480px) {
+      .page-content { padding: 88px 16px 64px; }
     }
 
     .faq-note {
@@ -294,17 +302,23 @@
 </head>
 <body class="landing">
 
-  <nav class="nav">
-    <a href="/" class="nav-logo">Puhe<span>o</span></a>
-    <div class="nav-links">
-      <a href="/#features">Toiminnot</a>
-      <a href="/pricing.html">Hinnoittelu</a>
+  <header class="nav" id="nav" data-scrolled="false">
+    <div class="nav__inner">
+      <a class="nav__brand" href="/" aria-label="Puheo etusivu">Puhe<span class="nav__brand-o" aria-hidden="true">o</span></a>
+
+      <nav class="nav__links" aria-label="Sivun osiot">
+        <a class="nav__link" href="/#tuote">Tuote</a>
+        <a class="nav__link" href="/#kurssit">Kurssit</a>
+        <a class="nav__link" href="/pricing.html">Hinnoittelu</a>
+        <a class="nav__link" href="/#faq">FAQ</a>
+      </nav>
+
+      <div class="nav__cta" id="nav-cta">
+        <a class="btn btn--quiet" id="nav-login" href="/app.html#kirjaudu">Kirjaudu</a>
+        <a class="btn btn--primary" id="nav-signup" href="/app.html#rekisteroidy">Aloita ilmaiseksi</a>
+      </div>
     </div>
-    <div class="nav-right">
-      <a href="app.html?mode=login" class="nav-login">Kirjaudu</a>
-      <a href="app.html" class="nav-cta">Aloita ilmaiseksi</a>
-    </div>
-  </nav>
+  </header>
 
   <main class="page-content">
     <h1>Kolme tasoa. <em>Valitse omasi.</em></h1>

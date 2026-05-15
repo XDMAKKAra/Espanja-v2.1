@@ -5,13 +5,19 @@
 
 .curr-bento {
   /* sits inside .curr-card.is-expanded grid-area: lessons */
+  grid-area: lessons;
   display: flex;
   flex-direction: column;
   gap: 16px;
   margin-top: 12px;
   padding-top: 16px;
   border-top: 1px solid var(--border, #2a2a2e);
+  /* Allow the bento grid to shrink — without min-width:0 the inner grid
+     items push the parent wider than the column and overflow the viewport. */
+  min-width: 0;
 }
+.curr-bento-grid { min-width: 0; }
+.curr-bento-card { min-width: 0; }
 
 /* ── Progress strip — 12 nodes summarising lesson completion ─────────────── */
 

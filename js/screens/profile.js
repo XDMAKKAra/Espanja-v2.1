@@ -111,10 +111,11 @@ export async function loadProfile() {
     const profilePromise = window._userProfile
       ? Promise.resolve(null)
       : apiFetch(`${API}/api/profile`, { headers: authHeader() }).catch(() => null);
-    const [dashRes, pathRes, profRes] = await Promise.all([
+    const [dashRes, pathRes, profRes, currRes] = await Promise.all([
       apiFetch(`${API}/api/dashboard`, { headers: authHeader() }),
       apiFetch(`${API}/api/learning-path`, { headers: authHeader() }).catch(() => null),
       profilePromise,
+      apiFetch(`${API}/api/curriculum`, { headers: authHeader() }).catch(() => null),
     ]);
     if (dashRes.status === 401) {
       clearAuth();
@@ -129,6 +130,10 @@ export async function loadProfile() {
     if (profRes && profRes.ok) {
       const profJson = await profRes.json().catch(() => ({}));
       if (profJson.profile) window._userProfile = profJson.profile;
+    }
+    if (currRes && currRes.ok) {
+      const currJson = await currRes.json().catch(() => ({}));
+      dashboardData._kurssit = currJson.kurssit || [];
     }
   } catch {
     /* fall through to render empty state */
@@ -193,14 +198,27 @@ function renderProfile(data = {}, learningPath = []) {
     badgesEl.innerHTML = chips.join("");
   }
 
-  // Readiness % derived from learning-path + writing dims (same formula
-  // as the dashboard rail, after L38 fix).
+  // Readiness % — match the dashboard YO-valmius tile exactly so the same
+  // user never sees two different numbers across screens. Dashboard derives
+  // this from completed-lesson share across the 8 kurssit; mirror that.
   let readinessPct = 0;
-  try {
-    const writingDims = getRecentWritingDimensions(5);
-    const map = computeReadinessMap({ learningPath, writingDims });
-    readinessPct = map.readinessPct || 0;
-  } catch { /* keep 0 */ }
+  const kurssit = Array.isArray(data._kurssit) ? data._kurssit : [];
+  if (kurssit.length) {
+    let done = 0, total = 0;
+    for (const k of kurssit) {
+      const t = (k.lessons || []).length || k.totalLessons || 0;
+      const d = (k.lessons || []).filter(l => l && l.completed).length
+              || k.completedLessons || 0;
+      done += d; total += t;
+    }
+    readinessPct = total > 0 ? Math.round((done / total) * 100) : 0;
+  } else {
+    try {
+      const writingDims = getRecentWritingDimensions(5);
+      const map = computeReadinessMap({ learningPath, writingDims });
+      readinessPct = map.readinessPct || 0;
+    } catch { /* keep 0 */ }
+  }
 
   // Stats row
   setStat("profile-stat-streak", streak, "pv");

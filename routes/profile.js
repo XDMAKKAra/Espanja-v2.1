@@ -1,6 +1,6 @@
 import { Router } from "express";
 import supabase from "../supabase.js";
-import { requireAuth } from "../middleware/auth.js";
+import { requireAuth, isTestProEmail } from "../middleware/auth.js";
 
 const router = Router();
 
@@ -38,7 +38,20 @@ router.get("/profile", requireAuth, async (req, res) => {
       return res.status(500).json({ error: "Profiilin haku epäonnistui" });
     }
 
-    return res.json({ profile: data || null });
+    // Test-pro accounts have no Stripe row, so DB tier is "free" / null.
+    // Surface the effective Mestari tier so the frontend (settings,
+    // dashboard free-chip, gates) treats them like real Pro users.
+    let profile = data || null;
+    if (isTestProEmail(req.user.email)) {
+      profile = {
+        ...(profile || { user_id: req.user.userId }),
+        subscription_tier: "mestari",
+        subscription_status: "active",
+        subscription_billing: profile?.subscription_billing || "test",
+      };
+    }
+
+    return res.json({ profile });
   } catch (err) {
     console.error("Profile error:", err.message);
     return res.status(500).json({ error: "Palvelinvirhe" });
