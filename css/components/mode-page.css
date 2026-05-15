@@ -218,7 +218,17 @@
 }
 
 /* Outer mode-page wrapper consumes the existing .app-main-inner padding. */
-.mode-page { padding: 0; position: relative; }
+.mode-page {
+  padding: 0;
+  position: relative;
+  /* Clip the decorative ::before glow (right: -80px, w: 360px) so it doesn't
+     extend the layout box past the viewport — that overflow combined with the
+     parent .screen flex-center was shifting the topic list off-screen left
+     on narrow mobile widths. */
+  overflow: hidden;
+  width: 100%;
+  max-width: 100%;
+}
 
 /* Per-mode color identity — each mode-page gets a faint corner glow + accent
    color override on the eyebrow and topic chevron. Same layout, different

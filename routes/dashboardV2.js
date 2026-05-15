@@ -20,7 +20,7 @@
 // don't re-run the slow eligibility query.
 import { Router } from "express";
 import supabase from "../supabase.js";
-import { requireAuth, isPro } from "../middleware/auth.js";
+import { requireAuth, isPro, isTestProEmail } from "../middleware/auth.js";
 import {
   GRADES, GRADE_ORDER, DAY_MS, WEEK_MS,
   calculateStreak, calculateEstLevel,
@@ -63,14 +63,23 @@ function adaptiveCacheSet(key, v) {
 }
 
 // ─── Section: profile ───────────────────────────────────────────────────────
-async function loadProfile(userId) {
+async function loadProfile(userId, email) {
   const { data, error } = await supabase
     .from("user_profile")
     .select("*")
     .eq("user_id", userId)
     .single();
   if (error && error.code !== "PGRST116") throw error;
-  return { profile: data || null };
+  let profile = data || null;
+  if (isTestProEmail(email)) {
+    profile = {
+      ...(profile || { user_id: userId }),
+      subscription_tier: "mestari",
+      subscription_status: "active",
+      subscription_billing: profile?.subscription_billing || "test",
+    };
+  }
+  return { profile };
 }
 
 // ─── Section: dashboard (mirrors routes/progress.js GET /dashboard) ─────────
@@ -326,7 +335,7 @@ router.get("/dashboard/v2", requireAuth, async (req, res) => {
     profile, dashboard, weakTopics, srCount, srForecast,
     examHistory, learningPath, placement, adaptiveStatus,
   ] = await Promise.all([
-    settle(() => loadProfile(userId)),
+    settle(() => loadProfile(userId, req.user.email)),
     settle(() => loadDashboardCore(userId)),
     settle(() => loadWeakTopics(userId, 7)),
     settle(() => loadSrCount(userId, language)),
