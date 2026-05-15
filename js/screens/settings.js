@@ -276,14 +276,17 @@ const STUDY_BG_LABELS = {
 // L-PLAN-6 — full I..L ladder. The pace + multiplier + tutor tone all
 // adapt per pick (CURRICULUM_SPEC §2; lib/lessonContext.js mirrors the
 // thresholds). Order matches the picker pill row in onboarding OB-1.
+// Official YO-arvosanat (ylioppilastutkinnon Latinankieliset arvosanat).
+// Older copy used Finnish translations ("Huippu", "Tyydyttävä") — replaced
+// with the canonical Latin names students see on their YO-todistus.
 const TARGET_GRADE_LABELS = {
   I: "I · Improbatur",
   A: "A · Approbatur",
-  B: "B · Hyväksytty",
-  C: "C · Tyydyttävä",
-  M: "M · Hyvä",
-  E: "E · Erinomainen",
-  L: "L · Huippu",
+  B: "B · Lubenter approbatur",
+  C: "C · Cum laude approbatur",
+  M: "M · Magna cum laude approbatur",
+  E: "E · Eximia cum laude approbatur",
+  L: "L · Laudatur",
 };
 const TARGET_GRADE_PACE_HINTS = {
   I: "hidas tahti, paljon toistoa",
@@ -590,9 +593,18 @@ async function saveEditor() {
   const payload = { [field.key]: newVal };
   if (typeof field.sideEffects === "function") field.sideEffects(payload, _pendingValue);
 
+  // Optimistic UI — settings save was perceived as slow because the modal
+  // waited on the POST round-trip + JSON parse before closing. Apply the
+  // change locally first, close the modal immediately, then fire the
+  // server save in the background. On error: revert + flash.
   const saveBtn = $("settings-modal-save");
   saveBtn.disabled = true;
-  saveBtn.textContent = "Tallennetaan…";
+  const prevProfile = { ..._profile };
+  _profile = { ..._profile, ...payload };
+  window._userProfile = _profile;
+  invalidateProfileCache();
+  closeEditor();
+  renderRows();
 
   try {
     const res = await apiFetch(`${API}/api/profile`, {
@@ -601,23 +613,24 @@ async function saveEditor() {
       body: JSON.stringify(payload),
     });
     if (!res.ok) {
+      // Revert optimistic update on server failure.
+      _profile = prevProfile;
+      window._userProfile = _profile;
+      invalidateProfileCache();
+      renderRows();
       const data = await res.json().catch(() => ({}));
       flashError(data.error || "Tallennus epäonnistui.");
-      saveBtn.disabled = false;
-      saveBtn.textContent = "Tallenna";
       return;
     }
     const { profile } = await res.json();
-    _profile = profile || { ..._profile, ...payload };
-    window._userProfile = _profile;
-    // L-LIVE-AUDIT-P2 UPDATE 4 — drop the in-memory profile cache so the next
-    // getProfile() call returns the fresh row instead of a stale 5-min copy.
-    invalidateProfileCache();
+    if (profile) {
+      _profile = profile;
+      window._userProfile = _profile;
+      invalidateProfileCache();
+      renderRows();
+    }
 
     track("profile_updated", { field: field.key });
-
-    closeEditor();
-    renderRows();
 
     // L-PLAN-6 — target_grade-specific toast confirms the adaptive shift
     // and reassures that completed lessons survive. Other fields stay

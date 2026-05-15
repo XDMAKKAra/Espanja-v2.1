@@ -187,34 +187,47 @@
       opacity: 0.4;
     }
     .price-cta {
-      display: block;
+      /* Landing-tokens dark theme doesn't define `--ink` (the original
+         pricing CTA styles used it from a different token set). Fall back
+         to `--text` / `--bg` / `--accent` that actually exist on the
+         landing surface so the Free + Treeni buttons render at all. */
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       text-align: center;
       padding: 14px 24px;
-      border-radius: var(--r-md);
-      font-family: var(--font-body);
+      border-radius: 10px;
+      font-family: var(--font-display, var(--font-body));
       font-size: 14px;
       font-weight: 600;
       text-decoration: none;
-      transition: background var(--dur-base) var(--ease-out), color var(--dur-base) var(--ease-out);
+      transition: background 160ms ease, color 160ms ease, border-color 160ms ease;
       border: 1px solid transparent;
       min-height: 44px;
     }
     .price-cta.free {
       background: transparent;
-      border-color: var(--ink);
-      color: var(--ink);
+      border-color: rgba(255, 255, 255, 0.32);
+      color: var(--text);
     }
-    .price-cta.free:hover { background: var(--ink); color: var(--bg, #fff); }
+    .price-cta.free:hover {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.55);
+    }
     .price-cta.tier {
-      background: var(--ink);
-      color: var(--bg, #fff);
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.18);
+      color: var(--text);
     }
-    .price-cta.tier:hover { background: var(--accent-dark); }
+    .price-cta.tier:hover {
+      background: rgba(255, 255, 255, 0.14);
+      border-color: var(--accent);
+    }
     .price-cta.featured-cta {
       background: var(--accent);
-      color: var(--ink);
+      color: #0B0E0D;
     }
-    .price-cta.featured-cta:hover { background: var(--accent-hover); }
+    .price-cta.featured-cta:hover { background: var(--accent-hover, var(--accent)); }
 
     /* Hide/show based on grid mode */
     .pricing-grid[data-mode="monthly"] .price--package { display: none; }
@@ -416,7 +429,7 @@
     </section>
 
     <p class="faq-note">
-      Paketit ovat voimassa 8 viikkoa ostosta tai koepäiväsi + 7 päivää, kumpi tulee ensin. Kuukausitilauksen voi peruuttaa milloin vain — peruutus astuu voimaan laskutusjakson lopussa. Kysyttävää? <a href="mailto:marcel.catchot@gmail.com" style="color:var(--accent-dark)">marcel.catchot@gmail.com</a>
+      Paketit ovat voimassa 8 viikkoa ostosta tai koepäiväsi + 7 päivää, kumpi tulee ensin. Kuukausitilauksen voi peruuttaa milloin vain — peruutus astuu voimaan laskutusjakson lopussa. Kysyttävää? <a href="mailto:tuki@puheo.fi" style="color:var(--accent-dark)">tuki@puheo.fi</a>
     </p>
   </main>
 
