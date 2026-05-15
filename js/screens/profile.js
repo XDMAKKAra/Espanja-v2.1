@@ -47,12 +47,15 @@ const MODE_NAMES = {
   writing: "Kirjoittaminen",
 };
 
+// Official YO-arvosanat (Latinankieliset). Match settings.js + dashboard.js.
 const TARGET_GRADE_LABELS = {
-  B: "B · Hyväksytty",
-  C: "C · Tyydyttävä",
-  M: "M · Hyvä",
-  E: "E · Erinomainen",
-  L: "L · Huippu",
+  I: "I · Improbatur",
+  A: "A · Approbatur",
+  B: "B · Lubenter approbatur",
+  C: "C · Cum laude approbatur",
+  M: "M · Magna cum laude approbatur",
+  E: "E · Eximia cum laude approbatur",
+  L: "L · Laudatur",
 };
 
 const STUDY_BG_LABELS = {
