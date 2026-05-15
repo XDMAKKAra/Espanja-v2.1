@@ -3,7 +3,7 @@
  */
 import { $, show } from "../ui/nav.js";
 import { API, isLoggedIn, authHeader, apiFetch } from "../api.js";
-import { state } from "../state.js";
+import { state, apiLang } from "../state.js";
 import { showLoading, showLoadingError } from "../ui/loading.js";
 
 let _deps = {};
@@ -169,7 +169,7 @@ async function startMasteryTest() {
       headers: { "Content-Type": "application/json", ...authHeader() },
       body: JSON.stringify({
         topicKey: _currentTopic.key,
-        language: state.language || "spanish",
+        language: apiLang(),
       }),
     });
     const data = await res.json();
@@ -263,7 +263,7 @@ async function startMixedReview() {
     const res = await apiFetch(`${API}/api/mixed-review`, {
       method: "POST",
       headers: { "Content-Type": "application/json", ...authHeader() },
-      body: JSON.stringify({ count: 15, language: state.language || "spanish" }),
+      body: JSON.stringify({ count: 15, language: apiLang() }),
     });
     const data = await res.json();
     if (!res.ok) throw new Error(data.error || "Harjoituksen luonti epäonnistui");

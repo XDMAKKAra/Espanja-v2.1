@@ -1,6 +1,6 @@
 import { $, show } from "../ui/nav.js";
 import { API, isLoggedIn, clearAuth, authHeader, apiFetch, getAuthEmail, setDashboardV2, getDashboardV2Section } from "../api.js";
-import { state, setLanguage } from "../state.js";
+import { state, setLanguage, apiLang } from "../state.js";
 import { showLoading } from "../ui/loading.js";
 import { srDueCount } from "../features/spacedRepetition.js";
 import { renderAdaptiveCard } from "./adaptive.js";
@@ -1249,7 +1249,7 @@ async function startCheckpoint() {
     const res = await apiFetch(`${API}/api/checkpoint/start`, {
       method: "POST",
       headers: { "Content-Type": "application/json", ...authHeader() },
-      body: JSON.stringify({ language: state.language || "spanish" }),
+      body: JSON.stringify({ language: apiLang() }),
     });
     const data = await res.json();
     if (!res.ok) throw new Error(data.error || "Checkpoint-virhe");
@@ -1398,7 +1398,7 @@ async function startFocusSession(topic) {
     const res = await apiFetch(`${API}/api/focus-session`, {
       method: "POST",
       headers: { "Content-Type": "application/json", ...authHeader() },
-      body: JSON.stringify({ topic, count: 10, language: state.language || "spanish" }),
+      body: JSON.stringify({ topic, count: 10, language: apiLang() }),
     });
     const data = await res.json();
     if (!res.ok) throw new Error(data.error || "Harjoituksen luonti epäonnistui");

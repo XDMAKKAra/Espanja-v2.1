@@ -1,6 +1,6 @@
 import { $, show } from "../ui/nav.js";
 import { API, isLoggedIn, authHeader, retryable } from "../api.js";
-import { state } from "../state.js";
+import { state, apiLang } from "../state.js";
 import { showSkeleton, showFetchError } from "../ui/loading.js";
 import { GRAMMAR_TYPE_LABELS } from "./vocab.js";
 import { resetAutoTriggerTracking, recordAnswerForAutoTrigger } from "./quickReview.js";
@@ -70,7 +70,7 @@ export async function loadGrammarDrill() {
         level: state.grammarLevel,
         // L-PLAN-6 — deepen overrides count to 4 (L follow-up).
         count: deepen ? 4 : 6,
-        language: state.language,
+        language: apiLang(),
         // Anti-repetition only applies to mixed-topic drills — when the
         // student explicitly picked a rule (e.g. "ser/estar") we WANT
         // every batch to keep drilling that rule.

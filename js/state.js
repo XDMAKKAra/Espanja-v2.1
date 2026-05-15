@@ -74,3 +74,13 @@ export function setLanguage(lang) {
   const allowed = ["es", "de", "fr"];
   state.language = allowed.includes(lang) ? lang : "es";
 }
+
+// Convert the 2-letter session code ("es"/"de"/"fr") into the full
+// language name the server's VALID_LANGUAGES set accepts
+// ("spanish"/"german"/"french"). Exercise endpoints validate against
+// the long form — sending the short code silently 400s with
+// "Virheellinen kieli" and no exercise ever loads.
+const LANG_LONG = { es: "spanish", de: "german", fr: "french" };
+export function apiLang(lang = state.language) {
+  return LANG_LONG[lang] || "spanish";
+}

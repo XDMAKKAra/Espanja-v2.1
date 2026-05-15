@@ -1,6 +1,6 @@
 import { $, show } from "../ui/nav.js";
 import { API, isLoggedIn, authHeader, retryable } from "../api.js";
-import { state } from "../state.js";
+import { state, apiLang } from "../state.js";
 import { showLoading, showLoadingError } from "../ui/loading.js";
 import { generateCoachLine, countUp } from "./mode-page.js";
 import { celebrateScore } from "../features/celebrate.js";
@@ -36,7 +36,7 @@ export async function loadReadingTask() {
       body: JSON.stringify({
         level: state.readingLevel,
         topic: state.readingTopic,
-        language: state.language,
+        language: apiLang(),
         recentlyShown: state.recentReadingTitles || [],
         ...(lessonCtx ? { lesson: lessonCtx } : {}),
       }),
