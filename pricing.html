@@ -3,243 +3,334 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>Puheo — Hinnoittelu</title>
   <meta name="description" content="Free, Treeni ja Mestari. Aloita ilmaiseksi tai avaa koko YO-valmennus Mestarilla alkaen 19 €/kk." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://puheo.fi/pricing.html" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap&subset=latin,latin-ext" rel="stylesheet" />
-  <link rel="stylesheet" href="css/landing-tokens.css" />
-  <link rel="stylesheet" href="css/landing.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&family=Inter:wght@400;500;600;700&display=swap&subset=latin,latin-ext" rel="stylesheet" />
+
+  <link rel="stylesheet" href="/css/landing-tokens.css" />
+  <link rel="stylesheet" href="/css/landing.css" />
+  <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
+  <meta name="theme-color" content="#0B0E0D" />
+
   <style>
-    .page-content {
+    /* Pricing — replicates the shadcn Pricing2 block recipe in vanilla CSS
+       on top of landing-tokens.css. Centered hero, monthly/package switch,
+       three cards with header → separator → checklist → footer-CTA. */
+
+    .pricing-shell {
       position: relative;
       z-index: 1;
-      max-width: 1200px;
+      max-width: 1180px;
       margin: 0 auto;
-      padding: 120px 32px 96px;
+      padding: clamp(96px, 14vw, 144px) var(--sp-3) clamp(80px, 12vw, 128px);
     }
-    .page-content h1 {
-      font-size: clamp(2rem, 5vw, 3.2rem);
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      margin-bottom: 16px;
+    .pricing-hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+      text-align: center;
+      margin: 0 auto 56px;
+      max-width: 720px;
     }
-    .page-content h1 em {
+    .pricing-hero__eyebrow {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-subtle);
+      margin: 0;
+    }
+    .pricing-hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.4rem, 6vw, 3.6rem);
+      font-weight: 700;
+      letter-spacing: var(--tracking-tight);
+      line-height: var(--lh-tight);
+      margin: 0;
+      color: var(--text);
+      text-wrap: pretty;
+    }
+    .pricing-hero h1 em {
       font-style: normal;
-      font-weight: 800;
-      color: var(--accent-dark);
+      font-weight: 700;
+      background: linear-gradient(180deg, var(--text) 0%, color-mix(in srgb, var(--text) 70%, var(--accent) 30%) 100%);
+      -webkit-background-clip: text;
+              background-clip: text;
+      color: transparent;
     }
-    .page-subtitle {
-      color: var(--ink-soft);
-      font-size: 15px;
-      margin-bottom: 32px;
-      font-family: var(--font-body);
+    .pricing-hero__lead {
+      font-size: clamp(1rem, 1.6vw, 1.125rem);
+      line-height: 1.6;
+      color: var(--text-muted);
       max-width: 56ch;
+      margin: 0;
     }
 
-    /* Segmented control: kk / paketti */
-    .price-toggle {
+    /* Monthly/package switch — pill with a sliding dot, mirroring shadcn Switch */
+    .pricing-switch {
       display: inline-flex;
-      gap: 2px;
-      padding: 3px;
-      background: rgba(0, 0, 0, 0.06);
-      border: 1px solid rgba(0, 0, 0, 0.10);
-      border-radius: 999px;
-      margin-bottom: 40px;
-      font-family: var(--font-body);
+      align-items: center;
+      gap: 14px;
+      font-family: var(--font-display);
+      font-size: 15px;
+      color: var(--text-muted);
+      margin: 8px 0 0;
     }
-    .price-toggle button {
+    .pricing-switch__label--on { color: var(--text); }
+    .pricing-switch__toggle {
       appearance: none;
-      background: transparent;
-      border: 0;
-      padding: 8px 20px;
+      width: 44px;
+      height: 24px;
       border-radius: 999px;
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--ink-soft);
-      cursor: pointer;
-      transition: background 200ms ease-out, color 200ms ease-out, box-shadow 200ms ease-out;
-      min-height: 36px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.18);
       position: relative;
+      cursor: pointer;
+      transition: background 200ms ease;
     }
-    .price-toggle button[aria-pressed="true"] {
-      background: #fff;
-      color: var(--ink);
-      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.14), 0 0 0 1px rgba(0, 0, 0, 0.06);
+    .pricing-switch__toggle::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 3px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #F0FDF9;
+      transform: translateY(-50%);
+      transition: left 200ms cubic-bezier(0.22, 0.61, 0.36, 1), background 200ms ease;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
     }
-    .price-toggle button[aria-pressed="false"] {
-      color: var(--ink-soft);
+    .pricing-switch__toggle[aria-checked="true"] {
+      background: var(--accent);
+      border-color: color-mix(in srgb, var(--accent) 50%, transparent);
     }
-    .price-toggle button:focus-visible {
+    .pricing-switch__toggle[aria-checked="true"]::after { left: 23px; }
+    .pricing-switch__toggle:focus-visible {
       outline: 2px solid var(--accent);
       outline-offset: 2px;
     }
 
+    /* ─── Cards ────────────────────────────────────────────────────── */
     .pricing-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 20px;
-      margin-bottom: 64px;
       align-items: stretch;
     }
-    @media (max-width: 960px) { .pricing-grid { grid-template-columns: 1fr; gap: 16px; } }
+    @media (max-width: 1080px) { .pricing-grid { grid-template-columns: repeat(2, 1fr); max-width: 820px; margin: 0 auto; } }
+    @media (max-width: 720px)  { .pricing-grid { grid-template-columns: 1fr; max-width: 480px; } }
 
     .price-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--r-lg);
-      padding: 32px 28px;
+      position: relative;
       display: flex;
       flex-direction: column;
-      position: relative;
+      gap: 20px;
+      padding: 32px 28px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      transition: border-color 200ms ease, transform 200ms ease;
+    }
+    .price-card:hover {
+      border-color: rgba(255, 255, 255, 0.18);
     }
     .price-card.featured {
-      border-color: var(--accent-dark);
-      box-shadow: 0 8px 28px -16px rgba(15, 118, 110, 0.35);
+      background:
+        radial-gradient(120% 80% at 0% 0%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 60%),
+        var(--surface);
+      border-color: color-mix(in srgb, var(--accent) 38%, var(--border));
+      box-shadow:
+        0 24px 64px -32px color-mix(in srgb, var(--accent) 32%, transparent),
+        inset 0 1px 0 0 rgba(255, 255, 255, 0.04);
     }
-    .price-card.featured::after {
-      content: "Suosituin";
+    .price-card__chip {
       position: absolute;
       top: -12px;
       left: 50%;
       transform: translateX(-50%);
-      font-family: var(--font-body);
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: #fff;
-      padding: 4px 12px;
+      padding: 5px 14px;
       border-radius: 999px;
-      background: #0f766e;
-      white-space: nowrap;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-    }
-    .price-name {
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: 0.06em;
+      background: var(--accent);
+      color: #0B0E0D;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.10em;
       text-transform: uppercase;
-      color: var(--ink-soft);
-      margin-bottom: 8px;
-      font-family: var(--font-body);
+      box-shadow: 0 8px 22px -10px color-mix(in srgb, var(--accent) 60%, transparent);
+      white-space: nowrap;
+    }
+
+    /* Header zone */
+    .price-card__head { display: flex; flex-direction: column; gap: 6px; }
+    .price-name {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: var(--text);
+      margin: 0;
+    }
+    .price-desc {
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--text-muted);
+      margin: 0 0 8px;
     }
     .price-amount {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 6px;
       font-family: var(--font-display);
-      font-size: 48px;
-      font-weight: 800;
+      font-size: clamp(2.4rem, 4vw, 3rem);
+      font-weight: 700;
       letter-spacing: -0.03em;
       line-height: 1;
-      color: var(--ink);
-      margin-bottom: 4px;
+      color: var(--text);
     }
-    .price-amount span {
-      font-size: 18px;
-      color: var(--ink-soft);
+    .price-amount__unit {
+      font-size: 0.85rem;
       font-weight: 500;
+      color: var(--text-muted);
+      letter-spacing: 0;
     }
     .price-period {
       font-size: 13px;
-      color: var(--ink-soft);
+      color: var(--text-muted);
       font-family: var(--font-body);
-      margin-bottom: 8px;
-      min-height: 1.4em;
+      margin: 4px 0 0;
+      min-height: 1.3em;
     }
-    .price-sub {
-      font-size: 12px;
-      color: var(--ink-soft);
-      font-family: var(--font-body);
-      margin-bottom: 24px;
-      min-height: 2em;
-      line-height: 1.5;
+
+    /* Separator */
+    .price-card__sep {
+      height: 1px;
+      width: 100%;
+      background: var(--border);
+      border: 0;
+      margin: 0;
+    }
+
+    /* Feature checklist */
+    .price-card__body {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      flex: 1;
+    }
+    .price-card__pre {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      margin: 0;
     }
     .price-features {
       list-style: none;
-      margin: 0 0 28px;
+      margin: 0;
       padding: 0;
-      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
     }
     .price-features li {
-      font-size: 14px;
-      font-family: var(--font-body);
-      color: var(--ink);
-      padding: 10px 0;
-      border-bottom: 1px solid var(--border);
       display: flex;
       align-items: flex-start;
       gap: 10px;
-      line-height: 1.4;
+      font-size: 14px;
+      line-height: 1.45;
+      color: var(--text);
     }
-    .price-features li::before {
-      content: '';
-      flex: 0 0 6px;
-      width: 6px;
-      height: 6px;
-      margin-top: 8px;
-      border-radius: 50%;
-      background: var(--accent-dark);
+    .price-features__icon {
+      flex: 0 0 18px;
+      width: 18px;
+      height: 18px;
+      margin-top: 1px;
+      color: var(--accent);
     }
-    .price-features li.muted {
-      color: var(--ink-soft);
-    }
-    .price-features li.muted::before {
-      background: var(--ink-soft);
-      opacity: 0.4;
+    .price-features li.muted { color: var(--text-subtle); }
+    .price-features li.muted .price-features__icon { color: var(--text-subtle); opacity: 0.5; }
+
+    /* Footer / CTA */
+    .price-card__footer {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-top: auto;
     }
     .price-cta {
-      /* Landing-tokens dark theme doesn't define `--ink` (the original
-         pricing CTA styles used it from a different token set). Fall back
-         to `--text` / `--bg` / `--accent` that actually exist on the
-         landing surface so the Free + Treeni buttons render at all. */
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      text-align: center;
-      padding: 14px 24px;
-      border-radius: 10px;
-      font-family: var(--font-display, var(--font-body));
+      gap: 8px;
+      width: 100%;
+      padding: 14px 22px;
+      border-radius: 12px;
+      font-family: var(--font-display);
       font-size: 14px;
       font-weight: 600;
       text-decoration: none;
-      transition: background 160ms ease, color 160ms ease, border-color 160ms ease;
       border: 1px solid transparent;
-      min-height: 44px;
+      min-height: 48px;
+      cursor: pointer;
+      transition: background 160ms ease, color 160ms ease, border-color 160ms ease, transform 160ms ease;
     }
-    .price-cta.free {
-      background: transparent;
-      border-color: rgba(255, 255, 255, 0.32);
-      color: var(--text);
+    .price-cta__arrow {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+      transition: transform 200ms ease;
     }
-    .price-cta.free:hover {
+    .price-cta:hover .price-cta__arrow { transform: translateX(3px); }
+    .price-cta.is-quiet {
       background: rgba(255, 255, 255, 0.06);
-      border-color: rgba(255, 255, 255, 0.55);
-    }
-    .price-cta.tier {
-      background: rgba(255, 255, 255, 0.08);
-      border-color: rgba(255, 255, 255, 0.18);
+      border-color: rgba(255, 255, 255, 0.16);
       color: var(--text);
     }
-    .price-cta.tier:hover {
-      background: rgba(255, 255, 255, 0.14);
-      border-color: var(--accent);
+    .price-cta.is-quiet:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.32);
     }
-    .price-cta.featured-cta {
+    .price-cta.is-primary {
       background: var(--accent);
       color: #0B0E0D;
     }
-    .price-cta.featured-cta:hover { background: var(--accent-hover, var(--accent)); }
+    .price-cta.is-primary:hover {
+      background: var(--accent-hover, var(--accent));
+      transform: translateY(-1px);
+    }
+    .price-cta__no-cc {
+      text-align: center;
+      font-size: 12px;
+      color: var(--text-subtle);
+      font-family: var(--font-mono);
+      letter-spacing: 0.04em;
+    }
 
-    /* Hide/show based on grid mode */
+    /* Hide/show per billing mode */
     .pricing-grid[data-mode="monthly"] .price--package { display: none; }
     .pricing-grid[data-mode="package"] .price--monthly { display: none; }
 
-    /* Comparison table */
-    .compare-section { margin-bottom: 80px; }
+    /* ─── Compare table ────────────────────────────────────────────── */
+    .compare-section {
+      margin-top: 96px;
+      padding-top: 64px;
+      border-top: 1px solid var(--border);
+    }
     .compare-section h2 {
-      font-size: clamp(1.4rem, 3vw, 1.8rem);
+      font-family: var(--font-display);
+      font-size: clamp(1.6rem, 3vw, 2rem);
       font-weight: 700;
       letter-spacing: -0.02em;
-      margin-bottom: 24px;
+      margin: 0 0 32px;
+      color: var(--text);
     }
     .compare-table {
       width: 100%;
@@ -249,83 +340,68 @@
     }
     .compare-table thead th {
       text-align: left;
-      padding: 14px 16px;
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 0.08em;
+      padding: 12px 16px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--ink-soft);
-      border-bottom: 2px solid var(--ink);
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border-strong);
     }
     .compare-table thead th:not(:first-child) { text-align: center; }
     .compare-table tbody td {
       padding: 14px 16px;
       border-bottom: 1px solid var(--border);
-      color: var(--ink);
+      color: var(--text);
       vertical-align: top;
     }
-    .compare-table tbody td:first-child { font-weight: 500; }
-    .compare-table tbody td:not(:first-child) {
-      text-align: center;
-      color: var(--ink-soft);
-      font-family: var(--font-mono, var(--font-body));
-    }
-    .compare-table .yes { color: var(--accent-dark); font-weight: 700; }
-    .compare-table .no { color: var(--ink-soft); opacity: 0.4; }
+    .compare-table tbody td:first-child { color: var(--text); font-weight: 500; }
+    .compare-table tbody td:not(:first-child) { text-align: center; color: var(--text-muted); font-family: var(--font-mono); }
+    .compare-table .yes { color: var(--accent); font-weight: 700; }
+    .compare-table .no { color: var(--text-subtle); opacity: 0.5; }
     @media (max-width: 720px) {
-      .compare-section { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+      .compare-section { overflow-x: auto; }
       .compare-table { min-width: 520px; }
-      .compare-table thead th,
-      .compare-table tbody td { padding: 10px 8px; font-size: 13px; }
+      .compare-table thead th, .compare-table tbody td { padding: 10px 8px; font-size: 13px; }
       .compare-table thead th:first-child,
       .compare-table tbody td:first-child {
         position: sticky;
         left: 0;
-        /* Must be fully opaque so horizontally-scrolled cells don't bleed through */
-        background: var(--bg-elevated, #141414);
+        background: var(--bg);
         z-index: 1;
         min-width: 160px;
       }
     }
-    /* The compare table is the only horizontally-scrollable element on the page.
-       Guard the rest of the page from horizontal overflow on narrow viewports. */
-    html, body { overflow-x: hidden; }
-    .page-content { max-width: 100%; }
-    @media (max-width: 480px) {
-      .page-content { padding: 88px 16px 64px; }
-    }
 
-    .faq-note {
+    html, body { overflow-x: hidden; }
+
+    .pricing-faq {
       max-width: 60ch;
+      margin: 56px auto 0;
+      text-align: center;
       font-family: var(--font-body);
-      color: var(--ink-soft);
+      color: var(--text-muted);
       font-size: 14px;
       line-height: 1.6;
     }
-    /* "Ei luottokorttia" microcopy */
-    .cta-no-cc {
-      display: block;
-      margin-top: 8px;
-      font-size: 12px;
-      color: var(--ink-soft);
-      text-align: center;
-      font-family: var(--font-body);
-    }
+    .pricing-faq a { color: var(--accent); text-decoration: none; }
+    .pricing-faq a:hover { text-decoration: underline; }
   </style>
 </head>
 <body class="landing">
 
+  <a href="#pricing" class="skip-link">Siirry sisältöön</a>
+
   <header class="nav" id="nav" data-scrolled="false">
     <div class="nav__inner">
       <a class="nav__brand" href="/" aria-label="Puheo etusivu">Puhe<span class="nav__brand-o" aria-hidden="true">o</span></a>
-
       <nav class="nav__links" aria-label="Sivun osiot">
         <a class="nav__link" href="/#tuote">Tuote</a>
         <a class="nav__link" href="/#kurssit">Kurssit</a>
-        <a class="nav__link" href="/pricing.html">Hinnoittelu</a>
-        <a class="nav__link" href="/#faq">FAQ</a>
+        <a class="nav__link" href="/pricing.html" aria-current="page">Hinnoittelu</a>
+        <a class="nav__link" href="/blog/">Blogi</a>
       </nav>
-
       <div class="nav__cta" id="nav-cta">
         <a class="btn btn--quiet" id="nav-login" href="/app.html#kirjaudu">Kirjaudu</a>
         <a class="btn btn--primary" id="nav-signup" href="/app.html#rekisteroidy">Aloita ilmaiseksi</a>
@@ -333,73 +409,107 @@
     </div>
   </header>
 
-  <main class="page-content">
-    <h1>Kolme tasoa. <em>Valitse omasi.</em></h1>
-    <p class="page-subtitle">Aloita Freellä, treenaa Treenillä, valmistaudu Mestarilla. Vaihtaminen onnistuu milloin vain.</p>
+  <main class="pricing-shell" id="pricing">
+    <section class="pricing-hero">
+      <p class="pricing-hero__eyebrow">Hinnoittelu</p>
+      <h1>Kolme tasoa. <em>Valitse omasi.</em></h1>
+      <p class="pricing-hero__lead">Aloita Freellä, treenaa Treenillä, valmistaudu Mestarilla. Vaihtaminen onnistuu milloin vain.</p>
 
-    <div class="price-toggle" role="group" aria-label="Valitse laskutusjakso">
-      <button type="button" id="toggle-monthly" aria-pressed="true">Kuukausi</button>
-      <button type="button" id="toggle-package" aria-pressed="false">8 viikon paketti</button>
-    </div>
+      <div class="pricing-switch" role="group" aria-label="Valitse laskutusjakso">
+        <span class="pricing-switch__label pricing-switch__label--on" id="pricing-switch-label-monthly">Kuukausi</span>
+        <button type="button" class="pricing-switch__toggle" id="pricing-switch-toggle"
+                role="switch" aria-checked="false" aria-labelledby="pricing-switch-label-monthly pricing-switch-label-package"></button>
+        <span class="pricing-switch__label" id="pricing-switch-label-package">8 viikon paketti</span>
+      </div>
+    </section>
 
     <div class="pricing-grid" id="pricing-grid" data-mode="monthly">
+
       <!-- Free -->
       <article class="price-card">
-        <div class="price-name">Free</div>
-        <div class="price-amount">0 <span>&euro;</span></div>
-        <div class="price-period">aina ilmainen</div>
-        <p class="price-sub">Kokeile ennen kuin valitset.</p>
-        <ul class="price-features">
-          <li>1 oppitunti</li>
-          <li>1 kirjoitustehtävä</li>
-          <li>1 luetun ymmärtäminen</li>
-          <li>1 harjoituskoe</li>
-          <li class="muted">Ei AI-seurantaa</li>
-        </ul>
-        <a href="/app.html#/aloitus" class="price-cta free">Aloita ilmaiseksi</a>
-        <span class="cta-no-cc">Ei luottokorttia tarvita</span>
+        <div class="price-card__head">
+          <h3 class="price-name">Free</h3>
+          <p class="price-desc">Kokeile ennen kuin valitset.</p>
+          <div class="price-amount">0 <span class="price-amount__unit">€</span></div>
+          <p class="price-period">Aina ilmainen, ei luottokorttia.</p>
+        </div>
+        <hr class="price-card__sep" aria-hidden="true" />
+        <div class="price-card__body">
+          <ul class="price-features">
+            <li><svg class="price-features__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg><span>1 oppitunti</span></li>
+            <li><svg class="price-features__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg><span>1 kirjoitustehtävä</span></li>
+            <li><svg class="price-features__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg><span>1 luetun ymmärtäminen</span></li>
+            <li><svg class="price-features__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg><span>1 harjoituskoe</span></li>
+          </ul>
+        </div>
+        <div class="price-card__footer">
+          <a class="price-cta is-quiet" href="/app.html#rekisteroidy">
+            Aloita ilmaiseksi
+            <svg class="price-cta__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
+          </a>
+          <span class="price-cta__no-cc">Ei luottokorttia tarvita</span>
+        </div>
       </article>
 
       <!-- Treeni -->
       <article class="price-card">
-        <div class="price-name">Treeni</div>
-        <div class="price-amount price--monthly">9 <span>&euro;/kk</span></div>
-        <div class="price-amount price--package">19 <span>&euro;</span></div>
-        <div class="price-period price--monthly">Peruuta milloin vain</div>
-        <div class="price-period price--package">8 viikon kertamaksu</div>
-        <p class="price-sub">Pakettihinta sopii 4–8 viikon valmistautumiseen.</p>
-        <ul class="price-features">
-          <li>Rajaton kirjoitustehtävät</li>
-          <li>Rajaton luetun ymmärtäminen</li>
-          <li>Rajaton harjoituskokeet</li>
-          <li>AI-arviointi</li>
-          <li class="muted">Ei rakenteellista kurssia</li>
-          <li class="muted">Ei adaptiivisuutta</li>
-        </ul>
-        <a href="/app.html#/aloitus?tier=treeni" class="price-cta tier" data-tier="treeni">Valitse Treeni</a>
-        <span class="cta-no-cc">Ei luottokorttia tarvita</span>
+        <div class="price-card__head">
+          <h3 class="price-name">Treeni</h3>
+          <p class="price-desc">Rajaton harjoittelu, kun YO-koe lähestyy.</p>
+          <div class="price-amount price--monthly">9 <span class="price-amount__unit">€ / kk</span></div>
+          <div class="price-amount price--package">19 <span class="price-amount__unit">€ / 8 vk</span></div>
+          <p class="price-period price--monthly">Peruuta milloin vain</p>
+          <p class="price-period price--package">Kertamaksu, sopii loppukirin</p>
+        </div>
+        <hr class="price-card__sep" aria-hidden="true" />
+        <div class="price-card__body">
+          <ul class="price-features">
+            <li><svg class="price-features__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg><span>Rajaton kirjoitustehtävät</span></li>
+            <li><svg class="price-features__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg><span>Rajaton luetun ymmärtäminen</span></li>
+            <li><svg class="price-features__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg><span>Rajaton harjoituskokeet</span></li>
+            <li><svg class="price-features__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg><span>AI-arviointi YTL-rubriikilla</span></li>
+          </ul>
+        </div>
+        <div class="price-card__footer">
+          <a class="price-cta is-quiet" href="/app.html#rekisteroidy?tier=treeni" data-tier="treeni">
+            Valitse Treeni
+            <svg class="price-cta__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
+          </a>
+          <span class="price-cta__no-cc">Peruuta milloin vain</span>
+        </div>
       </article>
 
-      <!-- Mestari -->
+      <!-- Mestari (popular) -->
       <article class="price-card featured">
-        <div class="price-name">Mestari</div>
-        <div class="price-amount price--monthly">19 <span>&euro;/kk</span></div>
-        <div class="price-amount price--package">39 <span>&euro;</span></div>
-        <div class="price-period price--monthly">Peruuta milloin vain</div>
-        <div class="price-period price--package">8 viikon kertamaksu</div>
-        <p class="price-sub">Säästät, jos rekisteröidyt vähintään 3 viikkoa ennen koetta.</p>
-        <ul class="price-features">
-          <li>Kaikki Treenin ominaisuudet</li>
-          <li>Koko 8-kurssin polku</li>
-          <li>Adaptiivinen vaikeus</li>
-          <li>YO-valmiusmittari</li>
-          <li>Henkilökohtainen lukusuunnitelma</li>
-          <li>Virheseuranta</li>
-          <li>Adaptiiviset koesimulaatiot</li>
-        </ul>
-        <a href="/app.html#/aloitus?tier=mestari" class="price-cta featured-cta" data-tier="mestari">Valitse Mestari</a>
-        <span class="cta-no-cc">Ei luottokorttia tarvita</span>
+        <span class="price-card__chip">Suosituin</span>
+        <div class="price-card__head">
+          <h3 class="price-name">Mestari</h3>
+          <p class="price-desc">Koko YO-valmennus — alusta YO-koevalmiiksi.</p>
+          <div class="price-amount price--monthly">19 <span class="price-amount__unit">€ / kk</span></div>
+          <div class="price-amount price--package">39 <span class="price-amount__unit">€ / 8 vk</span></div>
+          <p class="price-period price--monthly">Peruuta milloin vain</p>
+          <p class="price-period price--package">Säästä, jos rekisteröidyt 3+ vk ennen koetta</p>
+        </div>
+        <hr class="price-card__sep" aria-hidden="true" />
+        <div class="price-card__body">
+          <p class="price-card__pre">Kaikki Treenin ominaisuudet, ja:</p>
+          <ul class="price-features">
+            <li><svg class="price-features__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg><span>Koko 8-kurssin polku (90 oppituntia)</span></li>
+            <li><svg class="price-features__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg><span>Adaptiivinen vaikeustaso</span></li>
+            <li><svg class="price-features__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg><span>YO-valmiusmittari</span></li>
+            <li><svg class="price-features__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg><span>Henkilökohtainen lukusuunnitelma</span></li>
+            <li><svg class="price-features__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg><span>Virheseuranta + adaptiiviset koesimulaatiot</span></li>
+          </ul>
+        </div>
+        <div class="price-card__footer">
+          <a class="price-cta is-primary" href="/app.html#rekisteroidy?tier=mestari" data-tier="mestari">
+            Valitse Mestari
+            <svg class="price-cta__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
+          </a>
+          <span class="price-cta__no-cc">14 päivän rahat-takaisin -takuu</span>
+        </div>
       </article>
+
     </div>
 
     <section class="compare-section">
@@ -415,11 +525,11 @@
         </thead>
         <tbody>
           <tr><td>Kirjoitustehtävät</td><td>1</td><td>Rajaton</td><td>Rajaton</td></tr>
-          <tr><td>Luetun ymmärtämiset</td><td>1</td><td>Rajaton</td><td>Rajaton</td></tr>
+          <tr><td>Luetun ymmärtäminen</td><td>1</td><td>Rajaton</td><td>Rajaton</td></tr>
           <tr><td>Harjoituskokeet</td><td>1</td><td>Rajaton</td><td>Rajaton</td></tr>
           <tr><td>Oppitunnit</td><td>1 demo</td><td><span class="no">–</span></td><td>Kaikki 90</td></tr>
-          <tr><td>AI-arviointi YO-rubriikilla</td><td><span class="no">–</span></td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
-          <tr><td>Rakenteellinen 8-kurssin polku</td><td><span class="no">–</span></td><td><span class="no">–</span></td><td><span class="yes">✓</span></td></tr>
+          <tr><td>AI-arviointi YTL-rubriikilla</td><td><span class="no">–</span></td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
+          <tr><td>8-kurssin polku</td><td><span class="no">–</span></td><td><span class="no">–</span></td><td><span class="yes">✓</span></td></tr>
           <tr><td>Adaptiivinen vaikeus</td><td><span class="no">–</span></td><td><span class="no">–</span></td><td><span class="yes">✓</span></td></tr>
           <tr><td>YO-valmiusmittari</td><td><span class="no">–</span></td><td><span class="no">–</span></td><td><span class="yes">✓</span></td></tr>
           <tr><td>Henkilökohtainen lukusuunnitelma</td><td><span class="no">–</span></td><td><span class="no">–</span></td><td><span class="yes">✓</span></td></tr>
@@ -428,47 +538,78 @@
       </table>
     </section>
 
-    <p class="faq-note">
-      Paketit ovat voimassa 8 viikkoa ostosta tai koepäiväsi + 7 päivää, kumpi tulee ensin. Kuukausitilauksen voi peruuttaa milloin vain — peruutus astuu voimaan laskutusjakson lopussa. Kysyttävää? <a href="mailto:tuki@puheo.fi" style="color:var(--accent-dark)">tuki@puheo.fi</a>
+    <p class="pricing-faq">
+      Paketit ovat voimassa 8 viikkoa ostosta tai koepäiväsi + 7 päivää, kumpi tulee ensin. Kuukausitilauksen voi peruuttaa milloin vain — peruutus astuu voimaan laskutusjakson lopussa. Kysyttävää? <a href="mailto:tuki@puheo.fi">tuki@puheo.fi</a>
     </p>
   </main>
 
-  <footer style="border-top:1px solid var(--border,rgba(0,0,0,0.10));padding:32px;text-align:center;font-family:var(--font-body);font-size:14px;color:var(--ink-soft);">
-    <div style="margin-bottom:16px;font-size:16px;font-weight:700;letter-spacing:-0.02em;color:var(--ink);">Puhe<span style="color:var(--accent-dark)">o</span></div>
-    <nav style="display:flex;flex-wrap:wrap;justify-content:center;gap:8px 16px;margin-bottom:12px;" aria-label="Kielet">
-      <a href="/espanja-yo-koe" style="color:var(--ink-soft);text-decoration:none;padding:3px 10px;border:1px solid var(--border,rgba(0,0,0,0.10));border-radius:999px;font-size:13px;transition:color 150ms,border-color 150ms;">Espanja</a>
-      <a href="/saksan-yo-koe" style="color:var(--ink-soft);text-decoration:none;padding:3px 10px;border:1px solid var(--border,rgba(0,0,0,0.10));border-radius:999px;font-size:13px;transition:color 150ms,border-color 150ms;">Saksa</a>
-      <a href="/ranskan-yo-koe" style="color:var(--ink-soft);text-decoration:none;padding:3px 10px;border:1px solid var(--border,rgba(0,0,0,0.10));border-radius:999px;font-size:13px;transition:color 150ms,border-color 150ms;">Ranska</a>
-    </nav>
-    <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:4px 12px;">
-      <a href="/terms.html" style="color:var(--ink-soft);text-decoration:none;">Käyttöehdot</a>
-      <span aria-hidden="true" style="color:var(--ink-soft);opacity:0.4;">&middot;</span>
-      <a href="/privacy.html" style="color:var(--ink-soft);text-decoration:none;">Tietosuoja</a>
-      <span aria-hidden="true" style="color:var(--ink-soft);opacity:0.4;">&middot;</span>
-      <a href="/refund.html" style="color:var(--ink-soft);text-decoration:none;">Palautukset</a>
+  <footer class="landing-footer" role="contentinfo">
+    <div class="landing-footer__inner">
+      <div class="landing-footer__brand">
+        <a class="landing-footer__brandmark" href="/" aria-label="Puheo etusivu">
+          <span class="landing-footer__brand-dot" aria-hidden="true"></span>
+          Puheo
+        </a>
+        <p class="landing-footer__tagline">
+          YO-koe valmennus espanjaan, saksaan ja ranskaan.
+          Tekoälyvalmentaja, joka tuntee YTL:n rubriikin.
+        </p>
+      </div>
+      <div class="landing-footer__cols">
+        <nav class="landing-footer__col" aria-label="Tuote">
+          <h3 class="landing-footer__col-title">Tuote</h3>
+          <ul class="landing-footer__links">
+            <li><a href="/#tuote">Ominaisuudet</a></li>
+            <li><a href="/#kurssit">Kurssit</a></li>
+            <li><a href="/pricing.html">Hinnoittelu</a></li>
+            <li><a href="/#faq">UKK</a></li>
+          </ul>
+        </nav>
+        <nav class="landing-footer__col" aria-label="Tili">
+          <h3 class="landing-footer__col-title">Tili</h3>
+          <ul class="landing-footer__links">
+            <li><a href="/app.html#kirjaudu">Kirjaudu</a></li>
+            <li><a href="/app.html#rekisteroidy">Aloita ilmaiseksi</a></li>
+          </ul>
+        </nav>
+        <nav class="landing-footer__col" aria-label="Tieto">
+          <h3 class="landing-footer__col-title">Tieto</h3>
+          <ul class="landing-footer__links">
+            <li><a href="/privacy.html">Tietosuoja</a></li>
+            <li><a href="/terms.html">Käyttöehdot</a></li>
+            <li><a href="/refund.html">Palautukset</a></li>
+            <li><a href="/blog/">Blogi</a></li>
+            <li><a href="mailto:tuki@puheo.fi">Ota yhteyttä</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="landing-footer__bottom">
+        <p class="landing-footer__copy">© 2026 Puheo · Tehty Suomessa</p>
+      </div>
     </div>
-    <p style="margin:12px 0 0;font-size:12px;color:var(--ink-soft);">© 2026 Puheo · Tehty Suomessa</p>
   </footer>
 
   <script>
     (function () {
       const grid = document.getElementById("pricing-grid");
-      const btnM = document.getElementById("toggle-monthly");
-      const btnP = document.getElementById("toggle-package");
+      const toggle = document.getElementById("pricing-switch-toggle");
+      const labelMonthly = document.getElementById("pricing-switch-label-monthly");
+      const labelPackage = document.getElementById("pricing-switch-label-package");
       function setMode(mode) {
         grid.dataset.mode = mode;
-        const isMonthly = mode === "monthly";
-        btnM.setAttribute("aria-pressed", String(isMonthly));
-        btnP.setAttribute("aria-pressed", String(!isMonthly));
-        document.querySelectorAll(".price-cta[data-tier]").forEach((a) => {
-          const tier = a.dataset.tier;
-          a.href = "/app.html#/aloitus?tier=" + tier + "&billing=" + (isMonthly ? "monthly" : "package");
-        });
+        const isPackage = mode === "package";
+        toggle.setAttribute("aria-checked", String(isPackage));
+        labelMonthly.classList.toggle("pricing-switch__label--on", !isPackage);
+        labelPackage.classList.toggle("pricing-switch__label--on", isPackage);
       }
-      btnM.addEventListener("click", () => setMode("monthly"));
-      btnP.addEventListener("click", () => setMode("package"));
+      toggle.addEventListener("click", () => {
+        setMode(toggle.getAttribute("aria-checked") === "true" ? "monthly" : "package");
+      });
+      toggle.addEventListener("keydown", (e) => {
+        if (e.key === " " || e.key === "Enter") { e.preventDefault(); toggle.click(); }
+      });
     })();
   </script>
-
+  <script src="/js/landing-nav.js" defer></script>
 </body>
 </html>
