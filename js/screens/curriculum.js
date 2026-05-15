@@ -60,8 +60,18 @@ function lessonDifficulty(l) {
 }
 
 function lessonDurationMin(l) {
+  // Calibrated to match data/courses/.../lesson_*.json `meta.estimated_minutes_median`
+  // (the writers' own per-lesson estimate). Previous formula `exerciseCount × 90 s`
+  // gave 2 min for a writing task (1 exercise × 1.5 = 1.5 → max(2,1)) and 12 min for
+  // an 8-exercise vocab drill — both far below realistic YO-prep study time. A real
+  // student needs ~150 min per course, ~20 hr per language overall.
   const ex = Number(l && l.exerciseCount) || 8;
-  return Math.max(2, Math.round((ex * 90) / 60));
+  const type = (l && l.type) || "vocab";
+  if (type === "writing") return Math.max(20, 18 + Math.round(ex * 2));    // 20–28 min (full essay)
+  if (type === "reading") return Math.max(15, 12 + Math.round(ex * 1.5));  // 15–24 min (passage + Qs)
+  if (type === "test")    return 35;                                       // YO mock simulation
+  if (type === "grammar") return Math.max(12, 10 + Math.round(ex * 0.8));  // 12–18 min
+  return Math.max(10, 8 + Math.round(ex * 0.6));                           // vocab + default 10–15 min
 }
 
 function lessonPreview(l) {
@@ -518,9 +528,26 @@ export async function loadCurriculum() {
     // selects the right LANG_CURRICULA registry. The /api/curriculum route is
     // not in the AI_ROUTE_PREFIXES list, so apiFetch wouldn't inject it.
     const lang = (state.language === "de" || state.language === "fr") ? state.language : "es";
-    const res = await apiFetch(`${API}/api/curriculum?lang=${encodeURIComponent(lang)}`, {
-      headers: { ...(isLoggedIn() ? authHeader() : {}) },
-    });
+    // Share the 30-s cache with dashboard.js (same key) — opening Oppimispolku
+    // fires both screens' loaders in parallel and they hit the same endpoint.
+    // Cache stores Promise<{status, ok, data}> so the second caller can mimic
+    // a Response without re-running fetch.
+    const cacheKey = "_curriculumCache_" + lang;
+    if (!window[cacheKey] || (Date.now() - (window[cacheKey + "_at"] || 0)) > 30000) {
+      window[cacheKey] = apiFetch(`${API}/api/curriculum?lang=${encodeURIComponent(lang)}`, {
+        headers: { ...(isLoggedIn() ? authHeader() : {}) },
+      }).then(async (r) => ({ ok: r.ok, status: r.status, data: r.ok ? await r.json().catch(() => null) : null }));
+      window[cacheKey + "_at"] = Date.now();
+    }
+    const cached = await window[cacheKey];
+    if (!cached.ok) {
+      if (cached.status === 401) throw new Error("Kirjaudu sisään nähdäksesi polun.");
+      if (cached.status === 403) throw new Error("Tämä kieli ei ole vielä käytössä.");
+      if (cached.status === 404) throw new Error("Polkupäätepistettä ei löytynyt — yritä uudelleen.");
+      if (cached.status >= 500) throw new Error(`Palvelinvirhe (${cached.status}) — yritä uudelleen.`);
+      throw new Error(`Polun lataus epäonnistui (HTTP ${cached.status}).`);
+    }
+    const res = { ok: true, status: 200, json: async () => cached.data };
     if (!res.ok) {
       // Distinguish error classes so the user (and the next debugger) sees a
       // precise message instead of the generic "Polun lataus epäonnistui".
@@ -674,10 +701,16 @@ function ensureLessonRoot() {
 // L-PLAN-5 UPDATE 2 — rebuilt lesson screen layout. Eyebrow shows kurssi
 // number + lesson number, H1 is the lesson focus (display 40px), Markdown
 // teaching card is the body, CTA shows exercise count + estimated duration.
-function formatDurationMin(exerciseCount) {
-  // 90s per exercise (recognition + production mix); rounded to nearest min.
-  const seconds = (exerciseCount || 1) * 90;
-  return Math.max(1, Math.round(seconds / 60));
+function formatDurationMin(exerciseCount, type) {
+  // Mirrors lessonDurationMin (see top of file) — type-aware estimate
+  // calibrated against data/courses/.../lesson_*.json `estimated_minutes_median`.
+  const ex = Number(exerciseCount) || 1;
+  const t = type || "vocab";
+  if (t === "writing") return Math.max(20, 18 + Math.round(ex * 2));
+  if (t === "reading") return Math.max(15, 12 + Math.round(ex * 1.5));
+  if (t === "test")    return 35;
+  if (t === "grammar") return Math.max(12, 10 + Math.round(ex * 0.8));
+  return Math.max(10, 8 + Math.round(ex * 0.6));
 }
 
 function ctaLabel(lesson, lessonContext) {
@@ -685,7 +718,7 @@ function ctaLabel(lesson, lessonContext) {
   // fall back to baseline. Anonymous users (no profile) still see the
   // baseline B count so the public preview is honest.
   const n = Number(lessonContext?.exerciseCount) || lesson.exerciseCount || 8;
-  const min = formatDurationMin(n);
+  const min = formatDurationMin(n, lesson.type);
   if (lesson.type === "test") {
     return `Aloita kertaustesti (${n} kysymystä, ~${min} min) →`;
   }
