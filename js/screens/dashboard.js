@@ -226,7 +226,7 @@ function renderDashboard({
   totalSessions, modeStats, recent, chartData = [], estLevel = null,
   gradeEstimate = null,
   streak = 0, weekSessions = 0, prevWeekSessions = 0,
-  suggestedLevel = "B", modeDaysAgo = {}, pro = false,
+  suggestedLevel = "B", modeDaysAgo = {}, pro = false, tier = null,
   aiUsage = null,
 }) {
   // Kick off the tutor-message fetch in parallel — the rest of the dashboard
@@ -238,7 +238,13 @@ function renderDashboard({
   const proSlot = document.getElementById("sidebar-pro-slot");
   if (proSlot) {
     if (pro) {
-      proSlot.innerHTML = `<span class="sidebar-pro-badge">PRO</span> <button class="btn-manage-sub" id="btn-manage-sub">Hallinnoi tilausta</button>`;
+      // Reflect the concrete subscription tier in the badge — "MESTARI"
+      // for the full curriculum tier, "TREENI" for the practice tier, and
+      // the legacy "PRO" fallback when the tier field isn't available.
+      const badgeText = tier === "mestari" ? "MESTARI"
+                      : tier === "treeni"  ? "TREENI"
+                      : "PRO";
+      proSlot.innerHTML = `<span class="sidebar-pro-badge sidebar-pro-badge--${tier || 'pro'}">${badgeText}</span> <button class="btn-manage-sub" id="btn-manage-sub">Hallinnoi tilausta</button>`;
       setTimeout(() => {
         const manageBtn = document.getElementById("btn-manage-sub");
         if (manageBtn) manageBtn.addEventListener("click", () => _deps.openBillingPortal());
