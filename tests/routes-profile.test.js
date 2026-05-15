@@ -39,6 +39,9 @@ vi.mock("../middleware/auth.js", () => ({
     req.user = { userId: "test-user", email: "t@e.st" };
     next();
   },
+  isPro: async () => false,
+  isTestProEmail: () => false,
+  getUserTier: async () => null,
 }));
 
 let request, app;
