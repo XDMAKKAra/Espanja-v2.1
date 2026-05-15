@@ -4,17 +4,19 @@
    12-column desktop grid, 2-col mobile. */
 
 .curr-bento {
-  /* sits inside .curr-card.is-expanded grid-area: lessons */
+  /* sits inside .curr-card.is-expanded — must claim the full lessons row,
+     otherwise auto-placement drops it into the 48px step column (bento
+     grid collapses to 48 px wide → 30 px lesson cards). */
   grid-area: lessons;
+  grid-column: 1 / -1;
   display: flex;
   flex-direction: column;
   gap: 16px;
   margin-top: 12px;
   padding-top: 16px;
   border-top: 1px solid var(--border, #2a2a2e);
-  /* Allow the bento grid to shrink — without min-width:0 the inner grid
-     items push the parent wider than the column and overflow the viewport. */
   min-width: 0;
+  width: 100%;
 }
 .curr-bento-grid { min-width: 0; }
 .curr-bento-card { min-width: 0; }
@@ -57,9 +59,12 @@
   position: relative;
 }
 .curr-bento-strip__dot::after {
+  /* WCAG 2.5.8 — 24×24 minimum; aiming 44×24 (12 dots × ~70 px = whole
+     strip ≈ tap-friendly without spacing collisions). The visible dot
+     stays 4 px tall; the invisible hit-rect extends ±20 px vertically. */
   content: "";
   position: absolute;
-  inset: -10px -2px;
+  inset: -20px -2px;
 }
 .curr-bento-strip__dot:hover { transform: translateY(-1px); }
 .curr-bento-strip__dot:focus-visible {

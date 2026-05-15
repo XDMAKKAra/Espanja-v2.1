@@ -127,7 +127,11 @@
 }
 .landing .nav__brand {
   display: inline-flex;
-  align-items: baseline;
+  align-items: center;
+  /* WCAG 2.5.8 — brand link is the page's wordmark + nav anchor; needs
+     44 px min vertical hit target on mobile. */
+  min-height: 44px;
+  padding: 4px 0;
   font-family: var(--font-display);
   font-weight: 800;
   font-size: 22px;
@@ -1736,9 +1740,16 @@
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 2px;
 }
 .landing .landing-footer__links a {
+  /* WCAG 2.5.5 / 2.5.8 — 44 px min vertical hit target. Visible text
+     stays the same; padding extends the tap-zone so mobile users
+     don't mis-tap adjacent links. */
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 8px 0;
   color: var(--text-muted);
   font-size: var(--fs-sm);
   text-decoration: none;

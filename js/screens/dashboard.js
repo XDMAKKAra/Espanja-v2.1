@@ -323,7 +323,10 @@ function renderDashboard({
   // Defer one frame so the initial-state styles commit, then add the
   // `--in` modifier to drive the staggered transition. Idempotent — the
   // class is harmless to re-add.
-  const heroHeader = document.querySelector("#screen-dashboard .dash-greeting");
+  // Selector covers both legacy `#screen-dashboard` and current `#screen-path`
+  // hosts — without `.dash-greeting--in` the hero stays at opacity:0 + blur(6px)
+  // and the header reads as empty whitespace above the KPI row.
+  const heroHeader = document.querySelector(".dash-greeting");
   if (heroHeader) {
     heroHeader.classList.remove("dash-greeting--in");
     requestAnimationFrame(() => requestAnimationFrame(() => {
