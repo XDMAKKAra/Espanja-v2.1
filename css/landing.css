@@ -1236,13 +1236,23 @@
 
 .landing .pricing__grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  /* Three tiers (Free / Treeni / Mestari) — needs 3 columns on desktop
+     so they sit on one row. Was repeat(2, …) which forced Mestari onto
+     a second row below the others. */
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--sp-3);
   align-items: stretch;
-  max-width: 880px;
+  max-width: 1180px;
   margin: 0 auto;
 }
-@media (max-width: 880px) {
+@media (max-width: 1080px) {
+  /* Tight laptop: 2-col with the popular tier hero-spanning the row above */
+  .landing .pricing__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: 820px;
+  }
+}
+@media (max-width: 720px) {
   .landing .pricing__grid { grid-template-columns: 1fr; max-width: 480px; }
 }
 
