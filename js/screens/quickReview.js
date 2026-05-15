@@ -21,7 +21,16 @@ async function loadReviews() {
 }
 
 function getSelectedTopic() {
-  return document.querySelector("#grammar-topic-cards .topic-card.active")?.dataset.topic || "mixed";
+  // The grammar topic picker is `.mode-topic` (with `.is-current` /
+  // `aria-checked="true"`) inside `#screen-mode-grammar` — the old
+  // `#grammar-topic-cards .topic-card.active` selector pointed at
+  // classes that no longer exist, so the function always returned
+  // "mixed" and the kertaus button stayed hidden / inert.
+  return (
+    document.querySelector('#screen-mode-grammar .mode-topic[aria-checked="true"]')?.dataset.topic
+    || document.querySelector('#screen-mode-grammar .mode-topic.is-current')?.dataset.topic
+    || "mixed"
+  );
 }
 
 function renderReview(review) {
@@ -118,10 +127,18 @@ export function initQuickReview({ startGrammarDrill }) {
     });
   }
 
-  const cards = $("grammar-topic-cards");
-  if (cards) {
-    cards.addEventListener("click", (e) => {
-      if (e.target.closest(".topic-card")) updateReviewButtonVisibility();
+  // Watch the grammar topic picker; refresh button visibility whenever
+  // a `.mode-topic` is clicked (radio-style selection). The pre-2026
+  // markup used `#grammar-topic-cards .topic-card` — those IDs/classes
+  // are gone now.
+  const grammarScreen = document.getElementById("screen-mode-grammar");
+  if (grammarScreen) {
+    grammarScreen.addEventListener("click", (e) => {
+      if (e.target.closest(".mode-topic")) {
+        // Defer one frame so the click handler that flips `is-current` /
+        // `aria-checked` runs first and getSelectedTopic() sees the new state.
+        requestAnimationFrame(() => updateReviewButtonVisibility());
+      }
     });
   }
   updateReviewButtonVisibility();

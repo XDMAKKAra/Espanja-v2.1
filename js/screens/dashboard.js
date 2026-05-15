@@ -1,6 +1,6 @@
 import { $, show } from "../ui/nav.js";
 import { API, isLoggedIn, clearAuth, authHeader, apiFetch, getAuthEmail, setDashboardV2, getDashboardV2Section } from "../api.js";
-import { state, setLanguage } from "../state.js";
+import { state, setLanguage, apiLang } from "../state.js";
 import { showLoading } from "../ui/loading.js";
 import { srDueCount } from "../features/spacedRepetition.js";
 import { renderAdaptiveCard } from "./adaptive.js";
@@ -1249,7 +1249,7 @@ async function startCheckpoint() {
     const res = await apiFetch(`${API}/api/checkpoint/start`, {
       method: "POST",
       headers: { "Content-Type": "application/json", ...authHeader() },
-      body: JSON.stringify({ language: state.language || "spanish" }),
+      body: JSON.stringify({ language: apiLang() }),
     });
     const data = await res.json();
     if (!res.ok) throw new Error(data.error || "Checkpoint-virhe");
@@ -1398,7 +1398,7 @@ async function startFocusSession(topic) {
     const res = await apiFetch(`${API}/api/focus-session`, {
       method: "POST",
       headers: { "Content-Type": "application/json", ...authHeader() },
-      body: JSON.stringify({ topic, count: 10, language: state.language || "spanish" }),
+      body: JSON.stringify({ topic, count: 10, language: apiLang() }),
     });
     const data = await res.json();
     if (!res.ok) throw new Error(data.error || "Harjoituksen luonti epäonnistui");
@@ -1555,13 +1555,20 @@ async function loadAndRenderReadinessMap() {
   // completed across the 8 courses). The old SR-mastery map showed 20 % when
   // the student had completed 1 / 86 lessons (data was inherited from the
   // pre-curriculum vocab/grammar drills) which contradicted the course cards.
+  // /api/curriculum is also fetched by js/screens/curriculum.js immediately
+  // after this — share a 30-second cache (same key) so opening Oppimispolku
+  // doesn't pay the round-trip twice every time.
   let kurssit = [];
   try {
-    const res = await apiFetch(`${API}/api/curriculum`, { headers: authHeader() });
-    if (res.ok) {
-      const data = await res.json();
-      kurssit = Array.isArray(data?.kurssit) ? data.kurssit : [];
+    const lang = window.__currentLang || (window.state && window.state.language) || "es";
+    const cacheKey = "_curriculumCache_" + lang;
+    if (!window[cacheKey] || (Date.now() - (window[cacheKey + "_at"] || 0)) > 30000) {
+      window[cacheKey] = apiFetch(`${API}/api/curriculum?lang=${encodeURIComponent(lang)}`, { headers: authHeader() })
+        .then(async (r) => ({ ok: r.ok, status: r.status, data: r.ok ? await r.json().catch(() => null) : null }));
+      window[cacheKey + "_at"] = Date.now();
     }
+    const cached = await window[cacheKey];
+    kurssit = Array.isArray(cached?.data?.kurssit) ? cached.data.kurssit : [];
   } catch { /* network — show empty */ }
 
   const totalCells = kurssit.length;

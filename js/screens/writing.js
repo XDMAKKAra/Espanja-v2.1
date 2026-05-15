@@ -1,6 +1,6 @@
 import { $, show } from "../ui/nav.js";
 import { API, isLoggedIn, authHeader, apiFetch, retryable } from "../api.js";
-import { state } from "../state.js";
+import { state, apiLang } from "../state.js";
 import { CRITERIA_LABELS } from "../state.js";
 import { showLoading, showLoadingError, showSkeleton, showFetchError } from "../ui/loading.js";
 import { trackCheckoutStarted, trackProUpsellShown, track } from "../analytics.js";
@@ -238,7 +238,7 @@ export async function loadWritingTask() {
       body: JSON.stringify({
         taskType: state.writingTaskType,
         topic: state.writingTopic,
-        language: state.language,
+        language: apiLang(),
         recentWeaknesses: getRecentErrorCategories(10),
       }),
     });

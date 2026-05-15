@@ -195,13 +195,13 @@
   font-size: var(--fs-mono-sm);
   font-weight: 500;
   letter-spacing: 0.04em;
-  /* L-LIVE-AUDIT-P0 UPDATE 3 — live audit flagged the meta line as nearly
-     unreadable in the SR "Kertaa nyt — N korttia" CTA on the dashboard.
-     Root cause was opacity:0.78 compositing the mint to ~7:1, which still
-     passes AA but reads as washed-out next to the off-white title. Drop
-     the opacity so the full mint-20 hits its native ~13:1 against navy. */
-  color: #CCFBF1;
+  /* Brightened from #CCFBF1 (mint-20, ~13:1 on navy) to mint-50 #5EEAD4
+     which reads with more weight without losing brand color. Tested
+     reportedly looked washed out on mode-page CTAs until hover; this
+     ramps the unhovered state to match the hover legibility. */
+  color: #5EEAD4;
 }
+.btn--cta:hover .btn--cta__meta { color: #99F6E4; }
 .btn--cta__arrow {
   font-size: var(--fs-h3);
   font-weight: 600;

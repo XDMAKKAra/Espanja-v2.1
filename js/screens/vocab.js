@@ -1,6 +1,6 @@
 import { $, show } from "../ui/nav.js";
 import { API, isLoggedIn, authHeader, apiFetch, retryable } from "../api.js";
-import { state, LEVELS, BATCH_SIZE, MAX_BATCHES } from "../state.js";
+import { state, LEVELS, BATCH_SIZE, MAX_BATCHES, apiLang } from "../state.js";
 import { showLoading, showLoadingError, showSkeleton, showFetchError } from "../ui/loading.js";
 import { srPop, srAddWrong, srMarkCorrect, srReview, srGetDue } from "../features/spacedRepetition.js";
 import { isTranslationAccepted, isTranslationPartial, translationBand, TRANSLATION_BAND_LABELS } from "../features/answerGrading.js";
@@ -67,7 +67,7 @@ function triggerVocabPreload() {
           level: state.level,
           topic: state.topic,
           count: BATCH_SIZE,
-          language: state.language,
+          language: apiLang(),
           recentlyShown: state.recentVocabHeadwords || [],
         }),
       });
@@ -369,7 +369,7 @@ export async function loadNextBatch() {
           const mixRes = await fetch(`${API}/api/${pick}`, {
             method: "POST",
             headers: { "Content-Type": "application/json", ...authHeader() },
-            body: JSON.stringify({ level: state.level, count: 1, language: state.language }),
+            body: JSON.stringify({ level: state.level, count: 1, language: apiLang() }),
           });
           if (mixRes.ok) {
             const mixData = await mixRes.json();
@@ -408,7 +408,7 @@ export async function loadNextBatch() {
           level: state.level,
           topic: state.topic,
           count: deepen ? 4 : (lessonCtx ? (lessonCtx.lessonExerciseCount || mcCount) : mcCount),
-          language: state.language,
+          language: apiLang(),
           recentlyShown: state.recentVocabHeadwords || [],
           ...(lessonCtx ? { lesson: lessonCtx } : {}),
           ...(deepen ? { mode: "deepen" } : {}),
