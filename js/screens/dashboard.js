@@ -226,7 +226,7 @@ function renderDashboard({
   totalSessions, modeStats, recent, chartData = [], estLevel = null,
   gradeEstimate = null,
   streak = 0, weekSessions = 0, prevWeekSessions = 0,
-  suggestedLevel = "B", modeDaysAgo = {}, pro = false,
+  suggestedLevel = "B", modeDaysAgo = {}, pro = false, tier = null,
   aiUsage = null,
 }) {
   // Kick off the tutor-message fetch in parallel — the rest of the dashboard
@@ -238,7 +238,13 @@ function renderDashboard({
   const proSlot = document.getElementById("sidebar-pro-slot");
   if (proSlot) {
     if (pro) {
-      proSlot.innerHTML = `<span class="sidebar-pro-badge">PRO</span> <button class="btn-manage-sub" id="btn-manage-sub">Hallinnoi tilausta</button>`;
+      // Reflect the concrete subscription tier in the badge — "MESTARI"
+      // for the full curriculum tier, "TREENI" for the practice tier, and
+      // the legacy "PRO" fallback when the tier field isn't available.
+      const badgeText = tier === "mestari" ? "MESTARI"
+                      : tier === "treeni"  ? "TREENI"
+                      : "PRO";
+      proSlot.innerHTML = `<span class="sidebar-pro-badge sidebar-pro-badge--${tier || 'pro'}">${badgeText}</span> <button class="btn-manage-sub" id="btn-manage-sub">Hallinnoi tilausta</button>`;
       setTimeout(() => {
         const manageBtn = document.getElementById("btn-manage-sub");
         if (manageBtn) manageBtn.addEventListener("click", () => _deps.openBillingPortal());
@@ -323,12 +329,45 @@ function renderDashboard({
   // Defer one frame so the initial-state styles commit, then add the
   // `--in` modifier to drive the staggered transition. Idempotent — the
   // class is harmless to re-add.
-  const heroHeader = document.querySelector("#screen-dashboard .dash-greeting");
+  // Selector covers both legacy `#screen-dashboard` and current `#screen-path`
+  // hosts — without `.dash-greeting--in` the hero stays at opacity:0 + blur(6px)
+  // and the header reads as empty whitespace above the KPI row.
+  const heroHeader = document.querySelector(".dash-greeting");
   if (heroHeader) {
     heroHeader.classList.remove("dash-greeting--in");
     requestAnimationFrame(() => requestAnimationFrame(() => {
       heroHeader.classList.add("dash-greeting--in");
     }));
+  }
+  // KPI tiles share the same blur-fade arrival, staggered after the hero
+  // greeting completes (see --kpi-delay in dashboard.css).
+  const kpiRow = document.querySelector(".dash-kpi-row");
+  if (kpiRow) {
+    kpiRow.classList.remove("dash-kpi-row--in");
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      kpiRow.classList.add("dash-kpi-row--in");
+    }));
+    // Real values are committed by this point — strip skeleton shimmer
+    // so the populated number takes over the slot.
+    kpiRow.querySelectorAll(".dash-kpi-tile__val.is-loading").forEach((el) => {
+      el.classList.remove("is-loading");
+    });
+  }
+  // Dim the streak flame when the user has no active streak — a tiny
+  // 18 px flame next to a zero counter just adds noise.
+  const streakIcon = document.querySelector(".dash-kpi-tile--1 .dash-kpi-tile__icon");
+  if (streakIcon) {
+    streakIcon.classList.toggle("is-dim", !((streak ?? 0) >= 1));
+  }
+
+  // Zero-session empty state: when a freshly-registered user lands on
+  // the dashboard, four "0" tiles read as a broken page. Hide the KPI
+  // row entirely — the existing `.dash-empty-rail` welcome card in the
+  // rail already carries the "Tee ensimmäinen tehtävä →" CTA, which is
+  // a better first impression than KPI emptiness.
+  if (kpiRow) {
+    const isEmpty = (totalSessions ?? 0) === 0 && (streak ?? 0) === 0;
+    kpiRow.classList.toggle("dash-kpi-row--empty", isEmpty);
   }
 
   renderGradeWidget(gradeEstimate || { tier: "none", grade: null, confidence: 0, coverage: {}, total: totalSessions || 0 });

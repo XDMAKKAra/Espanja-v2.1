@@ -165,6 +165,7 @@ export default [
       "test-results/",
       "app.bundle.js",
       "*.bundle.js",
+      "chunks/",
       "dist/",
       "build/",
       "marketing/preview/",

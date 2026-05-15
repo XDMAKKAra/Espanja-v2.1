@@ -1896,9 +1896,12 @@ select option { background: var(--surface-2); }
   pointer-events: none;
   z-index: -1;
   color: var(--ink);
-  opacity: 0.10;
-  -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 85%);
-          mask-image: radial-gradient(ellipse at center, black 30%, transparent 85%);
+  /* 0.10 -> 0.05: the grid was reading as a "tech-startup template" cliché
+     when paired with the saturated teal hero. Half the opacity, narrower
+     visible band, so it stays as quiet texture instead of decoration. */
+  opacity: 0.05;
+  -webkit-mask-image: radial-gradient(ellipse at center, black 20%, transparent 70%);
+          mask-image: radial-gradient(ellipse at center, black 20%, transparent 70%);
 }
 @media (prefers-reduced-motion: no-preference) {
   /* Subtle 12s drift so the pattern doesn't feel inert. Keeps the
@@ -1936,12 +1939,22 @@ select option { background: var(--surface-2); }
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 16px;
-    padding: 40px 36px;
-    background: linear-gradient(160deg, #0F766E 0%, #134E4A 60%, #0B3A36 100%);
+    gap: 18px;
+    padding: 44px 40px;
+    /* Deeper bottom, warmer top, lower mid-saturation — the previous
+       #0F766E → #0B3A36 read as "Linear/Vercel teal template". Adding a
+       darker base and shifting the top toward a slightly cooler hue gives
+       the surface volume without changing the brand color. */
+    background:
+      radial-gradient(120% 80% at 0% 0%, rgba(45, 212, 191, 0.22), transparent 55%),
+      linear-gradient(168deg, #0B5953 0%, #093F3A 55%, #062927 100%);
     color: #ECFEFA;
-    border-radius: var(--r-xl, 24px);
-    box-shadow: 0 12px 40px -24px rgba(15, 118, 110, 0.45);
+    border-radius: 28px;
+    /* Shadow tinted to brand hue (teal) instead of neutral black so the
+     elevation reads as "lit object" rather than "pasted card". */
+    box-shadow:
+      0 24px 64px -28px rgba(6, 41, 39, 0.55),
+      0 1px 0 0 rgba(255, 255, 255, 0.05) inset;
     min-height: 480px;
     position: relative;
     overflow: hidden;
@@ -1949,9 +1962,11 @@ select option { background: var(--surface-2); }
   .auth-aside::after {
     content: "";
     position: absolute;
-    inset: -40% -20% auto auto;
-    width: 320px; height: 320px;
-    background: radial-gradient(circle, rgba(45, 212, 191, 0.45), transparent 70%);
+    inset: -50% -25% auto auto;
+    width: 360px; height: 360px;
+    /* Quieter highlight bloom — was 0.45, now 0.28 so it's a hint of
+       light rather than a circle competing with the headline. */
+    background: radial-gradient(circle, rgba(45, 212, 191, 0.28), transparent 72%);
     pointer-events: none;
   }
   .auth-aside > * { position: relative; z-index: 1; }

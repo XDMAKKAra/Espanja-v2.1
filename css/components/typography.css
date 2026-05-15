@@ -55,7 +55,10 @@
 
 .mono-num {
   font-family: var(--font-mono);
-  font-feature-settings: "tnum" 1;
+  /* "zero" 0 disables the slashed-zero glyph in DM Mono — a "0" in a KPI
+     tile was reading as Ø and being mistaken for a degree symbol. */
+  font-feature-settings: "tnum" 1, "zero" 0;
+  font-variant-numeric: lining-nums tabular-nums;
   color: var(--ink);
 }
 

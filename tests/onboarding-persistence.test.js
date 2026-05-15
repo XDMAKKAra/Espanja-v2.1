@@ -31,6 +31,9 @@ vi.mock("../supabase.js", () => {
 
 vi.mock("../middleware/auth.js", () => ({
   requireAuth: (req, _res, next) => { req.user = { userId: "test-user-id", email: "t@puheo.test" }; next(); },
+  isPro: async () => false,
+  isTestProEmail: () => false,
+  getUserTier: async () => null,
 }));
 
 let app;

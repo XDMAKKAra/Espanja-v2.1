@@ -203,8 +203,8 @@ function navigateTo(nav, { updateHash = true } = {}) {
   if (nav === "exam")          lazyFullExam().then((m) => m.startFullExam("demo"));
   else if (nav === "settings") lazySettings().then((m) => m.showSettings());
   else if (nav === "profile")  lazyProfile().then((m) => m.loadProfile());
-  else if (nav === "verbsprint") lazyVerbSprint();
-  else if (nav === "verbreference") lazyVerbReference();
+  else if (nav === "verbsprint")    lazyVerbSprint().then(() => showModePage("verbsprint"));
+  else if (nav === "verbreference") lazyVerbReference().then(() => showModePage("verbreference"));
   else if (nav === "path") {
     // Merged home: loadDashboard now also kicks off loadCurriculum after
     // rendering, so a single call populates greeting + day-CTA + readiness +

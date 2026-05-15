@@ -1,6 +1,6 @@
 import { Router } from "express";
 import supabase from "../supabase.js";
-import { requireAuth, isPro } from "../middleware/auth.js";
+import { requireAuth, isPro, getUserTier } from "../middleware/auth.js";
 import { GRADES, GRADE_ORDER, DAY_MS, WEEK_MS, calculateStreak, calculateEstLevel } from "../lib/openai.js";
 import { computeGradeEstimate } from "../lib/gradeThreshold.js";
 import { computeEligibility, LEVEL_ORDER } from "../lib/adaptive.js";
@@ -187,6 +187,10 @@ router.get("/dashboard", requireAuth, async (req, res) => {
   }
 
   const pro = await isPro(userId);
+  // Carry the concrete tier ("treeni" / "mestari" / null) alongside the
+  // boolean so the sidebar badge can read "MESTARI" instead of a generic
+  // "PRO" for mestari subscribers.
+  const tier = await getUserTier(userId);
   const aiUsage = await getMonthlyUsage(userId);
 
   // Stale topics: in_progress with no activity in last 7 days
@@ -203,7 +207,7 @@ router.get("/dashboard", requireAuth, async (req, res) => {
   res.json({
     totalSessions, modeStats, recent, chartData, estLevel, gradeEstimate,
     streak, weekSessions, prevWeekSessions, suggestedLevel, modeDaysAgo, pro,
-    aiUsage, staleTopics,
+    tier, aiUsage, staleTopics,
   });
 });
 

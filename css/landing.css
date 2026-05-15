@@ -127,7 +127,11 @@
 }
 .landing .nav__brand {
   display: inline-flex;
-  align-items: baseline;
+  align-items: center;
+  /* WCAG 2.5.8 — brand link is the page's wordmark + nav anchor; needs
+     44 px min vertical hit target on mobile. */
+  min-height: 44px;
+  padding: 4px 0;
   font-family: var(--font-display);
   font-weight: 800;
   font-size: 22px;
@@ -258,16 +262,18 @@
   justify-content: center;
 }
 
-/* Radial accent glow behind everything */
+/* Radial accent glow behind everything.
+   `filter: blur()` on a fullscreen element forces a continuous repaint
+   on every composited frame, which made the landing feel sluggish on
+   mid-tier laptops. Use a softer radial-gradient stop instead — the
+   visual is near-identical, but compositing cost drops to ~0. */
 .landing .hero__glow {
   position: absolute;
   inset: -10% -20% -10% -20%;
-  background: radial-gradient(closest-side, var(--accent-glow), transparent 70%);
-  filter: blur(40px);
+  background: radial-gradient(closest-side, var(--accent-glow), transparent 60%);
   opacity: 0.9;
   z-index: -1;
   pointer-events: none;
-  will-change: transform;
 }
 
 /* L-PLAN-8 UPDATE 1B — barely-perceptible drift (translate only, ≤2 %).
@@ -936,6 +942,8 @@
   overflow: hidden;
 }
 .landing .grader::before {
+  /* See note on .hero__glow — dropping filter:blur in favour of a softer
+     radial stop. Identical visual at ~0 compositing cost. */
   content: "";
   position: absolute;
   top: 50%;
@@ -943,8 +951,7 @@
   width: 80%;
   height: 80%;
   transform: translate(-50%, -50%);
-  background: radial-gradient(closest-side, var(--accent-glow), transparent 70%);
-  filter: blur(60px);
+  background: radial-gradient(closest-side, var(--accent-glow), transparent 55%);
   opacity: 0.6;
   z-index: -1;
   pointer-events: none;
@@ -1229,13 +1236,23 @@
 
 .landing .pricing__grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  /* Three tiers (Free / Treeni / Mestari) — needs 3 columns on desktop
+     so they sit on one row. Was repeat(2, …) which forced Mestari onto
+     a second row below the others. */
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--sp-3);
   align-items: stretch;
-  max-width: 880px;
+  max-width: 1180px;
   margin: 0 auto;
 }
-@media (max-width: 880px) {
+@media (max-width: 1080px) {
+  /* Tight laptop: 2-col with the popular tier hero-spanning the row above */
+  .landing .pricing__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: 820px;
+  }
+}
+@media (max-width: 720px) {
   .landing .pricing__grid { grid-template-columns: 1fr; max-width: 480px; }
 }
 
@@ -1601,14 +1618,15 @@
 
 /* Soft accent radial bloom behind the title — restrained, not loud */
 .landing .cta-card__glow {
+  /* See note on .hero__glow — large filter:blur on a positioned ::before
+     is the costliest repaint trigger here. Soft radial stop instead. */
   position: absolute;
   top: -30%;
   left: 50%;
   width: 120%;
   height: 90%;
   transform: translateX(-50%);
-  background: radial-gradient(closest-side, var(--accent-glow), transparent 70%);
-  filter: blur(50px);
+  background: radial-gradient(closest-side, var(--accent-glow), transparent 55%);
   opacity: 0.55;
   z-index: -1;
   pointer-events: none;
@@ -1736,9 +1754,16 @@
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 2px;
 }
 .landing .landing-footer__links a {
+  /* WCAG 2.5.5 / 2.5.8 — 44 px min vertical hit target. Visible text
+     stays the same; padding extends the tap-zone so mobile users
+     don't mis-tap adjacent links. */
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 8px 0;
   color: var(--text-muted);
   font-size: var(--fs-sm);
   text-decoration: none;
