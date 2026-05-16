@@ -2411,3 +2411,125 @@
   margin-right: 2px;
 }
 
+/* ============================================================
+   Loop L-SURGICAL-1 (2026-05-16) — testimoniaalit section +
+   grader-card sizing inside the hero right column.
+
+   Grader card was promoted from §7 to hero; below cuts the old
+   §2–7 sections and adds the new testimoniaalit block before
+   pricing. CSS scoped under .landing so no leak into app.
+   ============================================================ */
+
+.landing .grader-card--hero {
+  max-width: 560px;
+  margin-left: auto;
+}
+@media (max-width: 960px) {
+  .landing .grader-card--hero {
+    max-width: 100%;
+    margin-left: 0;
+  }
+}
+
+.landing .testimoniaalit__head {
+  max-width: 720px;
+  margin: 0 auto var(--sp-6);
+  text-align: center;
+}
+.landing .testimoniaalit__eyebrow {
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  color: var(--accent);
+  margin: 0 0 var(--sp-2);
+}
+.landing .testimoniaalit__title {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 600;
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-tight);
+  margin: 0 0 var(--sp-2);
+  color: var(--text);
+}
+.landing .testimoniaalit__sub {
+  font-size: var(--fs-md);
+  color: var(--text-muted);
+  line-height: var(--lh-body);
+  margin: 0;
+}
+
+.landing .testimoniaalit__grid {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--sp-3);
+}
+.landing .testimonial {
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: var(--sp-4);
+  transition: border-color var(--t-fast), background var(--t-fast);
+}
+.landing .testimonial:hover {
+  border-color: var(--border-strong);
+  background: var(--surface-hover);
+}
+.landing .testimonial__quote {
+  font-size: var(--fs-md);
+  line-height: 1.55;
+  color: var(--text);
+  margin: 0 0 var(--sp-3);
+}
+.landing .testimonial__quote-mark {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: 28px;
+  line-height: 0;
+  color: var(--accent);
+  margin-right: 2px;
+  vertical-align: -6px;
+}
+.landing .testimonial__by {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding-top: var(--sp-3);
+  border-top: 1px solid var(--border);
+  margin-top: auto;
+}
+.landing .testimonial__avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+.landing .testimonial__meta {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.landing .testimonial__name {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+}
+.landing .testimonial__role {
+  font-size: 12px;
+  color: var(--text-subtle);
+}

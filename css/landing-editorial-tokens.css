@@ -1,0 +1,141 @@
+/* ============================================================
+   Puheo Landing — Editorial-Paper register tokens (Loop L-EDITORIAL-1).
+
+   Coexists with the legacy `landing-tokens.css` (Tinted-Mint Workshop,
+   documented in DESIGN.md as end-of-life). Old vars stay live so the
+   rest of the page renders while subsequent craft loops migrate
+   section-by-section.
+
+   New tokens are namespaced `--ed-*` to avoid bleeding into any
+   `.landing-section` that hasn't been migrated yet.
+
+   Source-of-truth brief:
+     docs/superpowers/specs/2026-05-16-landing-editorial-rebuild-design.md
+   Strategic anchor:  PRODUCT.md
+   Visual anchor:     DESIGN.md (end-of-life baseline being replaced)
+   ============================================================ */
+
+.landing {
+  /* ─── Surfaces — warm off-white paper, tinted slightly toward
+     the deep-teal accent so paper and ink feel like the same scene. */
+  --ed-bg:           oklch(96% 0.005 80);    /* ≈ #f7f4ee  warm paper */
+  --ed-bg-deep:      oklch(94% 0.006 80);    /* ≈ #ede8df  one step warmer */
+  --ed-bg-card:      oklch(99% 0.003 80);    /* ≈ #fdfbf6  lifted paper (grader card) */
+  --ed-rule:         oklch(20% 0.006 80 / 0.12);  /* hairline ink */
+  --ed-rule-strong:  oklch(20% 0.006 80 / 0.22);
+
+  /* ─── Ink — deep warm neutral, never #000. */
+  --ed-ink:          oklch(20% 0.006 80);    /* ≈ #1d1a14  primary text */
+  --ed-ink-muted:    oklch(40% 0.006 80);    /* ≈ #4d4639  secondary */
+  --ed-ink-subtle:   oklch(58% 0.006 80);    /* ≈ #7a7264  marginalia / captions */
+  --ed-ink-faint:    oklch(72% 0.005 80);    /* ≈ #a89f8e  hairlines, decorative */
+
+  /* ─── Accent — muted deep teal-petrol. The Mint Signal gets
+     demoted; the new accent reads as "ink that happens to be teal"
+     rather than "neon glow." Used at ≤10% of any viewport. */
+  --ed-accent:       oklch(48% 0.09 195);    /* ≈ #1a6b75  primary action */
+  --ed-accent-hover: oklch(42% 0.10 195);    /* ≈ #135963  */
+  --ed-accent-soft:  oklch(48% 0.09 195 / 0.10);
+  --ed-accent-ink:   oklch(96% 0.005 80);    /* text-on-accent (paper-on-teal) */
+
+  /* ─── Mark colors — for grader card error spans. Warm, not neon.
+     Grammar errors and spelling errors get visually distinct tints. */
+  --ed-mark-grammar:  oklch(48% 0.09 195 / 0.18);   /* teal wash */
+  --ed-mark-spelling: oklch(74% 0.14 65 / 0.22);    /* warm ochre wash */
+  --ed-mark-grammar-rule:  oklch(48% 0.09 195);
+  --ed-mark-spelling-rule: oklch(58% 0.15 65);
+
+  /* ─── Score chip — quiet, paper-on-teal pill. */
+  --ed-score-bg:    oklch(48% 0.09 195 / 0.08);
+  --ed-score-ink:   oklch(38% 0.10 195);
+
+  /* ─── Type — editorial serif display + humanist sans body. */
+  --ed-serif: "Source Serif 4", "Source Serif Pro", Georgia, "Times New Roman", serif;
+  --ed-sans:  "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --ed-mono:  "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  /* Type scale — editorial proportions, less compressed than the dark
+     register. Display is large but never poster-sized; tracking is near-normal. */
+  --ed-fs-display: clamp(2.5rem, 4.5vw + 1rem, 4.5rem);   /* 40–72px hero h1 */
+  --ed-fs-h2:      clamp(1.75rem, 2.5vw + 1rem, 2.5rem);  /* 28–40px section h2 */
+  --ed-fs-lead:    clamp(1.125rem, 0.6vw + 1rem, 1.25rem); /* 18–20px hero sub */
+  --ed-fs-body:    1.0625rem;   /* 17px editorial body */
+  --ed-fs-meta:    0.875rem;    /* 14px marginalia */
+  --ed-fs-micro:   0.75rem;     /* 12px labels */
+
+  /* Editorial leading. Tighter on display, generous on body. */
+  --ed-lh-display: 1.08;
+  --ed-lh-h2:      1.15;
+  --ed-lh-body:    1.6;
+  --ed-lh-meta:    1.45;
+
+  /* Tracking. Editorial serifs need air, not negative tracking. */
+  --ed-tracking-display: -0.01em;
+  --ed-tracking-body:    0;
+  --ed-tracking-meta:    0.04em;
+
+  /* ─── Radius — modest, not pill-by-default. Buttons stay slightly
+     rounded; the grader card has a tight book-corner radius. */
+  --ed-r-sm:   4px;
+  --ed-r-md:   6px;
+  --ed-r-lg:   10px;
+  --ed-r-pill: 999px;   /* used very sparingly */
+
+  /* ─── Spacing — looser than the old grid, with rhythm. */
+  --ed-sp-1:  4px;
+  --ed-sp-2:  8px;
+  --ed-sp-3:  16px;
+  --ed-sp-4:  24px;
+  --ed-sp-5:  32px;
+  --ed-sp-6:  48px;
+  --ed-sp-7:  64px;
+  --ed-sp-8:  96px;
+  --ed-sp-9:  128px;
+
+  /* ─── Motion — calmer than the old dark register. No glow, no
+     parallax, just one ease-out curve and reduced-motion respect. */
+  --ed-t-fast: 140ms cubic-bezier(0.22, 1, 0.36, 1);
+  --ed-t-mid:  220ms cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* ─── Content width — narrower than the dark register, editorial. */
+  --ed-content-max: 1120px;
+  --ed-prose-max:   62ch;
+}
+
+/* The editorial sections opt in by sitting under `.landing__editorial`.
+   They get the paper surface; everything else (the legacy dark sections)
+   continues to use --bg / --text / --accent from landing-tokens.css. */
+.landing .landing__editorial {
+  background: var(--ed-bg);
+  color: var(--ed-ink);
+  font-family: var(--ed-sans);
+  font-size: var(--ed-fs-body);
+  line-height: var(--ed-lh-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1, "ss01" 1;
+}
+
+/* Source Serif 4 face has a heavier optical default; the editorial spec
+   wants weight 400 for body serif moments and 500 for display. */
+.landing .landing__editorial .serif {
+  font-family: var(--ed-serif);
+  font-feature-settings: "kern" 1, "liga" 1, "onum" 1;  /* old-style nums */
+}
+
+.landing .landing__editorial .mono-num {
+  font-family: var(--ed-mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
+}
+
+/* Reduced-motion override applies to the editorial scope too. */
+@media (prefers-reduced-motion: reduce) {
+  .landing .landing__editorial *,
+  .landing .landing__editorial *::before,
+  .landing .landing__editorial *::after {
+    animation-duration: 0ms !important;
+    transition-duration: 0ms !important;
+  }
+}
