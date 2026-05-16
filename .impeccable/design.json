@@ -1,0 +1,175 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-05-16T00:00:00Z",
+  "title": "Design System: Puheo Landing",
+  "extensions": {
+    "colorMeta": {
+      "bg-charcoal": {
+        "role": "neutral",
+        "displayName": "Charcoal Base",
+        "canonical": "oklch(15.5% 0.008 175)",
+        "tonalRamp": ["#070908", "#0B0E0D", "#0F1313", "#131818", "#1A1F1F", "#252B2B", "#3A4242", "#5A6464"]
+      },
+      "bg-elevated": {
+        "role": "neutral",
+        "displayName": "Charcoal Elevated",
+        "canonical": "oklch(19% 0.006 175)",
+        "tonalRamp": ["#0B0E0D", "#0F1313", "#131818", "#181E1E", "#1F2727", "#2A3333", "#3F4848", "#606A6A"]
+      },
+      "text": {
+        "role": "neutral",
+        "displayName": "Paper White",
+        "canonical": "oklch(98% 0.002 175)",
+        "tonalRamp": ["#3F4242", "#5A5E5E", "#7A7E7E", "#9CA0A0", "#B8BCBC", "#D4D7D7", "#EEF0F0", "#fafafa"]
+      },
+      "text-muted": {
+        "role": "neutral",
+        "displayName": "Muted Slate",
+        "canonical": "oklch(72% 0.005 260)",
+        "tonalRamp": ["#3F4148", "#52555E", "#666974", "#7B7F8A", "#8E929D", "#a1a1aa", "#BCBCC4", "#D8D8DE"]
+      },
+      "text-subtle": {
+        "role": "neutral",
+        "displayName": "Subtle Slate",
+        "canonical": "oklch(53% 0.006 260)",
+        "tonalRamp": ["#383A41", "#4A4C54", "#5C5F67", "#71717a", "#85858E", "#9999A2", "#B3B3BB", "#CDCDD3"]
+      },
+      "accent-mint": {
+        "role": "primary",
+        "displayName": "Mint Signal",
+        "canonical": "oklch(82% 0.13 175)",
+        "tonalRamp": ["#072622", "#0E4A41", "#176F62", "#1F9483", "#27B9A4", "#2DD4BF", "#73E1D2", "#B5EFE6"]
+      },
+      "accent-mint-deep": {
+        "role": "primary",
+        "displayName": "Mint Deep",
+        "canonical": "oklch(73% 0.13 175)",
+        "tonalRamp": ["#052D26", "#0A5147", "#107367", "#159687", "#1AB9A7", "#14B8A6", "#5BD3C5", "#A2EEE5"]
+      },
+      "ink-on-mint": {
+        "role": "primary",
+        "displayName": "Ink on Mint",
+        "canonical": "oklch(26% 0.04 175)",
+        "tonalRamp": ["#031A16", "#052924", "#073732", "#0A4640", "#0D544E", "#10625C", "#14716A", "#187F78"]
+      },
+      "border-hairline": {
+        "role": "neutral",
+        "displayName": "Hairline Border",
+        "canonical": "rgba(255, 255, 255, 0.08)",
+        "tonalRamp": ["rgba(255,255,255,0.02)", "rgba(255,255,255,0.04)", "rgba(255,255,255,0.06)", "rgba(255,255,255,0.08)", "rgba(255,255,255,0.10)", "rgba(255,255,255,0.14)", "rgba(255,255,255,0.20)", "rgba(255,255,255,0.30)"]
+      }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Hero h1 and the largest section headlines." },
+      "headline": { "displayName": "Headline", "purpose": "Section h2: 'Kolme aluetta', '8 kurssia', 'Kolme tasoa', etc." },
+      "title": { "displayName": "Title", "purpose": "Card titles (pillar, course, pricing, FAQ question)." },
+      "body": { "displayName": "Body", "purpose": "Running text, sub-headlines, FAQ answers. Capped at ~65 ch." },
+      "label": { "displayName": "Eyebrow Label", "purpose": "12 px uppercase tracking-wide label above every h2 section. The only uppercase voice." },
+      "mono": { "displayName": "Mono Digits", "purpose": "Countdown digits and YTL score numerals. Tabular numerals via font-feature-settings tnum 1." }
+    },
+    "shadows": [
+      { "name": "frame", "value": "0 40px 80px -20px rgba(0, 0, 0, 0.5)", "purpose": "Hero browser-frame only. Communicates 'product surface hovering above the page.'" },
+      { "name": "card", "value": "0 24px 48px -24px rgba(0, 0, 0, 0.4)", "purpose": "Grader card, final CTA card. Reserved for earned-elevation moments." },
+      { "name": "glow", "value": "0 40px 80px -20px rgba(45, 212, 191, 0.20)", "purpose": "Mint-tinted ambient glow on the final CTA card. The only colored shadow in the system; maximum one per page." }
+    ],
+    "motion": [
+      { "name": "fast", "value": "150ms ease-out", "purpose": "Micro-interactions: button color shifts, hover state, link underlines." },
+      { "name": "mid", "value": "220ms ease-out", "purpose": "Page-level transitions: nav backdrop-blur engage, FAQ accordion expand." },
+      { "name": "slow", "value": "320ms ease-out", "purpose": "Section reveal stagger on scroll; the slowest motion in the system." }
+    ],
+    "breakpoints": [
+      { "name": "mobile-cap", "value": "720px" },
+      { "name": "desktop", "value": "1200px (content-max)" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Filled mint pill, used for every primary CTA: 'Aloita ilmaiseksi', 'Valitse Mestari', 'Jatka harjoittelua'. Currently overused (5+ above the fold); rebuild reduces to one per viewport.",
+      "html": "<button class=\"ds-btn-primary\">Aloita ilmaiseksi<svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14M13 5l7 7-7 7\"/></svg></button>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 44px; padding: 0 18px; border-radius: 999px; border: 1px solid transparent; background: #2DD4BF; color: #052924; font-family: 'Geist', system-ui, sans-serif; font-size: 16px; font-weight: 600; letter-spacing: -0.02em; text-decoration: none; cursor: pointer; transition: background 150ms ease-out, color 150ms ease-out; } .ds-btn-primary:hover { background: #14B8A6; color: #042520; } .ds-btn-primary:focus-visible { outline: 2px solid #2DD4BF; outline-offset: 3px; }"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Transparent pill with strong hairline border, used for secondary CTAs ('Tutustu →', 'Näe esimerkkiarviointi'). At rest, visually similar to disabled state on dark surfaces; flagged for review.",
+      "html": "<button class=\"ds-btn-ghost\">Näe esimerkkiarviointi →</button>",
+      "css": ".ds-btn-ghost { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 44px; padding: 0 18px; border-radius: 999px; border: 1px solid rgba(255, 255, 255, 0.14); background: transparent; color: #fafafa; font-family: 'Geist', system-ui, sans-serif; font-size: 16px; font-weight: 500; letter-spacing: -0.02em; cursor: pointer; transition: background 150ms ease-out, border-color 150ms ease-out; } .ds-btn-ghost:hover { background: rgba(255, 255, 255, 0.04); } .ds-btn-ghost:focus-visible { outline: 2px solid #2DD4BF; outline-offset: 3px; }"
+    },
+    {
+      "name": "Eyebrow Countdown Pill",
+      "kind": "custom",
+      "refersTo": "input-eyebrow-pill",
+      "description": "Signature component: capsule containing the brand label, a saturated mint dot, and a live YO-koe countdown rendered in Geist Mono tabular numerals. Lives directly above the hero h1; the only mint-saturated element in the hero.",
+      "html": "<p class=\"ds-eyebrow\"><span class=\"ds-eyebrow-label\">Puheo · YO-koe-valmennus</span><span class=\"ds-eyebrow-dot\" aria-hidden=\"true\"></span><span class=\"ds-eyebrow-time\"><span>134</span><em>pv</em><span>06</span><em>h</em><span>42</span><em>min</em></span></p>",
+      "css": ".ds-eyebrow { display: inline-flex; align-items: center; gap: 10px; height: 28px; padding: 0 12px; margin: 0; border-radius: 999px; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); font-family: 'Geist', system-ui, sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.10em; text-transform: uppercase; color: #a1a1aa; } .ds-eyebrow-label { color: #a1a1aa; } .ds-eyebrow-dot { width: 6px; height: 6px; border-radius: 999px; background: #2DD4BF; box-shadow: 0 0 8px rgba(45, 212, 191, 0.6); } .ds-eyebrow-time { display: inline-flex; align-items: baseline; gap: 4px; font-family: 'Geist Mono', ui-monospace, monospace; font-variant-numeric: tabular-nums; color: #fafafa; letter-spacing: 0; text-transform: none; } .ds-eyebrow-time em { font-style: normal; font-size: 10px; color: #71717a; margin-right: 4px; }"
+    },
+    {
+      "name": "Pillar Card",
+      "kind": "card",
+      "refersTo": "card-elevated",
+      "description": "Charcoal-elevated card with an SVG icon, h3 title, body text, metric line, and an embedded product demo (real Spanish content). One of four 3-up grids currently stacked vertically on the landing; rebuild merges with the grader showcase.",
+      "html": "<article class=\"ds-pillar\"><span class=\"ds-pillar-icon\" aria-hidden=\"true\"><svg viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z\"/><path d=\"M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z\"/></svg></span><h3 class=\"ds-pillar-title\">Sanasto</h3><p class=\"ds-pillar-body\">Yli 2 000 YO-koe-tasoista sanaa, ryhmiteltynä YO-aiheisiin.</p><p class=\"ds-pillar-metric\"><strong>2 000+</strong> sanaa · 8 aihetta</p></article>",
+      "css": ".ds-pillar { display: flex; flex-direction: column; gap: 12px; padding: 24px; background: #131818; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 16px; color: #fafafa; font-family: 'Geist', system-ui, sans-serif; } .ds-pillar-icon { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 12px; background: rgba(45, 212, 191, 0.12); color: #2DD4BF; } .ds-pillar-title { margin: 0; font-size: 24px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.25; } .ds-pillar-body { margin: 0; font-size: 16px; line-height: 1.55; color: #a1a1aa; max-width: 65ch; } .ds-pillar-metric { margin: 0; font-size: 14px; color: #71717a; letter-spacing: 0; } .ds-pillar-metric strong { color: #fafafa; font-weight: 600; }"
+    },
+    {
+      "name": "YTL Rubric Row",
+      "kind": "custom",
+      "refersTo": "card-elevated",
+      "description": "Single row of the grader card's rubric block: dimension name + score chip + one-line Finnish feedback. The smallest unit of the system's signature differentiator (AI-graded writing on the YTL rubric).",
+      "html": "<div class=\"ds-rubric-row\"><span class=\"ds-rubric-name\">Viestinnällisyys</span><span class=\"ds-rubric-score\">4 / 5</span><span class=\"ds-rubric-fb\">Vastasit kaikkiin tehtävänannon kohtiin: aika, paikka, ruoka ja vastauspyyntö.</span></div>",
+      "css": ".ds-rubric-row { display: grid; grid-template-columns: 180px 70px 1fr; align-items: baseline; gap: 16px; padding: 14px 0; border-top: 1px solid rgba(255, 255, 255, 0.08); font-family: 'Geist', system-ui, sans-serif; color: #fafafa; } .ds-rubric-name { font-size: 14px; font-weight: 500; color: #fafafa; } .ds-rubric-score { font-family: 'Geist Mono', ui-monospace, monospace; font-variant-numeric: tabular-nums; font-size: 14px; font-weight: 500; color: #2DD4BF; letter-spacing: 0; } .ds-rubric-fb { font-size: 14px; line-height: 1.55; color: #a1a1aa; max-width: 65ch; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Tinted-Mint Workshop",
+    "overview": "A restrained dark canvas with a single mint accent, designed to feel like a quiet, late-evening workstation. The original brief, recorded verbatim in css/landing.css, was 'Aesthetic: restrained Linear / Vercel': a tinted-neutral base biased ~3% toward the brand hue (#0B0E0D charcoal, not pure black), one accent (#2DD4BF mint) carrying every primary action, hairline white-on-dark borders, Geist throughout, motion limited to 150-320ms ease-out. The intent was discipline; the visual result reads as the 2024-26 AI-SaaS dark-mode template (Linear, Vercel, Cursor, Supabase, Resend), which is precisely the first-order category reflex PRODUCT.md identifies as the primary anti-reference. This file documents the system as it currently ships, end-of-life. It is the baseline being replaced by an editorial-paper rebuild, not the target.",
+    "keyCharacteristics": [
+      "Single accent, mint (#2DD4BF), used as the only saturated color on the page.",
+      "Tinted neutrals: charcoal (#0B0E0D) biased toward the accent hue at ~3% chroma, no pure #000.",
+      "Hairline white-on-dark borders at 8% and 14% opacity, never a solid stroke.",
+      "Type pairing: Geist 400/500/600/700 for everything, with Geist Mono reserved for numeric monospace.",
+      "Radii: pill for actions, 8-24px for surfaces, no sharp 0px corners.",
+      "Motion: 150 / 220 / 320 ms ease-out only. No bounce, no spring, no scroll-driven choreography beyond a single reveal stagger.",
+      "One ornament: a radial-bloom background at the page top and a soft drop-shadow on the dashboard browser-frame."
+    ],
+    "rules": [
+      { "name": "The Mint-Once Rule", "body": "Mint appears at most once per visible viewport in saturated form. The accent button is mint, or the eyebrow dot is mint, or the rubric score is mint, but never all three at full saturation in the same vertical screen. Repetition desaturates the signal.", "section": "colors" },
+      { "name": "The No-Pure-Black, No-Pure-White Rule", "body": "#000 is prohibited; #fff is prohibited. Neutrals are tinted toward the mint hue at chroma 0.005-0.01 so the system reads as warm-tech, not stock-template dark.", "section": "colors" },
+      { "name": "The Hairline Border Rule", "body": "Borders are always white-on-dark at 8% or 14% opacity, never a solid color, never thicker than 1px. A 2px or saturated border on a card is a category-reflex failure.", "section": "colors" },
+      { "name": "The Single-Voice Rule", "body": "One typeface, full stop. Geist Mono is the only allowed second face, and only for digits. A display serif is prohibited in this system. The editorial-paper rebuild will overturn this rule deliberately.", "section": "typography" },
+      { "name": "The Tight-Tracking Rule", "body": "Display and headline tracking is -0.04em; title is -0.02em; body is 0; eyebrow labels are +0.10em (uppercase). Tracking changes carry as much hierarchy weight as size changes.", "section": "typography" },
+      { "name": "The Earned-Elevation Rule", "body": "A surface gets a shadow only if it represents a real product artifact (the dashboard frame, the grader card, the final-CTA moment). Decorative drop-shadows on every card are prohibited. If a card needs to feel grouped, it gets a hairline border instead.", "section": "elevation" },
+      { "name": "The No-Glow-On-Glow Rule", "body": "Mint glow appears at most once per page. The hero already carries a radial background bloom; a second mint glow on the final CTA card is the maximum. Multiple decorative mint glows is the category reflex.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do keep mint (#2DD4BF) under 10% of any visible surface. The accent's job is to be rare.",
+      "Do use Geist as the only typeface and Geist Mono only for digits. The Single-Voice Rule is the system.",
+      "Do tint every neutral toward the mint hue. #0B0E0D not #0a0a0a; #fafafa not #fff.",
+      "Do use hairline borders at 8% / 14% white opacity, 1px maximum.",
+      "Do restrict shadows to earned moments (the browser frame, the grader card, the final CTA glow). Three shadow tokens, three uses.",
+      "Do keep motion at 150 / 220 / 320 ms ease-out. No bounce, no spring.",
+      "Do respect prefers-reduced-motion: reduce by collapsing all transitions to 0ms.",
+      "Do keep all body text at 16px or larger on mobile; cap touch targets at 44x44px floor."
+    ],
+    "donts": [
+      "Don't ship anything that looks like Linear, Vercel, Cursor, Supabase, or Resend. Teal-on-charcoal with a radial bloom is the first-order category reflex for 'AI EdTech 2026'.",
+      "Don't ship anything that looks like Duolingo, Cake, or Memrise. Cartoon mascots, gamification-as-personality, plastic rounded UI: the audience is 17, not 7.",
+      "Don't ship anything that looks like Quizlet, Anki, MAOL, or Otava. Visually mute or school-IT dated is the opposite failure mode.",
+      "Don't use #000 or #fff anywhere. Tinted neutrals only.",
+      "Don't use gradient text (background-clip: text). Solid color, hierarchy via weight and size.",
+      "Don't use a side-stripe accent border on cards or callouts. Full borders, background tints, leading numbers; never border-left: 4px solid mint.",
+      "Don't use glassmorphism decoratively. The nav backdrop-blur is the system's one glass moment; no glass cards in the body.",
+      "Don't repeat four 3-up card grids vertically (current landing does this). Identical-card-grids is an absolute ban.",
+      "Don't use emoji as iconography. Flag emoji on language cards is a current violation; the rebuild replaces them with typographic treatments.",
+      "Don't use Inter as the rendered fallback. If Geist fails to load, the user sees a banned font. Prefer system-ui first.",
+      "Don't add a second mint glow alongside the hero radial bloom. One glow per page, maximum.",
+      "Don't scale or translate cards on hover. Color and border-opacity shifts only.",
+      "Don't ship transition: all. Animate transform and opacity (or specific properties) only.",
+      "Don't stack five primary CTAs labeled 'Aloita ilmaiseksi' above the fold. One primary CTA per viewport."
+    ]
+  }
+}

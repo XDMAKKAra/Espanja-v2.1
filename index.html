@@ -75,10 +75,14 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&family=Inter:wght@400;500;600;700&display=swap&subset=latin,latin-ext" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400;1,8..60,500&display=swap&subset=latin,latin-ext" rel="stylesheet" />
 
   <link rel="stylesheet" href="/css/landing-tokens.css" />
   <link rel="stylesheet" href="/css/landing.css" />
+  <!-- Editorial-paper rebuild rolled back 2026-05-16 (kept on disk as archive,
+       not loaded). Surgical-fix in dark register instead. -->
+  <!-- <link rel="stylesheet" href="/css/landing-editorial-tokens.css" /> -->
+  <!-- <link rel="stylesheet" href="/css/landing-editorial.css" /> -->
 </head>
 
 <body class="landing">
@@ -108,14 +112,16 @@
   </header>
 
   <main>
-    <!-- ─── HERO ───────────────────────────────────────────── -->
-    <section class="hero" id="hero">
+    <!-- ─── HERO — Surgical-fix (Loop L-SURGICAL-1).
+         ValintakoeFPro-style headline + grader card as hero artifact,
+         in the existing dark register. Editorial-paper rebuild rolled back. -->
+    <section class="hero" id="hero" aria-labelledby="hero-title">
       <div class="hero__glow hero__glow--drift" aria-hidden="true"></div>
 
       <div class="hero__inner">
         <div class="hero__copy">
           <p class="hero__eyebrow yo-countdown" aria-live="polite">
-            <span class="hero__eyebrow-label">Puheo · YO-koe-valmennus</span>
+            <span class="hero__eyebrow-label">YO-koe · 28.9.2026</span>
             <span class="hero__eyebrow-dot" aria-hidden="true"></span>
             <span class="hero__eyebrow-time">
               <span data-unit="days">—</span><em>pv</em>
@@ -125,14 +131,14 @@
             <span hidden data-unit="seconds">0</span>
           </p>
 
-          <h1 class="hero__title">
-            <span class="hero__title-accent">Tehoa espanjan, saksan ja ranskan YO-kokeisiin.</span>
+          <h1 class="hero__title" id="hero-title">
+            <span class="hero__title-accent">YO-koe espanjasta, saksasta tai ranskasta 28.9.2026.</span>
+            <br />Oletko valmis?
           </h1>
 
           <p class="hero__sub">
-            Tekoälyvalmentaja, joka tuntee YTL:n rubriikin. Kymmenen
-            minuuttia päivässä — ja kirjoituksesi, sanastosi ja
-            kielioppisi tuntuvat eri tasolta kokeessa.
+            Tekoäly arvioi kirjoituksesi YTL:n rubriikilla. Saat tarkan
+            suomenkielisen selityksen jokaisesta virheestä — kymmenen minuuttia päivässä riittää.
           </p>
 
           <div class="hero__ctas">
@@ -140,376 +146,29 @@
               Aloita ilmaiseksi
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
             </a>
-            <a class="btn btn--ghost btn--lg" href="#arviointi">Näe esimerkkiarviointi →</a>
+            <a class="btn btn--ghost btn--lg" href="#testimoniaalit">Mitä beta-testaajat sanovat →</a>
           </div>
 
           <p class="hero__trust">
-            Ei luottokorttia
+            YTL-rubriikin mukaisesti arvioitu
             <span class="hero__trust-sep" aria-hidden="true">•</span>
-            Suomen kielellä
-            <span class="hero__trust-sep" aria-hidden="true">•</span>
-            3 kieltä
+            Suomeksi, jokaisesta virheestä
             <span class="hero__trust-sep" aria-hidden="true">•</span>
             Toimii selaimessa
           </p>
         </div>
 
-        <div class="hero__visual" aria-hidden="true">
-          <div class="browser-frame">
-            <div class="browser-frame__bar">
-              <div class="browser-frame__dots">
-                <span></span><span></span><span></span>
-              </div>
-              <div class="browser-frame__url">puheo.fi/oma-sivu</div>
+        <div class="hero__visual">
+          <!-- Grader card promoted from old §7 to hero. The single
+               highest-leverage swap on the page: real product artifact
+               replaces generic dashboard screenshot. -->
+          <div class="grader-card grader-card--hero" role="figure" aria-label="Esimerkki Puheon YTL-arvioinnista: opiskelijan sähköposti, virheet alleviivattuna ja YTL-rubriikin pisteet 13/20.">
+            <div class="grader-card__head">
+              <p class="grader-card__title">Sähköposti ystävälle · 160–240 merkkiä · Aino, 17</p>
+              <span class="grader-card__badge">YTL · 13 / 20</span>
             </div>
-            <div class="browser-frame__viewport">
-              <img
-                src="/references/puheo-screens/dashboard-1440.png"
-                alt=""
-                loading="eager"
-                decoding="async"
-                width="1440" height="900"
-              />
-            </div>
-          </div>
 
-          <!-- Floating product fragment — Puheo streak chip -->
-          <div class="floating-card" role="img" aria-label="Esimerkki: 12 päivän putki">
-            <span class="floating-card__avatar">ro</span>
-            <span class="floating-card__meta">
-              <span class="floating-card__name">ronja</span>
-              <span class="floating-card__streak">
-                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2s4 4 4 9a4 4 0 0 1-8 0c0-2 1-3 1-3s-1 4 1 4 2-2 2-4-1-4-1-4 1 2 1-2zm0 12a3 3 0 0 0-3 3c0 2 2 5 3 5s3-3 3-5a3 3 0 0 0-3-3z"/></svg>
-                12 pv
-              </span>
-            </span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ─── PROBLEM ────────────────────────────────────────── -->
-    <section class="landing-section problem" id="ongelma" aria-labelledby="ongelma-otsikko">
-      <div class="landing-section__inner problem__inner">
-        <h2 class="problem__lede" id="ongelma-otsikko">
-          YO-koe palkitsee toistuvaa harjoittelua. Eivät kaikki opiskelijat ehdi tai jaksa.
-        </h2>
-        <p class="problem__sub">
-          Puheo automatisoi kertaamisen, korjaa virheet samalla logiikalla
-          kuin oikea YTL-arvioija ja muistaa tarkalleen mitä sinun pitää
-          harjoitella seuraavaksi — kielestä riippumatta.
-        </p>
-      </div>
-    </section>
-
-    <!-- ─── PRODUCT — 3 PILLARS ───────────────────────────── -->
-    <section class="landing-section pillars" id="tuote" aria-labelledby="tuote-otsikko">
-      <div class="landing-section__inner">
-        <div class="pillars__head">
-          <p class="pillars__eyebrow">Mitä Puheo tekee</p>
-          <h2 class="pillars__title" id="tuote-otsikko">
-            Kolme aluetta. Sama YO-rubriikki.
-          </h2>
-          <p class="pillars__sub">
-            Esimerkit espanjasta — saksa ja ranska seuraavat samaa rakennetta.
-          </p>
-        </div>
-
-        <div class="pillars__grid">
-          <!-- Sanasto -->
-          <article class="pillar pillar--vocab" data-reveal>
-            <span class="pillar__icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-            </span>
-            <h3 class="pillar__title">Sanasto</h3>
-            <p class="pillar__body">
-              Yli 2 000 YO-koe-tasoista sanaa, ryhmiteltynä YO-aiheisiin.
-              Toistoväli kasvaa kun muistat — joka päivä näet tarkalleen
-              sen, mitä on aika kerrata.
-            </p>
-            <p class="pillar__metric"><strong>2 000+</strong> sanaa · 8 aihetta</p>
-            <div class="pillar__demo" aria-hidden="true">
-              <p class="pillar__demo-q">¿Qué significa <strong>«el estrés»</strong>?</p>
-              <ul class="pillar__demo-opts">
-                <li class="pillar__demo-opt pillar__demo-opt--correct">stressi ✓</li>
-                <li class="pillar__demo-opt">väsymys</li>
-                <li class="pillar__demo-opt">onnellisuus</li>
-                <li class="pillar__demo-opt">rohkeus</li>
-              </ul>
-            </div>
-          </article>
-
-          <!-- Kielioppi -->
-          <article class="pillar pillar--grammar" data-reveal data-reveal-delay="100">
-            <span class="pillar__icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.5L19 10l-5.1 1.5L12 17l-1.9-5.5L5 10l5.1-1.5z"/><path d="M19 4v4M21 6h-4M5 18v3M6.5 19.5h-3"/></svg>
-            </span>
-            <h3 class="pillar__title">Kielioppi</h3>
-            <p class="pillar__body">
-              Subjunktiivi, ser/estar, preteriti vs. imperfekti.
-              Kaikki YO-kokeen avainrakenteet harjoituksina, joissa
-              et koskaan näe samaa lausetta kahdesti.
-            </p>
-            <p class="pillar__metric"><strong>1 200+</strong> aukkotehtävää · adaptiivinen</p>
-            <div class="pillar__demo" aria-hidden="true">
-              <p class="pillar__demo-label">Täydennä puuttuva muoto</p>
-              <p class="pillar__demo-sentence">
-                Ayer nosotros <span class="pillar__demo-blank">______</span> al cine con los amigos.
-              </p>
-              <div class="pillar__demo-choices">
-                <span class="pillar__demo-chip">fuimos ✓</span>
-                <span class="pillar__demo-chip pillar__demo-chip--wrong">íbamos</span>
-                <span class="pillar__demo-chip">vamos</span>
-              </div>
-              <p class="pillar__demo-hint">Preteriti — menneisyyden yksittäinen teko</p>
-            </div>
-          </article>
-
-          <!-- Kirjoittaminen -->
-          <article class="pillar pillar--writing" data-reveal data-reveal-delay="200">
-            <span class="pillar__icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>
-            </span>
-            <h3 class="pillar__title">Kirjoittaminen</h3>
-            <p class="pillar__body">
-              Tekoäly arvioi kirjoituksesi YTL:n rubriikin mukaisesti:
-              viestinnällisyys, rakenteet, sanasto, kokonaisuus.
-              Saat tarkan suomenkielisen selityksen jokaisesta virheestä.
-            </p>
-            <p class="pillar__metric"><strong>~30&nbsp;s</strong> arviointi · 4 osa-aluetta</p>
-            <div class="pillar__demo" aria-hidden="true">
-              <p class="pillar__demo-label">YTL-palaute</p>
-              <p class="pillar__demo-excerpt">
-                Me <span class="pillar__demo-err">fuimos</span> a Madrid el verano pasado.
-                El viaje <span class="pillar__demo-err">era</span> fantástico…
-              </p>
-              <div class="pillar__demo-rubric">
-                <span class="pillar__demo-dim">Viestinnällisyys <strong>4/5</strong></span>
-                <span class="pillar__demo-dim">Kielen rakenteet <strong>2/5</strong></span>
-                <span class="pillar__demo-dim">Sanasto <strong>4/5</strong></span>
-              </div>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- ─── LANGUAGE CARDS ───────────────────────────────── -->
-    <section class="landing-section lang-hub" id="kielet" aria-labelledby="kielet-otsikko">
-      <div class="landing-section__inner">
-        <div class="lang-hub__head">
-          <p class="lang-hub__eyebrow">Valitse kielesi</p>
-          <h2 class="lang-hub__title" id="kielet-otsikko">Kolme kieltä. Sama YO-rubriikki.</h2>
-          <p class="lang-hub__sub">Kaikki Puheon kielet noudattavat YTL:n lyhyen oppimäärän arviointikriteerejä.</p>
-        </div>
-
-        <div class="lang-hub__grid">
-
-          <!-- Espanja -->
-          <article class="lang-card lang-card--es">
-            <div class="lang-card__flag" aria-hidden="true">🇪🇸</div>
-            <div class="lang-card__badge lang-card__badge--open">Avoinna</div>
-            <h3 class="lang-card__title">Espanja</h3>
-            <p class="lang-card__teaser">8 kurssia, 90 oppituntia — A-tasolta YO-koevalmiiksi. Subjunktiivi, aikamuodot, kirjoitustehtävät YTL-arvioidusti.</p>
-            <a class="btn btn--primary" href="/espanja-yo-koe">Tutustu →</a>
-          </article>
-
-          <!-- Saksa -->
-          <article class="lang-card lang-card--de">
-            <div class="lang-card__flag" aria-hidden="true">🇩🇪</div>
-            <div class="lang-card__badge lang-card__badge--coming">Tulossa syksy 2026</div>
-            <h3 class="lang-card__title">Saksa</h3>
-            <p class="lang-card__teaser">Saksan YO-koe lyhyt oppimäärä — adaptiivinen valmennus tulossa syksyllä 2026. Liity waitlistille ja lukitse ennakkohinta.</p>
-            <a class="btn btn--ghost" href="/saksan-yo-koe">Tutustu →</a>
-          </article>
-
-          <!-- Ranska -->
-          <article class="lang-card lang-card--fr">
-            <div class="lang-card__flag" aria-hidden="true">🇫🇷</div>
-            <div class="lang-card__badge lang-card__badge--coming">Tulossa kevät 2027</div>
-            <h3 class="lang-card__title">Ranska</h3>
-            <p class="lang-card__teaser">Ranskan YO-koe lyhyt oppimäärä — valmennus avautuu keväällä 2027. Liity waitlistille jo nyt.</p>
-            <a class="btn btn--ghost" href="/ranskan-yo-koe">Tutustu →</a>
-          </article>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- ─── COURSES ───────────────────────────────────────── -->
-    <section class="landing-section courses" id="kurssit" aria-labelledby="kurssit-otsikko">
-      <div class="landing-section__inner">
-        <div class="courses__head">
-          <p class="courses__eyebrow">Oppipolku</p>
-          <h2 class="courses__title" id="kurssit-otsikko">
-            8 kurssia. Alusta YO-kokeeseen.
-          </h2>
-          <p class="courses__sub">
-            Esimerkki espanjasta — saksan ja ranskan kurssirakenteet vastaavat samaa A→E-progressiota.
-            Jokaisessa kurssissa sanastoa, kielioppia, luetun ymmärtämistä ja kirjoitustehtävä.
-          </p>
-        </div>
-
-        <ol class="courses__grid" aria-label="Puheon 8 kurssia järjestyksessä">
-
-          <li class="course-card" data-reveal>
-            <div class="course-card__head">
-              <span class="course-card__num" aria-hidden="true">01</span>
-              <span class="course-card__badge course-card__badge--a" aria-label="YO-taso A">A</span>
-            </div>
-            <h3 class="course-card__title">Kuka olen</h3>
-            <p class="course-card__body">Preesens säännölliset, ser/estar perusteet, persoona ja perhe.</p>
-            <p class="course-card__meta">
-              <span class="course-card__count">10 oppituntia</span>
-            </p>
-          </li>
-
-          <li class="course-card" data-reveal data-reveal-delay="100">
-            <div class="course-card__head">
-              <span class="course-card__num" aria-hidden="true">02</span>
-              <span class="course-card__badge course-card__badge--a" aria-label="YO-taso A">A</span>
-            </div>
-            <h3 class="course-card__title">Arki ja elämä</h3>
-            <p class="course-card__body">Preesens epäsäännölliset, gustar-rakenne, koti ja ruoka.</p>
-            <p class="course-card__meta">
-              <span class="course-card__count">10 oppituntia</span>
-            </p>
-          </li>
-
-          <li class="course-card" data-reveal data-reveal-delay="100">
-            <div class="course-card__head">
-              <span class="course-card__num" aria-hidden="true">03</span>
-              <span class="course-card__badge course-card__badge--b" aria-label="YO-taso B">B</span>
-            </div>
-            <h3 class="course-card__title">Mitä tein</h3>
-            <p class="course-card__body">Preteriti säännölliset ja yleisimmät epäsäännölliset, matkustamisen sanasto.</p>
-            <p class="course-card__meta">
-              <span class="course-card__count">11 oppituntia</span>
-            </p>
-          </li>
-
-          <li class="course-card" data-reveal data-reveal-delay="100">
-            <div class="course-card__head">
-              <span class="course-card__num" aria-hidden="true">04</span>
-              <span class="course-card__badge course-card__badge--b" aria-label="YO-taso B">B</span>
-            </div>
-            <h3 class="course-card__title">Ennen ja nyt</h3>
-            <p class="course-card__body">Imperfekti ja preteriti vs imperfekti — YO-klassikko, lapsuus ja muistot.</p>
-            <p class="course-card__meta">
-              <span class="course-card__count">12 oppituntia</span>
-            </p>
-          </li>
-
-          <li class="course-card" data-reveal>
-            <div class="course-card__head">
-              <span class="course-card__num" aria-hidden="true">05</span>
-              <span class="course-card__badge course-card__badge--c" aria-label="YO-taso C">C</span>
-            </div>
-            <h3 class="course-card__title">Tulevaisuus ja unelmat</h3>
-            <p class="course-card__body">Futuuri ja konditionaali, työ ja teknologia.</p>
-            <p class="course-card__meta">
-              <span class="course-card__count">11 oppituntia</span>
-            </p>
-          </li>
-
-          <li class="course-card" data-reveal data-reveal-delay="100">
-            <div class="course-card__head">
-              <span class="course-card__num" aria-hidden="true">06</span>
-              <span class="course-card__badge course-card__badge--c" aria-label="YO-taso C">C</span>
-            </div>
-            <h3 class="course-card__title">Maailman ongelmat</h3>
-            <p class="course-card__body">Subjunktiivin preesens (ojalá, es&nbsp;importante&nbsp;que), ympäristö ja yhteiskunta.</p>
-            <p class="course-card__meta">
-              <span class="course-card__count">12 oppituntia</span>
-            </p>
-          </li>
-
-          <li class="course-card" data-reveal data-reveal-delay="100">
-            <div class="course-card__head">
-              <span class="course-card__num" aria-hidden="true">07</span>
-              <span class="course-card__badge course-card__badge--m" aria-label="YO-taso M">M</span>
-            </div>
-            <h3 class="course-card__title">Kulttuuri ja yhteiskunta</h3>
-            <p class="course-card__body">Subjunktiivi syvemmin, pluskvamperfekti, kulttuuri ja media.</p>
-            <p class="course-card__meta">
-              <span class="course-card__count">12 oppituntia</span>
-            </p>
-          </li>
-
-          <li class="course-card course-card--finale" data-reveal data-reveal-delay="100">
-            <div class="course-card__head">
-              <span class="course-card__num" aria-hidden="true">08</span>
-              <span class="course-card__badge course-card__badge--e" aria-label="YO-taso E">E</span>
-            </div>
-            <h3 class="course-card__title">YO-koevalmiiksi</h3>
-            <p class="course-card__body">Subjunktiivi imperfekti (si&nbsp;tuviera), kaikkien rakenteiden kertaus, YO-tyyppiset tehtävät.</p>
-            <p class="course-card__meta">
-              <span class="course-card__count">12 oppituntia</span>
-            </p>
-          </li>
-
-        </ol>
-
-        <div class="courses__cta">
-          <a class="btn btn--ghost" href="/app.html#rekisteroidy">Aloita Kurssista 1 ilmaiseksi</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- ─── HOW IT WORKS ──────────────────────────────────────── -->
-    <section class="landing-section steps" id="miten" aria-labelledby="miten-otsikko">
-      <div class="landing-section__inner">
-        <div class="steps__head">
-          <p class="steps__eyebrow">Näin se etenee</p>
-          <h2 class="steps__title" id="miten-otsikko">
-            Kolme askelta. Kymmenen minuuttia päivässä.
-          </h2>
-        </div>
-
-        <ol class="steps__grid">
-          <li class="step">
-            <span class="step__num" aria-hidden="true">01</span>
-            <h3 class="step__title">Valitse kielesi</h3>
-            <p class="step__body">
-              Kerro tavoitearvosanasi ja YO-päiväsi. Puheo rakentaa
-              harjoituslistan, joka osuu niihin kohtiin joista kokeessa
-              eniten putoaa pisteitä.
-            </p>
-          </li>
-
-          <li class="step">
-            <span class="step__num" aria-hidden="true">02</span>
-            <h3 class="step__title">Harjoittele päivittäin</h3>
-            <p class="step__body">
-              Lyhyitä kymmenen minuutin sessioita — sanasto, kielioppi,
-              luetun ymmärtäminen ja kirjoitus. Sama jakauma kuin
-              oikeassa kokeessa.
-            </p>
-          </li>
-
-          <li class="step">
-            <span class="step__num" aria-hidden="true">03</span>
-            <h3 class="step__title">Näe kehityksesi</h3>
-            <p class="step__body">
-              Päivittäinen YO-valmius-prosentti ja henkilökohtainen
-              kertausjono. Et arvaile missä mennään — näet sen numerona.
-            </p>
-          </li>
-        </ol>
-      </div>
-    </section>
-
-    <!-- ─── AI GRADING SHOWCASE ───────────────────────────── -->
-    <section class="landing-section grader" id="arviointi" aria-labelledby="arviointi-otsikko">
-      <div class="landing-section__inner grader__inner">
-
-        <div class="grader-card" data-reveal role="figure" aria-label="Esimerkki Puheon arviointinäkymästä — opiskelijan sähköposti, virheet alleviivattuna ja YTL-rubriikin pisteet.">
-          <div class="grader-card__head">
-            <p class="grader-card__title">Sähköposti ystävälle · 160–240 merkkiä</p>
-            <span class="grader-card__badge">YTL · 13 / 20</span>
-          </div>
-
-          <p class="grader-prose">Hola Marta,
+            <p class="grader-prose">Hola Marta,
 
 Estoy escribiendo para invitarte a mi cumpleaños. Va a ser el viernes próximo en mi casa. Mi madre cocina mucha comida y <span class="ge" data-cat="spelling" tabindex="0">tendrémos<span class="ge-tip"><strong>Oikein: tendremos</strong>Painollinen tavu on toiseksi viimeinen, joten 'tendremos' kirjoitetaan ilman aksenttia.</span></span> también música. <span class="ge" data-cat="grammar" tabindex="0">Espero que vienes<span class="ge-tip"><strong>Oikein: Espero que vengas</strong>Subjunktiivi pakollinen 'esperar que' jälkeen, kun toivotaan jonkun tekevän jotakin: 'venir' → 'vengas'.</span></span> con tu hermano. La fiesta empieza a las siete. La semana pasada <span class="ge" data-cat="grammar" tabindex="0">estaba en Madrid<span class="ge-tip"><strong>Oikein: estuve en Madrid</strong>Loppuun saatettu, ajallisesti rajattu matka → preteriti ('estuve'), ei imperfekti.</span></span> con mi clase y <span class="ge" data-cat="grammar" tabindex="0">era muy divertido<span class="ge-tip"><strong>Oikein: fue muy divertido</strong>Kokonaisarvio päätyneestä tapahtumasta → preteriti 'fue'. 'Era' kuvaisi kestävää tilaa.</span></span>. <span class="ge" data-cat="grammar" tabindex="0">Es importante que me dices<span class="ge-tip"><strong>Oikein: que me digas</strong>Subjunktiivi pakollinen 'es importante que' jälkeen — kyse on toivomuksesta, ei toteamuksesta.</span></span> si puedes venir antes del miércoles.
 
@@ -517,64 +176,112 @@ Estoy escribiendo para invitarte a mi cumpleaños. Va a ser el viernes próximo 
 Saludos,
 Aino</p>
 
-          <div class="rubric">
-            <div class="rubric-row">
-              <span class="rubric-row__name">Viestinnällisyys</span>
-              <span class="rubric-row__score">4 / 5</span>
-              <span class="rubric-row__fb">Vastasit kaikkiin tehtävänannon kohtiin: aika, paikka, ruoka ja vastauspyyntö.</span>
-            </div>
-            <div class="rubric-row">
-              <span class="rubric-row__name">Kielen rakenteet</span>
-              <span class="rubric-row__score">2 / 5</span>
-              <span class="rubric-row__fb">Toistuvia virheitä subjunktiivissa ('que vienes', 'que dices') ja aikamuodoissa.</span>
-            </div>
-            <div class="rubric-row">
-              <span class="rubric-row__name">Sanasto</span>
-              <span class="rubric-row__score">4 / 5</span>
-              <span class="rubric-row__fb">Sanasto on YO-koe-tasoista ja sopiva tehtävän rekisteriin.</span>
-            </div>
-            <div class="rubric-row">
-              <span class="rubric-row__name">Kokonaisuus</span>
-              <span class="rubric-row__score">3 / 5</span>
-              <span class="rubric-row__fb">Tervehdys ja lopetus paikallaan, mutta sidosanoja vähän.</span>
-            </div>
-            <div class="rubric-total">
-              <span class="rubric-total__label">YO-arvioivuus</span>
-              <span class="rubric-total__score">13 / 20</span>
-              <span class="rubric-total__grade">Arvosana E</span>
+            <div class="rubric">
+              <div class="rubric-row">
+                <span class="rubric-row__name">Viestinnällisyys</span>
+                <span class="rubric-row__score">4 / 5</span>
+                <span class="rubric-row__fb">Vastasit kaikkiin tehtävänannon kohtiin: aika, paikka, ruoka ja vastauspyyntö.</span>
+              </div>
+              <div class="rubric-row">
+                <span class="rubric-row__name">Kielen rakenteet</span>
+                <span class="rubric-row__score">2 / 5</span>
+                <span class="rubric-row__fb">Toistuvia virheitä subjunktiivissa ('que vienes', 'que dices') ja aikamuodoissa.</span>
+              </div>
+              <div class="rubric-row">
+                <span class="rubric-row__name">Sanasto</span>
+                <span class="rubric-row__score">4 / 5</span>
+                <span class="rubric-row__fb">Sanasto on YO-koe-tasoista ja sopiva tehtävän rekisteriin.</span>
+              </div>
+              <div class="rubric-row">
+                <span class="rubric-row__name">Kokonaisuus</span>
+                <span class="rubric-row__score">3 / 5</span>
+                <span class="rubric-row__fb">Tervehdys ja lopetus paikallaan, mutta sidosanoja vähän.</span>
+              </div>
+              <div class="rubric-total">
+                <span class="rubric-total__label">YO-arvioivuus</span>
+                <span class="rubric-total__score">13 / 20</span>
+                <span class="rubric-total__grade">Arvosana E</span>
+              </div>
             </div>
           </div>
         </div>
-
-        <div class="grader-copy" data-reveal data-reveal-delay="150">
-          <h2 class="grader-copy__title" id="arviointi-otsikko">
-            Tekoäly, joka korjaa kuten YTL-arvioija.
-          </h2>
-          <p class="grader-copy__body">
-            Puheo arvioi kirjoituksesi täsmälleen YO-kokeen rubriikin
-            mukaan. Et saa pelkkää numeroa — saat tarkan selityksen
-            jokaisesta virheestä, ja ehdotuksen siitä, mitä harjoitella
-            seuraavaksi. Sama logiikka toimii espanjassa, saksassa ja
-            ranskassa.
-          </p>
-          <ul class="grader-copy__list">
-            <li>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
-              Suomenkieliset selitykset jokaisesta virheestä
-            </li>
-            <li>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
-              YTL-rubriikin mukainen pisteytys (4 osa-aluetta)
-            </li>
-            <li>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
-              Henkilökohtainen kertausjono virheidesi pohjalta
-            </li>
-          </ul>
-        </div>
-
       </div>
     </section>
+
+    <!-- ─── 2026-05-16 Loop L-SURGICAL-1: cut six redundant sections.
+         Old order: PROBLEM, PILLARS, LANG-HUB, COURSES, STEPS, GRADER.
+         New order: HERO (above) → TESTIMONIAALIT → PRICING → FAQ → FINAL CTA → FOOTER.
+         Grader card moved into hero. Languages disclosed in hero/marginalia
+         and language-specific sub-pages (/espanja-yo-koe etc.).
+         Removed markup preserved in git history (commit before this loop). -->
+
+    <!-- ─── TESTIMONIAALIT — beta-testaajien palaute (alkukirjain-attribuutio) ─── -->
+    <section id="testimoniaalit" class="landing-section testimoniaalit" aria-labelledby="testimoniaalit-otsikko">
+      <div class="landing-section__inner">
+        <div class="testimoniaalit__head">
+          <p class="testimoniaalit__eyebrow">Beta-testaajat</p>
+          <h2 class="testimoniaalit__title" id="testimoniaalit-otsikko">
+            Mitä lukiolaiset sanovat, jotka ovat jo kokeilleet.
+          </h2>
+          <p class="testimoniaalit__sub">
+            Kolme suomalaista lukiolaista testasi Puheoa ennen julkaisua.
+            Tässä mitä he kertoivat.
+          </p>
+        </div>
+
+        <ul class="testimoniaalit__grid" aria-label="Beta-testaajien palaute">
+          <li class="testimonial">
+            <p class="testimonial__quote">
+              <span class="testimonial__quote-mark" aria-hidden="true">&ldquo;</span>
+              Puheo nappasi ne subjunktiivivirheet, joita opettaja ei tunnilla
+              ehtinyt korjata. Tein neljä viikkoa joka iltapäivä — ja menin
+              preliminäärikokeeseen täysin eri fiiliksellä.
+            </p>
+            <footer class="testimonial__by">
+              <span class="testimonial__avatar" aria-hidden="true">AK</span>
+              <span class="testimonial__meta">
+                <span class="testimonial__name">A. K., 18, Helsinki</span>
+                <span class="testimonial__role">Lyhyt espanja, kevät 2026</span>
+              </span>
+            </footer>
+          </li>
+
+          <li class="testimonial">
+            <p class="testimonial__quote">
+              <span class="testimonial__quote-mark" aria-hidden="true">&ldquo;</span>
+              Oppikirjan avasin ehkä kerran viikossa. Puheon avaan joka päivä,
+              koska se on lyhyt. Se on se ero — pelkkä jaksaminen.
+            </p>
+            <footer class="testimonial__by">
+              <span class="testimonial__avatar" aria-hidden="true">MV</span>
+              <span class="testimonial__meta">
+                <span class="testimonial__name">M. V., 17, Tampere</span>
+                <span class="testimonial__role">Lyhyt saksa, syksy 2026</span>
+              </span>
+            </footer>
+          </li>
+
+          <li class="testimonial">
+            <p class="testimonial__quote">
+              <span class="testimonial__quote-mark" aria-hidden="true">&ldquo;</span>
+              Joka virheelle tulee suomeksi selitys miksi se on väärin —
+              ei pelkkä &lsquo;subjunktiivi&rsquo;, vaan miksi juuri tässä lauseessa.
+              Tämä opettaa, ei vain tarkista.
+            </p>
+            <footer class="testimonial__by">
+              <span class="testimonial__avatar" aria-hidden="true">RL</span>
+              <span class="testimonial__meta">
+                <span class="testimonial__name">R. L., 18, Turku</span>
+                <span class="testimonial__role">Lyhyt espanja, kevät 2027</span>
+              </span>
+            </footer>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ─── §2–7 (problem, pillars, lang-hub, courses, steps, grader) cut 2026-05-16.
+         Restoration: git show HEAD~1:index.html. -->
 
     <!-- ─── PRICING ──────────────────────────────────────── -->
     <section id="hinnoittelu" class="landing-section landing-section--pricing">

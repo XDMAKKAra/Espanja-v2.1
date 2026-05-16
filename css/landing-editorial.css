@@ -1,0 +1,454 @@
+/* ============================================================
+   Puheo Landing — Editorial-Paper hero (Loop L-EDITORIAL-1).
+
+   Scoped to `.landing__editorial`. Companion to
+   `css/landing-editorial-tokens.css`. Implements section §5
+   ("Layout Strategy") of the design brief.
+
+   This file only covers the hero today. Subsequent craft loops
+   add voice-and-proof, pricing, FAQ, final CTA, footer.
+   ============================================================ */
+
+/* ─── Section wrapper ─────────────────────────────────────── */
+.landing .landing__editorial {
+  position: relative;
+  padding: clamp(var(--ed-sp-6), 8vw, var(--ed-sp-9)) clamp(var(--ed-sp-3), 4vw, var(--ed-sp-6));
+  border-bottom: 1px solid var(--ed-rule);
+}
+.landing .landing__editorial > .ed-hero {
+  max-width: var(--ed-content-max);
+  margin: 0 auto;
+}
+
+/* ─── Hero layout: asymmetric on desktop, stacked on mobile ── */
+.ed-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(var(--ed-sp-5), 5vw, var(--ed-sp-7));
+}
+@media (min-width: 920px) {
+  .ed-hero {
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+    align-items: start;
+    gap: clamp(var(--ed-sp-6), 5vw, var(--ed-sp-8));
+  }
+}
+
+/* ─── Left column — headline + marginalia + CTA ──────────── */
+.ed-hero__copy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ed-sp-5);
+}
+
+.ed-hero__marginalia {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ed-sp-3) var(--ed-sp-4);
+  align-items: baseline;
+  padding-block: var(--ed-sp-2);
+  border-bottom: 1px solid var(--ed-rule);
+  font-size: var(--ed-fs-meta);
+  line-height: var(--ed-lh-meta);
+  color: var(--ed-ink-subtle);
+  letter-spacing: var(--ed-tracking-meta);
+}
+.ed-hero__marginalia-label {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: var(--ed-fs-micro);
+  color: var(--ed-ink-muted);
+  font-weight: 500;
+}
+.ed-hero__countdown {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.5ch;
+  color: var(--ed-ink);
+}
+.ed-hero__countdown-num {
+  font-family: var(--ed-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--ed-fs-meta);
+  font-weight: 500;
+  letter-spacing: 0;
+  color: var(--ed-ink);
+}
+.ed-hero__countdown-unit {
+  font-style: normal;
+  font-size: 0.75rem;
+  color: var(--ed-ink-subtle);
+  margin-right: 0.3ch;
+}
+
+/* The headline itself. Editorial serif, generous line-height,
+   no negative tracking. */
+.ed-hero__title {
+  font-family: var(--ed-serif);
+  font-size: var(--ed-fs-display);
+  font-weight: 500;
+  line-height: var(--ed-lh-display);
+  letter-spacing: var(--ed-tracking-display);
+  color: var(--ed-ink);
+  margin: 0;
+  text-wrap: balance;
+  max-width: 18ch;
+}
+.ed-hero__title-em {
+  font-style: italic;
+  font-weight: 500;
+  /* The verb "korjaa" gets italic emphasis — editorial pull, not color. */
+}
+
+.ed-hero__lead {
+  font-size: var(--ed-fs-lead);
+  line-height: 1.5;
+  color: var(--ed-ink-muted);
+  margin: 0;
+  max-width: var(--ed-prose-max);
+}
+
+.ed-hero__cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--ed-sp-4);
+  margin-top: var(--ed-sp-2);
+}
+
+/* Trust line — small, hairline-divided list of factual claims. */
+.ed-hero__trust {
+  font-size: var(--ed-fs-meta);
+  color: var(--ed-ink-subtle);
+  margin: 0;
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0 var(--ed-sp-3);
+  align-items: baseline;
+}
+.ed-hero__trust-sep {
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--ed-ink-faint);
+  margin: 0 var(--ed-sp-1);
+  position: relative;
+  top: -2px;
+}
+
+/* ─── Buttons (editorial) ─────────────────────────────────── */
+.ed-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  height: 48px;
+  padding: 0 22px;
+  border-radius: var(--ed-r-md);
+  border: 1px solid transparent;
+  font-family: var(--ed-sans);
+  font-size: var(--ed-fs-body);
+  font-weight: 500;
+  letter-spacing: 0;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background var(--ed-t-fast), color var(--ed-t-fast),
+              border-color var(--ed-t-fast), transform var(--ed-t-fast);
+  white-space: nowrap;
+}
+.ed-btn:focus-visible {
+  outline: 2px solid var(--ed-accent);
+  outline-offset: 3px;
+}
+.ed-btn:active {
+  transform: translateY(1px);
+}
+
+.ed-btn--primary {
+  background: var(--ed-accent);
+  color: var(--ed-accent-ink);
+  font-weight: 600;
+}
+.ed-btn--primary:hover {
+  background: var(--ed-accent-hover);
+}
+
+.ed-btn--quiet {
+  background: transparent;
+  color: var(--ed-ink);
+  border-color: var(--ed-rule-strong);
+}
+.ed-btn--quiet:hover {
+  background: var(--ed-bg-deep);
+  border-color: var(--ed-ink-faint);
+}
+
+.ed-btn__arrow {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+/* ─── Right column — the grader card as the hero artifact ─── */
+.ed-hero__visual {
+  position: relative;
+}
+
+.ed-grader {
+  position: relative;
+  background: var(--ed-bg-card);
+  border: 1px solid var(--ed-rule);
+  border-radius: var(--ed-r-lg);
+  padding: clamp(var(--ed-sp-4), 3vw, var(--ed-sp-6));
+  font-family: var(--ed-sans);
+  color: var(--ed-ink);
+  box-shadow:
+    0 1px 0 var(--ed-rule),
+    0 24px 60px -28px oklch(20% 0.006 80 / 0.18);
+}
+
+/* Caption row above the email — date-stamp + score chip. */
+.ed-grader__caption {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--ed-sp-3);
+  padding-bottom: var(--ed-sp-3);
+  border-bottom: 1px solid var(--ed-rule);
+  margin-bottom: var(--ed-sp-4);
+}
+.ed-grader__caption-title {
+  font-family: var(--ed-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: var(--ed-fs-meta);
+  color: var(--ed-ink-muted);
+  margin: 0;
+  letter-spacing: 0;
+}
+.ed-grader__caption-score {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.4ch;
+  font-family: var(--ed-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--ed-fs-meta);
+  font-weight: 500;
+  color: var(--ed-score-ink);
+  background: var(--ed-score-bg);
+  padding: 4px 10px;
+  border-radius: var(--ed-r-sm);
+  letter-spacing: 0;
+}
+.ed-grader__caption-score-label {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-family: var(--ed-sans);
+  font-size: 0.6875rem;
+  color: var(--ed-ink-subtle);
+  margin-right: 0.2ch;
+}
+
+/* The marked-up email body. Reads as letter, not as a code block. */
+.ed-grader__prose {
+  font-family: var(--ed-serif);
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--ed-ink);
+  margin: 0;
+  white-space: pre-wrap;
+  font-feature-settings: "kern" 1, "liga" 1, "onum" 1;
+}
+
+/* Marked errors — paper-friendly tints with hairline underlines. */
+.ed-grader__prose .ed-mark {
+  position: relative;
+  padding: 0 0.1em;
+  border-bottom: 1.5px solid var(--ed-mark-grammar-rule);
+  background: var(--ed-mark-grammar);
+  cursor: help;
+  border-radius: 1px;
+  transition: background var(--ed-t-fast);
+}
+.ed-grader__prose .ed-mark[data-cat="spelling"] {
+  border-bottom-color: var(--ed-mark-spelling-rule);
+  background: var(--ed-mark-spelling);
+}
+.ed-grader__prose .ed-mark:hover,
+.ed-grader__prose .ed-mark:focus-visible {
+  background: oklch(48% 0.09 195 / 0.28);
+  outline: none;
+}
+.ed-grader__prose .ed-mark[data-cat="spelling"]:hover,
+.ed-grader__prose .ed-mark[data-cat="spelling"]:focus-visible {
+  background: oklch(74% 0.14 65 / 0.34);
+}
+
+/* The tooltip — paper-on-paper callout, no dark popup. */
+.ed-mark__tip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 220px;
+  max-width: 320px;
+  padding: 12px 14px;
+  background: var(--ed-ink);
+  color: var(--ed-bg-card);
+  border-radius: var(--ed-r-md);
+  font-family: var(--ed-sans);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  text-align: left;
+  white-space: normal;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity var(--ed-t-fast), visibility var(--ed-t-fast);
+  z-index: 5;
+  box-shadow: 0 12px 32px -12px oklch(20% 0.006 80 / 0.35);
+}
+.ed-mark__tip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: var(--ed-ink);
+}
+.ed-mark__tip strong {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 4px;
+  color: oklch(96% 0.005 80);
+  font-family: var(--ed-serif);
+  font-size: 0.875rem;
+}
+.ed-grader__prose .ed-mark:hover .ed-mark__tip,
+.ed-grader__prose .ed-mark:focus-visible .ed-mark__tip {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Rubric block below the email — 4 rows + total. */
+.ed-rubric {
+  margin-top: var(--ed-sp-5);
+  padding-top: var(--ed-sp-4);
+  border-top: 1px solid var(--ed-rule);
+  display: flex;
+  flex-direction: column;
+}
+.ed-rubric__row {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) auto minmax(0, 2fr);
+  align-items: baseline;
+  gap: var(--ed-sp-3);
+  padding: 10px 0;
+  border-bottom: 1px solid var(--ed-rule);
+}
+.ed-rubric__row:last-of-type {
+  border-bottom: none;
+}
+.ed-rubric__name {
+  font-size: var(--ed-fs-meta);
+  font-weight: 500;
+  color: var(--ed-ink);
+}
+.ed-rubric__score {
+  font-family: var(--ed-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--ed-fs-meta);
+  font-weight: 500;
+  color: var(--ed-accent);
+  letter-spacing: 0;
+}
+.ed-rubric__fb {
+  font-size: var(--ed-fs-meta);
+  line-height: 1.55;
+  color: var(--ed-ink-muted);
+}
+
+.ed-rubric__total {
+  margin-top: var(--ed-sp-3);
+  padding-top: var(--ed-sp-3);
+  border-top: 2px solid var(--ed-ink);
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--ed-sp-3);
+}
+.ed-rubric__total-label {
+  font-family: var(--ed-serif);
+  font-style: italic;
+  font-size: var(--ed-fs-meta);
+  color: var(--ed-ink-muted);
+}
+.ed-rubric__total-score {
+  font-family: var(--ed-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--ed-ink);
+  letter-spacing: 0;
+}
+.ed-rubric__total-grade {
+  font-family: var(--ed-serif);
+  font-style: italic;
+  font-size: var(--ed-fs-meta);
+  color: var(--ed-accent);
+}
+
+/* ─── Mobile adjustments ─────────────────────────────────── */
+@media (max-width: 919px) {
+  .ed-hero__title { max-width: none; }
+  .ed-grader__caption {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+@media (max-width: 600px) {
+  .ed-grader { padding: var(--ed-sp-4); }
+  .ed-grader__prose { font-size: 0.9375rem; line-height: 1.65; }
+  .ed-rubric__row {
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "name score"
+      "fb fb";
+    row-gap: 4px;
+  }
+  .ed-rubric__name { grid-area: name; }
+  .ed-rubric__score { grid-area: score; }
+  .ed-rubric__fb { grid-area: fb; }
+}
+
+/* ─── Hide the editorial section's predecessor on the page.
+   The legacy `.hero` sat between nav and the problem section.
+   When `.landing__editorial--hero` is present, we suppress the old
+   one. This lets later loops migrate sections progressively. */
+.landing .landing__editorial--hero ~ .hero {
+  display: none;
+}
+
+/* ─── First-paint reveal — gated behind prefers-reduced-motion. */
+@media (prefers-reduced-motion: no-preference) {
+  .ed-hero__copy > *,
+  .ed-hero__visual {
+    opacity: 0;
+    transform: translateY(8px);
+    animation: ed-reveal 480ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+  .ed-hero__marginalia { animation-delay: 0ms; }
+  .ed-hero__title      { animation-delay: 80ms; }
+  .ed-hero__lead       { animation-delay: 160ms; }
+  .ed-hero__cta-row    { animation-delay: 240ms; }
+  .ed-hero__trust      { animation-delay: 320ms; }
+  .ed-hero__visual     { animation-delay: 200ms; animation-duration: 600ms; }
+}
+@keyframes ed-reveal {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
