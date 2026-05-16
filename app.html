@@ -963,9 +963,12 @@
   <!-- SCREEN: Mastery test result -->
   <div id="screen-mastery-result" class="screen">
     <div class="mastery-result-inner">
-      <div class="mastery-result-icon" id="mastery-result-icon">&#127881;</div>
+      <!-- L-SURGICAL-2 (2026-05-17): flip hierarchy — data first, emoji as
+           pinned small marker. Original layout led with 🎉 which trained
+           users to ignore actual feedback. -->
       <div class="mastery-result-pct" id="mastery-result-pct">90%</div>
       <div class="mastery-result-score" id="mastery-result-score">18 / 20 oikein</div>
+      <div class="mastery-result-icon mastery-result-icon--small" id="mastery-result-icon" aria-hidden="true">&#127881;</div>
       <div class="mastery-result-message" id="mastery-result-message">Osaat t&auml;m&auml;n aiheen!</div>
       <div class="mastery-result-unlock hidden" id="mastery-result-unlock">
         &#128275; Seuraava aihe avattu: <strong id="mastery-result-next"></strong>
@@ -1007,13 +1010,19 @@
         <div class="dash-tutor__skeleton-line dash-tutor__skeleton-line--short"></div>
       </section>
 
-      <!-- Hero grade card (gated by data coverage) -->
-      <button type="button" class="dash-hero-grade dash-hero-grade--tier-none" id="dash-hero-grade">
+      <!-- Hero grade card (gated by data coverage).
+           L-SURGICAL-2: added info-icon affordance + aria-haspopup so users
+           know it opens the grade-explainer dialog. -->
+      <button type="button" class="dash-hero-grade dash-hero-grade--tier-none" id="dash-hero-grade"
+              aria-haspopup="dialog" aria-expanded="false" aria-controls="grade-explainer-backdrop">
         <div class="dash-hero-left">
           <div class="dash-hero-grade-circle" id="dash-grade-circle">—</div>
         </div>
         <div class="dash-hero-right">
-          <div class="dash-hero-label" id="dash-hero-label">Arvioitu yo-arvosana</div>
+          <div class="dash-hero-label" id="dash-hero-label">
+            <span>Arvioitu yo-arvosana</span>
+            <svg class="dash-hero-info" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+          </div>
           <div class="dash-hero-scale hidden" id="dash-hero-scale">
             <span data-g="I">I</span><span data-g="A">A</span><span data-g="B">B</span>
             <span data-g="C">C</span><span data-g="M">M</span><span data-g="E">E</span><span data-g="L">L</span>
@@ -1099,10 +1108,10 @@
       <div class="section-h" style="margin-top:24px"><h2>Yo-koesimulaatio</h2></div>
       <div class="dash-full-exam-card" id="dash-full-exam-card">
         <div class="dash-full-exam-info">
-          <div class="dash-full-exam-title">Tayskoe — 4 osaa, 199p</div>
-          <div class="dash-full-exam-desc">Luetun ymmartaminen, rakenteet, lyhyt ja pitka kirjoitustehtava. Aikaraja 2h (demo) tai 6h (taydellinen).</div>
+          <div class="dash-full-exam-title">Täyskoe — 4 osaa, 199 p</div>
+          <div class="dash-full-exam-desc">Luetun ymmärtäminen, rakenteet, lyhyt ja pitkä kirjoitustehtävä. Aikaraja 2 h (demo) tai 6 h (täydellinen).</div>
         </div>
-        <button class="btn-primary" id="btn-start-full-exam">Aloita tayskoe</button>
+        <button class="btn-primary" id="btn-start-full-exam">Aloita täyskoe</button>
       </div>
       <div id="dash-exam-history"></div>
 

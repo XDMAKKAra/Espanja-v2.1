@@ -5724,3 +5724,38 @@ body:has(.app-countdown:not(.hidden)) #app-main { padding-top: 34px; }
 @media (prefers-reduced-motion: reduce) {
   ::view-transition-new(root) { animation: none; }
 }
+
+/* ============================================================
+   L-SURGICAL-2 (2026-05-17) — app product-register surgical fixes.
+   - Hide decorative "01 02 03" topic ordinals; numbers carry no meaning.
+   - Mastery result emoji shrunk + repositioned to act as pinned marker,
+     not as the page intro. Hierarchy now leads with the percentage.
+   - dash-hero-grade label is now a flex row with an info-icon affordance.
+   ============================================================ */
+
+.mode-topic__n {
+  display: none !important;
+}
+
+.mastery-result-icon--small {
+  font-size: 28px;
+  line-height: 1;
+  margin: 8px auto 0;
+  opacity: 0.85;
+}
+
+.dash-hero-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.dash-hero-info {
+  opacity: 0.5;
+  flex-shrink: 0;
+  transition: opacity 140ms ease-out;
+}
+.dash-hero-grade:hover .dash-hero-info,
+.dash-hero-grade:focus-visible .dash-hero-info {
+  opacity: 1;
+}
+
