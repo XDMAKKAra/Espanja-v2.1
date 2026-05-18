@@ -1632,3 +1632,152 @@ body.app #screen-grammar .exercise__top::after {
   }
 }
 
+/* ════════════════════════════════════════════════════════════════════
+   VERBISPRINTTI — verb conjugation input layout fix.
+   The legacy .vs-answer-form put the input + "Tarkista" submit on the
+   same flex row, but .btn-primary in style.css declares width:100%, so
+   the button claimed the entire row and the input collapsed to a
+   thumbnail (see Pro-user bug report 2026-05-18). Force a column with
+   the input on top + a wider, calmer paper textfield, and let the
+   submit button live on its own row underneath.
+   ════════════════════════════════════════════════════════════════════ */
+body.app .vs-answer-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 12px 0 16px;
+}
+body.app .vs-input {
+  width: 100%;
+  flex: none;
+  background: var(--ed-bg-card);
+  border: 1px solid var(--ed-rule);
+  border-radius: 10px;
+  padding: 18px 20px;
+  font-family: var(--ed-display);
+  font-variation-settings: "opsz" 36, "SOFT" 30;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--ed-ink);
+  letter-spacing: -0.005em;
+  transition: border-color var(--ed-t-fast), box-shadow var(--ed-t-fast);
+  box-shadow: inset 0 1px 0 oklch(20% 0.05 30 / 0.02);
+}
+body.app .vs-input::placeholder {
+  color: var(--ed-ink-faint);
+  font-style: italic;
+  font-variation-settings: "opsz" 24, "SOFT" 70, "WONK" 1;
+  font-weight: 400;
+}
+body.app .vs-input:focus {
+  outline: none;
+  border-color: var(--ed-accent);
+  box-shadow:
+    inset 0 1px 0 oklch(20% 0.05 30 / 0.02),
+    0 0 0 3px var(--ed-accent-soft);
+}
+body.app .vs-input.is-correct {
+  border-color: var(--ed-olive);
+  background: color-mix(in oklch, var(--ed-olive) 6%, var(--ed-bg-card));
+}
+body.app .vs-input.is-wrong {
+  border-color: var(--ed-accent);
+  background: color-mix(in oklch, var(--ed-accent) 6%, var(--ed-bg-card));
+}
+body.app .vs-submit {
+  width: 100%;
+  flex: none;
+  padding: 14px 24px;
+  font-family: var(--ed-sans);
+}
+/* Paradigm-peek button sits on its own row below — separate visual
+   weight from the primary submit. */
+body.app .vs-paradigm-btn {
+  width: 100%;
+  margin-top: 12px;
+  background: transparent;
+  border: 1px solid var(--ed-rule);
+  border-radius: 10px;
+  padding: 14px 18px;
+  color: var(--ed-ink-muted);
+  font-family: var(--ed-sans);
+  font-size: 0.9375rem;
+  transition: border-color var(--ed-t-fast), color var(--ed-t-fast), background var(--ed-t-fast);
+}
+body.app .vs-paradigm-btn:not(:disabled):hover {
+  border-color: var(--ed-accent);
+  color: var(--ed-accent);
+  background: var(--ed-accent-soft);
+}
+body.app .vs-paradigm-btn:disabled { opacity: 0.5; }
+
+/* Verb prompt block — Fraunces hero for the infinitive, italic gloss
+   for the Finnish translation, Persoona pill in olive. */
+body.app .vs-prompt {
+  background: var(--ed-bg-card);
+  border: 1px solid var(--ed-rule);
+  border-radius: 12px;
+  padding: 28px 32px;
+  text-align: left;
+}
+body.app .vs-verb-row {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+body.app .vs-infinitive {
+  font-family: var(--ed-display);
+  font-variation-settings: "opsz" 96, "SOFT" 40, "WONK" 0;
+  font-size: clamp(2.25rem, 4vw + 0.5rem, 3.25rem);
+  font-weight: 500;
+  color: var(--ed-ink);
+  letter-spacing: -0.015em;
+  line-height: 1;
+}
+body.app .vs-translation {
+  font-family: var(--ed-display);
+  font-style: italic;
+  font-variation-settings: "opsz" 24, "SOFT" 70;
+  color: var(--ed-ink-subtle);
+  font-size: 1.0625rem;
+}
+body.app .vs-person-row {
+  margin-top: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+body.app .vs-person-label {
+  font-family: var(--ed-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ed-ink-subtle);
+}
+body.app .vs-person {
+  font-family: var(--ed-display);
+  font-variation-settings: "opsz" 36, "SOFT" 50;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--ed-accent);
+}
+body.app #vs-tense-badge {
+  font-family: var(--ed-display);
+  font-style: italic;
+  font-variation-settings: "opsz" 24, "SOFT" 60, "WONK" 1;
+  color: var(--ed-ink-muted);
+  background: transparent;
+  border: 0;
+  font-size: 1rem;
+}
+body.app #vs-paradigms-badge {
+  font-family: var(--ed-mono);
+  font-size: 0.75rem;
+  color: var(--ed-ink-muted);
+  background: var(--ed-accent-soft);
+  border: 1px solid color-mix(in oklch, var(--ed-accent) 24%, transparent);
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+
