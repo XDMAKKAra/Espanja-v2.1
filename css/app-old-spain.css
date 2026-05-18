@@ -1688,6 +1688,39 @@ body.app #vs-paradigms-badge {
   border-radius: 999px;
 }
 
+/* PR #2 — "Mielestäni oikein" promotion row on käännös feedback. */
+body.app .translate-promote-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px dashed var(--ed-rule);
+}
+body.app .translate-promote-btn {
+  background: transparent;
+  border: 1px solid var(--ed-accent);
+  border-radius: 999px;
+  padding: 8px 16px;
+  color: var(--ed-accent);
+  font-family: var(--ed-sans);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--ed-t-fast), transform var(--ed-t-fast);
+}
+body.app .translate-promote-btn:hover:not(:disabled) { background: var(--ed-accent-soft); }
+body.app .translate-promote-btn:active:not(:disabled) { transform: scale(0.97); }
+body.app .translate-promote-btn:disabled { opacity: 0.65; cursor: default; }
+body.app .translate-promote-hint {
+  font-family: var(--ed-display);
+  font-style: italic;
+  font-variation-settings: "opsz" 24, "SOFT" 70;
+  font-size: 0.9375rem;
+  color: var(--ed-ink-muted);
+}
+
 /* ════════════════════════════════════════════════════════════════════
    PR #1 — Accent bar (es / fr / de) + character counter + click-to-
    advance feedback. Cream-paper chip palette that floats above any
