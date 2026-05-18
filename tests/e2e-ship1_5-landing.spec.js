@@ -98,6 +98,14 @@ test('Ship 1.5 — Old-Spain landing renders with multi-language hero', async ({
   // FAQ — Mafy-comparison preserved (Ship 1 got this right)
   await expect(page.locator('.faq-item__q-text', { hasText: 'Mafy' })).toBeVisible();
 
+  // Product-truth AI mention is visible (proof + wyg sections) — must NOT
+  // be the brand-level "Tekoälyvalmentaja" pattern from Ship 1.
+  await expect(page.locator('.proof__lede')).toContainText(/tekoäly/i);
+  const pageBody = await page.locator('body').textContent();
+  expect(pageBody).toMatch(/YO-rubriikilla treenattu tekoäly/i);
+  expect(pageBody).not.toMatch(/Tekoälyvalmentaja/i);
+  expect(pageBody).not.toMatch(/Tekoälyvalmennus/i);
+
   // Old-Spain palette — cream body bg (not white, not dark)
   const bodyBg = await page.evaluate(() => getComputedStyle(document.body).backgroundColor);
   const m = bodyBg.match(/rgb\((\d+),\s*(\d+),\s*(\d+)\)/);
