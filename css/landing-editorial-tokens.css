@@ -30,28 +30,34 @@
   --ed-ink-subtle:   oklch(58% 0.006 80);    /* ≈ #7a7264  marginalia / captions */
   --ed-ink-faint:    oklch(72% 0.005 80);    /* ≈ #a89f8e  hairlines, decorative */
 
-  /* ─── Accent — muted deep teal-petrol. The Mint Signal gets
-     demoted; the new accent reads as "ink that happens to be teal"
-     rather than "neon glow." Used at ≤10% of any viewport. */
-  --ed-accent:       oklch(48% 0.09 195);    /* ≈ #1a6b75  primary action */
-  --ed-accent-hover: oklch(42% 0.10 195);    /* ≈ #135963  */
-  --ed-accent-soft:  oklch(48% 0.09 195 / 0.10);
-  --ed-accent-ink:   oklch(96% 0.005 80);    /* text-on-accent (paper-on-teal) */
+  /* ─── Accent — deep maroon (espanjalainen ruskeanpunainen, oppikirjan
+     kansi-väri). Hue 25 = warm red-brown, ei kirkas, ei bordeaux.
+     Erottuu Mafyn siniharmaasta ja Studeon pastel-violetista, viittaa
+     espanjaan ilman lippua. Käytetään ≤10% pinnasta. */
+  --ed-accent:       oklch(38% 0.13 25);     /* ≈ #7a2a23  primary action */
+  --ed-accent-hover: oklch(32% 0.13 25);     /* ≈ #66201a  */
+  --ed-accent-soft:  oklch(38% 0.13 25 / 0.10);
+  --ed-accent-ink:   oklch(96% 0.005 80);    /* text-on-maroon (paper-on-ink) */
+  --ed-accent-tint:  oklch(94% 0.025 25);    /* warm tinted paper for callouts */
 
-  /* ─── Mark colors — for grader card error spans. Warm, not neon.
-     Grammar errors and spelling errors get visually distinct tints. */
-  --ed-mark-grammar:  oklch(48% 0.09 195 / 0.18);   /* teal wash */
-  --ed-mark-spelling: oklch(74% 0.14 65 / 0.22);    /* warm ochre wash */
-  --ed-mark-grammar-rule:  oklch(48% 0.09 195);
-  --ed-mark-spelling-rule: oklch(58% 0.15 65);
+  /* ─── Mark colors — for grader card error spans. Warm, not neon. */
+  --ed-mark-grammar:  oklch(38% 0.13 25 / 0.14);    /* maroon wash */
+  --ed-mark-spelling: oklch(72% 0.13 65 / 0.22);    /* warm ochre wash */
+  --ed-mark-grammar-rule:  oklch(38% 0.13 25);
+  --ed-mark-spelling-rule: oklch(56% 0.14 65);
 
-  /* ─── Score chip — quiet, paper-on-teal pill. */
-  --ed-score-bg:    oklch(48% 0.09 195 / 0.08);
-  --ed-score-ink:   oklch(38% 0.10 195);
+  /* ─── Score chip — quiet maroon-tinted pill. */
+  --ed-score-bg:    oklch(38% 0.13 25 / 0.08);
+  --ed-score-ink:   oklch(32% 0.13 25);
 
-  /* ─── Type — editorial serif display + humanist sans body. */
+  /* ─── Gold accent — used sparingly: chapter numbers, kunniamerkit.
+     Hue 80 = vanha kirja-kullan väri. */
+  --ed-gold:        oklch(58% 0.10 80);
+
+  /* ─── Type — editorial serif display + Geist sans body
+     (Inter banned per design-taste-frontend "premium contexts" rule). */
   --ed-serif: "Source Serif 4", "Source Serif Pro", Georgia, "Times New Roman", serif;
-  --ed-sans:  "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --ed-sans:  "Geist", system-ui, -apple-system, "Segoe UI", sans-serif;
   --ed-mono:  "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 
   /* Type scale — editorial proportions, less compressed than the dark

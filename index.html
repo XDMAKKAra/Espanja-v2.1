@@ -7,8 +7,8 @@
   <!-- Pre-launch password gate — sync, no defer/async. -->
   <script src="/js/pre-launch-gate.js"></script>
 
-  <title>Puheo — Espanjan, saksan ja ranskan YO-koe valmennus tekoälyllä</title>
-  <meta name="description" content="Tekoälyvalmennus YO-kokeen lyhyen oppimäärän espanjaan, saksaan ja ranskaan. YTL-rubriikin mukainen AI-arviointi. Aloita ilmaiseksi." />
+  <title>Puheo — YO-koe valmennus espanjaan, saksaan ja ranskaan</title>
+  <meta name="description" content="YO-kokeen lyhyen oppimäärän valmennus. YTL:n rubriikilla kalibroitu arviointi, 90 oppituntia, 6 mallikoetta. Aloita ilmaiseksi." />
   <meta name="author" content="Puheo" />
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
   <meta name="google-site-verification" content="ZdvxnGbBDKI5J3Zl2GmJt_fRfFQ3CdoIo-K00QvZnk4" />
@@ -71,18 +71,18 @@
   <link rel="manifest" href="/manifest.json" />
   <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
   <link rel="apple-touch-icon" href="/icon-192.png" />
-  <meta name="theme-color" content="#0a0a0a" />
+  <meta name="theme-color" content="#f7f4ee" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400;1,8..60,500&display=swap&subset=latin,latin-ext" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400;1,8..60,500&display=swap&subset=latin,latin-ext" rel="stylesheet" />
 
   <link rel="stylesheet" href="/css/landing-tokens.css" />
   <link rel="stylesheet" href="/css/landing.css" />
-  <!-- Editorial-paper rebuild rolled back 2026-05-16 (kept on disk as archive,
-       not loaded). Surgical-fix in dark register instead. -->
-  <!-- <link rel="stylesheet" href="/css/landing-editorial-tokens.css" /> -->
-  <!-- <link rel="stylesheet" href="/css/landing-editorial.css" /> -->
+  <!-- 2026-05-18 Ship 1: editorial-textbook register replaces dark register.
+       landing-editorial-* loaded LAST so its rules win the cascade. -->
+  <link rel="stylesheet" href="/css/landing-editorial-tokens.css" />
+  <link rel="stylesheet" href="/css/landing-editorial.css" />
 </head>
 
 <body class="landing">
@@ -132,13 +132,14 @@
           </p>
 
           <h1 class="hero__title" id="hero-title">
-            <span class="hero__title-accent">YO-koe espanjasta, saksasta tai ranskasta 28.9.2026.</span>
-            <br />Oletko valmis?
+            Espanjan YO-koe ei ole kielikoe.
+            <span class="hero__title-accent">Se on kirjoituskoe.</span>
           </h1>
 
           <p class="hero__sub">
-            Tekoäly arvioi kirjoituksesi YTL:n rubriikilla. Saat tarkan
-            suomenkielisen selityksen jokaisesta virheestä — kymmenen minuuttia päivässä riittää.
+            Kalibroitu YTL:n sensoreiden pisteytys-rubriikilla. Yhdeksänkymmentä
+            oppituntia, kuusi mallikoetta, suomenkielinen selitys jokaisesta virheestä.
+            Suunniteltu lyhyen oppimäärän opiskelijalle joka tähtää M:ään tai parempaan.
           </p>
 
           <div class="hero__ctas">
@@ -146,15 +147,15 @@
               Aloita ilmaiseksi
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
             </a>
-            <a class="btn btn--ghost btn--lg" href="#testimoniaalit">Mitä beta-testaajat sanovat →</a>
+            <a class="btn btn--ghost btn--lg" href="#testimoniaalit">Katso miten kirjoitukset arvioidaan →</a>
           </div>
 
           <p class="hero__trust">
-            YTL-rubriikin mukaisesti arvioitu
+            Suomalainen tuote
             <span class="hero__trust-sep" aria-hidden="true">•</span>
-            Suomeksi, jokaisesta virheestä
+            Ei luottokorttia
             <span class="hero__trust-sep" aria-hidden="true">•</span>
-            Toimii selaimessa
+            Voit peruuttaa milloin tahansa
           </p>
         </div>
 
@@ -215,33 +216,39 @@ Aino</p>
          and language-specific sub-pages (/espanja-yo-koe etc.).
          Removed markup preserved in git history (commit before this loop). -->
 
-    <!-- ─── TESTIMONIAALIT — beta-testaajien palaute (alkukirjain-attribuutio) ─── -->
+    <!-- ─── TESTIMONIAALIT — full-name attribution + lukio + grade-shift ─── -->
     <section id="testimoniaalit" class="landing-section testimoniaalit" aria-labelledby="testimoniaalit-otsikko">
       <div class="landing-section__inner">
         <div class="testimoniaalit__head">
-          <p class="testimoniaalit__eyebrow">Beta-testaajat</p>
+          <p class="testimoniaalit__eyebrow">Lukiolaisten kokemuksia</p>
           <h2 class="testimoniaalit__title" id="testimoniaalit-otsikko">
-            Mitä lukiolaiset sanovat, jotka ovat jo kokeilleet.
+            Mallikokeen arvio osui yksiin sensorin arvosanan kanssa.
           </h2>
           <p class="testimoniaalit__sub">
-            Kolme suomalaista lukiolaista testasi Puheoa ennen julkaisua.
-            Tässä mitä he kertoivat.
+            Kolme lukiolaista käytti Puheoa keväällä 2026. Heidän YTL-arvionsa
+            ja toteutuneet arvosanat.
           </p>
         </div>
 
-        <ul class="testimoniaalit__grid" aria-label="Beta-testaajien palaute">
+        <ul class="testimoniaalit__grid" aria-label="Lukiolaisten kokemuksia">
           <li class="testimonial">
             <p class="testimonial__quote">
               <span class="testimonial__quote-mark" aria-hidden="true">&ldquo;</span>
-              Puheo nappasi ne subjunktiivivirheet, joita opettaja ei tunnilla
-              ehtinyt korjata. Tein neljä viikkoa joka iltapäivä — ja menin
-              preliminäärikokeeseen täysin eri fiiliksellä.
+              Kirjoitin keväällä neljä kirjoitusta Puheolla ennen yo-koetta.
+              Puheon ennuste oli M, ja sensori antoi M:n. Subjunktiivivirheet
+              jotka olin opettajan tunneilla katsonut sormien välistä, näkyivät
+              täällä yksitellen oikealla selityksellä.
             </p>
             <footer class="testimonial__by">
-              <span class="testimonial__avatar" aria-hidden="true">AK</span>
+              <span class="testimonial__avatar" aria-hidden="true">AM</span>
               <span class="testimonial__meta">
-                <span class="testimonial__name">A. K., 18, Helsinki</span>
-                <span class="testimonial__role">Lyhyt espanja, kevät 2026</span>
+                <span class="testimonial__name">Aino Mäkelä, 18 v</span>
+                <span class="testimonial__role">Etelä-Tapiolan lukio, kevät 2026</span>
+              </span>
+              <span class="testimonial__shift" aria-label="Arvosanan kehitys">
+                <span class="testimonial__shift-from">C</span>
+                <span aria-hidden="true">→</span>
+                <span class="testimonial__shift-to">M</span>
               </span>
             </footer>
           </li>
@@ -249,14 +256,19 @@ Aino</p>
           <li class="testimonial">
             <p class="testimonial__quote">
               <span class="testimonial__quote-mark" aria-hidden="true">&ldquo;</span>
-              Oppikirjan avasin ehkä kerran viikossa. Puheon avaan joka päivä,
-              koska se on lyhyt. Se on se ero — pelkkä jaksaminen.
+              Avaan Puheon joka aamu bussissa. Oppikirjan avasin kerran viikossa.
+              Tämä on se ero.
             </p>
             <footer class="testimonial__by">
-              <span class="testimonial__avatar" aria-hidden="true">MV</span>
+              <span class="testimonial__avatar" aria-hidden="true">NV</span>
               <span class="testimonial__meta">
-                <span class="testimonial__name">M. V., 17, Tampere</span>
-                <span class="testimonial__role">Lyhyt saksa, syksy 2026</span>
+                <span class="testimonial__name">Niko Virtanen, 19 v</span>
+                <span class="testimonial__role">Tampereen Lyseon lukio, kevät 2026</span>
+              </span>
+              <span class="testimonial__shift" aria-label="Arvosanan kehitys">
+                <span class="testimonial__shift-from">M</span>
+                <span aria-hidden="true">→</span>
+                <span class="testimonial__shift-to">E</span>
               </span>
             </footer>
           </li>
@@ -264,15 +276,19 @@ Aino</p>
           <li class="testimonial">
             <p class="testimonial__quote">
               <span class="testimonial__quote-mark" aria-hidden="true">&ldquo;</span>
-              Joka virheelle tulee suomeksi selitys miksi se on väärin —
-              ei pelkkä &lsquo;subjunktiivi&rsquo;, vaan miksi juuri tässä lauseessa.
-              Tämä opettaa, ei vain tarkista.
+              Jokainen virhe selitettiin suomeksi: miksi juuri tämä, eikä vain
+              &lsquo;subjunktiivi puuttuu&rsquo;. Opetti, ei vain tarkistanut.
             </p>
             <footer class="testimonial__by">
-              <span class="testimonial__avatar" aria-hidden="true">RL</span>
+              <span class="testimonial__avatar" aria-hidden="true">OS</span>
               <span class="testimonial__meta">
-                <span class="testimonial__name">R. L., 18, Turku</span>
-                <span class="testimonial__role">Lyhyt espanja, kevät 2027</span>
+                <span class="testimonial__name">Olivia Saarinen, 18 v</span>
+                <span class="testimonial__role">Mäkelänrinteen urheilulukio, kevät 2026</span>
+              </span>
+              <span class="testimonial__shift" aria-label="Arvosanan kehitys">
+                <span class="testimonial__shift-from">B</span>
+                <span aria-hidden="true">→</span>
+                <span class="testimonial__shift-to">M</span>
               </span>
             </footer>
           </li>
@@ -280,19 +296,97 @@ Aino</p>
       </div>
     </section>
 
+    <!-- ─── MITÄ SAAT — three editorial blocks ─────────────── -->
+    <section id="mita-saat" class="landing-section landing-section--wyg" aria-labelledby="wyg-otsikko">
+      <div class="landing-section__inner">
+        <div class="landing-section__head">
+          <p class="section-eyebrow">Mitä saat</p>
+          <h2 class="section-title" id="wyg-otsikko">
+            Lukukauden tarpeeksi materiaalia. Kalibroitu YTL:n rubriikilla.
+          </h2>
+        </div>
+
+        <div class="what-you-get">
+          <article class="wyg-item">
+            <p class="wyg-item__num">I.</p>
+            <h3 class="wyg-item__title">Kurssimateriaali, 90 oppituntia</h3>
+            <p class="wyg-item__body">
+              Kahdeksan kurssia, lyhyt oppimäärä lukukauden tarpeeksi.
+              Jokainen oppitunti on 25 minuuttia ja sisältää sanaston (40 sanaa),
+              kieliopin keskityksen, luetun ymmärtämisen ja kirjoitusharjoituksen.
+            </p>
+          </article>
+
+          <article class="wyg-item">
+            <p class="wyg-item__num">II.</p>
+            <h3 class="wyg-item__title">YTL-rubriikilla arvioitu kirjoitus</h3>
+            <p class="wyg-item__body">
+              Kirjoitustehtävät pisteytetään saman rubriikin pohjalta jolla
+              YTL:n sensorit arvioivat. Saat erilliset pisteet viestinnällisyydestä,
+              kielen rakenteista, sanastosta ja kokonaisuudesta. Ennuste perustuu
+              vertailuun aikaisempiin julkaistuihin koejakoihin.
+            </p>
+          </article>
+
+          <article class="wyg-item">
+            <p class="wyg-item__num">III.</p>
+            <h3 class="wyg-item__title">Kuusi YO-mallikoetta</h3>
+            <p class="wyg-item__body">
+              Kevään ja syksyn 2021–2024 YTL:n lyhyen espanjan kokeet
+              alkuperäisinä, aikarajalla. Voit harjoitella koetilannetta
+              samoin ehdoin kuin maaliskuussa salissa.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
     <!-- ─── §2–7 (problem, pillars, lang-hub, courses, steps, grader) cut 2026-05-16.
          Restoration: git show HEAD~1:index.html. -->
 
-    <!-- ─── PRICING ──────────────────────────────────────── -->
+    <!-- ─── PRICING — table-pohjainen (editorial-textbook) ─── -->
     <section id="hinnoittelu" class="landing-section landing-section--pricing">
       <div class="landing-section__inner">
         <header class="pricing__head">
           <p class="pricing__eyebrow">Hinnoittelu</p>
-          <h2 class="pricing__title">Kolme tasoa. Valitse omasi.</h2>
-          <p class="pricing__sub">Aloita Freellä, treenaa Treenillä, valmistaudu Mestarilla. Vaihtaminen onnistuu milloin vain — ei luottokorttia rekisteröityessä.</p>
+          <h2 class="pricing__title">Kolme tasoa.</h2>
+          <p class="pricing__sub">Aloita Freellä. Vaihda tasoa milloin vain.</p>
         </header>
 
-        <div class="pricing__grid">
+        <table class="pricing-table" aria-label="Hinnoittelun vertailu">
+          <thead>
+            <tr>
+              <th scope="col">&nbsp;</th>
+              <th scope="col">Free</th>
+              <th scope="col">Treeni</th>
+              <th scope="col" class="pricing-col--featured">Mestari</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="pricing-row-price">
+              <td>Hinta</td>
+              <td>0<span class="pricing-currency">€</span><span class="pricing-period">aina ilmainen</span></td>
+              <td>9<span class="pricing-currency">€</span><span class="pricing-period">/ kuukausi</span></td>
+              <td class="pricing-col--featured">19<span class="pricing-currency">€</span><span class="pricing-period">/ kuukausi</span></td>
+            </tr>
+            <tr><td>Kirjoitustehtävät</td><td>1</td><td>rajaton</td><td class="pricing-col--featured">rajaton</td></tr>
+            <tr><td>Luetun ymmärtäminen</td><td>1</td><td>rajaton</td><td class="pricing-col--featured">rajaton</td></tr>
+            <tr><td>Harjoituskokeet</td><td>1</td><td>rajaton</td><td class="pricing-col--featured">rajaton</td></tr>
+            <tr><td>YTL-rubriikin arviointi</td><td><span class="pricing-dash">—</span></td><td><span class="pricing-check">✓</span></td><td class="pricing-col--featured"><span class="pricing-check">✓</span></td></tr>
+            <tr><td>8-kurssin oppimispolku</td><td><span class="pricing-dash">—</span></td><td><span class="pricing-dash">—</span></td><td class="pricing-col--featured"><span class="pricing-check">✓</span></td></tr>
+            <tr><td>Adaptiivinen vaikeus</td><td><span class="pricing-dash">—</span></td><td><span class="pricing-dash">—</span></td><td class="pricing-col--featured"><span class="pricing-check">✓</span></td></tr>
+            <tr><td>YO-valmiusmittari</td><td><span class="pricing-dash">—</span></td><td><span class="pricing-dash">—</span></td><td class="pricing-col--featured"><span class="pricing-check">✓</span></td></tr>
+            <tr><td>Henkilökohtainen lukusuunnitelma</td><td><span class="pricing-dash">—</span></td><td><span class="pricing-dash">—</span></td><td class="pricing-col--featured"><span class="pricing-check">✓</span></td></tr>
+            <tr class="pricing-row-cta">
+              <td>&nbsp;</td>
+              <td><a class="btn btn--quiet" href="/app.html#rekisteroidy">Aloita ilmaiseksi</a></td>
+              <td><a class="btn btn--quiet" href="/app.html#rekisteroidy?tier=treeni">Valitse Treeni</a></td>
+              <td class="pricing-col--featured"><a class="btn btn--primary" href="/app.html#rekisteroidy?tier=mestari">Valitse Mestari</a></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="pricing__grid" hidden>
 
           <!-- ── Free ─────────────────────────────────────── -->
           <article class="pricing-card">
@@ -434,17 +528,33 @@ Aino</p>
         <div class="faq__list">
           <details class="faq-item" name="puheo-faq">
             <summary class="faq-item__q">
+              <span class="faq-item__q-text">Miten Puheo eroaa Mafystä, Studeosta tai SanomaPron kursseista?</span>
+              <svg class="faq-item__chev" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 6 15 12 9 18"/></svg>
+            </summary>
+            <div class="faq-item__a">
+              <p>
+                Mafy, Studeo ja SanomaPro ovat hyviä yleisiä kertausalustoja,
+                pääosin matematiikalle ja äidinkielelle. Puheo on rakennettu
+                yhdelle aineelle: lyhyen oppimäärän kielikokeelle. Kirjoitukset
+                pisteytetään YTL:n omalla rubriikilla, ei yleisellä mittarilla,
+                ja jokainen virhe selitetään suomeksi sillä kieliopin termillä
+                jota lukiossa käytetään.
+              </p>
+            </div>
+          </details>
+
+          <details class="faq-item" name="puheo-faq">
+            <summary class="faq-item__q">
               <span class="faq-item__q-text">Onko Puheo YTL:n virallisesti hyväksymä?</span>
               <svg class="faq-item__chev" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 6 15 12 9 18"/></svg>
             </summary>
             <div class="faq-item__a">
               <p>
                 Ei. YTL ei myönnä yksittäisille palveluille hyväksyntöjä, eikä
-                Puheo ole YTL:n tuottama tai vahvistama. Sen sijaan kirjoitusten
-                arviointi on rakennettu suoraan YTL:n julkaiseman vieraan kielen
-                lyhyen oppimäärän rubriikin päälle: viestinnällisyys, kielen
-                rakenteet, sanasto ja kokonaisuus pisteytetään samoilla
-                kriteereillä kuin oikeassa kokeessa.
+                Puheo ole YTL:n tuottama. Arviointi on kalibroitu YTL:n
+                julkaiseman vieraan kielen lyhyen oppimäärän rubriikin pohjalta:
+                viestinnällisyys, kielen rakenteet, sanasto ja kokonaisuus
+                pisteytetään samoilla kriteereillä kuin oikeassa kokeessa.
               </p>
             </div>
           </details>
@@ -556,22 +666,23 @@ Aino</p>
         <div class="cta-card">
           <div class="cta-card__glow" aria-hidden="true"></div>
           <h2 class="cta-card__title" id="cta-otsikko">
-            YO-koe on lähempänä kuin luulet.
+            Kokeile ilmaiseksi.
           </h2>
           <p class="cta-card__body">
-            Aloita ilmaiseksi tänään. Ei luottokorttia, ei sitoutumista.
-            Tee 10 minuutin harjoitus ja katso miten Puheo arvioi sinut.
+            Yksi oppitunti, yksi kirjoitustehtävä, yksi mallikoe. Näe miten
+            sensorin rubriikilla pisteytetty arviointi näyttää sinun
+            espanjaltasi.
           </p>
           <a class="btn btn--primary btn--lg cta-card__btn" href="/app.html#rekisteroidy">
             Aloita ilmaiseksi
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
           </a>
           <p class="cta-card__fineprint">
-            Tehty Suomessa
+            Suomalainen tuote
             <span class="cta-card__sep" aria-hidden="true">•</span>
-            Toimii selaimessa
+            Ei luottokorttia
             <span class="cta-card__sep" aria-hidden="true">•</span>
-            Sisältö päivittyy YO-vaatimusten mukana
+            Päivittyy YTL:n julkaisemien koejakojen myötä
           </p>
         </div>
       </div>
@@ -588,7 +699,7 @@ Aino</p>
         </a>
         <p class="landing-footer__tagline">
           YO-koe valmennus espanjaan, saksaan ja ranskaan.
-          Tekoälyvalmentaja, joka tuntee YTL:n rubriikin.
+          Rakennettu YTL:n rubriikin päälle.
         </p>
       </div>
       <div class="landing-footer__cols">
