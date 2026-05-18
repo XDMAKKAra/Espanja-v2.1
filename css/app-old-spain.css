@@ -696,8 +696,633 @@ body.app *:focus-visible {
    ═══════════════════════════════════════════════════════════ */
 @media (prefers-reduced-motion: reduce) {
   body.app .dash-mode-card:hover,
-  body.app .dash-full-exam-card:hover {
+  body.app .dash-full-exam-card:hover,
+  body.app .ex-option:hover:not(.is-disabled) {
     transform: none;
     box-shadow: none;
   }
 }
+
+/* ════════════════════════════════════════════════════════════════════
+   VAIHE 2 — Exercise surfaces (vocab MCQ, gap-fill, matching, TF,
+   reading short-answer, writing, results). The token bridge already
+   pipes terracotta + olive + cream into the legacy --accent / --success
+   / --error / --surface vars, so most rules inherit Old-Spain for free.
+   What follows are targeted lifts that turn the surfaces from
+   "tinted SaaS forms" into "the next page of the textbook".
+   ════════════════════════════════════════════════════════════════════ */
+
+/* Drill view shell — paper page with a single hairline rule top + bottom,
+   no rounded card, generous side margin like a printed exercise book. */
+@media (min-width: 769px) {
+  body.app #screen-exercise > .exercise,
+  body.app #screen-grammar > .exercise,
+  body.app #screen-reading > .exercise.reading-inner {
+    background: var(--ed-bg-card);
+    border: 1px solid var(--ed-rule);
+    border-radius: 12px;
+    box-shadow: var(--ed-shadow-sm);
+    padding: 40px 48px 32px;
+  }
+}
+
+/* Eyebrow row — chapter-tag look. */
+body.app .exercise__top .eyebrow,
+body.app .exercise__meta .ex-type-badge {
+  font-family: var(--ed-mono);
+  letter-spacing: 0.12em;
+  color: var(--ed-ink-subtle);
+}
+body.app .exercise__sep { color: var(--ed-ink-faint); font-family: var(--ed-mono); }
+body.app .exercise__exit { color: var(--ed-ink-subtle); }
+body.app .exercise__exit:hover { color: var(--ed-accent); background: var(--ed-accent-soft); }
+
+/* Progress hairline — terracotta fill, slim. */
+body.app .exercise__progress { background: var(--ed-rule); border-radius: 2px; height: 2px; }
+body.app .exercise__progress i { background: var(--ed-accent); }
+
+/* The Spanish prompt — Fraunces display, italic emphasis lift. */
+body.app .exercise .display {
+  font-family: var(--ed-display);
+  font-variation-settings: "opsz" 72, "SOFT" 40;
+  font-size: clamp(1.75rem, 3.2vw + 0.5rem, 2.5rem);
+  line-height: 1.08;
+  letter-spacing: -0.012em;
+  color: var(--ed-ink);
+  max-width: 26ch;
+  margin: 8px 0 16px;
+}
+body.app .exercise .display em {
+  font-style: italic;
+  font-variation-settings: var(--ed-fvs-display-italic);
+  color: var(--ed-accent);
+}
+body.app .exercise__context {
+  font-family: var(--ed-display);
+  font-style: italic;
+  font-variation-settings: "opsz" 24, "SOFT" 70;
+  color: var(--ed-ink-subtle);
+  font-size: 1rem;
+  max-width: 52ch;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Multiple choice options — book-list rows. Letter prefix is
+   a Fraunces italic numeral (i, ii, iii, iv), the answer text
+   reads like a paragraph break. No left-stripe, no scale
+   animation — only colour + a quiet hard-offset on hover.
+   ═══════════════════════════════════════════════════════════ */
+body.app .ex-option {
+  background: transparent;
+  border: 1px solid var(--ed-rule);
+  border-left: 1px solid var(--ed-rule);
+  border-radius: 8px;
+  padding: 18px 20px;
+  gap: 18px;
+  margin-bottom: 10px;
+  transition:
+    background var(--ed-t-fast),
+    border-color var(--ed-t-fast),
+    transform var(--ed-t-fast),
+    box-shadow var(--ed-t-fast);
+}
+body.app .ex-option:first-child,
+body.app .ex-option:last-child { border-radius: 8px; }
+body.app .ex-option:hover:not(.is-disabled) {
+  background: var(--ed-bg-card);
+  border-color: color-mix(in oklch, var(--ed-accent) 36%, var(--ed-rule));
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0 0 var(--ed-accent-soft);
+}
+body.app .ex-option:active:not(.is-disabled) {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 0 var(--ed-accent-soft);
+}
+body.app .ex-option:focus-visible {
+  outline: 2px solid var(--ed-accent);
+  outline-offset: 2px;
+}
+
+/* Letter chip — Fraunces italic Roman numeral feel via OpenType ssXX
+   isn't reliable, so we substitute lowercase roman with content-rule
+   below; the actual glyph stays the latin letter for screen-readers. */
+body.app .ex-option__l {
+  flex: 0 0 32px;
+  height: 32px;
+  font-family: var(--ed-display);
+  font-variation-settings: "opsz" 32, "SOFT" 80, "WONK" 1;
+  font-style: italic;
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: var(--ed-accent);
+  background: transparent;
+  border-radius: 4px;
+  text-transform: lowercase;
+}
+body.app .ex-option__t {
+  font-family: var(--ed-display);
+  font-variation-settings: "opsz" 24, "SOFT" 30;
+  font-size: 1.125rem;
+  line-height: 1.5;
+  color: var(--ed-ink);
+}
+
+/* Correct / wrong states — olive for correct, deep terracotta for wrong.
+   Strip the legacy 3px coloured left border (an "Absolute Ban" per impeccable):
+   reach for a full-frame border tint instead. */
+body.app .ex-option.is-correct {
+  background: color-mix(in oklch, var(--ed-olive) 10%, var(--ed-bg-card));
+  border: 1px solid color-mix(in oklch, var(--ed-olive) 42%, transparent);
+  border-left: 1px solid color-mix(in oklch, var(--ed-olive) 42%, transparent);
+}
+body.app .ex-option.is-correct .ex-option__l {
+  color: var(--ed-olive);
+}
+body.app .ex-option.is-correct .ex-option__t { color: var(--ed-ink); }
+
+body.app .ex-option.is-wrong {
+  background: color-mix(in oklch, var(--ed-accent) 8%, var(--ed-bg-card));
+  border: 1px solid color-mix(in oklch, var(--ed-accent) 36%, transparent);
+  border-left: 1px solid color-mix(in oklch, var(--ed-accent) 36%, transparent);
+}
+body.app .ex-option.is-wrong .ex-option__l {
+  color: var(--ed-accent);
+}
+
+body.app .ex-option.is-disabled { opacity: 0.6; }
+
+/* Feedback band below the options — italic margin-note, not a coloured box. */
+body.app .exercise__feedback {
+  border-top: 1px solid var(--ed-rule);
+  border-bottom: 1px solid var(--ed-rule);
+  padding: 16px 0;
+  margin: 6px 0 18px;
+  background: transparent;
+}
+body.app .exercise__feedback-status {
+  font-family: var(--ed-display);
+  font-variation-settings: "opsz" 28, "SOFT" 40;
+  font-size: 1.0625rem;
+  color: var(--ed-ink);
+}
+body.app .exercise__feedback-status.is-correct { color: var(--ed-olive); }
+body.app .exercise__feedback-status.is-wrong { color: var(--ed-accent); }
+body.app .exercise__feedback-correct {
+  font-family: var(--ed-display);
+  font-style: italic;
+  font-variation-settings: "opsz" 24, "SOFT" 60;
+  color: var(--ed-ink-muted);
+  font-size: 1rem;
+}
+
+/* Skeleton rows — warm cream shimmer, matches the loading-shimmer override. */
+body.app .skeleton-row,
+body.app .skeleton-row--display,
+body.app .skeleton-row--option {
+  background: linear-gradient(
+    90deg,
+    color-mix(in oklch, var(--ed-accent) 4%, var(--ed-bg-deep)) 0%,
+    color-mix(in oklch, var(--ed-accent) 14%, var(--ed-bg-deep)) 50%,
+    color-mix(in oklch, var(--ed-accent) 4%, var(--ed-bg-deep)) 100%
+  );
+  background-size: 200% 100%;
+  animation: oldspain-skel 1600ms ease-in-out infinite;
+  border-radius: 6px;
+}
+@keyframes oldspain-skel {
+  0%   { background-position: 100% 0; }
+  100% { background-position: -100% 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  body.app .skeleton-row,
+  body.app .skeleton-row--display,
+  body.app .skeleton-row--option { animation: none; }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Gap-fill (aukkotehtävä) — sentence taittuu kuin oppikirjan
+   sivu, aukko on alleviivattu inline-blank. Strip the legacy
+   box-input look in favour of a 2px solid bottom rule.
+   ═══════════════════════════════════════════════════════════ */
+body.app .gap-fill-sentence {
+  font-family: var(--ed-display);
+  font-variation-settings: "opsz" 60, "SOFT" 30;
+  font-size: clamp(1.4rem, 2.4vw + 0.5rem, 1.75rem);
+  line-height: 1.4;
+  color: var(--ed-ink);
+  letter-spacing: -0.008em;
+  max-width: 36ch;
+  margin-bottom: 18px;
+}
+body.app .gap-fill-input-row { gap: 14px; align-items: baseline; }
+body.app .gap-fill-input {
+  background: transparent;
+  border: 0;
+  border-bottom: 2px solid var(--ed-ink-subtle);
+  border-radius: 0;
+  padding: 6px 4px 8px;
+  font-family: var(--ed-display);
+  font-variation-settings: "opsz" 36, "SOFT" 30;
+  font-size: 1.4rem;
+  color: var(--ed-ink);
+  letter-spacing: 0;
+  min-width: 220px;
+  transition: border-color var(--ed-t-fast);
+}
+body.app .gap-fill-input::placeholder {
+  color: var(--ed-ink-faint);
+  font-style: italic;
+}
+body.app .gap-fill-input:focus {
+  border-bottom-color: var(--ed-accent);
+  outline: none;
+}
+body.app .gap-fill-input.correct {
+  border-bottom-color: var(--ed-olive);
+  color: var(--ed-olive);
+}
+body.app .gap-fill-input.wrong {
+  border-bottom-color: var(--ed-accent);
+  color: var(--ed-accent);
+  /* Soften the legacy shake — Old-Spain pages don't tremble, they sigh. */
+  animation: none;
+}
+body.app .gap-fill-input.accent-warn {
+  border-bottom-color: var(--ed-gold);
+  color: oklch(36% 0.10 78);
+}
+body.app .gap-fill-hint {
+  font-family: var(--ed-display);
+  font-style: italic;
+  font-variation-settings: "opsz" 24, "SOFT" 70;
+  color: var(--ed-ink-muted);
+  font-size: 1rem;
+  line-height: 1.55;
+  padding-left: 14px;
+  border-left: 1px solid var(--ed-rule-strong);
+  margin: 4px 0 16px;
+}
+body.app .gap-fill-feedback {
+  font-family: var(--ed-display);
+  font-style: italic;
+  font-variation-settings: "opsz" 24, "SOFT" 60;
+  font-size: 1rem;
+  color: var(--ed-ink-muted);
+}
+body.app .gap-fill-feedback.correct { color: var(--ed-olive); }
+body.app .gap-fill-feedback.wrong { color: var(--ed-accent); }
+body.app .gap-fill-feedback.accent-warn { color: oklch(36% 0.10 78); }
+
+/* Hint-step button — quiet ghost, terracotta on hover. */
+body.app #gap-fill-hint-btn,
+body.app .gap-fill-hint-btn {
+  background: transparent;
+  border: 1px solid var(--ed-rule);
+  color: var(--ed-ink-muted);
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-family: var(--ed-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color var(--ed-t-fast), border-color var(--ed-t-fast), background var(--ed-t-fast);
+}
+body.app #gap-fill-hint-btn:hover,
+body.app .gap-fill-hint-btn:hover {
+  color: var(--ed-accent);
+  border-color: var(--ed-accent);
+  background: var(--ed-accent-soft);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   True/false buttons — paper tiles, olive/terracotta states.
+   ═══════════════════════════════════════════════════════════ */
+body.app .tf-btn {
+  background: var(--ed-bg-card);
+  border: 1px solid var(--ed-rule);
+  border-radius: 10px;
+  color: var(--ed-ink);
+  font-family: var(--ed-display);
+  font-variation-settings: "opsz" 28, "SOFT" 40;
+  font-size: 1.125rem;
+  padding: 18px 16px;
+  transition: border-color var(--ed-t-fast), background var(--ed-t-fast), transform var(--ed-t-fast);
+}
+body.app .tf-btn:hover:not(:disabled) {
+  border-color: var(--ed-accent);
+  background: var(--ed-accent-soft);
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0 0 var(--ed-accent-soft);
+}
+body.app .tf-btn:active:not(:disabled) { transform: translate(1px, 1px); box-shadow: none; }
+body.app .tf-btn.correct {
+  border-color: var(--ed-olive);
+  background: color-mix(in oklch, var(--ed-olive) 10%, var(--ed-bg-card));
+  color: var(--ed-olive);
+}
+body.app .tf-btn.wrong {
+  border-color: var(--ed-accent);
+  background: color-mix(in oklch, var(--ed-accent) 10%, var(--ed-bg-card));
+  color: var(--ed-accent);
+}
+
+/* Reading short-answer textarea — paper sheet, no tinted bg. */
+body.app .reading-short-textarea {
+  background: var(--ed-bg-card);
+  border: 1px solid var(--ed-rule);
+  border-radius: 8px;
+  font-family: var(--ed-display);
+  font-variation-settings: "opsz" 24, "SOFT" 40;
+  color: var(--ed-ink);
+  font-size: 1.0625rem;
+  line-height: 1.55;
+}
+body.app .reading-short-textarea:focus {
+  border-color: var(--ed-accent);
+  outline: 2px solid var(--ed-accent-soft);
+  outline-offset: 0;
+}
+body.app .reading-self-correct,
+body.app .reading-self-wrong {
+  background: transparent;
+  border: 1px solid var(--ed-rule);
+  border-radius: 8px;
+  color: var(--ed-ink-muted);
+  font-family: var(--ed-mono);
+  font-size: 0.8125rem;
+  letter-spacing: 0.04em;
+  transition: border-color var(--ed-t-fast), color var(--ed-t-fast), background var(--ed-t-fast);
+}
+body.app .reading-self-correct:hover {
+  border-color: var(--ed-olive);
+  color: var(--ed-olive);
+  background: color-mix(in oklch, var(--ed-olive) 8%, var(--ed-bg-card));
+}
+body.app .reading-self-wrong:hover {
+  border-color: var(--ed-accent);
+  color: var(--ed-accent);
+  background: var(--ed-accent-soft);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Type badge (Sanasto / Kielioppi / Luetun / Kirjoittaminen).
+   The legacy chips paint with bright SaaS hues (purple grammar,
+   orange reading, blue writing); recolour the whole row in
+   Old-Spain tonality so the dashboard + drill never read
+   "AI-generated rainbow chip salad".
+   ═══════════════════════════════════════════════════════════ */
+body.app .ex-type-badge,
+body.app .ex-type-badge.type-monivalinta,
+body.app .ex-type-badge.type-aukkotehtava,
+body.app .ex-type-badge.type-yhdistaminen,
+body.app .ex-type-badge.type-kaannos,
+body.app .ex-type-badge.type-lauseen,
+body.app .ex-type-badge.type-correction {
+  background: var(--ed-accent-soft);
+  color: var(--ed-accent);
+  border-color: color-mix(in oklch, var(--ed-accent) 30%, transparent);
+}
+body.app .ex-type-badge.type-yhdistaminen,
+body.app .ex-type-badge.type-kaannos {
+  background: var(--ed-olive-soft);
+  color: var(--ed-olive);
+  border-color: color-mix(in oklch, var(--ed-olive) 32%, transparent);
+}
+body.app .ex-type-badge.type-correction {
+  background: var(--ed-gold-soft);
+  color: oklch(36% 0.10 78);
+  border-color: color-mix(in oklch, var(--ed-gold) 40%, transparent);
+}
+
+/* Kertaus badge — already soft; just lock it to terracotta family. */
+body.app .ex-review-badge {
+  background: var(--ed-accent-soft);
+  border-color: color-mix(in oklch, var(--ed-accent) 30%, transparent);
+  color: var(--ed-ink);
+  font-family: var(--ed-sans);
+}
+body.app .ex-review-badge__icon { color: var(--ed-accent); }
+
+/* ═══════════════════════════════════════════════════════════
+   Mode pages (Sanasto / Kielioppi / Luetun / Kirjoittaminen /
+   Verbisprintti). Replace the rainbow cat-* tokens with three
+   tonal pulls within the Old-Spain palette so each mode feels
+   distinct without breaking the cream + terracotta + olive
+   restraint. Sanasto = terracotta, kielioppi = olive, luetun
+   = gold, kirjoittaminen = deep terracotta, verbsprint = wine.
+   ═══════════════════════════════════════════════════════════ */
+body.app .mode-page--vocab      { --mode-accent: var(--ed-accent);        --mode-glow: color-mix(in oklch, var(--ed-accent) 18%, transparent); }
+body.app .mode-page--grammar    { --mode-accent: var(--ed-olive);         --mode-glow: color-mix(in oklch, var(--ed-olive) 18%, transparent); }
+body.app .mode-page--reading    { --mode-accent: var(--ed-gold);          --mode-glow: color-mix(in oklch, var(--ed-gold) 22%, transparent); }
+body.app .mode-page--writing    { --mode-accent: oklch(38% 0.16 22);      --mode-glow: oklch(38% 0.16 22 / 0.18); }
+body.app .mode-page--verbsprint { --mode-accent: oklch(40% 0.12 12);      --mode-glow: oklch(40% 0.12 12 / 0.18); }
+
+body.app .mode-page .display {
+  font-family: var(--ed-display);
+  font-variation-settings: var(--ed-fvs-display);
+  color: var(--ed-ink);
+  letter-spacing: -0.015em;
+}
+body.app .mode-page__sub { color: var(--ed-ink-muted); }
+body.app .mode-page .mode-topic {
+  background: var(--ed-bg-card);
+  border-color: var(--ed-rule);
+  border-radius: 10px;
+  transition: border-color var(--ed-t-fast), transform var(--ed-t-fast), box-shadow var(--ed-t-fast);
+}
+body.app .mode-page .mode-topic:hover {
+  border-color: var(--mode-accent, var(--ed-accent));
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0 0 color-mix(in oklch, var(--mode-accent, var(--ed-accent)) 18%, transparent);
+}
+body.app .mode-page .mode-topic.is-current {
+  border-color: var(--mode-accent, var(--ed-accent));
+  background: color-mix(in oklch, var(--mode-accent, var(--ed-accent)) 6%, var(--ed-bg-card));
+}
+body.app .mode-page__pro-note {
+  background: var(--ed-bg-deep);
+  border: 1px solid var(--ed-rule);
+  border-radius: 8px;
+  color: var(--ed-ink-muted);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Writing screen — paper textarea, rubric-style grader feedback
+   on the right. The actual grader card already exists on the
+   landing as the proof section; mirror its restraint here.
+   ═══════════════════════════════════════════════════════════ */
+body.app .lr-writing-prompt {
+  font-family: var(--ed-display);
+  font-variation-settings: "opsz" 32, "SOFT" 40;
+  color: var(--ed-ink);
+  line-height: 1.45;
+}
+body.app #writing-prompt-text,
+body.app .writing-prompt-text {
+  font-family: var(--ed-display);
+  font-variation-settings: "opsz" 36, "SOFT" 40;
+  color: var(--ed-ink);
+  font-size: clamp(1.125rem, 1vw + 0.85rem, 1.375rem);
+  line-height: 1.5;
+}
+body.app textarea#writing-answer,
+body.app .writing-answer,
+body.app #writing-answer {
+  background: var(--ed-bg-card);
+  border: 1px solid var(--ed-rule);
+  border-radius: 10px;
+  color: var(--ed-ink);
+  font-family: var(--ed-display);
+  font-variation-settings: "opsz" 18, "SOFT" 30;
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  padding: 22px 24px;
+  box-shadow: var(--ed-shadow-sm);
+}
+body.app textarea#writing-answer:focus,
+body.app .writing-answer:focus,
+body.app #writing-answer:focus {
+  outline: none;
+  border-color: var(--ed-accent);
+  box-shadow: 0 0 0 3px var(--ed-accent-soft);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Results screen — grade circle, rubric breakdown, next-step
+   CTA. Carry the dashboard hero-grade circle treatment into the
+   post-drill summary so the entire arc is one design language.
+   ═══════════════════════════════════════════════════════════ */
+body.app .results-grade,
+body.app .results-circle,
+body.app .results-score {
+  font-family: var(--ed-display);
+  font-variation-settings: var(--ed-fvs-display);
+  color: var(--ed-accent);
+}
+body.app .results-rubric-row,
+body.app .lr-results-list > li {
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--ed-rule);
+  border-radius: 0;
+  padding: 14px 0;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Yhdistäminen / pair-matching — kierretyt kortit ±1deg.
+   The renderer doesn't ship yet but reserve the surface so
+   when it does the look matches the pricing-tier neo-stamp
+   from the landing.
+   ═══════════════════════════════════════════════════════════ */
+body.app .pair-card,
+body.app .matching-card,
+body.app .yhdistaminen-card {
+  background: var(--ed-bg-card);
+  border: 1px solid var(--ed-rule);
+  border-radius: 8px;
+  font-family: var(--ed-display);
+  font-variation-settings: "opsz" 24, "SOFT" 40;
+  color: var(--ed-ink);
+  padding: 14px 18px;
+  box-shadow: 3px 3px 0 0 var(--ed-rule);
+  transition: border-color var(--ed-t-fast), box-shadow var(--ed-t-fast), transform var(--ed-t-fast);
+}
+body.app .pair-card:nth-child(odd),
+body.app .matching-card:nth-child(odd),
+body.app .yhdistaminen-card:nth-child(odd) { transform: rotate(-0.6deg); }
+body.app .pair-card:nth-child(even),
+body.app .matching-card:nth-child(even),
+body.app .yhdistaminen-card:nth-child(even) { transform: rotate(0.6deg); }
+body.app .pair-card.is-selected,
+body.app .matching-card.is-selected,
+body.app .yhdistaminen-card.is-selected {
+  border-color: var(--ed-accent);
+  box-shadow: 3px 3px 0 0 var(--ed-accent-soft);
+  transform: rotate(0);
+}
+body.app .pair-card.is-matched,
+body.app .matching-card.is-matched,
+body.app .yhdistaminen-card.is-matched {
+  border-color: var(--ed-olive);
+  background: color-mix(in oklch, var(--ed-olive) 6%, var(--ed-bg-card));
+  box-shadow: 3px 3px 0 0 var(--ed-olive-soft);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Correction / käännös renderer — adopt the landing grader-rubric
+   visual where each error span gets an inline mark colour
+   matched to its grammar / spelling / vocab class.
+   ═══════════════════════════════════════════════════════════ */
+body.app .correction-mark,
+body.app mark.correction-grammar,
+body.app mark.correction-spelling,
+body.app mark.correction-vocab {
+  background-color: var(--ed-mark-grammar, color-mix(in oklch, var(--ed-accent) 14%, transparent));
+  color: var(--ed-ink);
+  padding: 0 2px;
+  border-bottom: 2px solid var(--ed-mark-grammar-rule, var(--ed-accent));
+  border-radius: 2px;
+}
+body.app mark.correction-spelling {
+  background-color: color-mix(in oklch, var(--ed-gold) 22%, transparent);
+  border-bottom-color: oklch(56% 0.14 65);
+}
+body.app mark.correction-vocab {
+  background-color: color-mix(in oklch, var(--ed-olive) 16%, transparent);
+  border-bottom-color: var(--ed-olive);
+}
+
+/* Mark-color tokens for the correction renderer to consume directly. */
+body.app {
+  --ed-mark-grammar:       oklch(42% 0.15 28 / 0.14);
+  --ed-mark-spelling:      oklch(62% 0.11 78 / 0.22);
+  --ed-mark-grammar-rule:  oklch(42% 0.15 28);
+  --ed-mark-spelling-rule: oklch(56% 0.14 65);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Full exam / mallikoe shell — section progression as chapter
+   tabs, paper-cream surface, terracotta active tab.
+   ═══════════════════════════════════════════════════════════ */
+body.app .full-exam-section-tabs button,
+body.app .fullExam-tab {
+  background: transparent;
+  border: 1px solid var(--ed-rule);
+  border-radius: 999px;
+  color: var(--ed-ink-muted);
+  font-family: var(--ed-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 6px 12px;
+}
+body.app .full-exam-section-tabs button.is-current,
+body.app .fullExam-tab.is-current {
+  background: var(--ed-accent);
+  border-color: var(--ed-accent);
+  color: var(--ed-accent-ink);
+}
+body.app .full-exam-section-tabs button.is-done,
+body.app .fullExam-tab.is-done {
+  border-color: var(--ed-olive);
+  color: var(--ed-olive);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Lesson-runner stop bar — terracotta on cream.
+   ═══════════════════════════════════════════════════════════ */
+body.app .lesson-runner__top,
+body.app .lr-shell {
+  background: var(--ed-bg-card);
+  border-bottom: 1px solid var(--ed-rule);
+}
+body.app .lr-step-label,
+body.app .lr-progress-label {
+  font-family: var(--ed-mono);
+  letter-spacing: 0.08em;
+  color: var(--ed-ink-subtle);
+}
+body.app .lr-progress-bar { background: var(--ed-rule); height: 2px; }
+body.app .lr-progress-bar__fill { background: var(--ed-accent); }
+
