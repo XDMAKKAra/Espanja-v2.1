@@ -6,8 +6,8 @@ Ennen kuin teet **mitään** Write/Edit/Bash-tool-kutsua (Read/Glob/Grep sallitt
 
 | Luokka | Mitä se on | Skill-stack (kutsu KAIKKI) |
 |---|---|---|
-| **FRONTEND** | HTML/CSS/JS-UI, landing, app-shell, screen-redesign, animaatio, copy, hero, modaali, nav, layout, visuaalinen korjaus, a11y-fix, mobile-responsive | `frontend-design`, `design-taste-frontend`, `ui-ux-pro-max`, `puheo-screen-template`, `puheo-finnish-voice` |
-| **EXERCISE / LESSON** | oppituntien sisältö, sanasto/kielioppi/luetun-ymmärtäminen/kirjoitustehtävät, monivalinta, tasotesti, adaptiivisuus, pisteytys, rubric, hinttiketju | `practice-problem-sequence-designer`, `variation-theory-task-designer`, `retrieval-practice-generator`, `scaffolded-task-modifier`, `worked-example-fading-designer`, `cognitive-load-analyser`, `criterion-referenced-rubric-generator`, `adaptive-hint-sequence-designer`, `puheo-finnish-voice` |
+| **FRONTEND** | HTML/CSS/JS-UI, landing, app-shell, screen-redesign, animaatio, copy, hero, modaali, nav, layout, visuaalinen korjaus, a11y-fix, mobile-responsive | `frontend-design`, `design-taste-frontend`, `ui-ux-pro-max`, `impeccable`, `emil-design-eng` |
+| **EXERCISE / LESSON** | oppituntien sisältö, sanasto/kielioppi/luetun-ymmärtäminen/kirjoitustehtävät, monivalinta, tasotesti, adaptiivisuus, pisteytys, rubric, hinttiketju | `practice-problem-sequence-designer`, `variation-theory-task-designer`, `retrieval-practice-generator`, `scaffolded-task-modifier`, `worked-example-fading-designer`, `cognitive-load-analyser`, `criterion-referenced-rubric-generator`, `adaptive-hint-sequence-designer` |
 | **TESTING** | Playwright, e2e, käyttäjäpolku-audit, bug-scan, regression-spec, screenshot-vertailu | `webapp-testing`, `superpowers:test-driven-development`, `superpowers:verification-before-completion`, `superpowers:systematic-debugging` |
 | **PLANNING / BRIEF** | planner-istunto, brief-kirjoitus, scope-keskustelu, queue-päivitys, audit-suunnittelu | `superpowers:brainstorming`, `superpowers:writing-plans` |
 | **SUPABASE / BACKEND** | migraatio, RLS, taulu-muutos, edge function, API-reitti, palvelinpuolen logiikka | `supabase`, `supabase-postgres-best-practices` |
