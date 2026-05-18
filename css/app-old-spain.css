@@ -1326,3 +1326,309 @@ body.app .lr-progress-label {
 body.app .lr-progress-bar { background: var(--ed-rule); height: 2px; }
 body.app .lr-progress-bar__fill { background: var(--ed-accent); }
 
+/* ════════════════════════════════════════════════════════════════════
+   VAIHE 3 — Drill-view structural redesign.
+
+   Vaihe 1 + 2 swapped paint. Vaihe 3 changes the silhouette: drill
+   becomes a two-column textbook page on desktop with a drop-cap on
+   the prompt, a chapter-rule ornament under the eyebrow, and a
+   marginalia rail on the right that lifts kbd-hint + scaffold out of
+   the question column so they read as page-edge annotations rather
+   than tinted boxes wedged below the answer block.
+
+   Mobile (<1024px) stays single-column, top-to-bottom flow.
+   ════════════════════════════════════════════════════════════════════ */
+
+/* ─── Chapter eyebrow + ornament. The existing .exercise__top renders
+   "1 / 12 · SANASTO · B"; we restyle it so the topic eyebrow takes the
+   leading role (Fraunces small-caps), the counter slips to the right
+   as quiet mono, and an inline divider sits beneath. ────────────── */
+@media (min-width: 769px) {
+  body.app #screen-exercise > .exercise,
+  body.app #screen-grammar > .exercise {
+    /* Override the Vaihe-2 single-column padding so the two-column
+       grid has breathing room on both edges. */
+    padding: 36px 56px 28px;
+  }
+}
+
+body.app #screen-exercise .exercise__top,
+body.app #screen-grammar .exercise__top {
+  position: relative;
+  align-items: flex-end;
+  padding-bottom: 4px;
+}
+body.app #screen-exercise .exercise__top::after,
+body.app #screen-grammar .exercise__top::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 1px;
+  background: var(--ed-rule);
+  /* Old-Spain ornament — a tiny diamond at the centre, marking the
+     chapter break. SVG inlined as data-URL so no extra request. */
+  background-image:
+    linear-gradient(to right, var(--ed-rule), var(--ed-rule)),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 12' width='24' height='12'><path d='M12 2 L18 6 L12 10 L6 6 Z' fill='%238E2922' opacity='0.55'/></svg>");
+  background-repeat: no-repeat, no-repeat;
+  background-position: center, center;
+  background-size: 100% 1px, 24px 12px;
+  background-color: transparent;
+  height: 12px;
+}
+body.app #screen-exercise .exercise__progress,
+body.app #screen-grammar .exercise__progress {
+  margin-top: 14px;
+  margin-bottom: 28px;
+}
+
+/* Counter slot in the eyebrow gets Fraunces italic so the "1 / 12" reads
+   like a folio number rather than a SaaS step counter. */
+body.app #screen-exercise #ex-counter,
+body.app #screen-grammar #gram-counter {
+  font-family: var(--ed-display);
+  font-variation-settings: "opsz" 28, "SOFT" 60, "WONK" 1;
+  font-style: italic;
+  font-weight: 500;
+  font-size: 1rem;
+  color: var(--ed-ink-muted);
+  letter-spacing: 0;
+}
+
+/* Topic eyebrow (SANASTO / PUHEOPPI / LUETUN / KIRJOITUS) becomes the
+   chapter heading, all-caps with proper spaced letterforms. */
+body.app #screen-exercise #ex-topic,
+body.app #screen-grammar #gram-topic-badge {
+  font-family: var(--ed-mono);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  color: var(--ed-accent);
+  text-transform: uppercase;
+}
+
+/* Level badge in the eyebrow becomes a circled letter — book chapter
+   tier-mark feel. */
+body.app #ex-level-badge,
+body.app #gram-level-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  border: 1px solid var(--ed-rule-strong);
+  color: var(--ed-ink);
+  font-family: var(--ed-display);
+  font-variation-settings: "opsz" 24, "SOFT" 50;
+  font-size: 0.875rem;
+  font-weight: 500;
+  background: var(--ed-bg-card);
+}
+
+/* ─── Two-column drill layout (desktop ≥1024px) ─────────────────── */
+@media (min-width: 1024px) {
+  body.app #screen-exercise > .exercise,
+  body.app #screen-grammar > .exercise {
+    display: grid;
+    grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
+    column-gap: 56px;
+    row-gap: 0;
+    align-items: start;
+  }
+  /* The eyebrow + progress bar span both columns so the chapter break
+     reads as one continuous rule across the page. */
+  body.app #screen-exercise > .exercise > .exercise__top,
+  body.app #screen-grammar > .exercise > .exercise__top,
+  body.app #screen-exercise > .exercise > .exercise__progress,
+  body.app #screen-grammar > .exercise > .exercise__progress {
+    grid-column: 1 / -1;
+  }
+  /* Left column = the question itself: skeleton slot, prompt, options,
+     gap-fill, matching, reorder, translate, and the feedback block. */
+  body.app #screen-exercise > .exercise > .scaffold-indicator,
+  body.app #screen-grammar > .exercise > .scaffold-indicator,
+  body.app #screen-exercise > .exercise > .question-block,
+  body.app #screen-grammar > .exercise > .question-block,
+  body.app #screen-exercise > .exercise > .exercise-skeleton-slot,
+  body.app #screen-grammar > .exercise > .exercise-skeleton-slot,
+  body.app #screen-exercise > .exercise > .exercise__options,
+  body.app #screen-grammar > .exercise > .exercise__options,
+  body.app #screen-exercise > .exercise > .gap-fill-area,
+  body.app #screen-exercise > .exercise > .matching-area,
+  body.app #screen-exercise > .exercise > .reorder-area,
+  body.app #screen-exercise > .exercise > .translate-area,
+  body.app #screen-exercise > .exercise > .exercise__feedback,
+  body.app #screen-grammar > .exercise > .exercise__feedback {
+    grid-column: 1;
+  }
+  /* Right column = the marginalia rail. kbd-hint sticks to the top so
+     it's visible while scrolling long prompts. */
+  body.app #screen-exercise > .exercise > .kbd-hint,
+  body.app #screen-grammar > .exercise > .kbd-hint {
+    grid-column: 2;
+    grid-row: 3 / span 6;
+    align-self: start;
+    position: sticky;
+    top: 24px;
+    margin-top: 12px;
+    padding: 18px 18px 18px 22px;
+    border-left: 1px solid var(--ed-rule);
+    border-radius: 0;
+    background: transparent;
+    opacity: 1;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  body.app #screen-exercise > .exercise > .kbd-hint::before,
+  body.app #screen-grammar > .exercise > .kbd-hint::before {
+    content: "Näppäimet";
+    display: block;
+    font-family: var(--ed-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ed-ink-subtle);
+    margin-bottom: 4px;
+  }
+  body.app #screen-exercise > .exercise > .kbd-hint .kbd-sep,
+  body.app #screen-grammar > .exercise > .kbd-hint .kbd-sep {
+    display: block;
+    width: 100%;
+    color: var(--ed-ink-subtle);
+    font-family: var(--ed-display);
+    font-style: italic;
+    margin: 4px 0;
+  }
+  body.app #screen-exercise > .exercise > .kbd-hint .kbd-label,
+  body.app #screen-grammar > .exercise > .kbd-hint .kbd-label {
+    font-family: var(--ed-display);
+    font-style: italic;
+    font-variation-settings: "opsz" 24, "SOFT" 60;
+    color: var(--ed-ink-muted);
+    margin-left: 6px;
+  }
+  /* Scaffold indicator (kertaus / SR-tag) joins the same rail beneath
+     the kbd-hint when visible. */
+  body.app #screen-exercise > .exercise > .scaffold-indicator:not(.hidden),
+  body.app #screen-grammar > .exercise > .scaffold-indicator:not(.hidden) {
+    grid-column: 2;
+    grid-row: 4 / span 2;
+    align-self: start;
+    position: sticky;
+    top: 240px;
+    margin-top: 0;
+    padding: 18px 18px 18px 22px;
+    border-left: 1px solid var(--ed-rule);
+    border-radius: 0;
+    background: transparent;
+  }
+}
+
+/* ─── Drop-cap on the prompt. The first letter of the prompt rises to
+   ~1.8× the prompt's own size, drops two lines of body alongside.
+   Falls back gracefully if the prompt starts with punctuation. ───── */
+@media (min-width: 769px) {
+  body.app #screen-exercise .question-block .display::first-letter,
+  body.app #screen-grammar .question-block .display::first-letter {
+    font-family: var(--ed-display);
+    font-variation-settings: "opsz" 144, "SOFT" 30, "WONK" 0;
+    font-weight: 500;
+    font-size: 4.6rem;
+    line-height: 0.85;
+    float: left;
+    margin: 0.12em 0.14em 0 -0.04em;
+    color: var(--ed-accent);
+    /* Tight letter — pull the next character snug against the drop. */
+    padding-right: 0.04em;
+  }
+}
+
+/* ─── Question prompt itself — let it breathe in the wider left column. */
+body.app #screen-exercise .question-block .display,
+body.app #screen-grammar .question-block .display {
+  max-width: 24ch;
+  font-size: clamp(1.875rem, 3vw + 0.7rem, 2.75rem);
+  line-height: 1.06;
+}
+
+/* ─── Pre-prompt label ("Mitä tarkoittaa?" / "Täydennä aukko.") becomes
+   a marginalia mono kicker rather than a body sentence. */
+body.app #screen-exercise #question-label,
+body.app #screen-grammar #gram-instruction {
+  font-family: var(--ed-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ed-ink-subtle);
+  margin: 0 0 10px;
+  font-weight: 600;
+}
+
+/* ─── Per-mode chapter ornament. Inline SVG vinjet (small fleuron) sits
+   inside the eyebrow row, tinted in the mode's accent. Default is the
+   terracotta diamond on .exercise__top::after above; per-mode versions
+   swap the vinjet glyph so vocab/grammar/reading/writing all carry a
+   distinct chapter mark.
+
+   Vinjet glyphs:
+     Sanasto    — open quote pair (vocabulary lookup mark)
+     Puheoppi   — paragraph mark (formal-grammar pilcrow)
+     Luetun     — open-book pictogram
+     Kirjoitus  — quill pictogram
+   ─────────────────────────────────────────────────────────────────── */
+body.app #screen-exercise .exercise__top[data-mode="sanasto"]::after {
+  background-image:
+    linear-gradient(to right, var(--ed-rule), var(--ed-rule)),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 12' width='32' height='12'><text x='16' y='10' font-family='Georgia,serif' font-size='14' font-weight='600' text-anchor='middle' fill='%238E2922' opacity='0.65'>&#x2766;</text></svg>");
+  background-size: 100% 1px, 32px 12px;
+}
+body.app #screen-grammar .exercise__top::after {
+  background-image:
+    linear-gradient(to right, var(--ed-rule), var(--ed-rule)),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 12' width='32' height='12'><text x='16' y='10' font-family='Georgia,serif' font-size='14' font-style='italic' font-weight='600' text-anchor='middle' fill='%23566E2B' opacity='0.7'>&#xB6;</text></svg>");
+  background-size: 100% 1px, 32px 12px;
+}
+
+/* ─── Live-fade entry. When the drill mounts, the question column and the
+   marginalia rail enter on a tiny stagger so the page reads as one
+   spread folding open rather than four boxes popping in. ────────── */
+@media (prefers-reduced-motion: no-preference) {
+  body.app #screen-exercise .question-block,
+  body.app #screen-grammar .question-block {
+    animation: oldspain-prompt-in 480ms cubic-bezier(0.23, 1, 0.32, 1) both;
+  }
+  body.app #screen-exercise .exercise__options,
+  body.app #screen-grammar .exercise__options {
+    animation: oldspain-prompt-in 520ms cubic-bezier(0.23, 1, 0.32, 1) 80ms both;
+  }
+  body.app #screen-exercise > .exercise > .kbd-hint,
+  body.app #screen-grammar > .exercise > .kbd-hint {
+    animation: oldspain-prompt-in 520ms cubic-bezier(0.23, 1, 0.32, 1) 200ms both;
+  }
+  @keyframes oldspain-prompt-in {
+    from { opacity: 0; transform: translateY(6px); filter: blur(3px); }
+    to   { opacity: 1; transform: translateY(0);  filter: blur(0); }
+  }
+}
+
+/* ─── Mobile fallback — strict single-column flow. CSS-grid rules above
+   only fire ≥1024px; below that, the existing block layout from Vaihe 2
+   stays intact. We still soften the kbd-hint visually on mobile so it
+   doesn't read as a centred footer bar. ────────────────────────── */
+@media (max-width: 1023px) {
+  body.app #screen-exercise > .exercise > .kbd-hint,
+  body.app #screen-grammar > .exercise > .kbd-hint {
+    border-top: 1px solid var(--ed-rule);
+    padding-top: 14px;
+    margin-top: 18px;
+  }
+  body.app #screen-exercise .question-block .display,
+  body.app #screen-grammar .question-block .display {
+    max-width: none;
+  }
+}
+
