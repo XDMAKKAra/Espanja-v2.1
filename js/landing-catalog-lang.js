@@ -18,12 +18,18 @@
         btn.setAttribute("aria-pressed", btn.dataset.lang === lang ? "true" : "false");
       });
       gridEl.setAttribute("data-active-lang", lang);
-      var titles = gridEl.querySelectorAll(".catalog-card__title");
-      titles.forEach(function (el) {
+      // Swap both titles and bodies — per-language grammar focus differs
+      // even when the theme is shared.
+      var i18nNodes = gridEl.querySelectorAll(".catalog-card__title, .catalog-card__body");
+      i18nNodes.forEach(function (el) {
         var v = el.getAttribute("data-" + lang);
         if (v) {
           el.textContent = v;
-          el.setAttribute("lang", lang);
+          // Only title gets lang attribute (target-language phrase);
+          // body is Finnish description regardless of selected lang.
+          if (el.classList.contains("catalog-card__title")) {
+            el.setAttribute("lang", lang);
+          }
         }
       });
     }

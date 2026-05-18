@@ -91,13 +91,15 @@ test('Ship 1.5 — Old-Spain landing renders with multi-language hero', async ({
   expect(testimonialsText).not.toContain('Etelä-Tapiolan');
   expect(testimonialsText).not.toContain('Tampereen Lyseon');
 
-  // Pricing table (not card grid)
-  await expect(page.locator('table.pricing-table')).toBeVisible();
-  await expect(page.locator('.pricing-table thead th', { hasText: 'Free' })).toBeVisible();
-  await expect(page.locator('.pricing-table thead th', { hasText: 'Treeni' })).toBeVisible();
-  await expect(page.locator('.pricing-table thead th', { hasText: 'Mestari' })).toBeVisible();
-  // Multi-language row in pricing
-  await expect(page.locator('.pricing-table td', { hasText: /kolme kieltä/i })).toBeVisible();
+  // Pricing tiers — tilted neo-textbook cards (replaces flat table)
+  await expect(page.locator('.pricing-tier')).toHaveCount(3);
+  await expect(page.locator('.pricing-tier__name', { hasText: 'Free' })).toBeVisible();
+  await expect(page.locator('.pricing-tier__name', { hasText: 'Treeni' })).toBeVisible();
+  await expect(page.locator('.pricing-tier__name', { hasText: 'Mestari' })).toBeVisible();
+  // Featured tier badge present
+  await expect(page.locator('.pricing-tier--featured .pricing-tier__badge')).toBeVisible();
+  // Multi-language coverage mentioned in tier features
+  await expect(page.locator('.pricing-tier__features', { hasText: /kolme kieltä/i })).toBeVisible();
 
   // FAQ — Mafy-comparison preserved (Ship 1 got this right)
   await expect(page.locator('.faq-item__q-text', { hasText: 'Mafy' })).toBeVisible();
