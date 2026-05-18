@@ -30,10 +30,15 @@
   <link rel="apple-touch-icon" href="/icon-192.png" />
   <meta name="theme-color" content="#2DD4BF" />
   <!-- L-LIVE-AUDIT-P2 UPDATE 8, Inter + DM Mono are self-hosted via /fonts/
-       declared at the top of style.css (bundled into /app.bundle.css). The
-       landing page (index.html) still uses Google Fonts for Geist family. -->
+       declared at the top of style.css (bundled into /app.bundle.css).
+       2026-05-18: in-app register switched to Fraunces (display) + Manrope
+       (body) to match the Old-Spain landing. Inter preloads retained as a
+       fallback during the Google Fonts swap window. -->
   <link rel="preload" href="/fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="/fonts/inter-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,400..700,0..100,0..1;1,9..144,400..700,0..100,0..1&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap&subset=latin,latin-ext" rel="stylesheet" />
   <!-- F-ARCH-1 §B, design tokens loaded FIRST so aliases (--text, --space-N,
        --radius-md, --z-modal, --focus-ring, --ease-spring) are resolvable
        everywhere downstream. File is additive and does NOT redefine the
@@ -50,7 +55,7 @@
   <!-- L-HERO-COUNTDOWN-AND-OFFCANVAS-1, off-canvas slide-in sidebar for <1024px. -->
   <link rel="stylesheet" href="/css/components/off-canvas-nav.css" />
 </head>
-<body>
+<body class="app">
 
   <!-- Pre-paint shell-mode + theme hint, extracted to /js/app-prepaint.js
        in L-SECURITY-3 so a strict CSP can ship. Sync, no defer/async. -->

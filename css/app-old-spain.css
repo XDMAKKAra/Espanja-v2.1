@@ -1,0 +1,703 @@
+/* ============================================================
+   Puheo App — Old-Spain editorial register (2026-05-18).
+
+   Bridges the Old-Spain palette + Fraunces/Manrope typography
+   from the landing onto the in-app dashboard, exercise screens
+   and settings. Loaded LAST in /app.bundle.css so it wins over
+   the legacy mint-on-charcoal palette declared in style.css.
+
+   Strategy:
+     1. Re-publish the --ed-* tokens scoped to body.app (so we don't
+        require landing-editorial-tokens.css to load on app.html).
+     2. Re-alias every legacy var the existing component CSS consumes
+        (--ink, --surface, --bg, --accent, --border, --font-*) so the
+        2k+ lines of dashboard / mode-page / exercise CSS automatically
+        pick up the warm cream + terracotta + olive palette without
+        being rewritten.
+     3. Wins both light and dark — body.app sits below html[data-theme]
+        in the tree, so the body.app custom properties shadow any
+        :root or [data-theme="dark"] declarations for everything inside.
+     4. Targeted micro-overrides on the most visible dashboard surfaces
+        (greeting, KPI tiles, mode cards, daily challenge, hero grade,
+        tutor card) lift them past a flat colour swap.
+
+   Source-of-truth alignment:
+     css/landing-editorial-tokens.css  — palette definitions
+     css/landing-editorial.css         — body.legal / body.blog bridge
+     memory/feedback_landing_direction_2026_05_18.md
+   ============================================================ */
+
+body.app {
+  /* ─── Surfaces (warm cream paper) ───────────────────────── */
+  --ed-bg:           oklch(96% 0.012 75);
+  --ed-bg-card:      oklch(98% 0.008 75);
+  --ed-bg-deep:      oklch(93% 0.018 75);
+  --ed-bg-tint:      oklch(91% 0.030 60);
+  --ed-rule:         oklch(20% 0.012 30 / 0.14);
+  --ed-rule-strong:  oklch(20% 0.012 30 / 0.26);
+
+  /* ─── Ink (warm near-black) ─────────────────────────────── */
+  --ed-ink:          oklch(18% 0.012 30);
+  --ed-ink-muted:    oklch(38% 0.012 30);
+  /* Darker than the landing's --ed-ink-subtle (L=56%) — the dashboard uses
+     this colour on 11px mono labels everywhere, where AA needs ≥4.5:1
+     against cream. L=48% pulls every meta label / chart legend above the
+     bar. Reserve --ed-ink-faint for purely decorative hairlines. */
+  --ed-ink-subtle:   oklch(48% 0.012 30);
+  --ed-ink-faint:    oklch(64% 0.010 30);
+
+  /* ─── Terracotta primary accent ─────────────────────────── */
+  --ed-accent:       oklch(42% 0.15 28);
+  --ed-accent-hover: oklch(36% 0.15 28);
+  --ed-accent-soft:  oklch(42% 0.15 28 / 0.10);
+  --ed-accent-tint:  oklch(91% 0.040 30);
+  --ed-accent-ink:   oklch(96% 0.012 75);
+
+  /* ─── Olive secondary ───────────────────────────────────── */
+  --ed-olive:        oklch(38% 0.07 110);
+  --ed-olive-hover:  oklch(32% 0.07 110);
+  --ed-olive-soft:   oklch(38% 0.07 110 / 0.12);
+  --ed-olive-tint:   oklch(91% 0.030 105);
+
+  /* ─── Gold marginalia ───────────────────────────────────── */
+  --ed-gold:         oklch(62% 0.11 78);
+  --ed-gold-soft:    oklch(62% 0.11 78 / 0.18);
+
+  /* ─── Type ──────────────────────────────────────────────── */
+  --ed-display: "Fraunces", "Source Serif 4", Georgia, "Times New Roman", serif;
+  --ed-serif:   "Fraunces", Georgia, "Times New Roman", serif;
+  --ed-sans:    "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --ed-mono:    "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --ed-fvs-display: "opsz" 96, "SOFT" 50, "WONK" 0;
+  --ed-fvs-display-italic: "opsz" 72, "SOFT" 100, "WONK" 1;
+
+  /* ─── Motion ────────────────────────────────────────────── */
+  --ed-t-fast: 160ms cubic-bezier(0.23, 1, 0.32, 1);
+  --ed-t-mid:  240ms cubic-bezier(0.23, 1, 0.32, 1);
+
+  /* ─── Tinted shadows ────────────────────────────────────── */
+  --ed-shadow-sm: 0 1px 2px oklch(20% 0.05 30 / 0.06),
+                  0 2px 6px oklch(20% 0.05 30 / 0.04);
+  --ed-shadow-md: 0 4px 10px oklch(20% 0.05 30 / 0.06),
+                  0 12px 28px oklch(20% 0.05 30 / 0.08);
+  --ed-shadow-lg: 0 8px 18px oklch(20% 0.05 30 / 0.08),
+                  0 24px 48px oklch(20% 0.05 30 / 0.10);
+
+  /* ═══════════════════════════════════════════════════════════
+     Legacy var bridge. Component CSS still references --ink,
+     --surface, --accent, etc. Map them onto the Old-Spain values
+     so the cream + terracotta lands everywhere automatically.
+     ═══════════════════════════════════════════════════════════ */
+  --bg:             var(--ed-bg);
+  --bg-elevated:    var(--ed-bg-card);
+  --bg-gradient:    none;
+  --surface:        var(--ed-bg-card);
+  --surface-2:      var(--ed-bg-deep);
+  --surface-hover:  var(--ed-bg-deep);
+  --card:           var(--ed-bg-card);
+
+  --border:         var(--ed-rule);
+  --border-strong:  var(--ed-rule-strong);
+
+  --ink:            var(--ed-ink);
+  --ink-soft:       var(--ed-ink-muted);
+  /* AA-safe at 11px — Old-Spain's --ed-ink-subtle (L=56%) reads 3.78:1 on
+     cream which fails AA for small text. The dashboard sprinkles 10–12px
+     mono labels on cream everywhere, so use the L=42% "muted" tier as the
+     in-app faint colour instead. Reserves --ed-ink-subtle for ≥14px copy. */
+  --ink-faint:      oklch(42% 0.012 30);
+  --text:           var(--ed-ink);
+  --text-muted:     var(--ed-ink-muted);
+  --text-faint:     oklch(42% 0.012 30);
+
+  --accent:         var(--ed-accent);
+  --accent-hover:   var(--ed-accent-hover);
+  --accent-dark:    var(--ed-accent-hover);
+  --accent-soft:    var(--ed-accent-soft);
+  --accent-glow:    var(--ed-accent-soft);
+
+  --success:        var(--ed-olive);
+  --warn:           var(--ed-gold);
+  --error:          oklch(48% 0.18 28);
+
+  --font-display:   var(--ed-display);
+  --font-body:      var(--ed-sans);
+  --font-mono:      var(--ed-mono);
+
+  --focus-ring:     0 0 0 2px var(--ed-accent);
+  --shadow-glow:    var(--ed-shadow-md);
+  --sh-rest:        var(--ed-shadow-sm);
+  --sh-hover:       var(--ed-shadow-md);
+  --sh-lift:        var(--ed-shadow-lg);
+
+  background: var(--ed-bg);
+  color: var(--ed-ink);
+  font-family: var(--ed-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1, "ss01" 1;
+}
+
+/* Subtle paper grain that lifts the cream from flatness. Identical
+   recipe to body.landing — two radial washes pinned to the viewport. */
+body.app::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(circle at 18% 20%, oklch(70% 0.05 60 / 0.05) 0, transparent 30%),
+    radial-gradient(circle at 84% 76%, oklch(60% 0.10 28 / 0.04) 0, transparent 32%);
+}
+body.app > * { position: relative; z-index: 1; }
+
+/* ═══════════════════════════════════════════════════════════
+   Typography lifts. Every dashboard heading rendered with the
+   legacy --font-display var now inherits Fraunces. The display
+   class (used by greeting + result banners) needs explicit
+   font-variation-settings so the optical-size axis kicks in.
+   ═══════════════════════════════════════════════════════════ */
+body.app h1,
+body.app h2,
+body.app h3,
+body.app .display,
+body.app .section-h,
+body.app .eyebrow {
+  color: var(--ed-ink);
+}
+
+body.app .display,
+body.app h1,
+body.app h2 {
+  font-family: var(--ed-display);
+  font-variation-settings: var(--ed-fvs-display);
+  letter-spacing: -0.012em;
+  line-height: 1.08;
+}
+
+body.app h1 em,
+body.app h2 em,
+body.app .display em {
+  font-style: italic;
+  font-variation-settings: var(--ed-fvs-display-italic);
+  color: var(--ed-accent);
+}
+
+body.app .eyebrow,
+body.app .section-h {
+  font-family: var(--ed-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ed-ink-subtle);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Dashboard surface upgrades. Targeted overrides for the most
+   visible blocks; everything else inherits cream + terracotta
+   from the bridge above.
+   ═══════════════════════════════════════════════════════════ */
+
+/* Greeting hero — let the Fraunces display breathe. */
+body.app .dash-greeting .display {
+  font-family: var(--ed-display);
+  font-variation-settings: var(--ed-fvs-display);
+  font-size: clamp(2rem, 3.6vw + 1rem, 3.25rem);
+  line-height: 1.06;
+  letter-spacing: -0.015em;
+  color: var(--ed-ink);
+}
+body.app .dash-greeting .display em {
+  font-style: italic;
+  font-variation-settings: var(--ed-fvs-display-italic);
+  color: var(--ed-accent);
+}
+body.app .dash-greeting__sub {
+  font-family: var(--ed-sans);
+  color: var(--ed-ink-muted);
+}
+
+/* Streak pill — terracotta-tinted, gold flame. */
+body.app .dash-greeting__streak {
+  background: var(--ed-accent-soft);
+  border-color: color-mix(in oklch, var(--ed-accent) 26%, transparent);
+  color: var(--ed-ink-muted);
+}
+body.app .dash-greeting__streak-num {
+  color: var(--ed-accent);
+  font-family: var(--ed-mono);
+}
+body.app .dash-greeting__streak .streak-flame {
+  color: var(--ed-gold);
+}
+
+/* KPI tile row — paper cards with hair-thin rule, mono numerals
+   stay tabular but in warm ink. Hero tile picks up the terracotta
+   wash instead of mint. */
+body.app .dash-kpi-tile {
+  background: var(--ed-bg-card);
+  border-color: var(--ed-rule);
+  border-radius: 8px;
+}
+body.app .dash-kpi-tile--2 { background: var(--ed-bg-deep); }
+body.app .dash-kpi-tile--4 {
+  background: color-mix(in oklch, var(--ed-accent) 8%, var(--ed-bg-card));
+  border-color: color-mix(in oklch, var(--ed-accent) 30%, var(--ed-rule));
+}
+body.app .dash-kpi-tile--4 .dash-kpi-tile__val { color: var(--ed-accent); }
+body.app .dash-kpi-tile--1.dash-kpi-tile--hot {
+  background: color-mix(in oklch, var(--ed-gold) 10%, var(--ed-bg-card));
+  border-color: color-mix(in oklch, var(--ed-gold) 32%, var(--ed-rule));
+}
+body.app .dash-kpi-tile--1.dash-kpi-tile--hot .dash-kpi-tile__icon { color: var(--ed-gold); }
+body.app .dash-kpi-tile__val {
+  font-family: var(--ed-mono);
+  color: var(--ed-ink);
+  font-feature-settings: "tnum" 1, "zero" 0;
+}
+body.app .dash-kpi-tile__label {
+  font-family: var(--ed-mono);
+  color: var(--ed-ink-subtle);
+}
+
+/* Daily challenge card — single warm tile, terracotta accent rule. */
+body.app .daily-challenge {
+  background: var(--ed-bg-card);
+  border-color: var(--ed-rule);
+  border-left: 0;
+  border-top: 2px solid var(--ed-accent);
+  border-radius: 10px;
+}
+body.app .daily-challenge__kicker { color: var(--ed-accent); font-family: var(--ed-mono); }
+body.app .daily-challenge__title {
+  font-family: var(--ed-display);
+  font-variation-settings: "opsz" 36, "SOFT" 40;
+  color: var(--ed-ink);
+}
+body.app .daily-challenge__desc { color: var(--ed-ink-muted); }
+body.app .daily-challenge--done {
+  border-top-color: var(--ed-olive);
+  background: color-mix(in oklch, var(--ed-olive) 6%, var(--ed-bg-card));
+}
+body.app .daily-challenge--done .daily-challenge__kicker { color: var(--ed-olive); }
+body.app .daily-challenge__check { background: var(--ed-olive); color: var(--ed-bg); }
+
+/* Mode cards — paper tile with hard-offset shadow on hover, no
+   transform jump. Reads as a textbook chapter card, not a SaaS tile. */
+body.app .dash-mode-card {
+  background: var(--ed-bg-card);
+  border-color: var(--ed-rule);
+  border-radius: 8px;
+  transition: border-color var(--ed-t-fast), box-shadow var(--ed-t-fast), transform var(--ed-t-fast);
+}
+body.app .dash-mode-card:hover {
+  border-color: color-mix(in oklch, var(--ed-accent) 50%, var(--ed-rule)) !important;
+  box-shadow: 4px 4px 0 0 var(--ed-accent-soft);
+  transform: translate(-1px, -1px);
+}
+body.app .dash-mode-card:active {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 0 var(--ed-accent-soft);
+}
+body.app .dash-mode-card.has-data {
+  border-color: color-mix(in oklch, var(--ed-olive) 35%, var(--ed-rule));
+}
+body.app .dash-mode-card::after,
+body.app .dash-mode-progress {
+  background: var(--ed-accent);
+}
+body.app .dash-mode-card.has-data::after,
+body.app .dash-mode-card.has-data .dash-mode-progress {
+  background: linear-gradient(90deg, var(--ed-accent), var(--ed-olive));
+}
+body.app .dash-mode-grade {
+  font-family: var(--ed-display);
+  font-variation-settings: "opsz" 48, "SOFT" 30;
+  color: var(--ed-accent);
+  font-weight: 600;
+}
+body.app .dash-mode-cta-btn {
+  border-color: var(--ed-accent);
+  background: var(--ed-accent-soft);
+  color: var(--ed-accent);
+  font-family: var(--ed-mono);
+  letter-spacing: 0.06em;
+}
+body.app .dash-mode-card:hover .dash-mode-cta-btn {
+  background: color-mix(in oklch, var(--ed-accent) 18%, var(--ed-bg-card));
+}
+body.app .dash-mode-due,
+body.app .dash-mode-due--pulse {
+  background: var(--ed-accent);
+}
+
+/* Hero grade circle — book-stamp medallion. */
+body.app .dash-hero-grade {
+  border-top-color: var(--ed-rule);
+  border-bottom-color: var(--ed-rule);
+}
+body.app .dash-hero-grade-circle {
+  background: var(--ed-bg-card);
+  border-color: var(--ed-ink);
+  font-family: var(--ed-display);
+  font-variation-settings: var(--ed-fvs-display);
+  color: var(--ed-ink);
+}
+body.app .dash-hero-grade--tier-high .dash-hero-grade-circle {
+  border-color: var(--ed-accent);
+  color: var(--ed-accent);
+}
+body.app .dash-hero-grade--tier-mid .dash-hero-grade-circle { border-color: var(--ed-ink); }
+body.app .dash-hero-grade--tier-low .dash-hero-grade-circle { border-color: var(--ed-ink-subtle); color: var(--ed-ink-subtle); }
+body.app .dash-hero-grade--tier-none .dash-hero-grade-circle {
+  border-color: var(--ed-rule-strong);
+  color: var(--ed-ink-subtle);
+}
+body.app .dash-hero-sub {
+  font-family: var(--ed-display);
+  font-variation-settings: "opsz" 40, "SOFT" 40;
+  color: var(--ed-ink);
+}
+body.app .dash-hero-label {
+  font-family: var(--ed-mono);
+  color: var(--ed-ink-subtle);
+  letter-spacing: 0.12em;
+}
+body.app .dash-hero-scale span {
+  background: var(--ed-bg-deep);
+  font-family: var(--ed-mono);
+  color: var(--ed-ink-subtle);
+}
+body.app .dash-hero-scale span.is-current {
+  background: var(--ed-ink);
+  color: var(--ed-bg);
+}
+
+/* Recent activity rows — list with hairline rules, no boxed cards. */
+body.app .dash-recent-item {
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--ed-rule);
+  border-radius: 0;
+  padding: 14px 4px;
+}
+body.app .dash-recent-item:hover {
+  background: var(--ed-accent-soft) !important;
+}
+body.app .dash-recent-mode { color: var(--ed-ink); }
+body.app .dash-recent-grade {
+  font-family: var(--ed-display);
+  color: var(--ed-accent);
+}
+body.app .dash-recent-level-chip {
+  background: var(--ed-accent-soft);
+  border-color: color-mix(in oklch, var(--ed-accent) 30%, transparent);
+  color: var(--ed-accent);
+  font-family: var(--ed-mono);
+}
+
+/* Level-progress card — quiet paper, terracotta fills. */
+body.app .dash-adaptive-card,
+body.app .dash-adaptive-card.level-progress-card {
+  background: var(--ed-bg-card);
+  border-color: var(--ed-rule);
+  border-radius: 10px;
+}
+body.app .lpc-eyebrow { color: var(--ed-ink-subtle); font-family: var(--ed-mono); }
+body.app .lpc-title {
+  font-family: var(--ed-display);
+  font-variation-settings: "opsz" 32, "SOFT" 40;
+  color: var(--ed-ink);
+}
+body.app .lpc-hint { color: var(--ed-ink-muted); }
+body.app .lpc-bar { background: var(--ed-rule); }
+body.app .lpc-bar__fill { background: var(--ed-accent); }
+body.app .lpc-metric.is-done .lpc-bar__fill,
+body.app .lpc-metric.is-done .lpc-metric__num { color: var(--ed-olive); background: var(--ed-olive); }
+body.app .lpc-metric.is-done .lpc-metric__num { background: transparent; }
+body.app .lpc-badge {
+  color: var(--ed-accent);
+  background: var(--ed-accent-soft);
+  border-color: color-mix(in oklch, var(--ed-accent) 30%, transparent);
+  font-family: var(--ed-mono);
+}
+
+/* AI tutor card — single Fraunces-italic line, marginalia in olive. */
+body.app .dash-tutor {
+  background: var(--ed-bg-card);
+  border-color: var(--ed-rule);
+  border-left: 2px solid var(--ed-accent);
+  border-radius: 12px;
+}
+body.app .dash-tutor__msg {
+  font-family: var(--ed-display);
+  font-variation-settings: "opsz" 28, "SOFT" 60;
+  font-size: clamp(1rem, 0.5vw + 0.95rem, 1.125rem);
+  line-height: 1.55;
+  color: var(--ed-ink);
+}
+
+/* Readiness card — terracotta progression. */
+body.app .dash-readiness {
+  background: var(--ed-bg-card);
+  border-color: var(--ed-rule);
+  border-radius: 10px;
+}
+body.app .dash-readiness-title {
+  font-family: var(--ed-mono);
+  color: var(--ed-ink-subtle);
+}
+body.app .dash-readiness-pct {
+  font-family: var(--ed-display);
+  font-variation-settings: "opsz" 60, "SOFT" 30;
+  color: var(--ed-ink);
+}
+body.app .dash-readiness-track { background: var(--ed-rule); }
+body.app .dash-readiness-track__fill { background: var(--ed-accent); }
+body.app .dash-readiness-cell {
+  background: var(--ed-bg-deep);
+  border-color: var(--ed-rule);
+}
+body.app .dash-readiness-cell.lvl-1 { background: color-mix(in oklch, var(--ed-accent) 14%, var(--ed-bg-card)); border-color: color-mix(in oklch, var(--ed-accent) 26%, transparent); }
+body.app .dash-readiness-cell.lvl-2 { background: color-mix(in oklch, var(--ed-accent) 30%, var(--ed-bg-card)); border-color: color-mix(in oklch, var(--ed-accent) 42%, transparent); }
+body.app .dash-readiness-cell.lvl-3 { background: color-mix(in oklch, var(--ed-accent) 55%, var(--ed-bg-card)); border-color: color-mix(in oklch, var(--ed-accent) 62%, transparent); }
+body.app .dash-readiness-cell.lvl-4 { background: var(--ed-accent); border-color: var(--ed-accent-hover); }
+body.app .dash-readiness-legend-dots span.lvl-1 { background: color-mix(in oklch, var(--ed-accent) 14%, var(--ed-bg-card)); }
+body.app .dash-readiness-legend-dots span.lvl-2 { background: color-mix(in oklch, var(--ed-accent) 30%, var(--ed-bg-card)); }
+body.app .dash-readiness-legend-dots span.lvl-3 { background: color-mix(in oklch, var(--ed-accent) 55%, var(--ed-bg-card)); }
+body.app .dash-readiness-legend-dots span.lvl-4 { background: var(--ed-accent); }
+
+/* Heatmap — olive scale on cream so it reads as marginalia ink. */
+body.app .heatmap-cell { background: var(--ed-bg-deep); }
+body.app .heatmap-cell.lvl-2 { background: color-mix(in oklch, var(--ed-olive) 22%, var(--ed-bg-card)); }
+body.app .heatmap-cell.lvl-3 { background: color-mix(in oklch, var(--ed-olive) 48%, var(--ed-bg-card)); }
+body.app .heatmap-cell.lvl-4 { background: var(--ed-olive); }
+body.app .heatmap-cell:not([class*="lvl-"]):not(.future) {
+  background: transparent;
+  border: 1px dashed color-mix(in oklch, var(--ed-olive) 30%, transparent);
+}
+
+/* Weak topics — book index style, hairline divider, Fraunces names. */
+body.app .dash-weak-list { border-top-color: var(--ed-rule); }
+body.app .dash-weak__row { border-bottom-color: var(--ed-rule); }
+body.app .dash-weak__row:hover { background: var(--ed-accent-soft); }
+body.app .dash-weak__name {
+  font-family: var(--ed-display);
+  font-variation-settings: "opsz" 32, "SOFT" 50;
+  color: var(--ed-ink);
+}
+body.app .dash-weak__n { color: var(--ed-gold); font-family: var(--ed-display); font-style: italic; }
+body.app .dash-weak__err { color: var(--ed-accent); }
+body.app .dash-weak__blog { font-family: var(--ed-mono); color: var(--ed-ink-subtle); }
+
+/* Full-exam CTA card — terracotta-tinted, hard-offset shadow on hover. */
+body.app .dash-full-exam-card {
+  background: var(--ed-bg-card);
+  border-color: var(--ed-rule);
+  border-radius: 10px;
+  transition: box-shadow var(--ed-t-fast), transform var(--ed-t-fast);
+}
+body.app .dash-full-exam-card:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 0 var(--ed-accent-soft);
+}
+body.app .dash-full-exam-title {
+  font-family: var(--ed-display);
+  font-variation-settings: "opsz" 36, "SOFT" 40;
+  color: var(--ed-ink);
+}
+
+/* Free-tier chip — paper pill, olive meter fill. */
+body.app .dash-free-chip {
+  background: var(--ed-bg-deep);
+  border-color: var(--ed-rule);
+}
+body.app .dash-free-chip__badge {
+  font-family: var(--ed-mono);
+  background: var(--ed-bg-card);
+  border-color: var(--ed-rule-strong);
+  color: var(--ed-ink-muted);
+}
+body.app .dash-free-meter { background: var(--ed-bg-card); border-color: var(--ed-rule); }
+body.app .dash-free-meter__fill--ok { background: var(--ed-olive); }
+body.app .dash-free-meter__fill--warn { background: var(--ed-gold); }
+body.app .dash-free-chip__cta { color: var(--ed-accent); font-family: var(--ed-mono); }
+
+/* Onboarding banner — single warm tint, no purple gradient. */
+body.app .dash-onboarding-banner {
+  background: color-mix(in oklch, var(--ed-accent) 7%, var(--ed-bg-card));
+  border-color: color-mix(in oklch, var(--ed-accent) 32%, var(--ed-rule));
+}
+body.app .dash-onboarding-banner:hover {
+  border-color: var(--ed-accent);
+}
+body.app .dash-onboarding-banner-text strong,
+body.app .dash-onboarding-banner-arrow { color: var(--ed-accent); }
+
+/* Empty rail / chart empty — friendly marginalia tone. */
+body.app .dash-empty-rail {
+  background: var(--ed-bg-card);
+  border-color: var(--ed-rule);
+  border-radius: 14px;
+}
+body.app .dash-empty-rail__icon,
+body.app .dash-chart-empty__art { color: var(--ed-accent); }
+body.app .dash-empty-rail__title,
+body.app .dash-chart-empty__title {
+  font-family: var(--ed-display);
+  font-variation-settings: "opsz" 28, "SOFT" 50;
+  color: var(--ed-ink);
+}
+body.app .dash-empty-rail__sub,
+body.app .dash-chart-empty__sub { color: var(--ed-ink-muted); }
+
+/* Skeleton shimmer — warm cream gradient instead of grey. */
+body.app .dash-kpi-tile__val.is-loading,
+body.app .dash-tutor__skeleton-line {
+  background: linear-gradient(
+    90deg,
+    color-mix(in oklch, var(--ed-accent) 6%, var(--ed-bg-deep)) 0%,
+    color-mix(in oklch, var(--ed-accent) 16%, var(--ed-bg-deep)) 50%,
+    color-mix(in oklch, var(--ed-accent) 6%, var(--ed-bg-deep)) 100%
+  );
+  background-size: 200% 100%;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Buttons + inputs. Make the press feedback unmistakable so
+   the dashboard feels like the same hand built it as the
+   landing's pricing-card stamps.
+   ═══════════════════════════════════════════════════════════ */
+body.app .btn,
+body.app button.btn {
+  font-family: var(--ed-sans);
+  transition: transform 140ms cubic-bezier(0.23, 1, 0.32, 1),
+              box-shadow 140ms cubic-bezier(0.23, 1, 0.32, 1),
+              background 140ms cubic-bezier(0.23, 1, 0.32, 1),
+              border-color 140ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+body.app .btn:active,
+body.app button.btn:active { transform: scale(0.97); }
+
+body.app .btn--primary,
+body.app .btn-primary {
+  background: var(--ed-accent);
+  border-color: var(--ed-accent);
+  color: var(--ed-accent-ink);
+}
+body.app .btn--primary:hover,
+body.app .btn-primary:hover {
+  background: var(--ed-accent-hover);
+  border-color: var(--ed-accent-hover);
+  color: var(--ed-accent-ink);
+}
+body.app .btn-secondary {
+  border-color: var(--ed-rule-strong);
+  color: var(--ed-ink);
+  background: transparent;
+}
+body.app .btn-secondary:hover {
+  border-color: var(--ed-accent);
+  color: var(--ed-accent);
+}
+
+/* Day CTA pill (#dash-day-cta) — legacy navy-on-mint contrast assumption
+   inverts to dark-on-terracotta = 2.18:1 fail. Flip the foreground to
+   cream so the AA-required 4.5:1 lands. */
+body.app .btn--cta--accent,
+body.app .btn--cta--accent:hover {
+  color: var(--ed-accent-ink);
+}
+body.app .btn--cta--accent .btn--cta__title,
+body.app .btn--cta--accent .btn--cta__arrow { color: var(--ed-accent-ink); }
+body.app .btn--cta--accent .btn--cta__meta { color: color-mix(in oklch, var(--ed-accent-ink) 82%, transparent); }
+
+/* Keyboard-hint label — legacy opacity:0.28 on dark ink hits 7:1 on the
+   #0a0a0a charcoal but degrades to 1.6:1 once the surface is cream paper.
+   Bump opacity to 0.8 — still recessive next to the answer field, no
+   longer invisible to AA. */
+body.app .kbd-hint { opacity: 0.8; }
+body.app .kbd-hint:hover { opacity: 1; }
+body.app .kbd-label,
+body.app .kbd-sep { color: var(--ed-ink-muted); }
+
+/* Loading shimmer — the legacy 0.55→1 opacity keyframe drops contrast to
+   3.3:1 at its trough, which axe correctly flags. Drop the animation
+   inside body.app and lean on the inherent --ed-ink-muted tone to read
+   as "this is provisional copy" without an opacity loop. */
+body.app .loading-shimmer {
+  animation: none;
+  opacity: 1;
+  color: var(--ed-ink-muted);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Auth screen (login / register) — paper card, Fraunces eyebrow.
+   ═══════════════════════════════════════════════════════════ */
+body.app .auth-card,
+body.app .auth-wrap {
+  background: var(--ed-bg-card);
+  border-color: var(--ed-rule);
+}
+body.app .auth-title,
+body.app .auth-h1 {
+  font-family: var(--ed-display);
+  font-variation-settings: var(--ed-fvs-display);
+  color: var(--ed-ink);
+  letter-spacing: -0.012em;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Rail / sidebar. Cream sidebar, hairline rules, current item
+   marked by a leading terracotta numeral (book chapter style).
+   ═══════════════════════════════════════════════════════════ */
+body.app .sidebar,
+body.app .app-sidebar,
+body.app .rail {
+  background: var(--ed-bg-deep);
+  border-right: 1px solid var(--ed-rule);
+}
+body.app .sidebar-logo,
+body.app .rail__brand {
+  font-family: var(--ed-display);
+  font-variation-settings: "opsz" 48, "SOFT" 50;
+  color: var(--ed-ink);
+  letter-spacing: -0.01em;
+}
+body.app .sidebar-logo span,
+body.app .rail__brand-o {
+  color: var(--ed-accent);
+  font-style: italic;
+  font-variation-settings: var(--ed-fvs-display-italic);
+}
+
+/* Bottom mobile nav — warm cream, accent for current tab. */
+body.app .mobile-nav {
+  background: color-mix(in oklch, var(--ed-bg) 92%, transparent);
+  border-top: 1px solid var(--ed-rule);
+  backdrop-filter: saturate(135%) blur(10px);
+  -webkit-backdrop-filter: saturate(135%) blur(10px);
+}
+body.app .mobile-nav-item { color: var(--ed-ink-subtle); }
+body.app .mobile-nav-item.active { color: var(--ed-accent); }
+
+/* ═══════════════════════════════════════════════════════════
+   Focus ring — terracotta on every interactive in body.app.
+   ═══════════════════════════════════════════════════════════ */
+body.app *:focus-visible {
+  outline: 2px solid var(--ed-accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Reduced motion — strip transforms on hover, keep only colour.
+   ═══════════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  body.app .dash-mode-card:hover,
+  body.app .dash-full-exam-card:hover {
+    transform: none;
+    box-shadow: none;
+  }
+}
