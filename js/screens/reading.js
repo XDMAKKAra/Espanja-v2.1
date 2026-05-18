@@ -1,5 +1,5 @@
 import { $, show } from "../ui/nav.js";
-import { API, isLoggedIn, authHeader, retryable } from "../api.js";
+import { API, isLoggedIn, authHeader, retryable, humanizeApiError } from "../api.js";
 import { state, apiLang } from "../state.js";
 import { showLoading, showLoadingError } from "../ui/loading.js";
 import { generateCoachLine, countUp } from "./mode-page.js";
@@ -64,7 +64,10 @@ export async function loadReadingTask() {
     renderReadingText();
     show("screen-reading");
   } catch (err) {
-    showLoadingError(err.message, () => loadReadingTask());
+    {
+      const copy = humanizeApiError(err);
+      showLoadingError(`${copy.title}. ${copy.subtext}`, () => loadReadingTask());
+    }
   }
 }
 

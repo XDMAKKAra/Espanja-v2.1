@@ -70,6 +70,39 @@ export function clearAuth() {
   _dashboardV2 = null;
 }
 
+// L-PRO-TIER-AND-QUOTA-UX — map server error codes to humane Finnish copy
+// so the loading-error UI never bleeds raw keys like "free_quota_exceeded".
+// Each entry is { title, subtext }; callers that only need one string can
+// take .subtext (matches the existing showFetchError contract).
+const API_ERROR_COPY = {
+  free_quota_exceeded: {
+    title:   "Päivän ilmaiskiintiö täynnä",
+    subtext: "Olet käyttänyt päivän ilmaisen kiintiösi. Päivitä Pro-versioon tai palaa huomenna, niin kiintiö nollautuu.",
+  },
+  tier_required: {
+    title:   "Pro-ominaisuus",
+    subtext: "Tämä ominaisuus kuuluu Pro-tilaukseen. Päivitä, niin pääset jatkamaan.",
+  },
+  rate_limited: {
+    title:   "Yritä hetken päästä",
+    subtext: "Pyyntöjä tuli liian tiheästi. Odota hetki, niin voit jatkaa.",
+  },
+  ai_budget_exceeded: {
+    title:   "Päivän laskenta-aika on loppu",
+    subtext: "Palvelin on tauolla. Yritä hetken kuluttua uudelleen.",
+  },
+};
+export function humanizeApiError(input) {
+  const key = (input instanceof Error ? input.message : String(input || "")).trim();
+  if (!key) return { title: "Jokin meni pieleen", subtext: "Yritä hetken päästä uudelleen." };
+  if (API_ERROR_COPY[key]) return API_ERROR_COPY[key];
+  // Long messages = already humane; pass through. Short snake_case = raw key.
+  if (/^[a-z][a-z0-9_]+$/.test(key) && key.length < 40) {
+    return { title: "Lataus epäonnistui", subtext: "Yritä hetken päästä uudelleen." };
+  }
+  return { title: "Lataus epäonnistui", subtext: key };
+}
+
 // Auto-refresh: if any authed request gets 401, try refreshing once then retry
 let _refreshing = null;
 

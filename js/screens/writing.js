@@ -1,5 +1,5 @@
 import { $, show } from "../ui/nav.js";
-import { API, isLoggedIn, authHeader, apiFetch, retryable } from "../api.js";
+import { API, isLoggedIn, authHeader, apiFetch, retryable, humanizeApiError } from "../api.js";
 import { state, apiLang } from "../state.js";
 import { CRITERIA_LABELS } from "../state.js";
 import { showLoading, showLoadingError, showSkeleton, showFetchError } from "../ui/loading.js";
@@ -252,11 +252,14 @@ export async function loadWritingTask() {
     renderWritingTask(data.task);
     show("screen-writing");
   } catch (err) {
-    showFetchError($("writing-skeleton-slot"), {
-      title: "Kirjoitustehtävän lataus epäonnistui",
-      subtext: err.message,
-      retryFn: () => loadWritingTask(),
-    });
+    {
+      const copy = humanizeApiError(err);
+      showFetchError($("writing-skeleton-slot"), {
+        title: copy.title,
+        subtext: copy.subtext,
+        retryFn: () => loadWritingTask(),
+      });
+    }
   }
 }
 
@@ -452,9 +455,12 @@ $("btn-submit-writing").addEventListener("click", async () => {
     });
     show("screen-writing-feedback");
   } catch (err) {
-    showLoadingError("Arviointivirhe: " + err.message, () => {
-      show("screen-writing");
-    });
+    {
+      const copy = humanizeApiError(err);
+      showLoadingError(`${copy.title}. ${copy.subtext}`, () => {
+        show("screen-writing");
+      });
+    }
   }
 });
 

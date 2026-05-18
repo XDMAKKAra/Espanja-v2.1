@@ -1,5 +1,5 @@
 import { $, show } from "../ui/nav.js";
-import { API, isLoggedIn, authHeader, apiFetch, retryable } from "../api.js";
+import { API, isLoggedIn, authHeader, apiFetch, retryable, humanizeApiError } from "../api.js";
 import { state, LEVELS, BATCH_SIZE, MAX_BATCHES, apiLang } from "../state.js";
 import { showLoading, showLoadingError, showSkeleton, showFetchError } from "../ui/loading.js";
 import { srPop, srAddWrong, srMarkCorrect, srReview, srGetDue } from "../features/spacedRepetition.js";
@@ -433,11 +433,14 @@ export async function loadNextBatch() {
   } catch (err) {
     // Commit 9: inline retry, student stays on #screen-exercise, no
     // full-screen loading-error flip.
-    showFetchError($("exercise-skeleton-slot"), {
-      title: "Tehtävien lataus epäonnistui",
-      subtext: err.message,
-      retryFn: () => loadNextBatch(),
-    });
+    {
+      const copy = humanizeApiError(err);
+      showFetchError($("exercise-skeleton-slot"), {
+        title: copy.title,
+        subtext: copy.subtext,
+        retryFn: () => loadNextBatch(),
+      });
+    }
     $("exercise-skeleton-slot").classList.remove("hidden");
     $("exercise-question-block").classList.add("hidden");
     $("options-grid").classList.add("hidden");
