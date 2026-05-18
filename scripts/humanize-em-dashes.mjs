@@ -55,7 +55,7 @@ for (const f of files) {
   if (!fs.existsSync(f)) continue;
   const orig = fs.readFileSync(f, "utf8");
   let out = orig.replace(/ — /g, ", ");
-  out = out.replace(/ —([\.,\)])/g, "$1");
+  out = out.replace(/ —([.,)])/g, "$1");
   const count = (orig.match(/ — /g) || []).length;
   if (count > 0) {
     fs.writeFileSync(f, out);

@@ -822,30 +822,75 @@ body.landing > * { position: relative; z-index: 1; }
 }
 .landing .ge-tip {
   position: absolute;
-  left: 0;
-  top: calc(100% + 6px);
-  z-index: 5;
+  left: 50%;
+  top: calc(100% + 8px);
+  z-index: 20;
+  width: max-content;
   min-width: 220px;
-  max-width: 320px;
-  padding: 10px 12px;
+  max-width: min(320px, 78vw);
+  padding: 12px 14px;
   background: var(--ed-ink);
   color: var(--ed-bg);
   border-radius: var(--ed-r-md);
   font-family: var(--ed-sans);
   font-size: var(--ed-fs-meta);
-  line-height: 1.45;
+  line-height: 1.5;
   font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
   opacity: 0;
   pointer-events: none;
-  transform: translateY(-4px);
+  transform: translate(-50%, -4px);
   transition: opacity var(--ed-t-fast), transform var(--ed-t-fast);
   white-space: normal;
+  box-shadow: 0 10px 24px oklch(20% 0.05 30 / 0.18),
+              0 2px 6px oklch(20% 0.05 30 / 0.10);
+}
+/* Arrow pointing up to the highlighted word */
+.landing .ge-tip::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: -5px;
+  width: 10px;
+  height: 10px;
+  background: var(--ed-ink);
+  transform: translateX(-50%) rotate(45deg);
+  border-radius: 1px;
 }
 .landing .ge-tip strong {
   display: block;
-  color: oklch(85% 0.06 28);
+  color: oklch(86% 0.07 60);
   margin-bottom: 4px;
   font-weight: 600;
+  font-size: 0.875rem;
+  letter-spacing: 0;
+  text-transform: none;
+}
+/* Re-anchor tooltips near the right edge so they don't overflow */
+.landing .ge:nth-last-child(-n+2) .ge-tip,
+.landing .grader-prose > .ge:last-of-type .ge-tip {
+  left: auto;
+  right: 0;
+  transform: translate(0, -4px);
+}
+.landing .ge:nth-last-child(-n+2) .ge-tip::before,
+.landing .grader-prose > .ge:last-of-type .ge-tip::before {
+  left: auto;
+  right: 16px;
+  transform: rotate(45deg);
+}
+.landing .ge:hover .ge-tip,
+.landing .ge:focus-visible .ge-tip {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+.landing .ge:nth-last-child(-n+2):hover .ge-tip,
+.landing .ge:nth-last-child(-n+2):focus-visible .ge-tip,
+.landing .grader-prose > .ge:last-of-type:hover .ge-tip,
+.landing .grader-prose > .ge:last-of-type:focus-visible .ge-tip {
+  opacity: 1;
+  transform: translate(0, 0);
 }
 .landing .ge:hover .ge-tip,
 .landing .ge:focus-visible .ge-tip {
@@ -1011,10 +1056,24 @@ body.landing > * { position: relative; z-index: 1; }
   box-shadow: var(--ed-shadow-sm);
 }
 .landing .testimonial--frag {
-  padding: var(--ed-sp-5) 0;
+  padding: var(--ed-sp-6) clamp(8px, 1.4vw, 16px);
   border-top: 1px solid var(--ed-rule);
 }
-.landing .testimonial--frag:first-of-type { border-top: none; padding-top: 0; }
+@media (min-width: 880px) {
+  /* Align first fragment's quote-top with the lead-card's quote-top so
+     the right column doesn't read as "floating high" next to the padded
+     card on the left. */
+  .landing .testimonial--frag:first-of-type {
+    border-top: none;
+    padding-top: clamp(28px, 4vw, 44px);
+  }
+}
+@media (max-width: 879px) {
+  .landing .testimonial--frag:first-of-type {
+    border-top: none;
+    padding-top: 0;
+  }
+}
 
 .landing .testimonial__quote {
   font-family: var(--ed-serif);
