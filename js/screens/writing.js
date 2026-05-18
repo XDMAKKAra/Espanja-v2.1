@@ -1,5 +1,6 @@
 import { $, show } from "../ui/nav.js";
 import { API, isLoggedIn, authHeader, apiFetch, retryable, humanizeApiError } from "../api.js";
+import { attachAccentBar } from "../features/accentBar.js";
 import { state, apiLang } from "../state.js";
 import { CRITERIA_LABELS } from "../state.js";
 import { showLoading, showLoadingError, showSkeleton, showFetchError } from "../ui/loading.js";
@@ -420,6 +421,7 @@ function updateCharCounter() {
 
 $("writing-input").addEventListener("input", updateCharCounter);
 $("writing-input").addEventListener("input", queueWritingAutosave);
+attachAccentBar($("writing-input"));
 
 $("btn-submit-writing").addEventListener("click", async () => {
   const text = $("writing-input").value.trim();

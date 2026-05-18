@@ -14,6 +14,7 @@ import { $ }                         from '../ui/nav.js';
 import { API, apiFetch, authHeader } from '../api.js';
 import { t }                         from '../ui/strings.js';
 import { resetHint, advanceHint, trackWrongAttempt } from '../features/hintLadder.js';
+import { attachAccentBar } from '../features/accentBar.js';
 
 function scoreToBand(score) {
   if (score >= 3) return 'taydellinen';
@@ -99,6 +100,7 @@ export function renderLauseenMuodostus(ex, _container, { onAnswer } = {}) {
   input.value       = '';
   input.disabled    = false;
   input.placeholder = 'Muodosta lause espanjaksi…';
+  attachAccentBar(input);
   input.focus();
   submit.disabled    = false;
   submit.textContent = t('btn.submit');

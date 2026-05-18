@@ -15,6 +15,9 @@
 import { show } from "../ui/nav.js";
 import { API, isLoggedIn, authHeader, apiFetch } from "../api.js";
 import { masteryThresholdFor, isPhaseSkipped } from "../lib/lessonAdapter.js";
+import { isAcceptable } from "../lib/accentTolerance.js";
+import { attachAccentBarAll } from "../features/accentBar.js";
+import { attachCharCounter, wordsToChars } from "../features/charCounter.js";
 
 const ROOT_ID = "lesson-runner-root";
 
@@ -33,10 +36,30 @@ function normalizeAnswer(s) {
     .replace(/[̀-ͯ]/g, "")
     .replace(/\s+/g, " ");
 }
-function answerMatches(input, accepts) {
+/**
+ * Matches a typed answer against a list of accepted strings using
+ * accent-tolerant comparison. Returns:
+ *   { ok: true,  hint: null }                    — strict match
+ *   { ok: true,  hint: "Muista aksentit: …" }    — match once diacritics
+ *                                                  stripped on user side
+ *   { ok: false, hint: null }                    — neither matched
+ *
+ * `hint` is the upgrade-path microcopy the feedback band surfaces so
+ * the user knows the missing accent without being rejected.
+ */
+function answerMatches(input, accepts, lang = "es") {
+  const list = accepts || [];
+  // First pass: strict normalized equality.
   const norm = normalizeAnswer(input);
-  if (!norm) return false;
-  return (accepts || []).some((a) => normalizeAnswer(a) === norm);
+  if (norm && list.some((a) => normalizeAnswer(a) === norm)) {
+    return { ok: true, hint: null };
+  }
+  // Second pass: accent-tolerant match (with critical-pair guard).
+  for (const exp of list) {
+    const r = isAcceptable(input, exp, lang);
+    if (r.ok) return r;
+  }
+  return { ok: false, hint: null };
 }
 
 // ── Lesson runner state ────────────────────────────────────────────────────
@@ -281,11 +304,19 @@ function renderGapFill(item) {
 }
 
 function renderWritingItem(item) {
+  // Convert any legacy word-targets (min_words/max_words) into character
+  // targets so the live mittari counts merkkejä, not sanoja. Per user
+  // feedback 2026-05-18, kaikki tehtävät joissa lasketaan sanoja → laske
+  // merkkejä. Item may also ship min_chars/max_chars directly.
+  const minChars = Number(item.min_chars) || wordsToChars(item.min_words);
+  const maxChars = Number(item.max_chars) || wordsToChars(item.max_words);
   return `
     <div class="lr-writing">
       <p class="lr-writing-prompt">${escapeHtml(item.prompt || "")}</p>
-      <p class="lr-writing-meta">${item.min_words || 0}–${item.max_words || 0} sanaa</p>
-      <textarea class="lr-writing-input" id="lr-writing-input" rows="8"></textarea>
+      <textarea class="lr-writing-input" id="lr-writing-input"
+                data-min-chars="${minChars}" data-max-chars="${maxChars}"
+                rows="8"></textarea>
+      <p class="lr-writing-char-counter" id="lr-writing-char-counter">0 / ${minChars}–${maxChars} merkkiä</p>
       <button type="button" class="btn btn-primary" id="lr-writing-submit">Lähetä</button>
       <div class="lr-feedback" id="lr-feedback" hidden></div>
     </div>`;
@@ -313,6 +344,14 @@ function renderReadingMC(item) {
 // ── Item handlers ──────────────────────────────────────────────────────────
 
 function wireExerciseHandlers(root, state, item) {
+  // Stash state on root so the click-to-advance "Seuraava →" button in
+  // showItemFeedback can call advanceItem without prop-drilling state.
+  root.__lrState = state;
+  // Attach the accent bar to every text input + textarea this item paints.
+  // We do this once per item so newly created elements pick it up; the
+  // bar itself dedupes via WeakSet so this is safe to call repeatedly.
+  attachAccentBarAll(root, state.language);
+
   document.getElementById("lr-help-toggle")?.addEventListener("click", () => toggleSidePanel(root, state));
   document.getElementById("lr-skip")?.addEventListener("click", () => onSkipPhase(root, state));
   document.getElementById("lr-exit-lesson")?.addEventListener("click", async () => {
@@ -330,27 +369,32 @@ function wireExerciseHandlers(root, state, item) {
   });
   root.querySelector("[data-lr-skip-item]")?.addEventListener("click", () => advanceItem(root, state, true));
 
+  // Resolve the active language so accent tolerance can apply the
+  // correct critical-pair guard. State.language defaults to es when
+  // unset (legacy single-language users).
+  const lang = (typeof state.language === "string" && state.language) || "es";
+
   if (item.item_type === "mc") {
     root.querySelectorAll(".lr-mc-choice").forEach((b) => {
       b.addEventListener("click", () => {
         const idx = Number(b.dataset.mcIdx);
         const correct = idx === Number(item.correct_index);
-        showItemFeedback(root, correct, item.explanation || "");
+        showItemFeedback(root, correct, item.explanation || "", { hint: null, waitForClick: !correct });
         markChoices(root, item.correct_index, idx);
         recordAnswer(state, correct);
-        scheduleAdvance(root, state);
+        if (correct) scheduleAdvance(root, state);
       });
     });
   } else if (item.item_type === "typed" || item.item_type === "translate") {
     const input = document.getElementById("lr-typed-input");
     const submit = document.getElementById("lr-typed-submit");
     const tryIt = () => {
-      const accepts = item.item_type === "translate" ? item.accept : item.accept;
-      const ok = answerMatches(input.value, accepts);
-      const expected = (accepts && accepts[0]) || "";
-      showItemFeedback(root, ok, ok ? "" : `Oikea vastaus: ${expected}`);
+      const accepts = item.accept || [];
+      const { ok, hint } = answerMatches(input.value, accepts, lang);
+      const expected = accepts[0] || "";
+      showItemFeedback(root, ok, ok ? "" : `Oikea vastaus: ${expected}`, { hint, waitForClick: !ok });
       recordAnswer(state, ok);
-      scheduleAdvance(root, state);
+      if (ok) scheduleAdvance(root, state);
     };
     submit?.addEventListener("click", tryIt);
     input?.addEventListener("keydown", (e) => { if (e.key === "Enter") tryIt(); });
@@ -362,24 +406,34 @@ function wireExerciseHandlers(root, state, item) {
       const inputs = root.querySelectorAll(".lr-gap-input");
       let allOk = true;
       const expected = [];
+      let firstHint = null;
       inputs.forEach((inp, i) => {
         const accepts = (item.answers && item.answers[i]) || [];
-        const ok = answerMatches(inp.value, accepts);
-        if (!ok) allOk = false;
+        const r = answerMatches(inp.value, accepts, lang);
+        if (!r.ok) allOk = false;
+        if (r.hint && !firstHint) firstHint = r.hint;
         expected.push((accepts[0] || "?"));
       });
-      showItemFeedback(root, allOk, allOk ? "" : `Oikeat vastaukset: ${expected.join(", ")}`);
+      showItemFeedback(root, allOk, allOk ? "" : `Oikeat vastaukset: ${expected.join(", ")}`, { hint: firstHint, waitForClick: !allOk });
       recordAnswer(state, allOk);
-      scheduleAdvance(root, state);
+      if (allOk) scheduleAdvance(root, state);
     });
   } else if (item.item_type === "writing") {
+    const ta = document.getElementById("lr-writing-input");
+    const counter = document.getElementById("lr-writing-char-counter");
+    const minChars = Number(ta?.dataset.minChars) || 0;
+    const maxChars = Number(ta?.dataset.maxChars) || 0;
+    if (ta && counter) attachCharCounter(ta, counter, { minChars, maxChars });
     document.getElementById("lr-writing-submit")?.addEventListener("click", () => {
-      const text = document.getElementById("lr-writing-input")?.value || "";
-      const wc = (text.trim().match(/\S+/g) || []).length;
-      const ok = wc >= (item.min_words || 0);
-      showItemFeedback(root, ok, ok ? "Kirjoituksesi on tallennettu." : `Sanamäärä on ${wc}, tavoite vähintään ${item.min_words}.`);
+      const text = ta?.value || "";
+      const chars = text.length;
+      const ok = chars >= minChars;
+      const msg = ok
+        ? "Kirjoituksesi on tallennettu."
+        : `Merkkimäärä on ${chars}, tavoite vähintään ${minChars} merkkiä. Jatka kirjoitusta.`;
+      showItemFeedback(root, ok, msg, { hint: null, waitForClick: !ok });
       recordAnswer(state, ok);
-      scheduleAdvance(root, state);
+      if (ok) scheduleAdvance(root, state);
     });
   } else if (item.item_type === "reading_mc") {
     document.getElementById("lr-reading-submit")?.addEventListener("click", () => {
@@ -443,24 +497,46 @@ const FB_ICON_CHECK =
 const FB_ICON_CROSS =
   '<svg class="lr-feedback__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>';
 
-function showItemFeedback(root, correct, msg) {
+function showItemFeedback(root, correct, msg, opts = {}) {
   const fb = root.querySelector("#lr-feedback");
   if (!fb) return;
+  const { hint = null, waitForClick = false } = opts;
   fb.hidden = false;
-  fb.className = `lr-feedback ${correct ? "is-correct" : "is-wrong"}`;
-  // aria-live ensures screen-readers announce both icon-bearing states.
+  fb.className =
+    `lr-feedback ${correct ? "is-correct lr-feedback--correct" : "is-wrong lr-feedback--wrong"}`;
   fb.setAttribute("role", "status");
   fb.setAttribute("aria-live", correct ? "polite" : "assertive");
   const text = correct ? (msg || "Hyvin meni!") : (msg || "Melkein, yritä uudelleen.");
+  const hintHtml = hint
+    ? `<p class="lr-feedback__accent-hint">${escapeHtml(hint)}</p>`
+    : "";
+  const nextHtml = waitForClick
+    ? `<button type="button" class="lr-feedback__next" id="lr-feedback-next">Seuraava →</button>`
+    : "";
   fb.innerHTML =
     `${correct ? FB_ICON_CHECK : FB_ICON_CROSS}` +
-    `<span class="lr-feedback__text">${escapeHtml(text)}</span>`;
-  // Retrigger the keyframe even when the same element is reused between items.
+    `<div class="lr-feedback__body-wrap">` +
+      `<p class="lr-feedback__title ${correct ? "is-correct" : "is-wrong"}">${correct ? "Oikein" : "Väärin"}</p>` +
+      `<p class="lr-feedback__body">${escapeHtml(text)}</p>` +
+      `${hintHtml}` +
+      `${nextHtml}` +
+    `</div>`;
   fb.classList.remove("lr-feedback--animate");
-  // Force reflow so the next class add restarts the animation.
   // eslint-disable-next-line no-unused-expressions
   void fb.offsetWidth;
   fb.classList.add("lr-feedback--animate");
+
+  if (waitForClick) {
+    // Caller already short-circuited scheduleAdvance for wrong answers;
+    // hook the explicit "Seuraava →" so the user advances when ready.
+    // root.__lrState is stashed by wireExerciseHandlers below so the
+    // click can resolve advanceItem(root, state).
+    const btn = fb.querySelector("#lr-feedback-next");
+    btn?.addEventListener("click", () => {
+      const s = root.__lrState;
+      if (s) advanceItem(root, s, false);
+    }, { once: true });
+  }
 }
 
 function markChoices(root, correctIdx, pickedIdx) {

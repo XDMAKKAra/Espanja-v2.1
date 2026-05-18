@@ -2,6 +2,7 @@ import { $, show } from "../ui/nav.js";
 import { state } from "../state.js";
 import { showLoadingError } from "../ui/loading.js";
 import { track } from "../analytics.js";
+import { attachAccentBar } from "../features/accentBar.js";
 import {
   loadVerbs,
   PERSON_LABELS,
@@ -194,6 +195,7 @@ function renderPrompt() {
     paradigmBtn.textContent = `📖 Näytä paradigma (${MAX_PARADIGMS_PER_SPRINT - session.paradigmsShown} jäljellä)`;
   }
 
+  attachAccentBar(input);
   session.promptShownAt = performance.now();
   setTimeout(() => input.focus(), 30);
 }
