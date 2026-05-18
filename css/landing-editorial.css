@@ -9,7 +9,108 @@
    Cascade: loaded AFTER landing.css → all .landing rules below win.
    ============================================================ */
 
-/* ─── Body register ─────────────────────────────────────────── */
+/* ─── Body register (landing + legal + blog all share Old-Spain) ──── */
+body.landing,
+body.legal,
+body.blog {
+  /* Alias old landing-tokens vars to new editorial tokens so the
+     existing inline <style> blocks on privacy/terms/refund/blog pages
+     keep working without rewriting every CSS variable name. */
+  --text:          var(--ed-ink);
+  --text-muted:    var(--ed-ink-muted);
+  --text-subtle:   var(--ed-ink-subtle);
+  --text-faint:    var(--ed-ink-faint);
+  --bg:            var(--ed-bg);
+  --bg-card:       var(--ed-bg-card);
+  --bg-deep:       var(--ed-bg-deep);
+  --border:        var(--ed-rule);
+  --border-strong: var(--ed-rule-strong);
+  --accent:        var(--ed-accent);
+  --accent-soft:   var(--ed-accent-soft);
+  --font-display:  var(--ed-display);
+  --font-sans:     var(--ed-sans);
+  --font-mono:     var(--ed-mono);
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 16px;
+  --sp-4: 24px;
+  --sp-5: 32px;
+  --sp-6: 48px;
+  --tracking-tight: -0.012em;
+  --lh-tight: 1.18;
+  --t-mid: 240ms cubic-bezier(0.23, 1, 0.32, 1);
+  --content-max: var(--ed-content-max);
+
+  /* Aliases for blog-post inline <style> blocks that use --ink, --ink-soft,
+     --font-body, --accent-dark, --surface, --error, --success */
+  --ink:           var(--ed-ink);
+  --ink-soft:      var(--ed-ink-muted);
+  --ink-faint:     var(--ed-ink-faint);
+  --font-body:     var(--ed-sans);
+  --accent-dark:   var(--ed-accent-hover);
+  --surface:       var(--ed-bg-card);
+  --error:         oklch(48% 0.15 28);
+  --success:       var(--ed-olive);
+  --r-xl:          var(--ed-r-xl);
+}
+
+body.legal,
+body.blog {
+  background: var(--ed-bg);
+  color: var(--ed-ink);
+  font-family: var(--ed-sans);
+  font-size: var(--ed-fs-body-lg);
+  line-height: var(--ed-lh-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  margin: 0;
+}
+
+body.legal a,
+body.blog a {
+  color: var(--ed-accent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+body.legal a:hover,
+body.blog a:hover {
+  color: var(--ed-accent-hover);
+}
+
+/* Headings on legal/blog default to display serif */
+body.legal h1, body.legal h2, body.legal h3,
+body.blog h1, body.blog h2, body.blog h3 {
+  font-family: var(--ed-display);
+  font-variation-settings: "opsz" 60, "SOFT" 40;
+  color: var(--ed-ink);
+  letter-spacing: -0.012em;
+}
+body.legal h1, body.blog h1 {
+  font-variation-settings: var(--ed-fvs-display);
+}
+body.legal h1 em, body.legal h2 em,
+body.blog h1 em, body.blog h2 em {
+  font-style: italic;
+  font-variation-settings: var(--ed-fvs-display-italic);
+  color: var(--ed-accent);
+}
+
+/* Subtle paper texture, same as landing */
+body.legal::before,
+body.blog::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: radial-gradient(circle at 18% 20%, oklch(70% 0.05 60 / 0.05) 0, transparent 32%),
+                    radial-gradient(circle at 84% 76%, oklch(60% 0.10 28 / 0.04) 0, transparent 34%);
+}
+body.legal > *,
+body.blog > * { position: relative; z-index: 1; }
+
+/* ─── Body register (landing only) ───────────────────────────── */
 body.landing {
   background: var(--ed-bg);
   color: var(--ed-ink);
