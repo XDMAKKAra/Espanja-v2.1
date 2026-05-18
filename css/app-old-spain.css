@@ -1428,124 +1428,37 @@ body.app #gram-level-badge {
   background: var(--ed-bg-card);
 }
 
-/* ─── Two-column drill layout (desktop ≥1024px) ─────────────────── */
+/* ─── Keyboard hint hidden. The marginalia rail with "Näppäimet" + 1-4
+   / A-D / ↵ chips was a Vaihe 3 experiment; user feedback 2026-05-18
+   removed it ("ota vittuun toi näppäin juttu") on the grounds that it
+   was illegible and unused. Drill returns to a single column where the
+   question and options have the full page width.
+
+   The actual .kbd-hint DOM is still rendered (vocab.js queries it), so
+   we hide it with display:none and let the scaffold-indicator fall
+   back to its inline position above the question block. ─────────── */
+body.app #screen-exercise > .exercise > .kbd-hint,
+body.app #screen-grammar > .exercise > .kbd-hint,
+body.app #screen-exercise .kbd-hint,
+body.app #screen-grammar .kbd-hint {
+  display: none !important;
+}
+
+/* Single column layout — drill content centres in a generous reading
+   column so prompts + options breathe across the full work surface. */
 @media (min-width: 1024px) {
   body.app #screen-exercise > .exercise,
   body.app #screen-grammar > .exercise {
-    display: grid;
-    grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
-    column-gap: 56px;
-    row-gap: 0;
-    align-items: start;
-  }
-  /* The eyebrow + progress bar span both columns so the chapter break
-     reads as one continuous rule across the page. */
-  body.app #screen-exercise > .exercise > .exercise__top,
-  body.app #screen-grammar > .exercise > .exercise__top,
-  body.app #screen-exercise > .exercise > .exercise__progress,
-  body.app #screen-grammar > .exercise > .exercise__progress {
-    grid-column: 1 / -1;
-  }
-  /* Left column = the question itself: skeleton slot, prompt, options,
-     gap-fill, matching, reorder, translate, and the feedback block. */
-  body.app #screen-exercise > .exercise > .scaffold-indicator,
-  body.app #screen-grammar > .exercise > .scaffold-indicator,
-  body.app #screen-exercise > .exercise > .question-block,
-  body.app #screen-grammar > .exercise > .question-block,
-  body.app #screen-exercise > .exercise > .exercise-skeleton-slot,
-  body.app #screen-grammar > .exercise > .exercise-skeleton-slot,
-  body.app #screen-exercise > .exercise > .exercise__options,
-  body.app #screen-grammar > .exercise > .exercise__options,
-  body.app #screen-exercise > .exercise > .gap-fill-area,
-  body.app #screen-exercise > .exercise > .matching-area,
-  body.app #screen-exercise > .exercise > .reorder-area,
-  body.app #screen-exercise > .exercise > .translate-area,
-  body.app #screen-exercise > .exercise > .exercise__feedback,
-  body.app #screen-grammar > .exercise > .exercise__feedback {
-    grid-column: 1;
-  }
-  /* Right column = the marginalia rail. kbd-hint sticks to the top so
-     it's visible while scrolling long prompts. */
-  body.app #screen-exercise > .exercise > .kbd-hint,
-  body.app #screen-grammar > .exercise > .kbd-hint {
-    grid-column: 2;
-    grid-row: 3 / span 6;
-    align-self: start;
-    position: sticky;
-    top: 24px;
-    margin-top: 12px;
-    padding: 18px 18px 18px 22px;
-    border-left: 1px solid var(--ed-rule);
-    border-radius: 0;
-    background: transparent;
-    opacity: 1;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-  }
-  body.app #screen-exercise > .exercise > .kbd-hint::before,
-  body.app #screen-grammar > .exercise > .kbd-hint::before {
-    content: "Näppäimet";
-    display: block;
-    font-family: var(--ed-mono);
-    font-size: 0.6875rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--ed-ink-subtle);
-    margin-bottom: 4px;
-  }
-  body.app #screen-exercise > .exercise > .kbd-hint .kbd-sep,
-  body.app #screen-grammar > .exercise > .kbd-hint .kbd-sep {
-    display: block;
-    width: 100%;
-    color: var(--ed-ink-subtle);
-    font-family: var(--ed-display);
-    font-style: italic;
-    margin: 4px 0;
-  }
-  body.app #screen-exercise > .exercise > .kbd-hint .kbd-label,
-  body.app #screen-grammar > .exercise > .kbd-hint .kbd-label {
-    font-family: var(--ed-display);
-    font-style: italic;
-    font-variation-settings: "opsz" 24, "SOFT" 60;
-    color: var(--ed-ink-muted);
-    margin-left: 6px;
-  }
-  /* Scaffold indicator (kertaus / SR-tag) joins the same rail beneath
-     the kbd-hint when visible. */
-  body.app #screen-exercise > .exercise > .scaffold-indicator:not(.hidden),
-  body.app #screen-grammar > .exercise > .scaffold-indicator:not(.hidden) {
-    grid-column: 2;
-    grid-row: 4 / span 2;
-    align-self: start;
-    position: sticky;
-    top: 240px;
-    margin-top: 0;
-    padding: 18px 18px 18px 22px;
-    border-left: 1px solid var(--ed-rule);
-    border-radius: 0;
-    background: transparent;
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
   }
 }
 
-/* ─── Drop-cap on the prompt. The first letter of the prompt rises to
-   ~1.8× the prompt's own size, drops two lines of body alongside.
-   Falls back gracefully if the prompt starts with punctuation. ───── */
-@media (min-width: 769px) {
-  body.app #screen-exercise .question-block .display::first-letter,
-  body.app #screen-grammar .question-block .display::first-letter {
-    font-family: var(--ed-display);
-    font-variation-settings: "opsz" 144, "SOFT" 30, "WONK" 0;
-    font-weight: 500;
-    font-size: 4.6rem;
-    line-height: 0.85;
-    float: left;
-    margin: 0.12em 0.14em 0 -0.04em;
-    color: var(--ed-accent);
-    /* Tight letter — pull the next character snug against the drop. */
-    padding-right: 0.04em;
-  }
-}
+/* Drop-cap removed 2026-05-18 — it broke on Finnish prompts where the
+   first word is itself a single letter or quote ("L'auseessa" reading
+   as a dropped L detached from the body). Keep the prompt as one
+   continuous serif heading. */
 
 /* ─── Question prompt itself — let it breathe in the wider left column. */
 body.app #screen-exercise .question-block .display,
@@ -1620,12 +1533,6 @@ body.app #screen-grammar .exercise__top::after {
    stays intact. We still soften the kbd-hint visually on mobile so it
    doesn't read as a centred footer bar. ────────────────────────── */
 @media (max-width: 1023px) {
-  body.app #screen-exercise > .exercise > .kbd-hint,
-  body.app #screen-grammar > .exercise > .kbd-hint {
-    border-top: 1px solid var(--ed-rule);
-    padding-top: 14px;
-    margin-top: 18px;
-  }
   body.app #screen-exercise .question-block .display,
   body.app #screen-grammar .question-block .display {
     max-width: none;
