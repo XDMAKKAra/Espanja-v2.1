@@ -36,7 +36,7 @@ export function showLoadingError(errorMsg, retryFn) {
 // Skeleton variants mirror the shape of the real component so the
 // student's eye is already parked where the answer will appear.
 // New variants (vocab/grammar/reading) preserve the same .skeleton-*
-// classnames the legacy "exercise" variant uses — the shimmer CSS is
+// classnames the legacy "exercise" variant uses, the shimmer CSS is
 // already gated on prefers-reduced-motion in skeleton.css.
 const SKELETON_MARKUP = {
   "exercise": `

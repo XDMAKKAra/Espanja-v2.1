@@ -1,34 +1,23 @@
-// Humanization pass 2: drop "tekoäly"/"AI" branding from user-facing
-// landing copy per ship1_ai_slop_mistakes memory rule. 18-year-old buyers
-// recognize AI-slop instantly; YTL-rubric language reads as product, not
-// marketing.
+// Humanization pass: drop "tekoäly"/"AI" branding from user-facing copy
+// per ship1_ai_slop_mistakes memory rule. Educational/contextual uses
+// (FAQ "Voiko tekoäly korvata opettajan?", vocabulary examples) are
+// kept intentionally — only marketing/promotional uses are replaced.
 import fs from "node:fs";
 
 const replacements = [
-  // SEO meta + JSON-LD descriptions — drop "tekoälyllä" / "tekoälyavusteinen"
+  // Generic noun chains in SEO meta and JSON-LD descriptions
   [/Espanjan YO-koe harjoittelu tekoälyllä/g, "Espanjan YO-koe ja kirjoitusten arviointi"],
   [/Ranskan YO-koe harjoittelu tekoälyllä/g, "Ranskan YO-koe ja kirjoitusten arviointi"],
   [/Saksan YO-koe harjoittelu tekoälyllä/g, "Saksan YO-koe ja kirjoitusten arviointi"],
   [/Tekoälyavusteinen /g, ""],
   [/tekoälyavusteinen /g, ""],
+  [/tekoälyvetoinen /g, ""],
 
-  // Hero subs
+  // Hero subs and section headlines
   [/Puheo on tekoälyvalmentaja, joka tuntee YO-rubriikin\./g,
    "Puheo arvioi kirjoituksesi samalla rubriikilla jolla YTL:n sensorit pisteyttävät kokeen."],
   [/Puheo on tekoälyvalmentaja, joka tuntee YTL:n rubriikin\./g,
    "Puheo arvioi kirjoituksesi YTL:n omalla rubriikilla."],
-
-  // Pillar body — "Tekoäly arvioi kirjoituksesi YTL:n rubriikin mukaisesti"
-  [/Tekoäly arvioi kirjoituksesi YTL:n rubriikin mukaisesti/g,
-   "Saat kirjoituksesta YTL-rubriikin mukaisen arvion"],
-
-  // CTA/feature bullets
-  [/AI-arviointi YTL-rubriikilla/g, "YTL-rubriikin arviointi"],
-  [/AI-arviointi yTL-rubriikilla/g, "YTL-rubriikin arviointi"],
-  [/\+ AI-arviointi/g, "+ YTL-arviointi"],
-  [/AI-arviointi/g, "YTL-rubriikin arviointi"],
-
-  // Footer
   [/Tekoälyvalmentaja, joka tuntee YTL:n rubriikin\./g,
    "Lyhyen oppimäärän valmennus YTL:n rubriikilla."],
   [/Tekoälyvalmentaja, tulossa keväällä 2027\./g,
@@ -36,7 +25,16 @@ const replacements = [
   [/Tekoälyvalmentaja, tulossa syksyllä 2026\./g,
    "Lyhyen saksan valmennus, avautuu syksyllä 2026."],
 
-  // Generic phrases in long meta descriptions
+  // Pillar body
+  [/Tekoäly arvioi kirjoituksesi YTL:n rubriikin mukaisesti/g,
+   "Saat kirjoituksesta YTL-rubriikin mukaisen arvion"],
+
+  // Feature bullets
+  [/AI-arviointi YTL-rubriikilla/g, "YTL-rubriikin arviointi"],
+  [/\+ AI-arviointi/g, "+ YTL-arviointi"],
+  [/AI-arviointi/g, "YTL-rubriikin arviointi"],
+
+  // Long meta description noun chains
   [/Tekoälyvalmennus saksan YO-kokeen lyhyeen oppimäärään/g,
    "Lyhyen oppimäärän saksan YO-koevalmennus"],
   [/Tekoälyvalmennus ranskan YO-kokeen lyhyeen oppimäärään/g,
@@ -44,22 +42,54 @@ const replacements = [
   [/Tekoälyvalmennus, joka noudattaa YTL:n rubriikin AI-arviointia/g,
    "Kirjoitusten arviointi YTL:n omalla rubriikilla"],
 
-  // FAQ question about "Voiko tekoäly korvata oikean opettajan?" — keep, it's a real student question
+  // app.html metas + UI fragments
+  [/Puheo, tekoälyvetoinen sovellus espanjan YO-kokeeseen/g,
+   "Puheo, espanjan YO-koevalmennus"],
+  [/Harjoittele espanjan YO-koetta \(lyhyt oppimäärä\) tekoälyn avulla\./g,
+   "Harjoittele espanjan YO-koetta lyhyellä oppimäärällä."],
+  [/Adaptiivinen tekoälyharjoittelu ylioppilaskirjoituksiin/g,
+   "Adaptiivinen harjoittelu lyhyen oppimäärän YO-kirjoituksiin"],
+  [/Kirjoitustehtävä \+ YTL-kriteerien mukainen AI-arviointi/g,
+   "Kirjoitustehtävä, pisteytys YTL-kriteerien mukaisesti"],
+  [/Kirjoittaminen, YTL-kriteerien mukainen AI-arviointi/g,
+   "Kirjoittaminen, YTL-kriteerien mukainen arviointi"],
+
+  // App runtime loading copy
+  [/Kirjoitustehtävät arvioidaan tekoälyllä/g,
+   "Kirjoitustehtävät arvioidaan rubriikin mukaan"],
+
+  // Blog footer boilerplate — appears in every blog post
+  [/Puheo on suomalainen tekoälyavusteinen espanjan YO-kokeen valmennusalusta\./g,
+   "Puheo on suomalainen YO-kokeen valmennusalusta lyhyen oppimäärän espanjaan, ranskaan ja saksaan."],
+
+  // Blog body — softer mentions in articles
+  [/Puheon tekoäly rakentaa sinulle/g, "Puheo rakentaa sinulle"],
+  [/Puheon tekoäly tunnistaa/g, "Puheo tunnistaa"],
+  [/tekoälyllä avustettu harjoittelu antaa suurinta hyötyä/g,
+   "kohdistettu harjoittelu antaa suurinta hyötyä"],
+  [/tekoälyavusteinen harjoittelualusta, joka tunnistaa heikot kohtasi/g,
+   "harjoittelualusta, joka tunnistaa heikot kohtasi"],
+  [/Puheo on tekoälyavusteinen espanjan YO-kokeen valmennusalusta\./g,
+   "Puheo on lyhyen oppimäärän YO-koevalmennus espanjaan, ranskaan ja saksaan."],
 
   // Promotional puff
   [/Ei AI-trackingia/g, "Ei rubriikkiarviointia"],
-
-  // Pricing card title fragments
-  [/Tekoälyvalmentaja, joka tuntee YTL:n rubriikin\./g,
-   "YTL:n rubriikilla pisteytetty kirjoitusten arviointi."],
 ];
 
 const files = [
   "index.html",
   "pricing.html",
+  "app.html",
   "public/landing/espanja.html",
   "public/landing/saksa.html",
   "public/landing/ranska.html",
+  "blog/index.html",
+  "blog/ser-vs-estar-milloin-kumpaakin.html",
+  "blog/preteriti-vs-imperfekti-opas.html",
+  "blog/por-vs-para-selkea-ero.html",
+  "blog/ojala-subjunktiivi-yleisimmat-virheet.html",
+  "blog/espanja-yo-koe-2026-lyhyt-oppimaara.html",
+  "js/screens/fullExam.js",
 ];
 
 let total = 0;
@@ -71,9 +101,8 @@ for (const f of files) {
     txt = txt.replace(re, sub);
   }
   if (txt !== orig) {
-    const diffCount = orig.length - txt.length;
     fs.writeFileSync(f, txt);
-    console.log(`${f}: ${diffCount} bytes diff`);
+    console.log(`${f}: ${(orig.length - txt.length)} bytes diff`);
     total++;
   }
 }

@@ -1,5 +1,5 @@
 /**
- * L-COURSE-1 UPDATE 3 — normalise lesson payloads from /api/curriculum/:k/lesson/:i.
+ * L-COURSE-1 UPDATE 3, normalise lesson payloads from /api/curriculum/:k/lesson/:i.
  *
  * Two response shapes:
  *  - Pre-generated: `{ pregenerated: <full schemas/lesson.json object> }`

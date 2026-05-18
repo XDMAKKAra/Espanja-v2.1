@@ -17,9 +17,9 @@ function clampIdx(i) {
  * Derive a starting YTL level from onboarding signals.
  *
  * Signals:
- *   coursesCompleted — integer 1..8 or null
- *   gradeAverage     — integer 4..10 or null
- *   background       — one of STUDY_BACKGROUNDS or null
+ *   coursesCompleted, integer 1..8 or null
+ *   gradeAverage    , integer 4..10 or null
+ *   background      , one of STUDY_BACKGROUNDS or null
  *
  * Returns a YTL letter (I/A/B/C/M/E/L) or null when not derivable.
  *
@@ -46,7 +46,7 @@ export function computeStartingLevel(coursesCompleted, gradeAverage, background)
   if (!STUDY_BACKGROUNDS.has(background)) return null;
   if (!hasCourses) return null;
 
-  // Lukio baseline by course count — picks mid of the band.
+  // Lukio baseline by course count, picks mid of the band.
   //   1–3 courses → "A"  (A1 / low A2 band)
   //   4–6 courses → "B"  (A2 / low B1 band)
   //   7–8 courses → "M"  (B1 band)

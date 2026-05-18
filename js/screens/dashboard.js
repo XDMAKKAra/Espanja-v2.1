@@ -26,40 +26,40 @@ export function initDashboard({ loadGrammarDrill, loadReadingTask, loadWritingTa
 // doesn't repeat the same line for a week of practice.
 const MOTIVATION = {
   zero: [
-    "Aloita ensimmäinen harjoitus — pieni alku riittää.",
+    "Aloita ensimmäinen harjoitus, pieni alku riittää.",
     "Yksi harjoitus tänään, ja olet käynnissä.",
     "Pieni alku tänään → suurempi ote ensi viikolla.",
   ],
   zeroStreak: [
-    "Jatka harjoittelua tänään — pieni rutiini riittää.",
+    "Jatka harjoittelua tänään, pieni rutiini riittää.",
     "Tänään paras päivä aloittaa uusi putki.",
-    "10 minuuttia espanjaa — ja tilanne paranee.",
+    "10 minuuttia espanjaa, ja tilanne paranee.",
   ],
   ones: [
-    "Hyvä alku — tee yksi harjoitus jatkaaksesi.",
+    "Hyvä alku, tee yksi harjoitus jatkaaksesi.",
     "Putki kasvaa askel kerrallaan.",
     "Yksi harjoitus pitää sinut mukana.",
   ],
   threes: [
-    "Vauhti päällä — harjoittele tänään ja pidä putki.",
+    "Vauhti päällä, harjoittele tänään ja pidä putki.",
     "Tämä alkaa kuulostamaan rutiinilta. Hyvä!",
-    "Kolme päivää — aivot oppivat parhaiten kertauksesta.",
-    "Jatka niin — pieni päivittäinen toisto kantaa pitkälle.",
+    "Kolme päivää, aivot oppivat parhaiten kertauksesta.",
+    "Jatka niin, pieni päivittäinen toisto kantaa pitkälle.",
   ],
   weeks: [
-    "🔥 Viikon putki — espanjasi kiittää sinua.",
+    "🔥 Viikon putki, espanjasi kiittää sinua.",
     "🔥 Seitsemän päivää! YO-rutiini alkaa rakentua.",
-    "🔥 Viikko espanjaa peräkkäin — ei pieni juttu.",
+    "🔥 Viikko espanjaa peräkkäin, ei pieni juttu.",
   ],
   months: [
-    "🔥 Yli viikko mennyt — tämä on jo tapa.",
-    "🔥 Putki kasvaa — pidä kiinni.",
+    "🔥 Yli viikko mennyt, tämä on jo tapa.",
+    "🔥 Putki kasvaa, pidä kiinni.",
     "🔥 Sinnikkyys palkitaan YTL-rubriikissa.",
   ],
   marathon: [
-    "🔥 Kuukauden putki — tämä on todellista omistautumista.",
+    "🔥 Kuukauden putki, tämä on todellista omistautumista.",
     "🔥 Kuukausi! Espanja on osa arkeasi.",
-    "🔥 Yli 30 päivää — vauhti vie kokeeseen asti.",
+    "🔥 Yli 30 päivää, vauhti vie kokeeseen asti.",
   ],
 };
 
@@ -86,7 +86,7 @@ export const MODE_META = {
 export async function loadDashboard() {
   showLoading("Ladataan…");
   try {
-    // L-LIVE-AUDIT-P2 UPDATE 3 — single batched request replaces 9 sequential
+    // L-LIVE-AUDIT-P2 UPDATE 3, single batched request replaces 9 sequential
     // dashboard fetches. Each section may be `null` if its server query failed;
     // helper functions (loadAdaptiveState, loadWeakTopics, ...) check the
     // cached payload first via getDashboardV2Section() and only fall back to
@@ -102,7 +102,7 @@ export async function loadDashboard() {
       const v2 = await res.json();
       setDashboardV2(v2);
       dashboardCore = v2.dashboard;
-      // L-LIVE-AUDIT-P2 UPDATE 4 — seed the global profile so the CTA renderer
+      // L-LIVE-AUDIT-P2 UPDATE 4, seed the global profile so the CTA renderer
       // and other readers don't need to re-fetch /api/profile separately.
       if (v2.profile?.profile && !window._userProfile) {
         window._userProfile = v2.profile.profile;
@@ -129,8 +129,8 @@ export async function loadDashboard() {
     }
     renderDashboard(dashboardCore);
     hideAppCountdown();
-    show("screen-path"); // L-MERGE-DASH-PATH — dashboard merged into path screen
-    // L-MERGE-DASH-PATH — also render the course list (the merged-home "main"
+    show("screen-path"); // L-MERGE-DASH-PATH, dashboard merged into path screen
+    // L-MERGE-DASH-PATH, also render the course list (the merged-home "main"
     // section). Dynamic import avoids a circular dep with curriculum.js.
     import("./curriculum.js")
       .then((m) => m.loadCurriculum?.())
@@ -140,7 +140,7 @@ export async function loadDashboard() {
   }
 }
 
-// L-PLAN-3 — daily AI tutor greeting card. Fetched once per session; the
+// L-PLAN-3, daily AI tutor greeting card. Fetched once per session; the
 // server caches the AI generation per user for 24h.
 async function loadTutorMessage() {
   const card = document.getElementById("dash-tutor");
@@ -153,7 +153,7 @@ async function loadTutorMessage() {
     return;
   }
 
-  // Session cache — avoid re-fetching on every dashboard render in the same tab.
+  // Session cache, avoid re-fetching on every dashboard render in the same tab.
   const cached = (() => {
     try { return sessionStorage.getItem("dashTutorMsg") || null; } catch { return null; }
   })();
@@ -189,14 +189,14 @@ function renderFreeChip() {
   const root = document.getElementById("dash-free-chip-root");
   if (!root) return;
 
-  // Read tier from cached profile. Fall back gracefully — don't crash.
+  // Read tier from cached profile. Fall back gracefully, don't crash.
   const tier = window._userProfile?.subscription_tier || "free";
   if (tier !== "free") {
     root.hidden = true;
     return;
   }
 
-  // /api/free-usage does not exist yet — show static quota chip with progress bar.
+  // /api/free-usage does not exist yet, show static quota chip with progress bar.
   // aiUsage is not in scope here; read from cached profile or use placeholder counts.
   const used = window._userProfile?.ai_calls_this_month ?? null;
   const limit = 20; // static free-tier limit placeholder
@@ -229,16 +229,16 @@ function renderDashboard({
   suggestedLevel = "B", modeDaysAgo = {}, pro = false, tier = null,
   aiUsage = null,
 }) {
-  // Kick off the tutor-message fetch in parallel — the rest of the dashboard
+  // Kick off the tutor-message fetch in parallel, the rest of the dashboard
   // doesn't block on it. The card stays hidden until a message arrives.
   loadTutorMessage().catch(() => {});
-  // Free-tier chip — shown before greeting so it's the first thing free users see.
+  // Free-tier chip, shown before greeting so it's the first thing free users see.
   renderFreeChip();
-  // Pro badge — moved from dashboard header to sidebar footer (T11)
+  // Pro badge, moved from dashboard header to sidebar footer (T11)
   const proSlot = document.getElementById("sidebar-pro-slot");
   if (proSlot) {
     if (pro) {
-      // Reflect the concrete subscription tier in the badge — "MESTARI"
+      // Reflect the concrete subscription tier in the badge, "MESTARI"
       // for the full curriculum tier, "TREENI" for the practice tier, and
       // the legacy "PRO" fallback when the tier field isn't available.
       const badgeText = tier === "mestari" ? "MESTARI"
@@ -266,7 +266,7 @@ function renderDashboard({
   const punct = document.getElementById("dash-greeting-punct");
   if (punct) punct.textContent = name ? "." : "!";
 
-  // Time-aware Finnish greeting — defaults to "Hei" outside the four named windows.
+  // Time-aware Finnish greeting, defaults to "Hei" outside the four named windows.
   const greetEl = document.getElementById("dash-greeting-prefix");
   if (greetEl) {
     const h = new Date().getHours();
@@ -286,7 +286,7 @@ function renderDashboard({
     dateEl.setAttribute("datetime", now.toISOString().slice(0, 10));
   }
 
-  // Day's drill CTA — unified button (onboarding / SR / drill)
+  // Day's drill CTA, unified button (onboarding / SR / drill)
   // SR count is fetched async in updateSrBadge; initial render uses profile + topics available at mount time.
   // updateSrBadge (called below) will call updateDashCta once the async count resolves.
   const ctaEl = document.getElementById("dash-day-cta");
@@ -315,7 +315,7 @@ function renderDashboard({
     motivationEl.textContent = pickMotivation(streak, totalSessions);
   }
 
-  // L-PLAN-4 UPDATE 4 — streak surfaces in the hero greeting now that the
+  // L-PLAN-4 UPDATE 4, streak surfaces in the hero greeting now that the
   // right rail is gone. Reveal the chip only once we know there's a streak
   // worth celebrating; zero-day users keep the cleaner hero.
   const streakRow = document.getElementById("dash-greeting-streak");
@@ -327,10 +327,10 @@ function renderDashboard({
 
   // Blur-fade arrival on the hero header (sourced: Magic UI blur-fade).
   // Defer one frame so the initial-state styles commit, then add the
-  // `--in` modifier to drive the staggered transition. Idempotent — the
+  // `--in` modifier to drive the staggered transition. Idempotent, the
   // class is harmless to re-add.
   // Selector covers both legacy `#screen-dashboard` and current `#screen-path`
-  // hosts — without `.dash-greeting--in` the hero stays at opacity:0 + blur(6px)
+  // hosts, without `.dash-greeting--in` the hero stays at opacity:0 + blur(6px)
   // and the header reads as empty whitespace above the KPI row.
   const heroHeader = document.querySelector(".dash-greeting");
   if (heroHeader) {
@@ -347,13 +347,13 @@ function renderDashboard({
     requestAnimationFrame(() => requestAnimationFrame(() => {
       kpiRow.classList.add("dash-kpi-row--in");
     }));
-    // Real values are committed by this point — strip skeleton shimmer
+    // Real values are committed by this point, strip skeleton shimmer
     // so the populated number takes over the slot.
     kpiRow.querySelectorAll(".dash-kpi-tile__val.is-loading").forEach((el) => {
       el.classList.remove("is-loading");
     });
   }
-  // Dim the streak flame when the user has no active streak — a tiny
+  // Dim the streak flame when the user has no active streak, a tiny
   // 18 px flame next to a zero counter just adds noise.
   const streakIcon = document.querySelector(".dash-kpi-tile--1 .dash-kpi-tile__icon");
   if (streakIcon) {
@@ -362,7 +362,7 @@ function renderDashboard({
 
   // Zero-session empty state: when a freshly-registered user lands on
   // the dashboard, four "0" tiles read as a broken page. Hide the KPI
-  // row entirely — the existing `.dash-empty-rail` welcome card in the
+  // row entirely, the existing `.dash-empty-rail` welcome card in the
   // rail already carries the "Tee ensimmäinen tehtävä →" CTA, which is
   // a better first impression than KPI emptiness.
   if (kpiRow) {
@@ -385,7 +385,7 @@ function renderDashboard({
     countUp(streakEl, safeStreak, safeStreak >= 30 ? 1600 : 1100);
   }
 
-  // KPI tile — streak flame icon tint
+  // KPI tile, streak flame icon tint
   const kpiTile1 = document.querySelector(".dash-kpi-tile--1");
   if (kpiTile1) {
     kpiTile1.classList.toggle("dash-kpi-tile--hot", (streak ?? 0) >= 7);
@@ -395,7 +395,7 @@ function renderDashboard({
   celebrateStreakMilestone(streak).catch(() => {});
 
   // Premium decoration: meteors fall behind the dashboard hero once the
-  // user is on a "hot" streak (≥ 7 days). Mount idempotently — re-renders of
+  // user is on a "hot" streak (≥ 7 days). Mount idempotently, re-renders of
   // the dashboard won't re-stack meteors. Unmount when the streak breaks.
   const meteorsEl = document.getElementById("dash-meteors");
   if (meteorsEl) {
@@ -425,12 +425,12 @@ function renderDashboard({
     }
   }
 
-  // YO-readiness rail stat — filled async by loadAndRenderReadinessMap below.
+  // YO-readiness rail stat, filled async by loadAndRenderReadinessMap below.
   // dash-yo-delta stays blank until the API exposes a delta source.
   const deltaEl = document.getElementById("dash-yo-delta");
   if (deltaEl) deltaEl.textContent = "";
 
-  // Sync footer — cosmetic timestamp showing when dashboard data was loaded.
+  // Sync footer, cosmetic timestamp showing when dashboard data was loaded.
   const syncEl = document.getElementById("dash-rail-sync");
   if (syncEl) {
     const t = new Date();
@@ -500,8 +500,8 @@ function renderDashboard({
       card.className = "dash-mode-card" + (s ? " has-data" : "");
       card.setAttribute("tabindex", "0");
       card.setAttribute("role", "button");
-      card.setAttribute("aria-label", `${meta.name} — ${s ? `${s.sessions ?? 0} harjoituskertaa` : "aloita"}`);
-      // Due dot — pulsing accent dot when practice is overdue
+      card.setAttribute("aria-label", `${meta.name}, ${s ? `${s.sessions ?? 0} harjoituskertaa` : "aloita"}`);
+      // Due dot, pulsing accent dot when practice is overdue
       const dueDot = isDue && totalSessions > 0
         ? `<span class="dash-mode-due dash-mode-due--pulse" title="Harjoittele tänään"></span>`
         : "";
@@ -569,7 +569,7 @@ function renderDashboard({
       item.setAttribute("role", "listitem");
       item.setAttribute("tabindex", "0");
       item.setAttribute("aria-label", `${meta.name}, ${timeAgo(log.createdAt)}`);
-      // Level chip — styled pill
+      // Level chip, styled pill
       const levelChip = log.level
         ? `<span class="dash-recent-level-chip">${log.level}</span>`
         : "";
@@ -585,7 +585,7 @@ function renderDashboard({
           ${scoreStr ? `<div class="dash-recent-score">${scoreStr}</div>` : ""}
           ${gradeStr ? `<div class="dash-recent-grade">${gradeStr}</div>` : ""}
         </div>`;
-      // Full-row click — navigate to that mode
+      // Full-row click, navigate to that mode
       const clickMode = log.mode;
       item.addEventListener("click", () => { try { navigateToMode(clickMode); } catch { /* noop */ } });
       item.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); try { navigateToMode(clickMode); } catch { /* noop */ } } });
@@ -716,7 +716,7 @@ function renderProgressChart(chartData) {
   let s = [];
 
   // Horizontal-only grid + axis labels (sourced: shadcn line chart aesthetic
-  // — CartesianGrid vertical={false}, no axis lines, only labels). Tokens
+  //, CartesianGrid vertical={false}, no axis lines, only labels). Tokens
   // pulled via currentColor so we can drive both via the SVG's parent
   // `style="color: var(--ink-faint)"`.
   GRADES.forEach((g, i) => {
@@ -727,7 +727,7 @@ function renderProgressChart(chartData) {
 
   if (n > 1) {
     // Catmull-Rom → cubic-Bezier (sourced: shadcn `<Line type="natural">`
-    // produces a natural cubic spline — Recharts uses Catmull-Rom under the
+    // produces a natural cubic spline, Recharts uses Catmull-Rom under the
     // hood; ported by hand here so we stay vanilla SVG).
     const xs = pts.map((_, i) => cx(i));
     const ys = pts.map((g) => cy(g));
@@ -748,7 +748,7 @@ function renderProgressChart(chartData) {
     const lastX  = xs[n - 1].toFixed(1);
     const bottom = (VH - PB).toFixed(1);
     // Area under the curve uses the same Catmull-Rom path, then closes
-    // along the bottom — gradient pulls from --accent so dark mode flips.
+    // along the bottom, gradient pulls from --accent so dark mode flips.
     s.push(`<defs><linearGradient id="dashChartGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="var(--accent)" stop-opacity="0.22"/><stop offset="100%" stop-color="var(--accent)" stop-opacity="0"/></linearGradient></defs>`);
     s.push(`<path d="${pathD} L ${lastX} ${bottom} L ${firstX} ${bottom} Z" fill="url(#dashChartGrad)"/>`);
     s.push(`<path d="${pathD}" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>`);
@@ -830,10 +830,10 @@ function renderHeatmap(chartData) {
       if (isFuture) {
         tip = dateStr;
       } else if (count === 0) {
-        tip = `${dateStr} — ei harjoituksia`;
+        tip = `${dateStr}, ei harjoituksia`;
       } else {
         const pct = stats.total > 0 ? Math.round((stats.correct / stats.total) * 100) : 0;
-        tip = `${dateStr} — ${count} harjoitus${count > 1 ? "ta" : ""}`
+        tip = `${dateStr}, ${count} harjoitus${count > 1 ? "ta" : ""}`
             + (stats.total > 0 ? `, ${pct}% oikein` : "");
       }
 
@@ -844,7 +844,7 @@ function renderHeatmap(chartData) {
   el.style.setProperty("--heatmap-cols", numWeeks + 1); // +1 for label col
   el.innerHTML = html;
 
-  // Empty-state caption — render a friendly Finnish nudge when no day in
+  // Empty-state caption, render a friendly Finnish nudge when no day in
   // the 30-day window has activity yet. Lives in the section, not over the grid.
   const section = el.closest(".dash-heatmap-section");
   if (section) {
@@ -907,7 +907,7 @@ function renderRecommendations(modeDaysAgo, modeStats, totalSessions) {
 
   const gramStats = modeStats.grammar;
   if (gramStats && gramStats.avgPct != null && gramStats.avgPct < 60) {
-    recs.push({ icon: icon("warn"), text: "Kielioppi kaipaa harjoittelua", sub: `Keskiarvo ${gramStats.avgPct}% — tavoite 70%+`, mode: "grammar" });
+    recs.push({ icon: icon("warn"), text: "Kielioppi kaipaa harjoittelua", sub: `Keskiarvo ${gramStats.avgPct}%, tavoite 70%+`, mode: "grammar" });
   }
 
   if (totalSessions >= 5 && totalSessions % 10 === 0) {
@@ -934,7 +934,7 @@ async function loadExamHistory() {
   const el = $("dash-exam-history");
   if (!el) return;
   try {
-    // L-LIVE-AUDIT-P2 UPDATE 3 — read from batched v2 payload first.
+    // L-LIVE-AUDIT-P2 UPDATE 3, read from batched v2 payload first.
     let exams;
     const cached = getDashboardV2Section("examHistory");
     if (cached?.exams) {
@@ -1036,7 +1036,7 @@ export function loadLastSettings(forcedMode) {
 
 export async function saveProgress({ mode, level, scoreCorrect, scoreTotal, ytlGrade }) {
   // Mark the daily-challenge done flag locally even when offline / not
-  // logged in — the user did the work, the dashboard should show the
+  // logged in, the user did the work, the dashboard should show the
   // celebratory state.
   markModeCompletedToday(mode);
   if (!isLoggedIn()) return;
@@ -1046,7 +1046,7 @@ export async function saveProgress({ mode, level, scoreCorrect, scoreTotal, ytlG
       headers: { "Content-Type": "application/json", ...authHeader() },
       body: JSON.stringify({ mode, level, scoreCorrect, scoreTotal, ytlGrade }),
     });
-  } catch { /* silently skip — never disrupt UX */ }
+  } catch { /* silently skip, never disrupt UX */ }
 }
 
 const GRADE_NAMES = { I: "Improbatur", A: "Approbatur", B: "Lubenter", C: "Cum laude", M: "Magna", E: "Eximia", L: "Laudatur" };
@@ -1076,7 +1076,7 @@ function renderGradeWidget(estimate) {
 
   if (tier === "none") {
     label.textContent = "Arvioitu yo-taso";
-    sub.textContent = "Tee 10 harjoitusta 3 osa-alueesta — sitten arvio.";
+    sub.textContent = "Tee 10 harjoitusta 3 osa-alueesta, sitten arvio.";
     return;
   }
 
@@ -1089,7 +1089,7 @@ function renderGradeWidget(estimate) {
     return;
   }
 
-  // estimated / full — show scale + confidence
+  // estimated / full, show scale + confidence
   label.textContent = tier === "full" ? "Arvioitu yo-arvosana" : "Arvioitu yo-taso";
   scale.classList.remove("hidden");
   const gIdx = GRADE_ORDER_LOCAL.indexOf(grade);
@@ -1182,7 +1182,7 @@ async function renderSrForecast() {
   if (!section || !chart) return;
 
   try {
-    // L-LIVE-AUDIT-P2 UPDATE 3 — read from batched v2 payload first.
+    // L-LIVE-AUDIT-P2 UPDATE 3, read from batched v2 payload first.
     let data = getDashboardV2Section("srForecast");
     if (!data) {
       const res = await apiFetch(`${API}/api/sr/forecast?days=30`, { headers: authHeader() });
@@ -1239,7 +1239,7 @@ export function shareResult(text) {
   }
 }
 
-// ─── Adaptive level progress (removed — bar deleted from UI) ──────────────
+// ─── Adaptive level progress (removed, bar deleted from UI) ──────────────
 // loadAdaptiveState() no-op kept so any lingering call sites don't throw
 async function loadAdaptiveState() {}
 
@@ -1282,7 +1282,7 @@ async function loadWeakTopics() {
   if (!wrap || !list) return;
 
   try {
-    // L-LIVE-AUDIT-P2 UPDATE 3 — read from batched v2 payload first.
+    // L-LIVE-AUDIT-P2 UPDATE 3, read from batched v2 payload first.
     let data = getDashboardV2Section("weakTopics");
     if (!data) {
       const res = await apiFetch(`${API}/api/weak-topics?days=7`, { headers: authHeader() });
@@ -1459,9 +1459,9 @@ function renderWritingProgression() {
     if (!d || typeof d.avg !== "number" || !Number.isFinite(d.avg)) continue;
     const pct = Math.round((d.avg / 5) * 100);
     const cls = d.avg >= 3.5 ? "" : d.avg >= 2.5 ? "is-mid" : "is-weak";
-    // Suomalainen desimaalipilkku — "3,5/5" eikä "3.5 / 5".
+    // Suomalainen desimaalipilkku, "3,5/5" eikä "3.5 / 5".
     const score = `${d.avg.toFixed(1).replace(".", ",")}/5`;
-    // Vain merkityksellinen suunta näkyy — flat-merkki näyttää keskeneräiseltä
+    // Vain merkityksellinen suunta näkyy, flat-merkki näyttää keskeneräiseltä
     // markdownilta vieressä olevan etiketin kanssa.
     const trendMarkup = (d.trend === "up" || d.trend === "down")
       ? ` <span class="dash-wp-trend ${d.trend}" aria-label="${d.trend === "up" ? "noussut" : "laskenut"}">${d.trend === "up" ? "↑" : "↓"}</span>`
@@ -1492,14 +1492,14 @@ function railInitials(email) {
 }
 
 function renderRail({ pro, streak }) {
-  // L-PLAN-4 UPDATE 4 — the right rail is gone. The avatar / Pro badge that
+  // L-PLAN-4 UPDATE 4, the right rail is gone. The avatar / Pro badge that
   // used to live here now belongs to the floating profile button (top-right).
   // We forward the Pro flag to it so the upgrade item shows / hides correctly.
   if (window._profileMenuRef?.syncProfileMenu) {
     try { window._profileMenuRef.syncProfileMenu({ pro: !!pro }); } catch { /* noop */ }
   }
 
-  // Pro upsell popup — bottom-right, free users only, 5s delay, 7-day suppress.
+  // Pro upsell popup, bottom-right, free users only, 5s delay, 7-day suppress.
   if (!pro) wireProPopup();
 }
 
@@ -1551,12 +1551,12 @@ async function loadAndRenderReadinessMap() {
     return;
   }
 
-  // L-HOME-HOTFIX-2 — readiness now mirrors curriculum progress (lessons
+  // L-HOME-HOTFIX-2, readiness now mirrors curriculum progress (lessons
   // completed across the 8 courses). The old SR-mastery map showed 20 % when
   // the student had completed 1 / 86 lessons (data was inherited from the
   // pre-curriculum vocab/grammar drills) which contradicted the course cards.
   // /api/curriculum is also fetched by js/screens/curriculum.js immediately
-  // after this — share a 30-second cache (same key) so opening Oppimispolku
+  // after this, share a 30-second cache (same key) so opening Oppimispolku
   // doesn't pay the round-trip twice every time.
   let kurssit = [];
   try {
@@ -1569,7 +1569,7 @@ async function loadAndRenderReadinessMap() {
     }
     const cached = await window[cacheKey];
     kurssit = Array.isArray(cached?.data?.kurssit) ? cached.data.kurssit : [];
-  } catch { /* network — show empty */ }
+  } catch { /* network, show empty */ }
 
   const totalCells = kurssit.length;
   if (totalCells === 0) {
@@ -1640,7 +1640,7 @@ async function loadAndRenderReadinessMap() {
   `;
 }
 
-// L48-hotfix Update 3 — qualitative readiness label.
+// L48-hotfix Update 3, qualitative readiness label.
 // Thresholds: <25 alkuvaiheessa, 25–49 hyvässä vauhdissa,
 // 50–74 hyvin hallussa, ≥75 erinomaisesti. Empty cells → no label.
 function readinessQualitative(pct, total) {

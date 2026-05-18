@@ -1,10 +1,10 @@
-// Scroll-reveal — L-PLAN-8 UPDATE 3.
+// Scroll-reveal, L-PLAN-8 UPDATE 3.
 //
 // Watches every [data-reveal] in the document and adds .is-revealed when
 // it crosses 40 % of the viewport (with a -10 % bottom margin so the
 // trigger fires slightly before the element is fully in frame).
 //
-// Idempotent — safe to re-run; observed elements are unobserved on first
+// Idempotent, safe to re-run; observed elements are unobserved on first
 // reveal so we never double-trigger when the user scrolls back up.
 
 const REVEAL_SELECTOR = "[data-reveal]";
@@ -19,7 +19,7 @@ export function initScrollReveal() {
   const targets = document.querySelectorAll(REVEAL_SELECTOR);
   if (!targets.length) return;
 
-  // Reduced-motion users get the final state immediately — the CSS
+  // Reduced-motion users get the final state immediately, the CSS
   // already overrides opacity/transform under the same media query, but
   // we also add the class so any JS-side observers stay coherent.
   if (prefersReducedMotion() || typeof IntersectionObserver === "undefined") {

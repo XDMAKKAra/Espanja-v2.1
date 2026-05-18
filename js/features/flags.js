@@ -1,5 +1,5 @@
 /**
- * Feature flags — localStorage-backed, dev-friendly.
+ * Feature flags, localStorage-backed, dev-friendly.
  *
  * Usage from DevTools:
  *   localStorage.setItem("ff_side_panel", "1"); location.reload();
@@ -10,7 +10,7 @@
  */
 
 const FLAGS = [
-  // Pass 1.5 dropped `side_panel` — .split is live everywhere now. Add new
+  // Pass 1.5 dropped `side_panel`, .split is live everywhere now. Add new
   // flags here; the runtime sets data-ff-<key>="1" on <body> when localStorage
   // holds `ff_<key>=1`.
 ];

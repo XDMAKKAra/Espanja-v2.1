@@ -1,4 +1,4 @@
-// L-PLAN-1 onboarding V2 — 4 screens (profile → test → assessment → plan).
+// L-PLAN-1 onboarding V2, 4 screens (profile → test → assessment → plan).
 //
 // Flow:
 //   showOnboardingV2() → OB-1 (profile fields)
@@ -63,12 +63,12 @@ function reset() {
     .forEach((b) => b.setAttribute("aria-pressed", "false"));
   const cta = $("ob1-next");
   if (cta) cta.disabled = true;
-  // L-PLAN-6 — clear the dynamic target-detail card on re-entry.
+  // L-PLAN-6, clear the dynamic target-detail card on re-entry.
   const detail = document.getElementById("ob1-target-detail");
   if (detail) detail.hidden = true;
 }
 
-// L-PLAN-6 — per-target description shown under the OB-1 picker.
+// L-PLAN-6, per-target description shown under the OB-1 picker.
 // Frame: "tavoite mahdollistaa, ei vaadi" (self-efficacy-builder-sequence).
 const TARGET_DESCRIPTIONS = {
   I: {
@@ -84,7 +84,7 @@ const TARGET_DESCRIPTIONS = {
   B: {
     title: "Tavoite B",
     pace: "Normaali tahti · baseline tehtävämäärä",
-    fit: "Sopii useimmille — etenet kurssit järjestyksessä omaan tahtiin.",
+    fit: "Sopii useimmille, etenet kurssit järjestyksessä omaan tahtiin.",
   },
   C: {
     title: "Tavoite C",
@@ -177,7 +177,7 @@ function wireOB1() {
       const val = btn.dataset.value;
       if (!pressed) {
         if (val === "en_tieda") {
-          // "En tiedä" is exclusive — clear the others.
+          // "En tiedä" is exclusive, clear the others.
           chipRow.querySelectorAll(".ob2-chip").forEach((b) => {
             if (b !== btn) b.setAttribute("aria-pressed", "false");
           });
@@ -232,7 +232,7 @@ async function loadOB2Questions() {
     const total = $("ob2-q-total");
     if (total) total.textContent = String(v2.questions.length);
   } catch {
-    // If the server is unreachable, the test cannot start — surface a clear
+    // If the server is unreachable, the test cannot start, surface a clear
     // Finnish error and let the user retry.
     alert("Yhteys palvelimeen pätki. Yritä uudelleen hetken päästä.");
   }
@@ -275,7 +275,7 @@ function renderQuestion() {
     btn.className = "ob2-option";
     btn.setAttribute("role", "radio");
     btn.setAttribute("aria-checked", "false");
-    // Options ship as e.g. "A) talo" — keep the leading letter as the value.
+    // Options ship as e.g. "A) talo", keep the leading letter as the value.
     const letter = String(opt).slice(0, 1).toUpperCase();
     btn.dataset.letter = letter;
     btn.textContent = String(opt);
@@ -402,7 +402,7 @@ async function loadOB3() {
       placementLevel: "B",
       placementConfidence: "high",
       suggestedKurssi: "kurssi_3",
-      suggestedKurssiName: "Kurssi 3 — Mitä tein",
+      suggestedKurssiName: "Kurssi 3, Mitä tein",
       tutorAssessment:
         "Yhteys palvelimeen pätki, mutta jatketaan. Aloitetaan rauhallisesti perusteista ja päivitetään suunnitelma kun olet kirjautunut sisään.",
       firstWeekPlan: [],
@@ -488,7 +488,7 @@ function wireOB4() {
             placementLevel: v2.result?.placementLevel,
             suggestedKurssi: v2.result?.suggestedKurssi,
           }));
-        } catch { /* private mode — silent */ }
+        } catch { /* private mode, silent */ }
         location.hash = "#rekisteroidy";
         show("screen-auth");
       }

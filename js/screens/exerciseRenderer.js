@@ -2,7 +2,7 @@
  * Exercise renderer dispatcher.
  *
  * Object-map registry (not a switch) so Pass 0's five new types register
- * with one line each. No call sites yet — commit 2b wires vocab, grammar,
+ * with one line each. No call sites yet, commit 2b wires vocab, grammar,
  * and adaptive to this dispatcher. Reading/exam/fullExam remain on their
  * inline render paths until Gate D per exercises/DEFERRED.md.
  *

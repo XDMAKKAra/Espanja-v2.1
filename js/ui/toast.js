@@ -1,16 +1,16 @@
 /**
- * Toast notifications — design-system/DESIGN.md §8.7
+ * Toast notifications, design-system/DESIGN.md §8.7
  *
  * Usage:
  *   import { toast } from "./ui/toast.js";
  *   toast.success("Tallennettu!");
- *   toast.error("Verkkovirhe — yritä uudelleen.");
+ *   toast.error("Verkkovirhe, yritä uudelleen.");
  *   toast.warn("Melkein oikein.");
  *   toast.info("Uusi harjoitus saatavilla.");
  *
  * Defaults:
  *   success + info auto-dismiss after 4s.
- *   error + warn are sticky — user must click close.
+ *   error + warn are sticky, user must click close.
  *   Both are overridable via `toast.show({ message, variant, duration })`.
  */
 

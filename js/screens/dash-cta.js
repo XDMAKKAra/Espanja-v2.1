@@ -1,4 +1,4 @@
-/* Dashboard "Day's drill" CTA — selection logic + DOM updater.
+/* Dashboard "Day's drill" CTA, selection logic + DOM updater.
    Spec: docs/superpowers/specs/2026-04-26-dashboard-editorial-redesign-design.md §3.3
    Selection priority (first match wins):
      1. Profile incomplete  → onboarding
@@ -19,7 +19,7 @@ export function selectDashboardCta({ profileComplete, srDueCount, weakestTopic }
   if (due > 0) {
     return {
       kind: "sr",
-      title: `Kertaa nyt — ${due} ${due === 1 ? "kortti" : "korttia"}`,
+      title: `Kertaa nyt, ${due} ${due === 1 ? "kortti" : "korttia"}`,
       meta: `${due} ODOTTAA · ~${Math.max(2, Math.round(due / 4))} MIN`,
       target: "sr-review",
     };

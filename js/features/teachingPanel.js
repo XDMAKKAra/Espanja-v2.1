@@ -1,5 +1,5 @@
 /**
- * L-PLAN-5 UPDATE 4 — re-readable teaching page.
+ * L-PLAN-5 UPDATE 4, re-readable teaching page.
  *
  * The student can tap "📖 Opetussivu" while doing exercises in lesson mode
  * and the teaching content slides in as a side-panel (desktop ≥ 880 px) or
@@ -12,7 +12,7 @@
  *   - It shows when the lesson context is active AND the current screen is
  *     an exercise screen (#screen-exercise / #screen-grammar /
  *     #screen-reading / #screen-writing).
- *   - It hides on every other screen — including the lesson page itself
+ *   - It hides on every other screen, including the lesson page itself
  *     (the teaching content is already on screen there).
  *
  * A11y:
@@ -32,7 +32,7 @@ const EXERCISE_SCREENS = new Set([
   "screen-grammar",
   "screen-reading",
   "screen-writing",
-  // L-COURSE-1 hotfix — the new pregenerated lesson runner stays on
+  // L-COURSE-1 hotfix, the new pregenerated lesson runner stays on
   // screen-lesson while the student answers items, so the re-read
   // Opetussivu trigger needs to surface there too. Without this entry the
   // floating button either never shows, or shows briefly and clicking it
@@ -40,7 +40,7 @@ const EXERCISE_SCREENS = new Set([
   "screen-lesson",
 ]);
 
-// L-HOME-HOTFIX-2 — on the home screen the button changes role: instead of
+// L-HOME-HOTFIX-2, on the home screen the button changes role: instead of
 // re-opening a lesson teaching page (no lesson context exists there), it
 // opens a static "Miten Puheo toimii" tutorial.
 const HOME_TUTORIAL_SCREENS = new Set(["screen-path"]);
@@ -51,7 +51,7 @@ const HOME_TUTORIAL_MD = [
   "Lyhyt katsaus siihen, miten YO-koevalmistautuminen etenee.",
   "",
   "## 1. Kurssipolku on ydin",
-  "Kahdeksan kurssia rakentavat YO-koevalmiuden vaihe vaiheelta. Etene omassa tahdissasi — kurssi 1 on auki heti, seuraavat avautuvat kun edellinen on hallinnassa.",
+  "Kahdeksan kurssia rakentavat YO-koevalmiuden vaihe vaiheelta. Etene omassa tahdissasi, kurssi 1 on auki heti, seuraavat avautuvat kun edellinen on hallinnassa.",
   "",
   "## 2. Oppitunnin neljä vaihetta",
   "Jokainen oppitunti kulkee saman kaaren: tunnista uudet sanat, palauta mieleen, sovella lauseissa ja yhdistä omaan puheeseen. Vaiheet rakentuvat edellisen päälle, joten kannattaa edetä järjestyksessä.",
@@ -60,13 +60,13 @@ const HOME_TUTORIAL_MD = [
   "Voit aina jatkaa eteenpäin. Järjestelmä merkitsee mitkä aiheet hallitset ja mitä kannattaa kerrata, mutta ei pidätä sinua pakon takia.",
   "",
   "## 4. Kertaukset perustuvat tieteeseen",
-  "Spaced repetition tuo aiheen takaisin juuri ennen kuin unohtaisit sen. Kun kortteja odottaa, valitse Kertaa-toiminto — viiden minuutin kertaus tuottaa enemmän kuin tunnin pänttäys.",
+  "Spaced repetition tuo aiheen takaisin juuri ennen kuin unohtaisit sen. Kun kortteja odottaa, valitse Kertaa-toiminto, viiden minuutin kertaus tuottaa enemmän kuin tunnin pänttäys.",
   "",
   "## 5. YO-valmius näyttää missä olet",
   "Prosentti perustuu suoraan kurssien edistymiseen. Kun kahdeksan kurssia on tehty, olet kokeen mittakaavassa valmis.",
   "",
   "## 6. Täyskoesimulaatio",
-  "Koeharjoitus-välilehdellä voit tehdä oikean YO-kokeen pituisen harjoituksen — sama aikapaine, sama muoto, sama arvostelu. Käytä sitä viimeisenä kertauksena ennen koetta.",
+  "Koeharjoitus-välilehdellä voit tehdä oikean YO-kokeen pituisen harjoituksen, sama aikapaine, sama muoto, sama arvostelu. Käytä sitä viimeisenä kertauksena ennen koetta.",
 ].join("\n");
 
 // Map exercise screen IDs to the natural top-bar element where the lesson
@@ -89,7 +89,7 @@ function escapeHtml(s) {
 }
 
 function buildDom() {
-  // Trigger button — fixed, top-right of the viewport, visible only when
+  // Trigger button, fixed, top-right of the viewport, visible only when
   // a lesson is active and we're on an exercise screen.
   const btn = document.createElement("button");
   btn.type = "button";
@@ -189,7 +189,7 @@ function onKeydown(e) {
     return;
   }
   if (e.key === "Tab" && _refs) {
-    // Simple focus trap — keep tab inside the panel.
+    // Simple focus trap, keep tab inside the panel.
     const focusables = _refs.panel.querySelectorAll("button, [href], input, [tabindex]:not([tabindex='-1'])");
     if (focusables.length === 0) return;
     const first = focusables[0];
@@ -210,7 +210,7 @@ function escapeBadge(s) {
   }[c]));
 }
 
-// L-PLAN-5 UPDATE 3 — lesson-mode badge in the exercise top bar. Shown
+// L-PLAN-5 UPDATE 3, lesson-mode badge in the exercise top bar. Shown
 // when a curriculum lesson is active. Includes an "x" button that asks for
 // confirmation before clearing the lesson context.
 function syncBadge(ctx, screenId) {
@@ -283,7 +283,7 @@ export function initTeachingPanel() {
   _refs.close.addEventListener("click", close);
   _refs.backdrop.addEventListener("click", close);
 
-  // Watch for screen changes — every show() in nav.js toggles .active on the
+  // Watch for screen changes, every show() in nav.js toggles .active on the
   // matching screen. A MutationObserver on the body covers all paths.
   const obs = new MutationObserver(() => syncTrigger());
   obs.observe(document.body, {
@@ -293,7 +293,7 @@ export function initTeachingPanel() {
   });
 
   // Also re-evaluate when sessionStorage changes (e.g. lesson context cleared
-  // by another tab) — best-effort.
+  // by another tab), best-effort.
   window.addEventListener("storage", (e) => {
     if (e.key === "currentLesson" || e.key === null) syncTrigger();
   });

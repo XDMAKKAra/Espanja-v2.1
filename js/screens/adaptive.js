@@ -1,4 +1,4 @@
-// ─── Adaptive level system — frontend ────────────────────────────────────────
+// ─── Adaptive level system, frontend ────────────────────────────────────────
 import { $, show } from "../ui/nav.js";
 import { API, authHeader, apiFetch, retryable } from "../api.js";
 import { showLoading, showLoadingError } from "../ui/loading.js";
@@ -240,7 +240,7 @@ export function masteryNext() {
 async function submitMasteryTest() {
   showLoading("Arvioidaan tuloksia...");
 
-  // Persist mastery answers — a blip at the submit boundary shouldn't wipe
+  // Persist mastery answers, a blip at the submit boundary shouldn't wipe
   // the student's test attempt (Pass 6 C16).
   try { localStorage.setItem("puheo_mastery_pending", JSON.stringify({ ..._masteryState, at: Date.now() })); } catch {}
 
@@ -291,7 +291,7 @@ function renderMasteryResults({ passed, scorePct, higherLevelPct, newLevel }) {
     content.innerHTML = `
       <div style="text-align:center;margin-bottom:24px">
         <div style="font-size:48px;margin-bottom:12px">💪</div>
-        <h2 style="margin-bottom:8px">Ei mennyt läpi — vielä!</h2>
+        <h2 style="margin-bottom:8px">Ei mennyt läpi, vielä!</h2>
         <p style="font-size:15px;color:var(--ink-soft)">Jatka harjoittelua, pääset kyllä seuraavalle tasolle.</p>
       </div>
       <div style="background:var(--surface);border-radius:var(--r-md);padding:16px;margin-bottom:16px">

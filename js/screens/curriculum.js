@@ -20,7 +20,7 @@ const LESSON_INNER_ID = "curr-lesson-root";
 let _state = { kurssit: null, expanded: null };
 
 const TYPE_ICONS = {
-  // F-CURRICULUM-BENTO-1 — Lucide 24x24 strokes, currentColor.
+  // F-CURRICULUM-BENTO-1, Lucide 24x24 strokes, currentColor.
   vocab:   '<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>',          // BookOpen
   grammar: '<path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/>',                                       // Pencil
   reading: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>',                       // FileText
@@ -51,7 +51,7 @@ function typeLabelFi(type) {
 }
 
 function lessonDifficulty(l) {
-  // No backend field exists today — derive 1-3 from sortOrder so the curve
+  // No backend field exists today, derive 1-3 from sortOrder so the curve
   // visibly steepens across the 12-lesson arc (1-4 easy, 5-8 med, 9-12 hard).
   const n = Number(l && l.sortOrder) || 1;
   if (n <= 4) return 1;
@@ -63,7 +63,7 @@ function lessonDurationMin(l) {
   // Calibrated to match data/courses/.../lesson_*.json `meta.estimated_minutes_median`
   // (the writers' own per-lesson estimate). Previous formula `exerciseCount × 90 s`
   // gave 2 min for a writing task (1 exercise × 1.5 = 1.5 → max(2,1)) and 12 min for
-  // an 8-exercise vocab drill — both far below realistic YO-prep study time. A real
+  // an 8-exercise vocab drill, both far below realistic YO-prep study time. A real
   // student needs ~150 min per course, ~20 hr per language overall.
   const ex = Number(l && l.exerciseCount) || 8;
   const type = (l && l.type) || "vocab";
@@ -99,7 +99,7 @@ function escapeHtml(s) {
   }[c]));
 }
 
-// Minimal Markdown renderer — h1, h2, blockquote, paragraphs, bold, code,
+// Minimal Markdown renderer, h1, h2, blockquote, paragraphs, bold, code,
 // 4-col tables (pipe-delimited). Sanitised by escaping all input first.
 // Exported so the teaching-panel side panel can reuse the same renderer.
 export function renderMarkdown(md) {
@@ -204,7 +204,7 @@ function renderError(root, msg, retry) {
         <h2>Oppimispolku</h2>
       </div>
       <div class="curr-error" role="alert">
-        <p>${escapeHtml(msg || "Ei yhteyttä — yritä uudelleen.")}</p>
+        <p>${escapeHtml(msg || "Ei yhteyttä, yritä uudelleen.")}</p>
         <button type="button" class="btn-primary" id="curr-retry">Yritä uudelleen</button>
       </div>
     </div>`;
@@ -276,7 +276,7 @@ function renderCard(k, stepNumber) {
       ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>'
       : String(stepNumber);
 
-  // L-PLAN-8 UPDATE 6C — locked-card hover tooltip explaining the prereq.
+  // L-PLAN-8 UPDATE 6C, locked-card hover tooltip explaining the prereq.
   // Stays visually subdued, but on hover/focus a tooltip names the course
   // the student has to clear first (kertaustesti ≥ 80 %). Tooltip is owned
   // by the global js/features/tooltip.js primitive (already installed in
@@ -290,7 +290,7 @@ function renderCard(k, stepNumber) {
   // no-op) but aria-disabled communicates the inactive state to AT.
   const lockedFocusAttr = !k.isUnlocked ? ' tabindex="0"' : "";
 
-  // L-PLAN-8 UPDATE 8 — accessibility fixes:
+  // L-PLAN-8 UPDATE 8, accessibility fixes:
   //  * Drop `role="button"` from the <li>. axe flags <ol> children whose
   //    role is not `listitem` (the role override breaks list semantics).
   //    `tabindex="0"` + the existing keydown(Enter/Space) handler keep the
@@ -363,7 +363,7 @@ async function fetchAndRenderLessons(kurssiKey) {
     const lessons = Array.isArray(data.lessons) ? data.lessons : [];
     renderBento(host, kurssiKey, lessons);
   } catch (err) {
-    host.innerHTML = `<p class="curr-bento-error" role="alert">${escapeHtml(err.message || "Ei yhteyttä — yritä uudelleen.")}</p>`;
+    host.innerHTML = `<p class="curr-bento-error" role="alert">${escapeHtml(err.message || "Ei yhteyttä, yritä uudelleen.")}</p>`;
   }
 }
 
@@ -408,7 +408,7 @@ function renderBento(host, kurssiKey, lessons) {
     });
   });
 
-  // Wire progress-strip nodes — clicking node N scrolls the matching card.
+  // Wire progress-strip nodes, clicking node N scrolls the matching card.
   host.querySelectorAll(".curr-bento-strip__dot").forEach((dot) => {
     dot.addEventListener("click", (e) => {
       e.stopPropagation();
@@ -442,7 +442,7 @@ function renderProgressStrip(sorted, nextUp, doneCount, totalCount) {
     const cls = ["curr-bento-strip__dot"];
     if (done) cls.push("curr-bento-strip__dot--done");
     else if (isNext) cls.push("curr-bento-strip__dot--next");
-    const label = `Oppitunti ${l.sortOrder}${done ? " — suoritettu" : isNext ? " — vuorossa" : " — tulossa"}`;
+    const label = `Oppitunti ${l.sortOrder}${done ? ", suoritettu" : isNext ? ", vuorossa" : ", tulossa"}`;
     return `<li><button type="button" class="${cls.join(" ")}" data-lesson="${l.sortOrder}" aria-label="${escapeHtml(label)}"></button></li>`;
   }).join("");
   return `<div class="curr-bento-strip">
@@ -509,12 +509,12 @@ export async function loadCurriculum() {
   const root = document.getElementById(PATH_INNER_ID);
   if (!root) return;
   show("screen-path");
-  // L-HOME-HOTFIX-3 — keep the active course expanded across renders so the
+  // L-HOME-HOTFIX-3, keep the active course expanded across renders so the
   // student lands on the lesson list directly. Cleared on first ever render
   // (no kurssit yet); set after fetch via firstActiveKurssiKey().
-  // (was: hardcoded null — Tab re-expand only.)
+  // (was: hardcoded null, Tab re-expand only.)
   // _state.expanded preserved here.
-  // L-PLAN-8 UPDATE 6A — make sure the floating Opetussivu trigger from a
+  // L-PLAN-8 UPDATE 6A, make sure the floating Opetussivu trigger from a
   // prior lesson session is hidden the moment we land back on the path
   // overview. The MutationObserver in teachingPanel.js handles this on its
   // own, but a direct refresh removes the (possibly visible) flicker.
@@ -524,11 +524,11 @@ export async function loadCurriculum() {
   renderSkeleton(root);
 
   try {
-    // L-LANDING-REBUILD-AND-BUGFIX-1 — pass ?lang= explicitly so the backend
+    // L-LANDING-REBUILD-AND-BUGFIX-1, pass ?lang= explicitly so the backend
     // selects the right LANG_CURRICULA registry. The /api/curriculum route is
     // not in the AI_ROUTE_PREFIXES list, so apiFetch wouldn't inject it.
     const lang = (state.language === "de" || state.language === "fr") ? state.language : "es";
-    // Share the 30-s cache with dashboard.js (same key) — opening Oppimispolku
+    // Share the 30-s cache with dashboard.js (same key), opening Oppimispolku
     // fires both screens' loaders in parallel and they hit the same endpoint.
     // Cache stores Promise<{status, ok, data}> so the second caller can mimic
     // a Response without re-running fetch.
@@ -543,8 +543,8 @@ export async function loadCurriculum() {
     if (!cached.ok) {
       if (cached.status === 401) throw new Error("Kirjaudu sisään nähdäksesi polun.");
       if (cached.status === 403) throw new Error("Tämä kieli ei ole vielä käytössä.");
-      if (cached.status === 404) throw new Error("Polkupäätepistettä ei löytynyt — yritä uudelleen.");
-      if (cached.status >= 500) throw new Error(`Palvelinvirhe (${cached.status}) — yritä uudelleen.`);
+      if (cached.status === 404) throw new Error("Polkupäätepistettä ei löytynyt, yritä uudelleen.");
+      if (cached.status >= 500) throw new Error(`Palvelinvirhe (${cached.status}), yritä uudelleen.`);
       throw new Error(`Polun lataus epäonnistui (HTTP ${cached.status}).`);
     }
     const res = { ok: true, status: 200, json: async () => cached.data };
@@ -553,18 +553,18 @@ export async function loadCurriculum() {
       // precise message instead of the generic "Polun lataus epäonnistui".
       if (res.status === 401) throw new Error("Kirjaudu sisään nähdäksesi polun.");
       if (res.status === 403) throw new Error("Tämä kieli ei ole vielä käytössä.");
-      if (res.status === 404) throw new Error("Polkupäätepistettä ei löytynyt — yritä uudelleen.");
-      if (res.status >= 500) throw new Error(`Palvelinvirhe (${res.status}) — yritä uudelleen.`);
+      if (res.status === 404) throw new Error("Polkupäätepistettä ei löytynyt, yritä uudelleen.");
+      if (res.status >= 500) throw new Error(`Palvelinvirhe (${res.status}), yritä uudelleen.`);
       throw new Error(`Polun lataus epäonnistui (HTTP ${res.status}).`);
     }
     let data;
     try {
       data = await res.json();
     } catch {
-      throw new Error("Polun vastaus oli virheellinen — yritä uudelleen.");
+      throw new Error("Polun vastaus oli virheellinen, yritä uudelleen.");
     }
     if (!data || typeof data !== "object") {
-      throw new Error("Polun vastaus oli tyhjä — yritä uudelleen.");
+      throw new Error("Polun vastaus oli tyhjä, yritä uudelleen.");
     }
     if (data.available === false) {
       throw new Error(data.message || "Sisältöä ei vielä julkaistu tälle kielelle.");
@@ -572,7 +572,7 @@ export async function loadCurriculum() {
     _state.kurssit = Array.isArray(data.kurssit)
       ? data.kurssit.filter((k) => k && typeof k.key === "string")
       : [];
-    // L-HOME-HOTFIX-3 — auto-expand the first active (unlocked, not yet
+    // L-HOME-HOTFIX-3, auto-expand the first active (unlocked, not yet
     // mastered) course so users see the lesson list without an extra click.
     // If the previously expanded course is now mastered/locked, advance.
     const prev = _state.expanded
@@ -595,7 +595,7 @@ export async function loadCurriculum() {
 }
 
 function ensurePathRoot() {
-  // L-MERGE-DASH-PATH — screen-path now hosts the merged home (greeting, day-CTA,
+  // L-MERGE-DASH-PATH, screen-path now hosts the merged home (greeting, day-CTA,
   // YO-readiness, recent + chart) around the course list. We render the cards
   // into #path-courses-root inside that wrapper, NOT into the whole screen,
   // so the surrounding sections survive each render pass.
@@ -619,7 +619,7 @@ export async function openLesson(kurssiKey, lessonIndex) {
   // network round-trip).
   try {
     sessionStorage.setItem("currentLesson", JSON.stringify({ kurssiKey, lessonIndex }));
-  } catch { /* private mode — ignore */ }
+  } catch { /* private mode, ignore */ }
 
   show("screen-lesson");
   root.innerHTML = `<div class="curr-lesson-page">
@@ -636,7 +636,7 @@ export async function openLesson(kurssiKey, lessonIndex) {
     });
     if (!res.ok) throw new Error("Oppitunnin lataus epäonnistui");
     const data = await res.json();
-    // L-COURSE-1 UPDATE 3 — pre-generated lesson short-circuit. The new
+    // L-COURSE-1 UPDATE 3, pre-generated lesson short-circuit. The new
     // backend returns `{ pregenerated: <full schemas/lesson.json> }` for
     // any data/courses/*.json that exists + isn't a placeholder.
     if (data && data.pregenerated && Array.isArray(data.pregenerated.phases)) {
@@ -647,9 +647,9 @@ export async function openLesson(kurssiKey, lessonIndex) {
     }
     // Enrich currentLesson with focus + type so the post-session lesson
     // results card can render them without a second fetch.
-    // L-PLAN-5 UPDATE 5 — lessonExerciseCount drives single-batch sizing
+    // L-PLAN-5 UPDATE 5, lessonExerciseCount drives single-batch sizing
     // in vocab.js loadNextBatch.
-    // L-PLAN-6 — prefer the target-grade-adjusted count from lessonContext
+    // L-PLAN-6, prefer the target-grade-adjusted count from lessonContext
     // when present; fall back to baseline lesson.exerciseCount otherwise.
     const adjustedCount = Number(data?.lessonContext?.exerciseCount)
       || Number(data?.lesson?.exerciseCount) || null;
@@ -663,19 +663,19 @@ export async function openLesson(kurssiKey, lessonIndex) {
         lessonExerciseCount: adjustedCount,
         targetGrade,
       }));
-      // L-PLAN-5 UPDATE 4 — cache the teaching Markdown for the re-read
+      // L-PLAN-5 UPDATE 4, cache the teaching Markdown for the re-read
       // side-panel so the student can review it mid-exercise without an
       // extra network round-trip.
       const md = data?.teachingPage?.contentMd || "";
       if (md) sessionStorage.setItem("currentLessonTeachingMd", md);
       else sessionStorage.removeItem("currentLessonTeachingMd");
-    } catch { /* private mode — ignore */ }
+    } catch { /* private mode, ignore */ }
     renderLessonPage(root, kurssiKey, data);
   } catch (err) {
     root.innerHTML = `<div class="curr-lesson-page">
       <button type="button" class="curr-back" id="curr-lesson-back">← Oppimispolku</button>
       <div class="curr-error" role="alert">
-        <p>${escapeHtml(err.message || "Ei yhteyttä — yritä uudelleen.")}</p>
+        <p>${escapeHtml(err.message || "Ei yhteyttä, yritä uudelleen.")}</p>
         <button type="button" class="btn-primary" id="curr-lesson-retry">Yritä uudelleen</button>
       </div>
     </div>`;
@@ -698,11 +698,11 @@ function ensureLessonRoot() {
   }
 }
 
-// L-PLAN-5 UPDATE 2 — rebuilt lesson screen layout. Eyebrow shows kurssi
+// L-PLAN-5 UPDATE 2, rebuilt lesson screen layout. Eyebrow shows kurssi
 // number + lesson number, H1 is the lesson focus (display 40px), Markdown
 // teaching card is the body, CTA shows exercise count + estimated duration.
 function formatDurationMin(exerciseCount, type) {
-  // Mirrors lessonDurationMin (see top of file) — type-aware estimate
+  // Mirrors lessonDurationMin (see top of file), type-aware estimate
   // calibrated against data/courses/.../lesson_*.json `estimated_minutes_median`.
   const ex = Number(exerciseCount) || 1;
   const t = type || "vocab";
@@ -714,7 +714,7 @@ function formatDurationMin(exerciseCount, type) {
 }
 
 function ctaLabel(lesson, lessonContext) {
-  // L-PLAN-6 — prefer the target-grade-adjusted count from lessonContext,
+  // L-PLAN-6, prefer the target-grade-adjusted count from lessonContext,
   // fall back to baseline. Anonymous users (no profile) still see the
   // baseline B count so the public preview is honest.
   const n = Number(lessonContext?.exerciseCount) || lesson.exerciseCount || 8;
@@ -768,14 +768,14 @@ function renderLessonPage(root, kurssiKey, data) {
 }
 
 function startExercises(kurssiKey, lesson) {
-  // L-PLAN-5 UPDATE 2 — when the student taps "Aloita harjoittelu →" we
+  // L-PLAN-5 UPDATE 2, when the student taps "Aloita harjoittelu →" we
   // bypass the topic-picker mode page (lesson context already pins the
   // topic + level + count via routes/exercises.js applyLessonContext) and
   // go straight to the exercise loader. The hash is updated so the browser
   // back-button works and the sidebar nav highlights correctly.
   const { type } = lesson;
   state.sessionStartTime = Date.now();
-  // L-LANDING-REBUILD-AND-BUGFIX-1 — do NOT overwrite state.language here.
+  // L-LANDING-REBUILD-AND-BUGFIX-1, do NOT overwrite state.language here.
   // It's hydrated from user_profile.target_language as the 2-letter code
   // ("es"/"de"/"fr"); overwriting to legacy "spanish" caused dashboard.js
   // line 124 to redirect every post-lesson home visit to the coming-soon
@@ -821,7 +821,7 @@ function startExercises(kurssiKey, lesson) {
     loadWritingTask();
     return;
   }
-  // Unknown type — fallback to vocab.
+  // Unknown type, fallback to vocab.
   state.mode = "vocab";
   state.topic = "general vocabulary";
   state.level = "B";

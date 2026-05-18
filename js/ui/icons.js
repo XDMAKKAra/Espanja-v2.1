@@ -1,5 +1,5 @@
 // Lucide-style inline SVG icons for UI use.
-// Returned as HTML strings — caller is responsible for safe insertion.
+// Returned as HTML strings, caller is responsible for safe insertion.
 
 const PATHS = {
   vocab:   '<path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2Z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7Z"/>',

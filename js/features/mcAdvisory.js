@@ -46,6 +46,6 @@ export async function reportMcAdvisory(submission) {
       });
     }
   } catch {
-    /* silent — advisory must never surface a UI error */
+    /* silent, advisory must never surface a UI error */
   }
 }

@@ -1,5 +1,5 @@
 /**
- * L-PLAN-5 UPDATE 3 — Puheo-styled confirm dialog.
+ * L-PLAN-5 UPDATE 3, Puheo-styled confirm dialog.
  *
  * Replaces native window.confirm() with an accessible role="dialog" modal
  * that matches the app's dark Linear-tier register. Used for the
@@ -7,7 +7,7 @@
  * an active curriculum lesson.
  *
  * confirmDialog({ title, body, confirmLabel, cancelLabel })
- *   → Promise<boolean> — resolves true if confirmed, false if cancelled.
+ *   → Promise<boolean>, resolves true if confirmed, false if cancelled.
  *
  * A11y:
  *   - role="dialog" + aria-modal="true"
@@ -103,7 +103,7 @@ export function confirmDialog({ title, body, confirmLabel = "Vahvista", cancelLa
     _root.querySelector("#confirm-dialog-confirm").addEventListener("click", () => close(true));
 
     document.addEventListener("keydown", onKeydown);
-    // Focus on cancel by default — safer default action.
+    // Focus on cancel by default, safer default action.
     _root.querySelector("#confirm-dialog-cancel").focus();
   });
 }

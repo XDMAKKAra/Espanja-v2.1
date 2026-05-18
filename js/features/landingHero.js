@@ -1,4 +1,4 @@
-// Landing hero "live elements" — L-PLAN-8 UPDATE 1.
+// Landing hero "live elements", L-PLAN-8 UPDATE 1.
 //
 // Two effects, both gated by IntersectionObserver and prefers-reduced-motion:
 //

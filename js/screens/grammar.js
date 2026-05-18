@@ -68,10 +68,10 @@ export async function loadGrammarDrill() {
       body: JSON.stringify({
         topic: state.grammarTopic,
         level: state.grammarLevel,
-        // L-PLAN-6 — deepen overrides count to 4 (L follow-up).
+        // L-PLAN-6, deepen overrides count to 4 (L follow-up).
         count: deepen ? 4 : 6,
         language: apiLang(),
-        // Anti-repetition only applies to mixed-topic drills — when the
+        // Anti-repetition only applies to mixed-topic drills, when the
         // student explicitly picked a rule (e.g. "ser/estar") we WANT
         // every batch to keep drilling that rule.
         recentlyShown: state.grammarTopic === "mixed" ? (state.recentGrammarRules || []) : [],
@@ -119,7 +119,7 @@ function renderGrammarExercise() {
   $("gram-counter").textContent = `${state.grammarCurrent + 1} / ${total}`;
   $("gram-level-badge").textContent = state.grammarLevel;
 
-  // L-PLAN-7 — kertaus-badge if this item is part of cumulative review.
+  // L-PLAN-7, kertaus-badge if this item is part of cumulative review.
   import("../features/reviewBadge.js").then(({ setReviewBadge }) => {
     setReviewBadge(ex, "#screen-grammar .exercise__meta");
   });
@@ -207,7 +207,7 @@ $("gram-btn-next").addEventListener("click", () => {
 function showGrammarResults() {
   const total = state.grammarExercises.length;
 
-  // L-PLAN-3 — curriculum lesson active? Hand off to lessonResults card.
+  // L-PLAN-3, curriculum lesson active? Hand off to lessonResults card.
   import("../lib/lessonContext.js").then(({ getLessonContext }) => {
     const lessonCtx = getLessonContext();
     if (!lessonCtx) {
@@ -229,7 +229,7 @@ function showGrammarResults() {
           topic_key: ex.topic_key || ex.rule || null,
         };
       });
-    // L-PLAN-7 — review item array for the post-results "Kertasit myös
+    // L-PLAN-7, review item array for the post-results "Kertasit myös
     // tätä" summary. Items the backend tagged is_review during /generate.
     const reviewItems = exercises
       .map((ex, idx) => ({ ex, ua: userAnswers[idx] }))
@@ -261,7 +261,7 @@ function showGrammarResults() {
       reviewItems,
     })).catch(() => { /* fall through */ });
   });
-  // Branch — when curriculum context active, return early so the legacy
+  // Branch, when curriculum context active, return early so the legacy
   // free-practice results screen doesn't briefly flash before the lesson
   // results card mounts.
   try {
@@ -297,7 +297,7 @@ function showGrammarResults() {
     ytlGrade: null,
   });
 
-  // Spec 2 §5 — populate new editorial result IDs.
+  // Spec 2 §5, populate new editorial result IDs.
   const grPct = total > 0 ? Math.round((state.grammarCorrect / total) * 100) : 0;
   $("gram-res-tot").textContent = String(total);
   countUp($("gram-res-num"), state.grammarCorrect);

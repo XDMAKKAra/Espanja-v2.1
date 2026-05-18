@@ -1,5 +1,5 @@
 /**
- * Monivalinta renderer — paints N option buttons into a container and
+ * Monivalinta renderer, paints N option buttons into a container and
  * fires `onAnswer` on click. That's it.
  *
  * Deliberately does not own prompt/context/feedback/explanation paint;
@@ -7,7 +7,7 @@
  * #explanation-block, etc.). The renderer's job is only to replace the
  * inline "forEach(opt)" option-painting pattern duplicated across
  * vocab.js / grammar.js / adaptive.js with a single shared
- * implementation — so when Gates B–D land new types, each gets a
+ * implementation, so when Gates B–D land new types, each gets a
  * renderer file that owns its full UI without having to compete with
  * legacy DOM slot conventions.
  *

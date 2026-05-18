@@ -1,4 +1,4 @@
-// Hint ladder — item-level state machine for progressive hint reveal.
+// Hint ladder, item-level state machine for progressive hint reveal.
 // Pure module-level state; no DOM. Renderers call these functions and
 // handle their own rendering based on the returned step number.
 //

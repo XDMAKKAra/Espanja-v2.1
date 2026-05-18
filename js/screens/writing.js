@@ -16,7 +16,7 @@ export function initWriting({ loadDashboard, saveProgress }) {
 // Soft copy shown when the gate suppresses the modal (no CTA, no purchase).
 // Keeps the student in flow instead of hitting them with a commercial.
 const SOFT_COPY = {
-  first_session: "Lukeminen ja kirjoittaminen aukeavat Pro-jäsenillä — aloita sanastosta, tutustu Puheoon ensin.",
+  first_session: "Lukeminen ja kirjoittaminen aukeavat Pro-jäsenillä, aloita sanastosta, tutustu Puheoon ensin.",
   frequency_cap: "",
 };
 
@@ -83,7 +83,7 @@ export function showProUpsell(trigger = UPSELL_TRIGGERS.LOCKED_TILE_WRITING) {
 }
 
 function showSoftUpsellBanner(message) {
-  // Reuse the generic toast-region pattern from ui/toast.js style — inline
+  // Reuse the generic toast-region pattern from ui/toast.js style, inline
   // minimal DOM to avoid importing the toast module from this file.
   const existing = document.getElementById("pro-soft-banner");
   if (existing) existing.remove();
@@ -98,7 +98,7 @@ function showSoftUpsellBanner(message) {
 
 export async function startCheckout() {
   trackCheckoutStarted();
-  // Pro-tilaus tulossa pian — tällä hetkellä kaikki upsell-CTAt ohjaavat
+  // Pro-tilaus tulossa pian, tällä hetkellä kaikki upsell-CTAt ohjaavat
   // jonotuslista-modaaliin. Maksuintegraatio (Stripe) lisätään L-STRIPE-1:ssä.
   track("waitlist_opened_from_upsell", { trigger: "startCheckout" });
   openAppWaitlist();
@@ -116,7 +116,7 @@ function openAppWaitlist() {
   document.getElementById("btn-dev-flip-pro")?.classList.toggle("hidden", !window.__DEV_PRO_ENABLED);
 }
 
-// Wire once — call from initWriting so it only runs after auth boot.
+// Wire once, call from initWriting so it only runs after auth boot.
 let _waitlistWired = false;
 export function wireAppWaitlist() {
   if (_waitlistWired) return;
@@ -173,7 +173,7 @@ export function wireAppWaitlist() {
       location.reload();
     } catch {
       devBtn.disabled = false;
-      devBtn.textContent = "[ Flip to Pro (dev) ] — epäonnistui";
+      devBtn.textContent = "[ Flip to Pro (dev) ], epäonnistui";
     }
   });
 }
@@ -195,7 +195,7 @@ export async function hydrateConfig() {
 
 export async function openBillingPortal() {
   // Hallintasivu palaa kun Stripe-integraatio on käytössä (L-STRIPE-1).
-  showSoftUpsellBanner("Hallintasivu tulossa pian — pidämme sinut ajan tasalla.");
+  showSoftUpsellBanner("Hallintasivu tulossa pian, pidämme sinut ajan tasalla.");
 }
 
 function showWritingSkeleton() {
@@ -398,7 +398,7 @@ function updateCharCounter() {
   else if (count >= max * 0.8) fill.classList.add("bar-warn");
   else fill.classList.add("bar-ok");
 
-  // Word counter — pedagogical aid (YTL grades by words, not chars).
+  // Word counter, pedagogical aid (YTL grades by words, not chars).
   const words = countWords(text);
   const wc = $("writing-word-count");
   if (wc) wc.textContent = words;
@@ -528,7 +528,7 @@ function renderAnnotatedText(originalText, errors, annotations) {
     }
   }
 
-  // Build HTML with inline markers — keyboard-focusable for a11y.
+  // Build HTML with inline markers, keyboard-focusable for a11y.
   let html = "";
   let cursor = 0;
   for (const s of nonOverlapping) {
@@ -538,7 +538,7 @@ function renderAnnotatedText(originalText, errors, annotations) {
     const text = escapeHtml(originalText.slice(s.start, s.end));
     const dataAttr = encodeURIComponent(JSON.stringify(s.data));
     const klass = s.kind === "error" ? "annotation-error" : "annotation-positive";
-    const aria = s.kind === "error" ? "Virhe — paina näyttääksesi selitys" : "Hyvin tehty — paina näyttääksesi selitys";
+    const aria = s.kind === "error" ? "Virhe, paina näyttääksesi selitys" : "Hyvin tehty, paina näyttääksesi selitys";
     html += `<span class="annotation-span ${klass}" data-kind="${s.kind}" data-annotation="${dataAttr}" tabindex="0" role="button" aria-label="${aria}">${text}</span>`;
     cursor = s.end;
   }
@@ -548,7 +548,7 @@ function renderAnnotatedText(originalText, errors, annotations) {
 
   container.innerHTML = html;
 
-  // Wire up tooltip — pointer + keyboard + touch (focus = keyboard, click = touch toggle).
+  // Wire up tooltip, pointer + keyboard + touch (focus = keyboard, click = touch toggle).
   const tooltip = $("feedback-tooltip");
   if (!tooltip) return;
 
@@ -636,7 +636,7 @@ function renderWritingFeedback(result) {
   // Inline annotated text (the centerpiece)
   renderAnnotatedText(result.originalText || "", result.errors || [], result.annotations || []);
 
-  // "Korjattu versio" — full corrected essay. Only shown when it differs from
+  // "Korjattu versio", full corrected essay. Only shown when it differs from
   // the student's text (guardrail: capped at 1.5× input length server-side).
   const correctedEl = document.getElementById("feedback-corrected-text");
   const correctedSec = document.getElementById("feedback-corrected-section");
@@ -673,7 +673,7 @@ function renderWritingFeedback(result) {
     criteriaEl.appendChild(block);
   }
 
-  // Penalty notice — pedagogical version (replaces the silent score deduction).
+  // Penalty notice, pedagogical version (replaces the silent score deduction).
   if (result.penalty > 0) {
     const notice = document.createElement("div");
     notice.className = "penalty-notice-pedagogical";
@@ -713,7 +713,7 @@ function renderWritingFeedback(result) {
     errorsSection.classList.add("hidden");
   }
 
-  // Positives (sidebar) — drawn from annotations
+  // Positives (sidebar), drawn from annotations
   const posEl = $("feedback-positives");
   const posSection = $("feedback-positives-section");
   posEl.innerHTML = "";

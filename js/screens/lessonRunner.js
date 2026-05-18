@@ -1,16 +1,16 @@
 /**
- * L-COURSE-1 UPDATE 4-6 — phase-based lesson runner for pre-generated lesson JSON.
+ * L-COURSE-1 UPDATE 4-6, phase-based lesson runner for pre-generated lesson JSON.
  *
  * Activates only when /api/curriculum/:k/lesson/:i returns a `pregenerated`
  * payload (schemas/lesson.json shape). Legacy runtime-OpenAI lessons keep using
  * js/screens/curriculum.js renderLessonPage().
  *
  * Pedagogy (skills referenced):
- *  - education/practice-problem-sequence-designer — phase order is authored, runner executes
- *  - education/formative-assessment-loop-designer — instant feedback per item
- *  - education/self-efficacy-builder-sequence — mastery banner copy never shames
- *  - education/spaced-practice-scheduler — failedItems carry into compatible later phases
- *  - puheo-finnish-voice — all copy is sinä-form, concrete, no superlatives
+ *  - education/practice-problem-sequence-designer, phase order is authored, runner executes
+ *  - education/formative-assessment-loop-designer, instant feedback per item
+ *  - education/self-efficacy-builder-sequence, mastery banner copy never shames
+ *  - education/spaced-practice-scheduler, failedItems carry into compatible later phases
+ *  - puheo-finnish-voice, all copy is sinä-form, concrete, no superlatives
  */
 import { show } from "../ui/nav.js";
 import { API, isLoggedIn, authHeader, apiFetch } from "../api.js";
@@ -80,7 +80,7 @@ export function runPregeneratedLesson(payload, kurssiKey, lessonIndex, targetGra
       targetGrade: state.targetGrade,
       isPregenerated: true,
     }));
-    // Hotfix — make the floating "📖 Opetussivu" panel show real content
+    // Hotfix, make the floating "📖 Opetussivu" panel show real content
     // while the student is inside the lesson runner. Compose the panel
     // body from the authored teaching block (intro + key points) so it
     // mirrors what they saw on the teaching step.
@@ -154,7 +154,7 @@ function renderPhase(root, state) {
   const stepper = phaseStepper(state);
   const item = phase.items[state.currentItemIdx];
   if (!item) {
-    // Phase complete — show banner.
+    // Phase complete, show banner.
     return renderPhaseBanner(root, state, phase, "completed");
   }
 
@@ -207,7 +207,7 @@ function renderItem(item, _state) {
     case "writing": return renderWritingItem(item);
     case "reading_mc": return renderReadingMC(item);
     default:
-      return `<p class="lr-unsupported">Tehtävätyyppiä "${escapeHtml(item.item_type || "?")}" ei tueta — ohitetaan.</p>
+      return `<p class="lr-unsupported">Tehtävätyyppiä "${escapeHtml(item.item_type || "?")}" ei tueta, ohitetaan.</p>
         <button type="button" class="btn btn-primary" data-lr-skip-item>Jatka</button>`;
   }
 }
@@ -377,7 +377,7 @@ function wireExerciseHandlers(root, state, item) {
       const text = document.getElementById("lr-writing-input")?.value || "";
       const wc = (text.trim().match(/\S+/g) || []).length;
       const ok = wc >= (item.min_words || 0);
-      showItemFeedback(root, ok, ok ? "Kirjoituksesi on tallennettu." : `Sanamäärä on ${wc} — tavoite vähintään ${item.min_words}.`);
+      showItemFeedback(root, ok, ok ? "Kirjoituksesi on tallennettu." : `Sanamäärä on ${wc}, tavoite vähintään ${item.min_words}.`);
       recordAnswer(state, ok);
       scheduleAdvance(root, state);
     });
@@ -436,7 +436,7 @@ function wireMatch(root, state, item) {
   });
 }
 
-// Lucide-style SVG icons — keep file-local so we don't pull a runtime dep.
+// Lucide-style SVG icons, keep file-local so we don't pull a runtime dep.
 // scale-0.6→1 spring + (wrong-only) shake is handled in lesson-runner.css.
 const FB_ICON_CHECK =
   '<svg class="lr-feedback__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>';
@@ -451,7 +451,7 @@ function showItemFeedback(root, correct, msg) {
   // aria-live ensures screen-readers announce both icon-bearing states.
   fb.setAttribute("role", "status");
   fb.setAttribute("aria-live", correct ? "polite" : "assertive");
-  const text = correct ? (msg || "Hyvin meni!") : (msg || "Melkein — yritä uudelleen.");
+  const text = correct ? (msg || "Hyvin meni!") : (msg || "Melkein, yritä uudelleen.");
   fb.innerHTML =
     `${correct ? FB_ICON_CHECK : FB_ICON_CROSS}` +
     `<span class="lr-feedback__text">${escapeHtml(text)}</span>`;
@@ -513,16 +513,16 @@ function renderPhaseBanner(root, state, phase, mode) {
   let title, message;
   if (skipped) {
     title = "Vaihe ohitettu";
-    message = "Sanat palaavat kertaussessioon myöhemmin — niitä ei jätetä unohduksiin.";
+    message = "Sanat palaavat kertaussessioon myöhemmin, niitä ei jätetä unohduksiin.";
   } else if (mastered) {
     title = "Hallitset tämän";
-    message = `Sait ${correct} / ${total} oikein — jatketaan seuraavaan vaiheeseen.`;
+    message = `Sait ${correct} / ${total} oikein, jatketaan seuraavaan vaiheeseen.`;
   } else if (pct >= 0.5) {
-    title = "Lähellä — vielä yksi pyyhkäisy";
+    title = "Lähellä, vielä yksi pyyhkäisy";
     message = `${correct} / ${total} oikein. Sanat joissa horjuit palaavat seuraavissa vaiheissa.`;
   } else {
     title = "Tämä kaipaa toistoa";
-    message = `${correct} / ${total} oikein. Et ole yksin — tämä rakenne vaatii toistoa, ei eri sääntöä.`;
+    message = `${correct} / ${total} oikein. Et ole yksin, tämä rakenne vaatii toistoa, ei eri sääntöä.`;
   }
 
   const isLast = state.currentPhaseIdx + 1 >= state.phases.length;
@@ -621,15 +621,15 @@ function buildTutorMessage(targetGrade, phaseResults) {
   const mastered = phaseResults.filter((r) => !r.skipped && r.mastered).length;
   const almost = phaseResults.filter((r) => !r.skipped && !r.mastered).length;
   if (targetGrade === "L" || targetGrade === "E") {
-    if (almost === 0 && skipped === 0) return "L/E-tavoite vaatii ~85–95 % YO-kokeessa — tämän tunnin sanat ovat sinulla automaattisia. Eteenpäin.";
-    return `${almost} vaihe${almost === 1 ? "" : "tta"} jäi alle hallintarajan. L/E-tavoite ei salli horjuvia perusrakenteita — palaa näihin huomenna kertauksessa.`;
+    if (almost === 0 && skipped === 0) return "L/E-tavoite vaatii ~85–95 % YO-kokeessa, tämän tunnin sanat ovat sinulla automaattisia. Eteenpäin.";
+    return `${almost} vaihe${almost === 1 ? "" : "tta"} jäi alle hallintarajan. L/E-tavoite ei salli horjuvia perusrakenteita, palaa näihin huomenna kertauksessa.`;
   }
   if (targetGrade === "I" || targetGrade === "A") {
-    if (almost === 0 && skipped === 0) return "Hyvä alku. I/A-tavoite tarvitsee perussanaston tunnistustasolla — olet nyt siellä.";
+    if (almost === 0 && skipped === 0) return "Hyvä alku. I/A-tavoite tarvitsee perussanaston tunnistustasolla, olet nyt siellä.";
     return `Et ole yksin. I/A-tavoitteelle riittää tunnistus, ei kaikki sanat tarvitse olla automaattisia heti. Sanat palaavat kertauksessa.`;
   }
   if (mastered === phaseResults.length) return "Tunti meni kuten pitikin. Jatketaan seuraavaan oppituntiin samalla rytmillä.";
-  if (almost > 0) return `${almost} vaihetta jäi alle hallintarajan. Sanat palaavat seuraavassa kertaussessiossa — tämä on osa rytmiä, ei takaisku.`;
+  if (almost > 0) return `${almost} vaihetta jäi alle hallintarajan. Sanat palaavat seuraavassa kertaussessiossa, tämä on osa rytmiä, ei takaisku.`;
   return "Tunti suoritettu.";
 }
 
@@ -662,7 +662,7 @@ function toggleSidePanel(root, state) {
   }
   const panel = root.querySelector("#lr-side-panel");
   const btn = root.querySelector("#lr-help-toggle");
-  // hotfix bug 3 — toggle has-panel-open on the exercise shell so the desktop
+  // hotfix bug 3, toggle has-panel-open on the exercise shell so the desktop
   // grid expands from 1-col task → 2-col task+panel split.
   const shell = root.querySelector(".lr-shell--exercise");
   if (shell) shell.classList.toggle("has-panel-open", state.sidePanelOpen);

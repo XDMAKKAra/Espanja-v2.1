@@ -1,4 +1,4 @@
-// L-LANG-INFRA-1 — Coming-soon screen for DE/FR users.
+// L-LANG-INFRA-1, Coming-soon screen for DE/FR users.
 // Shown when state.language !== "es". Explains that content is being written
 // and lets the user join a waitlist or switch back to Spanish.
 
@@ -83,7 +83,7 @@ function wireOnce() {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email, language: state.language || "de" }),
         });
-      } catch { /* show success regardless — fire-and-forget */ }
+      } catch { /* show success regardless, fire-and-forget */ }
 
       form.classList.add("hidden");
       const successEl = document.getElementById("cs-success");

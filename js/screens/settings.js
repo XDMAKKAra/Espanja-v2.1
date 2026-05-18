@@ -7,7 +7,7 @@ import { toast } from "../ui/toast.js";
 import { initPaywallModal } from "../features/paywallModal.js";
 
 const THEME_LABELS = {
-  auto:  "Vaalea — seuraa järjestelmää",
+  auto:  "Vaalea, seuraa järjestelmää",
   light: "Vaalea",
   dark:  "Tumma",
 };
@@ -21,7 +21,7 @@ function resolveEffectiveTheme(choice) {
 function applyThemeChoice(value) {
   const v = ["auto", "light", "dark"].includes(value) ? value : "auto";
   try { localStorage.setItem("puheo_theme", v); } catch {}
-  // Auto resolves to light/dark via prefers-color-scheme — write the
+  // Auto resolves to light/dark via prefers-color-scheme, write the
   // effective value to data-theme so the CSS [data-theme="dark"] block
   // matches whether the user chose Dark explicitly or Auto-on-dark-OS.
   document.documentElement.setAttribute("data-theme", resolveEffectiveTheme(v));
@@ -35,7 +35,7 @@ function applyThemeChoice(value) {
   if (valueEl) valueEl.textContent = THEME_LABELS[v];
 }
 
-// L-LIVE-AUDIT-P2 UPDATE 7 — Magic UI animated-theme-toggler ported to vanilla.
+// L-LIVE-AUDIT-P2 UPDATE 7, Magic UI animated-theme-toggler ported to vanilla.
 // View Transitions API expands a clip-path circle from the click point so the
 // new theme reveals as a wipe instead of a hard flash. Falls back to instant
 // when the browser lacks the API or the user prefers reduced motion.
@@ -50,7 +50,7 @@ function applyThemeChoiceWithTransition(value, evt) {
     originX = evt.clientX;
     originY = evt.clientY;
   } else {
-    // Keyboard / programmatic click — origin from the active element's centre.
+    // Keyboard / programmatic click, origin from the active element's centre.
     const target = (evt?.currentTarget) || document.activeElement;
     if (target?.getBoundingClientRect) {
       const r = target.getBoundingClientRect();
@@ -99,7 +99,7 @@ function wireAccountSection() {
     signOutBtn.dataset.wired = "1";
     signOutBtn.addEventListener("click", () => {
       clearAuth();
-      // updateSidebarState lives in main.js — fall back to a hard reload that
+      // updateSidebarState lives in main.js, fall back to a hard reload that
       // re-enters the auth screen via the bootstrap path.
       try { document.querySelector(".app-sidebar")?.style && (document.querySelector(".app-sidebar").style.display = "none"); } catch {}
       show("screen-auth");
@@ -149,7 +149,7 @@ async function wireSubscriptionSection(profile) {
         <a href="/pricing.html?from=settings&tier=mestari" class="btn-primary">Avaa Mestari</a>
       </div>`;
   } else {
-    // treeni, mestari, pro — show Stripe portal button
+    // treeni, mestari, pro, show Stripe portal button
     actionsHtml = `
       <div class="settings-tier-actions">
         <button type="button" class="btn-secondary" id="settings-portal-btn">Hallinnoi tilausta</button>
@@ -211,7 +211,7 @@ export function initSettings(deps) {
   wireBumpModal();
   wireLangModal();
   initPaywallModal();
-  // Sidebar click is handled centrally in main.js — it calls showSettings().
+  // Sidebar click is handled centrally in main.js, it calls showSettings().
 }
 
 // ─── Field descriptors ─────────────────────────────────────────────────────
@@ -273,11 +273,11 @@ const STUDY_BG_LABELS = {
   kotikieli: "Puhun espanjaa kotona / suvun kanssa",
 };
 
-// L-PLAN-6 — full I..L ladder. The pace + multiplier + tutor tone all
+// L-PLAN-6, full I..L ladder. The pace + multiplier + tutor tone all
 // adapt per pick (CURRICULUM_SPEC §2; lib/lessonContext.js mirrors the
 // thresholds). Order matches the picker pill row in onboarding OB-1.
 // Official YO-arvosanat (ylioppilastutkinnon Latinankieliset arvosanat).
-// Older copy used Finnish translations ("Huippu", "Tyydyttävä") — replaced
+// Older copy used Finnish translations ("Huippu", "Tyydyttävä"), replaced
 // with the canonical Latin names students see on their YO-todistus.
 const TARGET_GRADE_LABELS = {
   I: "I · Improbatur",
@@ -395,7 +395,7 @@ const FIELDS = [
   {
     key: "target_grade",
     label: "Tavoitearvosana",
-    hint: "Tavoitteesi YO-kokeessa määrittää harjoituksen määrää ja vaikeutta. Voit muuttaa sitä koska tahansa — suoritetut oppitunnit säilyvät.",
+    hint: "Tavoitteesi YO-kokeessa määrittää harjoituksen määrää ja vaikeutta. Voit muuttaa sitä koska tahansa, suoritetut oppitunnit säilyvät.",
     editor: "single",
     options: () =>
       Object.entries(TARGET_GRADE_LABELS).map(([value, label]) => ({ value, label })),
@@ -434,14 +434,14 @@ export async function openSettingsEditor(fieldKey) {
         _profile = profile || {};
         window._userProfile = _profile;
       }
-    } catch { /* fall through — openEditor will still work with empty state */ }
+    } catch { /* fall through, openEditor will still work with empty state */ }
   }
   openEditor(fieldKey);
 }
 
 export async function showSettings() {
   show("screen-settings");
-  // Wire the theme toggle + account section once per session — idempotent.
+  // Wire the theme toggle + account section once per session, idempotent.
   wireThemeToggle();
   wireAccountSection();
   const rowsEl = $("settings-profile-rows");
@@ -593,7 +593,7 @@ async function saveEditor() {
   const payload = { [field.key]: newVal };
   if (typeof field.sideEffects === "function") field.sideEffects(payload, _pendingValue);
 
-  // Optimistic UI — settings save was perceived as slow because the modal
+  // Optimistic UI, settings save was perceived as slow because the modal
   // waited on the POST round-trip + JSON parse before closing. Apply the
   // change locally first, close the modal immediately, then fire the
   // server save in the background. On error: revert + flash.
@@ -632,13 +632,13 @@ async function saveEditor() {
 
     track("profile_updated", { field: field.key });
 
-    // L-PLAN-6 — target_grade-specific toast confirms the adaptive shift
+    // L-PLAN-6, target_grade-specific toast confirms the adaptive shift
     // and reassures that completed lessons survive. Other fields stay
     // toast-less so the modal close itself signals success.
     if (field.key === "target_grade" && newVal && TARGET_GRADE_LABELS[newVal]) {
       const pace = TARGET_GRADE_PACE_HINTS[newVal] || "";
       toast.success(
-        `Tavoite päivitetty: ${newVal}. Seuraavat oppitunnit ovat ${pace || "tavoitteen mukaisia"} — suoritetut säilyvät ennallaan.`,
+        `Tavoite päivitetty: ${newVal}. Seuraavat oppitunnit ovat ${pace || "tavoitteen mukaisia"}, suoritetut säilyvät ennallaan.`,
       );
     }
 
@@ -916,7 +916,7 @@ async function handleLangSave() {
     return;
   }
 
-  // Switching from non-ES to another non-ES (or back to ES) — no warning.
+  // Switching from non-ES to another non-ES (or back to ES), no warning.
   await saveLang(_pendingLang);
 }
 

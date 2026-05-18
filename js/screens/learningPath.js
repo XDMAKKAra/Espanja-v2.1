@@ -1,5 +1,5 @@
 /**
- * Learning path screen — visual Duolingo-style progression.
+ * Learning path screen, visual Duolingo-style progression.
  */
 import { $, show } from "../ui/nav.js";
 import { API, isLoggedIn, authHeader, apiFetch } from "../api.js";
@@ -30,7 +30,7 @@ export function initLearningPath({ loadDashboard }) {
 
   // Note: the #nav-path sidebar button is handled by the central router in
   // js/main.js (navigateTo("path") → loadCurriculum). Do NOT attach a second
-  // listener here — it caused a race where both screen-curriculum and
+  // listener here, it caused a race where both screen-curriculum and
   // screen-path tried to show on the same click.
 }
 
@@ -79,7 +79,7 @@ function renderLevelBadge(data) {
   if (nextTopic) {
     milestone.textContent = `Seuraava virstanpylväs · ${nextTopic.label}`;
   } else {
-    milestone.textContent = "Kaikki aiheet osattu — hieno työ!";
+    milestone.textContent = "Kaikki aiheet osattu, hieno työ!";
   }
   badge.hidden = false;
 }
@@ -110,9 +110,9 @@ function renderPath(data) {
     const meta = topic.status === "mastered"
       ? `<span class="mastered-tag">✓ Osattu ${topic.bestPct > 0 ? "(" + Math.round(topic.bestPct * 100) + "%)" : ""}</span>`
       : topic.status === "in_progress"
-        ? `<span class="progress-tag">${Math.round(topic.bestPct * 100)}% — yritä uudelleen</span>`
+        ? `<span class="progress-tag">${Math.round(topic.bestPct * 100)}%, yritä uudelleen</span>`
         : topic.status === "locked"
-          ? "Lukittu — suorita edellinen"
+          ? "Lukittu, suorita edellinen"
           : "Valmis aloitettavaksi";
 
     return `
@@ -239,9 +239,9 @@ function showMasteryResult(result) {
     if (result.newlyMastered) {
       msgEl.textContent = "Mahtavaa! Osaat tämän aiheen nyt.";
     } else if (result.passed) {
-      msgEl.textContent = "Vahvistit osaamistasi — hienosti!";
+      msgEl.textContent = "Vahvistit osaamistasi, hienosti!";
     } else {
-      msgEl.textContent = `Tarvitset 80% läpäistäksesi. Yritä uudestaan — paras tuloksesi on ${result.bestPct}%.`;
+      msgEl.textContent = `Tarvitset 80% läpäistäksesi. Yritä uudestaan, paras tuloksesi on ${result.bestPct}%.`;
     }
   }
 

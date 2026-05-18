@@ -1,4 +1,4 @@
-// L-ONBOARDING-REDESIGN-1 — onboarding V3 (9 stages).
+// L-ONBOARDING-REDESIGN-1, onboarding V3 (9 stages).
 // Persuasion-first onboarding ennen Pro-ostoa.
 // Flow:
 //   welcome → language → level → current → target → exam-date → time → focus → reveal → signup
@@ -307,7 +307,7 @@ function wireFocus() {
 /**
  * Counts from 0 → target over ~600 ms using ease-out easing.
  * Writes the formatted value to `el` on each tick. Respects
- * prefers-reduced-motion — skips animation and sets final value immediately.
+ * prefers-reduced-motion, skips animation and sets final value immediately.
  * @param {HTMLElement} el
  * @param {number} target   integer end value
  * @param {string} [suffix] optional suffix (e.g. " viikkoa")
@@ -393,7 +393,7 @@ function renderReveal() {
     focusEl.textContent = labels.length ? labels.join(" · ") : "Yleinen valmistautuminen";
   }
 
-  // Course strip — 8 cards, first N highlighted up to coursesNeeded.
+  // Course strip, 8 cards, first N highlighted up to coursesNeeded.
   const courses = document.getElementById("ob3-reveal-courses");
   if (courses) {
     courses.innerHTML = "";
@@ -449,7 +449,7 @@ async function completeAndRedirect() {
   // Not logged in: stash the flow, route to register screen.
   try {
     sessionStorage.setItem("puheo_ob_v3_flow", JSON.stringify(flow));
-  } catch { /* private mode — silent */ }
+  } catch { /* private mode, silent */ }
   track("ob_v3_completed", { logged_in: false });
   location.hash = "#rekisteroidy";
   show("screen-auth");
@@ -530,7 +530,7 @@ function wireWaitlist() {
             level: waitlistContext.level,
           }),
         });
-      } catch { /* silent — show success regardless */ }
+      } catch { /* silent, show success regardless */ }
       const success = document.getElementById("ob3-waitlist-success");
       if (success) success.classList.remove("hidden");
       form.querySelector(".ob3-cta")?.setAttribute("disabled", "true");

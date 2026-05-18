@@ -263,7 +263,7 @@ function showParadigm() {
   const p = session.prompts[session.index];
   const tenseLabel = TENSE_LABELS[session.tense] || session.tense;
 
-  $("paradigm-title").textContent = `${p.verb.inf} — ${tenseLabel.toLowerCase()}`;
+  $("paradigm-title").textContent = `${p.verb.inf}, ${tenseLabel.toLowerCase()}`;
   $("paradigm-kicker").textContent = `Paradigma ${session.paradigmsShown + 1} / ${MAX_PARADIGMS_PER_SPRINT}`;
 
   const body = $("paradigm-body");

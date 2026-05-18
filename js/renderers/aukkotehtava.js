@@ -1,5 +1,5 @@
 /**
- * Aukkotehtava (gap-fill) renderer — seed-based, server-graded.
+ * Aukkotehtava (gap-fill) renderer, seed-based, server-graded.
  *
  * Reuses the existing #gap-fill-area DOM from app.html.
  * Correct answer is never held client-side; the grader at
@@ -33,7 +33,7 @@ function renderHintContent(hintEl, hintBtn, ex, step) {
     hintEl.textContent = ex.hint_fi || t('hint.nudge.aukko');
     hintBtn.textContent = t('hint.step', { step: 2 });
   } else if (step === 2) {
-    // First letter + underscores — requires hint_partial in seed or falls back to nudge
+    // First letter + underscores, requires hint_partial in seed or falls back to nudge
     hintEl.textContent = ex.hint_partial || ex.hint_fi || t('hint.nudge.aukko');
     hintBtn.textContent = t('hint.showAnswer');
   } else {
@@ -46,7 +46,7 @@ function renderHintContent(hintEl, hintBtn, ex, step) {
 
 /**
  * @param {{ id: string, sentence: string, hint_fi?: string, hint_partial?: string, hint_example_es?: string, hint_example_fi?: string }} ex
- * @param {HTMLElement} _container  — unused; renderer owns #gap-fill-area
+ * @param {HTMLElement} _container , unused; renderer owns #gap-fill-area
  * @param {{ onAnswer?: Function }} [opts]
  */
 export function renderAukkotehtava(ex, _container, { onAnswer } = {}) {
@@ -69,7 +69,7 @@ export function renderAukkotehtava(ex, _container, { onAnswer } = {}) {
   area.classList.remove('hidden');
   sentence.textContent = ex.sentence;
 
-  // Hint button — always visible, advances ladder on click
+  // Hint button, always visible, advances ladder on click
   hintBtn.onclick = () => {
     const step = advanceHint(ex.id);
     renderHintContent(hintEl, hintBtn, ex, step);
@@ -133,7 +133,7 @@ export function renderAukkotehtava(ex, _container, { onAnswer } = {}) {
 
     const bandLabel = t(`band.${result.band}`);
     feedback.textContent = result.band === 'vaarin'
-      ? `${bandLabel} — ${result.correctAnswer}`
+      ? `${bandLabel}, ${result.correctAnswer}`
       : bandLabel;
     feedback.className = `gap-fill-feedback ${cls}`;
     feedback.classList.remove('hidden');

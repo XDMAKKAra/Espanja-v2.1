@@ -1,5 +1,5 @@
 /**
- * Correction exercise renderer — seed-based, server-graded.
+ * Correction exercise renderer, seed-based, server-graded.
  *
  * Reuses the existing #translate-area DOM from app.html.
  * Student reads an erroneous Spanish sentence and types the corrected version.
@@ -43,7 +43,7 @@ function renderHintContent(hintEl, hintBtn, ex, step) {
 
 /**
  * @param {{ id: string, erroneous_sentence: string, hint_fi?: string, error_category?: string }} ex
- * @param {HTMLElement} _container  — unused
+ * @param {HTMLElement} _container , unused
  * @param {{ onAnswer?: Function }} [opts]
  */
 export function renderCorrection(ex, _container, { onAnswer } = {}) {

@@ -52,7 +52,7 @@ export async function loadReadingTask() {
     state.readingScore = 0;
 
     // Track titles so the next generate call can ask the model for a
-    // genuinely different text. Cap at 10 most-recent — a smaller universe
+    // genuinely different text. Cap at 10 most-recent, a smaller universe
     // than vocab lemmas, and prompt budget is tight on the reading route.
     if (data.reading.title) {
       state.recentReadingTitles = [
@@ -244,10 +244,10 @@ $("reading-btn-next").addEventListener("click", () => {
 function showReadingResults() {
   const total = state.currentReading.questions.length;
 
-  // L-PLAN-3 — curriculum lesson active → hand off to lessonResults.
+  // L-PLAN-3, curriculum lesson active → hand off to lessonResults.
   const lessonCtx = getLessonContext();
   if (lessonCtx) {
-    // Reading mode tracks a single aggregate score (state.readingScore) — we
+    // Reading mode tracks a single aggregate score (state.readingScore), we
     // don't have per-question student/correct strings, so we send an empty
     // wrongAnswers list and let the AI work from score alone.
     try {
@@ -290,7 +290,7 @@ function showReadingResults() {
     ytlGrade: null,
   });
 
-  // Spec 2 §5 — populate new editorial result IDs.
+  // Spec 2 §5, populate new editorial result IDs.
   const rdPct = total > 0 ? Math.round((state.readingScore / total) * 100) : 0;
   $("reading-res-tot").textContent = String(total);
   countUp($("reading-res-num"), state.readingScore);
