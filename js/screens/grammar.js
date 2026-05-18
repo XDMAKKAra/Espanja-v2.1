@@ -1,5 +1,5 @@
 import { $, show } from "../ui/nav.js";
-import { API, isLoggedIn, authHeader, retryable } from "../api.js";
+import { API, isLoggedIn, authHeader, retryable, humanizeApiError } from "../api.js";
 import { state, apiLang } from "../state.js";
 import { showSkeleton, showFetchError } from "../ui/loading.js";
 import { GRAMMAR_TYPE_LABELS } from "./vocab.js";
@@ -101,11 +101,14 @@ export async function loadGrammarDrill() {
     renderGrammarExercise();
     show("screen-grammar");
   } catch (err) {
-    showFetchError($("gram-skeleton-slot"), {
-      title: "Kielioppiharjoitusten lataus epäonnistui",
-      subtext: err.message,
-      retryFn: () => loadGrammarDrill(),
-    });
+    {
+      const copy = humanizeApiError(err);
+      showFetchError($("gram-skeleton-slot"), {
+        title: copy.title,
+        subtext: copy.subtext,
+        retryFn: () => loadGrammarDrill(),
+      });
+    }
     $("gram-skeleton-slot").classList.remove("hidden");
     $("gram-question-block").classList.add("hidden");
     $("gram-options-grid").classList.add("hidden");

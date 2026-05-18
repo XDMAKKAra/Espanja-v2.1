@@ -110,13 +110,40 @@ function isPayingRow(row) {
 }
 
 export async function getUserTier(userId) {
-  const { data } = await supabase
+  // 1) user_profile is the source-of-truth for paid users (Stripe webhook
+  //    writes here). When subscription_tier is populated AND the row is in
+  //    a paying state, return that exact tier.
+  const { data: row } = await supabase
     .from("user_profile")
-    .select("subscription_tier, subscription_billing, subscription_status, subscription_expires_at")
+    .select("subscription_tier, subscription_billing, subscription_status, subscription_expires_at, summer_package_expires_at")
     .eq("user_id", userId)
     .single();
-  if (!isPayingRow(data)) return "free";
-  return data.subscription_tier; // 'treeni' | 'mestari'
+  if (isPayingRow(row)) return row.subscription_tier;
+
+  // 2) Legacy summer-package one-time purchase. Treated as mestari (full
+  //    access) for as long as the expiry sits in the future. Without this
+  //    branch, users who paid via the package flow hit free_quota_exceeded
+  //    even though isPro() correctly reports true.
+  if (row?.summer_package_expires_at && new Date(row.summer_package_expires_at) > new Date()) {
+    return "mestari";
+  }
+
+  // 3) Test-accounts bypass (data/test-accounts.json + PRO_TEST_LIST env).
+  //    isPro() already implements the full lookup; lean on it instead of
+  //    duplicating logic, then map true → mestari so checkFeatureAccess
+  //    short-circuits on the "tier !== 'free'" branch.
+  if (await isPro(userId)) return "mestari";
+
+  // 4) Legacy subscriptions table — last-resort fallback for accounts
+  //    created before the user_profile.subscription_* columns existed.
+  const { data: legacy } = await supabase
+    .from("subscriptions")
+    .select("active")
+    .eq("user_id", userId)
+    .single();
+  if (legacy?.active === true) return "mestari";
+
+  return "free";
 }
 
 export async function hasFeature(userId, feature) {

@@ -1,5 +1,5 @@
 import { $, show } from "../ui/nav.js";
-import { API, isLoggedIn, authHeader, apiFetch } from "../api.js";
+import { API, isLoggedIn, authHeader, apiFetch, humanizeApiError } from "../api.js";
 import { showLoading, showLoadingError } from "../ui/loading.js";
 import { createExamTimer, clearPersisted as clearTimerPersisted } from "../features/examTimer.js";
 
@@ -259,7 +259,10 @@ export async function startFullExam(durationMode = "demo") {
 
     enterExam();
   } catch (err) {
-    showLoadingError("Kokeen luonti epäonnistui: " + err.message, () => startFullExam(durationMode));
+    {
+      const copy = humanizeApiError(err);
+      showLoadingError(`${copy.title}. ${copy.subtext}`, () => startFullExam(durationMode));
+    }
   }
 }
 
