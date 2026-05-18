@@ -1,147 +1,136 @@
 /* ============================================================
-   Puheo Landing — Editorial-Paper register tokens (Loop L-EDITORIAL-1).
+   Puheo Landing — Old-Spain editorial tokens (Ship 1.5 / 2026-05-18).
 
-   Coexists with the legacy `landing-tokens.css` (Tinted-Mint Workshop,
-   documented in DESIGN.md as end-of-life). Old vars stay live so the
-   rest of the page renders while subsequent craft loops migrate
-   section-by-section.
+   Replaces Ship 1 monochrome-paper palette + Source Serif 4. Direction
+   approved 2026-05-18: terracotta + olive on warm cream, Fraunces +
+   Manrope, Humaaans-style illustrations. Multi-language (es/fr/de).
 
-   New tokens are namespaced `--ed-*` to avoid bleeding into any
-   `.landing-section` that hasn't been migrated yet.
-
-   Source-of-truth brief:
-     docs/superpowers/specs/2026-05-16-landing-editorial-rebuild-design.md
-   Strategic anchor:  PRODUCT.md
-   Visual anchor:     DESIGN.md (end-of-life baseline being replaced)
+   Source-of-truth:
+     docs/superpowers/HANDOFF-2026-05-18-ship1_5-landing.md
+     memory/feedback_landing_direction_2026_05_18.md
    ============================================================ */
 
 .landing {
-  /* ─── Surfaces — warm off-white paper, tinted slightly toward
-     the deep-teal accent so paper and ink feel like the same scene. */
-  --ed-bg:           oklch(96% 0.005 80);    /* ≈ #f7f4ee  warm paper */
-  --ed-bg-deep:      oklch(94% 0.006 80);    /* ≈ #ede8df  one step warmer */
-  --ed-bg-card:      oklch(99% 0.003 80);    /* ≈ #fdfbf6  lifted paper (grader card) */
-  --ed-rule:         oklch(20% 0.006 80 / 0.12);  /* hairline ink */
-  --ed-rule-strong:  oklch(20% 0.006 80 / 0.22);
+  /* ─── Surfaces — warm cream, never white, never beige-AI-slop. */
+  --ed-bg:           oklch(96% 0.012 75);    /* warm cream paper */
+  --ed-bg-card:      oklch(98% 0.008 75);    /* lifted surface */
+  --ed-bg-deep:      oklch(93% 0.018 75);    /* one step warmer (stat row, footer) */
+  --ed-bg-tint:      oklch(91% 0.030 60);    /* terracotta-tinted wash (callouts) */
+  --ed-rule:         oklch(20% 0.012 30 / 0.14);
+  --ed-rule-strong:  oklch(20% 0.012 30 / 0.26);
 
-  /* ─── Ink — deep warm neutral, never #000. */
-  --ed-ink:          oklch(20% 0.006 80);    /* ≈ #1d1a14  primary text */
-  --ed-ink-muted:    oklch(40% 0.006 80);    /* ≈ #4d4639  secondary */
-  --ed-ink-subtle:   oklch(58% 0.006 80);    /* ≈ #7a7264  marginalia / captions */
-  --ed-ink-faint:    oklch(72% 0.005 80);    /* ≈ #a89f8e  hairlines, decorative */
+  /* ─── Ink — warm near-black, lifted toward terracotta family. */
+  --ed-ink:          oklch(18% 0.012 30);    /* primary text */
+  --ed-ink-muted:    oklch(38% 0.012 30);    /* secondary */
+  --ed-ink-subtle:   oklch(56% 0.012 30);    /* marginalia, captions */
+  --ed-ink-faint:    oklch(72% 0.010 30);    /* hairlines */
 
-  /* ─── Accent — deep maroon (espanjalainen ruskeanpunainen, oppikirjan
-     kansi-väri). Hue 25 = warm red-brown, ei kirkas, ei bordeaux.
-     Erottuu Mafyn siniharmaasta ja Studeon pastel-violetista, viittaa
-     espanjaan ilman lippua. Käytetään ≤10% pinnasta. */
-  --ed-accent:       oklch(38% 0.13 25);     /* ≈ #7a2a23  primary action */
-  --ed-accent-hover: oklch(32% 0.13 25);     /* ≈ #66201a  */
-  --ed-accent-soft:  oklch(38% 0.13 25 / 0.10);
-  --ed-accent-ink:   oklch(96% 0.005 80);    /* text-on-maroon (paper-on-ink) */
-  --ed-accent-tint:  oklch(94% 0.025 25);    /* warm tinted paper for callouts */
+  /* ─── Accent — deep terracotta. Espanjalainen savimuuri, ei vermillon.
+     Used ≤10% of surface as buttons + emphasis + chips. */
+  --ed-accent:       oklch(42% 0.15 28);     /* primary action */
+  --ed-accent-hover: oklch(36% 0.15 28);
+  --ed-accent-soft:  oklch(42% 0.15 28 / 0.10);
+  --ed-accent-tint:  oklch(91% 0.040 30);
+  --ed-accent-ink:   oklch(96% 0.012 75);    /* paper on terracotta */
 
-  /* ─── Mark colors — for grader card error spans. Warm, not neon. */
-  --ed-mark-grammar:  oklch(38% 0.13 25 / 0.14);    /* maroon wash */
-  --ed-mark-spelling: oklch(72% 0.13 65 / 0.22);    /* warm ochre wash */
-  --ed-mark-grammar-rule:  oklch(38% 0.13 25);
+  /* ─── Olive — secondary accent, asiantuntemus. Välimerellinen. */
+  --ed-olive:        oklch(38% 0.07 110);
+  --ed-olive-hover:  oklch(32% 0.07 110);
+  --ed-olive-soft:   oklch(38% 0.07 110 / 0.12);
+  --ed-olive-tint:   oklch(91% 0.030 105);
+
+  /* ─── Gold — marginalia. Used very sparingly: chapter Roman numerals,
+     stat-row figures, rosette ornaments. */
+  --ed-gold:         oklch(62% 0.11 78);
+  --ed-gold-soft:    oklch(62% 0.11 78 / 0.18);
+
+  /* ─── Illustration palette — for Humaaans-style figure recoloring.
+     Skin tones varied (figures ship with 3 different tones). */
+  --ed-fig-skin-1:   oklch(78% 0.06 50);    /* warm light */
+  --ed-fig-skin-2:   oklch(65% 0.07 55);    /* medium */
+  --ed-fig-skin-3:   oklch(48% 0.07 50);    /* deep */
+  --ed-fig-hair-1:   oklch(28% 0.04 40);    /* dark brown */
+  --ed-fig-hair-2:   oklch(38% 0.07 60);    /* warm brown */
+  --ed-fig-cloth-1:  var(--ed-accent);      /* terracotta clothing */
+  --ed-fig-cloth-2:  var(--ed-olive);       /* olive clothing */
+  --ed-fig-cloth-3:  oklch(58% 0.06 240);   /* dusty blue (variety) */
+  --ed-fig-line:     oklch(22% 0.012 30);   /* outline */
+
+  /* ─── Mark colors — grader card error spans. */
+  --ed-mark-grammar:       oklch(42% 0.15 28 / 0.14);
+  --ed-mark-spelling:      oklch(62% 0.11 78 / 0.22);
+  --ed-mark-grammar-rule:  oklch(42% 0.15 28);
   --ed-mark-spelling-rule: oklch(56% 0.14 65);
 
-  /* ─── Score chip — quiet maroon-tinted pill. */
-  --ed-score-bg:    oklch(38% 0.13 25 / 0.08);
-  --ed-score-ink:   oklch(32% 0.13 25);
+  /* ─── Score chip — terracotta-tinted pill. */
+  --ed-score-bg:    oklch(42% 0.15 28 / 0.08);
+  --ed-score-ink:   oklch(36% 0.15 28);
 
-  /* ─── Gold accent — used sparingly: chapter numbers, kunniamerkit.
-     Hue 80 = vanha kirja-kullan väri. */
-  --ed-gold:        oklch(58% 0.10 80);
+  /* ─── Type — Fraunces display + Manrope body. */
+  --ed-display: "Fraunces", "Source Serif 4", Georgia, "Times New Roman", serif;
+  --ed-serif:   "Fraunces", Georgia, "Times New Roman", serif;
+  --ed-sans:    "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --ed-mono:    "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 
-  /* ─── Type — editorial serif display + Geist sans body
-     (Inter banned per design-taste-frontend "premium contexts" rule). */
-  --ed-serif: "Source Serif 4", "Source Serif Pro", Georgia, "Times New Roman", serif;
-  --ed-sans:  "Geist", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --ed-mono:  "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  /* Type scale — slightly more restrained than Ship 1 to avoid serif
+     dominance. Display caps at 64px; one italic-emphasis word, not whole h1. */
+  --ed-fs-display:    clamp(2.25rem, 4vw + 1rem, 4rem);     /* 36–64px hero h1 */
+  --ed-fs-h2:         clamp(1.625rem, 2.2vw + 1rem, 2.25rem); /* 26–36px section h2 */
+  --ed-fs-h3:         clamp(1.125rem, 0.6vw + 1rem, 1.375rem);
+  --ed-fs-lead:       clamp(1.0625rem, 0.4vw + 1rem, 1.1875rem); /* 17–19px hero sub */
+  --ed-fs-body:       1rem;
+  --ed-fs-body-lg:    1.0625rem;
+  --ed-fs-meta:       0.875rem;
+  --ed-fs-micro:      0.75rem;
 
-  /* Type scale — editorial proportions, less compressed than the dark
-     register. Display is large but never poster-sized; tracking is near-normal. */
-  --ed-fs-display: clamp(2.5rem, 4.5vw + 1rem, 4.5rem);   /* 40–72px hero h1 */
-  --ed-fs-h2:      clamp(1.75rem, 2.5vw + 1rem, 2.5rem);  /* 28–40px section h2 */
-  --ed-fs-lead:    clamp(1.125rem, 0.6vw + 1rem, 1.25rem); /* 18–20px hero sub */
-  --ed-fs-body:    1.0625rem;   /* 17px editorial body */
-  --ed-fs-meta:    0.875rem;    /* 14px marginalia */
-  --ed-fs-micro:   0.75rem;     /* 12px labels */
+  --ed-lh-display: 1.06;
+  --ed-lh-h2:      1.18;
+  --ed-lh-body:    1.62;
+  --ed-lh-meta:    1.5;
 
-  /* Editorial leading. Tighter on display, generous on body. */
-  --ed-lh-display: 1.08;
-  --ed-lh-h2:      1.15;
-  --ed-lh-body:    1.6;
-  --ed-lh-meta:    1.45;
-
-  /* Tracking. Editorial serifs need air, not negative tracking. */
-  --ed-tracking-display: -0.01em;
+  --ed-tracking-display: -0.015em;
   --ed-tracking-body:    0;
-  --ed-tracking-meta:    0.04em;
+  --ed-tracking-meta:    0.08em;
 
-  /* ─── Radius — modest, not pill-by-default. Buttons stay slightly
-     rounded; the grader card has a tight book-corner radius. */
+  /* Fraunces variable axes — OPSZ scales optical size; SOFT/WONK add
+     editorial pull. Use these via font-variation-settings on display. */
+  --ed-fvs-display: "opsz" 96, "SOFT" 50, "WONK" 0;
+  --ed-fvs-display-italic: "opsz" 72, "SOFT" 100, "WONK" 1;
+
+  /* ─── Radius — modest, book-corner sensibility. */
   --ed-r-sm:   4px;
   --ed-r-md:   6px;
   --ed-r-lg:   10px;
-  --ed-r-pill: 999px;   /* used very sparingly */
+  --ed-r-xl:   14px;
+  --ed-r-pill: 999px;
 
-  /* ─── Spacing — looser than the old grid, with rhythm. */
+  /* ─── Spacing — rhythm-aware, not uniform. */
   --ed-sp-1:  4px;
   --ed-sp-2:  8px;
-  --ed-sp-3:  16px;
-  --ed-sp-4:  24px;
-  --ed-sp-5:  32px;
-  --ed-sp-6:  48px;
-  --ed-sp-7:  64px;
-  --ed-sp-8:  96px;
-  --ed-sp-9:  128px;
+  --ed-sp-3:  12px;
+  --ed-sp-4:  16px;
+  --ed-sp-5:  24px;
+  --ed-sp-6:  32px;
+  --ed-sp-7:  48px;
+  --ed-sp-8:  72px;
+  --ed-sp-9:  96px;
+  --ed-sp-10: 128px;
 
-  /* ─── Motion — calmer than the old dark register. No glow, no
-     parallax, just one ease-out curve and reduced-motion respect. */
-  --ed-t-fast: 140ms cubic-bezier(0.22, 1, 0.36, 1);
-  --ed-t-mid:  220ms cubic-bezier(0.22, 1, 0.36, 1);
+  /* ─── Motion — ease-out-quart, no bounce. */
+  --ed-t-fast: 160ms cubic-bezier(0.23, 1, 0.32, 1);
+  --ed-t-mid:  240ms cubic-bezier(0.23, 1, 0.32, 1);
+  --ed-t-slow: 480ms cubic-bezier(0.23, 1, 0.32, 1);
 
-  /* ─── Content width — narrower than the dark register, editorial. */
-  --ed-content-max: 1120px;
+  /* ─── Layout widths. */
+  --ed-content-max: 1180px;
+  --ed-content-narrow: 880px;
   --ed-prose-max:   62ch;
-}
 
-/* The editorial sections opt in by sitting under `.landing__editorial`.
-   They get the paper surface; everything else (the legacy dark sections)
-   continues to use --bg / --text / --accent from landing-tokens.css. */
-.landing .landing__editorial {
-  background: var(--ed-bg);
-  color: var(--ed-ink);
-  font-family: var(--ed-sans);
-  font-size: var(--ed-fs-body);
-  line-height: var(--ed-lh-body);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
-  font-feature-settings: "kern" 1, "liga" 1, "calt" 1, "ss01" 1;
-}
-
-/* Source Serif 4 face has a heavier optical default; the editorial spec
-   wants weight 400 for body serif moments and 500 for display. */
-.landing .landing__editorial .serif {
-  font-family: var(--ed-serif);
-  font-feature-settings: "kern" 1, "liga" 1, "onum" 1;  /* old-style nums */
-}
-
-.landing .landing__editorial .mono-num {
-  font-family: var(--ed-mono);
-  font-variant-numeric: tabular-nums;
-  letter-spacing: 0;
-}
-
-/* Reduced-motion override applies to the editorial scope too. */
-@media (prefers-reduced-motion: reduce) {
-  .landing .landing__editorial *,
-  .landing .landing__editorial *::before,
-  .landing .landing__editorial *::after {
-    animation-duration: 0ms !important;
-    transition-duration: 0ms !important;
-  }
+  /* ─── Shadows — diffuse, tinted to terracotta-warm. */
+  --ed-shadow-sm: 0 1px 2px oklch(20% 0.05 30 / 0.06),
+                  0 2px 6px oklch(20% 0.05 30 / 0.04);
+  --ed-shadow-md: 0 4px 10px oklch(20% 0.05 30 / 0.06),
+                  0 12px 28px oklch(20% 0.05 30 / 0.08);
+  --ed-shadow-lg: 0 8px 18px oklch(20% 0.05 30 / 0.08),
+                  0 24px 48px oklch(20% 0.05 30 / 0.10);
 }
