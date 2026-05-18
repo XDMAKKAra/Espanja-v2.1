@@ -4,15 +4,15 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Pre-launch password gate — extracted to /js/pre-launch-gate.js
+  <!-- Pre-launch password gate, extracted to /js/pre-launch-gate.js
        so a strict CSP (script-src without 'unsafe-inline') can ship.
-       Sync, no defer/async — must run before subsequent <script> tags
+       Sync, no defer/async, must run before subsequent <script> tags
        so the prompt + DOM-replace happens before any other code. -->
   <script src="/js/pre-launch-gate.js"></script>
 
 
-  <title>Puheo — Espanjan YO-koe harjoittelu tekoälyllä | Lyhyt oppimäärä 2026</title>
-  <meta name="description" content="Pärjää espanjan YO-kokeessa ilman kalliita kursseja. Tekoälyvalmentaja, joka tuntee YTL:n rubriikin. Aloita ilmaiseksi." />
+  <title>Puheo, Espanjan YO-koe ja kirjoitusten arviointi | Lyhyt oppimäärä 2026</title>
+  <meta name="description" content="Pärjää espanjan YO-kokeessa ilman kalliita kursseja. Lyhyen oppimäärän valmennus YTL:n rubriikilla. Aloita ilmaiseksi." />
   <meta name="keywords" content="espanja YO-koe, espanjan lyhyt oppimäärä, espanja kirjoitukset 2026, ojalá subjunktiivi, preteriti imperfekti, ylioppilaskirjoitukset espanja" />
   <meta name="author" content="Puheo" />
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
@@ -22,8 +22,8 @@
 
   <!-- Open Graph -->
   <meta property="og:site_name" content="Puheo" />
-  <meta property="og:title" content="Puheo — Espanjan YO-koe harjoittelu tekoälyllä" />
-  <meta property="og:description" content="YTL-rubriikin mukainen AI-arviointi, personoidut harjoitukset. Valmistaudu syksyn kirjoituksiin 28.9.2026." />
+  <meta property="og:title" content="Puheo, Espanjan YO-koe ja kirjoitusten arviointi" />
+  <meta property="og:description" content="YTL-rubriikin mukainen YTL-rubriikin arviointi, personoidut harjoitukset. Valmistaudu syksyn kirjoituksiin 28.9.2026." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://espanja-v2-1.vercel.app/espanja-yo-koe" />
   <meta property="og:image" content="https://espanja-v2-1.vercel.app/og-image.png" />
@@ -33,8 +33,8 @@
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Puheo — Espanjan YO-koe harjoittelu tekoälyllä" />
-  <meta name="twitter:description" content="YTL-rubriikin mukainen AI-arviointi, personoidut harjoitukset, täyskoe-simulaatio. Aloita ilmaiseksi." />
+  <meta name="twitter:title" content="Puheo, Espanjan YO-koe ja kirjoitusten arviointi" />
+  <meta name="twitter:description" content="YTL-rubriikin mukainen YTL-rubriikin arviointi, personoidut harjoitukset, täyskoe-simulaatio. Aloita ilmaiseksi." />
   <meta name="twitter:image" content="https://espanja-v2-1.vercel.app/og-image.png" />
 
   <!-- JSON-LD: SoftwareApplication -->
@@ -43,7 +43,7 @@
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
     "name": "Puheo",
-    "description": "Tekoälyavusteinen espanjan YO-kokeen valmennusalusta lyhyen oppimäärän lukiolaisille. YTL:n rubriikin mukainen kirjoitelma-arviointi ja adaptiiviset harjoitukset.",
+    "description": "espanjan YO-kokeen valmennusalusta lyhyen oppimäärän lukiolaisille. YTL:n rubriikin mukainen kirjoitelma-arviointi ja adaptiiviset harjoitukset.",
     "applicationCategory": "EducationalApplication",
     "operatingSystem": "Web, PWA (iOS, Android)",
     "inLanguage": "fi",
@@ -79,7 +79,7 @@
     "@context": "https://schema.org",
     "@type": "Course",
     "name": "Espanjan YO-koe valmennus",
-    "description": "Tekoälyavusteinen valmennus espanjan YO-kokeen lyhyeen oppimäärään.",
+    "description": "valmennus espanjan YO-kokeen lyhyeen oppimäärään.",
     "provider": { "@type": "Organization", "name": "Puheo", "sameAs": "https://espanja-v2-1.vercel.app/" },
     "inLanguage": "fi",
     "audience": { "@type": "EducationalAudience", "educationalRole": "student" }
@@ -152,9 +152,9 @@
           </h1>
 
           <p class="hero__sub">
-            Puheo on tekoälyvalmentaja, joka tuntee YO-rubriikin. Kymmenen
-            minuuttia päivässä — ja kirjoituksesi, sanastosi ja kielioppisi
-            tuntuvat eri tasolta kokeessa.
+            Puheo arvioi kirjoituksesi samalla rubriikilla jolla YTL:n sensorit
+            pisteyttävät kokeen. Kymmenen minuuttia päivässä riittää siihen,
+            että maaliskuussa salissa virheet ovat tuttuja eikä yllätyksiä.
           </p>
 
           <div class="hero__ctas">
@@ -235,7 +235,7 @@
             </div>
           </div>
 
-          <!-- Floating product fragment — Puheo streak chip -->
+          <!-- Floating product fragment, Puheo streak chip -->
           <div class="floating-card" role="img" aria-label="Esimerkki: 12 päivän putki">
             <span class="floating-card__avatar">ro</span>
             <span class="floating-card__meta">
@@ -264,7 +264,7 @@
       </div>
     </section>
 
-    <!-- ─── PRODUCT — 3 PILLARS ───────────────────────────── -->
+    <!-- ─── PRODUCT, 3 PILLARS ───────────────────────────── -->
     <section class="landing-section pillars" id="tuote" aria-labelledby="tuote-otsikko">
       <div class="landing-section__inner">
         <div class="pillars__head">
@@ -283,7 +283,7 @@
             <h3 class="pillar__title">Sanasto</h3>
             <p class="pillar__body">
               Yli 2 000 YO-koe-tasoista sanaa, ryhmiteltynä YO-aiheisiin.
-              Toistoväli kasvaa kun muistat — joka päivä näet tarkalleen
+              Toistoväli kasvaa kun muistat, joka päivä näet tarkalleen
               sen, mitä on aika kerrata.
             </p>
             <p class="pillar__metric"><strong>2 000+</strong> sanaa · 8 aihetta</p>
@@ -320,7 +320,7 @@
                 <span class="pillar__demo-chip pillar__demo-chip--wrong">íbamos</span>
                 <span class="pillar__demo-chip">vamos</span>
               </div>
-              <p class="pillar__demo-hint">Preteriti — menneisyyden yksittäinen teko</p>
+              <p class="pillar__demo-hint">Preteriti, menneisyyden yksittäinen teko</p>
             </div>
           </article>
 
@@ -331,7 +331,7 @@
             </span>
             <h3 class="pillar__title">Kirjoittaminen</h3>
             <p class="pillar__body">
-              Tekoäly arvioi kirjoituksesi YTL:n rubriikin mukaisesti:
+              Saat kirjoituksesta YTL-rubriikin mukaisen arvion:
               viestinnällisyys, rakenteet, sanasto, kokonaisuus.
               Saat tarkan suomenkielisen selityksen jokaisesta virheestä.
             </p>
@@ -353,10 +353,10 @@
       </div>
     </section>
 
-    <!-- ─── COURSES — L-HOME-COURSE-VISIBILITY ─────────────────
+    <!-- ─── COURSES, L-HOME-COURSE-VISIBILITY ─────────────────
          Pattern: trivial extension of .pillars__grid (STANDARDS §3).
          Data: lib/curriculumData.js CURRICULUM_KURSSIT (8 kurssit).
-         Static HTML — no JS needed, no new bundle.
+         Static HTML, no JS needed, no new bundle.
          Layout: 4-col desktop → 2-col tablet → 1-col mobile.
          YO-taso badge: A/B/C/M/E per kurssi (YO-arvosanat, EI CEFR).
          Skill: design:taste-frontend + ui-ux-pro-max.
@@ -385,7 +385,7 @@
 
         <ol class="courses__grid" aria-label="Puheon 8 kurssia järjestyksessä">
 
-          <!-- K1 — Kuka olen · 10 oppituntia · Taso A -->
+          <!-- K1, Kuka olen · 10 oppituntia · Taso A -->
           <li class="course-card" data-reveal>
             <div class="course-card__head">
               <span class="course-card__num" aria-hidden="true">01</span>
@@ -398,7 +398,7 @@
             </p>
           </li>
 
-          <!-- K2 — Arki ja elämä · 10 oppituntia · Taso A -->
+          <!-- K2, Arki ja elämä · 10 oppituntia · Taso A -->
           <li class="course-card" data-reveal data-reveal-delay="100">
             <div class="course-card__head">
               <span class="course-card__num" aria-hidden="true">02</span>
@@ -411,7 +411,7 @@
             </p>
           </li>
 
-          <!-- K3 — Mitä tein · 11 oppituntia · Taso B -->
+          <!-- K3, Mitä tein · 11 oppituntia · Taso B -->
           <li class="course-card" data-reveal data-reveal-delay="100">
             <div class="course-card__head">
               <span class="course-card__num" aria-hidden="true">03</span>
@@ -424,20 +424,20 @@
             </p>
           </li>
 
-          <!-- K4 — Ennen ja nyt · 12 oppituntia · Taso B -->
+          <!-- K4, Ennen ja nyt · 12 oppituntia · Taso B -->
           <li class="course-card" data-reveal data-reveal-delay="100">
             <div class="course-card__head">
               <span class="course-card__num" aria-hidden="true">04</span>
               <span class="course-card__badge course-card__badge--b" aria-label="YO-taso B">B</span>
             </div>
             <h3 class="course-card__title">Ennen ja nyt</h3>
-            <p class="course-card__body">Imperfekti ja preteriti vs imperfekti — YO-klassikko, lapsuus ja muistot.</p>
+            <p class="course-card__body">Imperfekti ja preteriti vs imperfekti, YO-klassikko, lapsuus ja muistot.</p>
             <p class="course-card__meta">
               <span class="course-card__count">12 oppituntia</span>
             </p>
           </li>
 
-          <!-- K5 — Tulevaisuus ja unelmat · 11 oppituntia · Taso C -->
+          <!-- K5, Tulevaisuus ja unelmat · 11 oppituntia · Taso C -->
           <li class="course-card" data-reveal>
             <div class="course-card__head">
               <span class="course-card__num" aria-hidden="true">05</span>
@@ -450,7 +450,7 @@
             </p>
           </li>
 
-          <!-- K6 — Maailman ongelmat · 12 oppituntia · Taso C -->
+          <!-- K6, Maailman ongelmat · 12 oppituntia · Taso C -->
           <li class="course-card" data-reveal data-reveal-delay="100">
             <div class="course-card__head">
               <span class="course-card__num" aria-hidden="true">06</span>
@@ -463,7 +463,7 @@
             </p>
           </li>
 
-          <!-- K7 — Kulttuuri ja yhteiskunta · 12 oppituntia · Taso M -->
+          <!-- K7, Kulttuuri ja yhteiskunta · 12 oppituntia · Taso M -->
           <li class="course-card" data-reveal data-reveal-delay="100">
             <div class="course-card__head">
               <span class="course-card__num" aria-hidden="true">07</span>
@@ -476,7 +476,7 @@
             </p>
           </li>
 
-          <!-- K8 — YO-koevalmiiksi · 12 oppituntia · Taso E -->
+          <!-- K8, YO-koevalmiiksi · 12 oppituntia · Taso E -->
           <li class="course-card course-card--finale" data-reveal data-reveal-delay="100">
             <div class="course-card__head">
               <span class="course-card__num" aria-hidden="true">08</span>
@@ -523,7 +523,7 @@
             <h3 class="step__title">Harjoittele päivittäin</h3>
             <p class="step__body">
               Lyhyitä kymmenen minuutin sessioita. Sanasto, kielioppi,
-              luetun ymmärtäminen ja kirjoitus vuorottelevat — sama
+              luetun ymmärtäminen ja kirjoitus vuorottelevat, sama
               jakauma kuin oikeassa kokeessa.
             </p>
           </li>
@@ -546,7 +546,7 @@
       <div class="landing-section__inner grader__inner">
 
         <!-- LEFT: recreated grader output (real fixture: references/puheo-screens/grading-response.json) -->
-        <div class="grader-card" data-reveal role="figure" aria-label="Esimerkki Puheon arviointinäkymästä — opiskelijan sähköposti, virheet alleviivattuna ja YTL-rubriikin pisteet.">
+        <div class="grader-card" data-reveal role="figure" aria-label="Esimerkki Puheon arviointinäkymästä, opiskelijan sähköposti, virheet alleviivattuna ja YTL-rubriikin pisteet.">
           <div class="grader-card__head">
             <p class="grader-card__title">Sähköposti ystävälle · 160–240 merkkiä</p>
             <span class="grader-card__badge">YTL · 13 / 20</span>
@@ -554,7 +554,7 @@
 
           <p class="grader-prose">Hola Marta,
 
-Estoy escribiendo para invitarte a mi cumpleaños. Va a ser el viernes próximo en mi casa. Mi madre cocina mucha comida y <span class="ge" data-cat="spelling" tabindex="0">tendrémos<span class="ge-tip"><strong>Oikein: tendremos</strong>Painollinen tavu on toiseksi viimeinen, joten 'tendremos' kirjoitetaan ilman aksenttia.</span></span> también música. <span class="ge" data-cat="grammar" tabindex="0">Espero que vienes<span class="ge-tip"><strong>Oikein: Espero que vengas</strong>Subjunktiivi pakollinen 'esperar que' jälkeen, kun toivotaan jonkun tekevän jotakin: 'venir' → 'vengas'.</span></span> con tu hermano. La fiesta empieza a las siete. La semana pasada <span class="ge" data-cat="grammar" tabindex="0">estaba en Madrid<span class="ge-tip"><strong>Oikein: estuve en Madrid</strong>Loppuun saatettu, ajallisesti rajattu matka → preteriti ('estuve'), ei imperfekti.</span></span> con mi clase y <span class="ge" data-cat="grammar" tabindex="0">era muy divertido<span class="ge-tip"><strong>Oikein: fue muy divertido</strong>Kokonaisarvio päätyneestä tapahtumasta → preteriti 'fue'. 'Era' kuvaisi kestävää tilaa.</span></span>. <span class="ge" data-cat="grammar" tabindex="0">Es importante que me dices<span class="ge-tip"><strong>Oikein: que me digas</strong>Subjunktiivi pakollinen 'es importante que' jälkeen — kyse on toivomuksesta, ei toteamuksesta.</span></span> si puedes venir antes del miércoles.
+Estoy escribiendo para invitarte a mi cumpleaños. Va a ser el viernes próximo en mi casa. Mi madre cocina mucha comida y <span class="ge" data-cat="spelling" tabindex="0">tendrémos<span class="ge-tip"><strong>Oikein: tendremos</strong>Painollinen tavu on toiseksi viimeinen, joten 'tendremos' kirjoitetaan ilman aksenttia.</span></span> también música. <span class="ge" data-cat="grammar" tabindex="0">Espero que vienes<span class="ge-tip"><strong>Oikein: Espero que vengas</strong>Subjunktiivi pakollinen 'esperar que' jälkeen, kun toivotaan jonkun tekevän jotakin: 'venir' → 'vengas'.</span></span> con tu hermano. La fiesta empieza a las siete. La semana pasada <span class="ge" data-cat="grammar" tabindex="0">estaba en Madrid<span class="ge-tip"><strong>Oikein: estuve en Madrid</strong>Loppuun saatettu, ajallisesti rajattu matka → preteriti ('estuve'), ei imperfekti.</span></span> con mi clase y <span class="ge" data-cat="grammar" tabindex="0">era muy divertido<span class="ge-tip"><strong>Oikein: fue muy divertido</strong>Kokonaisarvio päätyneestä tapahtumasta → preteriti 'fue'. 'Era' kuvaisi kestävää tilaa.</span></span>. <span class="ge" data-cat="grammar" tabindex="0">Es importante que me dices<span class="ge-tip"><strong>Oikein: que me digas</strong>Subjunktiivi pakollinen 'es importante que' jälkeen, kyse on toivomuksesta, ei toteamuksesta.</span></span> si puedes venir antes del miércoles.
 
 ¡Hasta pronto!
 Saludos,
@@ -592,11 +592,11 @@ Aino</p>
         <!-- RIGHT: copy -->
         <div class="grader-copy" data-reveal data-reveal-delay="150">
           <h2 class="grader-copy__title" id="arviointi-otsikko">
-            Tekoäly, joka korjaa kuten YTL-arvioija.
+            YTL-arvioijan rubriikki, sovellettuna sinun kirjoitukseesi.
           </h2>
           <p class="grader-copy__body">
             Puheo arvioi kirjoituksesi täsmälleen YO-kokeen rubriikin
-            mukaan. Et saa pelkkää numeroa — saat tarkan selityksen
+            mukaan. Et saa pelkkää numeroa, saat tarkan selityksen
             jokaisesta virheestä, ja ehdotuksen siitä, mitä harjoitella
             seuraavaksi.
           </p>
@@ -619,7 +619,7 @@ Aino</p>
       </div>
     </section>
 
-    <!-- ─── Pricing — LANDING_PLAN.md §C7 ─────────────────────────
+    <!-- ─── Pricing, LANDING_PLAN.md §C7 ─────────────────────────
          Sourced from 21st.dev/community/components/efferd/pricing/default
          (restrained dark "Plans that Scale with You" pattern).
          Both CTAs → /app.html#rekisteroidy per Y-tunnus / live-payment
@@ -652,7 +652,7 @@ Aino</p>
               </li>
               <li class="pricing-card__feature pricing-card__feature--yes">
                 <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-                1 kirjoitustehtävä + AI-arviointi
+                1 kirjoitustehtävä + YTL-arviointi
               </li>
               <li class="pricing-card__feature pricing-card__feature--yes">
                 <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
@@ -674,7 +674,7 @@ Aino</p>
           <article class="pricing-card">
             <header class="pricing-card__head">
               <h3 class="pricing-card__name">Treeni</h3>
-              <p class="pricing-card__lede">Rajaton harjoittelu — ilman kurssirakennetta.</p>
+              <p class="pricing-card__lede">Rajaton harjoittelu, ilman kurssirakennetta.</p>
             </header>
             <div class="pricing-card__price">
               <span class="pricing-card__price-num">9&nbsp;€</span>
@@ -695,7 +695,7 @@ Aino</p>
               </li>
               <li class="pricing-card__feature pricing-card__feature--yes">
                 <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-                AI-arviointi YTL-rubriikilla
+                YTL-rubriikin arviointi
               </li>
               <li class="pricing-card__feature pricing-card__feature--no">
                 <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
@@ -710,7 +710,7 @@ Aino</p>
             <span class="pricing-card__chip">Suosituin</span>
             <header class="pricing-card__head">
               <h3 class="pricing-card__name">Mestari</h3>
-              <p class="pricing-card__lede">Koko YO-valmennus — kurssipolku, adaptiivisuus, valmiusmittari.</p>
+              <p class="pricing-card__lede">Koko YO-valmennus, kurssipolku, adaptiivisuus, valmiusmittari.</p>
             </header>
             <div class="pricing-card__price">
               <span class="pricing-card__price-num">19&nbsp;€</span>
@@ -748,7 +748,7 @@ Aino</p>
       </div>
     </section>
 
-    <!-- ─── FAQ — LANDING_PLAN.md §C8 ─────────────────────────
+    <!-- ─── FAQ, LANDING_PLAN.md §C8 ─────────────────────────
          Sourced from 21st.dev/community/components/tailark/faq/faq-accordion-with-title
          (50/50 left-title + right-accordion pattern). Ported from
          Radix/shadcn Accordion → native <details> for built-in a11y
@@ -756,7 +756,7 @@ Aino</p>
          Smooth reveal via interpolate-size with grid-template-rows
          0fr→1fr fallback so older Chromiums still animate.
          6 honest answers from spec appendix #5 (verbatim from
-         landing/DESIGN.md §10 — YTL-endorsement honesty matters).
+         landing/DESIGN.md §10, YTL-endorsement honesty matters).
     -->
     <section id="faq" class="landing-section landing-section--faq" aria-labelledby="faq-otsikko">
       <div class="landing-section__inner faq__inner">
@@ -799,7 +799,7 @@ Aino</p>
               <p>
                 Seuraamme YTL:n ohjeistusta ja päivitämme harjoitukset, rubriikin
                 ja tehtävätyypit jokaisen julkaistun muutoksen jälkeen. Puheon
-                Pro-tilaajat saavat päivitykset automaattisesti — uusia versioita
+                Pro-tilaajat saavat päivitykset automaattisesti, uusia versioita
                 ei tarvitse asentaa erikseen.
               </p>
             </div>
@@ -813,7 +813,7 @@ Aino</p>
             <div class="faq-item__a">
               <p>
                 Vain rekisteröitymiseen tarvittavat tiedot ja harjoitusdata
-                (vastaukset, edistyminen) — ei kolmansille osapuolille,
+                (vastaukset, edistyminen), ei kolmansille osapuolille,
                 ei mainostajille. Palvelu on GDPR-yhteensopiva ja kaikki
                 data säilytetään EU-alueella sijaitsevilla palvelimilla.
                 Voit pyytää tietojesi poistamisen milloin tahansa.
@@ -830,7 +830,7 @@ Aino</p>
               <p>
                 Kyllä. Puheo on selainpohjainen ja toimii sellaisenaan iOS:n
                 ja Androidin kosketusnäytöillä. Voit halutessasi lisätä
-                Puheon kotinäytölle PWA:na (progressive web app) — silloin
+                Puheon kotinäytölle PWA:na (progressive web app), silloin
                 se aukeaa kuin sovellus, ilman erillistä asennusta.
               </p>
             </div>
@@ -848,7 +848,7 @@ Aino</p>
                 muistaa tarkalleen mitkä sanat ja rakenteet sinun on aika
                 kerrata, ja on käytettävissä silloin kun harjoittelet —
                 klo 22:30 tai sunnuntai-iltapäivänä. Hyvä opettaja antaa
-                muuta arvokasta — Puheo on harjoittelukumppani niiden
+                muuta arvokasta, Puheo on harjoittelukumppani niiden
                 tuntien välissä, ei opettajan korvaaja.
               </p>
             </div>
@@ -872,9 +872,9 @@ Aino</p>
       </div>
     </section>
 
-    <!-- ─── FINAL CTA — LANDING_PLAN.md §C9 ───────────────────
+    <!-- ─── FINAL CTA, LANDING_PLAN.md §C9 ───────────────────
          Sourced from 21st.dev/community/components/dhiluxui/spotlight-cta/default
-         — restrained centred-card pattern. Adopted §C9's vertical
+        , restrained centred-card pattern. Adopted §C9's vertical
          layout (title + body above the button) instead of the source's
          horizontal split, because the final CTA is a closer, not a
          feature-grid. Cursor-spotlight effect deliberately skipped:
@@ -907,9 +907,9 @@ Aino</p>
     </section>
   </main>
 
-  <!-- ─── FOOTER — LANDING_PLAN.md §C10 ───────────────────────
+  <!-- ─── FOOTER, LANDING_PLAN.md §C10 ───────────────────────
        Sourced from 21st.dev/community/components/shadcnblockscom/footer-7/default
-       — minimal pattern: wordmark + tagline + social row at top,
+      , minimal pattern: wordmark + tagline + social row at top,
        3 columns of links below, bottom row with © + legal.
        Skipped social icons (Puheo doesn't have public socials yet,
        per the no-invented-social-proof rule from LANDING_PLAN.md).
@@ -924,7 +924,7 @@ Aino</p>
         </a>
         <p class="landing-footer__tagline">
           Espanjan YO-koe lyhyen oppimäärän opiskelijoille.
-          Tekoälyvalmentaja, joka tuntee YTL:n rubriikin.
+          Lyhyen oppimäärän valmennus YTL:n rubriikilla.
         </p>
       </div>
 
@@ -966,7 +966,7 @@ Aino</p>
     </div>
   </footer>
 
-  <!-- L-PLAN-8 modules + nav scroll/chip — extracted to external files
+  <!-- L-PLAN-8 modules + nav scroll/chip, extracted to external files
        in L-SECURITY-3 so a strict CSP (script-src without 'unsafe-inline')
        can ship. Both are idempotent + reduced-motion-safe internally. -->
   <script type="module" src="/js/landing-init.js"></script>
