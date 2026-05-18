@@ -1,5 +1,5 @@
 // Render a 1080×1350 portrait PNG of a YO-koe writing result and trigger
-// download. Pure frontend — no extra deps. Reads accent color from CSS
+// download. Pure frontend, no extra deps. Reads accent color from CSS
 // custom properties when available, falls back to a fixed Puheo palette
 // so the exported image looks the same in dark and light mode.
 
@@ -26,7 +26,7 @@ function readAccent() {
       .getPropertyValue("--accent")
       .trim();
     if (v && /^#|^rgb|^hsl/.test(v)) return v;
-  } catch { /* CSS not available — fall through */ }
+  } catch { /* CSS not available, fall through */ }
   return PALETTE.accent;
 }
 

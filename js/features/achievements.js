@@ -1,4 +1,4 @@
-// Client-side achievements — derived from the existing /api/dashboard payload.
+// Client-side achievements, derived from the existing /api/dashboard payload.
 // No backend changes; no new endpoint; no localStorage. The badges re-evaluate
 // every render against fresh server data, which means they're always honest.
 
@@ -86,7 +86,7 @@ export const BADGES = [
   {
     id: "pro",
     title: "Pro-jäsen",
-    desc: "Tilaaja — kiitos tuestasi.",
+    desc: "Tilaaja, kiitos tuestasi.",
     icon: I.crown,
     unlocked: (d) => d.pro === true,
   },
@@ -123,11 +123,11 @@ function readSeenBadges() {
 function writeSeenBadges(set) {
   try {
     localStorage.setItem(SEEN_KEY, JSON.stringify([...set]));
-  } catch { /* private mode / quota — silently degrade */ }
+  } catch { /* private mode / quota, silently degrade */ }
 }
 
 // Renders the achievements section. Unlocked badges get the foil-shine
-// border (CSS — sourced from Magic UI shine-border). Newly-unlocked
+// border (CSS, sourced from Magic UI shine-border). Newly-unlocked
 // badges (first time the client has seen the id unlocked) get a
 // `--new` modifier with a "Uusi" pill + pulse animation, then are
 // added to localStorage so the pulse only fires once.

@@ -1,4 +1,4 @@
-// Word of the day — curated B1–B2 vocabulary aligned with YO-koe (lyhyt oppimäärä) themes.
+// Word of the day, curated B1–B2 vocabulary aligned with YO-koe (lyhyt oppimäärä) themes.
 // Deterministic rotation: same word for everyone on the same UTC day.
 // Words rotate; one full cycle ≈ 50 days.
 
@@ -69,7 +69,7 @@ export function getWordCount() {
   return WORDS.length;
 }
 
-// Render the word-of-day block into a target element. Idempotent — safe to call repeatedly.
+// Render the word-of-day block into a target element. Idempotent, safe to call repeatedly.
 export function renderWordOfDayInto(el) {
   if (!el) return;
   const w = getWordOfDay();

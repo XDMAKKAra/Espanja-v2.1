@@ -1,4 +1,4 @@
-/* Off-canvas nav controller — L-HERO-COUNTDOWN-AND-OFFCANVAS-1
+/* Off-canvas nav controller, L-HERO-COUNTDOWN-AND-OFFCANVAS-1
    Wires #menu-toggle + #app-sidebar-backdrop to body.sidebar-open.
    Adds focus-trap, ESC-to-close, and click-outside-to-close.
    Idempotent: re-running init() is a no-op.

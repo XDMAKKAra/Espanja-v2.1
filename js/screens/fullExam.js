@@ -125,7 +125,7 @@ async function saveExamProgress() {
 
 // ─── Start / Resume ─────────────────────────────────────────────────────────
 
-// L-LIVE-AUDIT-P0 UPDATE 1 — replaces window.confirm() for the resume prompt.
+// L-LIVE-AUDIT-P0 UPDATE 1, replaces window.confirm() for the resume prompt.
 // Native confirm + the "Cancel → start new → 409 active_session" loop
 // stranded Pro users on a black error screen. The branded modal offers three
 // outcomes:
@@ -192,7 +192,7 @@ function showExamResumeDialog() {
     root.querySelector("#exam-resume-confirm").addEventListener("click", () => close("resume"));
 
     document.addEventListener("keydown", onKeydown);
-    // Focus on the primary action — most users want to resume.
+    // Focus on the primary action, most users want to resume.
     root.querySelector("#exam-resume-confirm").focus();
   });
 }
@@ -220,7 +220,7 @@ export async function startFullExam(durationMode = "demo") {
         return;
       }
       if (choice === "dismiss") {
-        // Palaa dashboardiin — ei umpikujaan.
+        // Palaa dashboardiin, ei umpikujaan.
         if (isLoggedIn()) _deps.loadDashboard(); else show("screen-start");
         return;
       }
@@ -231,7 +231,7 @@ export async function startFullExam(durationMode = "demo") {
           headers: { "Content-Type": "application/json", ...authHeader() },
         });
       } catch {
-        // Discard endpoint failure is recoverable — start will throw if the
+        // Discard endpoint failure is recoverable, start will throw if the
         // session is still active and the brand error path takes over.
       }
     }
@@ -474,7 +474,7 @@ async function submitFullExam() {
   if (examState.sessionId) clearTimerPersisted(examState.sessionId);
   await saveExamProgress();
 
-  showLoading("Arvioidaan koetta...", { subtext: "Kirjoitustehtävät arvioidaan tekoälyllä" });
+  showLoading("Arvioidaan koetta...", { subtext: "Kirjoitustehtävät arvioidaan rubriikin mukaan" });
 
   try {
     const res = await apiFetch(`${API}/api/exam/submit`, {
@@ -515,7 +515,7 @@ function renderResults(result) {
     <div class="exam-result-row"><span>2. Rakenteet ja sanasto</span><span>${ps.structure.score} / ${ps.structure.maxPoints}p (${ps.structure.correct}/${ps.structure.total})</span></div>
     <div class="exam-result-row"><span>3. Lyhyt kirjoitustehtävä</span><span>${ps.shortWriting.score} / ${ps.shortWriting.maxPoints}p</span></div>
     <div class="exam-result-row"><span>4. Pitkä kirjoitustehtävä</span><span>${ps.longWriting.score} / ${ps.longWriting.maxPoints}p</span></div>
-    <div class="exam-result-row" style="font-weight:700;border-top:2px solid var(--border)"><span>Yhteensä</span><span>${totalPoints} / ${maxPoints}p — ${GRADE_NAMES[finalGrade] || finalGrade}</span></div>`;
+    <div class="exam-result-row" style="font-weight:700;border-top:2px solid var(--border)"><span>Yhteensä</span><span>${totalPoints} / ${maxPoints}p, ${GRADE_NAMES[finalGrade] || finalGrade}</span></div>`;
 
   let feedback = "";
   if (ps.shortWriting.feedback) feedback += `<p><strong>Lyhyt kirjoitustehtävä:</strong> ${ps.shortWriting.feedback}</p>`;

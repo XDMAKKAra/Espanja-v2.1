@@ -1,4 +1,4 @@
-// L-PLAN-4 UPDATE 4 — profile menu (replaces the old right rail).
+// L-PLAN-4 UPDATE 4, profile menu (replaces the old right rail).
 //
 // A 40-px gradient avatar floats top-right of the viewport. Click toggles a
 // 260-px dropdown anchored under it. Items: Oma sivu / Asetukset / (Päivitä
@@ -8,7 +8,7 @@
 // A11y per LPLAN-4 spec UPDATE 4: aria-expanded on the trigger, role="menu" +
 // role="menuitem" on the items, ArrowUp/ArrowDown navigation, Enter/Space
 // activate, Escape closes, click-outside closes. Tab leaves the menu and
-// continues the natural document order (no focus trap — closing on Tab-out
+// continues the natural document order (no focus trap, closing on Tab-out
 // is preferred to a trap on a small menu like this).
 
 import { getAuthEmail, clearAuth } from "../api.js";
@@ -87,7 +87,7 @@ export function initProfileMenu(deps = {}) {
   });
 }
 
-// Refresh identity / Pro flag visibility — call after login + dashboard load.
+// Refresh identity / Pro flag visibility, call after login + dashboard load.
 export function syncProfileMenu({ pro = false } = {}) {
   renderIdentity();
   const upgradeBtn = document.getElementById("profile-menu-upgrade");
@@ -177,6 +177,6 @@ function onMenuKeydown(e) {
     e.preventDefault();
     items[items.length - 1]?.focus();
   }
-  // Tab is intentionally NOT trapped — letting it leave naturally is more
+  // Tab is intentionally NOT trapped, letting it leave naturally is more
   // accessible for a small menu. The menu auto-closes on outside click.
 }

@@ -4,7 +4,7 @@ import { track } from "../analytics.js";
 import { state } from "../state.js";
 import { showPlacementIntro } from "./placement.js";
 import { deriveWeakness } from "../../lib/weakness.js";
-// L-PLAN-4 UPDATE 7 — V2 onboarding is now the default boot path. The legacy
+// L-PLAN-4 UPDATE 7, V2 onboarding is now the default boot path. The legacy
 // V1 screens (showWelcome / wirePath / wireGoal) stay in this module for now
 // so #/aloitus + previously-half-done sessions keep working; they will be
 // removed in a follow-up loop after V2 has soaked in production.
@@ -31,14 +31,14 @@ export async function checkOnboarding() {
     if (!res.ok) return false;
     const { profile } = await res.json();
     if (!profile || !profile.onboarding_completed) {
-      // L-PLAN-4 UPDATE 7 — route every fresh-account / mid-onboarding boot to
+      // L-PLAN-4 UPDATE 7, route every fresh-account / mid-onboarding boot to
       // the V2 flow. Legacy V1 screens stay reachable via direct screen-id
       // navigation but no longer enter the boot path.
       showOnboardingV2();
       return true;
     }
     window._userProfile = profile;
-    renderAppCountdown(); // returning user — countdown visible
+    renderAppCountdown(); // returning user, countdown visible
     return false;
   } catch {
     return false;

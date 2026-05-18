@@ -1,15 +1,15 @@
 /**
- * L-PLAN-3 UPDATE 2 — post-session results card for curriculum lessons.
+ * L-PLAN-3 UPDATE 2, post-session results card for curriculum lessons.
  *
  * Shown after a vocab/grammar/reading session that was launched from
  * #screen-lesson (curriculum context active). Replaces the default mode
  * results screen for curriculum lessons; free-practice sessions keep
  * using the existing results screens.
  *
- * Sourced layout pattern: 21st.dev /s/results + /s/score-card — restrained
+ * Sourced layout pattern: 21st.dev /s/results + /s/score-card, restrained
  * dark card with a single-stroke accuracy bar, mono score, and a stack of
  * three text blocks (score → metacognitive prompt → tutor message). No
- * animated number tickers, no celebration confetti — the curriculum loop
+ * animated number tickers, no celebration confetti, the curriculum loop
  * is meant to feel calm, not gamified.
  */
 
@@ -60,7 +60,7 @@ export async function showLessonResults(ctx) {
   const pct = scoreTotal > 0 ? Math.round((scoreCorrect / scoreTotal) * 100) : 0;
   const tone = pct >= 80 ? "good" : pct >= 60 ? "warn" : "low";
 
-  // L-PLAN-6 — when this entry is the tail of a deepen run (L-tavoite +
+  // L-PLAN-6, when this entry is the tail of a deepen run (L-tavoite +
   // ≥85% original score → 4 follow-up exercises), skip the /complete
   // round-trip (the lesson was already marked complete on the first
   // pass) and render a deepen mini-summary instead.
@@ -71,7 +71,7 @@ export async function showLessonResults(ctx) {
     return;
   }
 
-  // Initial render — score visible, message areas in skeleton state.
+  // Initial render, score visible, message areas in skeleton state.
   root.innerHTML = renderShell({ scoreCorrect, scoreTotal, pct, tone, lessonFocus });
   wireBackButton();
 
@@ -92,7 +92,7 @@ export async function showLessonResults(ctx) {
           scoreCorrect,
           scoreTotal,
           wrongAnswers: ctx.wrongAnswers || [],
-          // L-PLAN-7 — pass the review items so the server can build the
+          // L-PLAN-7, pass the review items so the server can build the
           // "Kertasit myös tätä" summary and tutorMessage that mentions
           // the cumulative review by name.
           reviewItems: ctx.reviewItems || [],
@@ -103,7 +103,7 @@ export async function showLessonResults(ctx) {
     if (!res.ok) throw new Error("Tallennus epäonnistui");
     resp = await res.json();
   } catch (err) {
-    renderFallbackMessage(root, ctx, err.message || "Ei yhteyttä — tulokset näytetään, mutta tallennus epäonnistui.");
+    renderFallbackMessage(root, ctx, err.message || "Ei yhteyttä, tulokset näytetään, mutta tallennus epäonnistui.");
     return;
   }
 
@@ -158,7 +158,7 @@ function renderShell({ scoreCorrect, scoreTotal, pct, tone, lessonFocus }) {
 }
 
 function wireBackButton() {
-  // No persistent back button on the results card — the primary CTA always
+  // No persistent back button on the results card, the primary CTA always
   // points back to the curriculum, so the only escape is via that CTA.
 }
 
@@ -171,16 +171,16 @@ function renderResolved(root, ctx, resp) {
   meta.innerHTML = `<p class="lr-meta-prompt">${escapeHtml(resp.metacognitivePrompt || "")}</p>`;
   tutor.innerHTML = `<p class="lr-tutor-msg">${escapeHtml(resp.tutorMessage || "")}</p>`;
 
-  // L-PLAN-7 — "Kertasit myös tätä" -osio. Backend reviewSummary is an
+  // L-PLAN-7, "Kertasit myös tätä" -osio. Backend reviewSummary is an
   // array of `{topic_key, label, correct, total, headline}` keyed by the
   // distinct review topics that appeared in this session.
   renderReviewSummary(tutor, resp.reviewSummary);
 
-  // L-PLAN-6 — Syvennä-callout for the L target.
+  // L-PLAN-6, Syvennä-callout for the L target.
   // Trigger: target_grade === 'L' AND score/total ≥ 0.85 AND not a deepen
   // run already AND the lesson type is one we have a deepen path for
   // (vocab + grammar/mixed; reading + writing don't fit a 4-item follow-up).
-  // education/cognitive-load-analyser: 4 extra items is the cap — more
+  // education/cognitive-load-analyser: 4 extra items is the cap, more
   // would push the L pacing past 16 items in one sitting.
   const lessonCtxNow = getLessonContext();
   const targetGrade = lessonCtxNow?.targetGrade || "B";
@@ -190,7 +190,7 @@ function renderResolved(root, ctx, resp) {
   const deepenBlock = showDeepen
     ? `<div class="lr-deepen" role="region" aria-label="L-tason syventävät harjoitukset">
          <h3 class="lr-deepen__title">Syvennä taitoasi</h3>
-         <p class="lr-deepen__body">L-tavoitteena halutaan täydellinen hallinta. 4 lisätehtävää samasta aiheesta vaativammilla ehdoilla — tee ne nyt kun aihe on tuore.</p>
+         <p class="lr-deepen__body">L-tavoitteena halutaan täydellinen hallinta. 4 lisätehtävää samasta aiheesta vaativammilla ehdoilla, tee ne nyt kun aihe on tuore.</p>
          <div class="lr-deepen__row">
            <button type="button" class="btn btn-primary" id="btn-deepen-yes">Tee 4 lisätehtävää (~6 min)</button>
            <button type="button" class="btn btn-secondary" id="btn-deepen-skip">Ohita tällä kertaa</button>
@@ -198,16 +198,16 @@ function renderResolved(root, ctx, resp) {
        </div>`
     : "";
 
-  // L-PLAN-4 UPDATE 6 — fast-leveling callout.
+  // L-PLAN-4 UPDATE 6, fast-leveling callout.
   // Wording per CURRICULUM_SPEC §4: offer a jump straight to the kertaustesti
   // (last lesson of the kurssi) when the AI flag fires. "yes" navigates to the
-  // last lesson; "no" dismisses the callout in place — student stays on the
+  // last lesson; "no" dismisses the callout in place, student stays on the
   // current results screen and resumes via the primary CTA. flow-state-
   // condition-designer rule: choice, not redirect.
   const fastTrackBlock = resp.fastTrack
     ? `<div class="lr-fasttrack" role="alert" aria-label="Nopea eteneminen">
          <span class="lr-fasttrack-icon" aria-hidden="true">⚡</span>
-         <p class="lr-fasttrack-text">Tämä vaikuttaa tutulta — tehdäänkö suoraan kertaustesti?</p>
+         <p class="lr-fasttrack-text">Tämä vaikuttaa tutulta, tehdäänkö suoraan kertaustesti?</p>
          <div class="lr-fasttrack-row">
            <button type="button" class="btn btn-primary" id="lr-fasttrack-yes">Siirry kertaustestiin →</button>
            <button type="button" class="btn btn-secondary" id="lr-fasttrack-no">Jatka järjestyksessä</button>
@@ -238,7 +238,7 @@ function renderResolved(root, ctx, resp) {
   });
 }
 
-// L-PLAN-6 — kick off a 4-item deepen run for the same lesson.
+// L-PLAN-6, kick off a 4-item deepen run for the same lesson.
 // Stays in the curriculum lesson context (sessionStorage.currentLesson is
 // still the original lesson so the AI prompt keeps the focus); we just
 // flip the deepen flag and re-launch the appropriate loader.
@@ -250,7 +250,7 @@ async function startDeepenRun(ctx) {
   state.totalAnswered = 0;
   state.recentVocabHeadwords = [];
   state.sessionStartTime = Date.now();
-  // L-LANDING-REBUILD-AND-BUGFIX-1 — don't overwrite state.language; it's a
+  // L-LANDING-REBUILD-AND-BUGFIX-1, don't overwrite state.language; it's a
   // 2-letter code ("es"/"de"/"fr") hydrated from profile. Resetting to legacy
   // "spanish" broke dashboard.js coming-soon gate on the next home visit.
 
@@ -298,11 +298,11 @@ async function jumpToKertaustesti(kurssiKey) {
   await mod.loadCurriculum();
 }
 
-// L-PLAN-7 — render the "Kertasit myös tätä" section. Inserted as a
+// L-PLAN-7, render the "Kertasit myös tätä" section. Inserted as a
 // sibling block after the tutor message so the visual hierarchy reads
 // score → meta → tutor → review. design:ux-copy verifies the per-band
 // headlines: Vahvistui (2/2), Pieni muistutus (1/2), Tämä kaipaa vielä
-// huomiota (0/2). Never shamea — language is descriptive, not judgmental.
+// huomiota (0/2). Never shamea, language is descriptive, not judgmental.
 function renderReviewSummary(tutorEl, reviewSummary) {
   if (!Array.isArray(reviewSummary) || reviewSummary.length === 0) return;
   const block = document.createElement("section");

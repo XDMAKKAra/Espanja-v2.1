@@ -30,7 +30,7 @@ async function seedMasteryFromDiagnostic(token) {
       localStorage.removeItem(DIAG_STORAGE_KEY);
     }
   } catch {
-    // Silent — diagnostic seeding is best-effort, never blocks registration
+    // Silent, diagnostic seeding is best-effort, never blocks registration
   }
 }
 
@@ -52,7 +52,7 @@ try {
   const wantRegister = requested === "register" || hash === "rekisteroidy";
   const wantLogin = requested === "login" || hash === "kirjaudu";
   if (wantRegister) {
-    // Defer click until DOM is ready — these element handlers register synchronously.
+    // Defer click until DOM is ready, these element handlers register synchronously.
     queueMicrotask(() => $("tab-register") && $("tab-register").click());
   } else if (wantLogin) {
     queueMicrotask(() => $("tab-login") && $("tab-login").click());
@@ -112,7 +112,7 @@ $("btn-auth-submit").addEventListener("click", async () => {
     setAuth(data.token, data.refreshToken, data.email);
     _deps.updateSidebarState();
     // Hydrate feature flags (waitlist mode + dev-Pro gate) before any Pro
-    // CTA becomes interactive — fire-and-forget, the default is already safe.
+    // CTA becomes interactive, fire-and-forget, the default is already safe.
     try {
       const { hydrateConfig } = await import("./writing.js");
       hydrateConfig();

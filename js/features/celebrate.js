@@ -1,4 +1,4 @@
-// Celebration helper — fires confetti on high-score results.
+// Celebration helper, fires confetti on high-score results.
 // Lazy-imports canvas-confetti so non-results screens never pay the parse cost.
 // Gated by prefers-reduced-motion (ui-ux-pro-max P6 animation rule).
 
@@ -9,7 +9,7 @@ function loadConfetti() {
   return _confettiP;
 }
 
-// Threshold tiers — match what feels "celebratable" without firing on every passing score.
+// Threshold tiers, match what feels "celebratable" without firing on every passing score.
 const TIERS = [
   { min: 100, particles: 220, spread: 110, scalar: 1.25 },
   { min: 90,  particles: 160, spread: 95,  scalar: 1.10 },
@@ -23,7 +23,7 @@ export async function celebrateScore(pct) {
   const confetti = await loadConfetti();
   if (!confetti) return;
   const t = TIERS.find((tt) => pct >= tt.min) || TIERS[TIERS.length - 1];
-  // Two cones from the bottom corners — feels celebratory without engulfing the result card.
+  // Two cones from the bottom corners, feels celebratory without engulfing the result card.
   const common = { particleCount: t.particles, spread: t.spread, scalar: t.scalar, ticks: 220, gravity: 1.0 };
   confetti({ ...common, origin: { x: 0.18, y: 0.82 }, angle: 60 });
   confetti({ ...common, origin: { x: 0.82, y: 0.82 }, angle: 120 });
@@ -33,7 +33,7 @@ export async function celebrateScore(pct) {
   }
 }
 
-// Streak milestone bands — once-per-crossing celebration. Persists the
+// Streak milestone bands, once-per-crossing celebration. Persists the
 // last celebrated band in localStorage so a returning user doesn't get the
 // same burst on every dashboard load.
 const STREAK_KEY = "puheo_streak_milestone";
@@ -60,7 +60,7 @@ export async function celebrateStreakMilestone(streak) {
   const confetti = await loadConfetti();
   if (!confetti) return;
 
-  // Tier the burst to the band — 30-day milestone gets the full top-down rain.
+  // Tier the burst to the band, 30-day milestone gets the full top-down rain.
   const intensity = current === 30 ? 1.4 : current === 7 ? 1.1 : 0.85;
   const common = {
     particleCount: Math.round(140 * intensity),

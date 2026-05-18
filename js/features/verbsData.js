@@ -50,7 +50,7 @@ export const IMPERATIVE_PERSON_LABELS = {
 
 // Strip accents/diacritics + lowercase for lenient matching in drills.
 // Diacritic correctness is still shown in feedback (`correct` form is preserved),
-// but we don't penalize a missing accent — the core taivutus is what we're testing.
+// but we don't penalize a missing accent, the core taivutus is what we're testing.
 export function normalize(s) {
   return String(s || "")
     .toLowerCase()

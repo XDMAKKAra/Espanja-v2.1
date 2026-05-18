@@ -1,5 +1,5 @@
 /**
- * Modal shell — design-system/DESIGN.md §8.8
+ * Modal shell, design-system/DESIGN.md §8.8
  *
  * Responsibilities (what an existing app modal gets for free):
  *   - Focus trap while open (Tab + Shift+Tab stay inside the panel).

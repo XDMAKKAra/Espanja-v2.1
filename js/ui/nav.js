@@ -2,14 +2,14 @@
 
 export const $ = (id) => document.getElementById(id);
 
-// Auth-family screens render full-width — no sidebar, no rail
+// Auth-family screens render full-width, no sidebar, no rail
 const AUTH_SCREENS = new Set([
   "screen-auth",
   "screen-reset-password",
 ]);
 
 function applyShellMode(id) {
-  // Rail is dashboard-only (Spec §3.2) — collapse grid on non-dashboard screens
+  // Rail is dashboard-only (Spec §3.2), collapse grid on non-dashboard screens
   const shell = document.getElementById("app-shell");
   if (shell) {
     if (id === "screen-dashboard") shell.removeAttribute("data-rail");
@@ -27,7 +27,7 @@ export const show = (id) => {
   document.querySelectorAll(".screen").forEach((s) => s.classList.remove("active"));
   $(id).classList.add("active");
   applyShellMode(id);
-  // L-PLAN-4 UPDATE 2 — reset scroll on every screen change so the new screen's
+  // L-PLAN-4 UPDATE 2, reset scroll on every screen change so the new screen's
   // H1 lands at the top instead of inheriting the previous screen's scroll
   // position (which made e.g. "Aloita →" jumps look like the heading vanished).
   // `scroll-padding-top` on <html> keeps any subsequent in-screen anchor jumps
@@ -37,7 +37,7 @@ export const show = (id) => {
   }
 };
 
-// Sync shell mode on initial load — the default-active screen is set by HTML,
+// Sync shell mode on initial load, the default-active screen is set by HTML,
 // not by show(), so we need to read it once at startup.
 function syncShellModeFromActiveScreen() {
   const active = document.querySelector(".screen.active");

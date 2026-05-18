@@ -1,5 +1,5 @@
 /**
- * Finnish UI string table — single source per exercises/SHARED.md §7.
+ * Finnish UI string table, single source per exercises/SHARED.md §7.
  *
  * New-exercise-type renderers MUST import from this module; no inline
  * Finnish strings in renderer code. If a new string is needed, add it
@@ -61,16 +61,16 @@ const STRINGS = Object.freeze({
   'correction.instruction': 'Korjaa virhe espanjankielisessä lauseessa',
   'correction.placeholder': 'Kirjoita korjattu lause…',
   'correction.hint.cat.ser_estar':        'Pohdi: onko kyseessä pysyvä ominaisuus vai tilapäinen tila/sijainti?',
-  'correction.hint.cat.agreement':        'Tarkista substantiivin suku ja luku — onko adjektiivi tai artikkeli sopusoinnussa?',
+  'correction.hint.cat.agreement':        'Tarkista substantiivin suku ja luku, onko adjektiivi tai artikkeli sopusoinnussa?',
   'correction.hint.cat.tense':            'Onko kyseessä yksittäinen tapahtuma (pretérito) vai toistuva/kuvaava tila (imperfecto)?',
   'correction.hint.cat.mood':             'Vaatiiko lauseen rakenne subjunktiivia (mielipide, toive, epävarmuus)?',
-  'correction.hint.cat.por_para':         'Por = syy/kesto, para = tarkoitus/kohde — kumpi sopii tähän lauseeseen?',
+  'correction.hint.cat.por_para':         'Por = syy/kesto, para = tarkoitus/kohde, kumpi sopii tähän lauseeseen?',
   'correction.hint.cat.word_order':       'Tarkista adjektiivin paikka (yleensä substantiivin jälkeen) ja negation sijainti.',
   'correction.hint.cat.missing_pronoun':  'Puuttuuko lauseesta objektipronomini tai refleksiivinen se?',
-  'correction.hint.cat.aspect':           'Pretérito perfecto vai indefinido — onko tapahtuma yhteydessä nykyhetkeen?',
+  'correction.hint.cat.aspect':           'Pretérito perfecto vai indefinido, onko tapahtuma yhteydessä nykyhetkeen?',
 
   // Hints (legacy feedback categories)
-  'hint.spelling':       'Kirjoitusvirhe — melkein oikein',
+  'hint.spelling':       'Kirjoitusvirhe, melkein oikein',
   'hint.accent':         'Aksentti puuttuu tai on väärin',
   'hint.wordOrder':      'Tarkista sanajärjestys',
   'hint.meaning':        'Merkitys hieman sivussa',
@@ -78,7 +78,7 @@ const STRINGS = Object.freeze({
 
 /**
  * Look up a Finnish string by dot-notation key.
- * Unknown key throws — fail loud so missing keys surface immediately
+ * Unknown key throws, fail loud so missing keys surface immediately
  * rather than silently rendering an empty label.
  *
  * @param {string} key
@@ -97,5 +97,5 @@ export function t(key, vars) {
   });
 }
 
-/** The underlying frozen table — exposed for tests and tooling only. */
+/** The underlying frozen table, exposed for tests and tooling only. */
 export const _STRINGS = STRINGS;

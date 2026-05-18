@@ -1,9 +1,9 @@
-// Card tilt + glare — sourced from Aceternity UI 3d-card-effect
+// Card tilt + glare, sourced from Aceternity UI 3d-card-effect
 // (mousemove → rotateX/Y derivation) and Magic UI magic-card (cursor-tracked
 // radial glare positioned via CSS custom properties). Vanilla JS port.
 //
 // Usage: enableCardTilt(".mode-picker .mode-btn:not(.mode-locked)").
-// Call after the matching elements are in the DOM. Idempotent — re-calling
+// Call after the matching elements are in the DOM. Idempotent, re-calling
 // with the same elements is a no-op (each element gets one set of listeners).
 
 const DEFAULTS = {
@@ -48,7 +48,7 @@ function attach(el, cfg) {
 export function enableCardTilt(selector, opts = {}) {
   if (typeof window === "undefined") return;
   if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return;
-  // Coarse pointers (touch devices) — skip; tilt-on-tap is jarring and
+  // Coarse pointers (touch devices), skip; tilt-on-tap is jarring and
   // the focus state already handles primary interaction.
   if (window.matchMedia?.("(pointer: coarse)").matches) return;
   const cfg = { ...DEFAULTS, ...opts };

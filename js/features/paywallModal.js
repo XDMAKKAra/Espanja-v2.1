@@ -1,8 +1,8 @@
 // ─── Paywall modal ────────────────────────────────────────────────────────────
 // Three variants:
-//   quota   — free user hit AI quota  → Avaa Treeni
-//   feature — feature locked to mestari → Avaa Mestari
-//   upgrade — treeni user, mestari feature → Päivitä Mestariin
+//   quota  , free user hit AI quota  → Avaa Treeni
+//   feature, feature locked to mestari → Avaa Mestari
+//   upgrade, treeni user, mestari feature → Päivitä Mestariin
 //
 // Usage:
 //   import { openPaywall } from "./paywallModal.js";
@@ -14,7 +14,7 @@ const VARIANT_COPY = {
   quota: {
     badge: "Ilmainen",
     title: "Olet käyttänyt ilmaisen kvoottisi",
-    body: "Jatka harjoittelua rajattomasti — Treeni avaa kaiken tämän viikon harjoitteet uudelleen.",
+    body: "Jatka harjoittelua rajattomasti, Treeni avaa kaiken tämän viikon harjoitteet uudelleen.",
     cta: "Avaa Treeni",
     href: (r) => `/pricing.html?from=quota&tier=treeni${r ? `&reason=${encodeURIComponent(r)}` : ""}`,
   },
@@ -75,7 +75,7 @@ export function openPaywall({ variant, reason } = {}) {
   modal.setAttribute("aria-hidden", "false");
   document.body.style.overflow = "hidden";
 
-  // Focus trap — move focus to the close button
+  // Focus trap, move focus to the close button
   const closeBtn = modal.querySelector("[data-paywall-close]");
   if (closeBtn) closeBtn.focus();
 

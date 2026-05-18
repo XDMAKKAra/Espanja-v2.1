@@ -1,5 +1,5 @@
 /**
- * LauseenMuodostus (sentence construction) renderer — seed-based, AI-graded.
+ * LauseenMuodostus (sentence construction) renderer, seed-based, AI-graded.
  *
  * Reuses the existing #translate-area DOM from app.html.
  * Required words are shown as chips inside #translate-source.
@@ -46,7 +46,7 @@ function renderHintContent(hintEl, hintBtn, ex, step) {
 
 /**
  * @param {{ id: string, prompt_fi: string, required_words: string[], hint_fi?: string }} ex
- * @param {HTMLElement} _container  — unused
+ * @param {HTMLElement} _container , unused
  * @param {{ onAnswer?: Function }} [opts]
  */
 export function renderLauseenMuodostus(ex, _container, { onAnswer } = {}) {

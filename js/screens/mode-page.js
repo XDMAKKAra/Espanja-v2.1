@@ -1,8 +1,8 @@
 /**
- * Mode-page module — Spec 2 §3.
+ * Mode-page module, Spec 2 §3.
  *
  * Owns:
- *  - Briefing card population (loadBriefing — added in Task 6).
+ *  - Briefing card population (loadBriefing, added in Task 6).
  *  - Topic-row interaction (radio-group toggle on click + keyboard).
  *  - Start-CTA meta line live update on topic change.
  *  - generateCoachLine helper used by results (added in Task 14).
@@ -43,7 +43,7 @@ const TOPIC_LABELS = {
  * Clicking a row reassigns .is-current + aria-checked,
  * and (if a CTA is provided) updates its meta line.
  *
- * @param {HTMLElement} container — `.mode-topics` element
+ * @param {HTMLElement} container, `.mode-topics` element
  * @param {{ ctaEl?: HTMLElement, ctaMetaTemplate?: (topic: string) => string }} [opts]
  */
 export function wireTopicPicker(container, { ctaEl, ctaMetaTemplate } = {}) {
@@ -87,7 +87,7 @@ export function topicLabel(topicId) {
  * shows "—". If `modeStats[modeId].sessions === 0` (or the entire entry
  * is missing), the briefing collapses to its empty-state variant.
  *
- * @param {string} modeId — "vocab" | "grammar" | "reading" | "writing" | "verbsprint"
+ * @param {string} modeId, "vocab" | "grammar" | "reading" | "writing" | "verbsprint"
  */
 export function loadBriefing(modeId) {
   const briefing = document.getElementById(`${modeId}-briefing`);
@@ -97,7 +97,7 @@ export function loadBriefing(modeId) {
   const streak = (typeof window !== "undefined") ? window._dashStreak : 0;
   const daysAgo = (typeof window !== "undefined" && window._dashModeDaysAgo?.[modeId]);
 
-  // Empty-state branch — first-time visitor or no data for this mode.
+  // Empty-state branch, first-time visitor or no data for this mode.
   if (!stats || !stats.sessions || stats.sessions === 0) {
     briefing.classList.add("mode-briefing--empty");
     const eyebrow = briefing.querySelector(".eyebrow");
@@ -163,7 +163,7 @@ export function generateCoachLine({ scorePct, sessionWeakestLabel }) {
  * Eases out cubic. Respects prefers-reduced-motion (writes target immediately).
  *
  * @param {HTMLElement|null} el
- * @param {number} target — final integer to land on
+ * @param {number} target, final integer to land on
  * @param {number} [duration=1200]
  */
 export function countUp(el, target, duration = 1200) {

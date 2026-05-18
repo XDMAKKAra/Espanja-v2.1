@@ -37,12 +37,12 @@ export function createExamTimer({
   onWarning = () => {},
   onPause = () => {},
   onResume = () => {},
-  // Injectable for tests — defaults to real globals in the browser.
+  // Injectable for tests, defaults to real globals in the browser.
   now = () => Date.now(),
   setIntervalFn = typeof window !== "undefined" ? window.setInterval : setInterval,
   clearIntervalFn = typeof window !== "undefined" ? window.clearInterval : clearInterval,
   storage = typeof localStorage !== "undefined" ? localStorage : null,
-  // Document event surface — also injectable for tests.
+  // Document event surface, also injectable for tests.
   doc = typeof document !== "undefined" ? document : null,
 } = {}) {
   let intervalId = null;

@@ -1,5 +1,5 @@
 /**
- * Kaannos (Finnish→Spanish translation) renderer — seed-based, AI-graded.
+ * Kaannos (Finnish→Spanish translation) renderer, seed-based, AI-graded.
  *
  * Reuses the existing #translate-area DOM from app.html.
  * Student types a Spanish translation of a Finnish prompt. Submitted to
@@ -44,7 +44,7 @@ function renderHintContent(hintEl, hintBtn, ex, step) {
 
 /**
  * @param {{ id: string, prompt_fi: string, hint_fi?: string, hint_partial?: string, hint_example_es?: string, hint_example_fi?: string }} ex
- * @param {HTMLElement} _container  — unused
+ * @param {HTMLElement} _container , unused
  * @param {{ onAnswer?: Function }} [opts]
  */
 export function renderKaannos(ex, _container, { onAnswer } = {}) {

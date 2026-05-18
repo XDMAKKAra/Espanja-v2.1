@@ -1,5 +1,5 @@
 /**
- * Yhdistaminen (matching) renderer — seed-based, server-graded.
+ * Yhdistaminen (matching) renderer, seed-based, server-graded.
  *
  * Renders two columns: Spanish items on the left, shuffled Finnish items on
  * the right. User clicks a Spanish item then a Finnish item to pair them.
@@ -52,7 +52,7 @@ function renderHintContent(hintEl, hintBtn, ex, step) {
 
 /**
  * @param {{ type: string, items: Array<{id,es}>, shuffledFi: string[] }} ex
- * @param {HTMLElement} _container  — unused
+ * @param {HTMLElement} _container , unused
  * @param {{ onAnswer?: Function }} [opts]
  */
 export function renderYhdistaminen(ex, _container, { onAnswer } = {}) {

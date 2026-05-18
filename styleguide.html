@@ -7,9 +7,9 @@
   <title>Puheo · Styleguide</title>
 
   <!--
-    F-ARCH-1 §C — Puheo styleguide.
+    F-ARCH-1 §C, Puheo styleguide.
     Loads tokens.css + app.bundle.css so every swatch and component matches
-    production exactly — no parallel hand-rolled CSS that can drift.
+    production exactly, no parallel hand-rolled CSS that can drift.
 
     Access gate: must be on localhost OR include ?dev=1 in the URL.
     Gate logic is in an external file because the production CSP rejects
@@ -21,7 +21,7 @@
   <link rel="stylesheet" href="/app.bundle.css" />
 
   <style>
-    /* Styleguide-local layout — kept inline so the page is one-file portable. */
+    /* Styleguide-local layout, kept inline so the page is one-file portable. */
     body {
       background: var(--bg);
       color: var(--text);
@@ -657,7 +657,7 @@
         <div class="sg-section__head">
           <span class="sg-section__num">04</span>
           <h2 class="sg-section__title">Varjot</h2>
-          <p class="sg-section__lede">Käytä vain kun nostat elementin pintatasolta — älä koristeena.</p>
+          <p class="sg-section__lede">Käytä vain kun nostat elementin pintatasolta, älä koristeena.</p>
         </div>
         <div class="sg-grid">
           <div class="sg-card"><div class="sg-shadow" style="box-shadow:var(--shadow-sm)">--shadow-sm</div></div>
@@ -678,7 +678,7 @@
           <div class="sg-type-row"><span class="sg-type-row__label">h2</span><div class="sg-type-row__sample sg-type-h2">Tämän päivän haaste</div></div>
           <div class="sg-type-row"><span class="sg-type-row__label">h3</span><div class="sg-type-row__sample sg-type-h3">Sanasto · K3 · oppitunti 4</div></div>
           <div class="sg-type-row"><span class="sg-type-row__label">Body</span><div class="sg-type-row__sample sg-type-body">Pitkät tekstit asettuvat 60–72 ch leveydelle. Mobiilissa minimi 16 px, koska sitä pienempi ei ole luettava.</div></div>
-          <div class="sg-type-row"><span class="sg-type-row__label">Small</span><div class="sg-type-row__sample sg-type-sm">Kontekstin lisä — esim. metadata, alaviite, tooltip.</div></div>
+          <div class="sg-type-row"><span class="sg-type-row__label">Small</span><div class="sg-type-row__sample sg-type-sm">Kontekstin lisä, esim. metadata, alaviite, tooltip.</div></div>
           <div class="sg-type-row"><span class="sg-type-row__label">Mono</span><div class="sg-type-row__sample sg-type-mono">tabular-nums: 1 234 · 47,2 % · 03:42</div></div>
         </div>
       </section>
@@ -688,7 +688,7 @@
         <div class="sg-section__head">
           <span class="sg-section__num">06</span>
           <h2 class="sg-section__title">Motion</h2>
-          <p class="sg-section__lede">Mouse-overaa korttia nähdäksesi käyrän — käyttöliittymässä animoidaan vain transform + opacity.</p>
+          <p class="sg-section__lede">Mouse-overaa korttia nähdäksesi käyrän, käyttöliittymässä animoidaan vain transform + opacity.</p>
         </div>
         <div class="sg-grid">
           <div class="sg-card sg-motion-card sg-motion-card--out">
@@ -800,12 +800,12 @@
           <div class="sg-preview">
             <p class="sg-eyebrow" style="margin:0 0 6px">Lepotila</p>
             <h3 class="sg-type-h3" style="margin:0">Sanasto · K3</h3>
-            <p class="sg-type-sm" style="margin:8px 0 0">12 sanaa kertaukseen — viimeisin sessio 2 päivää sitten.</p>
+            <p class="sg-type-sm" style="margin:8px 0 0">12 sanaa kertaukseen, viimeisin sessio 2 päivää sitten.</p>
           </div>
           <div class="sg-preview sg-preview--elev">
             <p class="sg-eyebrow" style="margin:0 0 6px">Nostettu (modaali, popover)</p>
             <h3 class="sg-type-h3" style="margin:0">Tämän päivän haaste</h3>
-            <p class="sg-type-sm" style="margin:8px 0 0">Käännä 8 lausetta — kesto noin 6 minuuttia.</p>
+            <p class="sg-type-sm" style="margin:8px 0 0">Käännä 8 lausetta, kesto noin 6 minuuttia.</p>
           </div>
         </div>
       </section>
@@ -815,7 +815,7 @@
         <div class="sg-section__head">
           <span class="sg-section__num">11</span>
           <h2 class="sg-section__title">Skeletonit</h2>
-          <p class="sg-section__lede">Spinneriä ei käytetä paitsi nappien sisällä — ladonta on aina hahmona, ei pyörivänä renkaana.</p>
+          <p class="sg-section__lede">Spinneriä ei käytetä paitsi nappien sisällä, ladonta on aina hahmona, ei pyörivänä renkaana.</p>
         </div>
         <div class="sg-skeleton-grid">
           <div class="sg-card" style="padding:0;overflow:hidden">
@@ -891,7 +891,7 @@
         <div class="sg-section__head">
           <span class="sg-section__num">13</span>
           <h2 class="sg-section__title">Palaute</h2>
-          <p class="sg-section__lede">Ikoni + teksti + role=status — ei pelkkä väri-indikaattori.</p>
+          <p class="sg-section__lede">Ikoni + teksti + role=status, ei pelkkä väri-indikaattori.</p>
         </div>
         <div class="sg-grid" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr))">
           <div class="lr-feedback is-correct lr-feedback--animate" role="status" style="background:color-mix(in srgb, var(--success) 14%, transparent)">
@@ -900,7 +900,7 @@
           </div>
           <div class="lr-feedback is-wrong lr-feedback--animate" role="status" style="background:color-mix(in srgb, var(--error) 14%, transparent)">
             <svg class="lr-feedback__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:var(--error)"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
-            <span class="lr-feedback__text">Melkein — tarkista artikkelin sukupuoli.</span>
+            <span class="lr-feedback__text">Melkein, tarkista artikkelin sukupuoli.</span>
           </div>
         </div>
       </section>
@@ -909,7 +909,7 @@
 
     <footer class="sg-foot">
       <span>Päivitetty F-ARCH-1 §C · token-lähde <code>/css/tokens.css</code></span>
-      <span>Älä linkkaa tätä tuotannosta — gate <code>?dev=1</code></span>
+      <span>Älä linkkaa tätä tuotannosta, gate <code>?dev=1</code></span>
     </footer>
   </div>
 </body>

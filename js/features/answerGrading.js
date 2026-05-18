@@ -12,7 +12,7 @@ export function normalizeAnswer(s) {
 }
 
 /**
- * Gap-fill grading — mirrors vocab.js:357-366.
+ * Gap-fill grading, mirrors vocab.js:357-366.
  * Returns { isCorrect, isAccentError }.
  * - Exact match OR alternative match  → isCorrect = true
  * - Accent-only mismatch              → isCorrect = false, isAccentError = true
@@ -35,12 +35,12 @@ export function gradeGapFill(userInput, correctAnswer, alternativeAnswers = []) 
   return { isCorrect, isAccentError };
 }
 
-/** Multiple-choice — mirrors vocab.js:659. Exact single-letter compare. */
+/** Multiple-choice, mirrors vocab.js:659. Exact single-letter compare. */
 export function gradeMultipleChoice(chosenLetter, correctLetter) {
   return String(chosenLetter ?? "").trim() === String(correctLetter ?? "").trim();
 }
 
-/** Matching — mirrors vocab.js:448. Case-insensitive pair check. */
+/** Matching, mirrors vocab.js:448. Case-insensitive pair check. */
 export function gradeMatchingPair(userSpanish, userFinnish, correctSpanish, correctFinnish) {
   return String(userSpanish ?? "").toLowerCase() === String(correctSpanish ?? "").toLowerCase() &&
          String(userFinnish ?? "").toLowerCase() === String(correctFinnish ?? "").toLowerCase();
@@ -84,7 +84,7 @@ export function pairUp(srcSpanish, dstSpanish, state = {}) {
   return { ...state, matched, selected, outcome: "noop" };
 }
 
-/** Reorder — mirrors vocab.js:545-546. Case-insensitive word-by-word match. */
+/** Reorder, mirrors vocab.js:545-546. Case-insensitive word-by-word match. */
 export function gradeReorder(userWords, correctWords) {
   const a = (userWords || []).map(w => String(w ?? "").toLowerCase());
   const b = (correctWords || []).map(w => String(w ?? "").toLowerCase());
@@ -93,14 +93,14 @@ export function gradeReorder(userWords, correctWords) {
   return true;
 }
 
-/** Translate-mini — mirrors server decision at vocab.js:608 (accepted if score >= 2). */
+/** Translate-mini, mirrors server decision at vocab.js:608 (accepted if score >= 2). */
 export function isTranslationAccepted(score) {
   return Number.isFinite(score) && score >= 2;
 }
 
 /**
  * Partial-credit band (Commit 14). Score 1/3 ("partly understandable") earns
- * XP but does NOT increment the streak — it nudges toward mastery without
+ * XP but does NOT increment the streak, it nudges toward mastery without
  * rewarding almost-wrong answers as if they were right.
  */
 export function isTranslationPartial(score) {
@@ -127,7 +127,7 @@ export const TRANSLATION_BAND_LABELS = {
 };
 
 /**
- * Reading short-answer — mirrors routes/exam.js:131-136.
+ * Reading short-answer, mirrors routes/exam.js:131-136.
  * Accepted if userAnswer.includes(accepted) OR accepted.includes(userAnswer) for any accepted entry.
  * Case-insensitive, accent-preserving (matches current server behavior).
  */
@@ -138,7 +138,7 @@ export function gradeShortAnswer(userAnswer, acceptedAnswers = []) {
   return list.some(a => u.includes(a) || a.includes(u));
 }
 
-/** YO-grade threshold mapping — mirrors routes/exam.js:94-109 (199-point exam). */
+/** YO-grade threshold mapping, mirrors routes/exam.js:94-109 (199-point exam). */
 export const GRADE_THRESHOLDS_PCT = [
   { minPct: 80, grade: "L" },
   { minPct: 65, grade: "E" },

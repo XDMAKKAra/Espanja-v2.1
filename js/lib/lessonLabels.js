@@ -1,5 +1,5 @@
 /**
- * L-PLAN-7 frontend mirror — render review-source keys as Finnish labels.
+ * L-PLAN-7 frontend mirror, render review-source keys as Finnish labels.
  *
  * The backend (lib/lessonLabels.js) is the source of truth for the rich
  * label text and ships it on each exercise (`review_source_label`) and

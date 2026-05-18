@@ -1,10 +1,10 @@
 /**
- * L-PLAN-7 — render the "Kertaus: …" pill on review exercises.
+ * L-PLAN-7, render the "Kertaus: …" pill on review exercises.
  *
  * Backend (lib/lessonContext.js + routes/exercises.js) tags review items
  * with `is_review: true` + `review_source` + `review_source_label`.
  * This module syncs a small badge into the host header element of the
- * active exercise screen. Idempotent — safe to call from every render.
+ * active exercise screen. Idempotent, safe to call from every render.
  */
 import { formatReviewLabel } from "../lib/lessonLabels.js";
 

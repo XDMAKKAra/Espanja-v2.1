@@ -21,7 +21,7 @@ import { generateExerciseShareCard } from "../features/shareCard.js";
 import { getLessonContext, isDeepenRun } from "../lib/lessonContext.js";
 import { setReviewBadge } from "../features/reviewBadge.js";
 
-// L-LIVE-AUDIT-P2 UPDATE 5 — Pre-generate the next vocab batch in the
+// L-LIVE-AUDIT-P2 UPDATE 5, Pre-generate the next vocab batch in the
 // background once the student is 2/3 through the current set. The audit
 // measured a 4 164 ms gap between "Aloita uusi" click and Q1 of the next
 // batch; pre-genning hides ~80% of that on free-practice loops.
@@ -107,7 +107,7 @@ function fmtElapsed(ms) {
 
 const OPTION_LETTERS = ["A", "B", "C", "D", "E", "F"];
 
-// Mirror of routes/exercises.js extractHeadwordKey — derive a Spanish lemma
+// Mirror of routes/exercises.js extractHeadwordKey, derive a Spanish lemma
 // from the correct option so we can ask the next /generate call to avoid it.
 function extractClientHeadwordKey(ex) {
   try {
@@ -134,7 +134,7 @@ let _recentTypes = [];
 export function initVocab({ loadDashboard, shareResult, saveProgress }) {
   _deps = { loadDashboard, shareResult, saveProgress };
 
-  // Scaffold help button — request hints back
+  // Scaffold help button, request hints back
   const helpBtn = $("scaffold-help-btn");
   if (helpBtn) {
     helpBtn.addEventListener("click", () => {
@@ -158,7 +158,7 @@ function updateScaffoldIndicator(scaffoldLevel) {
 
   if (scaffoldLevel <= 0) {
     fireEl.classList.remove("hidden");
-    textEl.textContent = "Ei vihjeitä — olet tulessa!";
+    textEl.textContent = "Ei vihjeitä, olet tulessa!";
     helpBtn.classList.remove("hidden");
   } else if (scaffoldLevel === 1) {
     fireEl.classList.add("hidden");
@@ -229,7 +229,7 @@ function recordItem(ex, isCorrect) {
     label = ex.correct.join(" ");
   }
   if (!label) label = "kysymys";
-  // L-PLAN-7 — capture review metadata so showVocabResults can hand off
+  // L-PLAN-7, capture review metadata so showVocabResults can hand off
   // a reviewItems[] array to /complete for the post-results summary.
   state.sessionItems.push({
     label: String(label).trim(),
@@ -252,7 +252,7 @@ async function reportAdaptiveAnswer(topic, isCorrect) {
     if (data.scaffoldChanged && data.direction === "down") {
       updateScaffoldIndicator(data.scaffoldLevel);
     } else if (data.scaffoldChanged && data.direction === "up") {
-      // Silently add more help — no announcement
+      // Silently add more help, no announcement
       if (_scaffoldMeta) _scaffoldMeta.scaffoldLevel = data.scaffoldLevel;
     }
   } catch { /* silent */ }
@@ -326,7 +326,7 @@ export async function loadNextBatch() {
   showSkeletonIntoExercise();
   show("screen-exercise");
 
-  // L-PLAN-5 UPDATE 5 — when a curriculum lesson is active, fetch all
+  // L-PLAN-5 UPDATE 5, when a curriculum lesson is active, fetch all
   // exercises in one batch (lesson.exercise_count) and skip SR injection +
   // mixed-type rotation. Topic is locked to the lesson focus, count comes
   // from the curriculum lesson row, and the session ends after this batch.
@@ -337,7 +337,7 @@ export async function loadNextBatch() {
 
     const freshCount = BATCH_SIZE - srItems.length;
 
-    // Mix in a new exercise type every other batch — disabled in lesson mode
+    // Mix in a new exercise type every other batch, disabled in lesson mode
     // so the focus stays on the curriculum topic.
     let mixedExercises = [];
     if (!lessonCtxEarly && state.batchNumber >= 2 && state.batchNumber % 2 === 0) {
@@ -380,17 +380,17 @@ export async function loadNextBatch() {
             }
           }
         }
-      } catch { /* silent — just skip mixed type */ }
+      } catch { /* silent, just skip mixed type */ }
     }
 
     const mcCount = Math.max(1, freshCount - mixedExercises.length);
-    // L-PLAN-3 — when a curriculum lesson is active, server overrides
+    // L-PLAN-3, when a curriculum lesson is active, server overrides
     // level/topic/count from the lesson and injects a focus constraint
     // into the prompt. We just forward { kurssiKey, lessonIndex }.
     const lessonCtx = lessonCtxEarly;
     const deepen = !!(lessonCtx && isDeepenRun());
 
-    // L-LIVE-AUDIT-P2 UPDATE 5 — free-practice may have a pre-generated batch
+    // L-LIVE-AUDIT-P2 UPDATE 5, free-practice may have a pre-generated batch
     // already in flight from the previous question's 2/3-mark trigger. Consume
     // it instead of hitting /api/generate again. Lesson + deepen paths bypass
     // the cache because their prompts are context-specific.
@@ -417,7 +417,7 @@ export async function loadNextBatch() {
       data = await res.json();
       if (!res.ok) throw new Error(data.error || "Tehtävien luonti epäonnistui");
     }
-    if (!data.exercises?.length) throw new Error("Tehtäviä ei voitu generoida tällä hetkellä — yritä hetken päästä uudelleen.");
+    if (!data.exercises?.length) throw new Error("Tehtäviä ei voitu generoida tällä hetkellä, yritä hetken päästä uudelleen.");
 
     // Track headwords from this batch so the next /generate call can ask
     // the model to avoid repeating them. Cap at 30 to keep prompt cheap.
@@ -431,7 +431,7 @@ export async function loadNextBatch() {
     renderVocabQuestion();
     show("screen-exercise");
   } catch (err) {
-    // Commit 9: inline retry — student stays on #screen-exercise, no
+    // Commit 9: inline retry, student stays on #screen-exercise, no
     // full-screen loading-error flip.
     showFetchError($("exercise-skeleton-slot"), {
       title: "Tehtävien lataus epäonnistui",
@@ -513,7 +513,7 @@ function renderVocabQuestion() {
   $("ex-level-badge").textContent = state.level;
   $("progress-fill").style.width = `${((questionNum - 1) / totalQuestions) * 100}%`;
 
-  // L-PLAN-7 — kertaus-badge if this item is part of cumulative review.
+  // L-PLAN-7, kertaus-badge if this item is part of cumulative review.
   setReviewBadge(ex, "#screen-exercise .exercise__meta");
 
   const exType = ex.type || "meaning";
@@ -886,7 +886,7 @@ function renderTranslateMini(ex) {
         state.totalCorrect++;
         state.batchCorrect++;
       } else {
-        // Commit 14: score 1 still earns XP (partial credit) — logs mistake
+        // Commit 14: score 1 still earns XP (partial credit), logs mistake
         // and grants half a correct toward the batch tally but does NOT
         // increment the streak (streak is counted via state.totalCorrect).
         if (isPartial) state._partialCredits = (state._partialCredits || 0) + 1;
@@ -1033,7 +1033,7 @@ $("btn-next").addEventListener("click", async () => {
   removeSrAnimation();
 
   state.current++;
-  // L-LIVE-AUDIT-P2 UPDATE 5 — opportunistic pre-gen of the next AI batch.
+  // L-LIVE-AUDIT-P2 UPDATE 5, opportunistic pre-gen of the next AI batch.
   triggerVocabPreload();
   if (state.current >= state.exercises.length) {
     endBatch();
@@ -1107,7 +1107,7 @@ function endBatch() {
     return;
   }
 
-  // L-PLAN-5 UPDATE 5 — curriculum lesson is bound to a single batch.
+  // L-PLAN-5 UPDATE 5, curriculum lesson is bound to a single batch.
   // After this batch the session ends and the post-session lesson results
   // card takes over (showVocabResults handles the lessonCtx hand-off).
   if (getLessonContext()) {
@@ -1216,7 +1216,7 @@ function showVocabResults() {
   const correct = state.totalCorrect;
   const total = state.totalAnswered;
 
-  // L-PLAN-3 — when this session was launched from a curriculum lesson,
+  // L-PLAN-3, when this session was launched from a curriculum lesson,
   // hand off to the dedicated post-session results card and skip the
   // free-practice results screen entirely. The card POSTs to /complete and
   // renders the AI tutorMessage + metacognitive prompt.
@@ -1232,7 +1232,7 @@ function showVocabResults() {
         studentAnswer: String(i.studentAnswer || "").slice(0, 200),
         topic_key: i.topic_key || null,
       }));
-    // L-PLAN-7 — full review-item array for the post-results "Kertasit
+    // L-PLAN-7, full review-item array for the post-results "Kertasit
     // myös tätä" summary. Only items tagged is_review by the backend.
     const reviewItems = items
       .filter((i) => !!i.is_review)
@@ -1266,7 +1266,7 @@ function showVocabResults() {
 
   $("results-score").textContent = `${correct} / ${total} oikein`;
 
-  // Spec 2 §5 — populate new editorial result IDs.
+  // Spec 2 §5, populate new editorial result IDs.
   const pct = total > 0 ? Math.round((correct / total) * 100) : 0;
   $("res-score-tot").textContent = String(total);
   countUp($("res-score-num"), correct);
@@ -1298,7 +1298,7 @@ function showVocabResults() {
     statsEl.hidden = total === 0;
   }
 
-  // Breakdown list — derived from state.sessionItems.
+  // Breakdown list, derived from state.sessionItems.
   const resList = $("res-list");
   if (resList) {
     resList.innerHTML = "";
@@ -1356,10 +1356,10 @@ function showVocabResults() {
     state.sessionStartTime ? Date.now() - state.sessionStartTime : 0
   );
   show("screen-results");
-  // Celebration is an overlay — fire-and-forget so the result screen
+  // Celebration is an overlay, fire-and-forget so the result screen
   // renders underneath and is already visible when the overlay dismisses.
   maybeShowFirstCelebration();
-  // Confetti for ≥80% — gated by reduced-motion inside the helper.
+  // Confetti for ≥80%, gated by reduced-motion inside the helper.
   if (total > 0) celebrateScore(pct);
 
   // Daily-cap nudge banner for free users at #15+ (Commit 10).

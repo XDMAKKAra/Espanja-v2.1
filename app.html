@@ -7,59 +7,59 @@
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
 
-  <!-- Pre-launch password gate — extracted to /js/pre-launch-gate.js
+  <!-- Pre-launch password gate, extracted to /js/pre-launch-gate.js
        so a strict CSP (script-src without 'unsafe-inline') can ship. -->
   <script src="/js/pre-launch-gate.js"></script>
 
-  <title>Puheo — Harjoittele</title>
-  <meta name="description" content="Puheo — tekoälyvetoinen sovellus espanjan YO-kokeeseen (lyhyt oppimäärä) valmistautumiseen. Sanasto, kielioppi, luetun ymmärtäminen, kirjoittaminen ja täyskokeet." />
+  <title>Puheo, Harjoittele</title>
+  <meta name="description" content="Puheo, sovellus espanjan YO-kokeeseen (lyhyt oppimäärä) valmistautumiseen. Sanasto, kielioppi, luetun ymmärtäminen, kirjoittaminen ja täyskokeet." />
   <meta name="robots" content="noindex,nofollow" />
   <meta name="google-site-verification" content="ZdvxnGbBDKI5J3Zl2GmJt_fRfFQ3CdoIo-K00QvZnk4" />
-  <meta property="og:title" content="Puheo — Harjoittele espanjan YO-koetta" />
-  <meta property="og:description" content="Harjoittele espanjan YO-koetta (lyhyt oppimäärä) tekoälyn avulla. Henkilökohtainen, adaptiivinen, suomeksi." />
+  <meta property="og:title" content="Puheo, Harjoittele espanjan YO-koetta" />
+  <meta property="og:description" content="Harjoittele espanjan YO-koetta lyhyellä oppimäärällä. Henkilökohtainen, adaptiivinen, suomeksi." />
   <meta property="og:image" content="https://puheo.fi/og-image.png" />
   <meta property="og:url" content="https://puheo.fi/app.html" />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="fi_FI" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Puheo — Harjoittele espanjan YO-koetta" />
-  <meta name="twitter:description" content="Harjoittele espanjan YO-koetta (lyhyt oppimäärä) tekoälyn avulla." />
+  <meta name="twitter:title" content="Puheo, Harjoittele espanjan YO-koetta" />
+  <meta name="twitter:description" content="Harjoittele espanjan YO-koetta lyhyellä oppimäärällä." />
   <meta name="twitter:image" content="https://puheo.fi/og-image.png" />
   <link rel="manifest" href="/manifest.json" />
   <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
   <link rel="apple-touch-icon" href="/icon-192.png" />
   <meta name="theme-color" content="#2DD4BF" />
-  <!-- L-LIVE-AUDIT-P2 UPDATE 8 — Inter + DM Mono are self-hosted via /fonts/
+  <!-- L-LIVE-AUDIT-P2 UPDATE 8, Inter + DM Mono are self-hosted via /fonts/
        declared at the top of style.css (bundled into /app.bundle.css). The
        landing page (index.html) still uses Google Fonts for Geist family. -->
   <link rel="preload" href="/fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="/fonts/inter-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin />
-  <!-- F-ARCH-1 §B — design tokens loaded FIRST so aliases (--text, --space-N,
+  <!-- F-ARCH-1 §B, design tokens loaded FIRST so aliases (--text, --space-N,
        --radius-md, --z-modal, --focus-ring, --ease-spring) are resolvable
        everywhere downstream. File is additive and does NOT redefine the
        canonical Puheo tokens declared in style.css. -->
   <link rel="stylesheet" href="/css/tokens.css" />
-  <!-- L-LIVE-AUDIT-P2 UPDATE 1 — single bundle replaces 16 separate CSS requests.
+  <!-- L-LIVE-AUDIT-P2 UPDATE 1, single bundle replaces 16 separate CSS requests.
        Source files remain in repo; bundle produced by `npm run build`. -->
   <link rel="stylesheet" href="/app.bundle.css" />
-  <!-- L-ONBOARDING-REDESIGN-1 — V3 onboarding styles. Loaded outside bundle
+  <!-- L-ONBOARDING-REDESIGN-1, V3 onboarding styles. Loaded outside bundle
        so the redesign is testable before the next `npm run build`. -->
   <link rel="stylesheet" href="/css/components/onboarding-v3.css" />
-  <!-- L-LANG-INFRA-1 — coming-soon screen + settings language modal styles. -->
+  <!-- L-LANG-INFRA-1, coming-soon screen + settings language modal styles. -->
   <link rel="stylesheet" href="/css/components/coming-soon.css" />
-  <!-- L-HERO-COUNTDOWN-AND-OFFCANVAS-1 — off-canvas slide-in sidebar for <1024px. -->
+  <!-- L-HERO-COUNTDOWN-AND-OFFCANVAS-1, off-canvas slide-in sidebar for <1024px. -->
   <link rel="stylesheet" href="/css/components/off-canvas-nav.css" />
 </head>
 <body>
 
-  <!-- Pre-paint shell-mode + theme hint — extracted to /js/app-prepaint.js
+  <!-- Pre-paint shell-mode + theme hint, extracted to /js/app-prepaint.js
        in L-SECURITY-3 so a strict CSP can ship. Sync, no defer/async. -->
   <script src="/js/app-prepaint.js"></script>
 
   <!-- Skip to main content -->
   <a href="#app-main" class="skip-link">Siirry sisältöön</a>
 
-  <!-- In-app waitlist modal — shown when window.__WAITLIST_MODE is true
+  <!-- In-app waitlist modal, shown when window.__WAITLIST_MODE is true
        (Y-tunnus pending). Replaces live checkout redirect. -->
   <div class="app-waitlist-overlay hidden" id="app-waitlist-overlay" role="dialog" aria-modal="true" aria-labelledby="app-waitlist-title">
     <div class="app-waitlist-modal">
@@ -81,7 +81,7 @@
     <div class="first-celebration-card">
       <div class="first-celebration-emoji" aria-hidden="true">🎉</div>
       <p class="first-celebration-title">Ensimmäinen valmis.</p>
-      <p class="first-celebration-sub">Olet aloittanut — paras askel jo tehty.</p>
+      <p class="first-celebration-sub">Olet aloittanut, paras askel jo tehty.</p>
     </div>
   </div>
 
@@ -94,7 +94,7 @@
 
   <div class="app-shell" id="app-shell">
 
-  <!-- TOPBAR + HAMBURGER — visible <1024px only (L-HERO-COUNTDOWN-AND-OFFCANVAS-1) -->
+  <!-- TOPBAR + HAMBURGER, visible <1024px only (L-HERO-COUNTDOWN-AND-OFFCANVAS-1) -->
   <header class="app-topbar" role="banner">
     <button id="menu-toggle" type="button" aria-label="Avaa valikko" aria-controls="app-sidebar" aria-expanded="false">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
@@ -174,7 +174,7 @@
        logged-in users don't flash the login screen before main.js routes them. -->
   <div id="screen-auth" class="screen">
     <!-- Sourced: Magic UI grid-pattern (apps/www/registry/magicui/grid-pattern.tsx)
-         — SVG <pattern> tile with a corner-piece path, masked by a radial
+        , SVG <pattern> tile with a corner-piece path, masked by a radial
          gradient so the grid fades out at the edges of the viewport. -->
     <svg class="auth-bg-grid" aria-hidden="true">
       <defs>
@@ -189,7 +189,7 @@
         <a href="index.html" class="auth-aside__logo" aria-label="Puheo etusivu">Puhe<span>o</span></a>
         <p class="auth-aside__eyebrow">Espanjan yo-koe · lyhyt</p>
         <h2 class="auth-aside__title">Adaptiivinen treeni 28.9.2026 saakka.</h2>
-        <p class="auth-aside__lead">AI-palaute, oma oppimispolku ja päivän putki — kaikki suomeksi.</p>
+        <p class="auth-aside__lead">AI-palaute, oma oppimispolku ja päivän putki, kaikki suomeksi.</p>
         <ul class="auth-aside__benefits" role="list">
           <li><svg class="auth-aside__check" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L20 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>60 sekunnin taitotaso-arvio</li>
           <li><svg class="auth-aside__check" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L20 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Kirjoitelmat YTL-rubriikilla</li>
@@ -226,7 +226,7 @@
     </div>
   </div>
 
-  <!-- SCREEN: Onboarding S1 — Welcome -->
+  <!-- SCREEN: Onboarding S1, Welcome -->
   <div id="screen-ob-welcome" class="screen">
     <div class="ob-welcome-inner">
       <p class="ob-welcome-eyebrow">Espanjan yo-koe</p>
@@ -295,7 +295,7 @@
     </div>
   </div>
 
-  <!-- SCREEN: Onboarding S5 — Goal + push opt-in -->
+  <!-- SCREEN: Onboarding S5, Goal + push opt-in -->
   <div id="screen-ob-goal" class="screen">
     <div class="ob-goal-inner">
       <section class="ob-goal-section">
@@ -336,7 +336,7 @@
     </div>
   </div>
 
-  <!-- SCREEN: Onboarding S2.5 — Personalize loading orb -->
+  <!-- SCREEN: Onboarding S2.5, Personalize loading orb -->
   <div id="screen-ob-personalize" class="screen">
     <div class="ob-personalize-inner">
       <h1 class="ob-personalize-title">Rakennamme sinulle henkilökohtaisen oppimispolun…</h1>
@@ -350,7 +350,7 @@
     </div>
   </div>
 
-  <!-- SCREEN: Onboarding S3 — Profile ready -->
+  <!-- SCREEN: Onboarding S3, Profile ready -->
   <div id="screen-ob-path" class="screen">
     <div class="ob-ready-inner">
       <div class="ob-ready-check" aria-hidden="true">
@@ -422,7 +422,7 @@
     </div>
   </div>
 
-  <!-- ─── L-ONBOARDING-REDESIGN-1 — V3 flow (9 stages) ───────────────────── -->
+  <!-- ─── L-ONBOARDING-REDESIGN-1, V3 flow (9 stages) ───────────────────── -->
   <!-- Stage 0: hero welcome -->
   <div id="screen-ob-v3-welcome" class="screen ob3">
     <div class="ob3-shell ob3-shell--center">
@@ -449,7 +449,7 @@
       <header class="ob3-head">
         <p class="ob3-eyebrow">1 / 8</p>
         <h1 class="ob3-title">Mitä kieltä kirjoitat?</h1>
-        <p class="ob3-sub">Pidä huoli että valitset oikean — sisältö rakentuu tämän mukaan.</p>
+        <p class="ob3-sub">Pidä huoli että valitset oikean, sisältö rakentuu tämän mukaan.</p>
       </header>
       <div class="ob3-cards" data-ob3-field="target_language" role="radiogroup" aria-label="Kieli">
         <button class="ob3-card" data-value="es" type="button" role="radio" aria-checked="false">
@@ -505,7 +505,7 @@
       <header class="ob3-head">
         <p class="ob3-eyebrow">3 / 8</p>
         <h1 class="ob3-title">Mihin asti olet jo päässyt?</h1>
-        <p class="ob3-sub">Tämä määrittää lähtötasosi. Ei tasokoetta vielä — luotamme arvioosi.</p>
+        <p class="ob3-sub">Tämä määrittää lähtötasosi. Ei tasokoetta vielä, luotamme arvioosi.</p>
       </header>
       <div class="ob3-chiprow" data-ob3-field="courses_done" role="radiogroup" aria-label="Suoritetut kurssit">
         <button class="ob3-chip" data-value="1" type="button" role="radio" aria-checked="false">1 kurssi</button>
@@ -527,7 +527,7 @@
       <header class="ob3-head">
         <p class="ob3-eyebrow">4 / 8</p>
         <h1 class="ob3-title">Mihin haluat?</h1>
-        <p class="ob3-sub">Valitse tavoitearvosana — voit muuttaa milloin tahansa.</p>
+        <p class="ob3-sub">Valitse tavoitearvosana, voit muuttaa milloin tahansa.</p>
       </header>
       <div class="ob3-grades" data-ob3-field="target_grade" role="radiogroup" aria-label="Tavoitearvosana">
         <button class="ob3-grade" data-value="A" type="button" role="radio" aria-checked="false"><span class="ob3-grade__letter">A</span><span class="ob3-grade__lat">approbatur</span></button>
@@ -578,7 +578,7 @@
       <header class="ob3-head">
         <p class="ob3-eyebrow">6 / 8</p>
         <h1 class="ob3-title">Paljonko aikaa viikossa?</h1>
-        <p class="ob3-sub">Voit muuttaa myöhemmin — tämä on lähtöarvio.</p>
+        <p class="ob3-sub">Voit muuttaa myöhemmin, tämä on lähtöarvio.</p>
       </header>
       <div class="ob3-slider-wrap">
         <input type="range" id="ob3-weekly" min="30" max="300" step="15" value="120" class="ob3-slider" aria-label="Minuuttia viikossa" />
@@ -600,7 +600,7 @@
       <header class="ob3-head">
         <p class="ob3-eyebrow">7 / 8</p>
         <h1 class="ob3-title">Mitä haluat painottaa?</h1>
-        <p class="ob3-sub">Valitse vähintään yksi. Voit valita monta — kaikki ovat lähtökohtaisesti päällä.</p>
+        <p class="ob3-sub">Valitse vähintään yksi. Voit valita monta, kaikki ovat lähtökohtaisesti päällä.</p>
       </header>
       <div class="ob3-focus" data-ob3-field="focus_areas" role="group" aria-label="Painopisteet">
         <button class="ob3-focus__chip" data-value="vocab" type="button" aria-pressed="true">Sanasto</button>
@@ -662,11 +662,11 @@
         <input type="email" id="ob3-waitlist-email" placeholder="sahkoposti@example.com" required class="ob3-input" />
         <button type="submit" class="ob3-cta">Liity jonoon</button>
       </form>
-      <p class="ob3-modal__success hidden" id="ob3-waitlist-success">Kiitos — kuulet meistä ensimmäisten joukossa.</p>
+      <p class="ob3-modal__success hidden" id="ob3-waitlist-success">Kiitos, kuulet meistä ensimmäisten joukossa.</p>
     </div>
   </div>
 
-  <!-- ─── L-PLAN-1 onboarding V2 (4 screens, LEGACY — kept for fallback) ── -->
+  <!-- ─── L-PLAN-1 onboarding V2 (4 screens, LEGACY, kept for fallback) ── -->
 
   <!-- OB-1: Profile (school grade, target grade, weak areas, daily minutes) -->
   <div id="screen-ob1-profile" class="screen ob2">
@@ -702,7 +702,7 @@
           <button type="button" class="ob2-pill" data-value="E" role="radio" aria-checked="false">E</button>
           <button type="button" class="ob2-pill" data-value="L" role="radio" aria-checked="false">L</button>
         </div>
-        <!-- L-PLAN-6 — dynamic per-target description, populated by onboardingV2.js -->
+        <!-- L-PLAN-6, dynamic per-target description, populated by onboardingV2.js -->
         <div class="ob1-target-detail" id="ob1-target-detail" hidden aria-live="polite">
           <p class="ob1-target-detail__title" id="ob1-target-detail-title"></p>
           <p class="ob1-target-detail__pace" id="ob1-target-detail-pace"></p>
@@ -747,7 +747,7 @@
       <header class="ob2-head ob2-head--test">
         <p class="ob2-eyebrow">Vaihe 2 / 4 · 8 kysymystä · noin 3 minuuttia</p>
         <h1 class="ob2-title ob2-title--sm">Nyt testataan missä olet</h1>
-        <p class="ob2-sub">Älä arvaile — arvaaminen hidastaa sinua. Vastaa rehellisesti.</p>
+        <p class="ob2-sub">Älä arvaile, arvaaminen hidastaa sinua. Vastaa rehellisesti.</p>
       </header>
 
       <div class="ob2-progress" aria-hidden="true">
@@ -801,7 +801,7 @@
         </ul>
 
         <p class="ob2-startpoint">Aloitamme <span class="ob2-startpoint__name" id="ob3-kurssi">…</span>.</p>
-        <p class="ob2-confidence-note hidden" id="ob3-confidence-note">Vastasit nopeasti — aloitetaan rauhallisemmin varmistuksen vuoksi.</p>
+        <p class="ob2-confidence-note hidden" id="ob3-confidence-note">Vastasit nopeasti, aloitetaan rauhallisemmin varmistuksen vuoksi.</p>
 
         <div class="ob2-actions">
           <button type="button" class="ob2-cta" id="ob3-next">Aloitetaan! →</button>
@@ -839,7 +839,7 @@
   <div id="screen-path" class="screen">
     <div class="path-inner">
 
-      <!-- Free-tier quota chip — rendered by dashboard.js; hidden for paid tiers -->
+      <!-- Free-tier quota chip, rendered by dashboard.js; hidden for paid tiers -->
       <div id="dash-free-chip-root" hidden aria-live="polite"></div>
 
       <header class="dash-greeting">
@@ -853,7 +853,7 @@
         </p>
       </header>
 
-      <!-- KPI stat row — PUTKI / HARJOITUKSIA / TÄLLÄ VIIKOLLA / YO-VALMIUS
+      <!-- KPI stat row, PUTKI / HARJOITUKSIA / TÄLLÄ VIIKOLLA / YO-VALMIUS
            Populated by dashboard.js renderDashboard(); safe-displays "—" until data arrives. -->
       <div class="dash-kpi-row" id="dash-kpi-row" aria-label="Tilastot">
         <div class="dash-kpi-tile dash-kpi-tile--1">
@@ -889,7 +889,7 @@
           </section>
         </main>
         <aside class="path-rail" aria-label="Pikatoiminnot ja edistyminen">
-          <!-- Day-CTA — accent variant in the path context (turquoise on dark
+          <!-- Day-CTA, accent variant in the path context (turquoise on dark
                surface) so it doesn't read as disabled. -->
           <button type="button" class="btn--cta btn--cta--accent" id="dash-day-cta" data-target="vocab" data-kind="drill">
             <div class="btn--cta__l">
@@ -898,7 +898,7 @@
             </div>
             <span class="btn--cta__arrow" aria-hidden="true">→</span>
           </button>
-          <!-- YO-koe readiness card — populated by dashboard.js. -->
+          <!-- YO-koe readiness card, populated by dashboard.js. -->
           <div class="dash-readiness hidden" id="dash-readiness" aria-live="polite"></div>
           <!-- L-HOME-HOTFIX-3-P2: recent + chart moved INTO the rail so the
                right column doesn't sit empty next to scroll-heavy course
@@ -907,7 +907,7 @@
             <div class="section-h"><h2>Viimeisimm&auml;t harjoitukset</h2></div>
             <div id="dash-recent-list" role="list"></div>
           </div>
-          <!-- Empty state — shown when user has no sessions yet -->
+          <!-- Empty state, shown when user has no sessions yet -->
           <div class="dash-empty-rail hidden" id="dash-empty-rail" aria-live="polite">
             <div class="dash-empty-rail__icon" aria-hidden="true">
               <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
@@ -939,7 +939,7 @@
     <div id="curr-lesson-root"></div>
   </div>
 
-  <!-- SCREEN: Post-session lesson results (L-PLAN-3) — content rendered by js/screens/lessonResults.js -->
+  <!-- SCREEN: Post-session lesson results (L-PLAN-3), content rendered by js/screens/lessonResults.js -->
   <div id="screen-lesson-results" class="screen">
     <div id="lesson-results-root"></div>
   </div>
@@ -963,7 +963,7 @@
   <!-- SCREEN: Mastery test result -->
   <div id="screen-mastery-result" class="screen">
     <div class="mastery-result-inner">
-      <!-- L-SURGICAL-2 (2026-05-17): flip hierarchy — data first, emoji as
+      <!-- L-SURGICAL-2 (2026-05-17): flip hierarchy, data first, emoji as
            pinned small marker. Original layout led with 🎉 which trained
            users to ignore actual feedback. -->
       <div class="mastery-result-pct" id="mastery-result-pct">90%</div>
@@ -999,7 +999,7 @@
       <!-- LEGACY [L-MERGE-DASH-PATH]: greeting block moved to #screen-path. -->
       <p class="dash-greeting__sub" id="dash-motivation"></p>
 
-      <!-- L-PLAN-3 — daily AI tutor greeting (CURRICULUM_SPEC §7).
+      <!-- L-PLAN-3, daily AI tutor greeting (CURRICULUM_SPEC §7).
            Fetched once per dashboard load via /api/curriculum/tutor-message;
            hidden when anonymous, skeleton until first response. -->
       <section class="dash-tutor" id="dash-tutor" hidden aria-live="polite">
@@ -1043,7 +1043,7 @@
         </div>
       </div>
 
-      <!-- Daily challenge — rotating curated micro-mission -->
+      <!-- Daily challenge, rotating curated micro-mission -->
       <div class="daily-challenge hidden" id="daily-challenge"></div>
 
       <!-- LEGACY [L-MERGE-DASH-PATH]: dash-day-cta moved to #screen-path. -->
@@ -1108,7 +1108,7 @@
       <div class="section-h" style="margin-top:24px"><h2>Yo-koesimulaatio</h2></div>
       <div class="dash-full-exam-card" id="dash-full-exam-card">
         <div class="dash-full-exam-info">
-          <div class="dash-full-exam-title">Täyskoe — 4 osaa, 199 p</div>
+          <div class="dash-full-exam-title">Täyskoe, 4 osaa, 199 p</div>
           <div class="dash-full-exam-desc">Luetun ymmärtäminen, rakenteet, lyhyt ja pitkä kirjoitustehtävä. Aikaraja 2 h (demo) tai 6 h (täydellinen).</div>
         </div>
         <button class="btn-primary" id="btn-start-full-exam">Aloita täyskoe</button>
@@ -1124,7 +1124,7 @@
     </div>
   </div>
 
-  <!-- SCREEN: Mode — Sanasto -->
+  <!-- SCREEN: Mode, Sanasto -->
   <div id="screen-mode-vocab" class="screen">
     <div class="mode-page mode-page--vocab">
       <p class="eyebrow">SANASTO · YO LYHYT</p>
@@ -1200,7 +1200,7 @@
     </div>
   </div>
 
-  <!-- SCREEN: Mode — Puheoppi -->
+  <!-- SCREEN: Mode, Puheoppi -->
   <div id="screen-mode-grammar" class="screen">
     <div class="mode-page mode-page--grammar">
       <p class="eyebrow">PUHEOPPI · YO LYHYT</p>
@@ -1298,12 +1298,12 @@
     </div>
   </div>
 
-  <!-- SCREEN: Mode — Verbisprintti -->
+  <!-- SCREEN: Mode, Verbisprintti -->
   <div id="screen-mode-verbsprint" class="screen">
     <div class="mode-page mode-page--verbsprint">
       <p class="eyebrow">VERBISPRINTTI · YO LYHYT</p>
       <h1 class="display">Verbisprintti</h1>
-      <p class="mode-page__sub">Nopea taivutusharjoitus — 40 yleisintä verbiä YO-tasolla</p>
+      <p class="mode-page__sub">Nopea taivutusharjoitus, 40 yleisintä verbiä YO-tasolla</p>
 
       <div class="mode-briefing" id="verbsprint-briefing">
         <p class="eyebrow">VIIMEKSI · —</p>
@@ -1454,7 +1454,7 @@
       <button class="paradigm-close" id="paradigm-close" aria-label="Sulje">&times;</button>
       <div class="paradigm-header">
         <div class="paradigm-kicker" id="paradigm-kicker">Paradigma</div>
-        <h2 class="paradigm-title" id="paradigm-title">tener — preteriti</h2>
+        <h2 class="paradigm-title" id="paradigm-title">tener, preteriti</h2>
       </div>
       <div class="paradigm-body" id="paradigm-body"></div>
       <div class="paradigm-actions">
@@ -1463,7 +1463,7 @@
     </div>
   </div>
 
-  <!-- SCREEN: Mode — Luetun ymmärtäminen -->
+  <!-- SCREEN: Mode, Luetun ymmärtäminen -->
   <div id="screen-mode-reading" class="screen">
     <div class="mode-page mode-page--reading">
       <p class="eyebrow">LUETUN YMMÄRTÄMINEN · YO LYHYT</p>
@@ -1539,12 +1539,12 @@
     </div>
   </div>
 
-  <!-- SCREEN: Mode — Kirjoittaminen -->
+  <!-- SCREEN: Mode, Kirjoittaminen -->
   <div id="screen-mode-writing" class="screen">
     <div class="mode-page mode-page--writing">
       <p class="eyebrow">KIRJOITTAMINEN · YO LYHYT</p>
       <h1 class="display">Kirjoittaminen</h1>
-      <p class="mode-page__sub">Kirjoitustehtävä + YTL-kriteerien mukainen AI-arviointi</p>
+      <p class="mode-page__sub">Kirjoitustehtävä + YTL-kriteerien mukainen YTL-rubriikin arviointi</p>
 
       <div class="mode-briefing" id="writing-briefing">
         <p class="eyebrow">VIIMEKSI · —</p>
@@ -1646,7 +1646,7 @@
         </div>
       </div>
       <h1 id="start-lang-title">Espanja<br/>Yo-koe</h1>
-      <p class="subtitle">Adaptiivinen tekoälyharjoittelu ylioppilaskirjoituksiin</p>
+      <p class="subtitle">Adaptiivinen harjoittelu lyhyen oppimäärän YO-kirjoituksiin</p>
 
       <!-- Language (Spanish only) -->
 
@@ -1734,7 +1734,7 @@
         <div class="config-block">
           <label>Puheoppiaihe</label>
           <select id="grammar-topic-select" aria-label="Kielioppiaihe">
-            <option value="mixed">Sekaisin — kaikki aiheet</option>
+            <option value="mixed">Sekaisin, kaikki aiheet</option>
             <option value="ser_estar">Ser vs. Estar</option>
             <option value="hay_estar">Hay vs. Estar</option>
             <option value="subjunctive">Subjunktiivi (ojalá, para que...)</option>
@@ -2391,7 +2391,7 @@
   <!-- SCREEN: Exam Results -->
   <div id="screen-exam-results" class="screen">
     <div class="results-inner" style="max-width:560px">
-      <p class="results-label">Koeharjoitus — tulos</p>
+      <p class="results-label">Koeharjoitus, tulos</p>
       <div class="grade-display" id="exam-grade-display">—</div>
       <div class="exam-results-breakdown" id="exam-results-breakdown"></div>
       <div class="feedback-overall" id="exam-overall-feedback" style="text-align:left;margin-top:16px;margin-bottom:32px"></div>
@@ -2411,10 +2411,10 @@
       <h1 id="pro-upsell-headline">Pro-tili vaaditaan</h1>
       <p class="subtitle">Luetun ymmärtäminen, kirjoittaminen ja koeharjoitus vaativat Pro-tilin.</p>
       <div class="pro-features-list">
-        <div class="pro-feature">📖 Luetun ymmärtäminen — AI-tekstit + kysymykset</div>
-        <div class="pro-feature">✍️ Kirjoittaminen — YTL-kriteerien mukainen AI-arviointi</div>
-        <div class="pro-feature">🎓 Koeharjoitus — Aikataulutettu simulaatio</div>
-        <div class="pro-feature">🎧 Kuullun ymmärtäminen — Tulossa pian</div>
+        <div class="pro-feature">📖 Luetun ymmärtäminen, AI-tekstit + kysymykset</div>
+        <div class="pro-feature">✍️ Kirjoittaminen, YTL-kriteerien mukainen YTL-rubriikin arviointi</div>
+        <div class="pro-feature">🎓 Koeharjoitus, Aikataulutettu simulaatio</div>
+        <div class="pro-feature">🎧 Kuullun ymmärtäminen, Tulossa pian</div>
         <div class="pro-feature">📊 Yksityiskohtainen edistymisraportti</div>
       </div>
       <button class="btn-primary" id="btn-upgrade-pro" style="margin-top:24px">Päivitä Pro →</button>
@@ -2447,7 +2447,7 @@
     <div class="exam-inner">
       <div class="exam-header">
         <div>
-          <div class="exam-title">Yo-koe — espanja, lyhyt</div>
+          <div class="exam-title">Yo-koe, espanja, lyhyt</div>
           <div class="exam-subtitle" id="full-exam-part-label">Osa 1: Luetun ymmärtäminen</div>
         </div>
         <div class="exam-timer" id="full-exam-timer">02:00:00</div>
@@ -2475,7 +2475,7 @@
   <!-- SCREEN: Full Exam Results -->
   <div id="screen-full-exam-results" class="screen">
     <div class="results-inner" style="max-width:600px">
-      <p class="results-label">Yo-koe — espanja, lyhyt oppimäärä</p>
+      <p class="results-label">Yo-koe, espanja, lyhyt oppimäärä</p>
       <div class="grade-display" id="full-exam-grade-display">—</div>
       <div id="full-exam-points" class="exam-points"></div>
       <div class="exam-results-breakdown" id="full-exam-breakdown"></div>
@@ -2491,7 +2491,7 @@
     </div><!-- /app-main-inner -->
   </main><!-- /app-main -->
 
-  <!-- L-PLAN-4 UPDATE 4 — Right-rail content removed.
+  <!-- L-PLAN-4 UPDATE 4, Right-rail content removed.
        The streak / readiness / daily-goal / Sana päivässä cards used to live
        here; the user reported the rail felt over-loaded ("Halusin tuon jutun
        tuolta oikealta pois"). Streak still surfaces in the dashboard hero
@@ -2531,7 +2531,7 @@
     </div>
   </aside>
 
-<!-- Pro upsell popup — bottom-right, dismissible, free users only.
+<!-- Pro upsell popup, bottom-right, dismissible, free users only.
      Triggered 5s after page load. 7-day suppress on dismiss. -->
 <aside class="pro-popup" id="pro-popup" role="complementary" aria-label="Puheo Pro" aria-live="polite" hidden>
   <button type="button" class="pro-popup__close" id="pro-popup-close" aria-label="Sulje">
@@ -2555,14 +2555,14 @@
 
   </div><!-- /app-shell -->
 
-  <!-- Analytics + feature-flag globals — extracted to /js/app-config.js
+  <!-- Analytics + feature-flag globals, extracted to /js/app-config.js
        in L-SECURITY-3 for strict CSP. Must precede the type=module
        main.js below so the globals are set before analytics.js boots. -->
   <script src="/js/app-config.js"></script>
   <!-- SCREEN: Settings / profile editor -->
   <div id="screen-profile" class="screen">
     <div class="profile-inner">
-      <!-- HERO STRIP — avatar | identity | level + countdown -->
+      <!-- HERO STRIP, avatar | identity | level + countdown -->
       <header class="profile-hero">
         <div class="profile-avatar" id="profile-avatar" aria-hidden="true">—</div>
         <div class="profile-hero-meta">
@@ -2577,7 +2577,7 @@
         </div>
       </header>
 
-      <!-- STATS ROW — 4 cells: streak / total / week / readiness -->
+      <!-- STATS ROW, 4 cells: streak / total / week / readiness -->
       <section class="profile-stats" aria-label="Tilastot">
         <div class="profile-stat">
           <span class="profile-stat-label">Putki</span>
@@ -2597,7 +2597,7 @@
         </div>
       </section>
 
-      <!-- MODE BREAKDOWN — 4 single-number cells -->
+      <!-- MODE BREAKDOWN, 4 single-number cells -->
       <section class="profile-section profile-section--modes">
         <div class="profile-modes" id="profile-modes"></div>
       </section>
@@ -2610,7 +2610,7 @@
           </div>
           <div class="profile-activity" id="profile-activity"></div>
           <div class="profile-empty hidden" id="profile-empty">
-            <p>Ei vielä harjoituksia — tee ensimmäinen, niin se ilmestyy tähän.</p>
+            <p>Ei vielä harjoituksia, tee ensimmäinen, niin se ilmestyy tähän.</p>
             <button type="button" class="btn-secondary" id="profile-empty-cta">Aloita harjoitus →</button>
           </div>
         </div>
@@ -2643,7 +2643,7 @@
         </div>
       </section>
 
-      <!-- L-LANG-INFRA-1: language switcher section — rendered by settings.js renderLanguageSection() -->
+      <!-- L-LANG-INFRA-1: language switcher section, rendered by settings.js renderLanguageSection() -->
       <section class="settings-section" id="settings-language-section">
         <h2 class="settings-section-title">Opiskelukieli</h2>
         <div class="settings-rows" id="settings-language-rows">
@@ -2657,7 +2657,7 @@
           <div class="settings-row" data-field="theme">
             <div class="settings-row-main">
               <div class="settings-row-label">Teema</div>
-              <div class="settings-row-value" id="settings-theme-value">Vaalea — seuraa järjestelmää</div>
+              <div class="settings-row-value" id="settings-theme-value">Vaalea, seuraa järjestelmää</div>
             </div>
             <div class="settings-theme-toggle" role="radiogroup" aria-label="Teema">
               <button type="button" class="settings-theme-btn is-current" data-theme="auto" role="radio" aria-checked="true">Auto</button>
@@ -2668,7 +2668,7 @@
         </div>
       </section>
 
-      <!-- Tilaus-section — rendered by settings.js wireSubscriptionSection() -->
+      <!-- Tilaus-section, rendered by settings.js wireSubscriptionSection() -->
       <section class="settings-section" id="settings-subscription-section">
         <h2 class="settings-section-title">Tilaus</h2>
         <div class="settings-rows settings-sub-section" id="settings-subscription-rows" aria-busy="true">
@@ -2731,7 +2731,7 @@
 
       <div class="cs-success hidden" id="cs-success" role="status">
         <p class="cs-success-title">Olet listalla!</p>
-        <p class="cs-success-body">Kerromme heti kun kurssi aukeaa. Sillä välin — espanja on jo valmis.</p>
+        <p class="cs-success-body">Kerromme heti kun kurssi aukeaa. Sillä välin, espanja on jo valmis.</p>
       </div>
 
       <footer class="cs-footer">
@@ -2764,7 +2764,7 @@
     <div class="settings-lang-confirm-modal">
       <h2 class="settings-lang-confirm-title" id="settings-lang-confirm-title">Vaihdetaanko kieli?</h2>
       <p class="settings-lang-confirm-body">
-        Vaihtamalla kielen siirrät painopisteen pois espanjasta — tekemäsi espanjan harjoitteet
+        Vaihtamalla kielen siirrät painopisteen pois espanjasta, tekemäsi espanjan harjoitteet
         eivät katoa, mutta oppimispolku ja suositukset päivittyvät uudelle kielelle.
         Oletko varma?
       </p>
@@ -2792,13 +2792,13 @@
     </div>
   </div>
 
-  <!-- Paywall modal — three variants: quota | feature | upgrade -->
+  <!-- Paywall modal, three variants: quota | feature | upgrade -->
   <div id="paywall-modal" role="dialog" aria-modal="true" aria-labelledby="paywall-modal-title" hidden data-variant="quota">
     <div class="paywall-dialog" data-paywall-backdrop-stop>
       <button class="paywall-close" data-paywall-close aria-label="Sulje">&times;</button>
       <div class="paywall-badge" data-paywall-badge>Treeni</div>
       <h2 class="paywall-title" id="paywall-modal-title" data-paywall-title>Olet käyttänyt ilmaisen kvoottisi</h2>
-      <p class="paywall-body" data-paywall-body>Jatka harjoittelua rajattomasti — Treeni avaa kaiken tämän viikon harjoitteet uudelleen.</p>
+      <p class="paywall-body" data-paywall-body>Jatka harjoittelua rajattomasti, Treeni avaa kaiken tämän viikon harjoitteet uudelleen.</p>
       <a class="paywall-cta" data-paywall-cta href="/pricing.html?from=quota&tier=treeni">Avaa Treeni</a>
       <button class="paywall-dismiss" data-paywall-close aria-label="Sulje maksumuuri">Ei nyt</button>
     </div>
@@ -2811,7 +2811,7 @@
       <button class="level-bump-close" id="level-bump-close" aria-label="Sulje">&times;</button>
       <div class="level-bump-icon">📈</div>
       <h2 class="level-bump-title" id="level-bump-title">Haluatko päivittää myös lähtötasosi?</h2>
-      <p class="level-bump-body" id="level-bump-body">Keskiarvosi parani — arvioitu lähtötaso voi nyt olla korkeampi.</p>
+      <p class="level-bump-body" id="level-bump-body">Keskiarvosi parani, arvioitu lähtötaso voi nyt olla korkeampi.</p>
       <div class="level-bump-suggestion" id="level-bump-suggestion"></div>
       <div class="level-bump-actions">
         <button class="btn-primary" id="level-bump-apply">Päivitä taso automaattisesti</button>
@@ -2826,7 +2826,7 @@
     <div class="verbref-modal">
       <button class="verbref-close" id="verbref-close" aria-label="Sulje">&times;</button>
       <div class="verbref-header">
-        <h2 class="verbref-title" id="verbref-title">Verbit — taivutustaulukko</h2>
+        <h2 class="verbref-title" id="verbref-title">Verbit, taivutustaulukko</h2>
         <p class="verbref-sub">Hae infinitiivillä: tener, poner, ir…</p>
         <div class="verbref-search-wrap">
           <input
@@ -2887,11 +2887,11 @@
     </div>
   </div>
 
-  <!-- L-LIVE-AUDIT-P2 UPDATE 2 — bundled module replaces js/main.js + 27 transitive imports. -->
+  <!-- L-LIVE-AUDIT-P2 UPDATE 2, bundled module replaces js/main.js + 27 transitive imports. -->
   <script type="module" src="/app.bundle.js"></script>
-  <!-- L-HERO-COUNTDOWN-AND-OFFCANVAS-1 — off-canvas slide-in nav controller. -->
+  <!-- L-HERO-COUNTDOWN-AND-OFFCANVAS-1, off-canvas slide-in nav controller. -->
   <script src="/js/features/offCanvasNav.js"></script>
-  <!-- SW registration — extracted to /js/sw-register.js in L-SECURITY-3. -->
+  <!-- SW registration, extracted to /js/sw-register.js in L-SECURITY-3. -->
   <script src="/js/sw-register.js"></script>
 </body>
 </html>

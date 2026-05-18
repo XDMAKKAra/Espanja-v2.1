@@ -1,8 +1,8 @@
-// Meteors mounter — sourced from Magic UI meteors.tsx
-// (github.com/magicuidesign/magicui — apps/www/registry/magicui/meteors.tsx).
+// Meteors mounter, sourced from Magic UI meteors.tsx
+// (github.com/magicuidesign/magicui, apps/www/registry/magicui/meteors.tsx).
 // React + framer-motion in the original; here it's vanilla. Mount once per
 // container; pass `count` and `angle` to taste. The parent should be
-// position:relative — the .meteors-fx container is absolute-positioned to
+// position:relative, the .meteors-fx container is absolute-positioned to
 // inset:0 so it traces the hero without affecting layout.
 
 const DEFAULTS = {

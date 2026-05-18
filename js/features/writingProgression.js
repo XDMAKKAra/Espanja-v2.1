@@ -1,4 +1,4 @@
-// Writing-specific progression tracking — localStorage cache of recent
+// Writing-specific progression tracking, localStorage cache of recent
 // per-dimension grading results. Keeps the surface area small: no DB
 // migration required. Cleared on logout.
 
@@ -28,7 +28,7 @@ function load() {
 function save(entries) {
   try {
     localStorage.setItem(KEY, JSON.stringify(entries.slice(0, MAX_ENTRIES)));
-  } catch { /* quota — silent */ }
+  } catch { /* quota, silent */ }
 }
 
 /**
@@ -92,7 +92,7 @@ export function getRecentWritingDimensions(n = 5) {
 }
 
 /**
- * Recent error categories (counts) — used as adaptive-prompt signal so the
+ * Recent error categories (counts), used as adaptive-prompt signal so the
  * AI generates the next writing task aimed at the student's weak structures.
  */
 export function getRecentErrorCategories(n = 10) {
@@ -125,7 +125,7 @@ export function computeReadinessMap({ learningPath = [], writingDims = null } = 
       // bestPct from /api/learning-path is a 0–1 fraction (see
       // lib/learningPath.js:142). Earlier rev divided by 100 again before
       // comparing to the 60/30/10 thresholds, so pct sat in 0..1 and never
-      // crossed any threshold — every in-progress topic read as level 0.
+      // crossed any threshold, every in-progress topic read as level 0.
       const pct = Math.round((t.bestPct || 0) * 100);
       if (pct >= 60) lvl = 3;
       else if (pct >= 30) lvl = 2;
@@ -136,11 +136,11 @@ export function computeReadinessMap({ learningPath = [], writingDims = null } = 
       label: t.short || t.label,
       kind: "path",
       level: lvl,
-      tooltip: `${t.label} — ${t.status === "mastered" ? "hallittu" : t.status === "locked" ? "lukittu" : `paras ${Math.round((t.bestPct || 0) * 100)}%`}`,
+      tooltip: `${t.label}, ${t.status === "mastered" ? "hallittu" : t.status === "locked" ? "lukittu" : `paras ${Math.round((t.bestPct || 0) * 100)}%`}`,
     });
   }
 
-  // 4 writing dimensions — only include cells when the user has actual
+  // 4 writing dimensions, only include cells when the user has actual
   // writing data. Pre-fix, an `else` branch pushed 4 level-0 placeholder
   // cells which dragged readinessPct down for every user who hadn't
   // touched writing yet (8 mastered path topics + 4 zero writing →
@@ -158,7 +158,7 @@ export function computeReadinessMap({ learningPath = [], writingDims = null } = 
         label: info.label,
         kind: "writing",
         level: lvl,
-        tooltip: `${info.label} (kirjoittaminen) — keskiarvo ${info.avg}/5 (${info.count} viim. tehtävää)`,
+        tooltip: `${info.label} (kirjoittaminen), keskiarvo ${info.avg}/5 (${info.count} viim. tehtävää)`,
       });
     }
   }
@@ -168,7 +168,7 @@ export function computeReadinessMap({ learningPath = [], writingDims = null } = 
   // Weighted partial-credit readiness: each cell contributes level/4 of full
   // credit so partial progress on many topics is visible. The earlier
   // mastered/total ratio penalised users who'd touched eight topics with
-  // 30–50 % best scores by reading them as 0 % — produced "8 harjoitusta =
+  // 30–50 % best scores by reading them as 0 %, produced "8 harjoitusta =
   // 14 %" which reads as "I've done nothing" when in fact every topic has
   // been started.
   const weightedSum = cells.reduce((s, c) => s + c.level, 0);

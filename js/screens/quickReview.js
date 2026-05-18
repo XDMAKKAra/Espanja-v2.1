@@ -22,7 +22,7 @@ async function loadReviews() {
 
 function getSelectedTopic() {
   // The grammar topic picker is `.mode-topic` (with `.is-current` /
-  // `aria-checked="true"`) inside `#screen-mode-grammar` — the old
+  // `aria-checked="true"`) inside `#screen-mode-grammar`, the old
   // `#grammar-topic-cards .topic-card.active` selector pointed at
   // classes that no longer exist, so the function always returned
   // "mixed" and the kertaus button stayed hidden / inert.
@@ -129,7 +129,7 @@ export function initQuickReview({ startGrammarDrill }) {
 
   // Watch the grammar topic picker; refresh button visibility whenever
   // a `.mode-topic` is clicked (radio-style selection). The pre-2026
-  // markup used `#grammar-topic-cards .topic-card` — those IDs/classes
+  // markup used `#grammar-topic-cards .topic-card`, those IDs/classes
   // are gone now.
   const grammarScreen = document.getElementById("screen-mode-grammar");
   if (grammarScreen) {

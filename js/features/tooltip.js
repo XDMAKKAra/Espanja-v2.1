@@ -1,4 +1,4 @@
-// Global tooltip — sourced from shadcn/ui Tooltip pattern (Radix Tooltip
+// Global tooltip, sourced from shadcn/ui Tooltip pattern (Radix Tooltip
 // primitive: dark popover with arrow, ~50-100ms open delay, fade-in).
 // Vanilla port. Targets any element carrying a `data-tooltip` attribute.
 //
@@ -6,7 +6,7 @@
 // system styling that ignores tokens, no positioning control, and no
 // fade animation. Shadcn-style tooltips are the de-facto premium default.
 //
-// Idempotent — `installTooltip()` is safe to call multiple times; only
+// Idempotent, `installTooltip()` is safe to call multiple times; only
 // the first call attaches handlers.
 
 const OPEN_DELAY_MS = 120;
@@ -80,7 +80,7 @@ function show(target) {
   }
   const pop = ensurePopover();
   // Interactive HTML mode (used by Free-card missing rows that embed a
-  // clickable trial CTA). Author-controlled content only — never user input.
+  // clickable trial CTA). Author-controlled content only, never user input.
   const isHtml = target.getAttribute("data-tooltip-html") === "true";
   if (isHtml) {
     pop.innerHTML = text;
@@ -92,7 +92,7 @@ function show(target) {
   pop.classList.remove("tt-popover--out");
   position(target);
   // Force layout, then trigger the in-class for the fade keyframe.
-  // requestAnimationFrame is enough — no need for double-rAF here.
+  // requestAnimationFrame is enough, no need for double-rAF here.
   requestAnimationFrame(() => pop.classList.add("tt-popover--in"));
   activeTarget = target;
 }
@@ -146,7 +146,7 @@ export function installTooltip() {
   if (typeof window === "undefined") return;
   installed = true;
   // Use pointer events so the same handler covers mouse + pen. Touch
-  // pointers fire pointerenter on tap which is fine — the tooltip dismisses
+  // pointers fire pointerenter on tap which is fine, the tooltip dismisses
   // on the next document tap (handled below).
   document.addEventListener("pointerenter", onEnter, true);
   document.addEventListener("pointerleave", onLeave, true);

@@ -1,4 +1,4 @@
-// Profile screen — single-viewport "Oma sivu" with hero strip, 4 stats,
+// Profile screen, single-viewport "Oma sivu" with hero strip, 4 stats,
 // 4-up mode breakdown, recent activity (3 rows), and inline editable
 // settings chips. Reuses /api/dashboard for stats + /api/learning-path
 // for readiness%. Chips drive the existing settings modal via the
@@ -160,7 +160,7 @@ function renderProfile(data = {}, learningPath = []) {
   const email = getAuthEmail() || "";
   const handle = email ? email.split("@")[0] : "Käyttäjä";
 
-  // Hero — avatar / name / handle
+  // Hero, avatar / name / handle
   const avatarEl = document.getElementById("profile-avatar");
   if (avatarEl) avatarEl.textContent = initials(email);
   const nameEl = document.getElementById("profile-name");
@@ -181,7 +181,7 @@ function renderProfile(data = {}, learningPath = []) {
     }
   }
 
-  // Blur-fade on hero (sourced L36 — Magic UI blur-fade pattern).
+  // Blur-fade on hero (sourced L36, Magic UI blur-fade pattern).
   const heroEl = document.querySelector("#screen-profile .profile-hero");
   if (heroEl) {
     heroEl.classList.remove("profile-hero--in");
@@ -201,7 +201,7 @@ function renderProfile(data = {}, learningPath = []) {
     badgesEl.innerHTML = chips.join("");
   }
 
-  // Readiness % — match the dashboard YO-valmius tile exactly so the same
+  // Readiness %, match the dashboard YO-valmius tile exactly so the same
   // user never sees two different numbers across screens. Dashboard derives
   // this from completed-lesson share across the 8 kurssit; mirror that.
   let readinessPct = 0;
@@ -229,7 +229,7 @@ function renderProfile(data = {}, learningPath = []) {
   setStat("profile-stat-week", weekSessions, "");
   setStat("profile-stat-readiness", readinessPct, "%");
 
-  // Mode breakdown — 4 cells
+  // Mode breakdown, 4 cells
   const modesEl = document.getElementById("profile-modes");
   if (modesEl) {
     const modes = ["vocab", "grammar", "reading", "writing"];
@@ -245,7 +245,7 @@ function renderProfile(data = {}, learningPath = []) {
     }).join("");
   }
 
-  // Recent activity — capped at 3 rows for the single-viewport budget.
+  // Recent activity, capped at 3 rows for the single-viewport budget.
   const activityEl = document.getElementById("profile-activity");
   const emptyEl = document.getElementById("profile-empty");
   if (activityEl && emptyEl) {
@@ -284,7 +284,7 @@ function renderProfile(data = {}, learningPath = []) {
     }
   }
 
-  // Settings chips — 5 most-used fields with current value + Edit button.
+  // Settings chips, 5 most-used fields with current value + Edit button.
   renderChips(profile);
 }
 
