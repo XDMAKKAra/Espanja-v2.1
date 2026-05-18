@@ -50,12 +50,16 @@ test('Ship 1.5 — Old-Spain landing renders with multi-language hero', async ({
   // Countdown pill present (eyebrow micro-pill, NOT a 720px standalone card)
   await expect(page.locator('.hero__eyebrow.yo-countdown')).toBeVisible();
 
-  // Stat row — verifiable numbers (4 stats)
-  await expect(page.locator('.stat')).toHaveCount(4);
-  await expect(page.locator('.stat__num').first()).toBeVisible();
-  // No disputable percentages
-  const statText = await page.locator('.stat-row').textContent();
-  expect(statText).not.toMatch(/\d+\s*%/);
+  // Grade-flow — 3-step writing-grade preview (replaces flat 4-number row)
+  await expect(page.locator('.grade-step')).toHaveCount(3);
+  await expect(page.locator('.grade-step--write')).toBeVisible();
+  await expect(page.locator('.grade-step--grade')).toBeVisible();
+  await expect(page.locator('.grade-step--learn')).toBeVisible();
+  // Stat sub-row preserves verifiable numbers without disputable %
+  const subRowText = await page.locator('.stat-subrow').textContent();
+  expect(subRowText).not.toMatch(/\d+\s*%/);
+  expect(subRowText).toMatch(/270/);
+  expect(subRowText).toMatch(/90/);
 
   // Course catalog: 8 cards, language switcher
   await expect(page.locator('.catalog-card')).toHaveCount(8);

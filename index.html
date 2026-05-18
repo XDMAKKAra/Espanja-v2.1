@@ -173,29 +173,81 @@
             <span class="hero__trust-sep" aria-hidden="true">·</span>
             YTL:n rubriikilla pisteytetty
           </p>
+
+          <a class="hero__teaser" href="#nayte" aria-label="Katso esimerkkinäyte arvioidusta kirjoituksesta">
+            <p class="hero__teaser-prose">
+              <span aria-hidden="true">&ldquo;</span>Espero que <span class="ge-mini">vienes</span> con tu hermano<span aria-hidden="true">&rdquo;</span> — subjunktiivivirhe, selitys suomeksi.
+            </p>
+            <span class="hero__teaser-score" aria-label="YTL-pisteet 13/20">
+              YTL
+              <b>13 / 20</b>
+            </span>
+          </a>
         </div>
       </div>
     </section>
 
     <!-- ═══ STAT ROW, verifiable numbers only (no disputable %). -->
-    <section class="stat-row" aria-label="Sisällön volyymi numeroina">
-      <div class="stat-row__inner">
-        <div class="stat">
-          <p class="stat__num">3</p>
-          <p class="stat__label"><strong>kieltä</strong>Espanja, ranska, saksa, lyhyt oppimäärä B-kielenä</p>
-        </div>
-        <div class="stat">
-          <p class="stat__num">90<sup>+</sup></p>
-          <p class="stat__label"><strong>oppituntia</strong>Sanasto, kielioppi, luetun ymmärtäminen ja kirjoittaminen, kahdeksan kurssin polku</p>
-        </div>
-        <div class="stat">
-          <p class="stat__num">6</p>
-          <p class="stat__label"><strong>YO-mallikoetta</strong>Kevään ja syksyn 2021–2024 koejaot alkuperäisinä, aikarajalla</p>
-        </div>
-        <div class="stat">
-          <p class="stat__num">4</p>
-          <p class="stat__label"><strong>rubriikin osaa</strong>Viestinnällisyys, kielen rakenteet, sanasto, kokonaisuus, YTL:n sensoreiden rubriikki</p>
-        </div>
+    <!-- ═══ GRADE-FLOW — replaces flat 4-number stat row with a concrete
+         3-step preview of the writing-grade loop. Verifiable numbers move
+         into a small sub-row underneath. -->
+    <section class="grade-flow" aria-labelledby="grade-flow-title">
+      <div class="grade-flow__head">
+        <h2 class="grade-flow__title" id="grade-flow-title">
+          Yksi <em>kirjoitustehtävä</em>, kolme vaihetta.
+        </h2>
+        <p class="grade-flow__lede">
+          Kirjoittaminen on YO-kokeen erottelevin osa. Näin Puheo käsittelee sen,
+          alusta kertaukseen.
+        </p>
+      </div>
+
+      <ol class="grade-flow__steps" aria-label="Kirjoitustehtävän vaiheet">
+        <li class="grade-step grade-step--write">
+          <span class="grade-step__chip">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18z"/></svg>
+            1 · Kirjoita
+          </span>
+          <h3 class="grade-step__title">Aito YO-tehtävä, aikarajalla.</h3>
+          <p class="grade-step__preview">Hola Marta, estoy escribiendo para invitarte a mi cumpleaños el viernes próximo<span class="cursor" aria-hidden="true"></span></p>
+          <p class="grade-step__note">160–240 merkkiä, samat aiheet kuin YTL:n julkaisemissa kokeissa.</p>
+        </li>
+
+        <li class="grade-step grade-step--grade">
+          <span class="grade-step__chip">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            2 · Tekoäly arvioi
+          </span>
+          <h3 class="grade-step__title">Sama rubriikki kuin YTL:n sensoreilla.</h3>
+          <p class="grade-step__preview">Mi madre cocina mucha comida y <span class="ge-mini">tendrémos</span> también música. Espero que <span class="ge-mini">vienes</span> con tu hermano.</p>
+          <div class="grade-step__rubric">
+            <span>Viestinnällisyys <b>4/5</b></span>
+            <span>Rakenteet <b>2/5</b></span>
+            <span>Sanasto <b>4/5</b></span>
+            <span>Kokonaisuus <b>3/5</b></span>
+          </div>
+        </li>
+
+        <li class="grade-step grade-step--learn">
+          <span class="grade-step__chip">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2v6M12 16v6M2 12h6M16 12h6"/><circle cx="12" cy="12" r="3"/></svg>
+            3 · Opit virheen
+          </span>
+          <h3 class="grade-step__title">Suomeksi, sillä termillä jota lukiossa käytetään.</h3>
+          <p class="grade-step__note">
+            <strong>Espero que vengas</strong>, ei <em>vienes</em>: subjunktiivi
+            pakollinen <em>esperar que</em> -rakenteen jälkeen kun toivot
+            jonkun tekevän jotakin. Sama virhe palaa kertausjonoosi neljän päivän päästä.
+          </p>
+        </li>
+      </ol>
+
+      <div class="stat-subrow" aria-label="Sisällön volyymi">
+        <span><b>3</b> kieltä</span>
+        <span><b>90</b> oppituntia / kieli</span>
+        <span><b>270</b> yhteensä</span>
+        <span><b>6</b> mallikoetta / kieli</span>
+        <span><b>4</b> rubriikin osa-aluetta</span>
       </div>
     </section>
 
@@ -224,7 +276,8 @@
       </div>
 
       <ul class="catalog__grid" id="catalog-grid" data-active-lang="es">
-        <li class="catalog-card">
+        <li class="catalog-card" data-icon="1">
+          <span class="catalog-card__icon" aria-label="Saludos-aihe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 9h8M8 13h5"/></svg></span>
           <p class="catalog-card__num">I.</p>
           <p class="catalog-card__meta">Lukukausi 1 · A-taso</p>
           <h3 class="catalog-card__title" data-i18n="title-1"
@@ -233,7 +286,8 @@
               data-de="Begrüßungen und Vorstellungen">Saludos y presentaciones</h3>
           <p class="catalog-card__body">Tutustuminen, perheen kuvailu, päivärytmi. 12 oppituntia, 480 sanaa, neljä kirjoitustehtävää.</p>
         </li>
-        <li class="catalog-card">
+        <li class="catalog-card" data-icon="2">
+          <span class="catalog-card__icon" aria-label="Comida-aihe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 2v8a3 3 0 0 0 3 3v9M9 2v6M6 2v6M15 9a3 3 0 0 1 3-3v15"/></svg></span>
           <p class="catalog-card__num">II.</p>
           <p class="catalog-card__meta">Lukukausi 1 · A&thinsp;→&thinsp;B</p>
           <h3 class="catalog-card__title" data-i18n="title-2"
@@ -242,7 +296,8 @@
               data-de="Essen und Gewohnheiten">Comida y costumbres</h3>
           <p class="catalog-card__body">Ruoka, ravintola, kulttuuri. Aikamuotojen perusteet ja ravintola-roolipeli.</p>
         </li>
-        <li class="catalog-card">
+        <li class="catalog-card" data-icon="3">
+          <span class="catalog-card__icon" aria-label="Viajes-aihe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v3M3 13h18"/></svg></span>
           <p class="catalog-card__num">III.</p>
           <p class="catalog-card__meta">Lukukausi 2 · B-taso</p>
           <h3 class="catalog-card__title" data-i18n="title-3"
@@ -251,7 +306,8 @@
               data-de="Reisen und Städte">Viajes y ciudades</h3>
           <p class="catalog-card__body">Matkustaminen, kaupungit, suunnistus. Imperfekti ja preteriti vastakkain.</p>
         </li>
-        <li class="catalog-card">
+        <li class="catalog-card" data-icon="4">
+          <span class="catalog-card__icon" aria-label="Estudios-aihe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5v14z"/><path d="M9 7h7M9 11h5"/></svg></span>
           <p class="catalog-card__num">IV.</p>
           <p class="catalog-card__meta">Lukukausi 2 · B&thinsp;→&thinsp;C</p>
           <h3 class="catalog-card__title" data-i18n="title-4"
@@ -260,7 +316,8 @@
               data-de="Studium und Arbeit">Estudios y trabajo</h3>
           <p class="catalog-card__body">Koulu, suunnitelmat, työ. Konditionaali ja tulevaisuusmuodot.</p>
         </li>
-        <li class="catalog-card">
+        <li class="catalog-card" data-icon="5">
+          <span class="catalog-card__icon" aria-label="Salud-aihe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.84 4.6a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 1 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span>
           <p class="catalog-card__num">V.</p>
           <p class="catalog-card__meta">Lukukausi 3 · C-taso</p>
           <h3 class="catalog-card__title" data-i18n="title-5"
@@ -269,7 +326,8 @@
               data-de="Gesundheit und Alltag">Salud y vida cotidiana</h3>
           <p class="catalog-card__body">Terveys, arki, suositusten antaminen. Subjunktiivin avaus.</p>
         </li>
-        <li class="catalog-card">
+        <li class="catalog-card" data-icon="6">
+          <span class="catalog-card__icon" aria-label="Ympäristö-aihe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 20A7 7 0 0 1 4 13C4 7 11 2 20 2c0 9-5 16-11 18zM2 22c4-4 8-6 10-7"/></svg></span>
           <p class="catalog-card__num">VI.</p>
           <p class="catalog-card__meta">Lukukausi 3 · C&thinsp;→&thinsp;M</p>
           <h3 class="catalog-card__title" data-i18n="title-6"
@@ -278,7 +336,8 @@
               data-de="Umwelt und Gesellschaft">Medio ambiente y sociedad</h3>
           <p class="catalog-card__body">Ympäristö, yhteiskunta, mielipidekirjoitus. Argumentaatiorakenteet.</p>
         </li>
-        <li class="catalog-card">
+        <li class="catalog-card" data-icon="7">
+          <span class="catalog-card__icon" aria-label="Kulttuuri-aihe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="17" x2="22" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/></svg></span>
           <p class="catalog-card__num">VII.</p>
           <p class="catalog-card__meta">Lukukausi 4 · M-taso</p>
           <h3 class="catalog-card__title" data-i18n="title-7"
@@ -287,7 +346,8 @@
               data-de="Kultur und Medien">Cultura y medios</h3>
           <p class="catalog-card__body">Media, kulttuuri, kirjoitelmien rakenteet. Sidosanat ja kappaleen logiikka.</p>
         </li>
-        <li class="catalog-card">
+        <li class="catalog-card" data-icon="8">
+          <span class="catalog-card__icon" aria-label="YO-koe-aihe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5a6 3 0 0 0 12 0v-5"/></svg></span>
           <p class="catalog-card__num">VIII.</p>
           <p class="catalog-card__meta">Lukukausi 4 · M&thinsp;→&thinsp;E</p>
           <h3 class="catalog-card__title" data-i18n="title-8"
@@ -370,26 +430,26 @@ Aino</p>
         </div>
 
         <div class="what-you-get">
-          <article class="wyg-item">
-            <p class="wyg-item__num">I.</p>
-            <h3 class="wyg-item__title">Kahdeksan kurssia, kolme kieltä</h3>
+          <article class="wyg-item wyg-item--lead">
+            <p class="wyg-item__num">II.</p>
+            <h3 class="wyg-item__title">YO-rubriikilla treenattu tekoäly arvioi kirjoitukset</h3>
             <p class="wyg-item__body">
-              Lukukauden tarpeeksi materiaalia per kieli: 90 oppituntia,
-              jokainen 25 minuuttia. Sanasto, kielioppi, luetun ymmärtäminen
-              ja kirjoitusharjoitus joka tunnilla. Sama runko espanjassa,
-              ranskassa ja saksassa.
+              Kirjoittaminen on YO-kokeen erottelevin osa, ja juuri siksi se
+              on Puheon pää-erottelija. Tekoälymalli on treenattu YTL:n
+              julkaisemiin koejakoihin ja virallisen rubriikin pisteytysohjeisiin.
+              Saat erilliset pisteet viestinnällisyydestä, kielen rakenteista,
+              sanastosta ja kokonaisuudesta, sekä suomenkielisen selityksen
+              jokaisesta virheestä sillä kieliopin termillä jota lukiossa käytetään.
             </p>
           </article>
 
           <article class="wyg-item">
-            <p class="wyg-item__num">II.</p>
-            <h3 class="wyg-item__title">YO-rubriikilla treenattu tekoäly arvioi</h3>
+            <p class="wyg-item__num">I.</p>
+            <h3 class="wyg-item__title">Kahdeksan kurssia, kolme kieltä</h3>
             <p class="wyg-item__body">
-              Kirjoitustehtävät arvioi tekoäly, joka on treenattu YTL:n
-              julkaisemiin koejakoihin ja virallisen rubriikin pisteytysohjeisiin.
-              Saat erilliset pisteet viestinnällisyydestä, kielen rakenteista,
-              sanastosta ja kokonaisuudesta, sekä suomenkielisen selityksen
-              jokaisesta virheestä sillä kieliopin termillä joka lukiossa käytetään.
+              90 oppituntia per kieli, jokainen 25 minuuttia. Sanasto, kielioppi,
+              luetun ymmärtäminen ja kirjoitusharjoitus joka tunnilla. Sama runko
+              espanjassa, ranskassa ja saksassa.
             </p>
           </article>
 
@@ -668,26 +728,31 @@ Aino</p>
     <!-- ═══ FINAL CTA, quieter than Ship 1, no glow card. -->
     <section id="rekisteroidy-cta" class="landing-section landing-section--cta" aria-labelledby="cta-otsikko">
       <div class="landing-section__inner">
-        <div class="cta-card">
-          <h2 class="cta-card__title" id="cta-otsikko">
-            Kokeile <em>ilmaiseksi</em>.
-          </h2>
-          <p class="cta-card__body">
-            Yksi oppitunti, yksi kirjoitustehtävä, yksi mallikoe, valitsemassasi
-            kielessä. Näe miten sensorin rubriikilla pisteytetty arviointi näyttää
-            sinun kirjoituksesi.
-          </p>
-          <a class="btn btn--primary btn--lg cta-card__btn" href="/app.html#rekisteroidy">
-            Aloita ilmaiseksi
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-          </a>
-          <p class="cta-card__fineprint">
-            Espanja, ranska, saksa
-            <span class="cta-card__sep" aria-hidden="true">·</span>
-            Lyhyt oppimäärä
-            <span class="cta-card__sep" aria-hidden="true">·</span>
-            Päivittyy YTL:n julkaisemien koejakojen myötä
-          </p>
+        <div class="cta-card cta-card--drenched">
+          <div class="cta-card__inner">
+            <h2 class="cta-card__title" id="cta-otsikko">
+              Kokeile <em>ilmaiseksi</em>.
+            </h2>
+            <p class="cta-card__body">
+              Yksi oppitunti, yksi kirjoitustehtävä, yksi mallikoe, valitsemassasi
+              kielessä. Näe miten sensorin rubriikilla pisteytetty arviointi näyttää
+              sinun kirjoituksesi.
+            </p>
+            <a class="btn btn--primary btn--lg cta-card__btn" href="/app.html#rekisteroidy">
+              Aloita ilmaiseksi
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </a>
+            <p class="cta-card__fineprint">
+              Espanja, ranska, saksa
+              <span class="cta-card__sep" aria-hidden="true">·</span>
+              Lyhyt oppimäärä
+              <span class="cta-card__sep" aria-hidden="true">·</span>
+              Päivittyy YTL:n julkaisemien koejakojen myötä
+            </p>
+          </div>
+          <div class="cta-walker" aria-hidden="true">
+            <img src="/img/illustrations/student-walking.svg" alt="" width="160" height="200" />
+          </div>
         </div>
       </div>
     </section>
