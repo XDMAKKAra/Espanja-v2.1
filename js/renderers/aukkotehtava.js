@@ -13,6 +13,7 @@ import { $ }                             from '../ui/nav.js';
 import { API, apiFetch, authHeader }     from '../api.js';
 import { t }                             from '../ui/strings.js';
 import { getHintStep, advanceHint, resetHint, trackWrongAttempt } from '../features/hintLadder.js';
+import { attachAccentBar }                from '../features/accentBar.js';
 
 const BAND_CLASS = {
   taydellinen:  'correct',
@@ -80,6 +81,7 @@ export function renderAukkotehtava(ex, _container, { onAnswer } = {}) {
   input.className = 'gap-fill-input';
   input.disabled  = false;
   input.placeholder = t('aukko.placeholder');
+  attachAccentBar(input);
   input.focus();
   submit.disabled = false;
   submit.textContent = t('btn.submit');

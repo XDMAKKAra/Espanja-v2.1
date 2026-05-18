@@ -1,5 +1,6 @@
 import { $, show } from "../ui/nav.js";
 import { API, isLoggedIn, authHeader, retryable, humanizeApiError } from "../api.js";
+import { attachAccentBar } from "../features/accentBar.js";
 import { state, apiLang } from "../state.js";
 import { showLoading, showLoadingError } from "../ui/loading.js";
 import { generateCoachLine, countUp } from "./mode-page.js";
@@ -204,6 +205,7 @@ function setupTrueFalse(q) {
 function setupShortAnswer(q) {
   const input = $("reading-short-input");
   input.value = "";
+  attachAccentBar(input);
   const submitBtn = $("reading-short-submit");
 
   submitBtn.onclick = () => {

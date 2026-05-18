@@ -1,5 +1,6 @@
 import { $, show } from "../ui/nav.js";
 import { API, isLoggedIn, authHeader, apiFetch, humanizeApiError } from "../api.js";
+import { attachAccentBar } from "../features/accentBar.js";
 import { showLoading, showLoadingError } from "../ui/loading.js";
 import { createExamTimer, clearPersisted as clearTimerPersisted } from "../features/examTimer.js";
 
@@ -444,10 +445,12 @@ function bindPartEvents(container) {
 
   container.querySelectorAll(".exam-input").forEach((inp) => {
     inp.addEventListener("input", () => { examState.answers[inp.dataset.key] = inp.value; updateProgressBar(); });
+    attachAccentBar(inp);
   });
 
   container.querySelectorAll(".exam-textarea").forEach((ta) => {
     ta.addEventListener("input", () => { examState.answers[ta.dataset.key] = ta.value; updateProgressBar(); });
+    attachAccentBar(ta);
   });
 }
 

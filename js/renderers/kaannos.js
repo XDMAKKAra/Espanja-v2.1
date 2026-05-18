@@ -12,6 +12,7 @@ import { $ }                         from '../ui/nav.js';
 import { API, apiFetch, authHeader } from '../api.js';
 import { t }                         from '../ui/strings.js';
 import { getHintStep, advanceHint, resetHint, trackWrongAttempt } from '../features/hintLadder.js';
+import { attachAccentBar }           from '../features/accentBar.js';
 
 function scoreToBand(score) {
   if (score >= 3) return 'taydellinen';
@@ -76,6 +77,7 @@ export function renderKaannos(ex, _container, { onAnswer } = {}) {
   input.value       = '';
   input.disabled    = false;
   input.placeholder = 'Kirjoita käännös espanjaksi…';
+  attachAccentBar(input);
   input.focus();
   submit.disabled    = false;
   submit.textContent = t('btn.submit');
@@ -138,8 +140,12 @@ export function renderKaannos(ex, _container, { onAnswer } = {}) {
     feedback.classList.remove('hidden');
     submit.textContent = t('btn.next');
 
+    // PR #1: käännös hyväksytään jo "ymmärrettävä"-tasolta (score >= 2).
+    // Tämä estää sen että kieliopiltaan oikea mutta sanavalinnaltaan
+    // toinen käännös merkitään väärin, vaikka käyttäjän vastaus olisi
+    // periaatteessa oikein. Best-translation-feedback näytetään silti.
     onAnswer?.({
-      isCorrect:   score >= 3,
+      isCorrect:   score >= 2,
       band,
       score,
       maxScore,
