@@ -1,5 +1,6 @@
 import { Router } from "express";
 import supabase from "../supabase.js";
+import { compareAnswer } from "../js/lib/accentTolerance.js";
 import {
   callOpenAI, coerceArrayResponse, getUserProfileContext,
   LEVEL_DESCRIPTIONS, TOPIC_CONTEXT, getTopicContext, LANGUAGE_META,
@@ -1193,23 +1194,58 @@ Return ONLY JSON array:
   }
 });
 
-// ─── Grade translate-mini (AI grading for free-text) ─────────────────────────
+// ─── Grade translate (hybrid: accepted-list lookup + AI fallback) ────────────
+// PR #2 — hybrid validator. When the request carries a taskId, we first
+// check the translation_accepted Supabase table for an instant match
+// (accent-tolerant, normalized). Only if no row matches do we spend an
+// OpenAI call. Successful AI grades (>= 2) are written back to the table
+// so the corpus learns over time.
 
 router.post("/grade-translate", requireAuth, aiLimiter, checkMonthlyCostLimit, async (req, res) => {
-  const { userAnswer, acceptedTranslations, finnishSentence } = req.body;
+  const { userAnswer, acceptedTranslations, finnishSentence, taskId, lang } = req.body;
 
-  if (!userAnswer || !acceptedTranslations || !finnishSentence) {
+  if (!userAnswer || !finnishSentence) {
     return res.status(400).json({ error: "Puuttuvia kenttiä" });
   }
 
   try {
     const userId = await getUserId(req);
 
-    const prompt = `You are grading a Finnish student's Spanish translation.
+    // ─── 1) List-match (instant, no API call) ──────────────────────────
+    let acceptedFromDb = [];
+    if (taskId) {
+      const { data: rows } = await supabase
+        .from("translation_accepted")
+        .select("accepted_answer")
+        .eq("task_id", taskId);
+      acceptedFromDb = (rows || []).map((r) => r.accepted_answer);
+    }
+    // Merge with any client-provided list (back-compat for legacy callers).
+    const pool = [...(acceptedTranslations || []), ...acceptedFromDb];
+    for (const exp of pool) {
+      const r = compareAnswer(userAnswer, exp);
+      if (r.match === "exact" || r.match === "missing-accents") {
+        return res.json({
+          score:           3,
+          maxScore:        3,
+          correct:         true,
+          feedback:        r.match === "exact" ? "Täydellinen käännös." : `Muista aksentit: ${r.hint}`,
+          bestTranslation: exp,
+          explanation:     "",
+          source:          "list",
+          listHit:         true,
+          accentSoft:      r.match === "missing-accents",
+        });
+      }
+    }
+
+    // ─── 2) AI grader fallback ──────────────────────────────────────────
+    const langName = lang === "fr" ? "French" : lang === "de" ? "German" : "Spanish";
+    const prompt = `You are grading a Finnish student's ${langName} translation.
 
 FINNISH ORIGINAL: "${finnishSentence}"
 STUDENT'S ANSWER: "${userAnswer}"
-ACCEPTED TRANSLATIONS: ${JSON.stringify(acceptedTranslations)}
+ACCEPTED TRANSLATIONS: ${JSON.stringify(pool.slice(0, 8))}
 
 Grade 0-3:
 3 = Perfect or near-perfect (minor accent errors OK)
@@ -1231,10 +1267,72 @@ Return ONLY JSON:
     logAiUsage(userId, "grade-translate", result._usage).catch(() => {});
     delete result._usage;
     result.correct = result.score >= 2;
+    result.source = "ai_grader";
+    result.listHit = false;
+
+    // ─── 3) Learn from successful AI grades. Score >= 2 means the AI
+    // confirmed the user's answer was at least "understandable", so it's
+    // safe to add to the accepted list for future users.
+    if (taskId && result.score >= 2) {
+      supabase
+        .from("translation_accepted")
+        .insert({ task_id: taskId, accepted_answer: userAnswer, source: "ai_grader" })
+        .then(() => {}, (e) => {
+          // Unique-violation is expected when two users submit the same
+          // novel answer concurrently. Anything else is logged.
+          if (!String(e?.code || "").includes("23505")) {
+            console.warn("translation_accepted insert failed:", e?.message);
+          }
+        });
+    }
+
     res.json(result);
   } catch (err) {
     console.error("Grade translate error:", err.message);
     res.status(500).json({ error: err.message || "Failed to grade translation" });
+  }
+});
+
+// ─── User-promoted translation acceptance ────────────────────────────────────
+// "Mielestäni oikein" flow. When the AI grader returned score 0-1 but the
+// user insists their answer was correct, they can promote it. We require a
+// taskId so promotions are bound to a real translation prompt; bare
+// arbitrary answers cannot be promoted.
+
+router.post("/translate-promote", requireAuth, async (req, res) => {
+  const { taskId, answer } = req.body;
+  if (!taskId || !answer || typeof answer !== "string") {
+    return res.status(400).json({ error: "Puuttuvia kenttiä" });
+  }
+  if (answer.trim().length < 2 || answer.length > 240) {
+    return res.status(400).json({ error: "Vastauksen pituus on virheellinen" });
+  }
+  try {
+    const userId = req.user.userId;
+    // Verify the task exists (guards against arbitrary INSERTs from clients
+    // that fabricated a taskId).
+    const { data: task } = await supabase
+      .from("translation_tasks")
+      .select("id")
+      .eq("id", taskId)
+      .single();
+    if (!task) return res.status(404).json({ error: "Tehtävää ei löytynyt" });
+
+    const { error } = await supabase
+      .from("translation_accepted")
+      .insert({
+        task_id:         taskId,
+        accepted_answer: answer.trim(),
+        source:          "user",
+        user_id:         userId,
+      });
+    if (error && !String(error.code || "").includes("23505")) {
+      throw new Error(error.message);
+    }
+    res.json({ ok: true });
+  } catch (err) {
+    console.error("translate-promote error:", err.message);
+    res.status(500).json({ error: err.message || "Failed to promote translation" });
   }
 });
 

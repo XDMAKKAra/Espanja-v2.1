@@ -133,6 +133,8 @@ export function renderLauseenMuodostus(ex, _container, { onAnswer } = {}) {
           userAnswer:           answer,
           acceptedTranslations: [],
           finnishSentence:      gradingContext,
+          taskId:               ex.taskId || ex.id || null,
+          lang:                 ex.lang || null,
         }),
       });
       data = await res.json();
@@ -157,18 +159,57 @@ export function renderLauseenMuodostus(ex, _container, { onAnswer } = {}) {
     }
 
     const scoreClass = score >= 3 ? 'correct' : score >= 2 ? 'accent-warn' : 'wrong';
+    const promoteId = (ex.taskId || ex.id);
+    const canPromote = score <= 1 && promoteId && !data.listHit;
     feedback.innerHTML = `
       <div class="translate-score ${scoreClass}">${score} / ${maxScore}</div>
       <div class="translate-best">
         <strong>Esimerkkilause:</strong> ${data.bestTranslation ?? ''}
         ${data.feedback ? `<br>${data.feedback}` : ''}
       </div>
+      ${canPromote ? `
+        <div class="translate-promote-row">
+          <button class="translate-promote-btn" id="translate-promote-yes-lm" type="button">Mielestäni oikein</button>
+          <span class="translate-promote-hint">Vastauksesi tallennetaan hyväksyttyihin lauseisiin.</span>
+        </div>
+      ` : ''}
     `;
     feedback.classList.remove('hidden');
     submit.textContent = t('btn.next');
 
+    if (canPromote) {
+      const promoteBtn = document.getElementById('translate-promote-yes-lm');
+      promoteBtn?.addEventListener('click', async () => {
+        promoteBtn.disabled = true;
+        promoteBtn.textContent = 'Tallennetaan…';
+        try {
+          const res = await apiFetch(`${API}/api/translate-promote`, {
+            method:  'POST',
+            headers: { 'Content-Type': 'application/json', ...authHeader() },
+            body:    JSON.stringify({ taskId: promoteId, answer }),
+          });
+          if (res.ok) {
+            promoteBtn.textContent = 'Tallennettu ✓';
+            onAnswer?.({
+              isCorrect:   true,
+              band:        'ymmarrettava',
+              score:       2,
+              maxScore,
+              explanation: data.bestTranslation ?? '',
+            });
+          } else {
+            promoteBtn.textContent = 'Tallennus epäonnistui';
+            promoteBtn.disabled = false;
+          }
+        } catch {
+          promoteBtn.textContent = 'Tallennus epäonnistui';
+          promoteBtn.disabled = false;
+        }
+      }, { once: true });
+    }
+
     onAnswer?.({
-      isCorrect:   score >= 3,
+      isCorrect:   score >= 2,
       band,
       score,
       maxScore,

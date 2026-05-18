@@ -1,0 +1,688 @@
+{
+  "language": "de",
+  "agent": "reviewer",
+  "reviewed_at": "2026-05-18T00:00:00.000Z",
+  "tasks": [
+    {
+      "kurssi": "kurssi_1",
+      "id": "de-k1-t1",
+      "prompt_fi": "Olen opiskelija.",
+      "accepted_translations": [
+        "Ich bin Student.",
+        "Ich bin Studentin.",
+        "Ich bin ein Student.",
+        "Ich bin eine Studentin.",
+        "Ich bin Schüler.",
+        "Ich bin Schülerin."
+      ],
+      "review_notes": "All forms correct. Noun capitalization OK. Gender variants appropriate. Article vs. zero-article both accepted for professions with sein.",
+      "review_score": "pass"
+    },
+    {
+      "kurssi": "kurssi_1",
+      "id": "de-k1-t2",
+      "prompt_fi": "Hän on minun äitini.",
+      "accepted_translations": [
+        "Sie ist meine Mutter.",
+        "Das ist meine Mutter.",
+        "Sie ist meine Mama.",
+        "Das ist meine Mama."
+      ],
+      "review_notes": "DROPPED: 'Sie ist mein Muttertier' — 'Muttertier' means female animal/dam (animal husbandry term), completely wrong semantic equivalent for 'äiti'. Added nothing; 4 remaining translations cover all natural variants.",
+      "review_score": "minor_fix"
+    },
+    {
+      "kurssi": "kurssi_1",
+      "id": "de-k1-t3",
+      "prompt_fi": "Asun Helsingissä.",
+      "accepted_translations": [
+        "Ich wohne in Helsinki.",
+        "Ich lebe in Helsinki.",
+        "Ich wohne in Helsinki, Finnland.",
+        "Ich lebe in Helsinki, Finnland."
+      ],
+      "review_notes": "All correct. 'in + city' has no article — Dativ form correct. 'wohnen' and 'leben' are both natural equivalents for 'asua'.",
+      "review_score": "pass"
+    },
+    {
+      "kurssi": "kurssi_1",
+      "id": "de-k1-t4",
+      "prompt_fi": "Minulla on kaksi veljeä.",
+      "accepted_translations": [
+        "Ich habe zwei Brüder.",
+        "Ich habe zwei Brüder und keine Schwestern.",
+        "Ich habe 2 Brüder."
+      ],
+      "review_notes": "All correct. 'Brüder' correctly uses umlaut plural. Accusative after 'haben' is correct. The addition 'und keine Schwestern' is an accepted elaboration at A1.",
+      "review_score": "pass"
+    },
+    {
+      "kurssi": "kurssi_1",
+      "id": "de-k1-t5",
+      "prompt_fi": "Koira on iso.",
+      "accepted_translations": [
+        "Der Hund ist groß.",
+        "Der Hund ist sehr groß.",
+        "Ein Hund ist groß."
+      ],
+      "review_notes": "DROPPED: 'Das Hund ist groß' — 'Hund' is masculine (der Hund), not neuter (das). Wrong article. Remaining 3 translations are all grammatically correct.",
+      "review_score": "minor_fix"
+    },
+    {
+      "kurssi": "kurssi_1",
+      "id": "de-k1-t6",
+      "prompt_fi": "Kuinka vanha olet?",
+      "accepted_translations": [
+        "Wie alt bist du?",
+        "Wie alt sind Sie?",
+        "Wie alt bist du eigentlich?"
+      ],
+      "review_notes": "DROPPED: 'Wie alt ist er?' — prompt 'Kuinka vanha olet?' is 2nd person (olet = you are), not 3rd person. 'er' changes addressee entirely. du/Sie variants preserved correctly.",
+      "review_score": "minor_fix"
+    },
+
+    {
+      "kurssi": "kurssi_2",
+      "id": "de-k2-t1",
+      "prompt_fi": "Voin puhua saksaa vähän.",
+      "accepted_translations": [
+        "Ich kann ein bisschen Deutsch sprechen.",
+        "Ich kann ein wenig Deutsch sprechen.",
+        "Ich spreche ein bisschen Deutsch.",
+        "Ich spreche ein wenig Deutsch.",
+        "Ich kann etwas Deutsch sprechen.",
+        "Ich spreche etwas Deutsch."
+      ],
+      "review_notes": "All correct. Modal 'können' + infinitive final position. 'Deutsch' as uninflected language name in accusative. All three adverb variants (ein bisschen / ein wenig / etwas) are natural.",
+      "review_score": "pass"
+    },
+    {
+      "kurssi": "kurssi_2",
+      "id": "de-k2-t2",
+      "prompt_fi": "Haluatko juoda kahvia?",
+      "accepted_translations": [
+        "Möchtest du Kaffee trinken?",
+        "Willst du Kaffee trinken?",
+        "Möchten Sie Kaffee trinken?",
+        "Wollen Sie Kaffee trinken?",
+        "Magst du Kaffee trinken?",
+        "Magst du Kaffee?"
+      ],
+      "review_notes": "All correct. 'möchten/wollen/mögen' are appropriate modal variants. 'Kaffee' in accusative (zero article, mass noun) is correct. du/Sie variants both present. 'Magst du Kaffee trinken?' is slightly unusual but grammatically fine colloquially.",
+      "review_score": "pass"
+    },
+    {
+      "kurssi": "kurssi_2",
+      "id": "de-k2-t3",
+      "prompt_fi": "Hän lukee kirjaa.",
+      "accepted_translations": [
+        "Er liest ein Buch.",
+        "Sie liest ein Buch.",
+        "Er liest das Buch.",
+        "Sie liest das Buch.",
+        "Er liest gerade ein Buch.",
+        "Sie liest gerade ein Buch."
+      ],
+      "review_notes": "All correct. 'lesen' stem-change e→ie in 3rd sg. Accusative 'ein/das Buch' both valid. 'gerade' adds progressive nuance matching 'lukee' (ongoing). er/sie gender variants appropriate for ambiguous 'hän'.",
+      "review_score": "pass"
+    },
+    {
+      "kurssi": "kurssi_2",
+      "id": "de-k2-t4",
+      "prompt_fi": "Minun täytyy tehdä läksyt.",
+      "accepted_translations": [
+        "Ich muss die Hausaufgaben machen.",
+        "Ich muss meine Hausaufgaben machen.",
+        "Ich muss Hausaufgaben machen.",
+        "Ich muss die Hausaufgaben erledigen.",
+        "Ich muss meine Hausaufgaben erledigen."
+      ],
+      "review_notes": "All correct. 'müssen' + infinitive final. 'Hausaufgaben' is plural, correctly capitalised. 'erledigen' is a natural synonym for 'machen' in this context. Definite, possessive, and zero-article variants all accepted.",
+      "review_score": "pass"
+    },
+    {
+      "kurssi": "kurssi_2",
+      "id": "de-k2-t5",
+      "prompt_fi": "Meillä on koira ja kissa.",
+      "accepted_translations": [
+        "Wir haben einen Hund und eine Katze.",
+        "Bei uns gibt es einen Hund und eine Katze."
+      ],
+      "review_notes": "DROPPED: 'Wir haben ein Hund und eine Katze' — 'Hund' is masculine, Akkusativ requires 'einen', not 'ein'. DROPPED: 'Bei uns gibt es ein Hund und eine Katze' — same error. Remaining 2 translations are correct.",
+      "review_score": "major_fix"
+    },
+    {
+      "kurssi": "kurssi_2",
+      "id": "de-k2-t6",
+      "prompt_fi": "En voi tulla huomenna.",
+      "accepted_translations": [
+        "Ich kann morgen nicht kommen.",
+        "Morgen kann ich nicht kommen.",
+        "Ich kann morgen leider nicht kommen.",
+        "Morgen kann ich leider nicht kommen."
+      ],
+      "review_notes": "DROPPED: 'Ich kann nicht morgen kommen' — placing 'nicht' before 'morgen' creates contrastive negation ('not tomorrow, but another day'), which distorts the meaning of the Finnish original. The natural position of 'nicht' is after the adverb in modal sentences. Remaining 4 variants cover V2 word order and 'leider' politeness marker.",
+      "review_score": "minor_fix"
+    },
+
+    {
+      "kurssi": "kurssi_3",
+      "id": "de-k3-t1",
+      "prompt_fi": "Matkustin junalla Berliiniin.",
+      "accepted_translations": [
+        "Ich bin mit dem Zug nach Berlin gefahren.",
+        "Mit dem Zug bin ich nach Berlin gefahren.",
+        "Ich fuhr mit dem Zug nach Berlin.",
+        "Ich bin mit dem Zug nach Berlin gereist."
+      ],
+      "review_notes": "DROPPED: 'Ich habe mit dem Zug nach Berlin gereist' — 'reisen' is an intransitive motion verb taking 'sein' as Perfekt auxiliary, not 'haben'. Corrected form 'Ich bin mit dem Zug nach Berlin gereist' retained. All remaining forms use correct sein-auxiliary or Präteritum.",
+      "review_score": "minor_fix"
+    },
+    {
+      "kurssi": "kurssi_3",
+      "id": "de-k3-t2",
+      "prompt_fi": "Olen jo syönyt.",
+      "accepted_translations": [
+        "Ich habe schon gegessen.",
+        "Ich habe bereits gegessen.",
+        "Ich habe schon gegessen, danke."
+      ],
+      "review_notes": "DROPPED: 'Schon gegessen habe ich' — highly marked, archaic-sounding topicalization, not natural modern German. 'schon' and 'bereits' are both correct adverbs. 'danke' variant accepted as contextually natural at A1.",
+      "review_score": "minor_fix"
+    },
+    {
+      "kurssi": "kurssi_3",
+      "id": "de-k3-t3",
+      "prompt_fi": "Lento kesti kaksi tuntia.",
+      "accepted_translations": [
+        "Der Flug hat zwei Stunden gedauert.",
+        "Der Flug dauerte zwei Stunden.",
+        "Der Flug hat 2 Stunden gedauert.",
+        "Der Flug hat zwei Stunden lang gedauert."
+      ],
+      "review_notes": "DROPPED: 'Das Flugzeug hat zwei Stunden gedauert' — 'Flugzeug' = airplane (the physical object), not 'Flug' = flight (the event). Semantically wrong: airplanes don't 'last/take' two hours; flights do. Remaining 4 translations are correct.",
+      "review_score": "minor_fix"
+    },
+    {
+      "kurssi": "kurssi_3",
+      "id": "de-k3-t4",
+      "prompt_fi": "Ostimme matkamuistoja torilla.",
+      "accepted_translations": [
+        "Wir haben Souvenirs auf dem Markt gekauft.",
+        "Wir haben Andenken auf dem Markt gekauft.",
+        "Auf dem Markt haben wir Souvenirs gekauft.",
+        "Wir kauften Souvenirs auf dem Markt.",
+        "Wir haben Souvenirs am Markt gekauft."
+      ],
+      "review_notes": "All correct. 'auf dem Markt' and 'am Markt' are both valid regional variants (am Markt is common in southern German-speaking regions). 'Souvenirs' and 'Andenken' are appropriate lexical synonyms. V2 topicalization variant included.",
+      "review_score": "pass"
+    },
+    {
+      "kurssi": "kurssi_3",
+      "id": "de-k3-t5",
+      "prompt_fi": "Hän saapui eilen.",
+      "accepted_translations": [
+        "Er ist gestern angekommen.",
+        "Sie ist gestern angekommen.",
+        "Er ist gestern eingetroffen.",
+        "Sie ist gestern eingetroffen.",
+        "Gestern ist er angekommen.",
+        "Gestern ist sie angekommen.",
+        "Er kam gestern an.",
+        "Sie kam gestern an."
+      ],
+      "review_notes": "All correct. 'ankommen' and 'eintreffen' are sein-auxiliary verbs correctly used. Separable prefix correctly attached in Partizip II (angekommen, eingetroffen). V2 topicalization and Präteritum variants all valid.",
+      "review_score": "pass"
+    },
+    {
+      "kurssi": "kurssi_3",
+      "id": "de-k3-t6",
+      "prompt_fi": "Olimme hotellissa viikon.",
+      "accepted_translations": [
+        "Wir waren eine Woche im Hotel.",
+        "Wir sind eine Woche im Hotel gewesen.",
+        "Eine Woche waren wir im Hotel.",
+        "Wir blieben eine Woche im Hotel.",
+        "Wir sind eine Woche lang im Hotel gewesen."
+      ],
+      "review_notes": "All correct. Duration 'eine Woche' correctly in Akkusativ. 'im Hotel' correct Dativ contraction. Präteritum (waren/blieben) and Perfekt (gewesen) both accepted. 'lang' adverb variant natural.",
+      "review_score": "pass"
+    },
+
+    {
+      "kurssi": "kurssi_4",
+      "id": "de-k4-t1",
+      "prompt_fi": "Lapsena asuin maalla.",
+      "accepted_translations": [
+        "Als Kind wohnte ich auf dem Land.",
+        "Als ich ein Kind war, wohnte ich auf dem Land.",
+        "Als Kind lebte ich auf dem Land.",
+        "Als ich klein war, wohnte ich auf dem Land.",
+        "Früher wohnte ich auf dem Land.",
+        "Als Kind habe ich auf dem Land gewohnt."
+      ],
+      "review_notes": "All correct. 'auf dem Land' correct Dativ idiom. Subordinate clause 'als' triggers verb-final correctly. Präteritum and Perfekt both accepted. 'Früher' as temporal paraphrase of childhood is acceptable.",
+      "review_score": "pass"
+    },
+    {
+      "kurssi": "kurssi_4",
+      "id": "de-k4-t2",
+      "prompt_fi": "Koira oli pihan alla puun alla.",
+      "accepted_translations": [
+        "Der Hund war unter dem Baum im Garten.",
+        "Der Hund lag unter dem Baum im Garten.",
+        "Der Hund saß unter dem Baum.",
+        "Der Hund war unter dem Baum.",
+        "Im Garten war der Hund unter dem Baum."
+      ],
+      "review_notes": "All correct. 'unter dem Baum' correct Dativ (location, not direction). 'liegen/sitzen' are more precise posture verbs, natural additions. Topicalization variant grammatically correct with V2.",
+      "review_score": "pass"
+    },
+    {
+      "kurssi": "kurssi_4",
+      "id": "de-k4-t3",
+      "prompt_fi": "Emme menneet kouluun, koska oli loma.",
+      "accepted_translations": [
+        "Wir gingen nicht zur Schule, weil Ferien waren.",
+        "Wir fuhren nicht zur Schule, weil wir Ferien hatten.",
+        "Wir gingen nicht in die Schule, weil wir Ferien hatten.",
+        "Wir sind nicht in die Schule gegangen, weil Ferien waren."
+      ],
+      "review_notes": "DROPPED: 'Wir gingen nicht in die Schule, weil Ferien war' — 'Ferien' is always plural in German (die Ferien), so verb must be 'waren', not 'war'. Corrected forms retained. 'in die Schule' (Akkusativ, directional) and 'zur Schule' both accepted for motion verbs.",
+      "review_score": "minor_fix"
+    },
+    {
+      "kurssi": "kurssi_4",
+      "id": "de-k4-t4",
+      "prompt_fi": "Tiedän, että hän on kotona.",
+      "accepted_translations": [
+        "Ich weiß, dass er zu Hause ist.",
+        "Ich weiß, dass sie zu Hause ist.",
+        "Ich weiß, dass er zuhause ist.",
+        "Ich weiß, dass sie zuhause ist.",
+        "Ich weiß, dass er zu Hause bleibt.",
+        "Ich weiß, dass sie zu Hause bleibt."
+      ],
+      "review_notes": "All correct. 'dass'-clause correctly has verb-final. 'zu Hause' (two words, standard) and 'zuhause' (one word, colloquial but accepted by Duden) both valid. 'bleibt' is a contextually appropriate semantic extension.",
+      "review_score": "pass"
+    },
+    {
+      "kurssi": "kurssi_4",
+      "id": "de-k4-t5",
+      "prompt_fi": "Kevät oli kaunis vuosi sitten.",
+      "accepted_translations": [
+        "Der Frühling war schön vor einem Jahr.",
+        "Der Frühling war vor einem Jahr schön.",
+        "Vor einem Jahr war der Frühling schön.",
+        "Der Frühling war letztes Jahr schön.",
+        "Letztes Jahr war der Frühling schön."
+      ],
+      "review_notes": "All correct. 'vor einem Jahr' correct Dativ with 'vor'. 'letztes Jahr' is a natural paraphrase. V2 topicalization variants correct. Predicate adjective 'schön' uninflected.",
+      "review_score": "pass"
+    },
+    {
+      "kurssi": "kurssi_4",
+      "id": "de-k4-t6",
+      "prompt_fi": "Isä kävi kaupassa joka päivä.",
+      "accepted_translations": [
+        "Mein Vater ging jeden Tag in den Laden.",
+        "Der Vater ging jeden Tag in den Supermarkt.",
+        "Mein Vater ging jeden Tag einkaufen.",
+        "Vater ging jeden Tag in den Laden.",
+        "Mein Vater fuhr jeden Tag zum Supermarkt.",
+        "Jeden Tag ging mein Vater in den Laden."
+      ],
+      "review_notes": "All correct. 'jeden Tag' Akkusativ for recurring time. 'in den Laden/Supermarkt' Akkusativ (directional motion). 'zum Supermarkt' (fahren + Dativ) also correct. V2 topicalization and zero-article 'Vater' (family address term) both natural.",
+      "review_score": "pass"
+    },
+
+    {
+      "kurssi": "kurssi_5",
+      "id": "de-k5-t1",
+      "prompt_fi": "Haluan olla lääkäri.",
+      "accepted_translations": [
+        "Ich will Arzt werden.",
+        "Ich will Ärztin werden.",
+        "Ich möchte Arzt werden.",
+        "Ich möchte Ärztin werden.",
+        "Ich werde Arzt sein.",
+        "Ich werde Ärztin sein.",
+        "Ich möchte einmal Arzt werden."
+      ],
+      "review_notes": "All correct. No article before profession with 'werden/sein' correctly applied. Umlaut in 'Ärztin' correct. 'wollen' and 'möchten' both natural. 'einmal' adds appropriate future aspiration nuance.",
+      "review_score": "pass"
+    },
+    {
+      "kurssi": "kurssi_5",
+      "id": "de-k5-t2",
+      "prompt_fi": "Tulevaisuudessa työ muuttuu.",
+      "accepted_translations": [
+        "In der Zukunft wird die Arbeit sich verändern.",
+        "In Zukunft wird die Arbeit sich verändern.",
+        "In der Zukunft wird sich die Arbeit verändern.",
+        "Die Arbeit wird sich in Zukunft verändern.",
+        "Die Arbeit wird sich in der Zukunft ändern."
+      ],
+      "review_notes": "All correct. 'in Zukunft' (without article, idiomatic) and 'in der Zukunft' (with article) both accepted. Reflexive pronoun 'sich' position flexible in main clause. 'verändern' and 'ändern' are synonyms here.",
+      "review_score": "pass"
+    },
+    {
+      "kurssi": "kurssi_5",
+      "id": "de-k5-t3",
+      "prompt_fi": "Jos saan töitä, muutan kaupunkiin.",
+      "accepted_translations": [
+        "Wenn ich eine Stelle bekomme, ziehe ich in die Stadt.",
+        "Wenn ich Arbeit bekomme, ziehe ich in die Stadt.",
+        "Wenn ich einen Job bekomme, ziehe ich in die Stadt.",
+        "Wenn ich Arbeit finde, ziehe ich in die Stadt.",
+        "Wenn ich einen Job finde, ziehe ich in die Stadt.",
+        "Bekomme ich eine Stelle, ziehe ich in die Stadt."
+      ],
+      "review_notes": "All correct. 'wenn'-clause with verb-final. Main clause V2. 'in die Stadt' Akkusativ (directional). 'ziehen' (separable: einziehen or simply ziehen) correct. Inversion variant 'Bekomme ich' grammatically correct.",
+      "review_score": "pass"
+    },
+    {
+      "kurssi": "kurssi_5",
+      "id": "de-k5-t4",
+      "prompt_fi": "Teknologia kehittyy nopeasti.",
+      "accepted_translations": [
+        "Die Technologie entwickelt sich schnell.",
+        "Technologie entwickelt sich schnell.",
+        "Die Technik entwickelt sich schnell.",
+        "Technologie entwickelt sich sehr schnell.",
+        "Die Technologie wird sich schnell entwickeln."
+      ],
+      "review_notes": "All correct. Reflexive 'sich entwickeln' correct. 'Technologie' and 'Technik' are both valid lexical choices here. Zero-article and definite article variants accepted. Futur I variant also natural.",
+      "review_score": "pass"
+    },
+    {
+      "kurssi": "kurssi_5",
+      "id": "de-k5-t5",
+      "prompt_fi": "En tiedä, mitä teen ensi vuonna.",
+      "accepted_translations": [
+        "Ich weiß nicht, was ich nächstes Jahr machen werde.",
+        "Ich weiß nicht, was ich nächstes Jahr tun werde.",
+        "Ich weiß nicht, was ich im nächsten Jahr machen werde.",
+        "Ich weiß nicht, was ich nächstes Jahr mache."
+      ],
+      "review_notes": "DROPPED: duplicate 'Ich weiß nicht, was ich nächstes Jahr tun werde.' (appeared twice in worker output). Remaining 4 translations correct. 'was'-clause verb-final. 'nächstes Jahr' vs 'im nächsten Jahr' both natural. Present tense as futur substitute (letzte Variante) accepted in spoken German.",
+      "review_score": "minor_fix"
+    },
+    {
+      "kurssi": "kurssi_5",
+      "id": "de-k5-t6",
+      "prompt_fi": "Yritys palkkaa uusia työntekijöitä.",
+      "accepted_translations": [
+        "Das Unternehmen stellt neue Mitarbeiter ein.",
+        "Die Firma stellt neue Mitarbeiter ein.",
+        "Das Unternehmen stellt neue Angestellte ein.",
+        "Die Firma stellt neue Angestellte ein.",
+        "Das Unternehmen stellt neue Mitarbeiter an.",
+        "Die Firma stellt neue Leute ein."
+      ],
+      "review_notes": "All correct. 'einstellen' is the primary separable verb for hiring; 'anstellen' is also valid colloquially. 'Mitarbeiter', 'Angestellte', 'Leute' are appropriate synonyms at increasing colloquiality. Accusative 'neue Mitarbeiter' correct.",
+      "review_score": "pass"
+    },
+
+    {
+      "kurssi": "kurssi_6",
+      "id": "de-k6-t1",
+      "prompt_fi": "Muovi on ympäristölle haitallista.",
+      "accepted_translations": [
+        "Plastik ist schädlich für die Umwelt.",
+        "Plastik schadet der Umwelt.",
+        "Kunststoff ist schädlich für die Umwelt.",
+        "Plastik ist für die Umwelt schädlich.",
+        "Plastik ist der Umwelt gegenüber schädlich."
+      ],
+      "review_notes": "All correct. 'schädlich für + Akkusativ' and 'schaden + Dativ' both correctly used. 'Kunststoff' is a valid synonym (more technical). 'der Umwelt gegenüber' is a valid but formal/written register — acceptable at B1.",
+      "review_score": "pass"
+    },
+    {
+      "kurssi": "kurssi_6",
+      "id": "de-k6-t2",
+      "prompt_fi": "Kierrätystä pitäisi lisätä.",
+      "accepted_translations": [
+        "Das Recycling sollte mehr gefördert werden.",
+        "Man sollte mehr recyceln.",
+        "Das Recycling müsste mehr gefördert werden.",
+        "Recycling sollte gefördert werden.",
+        "Man sollte Recycling mehr fördern.",
+        "Das Recycling sollte ausgebaut werden."
+      ],
+      "review_notes": "All correct. Passive 'werden + Partizip II' correctly formed. Konjunktiv II 'sollte/müsste' appropriate for 'pitäisi'. 'man'-construction is natural active alternative. 'gefördert/ausgebaut' are semantically appropriate variants.",
+      "review_score": "pass"
+    },
+    {
+      "kurssi": "kurssi_6",
+      "id": "de-k6-t3",
+      "prompt_fi": "Voitko sulkea ikkunan?",
+      "accepted_translations": [
+        "Könntest du das Fenster schließen?",
+        "Kannst du das Fenster schließen?",
+        "Würdest du das Fenster schließen?",
+        "Können Sie das Fenster schließen?",
+        "Könnten Sie das Fenster schließen?",
+        "Würden Sie das Fenster schließen?"
+      ],
+      "review_notes": "All correct. Konjunktiv II 'könntest/würdest' for polite request. Indikativ 'kannst' also natural for a direct request. ß in 'schließen' correctly written. du/Sie formal pairs all present.",
+      "review_score": "pass"
+    },
+    {
+      "kurssi": "kurssi_6",
+      "id": "de-k6-t4",
+      "prompt_fi": "Metsät hakataan liian nopeasti.",
+      "accepted_translations": [
+        "Die Wälder werden zu schnell abgeholzt.",
+        "Wälder werden zu schnell gefällt.",
+        "Die Wälder werden zu schnell gerodet."
+      ],
+      "review_notes": "DROPPED: 'Die Wälder werden zu schnell abgeholzt werden' — double 'werden' (Präsens Passiv + Futur werden stacked) is ungrammatical. Remaining 3 translations are correct Präsens Passiv. Umlaut in 'Wälder' correct.",
+      "review_score": "minor_fix"
+    },
+    {
+      "kurssi": "kurssi_6",
+      "id": "de-k6-t5",
+      "prompt_fi": "Ihmiset haluaisivat parempaa elämää.",
+      "accepted_translations": [
+        "Die Menschen möchten ein besseres Leben.",
+        "Die Menschen hätten gern ein besseres Leben.",
+        "Die Menschen würden gern ein besseres Leben haben.",
+        "Die Leute möchten ein besseres Leben.",
+        "Die Leute würden gern ein besseres Leben haben.",
+        "Die Menschen wünschen sich ein besseres Leben."
+      ],
+      "review_notes": "All correct. Konjunktiv II 'hätten gern / würden gern' correctly renders the conditional 'haluaisivat'. 'ein besseres Leben' correct Akkusativ with mixed adjective ending. 'möchten' is conventionally treated as Konjunktiv II equivalent and is natural here.",
+      "review_score": "pass"
+    },
+    {
+      "kurssi": "kurssi_6",
+      "id": "de-k6-t6",
+      "prompt_fi": "Hallitus ei toimi tarpeeksi.",
+      "accepted_translations": [
+        "Die Regierung handelt nicht genug.",
+        "Die Regierung tut nicht genug.",
+        "Die Regierung macht nicht genug.",
+        "Die Regierung handelt nicht ausreichend.",
+        "Die Regierung tut zu wenig."
+      ],
+      "review_notes": "All correct. 'handeln/tun/machen' are natural synonyms for 'toimia' in this context. 'nicht genug', 'nicht ausreichend', 'zu wenig' all appropriately render 'tarpeeksi' in negated form.",
+      "review_score": "pass"
+    },
+
+    {
+      "kurssi": "kurssi_7",
+      "id": "de-k7-t1",
+      "prompt_fi": "Jos minulla olisi rahaa, matkustaisin.",
+      "accepted_translations": [
+        "Wenn ich Geld hätte, würde ich reisen.",
+        "Wenn ich Geld hätte, würde ich verreisen.",
+        "Hätte ich Geld, würde ich reisen.",
+        "Wenn ich viel Geld hätte, würde ich reisen."
+      ],
+      "review_notes": "DROPPED: 'Wenn ich Geld gehabt hätte, wäre ich gereist' — this is Konjunktiv II past (counterfactual about a past situation), but the Finnish 'Jos minulla olisi rahaa, matkustaisin' is a present/future hypothetical (Konjunktiv II Gegenwart). Tense mismatch. Remaining 4 translations correctly use Konjunktiv II Gegenwart.",
+      "review_score": "minor_fix"
+    },
+    {
+      "kurssi": "kurssi_7",
+      "id": "de-k7-t2",
+      "prompt_fi": "Museossa oli paljon kuuluisia maalauksia.",
+      "accepted_translations": [
+        "Im Museum gab es viele berühmte Gemälde.",
+        "In dem Museum gab es viele berühmte Gemälde.",
+        "Das Museum hatte viele berühmte Gemälde.",
+        "Im Museum hingen viele berühmte Gemälde.",
+        "Im Museum waren viele berühmte Bilder."
+      ],
+      "review_notes": "All correct. 'im Museum' Dativ contraction. 'gab es / hatte / hingen / waren' all natural Präteritum forms. 'berühmte Gemälde/Bilder' correct adjective inflection (Nominativ/Akkusativ plural after 'viele': mixed inflection).",
+      "review_score": "pass"
+    },
+    {
+      "kurssi": "kurssi_7",
+      "id": "de-k7-t3",
+      "prompt_fi": "Hän luki, vaikka oli väsynyt.",
+      "accepted_translations": [
+        "Er las, obwohl er müde war.",
+        "Sie las, obwohl sie müde war.",
+        "Er hat gelesen, obwohl er müde war.",
+        "Sie hat gelesen, obwohl sie müde war.",
+        "Obwohl er müde war, las er.",
+        "Obwohl sie müde war, las sie."
+      ],
+      "review_notes": "All correct. 'obwohl'-clause verb-final correctly applied. 'las' correct Präteritum of 'lesen'. Perfekt variant also accepted. Topicalization of 'obwohl'-clause with V2 in main clause correct.",
+      "review_score": "pass"
+    },
+    {
+      "kurssi": "kurssi_7",
+      "id": "de-k7-t4",
+      "prompt_fi": "Saksalaisella kulttuurilla on pitkä historia.",
+      "accepted_translations": [
+        "Die deutsche Kultur hat eine lange Geschichte.",
+        "Die deutsche Kultur hat eine lange Geschichte hinter sich.",
+        "Der deutschen Kultur liegt eine lange Geschichte zugrunde.",
+        "Die Kultur Deutschlands hat eine lange Geschichte.",
+        "Deutsche Kultur hat eine lange Geschichte."
+      ],
+      "review_notes": "All correct. Genitive 'Deutschlands' correctly formed. 'der deutschen Kultur' correct Dativ (zugrunde liegen + Dativ). Adjective 'deutsche' correct weak/strong inflection after definite/zero article.",
+      "review_score": "pass"
+    },
+    {
+      "kurssi": "kurssi_7",
+      "id": "de-k7-t5",
+      "prompt_fi": "Jos olisi satanut, olisimme jääneet kotiin.",
+      "accepted_translations": [
+        "Wenn es geregnet hätte, wären wir zu Hause geblieben.",
+        "Wenn es geregnet hätte, hätten wir zuhause bleiben können.",
+        "Hätte es geregnet, wären wir zu Hause geblieben.",
+        "Wenn es geregnet hätte, wären wir zuhause geblieben."
+      ],
+      "review_notes": "All correct. Konjunktiv II Vergangenheit: 'hätte geregnet' + 'wären geblieben' correctly formed. Inversion 'Hätte es geregnet' correct. 'zu Hause/zuhause' spelling variants both accepted.",
+      "review_score": "pass"
+    },
+    {
+      "kurssi": "kurssi_7",
+      "id": "de-k7-t6",
+      "prompt_fi": "Elokuva on tehtävänäni siksi, että oppii enemmän.",
+      "accepted_translations": [
+        "Der Film ist meine Aufgabe, damit ich mehr lerne.",
+        "Ich soll den Film ansehen, damit ich mehr lerne.",
+        "Ich schaue den Film, damit ich mehr lerne.",
+        "Den Film schaue ich, damit ich mehr lerne.",
+        "Ich sehe mir den Film an, damit ich mehr lerne."
+      ],
+      "review_notes": "All correct. 'damit'-clause verb-final. 'mehr lerne' correct Konjunktiv-free present tense in purpose clause. 'ansehen/schauen/sehen an' are natural synonyms for watching. Akkusativ 'den Film' correct.",
+      "review_score": "pass"
+    },
+
+    {
+      "kurssi": "kurssi_8",
+      "id": "de-k8-t1",
+      "prompt_fi": "Hän sanoi, että on väsynyt.",
+      "accepted_translations": [
+        "Er sagte, dass er müde sei.",
+        "Sie sagte, dass sie müde sei.",
+        "Er sagte, er sei müde.",
+        "Sie sagte, sie sei müde.",
+        "Er sagte, dass er müde ist.",
+        "Sie sagte, dass sie müde ist.",
+        "Er sagte, er wäre müde.",
+        "Sie sagte, sie wäre müde."
+      ],
+      "review_notes": "All correct. Konjunktiv I 'sei' (indirect speech, standard written German) and Konjunktiv II 'wäre' (spoken alternative when KI indistinguishable) both correct. Indikativ 'ist' accepted in colloquial indirect speech. dass-clause and verbless indirect speech both present.",
+      "review_score": "pass"
+    },
+    {
+      "kurssi": "kurssi_8",
+      "id": "de-k8-t2",
+      "prompt_fi": "Opettaja kysyi, olimmeko valmiita.",
+      "accepted_translations": [
+        "Die Lehrerin fragte, ob wir bereit seien.",
+        "Der Lehrer fragte, ob wir bereit seien.",
+        "Die Lehrerin fragte, ob wir fertig seien.",
+        "Der Lehrer fragte, ob wir fertig seien.",
+        "Die Lehrerin fragte, ob wir bereit wären.",
+        "Der Lehrer fragte, ob wir fertig wären."
+      ],
+      "review_notes": "All correct. 'ob'-clause verb-final. Konjunktiv I 'seien' and Konjunktiv II 'wären' both valid. 'bereit' and 'fertig' are appropriate synonyms. Grammatical gender variants der/die Lehrer/Lehrerin both present.",
+      "review_score": "pass"
+    },
+    {
+      "kurssi": "kurssi_8",
+      "id": "de-k8-t3",
+      "prompt_fi": "Jos opiskelisit enemmän, saisit paremman arvosanan.",
+      "accepted_translations": [
+        "Wenn du mehr lernen würdest, würdest du eine bessere Note bekommen.",
+        "Wenn du mehr lerntest, würdest du eine bessere Note bekommen.",
+        "Würdest du mehr lernen, würdest du eine bessere Note bekommen.",
+        "Wenn du mehr lernen würdest, würdest du besser abschneiden.",
+        "Lerntest du mehr, würdest du eine bessere Note bekommen."
+      ],
+      "review_notes": "DROPPED: 'Wenn du mehr gelernt hättest, hättest du eine bessere Note bekommen' — Konjunktiv II past (counterfactual about past), but the Finnish 'Jos opiskelisit enemmän, saisit' is present hypothetical. Tense mismatch. NOTE: 'lerntest' (du) is technically correct Konjunktiv II of 'lernen' but is homophonous with Präteritum — kept as exam-level B1 variant with note. Remaining 5 translations are correct present Konjunktiv II.",
+      "review_score": "minor_fix"
+    },
+    {
+      "kurssi": "kurssi_8",
+      "id": "de-k8-t4",
+      "prompt_fi": "Toimittaja kertoi, että kaupungissa oli tulva.",
+      "accepted_translations": [
+        "Der Reporter berichtete, dass es in der Stadt eine Überschwemmung gegeben habe.",
+        "Die Reporterin berichtete, dass es in der Stadt eine Überschwemmung gegeben habe.",
+        "Der Journalist berichtete, dass in der Stadt eine Überschwemmung gewesen sei.",
+        "Die Journalistin berichtete, dass in der Stadt eine Überschwemmung gewesen sei.",
+        "Der Reporter sagte, dass die Stadt überschwemmt worden sei.",
+        "Der Reporter berichtete, es habe in der Stadt eine Überschwemmung gegeben."
+      ],
+      "review_notes": "All correct. Konjunktiv I 'habe gegeben / gewesen sei / überschwemmt worden sei' all correctly formed. 'in der Stadt' Dativ. Passive 'überschwemmt worden sei' correctly formed with sein-passive Konjunktiv I. Gender variants of 'Journalist/Journalistin' and 'Reporter/Reporterin' present.",
+      "review_score": "pass"
+    },
+    {
+      "kurssi": "kurssi_8",
+      "id": "de-k8-t5",
+      "prompt_fi": "Olisin voinut auttaa, jos olisin tiennyt.",
+      "accepted_translations": [
+        "Ich hätte helfen können, wenn ich es gewusst hätte.",
+        "Wenn ich es gewusst hätte, hätte ich helfen können.",
+        "Ich hätte geholfen, wenn ich es gewusst hätte.",
+        "Wenn ich es gewusst hätte, hätte ich geholfen.",
+        "Hätte ich es gewusst, hätte ich helfen können."
+      ],
+      "review_notes": "All correct. Konjunktiv II Vergangenheit: 'hätte können' + 'hätte gewusst' correctly formed. Inversion 'Hätte ich es gewusst' correct. 'hätte geholfen' accepted as simpler alternative to 'hätte helfen können' — slight semantic simplification but acceptable.",
+      "review_score": "pass"
+    },
+    {
+      "kurssi": "kurssi_8",
+      "id": "de-k8-t6",
+      "prompt_fi": "Poliitikot lupasivat, että verot laskevat.",
+      "accepted_translations": [
+        "Die Politiker versprachen, dass die Steuern sinken würden.",
+        "Die Politikerinnen versprachen, dass die Steuern sinken würden.",
+        "Die Politiker versprachen, die Steuern würden sinken.",
+        "Die Politiker versprachen, dass die Steuern gesenkt werden würden.",
+        "Die Politiker sagten, dass die Steuern sinken würden.",
+        "Die Politiker versprachen, dass die Steuern fallen würden."
+      ],
+      "review_notes": "All correct. Konjunktiv II 'würden sinken/fallen' correct for indirect speech in past narrative context. 'gesenkt werden würden' correct passive Konjunktiv II. Verbless indirect speech variant ('die Steuern würden sinken') correct. 'sinken/fallen' are natural synonyms. 'Politikerinnen' gender variant present.",
+      "review_score": "pass"
+    }
+  ]
+}

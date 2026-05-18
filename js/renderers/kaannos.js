@@ -105,6 +105,8 @@ export function renderKaannos(ex, _container, { onAnswer } = {}) {
           userAnswer:           answer,
           acceptedTranslations: [],
           finnishSentence:      ex.prompt_fi,
+          taskId:               ex.taskId || ex.id || null,
+          lang:                 ex.lang || null,
         }),
       });
       data = await res.json();
@@ -130,20 +132,63 @@ export function renderKaannos(ex, _container, { onAnswer } = {}) {
     }
 
     const scoreClass = score >= 3 ? 'correct' : score >= 2 ? 'accent-warn' : 'wrong';
+    const promoteId = (ex.taskId || ex.id);
+    // PR #2 — when the AI grader returned 0–1 ("wrong / barely close"), let
+    // the student promote their answer ("Mielestäni oikein"). Promotion
+    // requires a real taskId so freeform free-mode käännös items (which
+    // don't carry a task row in Supabase) silently skip the button.
+    const canPromote = score <= 1 && promoteId && !data.listHit;
     feedback.innerHTML = `
       <div class="translate-score ${scoreClass}">${score} / ${maxScore}</div>
       <div class="translate-best">
         <strong>Paras käännös:</strong> ${data.bestTranslation ?? ''}
         ${data.feedback ? `<br>${data.feedback}` : ''}
       </div>
+      ${canPromote ? `
+        <div class="translate-promote-row">
+          <button class="translate-promote-btn" id="translate-promote-yes" type="button">Mielestäni oikein</button>
+          <span class="translate-promote-hint">Vastauksesi tallennetaan hyväksyttyihin käännöksiin.</span>
+        </div>
+      ` : ''}
     `;
     feedback.classList.remove('hidden');
     submit.textContent = t('btn.next');
 
-    // PR #1: käännös hyväksytään jo "ymmärrettävä"-tasolta (score >= 2).
-    // Tämä estää sen että kieliopiltaan oikea mutta sanavalinnaltaan
-    // toinen käännös merkitään väärin, vaikka käyttäjän vastaus olisi
-    // periaatteessa oikein. Best-translation-feedback näytetään silti.
+    if (canPromote) {
+      const promoteBtn = document.getElementById('translate-promote-yes');
+      promoteBtn?.addEventListener('click', async () => {
+        promoteBtn.disabled = true;
+        promoteBtn.textContent = 'Tallennetaan…';
+        try {
+          const res = await apiFetch(`${API}/api/translate-promote`, {
+            method:  'POST',
+            headers: { 'Content-Type': 'application/json', ...authHeader() },
+            body:    JSON.stringify({ taskId: promoteId, answer }),
+          });
+          if (res.ok) {
+            promoteBtn.textContent = 'Tallennettu ✓';
+            // Treat as correct in the lesson runner now that the user
+            // claimed responsibility. score upgrades to 2 for SR purposes.
+            onAnswer?.({
+              isCorrect:   true,
+              band:        'ymmarrettava',
+              score:       2,
+              maxScore,
+              explanation: data.bestTranslation ?? '',
+            });
+          } else {
+            promoteBtn.textContent = 'Tallennus epäonnistui';
+            promoteBtn.disabled = false;
+          }
+        } catch {
+          promoteBtn.textContent = 'Tallennus epäonnistui';
+          promoteBtn.disabled = false;
+        }
+      }, { once: true });
+    }
+
+    // Käännös hyväksytään jo "ymmärrettävä"-tasolta (score >= 2). Best-
+    // translation-feedback näytetään silti. List-hits land here as score 3.
     onAnswer?.({
       isCorrect:   score >= 2,
       band,
