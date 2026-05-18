@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Puheo Ship 1.5 — Humaaans-inspired walking student with backpack.
+  Side-view, mid-stride. Used as accent near final CTA section.
+  Old-Spain palette tokens hardcoded as hex.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 420" role="img" aria-label="Lukiolainen kävelemässä reppu selässä">
+  <!-- Ground shadow -->
+  <ellipse cx="160" cy="408" rx="80" ry="6" fill="#1d1611" opacity="0.10"/>
+
+  <!-- Back leg (olive trouser) -->
+  <path d="M 134 268 q 8 50 -6 110 l -10 22 q 6 4 16 0 l 16 -22 q 12 -56 8 -110 z" fill="#3a3f24"/>
+  <!-- Shoe back -->
+  <ellipse cx="124" cy="400" rx="14" ry="6" fill="#1d1611"/>
+
+  <!-- Front leg (terracotta-darker trouser) -->
+  <path d="M 168 268 q -6 50 6 100 l 18 28 q 4 4 16 0 l -6 -30 q -4 -54 0 -100 z" fill="#4f5530"/>
+  <!-- Shoe front -->
+  <ellipse cx="200" cy="396" rx="16" ry="6" fill="#1d1611"/>
+
+  <!-- Body / torso (terracotta sweater) -->
+  <path d="M 130 152
+           q 28 -16 64 -8
+           q 24 6 28 30
+           l 4 70
+           q -4 26 -32 28
+           l -52 -2
+           q -28 -4 -28 -28
+           z"
+        fill="#a13b2e"/>
+  <!-- Sweater shadow fold -->
+  <path d="M 168 220 q 14 8 30 4 l -2 14 q -16 4 -30 -2 z" fill="#7a2a23" opacity="0.5"/>
+
+  <!-- Backpack (olive, behind torso) -->
+  <rect x="116" y="170" width="40" height="78" rx="10" fill="#4f5530"/>
+  <rect x="116" y="170" width="40" height="14" rx="6" fill="#3a3f24"/>
+  <!-- Strap -->
+  <path d="M 156 178 q 18 8 24 28 l -8 4 q -8 -14 -22 -22 z" fill="#3a3f24"/>
+  <!-- Pocket detail -->
+  <rect x="124" y="208" width="24" height="24" rx="4" fill="#3a3f24" opacity="0.6"/>
+
+  <!-- Head -->
+  <ellipse cx="180" cy="108" rx="40" ry="46" fill="#c89a7a"/>
+  <!-- Hair -->
+  <path d="M 142 100
+           q -4 -30 18 -50
+           q 18 -12 40 -8
+           q 26 6 32 32
+           q 4 14 -2 28
+           q -10 -14 -32 -16
+           q -18 -2 -32 8
+           q -16 6 -24 6 z" fill="#3a2718"/>
+
+  <!-- Neck shadow -->
+  <path d="M 162 148 l 36 0 l -2 12 q -16 6 -32 0 z" fill="#9d6e52" opacity="0.7"/>
+
+  <!-- Front arm swinging forward -->
+  <path d="M 222 178 q 22 28 32 64 q 2 12 -10 18 l -14 -4" fill="none" stroke="#a13b2e" stroke-width="30" stroke-linecap="round"/>
+  <circle cx="232" cy="260" r="14" fill="#c89a7a"/>
+
+  <!-- Back arm trailing -->
+  <path d="M 126 196 q -22 24 -22 60 q 0 12 14 14 l 10 -4" fill="none" stroke="#a13b2e" stroke-width="28" stroke-linecap="round"/>
+  <circle cx="116" cy="270" r="12" fill="#c89a7a"/>
+
+  <!-- Small forward-motion lines (decorative) -->
+  <line x1="234" y1="174" x2="262" y2="166" stroke="#c79046" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+  <line x1="234" y1="194" x2="266" y2="190" stroke="#c79046" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/>
+</svg>
