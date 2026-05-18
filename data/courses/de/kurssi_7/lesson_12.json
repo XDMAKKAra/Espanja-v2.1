@@ -25,39 +25,393 @@
       "phase_type": "recognition_mc",
       "title": "Kurssi 7 — Loppukoe",
       "instruction": "Vastaa 30 kysymykseen. Lue huolellisesti ennen vastausta.",
-      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "mastery_threshold": {
+        "I": 0.55,
+        "A": 0.6,
+        "B": 0.65,
+        "C": 0.7,
+        "M": 0.8,
+        "E": 0.85,
+        "L": 0.95
+      },
       "skip_for_targets": [],
       "items": [
-        { "item_type": "mc", "stem": "Mitä tarkoittaa 'die Ausstellung'?", "choices": ["museo", "galleria", "näyttely", "teatteri"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "die Ausstellung = näyttely. das Museum = museo, die Galerie = galleria." },
-        { "item_type": "mc", "stem": "Mikä on 'haben' Konjunktiv II -muoto (ich)?", "choices": ["hat", "hatte", "hätte", "haben"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "hätte = haben Konjunktiv II (ich). hatte = Präteritum, hat = Präsens." },
-        { "item_type": "mc", "stem": "Täydennä: 'Wenn ich Zeit ___, würde ich das Museum besuchen.'", "choices": ["habe", "hatte", "hätte", "haben"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "hätte = wenn-sivulauseen Konjunktiv II (haben). Kuvitteellinen tilanne." },
-        { "item_type": "mc", "stem": "Mitä tarkoittaa 'die Vielfalt'?", "choices": ["yhtenäisyys", "monimuotoisuus", "yhteistyö", "tasa-arvo"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "die Vielfalt = monimuotoisuus. Tärkeä yhteiskunnallinen termi." },
-        { "item_type": "mc", "stem": "Täydennä relatiivipronomini: 'Die Schriftstellerin, ___ den Roman schrieb, ist bekannt.' (feminiini, Nom.)", "choices": ["der", "die", "das", "den"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "die Schriftstellerin (feminiini) + Nominatiiv → die." },
-        { "item_type": "mc", "stem": "Mikä prepositio + Genitiv tarkoittaa 'huolimatta'?", "choices": ["wegen", "während", "trotz", "mit"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "trotz + Genitiv = huolimatta. wegen = takia, während = aikana." },
-        { "item_type": "mc", "stem": "Täydennä: '___ es regnet, gehen wir ins Theater.' (konjunktio valinta)", "choices": ["Damit", "Obwohl", "Wegen", "Trotzdem"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "obwohl = vaikka (sivulausekonjunktio + V-loppu). Vaikka sataa, menemme teatteriin." },
-        { "item_type": "mc", "stem": "Mikä on 'sein' Konjunktiv II -muoto (ich)?", "choices": ["ist", "war", "wäre", "sei"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "wäre = sein Konjunktiv II. war = Präteritum, ist = Präsens." },
-        { "item_type": "mc", "stem": "Täydennä: 'Das Museum, ___ ich besuche, zeigt Bauhaus-Werke.' (neutri, Akk.)", "choices": ["der", "die", "das", "dem"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "das Museum (neutri) + Akkusatiiv → das. Neutri Nom. ja Akk. ovat samat." },
-        { "item_type": "mc", "stem": "Mitä tarkoittaa 'die Heimat'?", "choices": ["koti (rakennus)", "kotimaa / kotiseutu", "kansallisuus", "alkuperä"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "die Heimat = kotimaa tai kotiseutu — erityisesti emotionaalisessa merkityksessä." },
-        { "item_type": "mc", "stem": "Täydennä: 'Ich lerne Deutsch, ___ ich DACH-Kultur verstehe.'", "choices": ["obwohl", "damit", "falls", "wegen"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "damit = jotta (tarkoitus). Opiskelen saksaa, jotta ymmärrän DACH-kulttuuria." },
-        { "item_type": "mc", "stem": "Mikä Genitiv-artikkeli kuuluu feminiinille (die Frau)?", "choices": ["des", "der", "dem", "den"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Feminiini Genitiv = der. das Buch der Frau = naisen kirja. des on maskuliini/neutri." },
-        { "item_type": "mc", "stem": "Täydennä: '___ du Zeit hast, komm uns besuchen.' (konjunktio)", "choices": ["Obwohl", "Damit", "Falls", "Wegen"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "falls = jos (epävarma ehto). Jos sinulla on aikaa, tule käymään." },
-        { "item_type": "mc", "stem": "Mikä on 'können' Konjunktiv II (er)?", "choices": ["kann", "konnte", "könnte", "können"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "könnte = können Konjunktiv II. Er könnte = hän voisi." },
-        { "item_type": "mc", "stem": "Mitä tarkoittaa 'die Tradition'?", "choices": ["innovaatio", "perinne", "muutos", "historia"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "die Tradition = perinne. der Wandel = muutos, die Geschichte = historia." },
-        { "item_type": "mc", "stem": "Täydennä: 'Trotz ___ Krieges blieb die Bibliothek geöffnet.' (der Krieg, mask.)", "choices": ["des", "der", "dem", "den"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "Maskuliini Genitiv = des. Trotz des Krieges = sodan huolimatta." },
-        { "item_type": "mc", "stem": "Mikä on väärä sanajärjestys sivulauseessa?", "choices": ["Obwohl es regnet, gehen wir.", "Damit ich bestehe, lerne ich.", "Obwohl regnet es, gehen wir.", "Falls du Zeit hast, ruf mich an."], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "VÄÄRÄ: 'Obwohl regnet es' — V-loppu puuttuu. Oikein: 'Obwohl es regnet'." },
-        { "item_type": "mc", "stem": "Täydennä: 'Der Roman, ___ ich lese, ist von Kafka.' (mask., Akk.)", "choices": ["der", "die", "das", "den"], "correct_index": 3, "distractor_difficulty": "hard", "explanation": "der Roman (maskuliini) + Akkusatiiv (ich lese DEN Roman) → den. Maskuliini Akk. = den." },
-        { "item_type": "mc", "stem": "Mitä tarkoittaa 'die Identität'?", "choices": ["kansallisuus", "alkuperä", "identiteetti", "kuuluminen"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "die Identität = identiteetti. die Nationalität = kansallisuus, die Herkunft = alkuperä." },
-        { "item_type": "mc", "stem": "Täydennä: 'Wir ___ gern nach Wien reisen.' (würde-muoto, wir)", "choices": ["würde", "würdest", "würden", "würdet"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "wir → würden. Taivutus: ich würde, du würdest, er würde, wir würden." },
-        { "item_type": "mc", "stem": "Milloin Berliinin muuri kaatui (der Mauerfall)?", "choices": ["9. marraskuuta 1989", "3. lokakuuta 1990", "9. marraskuuta 1961", "3. lokakuuta 1989"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "Der Mauerfall am 9. November 1989. Die Wiedervereinigung = 3. Oktober 1990." },
-        { "item_type": "mc", "stem": "Täydennä Konjunktiv II: 'Wenn ich nach Wien ___, würde ich die Oper besuchen.' (kommen)", "choices": ["komme", "käme", "kam", "kommen"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "käme = kommen Konjunktiv II. Tyylikkäämpi kuin kommen würde." },
-        { "item_type": "mc", "stem": "Mitä tarkoittaa 'schaffen'?", "choices": ["tuhota", "myydä", "luoda (taiteellisesti)", "ostaa"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "schaffen = luoda taiteellisesti. machen = tehdä (yleinen). schaffen korostaa luovaa prosessia." },
-        { "item_type": "mc", "stem": "Mikä Genitiv-artikkeli kuuluu neutriille (das Kind)?", "choices": ["des", "der", "dem", "den"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "Neutri Genitiv = des. das Buch des Kindes = lapsen kirja. Neutri ja maskuliini molemmat des." },
-        { "item_type": "mc", "stem": "Täydennä: 'Die Ausstellung, ___ wir gestern besuchten, war beeindruckend.' (fem., Akk.)", "choices": ["der", "die", "das", "den"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "die Ausstellung (feminiini) + Akkusatiiv → die. Feminiini Nom. ja Akk. ovat samat." },
-        { "item_type": "mc", "stem": "Täydennä: 'Er ___ gern Schriftsteller sein.' (sein, Konj.II)", "choices": ["ist", "war", "wäre", "sein"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "wäre = sein Konjunktiv II. Er wäre gern Schriftsteller = Hän olisi mielellään kirjailija." },
-        { "item_type": "mc", "stem": "Täydennä: 'Während ___ Mauerfall jubelten die Menschen.' (der Mauerfall, mask.)", "choices": ["des", "der", "dem", "die"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "Maskuliini Genitiv = des. während des Mauerfall → des (maskuliini)." },
-        { "item_type": "mc", "stem": "Mikä lauseista on Konjunktiv II oikein?", "choices": ["Wenn wir Zeit haben, würden wir reisen.", "Wenn wir Zeit hätten, würden wir reisen.", "Wenn wir Zeit hätten, wir würden reisen.", "Wenn wir Zeit hatten, würden wir reisen."], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "Konjunktiv II: hätten (wir-muoto) sivulauseessa + würden reisen päälauseessa. hatten = Präteritum, ei Konj.II." },
-        { "item_type": "mc", "stem": "Mikä on 'müssen' Konjunktiv II (du)?", "choices": ["muss", "musste", "müsstest", "müssen"], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "müsstest = müssen Konjunktiv II (du). muss = Präsens, musste = Präteritum." },
-        { "item_type": "mc", "stem": "Mitä tarkoittaa 'die Wiedervereinigung'?", "choices": ["vallankumous", "uudistus", "yhdistyminen", "itsenäistyminen"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "die Wiedervereinigung = yhdistyminen. wieder = uudelleen + Vereinigung = yhdistyminen. Saksan yhdistyminen 1990." }
+        {
+          "item_type": "mc",
+          "stem": "Mitä tarkoittaa 'die Ausstellung'?",
+          "choices": [
+            "museo",
+            "galleria",
+            "näyttely",
+            "teatteri"
+          ],
+          "correct_index": 2,
+          "distractor_difficulty": "easy",
+          "explanation": "die Ausstellung = näyttely. das Museum = museo, die Galerie = galleria."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Mikä on 'haben' Konjunktiv II -muoto (ich)?",
+          "choices": [
+            "hat",
+            "hatte",
+            "hätte",
+            "haben"
+          ],
+          "correct_index": 2,
+          "distractor_difficulty": "easy",
+          "explanation": "hätte = haben Konjunktiv II (ich). hatte = Präteritum, hat = Präsens."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Täydennä: 'Wenn ich Zeit ___, würde ich das Museum besuchen.'",
+          "choices": [
+            "habe",
+            "hatte",
+            "hätte",
+            "haben"
+          ],
+          "correct_index": 2,
+          "distractor_difficulty": "medium",
+          "explanation": "hätte = wenn-sivulauseen Konjunktiv II (haben). Kuvitteellinen tilanne."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Mitä tarkoittaa 'die Vielfalt'?",
+          "choices": [
+            "yhtenäisyys",
+            "monimuotoisuus",
+            "yhteistyö",
+            "tasa-arvo"
+          ],
+          "correct_index": 1,
+          "distractor_difficulty": "easy",
+          "explanation": "die Vielfalt = monimuotoisuus. Tärkeä yhteiskunnallinen termi."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Täydennä relatiivipronomini: 'Die Schriftstellerin, ___ den Roman schrieb, ist bekannt.' (feminiini, Nom.)",
+          "choices": [
+            "der",
+            "die",
+            "das",
+            "den"
+          ],
+          "correct_index": 1,
+          "distractor_difficulty": "medium",
+          "explanation": "die Schriftstellerin (feminiini) + Nominatiiv → die."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Mikä prepositio + Genitiv tarkoittaa 'huolimatta'?",
+          "choices": [
+            "wegen",
+            "während",
+            "trotz",
+            "mit"
+          ],
+          "correct_index": 2,
+          "distractor_difficulty": "easy",
+          "explanation": "trotz + Genitiv = huolimatta. wegen = takia, während = aikana."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Täydennä: '___ es regnet, gehen wir ins Theater.' (konjunktio valinta)",
+          "choices": [
+            "Damit",
+            "Obwohl",
+            "Wegen",
+            "Trotzdem"
+          ],
+          "correct_index": 1,
+          "distractor_difficulty": "easy",
+          "explanation": "obwohl = vaikka (sivulausekonjunktio + V-loppu). Vaikka sataa, menemme teatteriin."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Mikä on 'sein' Konjunktiv II -muoto (ich)?",
+          "choices": [
+            "ist",
+            "war",
+            "wäre",
+            "sei"
+          ],
+          "correct_index": 2,
+          "distractor_difficulty": "easy",
+          "explanation": "wäre = sein Konjunktiv II. war = Präteritum, ist = Präsens."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Täydennä: 'Das Museum, ___ ich besuche, zeigt Bauhaus-Werke.' (neutri, Akk.)",
+          "choices": [
+            "der",
+            "die",
+            "das",
+            "dem"
+          ],
+          "correct_index": 2,
+          "distractor_difficulty": "medium",
+          "explanation": "das Museum (neutri) + Akkusatiiv → das. Neutri Nom. ja Akk. ovat samat."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Mitä tarkoittaa 'die Heimat'?",
+          "choices": [
+            "koti (rakennus)",
+            "kotimaa / kotiseutu",
+            "kansallisuus",
+            "alkuperä"
+          ],
+          "correct_index": 1,
+          "distractor_difficulty": "medium",
+          "explanation": "die Heimat = kotimaa tai kotiseutu — erityisesti emotionaalisessa merkityksessä."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Täydennä: 'Ich lerne Deutsch, ___ ich DACH-Kultur verstehe.'",
+          "choices": [
+            "obwohl",
+            "damit",
+            "falls",
+            "wegen"
+          ],
+          "correct_index": 1,
+          "distractor_difficulty": "medium",
+          "explanation": "damit = jotta (tarkoitus). Opiskelen saksaa, jotta ymmärrän DACH-kulttuuria."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Mikä Genitiv-artikkeli kuuluu feminiinille (die Frau)?",
+          "choices": [
+            "des",
+            "der",
+            "dem",
+            "den"
+          ],
+          "correct_index": 1,
+          "distractor_difficulty": "medium",
+          "explanation": "Feminiini Genitiv = der. das Buch der Frau = naisen kirja. des on maskuliini/neutri."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Täydennä: '___ du Zeit hast, komm uns besuchen.' (konjunktio)",
+          "choices": [
+            "Obwohl",
+            "Damit",
+            "Falls",
+            "Wegen"
+          ],
+          "correct_index": 2,
+          "distractor_difficulty": "easy",
+          "explanation": "falls = jos (epävarma ehto). Jos sinulla on aikaa, tule käymään."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Mikä on 'können' Konjunktiv II (er)?",
+          "choices": [
+            "kann",
+            "konnte",
+            "könnte",
+            "können"
+          ],
+          "correct_index": 2,
+          "distractor_difficulty": "medium",
+          "explanation": "könnte = können Konjunktiv II. Er könnte = hän voisi."
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "Wenn ich Zeit {1} (haben, Konj. II), würde ich das Museum besuchen.",
+          "answers": [
+            [
+              "hätte"
+            ]
+          ],
+          "word_bank": null,
+          "topic_key": "konjunktiv_ii"
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "Trotz {1} (der Krieg, mask. Gen.) blieb das Theater geöffnet.",
+          "answers": [
+            [
+              "des Krieges",
+              "des Kriegs"
+            ]
+          ],
+          "word_bank": null,
+          "topic_key": "genitive_case"
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "{1} es regnet, gehen wir ins Theater. (Konjunktion: obwohl)",
+          "answers": [
+            [
+              "Obwohl"
+            ]
+          ],
+          "word_bank": null,
+          "topic_key": "subordinate_clauses_obwohl"
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "Wir {1} (würde, wir-muoto) gern nach Wien reisen.",
+          "answers": [
+            [
+              "würden"
+            ]
+          ],
+          "word_bank": null,
+          "topic_key": "konjunktiv_ii"
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "Das Buch {1} (der Schriftsteller, mask. Gen.) war ein Bestseller.",
+          "answers": [
+            [
+              "des Schriftstellers"
+            ]
+          ],
+          "word_bank": null,
+          "topic_key": "genitive_case"
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "Er lernt Deutsch, {1} er die DACH-Kultur versteht. (damit)",
+          "answers": [
+            [
+              "damit"
+            ]
+          ],
+          "word_bank": null,
+          "topic_key": "subordinate_clauses_obwohl"
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "Der Roman, {1} ich lese, ist von Kafka. (mask., Akk.)",
+          "answers": [
+            [
+              "den"
+            ]
+          ],
+          "word_bank": null,
+          "topic_key": "konjunktiv_ii"
+        },
+        {
+          "item_type": "typed",
+          "direction": "fi_to_de",
+          "prompt": "Jos sinulla olisi aikaa, voisit vierailla museossa.",
+          "accept": [
+            "wenn du zeit hättest könntest du das museum besuchen",
+            "wenn du zeit hättest, könntest du das museum besuchen",
+            "Wenn du Zeit hättest, könntest du das Museum besuchen",
+            "wenn sie zeit hätten könnten sie das museum besuchen"
+          ],
+          "topic_key": "konjunktiv_ii"
+        },
+        {
+          "item_type": "typed",
+          "direction": "fi_to_de",
+          "prompt": "Sodan huolimatta ihmiset jatkoivat elämäänsä.",
+          "accept": [
+            "trotz des krieges lebten die menschen weiter",
+            "Trotz des Krieges lebten die Menschen weiter",
+            "trotz des krieges machten die menschen weiter"
+          ],
+          "topic_key": "genitive_case"
+        },
+        {
+          "item_type": "typed",
+          "direction": "fi_to_de",
+          "prompt": "Vaikka sataa, menemme konserttiin.",
+          "accept": [
+            "obwohl es regnet gehen wir zum konzert",
+            "obwohl es regnet, gehen wir zum konzert",
+            "Obwohl es regnet, gehen wir zum Konzert",
+            "Obwohl es regnet gehen wir zum Konzert"
+          ],
+          "topic_key": "subordinate_clauses_obwohl"
+        },
+        {
+          "item_type": "typed",
+          "direction": "fi_to_de",
+          "prompt": "Hän olisi mielellään kirjailija.",
+          "accept": [
+            "er wäre gern schriftsteller",
+            "er wäre gern schriftsteller.",
+            "Er wäre gern Schriftsteller",
+            "Er wäre gern Schriftsteller.",
+            "sie wäre gern schriftstellerin",
+            "Sie wäre gern Schriftstellerin"
+          ],
+          "topic_key": "konjunktiv_ii"
+        },
+        {
+          "item_type": "typed",
+          "direction": "fi_to_de",
+          "prompt": "Naisen kirja on erittäin tunnettu.",
+          "accept": [
+            "das buch der frau ist sehr bekannt",
+            "das buch der frau ist sehr bekannt.",
+            "Das Buch der Frau ist sehr bekannt",
+            "Das Buch der Frau ist sehr bekannt."
+          ],
+          "topic_key": "genitive_case"
+        },
+        {
+          "item_type": "translate",
+          "direction": "fi_to_de",
+          "source": "Jos meillä olisi enemmän rahaa, matkustaisimme Wieniin ja kävisimme oopperassa.",
+          "accept": [
+            "wenn wir mehr geld hätten würden wir nach wien reisen und die oper besuchen",
+            "Wenn wir mehr Geld hätten, würden wir nach Wien reisen und die Oper besuchen",
+            "wenn wir mehr geld haetten wuerden wir nach wien reisen und die oper besuchen"
+          ],
+          "topic_key": "konjunktiv_ii"
+        },
+        {
+          "item_type": "translate",
+          "direction": "fi_to_de",
+          "source": "Vaikka perinne on vanha, se elää yhä nykykulttuurissa.",
+          "accept": [
+            "obwohl die tradition alt ist lebt sie noch in der modernen kultur",
+            "Obwohl die Tradition alt ist, lebt sie noch in der modernen Kultur",
+            "obwohl die tradition alt ist lebt sie noch in der zeitgenössischen kultur"
+          ],
+          "topic_key": "subordinate_clauses_obwohl"
+        },
+        {
+          "item_type": "translate",
+          "direction": "fi_to_de",
+          "source": "Saksan yhdistyminen vuonna 1990 muutti koko maan kulttuuria.",
+          "accept": [
+            "die wiedervereinigung deutschlands im jahr 1990 veränderte die kultur des ganzen landes",
+            "Die Wiedervereinigung Deutschlands im Jahr 1990 veränderte die Kultur des ganzen Landes",
+            "die wiedervereinigung 1990 veraenderte die kultur ganz deutschlands"
+          ],
+          "topic_key": "genitive_case"
+        },
+        {
+          "item_type": "match",
+          "pairs": [
+            {
+              "left": "die Ausstellung",
+              "right": "näyttely"
+            },
+            {
+              "left": "die Vielfalt",
+              "right": "monimuotoisuus"
+            },
+            {
+              "left": "die Heimat",
+              "right": "kotimaa / kotiseutu"
+            },
+            {
+              "left": "die Wiedervereinigung",
+              "right": "yhdistyminen"
+            }
+          ],
+          "topic_key": "konjunktiv_ii"
+        }
       ]
     }
   ],

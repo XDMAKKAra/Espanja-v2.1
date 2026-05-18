@@ -22,8 +22,8 @@
     {
       "phase_id": "p1-test-sanasto",
       "phase_type": "recognition_mc",
-      "title": "Osa 1 — Sanasto (K6)",
-      "instruction": "Valitse oikea käännös tai täydennä lauseeseen oikea sana.",
+      "title": "Kertaustesti K6",
+      "instruction": "Valitse oikea käännös tai täydennä lauseeseen oikea muoto. Loppupuolella kirjoita lauseita ranskaksi.",
       "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.75, "E": 0.8, "L": 0.85 },
       "skip_for_targets": [],
       "items": [
@@ -36,47 +36,36 @@
         { "item_type": "mc", "stem": "durable", "choices": ["uusiutuva", "luonnollinen", "kestävä", "biologinen"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "durable = kestävä. Le développement durable = kestävä kehitys." },
         { "item_type": "mc", "stem": "l'énergie éolienne", "choices": ["aurinkoenergia", "ydinvoima", "tuulienergia", "vesivoima"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "l'énergie éolienne = tuulienergia. Éolien = tuuleen liittyvä." },
         { "item_type": "mc", "stem": "la pauvreté", "choices": ["rikkaus", "eriarvoisuus", "köyhyys", "tasa-arvo"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "la pauvreté = köyhyys. L'inégalité = eriarvoisuus." },
-        { "item_type": "mc", "stem": "l'empreinte carbone", "choices": ["kasvihuonekaasut", "CO2-päästöt", "hiilijalanjälki", "hiilensidonta"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "l'empreinte carbone = hiilijalanjälki." }
-      ]
-    },
-    {
-      "phase_id": "p2-test-subjonctif-muodostus",
-      "phase_type": "recognition_mc",
-      "title": "Osa 2 — Subjonctif-muodostus",
-      "instruction": "Valitse oikea subjonctif présent -muoto.",
-      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.75, "E": 0.8, "L": 0.85 },
-      "skip_for_targets": [],
-      "items": [
+        { "item_type": "mc", "stem": "l'empreinte carbone", "choices": ["kasvihuonekaasut", "CO2-päästöt", "hiilijalanjälki", "hiilensidonta"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "l'empreinte carbone = hiilijalanjälki." },
         { "item_type": "mc", "stem": "parler — que tu ___", "choices": ["parlais", "parles", "parleras", "parler"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "Subjonctif: kanta parl- + pääte -es → que tu parles. Parlais on imparfait." },
         { "item_type": "mc", "stem": "finir — que nous ___", "choices": ["finissons", "finissions", "finirons", "finirions"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Subjonctif nous: finiss- + -ions → que nous finissions. Finissons on présent indicatif." },
         { "item_type": "mc", "stem": "être — qu'il ___", "choices": ["est", "soit", "était", "sera"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "être-subjonctif: qu'il soit. Est on présent indicatif." },
         { "item_type": "mc", "stem": "avoir — que j'___", "choices": ["ai", "aie", "avais", "aurai"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "avoir-subjonctif: que j'aie. Ai on présent indicatif." },
-        { "item_type": "mc", "stem": "faire — que vous ___", "choices": ["faites", "fassiez", "feriez", "faisiez"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "faire-subjonctif vous: que vous fassiez. Faites on présent indicatif." },
-        { "item_type": "mc", "stem": "aller — que tu ___", "choices": ["vas", "ailles", "irais", "allais"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "aller-subjonctif: que tu ailles. Vas on présent indicatif." },
-        { "item_type": "mc", "stem": "pouvoir — qu'elle ___", "choices": ["peut", "puisse", "pouvait", "pourra"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "pouvoir-subjonctif: qu'elle puisse. Peut on présent indicatif." },
-        { "item_type": "mc", "stem": "vouloir — qu'il ___", "choices": ["veut", "veuille", "voulait", "voudra"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "vouloir-subjonctif: qu'il veuille. Veut on présent indicatif." }
-      ]
-    },
-    {
-      "phase_id": "p3-test-laukaisijat",
-      "phase_type": "application_gap_fill",
-      "title": "Osa 3 — Laukaisijat: subjonctif vai indicatif?",
-      "instruction": "Täydennä lauseeseen oikea muoto. Tunnista laukaisija!",
-      "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.75, "E": 0.8, "L": 0.85 },
-      "skip_for_targets": [],
-      "items": [
-        { "item_type": "gap_fill", "sentence_template": "Il faut que tu {1} l'environnement. (protéger: ils protègent → protèg-)", "answers": [["protèges"]], "word_bank": ["protèges", "protèges", "protégeras"] },
+        { "item_type": "gap_fill", "sentence_template": "Il faut que tu {1} l'environnement. (protéger: ils protègent → protèg-)", "answers": [["protèges"]], "word_bank": ["protèges", "protégeras"] },
         { "item_type": "gap_fill", "sentence_template": "J'espère que les gouvernements {1} plus vite. (agir — indicatif futur: agiront)", "answers": [["agiront"]], "word_bank": ["agissent", "agiront", "agissaient"] },
         { "item_type": "gap_fill", "sentence_template": "Bien qu'il {1} difficile, nous devons lutter contre le racisme. (être)", "answers": [["soit"]], "word_bank": ["est", "soit", "sera"] },
         { "item_type": "gap_fill", "sentence_template": "Je ne pense pas que cette loi {1} suffisante. (être)", "answers": [["soit"]], "word_bank": ["est", "soit", "sera"] },
         { "item_type": "gap_fill", "sentence_template": "Pour que la planète {1} protégée, il faut agir maintenant. (être)", "answers": [["soit"]], "word_bank": null },
-        { "item_type": "gap_fill", "sentence_template": "Avant qu'il ne {1} trop tard, changeons nos habitudes. (être)", "answers": [["soit"]], "word_bank": null },
         { "item_type": "gap_fill", "sentence_template": "J'ai peur que la situation ne {1} pas. (s'améliorer: s'amélior-)", "answers": [["s'améliore"]], "word_bank": null },
-        { "item_type": "gap_fill", "sentence_template": "Je pense qu'il {1} important d'agir maintenant. (être — indicatif!)", "answers": [["est"]], "word_bank": null },
         { "item_type": "gap_fill", "sentence_template": "Il est nécessaire que chaque citoyen {1} consciencieusement. (voter: ils votent → vot-)", "answers": [["vote"]], "word_bank": null },
-        { "item_type": "gap_fill", "sentence_template": "Il me semble que les jeunes {1} de plus en plus engagés. (être — indicatif!)", "answers": [["sont"]], "word_bank": null },
-        { "item_type": "gap_fill", "sentence_template": "Bien que les réfugiés {1} de l'aide, l'intégration reste difficile. (avoir besoin — subjonctif: ils ont besoin → ils aient besoin)", "answers": [["aient besoin"]], "word_bank": null },
-        { "item_type": "gap_fill", "sentence_template": "Je doute que cette mesure {1} l'inégalité. (réduire: ils réduisent → réduisent-subj: réduise)", "answers": [["réduise"]], "word_bank": null }
+        { "item_type": "typed", "direction": "fi_to_fr", "prompt": "On tärkeää, että kierrätämme.", "accept": ["il est important que nous recyclions", "il faut que nous recyclions", "il est important qu'on recycle", "il faut qu'on recycle"], "topic_key": "subjonctif_present" },
+        { "item_type": "typed", "direction": "fi_to_fr", "prompt": "Haluamme, että hän toimii.", "accept": ["nous voulons qu'il agisse", "nous voulons qu'elle agisse", "on veut qu'il agisse", "on veut qu'elle agisse"], "topic_key": "subjonctif_present" },
+        { "item_type": "typed", "direction": "fi_to_fr", "prompt": "On välttämätöntä, että toimit.", "accept": ["il est nécessaire que tu agisses", "il faut que tu agisses", "il est indispensable que tu agisses"], "topic_key": "subjonctif_present" },
+        { "item_type": "typed", "direction": "fi_to_fr", "prompt": "Vaikka se on vaikeaa...", "accept": ["bien que ce soit difficile", "bien qu'il soit difficile", "bien que ce soit dur", "bien qu'il soit dur"], "topic_key": "subjonctif_present" },
+        { "item_type": "typed", "direction": "fi_to_fr", "prompt": "En usko, että se on mahdollista.", "accept": ["je ne pense pas que ce soit possible", "je ne crois pas que ce soit possible", "je ne pense pas que cela soit possible", "je ne crois pas que cela soit possible"], "topic_key": "subjonctif_present" },
+        { "item_type": "translate", "direction": "fi_to_fr", "source": "On välttämätöntä, että hallitus toimii nyt.", "accept": ["il est nécessaire que le gouvernement agisse maintenant", "il faut que le gouvernement agisse maintenant", "il est indispensable que le gouvernement agisse maintenant", "il est nécessaire que le gouvernement agisse maintenant."], "topic_key": "subjonctif_present" },
+        { "item_type": "translate", "direction": "fi_to_fr", "source": "Pelkään, että ilmastonmuutos pahenee.", "accept": ["j'ai peur que le changement climatique s'aggrave", "j'ai peur que le changement climatique empire", "j'ai peur que le réchauffement climatique s'aggrave", "j'ai peur que le réchauffement climatique empire"], "topic_key": "subjonctif_present" },
+        { "item_type": "translate", "direction": "fi_to_fr", "source": "Jotta nuoret osallistuisivat enemmän, tarvitsemme muutosta.", "accept": ["pour que les jeunes participent davantage nous avons besoin d'un changement", "pour que les jeunes participent plus nous avons besoin d'un changement", "pour que les jeunes s'engagent davantage nous avons besoin d'un changement", "pour que les jeunes participent davantage, nous avons besoin d'un changement"], "topic_key": "subjonctif_present" },
+        {
+          "item_type": "match",
+          "pairs": [
+            { "fr": "la pollution", "fi": "saastuminen" },
+            { "fr": "le recyclage", "fi": "kierrätys" },
+            { "fr": "le développement durable", "fi": "kestävä kehitys" },
+            { "fr": "le réchauffement climatique", "fi": "ilmaston lämpeneminen" }
+          ],
+          "topic_key": "vocabulaire_environnement"
+        }
       ]
     }
   ],

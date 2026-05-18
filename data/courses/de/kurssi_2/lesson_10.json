@@ -23,39 +23,397 @@
       "phase_type": "recognition_mc",
       "title": "Kurssi 2 — Loppukoe",
       "instruction": "Valitse oikea vaihtoehto. 30 kysymystä kattavat kaikki kurssin 2 aiheet.",
-      "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
+      "mastery_threshold": {
+        "I": 0.55,
+        "A": 0.6,
+        "B": 0.65,
+        "C": 0.7,
+        "M": 0.8,
+        "E": 0.85,
+        "L": 0.95
+      },
       "skip_for_targets": [],
       "items": [
-        { "item_type": "mc", "stem": "Mein ___ hat drei Zimmer, eine Küche und ein Bad.", "choices": ["Haus", "Wohnzimmer", "Wohnung", "Schlafzimmer"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "die Wohnung = kerrostaloasunto (feminiini). Huom: 'meine' olisi tarkempi, mutta mein voi esiintyä murteessa." },
-        { "item_type": "mc", "stem": "Ich schlafe im ___.", "choices": ["Küche", "Wohnzimmer", "Schlafzimmer", "Bad"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "Schlafzimmer = makuuhuone. schlafen = nukkua." },
-        { "item_type": "mc", "stem": "Was steht in deinem Wohnzimmer?", "choices": ["Das Bett", "Der Kühlschrank", "Das Sofa", "Die Dusche"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "Sofa = sohva kuuluu olohuoneeseen. Sänky on makuuhuoneessa, jääkaappi keittiössä." },
-        { "item_type": "mc", "stem": "Zum ___ esse ich ein Brötchen mit Käse.", "choices": ["Abendessen", "Mittagessen", "Frühstück", "Mitternacht"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "Frühstück = aamiainen. Brötchen mit Käse on tyypillinen saksalainen aamiainen." },
-        { "item_type": "mc", "stem": "Ich esse ___ gerne Fleisch.", "choices": ["oft", "nicht", "kein", "keinen"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "gerne + usein = oft + gerne. 'nicht gerne' = ei mielellään — tässä lauseessa puuttuu kieltosana." },
-        { "item_type": "mc", "stem": "Er ___ sehr gut Englisch. (sprechen)", "choices": ["sprecht", "spreche", "spricht", "sprechen"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "er/sie/es: spricht (e→i). sprecht on ihr-muoto." },
-        { "item_type": "mc", "stem": "Was ___ du gerade? (lesen)", "choices": ["liest", "lese", "lest", "lesen"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "du: liest (e→ie). lest on ihr-muoto." },
-        { "item_type": "mc", "stem": "Mein Vater ___ jeden Morgen zur Arbeit. (fahren)", "choices": ["fährt", "fahre", "fährst", "fahren"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "er/sie/es: fährt (a→ä). Isä on kolmas persoona." },
-        { "item_type": "mc", "stem": "Ich sehe ___ Mann auf der Straße.", "choices": ["der", "ein", "den", "einen"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "Mann on maskuliini, määräinen artikkeli Akkusativissa → den." },
-        { "item_type": "mc", "stem": "Er hat ___ Hund und ___ Katze.", "choices": ["einen / eine", "ein / eine", "einen / ein", "ein / einen"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "Hund (mask.) → einen; Katze (fem.) → eine." },
-        { "item_type": "mc", "stem": "Ich ___ ins Kino gehen. (haluaisin)", "choices": ["will", "kann", "möchte", "muss"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "möchte = haluaisi (kohtelias). will = vahva tahto." },
-        { "item_type": "mc", "stem": "Er ___ sehr gut schwimmen. (osaa)", "choices": ["muss", "will", "möchte", "kann"], "correct_index": 3, "distractor_difficulty": "easy", "explanation": "kann = osaa. können ilmaisee kykyä." },
-        { "item_type": "mc", "stem": "Ich möchte ins Restaurant ___.", "choices": ["gehe", "geht", "gehen", "gegangen"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "Pääverbi on infinitiivissä lauseen loppuun: möchte + gehen." },
-        { "item_type": "mc", "stem": "Was ist dein Lieblings-___?", "choices": ["Freizeit", "Hobby", "Verein", "Sport"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "das Hobby = harrastus. Lieblingshoby = suosikkiharrastus." },
-        { "item_type": "mc", "stem": "Er spielt ___ im Verein Fußball.", "choices": ["immer", "manchmal", "nie", "selten"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "Kaikki vaihtoehdot ovat mahdollisia — kontekstissa 'im Verein' viittaa säännölliseen toimintaan → immer tai oft." },
-        { "item_type": "mc", "stem": "Ich sehe ___ Vater. (mein, Akkusativ)", "choices": ["mein", "meinen", "meine", "meiner"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Vater on maskuliini → Akkusativissa meinen." },
-        { "item_type": "mc", "stem": "Er liebt ___ Mutter. (sein, Akkusativ)", "choices": ["seinen", "sein", "seine", "seiner"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "Mutter on feminiini → seine (ei muutu Akkusativissa)." },
-        { "item_type": "mc", "stem": "Wir besuchen ___ Großeltern. (unser, Akkusativ, monikko)", "choices": ["unseren", "unser", "unsere", "unserem"], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "Großeltern on monikko → unsere." },
-        { "item_type": "mc", "stem": "Ich habe ___ Hund. (en ole koiraa)", "choices": ["nicht", "kein", "keine", "keinen"], "correct_index": 3, "distractor_difficulty": "medium", "explanation": "Hund on maskuliini → keinen (ein → keinen Akkusativissa)." },
-        { "item_type": "mc", "stem": "Das ist ___ gut. (se ei ole hyvää)", "choices": ["kein", "keinen", "keine", "nicht"], "correct_index": 3, "distractor_difficulty": "easy", "explanation": "gut on adjektiivi → nicht. kein kieltää vain substantiiveja." },
-        { "item_type": "mc", "stem": "Wir haben ___ Zeit. (feminiini, ei aikaa)", "choices": ["nicht", "keinen", "keine", "kein"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "Zeit on feminiini → keine Zeit." },
-        { "item_type": "mc", "stem": "Er ___ jeden Morgen um 6:30 ___. (herätä)", "choices": ["steht / auf", "stehe / auf", "stehst / auf", "aufsteht / –"], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "Erotettava verbi aufstehen: er steht auf. Verbi on paikalla 2, etuliite loppuun." },
-        { "item_type": "mc", "stem": "Was ___ du in deiner Freizeit?", "choices": ["macht", "machst", "mache", "machen"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "du: machst." },
-        { "item_type": "mc", "stem": "Er isst nicht gerne ___. (kasvikset, neutri)", "choices": ["das Gemüse", "den Gemüse", "ein Gemüse", "die Gemüse"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "Gemüse on neutri → das Gemüse (myös Akkusativissa das, ei muutu)." },
-        { "item_type": "mc", "stem": "Ich ___ nächsten Sommer nach Deutschland reisen. (haluaisin)", "choices": ["kann", "muss", "möchte", "darf"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "möchte = haluaisi. Toive tulevaisuudessa → möchten." },
-        { "item_type": "mc", "stem": "Sie ___ gut singen. (she = hän, osata)", "choices": ["kannst", "können", "kann", "könntet"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "sie (yksikkö, hän) kann." },
-        { "item_type": "mc", "stem": "Er nimmt ___ Bus. (maskuliini, määräinen)", "choices": ["die", "der", "den", "das"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "Bus on maskuliini, Akkusativ → den." },
-        { "item_type": "mc", "stem": "Du ___ (nehmen) immer die S-Bahn?", "choices": ["nimmt", "nehme", "nimmst", "nehmt"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "du: nimmst (täysin epäsäännöllinen)." },
-        { "item_type": "mc", "stem": "Ich habe ___ Auto. (minulla ei ole autoa, neutri)", "choices": ["keinen", "keine", "kein", "nicht"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "Auto on neutri → kein Auto." },
-        { "item_type": "mc", "stem": "Was ist die richtige Satzstellung? (Ich / möchten / gehen / ins Kino)", "choices": ["Ich gehen möchte ins Kino.", "Ich möchte gehe ins Kino.", "Ich möchte ins Kino gehen.", "Ins Kino möchte gehen ich."], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "Modaaliverbi paikalla 2, pääverbi infinitiivissä lauseen loppuun: Ich möchte ins Kino gehen." }
+        {
+          "item_type": "mc",
+          "stem": "Mein ___ hat drei Zimmer, eine Küche und ein Bad.",
+          "choices": [
+            "Haus",
+            "Wohnzimmer",
+            "Wohnung",
+            "Schlafzimmer"
+          ],
+          "correct_index": 2,
+          "distractor_difficulty": "medium",
+          "explanation": "die Wohnung = kerrostaloasunto (feminiini). Huom: 'meine' olisi tarkempi, mutta mein voi esiintyä murteessa."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Ich schlafe im ___.",
+          "choices": [
+            "Küche",
+            "Wohnzimmer",
+            "Schlafzimmer",
+            "Bad"
+          ],
+          "correct_index": 2,
+          "distractor_difficulty": "easy",
+          "explanation": "Schlafzimmer = makuuhuone. schlafen = nukkua."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Was steht in deinem Wohnzimmer?",
+          "choices": [
+            "Das Bett",
+            "Der Kühlschrank",
+            "Das Sofa",
+            "Die Dusche"
+          ],
+          "correct_index": 2,
+          "distractor_difficulty": "easy",
+          "explanation": "Sofa = sohva kuuluu olohuoneeseen. Sänky on makuuhuoneessa, jääkaappi keittiössä."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Zum ___ esse ich ein Brötchen mit Käse.",
+          "choices": [
+            "Abendessen",
+            "Mittagessen",
+            "Frühstück",
+            "Mitternacht"
+          ],
+          "correct_index": 2,
+          "distractor_difficulty": "easy",
+          "explanation": "Frühstück = aamiainen. Brötchen mit Käse on tyypillinen saksalainen aamiainen."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Ich esse ___ gerne Fleisch.",
+          "choices": [
+            "oft",
+            "nicht",
+            "kein",
+            "keinen"
+          ],
+          "correct_index": 0,
+          "distractor_difficulty": "medium",
+          "explanation": "gerne + usein = oft + gerne. 'nicht gerne' = ei mielellään — tässä lauseessa puuttuu kieltosana."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Er ___ sehr gut Englisch. (sprechen)",
+          "choices": [
+            "sprecht",
+            "spreche",
+            "spricht",
+            "sprechen"
+          ],
+          "correct_index": 2,
+          "distractor_difficulty": "medium",
+          "explanation": "er/sie/es: spricht (e→i). sprecht on ihr-muoto."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Was ___ du gerade? (lesen)",
+          "choices": [
+            "liest",
+            "lese",
+            "lest",
+            "lesen"
+          ],
+          "correct_index": 0,
+          "distractor_difficulty": "medium",
+          "explanation": "du: liest (e→ie). lest on ihr-muoto."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Mein Vater ___ jeden Morgen zur Arbeit. (fahren)",
+          "choices": [
+            "fährt",
+            "fahre",
+            "fährst",
+            "fahren"
+          ],
+          "correct_index": 0,
+          "distractor_difficulty": "easy",
+          "explanation": "er/sie/es: fährt (a→ä). Isä on kolmas persoona."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Ich sehe ___ Mann auf der Straße.",
+          "choices": [
+            "der",
+            "ein",
+            "den",
+            "einen"
+          ],
+          "correct_index": 2,
+          "distractor_difficulty": "medium",
+          "explanation": "Mann on maskuliini, määräinen artikkeli Akkusativissa → den."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Er hat ___ Hund und ___ Katze.",
+          "choices": [
+            "einen / eine",
+            "ein / eine",
+            "einen / ein",
+            "ein / einen"
+          ],
+          "correct_index": 0,
+          "distractor_difficulty": "medium",
+          "explanation": "Hund (mask.) → einen; Katze (fem.) → eine."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Ich ___ ins Kino gehen. (haluaisin)",
+          "choices": [
+            "will",
+            "kann",
+            "möchte",
+            "muss"
+          ],
+          "correct_index": 2,
+          "distractor_difficulty": "easy",
+          "explanation": "möchte = haluaisi (kohtelias). will = vahva tahto."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Er ___ sehr gut schwimmen. (osaa)",
+          "choices": [
+            "muss",
+            "will",
+            "möchte",
+            "kann"
+          ],
+          "correct_index": 3,
+          "distractor_difficulty": "easy",
+          "explanation": "kann = osaa. können ilmaisee kykyä."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Ich möchte ins Restaurant ___.",
+          "choices": [
+            "gehe",
+            "geht",
+            "gehen",
+            "gegangen"
+          ],
+          "correct_index": 2,
+          "distractor_difficulty": "medium",
+          "explanation": "Pääverbi on infinitiivissä lauseen loppuun: möchte + gehen."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Was ist dein Lieblings-___?",
+          "choices": [
+            "Freizeit",
+            "Hobby",
+            "Verein",
+            "Sport"
+          ],
+          "correct_index": 1,
+          "distractor_difficulty": "easy",
+          "explanation": "das Hobby = harrastus. Lieblingshoby = suosikkiharrastus."
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "Er {1} (sprechen) sehr gut Englisch.",
+          "answers": [
+            [
+              "spricht"
+            ]
+          ],
+          "word_bank": null,
+          "topic_key": "present_irregular"
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "Ich sehe {1} (ein, mask. Akk.) Mann auf der Straße.",
+          "answers": [
+            [
+              "einen"
+            ]
+          ],
+          "word_bank": null,
+          "topic_key": "accusative_case"
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "Du {1} (nehmen) immer die U-Bahn zur Schule.",
+          "answers": [
+            [
+              "nimmst"
+            ]
+          ],
+          "word_bank": null,
+          "topic_key": "present_irregular"
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "Ich {1} (möchte) ins Kino gehen.",
+          "answers": [
+            [
+              "möchte"
+            ]
+          ],
+          "word_bank": null,
+          "topic_key": "modal_verbs"
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "Er hat {1} (kein, neutri) Auto.",
+          "answers": [
+            [
+              "kein"
+            ]
+          ],
+          "word_bank": null,
+          "topic_key": "accusative_case"
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "Wir besuchen {1} (unser, Akk., monikko) Großeltern.",
+          "answers": [
+            [
+              "unsere"
+            ]
+          ],
+          "word_bank": null,
+          "topic_key": "accusative_case"
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "Sie {1} (können) sehr gut schwimmen.",
+          "answers": [
+            [
+              "kann"
+            ]
+          ],
+          "word_bank": null,
+          "topic_key": "modal_verbs"
+        },
+        {
+          "item_type": "typed",
+          "direction": "fi_to_de",
+          "prompt": "Hän lukee sanomalehteä.",
+          "accept": [
+            "er liest die zeitung",
+            "er liest die zeitung.",
+            "Er liest die Zeitung",
+            "Er liest die Zeitung.",
+            "sie liest die zeitung",
+            "sie liest die zeitung.",
+            "Sie liest die Zeitung",
+            "Sie liest die Zeitung."
+          ],
+          "topic_key": "present_irregular"
+        },
+        {
+          "item_type": "typed",
+          "direction": "fi_to_de",
+          "prompt": "Minun täytyy tehdä läksyt.",
+          "accept": [
+            "ich muss hausaufgaben machen",
+            "ich muss hausaufgaben machen.",
+            "Ich muss Hausaufgaben machen",
+            "Ich muss Hausaufgaben machen."
+          ],
+          "topic_key": "modal_verbs"
+        },
+        {
+          "item_type": "typed",
+          "direction": "fi_to_de",
+          "prompt": "Minulla ei ole koiraa eikä kissaa.",
+          "accept": [
+            "ich habe keinen hund und keine katze",
+            "ich habe keinen hund und keine katze.",
+            "Ich habe keinen Hund und keine Katze",
+            "Ich habe keinen Hund und keine Katze."
+          ],
+          "topic_key": "accusative_case"
+        },
+        {
+          "item_type": "typed",
+          "direction": "fi_to_de",
+          "prompt": "Haluaisin mennä ravintolaan.",
+          "accept": [
+            "ich möchte ins restaurant gehen",
+            "ich möchte ins restaurant gehen.",
+            "Ich möchte ins Restaurant gehen",
+            "Ich möchte ins Restaurant gehen."
+          ],
+          "topic_key": "modal_verbs"
+        },
+        {
+          "item_type": "typed",
+          "direction": "fi_to_de",
+          "prompt": "Hän ajaa töihin joka aamu.",
+          "accept": [
+            "er fährt jeden morgen zur arbeit",
+            "er fährt jeden morgen zur arbeit.",
+            "Er fährt jeden Morgen zur Arbeit",
+            "Er fährt jeden Morgen zur Arbeit."
+          ],
+          "topic_key": "present_irregular"
+        },
+        {
+          "item_type": "translate",
+          "direction": "fi_to_de",
+          "source": "Minä näen bussin kadulla ja otan sen töihin.",
+          "accept": [
+            "ich sehe den bus auf der straße und nehme ihn zur arbeit",
+            "Ich sehe den Bus auf der Straße und nehme ihn zur Arbeit",
+            "ich sehe den bus und nehme ihn zur arbeit"
+          ],
+          "topic_key": "accusative_case"
+        },
+        {
+          "item_type": "translate",
+          "direction": "fi_to_de",
+          "source": "Hänellä on koira ja hän rakastaa isäänsä.",
+          "accept": [
+            "er hat einen hund und liebt seinen vater",
+            "Er hat einen Hund und liebt seinen Vater",
+            "sie hat einen hund und liebt ihren vater",
+            "Sie hat einen Hund und liebt ihren Vater"
+          ],
+          "topic_key": "accusative_case"
+        },
+        {
+          "item_type": "translate",
+          "direction": "fi_to_de",
+          "source": "Hän osaa puhua saksaa ja haluaa asua Berliinissä.",
+          "accept": [
+            "er kann deutsch sprechen und möchte in berlin wohnen",
+            "Er kann Deutsch sprechen und möchte in Berlin wohnen",
+            "er kann deutsch sprechen und will in berlin wohnen",
+            "Er kann Deutsch sprechen und will in Berlin wohnen"
+          ],
+          "topic_key": "modal_verbs"
+        },
+        {
+          "item_type": "match",
+          "pairs": [
+            {
+              "left": "können",
+              "right": "osata / voida"
+            },
+            {
+              "left": "müssen",
+              "right": "täytyä"
+            },
+            {
+              "left": "möchte",
+              "right": "haluaisi"
+            },
+            {
+              "left": "dürfen",
+              "right": "saada (lupa)"
+            }
+          ],
+          "topic_key": "modal_verbs"
+        }
       ]
     }
   ],

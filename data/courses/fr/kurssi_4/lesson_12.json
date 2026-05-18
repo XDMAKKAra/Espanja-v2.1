@@ -25,53 +25,463 @@
       "phase_type": "recognition_mc",
       "title": "Kertaustesti — Kurssi 4",
       "instruction": "Valitse oikea vastaus. 30 kysymystä — imparfait, passé composé vs imparfait, sanasto ja il y avait.",
-      "mastery_threshold": { "I": 0.3, "A": 0.38, "B": 0.52, "C": 0.63, "M": 0.75, "E": 0.85, "L": 0.95 },
+      "mastery_threshold": {
+        "I": 0.3,
+        "A": 0.38,
+        "B": 0.52,
+        "C": 0.63,
+        "M": 0.75,
+        "E": 0.85,
+        "L": 0.95
+      },
       "skip_for_targets": [],
       "items": [
-        { "item_type": "mc", "stem": "l'enfance", "choices": ["nuoruus", "lapsuus", "vanhuus", "kesä"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "l'enfance = lapsuus (feminiini)." },
-        { "item_type": "mc", "stem": "le souvenir", "choices": ["haave", "ongelma", "muisto", "seikkailu"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "le souvenir = muisto." },
-        { "item_type": "mc", "stem": "la forêt", "choices": ["meri", "metsä", "järvi", "joki"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "la forêt = metsä (feminiini)." },
-        { "item_type": "mc", "stem": "le chat", "choices": ["koira", "kissa", "lintu", "kani"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "le chat = kissa. le chien = koira." },
-        { "item_type": "mc", "stem": "tranquille", "choices": ["meluisa", "saastunut", "rauhallinen", "kaunis"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "tranquille = rauhallinen. bruyant = meluisa, pollué = saastunut." },
-        { "item_type": "mc", "stem": "il y avait", "choices": ["on olemassa", "oli olemassa", "oli ollut", "on ollut"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "il y avait = oli olemassa (imparfait). il y a = on olemassa (présent)." },
-        { "item_type": "mc", "stem": "parler — je (imparfait)", "choices": ["je parlai", "je parlais", "je parlait", "je parle"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "je parlais — nous parlons → kanta parl- + -ais." },
-        { "item_type": "mc", "stem": "être — il (imparfait)", "choices": ["il était", "il étais", "il estait", "il a été"], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "il était — être on poikkeus, kanta ét-. *Estait, étais ovat virheitä." },
-        { "item_type": "mc", "stem": "faire — elle (imparfait)", "choices": ["elle fesait", "elle faisait", "elle faisait", "elle ferait"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "elle faisait — nous faisons → fais- + -ait. *Fesait on virhe (nous faisons, EI fesons)." },
-        { "item_type": "mc", "stem": "aller — nous (imparfait)", "choices": ["nous allions", "nous alions", "nous allaient", "nous allons"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "nous allions — nous allons → all- (kaksois-l) + -ions. Présent: nous allons." },
-        { "item_type": "mc", "stem": "Tous les jours, il ___ (jouer) dehors.", "choices": ["a joué", "jouait", "joue", "jouera"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "jouait — imparfait, toistuva. 'Tous les jours' = imparfait-signaali." },
-        { "item_type": "mc", "stem": "Hier, elle ___ (partir) en vacances.", "choices": ["partait", "est partie", "parte", "partira"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "est partie — passé composé, 'hier'. partir on être-verbi passé composé:ssa." },
-        { "item_type": "mc", "stem": "Il ___ (faire) beau ce matin-là.", "choices": ["a fait", "faisait", "fait", "fera"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "faisait — sääkuvaus = imparfait. *A fait beau on YO:n klassinen virhe!" },
-        { "item_type": "mc", "stem": "Soudain, quelqu'un ___ (frapper) à la porte.", "choices": ["frappait", "a frappé", "frappe", "frappera"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "a frappé — passé composé, 'soudain' = äkillinen tapahtuma." },
-        { "item_type": "mc", "stem": "D'habitude, on ___ (dîner) à 19 heures.", "choices": ["a dîné", "dîne", "dînait", "dînera"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "dînait — imparfait, toistuva tapa. 'd'habitude' = imparfait-signaali." },
-        { "item_type": "mc", "stem": "Je ___ (dormir) quand le téléphone ___ (sonner).", "choices": ["dormais / a sonné", "ai dormi / sonnait", "dormais / sonnait", "ai dormi / a sonné"], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "dormais / a sonné — tausta (imparfait) + keskeytys (passé composé). YO-klassikko!" },
-        { "item_type": "mc", "stem": "Pendant qu'elle ___ (lire), son frère ___ (arriver).", "choices": ["lisait / est arrivé", "a lu / arrivait", "lisait / arrivait", "a lu / est arrivé"], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "lisait / est arrivé — tausta (imparfait) + keskeytys (passé composé). arriver = être-verbi." },
-        { "item_type": "mc", "stem": "Il y ___ un grand jardin.", "choices": ["était", "avait", "a", "avaient"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "avait — il y avait. *Il y était on virhe — être ei kuulu il y a -rakenteeseen." },
-        { "item_type": "mc", "stem": "Il n'y ___ pas de voitures.", "choices": ["était", "avait", "a", "ont"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "avait — il n'y avait pas de = 'ei ollut'." },
-        { "item_type": "mc", "stem": "La rivière ___ (couler) doucement.", "choices": ["a coulé", "coulait", "coule", "coulera"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "coulait — joen virtaaminen on jatkuva tila = imparfait." },
-        { "item_type": "mc", "stem": "le renard", "choices": ["susi", "jänis", "kettu", "orava"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "le renard = kettu. le loup = susi, le lièvre = jänis, l'écureuil = orava." },
-        { "item_type": "mc", "stem": "magnifique", "choices": ["ruma", "pieni", "upea", "meluisa"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "magnifique = upea, mahtava." },
-        { "item_type": "mc", "stem": "voir — ils (imparfait)", "choices": ["ils veyaient", "ils voyaient", "ils voient", "ils ont vu"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "ils voyaient — nous voyons → kanta voy- + -aient." },
-        { "item_type": "mc", "stem": "Autrefois, les enfants ___ (jouer) dehors.", "choices": ["ont joué", "jouaient", "jouent", "joueront"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "jouaient — imparfait, 'autrefois' = kuvaileva muinaisaika." },
-        { "item_type": "mc", "stem": "beau → feminiini", "choices": ["beau", "beaue", "belle", "joli"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "belle — beau on epäsäännöllinen: beau (m) → belle (f). *Beaue ei ole muoto." },
-        { "item_type": "mc", "stem": "sauvage (feminiini)?", "choices": ["sauvagée", "sauvage", "sauvagée", "sauvagé"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "sauvage — ei taivu sukupuolen mukaan! un animal sauvage / une forêt sauvage." },
-        { "item_type": "mc", "stem": "Finalement, il ___ (décider) de partir.", "choices": ["décidait", "a décidé", "décide", "décidera"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "a décidé — passé composé, 'finalement' = lopullinen päätös." },
-        { "item_type": "mc", "stem": "Quand j'___ (être) enfant, j'adorais les contes.", "choices": ["ai été", "suis", "étais", "serai"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "étais — imparfait. 'Quand j'étais enfant' = klassikkofraasin perusmuoto." },
-        { "item_type": "mc", "stem": "finir — vous (imparfait)", "choices": ["vous finiez", "vous finissiez", "vous finissez", "vous finirez"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "vous finissiez — nous finissons → kanta finiss- + -iez. *Finiez on vaille, koska kanta on finiss-." },
-        { "item_type": "mc", "stem": "Les oiseaux ___ (chanter) dans la forêt tous les matins.", "choices": ["ont chanté", "chantaient", "chantent", "chanteront"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "chantaient — imparfait, toistuva. 'tous les matins' = imparfait-signaali." }
+        {
+          "item_type": "mc",
+          "stem": "l'enfance",
+          "choices": [
+            "nuoruus",
+            "lapsuus",
+            "vanhuus",
+            "kesä"
+          ],
+          "correct_index": 1,
+          "distractor_difficulty": "easy",
+          "explanation": "l'enfance = lapsuus (feminiini)."
+        },
+        {
+          "item_type": "mc",
+          "stem": "le souvenir",
+          "choices": [
+            "haave",
+            "ongelma",
+            "muisto",
+            "seikkailu"
+          ],
+          "correct_index": 2,
+          "distractor_difficulty": "easy",
+          "explanation": "le souvenir = muisto."
+        },
+        {
+          "item_type": "mc",
+          "stem": "la forêt",
+          "choices": [
+            "meri",
+            "metsä",
+            "järvi",
+            "joki"
+          ],
+          "correct_index": 1,
+          "distractor_difficulty": "easy",
+          "explanation": "la forêt = metsä (feminiini)."
+        },
+        {
+          "item_type": "mc",
+          "stem": "le chat",
+          "choices": [
+            "koira",
+            "kissa",
+            "lintu",
+            "kani"
+          ],
+          "correct_index": 1,
+          "distractor_difficulty": "easy",
+          "explanation": "le chat = kissa. le chien = koira."
+        },
+        {
+          "item_type": "mc",
+          "stem": "tranquille",
+          "choices": [
+            "meluisa",
+            "saastunut",
+            "rauhallinen",
+            "kaunis"
+          ],
+          "correct_index": 2,
+          "distractor_difficulty": "easy",
+          "explanation": "tranquille = rauhallinen. bruyant = meluisa, pollué = saastunut."
+        },
+        {
+          "item_type": "mc",
+          "stem": "il y avait",
+          "choices": [
+            "on olemassa",
+            "oli olemassa",
+            "oli ollut",
+            "on ollut"
+          ],
+          "correct_index": 1,
+          "distractor_difficulty": "easy",
+          "explanation": "il y avait = oli olemassa (imparfait). il y a = on olemassa (présent)."
+        },
+        {
+          "item_type": "mc",
+          "stem": "parler — je (imparfait)",
+          "choices": [
+            "je parlai",
+            "je parlais",
+            "je parlait",
+            "je parle"
+          ],
+          "correct_index": 1,
+          "distractor_difficulty": "medium",
+          "explanation": "je parlais — nous parlons → kanta parl- + -ais."
+        },
+        {
+          "item_type": "mc",
+          "stem": "être — il (imparfait)",
+          "choices": [
+            "il était",
+            "il étais",
+            "il estait",
+            "il a été"
+          ],
+          "correct_index": 0,
+          "distractor_difficulty": "hard",
+          "explanation": "il était — être on poikkeus, kanta ét-. *Estait, étais ovat virheitä."
+        },
+        {
+          "item_type": "mc",
+          "stem": "faire — elle (imparfait)",
+          "choices": [
+            "elle fesait",
+            "elle faisait",
+            "elle faisait",
+            "elle ferait"
+          ],
+          "correct_index": 1,
+          "distractor_difficulty": "hard",
+          "explanation": "elle faisait — nous faisons → fais- + -ait. *Fesait on virhe (nous faisons, EI fesons)."
+        },
+        {
+          "item_type": "mc",
+          "stem": "aller — nous (imparfait)",
+          "choices": [
+            "nous allions",
+            "nous alions",
+            "nous allaient",
+            "nous allons"
+          ],
+          "correct_index": 0,
+          "distractor_difficulty": "medium",
+          "explanation": "nous allions — nous allons → all- (kaksois-l) + -ions. Présent: nous allons."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Tous les jours, il ___ (jouer) dehors.",
+          "choices": [
+            "a joué",
+            "jouait",
+            "joue",
+            "jouera"
+          ],
+          "correct_index": 1,
+          "distractor_difficulty": "medium",
+          "explanation": "jouait — imparfait, toistuva. 'Tous les jours' = imparfait-signaali."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Hier, elle ___ (partir) en vacances.",
+          "choices": [
+            "partait",
+            "est partie",
+            "parte",
+            "partira"
+          ],
+          "correct_index": 1,
+          "distractor_difficulty": "medium",
+          "explanation": "est partie — passé composé, 'hier'. partir on être-verbi passé composé:ssa."
+        },
+        {
+          "item_type": "mc",
+          "stem": "Il ___ (faire) beau ce matin-là.",
+          "choices": [
+            "a fait",
+            "faisait",
+            "fait",
+            "fera"
+          ],
+          "correct_index": 1,
+          "distractor_difficulty": "hard",
+          "explanation": "faisait — sääkuvaus = imparfait. *A fait beau on YO:n klassinen virhe!"
+        },
+        {
+          "item_type": "mc",
+          "stem": "Soudain, quelqu'un ___ (frapper) à la porte.",
+          "choices": [
+            "frappait",
+            "a frappé",
+            "frappe",
+            "frappera"
+          ],
+          "correct_index": 1,
+          "distractor_difficulty": "medium",
+          "explanation": "a frappé — passé composé, 'soudain' = äkillinen tapahtuma."
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "Quand j'étais petit, je {1} (jouer) dans la forêt tous les jours.",
+          "answers": [
+            [
+              "jouais"
+            ]
+          ],
+          "word_bank": null,
+          "topic_key": "imparfait"
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "Soudain, un renard {1} (apparaître) au bord du lac.",
+          "answers": [
+            [
+              "est apparu",
+              "a apparu"
+            ]
+          ],
+          "word_bank": null,
+          "topic_key": "passe_compose_vs_imparfait"
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "Il {1} (faire) beau et les oiseaux chantaient.",
+          "answers": [
+            [
+              "faisait"
+            ]
+          ],
+          "word_bank": null,
+          "topic_key": "imparfait"
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "Je {1} (dormir) quand le téléphone a sonné.",
+          "answers": [
+            [
+              "dormais"
+            ]
+          ],
+          "word_bank": null,
+          "topic_key": "passe_compose_vs_imparfait"
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "Il y {1} un grand jardin derrière la maison.",
+          "answers": [
+            [
+              "avait"
+            ]
+          ],
+          "word_bank": null,
+          "topic_key": "imparfait"
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "D'habitude, on {1} (dîner) ensemble le soir.",
+          "answers": [
+            [
+              "dînait"
+            ]
+          ],
+          "word_bank": null,
+          "topic_key": "imparfait"
+        },
+        {
+          "item_type": "gap_fill",
+          "sentence_template": "Pendant qu'il {1} (lire), sa sœur est arrivée.",
+          "answers": [
+            [
+              "lisait"
+            ]
+          ],
+          "word_bank": null,
+          "topic_key": "passe_compose_vs_imparfait"
+        },
+        {
+          "item_type": "typed",
+          "direction": "fi_to_fr",
+          "prompt": "Kun olin pieni, asuin maalla.",
+          "accept": [
+            "quand j'etais petit j'habitais a la campagne",
+            "quand j'étais petit, j'habitais à la campagne",
+            "quand j'etais petite j'habitais a la campagne",
+            "quand j'étais petite, j'habitais à la campagne"
+          ],
+          "topic_key": "imparfait"
+        },
+        {
+          "item_type": "typed",
+          "direction": "fi_to_fr",
+          "prompt": "Eilen hän meni metsään.",
+          "accept": [
+            "hier il est alle dans la foret",
+            "hier il est allé dans la forêt",
+            "hier elle est allee dans la foret",
+            "hier elle est allée dans la forêt"
+          ],
+          "topic_key": "passe_compose_vs_imparfait"
+        },
+        {
+          "item_type": "typed",
+          "direction": "fi_to_fr",
+          "prompt": "Taivas oli sininen ja linnut lauloivat.",
+          "accept": [
+            "le ciel etait bleu et les oiseaux chantaient",
+            "le ciel était bleu et les oiseaux chantaient"
+          ],
+          "topic_key": "imparfait"
+        },
+        {
+          "item_type": "typed",
+          "direction": "fi_to_fr",
+          "prompt": "Luin kirjaa kun äiti tuli kotiin.",
+          "accept": [
+            "je lisais un livre quand ma mere est rentree",
+            "je lisais un livre quand ma mère est rentrée",
+            "je lisais un livre quand la mere est arrivee",
+            "je lisais un livre quand ma mère est arrivée"
+          ],
+          "topic_key": "passe_compose_vs_imparfait"
+        },
+        {
+          "item_type": "typed",
+          "direction": "fi_to_fr",
+          "prompt": "Oli upea metsä järven rannalla.",
+          "accept": [
+            "il y avait une foret magnifique au bord du lac",
+            "il y avait une forêt magnifique au bord du lac"
+          ],
+          "topic_key": "imparfait"
+        },
+        {
+          "item_type": "translate",
+          "direction": "fi_to_fr",
+          "source": "Kun olin pieni, kävin usein isovanhempieni luona maalla.",
+          "accept": [
+            "quand j'etais petit j'allais souvent chez mes grands-parents a la campagne",
+            "quand j'étais petit, j'allais souvent chez mes grands-parents à la campagne",
+            "quand j'etais petite j'allais souvent chez mes grands-parents a la campagne",
+            "quand j'étais petite, j'allais souvent chez mes grands-parents à la campagne"
+          ],
+          "topic_key": "imparfait"
+        },
+        {
+          "item_type": "translate",
+          "direction": "fi_to_fr",
+          "source": "Yhtäkkiä susi tuli ulos metsästä ja kaikki lapset juoksivat kotiin.",
+          "accept": [
+            "soudain un loup est sorti de la foret et tous les enfants ont couru chez eux",
+            "soudain, un loup est sorti de la forêt et tous les enfants ont couru chez eux"
+          ],
+          "topic_key": "passe_compose_vs_imparfait"
+        },
+        {
+          "item_type": "translate",
+          "direction": "fi_to_fr",
+          "source": "Olin väsynyt mutta en voinut nukkua koska naapurit olivat meluisia.",
+          "accept": [
+            "j'etais fatigue mais je ne pouvais pas dormir parce que les voisins etaient bruyants",
+            "j'étais fatigué mais je ne pouvais pas dormir parce que les voisins étaient bruyants",
+            "j'etais fatiguee mais je ne pouvais pas dormir parce que les voisins etaient bruyants",
+            "j'étais fatiguée mais je ne pouvais pas dormir parce que les voisins étaient bruyants"
+          ],
+          "topic_key": "passe_compose_vs_imparfait"
+        },
+        {
+          "item_type": "match",
+          "pairs": [
+            {
+              "left": "tous les jours",
+              "right": "imparfait"
+            },
+            {
+              "left": "soudain",
+              "right": "passé composé"
+            },
+            {
+              "left": "d'habitude",
+              "right": "imparfait"
+            },
+            {
+              "left": "finalement",
+              "right": "passé composé"
+            }
+          ],
+          "topic_key": "passe_compose_vs_imparfait"
+        }
       ]
     }
   ],
   "vocab": [
-    { "es": "l'enfance", "fi": "lapsuus", "example_es": "Je me souviens de mon enfance.", "example_fi": "Muistan lapsuuteni.", "gender": "f" },
-    { "es": "le souvenir", "fi": "muisto", "example_es": "Ces souvenirs sont précieux.", "example_fi": "Nämä muistot ovat kallisarvoisia.", "gender": "m" },
-    { "es": "imparfait", "fi": "imparfait (ranskalainen aikamuoto)", "example_es": "L'imparfait décrit des actions répétées.", "example_fi": "Imparfait kuvaa toistuvia toimintoja.", "gender": null },
-    { "es": "passé composé", "fi": "passé composé (ranskalainen aikamuoto)", "example_es": "Le passé composé décrit des actions terminées.", "example_fi": "Passé composé kuvaa päättyneisyjä toimintoja.", "gender": null },
-    { "es": "il y avait", "fi": "oli olemassa", "example_es": "Il y avait un lac magnifique.", "example_fi": "Oli upea järvi.", "gender": null },
-    { "es": "tous les jours", "fi": "joka päivä (→ imparfait)", "example_es": "Tous les jours je jouais dehors.", "example_fi": "Joka päivä leikin ulkona.", "gender": null },
-    { "es": "soudain", "fi": "yhtäkkiä (→ passé composé)", "example_es": "Soudain, il a crié.", "example_fi": "Yhtäkkiä hän huusi.", "gender": null },
-    { "es": "d'habitude", "fi": "tavallisesti (→ imparfait)", "example_es": "D'habitude, on mangeait à midi.", "example_fi": "Tavallisesti söimme puoliltapäivin.", "gender": null },
-    { "es": "hier", "fi": "eilen (→ passé composé)", "example_es": "Hier, j'ai mangé une pomme.", "example_fi": "Eilen söin omenan.", "gender": null },
-    { "es": "être → étais", "fi": "olla → olin (imparfait, poikkeus)", "example_es": "Quand j'étais petit...", "example_fi": "Kun olin pieni...", "gender": null }
+    {
+      "es": "l'enfance",
+      "fi": "lapsuus",
+      "example_es": "Je me souviens de mon enfance.",
+      "example_fi": "Muistan lapsuuteni.",
+      "gender": "f"
+    },
+    {
+      "es": "le souvenir",
+      "fi": "muisto",
+      "example_es": "Ces souvenirs sont précieux.",
+      "example_fi": "Nämä muistot ovat kallisarvoisia.",
+      "gender": "m"
+    },
+    {
+      "es": "imparfait",
+      "fi": "imparfait (ranskalainen aikamuoto)",
+      "example_es": "L'imparfait décrit des actions répétées.",
+      "example_fi": "Imparfait kuvaa toistuvia toimintoja.",
+      "gender": null
+    },
+    {
+      "es": "passé composé",
+      "fi": "passé composé (ranskalainen aikamuoto)",
+      "example_es": "Le passé composé décrit des actions terminées.",
+      "example_fi": "Passé composé kuvaa päättyneisyjä toimintoja.",
+      "gender": null
+    },
+    {
+      "es": "il y avait",
+      "fi": "oli olemassa",
+      "example_es": "Il y avait un lac magnifique.",
+      "example_fi": "Oli upea järvi.",
+      "gender": null
+    },
+    {
+      "es": "tous les jours",
+      "fi": "joka päivä (→ imparfait)",
+      "example_es": "Tous les jours je jouais dehors.",
+      "example_fi": "Joka päivä leikin ulkona.",
+      "gender": null
+    },
+    {
+      "es": "soudain",
+      "fi": "yhtäkkiä (→ passé composé)",
+      "example_es": "Soudain, il a crié.",
+      "example_fi": "Yhtäkkiä hän huusi.",
+      "gender": null
+    },
+    {
+      "es": "d'habitude",
+      "fi": "tavallisesti (→ imparfait)",
+      "example_es": "D'habitude, on mangeait à midi.",
+      "example_fi": "Tavallisesti söimme puoliltapäivin.",
+      "gender": null
+    },
+    {
+      "es": "hier",
+      "fi": "eilen (→ passé composé)",
+      "example_es": "Hier, j'ai mangé une pomme.",
+      "example_fi": "Eilen söin omenan.",
+      "gender": null
+    },
+    {
+      "es": "être → étais",
+      "fi": "olla → olin (imparfait, poikkeus)",
+      "example_es": "Quand j'étais petit...",
+      "example_fi": "Kun olin pieni...",
+      "gender": null
+    }
   ],
   "side_panel": {
     "tabs": [
