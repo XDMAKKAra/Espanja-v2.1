@@ -176,6 +176,55 @@ test('PR4 — typed input accepts the correct translation', async ({ page }) => 
   await expect(page.locator('.dk__exercise-score')).toContainText('1 / 1');
 });
 
+test('PR5 — Flashcard flips, "Tiedän" advances + persists', async ({ page }) => {
+  test.setTimeout(90_000);
+  await login(page);
+  await page.setViewportSize({ width: 1440, height: 900 });
+
+  // Clear any prior flashcard progress so the spec is deterministic.
+  await page.evaluate(() => {
+    Object.keys(localStorage).forEach((k) => {
+      if (k.startsWith('puheo:dk:flashcards')) localStorage.removeItem(k);
+    });
+  });
+
+  await page.evaluate(() => { location.hash = '#/oppitunti/es/kurssi_2/3/kortit-1'; });
+  await page.waitForTimeout(1200);
+
+  await expect(page.locator('.dk__flashpack')).toBeVisible();
+  await expect(page.locator('.dk__flashcard')).toBeVisible();
+  await expect(page.locator('.dk__exercise-score')).toContainText('0 / 5');
+
+  // Card 1 front: Spanish headword, "Tiedän" is hidden until flip.
+  await expect(page.locator('.dk__flashcard-face--front .dk__flashcard-word')).toContainText('el desayuno');
+  await expect(page.locator('#dk-flash-know')).toBeHidden();
+
+  // Flip via the explicit Käännä button.
+  await page.locator('#dk-flash-flip').click();
+  await page.waitForTimeout(150);
+  await expect(page.locator('.dk__flashcard.is-flipped')).toBeVisible();
+  await expect(page.locator('#dk-flash-know')).toBeVisible();
+
+  // "Tiedän" commits + advances to card 2.
+  await page.locator('#dk-flash-know').click();
+  await page.waitForTimeout(150);
+  await expect(page.locator('.dk__exercise-score')).toContainText('1 / 5');
+  await expect(page.locator('.dk__exercise-eyebrow')).toContainText('Kortti 2 / 5');
+
+  // Persistence: the previous card's status is in localStorage.
+  const persisted = await page.evaluate(() => {
+    const key = Object.keys(localStorage).find((k) => k.startsWith('puheo:dk:flashcards'));
+    return key ? JSON.parse(localStorage.getItem(key)) : null;
+  });
+  expect(persisted).toBeTruthy();
+  expect(Object.values(persisted)).toContain('know');
+
+  await page.screenshot({
+    path: path.resolve('audit-screens', 'digikirja-pr5-flashcard.png'),
+    fullPage: true,
+  });
+});
+
 test('SideMenu toggle persists across navigation', async ({ page }) => {
   test.setTimeout(60_000);
   await login(page);
