@@ -149,10 +149,16 @@ router.get("/", optionalAuth, async (req, res) => {
     let progressByKurssi = {};
     if (req.user?.userId) {
       try {
+        // Multi-lang progress bleed fix (migration 040): user_curriculum_progress
+        // now carries a `lang` column, so the curriculum response only counts
+        // the rows that match the language the user is viewing. Without this,
+        // a Spanish completion bled into the German / French course list as
+        // "1/10 lessons completed" — the bug report from 2026-05-19.
         const { data, error } = await supabase
           .from("user_curriculum_progress")
           .select("kurssi_key, lesson_index, completed_at, score_correct, score_total")
-          .eq("user_id", req.user.userId);
+          .eq("user_id", req.user.userId)
+          .eq("lang", lang);
         if (error && !tablesMissing(error)) throw error;
         for (const row of data || []) {
           (progressByKurssi[row.kurssi_key] ||= []).push(row);
@@ -735,16 +741,22 @@ router.post("/:kurssiKey/lesson/:lessonIndex/complete", requireAuth, async (req,
     const lesson = lessons.find((l) => l.sort_order === lessonIndex);
     if (!lesson) return res.status(404).json({ error: "Oppituntia ei löydy" });
 
-    // Persist completion (best-effort — never block the UX)
+    // Persist completion (best-effort — never block the UX).
+    // Migration 040 widened the PK to include lang; default to 'es' for
+    // legacy clients (lessonRunner) that don't pass lang in the body yet.
+    const completeLang = SUPPORTED_LANGS.has(req.body?.lang) ? req.body.lang
+      : SUPPORTED_LANGS.has(req.query?.lang) ? req.query.lang
+      : "es";
     try {
       await supabase.from("user_curriculum_progress").upsert({
         user_id: req.user.userId,
+        lang: completeLang,
         kurssi_key: kurssiKey,
         lesson_index: lessonIndex,
         completed_at: new Date().toISOString(),
         score_correct: scoreCorrect,
         score_total: scoreTotal,
-      }, { onConflict: "user_id,kurssi_key,lesson_index" });
+      }, { onConflict: "user_id,lang,kurssi_key,lesson_index" });
     } catch (err) {
       console.warn("progress upsert:", err.message);
     }

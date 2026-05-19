@@ -24,6 +24,21 @@ async function login(page) {
   }
 }
 
+// PR8b — wipe the server-side digikirja progress for the demo lesson
+// so progress-sensitive tests start from a known-empty state.
+async function clearDigikirjaServerProgress(page, lang = 'es', kurssi = 'kurssi_2', lesson = 3) {
+  await page.evaluate(async ({ lang, kurssi, lesson }) => {
+    const t = localStorage.getItem('puheo_token');
+    if (!t) return;
+    const headers = { Authorization: `Bearer ${t}` };
+    const q = `lang=${lang}&kurssi=${encodeURIComponent(kurssi)}&lesson=${lesson}`;
+    await Promise.all([
+      fetch(`/api/digikirja/progress?${q}`,  { method: 'DELETE', headers }).catch(() => {}),
+      fetch(`/api/digikirja/itsearvio?${q}`, { method: 'DELETE', headers }).catch(() => {}),
+    ]);
+  }, { lang, kurssi, lesson });
+}
+
 const DEMO_HASH = '#/oppitunti/es/kurssi_2/3/teoria';
 
 test('digikirja shell renders the real Ruoka ja ateriat lesson', async ({ page }) => {
@@ -272,12 +287,13 @@ test('PR7 — Itsearviointi rates 4 statements, persists, averages', async ({ pa
   await login(page);
   await page.setViewportSize({ width: 1440, height: 900 });
 
-  // Clear any prior itsearvio result.
+  // Clear any prior itsearvio result (both local cache + server row).
   await page.evaluate(() => {
     Object.keys(localStorage).forEach((k) => {
       if (k.startsWith('puheo:dk:itsearvio')) localStorage.removeItem(k);
     });
   });
+  await clearDigikirjaServerProgress(page);
 
   await page.evaluate(() => { location.hash = '#/oppitunti/es/kurssi_2/3/arvio'; });
   await page.waitForTimeout(1200);
@@ -339,12 +355,14 @@ test('PR8 — progress chip + SideMenu is-done update on submit', async ({ page 
   await login(page);
   await page.setViewportSize({ width: 1440, height: 900 });
 
-  // Wipe progress so the count starts at 0 (teoria visit will add it).
+  // Wipe progress (both local cache + server row) so the count starts
+  // at 0 and the hydrate-from-server step doesn't carry prior runs.
   await page.evaluate(() => {
     Object.keys(localStorage).forEach((k) => {
       if (k.startsWith('puheo:dk:progress')) localStorage.removeItem(k);
     });
   });
+  await clearDigikirjaServerProgress(page);
 
   await page.evaluate(() => { location.hash = '#/oppitunti/es/kurssi_2/3/teoria'; });
   await page.waitForTimeout(1200);
@@ -382,11 +400,13 @@ test('SideMenu toggle persists across navigation', async ({ page }) => {
   await page.evaluate(() => { try { localStorage.removeItem('puheo:dk:sidemenu'); } catch {} });
 
   await page.evaluate((h) => { location.hash = h; }, DEMO_HASH);
-  await page.waitForTimeout(1100);
+  // Wait for the full shell, not just a fixed timer — hydrateFromServer
+  // (PR8b) adds an async round-trip whose duration depends on Supabase
+  // latency. Asserting on the visible toggle gives us a reliable signal.
+  await expect(page.locator('#dk-toggle-sidemenu')).toBeVisible();
+  await expect(page.locator('#dk-root[data-sidemenu="open"]')).toBeVisible();
 
   await page.locator('#dk-toggle-sidemenu').click();
-  await page.waitForTimeout(150);
-  const collapsed = await page.evaluate(() => document.getElementById('dk-root').dataset.sidemenu);
-  expect(collapsed).toBe('collapsed');
+  await expect(page.locator('#dk-root[data-sidemenu="collapsed"]')).toBeVisible();
   expect(await page.evaluate(() => localStorage.getItem('puheo:dk:sidemenu'))).toBe('collapsed');
 });

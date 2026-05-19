@@ -14,6 +14,7 @@
 import { show } from "../ui/nav.js";
 import { renderTeoriaMarkdown } from "../lib/markdownLite.js";
 import { isAcceptable } from "../lib/accentTolerance.js";
+import { API, isLoggedIn, authHeader, apiFetch } from "../api.js";
 
 const LS_SIDEMENU = "puheo:dk:sidemenu";
 const SIDEMENU_OPEN = "open";
@@ -42,6 +43,20 @@ function markSivuDone(sivuId) {
   if (map[sivuId] === "done") return;
   map[sivuId] = "done";
   writeProgress(map);
+  // PR8b — best-effort sync to Supabase. localStorage is the offline
+  // fallback, so a failed POST shouldn't surface to the user.
+  if (isLoggedIn()) {
+    apiFetch(`${API}/api/digikirja/progress`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", ...authHeader() },
+      body: JSON.stringify({
+        lang: _route.lang,
+        kurssi: _route.kurssiKey,
+        lesson: _route.lessonIndex,
+        sivuId,
+      }),
+    }).catch(() => { /* offline tolerated */ });
+  }
   // Refresh just the SideMenu row + completion chip — full re-render
   // would steal focus from whatever the student is doing.
   refreshSidemenuProgress();
@@ -148,6 +163,49 @@ async function fetchLesson(route) {
   const res = await fetch(url, { headers: { accept: "application/json" } });
   if (!res.ok) throw new Error(`lesson fetch ${res.status}`);
   return res.json();
+}
+
+// PR8b — pull saved progress + itsearvio from the server and merge into
+// localStorage so the offline cache reflects whatever the user has on
+// other devices. Server is authoritative on hydration; from there on,
+// markSivuDone / Tallenna arvio write locally first + POST in the
+// background, so the UI always feels instant.
+async function hydrateFromServer(route) {
+  if (!isLoggedIn()) return;
+  try {
+    const params = `lang=${encodeURIComponent(route.lang)}&kurssi=${encodeURIComponent(route.kurssiKey)}&lesson=${encodeURIComponent(route.lessonIndex)}`;
+    const [progRes, arvioRes] = await Promise.all([
+      apiFetch(`${API}/api/digikirja/progress?${params}`, { headers: authHeader() }).catch(() => null),
+      apiFetch(`${API}/api/digikirja/itsearvio?${params}`, { headers: authHeader() }).catch(() => null),
+    ]);
+    if (progRes?.ok) {
+      const { sivut } = await progRes.json().catch(() => ({ sivut: {} }));
+      if (sivut && typeof sivut === "object") {
+        const local = readProgress();
+        for (const id of Object.keys(sivut)) {
+          if (!local[id]) local[id] = "done";
+        }
+        writeProgress(local);
+      }
+    }
+    if (arvioRes?.ok) {
+      const { itsearvio } = await arvioRes.json().catch(() => ({ itsearvio: null }));
+      if (itsearvio?.ratings) {
+        // Only seed local if the user hasn't already saved something
+        // newer locally — server is just a recovery surface here.
+        const existing = readArvio();
+        if (!existing) {
+          writeArvio({
+            ratings: itsearvio.ratings,
+            submittedAt: itsearvio.submittedAt,
+            lang: route.lang,
+            kurssiKey: route.kurssiKey,
+            lessonIndex: route.lessonIndex,
+          });
+        }
+      }
+    }
+  } catch { /* offline tolerated */ }
 }
 
 // Build the SideMenu sivut array from real lesson data. PR 2 keeps the
@@ -805,6 +863,21 @@ function wireArvio() {
     writeArvio(payload);
     markSivuDone(sivuId);
     reRenderArvioInPlace();
+    // PR8b — sync to Supabase. localStorage already holds the result;
+    // failure is silent so the UI doesn't get a "failed to save" toast
+    // for what the student perceives as their own private notebook.
+    if (isLoggedIn()) {
+      apiFetch(`${API}/api/digikirja/itsearvio`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", ...authHeader() },
+        body: JSON.stringify({
+          lang: _route.lang,
+          kurssi: _route.kurssiKey,
+          lesson: _route.lessonIndex,
+          ratings: payload.ratings,
+        }),
+      }).catch(() => { /* offline tolerated */ });
+    }
     // PR 7b — sync to Supabase here once the user_self_assessments table
     // + route lands. For now the localStorage save is the single source
     // of truth.
@@ -1641,7 +1714,13 @@ export async function showDigikirja(route = {}) {
   _loadKey = loadKey;
 
   try {
-    const lesson = await fetchLesson(_route);
+    // Hydrate from the server in parallel with the lesson JSON fetch so
+    // the SideMenu progress chips paint on the first render rather than
+    // flickering in after the user has already navigated to a sivu.
+    const [lesson] = await Promise.all([
+      fetchLesson(_route),
+      hydrateFromServer(_route),
+    ]);
     // Bail out if the user navigated to a different lesson while this
     // fetch was in flight.
     if (_loadKey !== loadKey) return;
