@@ -26,6 +26,37 @@ const KIND_GROUP = {
   itsearviointi: "Itsearvio",
 };
 
+// PR3 — distinct minimal-stroke SVG per sivu kind. Following impeccable
+// + ui-ux-pro-max bans, we do NOT use emoji glyphs. Each path uses a
+// 24×24 viewBox + 1.6 stroke and inherits currentColor so the active /
+// muted states match the row text colour.
+const KIND_GLYPH = {
+  teoria: `<svg class="dk__row-glyph" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M4 5.5a1.5 1.5 0 0 1 1.5-1.5h5A2.5 2.5 0 0 1 13 6.5V20"/>
+    <path d="M20 5.5A1.5 1.5 0 0 0 18.5 4h-5A2.5 2.5 0 0 0 11 6.5V20"/>
+    <path d="M4 5.5V19a1 1 0 0 0 1 1h5"/>
+    <path d="M20 5.5V19a1 1 0 0 1-1 1h-5"/>
+  </svg>`,
+  tehtava: `<svg class="dk__row-glyph" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M14 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
+    <path d="m18 2 4 4-9.5 9.5L8 17l1.5-4.5L18 2.5"/>
+  </svg>`,
+  flashcards: `<svg class="dk__row-glyph" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <rect x="3.5" y="6.5" width="13" height="11" rx="2"/>
+    <path d="M7.5 4.5h11a2 2 0 0 1 2 2v9"/>
+  </svg>`,
+  testi: `<svg class="dk__row-glyph" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <rect x="4" y="4" width="16" height="16" rx="3"/>
+    <path d="m8.5 12.5 2.5 2.5 4.5-5"/>
+  </svg>`,
+  itsearviointi: `<svg class="dk__row-glyph" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M12 3.5 14.6 9l6 .55-4.55 4.05L17.4 20 12 16.9 6.6 20l1.35-6.4L3.4 9.55 9.4 9z"/>
+  </svg>`,
+};
+function glyphFor(kind) {
+  return KIND_GLYPH[kind] || KIND_GLYPH.tehtava;
+}
+
 const KIND_PLACEHOLDER = {
   tehtava: {
     label: "Harjoitustehtävä, tulossa PR 4",
@@ -224,7 +255,10 @@ function renderSidemenu() {
         <button type="button"
                 class="dk__row${isActive ? " is-active" : ""}"
                 data-sivu="${escapeHtml(s.id)}"
-                aria-current="${isActive ? "page" : "false"}">
+                data-kind="${escapeHtml(s.kind)}"
+                aria-current="${isActive ? "page" : "false"}"
+                aria-label="${escapeHtml(s.title)}">
+          <span class="dk__row-glyph-wrap" aria-hidden="true">${glyphFor(s.kind)}</span>
           <span class="dk__row-num">${escapeHtml(num)}</span>
           <span class="dk__row-title">${escapeHtml(s.title)}</span>
           <span class="dk__row-meta">${escapeHtml(s.meta || "")}</span>
@@ -425,6 +459,7 @@ function navigateSivu(sivuId) {
   if (window.matchMedia("(max-width: 1023px)").matches) {
     applySidemenuState(SIDEMENU_COLLAPSED);
   }
+  scrollActiveIntoView();
   document.getElementById("dk-content")?.focus({ preventScroll: false });
 }
 
@@ -433,6 +468,30 @@ function wireSidemenuRows() {
     const btn = e.target.closest(".dk__row");
     if (!btn) return;
     navigateSivu(btn.dataset.sivu);
+  });
+}
+
+// PR3 — scroll the active SideMenu row into view. Long lessons have 15+
+// sivut and the student lands on whatever sivu the URL points to; if it's
+// past the fold the SideMenu shows the top rows and the active item is
+// off-screen. Use scrollIntoView with "nearest" so we don't yank the
+// list when the active row is already visible.
+function scrollActiveIntoView() {
+  const list = document.getElementById("dk-sidemenu-list");
+  if (!list) return;
+  const active = list.querySelector(".dk__row.is-active");
+  if (!active) return;
+  // Use rAF so the scroll runs after layout settles (otherwise the
+  // computed scrollTop is 0 on first paint and the call is a no-op).
+  requestAnimationFrame(() => {
+    try {
+      active.scrollIntoView({ block: "nearest", inline: "nearest", behavior: "auto" });
+    } catch {
+      // Older browsers without options-form scrollIntoView — fall back
+      // to a direct scrollTop adjustment.
+      const top = active.offsetTop - list.clientHeight / 2 + active.clientHeight / 2;
+      list.scrollTop = Math.max(0, top);
+    }
   });
 }
 
@@ -498,6 +557,7 @@ export async function showDigikirja(route = {}) {
     wireSidemenu();
     wireSidemenuRows();
     wireContent();
+    scrollActiveIntoView();
   } catch (err) {
     if (_loadKey !== loadKey) return;
     host.innerHTML = renderErrorShell(err);

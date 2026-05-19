@@ -213,7 +213,7 @@
   border: 0;
   width: 100%;
   display: grid;
-  grid-template-columns: 36px 1fr auto;
+  grid-template-columns: 22px 28px 1fr auto;
   align-items: center;
   gap: 10px;
   padding: 8px 14px 8px 12px;
@@ -227,6 +227,15 @@
   transition: background 140ms var(--dk-ease),
               color 140ms var(--dk-ease);
 }
+.dk__row-glyph-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ed-ink-faint);
+  transition: color 140ms var(--dk-ease);
+}
+.dk__row.is-active .dk__row-glyph-wrap { color: var(--ed-accent); }
+.dk__row:hover .dk__row-glyph-wrap { color: var(--ed-ink-muted); }
 .dk__row:hover { background: color-mix(in oklch, var(--ed-bg-deep) 70%, var(--ed-bg)); }
 .dk__row:focus-visible {
   outline: 2px solid var(--ed-accent);
@@ -282,14 +291,24 @@
   font-family: var(--ed-sans);
 }
 
-/* Collapsed rail: keep numerals + glyph centered */
+/* Collapsed rail — only the sivu-type glyph stays visible; numerals,
+   titles, and meta fade out (see top of file). The glyph itself bumps
+   up a couple of px for the bigger rail target. */
 .dk[data-sidemenu="collapsed"] .dk__row {
   grid-template-columns: 1fr;
   padding: 10px 0;
   justify-items: center;
 }
+.dk[data-sidemenu="collapsed"] .dk__row-glyph-wrap {
+  width: 28px;
+  height: 28px;
+}
+.dk[data-sidemenu="collapsed"] .dk__row-glyph-wrap svg {
+  width: 20px;
+  height: 20px;
+}
 .dk[data-sidemenu="collapsed"] .dk__row-num {
-  text-align: center;
+  display: none;
 }
 
 /* ── Content column ────────────────────────────────────────────────── */
