@@ -328,7 +328,8 @@ function renderDashboard({
       } else if (target === "sr-review") {
         document.getElementById("btn-start-review")?.click();
       } else {
-        document.getElementById("nav-vocab")?.click();
+        // Default drill target is writing (see dash-cta.js).
+        document.getElementById("nav-writing")?.click();
       }
     };
   }
@@ -626,8 +627,10 @@ function renderDashboard({
       if (emptyBtn && !emptyBtn._wired) {
         emptyBtn._wired = true;
         emptyBtn.addEventListener("click", () => {
-          const navBtn = document.getElementById("nav-vocab");
-          if (navBtn) navBtn.click(); else navigateToMode("vocab");
+          // First-task button routes to writing — the daily driver after
+          // the dashboard prune (vocab/grammar nav buttons removed).
+          const navBtn = document.getElementById("nav-writing");
+          if (navBtn) navBtn.click(); else navigateToMode("writing");
         });
       }
     }
