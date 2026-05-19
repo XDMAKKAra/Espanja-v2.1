@@ -276,6 +276,17 @@ window.addEventListener("hashchange", () => {
     location.replace(`#/oppimispolku/${legacyCourse[1]}/${legacyCourse[2]}`);
     return;
   }
+  // PR auto/digikirja-pohjarakenne (2026-05-19): five-segment
+  // #/oppitunti/{lang}/{kurssi}/{lesson}/{sivu} drives the new
+  // Otava Fokus 7 three-panel screen. Checked BEFORE the four-segment
+  // legacy lesson route so the more specific pattern wins.
+  const digikirjaMatch = /^#\/oppitunti\/([a-z]{2})\/([^/?#]+)\/(\d+)\/([^/?#]+)/i.exec(location.hash);
+  if (digikirjaMatch) {
+    import("./screens/digikirja.js")
+      .then((m) => m.tryRouteDigikirja?.(location.hash))
+      .catch(() => { /* fall through */ });
+    return;
+  }
   // PR auto/course-detail-shelf (2026-05-19): lesson route
   // #/oppitunti/{lang}/{kurssi}/{n}. Wins before the course-detail
   // pattern. Dispatch to existing curriculum.openLesson which
@@ -318,6 +329,13 @@ window._restoreFromHash = function restoreFromHash() {
   const legacyCourse = /^#\/kurssi\/([a-z]{2})\/([^/?#]+)/i.exec(location.hash);
   if (legacyCourse) {
     location.replace(`#/oppimispolku/${legacyCourse[1]}/${legacyCourse[2]}`);
+    return true;
+  }
+  const digikirjaBoot = /^#\/oppitunti\/([a-z]{2})\/([^/?#]+)\/(\d+)\/([^/?#]+)/i.exec(location.hash);
+  if (digikirjaBoot) {
+    import("./screens/digikirja.js")
+      .then((m) => m.tryRouteDigikirja?.(location.hash))
+      .catch(() => { /* fall through */ });
     return true;
   }
   const lessonMatch = /^#\/oppitunti\/([a-z]{2})\/([^/?#]+)\/(\d+)/i.exec(location.hash);
