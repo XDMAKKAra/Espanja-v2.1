@@ -261,10 +261,19 @@ body:has(.app-countdown:not(.hidden)) .teaching-panel-trigger { top: 50px; }
 .confirm-dialog-root {
   position: fixed;
   inset: 0;
-  z-index: 110;
+  /* Lifted above teaching-panel (z-index 100) AND any lesson runner
+     overlays. The earlier z-index of 110 lost to lr-side-panel siblings
+     in some flows, dropping the modal behind the page. */
+  z-index: 1000;
+  /* Anchor to the upper third of the viewport instead of dead-centre.
+     Lesson pages don't fill the viewport vertically — the old centered
+     position put the modal in the empty cream-void below the content,
+     reading as "lost popup" rather than "decision needed now". */
   display: grid;
-  place-items: center;
-  padding: 16px;
+  grid-template-rows: max-content;
+  justify-items: center;
+  align-content: start;
+  padding: clamp(40px, 12vh, 120px) 16px 16px;
   pointer-events: auto;
 }
 .confirm-dialog-root[hidden] { display: none; }
@@ -272,10 +281,13 @@ body:has(.app-countdown:not(.hidden)) .teaching-panel-trigger { top: 50px; }
 .confirm-dialog__backdrop {
   position: absolute;
   inset: 0;
-  /* Warm ink wash, not cold neutral grey — keeps the confirm-modal
-     anchored to the Old-Spain brand register even when summoned over
-     the dark Linear-tier dashboard. */
-  background: oklch(18% 0.012 30 / 0.55);
+  /* Light cream-paper backdrop on the app body (which is cream) — earlier
+     0.55 warm-ink wash read as a muddy brown band on the lesson page's
+     empty space below the content. 0.28 + cream-tinted ink keeps the
+     paper warmth, dims just enough to focus on the modal. */
+  background: oklch(20% 0.012 30 / 0.28);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
   opacity: 0;
   transition: opacity 220ms ease-out;
 }
