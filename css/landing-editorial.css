@@ -732,8 +732,43 @@ body.landing > * { position: relative; z-index: 1; }
   background: var(--ed-bg-deep);
 }
 .landing .proof__inner {
-  max-width: var(--ed-content-narrow);
+  max-width: var(--ed-content-max);
   margin: 0 auto;
+}
+.landing .proof__caveat {
+  max-width: 64ch;
+  margin: var(--ed-sp-6) auto 0;
+  text-align: center;
+  font-size: var(--ed-fs-meta);
+  font-style: italic;
+  color: var(--ed-ink-muted);
+  line-height: 1.55;
+}
+.landing .proof__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--ed-sp-5);
+}
+@media (min-width: 1080px) {
+  .landing .proof__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--ed-sp-4);
+    align-items: start;
+  }
+}
+/* Triptyykki cards are narrower; tighten interior typography so
+   they still feel premium at ~360 px column width. */
+@media (min-width: 1080px) {
+  .landing .proof__grid .grader-card {
+    padding: clamp(18px, 1.6vw, 24px);
+  }
+  .landing .proof__grid .grader-prose {
+    font-size: 0.9375rem;
+    line-height: 1.6;
+  }
+  .landing .proof__grid .grader-card__title {
+    font-size: calc(var(--ed-fs-meta) - 1px);
+  }
 }
 .landing .proof__head {
   text-align: center;
@@ -807,7 +842,6 @@ body.landing > * { position: relative; z-index: 1; }
 }
 
 .landing .ge {
-  position: relative;
   cursor: help;
   border-radius: 2px;
   padding: 1px 2px;
@@ -820,11 +854,15 @@ body.landing > * { position: relative; z-index: 1; }
   background: var(--ed-mark-spelling);
   border-bottom: 2px solid var(--ed-mark-spelling-rule);
 }
+/* The tooltip floats outside its trigger via JS positioning
+   (js/features/geTip.js). Position-fixed + computed top/left
+   means the arrow can be aligned to the trigger's first client
+   rect regardless of inline wrap. */
 .landing .ge-tip {
-  position: absolute;
-  left: 50%;
-  top: calc(100% + 8px);
-  z-index: 20;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 60;
   width: max-content;
   min-width: 220px;
   max-width: min(320px, 78vw);
@@ -840,23 +878,34 @@ body.landing > * { position: relative; z-index: 1; }
   text-transform: none;
   opacity: 0;
   pointer-events: none;
-  transform: translate(-50%, -4px);
+  transform: translateY(-4px);
   transition: opacity var(--ed-t-fast), transform var(--ed-t-fast);
   white-space: normal;
   box-shadow: 0 10px 24px oklch(20% 0.05 30 / 0.18),
               0 2px 6px oklch(20% 0.05 30 / 0.10);
 }
-/* Arrow pointing up to the highlighted word */
+/* Arrow tracks the trigger's centre via --ge-arrow-x (set by JS).
+   When the tooltip is flipped above the trigger, [data-placement="top"]
+   moves the arrow to the bottom edge. */
 .landing .ge-tip::before {
   content: "";
   position: absolute;
-  left: 50%;
+  left: var(--ge-arrow-x, 50%);
   top: -5px;
   width: 10px;
   height: 10px;
   background: var(--ed-ink);
   transform: translateX(-50%) rotate(45deg);
   border-radius: 1px;
+}
+.landing .ge-tip[data-placement="top"]::before {
+  top: auto;
+  bottom: -5px;
+}
+.landing .ge-tip[data-visible="true"] {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
 }
 .landing .ge-tip strong {
   display: block;
@@ -866,36 +915,6 @@ body.landing > * { position: relative; z-index: 1; }
   font-size: 0.875rem;
   letter-spacing: 0;
   text-transform: none;
-}
-/* Re-anchor tooltips near the right edge so they don't overflow */
-.landing .ge:nth-last-child(-n+2) .ge-tip,
-.landing .grader-prose > .ge:last-of-type .ge-tip {
-  left: auto;
-  right: 0;
-  transform: translate(0, -4px);
-}
-.landing .ge:nth-last-child(-n+2) .ge-tip::before,
-.landing .grader-prose > .ge:last-of-type .ge-tip::before {
-  left: auto;
-  right: 16px;
-  transform: rotate(45deg);
-}
-.landing .ge:hover .ge-tip,
-.landing .ge:focus-visible .ge-tip {
-  opacity: 1;
-  transform: translate(-50%, 0);
-}
-.landing .ge:nth-last-child(-n+2):hover .ge-tip,
-.landing .ge:nth-last-child(-n+2):focus-visible .ge-tip,
-.landing .grader-prose > .ge:last-of-type:hover .ge-tip,
-.landing .grader-prose > .ge:last-of-type:focus-visible .ge-tip {
-  opacity: 1;
-  transform: translate(0, 0);
-}
-.landing .ge:hover .ge-tip,
-.landing .ge:focus-visible .ge-tip {
-  opacity: 1;
-  transform: translateY(0);
 }
 
 .landing .rubric {
@@ -952,12 +971,17 @@ body.landing > * { position: relative; z-index: 1; }
   font-weight: 500;
   color: var(--ed-accent);
 }
-.landing .rubric-total__grade {
-  font-family: var(--ed-mono);
+/* Sanallinen kontribuutio replaces the legacy "Arvosana E" leima.
+   A single writing task's points don't determine the koe-arvosana —
+   only the combined exam total does. We report a fuzzy band instead. */
+.landing .rubric-total__note {
+  flex-basis: 100%;
+  margin-top: var(--ed-sp-2);
+  font-family: var(--ed-sans);
+  font-style: italic;
   font-size: var(--ed-fs-meta);
-  color: var(--ed-ink-subtle);
-  text-transform: uppercase;
-  letter-spacing: var(--ed-tracking-meta);
+  color: var(--ed-ink-muted);
+  line-height: 1.5;
 }
 
 /* ═══════════════════════════════════════════════════════════ */
