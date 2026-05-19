@@ -356,6 +356,205 @@
   margin-bottom: 10px;
 }
 
+/* ── Teoria prose ──────────────────────────────────────────────────── */
+
+.dk__teoria-h2 {
+  font-family: var(--ed-display);
+  font-weight: 500;
+  font-style: italic;
+  font-size: clamp(20px, 1.4vw + 12px, 26px);
+  line-height: 1.2;
+  letter-spacing: -0.005em;
+  color: var(--ed-ink);
+  margin: 36px 0 14px;
+  max-width: 28ch;
+}
+.dk__teoria-h2:first-child { margin-top: 0; }
+
+.dk__teoria-h3 {
+  font-family: var(--ed-sans);
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: var(--ed-ink-muted);
+  margin: 24px 0 10px;
+}
+
+.dk__teoria-p {
+  margin: 0 0 14px;
+  max-width: 68ch;
+  color: var(--ed-ink);
+}
+.dk__teoria-p strong { color: var(--ed-accent); font-weight: 600; }
+.dk__teoria-p em { font-style: italic; color: var(--ed-ink-muted); }
+
+.dk__teoria-ul {
+  margin: 8px 0 18px;
+  padding-left: 1.4em;
+  max-width: 64ch;
+}
+.dk__teoria-ul li {
+  margin-bottom: 6px;
+  line-height: 1.55;
+}
+.dk__teoria-ul li strong { color: var(--ed-accent); font-weight: 600; }
+.dk__teoria-ul li::marker {
+  color: var(--ed-ink-faint);
+  font-family: var(--ed-mono);
+  font-size: 0.9em;
+}
+
+.dk__teoria-code {
+  font-family: var(--ed-mono);
+  font-size: 0.94em;
+  background: var(--ed-bg-deep);
+  color: var(--ed-ink);
+  padding: 1px 6px;
+  border-radius: 4px;
+  border: 1px solid var(--ed-rule);
+}
+
+.dk__key-points {
+  margin-top: 36px;
+  padding: 20px 24px;
+  background: var(--ed-bg-card);
+  border: 1px solid var(--ed-rule);
+  border-radius: 14px;
+  max-width: 68ch;
+}
+.dk__key-points-title {
+  font-family: var(--ed-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ed-accent);
+  margin: 0 0 12px;
+}
+.dk__key-points ol {
+  margin: 0;
+  padding-left: 1.4em;
+  font-size: 15px;
+  line-height: 1.55;
+}
+.dk__key-points ol li { margin-bottom: 8px; }
+.dk__key-points ol li::marker {
+  font-family: var(--ed-mono);
+  color: var(--ed-accent);
+  font-weight: 600;
+}
+
+/* ── BilingualTable ───────────────────────────────────────────────── */
+
+.dk__bilingual {
+  margin: 18px 0 22px;
+  max-width: 68ch;
+  border: 1px solid var(--ed-rule);
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--ed-bg-card);
+}
+.dk__bilingual table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--ed-sans);
+  font-size: 14.5px;
+}
+.dk__bilingual th,
+.dk__bilingual td {
+  padding: 10px 14px;
+  text-align: left;
+  vertical-align: top;
+  border-top: 1px solid var(--ed-rule);
+}
+.dk__bilingual thead th {
+  background: var(--ed-bg-deep);
+  border-top: 0;
+  border-bottom: 1px solid var(--ed-rule);
+  font-family: var(--ed-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ed-ink-muted);
+  font-weight: 500;
+}
+.dk__bilingual tbody tr:first-child td { border-top: 0; }
+.dk__bilingual tbody td:first-child {
+  color: var(--ed-ink-muted);
+  width: 38%;
+}
+.dk__bilingual tbody td strong {
+  font-weight: 600;
+  color: var(--ed-accent);
+}
+.dk__bilingual--2col tbody td:nth-child(2) {
+  font-family: var(--ed-display);
+  font-weight: 500;
+  font-size: 16px;
+  color: var(--ed-ink);
+}
+
+/* ── InfoBox ("Obs!") ─────────────────────────────────────────────── */
+
+.dk__obs {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 14px;
+  align-items: start;
+  margin: 22px 0;
+  padding: 16px 20px;
+  background: var(--ed-accent-tint);
+  border: 1px solid color-mix(in oklch, var(--ed-accent) 18%, transparent);
+  border-radius: 12px;
+  max-width: 68ch;
+}
+.dk__obs-label {
+  font-family: var(--ed-display);
+  font-style: italic;
+  font-weight: 600;
+  font-size: 17px;
+  letter-spacing: -0.005em;
+  color: var(--ed-accent);
+  line-height: 1.1;
+  padding-top: 2px;
+  flex-shrink: 0;
+}
+.dk__obs-body p {
+  margin: 0 0 8px;
+  font-family: var(--ed-sans);
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--ed-ink);
+}
+.dk__obs-body p:last-child { margin-bottom: 0; }
+.dk__obs-body strong { color: var(--ed-accent); font-weight: 600; }
+.dk__obs-body em {
+  font-style: italic;
+  font-family: var(--ed-display);
+  color: var(--ed-ink);
+}
+
+/* ── Loading + error states for the content panel ─────────────────── */
+
+.dk__loading,
+.dk__error {
+  margin: 36px 0;
+  padding: 18px 22px;
+  background: var(--ed-bg-card);
+  border: 1px solid var(--ed-rule);
+  border-radius: 12px;
+  max-width: 64ch;
+  font-family: var(--ed-sans);
+  color: var(--ed-ink-muted);
+  font-size: 14px;
+  line-height: 1.55;
+}
+.dk__error {
+  border-color: color-mix(in oklch, var(--ed-accent) 30%, var(--ed-rule));
+  background: var(--ed-accent-tint);
+  color: var(--ed-ink);
+}
+
 /* ── Prev/Next bar (top + bottom of content) ──────────────────────── */
 
 .dk__prevnext {
