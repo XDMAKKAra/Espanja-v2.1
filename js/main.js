@@ -169,15 +169,14 @@ window._placementRef = { checkPlacementNeeded, showPlacementIntro, startPlacemen
 // ─── Sidebar navigation clicks + hash routing ──────────────────────────────
 
 const NAV_HASH = {
-  // L-MERGE-DASH-PATH — both legacy "Oma sivu" hash and new "Oppimispolku"
-  // hash resolve to the same merged-home nav target. Lookup is by-key, so the
-  // path entry wins for outbound `history.replaceState` calls below; the
-  // dashboard hash is kept here only for the inbound HASH_NAV reverse map.
+  // PR auto/home-screen (2026-05-19) — "home" is the new top-level entry
+  // above the path. Existing #/koti + #/oppimispolku still route to the
+  // path screen for backwards compatibility while PRs 3-4 land the rest
+  // of the home → course-overview → path → lesson hierarchy.
+  home: "#/aloitus",
   dashboard: "#/koti",
   reading: "#/luetun",
   writing: "#/kirjoitus",
-  // Task 4 (2026-05-19): #/sanasto, #/puheoppi, #/verbisprintti removed —
-  // their mode pages were deleted (sidebar nav already pruned in PR #86).
   path: "#/oppimispolku",
   exam: "#/koeharjoitus",
   settings: "#/asetukset",
@@ -200,6 +199,7 @@ function navigateTo(nav, { updateHash = true } = {}) {
   if (nav === "exam")          lazyFullExam().then((m) => m.startFullExam("demo"));
   else if (nav === "settings") lazySettings().then((m) => m.showSettings());
   else if (nav === "profile")  lazyProfile().then((m) => m.loadProfile());
+  else if (nav === "home")     import("./screens/home.js").then((m) => m.loadHome());
   else if (nav === "verbreference") lazyVerbReference().then(() => showModePage("verbreference"));
   else if (nav === "path") {
     // Merged home: loadDashboard now also kicks off loadCurriculum after
