@@ -62,10 +62,6 @@ const FLASHCARD_PACK_SIZE = 5;
 const LS_FLASHCARD_PREFIX = "puheo:dk:flashcards";
 
 const KIND_PLACEHOLDER = {
-  testi: {
-    label: "Testi, tulossa PR 6",
-    body: "Sama ExerciseCard kuin tehtävällä, mutta ilman live-palautetta per kohta. Opiskelija vastaa kaikkiin, painaa Tarkista, ja näkee yhteenvedon + per-kohta-palautteen.",
-  },
   itsearviointi: {
     label: "Itsearviointi, tulossa PR 7",
     body: "Lyhyt 1–5 asteikollinen lomake: hallitsen aiheen sanaston, tunnistan rakenteet, voin keskustella. Tulokset Supabaseen, ohjaavat seuraavan oppitunnin tasoa.",
@@ -158,21 +154,38 @@ function buildSivut(lesson) {
     });
   }
 
-  // 4. Test sivut — placeholder until PR 6.
-  out.push({
-    id: "test-1",
-    kind: "testi",
-    num: "T1",
-    title: "Test · Käännä",
-    meta: "Pisteytys",
-  });
-  out.push({
-    id: "test-2",
-    kind: "testi",
-    num: "T2",
-    title: "Test · Valitse oikea muoto",
-    meta: "Pisteytys",
-  });
+  // 4. Test sivut — sample real items from existing phases. The student
+  // experience is summative (no live feedback per kohta) so we want the
+  // test to draw on material they've already practised in the exercise
+  // phases above. Pick translate (fi → es) and mc as the two anchors.
+  const findPhaseByItemType = (kind) => phases.findIndex(
+    (p) => Array.isArray(p.items) && p.items[0]?.item_type === kind,
+  );
+  const translatePhase = findPhaseByItemType("translate");
+  const mcPhase = findPhaseByItemType("mc");
+  const TEST_LIMIT = 6;
+  if (translatePhase >= 0) {
+    const count = Math.min(TEST_LIMIT, (phases[translatePhase].items || []).length);
+    out.push({
+      id: "test-1",
+      kind: "testi",
+      num: "T1",
+      title: "Test 1 · Käännä",
+      meta: `${count} kohtaa`,
+      testDef: { sourcePhase: translatePhase, count, label: "Käännä espanjaksi" },
+    });
+  }
+  if (mcPhase >= 0) {
+    const count = Math.min(TEST_LIMIT, (phases[mcPhase].items || []).length);
+    out.push({
+      id: "test-2",
+      kind: "testi",
+      num: "T2",
+      title: "Test 2 · Valitse",
+      meta: `${count} kohtaa`,
+      testDef: { sourcePhase: mcPhase, count, label: "Valitse oikea vaihtoehto" },
+    });
+  }
 
   // 5. Itsearviointi — always last.
   out.push({
@@ -305,6 +318,281 @@ function renderPlaceholderContent(sivu) {
       <p class="dk__placeholder-kind">${escapeHtml(ph.label)}</p>
       <p>${escapeHtml(ph.body)}</p>
     </div>`;
+}
+
+// ─── Testi (PR6) ──────────────────────────────────────────────────────
+// Same item types as the ExerciseCard but summative: all items rendered
+// stacked, single "Tarkista testi" submit, result chip + per-kohta
+// breakdown after submit. The student experience is exam-like.
+
+const _testiState = new Map(); // sivuId → { submitted, results: [{ raw, graded }], answers: [..] }
+
+function testiItems(sivu) {
+  const def = sivu?.testDef;
+  if (!def) return [];
+  const phases = Array.isArray(_lesson?.phases) ? _lesson.phases : [];
+  const items = (phases[def.sourcePhase]?.items || []).slice(0, def.count);
+  return items.filter((it) => SUPPORTED_ITEM_TYPES.has(it.item_type));
+}
+
+function ensureTestiState(sivuId, items) {
+  let st = _testiState.get(sivuId);
+  if (!st) {
+    st = {
+      submitted: false,
+      answers: items.map((it) => (
+        it.item_type === "mc" ? null
+        : it.item_type === "gap_fill" ? new Array(
+            (String(it.sentence_template || "").match(/\{\d+\}/g) || []).length
+          ).fill("")
+        : ""
+      )),
+      results: items.map(() => null),
+      scoreCorrect: 0,
+    };
+    _testiState.set(sivuId, st);
+  }
+  return st;
+}
+
+function renderTestiContent(sivu) {
+  const items = testiItems(sivu);
+  if (items.length === 0) {
+    return `
+      <div class="dk__placeholder" data-kind="testi">
+        <p>Tällä testillä ei ole vielä kohtia.</p>
+      </div>`;
+  }
+  const st = ensureTestiState(sivu.id, items);
+  const label = sivu.testDef?.label || sivu.title || "Testi";
+
+  const itemsHtml = items.map((item, i) => renderTestiItem(item, i, st)).join("");
+  const summary = st.submitted ? renderTestiSummary(items, st) : "";
+  const submitBtn = st.submitted
+    ? `<button type="button" class="dk__btn dk__btn--ghost" id="dk-testi-reset">Tee uudelleen</button>
+       <button type="button" class="dk__btn dk__btn--primary" id="dk-testi-next-sivu">Seuraava sivu →</button>`
+    : `<button type="button" class="dk__btn dk__btn--primary" id="dk-testi-submit">Tarkista testi</button>`;
+
+  return `
+    <section class="dk__testi" data-sivu="${escapeHtml(sivu.id)}">
+      <header class="dk__exercise-head">
+        <span class="dk__exercise-eyebrow">Testi · ${escapeHtml(label)}</span>
+        <span class="dk__exercise-score">${items.length} kohtaa</span>
+      </header>
+      ${summary}
+      <ol class="dk__testi-list">${itemsHtml}</ol>
+      <div class="dk__exercise-actions dk__testi-actions">${submitBtn}</div>
+    </section>`;
+}
+
+function renderTestiItem(item, i, st) {
+  const submitted = st.submitted;
+  const result = st.results[i];
+  const stem = item.item_type === "translate"
+    ? (item.source || "")
+    : item.item_type === "typed"
+    ? (item.prompt || "")
+    : item.item_type === "gap_fill"
+    ? null
+    : item.stem || "";
+
+  const chip = submitted
+    ? `<span class="dk__feedback-chip ${result?.correct ? "is-correct" : "is-wrong"}">${result?.correct ? "Oikein" : "Vielä ei"}</span>`
+    : `<span class="dk__testi-itemnum">${i + 1}</span>`;
+
+  // Render the input per item_type. Reuses the bodies from ExerciseCard
+  // but suppresses the per-item submit button and feedback strip.
+  let body = "";
+  switch (item.item_type) {
+    case "mc": {
+      const chosen = submitted ? result?.choiceIndex : (st.answers[i] === null ? -1 : st.answers[i]);
+      const correctIdx = item.correct_index;
+      body = `
+        <p class="dk__exercise-stem dk__testi-stem">${escapeHtml(stem)}</p>
+        <ol class="dk__choices" role="radiogroup" aria-label="Vaihtoehdot">
+          ${(item.choices || []).map((c, idx) => {
+            const isChosen = chosen === idx;
+            const isRight = idx === correctIdx;
+            const cls = ["dk__choice"];
+            if (submitted) {
+              if (isChosen && isRight) cls.push("is-correct");
+              else if (isChosen && !isRight) cls.push("is-wrong");
+              else if (isRight) cls.push("is-revealed");
+            } else if (isChosen) {
+              cls.push("is-selected");
+            }
+            return `
+              <li>
+                <button type="button" class="${cls.join(" ")}"
+                        data-testi-item="${i}" data-choice="${idx}"
+                        ${submitted ? "disabled" : ""}>
+                  <span class="dk__choice-marker" aria-hidden="true">${String.fromCharCode(65 + idx)}</span>
+                  <span class="dk__choice-text">${escapeHtml(c)}</span>
+                </button>
+              </li>`;
+          }).join("")}
+        </ol>`;
+      break;
+    }
+    case "typed":
+    case "translate": {
+      const value = submitted ? (result?.userAnswer || "") : (st.answers[i] || "");
+      body = `
+        <p class="dk__exercise-stem dk__testi-stem">${escapeHtml(stem)}</p>
+        <div class="dk__input-row">
+          <label class="dk__input-label" for="dk-testi-input-${i}">Vastauksesi</label>
+          <${item.item_type === "translate" ? `textarea rows="2" id="dk-testi-input-${i}" class="dk__input dk__input--multiline"` : `input id="dk-testi-input-${i}" type="text" class="dk__input"`}
+                  data-testi-item="${i}" autocomplete="off" autocapitalize="off" spellcheck="false"
+                  ${submitted ? "disabled" : ""}${item.item_type === "translate" ? `>${escapeHtml(value)}</textarea>` : ` value="${escapeHtml(value)}">`}
+        </div>`;
+      break;
+    }
+    case "gap_fill": {
+      const tpl = String(item.sentence_template || "");
+      const vals = submitted ? (result?.userAnswer || []) : (st.answers[i] || []);
+      let blankIdx = 0;
+      const rendered = escapeHtml(tpl).replace(/\{(\d+)\}/g, () => {
+        const v = vals[blankIdx] || "";
+        const id = `dk-testi-${i}-gap-${blankIdx}`;
+        const cur = blankIdx;
+        blankIdx++;
+        return `<input id="${id}" type="text" class="dk__input dk__input--gap"
+                       data-testi-item="${i}" data-testi-gap="${cur}"
+                       autocomplete="off" spellcheck="false"
+                       value="${escapeHtml(v)}" ${submitted ? "disabled" : ""}>`;
+      });
+      const bank = Array.isArray(item.word_bank) && item.word_bank.length
+        ? `<ul class="dk__wordbank" aria-label="Sanapankki">
+             ${item.word_bank.map((w) => `<li><span>${escapeHtml(w)}</span></li>`).join("")}
+           </ul>`
+        : "";
+      body = `<p class="dk__exercise-stem dk__exercise-stem--gap dk__testi-stem">${rendered}</p>${bank}`;
+      break;
+    }
+    default:
+      body = `<p>${escapeHtml(stem)}</p>`;
+  }
+
+  // Per-item expected/explanation row revealed AFTER submit.
+  const reveal = submitted
+    ? `<div class="dk__testi-reveal">
+         ${result?.correct ? "" : `<p class="dk__feedback-expected"><span>Oikea vastaus:</span> ${escapeHtml(canonicalExpected(item) || "")}</p>`}
+         ${item.explanation ? `<p class="dk__feedback-text">${escapeHtml(item.explanation)}</p>` : ""}
+       </div>`
+    : "";
+
+  return `
+    <li class="dk__testi-item ${submitted ? (result?.correct ? "is-correct" : "is-wrong") : ""}" data-testi-item="${i}">
+      <div class="dk__testi-itemhead">
+        ${chip}
+      </div>
+      <div class="dk__testi-itembody">
+        ${body}
+        ${reveal}
+      </div>
+    </li>`;
+}
+
+function renderTestiSummary(items, st) {
+  const total = items.length;
+  const correct = st.scoreCorrect;
+  const pct = total ? Math.round((correct / total) * 100) : 0;
+  const headline = pct >= 80 ? "Hyvin meni." : pct >= 50 ? "Hyvä alku — kertaa virheelliset kohdat." : "Kertaa vielä ja yritä uudelleen.";
+  return `
+    <div class="dk__testi-summary" aria-live="polite">
+      <div class="dk__testi-summary-score">
+        <span class="dk__testi-summary-num">${correct} / ${total}</span>
+        <span class="dk__testi-summary-pct">${pct}%</span>
+      </div>
+      <p class="dk__testi-summary-headline">${escapeHtml(headline)}</p>
+    </div>`;
+}
+
+function readTestiInputs(items, st) {
+  const next = items.map((item, i) => {
+    switch (item.item_type) {
+      case "mc": return st.answers[i]; // captured on click
+      case "typed":
+      case "translate": {
+        const el = document.getElementById(`dk-testi-input-${i}`);
+        return el ? el.value : "";
+      }
+      case "gap_fill": {
+        const els = document.querySelectorAll(`[data-testi-item="${i}"][data-testi-gap]`);
+        return [...els].map((e) => e.value);
+      }
+      default: return null;
+    }
+  });
+  return next;
+}
+
+function reRenderTestiInPlace() {
+  const idx = findSivuIndex(_route.sivuId);
+  const sivu = _sivut[idx];
+  const slot = document.querySelector(".dk__content .dk__testi");
+  if (!slot) return;
+  const next = document.createElement("div");
+  next.innerHTML = renderTestiContent(sivu);
+  slot.replaceWith(next.firstElementChild);
+  wireTesti();
+}
+
+function wireTesti() {
+  const root = document.querySelector(".dk__testi");
+  if (!root) return;
+  const sivuId = root.dataset.sivu;
+  const sivu = _sivut.find((s) => s.id === sivuId);
+  const items = testiItems(sivu);
+  const st = ensureTestiState(sivuId, items);
+
+  // Capture MC clicks pre-submit so the chosen index persists across re-renders.
+  root.querySelectorAll(".dk__choice[data-testi-item]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      if (st.submitted) return;
+      const i = Number(btn.dataset.testiItem);
+      const c = Number(btn.dataset.choice);
+      st.answers[i] = c;
+      // Light-touch update: mark only the row's choices.
+      const li = root.querySelector(`.dk__testi-item[data-testi-item="${i}"]`);
+      li?.querySelectorAll(".dk__choice").forEach((b) => {
+        b.classList.toggle("is-selected", Number(b.dataset.choice) === c);
+      });
+    });
+  });
+
+  // Submit grades everything.
+  document.getElementById("dk-testi-submit")?.addEventListener("click", () => {
+    if (st.submitted) return;
+    // Capture current inputs.
+    st.answers = readTestiInputs(items, st);
+    let scoreCorrect = 0;
+    st.results = items.map((item, i) => {
+      const graded = gradeItem(item, st.answers[i]);
+      if (graded.correct) scoreCorrect++;
+      return graded;
+    });
+    st.scoreCorrect = scoreCorrect;
+    st.submitted = true;
+    reRenderTestiInPlace();
+    // Scroll the summary into view so the student sees their score first.
+    requestAnimationFrame(() => {
+      document.querySelector(".dk__testi-summary")?.scrollIntoView({ block: "start", behavior: "smooth" });
+    });
+  });
+
+  // Reset wipes the in-memory state and re-renders fresh.
+  document.getElementById("dk-testi-reset")?.addEventListener("click", () => {
+    _testiState.delete(sivuId);
+    reRenderTestiInPlace();
+  });
+
+  // Advance.
+  document.getElementById("dk-testi-next-sivu")?.addEventListener("click", () => {
+    const idx = findSivuIndex(_route.sivuId);
+    const next = _sivut[idx + 1];
+    if (next) navigateSivu(next.id);
+  });
 }
 
 // ─── Flashcards (PR5) ─────────────────────────────────────────────────
@@ -906,6 +1194,8 @@ function renderContent() {
     ? renderExerciseContent(sivu)
     : sivu.kind === "flashcards"
     ? renderFlashcardsContent(sivu)
+    : sivu.kind === "testi"
+    ? renderTestiContent(sivu)
     : renderPlaceholderContent(sivu);
 
   return `
@@ -1084,6 +1374,7 @@ function wireContent() {
   });
   wireExerciseCard();
   wireFlashcards();
+  wireTesti();
 }
 
 // ─── Public entry ─────────────────────────────────────────────────────

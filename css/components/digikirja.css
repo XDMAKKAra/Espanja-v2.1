@@ -831,6 +831,122 @@
   border-color: var(--ed-accent-hover);
 }
 
+/* ── Testi (PR6) ──────────────────────────────────────────────────── */
+
+.dk__testi {
+  margin: 18px 0 24px;
+  padding: 26px 28px 22px;
+  background: var(--ed-bg-card);
+  border: 1px solid var(--ed-rule);
+  border-radius: 16px;
+  max-width: 68ch;
+}
+
+.dk__testi-list {
+  list-style: none;
+  margin: 18px 0 24px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.dk__testi-item {
+  display: grid;
+  grid-template-columns: 38px 1fr;
+  gap: 16px;
+  padding: 14px 14px 14px 0;
+  border-top: 1px solid var(--ed-rule);
+}
+.dk__testi-item:first-child { border-top: 0; padding-top: 0; }
+
+.dk__testi-itemhead { padding-top: 4px; }
+.dk__testi-itemnum {
+  font-family: var(--ed-mono);
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+  color: var(--ed-ink-faint);
+  width: 30px;
+  height: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--ed-bg-deep);
+  border-radius: 50%;
+}
+.dk__testi-item.is-correct .dk__feedback-chip { padding: 5px 10px; }
+.dk__testi-item.is-wrong .dk__feedback-chip { padding: 5px 10px; }
+
+.dk__testi-stem {
+  font-size: 17px;
+  margin-bottom: 12px;
+  max-width: 56ch;
+}
+.dk__testi-reveal {
+  margin-top: 12px;
+  padding: 12px 14px;
+  background: var(--ed-bg);
+  border: 1px solid var(--ed-rule);
+  border-radius: 10px;
+}
+
+/* Pre-submit selected MC choice picks up a soft tint so the student
+   sees what they committed to without revealing right/wrong. */
+.dk__choice.is-selected {
+  background: var(--ed-bg-card);
+  border-color: var(--ed-ink-faint);
+}
+.dk__choice.is-selected .dk__choice-marker {
+  background: var(--ed-ink-muted);
+  color: var(--ed-accent-ink);
+}
+
+.dk__testi-summary {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 18px;
+  margin: 0 0 16px;
+  padding: 18px 20px;
+  background: var(--ed-accent-tint);
+  border: 1px solid color-mix(in oklch, var(--ed-accent) 25%, transparent);
+  border-radius: 12px;
+}
+.dk__testi-summary-score {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  min-width: 96px;
+}
+.dk__testi-summary-num {
+  font-family: var(--ed-display);
+  font-style: italic;
+  font-weight: 600;
+  font-size: 30px;
+  color: var(--ed-accent);
+  line-height: 1;
+}
+.dk__testi-summary-pct {
+  font-family: var(--ed-mono);
+  font-size: 12px;
+  color: var(--ed-ink-muted);
+}
+.dk__testi-summary-headline {
+  font-family: var(--ed-display);
+  font-style: italic;
+  font-size: 18px;
+  color: var(--ed-ink);
+  margin: 0;
+  max-width: 38ch;
+}
+
+.dk__testi-actions {
+  justify-content: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
 /* ── Flashcard pack (PR5) ─────────────────────────────────────────── */
 
 .dk__flashpack {

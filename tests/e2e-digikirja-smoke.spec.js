@@ -225,6 +225,48 @@ test('PR5 — Flashcard flips, "Tiedän" advances + persists', async ({ page }) 
   });
 });
 
+test('PR6 — Testi submits all items, shows summary + per-item chips', async ({ page }) => {
+  test.setTimeout(90_000);
+  await login(page);
+  await page.setViewportSize({ width: 1440, height: 900 });
+
+  // test-2 is the mc-based test (6 kohtaa from phase-0 of lesson_3).
+  await page.evaluate(() => { location.hash = '#/oppitunti/es/kurssi_2/3/test-2'; });
+  await page.waitForTimeout(1200);
+
+  await expect(page.locator('.dk__testi')).toBeVisible();
+  const itemCount = await page.locator('.dk__testi-item').count();
+  expect(itemCount).toBe(6);
+
+  // No live feedback before submit — Tarkista testi button visible, no
+  // summary panel yet.
+  await expect(page.locator('#dk-testi-submit')).toBeVisible();
+  await expect(page.locator('.dk__testi-summary')).toHaveCount(0);
+
+  // Answer all 6 items: first item correctly (choice 1 = "aamiainen"),
+  // remaining 5 with choice 0 (deliberately probably wrong → mixed score).
+  await page.locator('.dk__testi-item[data-testi-item="0"] .dk__choice[data-choice="1"]').click();
+  for (let i = 1; i < 6; i++) {
+    await page.locator(`.dk__testi-item[data-testi-item="${i}"] .dk__choice[data-choice="0"]`).click();
+  }
+
+  await page.locator('#dk-testi-submit').click();
+  await page.waitForTimeout(250);
+
+  // Summary panel, per-item chips, reset + next-sivu buttons all present.
+  await expect(page.locator('.dk__testi-summary')).toBeVisible();
+  await expect(page.locator('.dk__testi-summary-num')).toContainText('/ 6');
+  const correctChips = await page.locator('.dk__testi-item .dk__feedback-chip.is-correct').count();
+  expect(correctChips).toBeGreaterThanOrEqual(1);
+  await expect(page.locator('#dk-testi-reset')).toBeVisible();
+  await expect(page.locator('#dk-testi-next-sivu')).toBeVisible();
+
+  await page.screenshot({
+    path: path.resolve('audit-screens', 'digikirja-pr6-testi.png'),
+    fullPage: true,
+  });
+});
+
 test('SideMenu toggle persists across navigation', async ({ page }) => {
   test.setTimeout(60_000);
   await login(page);
