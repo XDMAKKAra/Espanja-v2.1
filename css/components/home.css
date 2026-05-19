@@ -1,7 +1,7 @@
-/* HOME screen — PR auto/home-screen (2026-05-19).
-   Otava-inspired course library: top tabs pick a language, grid below
-   shows that language's 8 courses with cover + title + progress.
-   Scoped to body.app so it only paints inside the logged-in shell. */
+/* HOME — PR auto/ohjaamo (2026-05-19).
+   Greeting + language tabs + ohjaamo (4 stats with paywall blur on 2) +
+   4 mode cards. No cover graphics, no gradients — typography-led
+   editorial register. Anti-AI-slop. */
 
 #screen-home.screen.active {
   align-items: flex-start;
@@ -10,49 +10,41 @@
 
 body.app .home-shell {
   width: 100%;
-  max-width: 1200px;
+  max-width: 960px;
   margin: 0 auto;
-  padding: clamp(24px, 4vw, 56px) clamp(16px, 4vw, 32px) 96px;
+  padding: clamp(28px, 5vw, 64px) clamp(16px, 4vw, 32px) 96px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
 }
 
-body.app .home-head {
-  margin-bottom: 28px;
-  max-width: 60ch;
+body.app .home-loading {
+  font-family: var(--ed-serif, Georgia, serif);
+  font-style: italic;
+  color: var(--ed-ink-faint, var(--ink-faint));
+  padding: 40px 0;
+  text-align: center;
 }
-body.app .home-eyebrow {
-  font-family: var(--ed-sans, system-ui);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--ed-accent, var(--accent));
-  margin: 0 0 8px;
-}
-body.app .home-title {
+
+/* Greeting — only personality moment on this screen. */
+body.app .home-head { margin-bottom: 0; }
+body.app .home-greeting {
   font-family: var(--ed-display, "Fraunces", Georgia, serif);
   font-variation-settings: "opsz" 96, "SOFT" 50;
-  font-size: clamp(2.2rem, 4.4vw, 3.6rem);
+  font-size: clamp(2.4rem, 5vw, 4rem);
   font-weight: 400;
-  letter-spacing: -0.025em;
-  line-height: 1.04;
-  margin: 0 0 10px;
+  letter-spacing: -0.026em;
+  line-height: 1;
   color: var(--ed-ink, var(--ink));
-}
-body.app .home-sub {
-  font-family: var(--ed-serif, var(--ed-display, Georgia, serif));
-  font-style: italic;
-  font-size: 16px;
-  line-height: 1.5;
-  color: var(--ed-ink-muted, var(--ink-soft));
   margin: 0;
-  max-width: 48ch;
 }
 
+/* Language tabs — underline-only switcher. */
 body.app .home-tabs {
   display: flex;
   gap: 4px;
-  margin-bottom: 28px;
   border-bottom: 1px solid var(--ed-rule, var(--border));
+  margin-bottom: 8px;
 }
 body.app .home-tab {
   display: inline-flex;
@@ -61,9 +53,9 @@ body.app .home-tab {
   background: transparent;
   border: 0;
   border-bottom: 2px solid transparent;
-  padding: 12px 14px 14px;
+  padding: 12px 16px 14px;
   font-family: var(--ed-sans, system-ui);
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.02em;
   color: var(--ed-ink-muted, var(--ink-soft));
@@ -76,168 +68,196 @@ body.app .home-tab.is-active {
   color: var(--ed-ink, var(--ink));
   border-bottom-color: var(--ed-accent, var(--accent));
 }
-body.app .home-tab__flag { font-size: 18px; }
+body.app .home-tab__flag { font-size: 16px; }
 
-body.app .home-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 18px;
-}
-@media (min-width: 1024px) {
-  body.app .home-grid {
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 24px;
-  }
-}
-body.app .home-grid-loading,
-body.app .home-grid-empty {
-  grid-column: 1 / -1;
-  padding: 40px 0;
-  font-family: var(--ed-serif, Georgia, serif);
-  font-style: italic;
-  color: var(--ed-ink-faint, var(--ink-faint));
-  text-align: center;
-}
-
-body.app .home-card {
-  display: flex;
-  flex-direction: column;
+/* Ohjaamo — 4-cell stats panel with paywall blur on 2 cells for free. */
+body.app .ohjaamo {
   background: var(--ed-bg-card, var(--surface));
   border: 1px solid var(--ed-rule, var(--border));
-  border-radius: 8px;
-  padding: 0;
-  text-align: left;
-  cursor: pointer;
-  overflow: hidden;
-  transition: border-color 160ms ease, transform 160ms ease, box-shadow 200ms ease;
+  border-radius: 6px;
+  padding: 20px 24px 22px;
 }
-body.app .home-card:not([aria-disabled="true"]):hover {
-  border-color: var(--ed-accent, var(--accent));
-  transform: translateY(-2px);
-  box-shadow: 0 12px 28px -16px oklch(20% 0.05 30 / 0.22);
-}
-body.app .home-card:not([aria-disabled="true"]):focus-visible {
-  outline: 2px solid var(--ed-accent, var(--accent));
-  outline-offset: 3px;
-}
-body.app .home-card[aria-disabled="true"] {
-  opacity: 0.55;
-  cursor: not-allowed;
-}
-body.app .home-card.is-done .home-card__cover-num { background: var(--ed-olive, var(--accent)); }
-
-body.app .home-card__cover {
-  position: relative;
-  aspect-ratio: 16 / 9;
-  display: grid;
-  place-items: center;
-  color: oklch(98% 0.012 75 / 0.95);
-  overflow: hidden;
-}
-body.app .home-card__cover::before {
-  /* Faint diagonal cross-hatch on top of the gradient — gives each
-     cover area more texture than a flat fill, no extra assets. */
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image:
-    repeating-linear-gradient(135deg,
-      oklch(20% 0.05 30 / 0.08) 0 1px, transparent 1px 12px);
-  pointer-events: none;
-}
-body.app .home-card__cover-num {
-  /* Bug fix screenshot 215619: "1 2 3" was too dominant — softened to
-     a subtle mono numeral in the bottom-left corner instead of a
-     dominant serif glyph in the centre. Cover area now reads as paper
-     texture, not as a tile flagged with a number. */
-  position: absolute;
-  bottom: 14px;
-  left: 16px;
-  z-index: 1;
-  font-family: var(--ed-mono, monospace);
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.18em;
-  line-height: 1;
-  color: oklch(98% 0.012 75 / 0.88);
-  text-shadow: 0 1px 1px oklch(20% 0.05 30 / 0.22);
-}
-body.app .home-card__cover-num::before {
-  content: "KURSSI ";
-  font-size: 10px;
-  letter-spacing: 0.16em;
-  opacity: 0.72;
-}
-body.app .home-card__cover-level {
-  position: absolute;
-  top: 12px;
-  right: 14px;
-  z-index: 1;
+body.app .ohjaamo__eyebrow {
   font-family: var(--ed-sans, system-ui);
   font-size: 10px;
-  letter-spacing: 0.14em;
   font-weight: 600;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: oklch(98% 0.012 75 / 0.85);
-  background: oklch(20% 0.05 30 / 0.22);
-  padding: 3px 8px;
-  border-radius: 999px;
-  backdrop-filter: blur(2px);
+  color: var(--ed-accent, var(--accent));
+  margin: 0 0 14px;
 }
-
-body.app .home-card__body {
-  padding: 16px 18px 18px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  flex: 1;
+body.app .ohjaamo__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 0;
 }
-body.app .home-card__title {
-  font-family: var(--ed-sans, system-ui);
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 1.3;
-  letter-spacing: -0.005em;
-  color: var(--ed-ink, var(--ink));
-  margin: 0;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-body.app .home-card__progress {
+body.app .ohjaamo-cell {
   display: flex;
   flex-direction: column;
   gap: 4px;
+  padding: 4px 12px 4px 0;
+  border-right: 1px solid var(--ed-rule, var(--border));
+  position: relative;
+  transition: background 160ms ease;
 }
-body.app .home-card__progress-bar {
-  height: 4px;
-  background: var(--ed-rule, var(--border));
-  border-radius: 2px;
-  overflow: hidden;
-}
-body.app .home-card__progress-fill {
-  height: 100%;
-  background: var(--ed-accent, var(--accent));
-  border-radius: 2px;
-  transition: width 240ms ease;
-}
-body.app .home-card.is-done .home-card__progress-fill { background: var(--ed-olive, var(--accent)); }
-body.app .home-card__progress-text {
-  font-family: var(--ed-mono, monospace);
-  font-size: 11px;
-  color: var(--ed-ink-faint, var(--ink-faint));
-  letter-spacing: 0.02em;
-}
-body.app .home-card__status {
+body.app .ohjaamo-cell:last-child { border-right: 0; }
+body.app .ohjaamo-cell__label {
   font-family: var(--ed-sans, system-ui);
-  font-size: 11px;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ed-ink-faint, var(--ink-faint));
+  font-weight: 600;
+}
+body.app .ohjaamo-cell__value {
+  font-family: var(--ed-mono, monospace);
+  font-size: 24px;
+  font-weight: 500;
+  color: var(--ed-ink, var(--ink));
+  letter-spacing: -0.01em;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+body.app .ohjaamo-cell.is-locked .ohjaamo-cell__value {
+  color: var(--ed-ink-faint, var(--ink-faint));
+  filter: blur(2px);
+}
+body.app .ohjaamo-cell.is-locked .ohjaamo-cell__lock {
+  filter: none;
+  font-size: 14px;
+}
+body.app .ohjaamo-cell.is-locked::after {
+  /* Hover-only "Avaa Treeni" hint via title-attr fallback; the
+     pointer-cursor + click handler in home.js opens the paywall. */
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 4px;
+  transition: background 160ms ease;
+}
+body.app .ohjaamo-cell.is-locked:hover::after {
+  background: color-mix(in oklch, var(--ed-accent, var(--accent)) 6%, transparent);
+}
+
+body.app .ohjaamo-upgrade {
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid var(--ed-rule, var(--border));
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-start;
+}
+body.app .ohjaamo-upgrade__body {
+  font-family: var(--ed-serif, Georgia, serif);
+  font-style: italic;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--ed-ink-muted, var(--ink-soft));
+  margin: 0;
+  max-width: 52ch;
+}
+body.app .ohjaamo-upgrade__cta {
+  background: var(--ed-accent, var(--accent));
+  color: var(--ed-accent-ink, oklch(96% 0.012 75));
+  border: 0;
+  border-radius: 4px;
+  font-family: var(--ed-sans, system-ui);
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  padding: 10px 14px;
+  cursor: pointer;
+  transition: background 200ms ease;
+}
+body.app .ohjaamo-upgrade__cta:hover { background: var(--ed-accent-hover, var(--accent)); }
+
+/* 4 mode cards — no cover graphics, no gradients. Typography + chip +
+   body, hover lift, brick on the active. */
+body.app .home-modes {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+@media (min-width: 720px) {
+  body.app .home-modes {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+}
+
+body.app .home-mode {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: var(--ed-bg-card, var(--surface));
+  border: 1px solid var(--ed-rule, var(--border));
+  border-radius: 6px;
+  padding: 22px 22px 20px;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 160ms ease, transform 160ms ease, box-shadow 200ms ease;
+}
+body.app .home-mode:hover:not([aria-disabled="true"]) {
+  border-color: var(--ed-accent, var(--accent));
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px -14px oklch(20% 0.05 30 / 0.22);
+}
+body.app .home-mode:focus-visible {
+  outline: 2px solid var(--ed-accent, var(--accent));
+  outline-offset: 3px;
+}
+body.app .home-mode[aria-disabled="true"] {
+  cursor: not-allowed;
+  background: color-mix(in oklch, var(--ed-bg-deep, var(--surface)) 60%, var(--ed-bg-card));
+}
+body.app .home-mode__chip {
+  font-family: var(--ed-sans, system-ui);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ed-accent, var(--accent));
+  margin: 0;
+}
+body.app .home-mode__title {
+  font-family: var(--ed-display, "Fraunces", Georgia, serif);
+  font-variation-settings: "opsz" 48;
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: -0.014em;
+  line-height: 1.16;
+  color: var(--ed-ink, var(--ink));
+  margin: 4px 0 6px;
+}
+body.app .home-mode__desc {
+  font-family: var(--ed-serif, Georgia, serif);
+  font-style: italic;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--ed-ink-muted, var(--ink-soft));
+  margin: 0;
+  max-width: 42ch;
+}
+body.app .home-mode__badge {
+  margin-top: 12px;
+  align-self: flex-start;
+  font-family: var(--ed-sans, system-ui);
+  font-size: 10px;
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
+  background: var(--ed-bg-deep, color-mix(in srgb, var(--ed-accent, var(--accent)) 10%, transparent));
   color: var(--ed-accent, var(--accent));
-  margin-top: auto;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in oklch, var(--ed-accent, var(--accent)) 22%, transparent);
+  white-space: nowrap;
 }
-body.app .home-card.is-done .home-card__status { color: var(--ed-olive, var(--accent)); }
-body.app .home-card.is-locked .home-card__status { color: var(--ed-ink-faint, var(--ink-faint)); }
-body.app .home-card.is-progress .home-card__status { color: var(--ed-accent, var(--accent)); }
+body.app .home-mode__badge.is-lock {
+  background: color-mix(in oklch, var(--ed-ink-faint, var(--ink-faint)) 12%, transparent);
+  color: var(--ed-ink-muted, var(--ink-soft));
+  border-color: var(--ed-rule, var(--border));
+}

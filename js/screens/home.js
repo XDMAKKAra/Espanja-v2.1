@@ -1,20 +1,18 @@
 /**
- * HOME screen — PR auto/home-screen (2026-05-19).
+ * HOME — PR auto/ohjaamo (2026-05-19).
  *
- * Top tabs pick a target language (ES / FR / DE), grid below lists 8
- * Otava-style course cards for the active language. Card click navigates
- * to #/kurssi/{lang}/{key} (handled by future PR 3's course-overview
- * screen). Until that lands, clicks fall back to the existing path
- * screen with the chosen course auto-expanded.
+ * Rewritten per docs/superpowers/specs/2026-05-19-mode-first-hierarchy-design.md.
+ * Top tabs pick language. Below: greeting + ohjaamo (student stats,
+ * level + YO-valmius gated for free) + 4 mode cards
+ * (Oppimispolku / Kirjoitustehtävä / Luetun ymmärt. / Koeharjoitus).
  *
- * State: active language persists to localStorage("puheo:lang") so the
- * user lands on their last-pick on return. First-time visitors default
- * to "es" (Spanish — the only language with fully populated content
- * during this rollout).
+ * The earlier course-library grid is gone — modes are now top-level,
+ * Oppimispolku opens its own kurssilista at #/oppimispolku?lang=X.
  */
 
 import { API, apiFetch, isLoggedIn, authHeader } from "../api.js";
 import { show } from "../ui/nav.js";
+import { isProTier } from "../lib/tier.js";
 
 const LANGS = [
   { code: "es", label: "Espanja", flag: "🇪🇸" },
@@ -23,7 +21,13 @@ const LANGS = [
 ];
 
 const LANG_KEY = "puheo:lang";
-const _courseCache = new Map(); // lang → { ts, kurssit }
+let _ohjaamoData = null;
+
+function escapeHtml(s) {
+  return String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
+  }[c]));
+}
 
 function readActiveLang() {
   try {
@@ -37,14 +41,25 @@ function writeActiveLang(code) {
   try { localStorage.setItem(LANG_KEY, code); } catch { /* ignore */ }
 }
 
-function escapeHtml(s) {
-  return String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ({
-    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
-  }[c]));
+async function fetchOhjaamo() {
+  if (_ohjaamoData && (Date.now() - _ohjaamoData.ts) < 60_000) {
+    return _ohjaamoData.payload;
+  }
+  try {
+    const res = await apiFetch(`${API}/api/dashboard/v2`, {
+      headers: { ...(isLoggedIn() ? authHeader() : {}) },
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    _ohjaamoData = { ts: Date.now(), payload: data };
+    return data;
+  } catch {
+    return null;
+  }
 }
 
-function renderHomeShell(activeLang) {
-  const tabs = LANGS.map((l) => `
+function renderTabs(activeLang) {
+  return LANGS.map((l) => `
     <button type="button"
             class="home-tab ${l.code === activeLang ? "is-active" : ""}"
             data-lang="${l.code}"
@@ -54,120 +69,121 @@ function renderHomeShell(activeLang) {
       <span class="home-tab__label">${escapeHtml(l.label)}</span>
     </button>
   `).join("");
+}
 
+function renderOhjaamoCell({ label, value, locked }) {
   return `
-    <header class="home-head">
-      <p class="home-eyebrow">Aloita harjoittelu</p>
-      <h1 class="home-title display display--serif">YO-koevalmennus</h1>
-      <p class="home-sub">Valitse kieli ja kurssi. Edistyminen tallentuu jokaiseen erikseen.</p>
-    </header>
-    <div class="home-tabs" role="tablist" aria-label="Kielet">${tabs}</div>
-    <div class="home-grid" id="home-grid" aria-live="polite">
-      <div class="home-grid-loading">Ladataan kursseja&hellip;</div>
+    <div class="ohjaamo-cell ${locked ? "is-locked" : ""}">
+      <span class="ohjaamo-cell__label">${escapeHtml(label)}</span>
+      <span class="ohjaamo-cell__value">${locked ? '<span class="ohjaamo-cell__lock" aria-hidden="true">🔒</span>' : ""}${locked ? "—" : escapeHtml(value)}</span>
     </div>`;
 }
 
-function renderCourseCard(lang, k, stepNumber) {
-  const done = !!k.kertausPassed;
-  const locked = !k.isUnlocked;
-  const completed = k.lessonsCompleted || 0;
-  const total = k.lessonCount || 10;
-  const pct = Math.min(100, Math.round((completed / total) * 100));
+function renderOhjaamo(data, isPro) {
+  const dashboard = data?.dashboard || {};
+  const streak = dashboard.streak ?? 0;
+  const sessions = dashboard.totalSessions ?? 0;
+  const level = dashboard.estLevel || dashboard.currentLevel || "—";
+  const yoReadiness = dashboard.yoReadinessPct != null ? `${dashboard.yoReadinessPct} %` : "—";
 
-  const status = done
-    ? "Suoritettu"
-    : locked
-      ? "Lukittu"
-      : completed > 0
-        ? "Jatka"
-        : "Aloita";
-
-  const statusCls = done
-    ? "is-done"
-    : locked
-      ? "is-locked"
-      : completed > 0
-        ? "is-progress"
-        : "is-start";
-
-  // Deterministic cover hue per course index so each card looks distinct
-  // without needing 8 separate SVG files. Two-stop gradient on the cover
-  // area, brick accent corner glyph stays consistent across cards.
-  const hueA = (stepNumber * 47) % 360;
-  const hueB = (hueA + 28) % 360;
+  const upgradeRow = isPro ? "" : `
+    <div class="ohjaamo-upgrade">
+      <p class="ohjaamo-upgrade__body">Avaa Treeni nähdäksesi tasosi ja YO-valmiusarvion sekä rajoittamattomat harjoitukset.</p>
+      <button type="button" class="ohjaamo-upgrade__cta" id="ohjaamo-upgrade-cta">Tutustu Treeniin →</button>
+    </div>`;
 
   return `
-    <button type="button"
-            class="home-card ${statusCls}"
-            data-kurssi="${escapeHtml(k.key)}"
-            data-lang="${escapeHtml(lang)}"
-            ${locked ? 'aria-disabled="true"' : ""}>
-      <div class="home-card__cover"
-           style="background: linear-gradient(135deg, oklch(72% 0.08 ${hueA}) 0%, oklch(58% 0.10 ${hueB}) 100%);">
-        <span class="home-card__cover-num">${stepNumber}</span>
-        <span class="home-card__cover-level">Taso ${escapeHtml(k.level || "—")}</span>
+    <section class="ohjaamo" aria-label="Ohjaamo">
+      <p class="ohjaamo__eyebrow">Ohjaamo</p>
+      <div class="ohjaamo__grid">
+        ${renderOhjaamoCell({ label: "Päivän putki", value: `${streak} pv`, locked: false })}
+        ${renderOhjaamoCell({ label: "Harjoituksia", value: `${sessions}`, locked: false })}
+        ${renderOhjaamoCell({ label: "Tasosi", value: level, locked: !isPro })}
+        ${renderOhjaamoCell({ label: "YO-valmius", value: yoReadiness, locked: !isPro })}
       </div>
-      <div class="home-card__body">
-        <h3 class="home-card__title">${escapeHtml(`${stepNumber}. ${k.title}`)}</h3>
-        <div class="home-card__progress" role="progressbar" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100" aria-label="${pct} % suoritettu">
-          <div class="home-card__progress-bar"><div class="home-card__progress-fill" style="width:${pct}%"></div></div>
-          <span class="home-card__progress-text">${completed} / ${total} oppituntia</span>
-        </div>
-        <span class="home-card__status">${escapeHtml(status)}</span>
+      ${upgradeRow}
+    </section>`;
+}
+
+const MODES = [
+  {
+    id: "path",
+    title: "Oppimispolku",
+    body: "Vaiheittainen kurssi sanasto- ja kielioppitehtävineen.",
+    chip: "8 kurssia · 80 oppituntia",
+    freeBadge: "Yksi oppitunti per päivä",
+    locked: false,
+    target: (lang) => `#/oppimispolku?lang=${lang}`,
+  },
+  {
+    id: "writing",
+    title: "Kirjoitustehtävä",
+    body: "AI arvioi tuotoksesi YTL-rubriikilla ja antaa konkreettiset korjaukset.",
+    chip: "Lyhyt + pitkä",
+    freeBadge: "3 tehtävää per kuukausi",
+    locked: false,
+    target: (lang) => `#/kirjoitus?lang=${lang}`,
+  },
+  {
+    id: "reading",
+    title: "Luetun ymmärtäminen",
+    body: "Aitoja YO-tyylisiä tekstejä monivalintatehtävineen.",
+    chip: "180 tekstiä",
+    freeBadge: "5 tekstiä per päivä",
+    locked: false,
+    target: (lang) => `#/luetun?lang=${lang}`,
+  },
+  {
+    id: "exam",
+    title: "Koeharjoitus",
+    body: "Koko YO-koe simulaationa. AI-arvio kaikkiin osa-alueisiin.",
+    chip: "Täysi YO-simulaatio",
+    freeBadge: "Avaa Treeni",
+    locked: true, // hard-locked for free
+    target: (lang) => `#/koeharjoitus?lang=${lang}`,
+  },
+];
+
+function renderModeCard(mode, lang, isPro) {
+  const showLock = mode.locked && !isPro;
+  const cls = ["home-mode", `home-mode--${mode.id}`, showLock ? "is-locked" : ""].filter(Boolean).join(" ");
+  const badge = !isPro
+    ? `<span class="home-mode__badge ${showLock ? "is-lock" : ""}">${showLock ? "🔒 " : ""}${escapeHtml(mode.freeBadge)}</span>`
+    : "";
+  return `
+    <a class="${cls}" href="${mode.target(lang)}" data-mode="${mode.id}" ${showLock ? 'aria-disabled="true"' : ""}>
+      <div class="home-mode__body">
+        <p class="home-mode__chip">${escapeHtml(mode.chip)}</p>
+        <h3 class="home-mode__title">${escapeHtml(mode.title)}</h3>
+        <p class="home-mode__desc">${escapeHtml(mode.body)}</p>
       </div>
-    </button>`;
+      ${badge}
+    </a>`;
 }
 
-function renderGrid(host, lang, kurssit) {
-  if (!kurssit || kurssit.length === 0) {
-    host.innerHTML = `<p class="home-grid-empty">Kursseja ei vielä julkaistu tälle kielelle.</p>`;
-    return;
-  }
-  host.innerHTML = kurssit.map((k, i) => renderCourseCard(lang, k, i + 1)).join("");
-  host.querySelectorAll(".home-card:not([aria-disabled='true'])").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const key = btn.dataset.kurssi;
-      const cardLang = btn.dataset.lang;
-      writeActiveLang(cardLang);
-      // PR auto/course-overview (2026-05-19): route to the new
-      // overview screen. hashchange listener in main.js pattern-
-      // matches #/kurssi/{lang}/{key} and dispatches to
-      // courseOverview.tryRouteCourseOverview.
-      location.hash = `#/kurssi/${cardLang}/${encodeURIComponent(key)}`;
-    });
-  });
+function renderShell(activeLang, data, isPro) {
+  const tabs = renderTabs(activeLang);
+  const tiles = MODES.map((m) => renderModeCard(m, activeLang, isPro)).join("");
+  const userName = data?.profile?.profile?.preferred_name
+    || data?.profile?.profile?.full_name
+    || window._userProfile?.preferred_name
+    || "";
+  const hour = new Date().getHours();
+  const greet = hour < 11 ? "Huomenta" : hour < 18 ? "Päivää" : "Iltaa";
+  const greeting = userName ? `${greet}, ${userName}.` : `${greet}.`;
+
+  return `
+    <header class="home-head">
+      <h1 class="home-greeting display display--serif">${escapeHtml(greeting)}</h1>
+    </header>
+    <div class="home-tabs" role="tablist" aria-label="Kielet">${tabs}</div>
+    <div id="ohjaamo-root">${renderOhjaamo(data, isPro)}</div>
+    <section class="home-modes" aria-label="Harjoitustyypit">${tiles}</section>`;
 }
 
-async function fetchCourses(lang) {
-  const cached = _courseCache.get(lang);
-  if (cached && (Date.now() - cached.ts) < 60_000) return cached.kurssit;
-  try {
-    const res = await apiFetch(`${API}/api/curriculum?lang=${encodeURIComponent(lang)}`, {
-      headers: { ...(isLoggedIn() ? authHeader() : {}) },
-    });
-    if (!res.ok) return [];
-    const data = await res.json();
-    if (data?.available === false) return [];
-    const kurssit = Array.isArray(data?.kurssit)
-      ? data.kurssit.filter((k) => k && typeof k.key === "string")
-      : [];
-    _courseCache.set(lang, { ts: Date.now(), kurssit });
-    return kurssit;
-  } catch {
-    return [];
-  }
-}
-
-async function loadGridForLang(lang) {
-  const host = document.getElementById("home-grid");
-  if (!host) return;
-  const kurssit = await fetchCourses(lang);
-  renderGrid(host, lang, kurssit);
-}
-
-function wireTabs(root) {
+function wireTabs(root, isPro) {
   root.querySelectorAll(".home-tab").forEach((tab) => {
-    tab.addEventListener("click", async () => {
+    tab.addEventListener("click", () => {
       const lang = tab.dataset.lang;
       if (!lang) return;
       writeActiveLang(lang);
@@ -176,9 +192,36 @@ function wireTabs(root) {
         t.classList.toggle("is-active", isThis);
         t.setAttribute("aria-selected", isThis ? "true" : "false");
       });
-      const host = document.getElementById("home-grid");
-      if (host) host.innerHTML = `<div class="home-grid-loading">Ladataan kursseja&hellip;</div>`;
-      await loadGridForLang(lang);
+      // Re-render mode card hrefs with the new lang.
+      root.querySelectorAll(".home-mode").forEach((a) => {
+        const id = a.dataset.mode;
+        const mode = MODES.find((m) => m.id === id);
+        if (mode) a.setAttribute("href", mode.target(lang));
+      });
+    });
+  });
+}
+
+function wireUpgrade(root) {
+  root.querySelector("#ohjaamo-upgrade-cta")?.addEventListener("click", () => {
+    import("../features/paywallModal.js").then((m) => m.openPaywallModal?.()).catch(() => {});
+  });
+  // Locked ohjaamo cells also open paywall.
+  root.querySelectorAll(".ohjaamo-cell.is-locked").forEach((cell) => {
+    cell.addEventListener("click", () => {
+      import("../features/paywallModal.js").then((m) => m.openPaywallModal?.()).catch(() => {});
+    });
+    cell.style.cursor = "pointer";
+  });
+}
+
+function wireModes(root, isPro) {
+  root.querySelectorAll(".home-mode").forEach((a) => {
+    a.addEventListener("click", (e) => {
+      if (a.getAttribute("aria-disabled") === "true") {
+        e.preventDefault();
+        import("../features/paywallModal.js").then((m) => m.openPaywallModal?.()).catch(() => {});
+      }
     });
   });
 }
@@ -188,7 +231,11 @@ export async function loadHome() {
   const root = document.getElementById("home-root");
   if (!root) return;
   const activeLang = readActiveLang();
-  root.innerHTML = renderHomeShell(activeLang);
-  wireTabs(root);
-  await loadGridForLang(activeLang);
+  root.innerHTML = `<p class="home-loading">Ladataan…</p>`;
+  const data = await fetchOhjaamo();
+  const isPro = isProTier(data?.profile?.profile);
+  root.innerHTML = renderShell(activeLang, data, isPro);
+  wireTabs(root, isPro);
+  wireUpgrade(root);
+  wireModes(root, isPro);
 }

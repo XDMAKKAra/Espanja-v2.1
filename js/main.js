@@ -282,24 +282,35 @@ document.querySelectorAll(".sidebar-item[data-nav], .mobile-nav-item[data-nav], 
 
 window.addEventListener("hashchange", () => {
   if (!isLoggedIn()) return;
-  // PR auto/course-overview: pattern-route #/kurssi/{lang}/{key} first
-  // before falling back to the static NAV_HASH lookup. The async import
-  // is fire-and-forget — the screen toggles to its host via show()
-  // inside loadCourseOverview, so no double-paint.
   if (/^#\/kurssi\//.test(location.hash)) {
     import("./screens/courseOverview.js")
       .then((m) => m.tryRouteCourseOverview?.(location.hash))
       .catch(() => { /* fall through */ });
     return;
   }
-  const nav = HASH_NAV[location.hash];
+  // PR auto/ohjaamo (2026-05-19): home mode cards include ?lang=X
+  // query strings (e.g. "#/luetun?lang=es"). Strip the query before
+  // the static NAV_HASH lookup so the dispatch still finds the
+  // matching nav target.
+  const hashRaw = location.hash || "";
+  const hashBase = hashRaw.split("?")[0];
+  const nav = HASH_NAV[hashBase];
   if (nav) navigateTo(nav, { updateHash: false });
 });
 
 // On boot, restore screen from hash (only if logged in — auth flow handles otherwise).
 window._restoreFromHash = function restoreFromHash() {
   if (!isLoggedIn()) return false;
-  const nav = HASH_NAV[location.hash];
+  // Course-overview pattern wins first (#/kurssi/{lang}/{key}).
+  if (/^#\/kurssi\//.test(location.hash)) {
+    import("./screens/courseOverview.js")
+      .then((m) => m.tryRouteCourseOverview?.(location.hash))
+      .catch(() => { /* fall through */ });
+    return true;
+  }
+  const hashRaw = location.hash || "";
+  const hashBase = hashRaw.split("?")[0];
+  const nav = HASH_NAV[hashBase];
   if (!nav) return false;
   navigateTo(nav, { updateHash: false });
   return true;
