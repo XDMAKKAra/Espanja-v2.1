@@ -1,7 +1,8 @@
-// PR1 smoke: Otava Fokus 7 three-panel digikirja screen.
-// Verifies the new screen mounts, the SideMenu lists all sivut for
-// the demo lesson, clicking a row switches the content, and the
-// SideMenu toggle persists across navigation.
+// PR1+2 smoke: Otava Fokus 7 three-panel digikirja screen.
+// PR1 verified the shell renders + SideMenu navigation + toggle persist.
+// PR2 verifies real lesson JSON is fetched, teoria sivu renders the
+// teaching markdown (BilingualTable + InfoBox + key points), and the
+// SideMenu's sivu list is derived from the lesson's phases.
 import { test, expect } from '@playwright/test';
 import path from 'path';
 
@@ -23,70 +24,75 @@ async function login(page) {
   }
 }
 
-test('digikirja shell renders with demo lesson and switches sivu', async ({ page }) => {
+const DEMO_HASH = '#/oppitunti/es/kurssi_2/3/teoria';
+
+test('digikirja shell renders the real Ruoka ja ateriat lesson', async ({ page }) => {
   test.setTimeout(90_000);
   await login(page);
   await page.setViewportSize({ width: 1440, height: 900 });
 
-  // Navigate directly to the new 5-segment route.
-  await page.evaluate(() => { location.hash = '#/oppitunti/es/kurssi-2/3/teoria'; });
-  await page.waitForTimeout(800);
+  await page.evaluate((h) => { location.hash = h; }, DEMO_HASH);
+  await page.waitForTimeout(1200);
 
-  // Active screen must be screen-digikirja.
   const active = await page.evaluate(() => document.querySelector('.screen.active')?.id);
   expect(active).toBe('screen-digikirja');
 
-  // TopBar, SideMenu list, content present.
-  await expect(page.locator('.dk__topbar')).toBeVisible();
-  await expect(page.locator('.dk__sidemenu')).toBeVisible();
-  await expect(page.locator('.dk__content')).toBeVisible();
+  // TopBar title comes from lesson_3.json meta.title.
+  await expect(page.locator('.dk__topbar .dk__title')).toHaveText(/Ruoka ja ateriat/);
 
-  // SideMenu list has the full set of demo sivut (9 rows).
+  // SideMenu is built from lesson phases: 1 teoria + 10 phases + 1 flashcards
+  // + 2 tests + 1 itsearvio = 15 rows.
   const rowCount = await page.locator('.dk__sidemenu-list .dk__row').count();
-  expect(rowCount).toBe(9);
+  expect(rowCount).toBe(15);
 
-  // Default active row is teoria.
+  // First row is the teoria sivu, active by default.
   await expect(page.locator('.dk__row.is-active')).toHaveAttribute('data-sivu', 'teoria');
 
-  // Click sivu "2a" and verify the active row + URL update.
-  await page.locator('.dk__row[data-sivu="2a"]').click();
-  await page.waitForTimeout(200);
-  await expect(page.locator('.dk__row.is-active')).toHaveAttribute('data-sivu', '2a');
-  expect(await page.evaluate(() => location.hash)).toContain('/3/2a');
+  // Teoria sivu renders the markdown: page title (italic em), at least one
+  // BilingualTable (ateriat), and an Obs! InfoBox.
+  await expect(page.locator('.dk__page-title em')).toContainText('Ruoka ja ateriat');
+  await expect(page.locator('.dk__bilingual')).toHaveCount(1);
+  await expect(page.locator('.dk__bilingual th').first()).toBeVisible();
+  await expect(page.locator('.dk__obs')).toHaveCount(2);
+  await expect(page.locator('.dk__obs-label').first()).toHaveText('Obs!');
 
-  // Content title reflects sivu 2a.
-  const title = await page.locator('.dk__page-title').first().textContent();
-  expect(title).toContain('Yhdistä');
+  // Key points panel renders the teaching.key_points array.
+  await expect(page.locator('.dk__key-points')).toBeVisible();
 
-  // Toggle SideMenu collapse on desktop and verify the dataset flag.
-  await page.locator('#dk-toggle-sidemenu').click();
-  await page.waitForTimeout(200);
-  const collapsed = await page.evaluate(() => document.getElementById('dk-root').dataset.sidemenu);
-  expect(collapsed).toBe('collapsed');
-  expect(await page.evaluate(() => localStorage.getItem('puheo:dk:sidemenu'))).toBe('collapsed');
-
-  // Screenshot for visual verification.
   await page.screenshot({
-    path: path.resolve('audit-screens', 'digikirja-pr1-desktop.png'),
+    path: path.resolve('audit-screens', 'digikirja-pr2-teoria.png'),
     fullPage: true,
   });
 });
 
-test('Prev/Next buttons walk through sivut', async ({ page }) => {
+test('Prev/Next walks teoria → phase-0 → phase-1', async ({ page }) => {
   test.setTimeout(60_000);
   await login(page);
   await page.setViewportSize({ width: 1440, height: 900 });
 
-  await page.evaluate(() => { location.hash = '#/oppitunti/es/kurssi-2/3/teoria'; });
-  await page.waitForTimeout(700);
+  await page.evaluate((h) => { location.hash = h; }, DEMO_HASH);
+  await page.waitForTimeout(1200);
 
-  // Click bottom Next button → moves to sivu 1.
   await page.locator('.dk__prevnext--bottom .dk__prevnext-btn--next').click();
   await page.waitForTimeout(150);
-  expect(await page.evaluate(() => location.hash)).toContain('/3/1');
+  expect(await page.evaluate(() => location.hash)).toContain('/3/phase-0');
 
-  // Click bottom Next again → moves to sivu 2a.
   await page.locator('.dk__prevnext--bottom .dk__prevnext-btn--next').click();
   await page.waitForTimeout(150);
-  expect(await page.evaluate(() => location.hash)).toContain('/3/2a');
+  expect(await page.evaluate(() => location.hash)).toContain('/3/phase-1');
+});
+
+test('SideMenu toggle persists across navigation', async ({ page }) => {
+  test.setTimeout(60_000);
+  await login(page);
+  await page.setViewportSize({ width: 1440, height: 900 });
+
+  await page.evaluate((h) => { location.hash = h; }, DEMO_HASH);
+  await page.waitForTimeout(1100);
+
+  await page.locator('#dk-toggle-sidemenu').click();
+  await page.waitForTimeout(150);
+  const collapsed = await page.evaluate(() => document.getElementById('dk-root').dataset.sidemenu);
+  expect(collapsed).toBe('collapsed');
+  expect(await page.evaluate(() => localStorage.getItem('puheo:dk:sidemenu'))).toBe('collapsed');
 });
