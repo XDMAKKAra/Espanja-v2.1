@@ -224,15 +224,11 @@
     max-height: calc(100vh - 80px);
     overflow-y: auto;
   }
-  /* On 3-col layout the side-panel is in-flow as the right column and
-     visible by default — like Eduix/Mafy's "Teoriat" rail. Base
-     .lr-side-panel rule sets display:none until .is-open; override
-     here so the panel renders without requiring sidePanelOpen=true.
-     The "📖 Apua" toggle button stays in the topbar so the student
-     can still close the rail if it's distracting (regression fix per
-     user screenshot 212154 — panel disappeared entirely after PR #97). */
+  /* On 3-col layout the side-panel is in-flow as the right column
+     but CLOSED BY DEFAULT (user feedback 2026-05-19 — "ei kuulu olla
+     koko ajan auki"). Apua toggle button opens it via .is-open
+     class; closing reclaims the column for the middle content. */
   body.app .lr-shell--three > .lr-side-panel {
-    display: flex !important;
     position: static;
     transform: none;
     opacity: 1;
@@ -242,6 +238,19 @@
     background: var(--ed-bg-card, var(--surface-2));
     border-radius: 6px;
     padding: 18px 20px;
+  }
+  body.app .lr-shell--three > .lr-side-panel.is-open {
+    display: flex !important;
+  }
+  /* When Apua closed → middle column expands across both content
+     columns so the exercise breathes. */
+  body.app .lr-shell--three:not(.has-panel-open) {
+    grid-template-columns: 240px minmax(0, 1fr);
+    grid-template-areas:
+      "crumb  crumb"
+      "toc    topbar"
+      "toc    phase"
+      "toc    item";
   }
 }
 @media (min-width: 1600px) {
