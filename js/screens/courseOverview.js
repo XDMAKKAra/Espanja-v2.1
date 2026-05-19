@@ -55,28 +55,28 @@ const MODES = [
   {
     id: "path",
     title: "Oppimispolku",
-    body: "Vaiheittainen kurssin sis&auml;lt&ouml; sanasto- ja kielioppi&shy;tehtavineen.",
+    body: "Vaiheittainen kurssin sisältö sanasto- ja kielioppitehtävineen.",
     icon: "📚",
     gateForFree: false, // free can do 1 lesson/day per existing checkFeatureAccess
-    badge: { free: "Yksi oppitunti per p&auml;iv&auml;", pro: null },
+    badge: { free: "Yksi oppitunti per päivä", pro: null },
     target: ({ lang, kurssiKey }) => `#/oppimispolku?lang=${lang}&kurssi=${encodeURIComponent(kurssiKey)}`,
   },
   {
     id: "writing",
-    title: "Kirjoitusteht&auml;v&auml;",
+    title: "Kirjoitustehtävä",
     body: "AI arvioi tuotoksen YTL-rubriikilla. Saat pisteet ja konkreettiset korjaukset.",
     icon: "✍️",
     gateForFree: false,
-    badge: { free: "3 teht&auml;v&auml;&auml; per kuukausi", pro: null },
+    badge: { free: "3 tehtävää per kuukausi", pro: null },
     target: () => "#/kirjoitus",
   },
   {
     id: "reading",
-    title: "Luetun ymm&auml;rt&auml;minen",
-    body: "Aitoja YO-tyylisi&auml; tekstej&auml; ja monivalintatehtaev&auml;t.",
+    title: "Luetun ymmärtäminen",
+    body: "Aitoja YO-tyylisiä tekstejä ja monivalintatehtävät.",
     icon: "📖",
     gateForFree: false,
-    badge: { free: "5 teksti&auml; per p&auml;iv&auml;", pro: null },
+    badge: { free: "5 tekstiä per päivä", pro: null },
     target: () => "#/luetun",
   },
   {
@@ -146,7 +146,7 @@ function renderUpgradeCallout(isPro) {
     <aside class="co-upgrade">
       <p class="co-upgrade__eyebrow">Treeni</p>
       <h4 class="co-upgrade__title">Avaa kaikki harjoitukset.</h4>
-      <p class="co-upgrade__body">Treeni-tilauksella saat rajoittamattoman p&auml;&auml;syn jokaiseen kurssiin, koeharjoituksiin ja kirjoitustehtaiv&auml;n AI-arvioon.</p>
+      <p class="co-upgrade__body">Treeni-tilauksella saat rajoittamattoman pääsyn jokaiseen kurssiin, koeharjoituksiin ja kirjoitustehtävän AI-arvioon.</p>
       <button type="button" class="co-upgrade__cta" id="co-upgrade-cta">Tutustu Treeniin →</button>
     </aside>`;
 }
@@ -169,7 +169,7 @@ function renderError(root, msg) {
       <a class="co-breadcrumb__link" href="#/aloitus">Aloitus</a>
     </nav>
     <div class="co-error" role="alert">
-      <p>${escapeHtml(msg || "Kurssia ei l&ouml;ytynyt.")}</p>
+      <p>${escapeHtml(msg || "Kurssia ei löytynyt.")}</p>
       <a class="btn-primary" href="#/aloitus">Palaa aloitukseen</a>
     </div>`;
 }
@@ -185,7 +185,7 @@ export async function loadCourseOverview(lang, kurssiKey) {
   }
   const kurssi = await fetchCourse(lang, kurssiKey);
   if (!kurssi) {
-    renderError(root, "Kurssia ei l&ouml;ytynyt. Onkohan tunniste oikein?");
+    renderError(root, "Kurssia ei löytynyt. Onkohan tunniste oikein?");
     return;
   }
   root.innerHTML = renderShell(kurssi, lang);
@@ -202,12 +202,23 @@ export async function loadCourseOverview(lang, kurssiKey) {
       }
       if (mode === "path") {
         e.preventDefault();
+        // Bug fix screenshot 215333: calling only loadCurriculum bypassed
+        // loadDashboard, leaving the greeting at opacity:0 and the
+        // right-rail day-CTA stuck on its HTML placeholder text. The
+        // hashchange listener routes #/oppimispolku → navigateTo("path")
+        // → loadDashboard, which orchestrates greeting + rail + the
+        // curriculum render together. Pre-seed _state.expanded BEFORE
+        // the hashchange so the right course opens.
         try {
           const m = await import("./curriculum.js");
           if (m._setExpandedKurssi) m._setExpandedKurssi(kurssi.key);
-          location.hash = "#/oppimispolku";
-          if (m.loadCurriculum) m.loadCurriculum();
-        } catch {
+        } catch { /* fall through to hashchange */ }
+        if (location.hash === "#/oppimispolku") {
+          // Already there — force a hashchange-equivalent by importing
+          // dashboard.js directly. Setting the same hash again is a
+          // no-op so we can't rely on the listener firing.
+          import("./dashboard.js").then((m) => m.loadDashboard?.()).catch(() => {});
+        } else {
           location.hash = "#/oppimispolku";
         }
       }

@@ -643,7 +643,7 @@ function renderPathTOC() {
   if (!list) return;
   const kurssit = _state.kurssit || [];
   if (kurssit.length === 0) {
-    list.innerHTML = `<li class="path-toc__loading">Kursseja ei l&ouml;ytynyt.</li>`;
+    list.innerHTML = `<li class="path-toc__loading">Kursseja ei löytynyt.</li>`;
     list.removeAttribute("aria-busy");
     return;
   }

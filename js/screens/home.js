@@ -120,7 +120,7 @@ function renderCourseCard(lang, k, stepNumber) {
 
 function renderGrid(host, lang, kurssit) {
   if (!kurssit || kurssit.length === 0) {
-    host.innerHTML = `<p class="home-grid-empty">Kursseja ei viel&auml; julkaistu t&auml;lle kielelle.</p>`;
+    host.innerHTML = `<p class="home-grid-empty">Kursseja ei vielä julkaistu tälle kielelle.</p>`;
     return;
   }
   host.innerHTML = kurssit.map((k, i) => renderCourseCard(lang, k, i + 1)).join("");
