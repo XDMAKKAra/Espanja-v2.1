@@ -58,11 +58,10 @@ function glyphFor(kind) {
   return KIND_GLYPH[kind] || KIND_GLYPH.tehtava;
 }
 
+const FLASHCARD_PACK_SIZE = 5;
+const LS_FLASHCARD_PREFIX = "puheo:dk:flashcards";
+
 const KIND_PLACEHOLDER = {
-  flashcards: {
-    label: "Kääntökortit, tulossa PR 5",
-    body: "Pino kääntyviä kortteja oppitunnin sanastosta. Etupuoli: lähdekielinen virke. Takapuoli: suomi + sääntövihje. Tila per kortti (tiedän / harjoittele vielä) persistoituu localStorage:en, kirjautuneille Supabaseen.",
-  },
   testi: {
     label: "Testi, tulossa PR 6",
     body: "Sama ExerciseCard kuin tehtävällä, mutta ilman live-palautetta per kohta. Opiskelija vastaa kaikkiin, painaa Tarkista, ja näkee yhteenvedon + per-kohta-palautteen.",
@@ -146,14 +145,18 @@ function buildSivut(lesson) {
     });
   });
 
-  // 3. Flashcards sivu — placeholder until PR 5 wires the sanasto pack.
-  out.push({
-    id: "kortit-1",
-    kind: "flashcards",
-    num: "",
-    title: `Kääntökortit · ${lesson?.meta?.title || ""}`.trim(),
-    meta: "5 korttia",
-  });
+  // 3. Flashcards sivu — first FLASHCARD_PACK_SIZE entries from lesson.vocab.
+  const vocab = Array.isArray(lesson?.vocab) ? lesson.vocab : [];
+  const cardCount = Math.min(vocab.length, FLASHCARD_PACK_SIZE);
+  if (cardCount > 0) {
+    out.push({
+      id: "kortit-1",
+      kind: "flashcards",
+      num: "",
+      title: `Kääntökortit · ${lesson?.meta?.title || ""}`.trim(),
+      meta: `${cardCount} korttia`,
+    });
+  }
 
   // 4. Test sivut — placeholder until PR 6.
   out.push({
@@ -302,6 +305,231 @@ function renderPlaceholderContent(sivu) {
       <p class="dk__placeholder-kind">${escapeHtml(ph.label)}</p>
       <p>${escapeHtml(ph.body)}</p>
     </div>`;
+}
+
+// ─── Flashcards (PR5) ─────────────────────────────────────────────────
+// One pack per lesson, FLASHCARD_PACK_SIZE entries sampled from
+// lesson.vocab. Per-card status persists to localStorage so the student's
+// "tiedän / harjoittele" decisions survive a page reload. Once every card
+// is marked "tiedän", the deck shows a completion state with a reset.
+
+const _flashState = new Map(); // sivuId → { cardIndex, flipped }
+const FLASHCARD_KNOW = "know";
+const FLASHCARD_AGAIN = "again";
+
+function flashcardPack(lesson) {
+  const vocab = Array.isArray(lesson?.vocab) ? lesson.vocab : [];
+  return vocab.slice(0, FLASHCARD_PACK_SIZE);
+}
+
+function flashcardLsKey() {
+  return `${LS_FLASHCARD_PREFIX}:${_route.lang}:${_route.kurssiKey}:${_route.lessonIndex}`;
+}
+
+function readFlashcardStatuses() {
+  try {
+    const raw = localStorage.getItem(flashcardLsKey());
+    return raw ? JSON.parse(raw) : {};
+  } catch {
+    return {};
+  }
+}
+function writeFlashcardStatus(cardId, status) {
+  try {
+    const all = readFlashcardStatuses();
+    all[cardId] = status;
+    localStorage.setItem(flashcardLsKey(), JSON.stringify(all));
+  } catch { /* noop */ }
+}
+function resetFlashcardStatuses() {
+  try { localStorage.removeItem(flashcardLsKey()); } catch { /* noop */ }
+}
+
+function ensureFlashState(sivuId) {
+  let st = _flashState.get(sivuId);
+  if (!st) {
+    st = { cardIndex: 0, flipped: false };
+    _flashState.set(sivuId, st);
+  }
+  return st;
+}
+
+function cardIdFor(card, idx) {
+  return card?.es ? `${idx}:${card.es}` : `${idx}`;
+}
+
+function renderFlashcardsContent(sivu) {
+  const pack = flashcardPack(_lesson);
+  if (pack.length === 0) {
+    return `<div class="dk__placeholder"><p>Tämän oppitunnin sanasto on tyhjä.</p></div>`;
+  }
+
+  const statuses = readFlashcardStatuses();
+  const knownCount = pack.filter((c, i) => statuses[cardIdFor(c, i)] === FLASHCARD_KNOW).length;
+  const allKnown = knownCount === pack.length;
+
+  if (allKnown) {
+    return `
+      <section class="dk__flashpack" data-sivu="${escapeHtml(sivu.id)}" data-done="true">
+        <header class="dk__exercise-head">
+          <span class="dk__exercise-eyebrow">Kääntökortit</span>
+          <span class="dk__exercise-score">${knownCount} / ${pack.length}</span>
+        </header>
+        <div class="dk__flashdone">
+          <p class="dk__flashdone-headline">Pakka käyty läpi.</p>
+          <p class="dk__flashdone-sub">Voit palata kortteihin myöhemmin, tai nollata edistymisesi ja harjoitella uudelleen.</p>
+          <div class="dk__exercise-actions">
+            <button type="button" class="dk__btn dk__btn--ghost" id="dk-flash-reset">Aloita alusta</button>
+            <button type="button" class="dk__btn dk__btn--primary" id="dk-flash-next-sivu">Seuraava sivu →</button>
+          </div>
+        </div>
+      </section>`;
+  }
+
+  const st = ensureFlashState(sivu.id);
+  // Skip cards already marked "know" so the active card is always something
+  // the student wants to revisit. This implements a tiny in-memory review
+  // queue without needing a real SRS schedule yet.
+  let i = Math.min(st.cardIndex, pack.length - 1);
+  const visitOrder = orderedCards(pack, statuses, i);
+  const activeIdx = visitOrder[0] ?? i;
+  const card = pack[activeIdx];
+  const cardId = cardIdFor(card, activeIdx);
+  const cardStatus = statuses[cardId] || null;
+
+  return `
+    <section class="dk__flashpack" data-sivu="${escapeHtml(sivu.id)}" data-index="${activeIdx}">
+      <header class="dk__exercise-head">
+        <span class="dk__exercise-eyebrow">Kortti ${activeIdx + 1} / ${pack.length}</span>
+        <span class="dk__exercise-score" aria-label="Hallinnassa">${knownCount} / ${pack.length} hallinnassa</span>
+      </header>
+      ${renderFlashcard(card, cardId, st.flipped, cardStatus)}
+      <p class="dk__flash-hint">${st.flipped
+        ? "Merkitse kortti hallinnaksi tai palaa siihen myöhemmin."
+        : "Yritä muistaa ensin omasta päästäsi. Sitten käännä kortti."}</p>
+    </section>`;
+}
+
+function orderedCards(pack, statuses, startIdx) {
+  // Visit start → end, then 0 → start, skipping any cards already "know".
+  const order = [];
+  for (let i = startIdx; i < pack.length; i++) {
+    const id = cardIdFor(pack[i], i);
+    if (statuses[id] !== FLASHCARD_KNOW) order.push(i);
+  }
+  for (let i = 0; i < startIdx; i++) {
+    const id = cardIdFor(pack[i], i);
+    if (statuses[id] !== FLASHCARD_KNOW) order.push(i);
+  }
+  return order;
+}
+
+function renderFlashcard(card, cardId, flipped, status) {
+  const genderChip = card.gender
+    ? `<span class="dk__flashcard-tag">${escapeHtml(card.gender === "m" ? "Maskuliini" : card.gender === "f" ? "Feminiini" : card.gender)}</span>`
+    : "";
+  const statusChip = status === FLASHCARD_AGAIN
+    ? `<span class="dk__flashcard-tag dk__flashcard-tag--again">Harjoittelussa</span>`
+    : status === FLASHCARD_KNOW
+    ? `<span class="dk__flashcard-tag dk__flashcard-tag--know">Hallinnassa</span>`
+    : "";
+
+  return `
+    <div class="dk__flashcard ${flipped ? "is-flipped" : ""}"
+         id="dk-flashcard"
+         role="button"
+         tabindex="0"
+         data-card="${escapeHtml(cardId)}"
+         aria-pressed="${flipped ? "true" : "false"}"
+         aria-label="${escapeHtml(flipped ? "Näytä etupuoli" : "Käännä kortti")}">
+      <div class="dk__flashcard-inner">
+        <div class="dk__flashcard-face dk__flashcard-face--front">
+          <div class="dk__flashcard-meta">
+            <span class="dk__flashcard-eyebrow">Etupuoli</span>
+            ${genderChip}${statusChip}
+          </div>
+          <p class="dk__flashcard-word">${escapeHtml(card.es || "")}</p>
+          <p class="dk__flashcard-hint-pad">Yritä muistaa, sitten käännä.</p>
+        </div>
+        <div class="dk__flashcard-face dk__flashcard-face--back">
+          <div class="dk__flashcard-meta">
+            <span class="dk__flashcard-eyebrow">Takapuoli</span>
+            ${statusChip}
+          </div>
+          <p class="dk__flashcard-word">${escapeHtml(card.fi || "")}</p>
+          ${card.example_es ? `<p class="dk__flashcard-example"><span lang="es">${escapeHtml(card.example_es)}</span></p>` : ""}
+          ${card.example_fi ? `<p class="dk__flashcard-example dk__flashcard-example--fi">${escapeHtml(card.example_fi)}</p>` : ""}
+        </div>
+      </div>
+    </div>
+    <div class="dk__exercise-actions dk__flash-actions">
+      <button type="button" class="dk__btn dk__btn--ghost" id="dk-flash-again" ${flipped ? "" : "hidden"}>Harjoittele vielä</button>
+      <button type="button" class="dk__btn dk__btn--primary" id="dk-flash-know" ${flipped ? "" : "hidden"}>Tiedän</button>
+      <button type="button" class="dk__btn dk__btn--primary" id="dk-flash-flip" ${flipped ? "hidden" : ""}>Käännä kortti</button>
+    </div>`;
+}
+
+function reRenderFlashcardsInPlace() {
+  const sivuIdx = findSivuIndex(_route.sivuId);
+  const sivu = _sivut[sivuIdx];
+  const slot = document.querySelector(".dk__content .dk__flashpack");
+  if (!slot) return;
+  const next = document.createElement("div");
+  next.innerHTML = renderFlashcardsContent(sivu);
+  slot.replaceWith(next.firstElementChild);
+  wireFlashcards();
+}
+
+function wireFlashcards() {
+  const root = document.querySelector(".dk__flashpack");
+  if (!root) return;
+  const sivuId = root.dataset.sivu;
+
+  // Empty/done state: reset + advance.
+  document.getElementById("dk-flash-reset")?.addEventListener("click", () => {
+    resetFlashcardStatuses();
+    _flashState.delete(sivuId);
+    reRenderFlashcardsInPlace();
+  });
+  document.getElementById("dk-flash-next-sivu")?.addEventListener("click", () => {
+    const idx = findSivuIndex(_route.sivuId);
+    const next = _sivut[idx + 1];
+    if (next) navigateSivu(next.id);
+  });
+
+  if (root.dataset.done === "true") return;
+
+  const st = ensureFlashState(sivuId);
+  const activeIdx = Number(root.dataset.index);
+  const card = flashcardPack(_lesson)[activeIdx];
+  if (!card) return;
+  const cardId = cardIdFor(card, activeIdx);
+
+  const flipFn = () => {
+    st.flipped = !st.flipped;
+    reRenderFlashcardsInPlace();
+  };
+  document.getElementById("dk-flashcard")?.addEventListener("click", flipFn);
+  document.getElementById("dk-flashcard")?.addEventListener("keydown", (e) => {
+    if (e.key === " " || e.key === "Enter") {
+      e.preventDefault();
+      flipFn();
+    }
+  });
+  document.getElementById("dk-flash-flip")?.addEventListener("click", flipFn);
+
+  const commit = (status) => {
+    writeFlashcardStatus(cardId, status);
+    st.flipped = false;
+    // Move on to whatever the next not-yet-known card is.
+    const statuses = readFlashcardStatuses();
+    const pack = flashcardPack(_lesson);
+    const order = orderedCards(pack, statuses, activeIdx + 1 < pack.length ? activeIdx + 1 : 0);
+    st.cardIndex = order[0] ?? activeIdx;
+    reRenderFlashcardsInPlace();
+  };
+  document.getElementById("dk-flash-again")?.addEventListener("click", () => commit(FLASHCARD_AGAIN));
+  document.getElementById("dk-flash-know")?.addEventListener("click", () => commit(FLASHCARD_KNOW));
 }
 
 // ─── ExerciseCard (PR4) ───────────────────────────────────────────────
@@ -676,6 +904,8 @@ function renderContent() {
     ? renderTeoriaContent()
     : sivu.kind === "tehtava"
     ? renderExerciseContent(sivu)
+    : sivu.kind === "flashcards"
+    ? renderFlashcardsContent(sivu)
     : renderPlaceholderContent(sivu);
 
   return `
@@ -853,6 +1083,7 @@ function wireContent() {
     btn.addEventListener("click", () => navigateSivu(btn.dataset.sivu));
   });
   wireExerciseCard();
+  wireFlashcards();
 }
 
 // ─── Public entry ─────────────────────────────────────────────────────
