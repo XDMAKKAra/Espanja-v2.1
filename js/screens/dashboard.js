@@ -115,10 +115,21 @@ function payloadHash(payload) {
 }
 
 export async function loadDashboard() {
-  // Show the path shell immediately so the sidebar click feels instant.
-  // If we have a cached payload, render it now; otherwise the screen
-  // will paint its skeleton/empty state until the fetch resolves.
-  show("screen-path");
+  // PR auto/kill-screen-path (2026-05-19): loadDashboard previously
+  // showed the legacy #screen-path which still ships its own
+  // hard-coded "Aloita päivän treeni" placeholder day-CTA and the
+  // path-toc stuck on "Ladataan…". Every call from auth/settings/
+  // exam/vocab/grammar/writing/adaptive that uses loadDashboard as
+  // a generic "return home" callback was landing users on that
+  // broken surface. Redirect to the new HOME screen instead. The
+  // rest of this function still runs (background data refresh +
+  // profile hydration); only the visible host is now #screen-home.
+  try {
+    const m = await import("./home.js");
+    await m.loadHome?.();
+  } catch {
+    show("screen-home");
+  }
   hideAppCountdown();
   const cacheValid = _dashboardCache && (Date.now() - _dashboardCache.ts) < DASHBOARD_CACHE_TTL_MS;
   if (cacheValid) {
