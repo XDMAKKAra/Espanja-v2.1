@@ -1,11 +1,12 @@
 /* Dashboard "Day's drill" CTA, selection logic + DOM updater.
-   Spec: docs/superpowers/specs/2026-04-26-dashboard-editorial-redesign-design.md §3.3
+   Spec: docs/superpowers/specs/2026-05-19-dashboard-writingfirst-confirm-design.md
    Selection priority (first match wins):
      1. Profile incomplete  → onboarding
-     2. SR cards due        → SR review
-     3. Default             → daily drill (seeded with weakest topic) */
+     2. Default             → writing task (vocab/grammar/SR standalone modes
+                              were removed; SR queue is frozen — see Task 1
+                              sub-fix A, user-chosen option B). */
 
-export function selectDashboardCta({ profileComplete, srDueCount, weakestTopic }) {
+export function selectDashboardCta({ profileComplete, weakestTopic } = {}) {
   if (!profileComplete) {
     return {
       kind: "onboarding",
@@ -15,17 +16,7 @@ export function selectDashboardCta({ profileComplete, srDueCount, weakestTopic }
     };
   }
 
-  const due = Number(srDueCount) || 0;
-  if (due > 0) {
-    return {
-      kind: "sr",
-      title: `Kertaa nyt, ${due} ${due === 1 ? "kortti" : "korttia"}`,
-      meta: `${due} ODOTTAA · ~${Math.max(2, Math.round(due / 4))} MIN`,
-      target: "sr-review",
-    };
-  }
-
-  // Default day-CTA is the writing task: it's Puheo's centerpiece
+  // Day-CTA is the writing task: it's Puheo's centerpiece
   // (YTL-rubriikilla treenattu AI-grader) and produces the deepest signal
   // for the adaptive engine. Vocab/grammar standalone modes were removed
   // from the dashboard so this CTA never falls back to them.

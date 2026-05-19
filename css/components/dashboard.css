@@ -3,6 +3,49 @@
    Rules below are identical to what previously lived in style.css.
    They will be progressively rewritten in subsequent tasks (T7-T10). */
 
+/* ── KPI footnote-strip (Task 1, 2026-05-19) ──────────────────────────
+   When rendered below .path-grid the row reads as a footnote, not a
+   competing hero. Smaller numerals, muted surface, no per-tile hero
+   variant, no blur-fade entrance. The base .dash-kpi-row rules below
+   still drive layout; this override sits last so it wins on cascade. */
+.dash-kpi-row.dash-kpi-row--footnote {
+  margin: 28px 0 8px;
+  opacity: 0.78;
+  transition: opacity 200ms ease;
+}
+.dash-kpi-row.dash-kpi-row--footnote:hover,
+.dash-kpi-row.dash-kpi-row--footnote:focus-within {
+  opacity: 1;
+}
+.dash-kpi-row.dash-kpi-row--footnote .dash-kpi-tile {
+  padding: 10px 12px 8px;
+}
+.dash-kpi-row.dash-kpi-row--footnote .dash-kpi-tile__val {
+  font-size: 1.4rem;
+}
+.dash-kpi-row.dash-kpi-row--footnote .dash-kpi-tile__label {
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.72;
+}
+@media (min-width: 720px) {
+  /* Override hero promotion of YO-valmius — footnote-strip is uniform. */
+  .dash-kpi-row.dash-kpi-row--footnote > .dash-kpi-tile--4 {
+    grid-column: span 3;
+    order: 0;
+    padding: 10px 12px 8px;
+  }
+  .dash-kpi-row.dash-kpi-row--footnote > .dash-kpi-tile--1,
+  .dash-kpi-row.dash-kpi-row--footnote > .dash-kpi-tile--2,
+  .dash-kpi-row.dash-kpi-row--footnote > .dash-kpi-tile--3 {
+    grid-column: span 3;
+  }
+  .dash-kpi-row.dash-kpi-row--footnote > .dash-kpi-tile--4 .dash-kpi-tile__val {
+    font-size: 1.4rem;
+  }
+}
+
 /* ── KPI STAT ROW (L-FRONTEND-POLISH-1) ── */
 /* Four tiles: Putki / Harjoituksia / Tällä viikolla / YO-valmius.
    Mono numerals, varied surface tokens per tile, 16-20px gap.
