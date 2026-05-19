@@ -613,6 +613,16 @@ body.app .btn--cta--accent .btn--cta__title,
 body.app .btn--cta--accent .btn--cta__arrow { color: var(--ed-accent-ink); }
 body.app .btn--cta--accent .btn--cta__meta { color: color-mix(in oklch, var(--ed-accent-ink) 82%, transparent); }
 
+/* Default .btn--cta variant is dark-on-cream-page. Legacy mint/teal
+   meta-text (#5EEAD4 / #99F6E4 from button.css) reads neon next to
+   the warm palette. Re-tint to a warm cream-with-saffron-undertone. */
+body.app .btn--cta .btn--cta__meta {
+  color: color-mix(in oklch, var(--ed-bg) 78%, var(--ed-accent) 22%);
+}
+body.app .btn--cta:hover .btn--cta__meta {
+  color: color-mix(in oklch, var(--ed-bg) 88%, var(--ed-accent) 12%);
+}
+
 /* Keyboard-hint label — legacy opacity:0.28 on dark ink hits 7:1 on the
    #0a0a0a charcoal but degrades to 1.6:1 once the surface is cream paper.
    Bump opacity to 0.8 — still recessive next to the answer field, no
@@ -1845,3 +1855,30 @@ body.app .writing-word-counter { display: none !important; }
 .lr-feedback__next:hover { background: var(--ed-accent-hover); }
 .lr-feedback__next:active { transform: scale(0.97); }
 
+/* ─── Brand polish: PRO chip + dark-CTA meta text ──────────────────
+   The legacy --grad-pro gradient and a teal "meta" colour on dark
+   CTAs leak through the Old-Spain register from style.css. Pin the
+   in-app surfaces to editorial tokens explicitly so PRO and the
+   per-lesson topic chip read as part of the Fraunces/Manrope system. */
+body.app .sidebar-pro-badge,
+body.app .sidebar-pro-badge--pro,
+body.app .sidebar-pro-badge--mestari,
+body.app .sidebar-pro-badge--lifetime {
+  background: var(--ed-ink);
+  color: var(--ed-bg);
+  font-family: var(--ed-mono);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+}
+body.app .btn-manage-sub {
+  font-family: var(--ed-mono);
+  font-size: 10px;
+  color: var(--ed-ink-muted);
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+body.app .btn-manage-sub:hover { color: var(--ed-accent); }
