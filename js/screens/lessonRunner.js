@@ -22,6 +22,91 @@ import { attachCharCounter, wordsToChars } from "../features/charCounter.js";
 const ROOT_ID = "lesson-runner-root";
 const PROGRESS_KEY_PREFIX = "puheo:lessonProgress:";
 
+/* Course-lesson list cache for the left TOC on the lesson screen.
+   PR auto/lesson-3col-breadcrumb (2026-05-19). One fetch per kurssi per
+   page load — the response is the same regardless of which lesson the
+   student is on. Keyed by kurssiKey → array of lesson meta objects. */
+const _courseLessonsCache = new Map();
+async function getCourseLessons(kurssiKey) {
+  if (!kurssiKey) return [];
+  if (_courseLessonsCache.has(kurssiKey)) return _courseLessonsCache.get(kurssiKey);
+  try {
+    const { API, isLoggedIn, authHeader, apiFetch } = await import("../api.js");
+    const res = await apiFetch(`${API}/api/curriculum/${encodeURIComponent(kurssiKey)}`, {
+      headers: { ...(isLoggedIn() ? authHeader() : {}) },
+    });
+    if (!res.ok) { _courseLessonsCache.set(kurssiKey, []); return []; }
+    const data = await res.json();
+    const lessons = Array.isArray(data.lessons) ? data.lessons.slice().sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0)) : [];
+    _courseLessonsCache.set(kurssiKey, lessons);
+    return lessons;
+  } catch {
+    return [];
+  }
+}
+
+function renderLessonTOC(state) {
+  const lessons = state._courseLessons || [];
+  if (lessons.length === 0) {
+    return `<aside class="lr-toc" aria-label="Kurssin oppitunnit">
+      <p class="lr-toc__head">Oppitunnit</p>
+      <p class="lr-toc__loading">Ladataan&hellip;</p>
+    </aside>`;
+  }
+  const currentIdx = state.lessonIndex;
+  const items = lessons.map((l) => {
+    const num = l.sortOrder || 0;
+    const isCurrent = num === currentIdx;
+    const isDone = !!l.completed && !isCurrent;
+    const cls = [
+      "lr-toc__item",
+      isCurrent ? "is-current" : "",
+      isDone ? "is-done" : "",
+    ].filter(Boolean).join(" ");
+    const mark = isCurrent ? "→" : (isDone ? "✓" : "");
+    return `<li class="${cls}" data-lesson="${escapeHtml(String(num))}" ${isCurrent ? '' : 'tabindex="0"'}>
+      <span class="lr-toc__num">${escapeHtml(String(num))}</span>
+      <span class="lr-toc__title">${escapeHtml(l.title || `Oppitunti ${num}`)}</span>
+      <span class="lr-toc__mark" aria-hidden="true">${mark}</span>
+    </li>`;
+  }).join("");
+  return `<aside class="lr-toc" aria-label="Kurssin oppitunnit">
+    <p class="lr-toc__head">Oppitunnit</p>
+    <ol class="lr-toc__list">${items}</ol>
+  </aside>`;
+}
+
+function wireLessonTOC(root, state) {
+  root.querySelectorAll(".lr-toc__item:not(.is-current)").forEach((li) => {
+    const click = async () => {
+      const idx = Number(li.dataset.lesson);
+      if (!Number.isFinite(idx) || idx === state.lessonIndex) return;
+      // Save current progress so the next lesson entry knows.
+      saveLessonProgress(state);
+      const m = await import("./curriculum.js");
+      m.openLesson(state.kurssiKey, idx);
+    };
+    li.addEventListener("click", click);
+    li.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); click(); }
+    });
+  });
+}
+
+function renderBreadcrumb(state) {
+  const meta = state.lesson.meta || {};
+  const kurssiTitle = meta.kurssi_title || meta.course_title || meta.course_key || "Kurssi";
+  const lessonNum = meta.lesson_index || state.lessonIndex;
+  const lessonTitle = meta.title || "Oppitunti";
+  return `<nav class="lr-breadcrumb" aria-label="Sijainti">
+    <a class="lr-breadcrumb__link" href="#/oppimispolku" id="lr-breadcrumb-path">Oppimispolku</a>
+    <span class="lr-breadcrumb__sep" aria-hidden="true">/</span>
+    <span class="lr-breadcrumb__crumb">${escapeHtml(kurssiTitle)}</span>
+    <span class="lr-breadcrumb__sep" aria-hidden="true">/</span>
+    <span class="lr-breadcrumb__crumb is-current" aria-current="page">${escapeHtml(`${lessonNum}. ${lessonTitle}`)}</span>
+  </nav>`;
+}
+
 /**
  * Resume support — save the active state shape to sessionStorage so the
  * student can leave a half-done lesson and pick up exactly where they
@@ -178,6 +263,24 @@ export function runPregeneratedLesson(payload, kurssiKey, lessonIndex, targetGra
     else sessionStorage.removeItem("currentLessonTeachingMd");
   } catch { /* private mode */ }
 
+  // PR auto/lesson-3col-breadcrumb — fetch the course's lesson list once
+  // so the left TOC can show siblings + completed marks. Non-blocking;
+  // if the fetch fails the TOC just stays in its "Ladataan…" state, the
+  // rest of the runner still works.
+  state._courseLessons = [];
+  getCourseLessons(kurssiKey).then((lessons) => {
+    state._courseLessons = lessons;
+    // Re-render the TOC if the lesson is already on screen so the
+    // skeleton "Ladataan…" gets replaced with the real list.
+    const tocHost = document.querySelector(".lr-shell .lr-toc");
+    if (tocHost && tocHost.parentElement) {
+      const fresh = document.createElement("div");
+      fresh.innerHTML = renderLessonTOC(state);
+      tocHost.parentElement.replaceChild(fresh.firstElementChild, tocHost);
+      wireLessonTOC(document.getElementById(ROOT_ID), state);
+    }
+  });
+
   // Resume: if the student left this lesson mid-practice (saved snapshot
   // matches the current lesson definition + within 24h), skip the teaching
   // page and drop them back where they were. Render a small toast at the
@@ -222,11 +325,13 @@ function renderTeaching(root, state) {
     : "";
 
   root.innerHTML = `
-    <div class="lr-shell">
+    <div class="lr-shell lr-shell--teaching lr-shell--three">
+      ${renderBreadcrumb(state)}
       <button type="button" class="lr-back" id="lr-back">← Oppimispolku</button>
+      ${renderLessonTOC(state)}
       <header class="lr-hero">
         <p class="lr-eyebrow">${escapeHtml(meta.course_key || "")} · Oppitunti ${escapeHtml(String(meta.lesson_index || ""))}</p>
-        <h1>${escapeHtml(meta.title || "Oppitunti")}</h1>
+        <h1 class="display display--serif">${escapeHtml(meta.title || "Oppitunti")}</h1>
         ${meta.description ? `<p class="lr-desc">${escapeHtml(meta.description)}</p>` : ""}
       </header>
       <article class="lr-teaching">${intro}${keyHtml}</article>
@@ -235,6 +340,7 @@ function renderTeaching(root, state) {
         <p class="lr-hint">Voit avata Apua-paneelin milloin tahansa harjoituksen aikana.</p>
       </div>
     </div>`;
+  wireLessonTOC(root, state);
   document.getElementById("lr-back")?.addEventListener("click", () => {
     import("./curriculum.js").then((m) => m.loadCurriculum());
   });
@@ -259,7 +365,8 @@ function renderPhase(root, state) {
   }
 
   root.innerHTML = `
-    <div class="lr-shell lr-shell--exercise">
+    <div class="lr-shell lr-shell--exercise lr-shell--three">
+      ${renderBreadcrumb(state)}
       <div class="lr-topbar">
         <button type="button" class="lr-exit-btn" id="lr-exit-lesson" aria-label="Takaisin oppimispolulle">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
@@ -274,6 +381,7 @@ function renderPhase(root, state) {
           <button type="button" class="lr-skip-btn" id="lr-skip">Olen valmis tästä</button>
         </div>
       </div>
+      ${renderLessonTOC(state)}
       <header class="lr-phase-head">
         <h2 class="lr-phase-title">${escapeHtml(phase.title || "Vaihe")}</h2>
         ${phase.instruction ? `<p class="lr-phase-instr">${escapeHtml(phase.instruction)}</p>` : ""}
@@ -284,6 +392,7 @@ function renderPhase(root, state) {
     </div>`;
 
   wireExerciseHandlers(root, state, item);
+  wireLessonTOC(root, state);
 }
 
 function phaseStepper(state) {

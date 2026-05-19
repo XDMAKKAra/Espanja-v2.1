@@ -17,6 +17,130 @@
   .lr-shell { max-width: 960px; padding: 56px 24px 96px; }
 }
 
+/* Breadcrumb + lesson TOC styles — PR auto/lesson-3col-breadcrumb
+   (2026-05-19). Eduix-style chapter index on the left, breadcrumb at
+   the top so the student always sees where they are. */
+.lr-breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--ed-sans, system-ui, sans-serif);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: var(--ed-ink-muted, var(--ink-soft));
+  margin: 0 0 14px;
+}
+.lr-breadcrumb__link {
+  color: var(--ed-ink-muted, var(--ink-soft));
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--ed-rule, transparent);
+  transition: color 160ms ease, text-decoration-color 160ms ease;
+}
+.lr-breadcrumb__link:hover {
+  color: var(--ed-accent, var(--accent));
+  text-decoration-color: var(--ed-accent, var(--accent));
+}
+.lr-breadcrumb__sep {
+  color: var(--ed-ink-faint, var(--ink-faint));
+}
+.lr-breadcrumb__crumb {
+  color: var(--ed-ink-muted, var(--ink-soft));
+}
+.lr-breadcrumb__crumb.is-current {
+  color: var(--ed-ink, var(--ink));
+  font-weight: 600;
+}
+
+.lr-toc {
+  background: var(--ed-bg-card, var(--surface-2));
+  border: 1px solid var(--ed-rule, var(--border));
+  border-radius: 6px;
+  padding: 14px 14px 16px;
+  display: block;
+}
+.lr-toc__head {
+  font-family: var(--ed-sans, system-ui, sans-serif);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ed-accent, var(--accent));
+  margin: 0 0 10px;
+}
+.lr-toc__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.lr-toc__loading {
+  font-family: var(--ed-sans, system-ui, sans-serif);
+  font-size: 13px;
+  font-style: italic;
+  color: var(--ed-ink-faint, var(--ink-faint));
+  margin: 0;
+  padding: 8px 6px;
+}
+.lr-toc__item {
+  display: grid;
+  grid-template-columns: 24px 1fr auto;
+  align-items: center;
+  gap: 10px;
+  padding: 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: var(--ed-sans, system-ui, sans-serif);
+  font-size: 13px;
+  color: var(--ed-ink, var(--ink));
+  line-height: 1.3;
+  position: relative;
+  transition: background 160ms ease;
+}
+.lr-toc__item:not(.is-current):hover {
+  background: var(--ed-bg-deep, color-mix(in srgb, var(--ink-faint, #71717a) 10%, transparent));
+}
+.lr-toc__item.is-current {
+  background: var(--ed-accent-soft, color-mix(in srgb, var(--accent, currentColor) 12%, transparent));
+  font-weight: 600;
+  cursor: default;
+}
+.lr-toc__item.is-current::before {
+  content: "";
+  position: absolute;
+  left: -14px;
+  top: 6px;
+  bottom: 6px;
+  width: 3px;
+  background: var(--ed-accent, var(--accent));
+  border-radius: 0 2px 2px 0;
+}
+.lr-toc__item.is-done { color: var(--ed-ink-muted, var(--ink-soft)); }
+.lr-toc__num {
+  font-family: var(--ed-mono, ui-monospace);
+  font-size: 11px;
+  text-align: right;
+  color: var(--ed-ink-faint, var(--ink-faint));
+}
+.lr-toc__item.is-current .lr-toc__num,
+.lr-toc__item.is-done .lr-toc__num { color: var(--ed-accent, var(--accent)); }
+.lr-toc__title {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.lr-toc__mark {
+  font-family: var(--ed-mono, ui-monospace);
+  font-size: 12px;
+  color: var(--ed-accent, var(--accent));
+}
+
 /* hotfix bug 5 — exercise mode uses the full viewport width with a left/right
    split: task on the left, side-panel docked on the right when open. The task
    card itself stays tightly constrained (max ~960px) but we let the shell go
@@ -63,6 +187,67 @@
 .lr-shell--exercise > .lr-phase-head { grid-area: phase; }
 .lr-shell--exercise > .lr-item { grid-area: item; }
 .lr-shell--exercise > .lr-side-panel { grid-area: panel; }
+
+/* PR auto/lesson-3col-breadcrumb — three-column lesson layout adds a
+   left TOC at ≥1280px. lr-shell--three has the same areas as the
+   2-col layout plus "toc" + "crumb" at top. Below 1280px the TOC
+   stacks above the content. Below 1024px the TOC stacks naturally
+   in document order. */
+.lr-shell--three {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas:
+    "crumb"
+    "topbar"
+    "toc"
+    "phase"
+    "item"
+    "panel";
+}
+.lr-shell--three > .lr-breadcrumb { grid-area: crumb; }
+.lr-shell--three > .lr-toc { grid-area: toc; }
+
+@media (min-width: 1280px) {
+  body.app .lr-shell--three {
+    grid-template-columns: 240px minmax(0, 1fr) 320px;
+    grid-template-areas:
+      "crumb  crumb  crumb"
+      "toc    topbar topbar"
+      "toc    phase  panel"
+      "toc    item   panel";
+    column-gap: 32px;
+    row-gap: 20px;
+  }
+  body.app .lr-shell--three > .lr-toc {
+    position: sticky;
+    top: 24px;
+    align-self: start;
+    max-height: calc(100vh - 80px);
+    overflow-y: auto;
+  }
+  /* On 3-col layout the side-panel is in-flow as the right column and
+     the slide-in toggle behaviour is suppressed — it's always there
+     like Eduix/Mafy's "Teoriat" rail. */
+  body.app .lr-shell--three > .lr-side-panel {
+    position: static;
+    transform: none;
+    opacity: 1;
+    pointer-events: auto;
+    box-shadow: none;
+    border: 1px solid var(--ed-rule, var(--border));
+    background: var(--ed-bg-card, var(--surface-2));
+    border-radius: 6px;
+    padding: 18px 20px;
+  }
+  /* Hide the now-redundant "📖 Apua" toggle button in the topbar — the
+     panel is always visible. */
+  body.app .lr-shell--three .lr-help-btn { display: none; }
+}
+@media (min-width: 1600px) {
+  body.app .lr-shell--three {
+    grid-template-columns: 280px minmax(0, 1fr) 360px;
+    column-gap: 40px;
+  }
+}
 
 .lr-back {
   align-self: flex-start;
