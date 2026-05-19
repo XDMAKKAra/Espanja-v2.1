@@ -282,6 +282,16 @@ document.querySelectorAll(".sidebar-item[data-nav], .mobile-nav-item[data-nav], 
 
 window.addEventListener("hashchange", () => {
   if (!isLoggedIn()) return;
+  // PR auto/course-overview: pattern-route #/kurssi/{lang}/{key} first
+  // before falling back to the static NAV_HASH lookup. The async import
+  // is fire-and-forget — the screen toggles to its host via show()
+  // inside loadCourseOverview, so no double-paint.
+  if (/^#\/kurssi\//.test(location.hash)) {
+    import("./screens/courseOverview.js")
+      .then((m) => m.tryRouteCourseOverview?.(location.hash))
+      .catch(() => { /* fall through */ });
+    return;
+  }
   const nav = HASH_NAV[location.hash];
   if (nav) navigateTo(nav, { updateHash: false });
 });
