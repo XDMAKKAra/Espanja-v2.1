@@ -134,11 +134,9 @@ const lazyProfile = makeLazyScreen({
   factory: () => import("./screens/profile.js"),
   init: (m) => m.initProfile(),
 });
-const lazyVerbSprint = makeLazyScreen({
-  key: "verbSprint",
-  factory: () => import("./screens/verbSprint.js"),
-  init: (m) => m.initVerbSprint({ saveProgress }),
-});
+// Task 4 (2026-05-19): lazyVerbSprint removed — screen-verbsprint UI and
+// verbSprint.js have been deleted. lazyVerbReference remains as a lazy
+// loader in case future curriculum lessons link verb-reference cards.
 const lazyVerbReference = makeLazyScreen({
   key: "verbReference",
   factory: () => import("./screens/verbReference.js"),
@@ -176,11 +174,10 @@ const NAV_HASH = {
   // path entry wins for outbound `history.replaceState` calls below; the
   // dashboard hash is kept here only for the inbound HASH_NAV reverse map.
   dashboard: "#/koti",
-  vocab: "#/sanasto",
-  grammar: "#/puheoppi",
   reading: "#/luetun",
   writing: "#/kirjoitus",
-  verbsprint: "#/verbisprintti",
+  // Task 4 (2026-05-19): #/sanasto, #/puheoppi, #/verbisprintti removed —
+  // their mode pages were deleted (sidebar nav already pruned in PR #86).
   path: "#/oppimispolku",
   exam: "#/koeharjoitus",
   settings: "#/asetukset",
@@ -203,7 +200,6 @@ function navigateTo(nav, { updateHash = true } = {}) {
   if (nav === "exam")          lazyFullExam().then((m) => m.startFullExam("demo"));
   else if (nav === "settings") lazySettings().then((m) => m.showSettings());
   else if (nav === "profile")  lazyProfile().then((m) => m.loadProfile());
-  else if (nav === "verbsprint")    lazyVerbSprint().then(() => showModePage("verbsprint"));
   else if (nav === "verbreference") lazyVerbReference().then(() => showModePage("verbreference"));
   else if (nav === "path") {
     // Merged home: loadDashboard now also kicks off loadCurriculum after
@@ -223,9 +219,11 @@ const EXERCISE_SCREENS = new Set([
   "screen-writing",
   "screen-lesson",
 ]);
+// Task 4 (2026-05-19): screen-mode-vocab and screen-mode-grammar entries
+// removed — those mode pages were deleted. exitToSource() falls back to
+// screen-dashboard when the target mode page is absent, so the X-button on
+// screen-exercise / screen-grammar still works during curriculum lessons.
 const EXERCISE_TO_MODE_PAGE = {
-  "screen-exercise": "screen-mode-vocab",
-  "screen-grammar": "screen-mode-grammar",
   "screen-reading": "screen-mode-reading",
   "screen-writing": "screen-mode-writing",
 };
@@ -316,59 +314,26 @@ document.querySelectorAll(".mode-topics").forEach((container) => {
 // Pass 0.6: manual taso-picker listeners removed. Level now comes from
 // GET /api/user-level — the adaptive engine owns it, not a DOM click.
 
-// Mode defaults when the API call fails or the user has no placement yet.
-const MODE_LEVEL_DEFAULTS = { vocab: "B", grammar: "C", reading: "C" };
-
-async function fetchUserLevel(mode, topic) {
-  const fallback = MODE_LEVEL_DEFAULTS[mode] || "B";
-  try {
-    const qs = new URLSearchParams({ mode });
-    if (topic) qs.set("topic", topic);
-    const res = await apiFetch(`${API}/api/user-level?${qs}`, { headers: authHeader() });
-    if (!res.ok) return fallback;
-    const data = await res.json();
-    return data.level || fallback;
-  } catch {
-    return fallback;
-  }
-}
-
-// Optional: populate the "Tasosi: X" status line on mode pages when they open.
-async function showLevelForMode(displayId, mode, topic) {
-  const el = document.getElementById(displayId);
-  if (!el) return;
-  const level = await fetchUserLevel(mode, topic);
-  const strong = el.querySelector("[data-level]");
-  if (strong) strong.textContent = level;
-  el.hidden = false;
-  return level;
-}
+// Task 4 (2026-05-19): MODE_LEVEL_DEFAULTS, fetchUserLevel, and
+// showLevelForMode removed — they only fed the btn-start-vocab handler
+// which is gone. The user-level endpoint is still called by
+// dashboard.js for the home greeting; this dedup is local.
 
 // ─── Start buttons on mode pages ───────────────────────────────────────────
 
-if ($("btn-start-vocab")) $("btn-start-vocab").addEventListener("click", async () => {
-  state.mode = "vocab";
-  state.topic = document.querySelector('#screen-mode-vocab .mode-topic[aria-checked="true"]')?.dataset.topic || "general vocabulary";
-  state.level = await fetchUserLevel("vocab", state.topic);
-  state.startLevel = state.level;
-  state.peakLevel = state.level;
-  state.batchNumber = 0;
-  state.totalCorrect = 0;
-  state.totalAnswered = 0;
-  state.sessionItems = [];
-  state.sessionStartTime = Date.now();
-  loadNextBatch();
-});
-
+// Task 4 (2026-05-19): btn-start-vocab + btn-start-grammar handlers removed
+// — their host mode pages were deleted. startGrammarDrill is retained as a
+// function because initQuickReview still receives it as a dep (the kertaus
+// drill in #screen-quickreview launches a grammar batch). loadNextBatch
+// and loadGrammarDrill stay exported from their modules and are called
+// from curriculum.js / dashboard.js / onboarding for lesson exercises.
 async function startGrammarDrill() {
   state.mode = "grammar";
-  state.grammarTopic = document.querySelector('#screen-mode-grammar .mode-topic[aria-checked="true"]')?.dataset.topic || "mixed";
-  state.grammarLevel = "C";  // server-driven default; matches old fallback
+  state.grammarTopic = "mixed";
+  state.grammarLevel = "C";
   state.sessionStartTime = Date.now();
   loadGrammarDrill();
 }
-
-if ($("btn-start-grammar")) $("btn-start-grammar").addEventListener("click", startGrammarDrill);
 
 initQuickReview({ startGrammarDrill });
 // F-ARCH-1 §A — initVerbSprint / initVerbReference / initSettings / initProfile
