@@ -819,13 +819,23 @@
     </div>
   </div>
 
-  <!-- SCREEN: Home (merged Oma sivu + Oppimispolku as of L-MERGE-DASH-PATH).
-       Element IDs that used to live inside #screen-dashboard (dash-greeting,
-       dash-day-cta, dash-readiness, dash-recent-list, dash-chart) now live
-       here so dashboard.js's renderers populate the path screen directly.
-       The old learningPath.js Duolingo-style nodes (path-level-badge,
-       path-progress, path-nodes, path-mixed-review) were superseded by the
-       js/screens/curriculum.js course-card renderer in #path-courses-root. -->
+  <!-- SCREEN: HOME (PR auto/home-screen 2026-05-19). New entry-screen
+       above the path. Top tabs pick a language (ES/FR/DE), grid below
+       lists that language's 8 courses Otava-style. js/screens/home.js
+       owns rendering inside #home-root. -->
+  <div id="screen-home" class="screen">
+    <div class="home-shell">
+      <div id="home-root"></div>
+    </div>
+  </div>
+
+  <!-- SCREEN: Path (formerly the merged home). Element IDs that used to
+       live inside #screen-dashboard (dash-greeting, dash-day-cta,
+       dash-readiness, dash-recent-list, dash-chart) live here so
+       dashboard.js's renderers populate the path screen directly. The
+       old learningPath.js Duolingo-style nodes were superseded by the
+       js/screens/curriculum.js course-card renderer in
+       #path-courses-root. -->
   <div id="screen-path" class="screen">
     <div class="path-inner">
 

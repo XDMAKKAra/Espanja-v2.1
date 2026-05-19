@@ -19,6 +19,17 @@ const LESSON_INNER_ID = "curr-lesson-root";
 
 let _state = { kurssit: null, expanded: null };
 
+/**
+ * PR auto/home-screen — let other screens (HOME card click) pre-set
+ * the expanded kurssi before loadCurriculum runs, so the path opens
+ * to the user's chosen course instead of the first-active default.
+ */
+export function _setExpandedKurssi(key) {
+  if (typeof key === "string" && key.length > 0) {
+    _state.expanded = key;
+  }
+}
+
 const TYPE_ICONS = {
   // F-CURRICULUM-BENTO-1, Lucide 24x24 strokes, currentColor.
   vocab:   '<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>',          // BookOpen

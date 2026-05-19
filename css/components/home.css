@@ -1,0 +1,232 @@
+/* HOME screen — PR auto/home-screen (2026-05-19).
+   Otava-inspired course library: top tabs pick a language, grid below
+   shows that language's 8 courses with cover + title + progress.
+   Scoped to body.app so it only paints inside the logged-in shell. */
+
+#screen-home.screen.active {
+  align-items: flex-start;
+  justify-content: stretch;
+}
+
+body.app .home-shell {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: clamp(24px, 4vw, 56px) clamp(16px, 4vw, 32px) 96px;
+}
+
+body.app .home-head {
+  margin-bottom: 28px;
+  max-width: 60ch;
+}
+body.app .home-eyebrow {
+  font-family: var(--ed-sans, system-ui);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ed-accent, var(--accent));
+  margin: 0 0 8px;
+}
+body.app .home-title {
+  font-family: var(--ed-display, "Fraunces", Georgia, serif);
+  font-variation-settings: "opsz" 96, "SOFT" 50;
+  font-size: clamp(2.2rem, 4.4vw, 3.6rem);
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  line-height: 1.04;
+  margin: 0 0 10px;
+  color: var(--ed-ink, var(--ink));
+}
+body.app .home-sub {
+  font-family: var(--ed-serif, var(--ed-display, Georgia, serif));
+  font-style: italic;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--ed-ink-muted, var(--ink-soft));
+  margin: 0;
+  max-width: 48ch;
+}
+
+body.app .home-tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 28px;
+  border-bottom: 1px solid var(--ed-rule, var(--border));
+}
+body.app .home-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  padding: 12px 14px 14px;
+  font-family: var(--ed-sans, system-ui);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--ed-ink-muted, var(--ink-soft));
+  cursor: pointer;
+  margin-bottom: -1px;
+  transition: color 160ms ease, border-color 160ms ease;
+}
+body.app .home-tab:hover { color: var(--ed-ink, var(--ink)); }
+body.app .home-tab.is-active {
+  color: var(--ed-ink, var(--ink));
+  border-bottom-color: var(--ed-accent, var(--accent));
+}
+body.app .home-tab__flag { font-size: 18px; }
+
+body.app .home-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 18px;
+}
+@media (min-width: 1024px) {
+  body.app .home-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+  }
+}
+body.app .home-grid-loading,
+body.app .home-grid-empty {
+  grid-column: 1 / -1;
+  padding: 40px 0;
+  font-family: var(--ed-serif, Georgia, serif);
+  font-style: italic;
+  color: var(--ed-ink-faint, var(--ink-faint));
+  text-align: center;
+}
+
+body.app .home-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--ed-bg-card, var(--surface));
+  border: 1px solid var(--ed-rule, var(--border));
+  border-radius: 8px;
+  padding: 0;
+  text-align: left;
+  cursor: pointer;
+  overflow: hidden;
+  transition: border-color 160ms ease, transform 160ms ease, box-shadow 200ms ease;
+}
+body.app .home-card:not([aria-disabled="true"]):hover {
+  border-color: var(--ed-accent, var(--accent));
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px -16px oklch(20% 0.05 30 / 0.22);
+}
+body.app .home-card:not([aria-disabled="true"]):focus-visible {
+  outline: 2px solid var(--ed-accent, var(--accent));
+  outline-offset: 3px;
+}
+body.app .home-card[aria-disabled="true"] {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+body.app .home-card.is-done .home-card__cover-num { background: var(--ed-olive, var(--accent)); }
+
+body.app .home-card__cover {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  display: grid;
+  place-items: center;
+  color: oklch(98% 0.012 75 / 0.95);
+  overflow: hidden;
+}
+body.app .home-card__cover::before {
+  /* Faint diagonal cross-hatch on top of the gradient — gives each
+     cover area more texture than a flat fill, no extra assets. */
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(135deg,
+      oklch(20% 0.05 30 / 0.08) 0 1px, transparent 1px 12px);
+  pointer-events: none;
+}
+body.app .home-card__cover-num {
+  position: relative;
+  z-index: 1;
+  font-family: var(--ed-display, Georgia, serif);
+  font-size: clamp(48px, 4vw, 72px);
+  font-weight: 400;
+  font-variation-settings: "opsz" 96;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: oklch(98% 0.012 75 / 0.96);
+  text-shadow: 0 1px 2px oklch(20% 0.05 30 / 0.18);
+}
+body.app .home-card__cover-level {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  z-index: 1;
+  font-family: var(--ed-sans, system-ui);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: oklch(98% 0.012 75 / 0.85);
+  background: oklch(20% 0.05 30 / 0.22);
+  padding: 3px 8px;
+  border-radius: 999px;
+  backdrop-filter: blur(2px);
+}
+
+body.app .home-card__body {
+  padding: 16px 18px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+body.app .home-card__title {
+  font-family: var(--ed-sans, system-ui);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.005em;
+  color: var(--ed-ink, var(--ink));
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+body.app .home-card__progress {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+body.app .home-card__progress-bar {
+  height: 4px;
+  background: var(--ed-rule, var(--border));
+  border-radius: 2px;
+  overflow: hidden;
+}
+body.app .home-card__progress-fill {
+  height: 100%;
+  background: var(--ed-accent, var(--accent));
+  border-radius: 2px;
+  transition: width 240ms ease;
+}
+body.app .home-card.is-done .home-card__progress-fill { background: var(--ed-olive, var(--accent)); }
+body.app .home-card__progress-text {
+  font-family: var(--ed-mono, monospace);
+  font-size: 11px;
+  color: var(--ed-ink-faint, var(--ink-faint));
+  letter-spacing: 0.02em;
+}
+body.app .home-card__status {
+  font-family: var(--ed-sans, system-ui);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ed-accent, var(--accent));
+  margin-top: auto;
+}
+body.app .home-card.is-done .home-card__status { color: var(--ed-olive, var(--accent)); }
+body.app .home-card.is-locked .home-card__status { color: var(--ed-ink-faint, var(--ink-faint)); }
+body.app .home-card.is-progress .home-card__status { color: var(--ed-accent, var(--accent)); }
