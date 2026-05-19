@@ -257,7 +257,7 @@ async function maybeConfirmNavAway(targetNav) {
     const ok = await confirmDialog({
       title: isLesson ? "Lopetetaanko oppitunti?" : "Lopetetaanko harjoitus?",
       body: isLesson
-        ? `Sinulla on käynnissä oppitunti "${ctx.lessonFocus || "harjoitus"}". Haluatko lopettaa harjoittelun nyt?`
+        ? `Sinulla on käynnissä oppitunti "${ctx.lessonFocus || "harjoitus"}". Tallennamme kohdan johon pääsit, voit jatkaa siitä myöhemmin.`
         : "Vastauksesi tähän asti tallentuvat, mutta keskeneräistä sessiota ei voi jatkaa myöhemmin.",
       confirmLabel: isLesson ? "Lopeta" : "Lopeta ja siirry",
       cancelLabel: isLesson ? "Jatka oppituntia" : "Jatka harjoitusta",

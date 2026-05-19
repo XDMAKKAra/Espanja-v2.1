@@ -20,6 +20,66 @@ import { attachAccentBarAll } from "../features/accentBar.js";
 import { attachCharCounter, wordsToChars } from "../features/charCounter.js";
 
 const ROOT_ID = "lesson-runner-root";
+const PROGRESS_KEY_PREFIX = "puheo:lessonProgress:";
+
+/**
+ * Resume support — save the active state shape to sessionStorage so the
+ * student can leave a half-done lesson and pick up exactly where they
+ * stopped on re-entry. Stored per (kurssiKey, lessonIndex) key.
+ *
+ * What we persist: phase index, item index, per-phase correct/answered
+ * counters, completed phaseResults, sidePanelOpenMs. We do NOT persist
+ * the lesson payload itself — it's re-fetched on entry and matched to
+ * the saved snapshot. If the lesson definition has changed (new phases,
+ * different item count) we discard the snapshot to avoid index drift.
+ */
+function progressKey(kurssiKey, lessonIndex) {
+  return `${PROGRESS_KEY_PREFIX}${kurssiKey}:${lessonIndex}`;
+}
+
+export function saveLessonProgress(state) {
+  if (!state || !state.kurssiKey || state.finished) return;
+  // Only save once the student is actually IN the practice (past the
+  // teaching page) — saving "0/0" before the first item is noise.
+  if (state.currentPhaseIdx === 0 && state.currentItemIdx === 0 && state.answeredInPhase === 0) {
+    return;
+  }
+  try {
+    sessionStorage.setItem(progressKey(state.kurssiKey, state.lessonIndex), JSON.stringify({
+      currentPhaseIdx: state.currentPhaseIdx,
+      currentItemIdx: state.currentItemIdx,
+      correctInPhase: state.correctInPhase,
+      answeredInPhase: state.answeredInPhase,
+      phaseResults: state.phaseResults,
+      targetGrade: state.targetGrade,
+      phaseSignature: state.phases.map((p) => `${p.phase_id}:${p.items.length}`).join("|"),
+      savedAt: Date.now(),
+    }));
+  } catch { /* quota / private mode — silently skip */ }
+}
+
+function loadLessonProgress(kurssiKey, lessonIndex, freshState) {
+  try {
+    const raw = sessionStorage.getItem(progressKey(kurssiKey, lessonIndex));
+    if (!raw) return null;
+    const snap = JSON.parse(raw);
+    if (!snap || typeof snap !== "object") return null;
+    // Lesson definition drift guard.
+    const currentSig = freshState.phases.map((p) => `${p.phase_id}:${p.items.length}`).join("|");
+    if (snap.phaseSignature !== currentSig) return null;
+    // Stale snapshot guard (24h).
+    if (snap.savedAt && Date.now() - snap.savedAt > 24 * 60 * 60 * 1000) return null;
+    return snap;
+  } catch {
+    return null;
+  }
+}
+
+export function clearLessonProgress(kurssiKey, lessonIndex) {
+  try {
+    sessionStorage.removeItem(progressKey(kurssiKey, lessonIndex));
+  } catch { /* private mode */ }
+}
 
 function escapeHtml(s) {
   return String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ({
@@ -117,6 +177,23 @@ export function runPregeneratedLesson(payload, kurssiKey, lessonIndex, targetGra
     if (md) sessionStorage.setItem("currentLessonTeachingMd", md);
     else sessionStorage.removeItem("currentLessonTeachingMd");
   } catch { /* private mode */ }
+
+  // Resume: if the student left this lesson mid-practice (saved snapshot
+  // matches the current lesson definition + within 24h), skip the teaching
+  // page and drop them back where they were. Render a small toast at the
+  // top of the page so they know it resumed, not started over.
+  const snap = loadLessonProgress(kurssiKey, lessonIndex, state);
+  if (snap) {
+    state.currentPhaseIdx = snap.currentPhaseIdx;
+    state.currentItemIdx = snap.currentItemIdx;
+    state.correctInPhase = snap.correctInPhase || 0;
+    state.answeredInPhase = snap.answeredInPhase || 0;
+    state.phaseResults = Array.isArray(snap.phaseResults) ? snap.phaseResults : [];
+    state.startedAt = Date.now();
+    renderPhase(root, state);
+    return;
+  }
+
   renderTeaching(root, state);
 }
 
@@ -356,9 +433,14 @@ function wireExerciseHandlers(root, state, item) {
   document.getElementById("lr-skip")?.addEventListener("click", () => onSkipPhase(root, state));
   document.getElementById("lr-exit-lesson")?.addEventListener("click", async () => {
     const { confirmDialog } = await import("../features/confirmDialog.js");
+    // Snapshot current state BEFORE the modal opens so the save is
+    // atomic — confirmDialog awaits the user; if they cancel the modal
+    // closes and the snapshot is harmless extra writes; if they confirm
+    // the snapshot is already on disk before we navigate away.
+    saveLessonProgress(state);
     const ok = await confirmDialog({
       title: "Lopetetaanko oppitunti?",
-      body: "Edistyminen tällä oppitunnilla ei tallennu jos lähdet nyt. Voit aloittaa tunnin alusta uudelleen myöhemmin.",
+      body: "Tallennamme kohdan johon pääsit, voit jatkaa täältä myöhemmin.",
       confirmLabel: "Lähde takaisin",
       cancelLabel: "Jatka oppituntia",
     });
@@ -560,6 +642,7 @@ function scheduleAdvance(root, state, advanceItem_ = true) {
 function advanceItem(root, state, _skipped) {
   const phase = state.phases[state.currentPhaseIdx];
   state.currentItemIdx += 1;
+  saveLessonProgress(state);
   if (state.currentItemIdx >= phase.items.length) {
     return renderPhaseBanner(root, state, phase, "completed");
   }
@@ -620,6 +703,7 @@ function renderPhaseBanner(root, state, phase, mode) {
     if (state.currentPhaseIdx >= state.phases.length) {
       finalizeLesson(root, state);
     } else {
+      saveLessonProgress(state);
       renderPhase(root, state);
     }
   });
@@ -637,6 +721,9 @@ function onSkipPhase(root, state) {
 function finalizeLesson(root, state) {
   if (state.finished) return;
   state.finished = true;
+  // Lesson done — discard the resume snapshot so the next entry starts
+  // fresh (teaching page → first phase).
+  clearLessonProgress(state.kurssiKey, state.lessonIndex);
   const totalCorrect = state.phaseResults.reduce((s, p) => s + (p.skipped ? 0 : p.correct), 0);
   const totalAsked = state.phaseResults.reduce((s, p) => s + (p.skipped ? 0 : p.total), 0);
   const elapsedMin = Math.max(1, Math.round((Date.now() - state.startedAt) / 60000));
