@@ -168,13 +168,35 @@ body.app .eyebrow {
   color: var(--ed-ink);
 }
 
-body.app .display,
+/* PR auto/path-3col-hybrid (2026-05-19): Fraunces dropped from h1/h2
+   defaults — referenced Eduix/Mafy/Otava all use sans-serif throughout.
+   Fraunces is now reserved for explicit personality moments
+   (.display.display--serif on the greeting + open-course title).
+   Body heading defaults switch to Manrope sans. */
 body.app h1,
-body.app h2 {
+body.app h2,
+body.app h3 {
+  font-family: var(--ed-sans);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.18;
+}
+body.app .display {
+  font-family: var(--ed-sans);
+  font-weight: 600;
+  letter-spacing: -0.012em;
+  line-height: 1.1;
+}
+/* Opt-in Fraunces — apply .display--serif on the ONE element per
+   screen that should carry editorial personality. Use sparingly. */
+body.app .display.display--serif,
+body.app h1.display--serif,
+body.app h2.display--serif {
   font-family: var(--ed-display);
   font-variation-settings: var(--ed-fvs-display);
-  letter-spacing: -0.012em;
-  line-height: 1.08;
+  font-weight: 400;
+  letter-spacing: -0.022em;
+  line-height: 1.04;
 }
 
 body.app h1 em,
@@ -2217,70 +2239,29 @@ body.app #screen-path .dash-greeting .display {
   max-width: 22ch;
 }
 
-/* Editorial section divider — a hair rule + tiny center fleuron.
-   Sits between the hero band and the .path-grid. Render via a
-   pseudo-element on .path-grid::before so we don't touch the HTML. */
-body.app #screen-path .path-grid {
-  position: relative;
-}
-body.app #screen-path .path-grid::before {
-  content: "";
-  display: block;
-  height: 1px;
-  background: var(--ed-rule);
-  margin: 0 0 32px;
-  position: relative;
-}
-body.app #screen-path .path-grid::after {
-  content: "✦";
-  position: absolute;
-  top: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-family: var(--ed-display);
-  font-size: 14px;
-  color: var(--ed-accent);
-  background: var(--ed-bg);
-  padding: 0 12px;
-  pointer-events: none;
-}
+/* PR auto/path-3col-hybrid (2026-05-19) — REMOVED the .path-grid::before
+   hair-rule + ✦ fleuron and the .btn--cta::before "PÄIVÄN HARJOITUS"
+   eyebrow. Both were editorial ornaments that conflict with the new
+   three-column functional layout pulled from Eduix/Mafy references.
 
-/* Day-CTA — reframe as a textbook "exercise" card with a small label
-   row above the title. Drops the bright filled-button feel and reads
-   as the open page of a chapter. */
+   Day-CTA stays brick-fill + cream foreground but without the eyebrow
+   prefix and with sans body type — matches the Eduix "Aloita" button
+   register rather than a textbook chapter opener. */
 body.app #screen-path .btn--cta {
   background: var(--ed-accent);
   color: var(--ed-accent-ink);
   border: 0;
-  border-radius: 4px;
-  padding: 22px 24px;
+  border-radius: 6px;
+  padding: 18px 22px;
   position: relative;
-  overflow: hidden;
-  box-shadow:
-    0 1px 0 0 oklch(30% 0.10 28 / 0.45),
-    0 18px 36px -22px oklch(20% 0.10 28 / 0.45);
+  box-shadow: 0 6px 18px -10px oklch(20% 0.10 28 / 0.32);
 }
-body.app #screen-path .btn--cta::before {
-  content: "PÄIVÄN HARJOITUS · YO LYHYT";
-  position: absolute;
-  top: 12px;
-  left: 24px;
-  right: 24px;
-  font-family: var(--ed-sans);
-  font-size: 10px;
-  letter-spacing: 0.18em;
-  font-weight: 600;
-  color: oklch(94% 0.012 75 / 0.78);
-  text-transform: uppercase;
-}
-body.app #screen-path .btn--cta__l { margin-top: 16px; }
 body.app #screen-path .btn--cta__title {
-  font-family: var(--ed-display);
-  font-size: clamp(20px, 2.2vw, 26px);
-  font-weight: 500;
-  font-variation-settings: "opsz" 72;
-  letter-spacing: -0.012em;
-  line-height: 1.12;
+  font-family: var(--ed-sans);
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  line-height: 1.2;
 }
 body.app #screen-path .btn--cta__meta {
   font-family: var(--ed-sans);
@@ -2290,9 +2271,8 @@ body.app #screen-path .btn--cta__meta {
   color: oklch(94% 0.012 75 / 0.82);
 }
 body.app #screen-path .btn--cta__arrow {
-  font-family: var(--ed-display);
-  font-size: 22px;
-  font-style: italic;
+  font-family: var(--ed-sans);
+  font-size: 18px;
   color: var(--ed-accent-ink);
 }
 body.app #screen-path .btn--cta:hover {
@@ -2462,4 +2442,143 @@ body.app .dash-kpi-row--footnote .dash-kpi-tile__label {
 }
 body.app .dash-kpi-row--footnote .dash-kpi-tile__icon {
   display: none;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   PATH 3-COL HYBRID — Eduix-style TOC + middle + rail
+   PR auto/path-3col-hybrid (2026-05-19). Three columns ≥1280px, falls
+   back to 2-col 1024-1279px (rail wraps under middle), single-column
+   mobile (TOC becomes a horizontal scroll-strip).
+   ═══════════════════════════════════════════════════════════════ */
+
+/* TOC base (mobile-first). Horizontal scroll strip when narrow so the
+   student can see the chapter index without the layout collapsing. */
+.path-toc {
+  display: block;
+  background: var(--ed-bg-card);
+  border: 1px solid var(--ed-rule);
+  border-radius: 6px;
+  padding: 14px 16px;
+  margin-bottom: 20px;
+}
+.path-toc__head {
+  font-family: var(--ed-sans);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ed-accent);
+  margin: 0 0 10px;
+}
+.path-toc__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.path-toc__item {
+  display: grid;
+  grid-template-columns: 28px 1fr auto;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: var(--ed-sans);
+  font-size: 14px;
+  color: var(--ed-ink);
+  transition: background 160ms ease, color 160ms ease;
+  position: relative;
+}
+.path-toc__item:not(.is-locked):hover {
+  background: var(--ed-bg-deep);
+}
+.path-toc__item.is-locked {
+  cursor: not-allowed;
+  color: var(--ed-ink-faint);
+}
+.path-toc__item.is-done {
+  color: var(--ed-ink-muted);
+}
+.path-toc__item.is-active {
+  background: var(--ed-accent-soft);
+  color: var(--ed-ink);
+  font-weight: 600;
+}
+.path-toc__item.is-active::before {
+  content: "";
+  position: absolute;
+  left: -16px;
+  top: 6px;
+  bottom: 6px;
+  width: 3px;
+  background: var(--ed-accent);
+  border-radius: 0 2px 2px 0;
+}
+.path-toc__num {
+  font-family: var(--ed-mono);
+  font-size: 12px;
+  color: var(--ed-ink-faint);
+  text-align: right;
+}
+.path-toc__item.is-active .path-toc__num,
+.path-toc__item.is-done .path-toc__num { color: var(--ed-accent); }
+.path-toc__title {
+  font-size: 14px;
+  line-height: 1.3;
+}
+.path-toc__mark {
+  font-size: 13px;
+  color: var(--ed-ink-faint);
+}
+.path-toc__item.is-active .path-toc__mark { color: var(--ed-accent); }
+.path-toc__item.is-done .path-toc__mark { color: var(--ed-olive); }
+.path-toc__loading {
+  padding: 10px 8px;
+  color: var(--ed-ink-faint);
+  font-family: var(--ed-sans);
+  font-size: 13px;
+  font-style: italic;
+}
+
+/* Wide grid override — 3 columns at ≥1280px. Existing style.css rule
+   sets .path-grid grid at ≥1024px to (1fr, 440px); we override with
+   --three modifier so legacy callers without the modifier stay 2-col. */
+@media (min-width: 1024px) {
+  body.app .path-grid--three {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 440px);
+    grid-template-areas: "main rail" "toc toc";
+    gap: 32px;
+  }
+  body.app .path-grid--three > .path-toc {
+    grid-area: toc;
+    order: 99;
+    margin-bottom: 0;
+  }
+  body.app .path-grid--three > .path-main { grid-area: main; }
+  body.app .path-grid--three > .path-rail { grid-area: rail; }
+}
+@media (min-width: 1280px) {
+  body.app .path-grid--three {
+    grid-template-columns: 260px minmax(0, 1fr) minmax(0, 360px);
+    grid-template-areas: "toc main rail";
+    gap: 36px;
+  }
+  body.app .path-grid--three > .path-toc {
+    order: 0;
+    position: sticky;
+    top: 24px;
+    align-self: start;
+    max-height: calc(100vh - 80px);
+    overflow-y: auto;
+  }
+}
+@media (min-width: 1600px) {
+  body.app .path-grid--three {
+    grid-template-columns: 280px minmax(0, 1fr) minmax(0, 380px);
+    gap: 48px;
+  }
 }
