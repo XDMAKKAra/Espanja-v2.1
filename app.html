@@ -819,15 +819,10 @@
     </div>
   </div>
 
-  <!-- SCREEN: Course overview (PR auto/course-overview 2026-05-19).
-       Sits between HOME and PATH/lesson/reading/writing/exam. Lets the
-       student pick one of 4 modes for the selected course with per-mode
-       tier-lock badges. js/screens/courseOverview.js owns rendering. -->
-  <div id="screen-course-overview" class="screen">
-    <div class="co-shell">
-      <div id="co-root"></div>
-    </div>
-  </div>
+  <!-- PR auto/cleanup-old-screens (2026-05-19): #screen-course-overview
+       removed. Its 4 mode tiles graduated to HOME top-level; per-course
+       lesson lists live on #screen-course-detail. Legacy #/kurssi/...
+       hashes redirect to #/oppimispolku/.../... via main.js. -->
 
   <!-- SCREEN: Oppimispolku index (PR auto/oppimispolku-shelf 2026-05-19).
        The 8-course library, opened from HOME's Oppimispolku mode card.
