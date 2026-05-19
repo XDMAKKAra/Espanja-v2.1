@@ -19,6 +19,49 @@ const LS_SIDEMENU = "puheo:dk:sidemenu";
 const SIDEMENU_OPEN = "open";
 const SIDEMENU_COLLAPSED = "collapsed";
 
+// PR8 — per-sivu progress persistence. Keyed by lesson so a student
+// switching between lessons keeps the right rings lit. Values are
+// "done" only (visited-but-not-done isn't worth tracking for the
+// SideMenu rendering yet).
+const LS_PROGRESS_PREFIX = "puheo:dk:progress";
+
+function progressLsKey() {
+  return `${LS_PROGRESS_PREFIX}:${_route.lang}:${_route.kurssiKey}:${_route.lessonIndex}`;
+}
+function readProgress() {
+  try { return JSON.parse(localStorage.getItem(progressLsKey()) || "{}"); }
+  catch { return {}; }
+}
+function writeProgress(map) {
+  try { localStorage.setItem(progressLsKey(), JSON.stringify(map)); }
+  catch { /* noop */ }
+}
+function markSivuDone(sivuId) {
+  if (!sivuId) return;
+  const map = readProgress();
+  if (map[sivuId] === "done") return;
+  map[sivuId] = "done";
+  writeProgress(map);
+  // Refresh just the SideMenu row + completion chip — full re-render
+  // would steal focus from whatever the student is doing.
+  refreshSidemenuProgress();
+}
+function refreshSidemenuProgress() {
+  const map = readProgress();
+  const list = document.getElementById("dk-sidemenu-list");
+  if (list) {
+    list.querySelectorAll(".dk__row").forEach((row) => {
+      row.classList.toggle("is-done", map[row.dataset.sivu] === "done");
+    });
+  }
+  const chip = document.getElementById("dk-progress-chip");
+  if (chip) {
+    const done = _sivut.filter((s) => map[s.id] === "done").length;
+    chip.textContent = `${done} / ${_sivut.length} valmis`;
+    chip.dataset.full = done >= _sivut.length ? "true" : "false";
+  }
+}
+
 const KIND_GROUP = {
   teoria: "Opetus",
   tehtava: "Harjoitukset",
@@ -225,6 +268,7 @@ function renderTopbar() {
       </nav>
       <h1 class="dk__title">${escapeHtml(title)}</h1>
       <div class="dk__tools">
+        <span class="dk__progress-chip" id="dk-progress-chip" aria-live="polite">0 / 0 valmis</span>
         <button type="button" class="dk__tool" id="dk-search" aria-label="Etsi" title="Etsi (tulossa)">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <circle cx="11" cy="11" r="7"/>
@@ -254,18 +298,23 @@ function renderSidemenu() {
     groups[groups.length - 1].items.push(s);
   }
 
+  const progressMap = readProgress();
   const rows = groups.map((g) => {
     const head = `<span class="dk__group-title">${escapeHtml(g.title)}</span>`;
     const items = g.items.map((s) => {
       const isActive = s.id === _route.sivuId;
+      const isDone = progressMap[s.id] === "done";
       const num = s.num || "·";
+      const cls = ["dk__row"];
+      if (isActive) cls.push("is-active");
+      if (isDone) cls.push("is-done");
       return `
         <button type="button"
-                class="dk__row${isActive ? " is-active" : ""}"
+                class="${cls.join(" ")}"
                 data-sivu="${escapeHtml(s.id)}"
                 data-kind="${escapeHtml(s.kind)}"
                 aria-current="${isActive ? "page" : "false"}"
-                aria-label="${escapeHtml(s.title)}">
+                aria-label="${escapeHtml(s.title)}${isDone ? ", suoritettu" : ""}">
           <span class="dk__row-glyph-wrap" aria-hidden="true">${glyphFor(s.kind)}</span>
           <span class="dk__row-num">${escapeHtml(num)}</span>
           <span class="dk__row-title">${escapeHtml(s.title)}</span>
@@ -286,6 +335,13 @@ function renderSidemenu() {
       </nav>
     </aside>
     <div class="dk__sidemenu-backdrop" id="dk-sidemenu-backdrop" aria-hidden="true"></div>`;
+}
+
+// PR8 — visiting the teoria sivu counts as "done" once. The student
+// has been exposed to the opetus material; that's enough to flip the
+// chip and the SideMenu row.
+function markTeoriaDoneIfNeeded() {
+  if (_route.sivuId === "teoria") markSivuDone("teoria");
 }
 
 function renderTeoriaContent() {
@@ -569,6 +625,7 @@ function wireTesti() {
     });
     st.scoreCorrect = scoreCorrect;
     st.submitted = true;
+    markSivuDone(sivuId);
     reRenderTestiInPlace();
     // Scroll the summary into view so the student sees their score first.
     requestAnimationFrame(() => {
@@ -746,6 +803,7 @@ function wireArvio() {
       lessonIndex: _route.lessonIndex,
     };
     writeArvio(payload);
+    markSivuDone(sivuId);
     reRenderArvioInPlace();
     // PR 7b — sync to Supabase here once the user_self_assessments table
     // + route lands. For now the localStorage save is the single source
@@ -980,6 +1038,9 @@ function wireFlashcards() {
     // Move on to whatever the next not-yet-known card is.
     const statuses = readFlashcardStatuses();
     const pack = flashcardPack(_lesson);
+    // PR8: the pack is "done" once every card is marked "know".
+    const allKnown = pack.length > 0 && pack.every((c, i) => statuses[cardIdFor(c, i)] === FLASHCARD_KNOW);
+    if (allKnown) markSivuDone(sivuId);
     const order = orderedCards(pack, statuses, activeIdx + 1 < pack.length ? activeIdx + 1 : 0);
     st.cardIndex = order[0] ?? activeIdx;
     reRenderFlashcardsInPlace();
@@ -1303,6 +1364,7 @@ function wireExerciseCard() {
       st.answered[i] = result;
       if (result.correct) st.scoreCorrect++;
       st.scoreTotal++;
+      if (st.scoreTotal >= items.length) markSivuDone(sivuId);
       reRenderExerciseInPlace();
     });
   });
@@ -1315,6 +1377,7 @@ function wireExerciseCard() {
     st.answered[i] = result;
     if (result.correct) st.scoreCorrect++;
     st.scoreTotal++;
+    if (st.scoreTotal >= items.length) markSivuDone(sivuId);
     reRenderExerciseInPlace();
   });
 
@@ -1503,6 +1566,8 @@ function navigateSivu(sivuId) {
     applySidemenuState(SIDEMENU_COLLAPSED);
   }
   scrollActiveIntoView();
+  markTeoriaDoneIfNeeded();
+  refreshSidemenuProgress();
   document.getElementById("dk-content")?.focus({ preventScroll: false });
 }
 
@@ -1605,6 +1670,8 @@ export async function showDigikirja(route = {}) {
     wireSidemenuRows();
     wireContent();
     scrollActiveIntoView();
+    markTeoriaDoneIfNeeded();
+    refreshSidemenuProgress();
   } catch (err) {
     if (_loadKey !== loadKey) return;
     host.innerHTML = renderErrorShell(err);

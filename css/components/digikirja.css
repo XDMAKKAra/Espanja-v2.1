@@ -285,10 +285,42 @@
 .dk__row.is-done .dk__row-num {
   color: var(--ed-accent);
 }
-.dk__row.is-done .dk__row-num::after {
-  content: "✓";
-  margin-left: 4px;
+.dk__row.is-done .dk__row-glyph-wrap { color: var(--ed-accent); }
+/* Done state replaces the meta column with a check chip, leaving the
+   number + title untouched. No side-stripe (impeccable ban). */
+.dk__row.is-done .dk__row-meta {
+  color: var(--ed-accent);
+  font-family: var(--ed-mono);
+  font-size: 10px;
+}
+.dk__row.is-done .dk__row-meta::before {
+  content: "✓ ";
   font-family: var(--ed-sans);
+  margin-right: 2px;
+}
+
+/* TopBar progress chip — small pill, sits between title and tools.
+   Picks up an accent fill once the whole lesson is done. */
+.dk__progress-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--ed-bg-deep);
+  border: 1px solid var(--ed-rule);
+  color: var(--ed-ink-muted);
+  font-family: var(--ed-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.08em;
+  font-variant-numeric: tabular-nums;
+}
+.dk__progress-chip[data-full="true"] {
+  background: var(--ed-accent);
+  color: var(--ed-accent-ink);
+  border-color: var(--ed-accent);
+}
+@media (max-width: 900px) {
+  .dk__progress-chip { display: none; }
 }
 
 /* Collapsed rail — only the sivu-type glyph stays visible; numerals,

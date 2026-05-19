@@ -319,10 +319,67 @@ test('PR7 — Itsearviointi rates 4 statements, persists, averages', async ({ pa
   });
 });
 
+test('PR8 — legacy 4-segment lesson route redirects to digikirja /teoria', async ({ page }) => {
+  test.setTimeout(60_000);
+  await login(page);
+  await page.setViewportSize({ width: 1440, height: 900 });
+
+  // Hit the legacy four-segment form (no /sivu).
+  await page.evaluate(() => { location.hash = '#/oppitunti/es/kurssi_2/3'; });
+  await page.waitForTimeout(1500);
+
+  // We land on the digikirja screen at the teoria sivu.
+  const active = await page.evaluate(() => document.querySelector('.screen.active')?.id);
+  expect(active).toBe('screen-digikirja');
+  expect(await page.evaluate(() => location.hash)).toContain('/3/teoria');
+});
+
+test('PR8 — progress chip + SideMenu is-done update on submit', async ({ page }) => {
+  test.setTimeout(90_000);
+  await login(page);
+  await page.setViewportSize({ width: 1440, height: 900 });
+
+  // Wipe progress so the count starts at 0 (teoria visit will add it).
+  await page.evaluate(() => {
+    Object.keys(localStorage).forEach((k) => {
+      if (k.startsWith('puheo:dk:progress')) localStorage.removeItem(k);
+    });
+  });
+
+  await page.evaluate(() => { location.hash = '#/oppitunti/es/kurssi_2/3/teoria'; });
+  await page.waitForTimeout(1200);
+
+  // teoria flips the chip to 1/15 (lesson_3 has 15 sivut).
+  await expect(page.locator('#dk-progress-chip')).toContainText('1 / 15 valmis');
+  await expect(page.locator('.dk__row[data-sivu="teoria"].is-done')).toBeVisible();
+
+  // Submit test-2 (6 mc items). Picks don't matter — the test merely
+  // checks that submitting marks the sivu done.
+  await page.evaluate(() => { location.hash = '#/oppitunti/es/kurssi_2/3/test-2'; });
+  await page.waitForTimeout(1000);
+  for (let i = 0; i < 6; i++) {
+    await page.locator(`.dk__testi-item[data-testi-item="${i}"] .dk__choice[data-choice="0"]`).click();
+  }
+  await page.locator('#dk-testi-submit').click();
+  await page.waitForTimeout(250);
+
+  await expect(page.locator('.dk__row[data-sivu="test-2"].is-done')).toBeVisible();
+  await expect(page.locator('#dk-progress-chip')).toContainText('2 / 15 valmis');
+
+  await page.screenshot({
+    path: path.resolve('audit-screens', 'digikirja-pr8-progress.png'),
+    fullPage: true,
+  });
+});
+
 test('SideMenu toggle persists across navigation', async ({ page }) => {
   test.setTimeout(60_000);
   await login(page);
   await page.setViewportSize({ width: 1440, height: 900 });
+
+  // Clear sidemenu pref so the toggle test is deterministic regardless
+  // of what earlier tests in this file did.
+  await page.evaluate(() => { try { localStorage.removeItem('puheo:dk:sidemenu'); } catch {} });
 
   await page.evaluate((h) => { location.hash = h; }, DEMO_HASH);
   await page.waitForTimeout(1100);

@@ -287,19 +287,13 @@ window.addEventListener("hashchange", () => {
       .catch(() => { /* fall through */ });
     return;
   }
-  // PR auto/course-detail-shelf (2026-05-19): lesson route
-  // #/oppitunti/{lang}/{kurssi}/{n}. Wins before the course-detail
-  // pattern. Dispatch to existing curriculum.openLesson which
-  // handles the lesson runner.
-  const lessonMatch = /^#\/oppitunti\/([a-z]{2})\/([^/?#]+)\/(\d+)/i.exec(location.hash);
-  if (lessonMatch) {
-    const kurssiKey = decodeURIComponent(lessonMatch[2]);
-    const lessonNum = Number(lessonMatch[3]);
-    if (Number.isFinite(lessonNum)) {
-      import("./screens/curriculum.js")
-        .then((m) => m.openLesson?.(kurssiKey, lessonNum))
-        .catch(() => { /* fall through */ });
-    }
+  // PR auto/digikirja-pr8 (2026-05-19): the legacy four-segment route
+  // #/oppitunti/{lang}/{kurssi}/{n} now redirects to the new five-segment
+  // digikirja with /teoria appended. Replace the URL in place so the
+  // hashchange listener picks the more specific matcher above.
+  const legacyLesson = /^#\/oppitunti\/([a-z]{2})\/([^/?#]+)\/(\d+)\s*$/i.exec(location.hash);
+  if (legacyLesson) {
+    location.replace(`#/oppitunti/${legacyLesson[1]}/${legacyLesson[2]}/${legacyLesson[3]}/teoria`);
     return;
   }
   // PR auto/course-detail-shelf: per-course detail route BEFORE the
@@ -338,15 +332,9 @@ window._restoreFromHash = function restoreFromHash() {
       .catch(() => { /* fall through */ });
     return true;
   }
-  const lessonMatch = /^#\/oppitunti\/([a-z]{2})\/([^/?#]+)\/(\d+)/i.exec(location.hash);
-  if (lessonMatch) {
-    const kurssiKey = decodeURIComponent(lessonMatch[2]);
-    const lessonNum = Number(lessonMatch[3]);
-    if (Number.isFinite(lessonNum)) {
-      import("./screens/curriculum.js")
-        .then((m) => m.openLesson?.(kurssiKey, lessonNum))
-        .catch(() => { /* fall through */ });
-    }
+  const legacyLessonBoot = /^#\/oppitunti\/([a-z]{2})\/([^/?#]+)\/(\d+)\s*$/i.exec(location.hash);
+  if (legacyLessonBoot) {
+    location.replace(`#/oppitunti/${legacyLessonBoot[1]}/${legacyLessonBoot[2]}/${legacyLessonBoot[3]}/teoria`);
     return true;
   }
   if (/^#\/oppimispolku\/[a-z]{2}\//i.test(location.hash)) {
