@@ -61,12 +61,7 @@ function glyphFor(kind) {
 const FLASHCARD_PACK_SIZE = 5;
 const LS_FLASHCARD_PREFIX = "puheo:dk:flashcards";
 
-const KIND_PLACEHOLDER = {
-  itsearviointi: {
-    label: "Itsearviointi, tulossa PR 7",
-    body: "Lyhyt 1–5 asteikollinen lomake: hallitsen aiheen sanaston, tunnistan rakenteet, voin keskustella. Tulokset Supabaseen, ohjaavat seuraavan oppitunnin tasoa.",
-  },
-};
+const KIND_PLACEHOLDER = {};
 
 let _wired = false;
 let _route = { lang: "es", kurssiKey: "kurssi_2", lessonIndex: 3, sivuId: "teoria" };
@@ -592,6 +587,179 @@ function wireTesti() {
     const idx = findSivuIndex(_route.sivuId);
     const next = _sivut[idx + 1];
     if (next) navigateSivu(next.id);
+  });
+}
+
+// ─── Itsearviointi (PR7) ──────────────────────────────────────────────
+// 4 generic statements rated 1–5. Submission persists to localStorage
+// under "puheo:dk:itsearvio:{lang}:{kurssi}:{lesson}" with the ratings
+// + an ISO timestamp. No Supabase wiring this PR — the schema + RLS
+// policy + route need their own change set. PR 7b can add the sync.
+
+const LS_ARVIO_PREFIX = "puheo:dk:itsearvio";
+
+const ARVIO_STATEMENTS = [
+  { id: "vocab",   text: "Hallitsen tämän oppitunnin sanaston." },
+  { id: "grammar", text: "Pystyn käyttämään uutta kielioppia omissa lauseissani." },
+  { id: "input",   text: "Ymmärrän aiheen tekstiä ja keskusteluja." },
+  { id: "output",  text: "Voin puhua ja kirjoittaa tästä aiheesta espanjaksi." },
+];
+const ARVIO_LABELS = ["heikko", "vajaa", "kohtuu", "vahva", "hallitsen"];
+
+function arvioLsKey() {
+  return `${LS_ARVIO_PREFIX}:${_route.lang}:${_route.kurssiKey}:${_route.lessonIndex}`;
+}
+function readArvio() {
+  try { return JSON.parse(localStorage.getItem(arvioLsKey()) || "null"); }
+  catch { return null; }
+}
+function writeArvio(payload) {
+  try { localStorage.setItem(arvioLsKey(), JSON.stringify(payload)); }
+  catch { /* noop */ }
+}
+
+const _arvioDraft = new Map(); // sivuId → { [statementId]: 1..5 }
+
+function ensureArvioDraft(sivuId) {
+  let d = _arvioDraft.get(sivuId);
+  if (!d) {
+    const saved = readArvio();
+    d = { ...(saved?.ratings || {}) };
+    _arvioDraft.set(sivuId, d);
+  }
+  return d;
+}
+
+function renderArvioContent(sivu) {
+  const draft = ensureArvioDraft(sivu.id);
+  const saved = readArvio();
+  const submitted = !!saved;
+
+  const rows = ARVIO_STATEMENTS.map((s) => {
+    const current = submitted ? (saved.ratings?.[s.id] ?? 0) : (draft[s.id] ?? 0);
+    const scale = [1, 2, 3, 4, 5].map((n) => `
+      <button type="button"
+              class="dk__arvio-btn ${current === n ? "is-chosen" : ""}"
+              data-statement="${escapeHtml(s.id)}"
+              data-value="${n}"
+              aria-pressed="${current === n}"
+              aria-label="${n}, ${escapeHtml(ARVIO_LABELS[n - 1])}"
+              ${submitted ? "disabled" : ""}>
+        <span class="dk__arvio-num">${n}</span>
+      </button>`).join("");
+    return `
+      <div class="dk__arvio-row" data-statement="${escapeHtml(s.id)}">
+        <p class="dk__arvio-statement">${escapeHtml(s.text)}</p>
+        <div class="dk__arvio-scale" role="radiogroup" aria-label="${escapeHtml(s.text)}">
+          ${scale}
+        </div>
+        <div class="dk__arvio-scale-axis" aria-hidden="true">
+          <span>1 · heikko</span>
+          <span>5 · hallitsen</span>
+        </div>
+      </div>`;
+  }).join("");
+
+  const allRated = ARVIO_STATEMENTS.every((s) => Number.isInteger(draft[s.id]) && draft[s.id] > 0);
+  const action = submitted
+    ? `<button type="button" class="dk__btn dk__btn--ghost" id="dk-arvio-reset">Päivitä arvio</button>
+       <button type="button" class="dk__btn dk__btn--primary" id="dk-arvio-back">Takaisin oppimispolulle</button>`
+    : `<button type="button" class="dk__btn dk__btn--primary" id="dk-arvio-submit" ${allRated ? "" : "disabled"}>Tallenna arvio</button>`;
+
+  const summary = submitted ? renderArvioSummary(saved) : "";
+
+  return `
+    <section class="dk__arvio" data-sivu="${escapeHtml(sivu.id)}">
+      <header class="dk__exercise-head">
+        <span class="dk__exercise-eyebrow">Itsearviointi</span>
+        <span class="dk__exercise-score">${ARVIO_STATEMENTS.length} väittämää</span>
+      </header>
+      <p class="dk__arvio-lede">Tämä on oma kompassisi, ei arvosana. Ole rehellinen — vastaukset ohjaavat seuraavan oppitunnin tasoa.</p>
+      ${summary}
+      <div class="dk__arvio-list">${rows}</div>
+      <div class="dk__exercise-actions dk__arvio-actions">${action}</div>
+    </section>`;
+}
+
+function renderArvioSummary(saved) {
+  const ratings = saved?.ratings || {};
+  const values = ARVIO_STATEMENTS.map((s) => ratings[s.id]).filter(Number.isInteger);
+  if (values.length === 0) return "";
+  const avg = values.reduce((a, b) => a + b, 0) / values.length;
+  const headline = avg >= 4 ? "Olet vahvalla pohjalla."
+    : avg >= 3 ? "Hyvä, suuntaa työ heikoimpiin kohtiin."
+    : "Kannattaa kerrata oppitunti ennen seuraavaa.";
+  return `
+    <div class="dk__testi-summary" aria-live="polite">
+      <div class="dk__testi-summary-score">
+        <span class="dk__testi-summary-num">${avg.toFixed(1)} / 5</span>
+        <span class="dk__testi-summary-pct">Keskiarvo</span>
+      </div>
+      <p class="dk__testi-summary-headline">${escapeHtml(headline)}</p>
+    </div>`;
+}
+
+function reRenderArvioInPlace() {
+  const sivuIdx = findSivuIndex(_route.sivuId);
+  const sivu = _sivut[sivuIdx];
+  const slot = document.querySelector(".dk__content .dk__arvio");
+  if (!slot) return;
+  const next = document.createElement("div");
+  next.innerHTML = renderArvioContent(sivu);
+  slot.replaceWith(next.firstElementChild);
+  wireArvio();
+}
+
+function wireArvio() {
+  const root = document.querySelector(".dk__arvio");
+  if (!root) return;
+  const sivuId = root.dataset.sivu;
+  const draft = ensureArvioDraft(sivuId);
+
+  root.querySelectorAll(".dk__arvio-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const id = btn.dataset.statement;
+      const value = Number(btn.dataset.value);
+      draft[id] = value;
+      // Light update: only flip the chosen state in this row.
+      const row = root.querySelector(`.dk__arvio-row[data-statement="${id}"]`);
+      row?.querySelectorAll(".dk__arvio-btn").forEach((b) => {
+        const on = Number(b.dataset.value) === value;
+        b.classList.toggle("is-chosen", on);
+        b.setAttribute("aria-pressed", on ? "true" : "false");
+      });
+      // Enable submit only when all four statements are rated.
+      const submit = document.getElementById("dk-arvio-submit");
+      if (submit) {
+        const ready = ARVIO_STATEMENTS.every((s) => Number.isInteger(draft[s.id]) && draft[s.id] > 0);
+        submit.disabled = !ready;
+      }
+    });
+  });
+
+  document.getElementById("dk-arvio-submit")?.addEventListener("click", () => {
+    const payload = {
+      ratings: { ...draft },
+      submittedAt: new Date().toISOString(),
+      lang: _route.lang,
+      kurssiKey: _route.kurssiKey,
+      lessonIndex: _route.lessonIndex,
+    };
+    writeArvio(payload);
+    reRenderArvioInPlace();
+    // PR 7b — sync to Supabase here once the user_self_assessments table
+    // + route lands. For now the localStorage save is the single source
+    // of truth.
+  });
+
+  document.getElementById("dk-arvio-reset")?.addEventListener("click", () => {
+    try { localStorage.removeItem(arvioLsKey()); } catch { /* noop */ }
+    _arvioDraft.delete(sivuId);
+    reRenderArvioInPlace();
+  });
+
+  document.getElementById("dk-arvio-back")?.addEventListener("click", () => {
+    location.hash = `#/oppimispolku/${_route.lang}/${encodeURIComponent(_route.kurssiKey)}`;
   });
 }
 
@@ -1196,6 +1364,8 @@ function renderContent() {
     ? renderFlashcardsContent(sivu)
     : sivu.kind === "testi"
     ? renderTestiContent(sivu)
+    : sivu.kind === "itsearviointi"
+    ? renderArvioContent(sivu)
     : renderPlaceholderContent(sivu);
 
   return `
@@ -1375,6 +1545,7 @@ function wireContent() {
   wireExerciseCard();
   wireFlashcards();
   wireTesti();
+  wireArvio();
 }
 
 // ─── Public entry ─────────────────────────────────────────────────────
