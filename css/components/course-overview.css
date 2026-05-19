@@ -1,0 +1,300 @@
+/* COURSE OVERVIEW — PR auto/course-overview (2026-05-19).
+   Between HOME and the per-mode flows: course meta hero + 4 mode tiles
+   with tier-lock badges. Old-Spain palette, scoped to body.app. */
+
+#screen-course-overview.screen.active {
+  align-items: flex-start;
+  justify-content: stretch;
+}
+
+body.app .co-shell {
+  width: 100%;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: clamp(20px, 4vw, 48px) clamp(16px, 4vw, 32px) 96px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+body.app .co-loading {
+  font-family: var(--ed-serif, Georgia, serif);
+  font-style: italic;
+  color: var(--ed-ink-faint, var(--ink-faint));
+  padding: 40px 0;
+  text-align: center;
+}
+
+body.app .co-error {
+  background: var(--ed-bg-card, var(--surface));
+  border: 1px solid var(--ed-rule, var(--border));
+  border-radius: 6px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+  text-align: center;
+}
+
+body.app .co-breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--ed-sans, system-ui);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: var(--ed-ink-muted, var(--ink-soft));
+}
+body.app .co-breadcrumb__link {
+  color: var(--ed-ink-muted, var(--ink-soft));
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--ed-rule, transparent);
+}
+body.app .co-breadcrumb__link:hover {
+  color: var(--ed-accent, var(--accent));
+  text-decoration-color: var(--ed-accent, var(--accent));
+}
+body.app .co-breadcrumb__sep { color: var(--ed-ink-faint, var(--ink-faint)); }
+body.app .co-breadcrumb__crumb.is-current { color: var(--ed-ink, var(--ink)); font-weight: 600; }
+
+/* Hero — cover thumbnail left, meta + progress right. */
+body.app .co-hero {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 32px;
+  align-items: center;
+}
+@media (max-width: 768px) {
+  body.app .co-hero {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+body.app .co-hero__cover {
+  aspect-ratio: 4 / 5;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  position: relative;
+  overflow: hidden;
+}
+body.app .co-hero__cover::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(135deg,
+      oklch(20% 0.05 30 / 0.08) 0 1px, transparent 1px 12px);
+}
+body.app .co-hero__num {
+  position: relative;
+  z-index: 1;
+  font-family: var(--ed-display, Georgia, serif);
+  font-variation-settings: "opsz" 96;
+  font-size: clamp(72px, 8vw, 120px);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  color: oklch(98% 0.012 75 / 0.96);
+  text-shadow: 0 2px 4px oklch(20% 0.05 30 / 0.2);
+}
+body.app .co-hero__body { min-width: 0; }
+body.app .co-hero__eyebrow {
+  font-family: var(--ed-sans, system-ui);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ed-accent, var(--accent));
+  margin: 0 0 6px;
+}
+body.app .co-hero__title {
+  font-family: var(--ed-display, Georgia, serif);
+  font-variation-settings: "opsz" 96, "SOFT" 50;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 400;
+  letter-spacing: -0.024em;
+  line-height: 1.05;
+  margin: 0 0 12px;
+  color: var(--ed-ink, var(--ink));
+  text-wrap: balance;
+}
+body.app .co-hero__desc {
+  font-family: var(--ed-serif, Georgia, serif);
+  font-style: italic;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--ed-ink-muted, var(--ink-soft));
+  margin: 0 0 18px;
+  max-width: 52ch;
+}
+body.app .co-hero__progress {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-width: 360px;
+}
+body.app .co-hero__progress-bar {
+  height: 4px;
+  background: var(--ed-rule, var(--border));
+  border-radius: 2px;
+  overflow: hidden;
+}
+body.app .co-hero__progress-fill {
+  height: 100%;
+  background: var(--ed-accent, var(--accent));
+  border-radius: 2px;
+  transition: width 240ms ease;
+}
+body.app .co-hero__progress-text {
+  font-family: var(--ed-mono, monospace);
+  font-size: 12px;
+  color: var(--ed-ink-faint, var(--ink-faint));
+  letter-spacing: 0.02em;
+}
+
+/* Mode tiles — 2×2 grid on desktop, 1-col stack on mobile. */
+body.app .co-modes {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+@media (min-width: 720px) {
+  body.app .co-modes {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+}
+
+body.app .co-mode {
+  display: grid;
+  grid-template-columns: 48px 1fr auto;
+  gap: 16px;
+  align-items: start;
+  background: var(--ed-bg-card, var(--surface));
+  border: 1px solid var(--ed-rule, var(--border));
+  border-radius: 8px;
+  padding: 22px 22px 24px;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  transition: border-color 160ms ease, transform 160ms ease, box-shadow 200ms ease;
+  position: relative;
+}
+body.app .co-mode:hover:not([aria-disabled="true"]) {
+  border-color: var(--ed-accent, var(--accent));
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px -16px oklch(20% 0.05 30 / 0.22);
+}
+body.app .co-mode:focus-visible {
+  outline: 2px solid var(--ed-accent, var(--accent));
+  outline-offset: 3px;
+}
+body.app .co-mode[aria-disabled="true"] {
+  cursor: not-allowed;
+  background: color-mix(in oklch, var(--ed-bg-deep, var(--surface)) 70%, var(--ed-bg-card));
+}
+body.app .co-mode__icon {
+  font-size: 32px;
+  line-height: 1;
+  width: 48px;
+  text-align: center;
+  filter: saturate(0.85);
+}
+body.app .co-mode__body {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+body.app .co-mode__title {
+  font-family: var(--ed-sans, system-ui);
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  color: var(--ed-ink, var(--ink));
+  margin: 0;
+}
+body.app .co-mode__desc {
+  font-family: var(--ed-serif, Georgia, serif);
+  font-style: italic;
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--ed-ink-muted, var(--ink-soft));
+  margin: 0;
+  max-width: 38ch;
+}
+body.app .co-mode__badge {
+  grid-row: 1 / -1;
+  grid-column: 3;
+  align-self: start;
+  font-family: var(--ed-sans, system-ui);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  font-weight: 600;
+  text-transform: uppercase;
+  background: var(--ed-bg-deep, color-mix(in srgb, var(--ed-accent, var(--accent)) 10%, transparent));
+  color: var(--ed-accent, var(--accent));
+  padding: 5px 10px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in oklch, var(--ed-accent, var(--accent)) 24%, transparent);
+  white-space: nowrap;
+}
+body.app .co-mode__badge.is-lock {
+  background: color-mix(in oklch, var(--ed-ink-faint, var(--ink-faint)) 12%, transparent);
+  color: var(--ed-ink-muted, var(--ink-soft));
+  border-color: var(--ed-rule, var(--border));
+}
+
+/* Upgrade callout — only renders for free users. Sits below the
+   mode grid. */
+body.app .co-upgrade {
+  background: color-mix(in oklch, var(--ed-accent, var(--accent)) 8%, var(--ed-bg-card, var(--surface)));
+  border: 1px solid color-mix(in oklch, var(--ed-accent, var(--accent)) 28%, var(--ed-rule, var(--border)));
+  border-radius: 8px;
+  padding: 24px 28px 26px;
+}
+body.app .co-upgrade__eyebrow {
+  font-family: var(--ed-sans, system-ui);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ed-accent, var(--accent));
+  margin: 0 0 6px;
+}
+body.app .co-upgrade__title {
+  font-family: var(--ed-display, Georgia, serif);
+  font-variation-settings: "opsz" 72;
+  font-size: clamp(22px, 2vw, 26px);
+  font-weight: 400;
+  letter-spacing: -0.018em;
+  color: var(--ed-ink, var(--ink));
+  margin: 0 0 8px;
+}
+body.app .co-upgrade__body {
+  font-family: var(--ed-serif, Georgia, serif);
+  font-style: italic;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--ed-ink-muted, var(--ink-soft));
+  margin: 0 0 18px;
+  max-width: 50ch;
+}
+body.app .co-upgrade__cta {
+  background: var(--ed-accent, var(--accent));
+  color: var(--ed-accent-ink, oklch(96% 0.012 75));
+  border: 0;
+  border-radius: 4px;
+  font-family: var(--ed-sans, system-ui);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  padding: 12px 18px;
+  cursor: pointer;
+  transition: background 200ms ease;
+}
+body.app .co-upgrade__cta:hover { background: var(--ed-accent-hover, var(--accent)); }

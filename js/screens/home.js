@@ -125,23 +125,15 @@ function renderGrid(host, lang, kurssit) {
   }
   host.innerHTML = kurssit.map((k, i) => renderCourseCard(lang, k, i + 1)).join("");
   host.querySelectorAll(".home-card:not([aria-disabled='true'])").forEach((btn) => {
-    btn.addEventListener("click", async () => {
+    btn.addEventListener("click", () => {
       const key = btn.dataset.kurssi;
       const cardLang = btn.dataset.lang;
-      // PR auto/home-screen — until PR 3 lands the course-overview
-      // screen, card click routes directly to the path with the
-      // selected course pre-expanded. Hash kept at #/oppimispolku so
-      // existing back-buttons still work. PR 3 will redirect here
-      // to #/kurssi/{lang}/{key} → course-overview instead.
       writeActiveLang(cardLang);
-      try {
-        const m = await import("./curriculum.js");
-        if (m._setExpandedKurssi) m._setExpandedKurssi(key);
-        location.hash = "#/oppimispolku";
-        if (m.loadCurriculum) m.loadCurriculum();
-      } catch {
-        location.hash = "#/oppimispolku";
-      }
+      // PR auto/course-overview (2026-05-19): route to the new
+      // overview screen. hashchange listener in main.js pattern-
+      // matches #/kurssi/{lang}/{key} and dispatches to
+      // courseOverview.tryRouteCourseOverview.
+      location.hash = `#/kurssi/${cardLang}/${encodeURIComponent(key)}`;
     });
   });
 }
