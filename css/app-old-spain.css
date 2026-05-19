@@ -2388,16 +2388,21 @@ body.app .sidebar-item {
 body.app .sidebar-item.active {
   position: relative;
 }
+/* PR auto/asetukset-profile-race-fix (2026-05-19): the active sidebar item
+   used to carry a "❦" fleuron at left:-4px. At 14px italic display the
+   fleuron rendered as a narrow vertical sliver that read as a stray red
+   hairline bleeding out of the row. Swap to a clean 3px accent stripe
+   that lines up with the path-toc active marker (same idiom across the
+   app). */
 body.app .sidebar-item.active::before {
-  content: "❦";
+  content: "";
   position: absolute;
-  left: -4px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-family: var(--ed-display);
-  font-style: italic;
-  color: var(--ed-accent);
-  font-size: 14px;
+  left: 0;
+  top: 8px;
+  bottom: 8px;
+  width: 3px;
+  background: var(--ed-accent);
+  border-radius: 0 2px 2px 0;
 }
 
 /* Top-bar countdown chip — minimal warm pill, not a teal pill. */

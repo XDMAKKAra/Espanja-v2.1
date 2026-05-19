@@ -138,16 +138,21 @@ export async function loadDashboard() {
       _lastRenderAt = Date.now();
       _lastRenderHash = payloadHash(_dashboardCache.payload);
     } catch { /* fall through to fresh fetch */ }
-    // Curriculum render kicks off ONCE here in the cache-hit path. The
-    // post-fetch render below skips itself when this call already ran,
-    // killing the visible double-paint of the course list (skeleton →
-    // cards → skeleton → cards). Tracked via _curriculumKickedAt so a
-    // stale cache (>60s) re-kicks naturally.
+    // PR auto/asetukset-profile-race-fix (2026-05-19): the legacy curriculum
+    // kick rendered into #screen-path (now display:none) and its internal
+    // show("screen-path") yanked focus away from any screen the user opened
+    // while the deferred fetch was still in flight — clicking Asetukset or
+    // sidebar-user during the first few seconds after login dropped them on
+    // a blank page. HOME owns its own course list now, so the kick is dead
+    // work; remove it.
     _curriculumKickedAt = Date.now();
-    import("./curriculum.js").then((m) => m.loadCurriculum?.()).catch(() => {});
-  } else {
-    showLoading("Ladataan…");
   }
+  // PR auto/asetukset-profile-race-fix (2026-05-19): the cache-miss branch
+  // used to fire showLoading("Ladataan…") which yanked focus from the
+  // freshly painted #screen-home (loadHome already shows its own inline
+  // "Ladataan…" skeleton). The user landed on the full-screen loading
+  // surface and never came back unless a later render switched screens.
+  // Drop it; home.js owns the in-place loading state now.
 
   try {
     // L-LIVE-AUDIT-P2 UPDATE 3, single batched request replaces 9 sequential
@@ -205,17 +210,10 @@ export async function loadDashboard() {
       _lastRenderAt = Date.now();
       _lastRenderHash = freshHash;
     }
-    // L-MERGE-DASH-PATH, render the course list. Dynamic import avoids a
-    // circular dep with curriculum.js. Skip the kick if the cache-hit
-    // path above already fired the render within the last
-    // CURRICULUM_DEDUPE_MS — that's the case that caused the visible
-    // skeleton → cards → skeleton → cards flicker.
-    if (Date.now() - _curriculumKickedAt > CURRICULUM_DEDUPE_MS) {
-      _curriculumKickedAt = Date.now();
-      import("./curriculum.js")
-        .then((m) => m.loadCurriculum?.())
-        .catch(() => { /* curriculum optional; ignore */ });
-    }
+    // PR auto/asetukset-profile-race-fix (2026-05-19): see note above —
+    // the background curriculum kick yanked focus from any screen the user
+    // opened during the first few seconds after login. Removed.
+    _curriculumKickedAt = Date.now();
   } catch {
     if (!cacheValid) show("screen-start");
   }
