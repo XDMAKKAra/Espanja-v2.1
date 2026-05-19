@@ -46,45 +46,61 @@ async function getCourseLessons(kurssiKey) {
 }
 
 function renderLessonTOC(state) {
-  const lessons = state._courseLessons || [];
-  if (lessons.length === 0) {
-    return `<aside class="lr-toc" aria-label="Kurssin oppitunnit">
-      <p class="lr-toc__head">Oppitunnit</p>
-      <p class="lr-toc__loading">Ladataan&hellip;</p>
+  // PR auto/lesson-toc-phases (2026-05-19) — TOC switched from sibling
+  // lessons to current-lesson PHASES per user request: "vasemmal näkyy
+  // kaikki sen oppitunnin tehtävät, niitä tehtäviä voi tehdä edes
+  // takaisin". Each phase row carries its title (e.g. "Tehtävä 3.
+  // Yhdistä") + done/current/future state. Clicking jumps to that
+  // phase's first item.
+  const phases = Array.isArray(state.phases) ? state.phases : [];
+  if (phases.length === 0) {
+    return `<aside class="lr-toc" aria-label="Tehtävät">
+      <p class="lr-toc__head">Tehtävät</p>
+      <p class="lr-toc__loading">Ei vaiheita.</p>
     </aside>`;
   }
-  const currentIdx = state.lessonIndex;
-  const items = lessons.map((l) => {
-    const num = l.sortOrder || 0;
-    const isCurrent = num === currentIdx;
-    const isDone = !!l.completed && !isCurrent;
+  const currentIdx = state.currentPhaseIdx;
+  const doneSet = new Set(
+    (state.phaseResults || [])
+      .filter((r) => !r.skipped && r.mastered)
+      .map((r) => r.phaseId)
+  );
+  const items = phases.map((p, i) => {
+    const isCurrent = i === currentIdx;
+    const isDone = doneSet.has(p.phase_id) && !isCurrent;
     const cls = [
       "lr-toc__item",
       isCurrent ? "is-current" : "",
       isDone ? "is-done" : "",
     ].filter(Boolean).join(" ");
     const mark = isCurrent ? "→" : (isDone ? "✓" : "");
-    return `<li class="${cls}" data-lesson="${escapeHtml(String(num))}" ${isCurrent ? '' : 'tabindex="0"'}>
-      <span class="lr-toc__num">${escapeHtml(String(num))}</span>
-      <span class="lr-toc__title">${escapeHtml(l.title || `Oppitunti ${num}`)}</span>
+    const title = p.title || `Vaihe ${i + 1}`;
+    return `<li class="${cls}" data-phase="${i}" ${isCurrent ? '' : 'tabindex="0"'}>
+      <span class="lr-toc__num">${i + 1}</span>
+      <span class="lr-toc__title">${escapeHtml(title)}</span>
       <span class="lr-toc__mark" aria-hidden="true">${mark}</span>
     </li>`;
   }).join("");
-  return `<aside class="lr-toc" aria-label="Kurssin oppitunnit">
-    <p class="lr-toc__head">Oppitunnit</p>
+  return `<aside class="lr-toc" aria-label="Tehtävät">
+    <p class="lr-toc__head">Tehtävät</p>
     <ol class="lr-toc__list">${items}</ol>
   </aside>`;
 }
 
 function wireLessonTOC(root, state) {
   root.querySelectorAll(".lr-toc__item:not(.is-current)").forEach((li) => {
-    const click = async () => {
-      const idx = Number(li.dataset.lesson);
-      if (!Number.isFinite(idx) || idx === state.lessonIndex) return;
-      // Save current progress so the next lesson entry knows.
+    const click = () => {
+      const idx = Number(li.dataset.phase);
+      if (!Number.isFinite(idx) || idx === state.currentPhaseIdx) return;
+      // Save progress before jumping so the resume snapshot reflects
+      // the actual furthest-reached phase, not the one we land on.
       saveLessonProgress(state);
-      const m = await import("./curriculum.js");
-      m.openLesson(state.kurssiKey, idx);
+      state.currentPhaseIdx = idx;
+      state.currentItemIdx = 0;
+      state.correctInPhase = 0;
+      state.answeredInPhase = 0;
+      saveLessonProgress(state);
+      renderPhase(root, state);
     };
     li.addEventListener("click", click);
     li.addEventListener("keydown", (e) => {
