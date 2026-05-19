@@ -1267,7 +1267,14 @@ function renderItemGapFill(item, answer) {
   });
   const bank = Array.isArray(item.word_bank) && item.word_bank.length
     ? `<ul class="dk__wordbank" aria-label="Sanapankki">
-         ${item.word_bank.map((w) => `<li><span>${escapeHtml(w)}</span></li>`).join("")}
+         ${item.word_bank.map((w) => `
+           <li>
+             <button type="button" class="dk__wordbank-chip"
+                     data-word="${escapeHtml(w)}"
+                     ${disabled ? "disabled" : ""}>
+               ${escapeHtml(w)}
+             </button>
+           </li>`).join("")}
        </ul>`
     : "";
   return `
@@ -1461,6 +1468,22 @@ function wireExerciseCard() {
       e.preventDefault();
       document.getElementById("dk-check")?.click();
     }
+  });
+
+  // Word-bank chips → insert clicked word into the first empty gap input.
+  // Earlier ship treated chips as static labels and users couldn't make
+  // sense of how to answer — fixed by making them proper buttons.
+  root.querySelectorAll(".dk__wordbank-chip").forEach((chip) => {
+    chip.addEventListener("click", () => {
+      if (st.answered[i]) return;
+      const word = chip.dataset.word || "";
+      const gaps = [...root.querySelectorAll(".dk__input--gap")];
+      const empty = gaps.find((g) => !g.value.trim()) || gaps[gaps.length - 1];
+      if (empty) {
+        empty.value = word;
+        empty.focus();
+      }
+    });
   });
 
   // Next item — advance within the phase or jump to the next sivu when done.
