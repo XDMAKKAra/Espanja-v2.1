@@ -200,13 +200,15 @@ function navigateTo(nav, { updateHash = true } = {}) {
   else if (nav === "settings") lazySettings().then((m) => m.showSettings());
   else if (nav === "profile")  lazyProfile().then((m) => m.loadProfile());
   else if (nav === "home")     import("./screens/home.js").then((m) => m.loadHome());
+  // PR auto/cleanup-old-screens (2026-05-19): nav=path is legacy.
+  // Routing to home keeps users from landing on the deprecated
+  // dashboard surface (#screen-path) which mixes greeting + day-CTA +
+  // course list — all of that now lives across HOME + oppimispolku +
+  // course detail. Path screen HTML stays for compat with any code
+  // path that hardcodes loadDashboard, but nav clicks no longer reach
+  // it.
+  else if (nav === "path")     import("./screens/home.js").then((m) => m.loadHome());
   else if (nav === "verbreference") lazyVerbReference().then(() => showModePage("verbreference"));
-  else if (nav === "path") {
-    // Merged home: loadDashboard now also kicks off loadCurriculum after
-    // rendering, so a single call populates greeting + day-CTA + readiness +
-    // recent + chart AND the course list inside #path-courses-root.
-    loadDashboard();
-  }
   else showModePage(nav);
 }
 
@@ -282,10 +284,13 @@ document.querySelectorAll(".sidebar-item[data-nav], .mobile-nav-item[data-nav], 
 
 window.addEventListener("hashchange", () => {
   if (!isLoggedIn()) return;
-  if (/^#\/kurssi\//.test(location.hash)) {
-    import("./screens/courseOverview.js")
-      .then((m) => m.tryRouteCourseOverview?.(location.hash))
-      .catch(() => { /* fall through */ });
+  // PR auto/cleanup-old-screens (2026-05-19): redirect legacy
+  // #/kurssi/{lang}/{key} → #/oppimispolku/{lang}/{key}. The
+  // courseOverview screen is gone — its 4 mode tiles moved up to
+  // HOME, course detail handles the single-course lesson list.
+  const legacyCourse = /^#\/kurssi\/([a-z]{2})\/([^/?#]+)/i.exec(location.hash);
+  if (legacyCourse) {
+    location.replace(`#/oppimispolku/${legacyCourse[1]}/${legacyCourse[2]}`);
     return;
   }
   // PR auto/course-detail-shelf (2026-05-19): lesson route
@@ -327,10 +332,9 @@ window.addEventListener("hashchange", () => {
 // On boot, restore screen from hash (only if logged in — auth flow handles otherwise).
 window._restoreFromHash = function restoreFromHash() {
   if (!isLoggedIn()) return false;
-  if (/^#\/kurssi\//.test(location.hash)) {
-    import("./screens/courseOverview.js")
-      .then((m) => m.tryRouteCourseOverview?.(location.hash))
-      .catch(() => { /* fall through */ });
+  const legacyCourse = /^#\/kurssi\/([a-z]{2})\/([^/?#]+)/i.exec(location.hash);
+  if (legacyCourse) {
+    location.replace(`#/oppimispolku/${legacyCourse[1]}/${legacyCourse[2]}`);
     return true;
   }
   const lessonMatch = /^#\/oppitunti\/([a-z]{2})\/([^/?#]+)\/(\d+)/i.exec(location.hash);
