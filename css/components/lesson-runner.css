@@ -568,16 +568,99 @@
 
 @keyframes lr-shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-4px); } 75% { transform: translateX(4px); } }
 
-/* Gap fill */
-.lr-gap-sentence { font-size: clamp(20px, 2.2vw, 24px); line-height: 1.8; }
-.lr-gap-input { display: inline-block; width: 120px; min-height: 36px; padding: 4px 8px; }
-.lr-gap-bank { display: flex; flex-wrap: wrap; gap: 8px; }
+/* PR auto/inline-exercises (2026-05-19) — Eduix-style inline gap-fill.
+   Inputs become a thin underline that flows with the prose (reference
+   screenshot 203255). Word-bank chips are clickable buttons that drop
+   into the focused input; used chips mute out. */
+.lr-gap {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+.lr-gap-sentence {
+  font-family: var(--ed-serif, var(--ed-display, Georgia, serif));
+  font-size: clamp(18px, 1.9vw, 22px);
+  line-height: 1.9;
+  color: var(--ed-ink, var(--ink));
+  margin: 0;
+  max-width: 56ch;
+}
+.lr-gap-input {
+  /* Reset the boxed input style inherited from .lr-typed-input. */
+  display: inline-block;
+  width: auto;
+  background: transparent;
+  border: 0;
+  border-bottom: 1.5px solid var(--ed-rule-strong, color-mix(in srgb, var(--ink-faint, #71717a) 30%, transparent));
+  border-radius: 0;
+  color: var(--ed-ink, var(--ink));
+  font-family: var(--ed-display, "Fraunces", Georgia, serif);
+  font-style: italic;
+  font-size: clamp(17px, 1.7vw, 20px);
+  line-height: 1.2;
+  padding: 2px 6px 4px;
+  min-height: 0;
+  margin: 0 2px;
+  vertical-align: baseline;
+  transition: border-color 160ms ease, background 160ms ease;
+}
+.lr-gap-input:focus {
+  outline: none;
+  border-bottom-color: var(--ed-accent, var(--accent));
+  background: var(--ed-accent-soft, color-mix(in srgb, var(--accent, currentColor) 8%, transparent));
+}
+.lr-gap-input.is-filled {
+  border-bottom-style: solid;
+  color: var(--ed-accent, var(--accent));
+  font-style: normal;
+  font-weight: 500;
+}
+.lr-gap-input.is-correct {
+  border-bottom-color: var(--ed-olive, var(--success, var(--accent)));
+  color: var(--ed-olive, var(--success, var(--accent)));
+  background: color-mix(in srgb, var(--ed-olive, var(--accent)) 10%, transparent);
+}
+.lr-gap-input.is-wrong {
+  border-bottom-color: var(--ed-accent, var(--error, #b91c1c));
+  color: var(--ed-accent, var(--error, #b91c1c));
+  background: color-mix(in srgb, var(--ed-accent, var(--error, #b91c1c)) 12%, transparent);
+}
+.lr-gap-bank {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-top: 4px;
+  border-top: 1px solid var(--ed-rule, var(--border));
+  padding-top: 16px;
+  margin-top: 4px;
+}
 .lr-gap-chip {
-  background: var(--surface);
-  border: 1px solid var(--surface-2);
-  padding: 4px 10px;
+  background: var(--ed-bg-card, var(--surface));
+  border: 1px solid var(--ed-rule-strong, var(--border));
+  color: var(--ed-ink, var(--ink));
+  padding: 8px 14px;
   border-radius: 999px;
-  font-size: 13px;
+  font-family: var(--ed-sans, system-ui, sans-serif);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 160ms ease, border-color 160ms ease, transform 100ms ease, opacity 160ms ease;
+}
+.lr-gap-chip:hover:not(.is-used) {
+  background: var(--ed-bg-deep, color-mix(in srgb, var(--ed-accent, var(--accent)) 10%, transparent));
+  border-color: var(--ed-accent, var(--accent));
+}
+.lr-gap-chip:active:not(.is-used) {
+  transform: translateY(1px);
+}
+.lr-gap-chip.is-used {
+  opacity: 0.35;
+  cursor: default;
+  border-style: dashed;
+}
+.lr-gap-chip:focus-visible {
+  outline: 2px solid var(--ed-accent, var(--accent));
+  outline-offset: 3px;
 }
 
 /* Writing */

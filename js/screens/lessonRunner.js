@@ -472,13 +472,24 @@ function renderMatch(item) {
 }
 
 function renderGapFill(item) {
-  // Replace {1} {2} ... with input slots.
+  // PR auto/inline-exercises (2026-05-19) — gap_fill rendering polished
+  // to feel like the Eduix textbook inline-blank pattern (reference
+  // screenshot 203255). Inputs are visually a thin underline, not a
+  // boxed field. Word bank chips are clickable buttons that fill the
+  // currently focused input (or the next empty one when no focus).
   const tpl = item.sentence_template || "";
+  // Auto-size the inline input to roughly the expected answer length
+  // so the prose flows naturally around the blank.
+  const expectedLen = (item.answers || item.accepts || [])
+    .reduce((max, a) => Math.max(max, String(a || "").length), 8);
+  const inputCh = Math.min(Math.max(expectedLen, 6), 18);
   const html = escapeHtml(tpl).replace(/\{(\d+)\}/g, (_m, n) =>
-    `<input type="text" class="lr-gap-input" data-gap="${n}" autocomplete="off" autocapitalize="off" spellcheck="false" />`
+    `<input type="text" class="lr-gap-input" data-gap="${n}" size="${inputCh}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Täytä kohta ${n}" />`
   );
   const bank = Array.isArray(item.word_bank) && item.word_bank.length
-    ? `<div class="lr-gap-bank">${item.word_bank.map((w) => `<span class="lr-gap-chip">${escapeHtml(w)}</span>`).join("")}</div>`
+    ? `<div class="lr-gap-bank" role="group" aria-label="Sanapankki">
+        ${item.word_bank.map((w) => `<button type="button" class="lr-gap-chip" data-word="${escapeHtml(w)}">${escapeHtml(w)}</button>`).join("")}
+       </div>`
     : "";
   return `
     <div class="lr-gap">
@@ -593,8 +604,46 @@ function wireExerciseHandlers(root, state, item) {
   } else if (item.item_type === "match") {
     wireMatch(root, state, item);
   } else if (item.item_type === "gap_fill") {
+    // PR auto/inline-exercises — track which input the student last
+    // focused so chip clicks fill that one; falls back to the first
+    // empty input when nothing is focused yet.
+    let lastFocused = null;
+    const inputs = root.querySelectorAll(".lr-gap-input");
+    inputs.forEach((inp) => {
+      inp.addEventListener("focus", () => { lastFocused = inp; });
+    });
+    inputs[0]?.focus();
+    root.querySelectorAll(".lr-gap-chip").forEach((chip) => {
+      chip.addEventListener("click", () => {
+        const word = chip.dataset.word || chip.textContent || "";
+        const target = (lastFocused && lastFocused.value === "")
+          ? lastFocused
+          : Array.from(inputs).find((i) => !i.value)
+            || lastFocused
+            || inputs[0];
+        if (target) {
+          target.value = word;
+          target.classList.add("is-filled");
+          chip.classList.add("is-used");
+          // Move focus to the next empty input so the student can keep
+          // tapping chips without reaching back to the keyboard.
+          const next = Array.from(inputs).find((i) => !i.value);
+          (next || target).focus();
+        }
+      });
+    });
+    // If the student clears an input, free the matching chip again.
+    inputs.forEach((inp) => {
+      inp.addEventListener("input", () => {
+        inp.classList.toggle("is-filled", !!inp.value);
+        root.querySelectorAll(".lr-gap-chip.is-used").forEach((chip) => {
+          const word = chip.dataset.word || chip.textContent || "";
+          const stillUsed = Array.from(inputs).some((i) => i.value === word);
+          chip.classList.toggle("is-used", stillUsed);
+        });
+      });
+    });
     document.getElementById("lr-gap-submit")?.addEventListener("click", () => {
-      const inputs = root.querySelectorAll(".lr-gap-input");
       let allOk = true;
       const expected = [];
       let firstHint = null;
@@ -604,6 +653,8 @@ function wireExerciseHandlers(root, state, item) {
         if (!r.ok) allOk = false;
         if (r.hint && !firstHint) firstHint = r.hint;
         expected.push((accepts[0] || "?"));
+        inp.classList.toggle("is-wrong", !r.ok);
+        inp.classList.toggle("is-correct", r.ok);
       });
       showItemFeedback(root, allOk, allOk ? "" : `Oikeat vastaukset: ${expected.join(", ")}`, { hint: firstHint, waitForClick: !allOk });
       recordAnswer(state, allOk);
