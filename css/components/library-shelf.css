@@ -1,0 +1,232 @@
+/* LIBRARY SHELF — PR auto/oppimispolku-shelf (2026-05-19).
+   Shared row style for the 8-course list (op-list) and the per-course
+   10-lesson list (PR C). Inspired by a printed textbook's table of
+   contents: number gutter + title + progress, hairline rules between
+   rows. Zero covers, zero shadows, zero gradient blocks. */
+
+#screen-oppimispolku-index.screen.active {
+  align-items: flex-start;
+  justify-content: stretch;
+}
+
+body.app .op-shell {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: clamp(24px, 4vw, 56px) clamp(16px, 4vw, 32px) 96px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+body.app .op-loading,
+body.app .op-error {
+  font-family: var(--ed-serif, Georgia, serif);
+  font-style: italic;
+  color: var(--ed-ink-faint, var(--ink-faint));
+  padding: 40px 0;
+  text-align: center;
+}
+body.app .op-error {
+  background: var(--ed-bg-card, var(--surface));
+  border: 1px solid var(--ed-rule, var(--border));
+  border-radius: 6px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: center;
+}
+
+body.app .op-breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--ed-sans, system-ui);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: var(--ed-ink-muted, var(--ink-soft));
+}
+body.app .op-breadcrumb__link {
+  color: var(--ed-ink-muted, var(--ink-soft));
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--ed-rule, transparent);
+}
+body.app .op-breadcrumb__link:hover {
+  color: var(--ed-accent, var(--accent));
+  text-decoration-color: var(--ed-accent, var(--accent));
+}
+body.app .op-breadcrumb__sep { color: var(--ed-ink-faint, var(--ink-faint)); }
+body.app .op-breadcrumb__crumb.is-current { color: var(--ed-ink, var(--ink)); font-weight: 600; }
+
+body.app .op-head {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 8px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--ed-rule-strong, color-mix(in srgb, var(--ink-faint, #71717a) 30%, transparent));
+}
+body.app .op-eyebrow {
+  font-family: var(--ed-sans, system-ui);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ed-accent, var(--accent));
+  margin: 0;
+}
+body.app .op-title {
+  font-family: var(--ed-display, "Fraunces", Georgia, serif);
+  font-variation-settings: "opsz" 96, "SOFT" 50;
+  font-size: clamp(2.2rem, 5vw, 3.6rem);
+  font-weight: 400;
+  letter-spacing: -0.026em;
+  line-height: 1.02;
+  margin: 6px 0 4px;
+  color: var(--ed-ink, var(--ink));
+}
+body.app .op-sub {
+  font-family: var(--ed-serif, Georgia, serif);
+  font-style: italic;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--ed-ink-muted, var(--ink-soft));
+  margin: 0;
+}
+
+/* The library-shelf list itself */
+body.app .op-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+body.app .op-row {
+  display: grid;
+  grid-template-columns: 48px 1fr 200px;
+  align-items: center;
+  gap: 24px;
+  padding: 20px 8px 22px;
+  border-bottom: 1px solid var(--ed-rule, var(--border));
+  text-decoration: none;
+  color: inherit;
+  transition: background 160ms ease, padding-left 160ms ease;
+  position: relative;
+}
+body.app .op-row.is-clickable:hover {
+  background: var(--ed-bg-deep, color-mix(in srgb, var(--ed-accent, var(--accent)) 4%, transparent));
+  padding-left: 12px;
+}
+body.app .op-row.is-clickable:focus-visible {
+  outline: 2px solid var(--ed-accent, var(--accent));
+  outline-offset: -2px;
+}
+body.app .op-row.is-locked {
+  cursor: not-allowed;
+  color: var(--ed-ink-faint, var(--ink-faint));
+}
+body.app .op-row.is-locked .op-row__title,
+body.app .op-row.is-locked .op-row__desc {
+  color: var(--ed-ink-faint, var(--ink-faint));
+}
+body.app .op-row.is-progress::before,
+body.app .op-row.is-done::before {
+  /* Brick stripe at left to mark current/done, like a bookmark. */
+  content: "";
+  position: absolute;
+  left: -8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 60%;
+  background: var(--ed-accent, var(--accent));
+  border-radius: 0 2px 2px 0;
+}
+body.app .op-row.is-done::before { background: var(--ed-olive, var(--accent)); }
+
+body.app .op-row__num {
+  font-family: var(--ed-mono, monospace);
+  font-size: 28px;
+  font-weight: 400;
+  text-align: right;
+  color: var(--ed-ink-faint, var(--ink-faint));
+  line-height: 1;
+  padding-right: 4px;
+}
+body.app .op-row.is-progress .op-row__num,
+body.app .op-row.is-done .op-row__num { color: var(--ed-accent, var(--accent)); }
+body.app .op-row.is-done .op-row__num { color: var(--ed-olive, var(--accent)); }
+
+body.app .op-row__body { min-width: 0; }
+body.app .op-row__title {
+  font-family: var(--ed-display, "Fraunces", Georgia, serif);
+  font-variation-settings: "opsz" 36;
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: -0.012em;
+  line-height: 1.2;
+  color: var(--ed-ink, var(--ink));
+  margin: 0 0 4px;
+}
+body.app .op-row__desc {
+  font-family: var(--ed-serif, Georgia, serif);
+  font-style: italic;
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--ed-ink-muted, var(--ink-soft));
+  margin: 0;
+  max-width: 52ch;
+}
+
+body.app .op-row__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: flex-end;
+  text-align: right;
+}
+body.app .op-row__progress {
+  width: 140px;
+  height: 3px;
+  background: var(--ed-rule, var(--border));
+  border-radius: 2px;
+  overflow: hidden;
+}
+body.app .op-row__progress-fill {
+  height: 100%;
+  background: var(--ed-accent, var(--accent));
+  transition: width 240ms ease;
+}
+body.app .op-row.is-done .op-row__progress-fill { background: var(--ed-olive, var(--accent)); }
+body.app .op-row__status {
+  font-family: var(--ed-sans, system-ui);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--ed-ink-muted, var(--ink-soft));
+}
+body.app .op-row.is-progress .op-row__status,
+body.app .op-row.is-done .op-row__status { color: var(--ed-accent, var(--accent)); }
+body.app .op-row.is-done .op-row__status { color: var(--ed-olive, var(--accent)); }
+body.app .op-row.is-locked .op-row__status { color: var(--ed-ink-faint, var(--ink-faint)); }
+
+@media (max-width: 720px) {
+  body.app .op-row {
+    grid-template-columns: 40px 1fr;
+    grid-template-rows: auto auto;
+    gap: 8px 16px;
+  }
+  body.app .op-row__meta {
+    grid-column: 2;
+    grid-row: 2;
+    align-items: flex-start;
+    flex-direction: row;
+    gap: 12px;
+  }
+  body.app .op-row__progress { width: 100px; }
+  body.app .op-row__num { font-size: 22px; }
+}

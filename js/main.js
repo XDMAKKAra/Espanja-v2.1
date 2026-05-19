@@ -288,10 +288,14 @@ window.addEventListener("hashchange", () => {
       .catch(() => { /* fall through */ });
     return;
   }
-  // PR auto/ohjaamo (2026-05-19): home mode cards include ?lang=X
-  // query strings (e.g. "#/luetun?lang=es"). Strip the query before
-  // the static NAV_HASH lookup so the dispatch still finds the
-  // matching nav target.
+  // PR auto/oppimispolku-shelf (2026-05-19): route #/oppimispolku (with
+  // optional ?lang=X) to the new library-shelf index screen.
+  if (/^#\/oppimispolku(\?|$)/.test(location.hash)) {
+    import("./screens/oppimispolkuIndex.js")
+      .then((m) => m.tryRouteOppimispolkuIndex?.(location.hash))
+      .catch(() => { /* fall through to legacy nav */ });
+    return;
+  }
   const hashRaw = location.hash || "";
   const hashBase = hashRaw.split("?")[0];
   const nav = HASH_NAV[hashBase];
@@ -301,11 +305,16 @@ window.addEventListener("hashchange", () => {
 // On boot, restore screen from hash (only if logged in — auth flow handles otherwise).
 window._restoreFromHash = function restoreFromHash() {
   if (!isLoggedIn()) return false;
-  // Course-overview pattern wins first (#/kurssi/{lang}/{key}).
   if (/^#\/kurssi\//.test(location.hash)) {
     import("./screens/courseOverview.js")
       .then((m) => m.tryRouteCourseOverview?.(location.hash))
       .catch(() => { /* fall through */ });
+    return true;
+  }
+  if (/^#\/oppimispolku(\?|$)/.test(location.hash)) {
+    import("./screens/oppimispolkuIndex.js")
+      .then((m) => m.tryRouteOppimispolkuIndex?.(location.hash))
+      .catch(() => { /* fall through to legacy nav */ });
     return true;
   }
   const hashRaw = location.hash || "";
