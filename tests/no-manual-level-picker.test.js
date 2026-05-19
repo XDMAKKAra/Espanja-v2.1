@@ -113,9 +113,8 @@ describe("app.html — no active level-picker buttons remain", () => {
     expect(appHtml).not.toMatch(/<div\s+class="level-picker"\s+id="reading-page-level-picker"/);
   });
 
-  it("verbsprint duration picker survives (different purpose)", () => {
-    expect(appHtml).toMatch(/id="verbsprint-duration-picker"/);
-    expect(appHtml).toMatch(/data-duration=/);
+  it("verbsprint duration picker is gone (Task 4 removed the verbsprint UI)", () => {
+    expect(appHtml).not.toMatch(/id="verbsprint-duration-picker"/);
   });
 
   it("no lvl-btn with data-level remains (verbsprint data-duration is fine)", () => {
