@@ -209,11 +209,20 @@ joka sisältää teoria + tehtävät + kortit + testit + itsearvio.
               flashcard-tilat, test-tulokset). Synkkaa Supabaseen
               kirjautuneille.
 
-**PR 9** — Lisää oppitunteja: 3 parallel sonnet-agenttia generoivat
-              sisältöä Subjuntiivin lisäksi (Preteriti vs imperfekti, Ser
-              vs Estar, Konditionaali, Persoonapronominit, Refleksiiviverbit).
-              Per lesson: teoria + 6-10 tehtävää + 1-2 flashcard-pakkaa +
-              1-2 testiä + itsearvio. Output `data/courses/es/...`-jsoneihin.
+**Tämän jälkeen olemme valmiit** — kaikki 240 oppituntidataa renderöityy
+Otava-tyyliin ilman uutta sisältöä.
+
+**HUOM — sisältöä EI generoida uudelleen.** Käyttäjällä on kaikki
+oppituntidata valmiina `data/courses/{lang}/kurssi_N/lesson_M.json`
+-tiedostoissa (240 jsonia). Tämä projekti on PELKKÄ RENDERÖINTI:
+saada nykyinen data näkyväksi Otava-tyyliin. Lue olemassa olevat
+jsonit ja peilaa niiden `phases`/`items` → uusi `sivut`-skeema
+(teoria + tehtävät + flashcards + testit + itsearvio). Joko:
+(a) Migrate-skripti kirjoittaa kaikki 240 jsonia uuteen skeemaan
+    (yksi PR, kirjoita scripts/migrate-lesson-jsons.mjs, aja itse)
+(b) Käytä `sivut`-skeemaa virtuaalisesti — renderöinti rakentaa
+    sen lennossa nykyisistä `phases`+`teaching`-kentistä, ei muuta
+    diskiä. Backwards-compat helpompi. Recommended.
 
 ### Tekninen stack — pysytään nykyisessä (EI React)
 
