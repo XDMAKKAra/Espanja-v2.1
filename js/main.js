@@ -288,8 +288,30 @@ window.addEventListener("hashchange", () => {
       .catch(() => { /* fall through */ });
     return;
   }
-  // PR auto/oppimispolku-shelf (2026-05-19): route #/oppimispolku (with
-  // optional ?lang=X) to the new library-shelf index screen.
+  // PR auto/course-detail-shelf (2026-05-19): lesson route
+  // #/oppitunti/{lang}/{kurssi}/{n}. Wins before the course-detail
+  // pattern. Dispatch to existing curriculum.openLesson which
+  // handles the lesson runner.
+  const lessonMatch = /^#\/oppitunti\/([a-z]{2})\/([^/?#]+)\/(\d+)/i.exec(location.hash);
+  if (lessonMatch) {
+    const kurssiKey = decodeURIComponent(lessonMatch[2]);
+    const lessonNum = Number(lessonMatch[3]);
+    if (Number.isFinite(lessonNum)) {
+      import("./screens/curriculum.js")
+        .then((m) => m.openLesson?.(kurssiKey, lessonNum))
+        .catch(() => { /* fall through */ });
+    }
+    return;
+  }
+  // PR auto/course-detail-shelf: per-course detail route BEFORE the
+  // bare index check so the more-specific pattern wins.
+  if (/^#\/oppimispolku\/[a-z]{2}\//i.test(location.hash)) {
+    import("./screens/courseDetail.js")
+      .then((m) => m.tryRouteCourseDetail?.(location.hash))
+      .catch(() => { /* fall through */ });
+    return;
+  }
+  // Index — bare #/oppimispolku or #/oppimispolku?lang=X
   if (/^#\/oppimispolku(\?|$)/.test(location.hash)) {
     import("./screens/oppimispolkuIndex.js")
       .then((m) => m.tryRouteOppimispolkuIndex?.(location.hash))
@@ -308,6 +330,23 @@ window._restoreFromHash = function restoreFromHash() {
   if (/^#\/kurssi\//.test(location.hash)) {
     import("./screens/courseOverview.js")
       .then((m) => m.tryRouteCourseOverview?.(location.hash))
+      .catch(() => { /* fall through */ });
+    return true;
+  }
+  const lessonMatch = /^#\/oppitunti\/([a-z]{2})\/([^/?#]+)\/(\d+)/i.exec(location.hash);
+  if (lessonMatch) {
+    const kurssiKey = decodeURIComponent(lessonMatch[2]);
+    const lessonNum = Number(lessonMatch[3]);
+    if (Number.isFinite(lessonNum)) {
+      import("./screens/curriculum.js")
+        .then((m) => m.openLesson?.(kurssiKey, lessonNum))
+        .catch(() => { /* fall through */ });
+    }
+    return true;
+  }
+  if (/^#\/oppimispolku\/[a-z]{2}\//i.test(location.hash)) {
+    import("./screens/courseDetail.js")
+      .then((m) => m.tryRouteCourseDetail?.(location.hash))
       .catch(() => { /* fall through */ });
     return true;
   }
