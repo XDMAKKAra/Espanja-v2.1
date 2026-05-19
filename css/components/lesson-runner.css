@@ -225,9 +225,14 @@
     overflow-y: auto;
   }
   /* On 3-col layout the side-panel is in-flow as the right column and
-     the slide-in toggle behaviour is suppressed — it's always there
-     like Eduix/Mafy's "Teoriat" rail. */
+     visible by default — like Eduix/Mafy's "Teoriat" rail. Base
+     .lr-side-panel rule sets display:none until .is-open; override
+     here so the panel renders without requiring sidePanelOpen=true.
+     The "📖 Apua" toggle button stays in the topbar so the student
+     can still close the rail if it's distracting (regression fix per
+     user screenshot 212154 — panel disappeared entirely after PR #97). */
   body.app .lr-shell--three > .lr-side-panel {
+    display: flex !important;
     position: static;
     transform: none;
     opacity: 1;
@@ -238,9 +243,6 @@
     border-radius: 6px;
     padding: 18px 20px;
   }
-  /* Hide the now-redundant "📖 Apua" toggle button in the topbar — the
-     panel is always visible. */
-  body.app .lr-shell--three .lr-help-btn { display: none; }
 }
 @media (min-width: 1600px) {
   body.app .lr-shell--three {
