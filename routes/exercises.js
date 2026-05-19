@@ -22,6 +22,7 @@ import { validateGrammarBatch } from "../lib/grammarScope.js";
 import { getSessionState, processAnswer, describeScaffold } from "../lib/scaffoldEngine.js";
 import { pickExerciseType, composePrompt, getMaxTokens } from "../lib/exerciseComposer.js";
 import { pickFromSeed, seedCounts } from "../lib/seedBank.js";
+import { pickReadingFromBank } from "../lib/readingBank.js";
 import { topicLabel, VALID_TOPICS } from "../lib/mistakeTaxonomy.js";
 import { getUserPath, recordMasteryAttempt, getTopicByKey, getMasteredTopics, LEARNING_PATH, MASTERY_TEST_SIZE } from "../lib/learningPath.js";
 import { composeSession } from "../lib/sessionComposer.js";
@@ -822,6 +823,17 @@ router.post("/reading-task", requireAuth, aiStrictLimiter, checkMonthlyCostLimit
   try {
     const userId = await getUserId(req);
     if (!lessonCtx) {
+      // Static reading bank first — pre-generated JSON files at
+      // data/exam-pools/reading-bank/{lang}/{topic}.json. Zero AI cost,
+      // <50ms response. Falls through to the DB bank and then to AI
+      // generation when the static bank is empty or the (level, topic)
+      // slot has no entries.
+      const staticHit = pickReadingFromBank({ language, topic, level, recentTitles });
+      if (staticHit) {
+        if (readingAccess.tier === "free") await incrementFreeUsage(req.user.userId, "reading");
+        return res.json({ reading: staticHit, source: "static-bank" });
+      }
+
       const banked = await tryBankExercise("reading", level, topic, language, userId);
       if (banked) {
         if (readingAccess.tier === "free") await incrementFreeUsage(req.user.userId, "reading");
