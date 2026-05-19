@@ -6,6 +6,7 @@ import { requireSupportedLanguage, resolveLang } from "../middleware/language.js
 import { aiStrictLimiter } from "../middleware/rateLimit.js";
 import { checkMonthlyCostLimit } from "../middleware/costLimit.js";
 import { logAiUsage } from "../lib/aiCost.js";
+import { pickWritingTaskFromBank } from "../lib/writingBank.js";
 
 const router = Router();
 
@@ -84,6 +85,22 @@ Return ONLY JSON:
 }`;
 
   try {
+    // Static bank first — pre-generated prompts at
+    // data/exam-pools/writing-tasks/{lang}/{type}.json. Zero AI cost.
+    // Bank picks weakness-aware when the client passes recentWeaknesses;
+    // otherwise random-unseen, falling back to repeat as a last resort.
+    const recentIds = Array.isArray(req.body?.recentIds) ? req.body.recentIds : [];
+    const banked = pickWritingTaskFromBank({
+      language,
+      taskType,
+      recentIds,
+      weaknessCategories: recentWeaknesses,
+    });
+    if (banked) {
+      if (access.tier === "free") await incrementFreeUsage(req.user.userId, "writing");
+      return res.json({ task: banked, source: "static-bank" });
+    }
+
     const task = await callOpenAI(prompt, 1000);
     logAiUsage(req.user?.userId, "writing-task", task._usage).catch(() => {});
     delete task._usage;
