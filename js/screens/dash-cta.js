@@ -25,16 +25,20 @@ export function selectDashboardCta({ profileComplete, srDueCount, weakestTopic }
     };
   }
 
+  // Default day-CTA is the writing task: it's Puheo's centerpiece
+  // (YTL-rubriikilla treenattu AI-grader) and produces the deepest signal
+  // for the adaptive engine. Vocab/grammar standalone modes were removed
+  // from the dashboard so this CTA never falls back to them.
   const topicTag = weakestTopic
     ? String(weakestTopic).toUpperCase()
     : null;
   return {
     kind: "drill",
-    title: "Aloita päivän treeni",
+    title: "Kirjoita päivän tehtävä",
     meta: topicTag
-      ? `20 SANAA · 5 MIN · ${topicTag}`
-      : "20 SANAA · 5 MIN",
-    target: "vocab",
+      ? `~15 MIN · LYHYT KIRJOITUS · ${topicTag}`
+      : "~15 MIN · LYHYT KIRJOITUS",
+    target: "writing",
   };
 }
 
