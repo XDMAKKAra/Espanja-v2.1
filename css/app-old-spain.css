@@ -2663,6 +2663,13 @@ body.app .curr-bento-card {
   transition: background 160ms ease;
   min-height: 0;
   width: 100%;
+  /* Bugfix screenshot 210449: legacy curriculum-bento.css set
+     grid-column: span 6 on --feature cards and span 4 on --done
+     cards, which in the new auto-fill 240px grid meant feature
+     cards wrapped to the next row alone and done cards dragged
+     neighbours sideways. Force every card to one auto column. */
+  grid-column: auto !important;
+  grid-row: auto !important;
 }
 body.app .curr-bento-card:hover {
   background: var(--ed-bg-deep);
