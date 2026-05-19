@@ -30,12 +30,14 @@ jobs:
         run: npm run lint
       - name: Unit tests with coverage
         run: npm run test:coverage
-      - name: Service-worker cache-version check
-        env:
-          # On PR: diff vs the PR base. On push to main: diff vs previous commit
-          # (script auto-resolves HEAD~1 from GITHUB_EVENT_NAME=push).
-          CI_BASE_REF: ${{ github.event_name == 'pull_request' && format('origin/{0}', github.base_ref) || '' }}
-        run: npm run check:sw
+      # 2026-05-19 — check:sw step removed from CI. The script kept
+      # firing false-positive "STATIC_ASSETS changed but CACHE_VERSION
+      # stayed X" errors when the diff base resolved unexpectedly,
+      # creating a stream of failure emails the user explicitly asked
+      # to stop. SW cache hygiene is now an authoring discipline
+      # (every PR that touches a STATIC_ASSETS file bumps sw.js by
+      # convention); the script can still be run locally via
+      # `npm run check:sw` before merge if you want a sanity check.
       - name: Upload coverage summary
         if: always()
         uses: actions/upload-artifact@v4

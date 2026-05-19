@@ -796,9 +796,12 @@ if (!resetToken && isLoggedIn()) {
       showPlacementIntro();
       return;
     }
-    // Restore screen from URL hash if present, else load dashboard.
+    // PR auto/silence-ci-and-strip-sidebar (2026-05-19): default boot
+    // lands on HOME instead of the path (dashboard). Hash-restore wins
+    // when present, so deep links to #/oppimispolku / #/oppitunti etc.
+    // still work as expected.
     if (!window._restoreFromHash || !window._restoreFromHash()) {
-      loadDashboard();
+      import("./screens/home.js").then((m) => m.loadHome?.()).catch(() => loadDashboard());
     }
   });
   initPushNotifications();
