@@ -230,3 +230,55 @@ body.app .op-row.is-locked .op-row__status { color: var(--ed-ink-faint, var(--in
   body.app .op-row__progress { width: 100px; }
   body.app .op-row__num { font-size: 22px; }
 }
+
+/* Course detail extras — overall progress bar in head + per-lesson
+   type eyebrow + minutes. */
+#screen-course-detail.screen.active {
+  align-items: flex-start;
+  justify-content: stretch;
+}
+body.app .op-progress {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 12px;
+  max-width: 360px;
+}
+body.app .op-progress-bar {
+  height: 4px;
+  background: var(--ed-rule, var(--border));
+  border-radius: 2px;
+  overflow: hidden;
+}
+body.app .op-progress-fill {
+  height: 100%;
+  background: var(--ed-accent, var(--accent));
+  border-radius: 2px;
+  transition: width 240ms ease;
+}
+body.app .op-progress-text {
+  font-family: var(--ed-mono, monospace);
+  font-size: 12px;
+  color: var(--ed-ink-faint, var(--ink-faint));
+  letter-spacing: 0.02em;
+}
+
+body.app .op-row__type {
+  font-family: var(--ed-sans, system-ui);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ed-ink-faint, var(--ink-faint));
+  margin: 0 0 4px;
+}
+body.app .op-row.is-progress .op-row__type,
+body.app .op-row.is-done .op-row__type { color: var(--ed-accent, var(--accent)); }
+body.app .op-row.is-done .op-row__type { color: var(--ed-olive, var(--accent)); }
+
+body.app .op-row__minutes {
+  font-family: var(--ed-mono, monospace);
+  font-size: 11px;
+  color: var(--ed-ink-faint, var(--ink-faint));
+  letter-spacing: 0.02em;
+}
