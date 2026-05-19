@@ -82,6 +82,43 @@ test('Prev/Next walks teoria → phase-0 → phase-1', async ({ page }) => {
   expect(await page.evaluate(() => location.hash)).toContain('/3/phase-1');
 });
 
+test('PR3 — SVG glyphs render per sivu kind + scroll-to-active', async ({ page }) => {
+  test.setTimeout(60_000);
+  await login(page);
+  await page.setViewportSize({ width: 1440, height: 900 });
+
+  // Land on a sivu deep in the SideMenu so scroll-to-active has work to do.
+  await page.evaluate(() => { location.hash = '#/oppitunti/es/kurssi_2/3/test-2'; });
+  await page.waitForTimeout(1200);
+
+  // Every row carries an SVG glyph (not emoji) and a data-kind attribute.
+  const totalRows = await page.locator('.dk__sidemenu-list .dk__row').count();
+  const rowsWithGlyph = await page.locator('.dk__sidemenu-list .dk__row .dk__row-glyph').count();
+  expect(rowsWithGlyph).toBe(totalRows);
+
+  // Verify each kind has a glyph by checking representative rows.
+  for (const sivu of ['teoria', 'phase-0', 'kortit-1', 'test-1', 'arvio']) {
+    await expect(page.locator(`.dk__row[data-sivu="${sivu}"] .dk__row-glyph`)).toBeVisible();
+  }
+
+  // The active row (test-2) must be scrolled into the visible portion of
+  // the SideMenu list — i.e. its bounding box overlaps the list's box.
+  const inView = await page.evaluate(() => {
+    const active = document.querySelector('.dk__row.is-active');
+    const list = document.getElementById('dk-sidemenu-list');
+    if (!active || !list) return false;
+    const aR = active.getBoundingClientRect();
+    const lR = list.getBoundingClientRect();
+    return aR.top >= lR.top && aR.bottom <= lR.bottom + 1;
+  });
+  expect(inView).toBe(true);
+
+  await page.screenshot({
+    path: path.resolve('audit-screens', 'digikirja-pr3-glyphs.png'),
+    fullPage: true,
+  });
+});
+
 test('SideMenu toggle persists across navigation', async ({ page }) => {
   test.setTimeout(60_000);
   await login(page);
