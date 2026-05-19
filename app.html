@@ -119,15 +119,6 @@
       <button class="sidebar-item active" data-nav="path" id="nav-path">
         <span class="sidebar-item-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3Z"/><path d="M9 3v15"/><path d="M15 6v15"/></svg></span> Oppimispolku
       </button>
-      <button class="sidebar-item" data-nav="vocab" id="nav-vocab">
-        <span class="sidebar-item-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2Z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7Z"/></svg></span> Sanasto
-      </button>
-      <button class="sidebar-item" data-nav="grammar" id="nav-grammar">
-        <span class="sidebar-item-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 1 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76Z"/></svg></span> Puheoppi
-      </button>
-      <button class="sidebar-item" data-nav="verbsprint" id="nav-verbsprint">
-        <span class="sidebar-item-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7v8l10-12h-7l3-8Z"/></svg></span> Verbisprintti
-      </button>
       <button class="sidebar-item" data-nav="reading" id="nav-reading">
         <span class="sidebar-item-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2Z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7Z"/></svg></span> Luetun ymmärt.
       </button>
@@ -155,12 +146,6 @@
   <nav class="mobile-nav" id="mobile-nav" role="navigation" aria-label="Mobiilinavigaatio">
     <button class="mobile-nav-item active" data-nav="path" aria-label="Koti">
       <span class="mobile-nav-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3Z"/><path d="M9 3v15"/><path d="M15 6v15"/></svg></span>Koti
-    </button>
-    <button class="mobile-nav-item" data-nav="vocab" aria-label="Sanasto">
-      <span class="mobile-nav-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2Z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7Z"/></svg></span>Sanasto
-    </button>
-    <button class="mobile-nav-item" data-nav="grammar" aria-label="Puheoppi">
-      <span class="mobile-nav-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 1 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76Z"/></svg></span>Puheoppi
     </button>
     <button class="mobile-nav-item" data-nav="reading" aria-label="Lukeminen">
       <span class="mobile-nav-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2Z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7Z"/></svg></span>Lukeminen
@@ -1659,17 +1644,7 @@
       <div class="config-block">
         <label>Harjoittelutapa</label>
         <div class="mode-picker" id="mode-picker">
-          <button class="mode-btn active" data-mode="vocab">
-            <svg class="mode-icon icon-lucide" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-            <span class="mode-title">Sanasto</span>
-            <span class="mode-desc">Monivalinta · adaptiivinen</span>
-          </button>
-          <button class="mode-btn" data-mode="grammar">
-            <svg class="mode-icon icon-lucide" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
-            <span class="mode-title">Puheoppi</span>
-            <span class="mode-desc">ser/estar · subj. · kondit.</span>
-          </button>
-          <button class="mode-btn" data-mode="reading">
+          <button class="mode-btn active" data-mode="reading">
             <svg class="mode-icon icon-lucide" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20"/><path d="M8 7h6"/><path d="M8 11h8"/></svg>
             <span class="mode-title">Luetun ymmärtäminen</span>
             <span class="mode-desc">Teksti + kysymykset</span>

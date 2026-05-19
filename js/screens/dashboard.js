@@ -76,15 +76,39 @@ function pickMotivation(streak = 0, totalSessions = 0) {
   return bucket[((day % bucket.length) + bucket.length) % bucket.length];
 }
 
+// Free-mode cards on the dashboard. Sanasto, kielioppi and verbisprintti
+// were removed (PR moving Puheo to writing-first positioning): those
+// renderers stay in the codebase because the kurssipolku lessonRunner
+// still uses them inline, but they're no longer surfaced as standalone
+// dashboard cards. Reading and writing remain because both map directly
+// to YO-koe sections.
 export const MODE_META = {
-  vocab:   { icon: MODE_ICONS.vocab,   name: "Sanasto" },
-  grammar: { icon: MODE_ICONS.grammar, name: "Kielioppi" },
-  reading: { icon: MODE_ICONS.reading, name: "Luetun ymmärtäminen" },
   writing: { icon: MODE_ICONS.writing, name: "Kirjoittaminen" },
+  reading: { icon: MODE_ICONS.reading, name: "Luetun ymmärtäminen" },
 };
 
+// Memory cache for the dashboard/v2 payload. Returning to the path
+// screen during a session re-renders from cache while a fresh fetch
+// runs in the background — eliminates the click-to-content delay that
+// made the sidebar feel sluggish. TTL keeps stats reasonably current.
+let _dashboardCache = null;        // { payload, ts }
+const DASHBOARD_CACHE_TTL_MS = 60_000;
+
 export async function loadDashboard() {
-  showLoading("Ladataan…");
+  // Show the path shell immediately so the sidebar click feels instant.
+  // If we have a cached payload, render it now; otherwise the screen
+  // will paint its skeleton/empty state until the fetch resolves.
+  show("screen-path");
+  hideAppCountdown();
+  const cacheValid = _dashboardCache && (Date.now() - _dashboardCache.ts) < DASHBOARD_CACHE_TTL_MS;
+  if (cacheValid) {
+    try { renderDashboard(_dashboardCache.payload); } catch { /* fall through to fresh fetch */ }
+    // Kick the curriculum render too so the lesson grid shows up immediately.
+    import("./curriculum.js").then((m) => m.loadCurriculum?.()).catch(() => {});
+  } else {
+    showLoading("Ladataan…");
+  }
+
   try {
     // L-LIVE-AUDIT-P2 UPDATE 3, single batched request replaces 9 sequential
     // dashboard fetches. Each section may be `null` if its server query failed;
@@ -127,16 +151,15 @@ export async function loadDashboard() {
         .catch(() => show("screen-coming-soon"));
       return;
     }
+    _dashboardCache = { payload: dashboardCore, ts: Date.now() };
     renderDashboard(dashboardCore);
-    hideAppCountdown();
-    show("screen-path"); // L-MERGE-DASH-PATH, dashboard merged into path screen
     // L-MERGE-DASH-PATH, also render the course list (the merged-home "main"
     // section). Dynamic import avoids a circular dep with curriculum.js.
     import("./curriculum.js")
       .then((m) => m.loadCurriculum?.())
       .catch(() => { /* curriculum optional; ignore */ });
   } catch {
-    show("screen-start");
+    if (!cacheValid) show("screen-start");
   }
 }
 
@@ -537,7 +560,8 @@ function renderDashboard({
   renderRecommendations(modeDaysAgo, modeStats, totalSessions);
   loadExamHistory();
   updateSrBadge();
-  renderAdaptiveCard("vocab");
+  // Writing is the centerpiece — the YO-rubriikki grader is our differentiator.
+  renderAdaptiveCard("writing");
   renderAiUsage(aiUsage, pro);
   renderWritingProgression();
   loadAndRenderReadinessMap().catch(() => {});
@@ -894,7 +918,9 @@ function renderRecommendations(modeDaysAgo, modeStats, totalSessions) {
 
   const recs = [];
 
-  const modeNames = { vocab: "Sanasto", grammar: "Kielioppi", reading: "Luetun ymmärtäminen", writing: "Kirjoittaminen" };
+  // Only surface writing + reading recs since vocab/grammar are no longer
+  // dashboard-level modes (their renderers stay for kurssipolku lessons).
+  const modeNames = { writing: "Kirjoittaminen", reading: "Luetun ymmärtäminen" };
 
   for (const [mode, name] of Object.entries(modeNames)) {
     const daysAgo = modeDaysAgo[mode];
@@ -903,11 +929,6 @@ function renderRecommendations(modeDaysAgo, modeStats, totalSessions) {
     } else if (daysAgo >= 5) {
       recs.push({ icon: MODE_ICONS[mode], text: `Palaa harjoittelemaan: ${name}`, sub: `${daysAgo} päivää sitten viimeksi`, mode });
     }
-  }
-
-  const gramStats = modeStats.grammar;
-  if (gramStats && gramStats.avgPct != null && gramStats.avgPct < 60) {
-    recs.push({ icon: icon("warn"), text: "Kielioppi kaipaa harjoittelua", sub: `Keskiarvo ${gramStats.avgPct}%, tavoite 70%+`, mode: "grammar" });
   }
 
   if (totalSessions >= 5 && totalSessions % 10 === 0) {
