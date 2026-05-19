@@ -390,6 +390,42 @@ test('PR8 — progress chip + SideMenu is-done update on submit', async ({ page 
   });
 });
 
+test('PR9 — wordbank chips fill gap_fill inputs + digikirja is full-bleed', async ({ page }) => {
+  test.setTimeout(90_000);
+  await login(page);
+  await page.setViewportSize({ width: 1440, height: 900 });
+
+  // Land on phase-5 (Lauseen täydennys, gap_fill) in kurssi_1 lesson_1.
+  await page.evaluate(() => { location.hash = '#/oppitunti/es/kurssi_1/1/phase-5'; });
+  await page.waitForTimeout(1300);
+
+  await expect(page.locator('.dk__exercise')).toBeVisible();
+  const chipCount = await page.locator('.dk__wordbank-chip').count();
+  expect(chipCount).toBeGreaterThanOrEqual(2);
+
+  // Click the first chip → that word lands in the first gap input.
+  const firstChip = page.locator('.dk__wordbank-chip').first();
+  const word = (await firstChip.textContent())?.trim();
+  expect(word).toBeTruthy();
+  await firstChip.click();
+  await page.waitForTimeout(120);
+  const inputValue = await page.locator('.dk__input--gap').first().inputValue();
+  expect(inputValue).toBe(word);
+
+  // Digikirja screen fills the viewport area to the right of the
+  // sidebar — its bounding-box width must be substantially wider than
+  // the legacy .app-main-inner cap (880px) and the height should
+  // approach viewport height.
+  const dkBox = await page.locator('#screen-digikirja .dk').boundingBox();
+  expect(dkBox).toBeTruthy();
+  expect(dkBox.width).toBeGreaterThan(1000);
+  expect(dkBox.height).toBeGreaterThan(600);
+  await page.screenshot({
+    path: path.resolve('audit-screens', 'digikirja-pr9-fullbleed-and-bank.png'),
+    fullPage: true,
+  });
+});
+
 test('SideMenu toggle persists across navigation', async ({ page }) => {
   test.setTimeout(60_000);
   await login(page);

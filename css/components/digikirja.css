@@ -19,6 +19,20 @@
    for the panel toggle. prefers-reduced-motion strips the transform.
    ─────────────────────────────────────────────────────────────────────── */
 
+/* Override the global .screen defaults (style.css):
+     - .screen has display:flex + center alignment + 24px padding, which
+       made digikirja shrink to a small centered card. We need it to
+       fill the .app-main column edge-to-edge.
+     - The original mount lived OUTSIDE .app-main and stacked under the
+       sidebar; the markup now lives inside .app-main-inner so the
+       position:absolute references the correct container. */
+#screen-digikirja.screen.active {
+  display: block;
+  align-items: stretch;
+  justify-content: stretch;
+  padding: 0;
+  overflow-y: auto;
+}
 #screen-digikirja {
   background: var(--ed-bg);
   color: var(--ed-ink);
@@ -774,6 +788,31 @@
   flex-wrap: wrap;
   gap: 6px;
 }
+.dk__wordbank-chip {
+  appearance: none;
+  display: inline-block;
+  padding: 7px 14px;
+  background: var(--ed-bg-deep);
+  border: 1px solid var(--ed-rule);
+  border-radius: 999px;
+  font-family: var(--ed-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--ed-ink);
+  cursor: pointer;
+  transition: background 140ms var(--dk-ease),
+              border-color 140ms var(--dk-ease),
+              transform 110ms var(--dk-ease);
+}
+.dk__wordbank-chip:hover:not(:disabled) {
+  background: var(--ed-accent-tint);
+  border-color: var(--ed-accent);
+  color: var(--ed-accent);
+}
+.dk__wordbank-chip:active:not(:disabled) { transform: scale(0.96); }
+.dk__wordbank-chip:disabled { opacity: 0.6; cursor: default; }
+/* Legacy span fallback in case any item renders without the button */
 .dk__wordbank li span {
   display: inline-block;
   padding: 6px 12px;

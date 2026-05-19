@@ -851,6 +851,12 @@
        old learningPath.js Duolingo-style nodes were superseded by the
        js/screens/curriculum.js course-card renderer in
        #path-courses-root. -->
+  <!-- Otava Fokus 7 -style three-panel lesson screen. Lazy-loaded via
+       js/screens/digikirja.js. Mounted INSIDE .app-main-inner so it sits
+       in the sidebar+content grid like every other screen; the CSS
+       override below kills the default .screen flex-centering. -->
+  <div id="screen-digikirja" class="screen"></div>
+
   <div id="screen-path" class="screen">
     <div class="path-inner">
 
@@ -2311,11 +2317,6 @@
       </section>
     </div>
   </div>
-
-  <!-- Otava Fokus 7 -style three-panel lesson screen. Lazy-loaded via
-       js/screens/digikirja.js. PR 1 (2026-05-19) ships the pohjarakenne
-       only; sivut still render placeholder content. -->
-  <div id="screen-digikirja" class="screen"></div>
 
   <div id="screen-settings" class="screen">
     <div class="settings-inner">
