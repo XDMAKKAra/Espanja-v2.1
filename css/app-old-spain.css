@@ -1882,3 +1882,302 @@ body.app .btn-manage-sub {
   text-underline-offset: 2px;
 }
 body.app .btn-manage-sub:hover { color: var(--ed-accent); }
+
+/* ═══════════════════════════════════════════════════════════════
+   AUTH SCREEN — Old-Spain editorial reskin (PR auth-and-shell)
+   Replaces the teal pitch card + glossy form chrome with a textbook
+   register: cream-paper aside frame, Fraunces titles, brick accent,
+   editorial quiet form chrome. Scoped to body.auth-mode so the same
+   tokens don't leak into the logged-in app where dashboard widgets
+   still ride the legacy Linear-tier surface.
+   ═══════════════════════════════════════════════════════════════ */
+
+body.app.auth-mode {
+  background: var(--ed-bg);
+}
+
+/* Subdue the SVG grid background pattern — was teal-tinted, now
+   warm-ink at low opacity so it reads as letterpress impression. */
+body.app.auth-mode .auth-bg-grid {
+  color: oklch(20% 0.012 30 / 0.06);
+}
+
+body.app.auth-mode .auth-shell {
+  max-width: 1120px;
+  padding: 32px 24px;
+}
+
+@media (min-width: 960px) {
+  body.app.auth-mode .auth-shell {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: 72px;
+    padding: 48px 40px;
+  }
+}
+
+/* Aside — cream-paper editorial frame, brick accent rule, Fraunces. */
+@media (min-width: 960px) {
+  body.app.auth-mode .auth-aside {
+    background: var(--ed-bg-card);
+    background-image: none;
+    color: var(--ed-ink);
+    border: 1px solid var(--ed-rule);
+    border-radius: 4px;
+    padding: 56px 52px;
+    min-height: 520px;
+    box-shadow:
+      0 1px 0 0 var(--ed-rule),
+      0 28px 60px -32px oklch(20% 0.05 30 / 0.18);
+  }
+  body.app.auth-mode .auth-aside::after {
+    /* Replace the teal bloom with a quiet warm corner ornament — a
+       paper-edge highlight, not a glow. */
+    background: radial-gradient(circle, oklch(62% 0.11 78 / 0.10), transparent 60%);
+    inset: -30% -20% auto auto;
+    width: 320px; height: 320px;
+  }
+}
+
+body.app.auth-mode .auth-aside__logo {
+  font-family: var(--ed-display);
+  font-weight: 400;
+  font-variation-settings: "opsz" 36;
+  color: var(--ed-ink);
+  font-size: 32px;
+  letter-spacing: -0.02em;
+}
+body.app.auth-mode .auth-aside__logo span {
+  color: var(--ed-accent);
+  font-style: italic;
+}
+
+body.app.auth-mode .auth-aside__eyebrow {
+  font-family: var(--ed-sans);
+  color: var(--ed-accent);
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  margin-top: 28px;
+}
+
+body.app.auth-mode .auth-aside__title {
+  font-family: var(--ed-display);
+  font-size: clamp(2.2rem, 3.6vw, 3.4rem);
+  font-weight: 400;
+  font-variation-settings: "opsz" 96, "SOFT" 50;
+  line-height: 1.02;
+  letter-spacing: -0.025em;
+  color: var(--ed-ink);
+  margin: 8px 0 14px;
+  max-width: 16ch;
+  text-wrap: balance;
+}
+
+body.app.auth-mode .auth-aside__lead {
+  font-family: var(--ed-serif);
+  font-style: italic;
+  font-size: 17px;
+  line-height: 1.5;
+  color: var(--ed-ink-muted);
+  margin: 0 0 28px;
+  max-width: 38ch;
+}
+
+body.app.auth-mode .auth-aside__benefits {
+  border-top: 1px solid var(--ed-rule);
+  padding-top: 22px;
+  gap: 14px;
+}
+body.app.auth-mode .auth-aside__benefits li {
+  font-family: var(--ed-serif);
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--ed-ink);
+  align-items: baseline;
+}
+body.app.auth-mode .auth-aside__check {
+  color: var(--ed-accent);
+  width: 16px; height: 16px;
+  margin-top: 4px;
+}
+
+body.app.auth-mode .auth-aside__foot {
+  font-family: var(--ed-sans);
+  color: var(--ed-ink-faint);
+  letter-spacing: 0.06em;
+  border-top: 1px solid var(--ed-rule);
+  padding-top: 16px;
+  margin-top: 28px;
+}
+
+/* Form column — editorial-quiet chrome. Drop the "config-block" 1px
+   rectangles and replace with field-style underlines + Fraunces label. */
+body.app.auth-mode .auth-inner h1 {
+  font-family: var(--ed-display);
+  font-size: clamp(2.4rem, 4vw, 3.4rem);
+  font-weight: 400;
+  font-variation-settings: "opsz" 96, "SOFT" 40;
+  letter-spacing: -0.025em;
+  line-height: 1.04;
+  color: var(--ed-ink);
+  margin: 0 0 8px;
+}
+
+body.app.auth-mode .auth-inner .subtitle {
+  font-family: var(--ed-serif);
+  font-style: italic;
+  color: var(--ed-ink-muted);
+  font-size: 15px;
+  margin: 0 0 28px;
+}
+
+body.app.auth-mode .auth-tabs {
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--ed-rule);
+  border-radius: 0;
+  padding: 0;
+  margin-bottom: 32px;
+  gap: 0;
+}
+body.app.auth-mode .auth-tab {
+  background: transparent;
+  border-radius: 0;
+  font-family: var(--ed-sans);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ed-ink-muted);
+  padding: 14px 4px;
+  position: relative;
+}
+body.app.auth-mode .auth-tab.active {
+  background: transparent;
+  color: var(--ed-ink);
+}
+body.app.auth-mode .auth-tab.active::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: -1px;
+  height: 2px;
+  background: var(--ed-accent);
+}
+
+body.app.auth-mode .config-block {
+  margin-bottom: 22px;
+}
+body.app.auth-mode .config-block label {
+  font-family: var(--ed-sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ed-ink-muted);
+  display: block;
+  margin-bottom: 8px;
+}
+body.app.auth-mode .auth-input {
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--ed-rule-strong);
+  border-radius: 0;
+  color: var(--ed-ink);
+  font-family: var(--ed-serif);
+  font-size: 17px;
+  padding: 8px 0 10px;
+  min-height: 40px;
+  transition: border-color 200ms ease;
+}
+body.app.auth-mode .auth-input::placeholder {
+  color: var(--ed-ink-faint);
+  font-style: italic;
+}
+body.app.auth-mode .auth-input:focus {
+  border-bottom-color: var(--ed-accent);
+  outline: none;
+}
+
+body.app.auth-mode .auth-inner .btn-primary {
+  background: var(--ed-accent);
+  color: var(--ed-accent-ink);
+  border: 0;
+  border-radius: 4px;
+  font-family: var(--ed-sans);
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  padding: 16px 20px;
+  min-height: 52px;
+  width: 100%;
+  margin-top: 8px;
+  transition: background 200ms ease;
+  text-transform: none;
+  box-shadow: none;
+}
+body.app.auth-mode .auth-inner .btn-primary:hover {
+  background: var(--ed-accent-hover);
+}
+
+body.app.auth-mode .btn-link {
+  font-family: var(--ed-sans);
+  color: var(--ed-ink-muted);
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  padding: 12px 0 4px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--ed-rule);
+}
+body.app.auth-mode .btn-link:hover {
+  color: var(--ed-accent);
+  text-decoration-color: var(--ed-accent);
+}
+
+body.app.auth-mode .auth-inner .btn-ghost {
+  background: transparent;
+  border: 1px solid var(--ed-rule-strong);
+  border-radius: 4px;
+  color: var(--ed-ink-muted);
+  font-family: var(--ed-sans);
+  font-weight: 500;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  padding: 14px 20px;
+  margin-top: 14px;
+  transition: border-color 200ms ease, color 200ms ease, background 200ms ease;
+}
+body.app.auth-mode .auth-inner .btn-ghost:hover {
+  border-color: var(--ed-ink);
+  color: var(--ed-ink);
+  background: var(--ed-bg-deep);
+}
+
+body.app.auth-mode .auth-error {
+  background: var(--ed-accent-soft);
+  border: 1px solid var(--ed-accent);
+  border-radius: 4px;
+  color: var(--ed-accent);
+  font-family: var(--ed-sans);
+  font-size: 13px;
+}
+
+body.app.auth-mode .auth-success {
+  background: var(--ed-olive-soft);
+  border: 1px solid var(--ed-olive);
+  border-radius: 4px;
+  color: var(--ed-olive);
+  font-family: var(--ed-sans);
+  font-size: 13px;
+}
+
+/* Mobile — aside is hidden by default but logo line uses Old-Spain too. */
+body.app.auth-mode .auth-inner__logo {
+  font-family: var(--ed-display);
+  color: var(--ed-ink);
+  font-weight: 400;
+  font-variation-settings: "opsz" 36;
+}
+body.app.auth-mode .auth-inner__logo span {
+  color: var(--ed-accent);
+  font-style: italic;
+}
