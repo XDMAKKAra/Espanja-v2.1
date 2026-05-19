@@ -22,6 +22,21 @@ import { attachCharCounter, wordsToChars } from "../features/charCounter.js";
 const ROOT_ID = "lesson-runner-root";
 const PROGRESS_KEY_PREFIX = "puheo:lessonProgress:";
 
+// PR auto/asetukset-profile-race-fix (2026-05-19): return to the per-course
+// detail screen via hash navigation. Previously the "← Oppimispolku" and
+// "Takaisin oppimispolulle →" buttons called curriculum.loadCurriculum()
+// which forced show("screen-path") — that screen is now display:none, so
+// the click left the lesson visible but inert. Route to the new course
+// detail page (or its parent oppimispolku index as a fallback).
+function backToCourse(state) {
+  const lang = (state && typeof state.language === "string" && state.language) || "es";
+  const kurssi = state && state.kurssiKey ? encodeURIComponent(state.kurssiKey) : "";
+  const target = kurssi
+    ? `#/oppimispolku/${lang}/${kurssi}`
+    : `#/oppimispolku?lang=${lang}`;
+  if (location.hash !== target) location.hash = target;
+}
+
 /* Course-lesson list cache for the left TOC on the lesson screen.
    PR auto/lesson-3col-breadcrumb (2026-05-19). One fetch per kurssi per
    page load — the response is the same regardless of which lesson the
@@ -358,7 +373,7 @@ function renderTeaching(root, state) {
     </div>`;
   wireLessonTOC(root, state);
   document.getElementById("lr-back")?.addEventListener("click", () => {
-    import("./curriculum.js").then((m) => m.loadCurriculum());
+    backToCourse(state);
   });
   document.getElementById("lr-start")?.addEventListener("click", () => {
     state.startedAt = Date.now();
@@ -927,7 +942,7 @@ function finalizeLesson(root, state) {
       </div>
     </div>`;
   document.getElementById("lr-done")?.addEventListener("click", () => {
-    import("./curriculum.js").then((m) => m.loadCurriculum());
+    backToCourse(state);
   });
 
   // Persist completion to backend (best-effort).
