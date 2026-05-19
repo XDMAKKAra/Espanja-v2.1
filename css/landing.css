@@ -1015,58 +1015,10 @@
   margin: 0 0 var(--sp-3);
   white-space: pre-wrap;
 }
-.landing .grader-prose .ge {
-  position: relative;
-  cursor: help;
-  text-decoration: underline wavy #ef4444;
-  text-decoration-thickness: 1.5px;
-  text-underline-offset: 4px;
-  border-radius: 2px;
-  padding: 0 1px;
-  transition: background var(--t-fast);
-}
-.landing .grader-prose .ge:hover,
-.landing .grader-prose .ge:focus { background: rgba(239, 68, 68, 0.08); }
-.landing .grader-prose .ge[data-cat="spelling"] { text-decoration-color: #facc15; }
-.landing .grader-prose .ge[data-cat="grammar"]  { text-decoration-color: #ef4444; }
-
-.landing .grader-prose .ge .ge-tip {
-  position: absolute;
-  bottom: calc(100% + 8px);
-  left: 50%;
-  transform: translateX(-50%) translateY(-4px);
-  width: max-content;
-  max-width: 320px;
-  padding: 10px 12px;
-  border-radius: var(--r-sm);
-  background: #0a0a0a;
-  border: 1px solid var(--border-strong);
-  box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.6);
-  font-size: 13px;
-  line-height: 1.45;
-  color: var(--text);
-  text-decoration: none;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity var(--t-fast), transform var(--t-fast);
-  z-index: 5;
-  text-align: left;
-}
-.landing .grader-prose .ge .ge-tip strong {
-  display: block;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: var(--tracking-wide);
-  color: var(--accent);
-  margin-bottom: 4px;
-  font-weight: 500;
-}
-.landing .grader-prose .ge:hover .ge-tip,
-.landing .grader-prose .ge:focus-within .ge-tip {
-  opacity: 1;
-  transform: translateX(-50%) translateY(0);
-}
+/* .grader-prose .ge / .ge-tip styling lives in css/landing-editorial.css.
+   The old high-specificity rules that previously lived here forced a
+   mono-uppercase "OIKEIN:" pill on a near-black tooltip, which clashed
+   with the editorial Old-Spain register. Editorial rules now own the look. */
 
 /* Rubric card */
 .landing .rubric {
