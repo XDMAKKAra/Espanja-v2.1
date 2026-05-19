@@ -7,7 +7,9 @@
 import { initLandingHero } from "/js/features/landingHero.js";
 import { initScrollReveal } from "/js/features/scrollReveal.js";
 import { installTooltip } from "/js/features/tooltip.js";
+import { initGeTip } from "/js/features/geTip.js";
 
 initLandingHero();
 initScrollReveal();
 installTooltip();
+initGeTip();

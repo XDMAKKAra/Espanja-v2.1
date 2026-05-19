@@ -1,4 +1,4 @@
-const CACHE_VERSION = "puheo-v184";
+const CACHE_VERSION = "puheo-v185";
 const STATIC_ASSETS = [
   "/app.html",
   "/index.html",
@@ -33,6 +33,7 @@ const STATIC_ASSETS = [
   "/img/illustrations/quill-inkwell.svg",
   "/img/illustrations/ornament-rosette.svg",
   "/js/features/offCanvasNav.js",
+  "/js/features/geTip.js",
   "/css/components/off-canvas-nav.css",
   "/js/app-prepaint.js",
   "/js/app-config.js",
