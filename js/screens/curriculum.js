@@ -372,9 +372,15 @@ function cssEscape(s) {
 }
 
 function renderBentoSkeleton(kurssiKey) {
-  const cards = Array.from({ length: 12 }, () => '<div class="curr-bento-skeleton" aria-hidden="true"></div>').join("");
-  return `<div class="curr-bento" data-kurssi="${escapeHtml(kurssiKey)}" aria-busy="true" aria-label="Ladataan oppitunteja">
-    <div class="curr-bento-grid">${cards}</div>
+  // Quiet loading state. Replaces the old 12-card shimmer grid that
+  // strobed for the ~400ms lesson fetch — that grid read as broken
+  // bento on the left rail. One centred pulsing dot reads as
+  // "intentional pause" rather than "loading failed".
+  return `<div class="curr-bento curr-bento--loading" data-kurssi="${escapeHtml(kurssiKey)}" aria-busy="true" aria-label="Ladataan oppitunteja">
+    <div class="curr-bento-loading">
+      <span class="curr-bento-loading__dot"></span>
+      <p class="curr-bento-loading__label">Avataan kurssia…</p>
+    </div>
   </div>`;
 }
 
@@ -622,11 +628,16 @@ export async function openLesson(kurssiKey, lessonIndex) {
   } catch { /* private mode, ignore */ }
 
   show("screen-lesson");
-  root.innerHTML = `<div class="curr-lesson-page">
+  // Quiet placeholder. The earlier 60/240/48 skeleton stack rendered as a
+  // jarring vertical strip on the left while the lesson definition fetched
+  // (sub-second on warm cache). One centered "Avataan oppituntia…" line
+  // reads as intentional rather than half-loaded.
+  root.innerHTML = `<div class="curr-lesson-page curr-lesson-page--loading" aria-busy="true">
     <button type="button" class="curr-back" id="curr-lesson-back">← Oppimispolku</button>
-    <div class="curr-skeleton-card" style="height:60px" aria-busy="true"></div>
-    <div class="curr-skeleton-card" style="height:240px"></div>
-    <div class="curr-skeleton-card" style="height:48px"></div>
+    <div class="curr-lesson-loading">
+      <span class="curr-lesson-loading__dot"></span>
+      <p class="curr-lesson-loading__label">Avataan oppituntia…</p>
+    </div>
   </div>`;
   document.getElementById("curr-lesson-back")?.addEventListener("click", goBack);
 

@@ -93,6 +93,8 @@ export const MODE_META = {
 // made the sidebar feel sluggish. TTL keeps stats reasonably current.
 let _dashboardCache = null;        // { payload, ts }
 const DASHBOARD_CACHE_TTL_MS = 60_000;
+let _curriculumKickedAt = 0;
+const CURRICULUM_DEDUPE_MS = 1500;
 
 export async function loadDashboard() {
   // Show the path shell immediately so the sidebar click feels instant.
@@ -103,7 +105,12 @@ export async function loadDashboard() {
   const cacheValid = _dashboardCache && (Date.now() - _dashboardCache.ts) < DASHBOARD_CACHE_TTL_MS;
   if (cacheValid) {
     try { renderDashboard(_dashboardCache.payload); } catch { /* fall through to fresh fetch */ }
-    // Kick the curriculum render too so the lesson grid shows up immediately.
+    // Curriculum render kicks off ONCE here in the cache-hit path. The
+    // post-fetch render below skips itself when this call already ran,
+    // killing the visible double-paint of the course list (skeleton →
+    // cards → skeleton → cards). Tracked via _curriculumKickedAt so a
+    // stale cache (>60s) re-kicks naturally.
+    _curriculumKickedAt = Date.now();
     import("./curriculum.js").then((m) => m.loadCurriculum?.()).catch(() => {});
   } else {
     showLoading("Ladataan…");
@@ -153,11 +160,17 @@ export async function loadDashboard() {
     }
     _dashboardCache = { payload: dashboardCore, ts: Date.now() };
     renderDashboard(dashboardCore);
-    // L-MERGE-DASH-PATH, also render the course list (the merged-home "main"
-    // section). Dynamic import avoids a circular dep with curriculum.js.
-    import("./curriculum.js")
-      .then((m) => m.loadCurriculum?.())
-      .catch(() => { /* curriculum optional; ignore */ });
+    // L-MERGE-DASH-PATH, render the course list. Dynamic import avoids a
+    // circular dep with curriculum.js. Skip the kick if the cache-hit
+    // path above already fired the render within the last
+    // CURRICULUM_DEDUPE_MS — that's the case that caused the visible
+    // skeleton → cards → skeleton → cards flicker.
+    if (Date.now() - _curriculumKickedAt > CURRICULUM_DEDUPE_MS) {
+      _curriculumKickedAt = Date.now();
+      import("./curriculum.js")
+        .then((m) => m.loadCurriculum?.())
+        .catch(() => { /* curriculum optional; ignore */ });
+    }
   } catch {
     if (!cacheValid) show("screen-start");
   }
