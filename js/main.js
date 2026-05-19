@@ -237,42 +237,25 @@ const EXERCISE_TO_MODE_PAGE = {
 // hash without changing the screen, leaving the student confused. Now the
 // prompt fires for *any* exercise screen regardless of lesson context, and
 // path → still skips the prompt (natural exit route for lessons).
-async function maybeConfirmNavAway(targetNav) {
+async function maybeConfirmNavAway(_targetNav) {
+  // PR auto/quickfixes (2026-05-19): "Lopetetaanko oppitunti?" confirm
+  // dialog removed per user request — lessonProgress already saves in
+  // realtime on every advanceItem + phase transition + before nav
+  // (see js/screens/lessonRunner.js saveLessonProgress + the resume
+  // snapshot logic), so the modal added friction without protecting
+  // anything. Clear lesson-context bookkeeping inline and let the
+  // nav proceed.
   try {
     const activeScreen = document.querySelector(".screen.active");
     const screenId = activeScreen?.id || "";
     if (!EXERCISE_SCREENS.has(screenId)) return true;
-
     const { getLessonContext, clearLessonContext } = await import("./lib/lessonContext.js");
-    const ctx = getLessonContext();
-
-    // Curriculum lessons: the natural exit route is the path overview, no
-    // prompt needed there. Standalone exercises don't have this shortcut.
-    if (ctx && targetNav === "path") {
-      clearLessonContext();
-      try { sessionStorage.removeItem("currentLessonTeachingMd"); } catch { /* ignore */ }
-      return true;
-    }
-
-    const { confirmDialog } = await import("./features/confirmDialog.js");
-    const isLesson = !!ctx;
-    const ok = await confirmDialog({
-      title: isLesson ? "Lopetetaanko oppitunti?" : "Lopetetaanko harjoitus?",
-      body: isLesson
-        ? `Sinulla on käynnissä oppitunti "${ctx.lessonFocus || "harjoitus"}". Tallennamme kohdan johon pääsit, voit jatkaa siitä myöhemmin.`
-        : "Vastauksesi tähän asti tallentuvat, mutta keskeneräistä sessiota ei voi jatkaa myöhemmin.",
-      confirmLabel: isLesson ? "Lopeta" : "Lopeta ja siirry",
-      cancelLabel: isLesson ? "Jatka oppituntia" : "Jatka harjoitusta",
-    });
-    if (!ok) return false;
-    if (ctx) {
+    if (getLessonContext()) {
       clearLessonContext();
       try { sessionStorage.removeItem("currentLessonTeachingMd"); } catch { /* ignore */ }
     }
-    return true;
-  } catch {
-    return true;
-  }
+  } catch { /* ignore */ }
+  return true;
 }
 
 document.querySelectorAll(".sidebar-item[data-nav], .mobile-nav-item[data-nav], .sidebar-user[data-nav]").forEach((btn) => {

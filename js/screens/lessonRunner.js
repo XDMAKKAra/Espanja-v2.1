@@ -568,22 +568,12 @@ function wireExerciseHandlers(root, state, item) {
   document.getElementById("lr-help-toggle")?.addEventListener("click", () => toggleSidePanel(root, state));
   document.getElementById("lr-skip")?.addEventListener("click", () => onSkipPhase(root, state));
   document.getElementById("lr-exit-lesson")?.addEventListener("click", async () => {
-    const { confirmDialog } = await import("../features/confirmDialog.js");
-    // Snapshot current state BEFORE the modal opens so the save is
-    // atomic — confirmDialog awaits the user; if they cancel the modal
-    // closes and the snapshot is harmless extra writes; if they confirm
-    // the snapshot is already on disk before we navigate away.
+    // PR auto/quickfixes (2026-05-19): confirm modal removed per user
+    // request. Realtime progress save runs on advanceItem + phase
+    // transitions + here on exit, so closing without confirmation is
+    // safe — the snapshot is on disk before the navigation lands.
     saveLessonProgress(state);
-    const ok = await confirmDialog({
-      title: "Lopetetaanko oppitunti?",
-      body: "Tallennamme kohdan johon pääsit, voit jatkaa täältä myöhemmin.",
-      confirmLabel: "Lähde takaisin",
-      cancelLabel: "Jatka oppituntia",
-    });
-    if (ok) {
-      const m = await import("./curriculum.js");
-      m.loadCurriculum();
-    }
+    location.hash = "#/aloitus";
   });
   root.querySelector("[data-lr-skip-item]")?.addEventListener("click", () => advanceItem(root, state, true));
 
