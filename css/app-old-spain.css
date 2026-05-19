@@ -2758,3 +2758,16 @@ body.app #screen-path .dash-greeting .display {
   margin: 0;
 }
 /* Streak chip stays — small enough that it's just metadata. */
+
+/* ═══════════════════════════════════════════════════════════════
+   KILL SCREEN-PATH — PR auto/kill-screen-path (2026-05-19)
+   The legacy #screen-path was the user-facing flicker every time
+   anything called loadDashboard without going through home.js.
+   Hide it permanently; any code path that activates it (legacy
+   navigateTo("path"), exitToSource, etc.) gets a blank surface
+   while home.js takes over. !important to win over .screen.active.
+   ═══════════════════════════════════════════════════════════════ */
+body.app #screen-path.screen,
+body.app #screen-path.screen.active {
+  display: none !important;
+}
