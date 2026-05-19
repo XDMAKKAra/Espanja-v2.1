@@ -267,6 +267,58 @@ test('PR6 — Testi submits all items, shows summary + per-item chips', async ({
   });
 });
 
+test('PR7 — Itsearviointi rates 4 statements, persists, averages', async ({ page }) => {
+  test.setTimeout(90_000);
+  await login(page);
+  await page.setViewportSize({ width: 1440, height: 900 });
+
+  // Clear any prior itsearvio result.
+  await page.evaluate(() => {
+    Object.keys(localStorage).forEach((k) => {
+      if (k.startsWith('puheo:dk:itsearvio')) localStorage.removeItem(k);
+    });
+  });
+
+  await page.evaluate(() => { location.hash = '#/oppitunti/es/kurssi_2/3/arvio'; });
+  await page.waitForTimeout(1200);
+
+  await expect(page.locator('.dk__arvio')).toBeVisible();
+  const rowCount = await page.locator('.dk__arvio-row').count();
+  expect(rowCount).toBe(4);
+
+  // Submit is disabled until all four are rated.
+  await expect(page.locator('#dk-arvio-submit')).toBeDisabled();
+
+  // Pick 5 / 4 / 3 / 4 → avg 4.0.
+  const picks = [5, 4, 3, 4];
+  for (let i = 0; i < 4; i++) {
+    await page.locator(`.dk__arvio-row >> nth=${i}`).locator(`.dk__arvio-btn[data-value="${picks[i]}"]`).click();
+  }
+
+  await expect(page.locator('#dk-arvio-submit')).toBeEnabled();
+  await page.locator('#dk-arvio-submit').click();
+  await page.waitForTimeout(200);
+
+  // Summary chip appears + score = 4.0 / 5.
+  await expect(page.locator('.dk__testi-summary')).toBeVisible();
+  await expect(page.locator('.dk__testi-summary-num')).toContainText('4.0 / 5');
+  await expect(page.locator('#dk-arvio-reset')).toBeVisible();
+  await expect(page.locator('#dk-arvio-back')).toBeVisible();
+
+  // Persistence.
+  const persisted = await page.evaluate(() => {
+    const key = Object.keys(localStorage).find((k) => k.startsWith('puheo:dk:itsearvio'));
+    return key ? JSON.parse(localStorage.getItem(key)) : null;
+  });
+  expect(persisted).toBeTruthy();
+  expect(Object.values(persisted.ratings)).toEqual([5, 4, 3, 4]);
+
+  await page.screenshot({
+    path: path.resolve('audit-screens', 'digikirja-pr7-itsearvio.png'),
+    fullPage: true,
+  });
+});
+
 test('SideMenu toggle persists across navigation', async ({ page }) => {
   test.setTimeout(60_000);
   await login(page);

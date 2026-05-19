@@ -947,6 +947,97 @@
   flex-wrap: wrap;
 }
 
+/* ── Itsearviointi (PR7) ──────────────────────────────────────────── */
+
+.dk__arvio {
+  margin: 18px 0 24px;
+  padding: 26px 28px 22px;
+  background: var(--ed-bg-card);
+  border: 1px solid var(--ed-rule);
+  border-radius: 16px;
+  max-width: 68ch;
+}
+.dk__arvio-lede {
+  font-family: var(--ed-display);
+  font-style: italic;
+  font-size: 17px;
+  color: var(--ed-ink);
+  margin: 4px 0 18px;
+  max-width: 48ch;
+}
+.dk__arvio-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.dk__arvio-row {
+  padding: 14px 0;
+  border-top: 1px solid var(--ed-rule);
+}
+.dk__arvio-row:first-child { border-top: 0; padding-top: 0; }
+
+.dk__arvio-statement {
+  font-family: var(--ed-sans);
+  font-size: 15.5px;
+  font-weight: 500;
+  color: var(--ed-ink);
+  margin: 0 0 10px;
+  max-width: 56ch;
+}
+.dk__arvio-scale {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+  max-width: 360px;
+}
+.dk__arvio-btn {
+  appearance: none;
+  background: var(--ed-bg);
+  border: 1px solid var(--ed-rule);
+  border-radius: 10px;
+  padding: 10px 0;
+  cursor: pointer;
+  font-family: var(--ed-mono);
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+  color: var(--ed-ink-muted);
+  transition: background 140ms var(--dk-ease),
+              border-color 140ms var(--dk-ease),
+              transform 110ms var(--dk-ease);
+}
+.dk__arvio-btn:hover:not(:disabled) {
+  background: var(--ed-bg-card);
+  border-color: var(--ed-rule-strong);
+}
+.dk__arvio-btn:active:not(:disabled) { transform: scale(0.97); }
+.dk__arvio-btn.is-chosen {
+  background: var(--ed-accent);
+  border-color: var(--ed-accent);
+  color: var(--ed-accent-ink);
+}
+.dk__arvio-btn:disabled { cursor: default; opacity: 0.85; }
+.dk__arvio-num {
+  font-family: var(--ed-mono);
+  font-size: 14px;
+}
+.dk__arvio-scale-axis {
+  display: flex;
+  justify-content: space-between;
+  max-width: 360px;
+  margin-top: 6px;
+  font-family: var(--ed-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ed-ink-faint);
+}
+
+.dk__arvio-actions {
+  justify-content: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
 /* ── Flashcard pack (PR5) ─────────────────────────────────────────── */
 
 .dk__flashpack {
