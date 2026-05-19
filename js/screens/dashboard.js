@@ -95,6 +95,24 @@ let _dashboardCache = null;        // { payload, ts }
 const DASHBOARD_CACHE_TTL_MS = 60_000;
 let _curriculumKickedAt = 0;
 const CURRICULUM_DEDUPE_MS = 1500;
+// Render dedupe — when the cache-hit render and the post-fetch render fire
+// within DASHBOARD_DEDUPE_MS and produce the same payload, skip the second
+// renderDashboard call. The earlier curriculum-only dedupe (PR #92) didn't
+// cover this, leaving a visible flash where the post-fetch render removes
+// the `.dash-greeting--in` class and the hero blanks for one frame before
+// the RAF-RAF restore fires.
+let _lastRenderAt = 0;
+let _lastRenderHash = "";
+const DASHBOARD_DEDUPE_MS = 1500;
+function payloadHash(payload) {
+  if (!payload) return "";
+  try {
+    const s = JSON.stringify(payload);
+    return `${s.length}:${s.slice(0, 64)}`;
+  } catch {
+    return "";
+  }
+}
 
 export async function loadDashboard() {
   // Show the path shell immediately so the sidebar click feels instant.
@@ -104,7 +122,11 @@ export async function loadDashboard() {
   hideAppCountdown();
   const cacheValid = _dashboardCache && (Date.now() - _dashboardCache.ts) < DASHBOARD_CACHE_TTL_MS;
   if (cacheValid) {
-    try { renderDashboard(_dashboardCache.payload); } catch { /* fall through to fresh fetch */ }
+    try {
+      renderDashboard(_dashboardCache.payload);
+      _lastRenderAt = Date.now();
+      _lastRenderHash = payloadHash(_dashboardCache.payload);
+    } catch { /* fall through to fresh fetch */ }
     // Curriculum render kicks off ONCE here in the cache-hit path. The
     // post-fetch render below skips itself when this call already ran,
     // killing the visible double-paint of the course list (skeleton →
@@ -159,7 +181,19 @@ export async function loadDashboard() {
       return;
     }
     _dashboardCache = { payload: dashboardCore, ts: Date.now() };
-    renderDashboard(dashboardCore);
+    // Render dedupe — if the cache-hit render fired within
+    // DASHBOARD_DEDUPE_MS AND the payload is unchanged, skip the second
+    // renderDashboard. Otherwise we'd remove `.dash-greeting--in`,
+    // blank the hero for one frame, then re-add it (the visible flicker
+    // the user flagged).
+    const freshHash = payloadHash(dashboardCore);
+    const sameAsRecent = freshHash && freshHash === _lastRenderHash &&
+      (Date.now() - _lastRenderAt) < DASHBOARD_DEDUPE_MS;
+    if (!sameAsRecent) {
+      renderDashboard(dashboardCore);
+      _lastRenderAt = Date.now();
+      _lastRenderHash = freshHash;
+    }
     // L-MERGE-DASH-PATH, render the course list. Dynamic import avoids a
     // circular dep with curriculum.js. Skip the kick if the cache-hit
     // path above already fired the render within the last

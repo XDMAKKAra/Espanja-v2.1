@@ -306,7 +306,7 @@ function renderCard(k, stepNumber) {
       <div class="curr-step" aria-hidden="true">${stepInner}</div>
       <div class="curr-body">
         <div class="curr-title-row">
-          <h3 class="curr-title">${escapeHtml(k.title)}</h3>
+          <h3 class="curr-title">${escapeHtml(`${stepNumber}. ${k.title}`)}</h3>
           <span class="curr-chip" aria-label="${escapeHtml("Taso " + k.level)}">${escapeHtml(k.level)}</span>
         </div>
         <div class="curr-progress">
@@ -346,6 +346,7 @@ async function toggleKurssi(kurssiKey) {
   const root = document.getElementById(PATH_INNER_ID);
   if (!root) return;
   renderKurssitList(root);
+  renderPathTOC();
   if (!wasOpen) {
     await fetchAndRenderLessons(kurssiKey);
   }
@@ -590,6 +591,7 @@ export async function loadCurriculum() {
       _state.expanded = active ? active.key : null;
     }
     renderKurssitList(root);
+    renderPathTOC();
     if (_state.expanded) {
       // Fire-and-forget: lesson list is rendered as "Ladataan…" by renderCard
       // and then replaced by fetchAndRenderLessons.
@@ -598,6 +600,63 @@ export async function loadCurriculum() {
   } catch (err) {
     renderError(root, err.message || "Jokin meni pieleen", () => loadCurriculum());
   }
+}
+
+/**
+ * Left TOC renderer (PR auto/path-3col-hybrid, 2026-05-19).
+ *
+ * Populates #path-toc-list with all 8 courses — completed → checkmark,
+ * locked → padlock, active/in-progress → arrow, current → highlighted.
+ * Click handler toggles the expanded course in the middle column so
+ * the TOC acts as a quick-jump index, not a separate router.
+ *
+ * Falls back gracefully if the TOC element isn't in the DOM (older
+ * cached HTML); curriculum still renders the middle-column course
+ * list as before.
+ */
+function renderPathTOC() {
+  const list = document.getElementById("path-toc-list");
+  if (!list) return;
+  const kurssit = _state.kurssit || [];
+  if (kurssit.length === 0) {
+    list.innerHTML = `<li class="path-toc__loading">Kursseja ei l&ouml;ytynyt.</li>`;
+    list.removeAttribute("aria-busy");
+    return;
+  }
+  const html = kurssit.map((k, i) => {
+    const stepNumber = i + 1;
+    const isExpanded = _state.expanded === k.key;
+    const isDone = !!k.kertausPassed;
+    const isLocked = !k.isUnlocked;
+    const cls = [
+      "path-toc__item",
+      isDone ? "is-done" : "",
+      isLocked ? "is-locked" : "",
+      isExpanded ? "is-active" : "",
+    ].filter(Boolean).join(" ");
+    const icon = isDone
+      ? '<span class="path-toc__mark" aria-hidden="true">✓</span>'
+      : isLocked
+        ? '<span class="path-toc__mark" aria-hidden="true">🔒</span>'
+        : '<span class="path-toc__mark" aria-hidden="true">→</span>';
+    return `<li class="${cls}" data-kurssi="${escapeHtml(k.key)}" ${isLocked ? 'aria-disabled="true"' : 'tabindex="0"'}>
+      <span class="path-toc__num">${stepNumber}</span>
+      <span class="path-toc__title">${escapeHtml(k.title)}</span>
+      ${icon}
+    </li>`;
+  }).join("");
+  list.innerHTML = html;
+  list.removeAttribute("aria-busy");
+  list.querySelectorAll(".path-toc__item:not(.is-locked)").forEach((li) => {
+    const click = () => {
+      const key = li.dataset.kurssi;
+      if (key) toggleKurssi(key);
+    };
+    li.addEventListener("click", click);
+    li.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); click(); }
+    });
+  });
 }
 
 function ensurePathRoot() {
