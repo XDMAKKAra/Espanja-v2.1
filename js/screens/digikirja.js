@@ -13,6 +13,7 @@
 
 import { show } from "../ui/nav.js";
 import { renderTeoriaMarkdown } from "../lib/markdownLite.js";
+import { isAcceptable } from "../lib/accentTolerance.js";
 
 const LS_SIDEMENU = "puheo:dk:sidemenu";
 const SIDEMENU_OPEN = "open";
@@ -58,10 +59,6 @@ function glyphFor(kind) {
 }
 
 const KIND_PLACEHOLDER = {
-  tehtava: {
-    label: "Harjoitustehtävä, tulossa PR 4",
-    body: "Tämän vaiheen tehtävät (monivalinta, täydennys, yhdistäminen, käännös) rendröidään tähän sivuun upotettuna. Lähde: nykyinen lesson_M.json:n items-array; ExerciseCard kuluttaa item-tyypin ja pisteyttää suoraan.",
-  },
   flashcards: {
     label: "Kääntökortit, tulossa PR 5",
     body: "Pino kääntyviä kortteja oppitunnin sanastosta. Etupuoli: lähdekielinen virke. Takapuoli: suomi + sääntövihje. Tila per kortti (tiedän / harjoittele vielä) persistoituu localStorage:en, kirjautuneille Supabaseen.",
@@ -299,12 +296,364 @@ function renderTeoriaContent() {
 }
 
 function renderPlaceholderContent(sivu) {
-  const ph = KIND_PLACEHOLDER[sivu.kind] || KIND_PLACEHOLDER.tehtava;
+  const ph = KIND_PLACEHOLDER[sivu.kind] || KIND_PLACEHOLDER.flashcards;
   return `
     <div class="dk__placeholder" data-kind="${escapeHtml(sivu.kind)}">
       <p class="dk__placeholder-kind">${escapeHtml(ph.label)}</p>
       <p>${escapeHtml(ph.body)}</p>
     </div>`;
+}
+
+// ─── ExerciseCard (PR4) ───────────────────────────────────────────────
+// Per-item state is held in _exerciseState; it's keyed by sivuId so that
+// switching away and coming back resumes where the student left off.
+
+const _exerciseState = new Map(); // sivuId → { itemIndex, answered, scoreCorrect, scoreTotal }
+const SUPPORTED_ITEM_TYPES = new Set(["mc", "typed", "gap_fill", "translate"]);
+
+function phaseForSivu(sivu) {
+  if (!sivu || sivu.kind !== "tehtava") return null;
+  const m = /^phase-(\d+)$/.exec(sivu.id);
+  if (!m) return null;
+  const idx = Number(m[1]);
+  const phases = Array.isArray(_lesson?.phases) ? _lesson.phases : [];
+  return phases[idx] || null;
+}
+
+function ensureExerciseState(sivuId, items) {
+  let st = _exerciseState.get(sivuId);
+  if (!st) {
+    st = {
+      itemIndex: 0,
+      answered: new Array(items.length).fill(null), // null | {correct, userAnswer}
+      scoreCorrect: 0,
+      scoreTotal: 0,
+    };
+    _exerciseState.set(sivuId, st);
+  }
+  return st;
+}
+
+function renderExerciseContent(sivu) {
+  const phase = phaseForSivu(sivu);
+  if (!phase) return renderPlaceholderContent(sivu);
+  const items = Array.isArray(phase.items) ? phase.items : [];
+  if (items.length === 0) {
+    return `<div class="dk__placeholder"><p>Tällä vaiheella ei ole tehtäviä.</p></div>`;
+  }
+  // Bail to placeholder for unsupported item types (match, writing) until
+  // their PRs land — keeps the SideMenu navigable end-to-end.
+  const firstKind = items[0].item_type;
+  if (!SUPPORTED_ITEM_TYPES.has(firstKind)) {
+    const label = firstKind === "match"
+      ? "Yhdistämistehtävä, tulossa PR 4b"
+      : firstKind === "writing"
+      ? "Kirjoitustehtävä, tulossa PR 7"
+      : `Tehtävätyyppi "${firstKind}" tulossa myöhemmin`;
+    return `
+      <div class="dk__placeholder" data-kind="tehtava">
+        <p class="dk__placeholder-kind">${escapeHtml(label)}</p>
+        <p>Vaihe ${escapeHtml(String((phaseIndexOfSivu(sivu) ?? 0) + 1))}: ${escapeHtml(phase.title || "")}. Vaiheessa ${items.length} tehtävää tätä tyyppiä.</p>
+      </div>`;
+  }
+
+  const st = ensureExerciseState(sivu.id, items);
+  const i = Math.min(st.itemIndex, items.length - 1);
+  const item = items[i];
+  const answer = st.answered[i];
+
+  return `
+    <section class="dk__exercise" data-sivu="${escapeHtml(sivu.id)}" data-index="${i}">
+      <header class="dk__exercise-head">
+        <span class="dk__exercise-eyebrow">Tehtävä ${i + 1} / ${items.length}</span>
+        <span class="dk__exercise-score" aria-label="Tulos">${st.scoreCorrect} / ${st.scoreTotal}</span>
+      </header>
+      ${renderItemBody(item, answer)}
+      ${renderExerciseFooter(item, answer, i, items.length)}
+    </section>`;
+}
+
+function phaseIndexOfSivu(sivu) {
+  const m = /^phase-(\d+)$/.exec(sivu.id);
+  return m ? Number(m[1]) : null;
+}
+
+function renderItemBody(item, answer) {
+  switch (item.item_type) {
+    case "mc":        return renderItemMc(item, answer);
+    case "typed":     return renderItemTyped(item, answer);
+    case "gap_fill":  return renderItemGapFill(item, answer);
+    case "translate": return renderItemTranslate(item, answer);
+    default:          return `<p class="dk__teoria-p">Tehtävätyyppi ”${escapeHtml(item.item_type)}” ei ole vielä käytettävissä.</p>`;
+  }
+}
+
+function renderItemMc(item, answer) {
+  const choices = Array.isArray(item.choices) ? item.choices : [];
+  const correct = Number.isInteger(item.correct_index) ? item.correct_index : -1;
+  const disabled = !!answer;
+  const chosen = answer?.choiceIndex;
+  return `
+    <p class="dk__exercise-stem">${escapeHtml(item.stem || "")}</p>
+    <ol class="dk__choices" role="radiogroup" aria-label="Vaihtoehdot">
+      ${choices.map((c, idx) => {
+        const isChosen = disabled && chosen === idx;
+        const isRight = disabled && idx === correct;
+        const cls = ["dk__choice"];
+        if (isChosen && isRight) cls.push("is-correct");
+        else if (isChosen && !isRight) cls.push("is-wrong");
+        else if (disabled && isRight) cls.push("is-revealed");
+        return `
+          <li>
+            <button type="button" class="${cls.join(" ")}"
+                    data-choice="${idx}"
+                    ${disabled ? "disabled" : ""}>
+              <span class="dk__choice-marker" aria-hidden="true">${String.fromCharCode(65 + idx)}</span>
+              <span class="dk__choice-text">${escapeHtml(c)}</span>
+            </button>
+          </li>`;
+      }).join("")}
+    </ol>`;
+}
+
+function renderItemTyped(item, answer) {
+  const hint = item.hint || "";
+  const value = answer?.userAnswer || "";
+  const disabled = !!answer;
+  return `
+    <p class="dk__exercise-stem">${escapeHtml(item.prompt || "")}</p>
+    ${hint ? `<p class="dk__exercise-hint">${escapeHtml(hint)}</p>` : ""}
+    <div class="dk__input-row">
+      <label class="dk__input-label" for="dk-input">Vastauksesi</label>
+      <input id="dk-input" type="text" class="dk__input"
+             autocomplete="off" autocapitalize="off" spellcheck="false"
+             value="${escapeHtml(value)}"
+             ${disabled ? "disabled" : ""}>
+    </div>`;
+}
+
+function renderItemGapFill(item, answer) {
+  // Replace `{1}` ... `{N}` with input slots.
+  const tpl = String(item.sentence_template || "");
+  const blanks = (tpl.match(/\{(\d+)\}/g) || []).length;
+  const values = answer?.userAnswer || new Array(blanks).fill("");
+  const disabled = !!answer;
+  let inputIdx = 0;
+  const rendered = escapeHtml(tpl).replace(/\{(\d+)\}/g, () => {
+    const v = values[inputIdx] || "";
+    const id = `dk-gap-${inputIdx}`;
+    inputIdx++;
+    return `<input id="${id}" type="text" class="dk__input dk__input--gap"
+                   data-gap="${inputIdx - 1}" autocomplete="off" spellcheck="false"
+                   value="${escapeHtml(v)}" ${disabled ? "disabled" : ""}>`;
+  });
+  const bank = Array.isArray(item.word_bank) && item.word_bank.length
+    ? `<ul class="dk__wordbank" aria-label="Sanapankki">
+         ${item.word_bank.map((w) => `<li><span>${escapeHtml(w)}</span></li>`).join("")}
+       </ul>`
+    : "";
+  return `
+    <p class="dk__exercise-stem dk__exercise-stem--gap">${rendered}</p>
+    ${bank}`;
+}
+
+function renderItemTranslate(item, answer) {
+  const dir = item.direction === "es_to_fi" ? "espanjasta suomeksi"
+            : item.direction === "fi_to_es" ? "suomesta espanjaksi"
+            : "käännös";
+  const value = answer?.userAnswer || "";
+  const disabled = !!answer;
+  return `
+    <p class="dk__exercise-eyebrow-tag">Käännös, ${escapeHtml(dir)}</p>
+    <p class="dk__exercise-stem">${escapeHtml(item.source || item.prompt || "")}</p>
+    <div class="dk__input-row">
+      <label class="dk__input-label" for="dk-input">Vastauksesi</label>
+      <textarea id="dk-input" class="dk__input dk__input--multiline"
+                rows="3" autocomplete="off" spellcheck="false"
+                ${disabled ? "disabled" : ""}>${escapeHtml(value)}</textarea>
+    </div>`;
+}
+
+function renderExerciseFooter(item, answer, i, total) {
+  if (!answer) {
+    return `
+      <div class="dk__exercise-actions">
+        <button type="button" class="dk__btn dk__btn--primary" id="dk-check">Tarkista</button>
+      </div>`;
+  }
+  const correct = answer.correct;
+  const chipCls = correct ? "is-correct" : "is-wrong";
+  const chipText = correct ? "Oikein" : "Vielä ei aivan";
+  const expl = renderItemExplanation(item, answer);
+  const isLast = i >= total - 1;
+  return `
+    <div class="dk__feedback" aria-live="polite">
+      <span class="dk__feedback-chip ${chipCls}">${chipText}</span>
+      ${expl}
+    </div>
+    <div class="dk__exercise-actions">
+      <button type="button" class="dk__btn dk__btn--primary" id="dk-next-item">
+        ${isLast ? "Vaihe valmis →" : "Seuraava →"}
+      </button>
+    </div>`;
+}
+
+function renderItemExplanation(item, answer) {
+  const expected = canonicalExpected(item);
+  const expectedHtml = expected
+    ? `<p class="dk__feedback-expected"><span>Oikea vastaus:</span> ${escapeHtml(expected)}</p>`
+    : "";
+  const expl = item.explanation
+    ? `<p class="dk__feedback-text">${escapeHtml(item.explanation)}</p>`
+    : "";
+  const accentHint = answer?.accentHint
+    ? `<p class="dk__feedback-text dk__feedback-hint">${escapeHtml(answer.accentHint)}</p>`
+    : "";
+  return `${expectedHtml}${accentHint}${expl}`;
+}
+
+function canonicalExpected(item) {
+  switch (item.item_type) {
+    case "mc":
+      return Array.isArray(item.choices) && Number.isInteger(item.correct_index)
+        ? item.choices[item.correct_index] : "";
+    case "typed":
+      return Array.isArray(item.accept) ? item.accept[0] || "" : "";
+    case "translate":
+      return Array.isArray(item.accept) ? item.accept[0] || "" : "";
+    case "gap_fill": {
+      const tpl = String(item.sentence_template || "");
+      const answers = Array.isArray(item.answers) ? item.answers : [];
+      let idx = 0;
+      return tpl.replace(/\{(\d+)\}/g, () => {
+        const cell = answers[idx++];
+        return Array.isArray(cell) ? (cell[0] || "—") : "—";
+      });
+    }
+    default: return "";
+  }
+}
+
+function gradeItem(item, raw) {
+  switch (item.item_type) {
+    case "mc": {
+      const idx = Number(raw);
+      return { correct: idx === item.correct_index, choiceIndex: idx };
+    }
+    case "typed":
+    case "translate": {
+      const userAnswer = String(raw || "").trim();
+      const accepts = Array.isArray(item.accept) ? item.accept : [];
+      for (const exp of accepts) {
+        const r = isAcceptable(userAnswer, exp, _route.lang || "es");
+        if (r.ok) return { correct: true, userAnswer, accentHint: r.hint || null };
+      }
+      return { correct: false, userAnswer };
+    }
+    case "gap_fill": {
+      const vals = Array.isArray(raw) ? raw : [];
+      const answers = Array.isArray(item.answers) ? item.answers : [];
+      let allOk = true;
+      for (let i = 0; i < answers.length; i++) {
+        const accepts = Array.isArray(answers[i]) ? answers[i] : [answers[i]];
+        const userAnswer = String(vals[i] || "").trim();
+        let ok = false;
+        for (const exp of accepts) {
+          if (isAcceptable(userAnswer, String(exp), _route.lang || "es").ok) { ok = true; break; }
+        }
+        if (!ok) { allOk = false; break; }
+      }
+      return { correct: allOk, userAnswer: vals };
+    }
+    default:
+      return { correct: false };
+  }
+}
+
+function readExerciseInput(item) {
+  const root = document.querySelector(".dk__exercise");
+  if (!root) return null;
+  switch (item.item_type) {
+    case "typed":
+    case "translate": {
+      const el = root.querySelector("#dk-input");
+      return el ? el.value : "";
+    }
+    case "gap_fill": {
+      return [...root.querySelectorAll(".dk__input--gap")].map((el) => el.value);
+    }
+    default: return null;
+  }
+}
+
+function reRenderExerciseInPlace() {
+  const idx = findSivuIndex(_route.sivuId);
+  const sivu = _sivut[idx];
+  const slot = document.querySelector(".dk__content .dk__exercise");
+  if (!slot) return;
+  const next = document.createElement("div");
+  next.innerHTML = renderExerciseContent(sivu);
+  slot.replaceWith(next.firstElementChild);
+  wireExerciseCard();
+}
+
+function wireExerciseCard() {
+  const root = document.querySelector(".dk__exercise");
+  if (!root) return;
+  const sivuId = root.dataset.sivu;
+  const sivu = _sivut.find((s) => s.id === sivuId);
+  const phase = phaseForSivu(sivu);
+  if (!phase) return;
+  const items = phase.items || [];
+  const i = Number(root.dataset.index);
+  const item = items[i];
+  if (!item) return;
+  const st = ensureExerciseState(sivuId, items);
+
+  // MC: clicking a choice both selects + commits the answer (Otava idiom).
+  root.querySelectorAll(".dk__choice").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      if (st.answered[i]) return;
+      const choice = Number(btn.dataset.choice);
+      const result = gradeItem(item, choice);
+      st.answered[i] = result;
+      if (result.correct) st.scoreCorrect++;
+      st.scoreTotal++;
+      reRenderExerciseInPlace();
+    });
+  });
+
+  // Typed / translate / gap_fill: Tarkista commits the input.
+  document.getElementById("dk-check")?.addEventListener("click", () => {
+    if (st.answered[i]) return;
+    const raw = readExerciseInput(item);
+    const result = gradeItem(item, raw);
+    st.answered[i] = result;
+    if (result.correct) st.scoreCorrect++;
+    st.scoreTotal++;
+    reRenderExerciseInPlace();
+  });
+
+  // Enter submits typed/translate inputs.
+  const input = root.querySelector("#dk-input");
+  input?.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" && !e.shiftKey && !st.answered[i]) {
+      e.preventDefault();
+      document.getElementById("dk-check")?.click();
+    }
+  });
+
+  // Next item — advance within the phase or jump to the next sivu when done.
+  document.getElementById("dk-next-item")?.addEventListener("click", () => {
+    if (i < items.length - 1) {
+      st.itemIndex = i + 1;
+      reRenderExerciseInPlace();
+    } else {
+      const sivuIdx = findSivuIndex(_route.sivuId);
+      const nextSivu = _sivut[sivuIdx + 1];
+      if (nextSivu) navigateSivu(nextSivu.id);
+    }
+  });
 }
 
 function renderContent() {
@@ -323,7 +672,11 @@ function renderContent() {
     ? `<em>${escapeHtml(sivu.title)}</em>`
     : `${sivu.num ? `${escapeHtml(sivu.num)} · ` : ""}${escapeHtml(sivu.title)}`;
 
-  const body = sivu.kind === "teoria" ? renderTeoriaContent() : renderPlaceholderContent(sivu);
+  const body = sivu.kind === "teoria"
+    ? renderTeoriaContent()
+    : sivu.kind === "tehtava"
+    ? renderExerciseContent(sivu)
+    : renderPlaceholderContent(sivu);
 
   return `
     <main class="dk__content" id="dk-content" tabindex="-1">
@@ -499,6 +852,7 @@ function wireContent() {
   document.querySelectorAll(".dk__content .dk__prevnext-btn[data-sivu]").forEach((btn) => {
     btn.addEventListener("click", () => navigateSivu(btn.dataset.sivu));
   });
+  wireExerciseCard();
 }
 
 // ─── Public entry ─────────────────────────────────────────────────────

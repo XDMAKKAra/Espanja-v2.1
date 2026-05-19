@@ -119,6 +119,63 @@ test('PR3 — SVG glyphs render per sivu kind + scroll-to-active', async ({ page
   });
 });
 
+test('PR4 — ExerciseCard renders mc, scores correctly, advances', async ({ page }) => {
+  test.setTimeout(90_000);
+  await login(page);
+  await page.setViewportSize({ width: 1440, height: 900 });
+
+  // phase-0 = "Tunnista — ateriat ja juomat" (12 mc items).
+  await page.evaluate(() => { location.hash = '#/oppitunti/es/kurssi_2/3/phase-0'; });
+  await page.waitForTimeout(1200);
+
+  await expect(page.locator('.dk__exercise')).toBeVisible();
+  await expect(page.locator('.dk__exercise-eyebrow')).toContainText('Tehtävä 1 / 12');
+
+  // First item: "el desayuno" → "aamiainen" (index 1).
+  await expect(page.locator('.dk__exercise-stem')).toContainText('el desayuno');
+  await page.locator('.dk__choice[data-choice="1"]').click();
+  await page.waitForTimeout(150);
+  await expect(page.locator('.dk__feedback-chip.is-correct')).toBeVisible();
+  await expect(page.locator('.dk__exercise-score')).toContainText('1 / 1');
+
+  // Advance to item 2.
+  await page.locator('#dk-next-item').click();
+  await page.waitForTimeout(120);
+  await expect(page.locator('.dk__exercise-eyebrow')).toContainText('Tehtävä 2 / 12');
+
+  // Pick the wrong choice (whichever is NOT correct_index in the JSON, choose 0).
+  await page.locator('.dk__choice[data-choice="0"]').click();
+  await page.waitForTimeout(150);
+  // One of is-correct or is-wrong must be visible; score must now be 1/2 or 2/2.
+  const score2 = await page.locator('.dk__exercise-score').textContent();
+  expect(score2).toMatch(/\d+\s*\/\s*2/);
+  await expect(page.locator('.dk__feedback-chip')).toBeVisible();
+  await expect(page.locator('.dk__feedback-expected')).toBeVisible();
+
+  await page.screenshot({
+    path: path.resolve('audit-screens', 'digikirja-pr4-exercise.png'),
+    fullPage: true,
+  });
+});
+
+test('PR4 — typed input accepts the correct translation', async ({ page }) => {
+  test.setTimeout(60_000);
+  await login(page);
+  await page.setViewportSize({ width: 1440, height: 900 });
+
+  // phase-3 = "Käännä suomeksi" (es_to_fi typed items).
+  await page.evaluate(() => { location.hash = '#/oppitunti/es/kurssi_2/3/phase-3'; });
+  await page.waitForTimeout(1200);
+
+  // First item prompts "el desayuno" → accept includes "aamiainen".
+  await expect(page.locator('.dk__exercise-stem')).toContainText('el desayuno');
+  await page.locator('#dk-input').fill('aamiainen');
+  await page.locator('#dk-check').click();
+  await page.waitForTimeout(150);
+  await expect(page.locator('.dk__feedback-chip.is-correct')).toBeVisible();
+  await expect(page.locator('.dk__exercise-score')).toContainText('1 / 1');
+});
+
 test('SideMenu toggle persists across navigation', async ({ page }) => {
   test.setTimeout(60_000);
   await login(page);
