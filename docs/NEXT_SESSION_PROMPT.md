@@ -1,264 +1,195 @@
-# Next session prompt — paste this verbatim
+# Next session prompt — paste this verbatim into a fresh session
 
 ---
 
-Olet jatkamassa Puheo-projektia (espanjan/ranskan/saksan lyhyt-oppimäärän
-YO-koevalmennus). Edellinen istunto teki ison arkkitehtuuri-pivot:in
-**mode-first**-hierarkiaan PRs #109–#115. Nyt **referenssi-rakenne on
-päivitetty**: malli on **Otava Fokus 7 (LOPS21) Digikirja** — kolmen
-paneelin layout teoriasivu + numeroidut tehtävät + kääntökortit + testit.
+Olet jatkamassa Puheo-projektia. Edellisen istunnon aikana 2026-05-19
+shippattiin PR #118–#128 (Otava Fokus 7 -rebuild PR1–PR8, Supabase-sync,
+multi-lang bleed-fix + layout/wordbank fix). Toimii teknisesti — 12/12
+e2e läpi — mutta **näyttää edelleen paskalta visuaalisesti**.
+
+Tämä prompt kuvaa mitä on auki ja mikä on prioriteetti.
 
 ## Lue ENSIN nämä
 
-1. `memory/MEMORY.md` — käy läpi feedback-* ja project-* tiedostot.
+1. `memory/MEMORY.md` — käy läpi feedback-* + project-* tiedostot.
    Erityisen tärkeät:
-   - `project_mode_first_hierarchy.md` — nykyinen flow HOME → mode-cards →
-     oppimispolku-index → course-detail → lesson + deprecoidut osat
-   - `feedback_design_direction_eduix_old_spain.md` — Old-Spain palette +
-     anti-AI-slop -checklist. **Lue ENNEN ekaa UI-PR:ää.**
-   - `project_open_issues_2026_05_19.md` — hand-off lista
-   - `feedback_user_does_not_code.md`, `feedback_auto_push_workflow.md`,
-     `feedback_skip_measurement_gates.md`, `feedback_humanizer_required.md`
-2. Tämän tiedoston **alempana** oleva **Otava Fokus 7 -malli** — se on
-   sitova rakenne-spec
-3. CLAUDE.md — skill-stack pakollinen ennen Write/Edit/Bash-kutsuja
-
-## P0 — Bugit jotka pitää selvittää HETI
-
-### 1. Asetukset + Oma profiili eivät VIELÄKÄÄN avaudu (vahvistettu 2026-05-19 lopussa)
-
-Sidebar-klikkaus ei aukaise screen-settings tai screen-profile. PR #114
-poisti confirmDialog-gaten mikä saattoi blokata, mutta bug pysyy. **Pyydä
-käyttäjältä browser devtools console -screenshot kun klikkaa "Asetukset"
-tai sidebar-user-painiketta.** Sieltä näkyy onko lazy-loader importti
-404, throwaako initSettings, vai estääkö joku CSS click-eventin.
-
-### 2. Punainen viiva aloitus-sivulla (screenshot 224754)
-
-Sidebar-itemin (Aloitus) vasemmassa reunassa näkyy punainen pystyviiva
-joka bleeditää ulos rivistä. Tarkista `.sidebar-item.active::before` ja
-`.path-toc__item.is-active::before` ja `.op-row.is-progress::before` —
-jokin näistä ::before-pseudoista työntyy `left: -X` -arvolla parent-
-border:in ulkopuolelle ja sidebarissa näkyy hairline-pala.
-
-### 3. Vahvista että #screen-path -kill toimii live-Vercelillä
-
-PR #113 + #114 hidetti `display:none-CSS:llä` + redirektoi loadDashboard →
-loadHome. Käyttäjä saattaa vielä nähdä rikkonaisen "SISÄLLYS Ladataan… /
-Aloita päivän treeni 20 SANAA · 5 MIN" -näkymän jos cache on stale.
-Pyydä hard refresh + verify; jos vielä toistuu, etsi mikä koodipolku
-ohittaa redirektin.
+   - `project_digikirja_layout_open` (uusi, tästä istunnosta)
+   - `project_mode_first_hierarchy`
+   - `feedback_design_direction_eduix_old_spain`
+   - `feedback_user_does_not_code`, `feedback_auto_push_workflow`,
+     `feedback_skip_measurement_gates`
+2. CLAUDE.md — skill-stack pakollinen
+3. Tämän tiedoston P0/P1-listat
 
 ---
 
-## ISO PROJEKTI — Otava Fokus 7 -mallin mukaiseksi (käyttäjän brief 2026-05-19)
+## P0 — Näkyvät bugit jotka pitää korjata HETI
 
-### Tavoite
+### 1. Double-sidebar visuaalinen ongelma
 
-Replikoida Otava Fokus 7 LOPS21 Digikirjan rakenne YO-espanjan
-kertaussivustolle. Esim. Kurssi 2 → Oppitunti 3 → Subjuntiivi sisältää
-teoriasivun + vasemman sivupaneelin tehtävälistan.
+Kun käyttäjä on lesson-näytössä (`#/oppitunti/{lang}/{kurssi}/{n}/{sivu}`),
+vasemmalla näkyy YHTÄAIKAA kaksi sivupalkkia:
 
-### Yleisrakenne (3-paneelinen layout)
+- Vanha `.app-sidebar` (Puheo-logo + Aloitus + Asetukset + Kirjaudu ulos)
+  vie ~220px viewportin vasemmasta reunasta
+- Digikirjan oma SideMenu (Sisällys + numeroidut sivut) vie ~290px sen
+  oikealla puolella
 
-**Yläpalkki (TopBar)**
-- Vasen: Logo/paluulinkki ("Palaa etusivulle"), Etusivu-linkki,
-  hampurilaisvalikon toggle
-- Keski: Sivun otsikko (esim. "YO Espanja Kertaus | Subjuntiivi")
-- Oikea: Sanakirja, Haku, Analytiikka, Opas, Sivuvalikko-painike
+Yhteensä ~510px sivupalkkia ennen kuin pääsisältö alkaa. Otava-mallin
+tarkoitus oli että lesson-näyttö on **full-bleed**: TopBar yläreunassa
+spans 100% leveys, vasemmalla VAIN digikirja-SideMenu, oikealla sisältö.
 
-**Vasen sivupaneeli (Sisällysluettelo / Tehtävälista) — kollapsoituva**
-- Listaa oppitunnin kaikki sivut yhdellä silmäyksellä
-- ENSIMMÄINEN ITEM = **teoriasivu** (esim. "Subjuntiivi")
-- Sitten numeroitu lista tehtäviä: "1 Muodosta verbimuotoja", "2a Yhdistä",
-  "2b Täydennä", "3a…", jne. Paritehtävät erottuvat a/b-merkinnällä.
-- Lopussa: **Kääntökortit** (flashcards) eri aihealueista
-- Lopussa: **Testit** ("Test 1a Käännä", "Test 2 Valitse"...)
-- Aivan lopussa: **"Arvioi omia taitojasi"** -itsearviointi
-- Aktiivinen sivu korostuu sivuvalikossa
+**Päätös tarvitaan:**
 
-**Pääsisältöalue (Main content)**
-- Sivunumeromerkintä (esim. "s. 191–194")
-- Otsikko (H1)
-- Teoriatekstit + esimerkkilauseet **kaksikielisinä taulukoina**
-  (espanja | suomi)
-- Alaotsikot (esim. "Indikatiivin ja subjuntiivin vertailu")
-- **"Obs!"-laatikot** huomioille / poikkeuksille (eri taustaväri)
-- Vertailutaulukoita
-- **Edellinen/Seuraava-sivu -navigointi sekä YLÄ- että ALAOSASSA**
-- Kommentointialue (myöhemmin)
+- **A)** Piilota `.app-sidebar` kun `screen-digikirja` on aktiivi
+  (`body:has(#screen-digikirja.active) .app-sidebar { display: none }`
+  tai JS-toggle screenchange-eventissä). Suosittelen tätä.
+- **B)** Siirrä digikirja TAKAISIN `.app-main`:n ulkopuolelle, anna
+  sille `position: fixed; inset: 0; z-index: ...` joka peittää kaiken
+- **C)** Hybridi: jätä `.app-sidebar` mutta digikirjan SideMenu siirtyy
+  yläosaan kollapsoituvaksi mobile-style -valikoksi
 
-### Sivutyyppien kategoriat
+### 2. Pääsisältö liian kapea
 
-1. **Teoriasivu** — sääntöjä, esimerkkejä, taulukoita
-2. **Harjoitustehtävät** numeroituna (1, 2a, 2b, 3a, 3b...) — täydennys,
-   yhdistäminen, kääntäminen, paritehtävät, kirjoitustehtävät
-3. **Kääntökortit / Flashcardit** sanaston harjoitteluun
-4. **Testit** (Käännä, Yhdistä, Valitse)
-5. **Itsearviointi**
+`.dk__exercise` ja `.dk__content` ovat `max-width: 68ch` (~720px). Kun
+viewport on 1920px ja sidebarit syövät 510px, oikealle jää massiivinen
+~700px tyhjä cream-alue. Otava käyttää 60ch:tä koska heidän kirjapaperin
+leveys on ~14cm fyysisesti — meidän tarvii laajempi koska screen on
+useimmiten laajempi kuin kirja.
 
-### Hierarkinen reitti-rakenne
+**Korjaus:**
 
-```
-Etusivu
- └─ Kurssi 2 (YO Espanja Kertaus)
-    └─ Oppitunti 3 (Subjuntiivi)
-        ├─ Teoriasivu (oletus)
-        ├─ 1 Muodosta...
-        ├─ 2a Yhdistä
-        ├─ 2b Täydennä
-        ├─ ...
-        ├─ Kääntökortit 1–5
-        ├─ Test 1a, 1b, 2, 3
-        └─ Arvioi omia taitojasi
-```
+- `.dk__content max-width` → `clamp(720px, 60vw, 1080px)`
+- `.dk__exercise max-width` → samoin
+- `.dk__bilingual max-width` → samoin
+- `.dk__teoria-p max-width` → pidetään 65ch luettavuuden takia
 
-URL-malli: `/kurssi/:kurssiId/oppitunti/:oppituntiId/:sivuId`
-Eli laajennettava Puheo:n nykyinen `#/oppitunti/{lang}/{kurssi}/{n}` →
-`#/oppitunti/{lang}/{kurssi}/{lessonId}/{sivuId}`.
+### 3. TopBar otsikko kropattu
 
-### Keskeiset UI-komponentit
+Otsikko "Perhe ja kansallisuudet" leikkautuu "Perhe ja kansallisu..."
+kun breadcrumb + tools vievät tilaa. `.dk__topbar` on
+`grid-template-columns: auto 1fr auto` ja otsikko on keskimmäisessä
+sarakkeessa, mutta breadcrumb venyy ja syö tilaa.
 
-| Komponentti | Tehtävä |
-|---|---|
-| `TopBar` | Kiinteä yläpalkki kurssin nimellä ja työkalupainikkeilla |
-| `SideMenu` | Kollapsoituva sivuvalikko (toggle), aktiivinen sivu korostettuna |
-| `LessonContent` | Pääsisältöalue, vaihtuu URL:n mukaan |
-| `BilingualTable` | Espanja/suomi-vertailutaulukko (2 saraketta) |
-| `InfoBox` ("Obs!") | Korostettu huomiolaatikko |
-| `ExerciseCard` | Tehtäväkomponentti (gap-fill, matching, multiple-choice, translate) |
-| `Flashcard` | Käännettävä kortti (etupuoli/takapuoli) |
-| `PrevNext` | Navigointipainikkeet sivun ylä- ja alaosassa |
-| `ProgressIndicator` | Analytiikka / edistyminen |
-| `SelfAssessment` | Itsearviointilomake |
+**Korjaus:**
 
-### Tietorakenne (JSON)
+- Joko: vähennä breadcrumb fonttikokoa (12px → 11px) + tighter spacing
+- Tai: vie otsikko OMAlle riville TopBarin alle (kaksi-rivinen TopBar
+  jossa breadcrumb yhdellä rivillä + otsikko + tools toisella)
+- Tai: tee otsikosta ellipsis + tooltip jos overflow
 
-```json
-{
-  "kurssit": [
-    {
-      "id": "kurssi-2",
-      "nimi": "YO Espanja Kertaus",
-      "oppitunnit": [
-        {
-          "id": "oppitunti-3",
-          "nimi": "Subjuntiivi",
-          "sivut": [
-            { "id": "teoria", "tyyppi": "teoria", "otsikko": "Subjuntiivi", "sisalto": "..." },
-            { "id": "1", "tyyppi": "tehtava", "alatyyppi": "muodosta", "otsikko": "1 Muodosta verbit" },
-            { "id": "2a", "tyyppi": "tehtava", "alatyyppi": "yhdista", "otsikko": "2a Yhdistä" },
-            { "id": "2b", "tyyppi": "tehtava", "alatyyppi": "taydenna", "otsikko": "2b Täydennä" },
-            { "id": "kortit-1", "tyyppi": "flashcards", "otsikko": "Kääntökortit 1" },
-            { "id": "test-1a", "tyyppi": "testi", "alatyyppi": "kaanna", "otsikko": "Test 1a Käännä" },
-            { "id": "arvio", "tyyppi": "itsearviointi", "otsikko": "Arvioi omia taitojasi" }
-          ]
-        }
-      ]
-    }
-  ]
-}
-```
+### 4. Prev/Next yläreunassa näyttää irralliselta
 
-Skaalata `data/courses/{lang}/kurssi_N/lesson_M.json` → uusi `sivut`-array
-joka sisältää teoria + tehtävät + kortit + testit + itsearvio.
+Yläreunan Prev/Next-laatikko (`.dk__prevnext--top`) renderöityy ENNEN
+sivun otsikkoa. Näyttää leijuvalta ohuelta laatikolta joka EI yhdistä
+visuaalisesti TopBariin eikä sisältöön.
 
-### UX-periaatteet (Otavan toteutuksesta)
-
-1. **Sivuvalikon auki/kiinni-toggle** — käyttäjä voi keskittyä sisältöön
-2. Teoriasivu on AINA oppitunnin **ensimmäinen** sivu
-3. Tehtävät numeroitu johdonmukaisesti (1, 2a, 2b, 3a…), paritehtävät
-   erottuvat a/b-merkinnällä
-4. **Edellinen/Seuraava**-navigointi sekä ylä- että alaosassa
-5. Esimerkit aina kaksikielisinä taulukoissa (lähdekieli vasemmalla,
-   suomi oikealla)
-6. **"Obs!"-laatikot** poikkeuksille ja muistisäännöille
-7. Aktiivinen sivu korostuu sivuvalikossa
-8. Sivunumero näkyy (esim. "s. 191–194") jos viitataan painettuun kirjaan
-
-### Toteutusjärjestys (PR-sequence)
-
-**PR 1** — pohjarakenne: TopBar + SideMenu + LessonContent layout +
-              routing `/oppitunti/{lang}/{kurssi}/{lesson}/{sivu}`,
-              sivuvalikon toggle. Käytä yhden oppitunnin testidata
-              ("Subjuntiivi") hardcodattuna.
-
-**PR 2** — Teoriasivu-komponentti + BilingualTable + InfoBox ("Obs!")
-              + PrevNext-navigointi.
-
-**PR 3** — SideMenu:n aktiivinen-tila + scroll-to-active + kollapsoitu
-              tila persistoituu localStorage:en. Sivu-tyyppi-glyphit:
-              teoria 📖, tehtävä 📝, kortit 🃏, testi ✓, arvio ⭐.
-
-**PR 4** — ExerciseCard-komponentti, yksi tehtävätyyppi kerrallaan.
-              Aloita gap-fill ja matching (ne meillä on jo lessonRunneriin).
-
-**PR 5** — Flashcard-komponentti (etupuoli/takapuoli, käännettävä,
-              localStorage-tila per kortti: "tiedän" / "harjoittele
-              vielä"). 5 korttipakkaa per oppitunti.
-
-**PR 6** — Testit (Käännä, Yhdistä, Valitse) — vaikuttavat samalta kuin
-              ExerciseCardit mutta pisteytys + lopputulos näytetään
-              testin jälkeen, ei live-feedbackia per kohta.
-
-**PR 7** — Itsearviointi-lomake: 4-5 kohtaa
-              ("Hallitsen subjuntiivin perussäännöt", asteikko 1-5).
-              Lähetä Supabaseen.
-
-**PR 8** — localStorage-tallennus edistymiselle (oppitunnin sivu-progressi,
-              flashcard-tilat, test-tulokset). Synkkaa Supabaseen
-              kirjautuneille.
-
-**Tämän jälkeen olemme valmiit** — kaikki 240 oppituntidataa renderöityy
-Otava-tyyliin ilman uutta sisältöä.
-
-**HUOM — sisältöä EI generoida uudelleen.** Käyttäjällä on kaikki
-oppituntidata valmiina `data/courses/{lang}/kurssi_N/lesson_M.json`
--tiedostoissa (240 jsonia). Tämä projekti on PELKKÄ RENDERÖINTI:
-saada nykyinen data näkyväksi Otava-tyyliin. Lue olemassa olevat
-jsonit ja peilaa niiden `phases`/`items` → uusi `sivut`-skeema
-(teoria + tehtävät + flashcards + testit + itsearvio). Joko:
-(a) Migrate-skripti kirjoittaa kaikki 240 jsonia uuteen skeemaan
-    (yksi PR, kirjoita scripts/migrate-lesson-jsons.mjs, aja itse)
-(b) Käytä `sivut`-skeemaa virtuaalisesti — renderöinti rakentaa
-    sen lennossa nykyisistä `phases`+`teaching`-kentistä, ei muuta
-    diskiä. Backwards-compat helpompi. Recommended.
-
-### Tekninen stack — pysytään nykyisessä (EI React)
-
-Käyttäjän brief mainitsi React/Vite/TS/Tailwind/Zustand, mutta meillä on
-**vanilla JS + ES-modules + esbuild + omat tokens.css/Old-Spain**.
-Älä uudelleenkirjoita stäkkiä — replikoi rakenne nykyisellä infrallä:
-
-- `js/screens/lessonRunner.js` saa sivu-tyypin: teoria | tehtava |
-  flashcards | testi | arvio. RenderItem-dispatcher case per tyyppi.
-- `js/screens/lessonRunner.js renderLessonTOC` lisää teoria-rivin ENSIN
-  + flashcards-rivit lopuksi + testi-rivit + arvio-rivin.
-- Uusi komponenttitiedosto `js/features/bilingualTable.js` +
-  `js/features/infoBox.js` + `js/features/flashcard.js` + uusi tyyli
-  `css/components/digikirja.css` (TopBar, SideMenu, content widths).
-- Tietorakenne `data/courses/{lang}/kurssi_N/lesson_M.json` laajenee
-  `sivut`-arraylla. Backwards-compat: jos `sivut` puuttuu, fallback
-  vanhaan phase-renderiin.
+**Suositukseni:** Poista yläreunan PrevNext kokonaan. Bottom riittää
+opiskelijan navigaatioon, ja säästät vertikaalista tilaa otsikolle.
 
 ---
 
-## Sääntöjä koko sessiolle
+## P1 — Pienempiä parannuksia
+
+### 5. Aloitus-näyttö renderöi tyhjää localhostissa
+
+Kun käyttäjä klikkaa Aloitus localhostissa (auth-token paikallaan),
+näkyy vain cream-ruutu. Scrollaamalla alas näkyy digikirja jos URL
+oli aiemmin lesson-hashissa. Syy: `home.js loadHome()` epäonnistuu
+hiljaa kun `/api/dashboard/v2` palauttaa 400.
+
+**Korjaus:** `loadHome()` catch-haara renderöi virhetilan
+("Etusivun lataus epäonnistui — yritä uudelleen") sen sijaan että
+jättää `#home-root` tyhjäksi.
+
+### 6. Vercel-tuotanto edelleen vanhalla buildillä
+
+`espanja-v2-1.vercel.app` näyttää viime kuun buildia. Promote-prompttiin
+tuli "api-deployments-free-per-day" -kiintiövirhe 2026-05-19 illalla.
+
+**Käyttäjän klikattava:** Avaa
+https://vercel.com/xdmakkaras-projects/espanja-v2-1/deployments → ylin
+`main`-deploy → ⋯-valikko → "Promote to Production". Kiintiö palautuu
+24h kuluessa joten tämä voidaan tehdä huomenna 2026-05-20.
+
+**Pysyvämpi korjaus:** Kytke Vercel-asetuksissa auto-deploy
+`main`-haaralle tuotantoon päälle:
+https://vercel.com/xdmakkaras-projects/espanja-v2-1/settings/git
+
+### 7. Sisältöä ei vielä kirjoiteta uudelleen
+
+`LANG_CURRICULA.*` placeholder-otsikot ("Kuka olen", generic phase
+names) odottavat 3 rinnakkaisen sonnet-sub-agentin -kirjoitusta
+(es/fr/de) joka tuottaa Otava-tyylisiä otsikoita ja oppituntien runkoa.
+Ei tehty vielä. ~$5 OpenAI-budjetti, wall ~30 min. Käyttäjä on
+hyväksynyt suunnan mutta ei ole pyytänyt ajamaan.
+
+### 8. Itsearvio + progress sync hiljaisesti epäonnistuu localhostissa
+
+PR7b/8b backend lähettää localStorage-pohjalta `/api/digikirja/*`
+-routeille, mutta routet vaativat Supabase JWT:n. Localhostin
+testikäyttäjälle saattaa tulla 401 hiljaa (catch swallow), joten
+UI toimii edelleen mutta server ei näe muutoksia. Voit varmistaa
+ajalleen Network-tabista: pitääkö nähdä `200 OK` POST-vasteet.
+
+---
+
+## Säännöt koko sessiolle
 
 - **Anti-AI-slop checklist** ennen ekaa Write:ia
-- **Auto-push workflow**: `auto/<slug>` branch → `gh pr create` →
+- **Auto-push workflow**: `auto/<slug>` branch → `gh pr create --fill` →
   `gh pr merge --squash --delete-branch --admin`
-- **Bump sw.js** STATIC_ASSETS-muutoksissa
+- **Bump sw.js cache** kaikilla STATIC_ASSETS-muutoksilla
 - **node --check** ennen committia
-- **Älä lisää uutta sidebar-nav-itemiä** — vain Aloitus + Asetukset +
-  Logout
-- **Älä lisää "Lopetetaanko"-modaalia takaisin**
-- **Käyttäjä ei koodaa**; älä pyydä lue/kirjoita-komentoja
-- **Skip per-step measurement gates**: ship koko queue chain:ina
+- **Skill-stack pakollinen** ennen Write/Edit/Bash kutsuja (CLAUDE.md
+  + hook injektoi tämän jokaiseen viestiin)
+- **Käyttäjä ei koodaa** — älä pyydä lue/kirjoita-komentoja
+- **Skip per-step measurement gates** — chain queue, käyttäjä lukee
+  ledgerin lopussa
 - **Humanizer** kaikkeen suomenkieliseen UI-tekstiin
+
+## Suositeltu järjestys istunnolle
+
+1. Lue muistit + tämä prompt
+2. **Yksi PR kaikkiin P0-asioihin** (#1 double-sidebar, #2 max-width,
+   #3 title cropping, #4 poista yläreunan PrevNext). Pidä scope yhdessä
+   koska kaikki ovat saman lesson-näytön visuaalia.
+3. Screenshot vertaa ennen/jälkeen → SendUserFile, näytä käyttäjälle
+4. Kysy käyttäjältä haluaako jatkaa P1:een vai tarkistaa P0:n erikseen
+5. P1-listalta käsitellään yksi kerrallaan käyttäjän priorisoinnin
+   mukaan
 
 ---
 
-Aloita lukemalla muistit. Korjaa P0 #1-#3 ENSIN (Asetukset bug + punainen
-viiva + #screen-path verify). Sitten kysy käyttäjältä haluaako aloittaa
-PR 1:n (pohjarakenne) heti vai katsella ekat korjaukset live.
+## Ledgeri — mitä shippiin 2026-05-19
+
+| PR  | Mitä           |
+|-----|----------------|
+| #118 | P0 fixes (Asetukset race + sidebar hairline + flicker) |
+| #119 | Digikirja PR1 (3-paneelinen pohjarakenne) |
+| #120 | PR2 (real lesson JSON + Teoriasivu/BilingualTable/Obs!) |
+| #121 | PR3 (sivu-tyyppi-SVG-glyphit + scroll-to-active) |
+| #122 | PR4 (ExerciseCard mc/typed/gap_fill/translate) |
+| #123 | PR5 (Flashcard pack + localStorage state) |
+| #124 | PR6 (summative Testi sivut) |
+| #125 | PR7 (Itsearviointi lomake) |
+| #126 | PR8 (progress chip + legacy redirect) |
+| #127 | Supabase sync (migr 038-040) + multi-lang bleed |
+| #128 | Full-bleed layout + wordbank chips clickable |
+
+12 e2e-testiä `tests/e2e-digikirja-smoke.spec.js`:ssä — kaikki läpi.
+SW cache `puheo-v215 → puheo-v226`.
+
+Supabase-migraatiot ajettu MCP:llä:
+- `038_create_user_self_assessments`
+- `039_create_user_lesson_progress`
+- `040_add_lang_to_user_curriculum_progress`
+
+RLS päällä kaikilla, omistaja-vain -policyt.
+
+---
+
+**Käyttäjän viimeinen kommentti 2026-05-20 00:42:** "kuten nyt kuvasta
+näät ei näytä yhtään hyvältä". Eli vaikka tekniikka toimii, visuaalinen
+viimeistely on auki. P0-lista yllä on minimi siisteen ilmeen
+saamiseksi.
