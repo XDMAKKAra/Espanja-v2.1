@@ -352,9 +352,19 @@ async function toggleKurssi(kurssiKey) {
   }
 }
 
+// PR auto/path-distill (2026-05-19) — per-kurssi lesson cache so warm
+// re-entry skips the bento-loading flash. Keyed by kurssiKey, stores
+// { lessons, ts }; entries older than 60s are refetched.
+const _lessonsCache = new Map();
+
 async function fetchAndRenderLessons(kurssiKey) {
   const host = document.querySelector(`.curr-bento[data-kurssi="${cssEscape(kurssiKey)}"]`);
   if (!host) return;
+  const cached = _lessonsCache.get(kurssiKey);
+  if (cached && (Date.now() - cached.ts) < 60000) {
+    renderBento(host, kurssiKey, cached.lessons);
+    return;
+  }
   try {
     const res = await apiFetch(`${API}/api/curriculum/${encodeURIComponent(kurssiKey)}`, {
       headers: { ...authHeader() },
@@ -362,6 +372,7 @@ async function fetchAndRenderLessons(kurssiKey) {
     if (!res.ok) throw new Error("Oppituntien lataus epäonnistui");
     const data = await res.json();
     const lessons = Array.isArray(data.lessons) ? data.lessons : [];
+    _lessonsCache.set(kurssiKey, { lessons, ts: Date.now() });
     renderBento(host, kurssiKey, lessons);
   } catch (err) {
     host.innerHTML = `<p class="curr-bento-error" role="alert">${escapeHtml(err.message || "Ei yhteyttä, yritä uudelleen.")}</p>`;
@@ -399,11 +410,13 @@ function renderBento(host, kurssiKey, lessons) {
   const doneCount = sorted.filter((l) => l.completed).length;
   const totalCount = sorted.length;
 
-  const strip = renderProgressStrip(sorted, nextUp, doneCount, totalCount);
+  // PR auto/path-distill (2026-05-19) — progress strip dropped. The
+  // bento numbering + done-marker already tells the student where they
+  // are; the strip duplicated that signal with a clickable dot row.
   const grid = `<div class="curr-bento-grid" role="list">${sorted.map((l) => renderBentoCard(kurssiKey, l, nextUp)).join("")}</div>`;
 
   host.removeAttribute("aria-busy");
-  host.innerHTML = strip + grid;
+  host.innerHTML = grid;
 
   // Wire card clicks
   host.querySelectorAll(".curr-bento-card").forEach((btn) => {
@@ -459,6 +472,11 @@ function renderProgressStrip(sorted, nextUp, doneCount, totalCount) {
 }
 
 function renderBentoCard(kurssiKey, l, nextUp) {
+  // PR auto/path-distill (2026-05-19) — radically simplified lesson card
+  // per user request. Eduix textbook reference: number + type eyebrow +
+  // title only. No per-card icon, preview, clock meta, or CTA button —
+  // the card itself is the click target, the state lives in a left
+  // marker (next-up brick, completed olive ✓, otherwise neutral).
   const done = !!l.completed;
   const isNext = nextUp && l.sortOrder === nextUp.sortOrder;
   const cls = ["curr-bento-card"];
@@ -468,24 +486,14 @@ function renderBentoCard(kurssiKey, l, nextUp) {
   const num = String(l.sortOrder).padStart(2, "0");
   const focus = String(l.focus || `Oppitunti ${l.sortOrder}`);
   const typeName = typeLabelFi(l.type);
-  const minutes = lessonDurationMin(l);
-  const diff = lessonDifficulty(l);
-  const preview = lessonPreview(l);
 
-  const cta = done
-    ? "Suoritettu"
-    : isNext
-      ? "Jatka tästä →"
-      : "Aloita →";
-
-  // Aria-label combines all signals so screen readers get the full picture.
   const ariaState = done ? "suoritettu" : isNext ? "vuorossa" : "tulossa";
-  const ariaLabel = `Oppitunti ${l.sortOrder}: ${focus}. ${typeName}. Kesto noin ${minutes} minuuttia. Vaikeustaso ${diff} / 3. Tila: ${ariaState}.`;
-
-  const iconD = TYPE_ICONS[l.type] || TYPE_ICONS.mixed;
-  const cornerIcon = done
-    ? svgIcon(META_ICONS.check, "curr-bento-card__corner")
-    : difficultyDots(diff);
+  const ariaLabel = `Oppitunti ${l.sortOrder}: ${focus}. ${typeName}. Tila: ${ariaState}.`;
+  const marker = done
+    ? '<span class="curr-bento-card__mark" aria-hidden="true">✓</span>'
+    : isNext
+      ? '<span class="curr-bento-card__mark curr-bento-card__mark--next" aria-hidden="true">→</span>'
+      : '<span class="curr-bento-card__mark" aria-hidden="true"></span>';
 
   return `
     <button type="button"
@@ -493,18 +501,10 @@ function renderBentoCard(kurssiKey, l, nextUp) {
             data-lesson="${l.sortOrder}"
             role="listitem"
             aria-label="${escapeHtml(ariaLabel)}">
-      <div class="curr-bento-card__top">
-        <span class="curr-bento-card__icon" aria-hidden="true">${svgIcon(iconD)}</span>
-        ${cornerIcon}
-      </div>
-      <div class="curr-bento-card__mid">
-        <span class="curr-bento-num">${escapeHtml(num)} · ${escapeHtml(typeName)}</span>
+      ${marker}
+      <div class="curr-bento-card__body">
+        <span class="curr-bento-num">${escapeHtml(num)} &middot; ${escapeHtml(typeName)}</span>
         <h4 class="curr-bento-title">${escapeHtml(focus)}</h4>
-        ${preview ? `<p class="curr-bento-preview">${escapeHtml(preview)}</p>` : ""}
-      </div>
-      <div class="curr-bento-card__bottom">
-        <span class="curr-bento-meta" aria-hidden="true">${svgIcon(META_ICONS.clock)}<span>~${minutes} min</span></span>
-        <span class="curr-bento-cta">${escapeHtml(cta)}</span>
       </div>
     </button>`;
 }
@@ -528,13 +528,22 @@ export async function loadCurriculum() {
   import("../features/teachingPanel.js")
     .then((m) => m.refreshTeachingPanel?.())
     .catch(() => { /* feature optional; ignore if not loaded */ });
-  renderSkeleton(root);
+
+  // PR auto/path-distill (2026-05-19) — flicker fix. Skip the
+  // skeleton paint when a fresh _curriculumResolved cache already has
+  // the data (warm re-entry after the first load). Without this guard
+  // the user sees skeleton → real cards → bento-skeleton → real bento
+  // every time they return to the path screen.
+  const lang = (state.language === "de" || state.language === "fr") ? state.language : "es";
+  const resolvedKey = "_curriculumResolved_" + lang;
+  const resolvedAtKey = resolvedKey + "_at";
+  const hasFreshResolved = window[resolvedKey] &&
+    (Date.now() - (window[resolvedAtKey] || 0)) < 30000;
+  if (!hasFreshResolved) {
+    renderSkeleton(root);
+  }
 
   try {
-    // L-LANDING-REBUILD-AND-BUGFIX-1, pass ?lang= explicitly so the backend
-    // selects the right LANG_CURRICULA registry. The /api/curriculum route is
-    // not in the AI_ROUTE_PREFIXES list, so apiFetch wouldn't inject it.
-    const lang = (state.language === "de" || state.language === "fr") ? state.language : "es";
     // Share the 30-s cache with dashboard.js (same key), opening Oppimispolku
     // fires both screens' loaders in parallel and they hit the same endpoint.
     // Cache stores Promise<{status, ok, data}> so the second caller can mimic
@@ -547,6 +556,10 @@ export async function loadCurriculum() {
       window[cacheKey + "_at"] = Date.now();
     }
     const cached = await window[cacheKey];
+    if (cached.ok && cached.data) {
+      window[resolvedKey] = cached.data;
+      window[resolvedAtKey] = Date.now();
+    }
     if (!cached.ok) {
       if (cached.status === 401) throw new Error("Kirjaudu sisään nähdäksesi polun.");
       if (cached.status === 403) throw new Error("Tämä kieli ei ole vielä käytössä.");

@@ -2582,3 +2582,166 @@ body.app .dash-kpi-row--footnote .dash-kpi-tile__icon {
     gap: 48px;
   }
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   PATH-SCREEN DISTILL — strip the chrome (PR auto/path-distill)
+   User feedback 2026-05-19: even after the 3-col layout the screen
+   reads as "kalpea SaaS-dashboard". This block hides the visual
+   noise so the page becomes left-TOC + center-grid + nothing else.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Right rail content all hidden on path-screen — the chart-empty,
+   "Viimeisimmät harjoitukset" list, dash-readiness card, and
+   dash-empty-rail card all competed with the lesson grid. The
+   day-CTA stays as the ONE thing on the right. */
+body.app #screen-path .path-rail #dash-recent-wrap,
+body.app #screen-path .path-rail .dash-chart-section,
+body.app #screen-path .path-rail .dash-readiness,
+body.app #screen-path .path-rail .dash-empty-rail {
+  display: none !important;
+}
+
+/* KPI footnote-strip hidden too — student doesn't need streak/totals
+   on the chapter index page. They live on the (future) overview tab. */
+body.app #screen-path .dash-kpi-row--footnote {
+  display: none !important;
+}
+
+/* Active course's outer chrome distilled. The brick-fill rounded
+   panel + step circle + title-row + progress bar are all redundant
+   now that the left TOC carries the "you are here" signal and the
+   bento grid is the actual content. Hide everything inside the
+   .is-current curr-card EXCEPT the bento. */
+body.app #screen-path .curr-card.is-current {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  padding: 0;
+  min-height: 0;
+  display: block;
+}
+body.app #screen-path .curr-card.is-current > .curr-step,
+body.app #screen-path .curr-card.is-current > .curr-body,
+body.app #screen-path .curr-card.is-current > .curr-status {
+  display: none;
+}
+
+/* Collapsed (non-current) course cards in the middle column also
+   become quieter — single-line rows that don't compete with the
+   active course's content. The TOC on the left is the real index;
+   the middle list is a backup affordance for mobile. */
+@media (min-width: 1280px) {
+  body.app #screen-path .curr-card:not(.is-current) {
+    display: none;
+  }
+  body.app #screen-path .curr-list::before { display: none; }
+  body.app #screen-path .curr-head { display: none; }
+}
+
+/* New minimal bento card — number eyebrow + title only, hairline rule
+   between cards instead of card chrome. Reads as a textbook chapter
+   list, not a marketing tile grid. */
+body.app .curr-bento-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 0;
+  border-top: 1px solid var(--ed-rule);
+}
+body.app .curr-bento-card {
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  align-items: start;
+  gap: 14px;
+  padding: 18px 16px;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--ed-rule);
+  border-right: 1px solid var(--ed-rule);
+  border-radius: 0;
+  text-align: left;
+  cursor: pointer;
+  transition: background 160ms ease;
+  min-height: 0;
+  width: 100%;
+}
+body.app .curr-bento-card:hover {
+  background: var(--ed-bg-deep);
+}
+body.app .curr-bento-card:focus-visible {
+  outline: 2px solid var(--ed-accent);
+  outline-offset: -2px;
+}
+body.app .curr-bento-card--feature {
+  background: var(--ed-accent-soft);
+}
+body.app .curr-bento-card--feature:hover {
+  background: color-mix(in oklch, var(--ed-accent) 18%, var(--ed-bg-card));
+}
+body.app .curr-bento-card--done {
+  opacity: 0.78;
+}
+body.app .curr-bento-card__mark {
+  font-family: var(--ed-mono);
+  font-size: 14px;
+  color: var(--ed-olive);
+  line-height: 1.3;
+  padding-top: 1px;
+  text-align: center;
+}
+body.app .curr-bento-card__mark--next {
+  color: var(--ed-accent);
+  font-family: var(--ed-display);
+  font-style: italic;
+}
+body.app .curr-bento-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+body.app .curr-bento-num {
+  font-family: var(--ed-sans);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ed-ink-faint);
+  font-weight: 600;
+}
+body.app .curr-bento-title {
+  font-family: var(--ed-sans);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.005em;
+  color: var(--ed-ink);
+  margin: 0;
+  /* Clamp at 2 lines so cards stay flush in the grid. */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+body.app .curr-bento-card--feature .curr-bento-title {
+  color: var(--ed-ink);
+}
+
+/* Skeleton bento simplified — drop the 12-tile shimmer in favour of
+   one quiet "Avataan kurssia…" line (already styled earlier as
+   .curr-bento--loading). */
+body.app .curr-bento.curr-bento--loading {
+  border-top: 1px solid var(--ed-rule);
+}
+
+/* Greeting tightening — when on path screen it currently competes
+   with the "Oppimispolku" title. Drop the greeting size + remove
+   the rule above it so the typography reads as a header band. */
+body.app #screen-path .dash-greeting {
+  padding-top: 8px;
+  border-top: 0;
+  margin-bottom: 16px;
+}
+body.app #screen-path .dash-greeting .display {
+  font-size: clamp(1.4rem, 2.4vw, 2rem);
+  margin: 0;
+}
+/* Streak chip stays — small enough that it's just metadata. */
