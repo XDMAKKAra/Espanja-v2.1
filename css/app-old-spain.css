@@ -2181,3 +2181,285 @@ body.app.auth-mode .auth-inner__logo span {
   color: var(--ed-accent);
   font-style: italic;
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   DASHBOARD — Old-Spain editorial chrome (PR auth-and-shell + 1)
+   The cream-paper greeting + KPI/rail cards already live further up;
+   this block adds the chapter-opener feel: heavy eyebrow rule, larger
+   Fraunces display, ornamental section dividers, and editorial frames
+   around the day-CTA, empty rail, and chart panel. Goal: read as a
+   SanomaPro/Otava textbook page, not a SaaS dashboard.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Hero band — chapter-opener treatment. Top hairline rule, small caps
+   date eyebrow in brick, larger Fraunces greeting with stronger
+   optical sizing. The rule reads as a textbook "page break". */
+body.app #screen-path .dash-greeting {
+  padding-top: 24px;
+  border-top: 1px solid var(--ed-rule-strong);
+  margin-bottom: 32px;
+}
+body.app .dash-greeting > .eyebrow {
+  font-family: var(--ed-sans);
+  color: var(--ed-accent);
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-size: 11px;
+  margin: 0;
+}
+body.app #screen-path .dash-greeting .display {
+  font-size: clamp(2.6rem, 5.2vw, 4.4rem);
+  font-variation-settings: "opsz" 96, "SOFT" 50, "WONK" 0;
+  letter-spacing: -0.028em;
+  line-height: 0.98;
+  margin: 12px 0 12px;
+  max-width: 22ch;
+}
+
+/* Editorial section divider — a hair rule + tiny center fleuron.
+   Sits between the hero band and the .path-grid. Render via a
+   pseudo-element on .path-grid::before so we don't touch the HTML. */
+body.app #screen-path .path-grid {
+  position: relative;
+}
+body.app #screen-path .path-grid::before {
+  content: "";
+  display: block;
+  height: 1px;
+  background: var(--ed-rule);
+  margin: 0 0 32px;
+  position: relative;
+}
+body.app #screen-path .path-grid::after {
+  content: "✦";
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--ed-display);
+  font-size: 14px;
+  color: var(--ed-accent);
+  background: var(--ed-bg);
+  padding: 0 12px;
+  pointer-events: none;
+}
+
+/* Day-CTA — reframe as a textbook "exercise" card with a small label
+   row above the title. Drops the bright filled-button feel and reads
+   as the open page of a chapter. */
+body.app #screen-path .btn--cta {
+  background: var(--ed-accent);
+  color: var(--ed-accent-ink);
+  border: 0;
+  border-radius: 4px;
+  padding: 22px 24px;
+  position: relative;
+  overflow: hidden;
+  box-shadow:
+    0 1px 0 0 oklch(30% 0.10 28 / 0.45),
+    0 18px 36px -22px oklch(20% 0.10 28 / 0.45);
+}
+body.app #screen-path .btn--cta::before {
+  content: "PÄIVÄN HARJOITUS · YO LYHYT";
+  position: absolute;
+  top: 12px;
+  left: 24px;
+  right: 24px;
+  font-family: var(--ed-sans);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  font-weight: 600;
+  color: oklch(94% 0.012 75 / 0.78);
+  text-transform: uppercase;
+}
+body.app #screen-path .btn--cta__l { margin-top: 16px; }
+body.app #screen-path .btn--cta__title {
+  font-family: var(--ed-display);
+  font-size: clamp(20px, 2.2vw, 26px);
+  font-weight: 500;
+  font-variation-settings: "opsz" 72;
+  letter-spacing: -0.012em;
+  line-height: 1.12;
+}
+body.app #screen-path .btn--cta__meta {
+  font-family: var(--ed-sans);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  margin-top: 6px;
+  color: oklch(94% 0.012 75 / 0.82);
+}
+body.app #screen-path .btn--cta__arrow {
+  font-family: var(--ed-display);
+  font-size: 22px;
+  font-style: italic;
+  color: var(--ed-accent-ink);
+}
+body.app #screen-path .btn--cta:hover {
+  background: var(--ed-accent-hover);
+}
+
+/* Empty-rail card — editorial framed quote + brick rule below the icon.
+   Replaces the generic dashed-border "empty state" feel. */
+body.app .dash-empty-rail {
+  background: var(--ed-bg-card);
+  border: 1px solid var(--ed-rule);
+  border-radius: 4px;
+  padding: 28px 24px;
+  position: relative;
+}
+body.app .dash-empty-rail::before {
+  content: "";
+  position: absolute;
+  top: 28px;
+  left: 24px;
+  width: 32px;
+  height: 2px;
+  background: var(--ed-accent);
+}
+body.app .dash-empty-rail__icon {
+  color: var(--ed-accent);
+  margin-top: 12px;
+  margin-bottom: 16px;
+}
+body.app .dash-empty-rail__title {
+  font-family: var(--ed-display);
+  font-size: 20px;
+  font-weight: 500;
+  font-variation-settings: "opsz" 36;
+  letter-spacing: -0.012em;
+  line-height: 1.2;
+  margin: 0 0 8px;
+  color: var(--ed-ink);
+}
+body.app .dash-empty-rail__sub {
+  font-family: var(--ed-serif);
+  font-style: italic;
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--ed-ink-muted);
+  margin: 0 0 18px;
+}
+body.app .dash-empty-rail__cta {
+  background: var(--ed-accent);
+  color: var(--ed-accent-ink);
+  border: 0;
+  border-radius: 4px;
+  font-family: var(--ed-sans);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  padding: 14px 18px;
+  width: 100%;
+}
+body.app .dash-empty-rail__cta:hover { background: var(--ed-accent-hover); }
+
+/* Chart section — editorial page panel. The empty-state copy gets
+   serif italic so it reads as marginalia, not error text. */
+body.app .dash-chart-section .section-h h2 {
+  font-family: var(--ed-display);
+  font-weight: 400;
+  font-variation-settings: "opsz" 36;
+  font-size: 16px;
+  letter-spacing: 0.02em;
+  color: var(--ed-ink-muted);
+  text-transform: none;
+  border-bottom: 1px solid var(--ed-rule);
+  padding-bottom: 8px;
+}
+body.app .dash-chart-container {
+  background: var(--ed-bg-card);
+  border: 1px solid var(--ed-rule);
+  border-radius: 4px;
+  padding: 24px;
+  margin-top: 14px;
+}
+body.app .dash-chart-empty__title {
+  font-family: var(--ed-display);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--ed-ink-muted);
+}
+body.app .dash-chart-empty__sub {
+  font-family: var(--ed-serif);
+  font-style: italic;
+  color: var(--ed-ink-faint);
+}
+
+/* Recent-list section header matches the chart header treatment. */
+body.app #screen-path .section-h h2 {
+  font-family: var(--ed-display);
+  font-weight: 400;
+  font-variation-settings: "opsz" 36;
+  font-size: 16px;
+  letter-spacing: 0.02em;
+  color: var(--ed-ink-muted);
+  border-bottom: 1px solid var(--ed-rule);
+  padding-bottom: 8px;
+}
+
+/* Sidebar item polish — italic Fraunces glyph hint on the active item,
+   numbered margin marks for the chapter feel. Items already had warm
+   tint from the earlier sidebar block; this adds the editorial pulse. */
+body.app .sidebar-item {
+  font-family: var(--ed-sans);
+  letter-spacing: 0.01em;
+}
+body.app .sidebar-item.active {
+  position: relative;
+}
+body.app .sidebar-item.active::before {
+  content: "❦";
+  position: absolute;
+  left: -4px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--ed-display);
+  font-style: italic;
+  color: var(--ed-accent);
+  font-size: 14px;
+}
+
+/* Top-bar countdown chip — minimal warm pill, not a teal pill. */
+body.app .app-countdown {
+  background: transparent;
+  border: 1px solid var(--ed-rule);
+  color: var(--ed-ink-muted);
+  font-family: var(--ed-sans);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  border-radius: 999px;
+  padding: 6px 12px;
+}
+body.app .app-countdown strong {
+  color: var(--ed-accent);
+  font-family: var(--ed-mono);
+}
+
+/* KPI footnote-strip on path — already rendered below the grid by Task
+   1. Tighten the typography so it reads as marginalia, not a metric
+   bar. */
+body.app .dash-kpi-row--footnote {
+  border-top: 1px solid var(--ed-rule);
+  padding-top: 16px;
+  margin-top: 40px;
+}
+body.app .dash-kpi-row--footnote .dash-kpi-tile {
+  background: transparent;
+  border: 0;
+  padding: 6px 10px;
+}
+body.app .dash-kpi-row--footnote .dash-kpi-tile__val {
+  font-family: var(--ed-mono);
+  font-size: 1.4rem;
+  color: var(--ed-ink);
+}
+body.app .dash-kpi-row--footnote .dash-kpi-tile__label {
+  font-family: var(--ed-sans);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  color: var(--ed-ink-faint);
+}
+body.app .dash-kpi-row--footnote .dash-kpi-tile__icon {
+  display: none;
+}
