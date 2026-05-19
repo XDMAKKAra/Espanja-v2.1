@@ -2607,12 +2607,16 @@ body.app #screen-path .dash-kpi-row--footnote {
   display: none !important;
 }
 
-/* Active course's outer chrome distilled. The brick-fill rounded
-   panel + step circle + title-row + progress bar are all redundant
-   now that the left TOC carries the "you are here" signal and the
-   bento grid is the actual content. Hide everything inside the
-   .is-current curr-card EXCEPT the bento. */
-body.app #screen-path .curr-card.is-current {
+/* Active (expanded) course's outer chrome distilled. The brick-fill
+   rounded panel + step circle + title-row + progress bar are all
+   redundant now that the left TOC carries the "you are here" signal
+   and the bento grid is the actual content. Targeted by .is-expanded
+   (set whenever _state.expanded === k.key) instead of .is-current
+   because the latter is only set when the student has already
+   completed ≥1 lesson — fresh users with zero progress wouldn't
+   get the modifier and the whole list would be hidden by the
+   :not selector below (bug from screenshot 211324). */
+body.app #screen-path .curr-card.is-expanded {
   background: transparent;
   border: 0;
   box-shadow: none;
@@ -2620,18 +2624,20 @@ body.app #screen-path .curr-card.is-current {
   min-height: 0;
   display: block;
 }
-body.app #screen-path .curr-card.is-current > .curr-step,
-body.app #screen-path .curr-card.is-current > .curr-body,
-body.app #screen-path .curr-card.is-current > .curr-status {
+body.app #screen-path .curr-card.is-expanded > .curr-step,
+body.app #screen-path .curr-card.is-expanded > .curr-body,
+body.app #screen-path .curr-card.is-expanded > .curr-status {
   display: none;
 }
 
-/* Collapsed (non-current) course cards in the middle column also
-   become quieter — single-line rows that don't compete with the
-   active course's content. The TOC on the left is the real index;
-   the middle list is a backup affordance for mobile. */
+/* Collapsed (non-expanded) course cards in the middle column are
+   hidden at ≥1280px — they duplicate the left TOC. Mobile falls back
+   to the full course list because the TOC stacks below the main
+   column there. Keying on .is-expanded (not .is-current) so a fresh
+   user whose only progress signal is "Kurssi 1 is unlocked" still
+   sees the active course's lessons in the middle. */
 @media (min-width: 1280px) {
-  body.app #screen-path .curr-card:not(.is-current) {
+  body.app #screen-path .curr-card:not(.is-expanded) {
     display: none;
   }
   body.app #screen-path .curr-list::before { display: none; }
