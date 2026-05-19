@@ -146,16 +146,27 @@ body.app .home-card__cover::before {
   pointer-events: none;
 }
 body.app .home-card__cover-num {
-  position: relative;
+  /* Bug fix screenshot 215619: "1 2 3" was too dominant — softened to
+     a subtle mono numeral in the bottom-left corner instead of a
+     dominant serif glyph in the centre. Cover area now reads as paper
+     texture, not as a tile flagged with a number. */
+  position: absolute;
+  bottom: 14px;
+  left: 16px;
   z-index: 1;
-  font-family: var(--ed-display, Georgia, serif);
-  font-size: clamp(48px, 4vw, 72px);
-  font-weight: 400;
-  font-variation-settings: "opsz" 96;
+  font-family: var(--ed-mono, monospace);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
   line-height: 1;
-  letter-spacing: -0.02em;
-  color: oklch(98% 0.012 75 / 0.96);
-  text-shadow: 0 1px 2px oklch(20% 0.05 30 / 0.18);
+  color: oklch(98% 0.012 75 / 0.88);
+  text-shadow: 0 1px 1px oklch(20% 0.05 30 / 0.22);
+}
+body.app .home-card__cover-num::before {
+  content: "KURSSI ";
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  opacity: 0.72;
 }
 body.app .home-card__cover-level {
   position: absolute;
