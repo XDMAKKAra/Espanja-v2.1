@@ -52,12 +52,21 @@ body:has(#screen-digikirja.active) .app-shell,
 body:has(#screen-digikirja.active) .app-shell[data-rail="off"] {
   grid-template-columns: 1fr;
 }
+/* !important here because the media-query rules in app-shell.css set
+   .app-main { padding: 40px } at 1024–1179px etc. Without !important the
+   user saw a 56px cream band between the browser chrome and the brick
+   topbar — that's --app-gutter-y bleeding through. */
 body:has(#screen-digikirja.active) .app-main {
-  grid-column: 1 / -1;
-  padding: 0;
+  grid-column: 1 / -1 !important;
+  padding: 0 !important;
 }
 body:has(#screen-digikirja.active) .app-main-inner {
-  max-width: none;
+  max-width: none !important;
+  margin: 0 !important;
+}
+body:has(#screen-digikirja.active) #screen-digikirja.screen.active {
+  position: static;
+  padding: 0 !important;
 }
 /* The .dk grid is itself 100dvh tall and sticky-scrolls its sidemenu, so
    the outer .app-main / #screen-digikirja shouldn't keep their own scroll
@@ -113,7 +122,7 @@ body:has(#screen-digikirja.active) .app-main-inner {
   appearance: none;
   background: transparent;
   border: 0;
-  color: var(--ed-accent-ink);
+  color: #fbfaf6;
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -126,24 +135,24 @@ body:has(#screen-digikirja.active) .app-main-inner {
   transition: background 140ms var(--dk-ease);
 }
 .dk__home:hover {
-  background: color-mix(in oklch, var(--ed-accent) 80%, white);
+  background: rgba(255, 255, 255, 0.12);
 }
 .dk__home:focus-visible {
-  outline: 2px solid var(--ed-accent-ink);
+  outline: 2px solid #fbfaf6;
   outline-offset: 2px;
 }
 /* Inverted tool buttons (hamburger, search, help) sit on the brick now,
    so their default ink-on-cream colors flip. */
 .dk__tool--invert {
-  color: var(--ed-accent-ink);
+  color: #fbfaf6;
 }
 .dk__tool--invert:hover {
-  background: color-mix(in oklch, var(--ed-accent) 80%, white);
-  color: var(--ed-accent-ink);
+  background: rgba(255, 255, 255, 0.12);
+  color: #fbfaf6;
 }
 .dk__tool--invert[aria-pressed="true"] {
-  background: color-mix(in oklch, var(--ed-accent) 70%, white);
-  color: var(--ed-accent-ink);
+  background: rgba(255, 255, 255, 0.22);
+  color: #fbfaf6;
 }
 
 .dk__breadcrumb {
@@ -175,12 +184,16 @@ body:has(#screen-digikirja.active) .app-main-inner {
   font-weight: 600;
   font-size: 15px;
   letter-spacing: -0.005em;
-  color: var(--ed-accent-ink);
+  /* Hard-coded paper white instead of var(--ed-accent-ink). The token
+     resolves to oklch(96% 0.012 75) which is cream, but a global h1 rule
+     in style.css was overriding the effective color in the cascade and
+     bleeding the page-title ink color through. Force the topbar text. */
+  color: #fbfaf6 !important;
   text-align: center;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  opacity: 0.95;
+  margin: 0;
 }
 
 .dk__tools {
@@ -499,25 +512,24 @@ body:has(#screen-digikirja.active) .app-main-inner {
   color: var(--ed-ink-muted);
 }
 
-/* TopBar progress chip — small pill on the brick topbar. Translucent
-   overlay rather than card-on-card, so it reads as part of the topbar. */
+/* TopBar progress chip — translucent overlay on the brick. */
 .dk__progress-chip {
   display: inline-flex;
   align-items: center;
   padding: 4px 10px;
   border-radius: 999px;
-  background: color-mix(in oklch, var(--ed-accent-ink) 18%, transparent);
-  border: 1px solid color-mix(in oklch, var(--ed-accent-ink) 30%, transparent);
-  color: var(--ed-accent-ink);
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.30);
+  color: #fbfaf6;
   font-family: var(--ed-mono);
   font-size: 11.5px;
   letter-spacing: 0.08em;
   font-variant-numeric: tabular-nums;
 }
 .dk__progress-chip[data-full="true"] {
-  background: var(--ed-accent-ink);
+  background: #fbfaf6;
   color: var(--ed-accent);
-  border-color: var(--ed-accent-ink);
+  border-color: #fbfaf6;
 }
 @media (max-width: 900px) {
   .dk__progress-chip { display: none; }
