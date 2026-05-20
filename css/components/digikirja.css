@@ -78,7 +78,9 @@ body:has(#screen-digikirja.active) .app-main-inner {
 
   display: grid;
   grid-template-rows: var(--dk-topbar-height) 1fr;
-  min-height: calc(100dvh - var(--app-topbar-h, 0px));
+  /* Hidden global topbar on this screen (see :has rule above) → don't
+     subtract its height. The .dk fills the full viewport. */
+  min-height: 100dvh;
   font-family: var(--ed-sans);
   color: var(--ed-ink);
 }
@@ -94,11 +96,54 @@ body:has(#screen-digikirja.active) .app-main-inner {
   align-items: center;
   gap: 16px;
   height: var(--dk-topbar-height);
-  padding: 0 24px;
-  /* Solid surface, no blur — the blur read as decorative chrome rather
-     than an anchored book topbar. */
-  background: var(--ed-bg);
-  border-bottom: 1px solid var(--ed-rule);
+  padding: 0 20px 0 14px;
+  /* Solid brick like Sanoma's purple topbar — anchors the lesson in a
+     way the cream-on-cream topbar never managed. White text/icons sit on
+     it with full WCAG-AA contrast (ed-accent vs ed-accent-ink). */
+  background: var(--ed-accent);
+  color: var(--ed-accent-ink);
+  border-bottom: 0;
+}
+.dk__topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.dk__home {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  color: var(--ed-accent-ink);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-family: var(--ed-sans);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 140ms var(--dk-ease);
+}
+.dk__home:hover {
+  background: color-mix(in oklch, var(--ed-accent) 80%, white);
+}
+.dk__home:focus-visible {
+  outline: 2px solid var(--ed-accent-ink);
+  outline-offset: 2px;
+}
+/* Inverted tool buttons (hamburger, search, help) sit on the brick now,
+   so their default ink-on-cream colors flip. */
+.dk__tool--invert {
+  color: var(--ed-accent-ink);
+}
+.dk__tool--invert:hover {
+  background: color-mix(in oklch, var(--ed-accent) 80%, white);
+  color: var(--ed-accent-ink);
+}
+.dk__tool--invert[aria-pressed="true"] {
+  background: color-mix(in oklch, var(--ed-accent) 70%, white);
+  color: var(--ed-accent-ink);
 }
 
 .dk__breadcrumb {
@@ -130,11 +175,12 @@ body:has(#screen-digikirja.active) .app-main-inner {
   font-weight: 600;
   font-size: 15px;
   letter-spacing: -0.005em;
-  color: var(--ed-ink);
+  color: var(--ed-accent-ink);
   text-align: center;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  opacity: 0.95;
 }
 
 .dk__tools {
@@ -176,10 +222,32 @@ body:has(#screen-digikirja.active) .app-main-inner {
   grid-template-columns: var(--dk-sidemenu-width) minmax(0, 1fr);
   align-items: start;
   min-height: 0;
+  /* Paint the sidebar paper stripe on the body itself so it visually
+     reaches the bottom even when the sidemenu's actual content is short.
+     The .dk__sidemenu sits inside the first column and is sticky on top
+     of this stripe. */
+  background:
+    linear-gradient(
+      to right,
+      #fbfaf6 0,
+      #fbfaf6 var(--dk-sidemenu-width),
+      var(--ed-rule) var(--dk-sidemenu-width),
+      var(--ed-rule) calc(var(--dk-sidemenu-width) + 1px),
+      var(--ed-bg) calc(var(--dk-sidemenu-width) + 1px)
+    );
 }
 
 .dk[data-sidemenu="collapsed"] .dk__body {
   grid-template-columns: var(--dk-sidemenu-rail) minmax(0, 1fr);
+  background:
+    linear-gradient(
+      to right,
+      #fbfaf6 0,
+      #fbfaf6 var(--dk-sidemenu-rail),
+      var(--ed-rule) var(--dk-sidemenu-rail),
+      var(--ed-rule) calc(var(--dk-sidemenu-rail) + 1px),
+      var(--ed-bg) calc(var(--dk-sidemenu-rail) + 1px)
+    );
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -226,6 +294,12 @@ body:has(#screen-digikirja.active) .app-main-inner {
 .dk__sidemenu-logo span {
   color: var(--ed-accent);
   font-style: italic;
+}
+.dk__sidemenu-course {
+  font-family: var(--ed-sans);
+  font-size: 12px;
+  color: var(--ed-ink-muted);
+  letter-spacing: 0.01em;
 }
 .dk__sidemenu-action {
   appearance: none;
@@ -425,25 +499,25 @@ body:has(#screen-digikirja.active) .app-main-inner {
   color: var(--ed-ink-muted);
 }
 
-/* TopBar progress chip — small pill, sits between title and tools.
-   Picks up an accent fill once the whole lesson is done. */
+/* TopBar progress chip — small pill on the brick topbar. Translucent
+   overlay rather than card-on-card, so it reads as part of the topbar. */
 .dk__progress-chip {
   display: inline-flex;
   align-items: center;
   padding: 4px 10px;
   border-radius: 999px;
-  background: var(--ed-bg-deep);
-  border: 1px solid var(--ed-rule);
-  color: var(--ed-ink-muted);
+  background: color-mix(in oklch, var(--ed-accent-ink) 18%, transparent);
+  border: 1px solid color-mix(in oklch, var(--ed-accent-ink) 30%, transparent);
+  color: var(--ed-accent-ink);
   font-family: var(--ed-mono);
   font-size: 11.5px;
   letter-spacing: 0.08em;
   font-variant-numeric: tabular-nums;
 }
 .dk__progress-chip[data-full="true"] {
-  background: var(--ed-accent);
-  color: var(--ed-accent-ink);
-  border-color: var(--ed-accent);
+  background: var(--ed-accent-ink);
+  color: var(--ed-accent);
+  border-color: var(--ed-accent-ink);
 }
 @media (max-width: 900px) {
   .dk__progress-chip { display: none; }
