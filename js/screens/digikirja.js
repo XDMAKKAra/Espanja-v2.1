@@ -86,6 +86,12 @@ const PHASE_TITLE_REWRITES = [
   [/^YO-tyylinen käännös$/i,    "Käännä lauseet"],
   [/^YO-tason käännös$/i,        "Käännä lauseet"],
   [/^Lyhyt kirjoitus$/i,         "Kirjoita lyhyt teksti"],
+  // "Lauseen rakentelua" / "Lauseiden rakentelua" -- title implied
+  // sentence-building but the underlying items were plain translation
+  // tasks (user pushback). Until a real word-rearrange exercise type
+  // ships, rename so the title matches what the student sees.
+  [/^Lauseiden rakentelua$/i,    "Käännä lauseet"],
+  [/^Lauseen rakentelua$/i,      "Käännä lauseet"],
   [/Lauseen täydennys\s*[—-]\s*/g, "Lauseen täydennys, "],
   [/Tunnista\s*[—-]\s*/g,        "Tunnista "],
   [/Tuota\s*[—-]\s*/g,           "Tuota "],

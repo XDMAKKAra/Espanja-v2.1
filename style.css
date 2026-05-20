@@ -299,6 +299,11 @@ body::before {
 /* ── APP SIDEBAR ── */
 .app-sidebar {
   width: 220px;
+  /* Lock height to the full viewport: top:0/bottom:0 alone left a gap
+     on some browsers where the body short-circuited under viewport
+     height. height: 100dvh forces full coverage from the top-left
+     corner to the bottom-left corner. */
+  height: 100dvh;
   min-height: 100vh;
   background: var(--surface);
   border-right: 1px solid var(--border);
@@ -310,6 +315,7 @@ body::before {
   left: 0;
   top: 0;
   bottom: 0;
+  overflow-y: auto;
 }
 .sidebar-logo {
   font-size: 22px;
