@@ -285,13 +285,15 @@ body:has(#screen-digikirja.active) #screen-digikirja.screen.active {
 .dk__sidemenu {
   position: sticky;
   top: var(--dk-topbar-height);
-  align-self: start;
-  max-height: calc(100dvh - var(--dk-topbar-height));
+  /* Force the sidemenu to ALWAYS fill the viewport beneath the topbar,
+     not just the content's natural height. align-self: stretch + height
+     pins it from y=topbar-height to y=viewport-bottom. User reported a
+     ~80px cream gap below the footer when max-height alone let the
+     content shrink. */
+  align-self: stretch;
+  height: calc(100dvh - var(--dk-topbar-height));
   display: flex;
   flex-direction: column;
-  /* Crisp white paper sidebar against the cream lesson body — gives the
-     SideMenu its own surface (like Sanoma / Otava do) instead of bleeding
-     into the lesson cream. */
   background: #fbfaf6;
   border-right: 1px solid var(--ed-rule);
   overflow: hidden;
