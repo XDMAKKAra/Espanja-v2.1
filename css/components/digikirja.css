@@ -39,11 +39,15 @@
 }
 
 /* When the digikirja screen is active, the lesson takes over the whole
-   viewport: hide the global .app-sidebar (Aloitus/Asetukset rail), drop
-   .app-main padding to zero, and let the digikirja grid span edge-to-edge.
-   The digikirja has its own SideMenu — two sidebars side-by-side ate ~510px
-   of viewport before any content rendered. */
+   viewport. The digikirja has its own SideMenu carrying Aloitus + the
+   account section, so the global chrome (sidebar, profile FAB, YO
+   countdown pill, mobile-only topbar) is suppressed: it would otherwise
+   overlap the dk__topbar title or eat horizontal space. */
 body:has(#screen-digikirja.active) .app-sidebar { display: none; }
+body:has(#screen-digikirja.active) .profile-menu-wrap { display: none; }
+body:has(#screen-digikirja.active) .app-countdown { display: none; }
+body:has(#screen-digikirja.active) .app-topbar { display: none; }
+body:has(#screen-digikirja.active) .mobile-nav { display: none; }
 body:has(#screen-digikirja.active) .app-shell,
 body:has(#screen-digikirja.active) .app-shell[data-rail="off"] {
   grid-template-columns: 1fr;
@@ -55,6 +59,12 @@ body:has(#screen-digikirja.active) .app-main {
 body:has(#screen-digikirja.active) .app-main-inner {
   max-width: none;
 }
+/* The .dk grid is itself 100dvh tall and sticky-scrolls its sidemenu, so
+   the outer .app-main / #screen-digikirja shouldn't keep their own scroll
+   contexts — double scrollbars + the bottom empty cream the user reported
+   come from .screen.active having overflow-y:auto with content shorter
+   than viewport. Let the inner .dk handle it. */
+#screen-digikirja.screen.active { overflow: visible; }
 
 .dk {
   --dk-sidemenu-width: 288px;
@@ -80,16 +90,14 @@ body:has(#screen-digikirja.active) .app-main-inner {
   top: 0;
   z-index: 5;
   display: grid;
-  /* Bound the breadcrumb and tools columns so the title (1fr in the middle)
-     can never get squeezed to ellipsis on common lesson titles. */
   grid-template-columns: minmax(0, max-content) minmax(0, 1fr) minmax(0, max-content);
   align-items: center;
-  gap: 12px;
+  gap: 16px;
   height: var(--dk-topbar-height);
-  padding: 0 20px;
-  background: color-mix(in oklch, var(--ed-bg) 88%, transparent);
-  backdrop-filter: saturate(140%) blur(8px);
-  -webkit-backdrop-filter: saturate(140%) blur(8px);
+  padding: 0 24px;
+  /* Solid surface, no blur — the blur read as decorative chrome rather
+     than an anchored book topbar. */
+  background: var(--ed-bg);
   border-bottom: 1px solid var(--ed-rule);
 }
 
@@ -118,10 +126,9 @@ body:has(#screen-digikirja.active) .app-main-inner {
 }
 
 .dk__title {
-  font-family: var(--ed-display);
-  font-style: italic;
-  font-weight: 500;
-  font-size: 17px;
+  font-family: var(--ed-sans);
+  font-weight: 600;
+  font-size: 15px;
   letter-spacing: -0.005em;
   color: var(--ed-ink);
   text-align: center;
@@ -187,10 +194,13 @@ body:has(#screen-digikirja.active) .app-main-inner {
   position: sticky;
   top: var(--dk-topbar-height);
   align-self: start;
-  max-height: calc(100dvh - var(--dk-topbar-height) - var(--app-topbar-h, 0px));
+  max-height: calc(100dvh - var(--dk-topbar-height));
   display: flex;
   flex-direction: column;
-  background: var(--ed-bg-deep);
+  /* Crisp white paper sidebar against the cream lesson body — gives the
+     SideMenu its own surface (like Sanoma / Otava do) instead of bleeding
+     into the lesson cream. */
+  background: #fbfaf6;
   border-right: 1px solid var(--ed-rule);
   overflow: hidden;
 }
@@ -200,15 +210,15 @@ body:has(#screen-digikirja.active) .app-main-inner {
 .dk__sidemenu-top {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  padding: 16px 18px 12px;
+  gap: 10px;
+  padding: 22px 20px 14px;
   border-bottom: 1px solid var(--ed-rule);
 }
 .dk__sidemenu-logo {
   font-family: var(--ed-display);
-  font-size: 22px;
-  font-weight: 600;
-  letter-spacing: -0.01em;
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: -0.015em;
   color: var(--ed-ink);
   text-decoration: none;
   line-height: 1;
@@ -220,42 +230,43 @@ body:has(#screen-digikirja.active) .app-main-inner {
 .dk__sidemenu-action {
   appearance: none;
   background: transparent;
-  border: 1px solid transparent;
+  border: 0;
   border-radius: 8px;
-  padding: 8px 10px;
+  padding: 9px 10px;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   width: 100%;
   font-family: var(--ed-sans);
-  font-size: 13.5px;
-  color: var(--ed-ink-muted);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ed-ink);
   cursor: pointer;
   text-align: left;
   transition: background 140ms var(--dk-ease), color 140ms var(--dk-ease);
 }
 .dk__sidemenu-action:hover {
-  background: color-mix(in oklch, var(--ed-bg) 60%, var(--ed-bg-deep));
-  color: var(--ed-ink);
+  background: color-mix(in oklch, var(--ed-bg) 50%, var(--ed-bg-deep));
 }
-.dk__sidemenu-action svg { flex-shrink: 0; }
+.dk__sidemenu-action svg { flex-shrink: 0; color: var(--ed-ink-muted); }
+.dk__sidemenu-action:hover svg { color: var(--ed-ink); }
 
 /* Bottom slot — account row (email) + Asetukset + Kirjaudu ulos. */
 .dk__sidemenu-footer {
   display: flex;
   flex-direction: column;
   gap: 2px;
-  padding: 10px 12px 14px;
+  padding: 12px 10px 18px;
   border-top: 1px solid var(--ed-rule);
 }
 .dk__sidemenu-user {
   appearance: none;
   background: transparent;
   border: 0;
-  padding: 8px 10px;
+  padding: 10px 12px;
   border-radius: 8px;
-  font-family: var(--ed-mono);
-  font-size: 12px;
+  font-family: var(--ed-sans);
+  font-size: 12.5px;
   color: var(--ed-ink-muted);
   text-align: left;
   cursor: pointer;
@@ -265,7 +276,7 @@ body:has(#screen-digikirja.active) .app-main-inner {
   transition: background 140ms var(--dk-ease), color 140ms var(--dk-ease);
 }
 .dk__sidemenu-user:hover {
-  background: color-mix(in oklch, var(--ed-bg) 60%, var(--ed-bg-deep));
+  background: color-mix(in oklch, var(--ed-bg) 50%, var(--ed-bg-deep));
   color: var(--ed-ink);
 }
 .dk__sidemenu-user-text {
@@ -274,6 +285,14 @@ body:has(#screen-digikirja.active) .app-main-inner {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+.dk__sidemenu-footer .dk__sidemenu-action {
+  padding: 9px 12px;
+  font-size: 13.5px;
+  color: var(--ed-ink-muted);
+}
+.dk__sidemenu-footer .dk__sidemenu-action:hover {
+  color: var(--ed-ink);
 }
 
 .dk[data-sidemenu="collapsed"] .dk__sidemenu-top,
@@ -286,20 +305,19 @@ body:has(#screen-digikirja.active) .app-main-inner {
   align-items: baseline;
   justify-content: space-between;
   gap: 8px;
-  padding: 18px 18px 10px;
-  border-bottom: 1px solid var(--ed-rule);
+  padding: 18px 20px 8px;
 }
 .dk__sidemenu-eyebrow {
-  font-family: var(--ed-mono);
-  font-size: 11px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--ed-ink-faint);
+  font-family: var(--ed-sans);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.005em;
+  color: var(--ed-ink);
 }
 .dk__sidemenu-count {
-  font-family: var(--ed-mono);
+  font-family: var(--ed-sans);
   font-size: 12px;
-  color: var(--ed-ink-muted);
+  color: var(--ed-ink-faint);
 }
 
 .dk[data-sidemenu="collapsed"] .dk__sidemenu-head,
@@ -324,51 +342,48 @@ body:has(#screen-digikirja.active) .app-main-inner {
   border-radius: 3px;
 }
 
+/* Group titles: subtle sans-serif sublabel, not a monospace UPPERCASE chip.
+   Sanoma/Otava use a quiet hierarchy header here; the all-caps mono-tracked
+   label read as "AI dashboard label" rather than a textbook section name. */
 .dk__group-title {
   display: block;
-  padding: 14px 18px 6px;
-  font-family: var(--ed-mono);
-  font-size: 10px;
-  letter-spacing: 0.16em;
+  padding: 16px 20px 6px;
+  font-family: var(--ed-sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--ed-ink-faint);
 }
-.dk__group-title:first-child { padding-top: 8px; }
+.dk__group-title:first-child { padding-top: 4px; }
 
-/* Otava-style row: circle bullet + title + optional ✓. No SVG glyph,
-   no separate number column — the number lives inline at the start of
-   the title ("1 Tunnista – perheenjäsenet"). Calmer rhythm, less noise. */
+/* Sidemenu row: simple text + status disc. Active row goes full-bleed
+   brick like Sanoma's solid purple block; done row is calm with a soft
+   accent disc. No side stripes (absolute ban), no nested cards. */
 .dk__row {
   appearance: none;
   background: transparent;
   border: 0;
   width: 100%;
   display: grid;
-  grid-template-columns: 18px 1fr auto;
+  grid-template-columns: 1fr auto;
   align-items: center;
-  gap: 12px;
-  padding: 9px 16px 9px 14px;
+  gap: 10px;
+  padding: 9px 20px;
   text-align: left;
   cursor: pointer;
-  color: var(--ed-ink-muted);
+  color: var(--ed-ink);
   font-family: var(--ed-sans);
   font-size: 14px;
-  line-height: 1.35;
+  line-height: 1.4;
   position: relative;
   transition: background 140ms var(--dk-ease),
               color 140ms var(--dk-ease);
 }
-.dk__row-bullet {
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  border: 1.5px solid var(--ed-rule-strong);
-  background: transparent;
-  transition: background 140ms var(--dk-ease),
-              border-color 140ms var(--dk-ease);
+.dk__row-bullet { display: none; }
+.dk__row:hover {
+  background: color-mix(in oklch, var(--ed-bg) 40%, var(--ed-bg-deep));
 }
-.dk__row:hover { background: color-mix(in oklch, var(--ed-bg-deep) 60%, var(--ed-bg)); }
-.dk__row:hover .dk__row-bullet { border-color: var(--ed-ink-muted); }
 .dk__row:focus-visible {
   outline: 2px solid var(--ed-accent);
   outline-offset: -2px;
@@ -382,33 +397,32 @@ body:has(#screen-digikirja.active) .app-main-inner {
   white-space: nowrap;
 }
 .dk__row-check {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--ed-accent);
+  color: var(--ed-accent-ink);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   font-family: var(--ed-sans);
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--ed-accent);
+  font-size: 10px;
+  font-weight: 700;
   line-height: 1;
 }
 
 .dk__row.is-active {
-  background: var(--ed-accent-soft);
-  color: var(--ed-ink);
-}
-.dk__row.is-active .dk__row-bullet {
   background: var(--ed-accent);
-  border-color: var(--ed-accent);
+  color: var(--ed-accent-ink);
 }
-.dk__row.is-active .dk__row-title {
-  font-weight: 600;
-  color: var(--ed-ink);
+.dk__row.is-active .dk__row-title { font-weight: 600; }
+.dk__row.is-active .dk__row-check {
+  background: var(--ed-accent-ink);
+  color: var(--ed-accent);
 }
 
-.dk__row.is-done .dk__row-bullet {
-  background: color-mix(in oklch, var(--ed-accent) 35%, var(--ed-bg-deep));
-  border-color: color-mix(in oklch, var(--ed-accent) 55%, var(--ed-rule-strong));
-}
-.dk__row.is-done.is-active .dk__row-bullet {
-  background: var(--ed-accent);
-  border-color: var(--ed-accent);
+.dk__row.is-done:not(.is-active) {
+  color: var(--ed-ink-muted);
 }
 
 /* TopBar progress chip — small pill, sits between title and tools.
@@ -451,9 +465,17 @@ body:has(#screen-digikirja.active) .app-main-inner {
 /* ── Content column ────────────────────────────────────────────────── */
 
 .dk__content {
-  padding: 36px clamp(20px, 4vw, 64px) 96px;
+  padding: 36px clamp(20px, 4vw, 64px) 48px;
   min-height: 0;
   min-width: 0;
+  /* Flex column so .dk__prevnext--bottom can pin to the viewport bottom on
+     short lessons. Without this the page ended after PrevNext and left an
+     ugly empty cream band below the fold. */
+  display: flex;
+  flex-direction: column;
+}
+.dk__content > .dk__prevnext--bottom {
+  margin-top: auto;
 }
 
 .dk__page-meta {
