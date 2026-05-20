@@ -138,7 +138,9 @@ function escapeHtml(s) {
 function readSidemenuPref() {
   try {
     const v = localStorage.getItem(LS_SIDEMENU);
-    return v === SIDEMENU_COLLAPSED ? SIDEMENU_COLLAPSED : SIDEMENU_OPEN;
+    // Default to COLLAPSED (Sanoma-style: panel hidden until user opens
+    // it). Only honour the saved OPEN choice; absence = collapsed.
+    return v === SIDEMENU_OPEN ? SIDEMENU_OPEN : SIDEMENU_COLLAPSED;
   } catch {
     return SIDEMENU_OPEN;
   }

@@ -260,17 +260,17 @@ body:has(#screen-digikirja.active) #screen-digikirja.screen.active {
     );
 }
 
+/* Collapsed = fully hidden (Sanoma-style). The sidemenu drops out of
+   the grid entirely so the lesson content uses the whole viewport, and
+   the paper-stripe gradient is replaced with the plain cream so the
+   left edge doesn't look like a half-rail. The hamburger in the topbar
+   slides it back in. */
 .dk[data-sidemenu="collapsed"] .dk__body {
-  grid-template-columns: var(--dk-sidemenu-rail) minmax(0, 1fr);
-  background:
-    linear-gradient(
-      to right,
-      #fbfaf6 0,
-      #fbfaf6 var(--dk-sidemenu-rail),
-      var(--ed-rule) var(--dk-sidemenu-rail),
-      var(--ed-rule) calc(var(--dk-sidemenu-rail) + 1px),
-      var(--ed-bg) calc(var(--dk-sidemenu-rail) + 1px)
-    );
+  grid-template-columns: 0 minmax(0, 1fr);
+  background: var(--ed-bg);
+}
+.dk[data-sidemenu="collapsed"] .dk__sidemenu {
+  display: none;
 }
 
 @media (prefers-reduced-motion: no-preference) {
