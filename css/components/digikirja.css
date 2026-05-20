@@ -142,15 +142,19 @@ body:has(#screen-digikirja.active) #screen-digikirja.screen.active {
   outline-offset: 2px;
 }
 /* Inverted tool buttons (hamburger, search, help) sit on the brick now,
-   so their default ink-on-cream colors flip. */
-.dk__tool--invert {
+   so their default ink-on-cream colors flip. The double-class selector
+   bumps specificity above the plain `.dk__tool` rule that appears later
+   in this file — without it the cascade tie was resolved by source
+   order and the icons stayed dark on the brick (user screenshot
+   2026-05-20 224424). */
+.dk__tool.dk__tool--invert {
   color: #fbfaf6;
 }
-.dk__tool--invert:hover {
+.dk__tool.dk__tool--invert:hover {
   background: rgba(255, 255, 255, 0.12);
   color: #fbfaf6;
 }
-.dk__tool--invert[aria-pressed="true"] {
+.dk__tool.dk__tool--invert[aria-pressed="true"] {
   background: rgba(255, 255, 255, 0.22);
   color: #fbfaf6;
 }
