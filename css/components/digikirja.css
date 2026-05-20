@@ -195,6 +195,92 @@ body:has(#screen-digikirja.active) .app-main-inner {
   overflow: hidden;
 }
 
+/* Top slot — Puheo logo + Aloitus shortcut. Replaces the standalone
+   global .app-sidebar on this screen (hidden via body:has rule above). */
+.dk__sidemenu-top {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 16px 18px 12px;
+  border-bottom: 1px solid var(--ed-rule);
+}
+.dk__sidemenu-logo {
+  font-family: var(--ed-display);
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--ed-ink);
+  text-decoration: none;
+  line-height: 1;
+}
+.dk__sidemenu-logo span {
+  color: var(--ed-accent);
+  font-style: italic;
+}
+.dk__sidemenu-action {
+  appearance: none;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: 8px 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  font-family: var(--ed-sans);
+  font-size: 13.5px;
+  color: var(--ed-ink-muted);
+  cursor: pointer;
+  text-align: left;
+  transition: background 140ms var(--dk-ease), color 140ms var(--dk-ease);
+}
+.dk__sidemenu-action:hover {
+  background: color-mix(in oklch, var(--ed-bg) 60%, var(--ed-bg-deep));
+  color: var(--ed-ink);
+}
+.dk__sidemenu-action svg { flex-shrink: 0; }
+
+/* Bottom slot — account row (email) + Asetukset + Kirjaudu ulos. */
+.dk__sidemenu-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 10px 12px 14px;
+  border-top: 1px solid var(--ed-rule);
+}
+.dk__sidemenu-user {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-family: var(--ed-mono);
+  font-size: 12px;
+  color: var(--ed-ink-muted);
+  text-align: left;
+  cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: background 140ms var(--dk-ease), color 140ms var(--dk-ease);
+}
+.dk__sidemenu-user:hover {
+  background: color-mix(in oklch, var(--ed-bg) 60%, var(--ed-bg-deep));
+  color: var(--ed-ink);
+}
+.dk__sidemenu-user-text {
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dk[data-sidemenu="collapsed"] .dk__sidemenu-top,
+.dk[data-sidemenu="collapsed"] .dk__sidemenu-footer {
+  display: none;
+}
+
 .dk__sidemenu-head {
   display: flex;
   align-items: baseline;
@@ -218,7 +304,7 @@ body:has(#screen-digikirja.active) .app-main-inner {
 
 .dk[data-sidemenu="collapsed"] .dk__sidemenu-head,
 .dk[data-sidemenu="collapsed"] .dk__row-title,
-.dk[data-sidemenu="collapsed"] .dk__row-meta,
+.dk[data-sidemenu="collapsed"] .dk__row-check,
 .dk[data-sidemenu="collapsed"] .dk__group-title {
   opacity: 0;
   pointer-events: none;
@@ -249,48 +335,45 @@ body:has(#screen-digikirja.active) .app-main-inner {
 }
 .dk__group-title:first-child { padding-top: 8px; }
 
+/* Otava-style row: circle bullet + title + optional ✓. No SVG glyph,
+   no separate number column — the number lives inline at the start of
+   the title ("1 Tunnista – perheenjäsenet"). Calmer rhythm, less noise. */
 .dk__row {
   appearance: none;
   background: transparent;
   border: 0;
   width: 100%;
   display: grid;
-  grid-template-columns: 22px 28px 1fr auto;
+  grid-template-columns: 18px 1fr auto;
   align-items: center;
-  gap: 10px;
-  padding: 8px 14px 8px 12px;
+  gap: 12px;
+  padding: 9px 16px 9px 14px;
   text-align: left;
   cursor: pointer;
   color: var(--ed-ink-muted);
   font-family: var(--ed-sans);
   font-size: 14px;
-  line-height: 1.3;
+  line-height: 1.35;
   position: relative;
   transition: background 140ms var(--dk-ease),
               color 140ms var(--dk-ease);
 }
-.dk__row-glyph-wrap {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--ed-ink-faint);
-  transition: color 140ms var(--dk-ease);
+.dk__row-bullet {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1.5px solid var(--ed-rule-strong);
+  background: transparent;
+  transition: background 140ms var(--dk-ease),
+              border-color 140ms var(--dk-ease);
 }
-.dk__row.is-active .dk__row-glyph-wrap { color: var(--ed-accent); }
-.dk__row:hover .dk__row-glyph-wrap { color: var(--ed-ink-muted); }
-.dk__row:hover { background: color-mix(in oklch, var(--ed-bg-deep) 70%, var(--ed-bg)); }
+.dk__row:hover { background: color-mix(in oklch, var(--ed-bg-deep) 60%, var(--ed-bg)); }
+.dk__row:hover .dk__row-bullet { border-color: var(--ed-ink-muted); }
 .dk__row:focus-visible {
   outline: 2px solid var(--ed-accent);
   outline-offset: -2px;
 }
 
-.dk__row-num {
-  font-family: var(--ed-mono);
-  font-size: 12px;
-  color: var(--ed-ink-faint);
-  text-align: right;
-  font-variant-numeric: tabular-nums;
-}
 .dk__row-title {
   color: inherit;
   font-weight: 500;
@@ -298,47 +381,34 @@ body:has(#screen-digikirja.active) .app-main-inner {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.dk__row-meta {
-  font-family: var(--ed-mono);
-  font-size: 10px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--ed-ink-faint);
+.dk__row-check {
+  font-family: var(--ed-sans);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ed-accent);
+  line-height: 1;
 }
 
-/* Active row: background tint + bold italic title, no side stripe.
-   (Honours impeccable "no side-stripe borders" ban.) */
 .dk__row.is-active {
   background: var(--ed-accent-soft);
   color: var(--ed-ink);
 }
-.dk__row.is-active .dk__row-title {
-  font-family: var(--ed-display);
-  font-style: italic;
-  font-weight: 600;
-  font-size: 15px;
-  letter-spacing: -0.005em;
+.dk__row.is-active .dk__row-bullet {
+  background: var(--ed-accent);
+  border-color: var(--ed-accent);
 }
-.dk__row.is-active .dk__row-num,
-.dk__row.is-active .dk__row-meta {
-  color: var(--ed-accent);
+.dk__row.is-active .dk__row-title {
+  font-weight: 600;
+  color: var(--ed-ink);
 }
 
-.dk__row.is-done .dk__row-num {
-  color: var(--ed-accent);
+.dk__row.is-done .dk__row-bullet {
+  background: color-mix(in oklch, var(--ed-accent) 35%, var(--ed-bg-deep));
+  border-color: color-mix(in oklch, var(--ed-accent) 55%, var(--ed-rule-strong));
 }
-.dk__row.is-done .dk__row-glyph-wrap { color: var(--ed-accent); }
-/* Done state replaces the meta column with a check chip, leaving the
-   number + title untouched. No side-stripe (impeccable ban). */
-.dk__row.is-done .dk__row-meta {
-  color: var(--ed-accent);
-  font-family: var(--ed-mono);
-  font-size: 10px;
-}
-.dk__row.is-done .dk__row-meta::before {
-  content: "✓ ";
-  font-family: var(--ed-sans);
-  margin-right: 2px;
+.dk__row.is-done.is-active .dk__row-bullet {
+  background: var(--ed-accent);
+  border-color: var(--ed-accent);
 }
 
 /* TopBar progress chip — small pill, sits between title and tools.
@@ -373,16 +443,9 @@ body:has(#screen-digikirja.active) .app-main-inner {
   padding: 10px 0;
   justify-items: center;
 }
-.dk[data-sidemenu="collapsed"] .dk__row-glyph-wrap {
-  width: 28px;
-  height: 28px;
-}
-.dk[data-sidemenu="collapsed"] .dk__row-glyph-wrap svg {
-  width: 20px;
-  height: 20px;
-}
-.dk[data-sidemenu="collapsed"] .dk__row-num {
-  display: none;
+.dk[data-sidemenu="collapsed"] .dk__row-bullet {
+  width: 16px;
+  height: 16px;
 }
 
 /* ── Content column ────────────────────────────────────────────────── */

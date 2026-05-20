@@ -14,7 +14,7 @@
 import { show } from "../ui/nav.js";
 import { renderTeoriaMarkdown } from "../lib/markdownLite.js";
 import { isAcceptable } from "../lib/accentTolerance.js";
-import { API, isLoggedIn, authHeader, apiFetch } from "../api.js";
+import { API, isLoggedIn, authHeader, apiFetch, getAuthEmail } from "../api.js";
 
 const LS_SIDEMENU = "puheo:dk:sidemenu";
 const SIDEMENU_OPEN = "open";
@@ -362,10 +362,10 @@ function renderSidemenu() {
     const items = g.items.map((s) => {
       const isActive = s.id === _route.sivuId;
       const isDone = progressMap[s.id] === "done";
-      const num = s.num || "·";
       const cls = ["dk__row"];
       if (isActive) cls.push("is-active");
       if (isDone) cls.push("is-done");
+      const prefix = s.num ? `${escapeHtml(s.num)} ` : "";
       return `
         <button type="button"
                 class="${cls.join(" ")}"
@@ -373,17 +373,26 @@ function renderSidemenu() {
                 data-kind="${escapeHtml(s.kind)}"
                 aria-current="${isActive ? "page" : "false"}"
                 aria-label="${escapeHtml(s.title)}${isDone ? ", suoritettu" : ""}">
-          <span class="dk__row-glyph-wrap" aria-hidden="true">${glyphFor(s.kind)}</span>
-          <span class="dk__row-num">${escapeHtml(num)}</span>
-          <span class="dk__row-title">${escapeHtml(s.title)}</span>
-          <span class="dk__row-meta">${escapeHtml(s.meta || "")}</span>
+          <span class="dk__row-bullet" aria-hidden="true"></span>
+          <span class="dk__row-title">${prefix}${escapeHtml(s.title)}</span>
+          ${isDone ? `<span class="dk__row-check" aria-hidden="true">✓</span>` : ""}
         </button>`;
     }).join("");
     return head + items;
   }).join("");
 
+  const email = (typeof getAuthEmail === "function" && getAuthEmail()) || "";
+  const emailLabel = email || "Oma sivu";
+
   return `
     <aside class="dk__sidemenu" id="dk-sidemenu" aria-label="Oppitunnin sisällys">
+      <div class="dk__sidemenu-top">
+        <a class="dk__sidemenu-logo" href="#home" data-dk-nav="home" aria-label="Puheo etusivulle">Puhe<span>o</span></a>
+        <button type="button" class="dk__sidemenu-action" data-dk-nav="home">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 11 9-8 9 8"/><path d="M5 9v11a1 1 0 0 0 1 1h4v-7h4v7h4a1 1 0 0 0 1-1V9"/></svg>
+          <span>Aloitus</span>
+        </button>
+      </div>
       <div class="dk__sidemenu-head">
         <span class="dk__sidemenu-eyebrow">Sisällys</span>
         <span class="dk__sidemenu-count">${_sivut.length} sivua</span>
@@ -391,8 +400,47 @@ function renderSidemenu() {
       <nav class="dk__sidemenu-list" id="dk-sidemenu-list">
         ${rows}
       </nav>
+      <div class="dk__sidemenu-footer">
+        <button type="button" class="dk__sidemenu-user" data-dk-nav="profile" title="${escapeHtml(emailLabel)}">
+          <span class="dk__sidemenu-user-text">${escapeHtml(emailLabel)}</span>
+        </button>
+        <button type="button" class="dk__sidemenu-action" data-dk-nav="settings">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg>
+          <span>Asetukset</span>
+        </button>
+        <button type="button" class="dk__sidemenu-action" data-dk-nav="logout">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/></svg>
+          <span>Kirjaudu ulos</span>
+        </button>
+      </div>
     </aside>
     <div class="dk__sidemenu-backdrop" id="dk-sidemenu-backdrop" aria-hidden="true"></div>`;
+}
+
+// Forward Aloitus / profile / settings / logout clicks inside the digikirja
+// sidemenu to the existing global handlers. The global .app-sidebar buttons
+// are hidden via CSS on this screen, but they still live in the DOM and
+// carry the wiring (navigateTo, clearAuth, etc.) — a synthetic .click()
+// reuses all of that.
+function bindSidemenuShellNav() {
+  const sm = document.getElementById("dk-sidemenu");
+  if (!sm) return;
+  sm.addEventListener("click", (e) => {
+    const btn = e.target.closest("[data-dk-nav]");
+    if (!btn) return;
+    const nav = btn.dataset.dkNav;
+    if (btn.tagName === "A") e.preventDefault();
+    if (nav === "home") {
+      document.querySelector('.sidebar-item[data-nav="home"]')?.click()
+        ?? (location.hash = "#home");
+    } else if (nav === "settings") {
+      document.querySelector('.sidebar-item[data-nav="settings"]')?.click();
+    } else if (nav === "profile") {
+      document.querySelector('.sidebar-user[data-nav="profile"], .sidebar-item[data-nav="profile"]')?.click();
+    } else if (nav === "logout") {
+      document.getElementById("sidebar-logout")?.click();
+    }
+  });
 }
 
 // PR8 — visiting the teoria sivu counts as "done" once. The student
@@ -1769,6 +1817,7 @@ export async function showDigikirja(route = {}) {
     applySidemenuState(initialState);
     wireSidemenu();
     wireSidemenuRows();
+    bindSidemenuShellNav();
     wireContent();
     scrollActiveIntoView();
     markTeoriaDoneIfNeeded();
