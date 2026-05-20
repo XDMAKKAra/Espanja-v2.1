@@ -443,7 +443,8 @@ body::before {
 #screen-profile.screen.active {
   align-items: flex-start;
   justify-content: flex-start;
-  padding-top: 40px;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 /* isolation:isolate + z-index force the active screen to its own stacking
    layer above .app-main-inner's in-flow content. Without this, real-mouse
@@ -5033,7 +5034,10 @@ body:has(.app-countdown:not(.hidden)) #app-main { padding-top: 34px; }
 .settings-inner {
   max-width: 720px;
   margin: 0 auto;
-  padding: 32px 24px 64px;
+  /* Tightened top padding: 32 → 8 so .settings-title sits as close to
+     the viewport top as possible. The wrapping .screen.active already
+     sets its own padding-top: 40px, which is enough breathing room. */
+  padding: 8px 24px 64px;
 }
 .settings-header { margin-bottom: 28px; }
 .settings-title {
