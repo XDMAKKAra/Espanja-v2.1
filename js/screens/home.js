@@ -20,6 +20,22 @@ const LANGS = [
   { code: "de", label: "Saksa", flag: "🇩🇪" },
 ];
 
+// User explicitly asked to drop the Ranska + Saksa tabs from the home
+// screen unless the student opted into multiple languages during
+// onboarding. localStorage["puheo:enabled-langs"] is a JSON array of
+// language codes the student picked; default is ["es"] for new accounts.
+const ENABLED_LANGS_KEY = "puheo:enabled-langs";
+function readEnabledLangs() {
+  try {
+    const raw = localStorage.getItem(ENABLED_LANGS_KEY);
+    if (raw) {
+      const arr = JSON.parse(raw);
+      if (Array.isArray(arr) && arr.length) return arr;
+    }
+  } catch { /* private mode */ }
+  return ["es"];
+}
+
 const LANG_KEY = "puheo:lang";
 let _ohjaamoData = null;
 
@@ -30,11 +46,12 @@ function escapeHtml(s) {
 }
 
 function readActiveLang() {
+  const enabled = readEnabledLangs();
   try {
     const v = localStorage.getItem(LANG_KEY);
-    if (v && LANGS.some((l) => l.code === v)) return v;
+    if (v && enabled.includes(v)) return v;
   } catch { /* private mode */ }
-  return "es";
+  return enabled[0] || "es";
 }
 
 function writeActiveLang(code) {
@@ -59,7 +76,12 @@ async function fetchOhjaamo() {
 }
 
 function renderTabs(activeLang) {
-  return LANGS.map((l) => `
+  const enabled = readEnabledLangs();
+  // Show the tab strip ONLY when 2+ langs are enabled. A single-lang user
+  // sees no tab row at all (one tab is pure chrome).
+  const visible = LANGS.filter((l) => enabled.includes(l.code));
+  if (visible.length < 2) return "";
+  return visible.map((l) => `
     <button type="button"
             class="home-tab ${l.code === activeLang ? "is-active" : ""}"
             data-lang="${l.code}"
