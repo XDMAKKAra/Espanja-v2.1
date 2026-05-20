@@ -1529,7 +1529,6 @@ function renderContent() {
 
   return `
     <main class="dk__content" id="dk-content" tabindex="-1">
-      ${renderPrevNext(prev, next, "top")}
       <p class="dk__page-meta">${escapeHtml(pageMeta)}</p>
       <h2 class="dk__page-title">${titleHtml}</h2>
       ${body}
