@@ -253,7 +253,7 @@ export async function loadHome() {
   const root = document.getElementById("home-root");
   if (!root) return;
   const activeLang = readActiveLang();
-  root.innerHTML = `<p class="home-loading">Ladataan…</p>`;
+  root.innerHTML = `<div class="home-loading" role="status" aria-label="Ladataan kotinäyttöä"><span class="sr-only">Ladataan…</span></div>`;
   const data = await fetchOhjaamo();
   const isPro = isProTier(data?.profile?.profile);
   root.innerHTML = renderShell(activeLang, data, isPro);

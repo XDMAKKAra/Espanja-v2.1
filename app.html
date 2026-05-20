@@ -2322,8 +2322,22 @@
     <div class="settings-inner">
       <div class="settings-header">
         <h1 class="settings-title">Asetukset</h1>
-        <p class="settings-sub">Päivitä profiilitietosi kurssien edistyessä. Adaptiivinen harjoittelu säätyy muutosten mukaan.</p>
+        <p class="settings-sub">Profiili ja kurssin asetukset. Muutokset tallentuvat heti.</p>
       </div>
+
+      <section class="settings-section">
+        <h2 class="settings-section-title">Kutsumanimi</h2>
+        <div class="settings-rows">
+          <div class="settings-row settings-row--nickname">
+            <div class="settings-row-main">
+              <div class="settings-row-label">Mitä sovellus saa kutsua sinua?</div>
+              <div class="settings-row-help">Näytetään sähköpostiosoitteen sijaan sivupalkissa ja tervehdyksissä. Jätä tyhjäksi jos haluat säilyttää sähköpostin.</div>
+              <input type="text" id="settings-nickname-input" class="settings-nickname-input" maxlength="40" placeholder="Esim. Maria" autocomplete="nickname" />
+            </div>
+            <button type="button" class="settings-row-edit" id="settings-nickname-save">Tallenna</button>
+          </div>
+        </div>
+      </section>
 
       <section class="settings-section">
         <h2 class="settings-section-title">Opiskeluprofiili</h2>

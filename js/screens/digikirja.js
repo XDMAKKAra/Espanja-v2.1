@@ -346,8 +346,10 @@ function renderSidemenu() {
     return head + items;
   }).join("");
 
+  let nick = "";
+  try { nick = (localStorage.getItem("puheo:nickname") || "").trim(); } catch { /* private mode */ }
   const email = (typeof getAuthEmail === "function" && getAuthEmail()) || "";
-  const emailLabel = email || "Oma sivu";
+  const emailLabel = nick || email || "Oma sivu";
 
   return `
     <aside class="dk__sidemenu" id="dk-sidemenu" aria-label="Oppitunnin sisällys">

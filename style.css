@@ -5080,6 +5080,31 @@ body:has(.app-countdown:not(.hidden)) #app-main { padding-top: 34px; }
   color: var(--accent-hover);
 }
 
+/* Nickname row — embedded input + Tallenna button. Used so the student
+   can hide their email from the sidebar by choosing a display name. */
+.settings-row--nickname .settings-row-main { flex: 1; min-width: 0; }
+.settings-row-help {
+  font-size: 13px;
+  color: var(--ink-soft, #6b7280);
+  margin: 4px 0 10px;
+  max-width: 52ch;
+}
+.settings-nickname-input {
+  width: min(280px, 100%);
+  padding: 9px 12px;
+  border: 1px solid var(--border, #e5e7eb);
+  border-radius: 8px;
+  background: var(--surface, #fff);
+  color: var(--ink, #111);
+  font: inherit;
+  font-size: 14px;
+}
+.settings-nickname-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in oklch, var(--accent) 20%, transparent);
+}
+
 /* Danger row (sign-out, delete account) — same shape, red accent on the action. */
 .settings-row--danger .settings-row-edit {
   border-color: rgba(220, 38, 38, 0.35);

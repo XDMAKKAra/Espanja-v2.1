@@ -211,7 +211,34 @@ export function initSettings(deps) {
   wireBumpModal();
   wireLangModal();
   initPaywallModal();
+  wireNicknameSection();
   // Sidebar click is handled centrally in main.js, it calls showSettings().
+}
+
+// Local-only nickname (no backend column yet). Stored under
+// localStorage["puheo:nickname"]; main.js + digikirja sidemenu render
+// it instead of the email when present.
+function wireNicknameSection() {
+  const input = document.getElementById("settings-nickname-input");
+  const save  = document.getElementById("settings-nickname-save");
+  if (!input || !save || save.dataset.wired === "1") return;
+  save.dataset.wired = "1";
+  try { input.value = (localStorage.getItem("puheo:nickname") || "").trim(); }
+  catch { /* private mode */ }
+  save.addEventListener("click", () => {
+    const v = input.value.trim().slice(0, 40);
+    try {
+      if (v) localStorage.setItem("puheo:nickname", v);
+      else   localStorage.removeItem("puheo:nickname");
+    } catch { /* private mode */ }
+    // Refresh sidebar so the new label takes effect immediately.
+    const sb = document.getElementById("sidebar-user");
+    if (sb) sb.textContent = v || (getAuthEmail() || "");
+    toast({ message: v ? "Kutsumanimi tallennettu" : "Kutsumanimi poistettu", variant: "success" });
+  });
+  input.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") { e.preventDefault(); save.click(); }
+  });
 }
 
 // ─── Field descriptors ─────────────────────────────────────────────────────

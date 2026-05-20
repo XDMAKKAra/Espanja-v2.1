@@ -81,7 +81,13 @@ function updateSidebarState() {
   document.querySelector(".app-main").style.marginLeft = "";
 
   const sidebarUser = $("sidebar-user");
-  if (sidebarUser) sidebarUser.textContent = getAuthEmail() || "";
+  if (sidebarUser) {
+    // Prefer the student's chosen nickname (set in Asetukset). Falls back
+    // to the email so the affordance still identifies the account.
+    let nick = "";
+    try { nick = localStorage.getItem("puheo:nickname") || ""; } catch { /* private mode */ }
+    sidebarUser.textContent = nick.trim() || getAuthEmail() || "";
+  }
 }
 
 // ─── Mode pages ────────────────────────────────────────────────────────────
