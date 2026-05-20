@@ -250,47 +250,11 @@ function buildSivut(lesson) {
     });
   }
 
-  // 4. Test sivut — sample real items from existing phases. The student
-  // experience is summative (no live feedback per kohta) so we want the
-  // test to draw on material they've already practised in the exercise
-  // phases above. Pick translate (fi → es) and mc as the two anchors.
-  const findPhaseByItemType = (kind) => phases.findIndex(
-    (p) => Array.isArray(p.items) && p.items[0]?.item_type === kind,
-  );
-  const translatePhase = findPhaseByItemType("translate");
-  const mcPhase = findPhaseByItemType("mc");
-  const TEST_LIMIT = 6;
-  if (translatePhase >= 0) {
-    const count = Math.min(TEST_LIMIT, (phases[translatePhase].items || []).length);
-    out.push({
-      id: "test-1",
-      kind: "testi",
-      num: "T1",
-      title: "Test 1 · Käännä",
-      meta: `${count} kohtaa`,
-      testDef: { sourcePhase: translatePhase, count, label: "Käännä espanjaksi" },
-    });
-  }
-  if (mcPhase >= 0) {
-    const count = Math.min(TEST_LIMIT, (phases[mcPhase].items || []).length);
-    out.push({
-      id: "test-2",
-      kind: "testi",
-      num: "T2",
-      title: "Test 2 · Valitse",
-      meta: `${count} kohtaa`,
-      testDef: { sourcePhase: mcPhase, count, label: "Valitse oikea vaihtoehto" },
-    });
-  }
-
-  // 5. Itsearviointi — always last.
-  out.push({
-    id: "arvio",
-    kind: "itsearviointi",
-    num: "",
-    title: "Arvioi omia taitojasi",
-    meta: "Itsearvio",
-  });
+  // Per-lesson Testit + Itsearviointi removed 2026-05-20. The summative
+  // "kurssin päätekoe" lives at the end of the course; folding it into
+  // every lesson made the sidemenu noisy and implied an exam was due
+  // after each oppitunti. Keep the renderers + state below in case a
+  // future course-level screen wants to reuse them.
 
   return out;
 }
@@ -304,36 +268,37 @@ function findSivuIndex(sivuId) {
 
 function renderTopbar() {
   const meta = _lesson?.meta || {};
-  const courseTitle = meta.course_key || _route.kurssiKey || "";
   const title = meta.title || "Oppitunti";
   return `
     <header class="dk__topbar" role="banner">
-      <button type="button" class="dk__tool" id="dk-toggle-sidemenu"
-              aria-label="Avaa tai sulje sisällysluettelo"
-              aria-pressed="false">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <line x1="4" y1="6" x2="20" y2="6"/>
-          <line x1="4" y1="12" x2="14" y2="12"/>
-          <line x1="4" y1="18" x2="20" y2="18"/>
-        </svg>
-      </button>
-      <nav class="dk__breadcrumb" aria-label="Navigointi">
-        <a href="#/aloitus">Etusivu</a>
-        <span class="dk__breadcrumb-sep">/</span>
-        <a href="#/oppimispolku?lang=${escapeHtml(_route.lang)}">${escapeHtml(langLabel(_route.lang))}</a>
-        <span class="dk__breadcrumb-sep">/</span>
-        <a href="#/oppimispolku/${escapeHtml(_route.lang)}/${encodeURIComponent(_route.kurssiKey)}">${escapeHtml(courseTitle)}</a>
-      </nav>
+      <div class="dk__topbar-left">
+        <button type="button" class="dk__tool dk__tool--invert" id="dk-toggle-sidemenu"
+                aria-label="Avaa tai sulje sisällysluettelo"
+                aria-pressed="false">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="4" y1="6" x2="20" y2="6"/>
+            <line x1="4" y1="12" x2="14" y2="12"/>
+            <line x1="4" y1="18" x2="20" y2="18"/>
+          </svg>
+        </button>
+        <button type="button" class="dk__home" data-dk-nav="home" aria-label="Palaa Aloitukseen">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="m3 11 9-8 9 8"/>
+            <path d="M5 9v11a1 1 0 0 0 1 1h4v-7h4v7h4a1 1 0 0 0 1-1V9"/>
+          </svg>
+          <span>Aloitus</span>
+        </button>
+      </div>
       <h1 class="dk__title">${escapeHtml(title)}</h1>
       <div class="dk__tools">
         <span class="dk__progress-chip" id="dk-progress-chip" aria-live="polite">0 / 0 valmis</span>
-        <button type="button" class="dk__tool" id="dk-search" aria-label="Etsi" title="Etsi (tulossa)">
+        <button type="button" class="dk__tool dk__tool--invert" id="dk-search" aria-label="Etsi" title="Etsi (tulossa)">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <circle cx="11" cy="11" r="7"/>
             <line x1="16.5" y1="16.5" x2="21" y2="21"/>
           </svg>
         </button>
-        <button type="button" class="dk__tool" id="dk-help" aria-label="Opas" title="Opas (tulossa)">
+        <button type="button" class="dk__tool dk__tool--invert" id="dk-help" aria-label="Opas" title="Opas (tulossa)">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <circle cx="12" cy="12" r="9"/>
             <path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.9.4-1.5 1-1.5 2"/>
@@ -388,10 +353,7 @@ function renderSidemenu() {
     <aside class="dk__sidemenu" id="dk-sidemenu" aria-label="Oppitunnin sisällys">
       <div class="dk__sidemenu-top">
         <a class="dk__sidemenu-logo" href="#home" data-dk-nav="home" aria-label="Puheo etusivulle">Puhe<span>o</span></a>
-        <button type="button" class="dk__sidemenu-action" data-dk-nav="home">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 11 9-8 9 8"/><path d="M5 9v11a1 1 0 0 0 1 1h4v-7h4v7h4a1 1 0 0 0 1-1V9"/></svg>
-          <span>Aloitus</span>
-        </button>
+        <div class="dk__sidemenu-course">${escapeHtml(langLabel(_route.lang))} · ${escapeHtml(_route.kurssiKey || "")}</div>
       </div>
       <div class="dk__sidemenu-head">
         <span class="dk__sidemenu-eyebrow">Sisällys</span>
@@ -423,9 +385,9 @@ function renderSidemenu() {
 // carry the wiring (navigateTo, clearAuth, etc.) — a synthetic .click()
 // reuses all of that.
 function bindSidemenuShellNav() {
-  const sm = document.getElementById("dk-sidemenu");
-  if (!sm) return;
-  sm.addEventListener("click", (e) => {
+  const root = document.getElementById("dk-root");
+  if (!root) return;
+  root.addEventListener("click", (e) => {
     const btn = e.target.closest("[data-dk-nav]");
     if (!btn) return;
     const nav = btn.dataset.dkNav;
