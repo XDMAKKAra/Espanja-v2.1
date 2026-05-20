@@ -989,7 +989,7 @@ body:has(#screen-digikirja.active) #screen-digikirja.screen.active {
   width: 13ch;
   padding: 4px 8px;
   font-size: 15.5px;
-  font-family: var(--ed-display);
+  font-family: var(--ed-sans);
   font-weight: 500;
   background: var(--ed-bg-card);
   border-radius: 6px;
@@ -1011,8 +1011,9 @@ body:has(#screen-digikirja.active) #screen-digikirja.screen.active {
   background: var(--ed-bg-deep);
   border: 1px solid var(--ed-rule);
   border-radius: 999px;
-  font-family: var(--ed-display);
-  font-style: italic;
+  /* Sans, no italic: the editorial Fraunces-italic chip read as AI-slop
+     on small interactive tokens like exercise word choices. */
+  font-family: var(--ed-sans);
   font-weight: 500;
   font-size: 14px;
   color: var(--ed-ink);
@@ -1571,10 +1572,9 @@ body:has(#screen-digikirja.active) #screen-digikirja.screen.active {
   display: block;
 }
 .dk__prevnext-label {
-  font-family: var(--ed-display);
-  font-style: italic;
-  font-weight: 500;
-  font-size: 15px;
+  font-family: var(--ed-sans);
+  font-weight: 600;
+  font-size: 14px;
   color: var(--ed-ink);
   display: block;
   max-width: 28ch;
