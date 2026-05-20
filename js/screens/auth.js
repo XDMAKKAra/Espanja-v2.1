@@ -110,7 +110,6 @@ $("btn-auth-submit").addEventListener("click", async () => {
       return;
     }
     setAuth(data.token, data.refreshToken, data.email);
-    _deps.updateSidebarState();
     // Hydrate feature flags (waitlist mode + dev-Pro gate) before any Pro
     // CTA becomes interactive, fire-and-forget, the default is already safe.
     try {
@@ -122,7 +121,10 @@ $("btn-auth-submit").addEventListener("click", async () => {
       seedMasteryFromDiagnostic(data.token);
       try { localStorage.setItem("puheo_signup_at", String(Date.now())); } catch { /* silent */ }
     }
-    // Check onboarding → placement → dashboard
+    // Check onboarding → placement → dashboard. Sidebar reveal moved AFTER
+    // the destination screen is up so the user never sees a sidebar-on-
+    // empty-cream flash between login and home-rendering. updateSidebarState
+    // itself is idempotent.
     const needsOnboarding = await checkOnboarding();
     if (!needsOnboarding) {
       const needsPlacement = await checkPlacementNeeded();
@@ -132,6 +134,7 @@ $("btn-auth-submit").addEventListener("click", async () => {
         await _deps.loadDashboard();
       }
     }
+    _deps.updateSidebarState();
   } catch {
     errEl.textContent = "Ei yhteyttä palvelimeen";
     errEl.classList.remove("hidden");

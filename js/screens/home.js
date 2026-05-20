@@ -101,12 +101,31 @@ function renderOhjaamoCell({ label, value, locked }) {
     </div>`;
 }
 
+function daysUntilExam(profile) {
+  // exam_date is stored as "YYYY-MM-DD" in user_profile. Spring exam falls
+  // mid-March, autumn mid-September; settings.js writes "${YYYY-MM}-15".
+  const raw = profile?.exam_date;
+  if (!raw) return null;
+  const d = new Date(String(raw));
+  if (Number.isNaN(d.getTime())) return null;
+  const now = new Date();
+  const ms = d.getTime() - now.setHours(0, 0, 0, 0);
+  const days = Math.round(ms / 86_400_000);
+  return Number.isFinite(days) ? days : null;
+}
+
 function renderOhjaamo(data, isPro) {
   const dashboard = data?.dashboard || {};
   const streak = dashboard.streak ?? 0;
   const sessions = dashboard.totalSessions ?? 0;
   const level = dashboard.estLevel || dashboard.currentLevel || "—";
   const yoReadiness = dashboard.yoReadinessPct != null ? `${dashboard.yoReadinessPct} %` : "—";
+  const examDays = daysUntilExam(data?.profile?.profile);
+  const examCell = examDays == null
+    ? "Aseta päivä"
+    : examDays < 0 ? "Mennyt"
+    : examDays === 0 ? "Tänään"
+    : `${examDays} pv`;
 
   const upgradeRow = isPro ? "" : `
     <div class="ohjaamo-upgrade">
@@ -118,6 +137,7 @@ function renderOhjaamo(data, isPro) {
     <section class="ohjaamo" aria-label="Ohjaamo">
       <p class="ohjaamo__eyebrow">Ohjaamo</p>
       <div class="ohjaamo__grid">
+        ${renderOhjaamoCell({ label: "YO-kokeeseen", value: examCell, locked: false })}
         ${renderOhjaamoCell({ label: "Päivän putki", value: `${streak} pv`, locked: false })}
         ${renderOhjaamoCell({ label: "Harjoituksia", value: `${sessions}`, locked: false })}
         ${renderOhjaamoCell({ label: "Tasosi", value: level, locked: !isPro })}

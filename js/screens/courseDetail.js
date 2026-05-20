@@ -146,7 +146,7 @@ export async function loadCourseDetail(lang, kurssiKey) {
   show("screen-course-detail");
   const root = document.getElementById("cd-root");
   if (!root) return;
-  root.innerHTML = `<p class="op-loading">Ladataan kurssia…</p>`;
+  root.innerHTML = `<div class="op-loading" role="status" aria-label="Ladataan kurssia"><span class="sr-only">Ladataan kurssia…</span></div>`;
   if (!lang || !kurssiKey) {
     renderError(root, "Kurssin tunnistetta ei annettu.", lang);
     return;
