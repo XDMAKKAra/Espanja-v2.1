@@ -127,7 +127,7 @@ export async function loadOppimispolkuIndex(lang) {
   const root = document.getElementById("op-root");
   if (!root) return;
   const activeLang = lang || readLangFromHash();
-  root.innerHTML = `<p class="op-loading">Ladataan kursseja…</p>`;
+  root.innerHTML = `<div class="op-loading" role="status" aria-label="Ladataan kursseja"><span class="sr-only">Ladataan kursseja…</span></div>`;
   const kurssit = await fetchCourses(activeLang);
   if (kurssit.length === 0) {
     renderError(root, "Kursseja ei vielä julkaistu tälle kielelle.");

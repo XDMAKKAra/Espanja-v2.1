@@ -85,10 +85,10 @@ body:has(#screen-digikirja.active) #screen-digikirja.screen.active {
   --dk-prose-max: clamp(720px, 60vw, 1080px);
   --dk-ease: cubic-bezier(0.23, 1, 0.32, 1);
 
-  display: grid;
-  grid-template-rows: var(--dk-topbar-height) 1fr;
-  /* Hidden global topbar on this screen (see :has rule above) → don't
-     subtract its height. The .dk fills the full viewport. */
+  display: block;
+  /* topbar is now position: fixed at viewport top — reserve room for it
+     so the body content (sidemenu + content) doesn't slide under. */
+  padding-top: var(--dk-topbar-height);
   min-height: 100dvh;
   font-family: var(--ed-sans);
   color: var(--ed-ink);
@@ -97,18 +97,24 @@ body:has(#screen-digikirja.active) #screen-digikirja.screen.active {
 /* ── TopBar ─────────────────────────────────────────────────────────── */
 
 .dk__topbar {
-  position: sticky;
+  /* User reported a persistent ~10px cream strip above the brick when
+     position: sticky was used: some ancestor's padding/margin was
+     bleeding through despite the body:has(#screen-digikirja.active)
+     overrides. Forcing position: fixed against the viewport itself
+     removes every cascade dependency — the bar is glued to top: 0
+     regardless of container state. The .dk reserves the height with
+     padding-top so content underneath doesn't slide behind. */
+  position: fixed;
   top: 0;
-  z-index: 5;
+  left: 0;
+  right: 0;
+  z-index: 50;
   display: grid;
   grid-template-columns: minmax(0, max-content) minmax(0, 1fr) minmax(0, max-content);
   align-items: center;
   gap: 16px;
   height: var(--dk-topbar-height);
   padding: 0 20px 0 14px;
-  /* Solid brick like Sanoma's purple topbar — anchors the lesson in a
-     way the cream-on-cream topbar never managed. White text/icons sit on
-     it with full WCAG-AA contrast (ed-accent vs ed-accent-ink). */
   background: var(--ed-accent);
   color: var(--ed-accent-ink);
   border-bottom: 0;
@@ -142,15 +148,19 @@ body:has(#screen-digikirja.active) #screen-digikirja.screen.active {
   outline-offset: 2px;
 }
 /* Inverted tool buttons (hamburger, search, help) sit on the brick now,
-   so their default ink-on-cream colors flip. */
-.dk__tool--invert {
+   so their default ink-on-cream colors flip. The double-class selector
+   bumps specificity above the plain `.dk__tool` rule that appears later
+   in this file — without it the cascade tie was resolved by source
+   order and the icons stayed dark on the brick (user screenshot
+   2026-05-20 224424). */
+.dk__tool.dk__tool--invert {
   color: #fbfaf6;
 }
-.dk__tool--invert:hover {
+.dk__tool.dk__tool--invert:hover {
   background: rgba(255, 255, 255, 0.12);
   color: #fbfaf6;
 }
-.dk__tool--invert[aria-pressed="true"] {
+.dk__tool.dk__tool--invert[aria-pressed="true"] {
   background: rgba(255, 255, 255, 0.22);
   color: #fbfaf6;
 }
@@ -250,17 +260,18 @@ body:has(#screen-digikirja.active) #screen-digikirja.screen.active {
     );
 }
 
+/* Collapsed = fully hidden (Sanoma-style). Flip the body from grid
+   back to block flow so the sidemenu's display:none doesn't shift the
+   remaining grid items into the (now 0-width) first column. The
+   sidemenu drops out, .dk__content fills the entire viewport width,
+   and the paper-stripe gradient becomes plain cream. The hamburger
+   slides the panel back in. */
 .dk[data-sidemenu="collapsed"] .dk__body {
-  grid-template-columns: var(--dk-sidemenu-rail) minmax(0, 1fr);
-  background:
-    linear-gradient(
-      to right,
-      #fbfaf6 0,
-      #fbfaf6 var(--dk-sidemenu-rail),
-      var(--ed-rule) var(--dk-sidemenu-rail),
-      var(--ed-rule) calc(var(--dk-sidemenu-rail) + 1px),
-      var(--ed-bg) calc(var(--dk-sidemenu-rail) + 1px)
-    );
+  display: block;
+  background: var(--ed-bg);
+}
+.dk[data-sidemenu="collapsed"] .dk__sidemenu {
+  display: none;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -274,13 +285,15 @@ body:has(#screen-digikirja.active) #screen-digikirja.screen.active {
 .dk__sidemenu {
   position: sticky;
   top: var(--dk-topbar-height);
-  align-self: start;
-  max-height: calc(100dvh - var(--dk-topbar-height));
+  /* Force the sidemenu to ALWAYS fill the viewport beneath the topbar,
+     not just the content's natural height. align-self: stretch + height
+     pins it from y=topbar-height to y=viewport-bottom. User reported a
+     ~80px cream gap below the footer when max-height alone let the
+     content shrink. */
+  align-self: stretch;
+  height: calc(100dvh - var(--dk-topbar-height));
   display: flex;
   flex-direction: column;
-  /* Crisp white paper sidebar against the cream lesson body — gives the
-     SideMenu its own surface (like Sanoma / Otava do) instead of bleeding
-     into the lesson cream. */
   background: #fbfaf6;
   border-right: 1px solid var(--ed-rule);
   overflow: hidden;
@@ -978,7 +991,7 @@ body:has(#screen-digikirja.active) #screen-digikirja.screen.active {
   width: 13ch;
   padding: 4px 8px;
   font-size: 15.5px;
-  font-family: var(--ed-display);
+  font-family: var(--ed-sans);
   font-weight: 500;
   background: var(--ed-bg-card);
   border-radius: 6px;
@@ -1000,8 +1013,9 @@ body:has(#screen-digikirja.active) #screen-digikirja.screen.active {
   background: var(--ed-bg-deep);
   border: 1px solid var(--ed-rule);
   border-radius: 999px;
-  font-family: var(--ed-display);
-  font-style: italic;
+  /* Sans, no italic: the editorial Fraunces-italic chip read as AI-slop
+     on small interactive tokens like exercise word choices. */
+  font-family: var(--ed-sans);
   font-weight: 500;
   font-size: 14px;
   color: var(--ed-ink);
@@ -1560,10 +1574,9 @@ body:has(#screen-digikirja.active) #screen-digikirja.screen.active {
   display: block;
 }
 .dk__prevnext-label {
-  font-family: var(--ed-display);
-  font-style: italic;
-  font-weight: 500;
-  font-size: 15px;
+  font-family: var(--ed-sans);
+  font-weight: 600;
+  font-size: 14px;
   color: var(--ed-ink);
   display: block;
   max-width: 28ch;

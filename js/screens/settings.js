@@ -211,7 +211,34 @@ export function initSettings(deps) {
   wireBumpModal();
   wireLangModal();
   initPaywallModal();
+  wireNicknameSection();
   // Sidebar click is handled centrally in main.js, it calls showSettings().
+}
+
+// Local-only nickname (no backend column yet). Stored under
+// localStorage["puheo:nickname"]; main.js + digikirja sidemenu render
+// it instead of the email when present.
+function wireNicknameSection() {
+  const input = document.getElementById("settings-nickname-input");
+  const save  = document.getElementById("settings-nickname-save");
+  if (!input || !save || save.dataset.wired === "1") return;
+  save.dataset.wired = "1";
+  try { input.value = (localStorage.getItem("puheo:nickname") || "").trim(); }
+  catch { /* private mode */ }
+  save.addEventListener("click", () => {
+    const v = input.value.trim().slice(0, 40);
+    try {
+      if (v) localStorage.setItem("puheo:nickname", v);
+      else   localStorage.removeItem("puheo:nickname");
+    } catch { /* private mode */ }
+    // Refresh sidebar so the new label takes effect immediately.
+    const sb = document.getElementById("sidebar-user");
+    if (sb) sb.textContent = v || (getAuthEmail() || "");
+    toast({ message: v ? "Kutsumanimi tallennettu" : "Kutsumanimi poistettu", variant: "success" });
+  });
+  input.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") { e.preventDefault(); save.click(); }
+  });
 }
 
 // ─── Field descriptors ─────────────────────────────────────────────────────
@@ -491,6 +518,14 @@ function renderRows() {
 function wireModal() {
   const overlay = $("settings-modal-overlay");
   if (!overlay) return;
+  // Reparent the modal-overlay to document.body so its position:fixed
+  // attaches to the viewport, not to a transformed/contained ancestor
+  // inside .app-main-inner. Symptom this fixes: clicking Muokkaa locked
+  // the screen (body.style.overflow="hidden") but the overlay rendered
+  // off-screen because an ancestor had created a new containing block.
+  if (overlay.parentElement !== document.body) {
+    document.body.appendChild(overlay);
+  }
   $("settings-modal-close").addEventListener("click", closeEditor);
   $("settings-modal-cancel").addEventListener("click", closeEditor);
   overlay.addEventListener("click", (e) => {
@@ -505,41 +540,55 @@ function wireModal() {
 function openEditor(fieldKey) {
   const field = FIELDS.find((f) => f.key === fieldKey);
   if (!field) return;
-  _editingField = field;
-  _pendingValue = field.readProfile(_profile);
+  try {
+    _editingField = field;
+    _pendingValue = field.readProfile(_profile);
 
-  $("settings-modal-title").textContent = field.label;
-  $("settings-modal-hint").textContent = field.hint || "";
-  $("settings-modal-hint").style.display = field.hint ? "" : "none";
-  hideError();
+    $("settings-modal-title").textContent = field.label;
+    $("settings-modal-hint").textContent = field.hint || "";
+    $("settings-modal-hint").style.display = field.hint ? "" : "none";
+    hideError();
 
-  const body = $("settings-modal-body");
-  body.innerHTML = "";
+    const body = $("settings-modal-body");
+    body.innerHTML = "";
 
-  const opts = field.options();
-  opts.forEach((opt) => {
-    const btn = document.createElement("button");
-    btn.type = "button";
-    btn.className = "settings-opt";
-    btn.dataset.value = opt.value;
-    btn.textContent = opt.label;
+    const opts = field.options();
+    opts.forEach((opt) => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "settings-opt";
+      btn.dataset.value = opt.value;
+      btn.textContent = opt.label;
 
-    if (field.editor === "single") {
-      if (String(_pendingValue) === String(opt.value)) btn.classList.add("selected");
-      btn.addEventListener("click", () => {
-        body.querySelectorAll(".settings-opt").forEach((b) => b.classList.remove("selected"));
-        btn.classList.add("selected");
-        _pendingValue = opt.value;
-      });
-    } else if (field.editor === "multi") {
-      if (Array.isArray(_pendingValue) && _pendingValue.includes(opt.value)) btn.classList.add("selected");
-      btn.addEventListener("click", () => toggleMulti(btn, field, opt.value));
-    }
-    body.appendChild(btn);
-  });
+      if (field.editor === "single") {
+        if (String(_pendingValue) === String(opt.value)) btn.classList.add("selected");
+        btn.addEventListener("click", () => {
+          body.querySelectorAll(".settings-opt").forEach((b) => b.classList.remove("selected"));
+          btn.classList.add("selected");
+          _pendingValue = opt.value;
+        });
+      } else if (field.editor === "multi") {
+        if (Array.isArray(_pendingValue) && _pendingValue.includes(opt.value)) btn.classList.add("selected");
+        btn.addEventListener("click", () => toggleMulti(btn, field, opt.value));
+      }
+      body.appendChild(btn);
+    });
 
-  $("settings-modal-overlay").classList.remove("hidden");
-  document.body.style.overflow = "hidden";
+    // Show overlay LAST, so a throw above this point leaves the UI
+    // unlocked. document.body overflow lock also lives here, paired
+    // with the always-restore in closeEditor.
+    $("settings-modal-overlay").classList.remove("hidden");
+    document.body.style.overflow = "hidden";
+  } catch (err) {
+    // Defensive: any exception during render must release the body
+    // lock + close the half-open overlay. Without this, a thrown
+    // field.options() left the screen frozen and unclickable.
+    console.error("openEditor failed:", err);
+    $("settings-modal-overlay").classList.add("hidden");
+    document.body.style.overflow = "";
+    _editingField = null;
+    _pendingValue = null;
+  }
 }
 
 function toggleMulti(btn, field, value) {

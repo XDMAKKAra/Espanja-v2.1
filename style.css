@@ -299,6 +299,11 @@ body::before {
 /* ── APP SIDEBAR ── */
 .app-sidebar {
   width: 220px;
+  /* Lock height to the full viewport: top:0/bottom:0 alone left a gap
+     on some browsers where the body short-circuited under viewport
+     height. height: 100dvh forces full coverage from the top-left
+     corner to the bottom-left corner. */
+  height: 100dvh;
   min-height: 100vh;
   background: var(--surface);
   border-right: 1px solid var(--border);
@@ -310,6 +315,7 @@ body::before {
   left: 0;
   top: 0;
   bottom: 0;
+  overflow-y: auto;
 }
 .sidebar-logo {
   font-size: 22px;
@@ -428,6 +434,17 @@ body::before {
   justify-content: center;
   padding: 24px;
   overflow-y: auto;
+}
+/* Tall screens (Asetukset, Oma profiili) must top-align their content,
+   otherwise flex-centering on a viewport shorter than the inner content
+   pushes the heading BELOW the fold and the user lands on cream and
+   thinks the screen is broken. */
+#screen-settings.screen.active,
+#screen-profile.screen.active {
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 /* isolation:isolate + z-index force the active screen to its own stacking
    layer above .app-main-inner's in-flow content. Without this, real-mouse
@@ -5017,7 +5034,10 @@ body:has(.app-countdown:not(.hidden)) #app-main { padding-top: 34px; }
 .settings-inner {
   max-width: 720px;
   margin: 0 auto;
-  padding: 32px 24px 64px;
+  /* Tightened top padding: 32 → 8 so .settings-title sits as close to
+     the viewport top as possible. The wrapping .screen.active already
+     sets its own padding-top: 40px, which is enough breathing room. */
+  padding: 8px 24px 64px;
 }
 .settings-header { margin-bottom: 28px; }
 .settings-title {
@@ -5080,6 +5100,31 @@ body:has(.app-countdown:not(.hidden)) #app-main { padding-top: 34px; }
   color: var(--accent-hover);
 }
 
+/* Nickname row — embedded input + Tallenna button. Used so the student
+   can hide their email from the sidebar by choosing a display name. */
+.settings-row--nickname .settings-row-main { flex: 1; min-width: 0; }
+.settings-row-help {
+  font-size: 13px;
+  color: var(--ink-soft, #6b7280);
+  margin: 4px 0 10px;
+  max-width: 52ch;
+}
+.settings-nickname-input {
+  width: min(280px, 100%);
+  padding: 9px 12px;
+  border: 1px solid var(--border, #e5e7eb);
+  border-radius: 8px;
+  background: var(--surface, #fff);
+  color: var(--ink, #111);
+  font: inherit;
+  font-size: 14px;
+}
+.settings-nickname-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in oklch, var(--accent) 20%, transparent);
+}
+
 /* Danger row (sign-out, delete account) — same shape, red accent on the action. */
 .settings-row--danger .settings-row-edit {
   border-color: rgba(220, 38, 38, 0.35);
@@ -5125,7 +5170,15 @@ body:has(.app-countdown:not(.hidden)) #app-main { padding-top: 34px; }
 
 .settings-modal-overlay,
 .level-bump-overlay {
-  position: fixed; inset: 0; z-index: 520;
+  /* !important needed because some cascading rule (likely .screen.active
+     z-index:1 + position:absolute reset) was overriding these values
+     even after the overlay was reparented to <body>. Playwright reported
+     computed `position: relative; z-index: 1` until we forced them. */
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 520 !important;
+  width: 100vw !important;
+  height: 100vh !important;
   background: rgba(0,0,0,0.78);
   backdrop-filter: blur(8px);
   display: flex; align-items: center; justify-content: center;

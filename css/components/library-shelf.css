@@ -19,13 +19,44 @@ body.app .op-shell {
   gap: 24px;
 }
 
-body.app .op-loading,
+/* Loading state: shimmer skeleton blocks shaped roughly like the course
+   list rows. Italic-Fraunces "Ladataan…" was AI-slop and called out. */
+body.app .op-loading {
+  display: grid;
+  gap: 14px;
+  padding: 4px 0 24px;
+}
+body.app .op-loading::before,
+body.app .op-loading::after {
+  content: "";
+  display: block;
+  height: 72px;
+  border-radius: 6px;
+  background: linear-gradient(
+    90deg,
+    color-mix(in oklch, var(--ed-bg-deep) 70%, var(--ed-bg)) 0,
+    color-mix(in oklch, var(--ed-bg-deep) 92%, var(--ed-bg)) 50%,
+    color-mix(in oklch, var(--ed-bg-deep) 70%, var(--ed-bg)) 100%
+  );
+  background-size: 200% 100%;
+  animation: op-loading-shimmer 1.6s linear infinite;
+}
+body.app .op-loading > * { visibility: hidden; height: 0; margin: 0; }
+@keyframes op-loading-shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  body.app .op-loading::before,
+  body.app .op-loading::after {
+    animation: none;
+  }
+}
 body.app .op-error {
-  font-family: var(--ed-serif, Georgia, serif);
-  font-style: italic;
-  color: var(--ed-ink-faint, var(--ink-faint));
-  padding: 40px 0;
-  text-align: center;
+  font-family: var(--ed-sans, system-ui, sans-serif);
+  color: var(--ed-ink-muted, var(--ink-soft));
+  padding: 32px 0;
+  text-align: left;
 }
 body.app .op-error {
   background: var(--ed-bg-card, var(--surface));

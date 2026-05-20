@@ -150,11 +150,48 @@
   box-shadow: 0 8px 24px -8px rgba(0,0,0,.35);
 }
 .ob3-card:focus-visible { outline: 4px solid var(--accent, #2dd4bf); outline-offset: 4px; }
-.ob3-card[aria-checked="true"] {
+.ob3-card[aria-checked="true"],
+.ob3-card[aria-pressed="true"] {
   border-color: var(--accent, #2dd4bf);
   background: color-mix(in srgb, var(--accent, #2dd4bf) 8%, var(--surface, #14171b));
   box-shadow: 0 0 0 0 transparent, 0 8px 24px -8px rgba(45,212,191,.2);
 }
+
+/* Nickname stage — single text input, generous breathing room. */
+.ob3-name-row {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 28px 0 32px;
+  max-width: 420px;
+}
+.ob3-name-label {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-2, #b9b9b3);
+}
+.ob3-name-input {
+  font: inherit;
+  font-size: 18px;
+  padding: 14px 16px;
+  background: var(--surface, #14171b);
+  color: var(--text, #f1f1ef);
+  border: 2px solid var(--line, #25272b);
+  border-radius: 10px;
+  transition: border-color 160ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+.ob3-name-input:focus {
+  outline: none;
+  border-color: var(--accent, #2dd4bf);
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) .ob3-name-input { background: #fff; border-color: #e5e7eb; color: #111; }
+  :root:not([data-theme="dark"]) .ob3-name-input:focus { border-color: var(--accent, #2dd4bf); }
+}
+:root[data-theme="light"] .ob3-name-input { background: #fff; border-color: #e5e7eb; color: #111; }
+:root[data-theme="light"] .ob3-name-input:focus { border-color: var(--accent, #2dd4bf); }
 /* POLISH: emoji flag + language name in a single row with generous spacing */
 .ob3-card__flag {
   font-size: 32px; line-height: 1; display: block;
@@ -170,11 +207,13 @@
 @media (prefers-color-scheme: light) {
   :root:not([data-theme="dark"]) .ob3-card { background: #fff; border-color: #e5e7eb; }
   :root:not([data-theme="dark"]) .ob3-card:hover { border-color: #9ca3af; box-shadow: 0 8px 24px -8px rgba(0,0,0,.08); }
-  :root:not([data-theme="dark"]) .ob3-card[aria-checked="true"] { border-color: var(--accent, #2dd4bf); background: color-mix(in srgb, var(--accent, #2dd4bf) 6%, #fff); }
+  :root:not([data-theme="dark"]) .ob3-card[aria-checked="true"],
+  :root:not([data-theme="dark"]) .ob3-card[aria-pressed="true"] { border-color: var(--accent, #2dd4bf); background: color-mix(in srgb, var(--accent, #2dd4bf) 6%, #fff); }
 }
 :root[data-theme="light"] .ob3-card { background: #fff; border-color: #e5e7eb; }
 :root[data-theme="light"] .ob3-card:hover { border-color: #9ca3af; box-shadow: 0 8px 24px -8px rgba(0,0,0,.08); }
-:root[data-theme="light"] .ob3-card[aria-checked="true"] { border-color: var(--accent, #2dd4bf); background: color-mix(in srgb, var(--accent, #2dd4bf) 6%, #fff); }
+:root[data-theme="light"] .ob3-card[aria-checked="true"],
+:root[data-theme="light"] .ob3-card[aria-pressed="true"] { border-color: var(--accent, #2dd4bf); background: color-mix(in srgb, var(--accent, #2dd4bf) 6%, #fff); }
 
 /* Pill rows (level / exam-date / chips) ------------------------------- */
 .ob3-pillrow { display: flex; flex-wrap: wrap; gap: 10px; }

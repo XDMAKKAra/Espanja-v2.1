@@ -18,13 +18,43 @@ body.app .home-shell {
   gap: 28px;
 }
 
+/* AI-slop banned: italic-Fraunces "Ladataan..." (see
+   feedback_ai_slop_check_every_frontend memory). Render the loading
+   state as skeleton bars matching the upcoming home layout instead. */
 body.app .home-loading {
-  font-family: var(--ed-serif, Georgia, serif);
-  font-style: italic;
-  color: var(--ed-ink-faint, var(--ink-faint));
-  padding: 40px 0;
-  text-align: center;
+  display: grid;
+  gap: 16px;
+  padding: 8px 0 24px;
 }
+body.app .home-loading::before,
+body.app .home-loading::after {
+  content: "";
+  display: block;
+  border-radius: 6px;
+  background: linear-gradient(
+    90deg,
+    color-mix(in oklch, var(--ed-bg-deep) 70%, var(--ed-bg)) 0,
+    color-mix(in oklch, var(--ed-bg-deep) 92%, var(--ed-bg)) 50%,
+    color-mix(in oklch, var(--ed-bg-deep) 70%, var(--ed-bg)) 100%
+  );
+  background-size: 200% 100%;
+  animation: home-loading-shimmer 1.6s linear infinite;
+}
+body.app .home-loading::before { height: 56px; width: 40%; }
+body.app .home-loading::after  { height: 120px; width: 100%; }
+@keyframes home-loading-shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  body.app .home-loading::before,
+  body.app .home-loading::after {
+    animation: none;
+  }
+}
+/* Defensive: in case some legacy markup still puts text inside,
+   hide it (a skeleton shouldn't announce text). */
+body.app .home-loading > * { visibility: hidden; height: 0; margin: 0; }
 
 /* Greeting — only personality moment on this screen. */
 body.app .home-head { margin-bottom: 0; }
