@@ -38,10 +38,32 @@
   color: var(--ed-ink);
 }
 
+/* When the digikirja screen is active, the lesson takes over the whole
+   viewport: hide the global .app-sidebar (Aloitus/Asetukset rail), drop
+   .app-main padding to zero, and let the digikirja grid span edge-to-edge.
+   The digikirja has its own SideMenu — two sidebars side-by-side ate ~510px
+   of viewport before any content rendered. */
+body:has(#screen-digikirja.active) .app-sidebar { display: none; }
+body:has(#screen-digikirja.active) .app-shell,
+body:has(#screen-digikirja.active) .app-shell[data-rail="off"] {
+  grid-template-columns: 1fr;
+}
+body:has(#screen-digikirja.active) .app-main {
+  grid-column: 1 / -1;
+  padding: 0;
+}
+body:has(#screen-digikirja.active) .app-main-inner {
+  max-width: none;
+}
+
 .dk {
   --dk-sidemenu-width: 288px;
   --dk-sidemenu-rail: 56px;
   --dk-topbar-height: 60px;
+  /* Prose & exercise card max width — was a fixed 68ch (~640px) which left
+     huge cream margins on 1440px+ viewports. clamp lets the column breathe
+     on wide screens while staying readable on tablet. */
+  --dk-prose-max: clamp(720px, 60vw, 1080px);
   --dk-ease: cubic-bezier(0.23, 1, 0.32, 1);
 
   display: grid;
@@ -58,9 +80,11 @@
   top: 0;
   z-index: 5;
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  /* Bound the breadcrumb and tools columns so the title (1fr in the middle)
+     can never get squeezed to ellipsis on common lesson titles. */
+  grid-template-columns: minmax(0, max-content) minmax(0, 1fr) minmax(0, max-content);
   align-items: center;
-  gap: 16px;
+  gap: 12px;
   height: var(--dk-topbar-height);
   padding: 0 20px;
   background: color-mix(in oklch, var(--ed-bg) 88%, transparent);
@@ -72,10 +96,14 @@
 .dk__breadcrumb {
   display: flex;
   align-items: center;
-  gap: 6px;
-  font-size: 13px;
+  gap: 5px;
+  font-size: 12px;
   color: var(--ed-ink-muted);
   letter-spacing: 0.01em;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 .dk__breadcrumb a {
   color: var(--ed-ink-muted);
@@ -394,7 +422,7 @@
   font-size: 16px;
   line-height: 1.65;
   color: var(--ed-ink);
-  max-width: 68ch;
+  max-width: 65ch;
 }
 .dk__page-body p + p { margin-top: 1em; }
 
@@ -448,7 +476,7 @@
 
 .dk__teoria-p {
   margin: 0 0 14px;
-  max-width: 68ch;
+  max-width: 65ch;
   color: var(--ed-ink);
 }
 .dk__teoria-p strong { color: var(--ed-accent); font-weight: 600; }
@@ -486,7 +514,7 @@
   background: var(--ed-bg-card);
   border: 1px solid var(--ed-rule);
   border-radius: 14px;
-  max-width: 68ch;
+  max-width: var(--dk-prose-max);
 }
 .dk__key-points-title {
   font-family: var(--ed-mono);
@@ -513,7 +541,7 @@
 
 .dk__bilingual {
   margin: 18px 0 22px;
-  max-width: 68ch;
+  max-width: var(--dk-prose-max);
   border: 1px solid var(--ed-rule);
   border-radius: 12px;
   overflow: hidden;
@@ -571,7 +599,7 @@
   background: var(--ed-accent-tint);
   border: 1px solid color-mix(in oklch, var(--ed-accent) 18%, transparent);
   border-radius: 12px;
-  max-width: 68ch;
+  max-width: var(--dk-prose-max);
 }
 .dk__obs-label {
   font-family: var(--ed-display);
@@ -607,7 +635,7 @@
   background: var(--ed-bg-card);
   border: 1px solid var(--ed-rule);
   border-radius: 16px;
-  max-width: 68ch;
+  max-width: var(--dk-prose-max);
   box-shadow: 0 1px 0 rgba(15, 15, 15, 0.02);
 }
 
@@ -910,7 +938,7 @@
   background: var(--ed-bg-card);
   border: 1px solid var(--ed-rule);
   border-radius: 16px;
-  max-width: 68ch;
+  max-width: var(--dk-prose-max);
 }
 
 .dk__testi-list {
@@ -1026,7 +1054,7 @@
   background: var(--ed-bg-card);
   border: 1px solid var(--ed-rule);
   border-radius: 16px;
-  max-width: 68ch;
+  max-width: var(--dk-prose-max);
 }
 .dk__arvio-lede {
   font-family: var(--ed-display);
@@ -1117,7 +1145,7 @@
   background: var(--ed-bg-card);
   border: 1px solid var(--ed-rule);
   border-radius: 16px;
-  max-width: 68ch;
+  max-width: var(--dk-prose-max);
 }
 
 .dk__flashcard {
