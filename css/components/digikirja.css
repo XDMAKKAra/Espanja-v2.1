@@ -338,8 +338,14 @@ body:has(#screen-digikirja.active) #screen-digikirja.screen.active {
 .dk__sidemenu-action svg { flex-shrink: 0; color: var(--ed-ink-muted); }
 .dk__sidemenu-action:hover svg { color: var(--ed-ink); }
 
-/* Bottom slot — account row (email) + Asetukset + Kirjaudu ulos. */
+/* Bottom slot — account row (email) + Asetukset + Kirjaudu ulos. The
+   `margin-top: auto` is the belt-and-braces companion to the parent
+   sidemenu's `flex-direction: column` + the list's `flex: 1 1 auto`: in
+   short lessons where the list doesn't fill its space, this still pins
+   the footer to the bottom of the rail instead of letting it ride up
+   under the last group title. */
 .dk__sidemenu-footer {
+  margin-top: auto;
   display: flex;
   flex-direction: column;
   gap: 2px;
