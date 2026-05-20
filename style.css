@@ -5166,7 +5166,15 @@ body:has(.app-countdown:not(.hidden)) #app-main { padding-top: 34px; }
 
 .settings-modal-overlay,
 .level-bump-overlay {
-  position: fixed; inset: 0; z-index: 520;
+  /* !important needed because some cascading rule (likely .screen.active
+     z-index:1 + position:absolute reset) was overriding these values
+     even after the overlay was reparented to <body>. Playwright reported
+     computed `position: relative; z-index: 1` until we forced them. */
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 520 !important;
+  width: 100vw !important;
+  height: 100vh !important;
   background: rgba(0,0,0,0.78);
   backdrop-filter: blur(8px);
   display: flex; align-items: center; justify-content: center;
