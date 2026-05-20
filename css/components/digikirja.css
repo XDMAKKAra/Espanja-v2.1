@@ -85,10 +85,10 @@ body:has(#screen-digikirja.active) #screen-digikirja.screen.active {
   --dk-prose-max: clamp(720px, 60vw, 1080px);
   --dk-ease: cubic-bezier(0.23, 1, 0.32, 1);
 
-  display: grid;
-  grid-template-rows: var(--dk-topbar-height) 1fr;
-  /* Hidden global topbar on this screen (see :has rule above) → don't
-     subtract its height. The .dk fills the full viewport. */
+  display: block;
+  /* topbar is now position: fixed at viewport top — reserve room for it
+     so the body content (sidemenu + content) doesn't slide under. */
+  padding-top: var(--dk-topbar-height);
   min-height: 100dvh;
   font-family: var(--ed-sans);
   color: var(--ed-ink);
@@ -97,18 +97,24 @@ body:has(#screen-digikirja.active) #screen-digikirja.screen.active {
 /* ── TopBar ─────────────────────────────────────────────────────────── */
 
 .dk__topbar {
-  position: sticky;
+  /* User reported a persistent ~10px cream strip above the brick when
+     position: sticky was used: some ancestor's padding/margin was
+     bleeding through despite the body:has(#screen-digikirja.active)
+     overrides. Forcing position: fixed against the viewport itself
+     removes every cascade dependency — the bar is glued to top: 0
+     regardless of container state. The .dk reserves the height with
+     padding-top so content underneath doesn't slide behind. */
+  position: fixed;
   top: 0;
-  z-index: 5;
+  left: 0;
+  right: 0;
+  z-index: 50;
   display: grid;
   grid-template-columns: minmax(0, max-content) minmax(0, 1fr) minmax(0, max-content);
   align-items: center;
   gap: 16px;
   height: var(--dk-topbar-height);
   padding: 0 20px 0 14px;
-  /* Solid brick like Sanoma's purple topbar — anchors the lesson in a
-     way the cream-on-cream topbar never managed. White text/icons sit on
-     it with full WCAG-AA contrast (ed-accent vs ed-accent-ink). */
   background: var(--ed-accent);
   color: var(--ed-accent-ink);
   border-bottom: 0;

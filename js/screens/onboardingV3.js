@@ -23,11 +23,12 @@ const FOCUS_LABELS = {
 };
 
 const STAGE_ORDER = [
-  "welcome", "language", "level", "current", "target", "exam-date", "time", "focus", "reveal",
+  "welcome", "name", "language", "level", "current", "target", "exam-date", "time", "focus", "reveal",
 ];
 
 const SCREEN_ID = {
   welcome: "screen-ob-v3-welcome",
+  name: "screen-ob-v3-name",
   language: "screen-ob-v3-language",
   level: "screen-ob-v3-level",
   current: "screen-ob-v3-current",
@@ -39,7 +40,9 @@ const SCREEN_ID = {
 };
 
 const flow = {
-  target_language: null,    // "es" | "de" | "fr"
+  nickname: "",             // saved to localStorage["puheo:nickname"]
+  target_language: null,    // "es" | "de" | "fr" (primary lang for backend)
+  enabled_langs: [],        // 1+ codes saved to localStorage["puheo:enabled-langs"]
   target_level: "lyhyt",    // "lyhyt" | "pitka"
   current_level: null,      // I/A/B/C
   target_grade: null,       // A..L
@@ -53,6 +56,7 @@ let _deps = {};
 export function initOnboardingV3(deps = {}) {
   _deps = deps;
   wireWelcome();
+  wireName();
   wireLanguage();
   wireLevel();
   wireCurrent();
@@ -131,7 +135,28 @@ function wireNext() {
 // ── Stage 0: welcome ───────────────────────────────────────────────────────
 function wireWelcome() { /* CTA wired by [data-ob3="next"] */ }
 
-// ── Stage 1: language ──────────────────────────────────────────────────────
+// ── Stage: name ────────────────────────────────────────────────────────────
+function wireName() {
+  const input = document.getElementById("ob3-name-input");
+  if (!input || input.dataset.wired) return;
+  input.dataset.wired = "1";
+  // Pre-fill if user has set a nickname previously (re-entering onboarding).
+  try { input.value = (localStorage.getItem("puheo:nickname") || "").trim(); }
+  catch { /* private mode */ }
+  input.addEventListener("input", () => {
+    flow.nickname = input.value.trim();
+  });
+  input.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      flow.nickname = input.value.trim();
+      const next = nextOf("name");
+      if (next) gotoStage(next);
+    }
+  });
+}
+
+// ── Stage 1: language (multi-select) ───────────────────────────────────────
 function wireLanguage() {
   const root = document.querySelector('[data-ob3-field="target_language"]');
   if (!root || root.dataset.wired) return;
@@ -139,14 +164,24 @@ function wireLanguage() {
   root.addEventListener("click", (e) => {
     const card = e.target.closest(".ob3-card");
     if (!card) return;
-    if (card.dataset.soon === "1") {
-      openWaitlist(card.dataset.value);
-      return;
-    }
-    setRadio(root, ".ob3-card", card);
-    flow.target_language = card.dataset.value;
-    enableNextOf("language");
+    const code = card.dataset.value;
+    const pressed = card.getAttribute("aria-pressed") === "true";
+    card.setAttribute("aria-pressed", pressed ? "false" : "true");
+    card.classList.toggle("is-selected", !pressed);
+    // Rebuild enabled_langs in DOM order so the first card the user
+    // picked stays the primary lang even after toggling others.
+    const selected = [...root.querySelectorAll('.ob3-card[aria-pressed="true"]')]
+      .map((c) => c.dataset.value);
+    flow.enabled_langs = selected;
+    flow.target_language = selected[0] || null;
+    if (flow.target_language) enableNextOf("language");
+    else disableNextOf("language");
   });
+}
+
+function disableNextOf(stage) {
+  const btn = document.querySelector(`[data-ob3="next"][data-from="${stage}"]`);
+  if (btn) btn.disabled = true;
 }
 
 // ── Stage 2: level ─────────────────────────────────────────────────────────
@@ -411,6 +446,19 @@ function renderReveal() {
 }
 
 async function completeAndRedirect() {
+  // Persist locally-scoped fields BEFORE the backend round-trip so the
+  // sidebar/home pick them up even if the API call is slow.
+  try {
+    if (flow.nickname) localStorage.setItem("puheo:nickname", flow.nickname);
+    else localStorage.removeItem("puheo:nickname");
+  } catch { /* private mode */ }
+  try {
+    const langs = (flow.enabled_langs && flow.enabled_langs.length)
+      ? flow.enabled_langs
+      : (flow.target_language ? [flow.target_language] : ["es"]);
+    localStorage.setItem("puheo:enabled-langs", JSON.stringify(langs));
+  } catch { /* private mode */ }
+
   if (isLoggedIn()) {
     try {
       await apiFetch(`${API}/api/onboarding/complete`, {
