@@ -77,6 +77,32 @@ function refreshSidemenuProgress() {
   }
 }
 
+// Phase titles in the lesson JSON files were written with AI-slop
+// patterns ("YO-tyylinen käännös", em-dashes, "tulossa PR 7"). We don't
+// have time to rewrite 150+ JSON files, so rewrite the titles here at
+// read-time. Map specific known strings; for the rest just strip em-dash
+// for humanizer compliance.
+const PHASE_TITLE_REWRITES = [
+  [/^YO-tyylinen käännös$/i,    "Käännä lauseet"],
+  [/^YO-tason käännös$/i,        "Käännä lauseet"],
+  [/^Lyhyt kirjoitus$/i,         "Kirjoita lyhyt teksti"],
+  [/Lauseen täydennys\s*[—-]\s*/g, "Lauseen täydennys, "],
+  [/Tunnista\s*[—-]\s*/g,        "Tunnista "],
+  [/Tuota\s*[—-]\s*/g,           "Tuota "],
+  [/Yhdistä\s*[—-]\s*/g,         "Yhdistä "],
+  [/Käännä\s*[—-]\s*/g,          "Käännä "],
+];
+function prettifyPhaseTitle(raw) {
+  if (!raw) return "";
+  let out = String(raw);
+  for (const [pattern, replacement] of PHASE_TITLE_REWRITES) {
+    out = out.replace(pattern, replacement);
+  }
+  // Final em-dash sweep (catches anything not covered above).
+  out = out.replace(/\s+—\s+/g, ", ");
+  return out;
+}
+
 const KIND_GROUP = {
   teoria: "Opetus",
   tehtava: "Harjoitukset",
@@ -228,7 +254,7 @@ function buildSivut(lesson) {
   const phases = Array.isArray(lesson?.phases) ? lesson.phases : [];
   phases.forEach((phase, i) => {
     const num = String(i + 1);
-    const title = phase.title || `Vaihe ${num}`;
+    const title = prettifyPhaseTitle(phase.title) || `Vaihe ${num}`;
     const itemCount = Array.isArray(phase.items) ? phase.items.length : 0;
     out.push({
       id: `phase-${i}`,
@@ -1178,14 +1204,14 @@ function renderExerciseContent(sivu) {
   const firstKind = items[0].item_type;
   if (!SUPPORTED_ITEM_TYPES.has(firstKind)) {
     const label = firstKind === "match"
-      ? "Yhdistämistehtävä, tulossa PR 4b"
+      ? "Yhdistämistehtävä"
       : firstKind === "writing"
-      ? "Kirjoitustehtävä, tulossa PR 7"
-      : `Tehtävätyyppi "${firstKind}" tulossa myöhemmin`;
+      ? "Kirjoitustehtävä"
+      : `Tehtävätyyppi "${firstKind}"`;
     return `
       <div class="dk__placeholder" data-kind="tehtava">
         <p class="dk__placeholder-kind">${escapeHtml(label)}</p>
-        <p>Vaihe ${escapeHtml(String((phaseIndexOfSivu(sivu) ?? 0) + 1))}: ${escapeHtml(phase.title || "")}. Vaiheessa ${items.length} tehtävää tätä tyyppiä.</p>
+        <p>Tämä tehtävätyyppi avautuu pian. Voit jatkaa muista vaiheista sivuvalikosta.</p>
       </div>`;
   }
 
