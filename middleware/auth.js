@@ -1,4 +1,4 @@
-import supabase from "../supabase.js";
+import { adminClient, createUserClient } from "../lib/supabase.js";
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
@@ -26,9 +26,12 @@ try {
 export async function requireAuth(req, res, next) {
   const auth = req.headers.authorization;
   if (!auth?.startsWith("Bearer ")) return res.status(401).json({ error: "Unauthorized" });
-  const { data: { user }, error } = await supabase.auth.getUser(auth.slice(7));
+  const jwt = auth.slice(7);
+  const { data: { user }, error } = await adminClient.auth.getUser(jwt);
   if (error || !user) return res.status(401).json({ error: "Invalid token" });
   req.user = { userId: user.id, email: user.email };
+  req.supabase = createUserClient(jwt);
+  req.adminClient = adminClient;
   next();
 }
 
@@ -55,7 +58,7 @@ export async function isPro(userId) {
 
   // Check test accounts
   if (alwaysPro.length || alwaysFree.length) {
-    const { data: { user } } = await supabase.auth.admin.getUserById(userId);
+    const { data: { user } } = await adminClient.auth.admin.getUserById(userId);
     if (user?.email) {
       if (alwaysPro.includes(user.email.toLowerCase())) return true;
       if (alwaysFree.includes(user.email.toLowerCase())) return false;
@@ -63,7 +66,7 @@ export async function isPro(userId) {
   }
 
   // L-PRICING-REVAMP-1 — new tier columns live on `user_profile` (PK user_id).
-  const { data: userRow } = await supabase
+  const { data: userRow } = await adminClient
     .from("user_profile")
     .select("subscription_tier, subscription_billing, subscription_status, subscription_expires_at")
     .eq("user_id", userId)
@@ -71,7 +74,7 @@ export async function isPro(userId) {
   if (isPayingRow(userRow)) return true;
 
   // Legacy summer package (one-time purchase with expiry)
-  const { data: profile } = await supabase
+  const { data: profile } = await adminClient
     .from("user_profile")
     .select("summer_package_expires_at")
     .eq("user_id", userId)
@@ -80,7 +83,7 @@ export async function isPro(userId) {
     return true;
   }
 
-  const { data } = await supabase
+  const { data } = await adminClient
     .from("subscriptions")
     .select("active")
     .eq("user_id", userId)
@@ -113,7 +116,7 @@ export async function getUserTier(userId) {
   // 1) user_profile is the source-of-truth for paid users (Stripe webhook
   //    writes here). When subscription_tier is populated AND the row is in
   //    a paying state, return that exact tier.
-  const { data: row } = await supabase
+  const { data: row } = await adminClient
     .from("user_profile")
     .select("subscription_tier, subscription_billing, subscription_status, subscription_expires_at, summer_package_expires_at")
     .eq("user_id", userId)
@@ -136,7 +139,7 @@ export async function getUserTier(userId) {
 
   // 4) Legacy subscriptions table — last-resort fallback for accounts
   //    created before the user_profile.subscription_* columns existed.
-  const { data: legacy } = await supabase
+  const { data: legacy } = await adminClient
     .from("subscriptions")
     .select("active")
     .eq("user_id", userId)
@@ -152,7 +155,7 @@ export async function hasFeature(userId, feature) {
 }
 
 export async function getFreeUsage(userId) {
-  const { data } = await supabase
+  const { data } = await adminClient
     .from("free_usage")
     .select("writing_count, reading_count, exam_count, lessons_done")
     .eq("user_id", userId)
@@ -175,7 +178,7 @@ export async function incrementFreeUsage(userId, feature) {
   if (!col) return;
   const usage = await getFreeUsage(userId);
   const next = (usage[col] || 0) + 1;
-  await supabase
+  await adminClient
     .from("free_usage")
     .upsert({ user_id: userId, [col]: next, updated_at: new Date().toISOString() }, { onConflict: "user_id" });
 }
@@ -226,7 +229,7 @@ export async function softReadingGate(req, res, next) {
     req.isPro = true;
     return next();
   }
-  const { data: profile } = await supabase
+  const { data: profile } = await adminClient
     .from("user_profile")
     .select("reading_pieces_consumed")
     .eq("user_id", req.user.userId)
@@ -256,13 +259,13 @@ export function isTestProEmail(email) {
 }
 
 export async function incrementReadingPieces(userId) {
-  const { data: profile } = await supabase
+  const { data: profile } = await adminClient
     .from("user_profile")
     .select("reading_pieces_consumed")
     .eq("user_id", userId)
     .single();
   const next = Number(profile?.reading_pieces_consumed || 0) + 1;
-  await supabase
+  await adminClient
     .from("user_profile")
     .upsert({ user_id: userId, reading_pieces_consumed: next }, { onConflict: "user_id" });
   return next;
@@ -275,9 +278,12 @@ export async function incrementReadingPieces(userId) {
 export async function softProGate(req, res, next) {
   const auth = req.headers.authorization;
   if (!auth?.startsWith("Bearer ")) return next();
-  const { data: { user }, error } = await supabase.auth.getUser(auth.slice(7));
+  const jwt = auth.slice(7);
+  const { data: { user }, error } = await adminClient.auth.getUser(jwt);
   if (error || !user) return next();
   req.user = { userId: user.id, email: user.email };
+  req.supabase = createUserClient(jwt);
+  req.adminClient = adminClient;
   const pro = await isPro(user.id);
   if (!pro) return res.status(403).json({ error: "pro_required", message: "Tämä toiminto vaatii Pro-tilin" });
   next();
