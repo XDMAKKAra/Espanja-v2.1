@@ -2201,6 +2201,96 @@
     </div>
   </div>
 
+  <!-- v246 — moved INSIDE .app-main-inner so `.screen { position:absolute; inset:0 }`
+       attaches to .app-main (768x768 on 1366×768) instead of flowing in normal
+       document flow below .app-shell. Previously a direct body.app child, where
+       `body.app > * { position: relative }` (app-old-spain.css) won by specificity
+       and forced the whole page to scroll instead of scrolling the form internally. -->
+  <div id="screen-settings" class="screen">
+    <div class="settings-inner">
+      <div class="settings-header">
+        <h1 class="settings-title">Asetukset</h1>
+        <p class="settings-sub">Profiili ja kurssin asetukset. Muutokset tallentuvat heti.</p>
+      </div>
+
+      <section class="settings-section">
+        <h2 class="settings-section-title">Kutsumanimi</h2>
+        <div class="settings-rows">
+          <div class="settings-row settings-row--nickname">
+            <div class="settings-row-main">
+              <div class="settings-row-label">Mitä sovellus saa kutsua sinua?</div>
+              <div class="settings-row-help">Näytetään sähköpostiosoitteen sijaan sivupalkissa ja tervehdyksissä. Jätä tyhjäksi jos haluat säilyttää sähköpostin.</div>
+              <input type="text" id="settings-nickname-input" class="settings-nickname-input" maxlength="40" placeholder="Esim. Maria" autocomplete="nickname" />
+            </div>
+            <button type="button" class="settings-row-edit" id="settings-nickname-save">Tallenna</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="settings-section">
+        <h2 class="settings-section-title">Opiskeluprofiili</h2>
+        <div class="settings-rows" id="settings-profile-rows" aria-busy="true">
+          <div class="skel skel--text" style="height:18px; max-width:65%; margin:14px 0;"></div>
+          <div class="skel skel--text" style="height:18px; max-width:55%; margin:14px 0;"></div>
+          <div class="skel skel--text" style="height:18px; max-width:60%; margin:14px 0;"></div>
+          <span class="sr-only">Ladataan profiilia…</span>
+        </div>
+      </section>
+
+      <!-- L-LANG-INFRA-1: language switcher section, rendered by settings.js renderLanguageSection() -->
+      <section class="settings-section" id="settings-language-section">
+        <h2 class="settings-section-title">Opiskelukieli</h2>
+        <div class="settings-rows" id="settings-language-rows">
+          <div class="skel skel--text" style="height:18px; max-width:50%; margin:14px 0;"></div>
+        </div>
+      </section>
+
+      <section class="settings-section">
+        <h2 class="settings-section-title">Ulkoasu</h2>
+        <div class="settings-rows">
+          <div class="settings-row" data-field="theme">
+            <div class="settings-row-main">
+              <div class="settings-row-label">Teema</div>
+              <div class="settings-row-value" id="settings-theme-value">Vaalea, seuraa järjestelmää</div>
+            </div>
+            <div class="settings-theme-toggle" role="radiogroup" aria-label="Teema">
+              <button type="button" class="settings-theme-btn is-current" data-theme="auto" role="radio" aria-checked="true">Auto</button>
+              <button type="button" class="settings-theme-btn" data-theme="light" role="radio" aria-checked="false">Vaalea</button>
+              <button type="button" class="settings-theme-btn" data-theme="dark" role="radio" aria-checked="false">Tumma</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tilaus-section, rendered by settings.js wireSubscriptionSection() -->
+      <section class="settings-section" id="settings-subscription-section">
+        <h2 class="settings-section-title">Tilaus</h2>
+        <div class="settings-rows settings-sub-section" id="settings-subscription-rows" aria-busy="true">
+          <span class="sr-only">Ladataan tilauksen tietoja…</span>
+        </div>
+      </section>
+
+      <section class="settings-section">
+        <h2 class="settings-section-title">Tili</h2>
+        <div class="settings-rows">
+          <div class="settings-row">
+            <div class="settings-row-main">
+              <div class="settings-row-label">Sähköposti</div>
+              <div class="settings-row-value" id="settings-account-email">—</div>
+            </div>
+          </div>
+          <div class="settings-row settings-row--danger">
+            <div class="settings-row-main">
+              <div class="settings-row-label">Kirjaudu ulos</div>
+              <div class="settings-row-value">Voit kirjautua takaisin sisään koska tahansa.</div>
+            </div>
+            <button type="button" class="settings-row-edit" id="settings-signout">Kirjaudu ulos</button>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
     </div><!-- /app-main-inner -->
   </main><!-- /app-main -->
 
@@ -2334,91 +2424,6 @@
             <button type="button" class="profile-section-link" id="profile-link-settings">Kaikki asetukset →</button>
           </div>
           <div class="profile-chips" id="profile-chips"></div>
-        </div>
-      </section>
-    </div>
-  </div>
-
-  <div id="screen-settings" class="screen">
-    <div class="settings-inner">
-      <div class="settings-header">
-        <h1 class="settings-title">Asetukset</h1>
-        <p class="settings-sub">Profiili ja kurssin asetukset. Muutokset tallentuvat heti.</p>
-      </div>
-
-      <section class="settings-section">
-        <h2 class="settings-section-title">Kutsumanimi</h2>
-        <div class="settings-rows">
-          <div class="settings-row settings-row--nickname">
-            <div class="settings-row-main">
-              <div class="settings-row-label">Mitä sovellus saa kutsua sinua?</div>
-              <div class="settings-row-help">Näytetään sähköpostiosoitteen sijaan sivupalkissa ja tervehdyksissä. Jätä tyhjäksi jos haluat säilyttää sähköpostin.</div>
-              <input type="text" id="settings-nickname-input" class="settings-nickname-input" maxlength="40" placeholder="Esim. Maria" autocomplete="nickname" />
-            </div>
-            <button type="button" class="settings-row-edit" id="settings-nickname-save">Tallenna</button>
-          </div>
-        </div>
-      </section>
-
-      <section class="settings-section">
-        <h2 class="settings-section-title">Opiskeluprofiili</h2>
-        <div class="settings-rows" id="settings-profile-rows" aria-busy="true">
-          <div class="skel skel--text" style="height:18px; max-width:65%; margin:14px 0;"></div>
-          <div class="skel skel--text" style="height:18px; max-width:55%; margin:14px 0;"></div>
-          <div class="skel skel--text" style="height:18px; max-width:60%; margin:14px 0;"></div>
-          <span class="sr-only">Ladataan profiilia…</span>
-        </div>
-      </section>
-
-      <!-- L-LANG-INFRA-1: language switcher section, rendered by settings.js renderLanguageSection() -->
-      <section class="settings-section" id="settings-language-section">
-        <h2 class="settings-section-title">Opiskelukieli</h2>
-        <div class="settings-rows" id="settings-language-rows">
-          <div class="skel skel--text" style="height:18px; max-width:50%; margin:14px 0;"></div>
-        </div>
-      </section>
-
-      <section class="settings-section">
-        <h2 class="settings-section-title">Ulkoasu</h2>
-        <div class="settings-rows">
-          <div class="settings-row" data-field="theme">
-            <div class="settings-row-main">
-              <div class="settings-row-label">Teema</div>
-              <div class="settings-row-value" id="settings-theme-value">Vaalea, seuraa järjestelmää</div>
-            </div>
-            <div class="settings-theme-toggle" role="radiogroup" aria-label="Teema">
-              <button type="button" class="settings-theme-btn is-current" data-theme="auto" role="radio" aria-checked="true">Auto</button>
-              <button type="button" class="settings-theme-btn" data-theme="light" role="radio" aria-checked="false">Vaalea</button>
-              <button type="button" class="settings-theme-btn" data-theme="dark" role="radio" aria-checked="false">Tumma</button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Tilaus-section, rendered by settings.js wireSubscriptionSection() -->
-      <section class="settings-section" id="settings-subscription-section">
-        <h2 class="settings-section-title">Tilaus</h2>
-        <div class="settings-rows settings-sub-section" id="settings-subscription-rows" aria-busy="true">
-          <span class="sr-only">Ladataan tilauksen tietoja…</span>
-        </div>
-      </section>
-
-      <section class="settings-section">
-        <h2 class="settings-section-title">Tili</h2>
-        <div class="settings-rows">
-          <div class="settings-row">
-            <div class="settings-row-main">
-              <div class="settings-row-label">Sähköposti</div>
-              <div class="settings-row-value" id="settings-account-email">—</div>
-            </div>
-          </div>
-          <div class="settings-row settings-row--danger">
-            <div class="settings-row-main">
-              <div class="settings-row-label">Kirjaudu ulos</div>
-              <div class="settings-row-value">Voit kirjautua takaisin sisään koska tahansa.</div>
-            </div>
-            <button type="button" class="settings-row-edit" id="settings-signout">Kirjaudu ulos</button>
-          </div>
         </div>
       </section>
     </div>

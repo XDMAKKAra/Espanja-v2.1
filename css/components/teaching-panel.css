@@ -5,6 +5,13 @@
 
 /* ── Trigger button ─────────────────────────────────────────────────────── */
 
+/* v246 — `display: inline-flex` below was ignoring the [hidden] attribute,
+   and `body.app > *` (app-old-spain.css) was downgrading the intended
+   `position: fixed` to relative by specificity, so the orphaned trigger
+   flowed in normal document flow below .app-shell and pushed page
+   scrollHeight past the viewport (913 vs 768 on 1366×768). */
+.teaching-panel-trigger[hidden] { display: none !important; }
+
 .teaching-panel-trigger {
   /* Floats to the LEFT of the L-PLAN-4 profile-menu avatar (top-right).
      Avatar is 40 px @ right: 16 px (z-index 100) — leave 8 px gap. */

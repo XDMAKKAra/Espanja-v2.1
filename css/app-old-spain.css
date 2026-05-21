@@ -152,6 +152,14 @@ body.app::before {
     radial-gradient(circle at 84% 76%, oklch(60% 0.10 28 / 0.04) 0, transparent 32%);
 }
 body.app > * { position: relative; z-index: 1; }
+/* v246 — the broad rule above downgrades the intentional `position: fixed`
+   on viewport-pinned children (countdown bar, teaching-panel trigger) to
+   relative by specificity, putting them in normal document flow and pushing
+   page scrollHeight past 100vh (55 px countdown + 768 px shell = 823 on a
+   1366×768 viewport). Restore fixed on the elements that need to pin. */
+body.app > .app-countdown { position: fixed; }
+body.app > .teaching-panel-trigger { position: fixed; }
+body.app > .skip-link { position: fixed; }
 
 /* ═══════════════════════════════════════════════════════════
    Typography lifts. Every dashboard heading rendered with the
