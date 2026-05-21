@@ -8,8 +8,8 @@ const authState = {
 const profileResult = { data: null, error: null };
 const subscriptionResult = { data: null, error: null };
 
-vi.mock("../supabase.js", () => ({
-  default: {
+vi.mock("../supabase.js", () => {
+  const adminClient = {
     auth: {
       getUser: vi.fn(async (_token) => authState.getUserResult),
       admin: {
@@ -35,8 +35,13 @@ vi.mock("../supabase.js", () => ({
       }
       return { select: () => ({ eq: () => ({ single: async () => ({ data: null, error: null }) }) }) };
     },
-  },
-}));
+  };
+  return {
+    default: adminClient,
+    adminClient,
+    createUserClient: vi.fn(() => adminClient),
+  };
+});
 
 const { requireAuth, requirePro, softProGate, isPro } = await import("../middleware/auth.js");
 
