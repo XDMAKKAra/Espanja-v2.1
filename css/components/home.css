@@ -291,3 +291,81 @@ body.app .home-mode__badge.is-lock {
   color: var(--ed-ink-muted, var(--ink-soft));
   border-color: var(--ed-rule, var(--border));
 }
+
+/* ── v247 — Home shell skeleton ────────────────────────────────────────
+   Renders BEFORE /api/dashboard/v2 resolves so the cream content area
+   doesn't sit empty for ~820 ms after login. Shapes match the live
+   shell (greeting, ohjaamo grid, mode tiles) so the swap is reflow-free.
+   The shimmer matches the rest of the app (.skel from skeleton.css) but
+   stays restrained — no spinner, no italic Fraunces "Ladataan…". */
+body.app .home-skel-root { display: contents; }
+
+body.app .home-skel {
+  display: block;
+  background: color-mix(in srgb, var(--ed-ink, var(--ink)) 7%, transparent);
+  background-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    color-mix(in srgb, var(--ed-ink, var(--ink)) 4%, transparent) 50%,
+    transparent 100%
+  );
+  background-repeat: no-repeat;
+  background-size: 220px 100%;
+  background-position: -220px 0;
+  border-radius: 6px;
+  color: transparent;
+  animation: home-skel-shimmer 1.4s linear infinite;
+}
+@keyframes home-skel-shimmer {
+  to { background-position: calc(100% + 220px) 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  body.app .home-skel { animation: none; }
+}
+
+body.app .home-skel--greeting {
+  height: 1em;
+  width: min(420px, 80%);
+  margin: 0;
+}
+body.app .home-skel--eyebrow {
+  height: 12px;
+  width: 88px;
+  border-radius: 4px;
+}
+body.app .home-skel--label {
+  height: 11px;
+  width: 70%;
+  border-radius: 4px;
+}
+body.app .home-skel--value {
+  height: 22px;
+  width: 50%;
+  margin-top: 8px;
+  border-radius: 5px;
+}
+body.app .ohjaamo-cell--skel {
+  /* Lock cell shape so the swap to the real ohjaamo grid is reflow-free. */
+  background: transparent;
+}
+body.app .home-mode--skel {
+  /* Match the real mode-card height so the grid doesn't jump. */
+  pointer-events: none;
+  cursor: default;
+}
+body.app .home-skel--chip {
+  height: 12px;
+  width: 96px;
+  border-radius: 999px;
+  margin-bottom: 14px;
+}
+body.app .home-skel--title {
+  height: 24px;
+  width: 60%;
+  margin: 0 0 12px;
+}
+body.app .home-skel--desc {
+  height: 14px;
+  width: 88%;
+  margin: 0;
+}

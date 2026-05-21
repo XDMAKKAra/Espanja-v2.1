@@ -268,12 +268,61 @@ function wireModes(root, isPro) {
   });
 }
 
+// v247 — Layout-matching skeleton for the home shell. Replaces the empty
+// `home-loading` div that left the cream content area blank for ~820 ms
+// after login while /api/dashboard/v2 resolved. Mirrors the real shell
+// structure (greeting, ohjaamo grid, four mode tiles) so the swap into
+// the live render doesn't reflow the page.
+function renderShellSkeleton(activeLang) {
+  const tabs = renderTabs(activeLang);
+  const cells = Array.from({ length: 5 }).map(() => `
+    <div class="ohjaamo-cell ohjaamo-cell--skel" aria-hidden="true">
+      <span class="ohjaamo-cell__label home-skel home-skel--label"></span>
+      <span class="ohjaamo-cell__value home-skel home-skel--value"></span>
+    </div>`).join("");
+  const tiles = Array.from({ length: 4 }).map(() => `
+    <div class="home-mode home-mode--skel" aria-hidden="true">
+      <div class="home-mode__body">
+        <p class="home-mode__chip home-skel home-skel--chip"></p>
+        <h3 class="home-mode__title home-skel home-skel--title"></h3>
+        <p class="home-mode__desc home-skel home-skel--desc"></p>
+      </div>
+    </div>`).join("");
+  return `
+    <div class="home-skel-root" role="status" aria-live="polite">
+      <span class="sr-only">Ladataan kotinäyttöä…</span>
+      <header class="home-head" aria-hidden="true">
+        <h1 class="home-greeting display display--serif home-skel home-skel--greeting"></h1>
+      </header>
+      <div class="home-tabs" aria-hidden="true">${tabs}</div>
+      <div id="ohjaamo-root">
+        <section class="ohjaamo" aria-hidden="true">
+          <p class="ohjaamo__eyebrow home-skel home-skel--eyebrow"></p>
+          <div class="ohjaamo__grid">${cells}</div>
+        </section>
+      </div>
+      <section class="home-modes" aria-hidden="true">${tiles}</section>
+    </div>`;
+}
+
 export async function loadHome() {
   show("screen-home");
   const root = document.getElementById("home-root");
   if (!root) return;
   const activeLang = readActiveLang();
-  root.innerHTML = `<div class="home-loading" role="status" aria-label="Ladataan kotinäyttöä"><span class="sr-only">Ladataan…</span></div>`;
+  // Repeat-visit fast path: if we already have ohjaamo data cached
+  // (TTL 60 s, see fetchOhjaamo), paint the real shell synchronously
+  // so subsequent home-loads have no skeleton frame at all.
+  if (_ohjaamoData && (Date.now() - _ohjaamoData.ts) < 60_000) {
+    const cached = _ohjaamoData.payload;
+    const isPro = isProTier(cached?.profile?.profile);
+    root.innerHTML = renderShell(activeLang, cached, isPro);
+    wireTabs(root, isPro);
+    wireUpgrade(root);
+    wireModes(root, isPro);
+    return;
+  }
+  root.innerHTML = renderShellSkeleton(activeLang);
   const data = await fetchOhjaamo();
   const isPro = isProTier(data?.profile?.profile);
   root.innerHTML = renderShell(activeLang, data, isPro);
