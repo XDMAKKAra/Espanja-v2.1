@@ -380,8 +380,13 @@ function renderSidemenu() {
     return head + items;
   }).join("");
 
-  let nick = "";
-  try { nick = (localStorage.getItem("puheo:nickname") || "").trim(); } catch { /* private mode */ }
+  // v248 — server profile is canonical (persists across origins).
+  // localStorage is a first-paint cache when /api/profile is still in flight.
+  let nick = (window._userProfile?.nickname || "").trim();
+  if (!nick) {
+    try { nick = (localStorage.getItem("puheo:nickname") || "").trim(); }
+    catch { /* private mode */ }
+  }
   const email = (typeof getAuthEmail === "function" && getAuthEmail()) || "";
   const emailLabel = nick || email || "Oma sivu";
 

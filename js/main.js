@@ -82,11 +82,27 @@ function updateSidebarState() {
 
   const sidebarUser = $("sidebar-user");
   if (sidebarUser) {
-    // Prefer the student's chosen nickname (set in Asetukset). Falls back
-    // to the email so the affordance still identifies the account.
+    // v248 — Server profile is the source of truth (persists across
+    // origins). localStorage is a first-paint cache for cold loads
+    // before /api/profile resolves. Order: server profile → cache → email.
     let nick = "";
-    try { nick = localStorage.getItem("puheo:nickname") || ""; } catch { /* private mode */ }
-    sidebarUser.textContent = nick.trim() || getAuthEmail() || "";
+    const serverNick = (window._userProfile?.nickname || "").trim();
+    if (serverNick) {
+      nick = serverNick;
+      try { localStorage.setItem("puheo:nickname", serverNick); }
+      catch { /* private mode */ }
+    } else {
+      try { nick = (localStorage.getItem("puheo:nickname") || "").trim(); }
+      catch { /* private mode */ }
+      // If the server explicitly says no nickname, clear the stale cache
+      // so the next cold load on a different origin doesn't resurrect it.
+      if (window._userProfile && !window._userProfile.nickname) {
+        try { localStorage.removeItem("puheo:nickname"); }
+        catch { /* private mode */ }
+        nick = "";
+      }
+    }
+    sidebarUser.textContent = nick || getAuthEmail() || "";
   }
 }
 
@@ -848,6 +864,10 @@ if (!resetToken && isLoggedIn()) {
   // Check onboarding first, then placement, then dashboard
   checkOnboarding().then(async (needsOnboarding) => {
     if (needsOnboarding) return; // onboarding screen shown
+    // v248 — profile is now loaded into window._userProfile; refresh
+    // sidebar so the server-side nickname overrides any stale cache
+    // (or absence of cache on a fresh origin like prod after localhost).
+    updateSidebarState();
     // Check if placement test is needed
     const needsPlacement = await checkPlacementNeeded();
     if (needsPlacement) {

@@ -74,6 +74,7 @@ router.post("/profile", requireAuth, async (req, res) => {
       preferred_session_length,
       referral_source,
       onboarding_completed,
+      nickname,
     } = req.body;
 
     // Validate
@@ -158,6 +159,22 @@ router.post("/profile", requireAuth, async (req, res) => {
     if (onboarding_completed) {
       profileData.onboarding_completed = true;
       profileData.completed_at = new Date().toISOString();
+    }
+
+    // v248 — nickname persists across origins (localhost ↔ prod).
+    // Empty string or null clears the column so the sidebar falls back
+    // to the auth email. DB check constraint caps at 40 chars, mirror
+    // the trim here so client-side noise (whitespace-only input) reads
+    // as "cleared" instead of erroring on the DB side.
+    if (nickname !== undefined) {
+      if (nickname === null) {
+        profileData.nickname = null;
+      } else if (typeof nickname !== "string") {
+        return res.status(400).json({ error: "Virheellinen kutsumanimi" });
+      } else {
+        const trimmed = nickname.trim().slice(0, 40);
+        profileData.nickname = trimmed.length > 0 ? trimmed : null;
+      }
     }
 
     const { data, error } = await supabase

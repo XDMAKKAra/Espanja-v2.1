@@ -215,30 +215,80 @@ export function initSettings(deps) {
   // Sidebar click is handled centrally in main.js, it calls showSettings().
 }
 
-// Local-only nickname (no backend column yet). Stored under
-// localStorage["puheo:nickname"]; main.js + digikirja sidemenu render
-// it instead of the email when present.
+// v248 — nickname persists in user_profile.nickname so it survives an origin
+// change (localhost ↔ prod). localStorage still backs an instant render
+// before /api/profile resolves; the API write is the source of truth.
 function wireNicknameSection() {
   const input = document.getElementById("settings-nickname-input");
   const save  = document.getElementById("settings-nickname-save");
   if (!input || !save || save.dataset.wired === "1") return;
   save.dataset.wired = "1";
+  // Pre-fill from the local cache so the input doesn't flicker between
+  // "" and the cached value while the profile fetch is in flight. The
+  // canonical value is rewritten by populateNicknameFromProfile() once
+  // _profile lands.
   try { input.value = (localStorage.getItem("puheo:nickname") || "").trim(); }
   catch { /* private mode */ }
-  save.addEventListener("click", () => {
+  save.addEventListener("click", async () => {
     const v = input.value.trim().slice(0, 40);
+    save.disabled = true;
+    const original = save.textContent;
+    save.textContent = "Tallennetaan…";
     try {
-      if (v) localStorage.setItem("puheo:nickname", v);
-      else   localStorage.removeItem("puheo:nickname");
-    } catch { /* private mode */ }
-    // Refresh sidebar so the new label takes effect immediately.
-    const sb = document.getElementById("sidebar-user");
-    if (sb) sb.textContent = v || (getAuthEmail() || "");
-    toast({ message: v ? "Kutsumanimi tallennettu" : "Kutsumanimi poistettu", variant: "success" });
+      const res = await apiFetch(`${API}/api/profile`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", ...authHeader() },
+        body: JSON.stringify({ nickname: v || null }),
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error || `HTTP ${res.status}`);
+      }
+      const { profile } = await res.json();
+      if (profile) {
+        _profile = profile;
+        window._userProfile = _profile;
+        invalidateProfileCache();
+      }
+      // Mirror to localStorage so the next first paint (sidebar, digikirja
+      // menu) renders the nickname before /api/profile resolves on cold
+      // load. The server value still wins after the fetch lands.
+      try {
+        if (v) localStorage.setItem("puheo:nickname", v);
+        else   localStorage.removeItem("puheo:nickname");
+      } catch { /* private mode */ }
+      // Refresh sidebar so the new label takes effect immediately.
+      const sb = document.getElementById("sidebar-user");
+      if (sb) sb.textContent = v || (getAuthEmail() || "");
+      toast({ message: v ? "Kutsumanimi tallennettu" : "Kutsumanimi poistettu", variant: "success" });
+    } catch (err) {
+      toast({ message: "Tallennus epäonnistui. Kokeile uudelleen.", variant: "error" });
+      track("nickname_save_error", { message: String(err?.message || err) });
+    } finally {
+      save.disabled = false;
+      save.textContent = original;
+    }
   });
   input.addEventListener("keydown", (e) => {
     if (e.key === "Enter") { e.preventDefault(); save.click(); }
   });
+}
+
+// Repopulate the nickname input from the freshly-loaded profile (server is
+// source of truth). Called from showSettings() after the /api/profile
+// fetch resolves. Skip when the user is mid-edit (input is focused) so we
+// don't clobber unsaved typing.
+function populateNicknameFromProfile(profile) {
+  const input = document.getElementById("settings-nickname-input");
+  if (!input || document.activeElement === input) return;
+  const serverNick = (profile?.nickname || "").trim();
+  input.value = serverNick;
+  // Keep the localStorage cache in sync so first-paint on subsequent
+  // logins (any origin) reflects the canonical value.
+  try {
+    if (serverNick) localStorage.setItem("puheo:nickname", serverNick);
+    else            localStorage.removeItem("puheo:nickname");
+  } catch { /* private mode */ }
 }
 
 // ─── Field descriptors ─────────────────────────────────────────────────────
@@ -481,6 +531,7 @@ export async function showSettings() {
     const { profile } = await res.json();
     _profile = profile || {};
     window._userProfile = _profile;
+    populateNicknameFromProfile(_profile);
     renderRows();
     wireSubscriptionSection(_profile);
     renderLanguageSection(_profile);

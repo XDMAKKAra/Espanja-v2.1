@@ -475,6 +475,17 @@ async function completeAndRedirect() {
         }),
       });
     } catch { /* non-blocking */ }
+    // v248 — persist nickname in user_profile so it survives an origin
+    // change. localStorage write above is just the first-paint cache.
+    if (flow.nickname !== undefined) {
+      try {
+        await apiFetch(`${API}/api/profile`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", ...authHeader() },
+          body: JSON.stringify({ nickname: flow.nickname || null }),
+        });
+      } catch { /* non-blocking */ }
+    }
     // L-LANG-INFRA-1: hydrate state.language from the just-saved flow so the
     // routing below sees the correct value without an extra /api/profile round-trip.
     if (flow.target_language) setLanguage(flow.target_language);
