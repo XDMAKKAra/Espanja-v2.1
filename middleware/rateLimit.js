@@ -1,4 +1,4 @@
-import supabase from "../supabase.js";
+import { adminClient } from "../supabase.js";
 
 const isProd = process.env.NODE_ENV === "production" || process.env.VERCEL;
 
@@ -27,7 +27,7 @@ async function supabaseRateLimit(key, windowMs, max) {
   const windowStart = new Date(now.getTime() - windowMs);
 
   // Count requests in the current window
-  const { data, error } = await supabase
+  const { data, error } = await adminClient
     .from("rate_limit_buckets")
     .select("count")
     .eq("key", key)
@@ -49,9 +49,9 @@ async function supabaseRateLimit(key, windowMs, max) {
   const bucketStart = new Date(Math.floor(now.getTime() / 60000) * 60000).toISOString();
 
   // Upsert: increment counter for current minute bucket
-  await supabase.rpc("increment_rate_limit", undefined).catch(() => null);
+  await adminClient.rpc("increment_rate_limit", undefined).catch(() => null);
   // Fallback: direct upsert
-  const { error: upsertErr } = await supabase
+  const { error: upsertErr } = await adminClient
     .from("rate_limit_buckets")
     .upsert(
       { key, window_start: bucketStart, count: 1 },
@@ -60,7 +60,7 @@ async function supabaseRateLimit(key, windowMs, max) {
 
   if (upsertErr) {
     // Try increment instead
-    const { data: existing } = await supabase
+    const { data: existing } = await adminClient
       .from("rate_limit_buckets")
       .select("count")
       .eq("key", key)
@@ -68,13 +68,13 @@ async function supabaseRateLimit(key, windowMs, max) {
       .single();
 
     if (existing) {
-      await supabase
+      await adminClient
         .from("rate_limit_buckets")
         .update({ count: existing.count + 1 })
         .eq("key", key)
         .eq("window_start", bucketStart);
     } else {
-      await supabase
+      await adminClient
         .from("rate_limit_buckets")
         .insert({ key, window_start: bucketStart, count: 1 });
     }

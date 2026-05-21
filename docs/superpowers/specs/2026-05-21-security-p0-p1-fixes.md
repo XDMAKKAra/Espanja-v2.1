@@ -116,18 +116,20 @@ export function createUserClient(jwt) {
 
 `rate_limit_buckets` is backend-internal. Switch to `adminClient`.
 
-### Routes (28 files)
+### Routes / lib / server (~24 files): DEFERRED to follow-up loop
 
-Strategy per file:
-- **Replace** `import supabase from "../supabase.js"` with `import { adminClient } from "../lib/supabase.js"`.
-- **Mechanical rename**: `supabase.` → `adminClient.` in that file.
-- This preserves current behavior exactly (service-role queries) while removing the singleton import. Routes that want defense-in-depth RLS can be migrated to `req.supabase` later — out of scope for this loop.
+Attempted import-alias sweep (`import { adminClient as supabase } from "../lib/supabase.js"`). It parsed but broke 86 vitest tests across 13 files because mocks target `"../supabase.js"` and vitest resolves mocks per module path — the refactored code's `"../lib/supabase.js"` resolves to a different module and is not intercepted.
 
-This is a smaller, safer refactor than the brief's per-route routing decision. The brief's framing implied `req.supabase` everywhere user-scoped, but applying that distinction correctly across hundreds of callsites in one commit is high-risk and the RLS lockdowns in P0.A–P1.B already eliminate the externally exposed surface. Defense-in-depth RLS on user data tables is a fine follow-up loop with its own spec.
+Updating the 18 affected test mocks is a meaningful refactor on its own (different mock shapes, mock factory bodies that include logic, dynamic `const { default: router } = await import(...)` destructures that would collide with a naive rename). To keep this loop honest, the sweep is deferred.
 
-### `supabase.js` default export removal
+**This loop ships:**
+- `supabase.js` becomes a thin re-export of `lib/supabase.js`. The default export still resolves to `adminClient`. Named exports `adminClient` and `createUserClient` are forwarded.
+- `middleware/auth.js` and `middleware/rateLimit.js` import named exports from the compat path `../supabase.js`. Only `tests/middleware-auth.test.js` was updated to add `adminClient` + `createUserClient` alongside `default` in its mock factory return.
+- All 24 other source files unchanged — their `import supabase from "../supabase.js"` keeps working but now resolves to `adminClient` re-exported from `lib/supabase.js`. No service-role client is constructed directly in `supabase.js` anymore.
 
-After all routes import from `lib/supabase.js`, delete `supabase.js` (or empty it). `grep "import supabase from"` should return 0.
+**Follow-up loop scope:** migrate the 24 remaining callers to `import { adminClient } from "../lib/supabase.js"` (or to `req.supabase` where user-scoped); update all 18 test mocks; delete `supabase.js`. Estimated 3–5 hours; needs its own loop because the bulk of the work is test infrastructure, not security.
+
+### `supabase.js` default export removal: DEFERRED (same reason)
 
 ## Regression tests
 

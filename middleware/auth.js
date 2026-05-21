@@ -1,4 +1,4 @@
-import { adminClient, createUserClient } from "../lib/supabase.js";
+import { adminClient, createUserClient } from "../supabase.js";
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
