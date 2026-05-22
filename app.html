@@ -1374,9 +1374,66 @@
           </span>
           <span class="btn--cta__arrow" aria-hidden="true">→</span>
         </button>
+        <button class="btn--cta btn--cta--secondary" id="btn-start-sentence-build" data-target="sentence-build" type="button">
+          <span class="btn--cta__l">
+            <span class="btn--cta__title">Käännä lauseet</span>
+            <span class="btn--cta__meta">Järjestä sanat oikeaan järjestykseen</span>
+          </span>
+          <span class="btn--cta__arrow" aria-hidden="true">→</span>
+        </button>
       </div>
     </div>
   </div>
+
+  <!-- SCREEN: Sentence build (v279) — click-to-order word reorder drill. -->
+  <section id="screen-sentence-build" class="screen" hidden>
+    <div class="sb">
+      <header class="sb__header">
+        <button class="sb__back" data-action="back-to-writing" type="button" aria-label="Takaisin">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+        </button>
+        <p class="sb__eyebrow">KÄÄNNÄ LAUSEET · LYHYT</p>
+        <div class="sb__progress" aria-live="polite">
+          <span class="sb__progress-current" id="sb-current">1</span>
+          <span class="sb__progress-sep">/</span>
+          <span class="sb__progress-total" id="sb-total">8</span>
+        </div>
+      </header>
+
+      <div class="sb__body" id="sb-body">
+        <p class="sb__hint" id="sb-hint" aria-live="polite">Ladataan lauseita…</p>
+
+        <div class="sb__answer" id="sb-answer-area" aria-label="Vastauksesi" role="list"></div>
+        <div class="sb__pool" id="sb-token-pool" aria-label="Saatavilla olevat sanat" role="list"></div>
+
+        <div class="sb__actions">
+          <button class="sb__btn sb__btn--ghost" id="sb-reset" type="button">Tyhjennä</button>
+          <button class="sb__btn sb__btn--primary" id="sb-submit" type="button" disabled>Tarkista</button>
+        </div>
+
+        <div class="sb__feedback" id="sb-feedback" hidden>
+          <p class="sb__verdict" id="sb-verdict"></p>
+          <p class="sb__correct" id="sb-correct" hidden>
+            <span class="sb__correct-label">Oikein:</span>
+            <span class="sb__correct-text" id="sb-correct-text"></span>
+          </p>
+          <p class="sb__explain" id="sb-explain"></p>
+          <button class="sb__btn sb__btn--primary" id="sb-next" type="button">Seuraava</button>
+        </div>
+
+        <div class="sb__error" id="sb-error" hidden role="alert"></div>
+      </div>
+
+      <footer class="sb__summary" id="sb-summary" hidden>
+        <p class="sb__summary-eyebrow">VALMIS</p>
+        <p class="sb__summary-score"><span id="sb-summary-correct">0</span> / <span id="sb-summary-total">0</span> oikein</p>
+        <div class="sb__summary-actions">
+          <button class="sb__btn sb__btn--ghost" id="sb-restart" type="button">Uusi sarja</button>
+          <button class="sb__btn sb__btn--primary" id="sb-done" type="button">Palaa</button>
+        </div>
+      </footer>
+    </div>
+  </section>
 
   <!-- SCREEN: Start (legacy/guest fallback) -->
   <div id="screen-start" class="screen">
