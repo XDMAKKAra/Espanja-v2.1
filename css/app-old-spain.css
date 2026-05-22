@@ -28,13 +28,16 @@
    ============================================================ */
 
 body.app {
-  /* ─── Surfaces (warm cream paper) ───────────────────────── */
-  --ed-bg:           oklch(96% 0.012 75);
-  --ed-bg-card:      oklch(98% 0.008 75);
-  --ed-bg-deep:      oklch(93% 0.018 75);
-  --ed-bg-tint:      oklch(91% 0.030 60);
-  --ed-rule:         oklch(20% 0.012 30 / 0.14);
-  --ed-rule-strong:  oklch(20% 0.012 30 / 0.26);
+  /* ─── Surfaces (v271 — app shell goes white; landing stays cream).
+       Brick + olive accents kept so Puheo's DNA still reads on every
+       screen. Tinted whites (chroma 0.001–0.004 around the 75° hue)
+       avoid the sterile pure-#fff feel impeccable forbids. ───────── */
+  --ed-bg:           oklch(99% 0.002 75);   /* near-white app canvas */
+  --ed-bg-card:      oklch(100% 0.001 75);  /* lifted card surface */
+  --ed-bg-deep:      oklch(96% 0.004 75);   /* shelves, sidebar nav rest */
+  --ed-bg-tint:      oklch(94% 0.020 30);   /* terracotta-tinted wash */
+  --ed-rule:         oklch(20% 0.012 30 / 0.10);
+  --ed-rule-strong:  oklch(20% 0.012 30 / 0.20);
 
   /* ─── Ink (warm near-black) ─────────────────────────────── */
   --ed-ink:          oklch(18% 0.012 30);
