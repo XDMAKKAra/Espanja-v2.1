@@ -10,10 +10,9 @@
  * index page of a textbook.
  */
 
-import { API, apiFetch, isLoggedIn, authHeader } from "../api.js";
 import { show } from "../ui/nav.js";
-
-const _cache = new Map(); // lang → { ts, kurssit }
+import { getCurriculumList, prefetchCourseDetail } from "../lib/curriculumCache.js";
+import { prefetchChunk, onHoverIntent } from "../lib/prefetch.js";
 
 function escapeHtml(s) {
   return String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ({
@@ -26,26 +25,6 @@ function readLangFromHash() {
   if (m) return m[1].toLowerCase();
   try { return localStorage.getItem("puheo:lang") || "es"; }
   catch { return "es"; }
-}
-
-async function fetchCourses(lang) {
-  const cached = _cache.get(lang);
-  if (cached && (Date.now() - cached.ts) < 60_000) return cached.kurssit;
-  try {
-    const res = await apiFetch(`${API}/api/curriculum?lang=${encodeURIComponent(lang)}`, {
-      headers: { ...(isLoggedIn() ? authHeader() : {}) },
-    });
-    if (!res.ok) return [];
-    const data = await res.json();
-    if (data?.available === false) return [];
-    const kurssit = Array.isArray(data?.kurssit)
-      ? data.kurssit.filter((k) => k && typeof k.key === "string")
-      : [];
-    _cache.set(lang, { ts: Date.now(), kurssit });
-    return kurssit;
-  } catch {
-    return [];
-  }
 }
 
 function renderRow(k, stepNumber, lang) {
@@ -128,7 +107,7 @@ export async function loadOppimispolkuIndex(lang) {
   if (!root) return;
   const activeLang = lang || readLangFromHash();
   root.innerHTML = `<div class="op-loading" role="status" aria-label="Ladataan kursseja"><span class="sr-only">Ladataan kursseja…</span></div>`;
-  const kurssit = await fetchCourses(activeLang);
+  const kurssit = await getCurriculumList(activeLang);
   if (kurssit.length === 0) {
     renderError(root, "Kursseja ei vielä julkaistu tälle kielelle.");
     return;
@@ -137,6 +116,17 @@ export async function loadOppimispolkuIndex(lang) {
   // Locked rows: prevent click + paywall hint optional.
   root.querySelectorAll(".op-row.is-locked").forEach((a) => {
     a.addEventListener("click", (e) => e.preventDefault());
+  });
+  // v282 perf — hover-prefetch the courseDetail chunk + per-course payload
+  // so the next click resolves against a warm cache instead of two round-
+  // trips. Only clickable rows; locked rows wouldn't navigate anyway.
+  root.querySelectorAll(".op-row.is-clickable").forEach((a) => {
+    const key = a.dataset.kurssi;
+    if (!key) return;
+    onHoverIntent(a, () => {
+      prefetchChunk("courseDetail", () => import("./courseDetail.js"));
+      prefetchCourseDetail(activeLang, key);
+    });
   });
 }
 

@@ -21,6 +21,8 @@
 import { API, apiFetch, isLoggedIn, authHeader } from "../api.js";
 import { show } from "../ui/nav.js";
 import { isProTier } from "../lib/tier.js";
+import { prefetchChunk, onHoverIntent } from "../lib/prefetch.js";
+import { prefetchCurriculumList } from "../lib/curriculumCache.js";
 
 const LANGS = [
   { code: "es", label: "Espanja", flag: "🇪🇸" },
@@ -314,6 +316,32 @@ function renderShellSkeleton(activeLang) {
     </div>`;
 }
 
+// v282 perf — warm the next-screen chunk + its API payload on hover so
+// the Aloitus → Oppimispolku / Luetun / Kirjoitus jump runs against an
+// already-resolved cache instead of cold imports + cold fetches.
+function wireHoverPrefetch(root, lang) {
+  const continueCard = root.querySelector(".home-continue");
+  if (continueCard) {
+    onHoverIntent(continueCard, () => {
+      prefetchChunk("oppimispolkuIndex", () => import("./oppimispolkuIndex.js"));
+      prefetchCurriculumList(lang);
+    });
+  }
+  root.querySelectorAll(".home-track").forEach((a) => {
+    const track = a.dataset.track;
+    onHoverIntent(a, () => {
+      if (track === "sanasto" || track === "kielioppi") {
+        prefetchChunk("oppimispolkuIndex", () => import("./oppimispolkuIndex.js"));
+        prefetchCurriculumList(lang);
+      } else if (track === "luetun") {
+        prefetchChunk("reading", () => import("./reading.js"));
+      } else if (track === "kirjoitus") {
+        prefetchChunk("writing", () => import("./writing.js"));
+      }
+    });
+  });
+}
+
 function wirePaywallTriggers(root) {
   root.querySelectorAll("[data-action='exam']").forEach((a) => {
     a.addEventListener("click", (e) => {
@@ -343,6 +371,7 @@ export async function loadHome() {
     root.innerHTML = renderShell(activeLang, cached, isPro);
     wireTabs(root);
     wirePaywallTriggers(root);
+    wireHoverPrefetch(root, activeLang);
     return;
   }
   root.innerHTML = renderShellSkeleton(activeLang);
@@ -352,4 +381,5 @@ export async function loadHome() {
   root.innerHTML = renderShell(activeLang, data, isPro);
   wireTabs(root);
   wirePaywallTriggers(root);
+  wireHoverPrefetch(root, activeLang);
 }

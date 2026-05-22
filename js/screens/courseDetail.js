@@ -7,47 +7,13 @@
  * gradients, no cover blocks. Click lesson → existing lesson runner.
  */
 
-import { API, apiFetch, isLoggedIn, authHeader } from "../api.js";
 import { show } from "../ui/nav.js";
-
-const _kurssiCache = new Map(); // `${lang}/${key}` → { ts, kurssi, lessons }
+import { getCourseDetail } from "../lib/curriculumCache.js";
 
 function escapeHtml(s) {
   return String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ({
     "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
   }[c]));
-}
-
-async function fetchCourseDetail(lang, kurssiKey) {
-  const cacheKey = `${lang}/${kurssiKey}`;
-  const cached = _kurssiCache.get(cacheKey);
-  if (cached && (Date.now() - cached.ts) < 60_000) return cached;
-  try {
-    // /api/curriculum lists all courses with the meta we need for the
-    // hero; /api/curriculum/:key returns the per-course lesson list.
-    const [overviewRes, detailRes] = await Promise.all([
-      apiFetch(`${API}/api/curriculum?lang=${encodeURIComponent(lang)}`, {
-        headers: { ...(isLoggedIn() ? authHeader() : {}) },
-      }),
-      apiFetch(`${API}/api/curriculum/${encodeURIComponent(kurssiKey)}`, {
-        headers: { ...(isLoggedIn() ? authHeader() : {}) },
-      }),
-    ]);
-    const overview = overviewRes.ok ? await overviewRes.json() : null;
-    const detail = detailRes.ok ? await detailRes.json() : null;
-    const kurssit = Array.isArray(overview?.kurssit) ? overview.kurssit : [];
-    const stepNumber = kurssit.findIndex((k) => k.key === kurssiKey) + 1;
-    const kurssi = kurssit.find((k) => k.key === kurssiKey) || null;
-    const lessons = Array.isArray(detail?.lessons)
-      ? detail.lessons.slice().sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0))
-      : [];
-    if (kurssi) kurssi._stepNumber = stepNumber;
-    const payload = { ts: Date.now(), kurssi, lessons };
-    _kurssiCache.set(cacheKey, payload);
-    return payload;
-  } catch {
-    return { ts: Date.now(), kurssi: null, lessons: [] };
-  }
 }
 
 function typeLabelFi(t) {
@@ -151,7 +117,7 @@ export async function loadCourseDetail(lang, kurssiKey) {
     renderError(root, "Kurssin tunnistetta ei annettu.", lang);
     return;
   }
-  const { kurssi, lessons } = await fetchCourseDetail(lang, kurssiKey);
+  const { kurssi, lessons } = await getCourseDetail(lang, kurssiKey);
   if (!kurssi) {
     renderError(root, "Kurssia ei löytynyt.", lang);
     return;
