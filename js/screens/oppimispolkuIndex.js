@@ -34,10 +34,14 @@ function renderRow(k, stepNumber, lang) {
   const total = k.lessonCount || 10;
   const pct = Math.min(100, Math.round((completed / total) * 100));
 
+  // L-PRO-LUKITTU-1: the gate is sequential progression, not Pro. The
+  // old "Lukittu" + dim styling read as a paywall and made Pro users
+  // think they'd been short-changed. Switch to progression language so
+  // the chip explains *why* the course isn't reachable yet.
   const status = done
     ? "Suoritettu"
     : locked
-      ? "Lukittu"
+      ? "Avautuu vuorollaan"
       : completed > 0
         ? `${completed} / ${total} oppituntia`
         : "Aloita →";
