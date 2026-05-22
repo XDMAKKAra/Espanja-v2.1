@@ -134,6 +134,27 @@
 }
 .mode-page__cta-row .btn--cta { flex: 1 1 320px; margin-bottom: 0; }
 
+/* L-WRITING-CTA-1: writing mode has six topic-cards + a two-type
+   stack before the CTA, so on a 1080p viewport the Aloita button
+   sits below the fold and the user reads the page as "no action".
+   Pin the CTA-row to the bottom of the viewport while the topic
+   grid scrolls underneath; a soft fade hides the cards crossing
+   under the button so it doesn't read as a separate floater. The
+   default Lyhyt + Sekalaiset are meaningful, so a one-click start
+   works even before the user touches a card. */
+.mode-page--writing .mode-page__cta-row {
+  position: sticky;
+  bottom: 0;
+  z-index: 5;
+  margin-top: 24px;
+  padding: 16px 0 max(16px, env(safe-area-inset-bottom));
+  background: linear-gradient(
+    to top,
+    var(--ed-bg, var(--surface)) 70%,
+    color-mix(in oklch, var(--ed-bg, var(--surface)) 100%, transparent) 100%
+  );
+}
+
 /* §3.6 Bespoke per-mode pieces */
 .mode-page--verbsprint .mode-page__duration {
   display: flex;
