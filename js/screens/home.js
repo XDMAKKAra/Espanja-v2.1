@@ -1,21 +1,29 @@
 /**
- * HOME — v271 dashboard-redesign (2026-05-22).
+ * HOME — v280 dashboard real-redesign (2026-05-22).
  *
- * Implements docs/briefs/2026-05-22-dashboard-redesign.md.
+ * Implements docs/briefs/2026-05-22-dashboard-v2-real-redesign.md.
  *
- * Old shell (Ohjaamo 5-cell + 4 identical mode cards + italic "Päivää.")
- * was portfolio-page slop — it answered "what does Puheo *contain*"
- * instead of "what do I do next." The new shell collapses to four
- * answerable surfaces:
+ * v271 was six stacked text boxes — user complained "flat ja tylsä,
+ * täynnä ai sloppia, pitää olla paljon elävämpi". That diagnosis is
+ * correct. This rewrite breaks the symmetry:
  *
- *   1. Greeting + date  — personal anchor, no italic Fraunces
- *   2. "Jatka tästä?"   — single primary card with one brick CTA
- *   3. Päivän tavoite   — streak + minute-goal bar
- *   4. Kurssipolku      — 4 micro-tiles for sanasto/kielioppi/luetun/kirjoitus
+ *   ┌──────────────────────────────────┬──────────────────┐
+ *   │  HERO (cream + SVG arch motif)   │  Streak ring     │
+ *   │  Location eyebrow                 │                  │
+ *   │  Fraunces title (NOT italic)     ├──────────────────┤
+ *   │  Sub                              │  Vinkki päivään  │
+ *   │  Brick CTA pill                   │  (warm tint)     │
+ *   └──────────────────────────────────┴──────────────────┘
+ *   ┌──────────────────┬───────────┬───────────┐
+ *   │  Active mode     │  mode B   │  mode C   │   asymmetric 2fr 1fr 1fr
+ *   │  (big, progress) │           │           │
+ *   └──────────────────┴───────────┴───────────┘
+ *   Koeharjoitus · Vaihda kieltä · Asetukset
  *
- * Language tabs stay (multi-lang feature exists), Koeharjoitus survives
- * as a small secondary link in the footer until the sidebar rebuild
- * picks it up (SidebarShell-brief).
+ * Inline SVG illustration instead of stock photo: brand-cohesive Old-Spain
+ * palette, no clichéd "person with laptop", no license overhead, performant
+ * (no extra fetch). One arch motif per language family (ES horseshoe arch,
+ * FR wrought-iron curl, DE bauhaus circle).
  */
 
 import { API, apiFetch, isLoggedIn, authHeader } from "../api.js";
@@ -32,6 +40,90 @@ const ENABLED_LANGS_KEY = "puheo:enabled-langs";
 const LANG_KEY = "puheo:lang";
 const DEFAULT_GOAL_MIN = 15;
 let _ohjaamoData = null;
+
+// Per-language theme-and-curriculum metadata used by the hero card. Course
+// titles mirror the curricula list — we don't import the whole curriculum
+// module just to read 8 names, this is a deliberately small dependency.
+const HERO_THEMES = {
+  es: {
+    label: "Espanja",
+    courses: [
+      { num: 1, title: "Tervehdys ja arki",      hook: "Aloita ensimmäisistä lauseista." },
+      { num: 2, title: "Arjen rutiinit",         hook: "Päivän rytmi ja toistuvat tavat." },
+      { num: 3, title: "Matkailu ja kaupungit",  hook: "Sanoja juna-asemalle ja kahvilaan." },
+      { num: 4, title: "Ennen ja nyt",           hook: "Menneestä imperfektillä, nyt nykyisin." },
+      { num: 5, title: "Ympäristö ja maisema",   hook: "Luonto, kaupunki ja kestävyys." },
+      { num: 6, title: "Työ ja opiskelu",        hook: "Ammatit, suunnitelmat ja CV-sanasto." },
+      { num: 7, title: "Terveys ja hyvinvointi", hook: "Vartalo, lääkäri ja arjen kunto." },
+      { num: 8, title: "Kulttuuri ja taide",     hook: "Elokuva, musiikki ja kirjallisuus." },
+    ],
+  },
+  fr: {
+    label: "Ranska",
+    courses: [
+      { num: 1, title: "Salutations et quotidien", hook: "Aloita ensimmäisistä lauseista." },
+      { num: 2, title: "Routines quotidiennes",    hook: "Päivän rytmi ja toistuvat tavat." },
+      { num: 3, title: "Voyages et villes",        hook: "Sanoja juna-asemalle ja kahvilaan." },
+      { num: 4, title: "Avant et maintenant",      hook: "Menneestä imperfektillä, nyt nykyisin." },
+      { num: 5, title: "Environnement et paysage", hook: "Luonto, kaupunki ja kestävyys." },
+      { num: 6, title: "Travail et études",        hook: "Ammatit, suunnitelmat ja CV-sanasto." },
+      { num: 7, title: "Santé et bien-être",       hook: "Vartalo, lääkäri ja arjen kunto." },
+      { num: 8, title: "Culture et arts",          hook: "Elokuva, musiikki ja kirjallisuus." },
+    ],
+  },
+  de: {
+    label: "Saksa",
+    courses: [
+      { num: 1, title: "Begrüßung und Alltag",     hook: "Aloita ensimmäisistä lauseista." },
+      { num: 2, title: "Alltagsroutinen",          hook: "Päivän rytmi ja toistuvat tavat." },
+      { num: 3, title: "Reisen und Städte",        hook: "Sanoja juna-asemalle ja kahvilaan." },
+      { num: 4, title: "Früher und heute",         hook: "Menneestä imperfektillä, nyt nykyisin." },
+      { num: 5, title: "Umwelt und Landschaft",    hook: "Luonto, kaupunki ja kestävyys." },
+      { num: 6, title: "Arbeit und Studium",       hook: "Ammatit, suunnitelmat ja CV-sanasto." },
+      { num: 7, title: "Gesundheit und Wohl",      hook: "Vartalo, lääkäri ja arjen kunto." },
+      { num: 8, title: "Kultur und Kunst",         hook: "Elokuva, musiikki ja kirjallisuus." },
+    ],
+  },
+};
+
+// Daily tip — rotates by day-of-week. Per-language so the surface stays
+// honest when user swaps languages. Hardcoded on the frontend because the
+// brief explicitly forbids new API routes for this redesign.
+const DAILY_TIPS = {
+  es: [
+    { title: "Subjunktiivi & ojalá",   body: "Käytä subjunktiivia kun ojalá tai querer que aloittaa lauseen." },
+    { title: "Ser vs estar",           body: "Pysyvä ominaisuus = ser. Tilapäinen tila tai sijainti = estar." },
+    { title: "Por vai para",           body: "Por kertoo syyn tai välineen. Para kertoo tarkoituksen tai määränpään." },
+    { title: "Aksentti pelastaa",      body: "Pieni á ratkaisee onko sanasta substantiivi vai verbi." },
+    { title: "Imperfekti vs preteriti",body: "Imperfekti maalaa taustaa. Preteriti kertoo mitä tapahtui." },
+    { title: "Hay tai está",           body: "Hay = on olemassa (uusi tieto). Está = on tietyssä paikassa." },
+    { title: "Lue ääneen päivittäin",  body: "Viisi minuuttia ääneen lukua treenaa korvaa nopeammin kuin sanalistat." },
+  ],
+  fr: [
+    { title: "Avoir vai être",         body: "Useimmat verbit käyttävät avoir-passéssa, liikeverbit être." },
+    { title: "Subjonctif & il faut que",body: "Il faut que ja je veux que vetävät verbin subjonctiviin." },
+    { title: "C'est vai il est",       body: "C'est + substantiivi tai adjektiivi yksin. Il est + ammatti tai adjektiivi henkilöstä." },
+    { title: "Du, de la, des",         body: "Osa-artikkeli kertoo että otat osan: du pain, de la confiture, des pommes." },
+    { title: "Imparfait vai passé composé", body: "Imparfait maalaa taustaa. Passé composé kertoo päättyneen tapahtuman." },
+    { title: "Y ja en pronominit",     body: "Y korvaa paikan tai à+asia. En korvaa de+asia tai määrän." },
+    { title: "Lue ranskaa ääneen",     body: "Viisi minuuttia ääneen lukua opettaa korvalle nasaalit ja liaison-säännöt." },
+  ],
+  de: [
+    { title: "Der, die, das",          body: "Suku ei seuraa logiikkaa — opettele se osana substantiivia." },
+    { title: "Trennbare Verben",       body: "Aufstehen → ich stehe um sieben auf. Etuliite vaeltaa lauseen loppuun." },
+    { title: "Akkusativ vai Dativ",    body: "Akkusativ = liike kohti (in die Stadt). Dativ = paikka jossa (in der Stadt)." },
+    { title: "Modaaliverbit + Infinitiv",body: "Können, müssen, wollen vievät pääverbin infinitiivin lauseen loppuun." },
+    { title: "Perfekti vs Imperfekti", body: "Puheessa Perfekti (ich habe gemacht). Kirjoituksessa Imperfekti (ich machte)." },
+    { title: "Sanajärjestys",          body: "Verbi on lauseessa toinen elementti — vaikka edessä olisi adverbi tai aikamääre." },
+    { title: "Lue saksaa ääneen",      body: "Viisi minuuttia ääneen lukua treenaa korvan ä, ö, ü ja ch-ääniin." },
+  ],
+};
+
+function pickDailyTip(lang) {
+  const list = DAILY_TIPS[lang] || DAILY_TIPS.es;
+  const dow = new Date().getDay(); // 0-6
+  return list[dow % list.length];
+}
 
 function readEnabledLangs() {
   try {
@@ -80,8 +172,6 @@ async function fetchOhjaamo() {
   }
 }
 
-// Finnish localised "Perjantai 22. toukokuuta" — Intl gives us the parts
-// but capitalises the weekday lowercase. Manual title-case keeps it tidy.
 function finnishDateLabel(now = new Date()) {
   const weekday = now.toLocaleDateString("fi-FI", { weekday: "long" });
   const day = now.getDate();
@@ -106,158 +196,287 @@ function renderTabs(activeLang) {
   `).join("");
 }
 
-function renderGreeting(profile) {
+function renderTopBar(profile, activeLang) {
   const name = profile?.preferred_name
     || profile?.full_name
     || window._userProfile?.preferred_name
     || "";
-  const greeting = name ? `Hei, ${escapeHtml(name)}!` : "Hei!";
+  const greeting = name ? `Hei, ${escapeHtml(name)}.` : "Hei.";
   const dateLabel = escapeHtml(finnishDateLabel());
+  const tabs = renderTabs(activeLang);
   return `
-    <header class="home-head">
-      <h1 class="home-greeting">${greeting}</h1>
-      <p class="home-date-pill" aria-label="Päivämäärä">${dateLabel}</p>
+    <header class="home-topbar">
+      <div class="home-topbar__greet">
+        <p class="home-topbar__hello">${greeting}</p>
+        <p class="home-topbar__date">${dateLabel}</p>
+      </div>
+      ${tabs ? `<div class="home-tabs" role="tablist" aria-label="Kielet">${tabs}</div>` : ""}
     </header>`;
 }
 
-// "Jatka tästä?" — the only primary surface on the screen. Brief mandates
-// EI tyhjää placeholderia: empty-state shows "Aloita ensimmäinen kurssi".
-//
-// We don't yet ship a /api/curriculum/continue endpoint that knows the
-// last lesson — sessionStorage["currentLesson"] is session-scoped (clears
-// on tab close), so a fresh tab still empty-states. Truthful for now;
-// a future iteration writes localStorage["puheo:last-lesson"] from
-// curriculum.js openLesson() and we read it here.
-function renderContinueCard(dashboard, lang) {
+// Hero SVG illustrations — per-language motif, brick stroke on cream.
+// Anchored bottom-right of the hero card at low opacity. Inline SVG keeps
+// it on the critical path (no extra request) and lets CSS color it via
+// currentColor → --ed-accent.
+function heroMotif(lang) {
+  if (lang === "fr") {
+    // Wrought-iron Haussmann balcony curl — repeating S-curves
+    return `
+      <svg class="home-hero__motif" viewBox="0 0 240 200" aria-hidden="true" focusable="false">
+        <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+          <path d="M20 180 C 20 130, 70 130, 70 90 S 120 50, 120 10"/>
+          <path d="M60 180 C 60 130, 110 130, 110 90 S 160 50, 160 10"/>
+          <path d="M100 180 C 100 130, 150 130, 150 90 S 200 50, 200 10"/>
+          <path d="M140 180 C 140 130, 190 130, 190 90 S 240 50, 240 10"/>
+          <circle cx="70" cy="90" r="6"/>
+          <circle cx="110" cy="90" r="6"/>
+          <circle cx="150" cy="90" r="6"/>
+          <circle cx="190" cy="90" r="6"/>
+          <path d="M0 180 L 240 180"/>
+        </g>
+      </svg>`;
+  }
+  if (lang === "de") {
+    // Bauhaus circle + square + triangle — primary forms only
+    return `
+      <svg class="home-hero__motif" viewBox="0 0 240 200" aria-hidden="true" focusable="false">
+        <g fill="none" stroke="currentColor" stroke-width="1.5">
+          <circle cx="80" cy="100" r="60"/>
+          <rect x="120" y="40" width="100" height="100"/>
+          <path d="M30 180 L 90 80 L 150 180 Z"/>
+        </g>
+      </svg>`;
+  }
+  // Default ES: three Andalusian horseshoe arches with a tile band below
+  return `
+    <svg class="home-hero__motif" viewBox="0 0 240 200" aria-hidden="true" focusable="false">
+      <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+        <path d="M20 170 L 20 100 A 30 36 0 0 1 80 100 L 80 170"/>
+        <path d="M105 170 L 105 100 A 30 36 0 0 1 165 100 L 165 170"/>
+        <path d="M190 170 L 190 100 A 30 36 0 0 1 250 100 L 250 170"/>
+        <path d="M20 90 A 30 26 0 0 1 80 90"/>
+        <path d="M105 90 A 30 26 0 0 1 165 90"/>
+        <path d="M190 90 A 30 26 0 0 1 250 90"/>
+        <path d="M0 170 L 240 170"/>
+        <path d="M0 180 L 240 180" stroke-dasharray="6 6"/>
+      </g>
+    </svg>`;
+}
+
+// Hero — the dominant surface. Picks an active course (last visited from
+// localStorage, falls back to course 1 for fresh accounts) and frames it
+// as today's invitation. Brief: "Tänään puhutaan ympäristöstä"-tyyppinen
+// otsikko, ei pelkkä "Jatka oppimispolulla".
+function renderHero(dashboard, lang) {
   const sessions = Number(dashboard?.totalSessions ?? 0);
   let lastLesson = null;
   try {
-    const raw = sessionStorage.getItem("currentLesson");
+    const raw = sessionStorage.getItem("currentLesson")
+              || localStorage.getItem("puheo:last-lesson");
     if (raw) lastLesson = JSON.parse(raw);
   } catch { /* private mode */ }
 
+  const theme = HERO_THEMES[lang] || HERO_THEMES.es;
+  // Heuristic: progress through 8 courses scales with session count. Each
+  // course is ~6 lessons of ~3 min = ~18 min of activity, so once you've
+  // got ~6 sessions you're conceptually on course 2. Capped at 8.
+  const courseIdx = Math.min(7, Math.max(0, Math.floor(sessions / 6)));
+  const course = theme.courses[courseIdx];
+
   const isFresh = sessions === 0 && !lastLesson;
-  const title = isFresh ? "Aloita ensimmäinen kurssi" : "Jatka oppimispolulla";
+  const eyebrow = isFresh
+    ? `${theme.label} · Aloita tästä`
+    : `${theme.label} · Kurssi ${course.num}`;
+  const title = isFresh
+    ? `Aloita matka ${theme.label.toLowerCase()}an`
+    : course.title;
   const sub = isFresh
-    ? "Yksi oppitunti per päivä riittää alkuun."
-    : "Avaa viimeisin kurssisi ja jatka siitä mihin jäit.";
-  const eyebrow = isFresh ? "Tervetuloa" : "Jatka tästä";
-  const cta = isFresh ? "Aloita →" : "Jatka →";
+    ? "Yksi oppitunti per päivä riittää. Aloitamme tutuilla sanoilla."
+    : course.hook;
+  const cta = isFresh ? "Aloita →" : "Jatka oppituntia →";
 
   return `
-    <a class="home-continue ${isFresh ? "is-fresh" : ""}"
+    <a class="home-hero ${isFresh ? "is-fresh" : ""}"
        href="#/oppimispolku?lang=${escapeHtml(lang)}"
-       data-action="continue">
-      <div class="home-continue__body">
-        <p class="home-continue__eyebrow">${escapeHtml(eyebrow)}</p>
-        <h2 class="home-continue__title">${escapeHtml(title)}</h2>
-        <p class="home-continue__sub">${escapeHtml(sub)}</p>
+       data-action="continue"
+       data-lang="${escapeHtml(lang)}">
+      <div class="home-hero__body">
+        <p class="home-hero__eyebrow">${escapeHtml(eyebrow)}</p>
+        <h2 class="home-hero__title">${escapeHtml(title)}</h2>
+        <p class="home-hero__sub">${escapeHtml(sub)}</p>
+        <span class="home-hero__cta">
+          <span class="home-hero__cta-label">${escapeHtml(cta)}</span>
+        </span>
       </div>
-      <span class="home-continue__cta">${escapeHtml(cta)}</span>
+      <div class="home-hero__art" aria-hidden="true">
+        ${heroMotif(lang)}
+      </div>
     </a>`;
 }
 
-// Päivän tavoite — streak chip on the left, minute-goal bar on the right.
-// Both surfaces are real data, not placeholders. When streak is 0 the
-// chip swaps to a softer "Aloita putki tänään" instead of "0 pv".
-function renderGoalRow(data) {
-  const dashboard = data?.dashboard || {};
-  const profile = data?.profile?.profile || window._userProfile || {};
-  const streak = Number(dashboard.streak ?? 0);
+// Streak ring — SVG circle with stroke-dasharray progress against weekly
+// goal (7 days). The number in the centre is the actual streak count;
+// the ring fills proportionally. Visualises progress, not flat bar.
+function renderStreakRing(dashboard) {
+  const streak = Number(dashboard?.streak ?? 0);
+  const profile = window._userProfile || {};
   const goalMin = Number(profile.preferred_session_length || DEFAULT_GOAL_MIN);
 
-  // Today's minutes — estimate from chartData (3 min/session, same heuristic
-  // dashboard.js used). chartData lives on the v2 payload's dashboard core.
   const today = new Date().toISOString().slice(0, 10);
-  const chartData = Array.isArray(dashboard.chartData) ? dashboard.chartData : [];
+  const chartData = Array.isArray(dashboard?.chartData) ? dashboard.chartData : [];
   const todaySessions = chartData.filter((l) => l?.createdAt?.slice(0, 10) === today).length;
   const todayMin = Math.min(goalMin, todaySessions * 3);
-  const pct = Math.max(0, Math.min(100, Math.round((todayMin / goalMin) * 100)));
   const goalMet = todayMin >= goalMin;
 
-  const streakLabel = streak >= 1
-    ? `<span class="home-goal__streak-num">${streak}</span><span class="home-goal__streak-unit">pv putki</span>`
-    : `<span class="home-goal__streak-empty">Aloita putki tänään</span>`;
-  const streakHot = streak >= 7;
+  // Ring math: r=46, circumference ≈ 289. Show progress against today's
+  // minute goal — that's the immediate target. Streak number is the big
+  // anchor; goal-met state colours the ring olive.
+  const r = 46;
+  const c = 2 * Math.PI * r;
+  const pct = Math.max(0, Math.min(1, todayMin / goalMin));
+  const offset = c * (1 - pct);
+
+  const streakDisplay = streak >= 1 ? String(streak) : "0";
+  const streakUnit = streak >= 1 ? "pv putki" : "aloita putki";
 
   return `
-    <section class="home-goal" aria-label="Päivän tavoite">
-      <div class="home-goal__streak ${streakHot ? "is-hot" : ""} ${streak === 0 ? "is-empty" : ""}">
-        ${streakLabel}
+    <section class="home-streak ${goalMet ? "is-met" : ""} ${streak === 0 ? "is-empty" : ""}"
+             aria-label="Päivän tavoite ja streak">
+      <div class="home-streak__ring-wrap">
+        <svg class="home-streak__ring" viewBox="0 0 120 120" aria-hidden="true" focusable="false">
+          <circle class="home-streak__track" cx="60" cy="60" r="${r}"
+                  fill="none" stroke-width="8"/>
+          <circle class="home-streak__fill" cx="60" cy="60" r="${r}"
+                  fill="none" stroke-width="8"
+                  stroke-linecap="round"
+                  stroke-dasharray="${c}"
+                  stroke-dashoffset="${offset}"
+                  transform="rotate(-90 60 60)"/>
+        </svg>
+        <div class="home-streak__center">
+          <span class="home-streak__num" data-target="${streak}">${streakDisplay}</span>
+          <span class="home-streak__unit">${streakUnit}</span>
+        </div>
       </div>
-      <div class="home-goal__progress">
-        <div class="home-goal__progress-head">
-          <span class="home-goal__progress-label">Päivän tavoite</span>
-          <span class="home-goal__progress-val">${todayMin} / ${goalMin} min</span>
-        </div>
-        <div class="home-goal__bar" role="progressbar"
-             aria-valuemin="0" aria-valuemax="${goalMin}" aria-valuenow="${todayMin}">
-          <div class="home-goal__fill ${goalMet ? "is-met" : ""}" style="width:${pct}%"></div>
-        </div>
+      <div class="home-streak__meta">
+        <p class="home-streak__minutes">
+          <span class="home-streak__minutes-val">${todayMin}</span>
+          <span class="home-streak__minutes-sep">/</span>
+          <span class="home-streak__minutes-goal">${goalMin}</span>
+          <span class="home-streak__minutes-unit">min tänään</span>
+        </p>
       </div>
     </section>`;
 }
 
-// Kurssipolku snapshot — four micro-tiles, NOT the four big mode cards.
-// Sanasto + Kielioppi live inside the oppimispolku flow; luetun + kirjoitus
-// each have a dedicated mode page. Linking accordingly.
-const TRACKS = [
-  { id: "sanasto",   name: "Sanasto",             modeKey: "vocab",   href: (l) => `#/oppimispolku?lang=${l}` },
-  { id: "kielioppi", name: "Kielioppi",           modeKey: "grammar", href: (l) => `#/oppimispolku?lang=${l}` },
-  { id: "luetun",    name: "Luetun ymmärtäminen", modeKey: "reading", href: (l) => `#/luetun?lang=${l}` },
-  { id: "kirjoitus", name: "Kirjoitus",           modeKey: "writing", href: (l) => `#/kirjoitus?lang=${l}` },
+// Vinkki päivään — warm accent-tinted card that breaks the white-card
+// monotony. Content rotates by day-of-week so subsequent visits in the
+// same day stay stable.
+function renderTipCard(lang) {
+  const tip = pickDailyTip(lang);
+  return `
+    <section class="home-tip" aria-label="Vinkki päivään">
+      <p class="home-tip__eyebrow">Vinkki päivään</p>
+      <h3 class="home-tip__title">${escapeHtml(tip.title)}</h3>
+      <p class="home-tip__body">${escapeHtml(tip.body)}</p>
+      <a class="home-tip__more" href="#/oppimispolku?lang=${escapeHtml(lang)}">
+        Lue lisää
+        <span class="home-tip__arrow" aria-hidden="true">→</span>
+      </a>
+    </section>`;
+}
+
+// Modes snapshot — asymmetric 2fr 1fr 1fr grid on desktop. The current
+// most-active mode becomes the feature card (bigger, fuller copy); the
+// other two collapse into compact tiles. Kirjoitus folds under the
+// feature on tall layouts so we keep 3 surfaces, not 4.
+const MODES = [
+  { id: "vocab",   label: "Sanasto",             sub: "Sanoja ja merkityksiä",       href: (l) => `#/oppimispolku?lang=${l}` },
+  { id: "grammar", label: "Kielioppi",           sub: "Rakenteet ja muodot",         href: (l) => `#/oppimispolku?lang=${l}` },
+  { id: "reading", label: "Luetun ymmärtäminen", sub: "Tekstejä ja kysymyksiä",      href: (l) => `#/luetun?lang=${l}` },
+  { id: "writing", label: "Kirjoitus",           sub: "Lyhyitä omia tekstejä",       href: (l) => `#/kirjoitus?lang=${l}` },
 ];
 
-function renderTracks(dashboard, lang) {
+function renderModes(dashboard, lang) {
   const modeStats = dashboard?.modeStats || {};
-  const tiles = TRACKS.map((t) => {
-    const s = modeStats[t.modeKey] || {};
-    const sessions = Number(s.sessions ?? 0);
-    // Track-progress is session-count scaled against 30 (~one month of
-    // daily practice). Honest signal of effort, not a fake course-counter.
-    const fillPct = Math.max(0, Math.min(100, Math.round((sessions / 30) * 100)));
-    const countLabel = sessions === 0
-      ? "Ei vielä aloitettu"
-      : `${sessions} ${sessions === 1 ? "harjoitus" : "harjoitusta"}`;
+  // Pick feature mode = mode with the most sessions; default vocab if all 0.
+  let featureId = "vocab";
+  let max = -1;
+  for (const m of MODES) {
+    const s = Number(modeStats[m.id]?.sessions ?? 0);
+    if (s > max) { max = s; featureId = m.id; }
+  }
+  const feature = MODES.find((m) => m.id === featureId);
+  const rest = MODES.filter((m) => m.id !== featureId);
+
+  const fSessions = Number(modeStats[featureId]?.sessions ?? 0);
+  const fPct = Math.max(0, Math.min(100, Math.round((fSessions / 30) * 100)));
+  const fMeta = fSessions === 0
+    ? "Ei vielä aloitettu"
+    : `${fSessions} ${fSessions === 1 ? "harjoitus" : "harjoitusta"} kertynyt`;
+
+  const featureCard = `
+    <a class="home-mode home-mode--feature" href="${feature.href(lang)}" data-mode="${feature.id}">
+      <p class="home-mode__eyebrow">Vahvin reitti</p>
+      <h3 class="home-mode__name">${escapeHtml(feature.label)}</h3>
+      <p class="home-mode__sub">${escapeHtml(feature.sub)}</p>
+      <div class="home-mode__bar" aria-hidden="true">
+        <div class="home-mode__bar-fill" style="width:${fPct}%"></div>
+      </div>
+      <p class="home-mode__meta">${escapeHtml(fMeta)}</p>
+    </a>`;
+
+  const restTiles = rest.map((m) => {
+    const s = Number(modeStats[m.id]?.sessions ?? 0);
+    const meta = s === 0 ? "Ei aloitettu" : `${s} harj.`;
     return `
-      <a class="home-track" href="${t.href(lang)}" data-track="${t.id}">
-        <h3 class="home-track__name">${escapeHtml(t.name)}</h3>
-        <div class="home-track__bar" aria-hidden="true">
-          <div class="home-track__bar-fill" style="width:${fillPct}%"></div>
-        </div>
-        <p class="home-track__meta">${escapeHtml(countLabel)}</p>
+      <a class="home-mode home-mode--mini" href="${m.href(lang)}" data-mode="${m.id}">
+        <h4 class="home-mode__name home-mode__name--mini">${escapeHtml(m.label)}</h4>
+        <p class="home-mode__meta home-mode__meta--mini">${escapeHtml(meta)}</p>
+        <span class="home-mode__arrow" aria-hidden="true">→</span>
       </a>`;
   }).join("");
+
   return `
-    <section class="home-tracks" aria-label="Kurssipolku">
-      <p class="home-tracks__eyebrow">Kurssipolku</p>
-      <div class="home-tracks__grid">${tiles}</div>
+    <section class="home-modes" aria-label="Harjoitusreitit">
+      <p class="home-modes__eyebrow">Harjoitusreitit</p>
+      <div class="home-modes__grid">
+        ${featureCard}
+        <div class="home-modes__minis">${restTiles}</div>
+      </div>
     </section>`;
 }
 
-// Small footer with secondary actions — until the sidebar rebuild lands
-// (SidebarShell-brief), Koeharjoitus needs a discoverable entry point.
-function renderFooter(lang, isPro) {
-  const lockHint = isPro ? "" : `<span class="home-footer__lock" aria-hidden="true">🔒</span>`;
+function renderQuickActions(lang, isPro) {
+  const lockHint = isPro ? "" : `<span class="home-quick__lock" aria-hidden="true">🔒</span>`;
   return `
-    <footer class="home-footer">
-      <a class="home-footer__link" href="#/koeharjoitus?lang=${escapeHtml(lang)}" data-action="exam">
-        ${lockHint}<span>Koeharjoitus</span>
-        <span class="home-footer__arrow" aria-hidden="true">→</span>
+    <nav class="home-quick" aria-label="Pikatoiminnot">
+      <a class="home-quick__link" href="#/koeharjoitus?lang=${escapeHtml(lang)}" data-action="exam">
+        ${lockHint}Koeharjoitus
       </a>
-    </footer>`;
+      <span class="home-quick__sep" aria-hidden="true">·</span>
+      <a class="home-quick__link" href="#/asetukset?tab=kielet">Vaihda kieltä</a>
+      <span class="home-quick__sep" aria-hidden="true">·</span>
+      <a class="home-quick__link" href="#/asetukset">Asetukset</a>
+    </nav>`;
 }
 
 function renderShell(activeLang, data, isPro) {
   const dashboard = data?.dashboard || {};
   const profile = data?.profile?.profile || window._userProfile || null;
   return `
-    ${renderGreeting(profile)}
-    ${renderTabs(activeLang) ? `<div class="home-tabs" role="tablist" aria-label="Kielet">${renderTabs(activeLang)}</div>` : ""}
-    ${renderContinueCard(dashboard, activeLang)}
-    ${renderGoalRow(data)}
-    ${renderTracks(dashboard, activeLang)}
-    ${renderFooter(activeLang, isPro)}
+    <div class="home-v280">
+      ${renderTopBar(profile, activeLang)}
+      <div class="home-band">
+        <div class="home-band__main">${renderHero(dashboard, activeLang)}</div>
+        <aside class="home-band__rail">
+          ${renderStreakRing(dashboard)}
+          ${renderTipCard(activeLang)}
+        </aside>
+      </div>
+      ${renderModes(dashboard, activeLang)}
+      ${renderQuickActions(activeLang, isPro)}
+    </div>
   `;
 }
 
@@ -267,51 +486,9 @@ function wireTabs(root) {
       const lang = tab.dataset.lang;
       if (!lang) return;
       writeActiveLang(lang);
-      // Full re-render is cheaper than rewriting every href in place
-      // (continue card, tracks, footer, lang-aware data all need it).
       loadHome();
     });
   });
-}
-
-// Layout-matching skeleton — renders BEFORE /api/dashboard/v2 resolves
-// so the white content area never sits empty. Same shapes the live
-// shell uses (greeting, primary card, goal bar, four micro-tracks) so
-// the swap is reflow-free. No italic "Ladataan…" — the brief explicitly
-// bans that AI-slop pattern.
-function renderShellSkeleton(activeLang) {
-  const tabs = renderTabs(activeLang);
-  const trackTiles = Array.from({ length: 4 }).map(() => `
-    <div class="home-track home-track--skel" aria-hidden="true">
-      <span class="home-skel home-skel--track-name"></span>
-      <span class="home-skel home-skel--track-bar"></span>
-      <span class="home-skel home-skel--track-meta"></span>
-    </div>`).join("");
-  return `
-    <div class="home-skel-root" role="status" aria-live="polite">
-      <span class="sr-only">Ladataan kotinäyttöä…</span>
-      <header class="home-head" aria-hidden="true">
-        <span class="home-skel home-skel--greeting"></span>
-        <span class="home-skel home-skel--date"></span>
-      </header>
-      ${tabs ? `<div class="home-tabs" aria-hidden="true">${tabs}</div>` : ""}
-      <div class="home-continue home-continue--skel" aria-hidden="true">
-        <div class="home-continue__body">
-          <span class="home-skel home-skel--eyebrow"></span>
-          <span class="home-skel home-skel--title"></span>
-          <span class="home-skel home-skel--sub"></span>
-        </div>
-        <span class="home-skel home-skel--cta"></span>
-      </div>
-      <section class="home-goal home-goal--skel" aria-hidden="true">
-        <span class="home-skel home-skel--streak"></span>
-        <span class="home-skel home-skel--goal-bar"></span>
-      </section>
-      <section class="home-tracks" aria-hidden="true">
-        <span class="home-skel home-skel--eyebrow"></span>
-        <div class="home-tracks__grid">${trackTiles}</div>
-      </section>
-    </div>`;
 }
 
 function wirePaywallTriggers(root) {
@@ -328,14 +505,92 @@ function wirePaywallTriggers(root) {
   });
 }
 
+// Streak count-up — small Emil-style flourish. When the streak first
+// renders we lerp 0 → target over 600ms with ease-out. Skipped if the
+// user prefers reduced motion. No bounce, no scale-pop.
+function animateStreak(root) {
+  if (typeof window === "undefined") return;
+  const reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const el = root.querySelector(".home-streak__num");
+  if (!el) return;
+  const target = Number(el.dataset.target || el.textContent || 0);
+  if (!Number.isFinite(target) || target <= 0) return;
+  if (reduce) { el.textContent = String(target); return; }
+  const start = performance.now();
+  const dur = Math.min(900, 200 + target * 50);
+  function tick(t) {
+    const p = Math.min(1, (t - start) / dur);
+    // ease-out-quart
+    const eased = 1 - Math.pow(1 - p, 4);
+    el.textContent = String(Math.round(target * eased));
+    if (p < 1) requestAnimationFrame(tick);
+  }
+  el.textContent = "0";
+  requestAnimationFrame(tick);
+}
+
+// Stroke-dashoffset animation — the ring renders at final value via
+// inline style, then we briefly snap it to full circumference and
+// transition back. CSS handles the easing; this just kicks the param.
+function animateRing(root) {
+  if (typeof window === "undefined") return;
+  const reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduce) return;
+  const fill = root.querySelector(".home-streak__fill");
+  if (!fill) return;
+  const final = fill.getAttribute("stroke-dashoffset");
+  const total = fill.getAttribute("stroke-dasharray");
+  fill.style.transition = "none";
+  fill.setAttribute("stroke-dashoffset", total);
+  // Force layout, then transition back
+  void fill.getBoundingClientRect();
+  fill.style.transition = "stroke-dashoffset 700ms cubic-bezier(0.23, 1, 0.32, 1)";
+  requestAnimationFrame(() => {
+    fill.setAttribute("stroke-dashoffset", final);
+  });
+}
+
+function renderShellSkeleton(activeLang) {
+  return `
+    <div class="home-v280 home-v280--skel" role="status" aria-live="polite">
+      <span class="sr-only">Ladataan kotinäyttöä…</span>
+      <header class="home-topbar" aria-hidden="true">
+        <div class="home-topbar__greet">
+          <span class="home-skel home-skel--hello"></span>
+          <span class="home-skel home-skel--date"></span>
+        </div>
+      </header>
+      <div class="home-band">
+        <div class="home-band__main">
+          <div class="home-hero home-hero--skel" aria-hidden="true">
+            <div class="home-hero__body">
+              <span class="home-skel home-skel--eyebrow"></span>
+              <span class="home-skel home-skel--title"></span>
+              <span class="home-skel home-skel--sub"></span>
+              <span class="home-skel home-skel--cta"></span>
+            </div>
+          </div>
+        </div>
+        <aside class="home-band__rail" aria-hidden="true">
+          <div class="home-streak home-streak--skel">
+            <span class="home-skel home-skel--ring"></span>
+          </div>
+          <div class="home-tip home-tip--skel">
+            <span class="home-skel home-skel--eyebrow"></span>
+            <span class="home-skel home-skel--title"></span>
+            <span class="home-skel home-skel--sub"></span>
+          </div>
+        </aside>
+      </div>
+    </div>`;
+}
+
 export async function loadHome() {
   show("screen-home");
   const root = document.getElementById("home-root");
   if (!root) return;
   const activeLang = readActiveLang();
 
-  // Warm-cache fast path: paint the live shell synchronously if we already
-  // have ohjaamo data <60s old. Eliminates the skeleton flash on tab return.
   if (_ohjaamoData && (Date.now() - _ohjaamoData.ts) < 60_000) {
     const cached = _ohjaamoData.payload;
     const isPro = isProTier(cached?.profile?.profile);
@@ -343,6 +598,8 @@ export async function loadHome() {
     root.innerHTML = renderShell(activeLang, cached, isPro);
     wireTabs(root);
     wirePaywallTriggers(root);
+    animateStreak(root);
+    animateRing(root);
     return;
   }
   root.innerHTML = renderShellSkeleton(activeLang);
@@ -352,4 +609,6 @@ export async function loadHome() {
   root.innerHTML = renderShell(activeLang, data, isPro);
   wireTabs(root);
   wirePaywallTriggers(root);
+  animateStreak(root);
+  animateRing(root);
 }
