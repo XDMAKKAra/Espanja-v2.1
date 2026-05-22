@@ -23,7 +23,35 @@ function applyShellMode(id) {
   }
 }
 
+// L-MODAL-BLEED-1: any transient modal that lived on body (exam resume
+// dialog, paywall, confirm-dialog) used to survive a screen change and
+// reappear over the next screen — most visibly on Asetukset, which is
+// where users instinctively go to "get out of" a stuck flow. Force-
+// close every confirm-dialog-root + paywall-modal-root on navigation
+// so the new screen always renders solo. The dismiss button keeps the
+// existing Promise resolution path (resolves "dismiss"), so callers
+// awaiting the modal don't leak.
+function closeTransientModals(nextId) {
+  document.querySelectorAll(".confirm-dialog-root.is-open").forEach((root) => {
+    const dismissBtn = root.querySelector('[id$="-dismiss"]')
+      || root.querySelector('[data-close="1"]');
+    if (dismissBtn) {
+      dismissBtn.click();
+    } else {
+      root.classList.remove("is-open");
+      root.hidden = true;
+    }
+  });
+  // Paywall modal lives at #paywall-modal-root with .is-open; same shape.
+  const paywall = document.getElementById("paywall-modal-root");
+  if (paywall && paywall.classList.contains("is-open") && nextId !== "screen-pricing") {
+    paywall.classList.remove("is-open");
+    paywall.hidden = true;
+  }
+}
+
 export const show = (id) => {
+  closeTransientModals(id);
   document.querySelectorAll(".screen").forEach((s) => s.classList.remove("active"));
   $(id).classList.add("active");
   applyShellMode(id);
