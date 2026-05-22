@@ -142,6 +142,20 @@ if (isLoggedIn()) hydrateConfig();
 initExam({ loadDashboard, saveProgress, shareResult });
 initAdaptive({ loadDashboard });
 
+// v279 — Sentence build (Käännä lauseet). Lazy-loaded on first open from
+// the writing mode-page CTA or the #/lauseet hash.
+const lazySentenceBuild = makeLazyScreen({
+  key: "sentenceBuild",
+  factory: () => import("./screens/sentenceBuild.js"),
+  init: (m) => m.initSentenceBuild(),
+});
+document.addEventListener("click", (e) => {
+  const cta = e.target.closest('#btn-start-sentence-build, [data-target="sentence-build"]');
+  if (!cta) return;
+  e.preventDefault();
+  lazySentenceBuild().then((m) => m.openSentenceBuild({}));
+});
+
 // ── F-ARCH-1 §A — lazy screens (loaded on first navigation) ────────────────
 const lazyFullExam = makeLazyScreen({
   key: "fullExam",
@@ -318,6 +332,10 @@ document.querySelectorAll(".sidebar-item[data-nav], .mobile-nav-item[data-nav], 
 
 window.addEventListener("hashchange", () => {
   if (!isLoggedIn()) return;
+  if (location.hash === "#/lauseet") {
+    lazySentenceBuild().then((m) => m.openSentenceBuild({})).catch(() => { /* fall through */ });
+    return;
+  }
   // PR auto/cleanup-old-screens (2026-05-19): redirect legacy
   // #/kurssi/{lang}/{key} → #/oppimispolku/{lang}/{key}. The
   // courseOverview screen is gone — its 4 mode tiles moved up to
@@ -371,6 +389,10 @@ window.addEventListener("hashchange", () => {
 // On boot, restore screen from hash (only if logged in — auth flow handles otherwise).
 window._restoreFromHash = function restoreFromHash() {
   if (!isLoggedIn()) return false;
+  if (location.hash === "#/lauseet") {
+    lazySentenceBuild().then((m) => m.openSentenceBuild({})).catch(() => { /* ignore */ });
+    return true;
+  }
   const legacyCourse = /^#\/kurssi\/([a-z]{2})\/([^/?#]+)/i.exec(location.hash);
   if (legacyCourse) {
     location.replace(`#/oppimispolku/${legacyCourse[1]}/${legacyCourse[2]}`);
