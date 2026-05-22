@@ -557,10 +557,10 @@
 .curr-teaching p { margin: 0 0 12px; }
 .curr-teaching blockquote {
   margin: 12px 0;
-  padding: 12px 16px;
-  border-left: 3px solid var(--accent, #2DD4BF);
-  background: color-mix(in srgb, var(--accent, #2DD4BF) 6%, transparent);
-  border-radius: 0 8px 8px 0;
+  padding: 14px 18px;
+  background: color-mix(in srgb, var(--accent, #2DD4BF) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent, #2DD4BF) 28%, transparent);
+  border-radius: 8px;
   font-style: normal;
   color: var(--ink, var(--text, #fafafa));
 }
@@ -787,9 +787,8 @@
    the leading edge (Linear-tier restraint), warm bolt icon, single-line copy.
    Stacks on narrow viewports per spec. */
 .lr-fasttrack {
-  background: color-mix(in srgb, var(--accent, #2DD4BF) 6%, var(--surface, #0a0a0a));
-  border: 1px solid color-mix(in srgb, var(--accent, #2DD4BF) 24%, var(--border, #2a2a2a));
-  border-left: 3px solid var(--accent, #2DD4BF);
+  background: color-mix(in srgb, var(--accent, #2DD4BF) 8%, var(--surface, #0a0a0a));
+  border: 1px solid color-mix(in srgb, var(--accent, #2DD4BF) 36%, var(--border, #2a2a2a));
   border-radius: 12px;
   padding: 16px;
   display: grid;
@@ -836,9 +835,8 @@
 /* L-PLAN-6 — Syvennä callout for L target. Restrained accent card,
    single-stroke border, no glow. Sits above the primary CTA stack. */
 .lr-deepen {
-  background: color-mix(in srgb, var(--accent, #2DD4BF) 7%, var(--surface, #0a0a0a));
-  border: 1px solid color-mix(in srgb, var(--accent, #2DD4BF) 28%, var(--border, #2a2a2a));
-  border-left: 3px solid var(--accent, #2DD4BF);
+  background: color-mix(in srgb, var(--accent, #2DD4BF) 9%, var(--surface, #0a0a0a));
+  border: 1px solid color-mix(in srgb, var(--accent, #2DD4BF) 40%, var(--border, #2a2a2a));
   border-radius: 12px;
   padding: 16px;
   display: grid;

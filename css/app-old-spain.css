@@ -466,8 +466,7 @@ body.app .lpc-badge {
 /* AI tutor card — single Fraunces-italic line, marginalia in olive. */
 body.app .dash-tutor {
   background: var(--ed-bg-card);
-  border-color: var(--ed-rule);
-  border-left: 2px solid var(--ed-accent);
+  border: 1px solid color-mix(in oklch, var(--ed-accent) 30%, var(--ed-rule));
   border-radius: 12px;
 }
 body.app .dash-tutor__msg {
@@ -883,7 +882,6 @@ body.app .ex-option__t {
 body.app .ex-option.is-correct {
   background: color-mix(in oklch, var(--ed-olive) 10%, var(--ed-bg-card));
   border: 1px solid color-mix(in oklch, var(--ed-olive) 42%, transparent);
-  border-left: 1px solid color-mix(in oklch, var(--ed-olive) 42%, transparent);
 }
 body.app .ex-option.is-correct .ex-option__l {
   color: var(--ed-olive);
@@ -893,7 +891,6 @@ body.app .ex-option.is-correct .ex-option__t { color: var(--ed-ink); }
 body.app .ex-option.is-wrong {
   background: color-mix(in oklch, var(--ed-accent) 8%, var(--ed-bg-card));
   border: 1px solid color-mix(in oklch, var(--ed-accent) 36%, transparent);
-  border-left: 1px solid color-mix(in oklch, var(--ed-accent) 36%, transparent);
 }
 body.app .ex-option.is-wrong .ex-option__l {
   color: var(--ed-accent);
