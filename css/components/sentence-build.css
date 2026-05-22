@@ -1,0 +1,327 @@
+/* v279 — Sentence build (Käännä lauseet) screen.
+   Click-to-add + click-to-remove word reordering. No drag-and-drop:
+   click is the only interaction that works reliably on mobile + a11y.
+
+   Visual register: Old-Spain. Cream paper background, brick accents,
+   Fraunces only on the revealed correct sentence (treat it like a
+   block-quote of the canonical answer — direct readable, not italic).
+   Everything else uses the inherited body sans so the chips read as
+   data, not decoration. */
+
+#screen-sentence-build {
+  --sb-easing: cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.sb {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 24px 20px 64px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.sb__header {
+  display: grid;
+  grid-template-columns: 40px 1fr auto;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-soft, rgba(15, 13, 11, 0.08));
+}
+.sb__back {
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border-soft, rgba(15, 13, 11, 0.12));
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink, #1f1a13);
+  cursor: pointer;
+  transition: background 160ms var(--sb-easing), transform 100ms var(--sb-easing);
+}
+.sb__back:hover { background: var(--brand-cream-deep, rgba(15, 13, 11, 0.04)); }
+.sb__back:active { transform: scale(0.96); }
+.sb__back:focus-visible {
+  outline: 2px solid var(--brand-brick, #a0341f);
+  outline-offset: 2px;
+}
+.sb__eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+  color: var(--ink-soft, #6f6353);
+  margin: 0;
+}
+.sb__progress {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 2px;
+  font-variant-numeric: tabular-nums;
+  font-size: 14px;
+  color: var(--ink-soft, #6f6353);
+}
+.sb__progress-current {
+  color: var(--ink, #1f1a13);
+  font-weight: 600;
+}
+
+.sb__hint {
+  font-size: 19px;
+  line-height: 1.5;
+  color: var(--ink, #1f1a13);
+  margin: 0;
+}
+
+/* Answer area — where ordered tokens land. Dashed border signals
+   "this is the work surface." Empty-state copy lives in ::before. */
+.sb__answer {
+  min-height: 72px;
+  padding: 14px 16px;
+  border: 1.5px dashed var(--border-soft, rgba(15, 13, 11, 0.18));
+  border-radius: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  background: var(--brand-cream-soft, rgba(255, 251, 244, 0.4));
+  transition: border-color 160ms var(--sb-easing), background 160ms var(--sb-easing);
+}
+.sb__answer:empty::before {
+  content: "Klikkaa sanoja alta järjestääksesi lauseen.";
+  color: var(--ink-soft, #6f6353);
+  font-size: 14px;
+  line-height: 1.4;
+}
+.sb__answer.is-correct {
+  border-color: oklch(55% 0.13 145);
+  border-style: solid;
+  background: oklch(96% 0.04 145);
+}
+.sb__answer.is-wrong {
+  border-color: var(--brand-brick, #a0341f);
+  border-style: solid;
+  background: oklch(96% 0.02 28);
+}
+
+.sb__pool {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-height: 44px;
+}
+
+/* Token chip — shared between answer + pool. Two states:
+   default (in pool, clickable to add) and the "used" twin (in pool
+   but already placed in answer area; visually dim + struck through
+   so the user sees what's already been picked without re-rendering). */
+.sb-token {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 16px;
+  min-height: 44px;
+  background: var(--brand-cream, #fffaf2);
+  border: 1px solid var(--border-soft, rgba(15, 13, 11, 0.14));
+  border-radius: 10px;
+  font-size: 16px;
+  font-family: inherit;
+  font-weight: 500;
+  color: var(--ink, #1f1a13);
+  cursor: pointer;
+  transition: background 160ms var(--sb-easing),
+              border-color 160ms var(--sb-easing),
+              transform 100ms var(--sb-easing),
+              opacity 160ms var(--sb-easing);
+}
+@media (hover: hover) and (pointer: fine) {
+  .sb-token:hover {
+    background: var(--brand-brick-soft, oklch(94% 0.04 28));
+    border-color: var(--brand-brick, #a0341f);
+  }
+}
+.sb-token:active { transform: scale(0.97); }
+.sb-token:focus-visible {
+  outline: 2px solid var(--brand-brick, #a0341f);
+  outline-offset: 2px;
+}
+.sb-token.is-used {
+  opacity: 0.32;
+  pointer-events: none;
+  text-decoration: line-through;
+  text-decoration-thickness: 1px;
+}
+.sb-token[data-locked="true"] {
+  pointer-events: none;
+}
+
+.sb__actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.sb__btn {
+  padding: 12px 22px;
+  min-height: 44px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: background 160ms var(--sb-easing),
+              border-color 160ms var(--sb-easing),
+              transform 100ms var(--sb-easing),
+              opacity 160ms var(--sb-easing);
+}
+.sb__btn:active:not(:disabled) { transform: scale(0.98); }
+.sb__btn:focus-visible {
+  outline: 2px solid var(--brand-brick, #a0341f);
+  outline-offset: 2px;
+}
+.sb__btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.sb__btn--ghost {
+  background: transparent;
+  color: var(--ink-soft, #6f6353);
+  border-color: var(--border-soft, rgba(15, 13, 11, 0.14));
+}
+.sb__btn--ghost:hover:not(:disabled) {
+  background: var(--brand-cream-deep, rgba(15, 13, 11, 0.04));
+  color: var(--ink, #1f1a13);
+}
+.sb__btn--primary {
+  background: var(--brand-brick, #a0341f);
+  color: var(--brand-cream, #fffaf2);
+}
+.sb__btn--primary:hover:not(:disabled) {
+  background: var(--brand-brick-hover, oklch(38% 0.15 28));
+}
+
+/* Feedback — sits below actions when checked. No left-stripe border.
+   Verdict colour shifts; the rest of the panel stays in cream so the
+   correct sentence reads as a calm reveal, not an alert banner. */
+.sb__feedback {
+  margin-top: 8px;
+  padding: 20px 22px;
+  background: var(--brand-cream, #fffaf2);
+  border: 1px solid var(--border-soft, rgba(15, 13, 11, 0.1));
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+@starting-style {
+  .sb__feedback {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}
+.sb__feedback {
+  transition: opacity 220ms var(--sb-easing), transform 220ms var(--sb-easing);
+}
+.sb__verdict {
+  font-size: 17px;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: -0.005em;
+}
+.sb__verdict[data-correct="true"] { color: oklch(40% 0.13 145); }
+.sb__verdict[data-correct="false"] { color: var(--brand-brick, #a0341f); }
+.sb__correct {
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.sb__correct-label {
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-soft, #6f6353);
+  font-weight: 600;
+}
+.sb__correct-text {
+  font-family: var(--font-display, "Fraunces"), Georgia, serif;
+  font-size: 22px;
+  line-height: 1.25;
+  color: var(--ink, #1f1a13);
+  /* Direct readable answer. No italic — emil-design-eng: hierarchy
+     through weight/scale, not affectation. */
+  font-style: normal;
+  font-weight: 500;
+}
+.sb__explain {
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--ink-soft, #6f6353);
+  margin: 0;
+  max-width: 65ch;
+}
+
+.sb__error {
+  padding: 14px 16px;
+  border-radius: 10px;
+  background: oklch(96% 0.03 28);
+  border: 1px solid var(--brand-brick, #a0341f);
+  color: var(--brand-brick, #a0341f);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.sb__summary {
+  margin-top: 16px;
+  padding: 28px 24px;
+  background: var(--brand-cream, #fffaf2);
+  border: 1px solid var(--border-soft, rgba(15, 13, 11, 0.1));
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  text-align: center;
+}
+.sb__summary-eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  color: var(--ink-soft, #6f6353);
+  margin: 0;
+}
+.sb__summary-score {
+  font-family: var(--font-display, "Fraunces"), Georgia, serif;
+  font-size: 36px;
+  line-height: 1;
+  margin: 0;
+  color: var(--ink, #1f1a13);
+  font-variant-numeric: tabular-nums;
+}
+.sb__summary-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+@media (max-width: 640px) {
+  .sb { padding: 16px 14px 48px; gap: 18px; }
+  .sb-token { padding: 11px 14px; font-size: 17px; }
+  .sb__actions { flex-direction: column-reverse; align-items: stretch; }
+  .sb__actions .sb__btn { width: 100%; }
+  .sb__correct-text { font-size: 19px; }
+  .sb__summary-actions .sb__btn { flex: 1 1 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sb-token,
+  .sb__btn,
+  .sb__back,
+  .sb__answer,
+  .sb__feedback { transition: none; }
+}
