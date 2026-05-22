@@ -25,18 +25,29 @@ export function setSidebarMode(mode, ctx = {}) {
   // Strip any stray inline display set by old code paths (settings.js
   // sign-out kludge, manual show/hide). Layout is data-mode-driven now.
   if (sb.style.display) sb.style.display = "";
-  sb.dataset.mode = mode;
+
+  // L-SIDEBAR-FLICKER-1: mutate the mode-slot BEFORE flipping data-mode.
+  // Old order set data-mode="mode" first → CSS revealed an empty (or
+  // stale) slot for one paint frame, then renderModeNav populated it.
+  // On home transitions the previous mode-slot's last frame leaked
+  // through. Mutate while the target slot is still hidden, then flip
+  // — one repaint, no flicker.
   currentMode = mode;
   currentCtx = ctx;
   if (mode === "mode") { renderModeNav(ctx); wireModeItemDelegation(); }
   if (mode === "home") clearModeNav();
+  sb.dataset.mode = mode;
 }
 
 function clearModeNav() {
   const itemsEl = document.getElementById("sidebar-mode-items");
   const titleEl = document.getElementById("sidebar-mode-title");
-  if (itemsEl) itemsEl.innerHTML = "";
-  if (titleEl) titleEl.textContent = "—";
+  if (itemsEl) itemsEl.replaceChildren();
+  // L-SIDEBAR-FLICKER-1: drop the em-dash placeholder. It was a visible
+  // AI-slop signal whenever a transition let the hidden mode-slot title
+  // leak for a frame; an empty string costs nothing and removes the
+  // artifact.
+  if (titleEl) titleEl.textContent = "";
 }
 
 function renderModeNav({ modeKey, modeLabel, items = [] }) {
@@ -45,14 +56,21 @@ function renderModeNav({ modeKey, modeLabel, items = [] }) {
   const label = modeLabel || MODE_LABELS[modeKey] || "";
   if (titleEl) titleEl.textContent = label;
   if (!itemsEl) return;
-  itemsEl.innerHTML = "";
+
+  // L-SIDEBAR-FLICKER-1: build off-DOM, swap atomically. The old code
+  // did `innerHTML = ""` + a per-item appendChild loop — when the async
+  // items-hydration call replayed renderModeNav, the list briefly
+  // collapsed to height 0 between clear and append, which the eye
+  // catches as flicker. DocumentFragment + replaceChildren mutates the
+  // live DOM once.
+  const frag = document.createDocumentFragment();
   for (const item of items) {
     if (item.type === "heading") {
       const li = document.createElement("li");
       li.className = "sidebar-section-heading";
       li.setAttribute("role", "presentation");
       li.textContent = item.label || "";
-      itemsEl.appendChild(li);
+      frag.appendChild(li);
       continue;
     }
     const li = document.createElement("li");
@@ -75,8 +93,9 @@ function renderModeNav({ modeKey, modeLabel, items = [] }) {
       btn.addEventListener("click", item.onClick);
     }
     li.appendChild(btn);
-    itemsEl.appendChild(li);
+    frag.appendChild(li);
   }
+  itemsEl.replaceChildren(frag);
 }
 
 // Event delegation: any open-lesson click in the MODE list dispatches a
