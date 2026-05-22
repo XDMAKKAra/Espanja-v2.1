@@ -1833,7 +1833,9 @@
    its aspect-ratio so the browser-frame doesn't reflow.
    prefers-reduced-motion: only the grade frame stays visible.       */
 .landing .browser-frame__viewport--mock {
-  background: #0a0a0a;
+  /* v272 — mock browser viewport matches the app shell (white) now
+     that the rest of the landing flipped from cream/dark to near-white. */
+  background: var(--bg-elevated);
   display: grid;
   place-items: stretch;
 }
