@@ -53,20 +53,27 @@ function renderRow(k, stepNumber, lang) {
     ? "#"
     : `#/oppimispolku/${lang}/${encodeURIComponent(k.key)}`;
 
+  // L-OPPIMISPOLKU-ROLES-1: wrap each row anchor in <li>. The outer <ol>
+  // previously held bare <a> children, which is invalid HTML and made
+  // screen readers announce the rows as a loose chain of links instead
+  // of "list, 8 items, item 1 of 8". <li> is implicit listitem; the
+  // anchor keeps its link role and aria-disabled state for locked rows.
   return `
-    <a class="${cls}" href="${href}" data-kurssi="${escapeHtml(k.key)}" ${locked ? 'aria-disabled="true"' : ""}>
-      <span class="op-row__num">${stepNumber}</span>
-      <div class="op-row__body">
-        <h3 class="op-row__title">${escapeHtml(k.title)}</h3>
-        ${k.description ? `<p class="op-row__desc">${escapeHtml(k.description)}</p>` : ""}
-      </div>
-      <div class="op-row__meta">
-        <div class="op-row__progress" role="progressbar" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100" aria-label="${pct} % suoritettu">
-          <div class="op-row__progress-fill" style="width:${pct}%"></div>
+    <li class="op-row-li">
+      <a class="${cls}" href="${href}" data-kurssi="${escapeHtml(k.key)}" ${locked ? 'aria-disabled="true"' : ""} aria-label="Kurssi ${stepNumber}: ${escapeHtml(k.title)}, ${escapeHtml(status)}">
+        <span class="op-row__num" aria-hidden="true">${stepNumber}</span>
+        <div class="op-row__body">
+          <h3 class="op-row__title">${escapeHtml(k.title)}</h3>
+          ${k.description ? `<p class="op-row__desc">${escapeHtml(k.description)}</p>` : ""}
         </div>
-        <span class="op-row__status">${escapeHtml(status)}</span>
-      </div>
-    </a>`;
+        <div class="op-row__meta">
+          <div class="op-row__progress" role="progressbar" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100" aria-label="${pct} % suoritettu">
+            <div class="op-row__progress-fill" style="width:${pct}%"></div>
+          </div>
+          <span class="op-row__status">${escapeHtml(status)}</span>
+        </div>
+      </a>
+    </li>`;
 }
 
 function renderShell(lang, kurssit) {

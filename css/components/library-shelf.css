@@ -136,6 +136,15 @@ body.app .op-list {
   display: flex;
   flex-direction: column;
 }
+/* L-OPPIMISPOLKU-ROLES-1: <li> wrapper exists for screen-reader list
+   semantics. Strip the bullet + default margins so the inner <a> grid
+   row stays visually unchanged. display:contents would erase listitem
+   semantics in older Safari, so keep the box. */
+body.app .op-row-li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
 body.app .op-row {
   display: grid;
   grid-template-columns: 48px 1fr 200px;
