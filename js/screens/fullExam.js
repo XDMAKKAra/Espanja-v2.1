@@ -206,7 +206,7 @@ export async function startFullExam(durationMode = "demo") {
   // throw before the catch). Without this the user sits on
   // "Tarkistetaan aktiivista koetta…" with no recovery affordance.
   let watchdogFired = false;
-  const watchdog = setTimeout(() => {
+  let watchdog = setTimeout(() => {
     watchdogFired = true;
     showLoadingError(
       "Kokeen tarkistus kesti odotettua kauemmin. Yhteys voi olla katkennut.",
@@ -226,6 +226,16 @@ export async function startFullExam(durationMode = "demo") {
     if (watchdogFired) return;
 
     if (resumeData.active) {
+      // L-EXAM-LOADER-1: hide the spinner BEFORE awaiting the modal.
+      // The resume-dialog backdrop is 0.28-opacity (cream-warm), so a
+      // running spinner behind it pulses through and reads as "stuck
+      // loading screen" — exactly the v283 P0 symptom. Drop the user
+      // back to #screen-home so the modal sits on the dashboard they
+      // came from. Also clear the 12 s watchdog: it was meant for the
+      // network step, not for the time a human spends reading a modal.
+      clearTimeout(watchdog);
+      show("screen-home");
+
       const choice = await showExamResumeDialog();
       if (choice === "resume") {
         examState.sessionId = resumeData.sessionId;
@@ -255,6 +265,18 @@ export async function startFullExam(durationMode = "demo") {
     }
 
     showLoading("Valmistellaan koetta...", { subtext: "Arvotaan 4 osaa koepankista" });
+    // The discard branch cleared the original watchdog when the modal opened,
+    // so re-arm one for the /start network step — otherwise an offline or
+    // hung /start would leave the spinner running with no recovery.
+    clearTimeout(watchdog);
+    watchdogFired = false;
+    watchdog = setTimeout(() => {
+      watchdogFired = true;
+      showLoadingError(
+        "Kokeen valmistelu kesti odotettua kauemmin. Yhteys voi olla katkennut.",
+        () => startFullExam(durationMode)
+      );
+    }, 12_000);
 
     const startRes = await apiFetch(`${API}/api/exam/start`, {
       method: "POST",

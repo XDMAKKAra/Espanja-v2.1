@@ -55,7 +55,7 @@ test.describe('Koeharjoitus card on Aloitus', () => {
     test.setTimeout(60_000);
     await loginAndLandAloitus(page);
 
-    const koeharjoitus = page.locator('a.home-mode[data-mode="exam"]').first();
+    const koeharjoitus = page.locator('[data-action="exam"]').first();
     await expect(koeharjoitus).toBeVisible();
     await koeharjoitus.click();
 
@@ -84,11 +84,55 @@ test.describe('Koeharjoitus card on Aloitus', () => {
     }, { timeout: 5_000 });
   });
 
+  test('L-EXAM-LOADER-1: screen-loading is dismissed before the resume modal opens', async ({ page }) => {
+    test.setTimeout(60_000);
+    await loginAndLandAloitus(page);
+
+    // The Koeharjoitus entry point lives in the home footer (data-action="exam"),
+    // not the legacy .home-mode tile — the older locator silently selected
+    // nothing on current builds and the test passed for the wrong reason.
+    const koeharjoitus = page.locator('[data-action="exam"]').first();
+    await expect(koeharjoitus).toBeVisible();
+    await koeharjoitus.click();
+
+    // Wait until the resume modal is reachable, then assert the loading
+    // screen is no longer the active screen. Pre-fix the modal opened while
+    // #screen-loading kept .active and its spinner pumped behind the
+    // 0.28-opacity backdrop, reading as "stuck loader".
+    await expect(page.locator('#exam-resume-dialog-root.is-open')).toBeVisible({ timeout: 8_000 });
+
+    const loadingActive = await page.evaluate(() => {
+      const el = document.getElementById('screen-loading');
+      return !!(el && el.classList.contains('active'));
+    });
+    expect(loadingActive, 'screen-loading.active while resume modal is open').toBe(false);
+
+    // Belt + braces: the spinner element itself must not be rendering inside
+    // the viewport. If layout ever changes so screen-loading is positioned
+    // off-screen by other means, that's still fine.
+    const spinnerVisible = await page.locator('#loading-spinner').isVisible().catch(() => false);
+    const screenLoadingRect = await page.evaluate(() => {
+      const el = document.getElementById('screen-loading');
+      if (!el) return null;
+      const r = el.getBoundingClientRect();
+      const cs = getComputedStyle(el);
+      return { w: r.width, h: r.height, display: cs.display, visibility: cs.visibility };
+    });
+    const stillPainting =
+      spinnerVisible &&
+      screenLoadingRect &&
+      screenLoadingRect.display !== 'none' &&
+      screenLoadingRect.visibility !== 'hidden' &&
+      screenLoadingRect.w > 0 &&
+      screenLoadingRect.h > 0;
+    expect(stillPainting, 'loader still painted behind resume modal').toBe(false);
+  });
+
   test('resume dialog covers the viewport above screen-loading (CSS specificity fix)', async ({ page }) => {
     test.setTimeout(60_000);
     await loginAndLandAloitus(page);
 
-    await page.locator('a.home-mode[data-mode="exam"]').first().click();
+    await page.locator('[data-action="exam"]').first().click();
 
     // Resume dialog must appear (testpro has an active session) AND must
     // cover the full viewport with z-index > the loading screen.
