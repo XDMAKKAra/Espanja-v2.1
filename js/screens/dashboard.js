@@ -3,7 +3,6 @@ import { API, isLoggedIn, clearAuth, authHeader, apiFetch, getAuthEmail, setDash
 import { state, setLanguage, apiLang } from "../state.js";
 import { showLoading } from "../ui/loading.js";
 import { srDueCount } from "../features/spacedRepetition.js";
-import { renderAdaptiveCard } from "./adaptive.js";
 import { getBlogForTopic, trackBlogClick } from "../features/topicBlogMap.js";
 import { icon, MODE_ICONS } from "../ui/icons.js";
 import { getRecentWritingDimensions } from "../features/writingProgression.js";
@@ -617,8 +616,6 @@ function renderDashboard({
   renderRecommendations(modeDaysAgo, modeStats, totalSessions);
   loadExamHistory();
   updateSrBadge();
-  // Writing is the centerpiece — the YO-rubriikki grader is our differentiator.
-  renderAdaptiveCard("writing");
   renderAiUsage(aiUsage, pro);
   renderWritingProgression();
   loadAndRenderReadinessMap().catch(() => {});
