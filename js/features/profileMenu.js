@@ -97,27 +97,44 @@ export function syncProfileMenu({ pro = false } = {}) {
 function renderIdentity() {
   const email = getAuthEmail() || "";
   const handle = email ? email.split("@")[0] : "Käyttäjä";
-  const initials = computeInitials(handle, email);
+  const initials = computeInitials(email);
 
   const av = document.getElementById("profile-menu-avatar");
-  if (av) av.textContent = initials;
+  if (av) paintAvatar(av, initials);
   const avLg = document.getElementById("profile-menu-avatar-lg");
-  if (avLg) avLg.textContent = initials;
+  if (avLg) paintAvatar(avLg, initials);
   const nm = document.getElementById("profile-menu-name");
   if (nm) nm.textContent = handle;
   const em = document.getElementById("profile-menu-email");
   if (em) em.textContent = email;
 }
 
-function computeInitials(name, email) {
-  const seed = (name || email || "").trim();
-  if (!seed) return "—";
-  const parts = seed.split(/[.\s_-]+/).filter(Boolean);
+// L-AVATAR-INITIALS-1: derive initials from the real email handle only.
+// The previous version accepted the "Käyttäjä" UI placeholder as input
+// and happily returned "KÄ", which read as a username on screen and
+// confused the user about which account they were logged into. Returns
+// null when there's nothing real to initialise from, so the renderer
+// can swap in a person silhouette instead of garbage text.
+function computeInitials(email) {
+  const handle = (email || "").trim().split("@")[0];
+  if (!handle) return null;
+  const parts = handle.split(/[.\s_+\-]+/).filter(Boolean);
+  if (parts.length === 0) return null;
   if (parts.length === 1) {
     const p = parts[0];
     return (p.length >= 2 ? p.slice(0, 2) : p[0]).toUpperCase();
   }
   return (parts[0][0] + parts[1][0]).toUpperCase();
+}
+
+const PERSON_ICON = '<svg viewBox="0 0 24 24" width="60%" height="60%" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="8" r="4"/><path d="M4 20c1.5-3.5 4.5-5 8-5s6.5 1.5 8 5"/></svg>';
+
+function paintAvatar(el, initials) {
+  if (initials) {
+    el.textContent = initials;
+  } else {
+    el.innerHTML = PERSON_ICON;
+  }
 }
 
 function isOpen() {
