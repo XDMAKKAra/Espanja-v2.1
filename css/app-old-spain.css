@@ -235,11 +235,14 @@ body.app .display em {
   color: var(--ed-accent);
 }
 
+/* L-EYEBROW-EMDASH-1: dropped uppercase + mono on .eyebrow/.section-h
+   in the app shell. Eduix and Otava textbooks render section labels
+   in lowercase sans; the v283 audit flagged the mono-UPPERCASE chip
+   stack as AI-slop. Letter-spacing softened from 0.12em to 0.02em. */
 body.app .eyebrow,
 body.app .section-h {
-  font-family: var(--ed-mono);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  font-family: var(--ed-sans, var(--ed-display));
+  letter-spacing: 0.02em;
   color: var(--ed-ink-subtle);
 }
 

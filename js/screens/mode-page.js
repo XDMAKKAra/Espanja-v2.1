@@ -101,7 +101,7 @@ export function loadBriefing(modeId) {
   if (!stats || !stats.sessions || stats.sessions === 0) {
     briefing.classList.add("mode-briefing--empty");
     const eyebrow = briefing.querySelector(".eyebrow");
-    if (eyebrow) eyebrow.textContent = "ENSIMMÄINEN KERTA";
+    if (eyebrow) eyebrow.textContent = "Ensimmäinen kerta";
     let intro = briefing.querySelector(".mode-briefing__intro");
     if (!intro) {
       intro = document.createElement("p");
@@ -131,10 +131,12 @@ export function loadBriefing(modeId) {
 }
 
 function formatLastEyebrow(daysAgo) {
-  if (daysAgo == null) return "VIIMEKSI · —";
-  if (daysAgo === 0) return "VIIMEKSI · TÄNÄÄN";
-  if (daysAgo === 1) return "VIIMEKSI · EILEN";
-  return `VIIMEKSI · ${daysAgo} PV SITTEN`;
+  // L-EYEBROW-EMDASH-1: sentence case + em-dash removed. Eyebrow CSS no
+  // longer uppercases the string, so the source must read like prose.
+  if (daysAgo == null) return "Viimeksi: ei tietoa";
+  if (daysAgo === 0) return "Viimeksi tänään";
+  if (daysAgo === 1) return "Viimeksi eilen";
+  return `Viimeksi ${daysAgo} pv sitten`;
 }
 
 /**
