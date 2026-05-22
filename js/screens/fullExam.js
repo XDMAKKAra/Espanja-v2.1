@@ -201,12 +201,29 @@ function showExamResumeDialog() {
 export async function startFullExam(durationMode = "demo") {
   showLoading("Tarkistetaan aktiivista koetta...");
 
+  // v270 — watchdog so the loading screen can't hang forever if /resume
+  // or /start never resolves (offline, gateway timeout, prior client-side
+  // throw before the catch). Without this the user sits on
+  // "Tarkistetaan aktiivista koetta…" with no recovery affordance.
+  let watchdogFired = false;
+  const watchdog = setTimeout(() => {
+    watchdogFired = true;
+    showLoadingError(
+      "Kokeen tarkistus kesti odotettua kauemmin. Yhteys voi olla katkennut.",
+      () => startFullExam(durationMode)
+    );
+  }, 12_000);
+
   try {
     const resumeRes = await apiFetch(`${API}/api/exam/resume`, {
       method: "POST",
       headers: { "Content-Type": "application/json", ...authHeader() },
     });
+    if (!resumeRes.ok) {
+      throw new Error(`Resume tarkistus epäonnistui (HTTP ${resumeRes.status})`);
+    }
     const resumeData = await resumeRes.json();
+    if (watchdogFired) return;
 
     if (resumeData.active) {
       const choice = await showExamResumeDialog();
@@ -260,10 +277,11 @@ export async function startFullExam(durationMode = "demo") {
 
     enterExam();
   } catch (err) {
-    {
-      const copy = humanizeApiError(err);
-      showLoadingError(`${copy.title}. ${copy.subtext}`, () => startFullExam(durationMode));
-    }
+    if (watchdogFired) return;
+    const copy = humanizeApiError(err);
+    showLoadingError(`${copy.title}. ${copy.subtext}`, () => startFullExam(durationMode));
+  } finally {
+    clearTimeout(watchdog);
   }
 }
 

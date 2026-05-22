@@ -160,6 +160,13 @@ body.app > * { position: relative; z-index: 1; }
 body.app > .app-countdown { position: fixed; }
 body.app > .teaching-panel-trigger { position: fixed; }
 body.app > .skip-link { position: fixed; }
+/* v270 — confirm-dialog-root was demoted to position:relative by the broad
+   `body.app > *` rule, so the modal lost full-viewport coverage and
+   anchored to the bottom half of the cream paper behind the loading
+   spinner. Restoring fixed + the original z-index keeps it centered above
+   screen-loading instead of looking like a stuck "Tarkistetaan aktiivista
+   koetta…" page (Koeharjoitus resume flow). */
+body.app > .confirm-dialog-root { position: fixed; z-index: 1000; }
 
 /* ═══════════════════════════════════════════════════════════
    Typography lifts. Every dashboard heading rendered with the
