@@ -99,9 +99,10 @@ function wireAccountSection() {
     signOutBtn.dataset.wired = "1";
     signOutBtn.addEventListener("click", () => {
       clearAuth();
-      // updateSidebarState lives in main.js, fall back to a hard reload that
-      // re-enters the auth screen via the bootstrap path.
-      try { document.querySelector(".app-sidebar")?.style && (document.querySelector(".app-sidebar").style.display = "none"); } catch {}
+      // v277: don't touch inline .app-sidebar style — updateSidebarState()
+      // in main.js gates the sidebar on isLoggedIn(). Mutating inline
+      // display here was tossing the grid layout on every settings-modal
+      // sign-out, which is the bug three-strikes flagged.
       show("screen-auth");
     });
   }

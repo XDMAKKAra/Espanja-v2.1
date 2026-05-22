@@ -40,10 +40,14 @@
 
 /* When the digikirja screen is active, the lesson takes over the whole
    viewport. The digikirja has its own SideMenu carrying Aloitus + the
-   account section, so the global chrome (sidebar, profile FAB, YO
-   countdown pill, mobile-only topbar) is suppressed: it would otherwise
-   overlap the dk__topbar title or eat horizontal space. */
-body:has(#screen-digikirja.active) .app-sidebar { display: none; }
+   account section, so the global chrome (profile FAB, YO countdown pill,
+   mobile-only topbar) is suppressed: it would otherwise overlap the
+   dk__topbar title or eat horizontal space.
+
+   v277: the .app-sidebar `display: none` band-aid is replaced by
+   [data-mode="book"] in css/components/sidebar-shell.css — the sidebar
+   collapses to a 56px rail instead of vanishing, so the Aloitus path
+   stays clickable from anywhere in the app. */
 body:has(#screen-digikirja.active) .profile-menu-wrap { display: none; }
 body:has(#screen-digikirja.active) .app-countdown { display: none; }
 body:has(#screen-digikirja.active) .app-topbar { display: none; }

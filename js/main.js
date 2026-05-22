@@ -38,6 +38,8 @@ import { initProfileMenu, syncProfileMenu } from "./features/profileMenu.js";
 import { initTeachingPanel } from "./features/teachingPanel.js";
 // Paywall modal — wired early so the 403 intercept in api.js can open it.
 import { initPaywallModal } from "./features/paywallModal.js";
+// v277 SidebarShell controller — owns [data-mode] on .app-sidebar.
+import { setSidebarMode } from "./components/sidebarShell.js";
 
 // ─── Inject show into api.js (avoids circular dep) ─────────────────────────
 setShowFn(show);
@@ -216,6 +218,16 @@ function navigateTo(nav, { updateHash = true } = {}) {
 
   if (updateHash && NAV_HASH[nav] && location.hash !== NAV_HASH[nav]) {
     history.replaceState(null, "", NAV_HASH[nav]);
+  }
+
+  // v277: drive .app-sidebar [data-mode]. "home"/"path"/"profile"/"settings"
+  // are all HOME-state from the sidebar's POV (no mode shell). vocab/grammar/
+  // reading/writing/exam flip to MODE-state with the section title.
+  const MODE_LABELS = { vocab: "Sanasto", grammar: "Kielioppi", reading: "Luetun ymmärtäminen", writing: "Kirjoittaminen", exam: "Koeharjoitus" };
+  if (MODE_LABELS[nav]) {
+    setSidebarMode("mode", { modeKey: nav, modeLabel: MODE_LABELS[nav], items: [] });
+  } else if (nav === "home" || nav === "path" || nav === "dashboard") {
+    setSidebarMode("home");
   }
 
   if (nav === "exam")          lazyFullExam().then((m) => m.startFullExam("demo"));
