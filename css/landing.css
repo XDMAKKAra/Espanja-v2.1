@@ -736,7 +736,21 @@
   transform: translateY(-2px);
 }
 
-/* Finale card (K8) gets a subtle accent left-border */
+/* Bento asymmetry — K1 (entry) spans 2, K8 (finale) spans full row. Breaks the
+   8-identical-card pattern: large entry, four standards, wide finale climax. */
+@media (min-width: 1081px) {
+  .landing .courses__grid > .course-card:first-child {
+    grid-column: span 2;
+  }
+  .landing .courses__grid > .course-card--finale {
+    grid-column: 1 / -1;
+  }
+}
+@media (min-width: 581px) and (max-width: 1080px) {
+  .landing .courses__grid > .course-card--finale {
+    grid-column: 1 / -1;
+  }
+}
 .landing .course-card--finale {
   border-color: color-mix(in srgb, var(--accent) 30%, var(--border));
 }
