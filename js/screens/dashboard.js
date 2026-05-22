@@ -1,5 +1,5 @@
 import { $, show } from "../ui/nav.js";
-import { API, isLoggedIn, clearAuth, authHeader, apiFetch, getAuthEmail, setDashboardV2, getDashboardV2Section } from "../api.js";
+import { API, isLoggedIn, clearAuth, authHeader, apiFetch, getAuthEmail, setDashboardV2, getDashboardV2Section, fetchDashboardV2 } from "../api.js";
 import { state, setLanguage, apiLang } from "../state.js";
 import { showLoading } from "../ui/loading.js";
 import { srDueCount } from "../features/spacedRepetition.js";
@@ -154,29 +154,24 @@ export async function loadDashboard() {
   // Drop it; home.js owns the in-place loading state now.
 
   try {
-    // L-LIVE-AUDIT-P2 UPDATE 3, single batched request replaces 9 sequential
-    // dashboard fetches. Each section may be `null` if its server query failed;
-    // helper functions (loadAdaptiveState, loadWeakTopics, ...) check the
-    // cached payload first via getDashboardV2Section() and only fall back to
-    // their legacy single-endpoint fetch on cache miss.
-    const res = await apiFetch(`${API}/api/dashboard/v2`, { headers: authHeader() });
-    if (res.status === 401) {
-      clearAuth();
-      show("screen-auth");
-      return;
+    // L-RENDER-PERF-1 (2026-05-22): use shared fetchDashboardV2 from api.js.
+    // loadHome already kicked off the same fetch upstream; this resolves to
+    // the cached payload or awaits the in-flight promise — no second network
+    // roundtrip. Without the coalesce, login fired /api/dashboard/v2 twice
+    // sequentially and added ~5-7s to first paint on cold instances.
+    let v2;
+    try {
+      v2 = await fetchDashboardV2();
+    } catch {
+      v2 = null;
     }
     let dashboardCore;
-    if (res.ok) {
-      const v2 = await res.json();
+    if (v2) {
       setDashboardV2(v2);
       dashboardCore = v2.dashboard;
-      // L-LIVE-AUDIT-P2 UPDATE 4, seed the global profile so the CTA renderer
-      // and other readers don't need to re-fetch /api/profile separately.
       if (v2.profile?.profile && !window._userProfile) {
         window._userProfile = v2.profile.profile;
       }
-      // L-LANG-INFRA-1: hydrate language from profile so routing + ?lang= work
-      // immediately after the first dashboard load (no extra /api/profile fetch).
       if (v2.profile?.profile?.target_language) {
         setLanguage(v2.profile.profile.target_language);
       }

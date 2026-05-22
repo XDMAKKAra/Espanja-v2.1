@@ -68,6 +68,8 @@ export function clearAuth() {
   _profileCache = null;
   _profileCacheTime = 0;
   _dashboardV2 = null;
+  _dashboardV2CacheTs = 0;
+  _dashboardV2Inflight = null;
 }
 
 // L-PRO-TIER-AND-QUOTA-UX — map server error codes to humane Finnish copy
@@ -192,7 +194,47 @@ export function invalidateProfileCache() {
 let _dashboardV2 = null;
 export function setDashboardV2(payload) { _dashboardV2 = payload || null; }
 export function getDashboardV2Section(key) { return _dashboardV2?.[key] ?? null; }
-export function clearDashboardV2() { _dashboardV2 = null; }
+export function clearDashboardV2() {
+  _dashboardV2 = null;
+  _dashboardV2CacheTs = 0;
+  _dashboardV2Inflight = null;
+}
+
+// L-RENDER-PERF-1 (2026-05-22) — single coalesced fetcher for /api/dashboard/v2.
+// Before: home.js (loadHome → fetchOhjaamo) and dashboard.js (loadDashboard)
+// each held their own cache and fetched the endpoint twice on login + once
+// per nav-home. Now: one in-flight promise, one 60s memory cache, one network
+// roundtrip per minute. Pair with the server-side 30s response cache in
+// routes/dashboardV2.js for end-to-end dedupe.
+const DASHBOARD_V2_TTL_MS = 60_000;
+let _dashboardV2CacheTs = 0;
+let _dashboardV2Inflight = null;
+
+export async function fetchDashboardV2({ force = false } = {}) {
+  const now = Date.now();
+  if (!force && _dashboardV2 && now - _dashboardV2CacheTs < DASHBOARD_V2_TTL_MS) {
+    return _dashboardV2;
+  }
+  if (_dashboardV2Inflight) return _dashboardV2Inflight;
+
+  _dashboardV2Inflight = (async () => {
+    try {
+      const res = await apiFetch(`${API}/api/dashboard/v2`, {
+        headers: { ...(isLoggedIn() ? authHeader() : {}) },
+      });
+      if (!res.ok) return null;
+      const payload = await res.json();
+      _dashboardV2 = payload;
+      _dashboardV2CacheTs = Date.now();
+      return payload;
+    } catch {
+      return null;
+    } finally {
+      _dashboardV2Inflight = null;
+    }
+  })();
+  return _dashboardV2Inflight;
+}
 
 // ─── retryable — Pass 6 C16 ────────────────────────────────────────────────
 // Wraps a fetch-returning async fn with bounded retries + backoff. Retries

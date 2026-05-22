@@ -18,7 +18,7 @@
  * picks it up (SidebarShell-brief).
  */
 
-import { API, apiFetch, isLoggedIn, authHeader } from "../api.js";
+import { API, apiFetch, isLoggedIn, authHeader, fetchDashboardV2 } from "../api.js";
 import { show } from "../ui/nav.js";
 import { isProTier } from "../lib/tier.js";
 import { prefetchChunk, onHoverIntent } from "../lib/prefetch.js";
@@ -33,6 +33,10 @@ const LANGS = [
 const ENABLED_LANGS_KEY = "puheo:enabled-langs";
 const LANG_KEY = "puheo:lang";
 const DEFAULT_GOAL_MIN = 15;
+// L-RENDER-PERF-1: shared cache via fetchDashboardV2 in api.js. The local
+// _ohjaamoData wrapper stays for the warm-cache fast-path check (timestamp
+// gate) but the actual fetch is deduped at the api.js layer so dashboard.js
+// + home.js share one network roundtrip.
 let _ohjaamoData = null;
 
 function readEnabledLangs() {
@@ -66,20 +70,12 @@ function writeActiveLang(code) {
 }
 
 async function fetchOhjaamo() {
-  if (_ohjaamoData && (Date.now() - _ohjaamoData.ts) < 60_000) {
-    return _ohjaamoData.payload;
-  }
-  try {
-    const res = await apiFetch(`${API}/api/dashboard/v2`, {
-      headers: { ...(isLoggedIn() ? authHeader() : {}) },
-    });
-    if (!res.ok) return null;
-    const data = await res.json();
-    _ohjaamoData = { ts: Date.now(), payload: data };
-    return data;
-  } catch {
-    return null;
-  }
+  // L-RENDER-PERF-1: delegate to shared coalesced fetcher. If dashboard.js
+  // already kicked off a /api/dashboard/v2 request, we await the same
+  // in-flight promise instead of firing a second one.
+  const data = await fetchDashboardV2();
+  if (data) _ohjaamoData = { ts: Date.now(), payload: data };
+  return data;
 }
 
 // Finnish localised "Perjantai 22. toukokuuta" — Intl gives us the parts
