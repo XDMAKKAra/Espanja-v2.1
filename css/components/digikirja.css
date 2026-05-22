@@ -1650,3 +1650,300 @@ body:has(#screen-digikirja.active) #screen-digikirja.screen.active {
     transition: none !important;
   }
 }
+
+/* ─── Writing phase (v281) ─────────────────────────────────────────── */
+
+.dk__writing {
+  display: grid;
+  gap: 20px;
+  max-width: 72ch;
+}
+
+.dk__writing-switcher {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.dk__writing-tab {
+  appearance: none;
+  font-family: var(--ed-sans);
+  font-size: 14px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--ed-rule);
+  background: var(--ed-bg);
+  color: var(--ed-ink-muted);
+  cursor: pointer;
+  transition: background 140ms var(--dk-ease), border-color 140ms var(--dk-ease), color 140ms var(--dk-ease);
+}
+.dk__writing-tab:hover {
+  border-color: var(--ed-rule-strong);
+  color: var(--ed-ink);
+}
+.dk__writing-tab.is-active {
+  background: var(--ed-accent);
+  color: var(--ed-accent-ink);
+  border-color: var(--ed-accent);
+}
+
+.dk__writing-instruction {
+  font-family: var(--ed-sans);
+  font-size: 14.5px;
+  color: var(--ed-ink-muted);
+  margin: 0;
+}
+
+.dk__writing-prompt {
+  font-family: var(--ed-sans);
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--ed-ink);
+  background: var(--ed-bg-card);
+  border-left: 3px solid var(--ed-accent);
+  border-radius: 4px;
+  padding: 16px 20px;
+  margin: 0;
+}
+.dk__writing-prompt strong {
+  color: var(--ed-ink);
+  font-weight: 600;
+  background: color-mix(in oklch, var(--ed-accent) 12%, transparent);
+  padding: 0 3px;
+  border-radius: 3px;
+}
+
+.dk__writing-composer {
+  display: grid;
+  gap: 10px;
+}
+
+.dk__writing-textarea {
+  width: 100%;
+  min-height: 280px;
+  font-family: var(--ed-sans);
+  font-size: 16px;
+  line-height: 1.6;
+  padding: 14px 16px;
+  border: 1px solid var(--ed-rule);
+  border-radius: 10px;
+  background: var(--ed-bg);
+  color: var(--ed-ink);
+  resize: vertical;
+  transition: border-color 140ms var(--dk-ease), box-shadow 140ms var(--dk-ease);
+}
+.dk__writing-textarea:focus {
+  outline: none;
+  border-color: var(--ed-accent);
+  box-shadow: 0 0 0 3px color-mix(in oklch, var(--ed-accent) 18%, transparent);
+}
+.dk__writing-textarea:disabled {
+  opacity: 0.65;
+  cursor: progress;
+}
+
+.dk__writing-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-family: var(--ed-sans);
+  font-size: 13.5px;
+  color: var(--ed-ink-muted);
+}
+.dk__writing-counter strong {
+  font-weight: 600;
+  color: var(--ed-ink);
+  font-variant-numeric: tabular-nums;
+}
+.dk__writing-counter.is-ok strong { color: var(--ed-accent); }
+.dk__writing-counter.is-over strong { color: #b54a3d; }
+.dk__writing-counter.is-short strong { color: var(--ed-ink-muted); }
+
+.dk__writing-rubric {
+  color: var(--ed-ink-faint);
+}
+
+.dk__writing-error {
+  font-family: var(--ed-sans);
+  font-size: 14px;
+  color: #b54a3d;
+  background: color-mix(in oklch, #b54a3d 6%, transparent);
+  border: 1px solid color-mix(in oklch, #b54a3d 25%, var(--ed-rule));
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin: 0;
+}
+
+.dk__writing-result {
+  display: grid;
+  gap: 18px;
+}
+.dk__writing-score {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.dk__writing-score-num {
+  font-family: var(--ed-serif);
+  font-size: 48px;
+  font-weight: 600;
+  color: var(--ed-ink);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+.dk__writing-score-denom {
+  font-family: var(--ed-sans);
+  font-size: 18px;
+  color: var(--ed-ink-muted);
+}
+.dk__writing-grade {
+  font-family: var(--ed-sans);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: var(--ed-accent);
+  color: var(--ed-accent-ink);
+}
+
+.dk__writing-overall {
+  font-family: var(--ed-sans);
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--ed-ink);
+  margin: 0;
+}
+
+.dk__writing-section {
+  display: grid;
+  gap: 8px;
+}
+.dk__writing-section-title {
+  font-family: var(--ed-sans);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--ed-ink-muted);
+  text-transform: none;
+  margin: 0;
+}
+.dk__writing-errors,
+.dk__writing-positives {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+.dk__writing-errors li {
+  background: var(--ed-bg-card);
+  border: 1px solid var(--ed-rule);
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-family: var(--ed-sans);
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--ed-ink);
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 6px 10px;
+  align-items: baseline;
+}
+.dk__writing-error-wrong {
+  text-decoration: line-through;
+  color: var(--ed-ink-muted);
+}
+.dk__writing-error-right {
+  color: var(--ed-accent);
+  font-weight: 500;
+}
+.dk__writing-error-expl {
+  grid-column: 1 / -1;
+  margin: 4px 0 0;
+  font-size: 13.5px;
+  color: var(--ed-ink-muted);
+}
+.dk__writing-positives li {
+  background: color-mix(in oklch, var(--ed-accent) 6%, var(--ed-bg-card));
+  border: 1px solid color-mix(in oklch, var(--ed-accent) 20%, var(--ed-rule));
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-family: var(--ed-sans);
+  font-size: 14.5px;
+  color: var(--ed-ink);
+}
+
+/* ─── Reading phase (v281) ─────────────────────────────────────────── */
+
+.dk__reading {
+  display: grid;
+  gap: 24px;
+  max-width: 72ch;
+}
+
+.dk__reading-passage {
+  font-family: var(--ed-serif);
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--ed-ink);
+  background: var(--ed-bg-card);
+  border-radius: 10px;
+  padding: 20px 24px;
+}
+.dk__reading-passage p {
+  margin: 0 0 12px;
+}
+.dk__reading-passage p:last-child {
+  margin-bottom: 0;
+}
+
+.dk__reading-questions {
+  display: grid;
+  gap: 22px;
+}
+
+.dk__reading-q {
+  display: grid;
+  gap: 10px;
+}
+.dk__reading-q-stem {
+  font-family: var(--ed-sans);
+  font-size: 15.5px;
+  font-weight: 500;
+  color: var(--ed-ink);
+  margin: 0;
+}
+
+.dk__choice.is-selected {
+  border-color: var(--ed-accent);
+  background: color-mix(in oklch, var(--ed-accent) 5%, var(--ed-bg));
+}
+
+.dk__reading-expl {
+  font-family: var(--ed-sans);
+  font-size: 13.5px;
+  line-height: 1.55;
+  margin: 4px 0 0;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: var(--ed-bg-card);
+  color: var(--ed-ink-muted);
+  border-left: 3px solid var(--ed-rule);
+}
+.dk__reading-expl.is-correct {
+  border-left-color: var(--ed-accent);
+}
+.dk__reading-expl.is-wrong {
+  border-left-color: #b54a3d;
+}
+
+@media (max-width: 640px) {
+  .dk__writing-textarea { min-height: 240px; }
+  .dk__writing-score-num { font-size: 40px; }
+  .dk__writing-errors li {
+    grid-template-columns: 1fr;
+  }
+}

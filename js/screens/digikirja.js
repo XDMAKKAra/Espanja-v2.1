@@ -272,9 +272,15 @@ function buildSivut(lesson) {
   });
 
   // 3. Flashcards sivu — first FLASHCARD_PACK_SIZE entries from lesson.vocab.
+  // v281: gate by meta.lesson_type. Writing/reading/grammar/test-lessonit voivat
+  // sisältää scaffolding-vocabia, mutta KORTIT-pino on tarkoitettu vain
+  // sanasto-painotteisille tunneille. Grammar-lessonien vocab on rakenteita,
+  // ei tilannekorttien sisältöä; writing-lessonien vocab on fraasipankki.
+  const lessonType = lesson?.meta?.lesson_type || "vocab";
+  const FLASHCARD_LESSON_TYPES = new Set(["vocab", "mixed"]);
   const vocab = Array.isArray(lesson?.vocab) ? lesson.vocab : [];
   const cardCount = Math.min(vocab.length, FLASHCARD_PACK_SIZE);
-  if (cardCount > 0) {
+  if (cardCount > 0 && FLASHCARD_LESSON_TYPES.has(lessonType)) {
     out.push({
       id: "kortit-1",
       kind: "flashcards",
@@ -1210,14 +1216,23 @@ function renderExerciseContent(sivu) {
   if (items.length === 0) {
     return `<div class="dk__placeholder"><p>Tällä vaiheella ei ole tehtäviä.</p></div>`;
   }
-  // Bail to placeholder for unsupported item types (match, writing) until
-  // their PRs land — keeps the SideMenu navigable end-to-end.
+
+  // v281: writing + reading_mc renderöidään omilla poluilla (ne eivät mahdu
+  // item-by-item-flow:hun, joka olettaa yhden kysymyksen per item ja paikallista
+  // arvostelua). Tarkistetaan vain ensimmäinen item — phase on käytännössä aina
+  // homogeeninen.
   const firstKind = items[0].item_type;
+  if (firstKind === "writing") {
+    return renderWritingPhase(sivu, phase, items);
+  }
+  if (firstKind === "reading_mc") {
+    return renderReadingPhase(sivu, phase, items);
+  }
+
+  // Bail to placeholder for unsupported item types (match) until their PRs land.
   if (!SUPPORTED_ITEM_TYPES.has(firstKind)) {
     const label = firstKind === "match"
       ? "Yhdistämistehtävä"
-      : firstKind === "writing"
-      ? "Kirjoitustehtävä"
       : `Tehtävätyyppi "${firstKind}"`;
     return `
       <div class="dk__placeholder" data-kind="tehtava">
@@ -1245,6 +1260,445 @@ function renderExerciseContent(sivu) {
 function phaseIndexOfSivu(sivu) {
   const m = /^phase-(\d+)$/.exec(sivu.id);
   return m ? Number(m[1]) : null;
+}
+
+// ─── Writing phase (v281) ─────────────────────────────────────────────
+// writing-lessons (meta.lesson_type === "writing") sisältävät yhden
+// "writing_long"-phaseen jossa 1..N kirjoitusprompttia. Käyttäjä valitsee
+// yhden, kirjoittaa, ja palaute haetaan /api/grade-writing:lta YTL-rubriikilla.
+
+const _writingState = new Map(); // sivuId → { promptIdx, text, submitted, result, loading, error }
+
+function ensureWritingState(sivuId) {
+  let st = _writingState.get(sivuId);
+  if (!st) {
+    st = { promptIdx: 0, text: "", submitted: false, result: null, loading: false, error: null };
+    _writingState.set(sivuId, st);
+  }
+  return st;
+}
+
+function renderWritingPhase(sivu, phase, items) {
+  const st = ensureWritingState(sivu.id);
+  const item = items[Math.min(st.promptIdx, items.length - 1)] || items[0];
+  const minW = item.min_words || 50;
+  const maxW = item.max_words || 120;
+  const instruction = phase.instruction || "";
+
+  const switcher = items.length > 1 && !st.submitted
+    ? `<div class="dk__writing-switcher" role="tablist" aria-label="Valitse aihe">
+         ${items.map((_, idx) => `
+           <button type="button"
+                   class="dk__writing-tab ${idx === st.promptIdx ? "is-active" : ""}"
+                   data-prompt-idx="${idx}"
+                   role="tab"
+                   aria-selected="${idx === st.promptIdx}">
+             Aihe ${idx + 1}
+           </button>`).join("")}
+       </div>`
+    : "";
+
+  const body = st.submitted && st.result
+    ? renderWritingResult(st)
+    : renderWritingComposer(item, st, minW, maxW, instruction);
+
+  return `
+    <section class="dk__writing" data-sivu="${escapeHtml(sivu.id)}">
+      <header class="dk__exercise-head">
+        <span class="dk__exercise-eyebrow">Kirjoitustehtävä</span>
+        <span class="dk__exercise-score" aria-label="Tavoite">${minW}–${maxW} sanaa</span>
+      </header>
+      ${switcher}
+      ${body}
+    </section>`;
+}
+
+function renderWritingComposer(item, st, minW, maxW, instruction) {
+  const promptHtml = escapeHtml(item.prompt || "")
+    .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+  const words = countWritingWords(st.text);
+  const counterCls = words >= minW && words <= maxW
+    ? "dk__writing-counter is-ok"
+    : words > maxW
+    ? "dk__writing-counter is-over"
+    : "dk__writing-counter is-short";
+  const submitDisabled = words < minW || st.loading;
+  const submitLabel = st.loading ? "Arvioidaan…" : "Lähetä arvioitavaksi";
+  const instructionHtml = instruction
+    ? `<p class="dk__writing-instruction">${escapeHtml(instruction)}</p>`
+    : "";
+  const errorHtml = st.error
+    ? `<p class="dk__writing-error" role="alert">${escapeHtml(st.error)}</p>`
+    : "";
+
+  return `
+    ${instructionHtml}
+    <p class="dk__writing-prompt">${promptHtml}</p>
+    <div class="dk__writing-composer">
+      <label class="dk__input-label" for="dk-writing-input">Vastauksesi</label>
+      <textarea id="dk-writing-input"
+                class="dk__input dk__input--multiline dk__writing-textarea"
+                rows="12"
+                autocomplete="off"
+                spellcheck="false"
+                placeholder="Kirjoita vastauksesi tähän…"
+                ${st.loading ? "disabled" : ""}>${escapeHtml(st.text)}</textarea>
+      <div class="dk__writing-meta">
+        <span class="${counterCls}" aria-live="polite">
+          <strong id="dk-writing-words">${words}</strong> / ${minW}–${maxW} sanaa
+        </span>
+        <span class="dk__writing-rubric">Arvioidaan YTL-rubriikilla</span>
+      </div>
+      ${errorHtml}
+      <div class="dk__exercise-actions">
+        <button type="button"
+                class="dk__btn dk__btn--primary"
+                id="dk-writing-submit"
+                ${submitDisabled ? "disabled" : ""}>
+          ${escapeHtml(submitLabel)}
+        </button>
+      </div>
+    </div>`;
+}
+
+function renderWritingResult(st) {
+  const r = st.result || {};
+  const score = r.finalScore != null ? r.finalScore : "—";
+  const max = r.maxScore != null ? r.maxScore : "";
+  const grade = r.ytlGrade ? `<span class="dk__writing-grade">YTL ${escapeHtml(String(r.ytlGrade))}</span>` : "";
+  const errors = Array.isArray(r.errors) ? r.errors : [];
+  const positives = Array.isArray(r.annotations) ? r.annotations.filter(a => a?.type === "positive") : [];
+  const overall = r.overall_feedback_fi ? `<p class="dk__writing-overall">${escapeHtml(r.overall_feedback_fi)}</p>` : "";
+
+  const errorList = errors.length
+    ? `<div class="dk__writing-section">
+         <h3 class="dk__writing-section-title">Korjattavaa</h3>
+         <ul class="dk__writing-errors">
+           ${errors.slice(0, 6).map(e => `
+             <li>
+               <span class="dk__writing-error-wrong">${escapeHtml(e.excerpt || e.original || "")}</span>
+               <span aria-hidden="true">→</span>
+               <span class="dk__writing-error-right">${escapeHtml(e.corrected || e.correct || "")}</span>
+               ${e.explanation_fi ? `<p class="dk__writing-error-expl">${escapeHtml(e.explanation_fi)}</p>` : ""}
+             </li>`).join("")}
+         </ul>
+       </div>`
+    : "";
+  const posList = positives.length
+    ? `<div class="dk__writing-section">
+         <h3 class="dk__writing-section-title">Hyvin tehty</h3>
+         <ul class="dk__writing-positives">
+           ${positives.slice(0, 4).map(p => `<li>${escapeHtml(p.comment_fi || "")}</li>`).join("")}
+         </ul>
+       </div>`
+    : "";
+
+  return `
+    <div class="dk__writing-result">
+      <div class="dk__writing-score">
+        <span class="dk__writing-score-num">${escapeHtml(String(score))}</span>
+        <span class="dk__writing-score-denom">/ ${escapeHtml(String(max))}</span>
+        ${grade}
+      </div>
+      ${overall}
+      ${posList}
+      ${errorList}
+      <div class="dk__exercise-actions">
+        <button type="button" class="dk__btn dk__btn--ghost" id="dk-writing-retry">Kirjoita uudestaan</button>
+        <button type="button" class="dk__btn dk__btn--primary" id="dk-writing-next">Seuraava sivu →</button>
+      </div>
+    </div>`;
+}
+
+function countWritingWords(text) {
+  const t = String(text || "").trim();
+  if (!t) return 0;
+  return t.split(/\s+/).filter(Boolean).length;
+}
+
+// Map a lesson writing item → /api/grade-writing task shape. The backend
+// validates { taskType, charMin, charMax, points }; the lesson schema gives
+// us min/max words, so we approximate chars at ~6 per word and pick task
+// type by word count threshold (>=200 words → "long", else "short").
+function writingTaskFromItem(item) {
+  const minW = item.min_words || 50;
+  const maxW = item.max_words || 120;
+  const taskType = maxW >= 200 ? "long" : "short";
+  return {
+    taskType,
+    points: taskType === "long" ? 99 : 33,
+    charMin: Math.max(60, Math.round(minW * 6)),
+    charMax: Math.max(120, Math.round(maxW * 6)),
+    situation: "",
+    prompt: item.prompt || "",
+    requirements: [],
+    textType: taskType === "long" ? "pidempi kirjoitelma" : "lyhyt kirjoitelma",
+  };
+}
+
+function wireWritingPhase() {
+  const root = document.querySelector(".dk__writing");
+  if (!root) return;
+  const sivuId = root.dataset.sivu;
+  const sivu = _sivut.find((s) => s.id === sivuId);
+  if (!sivu) return;
+  const phase = phaseForSivu(sivu);
+  if (!phase) return;
+  const items = Array.isArray(phase.items) ? phase.items : [];
+  const st = ensureWritingState(sivuId);
+
+  // Tab switcher
+  root.querySelectorAll(".dk__writing-tab").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const idx = Number(btn.dataset.promptIdx);
+      if (Number.isInteger(idx) && idx !== st.promptIdx) {
+        st.promptIdx = idx;
+        st.text = "";
+        st.error = null;
+        reRenderWritingInPlace(sivuId);
+      }
+    });
+  });
+
+  const textarea = root.querySelector("#dk-writing-input");
+  const counter = root.querySelector("#dk-writing-words");
+  const submitBtn = root.querySelector("#dk-writing-submit");
+  textarea?.addEventListener("input", () => {
+    st.text = textarea.value;
+    const w = countWritingWords(st.text);
+    if (counter) counter.textContent = w;
+    const item = items[st.promptIdx] || items[0];
+    const minW = item.min_words || 50;
+    const maxW = item.max_words || 120;
+    if (submitBtn) submitBtn.disabled = w < minW || st.loading;
+    const wrap = root.querySelector(".dk__writing-counter");
+    if (wrap) {
+      wrap.classList.remove("is-ok", "is-over", "is-short");
+      if (w > maxW) wrap.classList.add("is-over");
+      else if (w >= minW) wrap.classList.add("is-ok");
+      else wrap.classList.add("is-short");
+    }
+  });
+
+  submitBtn?.addEventListener("click", async () => {
+    if (st.loading) return;
+    const item = items[st.promptIdx] || items[0];
+    const minW = item.min_words || 50;
+    if (countWritingWords(st.text) < minW) return;
+    st.loading = true;
+    st.error = null;
+    reRenderWritingInPlace(sivuId);
+    try {
+      const task = writingTaskFromItem(item);
+      const headers = { "Content-Type": "application/json" };
+      if (isLoggedIn()) Object.assign(headers, authHeader());
+      const res = await apiFetch(`${API}/api/grade-writing`, {
+        method: "POST",
+        headers,
+        body: JSON.stringify({ task, studentText: st.text }),
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data?.error || `Arvionti epäonnistui (${res.status})`);
+      }
+      const data = await res.json();
+      if (!data?.result) throw new Error("Ei tulosta palvelimelta");
+      st.result = data.result;
+      st.submitted = true;
+      markSivuDone(sivuId);
+    } catch (err) {
+      st.error = String(err?.message || "Arvionti ei nyt vastaa, yritä hetken päästä.");
+    } finally {
+      st.loading = false;
+      reRenderWritingInPlace(sivuId);
+    }
+  });
+
+  root.querySelector("#dk-writing-retry")?.addEventListener("click", () => {
+    st.submitted = false;
+    st.result = null;
+    st.text = "";
+    reRenderWritingInPlace(sivuId);
+  });
+  root.querySelector("#dk-writing-next")?.addEventListener("click", () => {
+    const sivuIdx = findSivuIndex(sivuId);
+    const nextSivu = _sivut[sivuIdx + 1];
+    if (nextSivu) navigateSivu(nextSivu.id);
+  });
+}
+
+function reRenderWritingInPlace(sivuId) {
+  const slot = document.querySelector(`.dk__writing[data-sivu="${sivuId}"]`);
+  if (!slot) return;
+  const sivu = _sivut.find((s) => s.id === sivuId);
+  const phase = phaseForSivu(sivu);
+  if (!sivu || !phase) return;
+  const items = Array.isArray(phase.items) ? phase.items : [];
+  const html = renderWritingPhase(sivu, phase, items);
+  const next = document.createElement("div");
+  next.innerHTML = html;
+  slot.replaceWith(next.firstElementChild);
+  wireWritingPhase();
+}
+
+// ─── Reading phase (v281) ─────────────────────────────────────────────
+// reading_mc items: each item contains a `passage` + `questions[]` (each MC).
+// Renderöidään yksi passage kerrallaan kaikki kysymykset alle, Tarkista
+// arvostelee paikallisesti (correct_index match) ja näyttää explanation_fi:t.
+
+const _readingState = new Map(); // sivuId → { itemIdx, answers: number[][], submitted: boolean[] }
+
+function ensureReadingState(sivuId, items) {
+  let st = _readingState.get(sivuId);
+  if (!st) {
+    st = {
+      itemIdx: 0,
+      answers: items.map((it) => new Array((it.questions || []).length).fill(null)),
+      submitted: items.map(() => false),
+    };
+    _readingState.set(sivuId, st);
+  }
+  return st;
+}
+
+function renderReadingPhase(sivu, phase, items) {
+  const st = ensureReadingState(sivu.id, items);
+  const i = Math.min(st.itemIdx, items.length - 1);
+  const item = items[i] || {};
+  const questions = Array.isArray(item.questions) ? item.questions : [];
+  const isSubmitted = !!st.submitted[i];
+  const answers = st.answers[i] || [];
+
+  const correctCount = isSubmitted
+    ? answers.reduce((acc, a, qi) => acc + (a === questions[qi]?.correct_index ? 1 : 0), 0)
+    : 0;
+
+  const passageHtml = escapeHtml(item.passage || "")
+    .split(/\n\n+/)
+    .map(p => `<p>${p.replace(/\n/g, "<br>")}</p>`)
+    .join("");
+
+  const qList = questions.map((q, qi) => {
+    const choices = Array.isArray(q.choices) ? q.choices : [];
+    const chosen = answers[qi];
+    const correct = q.correct_index;
+    return `
+      <div class="dk__reading-q" data-qi="${qi}">
+        <p class="dk__reading-q-stem">${qi + 1}. ${escapeHtml(q.question_fi || "")}</p>
+        <ol class="dk__choices" role="radiogroup" aria-label="Vaihtoehdot">
+          ${choices.map((c, ci) => {
+            const isChosen = chosen === ci;
+            const showCorrect = isSubmitted && ci === correct;
+            const showWrong = isSubmitted && isChosen && ci !== correct;
+            const cls = ["dk__choice"];
+            if (showWrong) cls.push("is-wrong");
+            else if (showCorrect) cls.push("is-correct");
+            else if (isChosen && !isSubmitted) cls.push("is-selected");
+            return `
+              <li>
+                <button type="button"
+                        class="${cls.join(" ")}"
+                        data-qi="${qi}" data-ci="${ci}"
+                        ${isSubmitted ? "disabled" : ""}>
+                  <span class="dk__choice-marker" aria-hidden="true">${String.fromCharCode(65 + ci)}</span>
+                  <span class="dk__choice-text">${escapeHtml(c)}</span>
+                </button>
+              </li>`;
+          }).join("")}
+        </ol>
+        ${isSubmitted && q.explanation_fi
+          ? `<p class="dk__reading-expl ${chosen === correct ? "is-correct" : "is-wrong"}">${escapeHtml(q.explanation_fi)}</p>`
+          : ""}
+      </div>`;
+  }).join("");
+
+  const isLast = i >= items.length - 1;
+  const footer = isSubmitted
+    ? `<div class="dk__feedback" aria-live="polite">
+         <span class="dk__feedback-chip ${correctCount === questions.length ? "is-correct" : "is-wrong"}">
+           ${correctCount} / ${questions.length} oikein
+         </span>
+       </div>
+       <div class="dk__exercise-actions">
+         <button type="button" class="dk__btn dk__btn--primary" id="dk-reading-next">
+           ${isLast ? "Vaihe valmis →" : "Seuraava teksti →"}
+         </button>
+       </div>`
+    : `<div class="dk__exercise-actions">
+         <button type="button"
+                 class="dk__btn dk__btn--primary"
+                 id="dk-reading-submit"
+                 ${answers.some(a => a == null) ? "disabled" : ""}>
+           Tarkista vastaukset
+         </button>
+       </div>`;
+
+  return `
+    <section class="dk__reading" data-sivu="${escapeHtml(sivu.id)}" data-item="${i}">
+      <header class="dk__exercise-head">
+        <span class="dk__exercise-eyebrow">Teksti ${i + 1} / ${items.length}</span>
+        <span class="dk__exercise-score" aria-label="Kysymyksiä">${questions.length} kysymystä</span>
+      </header>
+      <div class="dk__reading-passage">${passageHtml}</div>
+      <div class="dk__reading-questions">${qList}</div>
+      ${footer}
+    </section>`;
+}
+
+function wireReadingPhase() {
+  const root = document.querySelector(".dk__reading");
+  if (!root) return;
+  const sivuId = root.dataset.sivu;
+  const sivu = _sivut.find((s) => s.id === sivuId);
+  if (!sivu) return;
+  const phase = phaseForSivu(sivu);
+  if (!phase) return;
+  const items = Array.isArray(phase.items) ? phase.items : [];
+  const st = ensureReadingState(sivuId, items);
+  const i = Number(root.dataset.item) || 0;
+
+  root.querySelectorAll(".dk__choice").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      if (st.submitted[i]) return;
+      const qi = Number(btn.dataset.qi);
+      const ci = Number(btn.dataset.ci);
+      st.answers[i][qi] = ci;
+      reRenderReadingInPlace(sivuId);
+    });
+  });
+
+  root.querySelector("#dk-reading-submit")?.addEventListener("click", () => {
+    if (st.answers[i].some(a => a == null)) return;
+    st.submitted[i] = true;
+    // Mark sivu done when all items submitted
+    if (st.submitted.every(Boolean)) markSivuDone(sivuId);
+    reRenderReadingInPlace(sivuId);
+  });
+
+  root.querySelector("#dk-reading-next")?.addEventListener("click", () => {
+    if (i < items.length - 1) {
+      st.itemIdx = i + 1;
+      reRenderReadingInPlace(sivuId);
+    } else {
+      const sivuIdx = findSivuIndex(sivuId);
+      const nextSivu = _sivut[sivuIdx + 1];
+      if (nextSivu) navigateSivu(nextSivu.id);
+    }
+  });
+}
+
+function reRenderReadingInPlace(sivuId) {
+  const slot = document.querySelector(`.dk__reading[data-sivu="${sivuId}"]`);
+  if (!slot) return;
+  const sivu = _sivut.find((s) => s.id === sivuId);
+  const phase = phaseForSivu(sivu);
+  if (!sivu || !phase) return;
+  const items = Array.isArray(phase.items) ? phase.items : [];
+  const html = renderReadingPhase(sivu, phase, items);
+  const next = document.createElement("div");
+  next.innerHTML = html;
+  slot.replaceWith(next.firstElementChild);
+  wireReadingPhase();
 }
 
 function renderItemBody(item, answer) {
@@ -1757,6 +2211,8 @@ function wireContent() {
   wireFlashcards();
   wireTesti();
   wireArvio();
+  wireWritingPhase();
+  wireReadingPhase();
 }
 
 // ─── Public entry ─────────────────────────────────────────────────────
