@@ -1,0 +1,144 @@
+/* ============================================================
+   SIDEBAR SHELL — v277
+   Single source of truth for sidebar layout + state.
+   Loaded AFTER style.css + off-canvas-nav.css so its rules win.
+
+   Why this file exists: three-strikes-redesign — sidebar bugs
+   (empty top/bottom, missing mode-links, settings-modal jitter)
+   kept returning because geometry lived in three files. Layout
+   is now grid-driven (auto / 1fr / auto) so vertical slots
+   never collapse, and state is driven by [data-mode] on the
+   <aside> itself.
+
+   States:
+     data-mode="home"  → only Aloitus + footer visible
+     data-mode="mode"  → back-home + mode title + lesson list
+     data-mode="book"  → compact rail (digikirja takes over)
+   ============================================================ */
+
+/* Force three-row grid so logo / nav / footer never bleed into
+   each other. style.css used flex which let footer drift up
+   when the nav was empty. */
+.app-sidebar {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 0;
+  /* Override style.css padding-bottom 0 so footer has breathing room. */
+  padding: 20px 0 16px;
+}
+
+/* The three sidebar slots — used so off-canvas-nav animation
+   stagger keeps working on existing .sidebar-item / .sidebar-user
+   / .sidebar-pro-slot selectors. */
+.app-sidebar .sidebar-logo,
+.app-sidebar .sidebar-nav,
+.app-sidebar .sidebar-footer {
+  min-width: 0;
+}
+.app-sidebar .sidebar-nav {
+  overflow-y: auto;
+  min-height: 0;
+}
+
+/* ── Mode-gated reveal ───────────────────────────────────────
+   Hide every [data-mode-only] by default; show only the one
+   matching the current state. */
+.app-sidebar [data-mode-only] { display: none; }
+.app-sidebar[data-mode="home"] [data-mode-only="home"] { display: contents; }
+.app-sidebar[data-mode="mode"] [data-mode-only="mode"] { display: contents; }
+.app-sidebar[data-mode="book"] [data-mode-only="book"] { display: contents; }
+
+/* Mode-state header: shows current section name + sticky back-link. */
+.sidebar-mode-title {
+  font-family: var(--font-display, inherit);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  padding: 14px 20px 8px;
+  margin: 0;
+  list-style: none;
+}
+
+#sidebar-mode-items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+#sidebar-mode-items li {
+  list-style: none;
+}
+#sidebar-mode-items .sidebar-item {
+  font-weight: 500;
+  font-size: 13px;
+}
+
+/* Back-home button uses a subtle leading caret instead of
+   the off-canvas chevron::after — visually marks return path. */
+.app-sidebar [data-nav="back-home"] .sidebar-item-icon {
+  opacity: 0.6;
+}
+
+/* ── BOOK mode (digikirja) ───────────────────────────────────
+   Replaces the old `body:has(#screen-digikirja.active) .app-sidebar
+   { display: none }` band-aid in digikirja.css. The book screen
+   now owns its own internal sidemenu (.dk__sidemenu); we collapse
+   the global sidebar to a compact 56px rail so the header path
+   (Aloitus → Asetukset) is still reachable without a hard hide. */
+@media (min-width: 1024px) {
+  .app-sidebar[data-mode="book"] {
+    width: 56px;
+  }
+  .app-sidebar[data-mode="book"] .sidebar-logo span:not(:first-child),
+  .app-sidebar[data-mode="book"] .sidebar-item:not(.sidebar-item-icon-only) > *:not(.sidebar-item-icon),
+  .app-sidebar[data-mode="book"] .sidebar-mode-title,
+  .app-sidebar[data-mode="book"] .sidebar-pro-slot,
+  .app-sidebar[data-mode="book"] .sidebar-user {
+    display: none;
+  }
+  .app-sidebar[data-mode="book"] .sidebar-logo {
+    padding: 0;
+    text-align: center;
+    overflow: hidden;
+    white-space: nowrap;
+    text-indent: -2px;
+  }
+  .app-sidebar[data-mode="book"] .sidebar-item {
+    justify-content: center;
+    padding: 10px 0;
+  }
+}
+
+/* Below 1024px the off-canvas drawer handles its own visibility;
+   don't override it here. The digikirja screen also has its own
+   in-screen sidemenu that takes over the visual role. */
+@media (max-width: 1023px) {
+  .app-sidebar[data-mode="book"] { /* let off-canvas-nav.css drive */ }
+}
+
+/* ── Settings-modal jitter fix ───────────────────────────────
+   The old code path in settings.js sign-out handler set
+   .app-sidebar inline display:none, which tossed the grid and
+   left the next render with collapsed rows. Inline style is now
+   removed in JS (settings.js v277); this rule re-asserts the
+   layout if anything else ever sets display: none mid-session. */
+.app-sidebar[style*="display: none"],
+.app-sidebar[style*="display:none"] {
+  display: grid !important;
+}
+
+/* ── Active state polish — keep v276 brand-brick visuals ─────
+   No side-stripe border; bg + text-color shift only. */
+.app-sidebar .sidebar-item.active {
+  background: var(--brand-brick-soft, var(--accent-soft));
+  color: var(--brand-brick, var(--ink));
+  font-weight: 600;
+}
+.app-sidebar .sidebar-item:focus-visible {
+  outline: 2px solid var(--brand-brick, var(--accent));
+  outline-offset: 2px;
+}
+
+/* Mode-items hover/active reuses base .sidebar-item rules
+   from style.css — nothing extra needed. */
