@@ -80,15 +80,23 @@ app.use(helmet({
   },
 }));
 
-// ─── CORS — restrict to allowed origins ─────────────────────────────────────
-const allowedOrigins = (process.env.ALLOWED_ORIGINS || process.env.APP_URL || "").split(",").map(s => s.trim()).filter(Boolean);
-app.use(cors(allowedOrigins.length ? {
+// ─── CORS — restrict to allowed origins, fail-safe default ──────────────────
+// If ALLOWED_ORIGINS and APP_URL are both unset we still restrict to
+// puheo.fi rather than fall through to cors(undefined) which would allow
+// every origin with credentials.
+const DEFAULT_ORIGIN = "https://puheo.fi";
+const _envOrigins = (process.env.ALLOWED_ORIGINS || process.env.APP_URL || "")
+  .split(",").map(s => s.trim()).filter(Boolean);
+const allowedOrigins = [...new Set([..._envOrigins, DEFAULT_ORIGIN])];
+app.use(cors({
   origin(origin, cb) {
-    if (!origin || allowedOrigins.includes(origin)) return cb(null, true);
+    if (!origin) return cb(null, true);
+    if (allowedOrigins.includes(origin)) return cb(null, true);
+    if (!__IS_PROD && /^http:\/\/localhost:\d+$/.test(origin)) return cb(null, true);
     cb(new Error("Not allowed by CORS"));
   },
   credentials: true,
-} : undefined));
+}));
 
 // Payment webhook needs raw body — must come BEFORE express.json().
 // New canonical path is /api/stripe/webhook (L-PRICING-REVAMP-1); legacy

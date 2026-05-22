@@ -26,14 +26,23 @@ try {
 
   app = express();
 
-  const allowedOrigins = (process.env.ALLOWED_ORIGINS || process.env.APP_URL || "").split(",").map(s => s.trim()).filter(Boolean);
-  app.use(cors(allowedOrigins.length ? {
+  // CORS — fail-safe default. If env vars are unset we still restrict to
+  // puheo.fi rather than fall through to cors(undefined) which would allow
+  // every origin with credentials.
+  const DEFAULT_ORIGIN = "https://puheo.fi";
+  const _envOrigins = (process.env.ALLOWED_ORIGINS || process.env.APP_URL || "")
+    .split(",").map(s => s.trim()).filter(Boolean);
+  const allowedOrigins = [...new Set([..._envOrigins, DEFAULT_ORIGIN])];
+  const _isDev = process.env.NODE_ENV !== "production";
+  app.use(cors({
     origin(origin, cb) {
-      if (!origin || allowedOrigins.includes(origin)) return cb(null, true);
+      if (!origin) return cb(null, true);
+      if (allowedOrigins.includes(origin)) return cb(null, true);
+      if (_isDev && /^http:\/\/localhost:\d+$/.test(origin)) return cb(null, true);
       cb(new Error("Not allowed by CORS"));
     },
     credentials: true,
-  } : undefined));
+  }));
 
   app.post("/api/stripe/webhook", express.raw({ type: "application/json" }), handleWebhook);
   app.post("/api/payments/webhook", express.raw({ type: "application/json" }), handleWebhook);
@@ -80,10 +89,14 @@ try {
   });
 
 } catch (e) {
+  // Boot failed. Log the full error server-side; do NOT leak the stack to
+  // clients (it discloses internal file paths, env hints, and library
+  // versions). The boot-failure handler always returns a generic 500.
+  console.error("[api] boot failed:", e);
   const { default: express } = await import("express");
   app = express();
   app.use((req, res) => {
-    res.status(500).json({ error: e.message, stack: e.stack });
+    res.status(500).json({ error: "Server error" });
   });
 }
 

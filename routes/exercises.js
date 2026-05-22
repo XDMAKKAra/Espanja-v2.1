@@ -258,10 +258,14 @@ router.post("/generate", requireAuth, aiLimiter, checkMonthlyCostLimit, async (r
   // Sanitize anti-repetition list: array of lowercase strings, ≤40 chars,
   // ≤30 entries. Used only to nudge the model — bank exercises already
   // de-dup via the seen_exercises table.
+  // Prompt-injection hardening: strip characters that could break out of
+  // the template string (backticks, quotes, angle/curly brackets,
+  // backslashes) and collapse whitespace so a single entry stays on one
+  // line and can't smuggle in instructions.
   const recentList = Array.isArray(recentlyShown)
     ? recentlyShown
         .filter((s) => typeof s === "string")
-        .map((s) => s.toLowerCase().trim().slice(0, 40))
+        .map((s) => s.toLowerCase().trim().replace(/[`"'\\<>{}]/g, "").replace(/\s+/g, " ").slice(0, 40))
         .filter(Boolean)
         .slice(-30)
     : [];
@@ -636,11 +640,12 @@ router.post("/grammar-drill", requireAuth, aiLimiter, checkMonthlyCostLimit, asy
 
   // Anti-repetition list of rule labels (e.g. "ser/estar", "imperfekti").
   // Only meaningful for mixed topic — client already gates this — but we
-  // still sanitise defensively.
+  // still sanitise defensively. Same prompt-injection hardening as the
+  // vocab generator (strip break-out characters, collapse whitespace).
   const recentRules = Array.isArray(recentlyShown)
     ? recentlyShown
         .filter((s) => typeof s === "string")
-        .map((s) => s.toLowerCase().trim().slice(0, 40))
+        .map((s) => s.toLowerCase().trim().replace(/[`"'\\<>{}]/g, "").replace(/\s+/g, " ").slice(0, 40))
         .filter(Boolean)
         .slice(-20)
     : [];
@@ -800,11 +805,12 @@ router.post("/reading-task", requireAuth, aiStrictLimiter, checkMonthlyCostLimit
 
   // Anti-repetition: list of recent text titles. Capped tighter than the
   // vocab/grammar lists because each title is a much longer string and the
-  // reading-task prompt is already 100+ tokens.
+  // reading-task prompt is already 100+ tokens. Same prompt-injection
+  // hardening (strip break-out characters, collapse whitespace).
   const recentTitles = Array.isArray(recentlyShown)
     ? recentlyShown
         .filter((s) => typeof s === "string")
-        .map((s) => s.toLowerCase().trim().slice(0, 80))
+        .map((s) => s.toLowerCase().trim().replace(/[`"'\\<>{}]/g, "").replace(/\s+/g, " ").slice(0, 80))
         .filter(Boolean)
         .slice(-10)
     : [];
