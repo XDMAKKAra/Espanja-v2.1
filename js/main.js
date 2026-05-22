@@ -38,6 +38,8 @@ import { initProfileMenu, syncProfileMenu } from "./features/profileMenu.js";
 import { initTeachingPanel } from "./features/teachingPanel.js";
 // Paywall modal — wired early so the 403 intercept in api.js can open it.
 import { initPaywallModal } from "./features/paywallModal.js";
+// v277 SidebarShell controller — owns [data-mode] on .app-sidebar.
+import { setSidebarMode } from "./components/sidebarShell.js";
 
 // ─── Inject show into api.js (avoids circular dep) ─────────────────────────
 setShowFn(show);
@@ -218,6 +220,23 @@ function navigateTo(nav, { updateHash = true } = {}) {
     history.replaceState(null, "", NAV_HASH[nav]);
   }
 
+  // v277: drive .app-sidebar [data-mode]. "home"/"path"/"profile"/"settings"
+  // are all HOME-state from the sidebar's POV (no mode shell). vocab/grammar/
+  // reading/writing/exam flip to MODE-state with the section title.
+  const MODE_LABELS = { vocab: "Sanasto", grammar: "Kielioppi", reading: "Luetun ymmärtäminen", writing: "Kirjoittaminen", exam: "Koeharjoitus" };
+  if (MODE_LABELS[nav]) {
+    // v278 — paint the sidebar shell synchronously with empty list, then
+    // hydrate items[] async so the mode-state header doesn't flicker.
+    setSidebarMode("mode", { modeKey: nav, modeLabel: MODE_LABELS[nav], items: [] });
+    import("./lib/sidebarItems.js").then(({ buildSidebarItemsForMode }) => {
+      return buildSidebarItemsForMode(nav).then((items) => {
+        setSidebarMode("mode", { modeKey: nav, modeLabel: MODE_LABELS[nav], items });
+      });
+    }).catch(() => { /* keep empty state on failure — non-blocking */ });
+  } else if (nav === "home" || nav === "path" || nav === "dashboard") {
+    setSidebarMode("home");
+  }
+
   if (nav === "exam")          lazyFullExam().then((m) => m.startFullExam("demo"));
   else if (nav === "settings") lazySettings().then((m) => m.showSettings());
   else if (nav === "profile")  lazyProfile().then((m) => m.loadProfile());
@@ -279,6 +298,16 @@ async function maybeConfirmNavAway(_targetNav) {
   } catch { /* ignore */ }
   return true;
 }
+
+// v278 — sidebar mode-list dispatches puheo:open-lesson; route it to the
+// canonical lesson hash so existing hashchange logic handles the rest.
+document.addEventListener("puheo:open-lesson", (e) => {
+  const { kurssiKey, lessonIndex } = e.detail || {};
+  if (!kurssiKey || !Number.isFinite(lessonIndex)) return;
+  const lang = (state.language === "de" || state.language === "fr") ? state.language : "es";
+  const target = `#/oppitunti/${lang}/${encodeURIComponent(kurssiKey)}/${lessonIndex}/teoria`;
+  if (location.hash !== target) location.hash = target;
+});
 
 document.querySelectorAll(".sidebar-item[data-nav], .mobile-nav-item[data-nav], .sidebar-user[data-nav]").forEach((btn) => {
   btn.addEventListener("click", async () => {

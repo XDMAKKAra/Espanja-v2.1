@@ -31,7 +31,6 @@ export async function requireAuth(req, res, next) {
   if (error || !user) return res.status(401).json({ error: "Invalid token" });
   req.user = { userId: user.id, email: user.email };
   req.supabase = createUserClient(jwt);
-  req.adminClient = adminClient;
   next();
 }
 
@@ -283,7 +282,6 @@ export async function softProGate(req, res, next) {
   if (error || !user) return next();
   req.user = { userId: user.id, email: user.email };
   req.supabase = createUserClient(jwt);
-  req.adminClient = adminClient;
   const pro = await isPro(user.id);
   if (!pro) return res.status(403).json({ error: "pro_required", message: "Tämä toiminto vaatii Pro-tilin" });
   next();

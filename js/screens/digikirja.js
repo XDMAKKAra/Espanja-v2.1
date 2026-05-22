@@ -1782,6 +1782,10 @@ export async function showDigikirja(route = {}) {
   // and the user sees we're working.
   host.innerHTML = renderLoadingShell();
   show("screen-digikirja");
+  // v277 SidebarShell: collapse global sidebar to rail while digikirja
+  // owns the screen (replaces the old `body:has(#screen-digikirja.active)
+  // .app-sidebar { display: none }` band-aid in digikirja.css).
+  import("../components/sidebarShell.js").then((m) => m.setSidebarMode("book"));
 
   const loadKey = `${_route.lang}/${_route.kurssiKey}/${_route.lessonIndex}`;
   _loadKey = loadKey;

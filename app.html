@@ -54,6 +54,10 @@
   <link rel="stylesheet" href="/css/components/coming-soon.css" />
   <!-- L-HERO-COUNTDOWN-AND-OFFCANVAS-1, off-canvas slide-in sidebar for <1024px. -->
   <link rel="stylesheet" href="/css/components/off-canvas-nav.css" />
+  <!-- v277 SidebarShell, consolidates sidebar geometry + state under
+       [data-mode] on the <aside>. Loaded last so its rules override
+       style.css + off-canvas-nav.css. -->
+  <link rel="stylesheet" href="/css/components/sidebar-shell.css" />
 </head>
 <body class="app">
 
@@ -110,18 +114,34 @@
   <!-- Backdrop for off-canvas sidebar -->
   <div class="app-sidebar-backdrop" id="app-sidebar-backdrop" aria-hidden="true"></div>
 
-  <!-- SIDEBAR (desktop only) -->
-  <aside class="app-sidebar" id="app-sidebar" role="navigation" aria-label="Päävalikko">
+  <!-- SIDEBAR (desktop only). v277: [data-mode] drives layout — "home"
+       shows the Aloitus shortcut, "mode" reveals the back-link + section
+       title + lesson list, "book" collapses to a 56px rail while
+       digikirja owns the screen. JS controller in js/components/sidebarShell.js. -->
+  <aside class="app-sidebar" id="app-sidebar" role="navigation" aria-label="Päävalikko" data-mode="home">
     <a href="index.html" class="sidebar-logo">Puhe<span>o</span></a>
     <nav class="sidebar-nav">
-      <!-- PR auto/silence-ci-and-strip-sidebar (2026-05-19): mode-nav
-           items (Oppimispolku / Luetun / Kirjoit. / Koeharjoitus)
-           removed. Navigation now flows through HOME → course-overview
-           → mode. Only "Aloitus" home-link remains in the top sidebar
-           slot; Asetukset + Kirjaudu ulos stay in the footer. -->
-      <button class="sidebar-item active" data-nav="home" id="nav-home">
-        <span class="sidebar-item-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 9-8 9 8"/><path d="M5 9v11a1 1 0 0 0 1 1h4v-7h4v7h4a1 1 0 0 0 1-1V9"/></svg></span> Aloitus
-      </button>
+      <!-- HOME state: Aloitus shortcut only. Mode picks happen on the
+           course-overview screen, not the sidebar. -->
+      <div data-mode-only="home">
+        <button class="sidebar-item active" data-nav="home" id="nav-home">
+          <span class="sidebar-item-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 9-8 9 8"/><path d="M5 9v11a1 1 0 0 0 1 1h4v-7h4v7h4a1 1 0 0 0 1-1V9"/></svg></span> Aloitus
+        </button>
+      </div>
+
+      <!-- MODE state: back-home + section title + lesson list slot.
+           sidebarShell.js fills #sidebar-mode-title and #sidebar-mode-items
+           when navigateToMode() runs. -->
+      <div data-mode-only="mode">
+        <button class="sidebar-item" data-nav="home" type="button" aria-label="Takaisin aloitukseen">
+          <span class="sidebar-item-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg></span> Aloitus
+        </button>
+        <p class="sidebar-mode-title" id="sidebar-mode-title">—</p>
+        <ul id="sidebar-mode-items" role="list"></ul>
+      </div>
+
+      <!-- BOOK state: rail-only. No nav items render here; digikirja's
+           own .dk__sidemenu takes over the visual role. -->
     </nav>
     <div class="sidebar-footer">
       <button type="button" class="sidebar-user" id="sidebar-user" data-nav="profile" aria-label="Avaa oma sivu"></button>

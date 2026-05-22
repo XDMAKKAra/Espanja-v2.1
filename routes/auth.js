@@ -127,13 +127,20 @@ router.post("/reset-password", async (req, res) => {
   const resetPwError = validatePassword(newPassword);
   if (resetPwError) return res.status(400).json({ error: resetPwError });
 
+  // `.maybeSingle()` so a missing or duplicate row returns null instead of
+  // throwing a 500. `.single()` was rejecting any race-condition retry where
+  // the token had already been consumed in another request.
   const { data: resetRow, error: lookupErr } = await supabase
     .from("password_resets")
     .select("*")
     .eq("token", token)
-    .single();
+    .maybeSingle();
 
-  if (lookupErr || !resetRow) {
+  if (lookupErr) {
+    console.error("[auth] reset-password lookup failed:", lookupErr);
+    return res.status(500).json({ error: "Salasanan palautus epäonnistui" });
+  }
+  if (!resetRow) {
     return res.status(400).json({ error: "Virheellinen tai vanhentunut linkki" });
   }
 
@@ -164,13 +171,19 @@ router.post("/verify-email", async (req, res) => {
   const { token } = req.body;
   if (!token) return res.status(400).json({ error: "Token puuttuu" });
 
+  // `.maybeSingle()` keeps the route 4xx-clean if the token was already
+  // consumed or never existed; `.single()` would 500 in those cases.
   const { data: row, error: lookupErr } = await supabase
     .from("email_verifications")
     .select("*")
     .eq("token", token)
-    .single();
+    .maybeSingle();
 
-  if (lookupErr || !row) {
+  if (lookupErr) {
+    console.error("[auth] verify-email lookup failed:", lookupErr);
+    return res.status(500).json({ error: "Varmistus epäonnistui" });
+  }
+  if (!row) {
     return res.status(400).json({ error: "Virheellinen tai vanhentunut linkki" });
   }
 
@@ -183,9 +196,17 @@ router.post("/verify-email", async (req, res) => {
   const user = users?.find((u) => u.email === row.email);
   if (!user) return res.status(400).json({ error: "Käyttäjää ei löydy" });
 
-  await supabase.auth.admin.updateUserById(user.id, {
+  // Verify the user FIRST, then delete the token. Old order deleted the
+  // token before the update — if updateUserById failed (network blip,
+  // Supabase 5xx), the user was left in a half-verified state with no
+  // token to retry.
+  const { error: updateErr } = await supabase.auth.admin.updateUserById(user.id, {
     email_confirm: true,
   });
+  if (updateErr) {
+    console.error("[auth] verify-email update failed:", updateErr);
+    return res.status(500).json({ error: "Varmistus epäonnistui" });
+  }
 
   await supabase.from("email_verifications").delete().eq("token", token);
 

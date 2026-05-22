@@ -41,6 +41,20 @@ function table(name) {
           }
           return { data: null, error: null };
         },
+        // `.maybeSingle()` returns the same data shape as `.single()` but
+        // treats "no row" as success (data: null, error: null) rather than
+        // a PGRST116 error. Real Supabase clients implement this distinction
+        // — the mock now matches so routes that prefer maybeSingle for
+        // race-condition safety still pass the integration tests.
+        maybeSingle: async () => {
+          if (name === "password_resets") {
+            return { data: state.passwordResetsRow, error: null };
+          }
+          if (name === "email_verifications") {
+            return { data: state.emailVerificationsRow, error: null };
+          }
+          return { data: null, error: null };
+        },
       }),
     }),
     delete: () => ({
