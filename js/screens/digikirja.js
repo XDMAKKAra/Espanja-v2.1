@@ -657,7 +657,7 @@ function renderTestiSummary(items, st) {
   const total = items.length;
   const correct = st.scoreCorrect;
   const pct = total ? Math.round((correct / total) * 100) : 0;
-  const headline = pct >= 80 ? "Hyvin meni." : pct >= 50 ? "Hyvä alku — kertaa virheelliset kohdat." : "Kertaa vielä ja yritä uudelleen.";
+  const headline = pct >= 80 ? "Hyvin meni." : pct >= 50 ? "Hyvä alku. Kertaa virheelliset kohdat." : "Kertaa vielä ja yritä uudelleen.";
   return `
     <div class="dk__testi-summary" aria-live="polite">
       <div class="dk__testi-summary-score">
@@ -840,7 +840,7 @@ function renderArvioContent(sivu) {
         <span class="dk__exercise-eyebrow">Itsearviointi</span>
         <span class="dk__exercise-score">${ARVIO_STATEMENTS.length} väittämää</span>
       </header>
-      <p class="dk__arvio-lede">Tämä on oma kompassisi, ei arvosana. Ole rehellinen — vastaukset ohjaavat seuraavan oppitunnin tasoa.</p>
+      <p class="dk__arvio-lede">Tämä on oma kompassisi, ei arvosana. Ole rehellinen, vastaukset ohjaavat seuraavan oppitunnin tasoa.</p>
       ${summary}
       <div class="dk__arvio-list">${rows}</div>
       <div class="dk__exercise-actions dk__arvio-actions">${action}</div>
