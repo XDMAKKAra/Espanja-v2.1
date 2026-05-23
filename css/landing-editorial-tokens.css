@@ -69,9 +69,9 @@
   --ed-score-bg:    oklch(42% 0.15 28 / 0.08);
   --ed-score-ink:   oklch(36% 0.15 28);
 
-  /* ─── Type — Fraunces display + Manrope body. */
-  --ed-display: "Fraunces", "Source Serif 4", Georgia, "Times New Roman", serif;
-  --ed-serif:   "Fraunces", Georgia, "Times New Roman", serif;
+  /* ─── Type — Plus Jakarta Sans display + Manrope body (L-V291). */
+  --ed-display: "Plus Jakarta Sans", "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --ed-serif:   "Plus Jakarta Sans", "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
   --ed-sans:    "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
   --ed-mono:    "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 
@@ -95,10 +95,11 @@
   --ed-tracking-body:    0;
   --ed-tracking-meta:    0.08em;
 
-  /* Fraunces variable axes — OPSZ scales optical size; SOFT/WONK add
-     editorial pull. Use these via font-variation-settings on display. */
-  --ed-fvs-display: "opsz" 96, "SOFT" 50, "WONK" 0;
-  --ed-fvs-display-italic: "opsz" 72, "SOFT" 100, "WONK" 1;
+  /* L-V291: Fraunces axes retired. Plus Jakarta Sans is a single-axis (wght)
+     variable font — these variables remain only so legacy callers do not
+     break, but they resolve to no-ops on Plus Jakarta Sans. */
+  --ed-fvs-display: "wght" 600;
+  --ed-fvs-display-italic: "wght" 500;
 
   /* ─── Radius — modest, book-corner sensibility. */
   --ed-r-sm:   4px;

@@ -26,7 +26,7 @@ describe("loadBriefing", () => {
     buildBriefingDom("vocab");
     loadBriefing("vocab");
     expect(document.getElementById("vocab-briefing").classList.contains("mode-briefing--empty")).toBe(true);
-    expect(document.querySelector(".eyebrow").textContent).toBe("ENSIMMÄINEN KERTA");
+    expect(document.querySelector(".eyebrow").textContent).toBe("Ensimmäinen kerta");
   });
 
   it("renders empty state when sessions is zero", () => {
@@ -45,7 +45,7 @@ describe("loadBriefing", () => {
     expect(document.getElementById("grammar-last-acc").textContent).toBe("78");
     expect(document.getElementById("grammar-week-sessions").textContent).toBe("12");
     expect(document.getElementById("grammar-streak").textContent).toBe("4");
-    expect(document.querySelector("#grammar-briefing .eyebrow").textContent).toBe("VIIMEKSI · 2 PV SITTEN");
+    expect(document.querySelector("#grammar-briefing .eyebrow").textContent).toBe("Viimeksi 2 pv sitten");
   });
 
   it("formats today / yesterday / null distinctly in the eyebrow", () => {
@@ -54,15 +54,15 @@ describe("loadBriefing", () => {
 
     window._dashModeDaysAgo = { vocab: 0 };
     loadBriefing("vocab");
-    expect(document.querySelector("#vocab-briefing .eyebrow").textContent).toBe("VIIMEKSI · TÄNÄÄN");
+    expect(document.querySelector("#vocab-briefing .eyebrow").textContent).toBe("Viimeksi tänään");
 
     window._dashModeDaysAgo = { vocab: 1 };
     loadBriefing("vocab");
-    expect(document.querySelector("#vocab-briefing .eyebrow").textContent).toBe("VIIMEKSI · EILEN");
+    expect(document.querySelector("#vocab-briefing .eyebrow").textContent).toBe("Viimeksi eilen");
 
     window._dashModeDaysAgo = { vocab: null };
     loadBriefing("vocab");
-    expect(document.querySelector("#vocab-briefing .eyebrow").textContent).toBe("VIIMEKSI · —");
+    expect(document.querySelector("#vocab-briefing .eyebrow").textContent).toBe("Viimeksi: ei tietoa");
   });
 
   it("writes — when individual fields are null", () => {

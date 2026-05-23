@@ -77,12 +77,12 @@ body.app {
   --ed-gold-soft:    oklch(62% 0.11 78 / 0.18);
 
   /* ─── Type ──────────────────────────────────────────────── */
-  --ed-display: "Fraunces", "Source Serif 4", Georgia, "Times New Roman", serif;
-  --ed-serif:   "Fraunces", Georgia, "Times New Roman", serif;
+  --ed-display: "Plus Jakarta Sans", "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --ed-serif:   "Plus Jakarta Sans", "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
   --ed-sans:    "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
   --ed-mono:    "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-  --ed-fvs-display: "opsz" 96, "SOFT" 50, "WONK" 0;
-  --ed-fvs-display-italic: "opsz" 72, "SOFT" 100, "WONK" 1;
+  --ed-fvs-display: "wght" 600;
+  --ed-fvs-display-italic: "wght" 500;
 
   /* ─── Motion ────────────────────────────────────────────── */
   --ed-t-fast: 160ms cubic-bezier(0.23, 1, 0.32, 1);
@@ -230,8 +230,8 @@ body.app h2.display--serif {
 body.app h1 em,
 body.app h2 em,
 body.app .display em {
-  font-style: italic;
-  font-variation-settings: var(--ed-fvs-display-italic);
+  font-style: normal;
+  font-weight: 600;
   color: var(--ed-accent);
 }
 
@@ -262,8 +262,8 @@ body.app .dash-greeting .display {
   color: var(--ed-ink);
 }
 body.app .dash-greeting .display em {
-  font-style: italic;
-  font-variation-settings: var(--ed-fvs-display-italic);
+  font-style: normal;
+  font-weight: 600;
   color: var(--ed-accent);
 }
 body.app .dash-greeting__sub {
@@ -539,7 +539,7 @@ body.app .dash-weak__name {
   font-variation-settings: "opsz" 32, "SOFT" 50;
   color: var(--ed-ink);
 }
-body.app .dash-weak__n { color: var(--ed-gold); font-family: var(--ed-display); font-style: italic; }
+body.app .dash-weak__n { color: var(--ed-gold); font-family: var(--ed-display); font-weight: 600; }
 body.app .dash-weak__err { color: var(--ed-accent); }
 body.app .dash-weak__blog { font-family: var(--ed-mono); color: var(--ed-ink-subtle); }
 
@@ -730,8 +730,8 @@ body.app .rail__brand {
 body.app .sidebar-logo span,
 body.app .rail__brand-o {
   color: var(--ed-accent);
-  font-style: italic;
-  font-variation-settings: var(--ed-fvs-display-italic);
+  font-style: normal;
+  font-weight: 700;
 }
 
 /* Bottom mobile nav — warm cream, accent for current tab. */
@@ -815,14 +815,12 @@ body.app .exercise .display {
   margin: 8px 0 16px;
 }
 body.app .exercise .display em {
-  font-style: italic;
-  font-variation-settings: var(--ed-fvs-display-italic);
+    font-variation-settings: var(--ed-fvs-display-italic);
   color: var(--ed-accent);
 }
 body.app .exercise__context {
   font-family: var(--ed-display);
-  font-style: italic;
-  font-variation-settings: "opsz" 24, "SOFT" 70;
+    font-variation-settings: "opsz" 24, "SOFT" 70;
   color: var(--ed-ink-subtle);
   font-size: 1rem;
   max-width: 52ch;
@@ -873,8 +871,7 @@ body.app .ex-option__l {
   height: 32px;
   font-family: var(--ed-display);
   font-variation-settings: "opsz" 32, "SOFT" 80, "WONK" 1;
-  font-style: italic;
-  font-size: 1.4rem;
+    font-size: 1.4rem;
   font-weight: 500;
   color: var(--ed-accent);
   background: transparent;
@@ -929,8 +926,7 @@ body.app .exercise__feedback-status.is-correct { color: var(--ed-olive); }
 body.app .exercise__feedback-status.is-wrong { color: var(--ed-accent); }
 body.app .exercise__feedback-correct {
   font-family: var(--ed-display);
-  font-style: italic;
-  font-variation-settings: "opsz" 24, "SOFT" 60;
+    font-variation-settings: "opsz" 24, "SOFT" 60;
   color: var(--ed-ink-muted);
   font-size: 1rem;
 }
@@ -991,8 +987,7 @@ body.app .gap-fill-input {
 }
 body.app .gap-fill-input::placeholder {
   color: var(--ed-ink-faint);
-  font-style: italic;
-}
+  }
 body.app .gap-fill-input:focus {
   border-bottom-color: var(--ed-accent);
   outline: none;
@@ -1013,8 +1008,7 @@ body.app .gap-fill-input.accent-warn {
 }
 body.app .gap-fill-hint {
   font-family: var(--ed-display);
-  font-style: italic;
-  font-variation-settings: "opsz" 24, "SOFT" 70;
+    font-variation-settings: "opsz" 24, "SOFT" 70;
   color: var(--ed-ink-muted);
   font-size: 1rem;
   line-height: 1.55;
@@ -1024,8 +1018,7 @@ body.app .gap-fill-hint {
 }
 body.app .gap-fill-feedback {
   font-family: var(--ed-display);
-  font-style: italic;
-  font-variation-settings: "opsz" 24, "SOFT" 60;
+    font-variation-settings: "opsz" 24, "SOFT" 60;
   font-size: 1rem;
   color: var(--ed-ink-muted);
 }
@@ -1450,8 +1443,7 @@ body.app #screen-exercise #ex-counter,
 body.app #screen-grammar #gram-counter {
   font-family: var(--ed-display);
   font-variation-settings: "opsz" 28, "SOFT" 60, "WONK" 1;
-  font-style: italic;
-  font-weight: 500;
+    font-weight: 500;
   font-size: 1rem;
   color: var(--ed-ink-muted);
   letter-spacing: 0;
@@ -1632,8 +1624,7 @@ body.app .vs-input {
 }
 body.app .vs-input::placeholder {
   color: var(--ed-ink-faint);
-  font-style: italic;
-  font-variation-settings: "opsz" 24, "SOFT" 70, "WONK" 1;
+    font-variation-settings: "opsz" 24, "SOFT" 70, "WONK" 1;
   font-weight: 400;
 }
 body.app .vs-input:focus {
@@ -1704,8 +1695,7 @@ body.app .vs-infinitive {
 }
 body.app .vs-translation {
   font-family: var(--ed-display);
-  font-style: italic;
-  font-variation-settings: "opsz" 24, "SOFT" 70;
+    font-variation-settings: "opsz" 24, "SOFT" 70;
   color: var(--ed-ink-subtle);
   font-size: 1.0625rem;
 }
@@ -1731,8 +1721,7 @@ body.app .vs-person {
 }
 body.app #vs-tense-badge {
   font-family: var(--ed-display);
-  font-style: italic;
-  font-variation-settings: "opsz" 24, "SOFT" 60, "WONK" 1;
+    font-variation-settings: "opsz" 24, "SOFT" 60, "WONK" 1;
   color: var(--ed-ink-muted);
   background: transparent;
   border: 0;
@@ -1775,8 +1764,7 @@ body.app .translate-promote-btn:active:not(:disabled) { transform: scale(0.97); 
 body.app .translate-promote-btn:disabled { opacity: 0.65; cursor: default; }
 body.app .translate-promote-hint {
   font-family: var(--ed-display);
-  font-style: italic;
-  font-variation-settings: "opsz" 24, "SOFT" 70;
+    font-variation-settings: "opsz" 24, "SOFT" 70;
   font-size: 0.9375rem;
   color: var(--ed-ink-muted);
 }
@@ -1804,8 +1792,8 @@ body.app .translate-promote-hint {
   background: transparent;
   border: 1px solid transparent;
   border-radius: 6px;
-  font-family: "Fraunces", Georgia, serif;
-  font-variation-settings: "opsz" 24, "SOFT" 40;
+  font-family: var(--ed-display);
+  font-weight: 600;
   font-size: 1.0625rem;
   line-height: 1;
   min-width: 32px;
@@ -1873,8 +1861,7 @@ body.app .writing-word-counter { display: none !important; }
 .lr-feedback__title.is-wrong   { color: var(--ed-accent); }
 .lr-feedback__body {
   font-family: var(--ed-display);
-  font-style: italic;
-  font-variation-settings: "opsz" 24, "SOFT" 60;
+    font-variation-settings: "opsz" 24, "SOFT" 60;
   color: var(--ed-ink-muted);
   line-height: 1.5;
   margin: 0 0 12px;
@@ -2000,8 +1987,7 @@ body.app.auth-mode .auth-aside__logo {
 }
 body.app.auth-mode .auth-aside__logo span {
   color: var(--ed-accent);
-  font-style: italic;
-}
+  }
 
 body.app.auth-mode .auth-aside__eyebrow {
   font-family: var(--ed-sans);
@@ -2026,8 +2012,7 @@ body.app.auth-mode .auth-aside__title {
 
 body.app.auth-mode .auth-aside__lead {
   font-family: var(--ed-serif);
-  font-style: italic;
-  font-size: 17px;
+    font-size: 17px;
   line-height: 1.5;
   color: var(--ed-ink-muted);
   margin: 0 0 28px;
@@ -2076,8 +2061,7 @@ body.app.auth-mode .auth-inner h1 {
 
 body.app.auth-mode .auth-inner .subtitle {
   font-family: var(--ed-serif);
-  font-style: italic;
-  color: var(--ed-ink-muted);
+    color: var(--ed-ink-muted);
   font-size: 15px;
   margin: 0 0 28px;
 }
@@ -2142,8 +2126,7 @@ body.app.auth-mode .auth-input {
 }
 body.app.auth-mode .auth-input::placeholder {
   color: var(--ed-ink-faint);
-  font-style: italic;
-}
+  }
 body.app.auth-mode .auth-input:focus {
   border-bottom-color: var(--ed-accent);
   outline: none;
@@ -2231,8 +2214,7 @@ body.app.auth-mode .auth-inner__logo {
 }
 body.app.auth-mode .auth-inner__logo span {
   color: var(--ed-accent);
-  font-style: italic;
-}
+  }
 
 /* ═══════════════════════════════════════════════════════════════
    DASHBOARD — Old-Spain editorial chrome (PR auth-and-shell + 1)
@@ -2344,8 +2326,7 @@ body.app .dash-empty-rail__title {
 }
 body.app .dash-empty-rail__sub {
   font-family: var(--ed-serif);
-  font-style: italic;
-  font-size: 15px;
+    font-size: 15px;
   line-height: 1.55;
   color: var(--ed-ink-muted);
   margin: 0 0 18px;
@@ -2386,14 +2367,12 @@ body.app .dash-chart-container {
 }
 body.app .dash-chart-empty__title {
   font-family: var(--ed-display);
-  font-style: italic;
-  font-weight: 400;
+    font-weight: 400;
   color: var(--ed-ink-muted);
 }
 body.app .dash-chart-empty__sub {
   font-family: var(--ed-serif);
-  font-style: italic;
-  color: var(--ed-ink-faint);
+    color: var(--ed-ink-faint);
 }
 
 /* Recent-list section header matches the chart header treatment. */
@@ -2740,8 +2719,7 @@ body.app .curr-bento-card__mark {
 body.app .curr-bento-card__mark--next {
   color: var(--ed-accent);
   font-family: var(--ed-display);
-  font-style: italic;
-}
+  }
 body.app .curr-bento-card__body {
   display: flex;
   flex-direction: column;
