@@ -19,6 +19,9 @@ import {
   saveAnswer,
   completeDiagnostic,
   partProgress,
+  renderQuestion,
+  renderFeedback,
+  gradeQuestion,
 } from "../features/miniYO.js";
 
 const STAGE_ORDER = ["intro", "test", "courses", "biography", "summary"];
@@ -38,6 +41,7 @@ const state = {
   currentPart: "a_grammar",
   partData: null,
   progress: [],
+  questionIndex: 0,
   coursesCompleted: [],
   courseGrades: {},
   biography: { home_usage: null, lived_abroad: null, frequency: null },
@@ -112,6 +116,7 @@ async function renderTest() {
   const titleEl = $("ob-v4-test-title");
   const bodyEl = $("ob-v4-test-body");
   const progressEl = $("ob-v4-test-progress");
+  const nextPartBtn = $("ob-v4-test-next-part");
   if (!bodyEl) return;
 
   state.partData = await loadPart(state.language, state.currentPart);
@@ -125,10 +130,94 @@ async function renderTest() {
       <p class="ob-v4-empty__hint">Tämän osion sisältö on vielä työn alla. Voit jatkaa eteenpäin, kurssi- ja biografia-vastauksesi tallennetaan silti.</p>
     `;
     if (progressEl) progressEl.textContent = "Sisältö tulossa";
-  } else {
-    bodyEl.innerHTML = `<p class="ob-v4-empty__hint">Renderöinti otetaan käyttöön L-V293-1b:ssä.</p>`;
-    renderTestProgressHint();
+    if (nextPartBtn) nextPartBtn.hidden = false;
+    return;
   }
+
+  // Real content path: resume from server progress (skip past answered questions).
+  state.questionIndex = computeResumeIndex(state.progress, state.currentPart, questionsFor(state.partData).length);
+  if (nextPartBtn) nextPartBtn.hidden = true;
+  showCurrentQuestion();
+}
+
+function computeResumeIndex(progressArray, part, total) {
+  if (!Array.isArray(progressArray)) return 0;
+  const indices = progressArray
+    .filter(p => p.part === part)
+    .map(p => p.question_index)
+    .sort((a, b) => a - b);
+  // Resume at the first index that hasn't been answered yet.
+  for (let i = 0; i < total; i++) {
+    if (!indices.includes(i)) return i;
+  }
+  return total; // all done
+}
+
+function showCurrentQuestion() {
+  const bodyEl = $("ob-v4-test-body");
+  const progressEl = $("ob-v4-test-progress");
+  const nextPartBtn = $("ob-v4-test-next-part");
+  if (!bodyEl) return;
+
+  const questions = questionsFor(state.partData);
+  const total = questions.length;
+  const idx = state.questionIndex;
+
+  if (idx >= total) {
+    // Part complete — show summary + reveal "next part" button.
+    bodyEl.innerHTML = `<p class="ob-v4-empty__hint">Tämä osa on valmis. Hyvää työtä.</p>`;
+    if (progressEl) progressEl.textContent = `${total}/${total} valmis`;
+    if (nextPartBtn) nextPartBtn.hidden = false;
+    return;
+  }
+
+  if (progressEl) progressEl.textContent = `${idx + 1} / ${total}`;
+  const question = questions[idx];
+
+  const { submitBtn, getValue } = renderQuestion(bodyEl, question, { index: idx, total });
+  if (!submitBtn) return;
+
+  submitBtn.addEventListener("click", async () => {
+    const userInput = getValue();
+    const { correct, normalizedAnswer } = gradeQuestion(question, userInput);
+    renderFeedback(bodyEl, question, normalizedAnswer, correct);
+
+    // UPSERT to backend. Non-fatal if anonymous/offline.
+    await saveAnswer({
+      language: state.language,
+      part: state.currentPart,
+      questionIndex: idx,
+      questionId: question.id,
+      userAnswer: normalizedAnswer,
+      isCorrect: correct,
+    });
+
+    // Update local progress cache so resume index is correct.
+    state.progress = [
+      ...state.progress.filter(p => !(p.part === state.currentPart && p.question_index === idx)),
+      {
+        part: state.currentPart,
+        question_index: idx,
+        question_id: question.id,
+        user_answer: normalizedAnswer,
+        is_correct: correct,
+      },
+    ];
+
+    // Reveal a "Seuraava" button.
+    const actionsEl = bodyEl.querySelector(".ob4-q__actions");
+    if (actionsEl) {
+      const nextBtn = document.createElement("button");
+      nextBtn.type = "button";
+      nextBtn.className = "ob4-btn ob4-btn--primary ob4-q__next";
+      nextBtn.textContent = idx + 1 >= total ? "Seuraava osa" : "Seuraava kysymys";
+      nextBtn.addEventListener("click", () => {
+        state.questionIndex = idx + 1;
+        showCurrentQuestion();
+      });
+      actionsEl.appendChild(nextBtn);
+    }
+  });
 }
 
 function renderTestProgressHint() {

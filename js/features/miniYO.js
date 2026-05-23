@@ -144,6 +144,158 @@ export async function completeDiagnostic({ language, status, textbookKey }) {
 }
 
 /**
+ * Grade a user's answer against the expected answer for one question.
+ * Returns { correct: boolean, normalizedAnswer }. Tolerant for fill-type:
+ * lowercases, trims, strips trailing punctuation. Accent-tolerant against
+ * `accepted_alternates`.
+ *
+ * @param {Object} question — question payload from the diagnostic JSON
+ * @param {number|string} userInput — option index (mc) or string (fill)
+ */
+export function gradeQuestion(question, userInput) {
+  if (!question) return { correct: false, normalizedAnswer: userInput };
+  if (question.type === "mc") {
+    const idx = Number(userInput);
+    return { correct: Number.isInteger(idx) && idx === question.answer, normalizedAnswer: idx };
+  }
+  if (question.type === "fill") {
+    const raw = String(userInput || "").trim().toLowerCase();
+    const target = String(question.answer || "").trim().toLowerCase();
+    if (raw === target) return { correct: true, normalizedAnswer: raw };
+    const alts = Array.isArray(question.accepted_alternates) ? question.accepted_alternates : [];
+    if (alts.map(a => String(a).trim().toLowerCase()).includes(raw)) {
+      return { correct: true, normalizedAnswer: raw };
+    }
+    return { correct: false, normalizedAnswer: raw };
+  }
+  return { correct: false, normalizedAnswer: userInput };
+}
+
+/**
+ * Render one diagnostic question into a target element. Returns the
+ * elements needed by the caller (submit button, input/options) so the
+ * caller can wire submit/advance logic.
+ *
+ * Style: sentence-case, no italic, no em-dash, no UPPERCASE chips.
+ *
+ * @param {HTMLElement} root — container; innerHTML is replaced
+ * @param {Object} question — question payload
+ * @param {Object} opts — { index, total }
+ * @returns {{ submitBtn: HTMLButtonElement|null, getValue: () => any }}
+ */
+export function renderQuestion(root, question, { index = 0, total = 0 } = {}) {
+  if (!root || !question) return { submitBtn: null, getValue: () => null };
+
+  const counter = total > 0 ? `Kysymys ${index + 1} / ${total}` : `Kysymys ${index + 1}`;
+  const prompt = escapeHtml(question.question || "");
+  const sentence = buildSentenceHtml(question);
+  const verbHint = question.type === "fill" && question.verb_infinitive
+    ? `<p class="ob4-q__verb-hint">Verbi: <b>${escapeHtml(question.verb_infinitive)}</b></p>`
+    : "";
+
+  let inputBlockHtml = "";
+  if (question.type === "mc" && Array.isArray(question.options)) {
+    inputBlockHtml = `<div class="ob4-q__options" role="radiogroup" aria-label="Vaihtoehdot">${question.options
+      .map((opt, i) =>
+        `<button type="button" class="ob4-q__option" data-option-index="${i}">${escapeHtml(String(opt))}</button>`,
+      ).join("")}</div>`;
+  } else if (question.type === "fill") {
+    inputBlockHtml = `
+      <div class="ob4-q__fill">
+        <label class="ob4-q__fill-label" for="ob-v4-q-input">Vastauksesi</label>
+        <input type="text" class="ob4-q__input" id="ob-v4-q-input" autocomplete="off" autocapitalize="off" spellcheck="false" />
+      </div>
+    `;
+  }
+
+  root.innerHTML = `
+    <div class="ob4-q">
+      <p class="ob4-q__counter">${escapeHtml(counter)}</p>
+      <p class="ob4-q__prompt">${prompt}</p>
+      <p class="ob4-q__sentence">${sentence}</p>
+      ${verbHint}
+      ${inputBlockHtml}
+      <div class="ob4-q__feedback" hidden></div>
+      <div class="ob4-q__actions">
+        <button type="button" class="ob4-btn ob4-btn--primary ob4-q__submit" disabled>Tarkista</button>
+      </div>
+    </div>
+  `;
+
+  const submitBtn = root.querySelector(".ob4-q__submit");
+  const optionBtns = root.querySelectorAll(".ob4-q__option");
+  const fillInput = root.querySelector(".ob4-q__input");
+
+  let selectedIndex = null;
+
+  if (question.type === "mc") {
+    optionBtns.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        optionBtns.forEach(b => b.classList.remove("is-selected"));
+        btn.classList.add("is-selected");
+        selectedIndex = Number(btn.dataset.optionIndex);
+        if (submitBtn) submitBtn.disabled = false;
+      });
+    });
+  } else if (question.type === "fill") {
+    fillInput?.addEventListener("input", () => {
+      if (submitBtn) submitBtn.disabled = fillInput.value.trim().length === 0;
+    });
+  }
+
+  const getValue = () => {
+    if (question.type === "mc") return selectedIndex;
+    if (question.type === "fill") return fillInput?.value || "";
+    return null;
+  };
+
+  return { submitBtn, getValue };
+}
+
+/**
+ * Render feedback after a user submits an answer. Mutates the rendered
+ * question container to show correct/incorrect + explanation.
+ */
+export function renderFeedback(root, question, userAnswer, correct) {
+  const fb = root?.querySelector(".ob4-q__feedback");
+  if (!fb) return;
+  const status = correct ? "Oikein" : "Ei vielä oikein";
+  const correctText = question.type === "mc" && Array.isArray(question.options)
+    ? escapeHtml(String(question.options[question.answer] ?? ""))
+    : escapeHtml(String(question.answer ?? ""));
+  const correctRow = correct ? "" : `<p class="ob4-q__fb-correct">Oikea vastaus: <b>${correctText}</b></p>`;
+  const explanation = question.explanation
+    ? `<p class="ob4-q__fb-explain">${escapeHtml(question.explanation)}</p>`
+    : "";
+
+  fb.hidden = false;
+  fb.classList.toggle("is-correct", !!correct);
+  fb.classList.toggle("is-incorrect", !correct);
+  fb.innerHTML = `<p class="ob4-q__fb-status">${status}</p>${correctRow}${explanation}`;
+
+  // Disable further input on the question
+  root.querySelectorAll(".ob4-q__option").forEach(b => { b.disabled = true; });
+  const input = root.querySelector(".ob4-q__input");
+  if (input) input.disabled = true;
+  const submit = root.querySelector(".ob4-q__submit");
+  if (submit) submit.disabled = true;
+}
+
+function buildSentenceHtml(question) {
+  const prefix = escapeHtml(question.sentence_prefix || "");
+  const suffix = escapeHtml(question.sentence_suffix || "");
+  const blank = `<span class="ob4-q__blank">${escapeHtml(question.sentence_blank || "____")}</span>`;
+  // Join with a single space; trim leading/trailing whitespace artefacts.
+  return [prefix, blank, suffix].filter(s => s.length > 0).join(" ");
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, (c) =>
+    ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]),
+  );
+}
+
+/**
  * Compute completion stats from server progress for a given part:
  * `{ answered: N, total: M }`. M comes from the content JSON; N is the
  * number of distinct question_index values the server has stored.

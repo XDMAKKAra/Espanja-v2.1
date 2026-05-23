@@ -1,8 +1,264 @@
 {
   "lang": "es",
   "part": "a_grammar",
-  "version": 0,
-  "status": "placeholder",
-  "note": "Sisältö generoidaan L-V293-1b -loopissa: 15 kysymystä jotka kattavat ser_estar, preterite_imperfect, subjunctive_present, future, conditional, gustar_verbs, pronouns, articles. Tämä on infra-stubi.",
-  "questions": []
+  "version": 1,
+  "status": "ready",
+  "note": "Mini-YO Part A — Spanish lyhyt oppimäärä diagnostic grammar. 15 questions cover YTL-relevant topics: ser/estar, gustar, articles, present irregular, preterite, imperfect, preterite_vs_imperfect (YO klassikko), future, conditional, subjunctive_present, relative_pronouns. Difficulty progresses A → B → C → M (kept within IN_SCOPE_TOPICS from lib/grammarScope.js — no subjunctive_imperfect or si-clauses).",
+  "topic_taxonomy": "curriculumData.js grammar_focus keys + lib/mistakeTaxonomy.js TOPIC_LABELS",
+  "questions": [
+    {
+      "id": "es_a_001",
+      "topic": "ser_estar",
+      "level": "A",
+      "type": "mc",
+      "question": "Valitse oikea muoto: pysyvä ominaisuus.",
+      "sentence_prefix": "Mi madre",
+      "sentence_blank": "____",
+      "sentence_suffix": "profesora de matemáticas.",
+      "options": ["es", "está", "son", "están"],
+      "answer": 0,
+      "distractor_rationale": {
+        "1": "ser/estar-sekaannus: ammatti on pysyvä ominaisuus, vaatii ser:n",
+        "2": "ser, mutta väärä persoonataivutus (3. mon yks-subjektille)",
+        "3": "sekä ser/estar että persoona väärin"
+      },
+      "explanation": "Ammatti ja pysyvä identiteetti vaativat ser-verbin. Estar käytetään hetkellisistä tiloista tai paikoista."
+    },
+    {
+      "id": "es_a_002",
+      "topic": "ser_estar",
+      "level": "B",
+      "type": "mc",
+      "question": "Valitse oikea muoto: hetkellinen tila.",
+      "sentence_prefix": "Hoy mi hermano",
+      "sentence_blank": "____",
+      "sentence_suffix": "muy cansado después del partido.",
+      "options": ["es", "está", "son", "están"],
+      "answer": 1,
+      "distractor_rationale": {
+        "0": "ser/estar-klassikko: 'cansado' on hetkellinen tila, ei pysyvä ominaisuus → estar",
+        "2": "väärä verbi + väärä persoona",
+        "3": "estar mutta väärä persoona"
+      },
+      "explanation": "Hetkelliset tilat (väsynyt, sairas, iloinen tilanteessa) ottavat aina estar:n."
+    },
+    {
+      "id": "es_a_003",
+      "topic": "gustar_verbs",
+      "level": "A",
+      "type": "mc",
+      "question": "Valitse oikea muoto: gustar-rakenne, monikko-objekti.",
+      "sentence_prefix": "A mí",
+      "sentence_blank": "____",
+      "sentence_suffix": "las películas españolas.",
+      "options": ["me gusta", "me gustan", "yo gusto", "a mí gusta"],
+      "answer": 1,
+      "distractor_rationale": {
+        "0": "verbi taipuu objektin mukaan: 'las películas' on monikko → gustan",
+        "2": "klassinen suomi-vaikutteinen virhe: 'minä pidän' ≠ 'me gusto'",
+        "3": "puuttuu indirekti pronomini 'me'"
+      },
+      "explanation": "Gustar-verbi taipuu sen MUKAAN, mikä miellyttää (subjekti). 'Las películas' on monikko, joten gustan, ei gusta."
+    },
+    {
+      "id": "es_a_004",
+      "topic": "articles",
+      "level": "A",
+      "type": "mc",
+      "question": "Valitse oikea määräinen artikkeli.",
+      "sentence_prefix": "Veo",
+      "sentence_blank": "____",
+      "sentence_suffix": "chicos jugando en el parque.",
+      "options": ["el", "la", "los", "las"],
+      "answer": 2,
+      "distractor_rationale": {
+        "0": "'chicos' on monikko maskuliini → los, ei el",
+        "1": "väärä suku (la = femin yks)",
+        "3": "väärä suku (las = femin mon)"
+      },
+      "explanation": "Espanjan artikkeli sopii sekä sukuun että lukuun. 'Chicos' = mask. mon → los."
+    },
+    {
+      "id": "es_a_005",
+      "topic": "present_irregular",
+      "level": "B",
+      "type": "mc",
+      "question": "Valitse oikea taivutus: tener, yo-muoto.",
+      "sentence_prefix": "Esta semana yo",
+      "sentence_blank": "____",
+      "sentence_suffix": "muchísimo que estudiar.",
+      "options": ["tengo", "tiene", "tienen", "tener"],
+      "answer": 0,
+      "distractor_rationale": {
+        "1": "3. yks (él/ella), ei yo",
+        "2": "3. mon (ellos), ei yo",
+        "3": "infinitiivi, ei taivutettu muoto"
+      },
+      "explanation": "Tener on epäsäännöllinen: yo tengo, tú tienes, él tiene. Yo-muoto vaihtaa 'e' → 'ie' eikä lisää 'g'."
+    },
+    {
+      "id": "es_a_006",
+      "topic": "preterite",
+      "level": "B",
+      "type": "fill",
+      "question": "Täydennä verbin oikealla preteriti-muodolla (yo-muoto).",
+      "sentence_prefix": "Ayer",
+      "sentence_blank": "____",
+      "sentence_suffix": "con mi profesor durante una hora.",
+      "verb_infinitive": "hablar",
+      "answer": "hablé",
+      "accepted_alternates": ["hable"],
+      "explanation": "Säännöllisen -ar-verbin preteritin yo-muoto on -é (painollinen). 'Hable' ilman aksenttia hyväksytään mutta korjataan oikeaan kirjoitusasuun."
+    },
+    {
+      "id": "es_a_007",
+      "topic": "preterite",
+      "level": "B",
+      "type": "mc",
+      "question": "Valitse oikea preteriti-muoto: ir (yo).",
+      "sentence_prefix": "El año pasado",
+      "sentence_blank": "____",
+      "sentence_suffix": "a México con mi familia.",
+      "options": ["fui", "fue", "fueron", "iba"],
+      "answer": 0,
+      "distractor_rationale": {
+        "1": "3. yks (él fue), ei yo",
+        "2": "3. mon (ellos fueron)",
+        "3": "imperfekti, ei preteriti — 'el año pasado' viittaa päättyneeseen tapahtumaan"
+      },
+      "explanation": "Ir-verbin preteriti on epäsäännöllinen ja sama kuin ser:n: fui, fuiste, fue, fuimos, fuisteis, fueron."
+    },
+    {
+      "id": "es_a_008",
+      "topic": "imperfect",
+      "level": "B",
+      "type": "mc",
+      "question": "Valitse oikea muoto: toistuva mennyt toiminta.",
+      "sentence_prefix": "Cuando era niño,",
+      "sentence_blank": "____",
+      "sentence_suffix": "todos los días en el parque con mis amigos.",
+      "options": ["juego", "jugué", "jugaba", "jugaría"],
+      "answer": 2,
+      "distractor_rationale": {
+        "0": "preesens, ei mennyt aika",
+        "1": "preteriti (kertaluonteinen), mut 'todos los días' = toistuva → imperfekti",
+        "3": "konditionaali, ei imperfekti"
+      },
+      "explanation": "Imperfekti kuvaa toistuvia tai jatkuvia menneitä toimintoja. 'Todos los días' on selvä imperfekti-merkki."
+    },
+    {
+      "id": "es_a_009",
+      "topic": "preterite_vs_imperfect",
+      "level": "B",
+      "type": "fill",
+      "question": "Täydennä oikealla muodolla: tausta keskeytyy. (caminar, yo)",
+      "sentence_prefix": "",
+      "sentence_blank": "____",
+      "sentence_suffix": "por la calle cuando vi a Pedro.",
+      "verb_infinitive": "caminar",
+      "answer": "caminaba",
+      "accepted_alternates": [],
+      "explanation": "YO-koe-klassikko: 'cuando vi a Pedro' on pisteittäinen tapahtuma (preteriti), ja sen tausta vaatii imperfektin. Tein-juuri-jotain → imperfekti, yhtäkkiä-tapahtui → preteriti."
+    },
+    {
+      "id": "es_a_010",
+      "topic": "preterite_vs_imperfect",
+      "level": "C",
+      "type": "mc",
+      "question": "Valitse oikea muoto: yhtäkkinen tapahtuma.",
+      "sentence_prefix": "De repente",
+      "sentence_blank": "____",
+      "sentence_suffix": "a llover muy fuerte.",
+      "options": ["empezaba", "empezó", "empieza", "ha empezado"],
+      "answer": 1,
+      "distractor_rationale": {
+        "0": "imperfekti (tausta), mut 'de repente' merkitsee pisteittäistä → preteriti",
+        "2": "preesens, ei mennyt aika",
+        "3": "perfekti — ei sovi 'de repente' -ilmaisuun YO-koe-kontekstissa"
+      },
+      "explanation": "Aikaisilmaisu 'de repente' (yhtäkkiä) merkitsee aina yhden hetken tapahtumaa → preteriti."
+    },
+    {
+      "id": "es_a_011",
+      "topic": "future",
+      "level": "C",
+      "type": "fill",
+      "question": "Täydennä futuurissa (nosotros).",
+      "sentence_prefix": "El próximo verano",
+      "sentence_blank": "____",
+      "sentence_suffix": "el museo de Prado en Madrid.",
+      "verb_infinitive": "visitar",
+      "answer": "visitaremos",
+      "accepted_alternates": [],
+      "explanation": "Futuuri muodostetaan infinitiivi + päätteet (-é, -ás, -á, -emos, -éis, -án). Nosotros-muoto: visitar + emos = visitaremos."
+    },
+    {
+      "id": "es_a_012",
+      "topic": "conditional",
+      "level": "C",
+      "type": "mc",
+      "question": "Valitse oikea muoto: hypoteettinen rakenne.",
+      "sentence_prefix": "Si tuviera más tiempo,",
+      "sentence_blank": "____",
+      "sentence_suffix": "contigo al cine esta tarde.",
+      "options": ["iré", "iría", "fui", "iba"],
+      "answer": 1,
+      "distractor_rationale": {
+        "0": "futuuri ei sovi: 'si tuviera' (imperf subj) vaatii konditionaalin päälauseessa",
+        "2": "preteriti — väärä kombinaatio, eikä todellinen mennyt",
+        "3": "imperfekti — väärä, hypoteettinen rakenne ei imperfekti"
+      },
+      "explanation": "Si-lauseen kombinaatio: si + imperfekti subjunktiivi → konditionaali päälauseessa. 'Si tuviera tiempo, iría'."
+    },
+    {
+      "id": "es_a_013",
+      "topic": "subjunctive_present",
+      "level": "M",
+      "type": "mc",
+      "question": "Valitse oikea muoto: subjunktiivin laukaisija.",
+      "sentence_prefix": "Es importante que tú",
+      "sentence_blank": "____",
+      "sentence_suffix": "a clase todos los días.",
+      "options": ["vienes", "vengas", "venirías", "vinieras"],
+      "answer": 1,
+      "distractor_rationale": {
+        "0": "indikatiivi, mutta 'es importante que' laukaisee subjunktiivin",
+        "2": "ei ole olemassaolevaa muotoa",
+        "3": "subjunktiivi imperfektissä — käytetään kun päälause menneessä; 'es importante' on preesensissä → preesens subj"
+      },
+      "explanation": "Ilmaisut 'es importante/necesario/posible que' + subjunktiivi. Venir → preesens subj: venga, vengas, venga, vengamos, vengáis, vengan."
+    },
+    {
+      "id": "es_a_014",
+      "topic": "subjunctive_present",
+      "level": "M",
+      "type": "fill",
+      "question": "Täydennä subjunktiivin preesensissä: ojalá-ilmaus (yo).",
+      "sentence_prefix": "Ojalá",
+      "sentence_blank": "____",
+      "sentence_suffix": "ir contigo de viaje el verano que viene.",
+      "verb_infinitive": "poder",
+      "answer": "pueda",
+      "accepted_alternates": [],
+      "explanation": "Ojalá laukaisee aina subjunktiivin. Poder → preesens subj: pueda, puedas, pueda, podamos, podáis, puedan."
+    },
+    {
+      "id": "es_a_015",
+      "topic": "relative_pronouns",
+      "level": "M",
+      "type": "mc",
+      "question": "Valitse oikea relatiivipronomini.",
+      "sentence_prefix": "El libro",
+      "sentence_blank": "____",
+      "sentence_suffix": "leí ayer era muy interesante.",
+      "options": ["que", "quien", "cuyo", "lo que"],
+      "answer": 0,
+      "distractor_rationale": {
+        "1": "quien viittaa vain henkilöön, ei kirjaan",
+        "2": "cuyo = jonka (omistus), ei sovi tähän",
+        "3": "lo que viittaa abstraktiin asiaan / 'se mitä', ei konkreettiseen kirjaan"
+      },
+      "explanation": "Que on yleisin relatiivipronomini esineille ja asioille. Quien vain henkilöille, cuyo omistukseen, lo que abstrakteihin käsitteisiin."
+    }
+  ]
 }

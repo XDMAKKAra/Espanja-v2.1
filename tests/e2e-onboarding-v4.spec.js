@@ -32,12 +32,40 @@ test("V4 intro skip routes to courses step", async ({ page }) => {
   await expect(page.locator("#screen-ob-v4-courses h1.ob4-title")).toContainText(/lukio-kursseja/i);
 });
 
-test("V4 intro start routes to test step and shows empty-state for placeholder content", async ({ page }) => {
+test("V4 intro start routes to test step and renders Part A question 1/15 (ES content live)", async ({ page }) => {
   await page.goto(`${BASE}/app.html#/aloitus-v4`);
   await page.locator("#ob-v4-intro-start").click();
   await expect(page.locator("#screen-ob-v4-test")).toHaveClass(/active/);
   await expect(page.locator("#ob-v4-test-part-label")).toContainText(/Osa A/);
-  await expect(page.locator("#ob-v4-test-body")).toContainText(/sisältö on vielä työn alla|tulossa/i);
+  await expect(page.locator("#ob-v4-test-progress")).toContainText(/1 \/ 15/);
+  await expect(page.locator(".ob4-q__sentence")).toContainText(/profesora/i);
+});
+
+test("V4 Part A: select correct mc option, check, then advance", async ({ page }) => {
+  await page.goto(`${BASE}/app.html#/aloitus-v4`);
+  await page.locator("#ob-v4-intro-start").click();
+
+  // Q1: ser_estar — correct answer is "es" (index 0).
+  await page.locator('.ob4-q__option[data-option-index="0"]').click();
+  await expect(page.locator(".ob4-q__submit")).toBeEnabled();
+  await page.locator(".ob4-q__submit").click();
+  await expect(page.locator(".ob4-q__feedback")).toBeVisible();
+  await expect(page.locator(".ob4-q__feedback")).toHaveClass(/is-correct/);
+
+  // "Seuraava kysymys" should now exist and advance to Q2.
+  await page.locator(".ob4-q__next").click();
+  await expect(page.locator("#ob-v4-test-progress")).toContainText(/2 \/ 15/);
+});
+
+test("V4 Part A: incorrect mc shows correction + explanation", async ({ page }) => {
+  await page.goto(`${BASE}/app.html#/aloitus-v4`);
+  await page.locator("#ob-v4-intro-start").click();
+
+  // Q1: pick the wrong option (index 1 = "está").
+  await page.locator('.ob4-q__option[data-option-index="1"]').click();
+  await page.locator(".ob4-q__submit").click();
+  await expect(page.locator(".ob4-q__feedback")).toHaveClass(/is-incorrect/);
+  await expect(page.locator(".ob4-q__fb-correct")).toContainText(/es/);
 });
 
 test("V4 test skip-all routes to courses step", async ({ page }) => {
