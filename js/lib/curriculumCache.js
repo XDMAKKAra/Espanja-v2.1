@@ -18,6 +18,24 @@
 import { API, apiFetch, isLoggedIn, authHeader } from "../api.js";
 
 const TTL_MS = 60_000;
+
+// L-V290 microcopy sweep: em-dash exists in the curriculum migration that
+// hydrated supabase (20260429_curriculum.sql) — "Kurssi 1 — Kuka olen".
+// A SQL UPDATE would touch production data; instead, normalise on read.
+// Replace " — " with ": " (acts as a course-title separator) and lone
+// em-dashes inside descriptions with a comma.
+function humanizeText(s) {
+  if (typeof s !== "string") return s;
+  return s.replace(/ — /g, ": ").replace(/—/g, ",");
+}
+function humanize(k) {
+  if (!k || typeof k !== "object") return k;
+  return {
+    ...k,
+    title: humanizeText(k.title),
+    description: humanizeText(k.description),
+  };
+}
 const _listCache = new Map();   // lang → { ts, kurssit, promise? }
 const _detailCache = new Map(); // `${lang}/${key}` → { ts, kurssi, lessons, promise? }
 
@@ -47,7 +65,7 @@ export async function getCurriculumList(lang) {
         return [];
       }
       const kurssit = Array.isArray(data?.kurssit)
-        ? data.kurssit.filter((k) => k && typeof k.key === "string")
+        ? data.kurssit.filter((k) => k && typeof k.key === "string").map(humanize)
         : [];
       _listCache.set(lang, { ts: Date.now(), kurssit });
       return kurssit;

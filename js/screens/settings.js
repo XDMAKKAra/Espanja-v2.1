@@ -93,7 +93,7 @@ function wireThemeToggle() {
 }
 function wireAccountSection() {
   const emailEl = document.getElementById("settings-account-email");
-  if (emailEl) emailEl.textContent = getAuthEmail() || "—";
+  if (emailEl) emailEl.textContent = getAuthEmail() || "Ei sähköpostia";
   const signOutBtn = document.getElementById("settings-signout");
   if (signOutBtn && !signOutBtn.dataset.wired) {
     signOutBtn.dataset.wired = "1";
@@ -807,7 +807,7 @@ function maybePromptLevelBump(oldAvg, newAvg) {
 
   const suggestionEl = $("level-bump-suggestion");
   suggestionEl.innerHTML = `
-    <span class="level-bump-current">${escapeHtml(currentLevel || "—")}</span>
+    <span class="level-bump-current">${escapeHtml(currentLevel || "I")}</span>
     <span class="level-bump-arrow">→</span>
     <span class="level-bump-new">${escapeHtml(suggested)}</span>
   `;
