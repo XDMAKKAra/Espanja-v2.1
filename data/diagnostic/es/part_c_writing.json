@@ -1,11 +1,16 @@
 {
   "lang": "es",
   "part": "c_writing",
-  "version": 0,
-  "status": "placeholder",
-  "note": "Sisältö generoidaan L-V293-1e -loopissa: 1 prompt suomeksi, AI-arvio per-dimensio rubric. Tämä on infra-stubi.",
-  "prompt": null,
+  "version": 1,
+  "status": "ready",
+  "note": "Mini-YO Part C — Spanish writing prompt. Suomenkielinen prompt, vastaus espanjaksi. AI-arvio L-V294 reasonerin kanssa: per-dimensio (orthography, grammar, vocab, completeness, used_topics).",
+  "prompt": "Kirjoita 60–100 sanaa espanjaksi: kuvaile mitä teit viime viikonloppuna ja mitä aiot tehdä ensi viikonloppuna.",
+  "prompt_es": "Describe en español qué hiciste el fin de semana pasado y qué vas a hacer el próximo fin de semana.",
   "min_words": 60,
   "max_words": 100,
-  "rubric_dimensions": ["orthography", "grammar", "vocab", "completeness"]
+  "targeted_grammar": ["preterite", "future", "preterite_vs_imperfect"],
+  "rubric_dimensions": ["orthography", "grammar", "vocab", "completeness"],
+  "rubric_notes": "AI-arvio palauttaa per-dimension scoren (0–1) + boolean-flagit kohdistetuille rakenteille (käyttikö preteritiä ja oliko se oikein, käyttikö futuuria). Lyhyt diagnostic-rubric, ei yo-koe-tyyppinen tarkka rubric.",
+  "skip_allowed": true,
+  "skip_note": "Käyttäjä voi ohittaa kirjoitelman. Silloin reasoner käyttää vain Part A+B-dataa, ja arvio merkitään epävarmaksi (warning: kirjoitustaitosi arvio epävarma — kannattaa palata tähän myöhemmin)."
 }

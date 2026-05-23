@@ -1,11 +1,16 @@
 {
   "lang": "de",
   "part": "c_writing",
-  "version": 0,
-  "status": "placeholder",
-  "note": "Sisältö generoidaan L-V293-1e -loopissa.",
-  "prompt": null,
+  "version": 1,
+  "status": "ready",
+  "note": "Mini-YO Part C — German writing prompt. Suomenkielinen prompt, vastaus saksaksi. Houkuttelee käyttämään Perfekt + Konjunktiv II -rakenteita.",
+  "prompt": "Kirjoita 60–100 sanaa saksaksi: kerro miten vietit lomasi viime kesänä ja mitä haluaisit tehdä tulevaisuudessa.",
+  "prompt_de": "Schreib 60–100 Wörter auf Deutsch: Wie hast du letzten Sommer deinen Urlaub verbracht, und was würdest du in der Zukunft gerne machen?",
   "min_words": 60,
   "max_words": 100,
-  "rubric_dimensions": ["orthography", "grammar", "vocab", "completeness"]
+  "targeted_grammar": ["perfekt", "konjunktiv_ii_polite", "konjunktiv_ii"],
+  "rubric_dimensions": ["orthography", "grammar", "vocab", "completeness"],
+  "rubric_notes": "AI-arvio palauttaa per-dimension scoren + flagit kohdistetuille rakenteille: käyttikö Perfektiä menneestä lomasta, käyttikö Konjunktiv II:ta toiveistaan (würde, hätte).",
+  "skip_allowed": true,
+  "skip_note": "Käyttäjä voi ohittaa kirjoitelman. Arvio merkitään silloin epävarmaksi."
 }

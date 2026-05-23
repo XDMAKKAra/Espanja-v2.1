@@ -237,6 +237,70 @@
   gap: 10px;
 }
 
+/* Part B passage --------------------------------------------------------- */
+.ob4-passage-wrapper {
+  margin-bottom: 8px;
+}
+.ob4-passage {
+  border: 1px solid var(--line, #d8d4cb);
+  border-radius: var(--radius, 12px);
+  padding: clamp(20px, 3vw, 28px);
+  background: #fbf8f3;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.ob4-passage__title {
+  margin: 0;
+  font-size: clamp(20px, 3vw, 24px);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text, #1f1d1a);
+}
+.ob4-passage__body p {
+  margin: 0 0 10px;
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--text, #1f1d1a);
+}
+.ob4-passage__body p:last-child { margin-bottom: 0; }
+
+/* Textarea (Part B short, Part C writing) -------------------------------- */
+.ob4-q__textarea {
+  font-family: inherit;
+  font-size: 15px;
+  line-height: 1.55;
+  resize: vertical;
+  min-height: 80px;
+}
+.ob4-q__textarea--lg {
+  min-height: 180px;
+}
+.ob4-q__prompt-target {
+  margin: 0;
+  font-size: 14px;
+  color: var(--text-2, #6f6a62);
+  font-style: normal;
+}
+.ob4-q__wordcount {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-2, #6f6a62);
+  align-self: flex-end;
+}
+.ob4-q__wordcount.is-ok {
+  color: #4a6b3f;
+}
+
+/* Neutral feedback (Part B short answers, AI graded later) --------------- */
+.ob4-q__feedback.is-neutral {
+  border-color: var(--line, #d8d4cb);
+  background: #faf6f0;
+}
+.ob4-q__feedback.is-neutral .ob4-q__fb-status {
+  color: var(--text, #1f1d1a);
+}
+
 /* Courses step ------------------------------------------------------------ */
 .ob4-courses {
   display: flex;

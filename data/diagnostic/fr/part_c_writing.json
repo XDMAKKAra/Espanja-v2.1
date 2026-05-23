@@ -1,11 +1,16 @@
 {
   "lang": "fr",
   "part": "c_writing",
-  "version": 0,
-  "status": "placeholder",
-  "note": "Sisältö generoidaan L-V293-1e -loopissa.",
-  "prompt": null,
+  "version": 1,
+  "status": "ready",
+  "note": "Mini-YO Part C — French writing prompt. Suomenkielinen prompt, vastaus ranskaksi. Houkuttelee käyttämään passé composé + futur simple -rakenteita.",
+  "prompt": "Kirjoita 60–100 sanaa ranskaksi: kuvaile viime viikonloppuasi ja kerro suunnitelmistasi ensi viikonlopuksi.",
+  "prompt_fr": "Écris 60–100 mots en français : décris ton week-end dernier et raconte tes projets pour le week-end prochain.",
   "min_words": 60,
   "max_words": 100,
-  "rubric_dimensions": ["orthography", "grammar", "vocab", "completeness"]
+  "targeted_grammar": ["passe_compose", "futur_simple", "passe_compose_vs_imparfait"],
+  "rubric_dimensions": ["orthography", "grammar", "vocab", "completeness"],
+  "rubric_notes": "AI-arvio palauttaa per-dimension scoren + flagit kohdistetuille rakenteille: käyttikö passé composé:ta menneeseen, käyttikö futur simple:ä tulevaan, accordin oikeellisuus.",
+  "skip_allowed": true,
+  "skip_note": "Käyttäjä voi ohittaa kirjoitelman. Arvio merkitään silloin epävarmaksi."
 }

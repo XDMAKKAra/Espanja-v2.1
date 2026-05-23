@@ -1,9 +1,120 @@
 {
   "lang": "fr",
   "part": "b_reading",
-  "version": 0,
-  "status": "placeholder",
-  "note": "Sisältö generoidaan L-V293-1e -loopissa.",
-  "passage": null,
-  "questions": []
+  "version": 1,
+  "status": "ready",
+  "note": "Mini-YO Part B — French reading comprehension. ~260 sanaa teksti + 6 kysymystä. Aihe: ranskalaiset boulangerie:t ja leipäkulttuuri, neutraali kulttuuri-aihe.",
+  "passage_title": "Le pain et les boulangeries en France",
+  "passage": "En France, le pain est beaucoup plus qu'un simple aliment : c'est une tradition et une partie importante de la culture. Chaque jour, plus de 30 millions de Français achètent du pain frais, souvent dans une boulangerie de quartier. La baguette, longue et fine, est la plus connue, mais il existe des centaines d'autres pains : le pain de campagne, le pain complet, le pain aux noix, et bien d'autres encore.\n\nLes boulangeries jouent un rôle social important. Ce sont des lieux où les voisins se rencontrent et discutent. Le matin, beaucoup de gens passent à la boulangerie avant d'aller au travail ou à l'école. Le pain, traditionnellement, doit être consommé le jour même : un Français rarement achète du pain pour deux ou trois jours.\n\nCependant, le métier de boulanger n'est pas facile. Les boulangers commencent leur travail très tôt, souvent à trois ou quatre heures du matin, pour que le pain soit prêt quand les premiers clients arrivent. De plus, le nombre de boulangeries a diminué dans certains villages, parce que les jeunes préfèrent travailler en ville. Quand une boulangerie ferme, c'est souvent toute la vie du village qui change.\n\nPour protéger cette tradition, le gouvernement français a inscrit la baguette au patrimoine culturel de l'UNESCO en 2022. Pierre, boulanger à Lyon depuis 25 ans, dit : 'Je suis fier de mon métier. Faire du bon pain, c'est offrir quelque chose d'essentiel aux gens.' Pour beaucoup de Français, la boulangerie reste un symbole de leur identité et de leur quotidien.",
+  "questions": [
+    {
+      "id": "fr_b_001",
+      "topic": "main_idea",
+      "level": "B",
+      "type": "mc",
+      "question": "Mikä on tekstin pääajatus?",
+      "options": [
+        "Ranskalaiset syövät vain baguette-leipää.",
+        "Leipä ja leipomot ovat tärkeä osa ranskalaista kulttuuria, vaikka ammatti on haasteellinen.",
+        "Boulangerie:t ovat häviämässä koko Ranskasta.",
+        "Leivonta on ranskassa pelkkä työ, ei kulttuuri."
+      ],
+      "answer": 1,
+      "distractor_rationale": {
+        "0": "teksti mainitsee satoja muitakin leipiä",
+        "2": "vain joistakin kylistä häviävät, ei koko Ranskasta",
+        "3": "teksti sanoo päinvastaista: leipä on osa kulttuuria"
+      },
+      "explanation": "Teksti kuvaa leivän kulttuurisen merkityksen + ammatti-haasteet + UNESCO-tunnustus + boulangerie:n sosiaalisen roolin. Pääajatus yhdistää nämä."
+    },
+    {
+      "id": "fr_b_002",
+      "topic": "main_idea",
+      "level": "B",
+      "type": "mc",
+      "question": "Milloin leipuri yleensä aloittaa työpäivänsä?",
+      "options": [
+        "Aamuyhdeksältä",
+        "Iltapäivällä",
+        "Aamuyöllä, klo 3–4",
+        "Vain viikonloppuisin"
+      ],
+      "answer": 2,
+      "distractor_rationale": {
+        "0": "klo 9 on liian myöhään, leipä pitää olla valmiina aamulla",
+        "1": "ei tekstissä",
+        "3": "ei tekstissä"
+      },
+      "explanation": "Teksti sanoo: 'Les boulangers commencent leur travail très tôt, souvent à trois ou quatre heures du matin.'"
+    },
+    {
+      "id": "fr_b_003",
+      "topic": "vocabulary_in_context",
+      "level": "B",
+      "type": "mc",
+      "question": "Mitä tarkoittaa 'patrimoine culturel' tässä yhteydessä?",
+      "options": [
+        "kulttuuriperintö",
+        "kulttuurimaksu",
+        "kulttuurikielto",
+        "kulttuuritutkimus"
+      ],
+      "answer": 0,
+      "distractor_rationale": {
+        "1": "patrimoine ei tarkoita maksua",
+        "2": "ei kieltoa",
+        "3": "ei tutkimusta"
+      },
+      "explanation": "Patrimoine = perintö, culturel = kulttuurinen. UNESCO-konteksti vahvistaa: baguette merkattu kulttuuriperintöön."
+    },
+    {
+      "id": "fr_b_004",
+      "topic": "vocabulary_in_context",
+      "level": "B",
+      "type": "mc",
+      "question": "Mitä 'fier' tarkoittaa Pierren lainauksessa?",
+      "options": [
+        "väsynyt",
+        "ylpeä",
+        "huolissaan",
+        "nopea"
+      ],
+      "answer": 1,
+      "distractor_rationale": {
+        "0": "väsymys = fatigué",
+        "2": "huolissaan = inquiet",
+        "3": "nopea = rapide"
+      },
+      "explanation": "Pierre sanoo 'Je suis fier de mon métier' = 'olen ylpeä ammatistani'. Adjektiivi fier/fière = ylpeä."
+    },
+    {
+      "id": "fr_b_005",
+      "topic": "inference",
+      "level": "C",
+      "type": "mc",
+      "question": "Miksi boulangerie:n sulkeminen vaikuttaa koko kylän elämään?",
+      "options": [
+        "Kylien ihmiset muuttavat heti pois.",
+        "Boulangerie:t ovat kylien tärkeitä kohtaamispaikkoja, eivät vain leipäkauppoja.",
+        "Hallitus määrää sulkemisen.",
+        "Kylillä ei ole muita kauppoja."
+      ],
+      "answer": 1,
+      "distractor_rationale": {
+        "0": "muuttamista ei mainita",
+        "2": "hallitus suojelee, ei sulje",
+        "3": "ei tekstissä"
+      },
+      "explanation": "Teksti sanoo: 'Les boulangeries jouent un rôle social important. Ce sont des lieux où les voisins se rencontrent et discutent.' Sosiaalinen rooli + 'toute la vie du village qui change'."
+    },
+    {
+      "id": "fr_b_006",
+      "topic": "main_idea",
+      "level": "M",
+      "type": "short",
+      "question": "Miksi UNESCO merkitsi ranskalaisen baguetten kulttuuriperintöönsä? Vastaa lyhyesti suomeksi (1–2 lausetta).",
+      "expected_keywords": ["suojella", "perinne", "kulttuuri", "ranskalainen", "identiteetti", "perintö", "tärkeä", "katoaminen", "ammatti", "tradition"],
+      "explanation": "Hallitus halusi suojella tätä traditiota — baguetten merkitys kulttuurissa, ammatin uhka (boulangerie:t häviävät), kansallinen identiteetti."
+    }
+  ]
 }

@@ -57,6 +57,49 @@ test("V4 Part A: select correct mc option, check, then advance", async ({ page }
   await expect(page.locator("#ob-v4-test-progress")).toContainText(/2 \/ 15/);
 });
 
+test("V4 Part B: passage + first reading question renders after Part A skip", async ({ page }) => {
+  await page.goto(`${BASE}/app.html#/aloitus-v4`);
+  await page.locator("#ob-v4-intro-start").click();
+  // Click through Part A by skipping the part.
+  await page.locator("#ob-v4-test-skip-part").click();
+  // Now on Part B.
+  await expect(page.locator("#ob-v4-test-part-label")).toContainText(/Osa B/);
+  await expect(page.locator(".ob4-passage__title")).toContainText(/Madrid/i);
+  await expect(page.locator(".ob4-passage__body p")).toHaveCount(4);
+  await expect(page.locator(".ob4-q__prompt")).toContainText(/pääajatus/i);
+});
+
+test("V4 Part C: writing prompt + textarea + word count enables submit only at min words", async ({ page }) => {
+  await page.goto(`${BASE}/app.html#/aloitus-v4`);
+  await page.locator("#ob-v4-intro-start").click();
+  await page.locator("#ob-v4-test-skip-part").click(); // skip Part A
+  await page.locator("#ob-v4-test-skip-part").click(); // skip Part B
+  // Now on Part C.
+  await expect(page.locator("#ob-v4-test-part-label")).toContainText(/Kirjoitelma/);
+  const textarea = page.locator("#ob-v4-w-input");
+  await expect(textarea).toBeVisible();
+  const submit = page.locator(".ob4-q__submit");
+  await expect(submit).toBeDisabled();
+
+  // Type below minimum: submit stays disabled.
+  await textarea.fill("Pasé el fin de semana en casa.");
+  await expect(submit).toBeDisabled();
+
+  // Type 60+ words: submit enabled.
+  const longText = ("Pasé el fin de semana en casa con mi familia y mis amigos. Vimos una película muy divertida el sábado por la noche y luego comimos pizza juntos. El domingo por la mañana fuimos al parque grande con el perro y jugamos al fútbol. El próximo fin de semana voy a visitar a mis abuelos en el campo y vamos a hacer una barbacoa con mis primos en su casa nueva.").trim();
+  await textarea.fill(longText);
+  await expect(submit).toBeEnabled();
+});
+
+test("V4 Part C: skip writing routes to done state", async ({ page }) => {
+  await page.goto(`${BASE}/app.html#/aloitus-v4`);
+  await page.locator("#ob-v4-intro-start").click();
+  await page.locator("#ob-v4-test-skip-part").click();
+  await page.locator("#ob-v4-test-skip-part").click();
+  await page.locator(".ob4-q__skip").click();
+  await expect(page.locator("#ob-v4-test-body")).toContainText(/Kirjoitelma ohitettu/i);
+});
+
 test("V4 Part A: incorrect mc shows correction + explanation", async ({ page }) => {
   await page.goto(`${BASE}/app.html#/aloitus-v4`);
   await page.locator("#ob-v4-intro-start").click();

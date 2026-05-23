@@ -168,6 +168,13 @@ export function gradeQuestion(question, userInput) {
     }
     return { correct: false, normalizedAnswer: raw };
   }
+  if (question.type === "short") {
+    // Short Finnish answer (Part B inference / main idea). AI grades it
+    // later via L-V294 reasoner; here we only save the raw text and mark
+    // is_correct = null (unknown) so the reasoner knows to evaluate it.
+    const raw = String(userInput || "").trim();
+    return { correct: null, normalizedAnswer: raw };
+  }
   return { correct: false, normalizedAnswer: userInput };
 }
 
@@ -206,6 +213,13 @@ export function renderQuestion(root, question, { index = 0, total = 0 } = {}) {
         <input type="text" class="ob4-q__input" id="ob-v4-q-input" autocomplete="off" autocapitalize="off" spellcheck="false" />
       </div>
     `;
+  } else if (question.type === "short") {
+    inputBlockHtml = `
+      <div class="ob4-q__fill">
+        <label class="ob4-q__fill-label" for="ob-v4-q-input">Vastauksesi suomeksi (1–2 lausetta)</label>
+        <textarea class="ob4-q__input ob4-q__textarea" id="ob-v4-q-input" rows="3" autocomplete="off" spellcheck="true"></textarea>
+      </div>
+    `;
   }
 
   root.innerHTML = `
@@ -237,7 +251,7 @@ export function renderQuestion(root, question, { index = 0, total = 0 } = {}) {
         if (submitBtn) submitBtn.disabled = false;
       });
     });
-  } else if (question.type === "fill") {
+  } else if (question.type === "fill" || question.type === "short") {
     fillInput?.addEventListener("input", () => {
       if (submitBtn) submitBtn.disabled = fillInput.value.trim().length === 0;
     });
@@ -245,7 +259,7 @@ export function renderQuestion(root, question, { index = 0, total = 0 } = {}) {
 
   const getValue = () => {
     if (question.type === "mc") return selectedIndex;
-    if (question.type === "fill") return fillInput?.value || "";
+    if (question.type === "fill" || question.type === "short") return fillInput?.value || "";
     return null;
   };
 
@@ -259,19 +273,32 @@ export function renderQuestion(root, question, { index = 0, total = 0 } = {}) {
 export function renderFeedback(root, question, userAnswer, correct) {
   const fb = root?.querySelector(".ob4-q__feedback");
   if (!fb) return;
-  const status = correct ? "Oikein" : "Ei vielä oikein";
-  const correctText = question.type === "mc" && Array.isArray(question.options)
-    ? escapeHtml(String(question.options[question.answer] ?? ""))
-    : escapeHtml(String(question.answer ?? ""));
-  const correctRow = correct ? "" : `<p class="ob4-q__fb-correct">Oikea vastaus: <b>${correctText}</b></p>`;
-  const explanation = question.explanation
-    ? `<p class="ob4-q__fb-explain">${escapeHtml(question.explanation)}</p>`
-    : "";
 
-  fb.hidden = false;
-  fb.classList.toggle("is-correct", !!correct);
-  fb.classList.toggle("is-incorrect", !correct);
-  fb.innerHTML = `<p class="ob4-q__fb-status">${status}</p>${correctRow}${explanation}`;
+  // `short` questions: correct is null (AI evaluates later). Show a neutral
+  // "Vastauksesi tallennettu" message plus the explanation/expected angles.
+  if (question.type === "short" || correct === null) {
+    fb.hidden = false;
+    fb.classList.remove("is-correct", "is-incorrect");
+    fb.classList.add("is-neutral");
+    const explanation = question.explanation
+      ? `<p class="ob4-q__fb-explain">${escapeHtml(question.explanation)}</p>`
+      : "";
+    fb.innerHTML = `<p class="ob4-q__fb-status">Vastauksesi tallennettu</p>${explanation}`;
+  } else {
+    const status = correct ? "Oikein" : "Ei vielä oikein";
+    const correctText = question.type === "mc" && Array.isArray(question.options)
+      ? escapeHtml(String(question.options[question.answer] ?? ""))
+      : escapeHtml(String(question.answer ?? ""));
+    const correctRow = correct ? "" : `<p class="ob4-q__fb-correct">Oikea vastaus: <b>${correctText}</b></p>`;
+    const explanation = question.explanation
+      ? `<p class="ob4-q__fb-explain">${escapeHtml(question.explanation)}</p>`
+      : "";
+
+    fb.hidden = false;
+    fb.classList.toggle("is-correct", !!correct);
+    fb.classList.toggle("is-incorrect", !correct);
+    fb.innerHTML = `<p class="ob4-q__fb-status">${status}</p>${correctRow}${explanation}`;
+  }
 
   // Disable further input on the question
   root.querySelectorAll(".ob4-q__option").forEach(b => { b.disabled = true; });
@@ -279,6 +306,75 @@ export function renderFeedback(root, question, userAnswer, correct) {
   if (input) input.disabled = true;
   const submit = root.querySelector(".ob4-q__submit");
   if (submit) submit.disabled = true;
+}
+
+/**
+ * Render the reading passage above the question container. Called by
+ * onboardingV4.renderTest() when state.currentPart === "b_reading".
+ * Idempotent: if the passage is already rendered, it is left in place.
+ */
+export function renderReadingPassage(passageRootEl, partData) {
+  if (!passageRootEl) return;
+  if (passageRootEl.dataset.partPassage === String(partData?.version || "")) return;
+  const title = escapeHtml(partData?.passage_title || "");
+  const text = String(partData?.passage || "").split("\n\n").map(p => `<p>${escapeHtml(p)}</p>`).join("");
+  passageRootEl.innerHTML = `
+    <article class="ob4-passage">
+      ${title ? `<h2 class="ob4-passage__title">${title}</h2>` : ""}
+      <div class="ob4-passage__body">${text}</div>
+    </article>
+  `;
+  passageRootEl.dataset.partPassage = String(partData?.version || "");
+}
+
+/**
+ * Render the writing prompt (Part C). Unlike Part A/B, this is a single
+ * textarea + word counter + Lähetä button. Returns { submitBtn, getValue }
+ * matching the shape returned by renderQuestion so the caller can wire
+ * submit handling uniformly.
+ */
+export function renderWritingPrompt(root, partData) {
+  if (!root || !partData) return { submitBtn: null, getValue: () => "" };
+  const prompt = escapeHtml(partData.prompt || "");
+  const targetPrompt = escapeHtml(partData.prompt_es || partData.prompt_de || partData.prompt_fr || "");
+  const minW = Number(partData.min_words) || 0;
+  const maxW = Number(partData.max_words) || 0;
+
+  root.innerHTML = `
+    <div class="ob4-q ob4-q--writing">
+      <p class="ob4-q__counter">Kirjoitelma</p>
+      <p class="ob4-q__prompt">${prompt}</p>
+      ${targetPrompt ? `<p class="ob4-q__prompt-target">${targetPrompt}</p>` : ""}
+      <div class="ob4-q__fill">
+        <label class="ob4-q__fill-label" for="ob-v4-w-input">Kirjoitelmasi (${minW}–${maxW} sanaa)</label>
+        <textarea class="ob4-q__input ob4-q__textarea ob4-q__textarea--lg" id="ob-v4-w-input" rows="8" autocomplete="off" spellcheck="true"></textarea>
+        <p class="ob4-q__wordcount" data-min="${minW}" data-max="${maxW}">0 sanaa</p>
+      </div>
+      <div class="ob4-q__feedback" hidden></div>
+      <div class="ob4-q__actions">
+        <button type="button" class="ob4-btn ob4-btn--primary ob4-q__submit" disabled>Lähetä kirjoitelma</button>
+        <button type="button" class="ob4-btn ob4-btn--ghost ob4-q__skip">Ohita kirjoitelma</button>
+      </div>
+    </div>
+  `;
+
+  const submitBtn = root.querySelector(".ob4-q__submit");
+  const textarea = root.querySelector(".ob4-q__textarea--lg");
+  const counter = root.querySelector(".ob4-q__wordcount");
+
+  textarea?.addEventListener("input", () => {
+    const words = countWords(textarea.value);
+    counter.textContent = `${words} sanaa`;
+    counter.classList.toggle("is-ok", words >= minW && (!maxW || words <= maxW));
+    if (submitBtn) submitBtn.disabled = words < minW;
+  });
+
+  const getValue = () => textarea?.value || "";
+  return { submitBtn, getValue };
+}
+
+function countWords(s) {
+  return String(s || "").trim().split(/\s+/).filter(Boolean).length;
 }
 
 function buildSentenceHtml(question) {

@@ -22,6 +22,8 @@ import {
   renderQuestion,
   renderFeedback,
   gradeQuestion,
+  renderReadingPassage,
+  renderWritingPrompt,
 } from "../features/miniYO.js";
 
 const STAGE_ORDER = ["intro", "test", "courses", "biography", "summary"];
@@ -159,6 +161,12 @@ function showCurrentQuestion() {
   const nextPartBtn = $("ob-v4-test-next-part");
   if (!bodyEl) return;
 
+  // Part C is a single writing prompt, not a question sequence.
+  if (state.currentPart === "c_writing") {
+    showWritingPart(bodyEl, progressEl, nextPartBtn);
+    return;
+  }
+
   const questions = questionsFor(state.partData);
   const total = questions.length;
   const idx = state.questionIndex;
@@ -173,6 +181,12 @@ function showCurrentQuestion() {
 
   if (progressEl) progressEl.textContent = `${idx + 1} / ${total}`;
   const question = questions[idx];
+
+  // Part B: persist passage above the question container.
+  if (state.currentPart === "b_reading") {
+    ensurePassageContainer();
+    renderReadingPassage($("ob-v4-test-passage"), state.partData);
+  }
 
   const { submitBtn, getValue } = renderQuestion(bodyEl, question, { index: idx, total });
   if (!submitBtn) return;
@@ -238,6 +252,72 @@ function advanceTestPart(statusIfLast) {
   }
   state.currentPart = TEST_PARTS[idx + 1];
   renderTest();
+}
+
+// Insert a passage container above the question body if missing.
+function ensurePassageContainer() {
+  let el = $("ob-v4-test-passage");
+  if (el) return el;
+  const screen = $(SCREEN_ID.test);
+  const shell = screen?.querySelector(".ob4-shell");
+  const bodyEl = $("ob-v4-test-body");
+  if (!shell || !bodyEl) return null;
+  el = document.createElement("div");
+  el.id = "ob-v4-test-passage";
+  el.className = "ob4-passage-wrapper";
+  shell.insertBefore(el, bodyEl);
+  return el;
+}
+
+function clearPassageContainer() {
+  const el = $("ob-v4-test-passage");
+  if (el) { el.innerHTML = ""; el.dataset.partPassage = ""; }
+}
+
+function showWritingPart(bodyEl, progressEl, nextPartBtn) {
+  clearPassageContainer();
+  if (progressEl) progressEl.textContent = "Kirjoitelma";
+  if (nextPartBtn) nextPartBtn.hidden = true;
+
+  const { submitBtn, getValue } = renderWritingPrompt(bodyEl, state.partData);
+  const skipBtn = bodyEl.querySelector(".ob4-q__skip");
+
+  if (skipBtn) {
+    skipBtn.addEventListener("click", async () => {
+      await saveAnswer({
+        language: state.language,
+        part: state.currentPart,
+        questionIndex: 0,
+        questionId: "c_writing_skipped",
+        userAnswer: { skipped: true },
+        isCorrect: null,
+      });
+      bodyEl.innerHTML = `<p class="ob-v4-empty__hint">Kirjoitelma ohitettu. Arvio merkitään epävarmaksi, voit palata myöhemmin.</p>`;
+      if (nextPartBtn) {
+        nextPartBtn.hidden = false;
+        nextPartBtn.textContent = "Valmis";
+      }
+    });
+  }
+
+  if (!submitBtn) return;
+  submitBtn.addEventListener("click", async () => {
+    const text = getValue();
+    const words = String(text || "").trim().split(/\s+/).filter(Boolean).length;
+    await saveAnswer({
+      language: state.language,
+      part: state.currentPart,
+      questionIndex: 0,
+      questionId: "c_writing_submission",
+      userAnswer: { text, words },
+      isCorrect: null,
+    });
+    bodyEl.innerHTML = `<p class="ob-v4-empty__hint">Kiitos. Kirjoitelmasi tallennettu, arviointi tehdään myöhemmin.</p>`;
+    if (nextPartBtn) {
+      nextPartBtn.hidden = false;
+      nextPartBtn.textContent = "Valmis";
+    }
+  });
 }
 
 function partLabel(part) {

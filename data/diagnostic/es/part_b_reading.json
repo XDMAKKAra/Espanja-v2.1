@@ -1,9 +1,120 @@
 {
   "lang": "es",
   "part": "b_reading",
-  "version": 0,
-  "status": "placeholder",
-  "note": "Sisältö generoidaan L-V293-1e -loopissa: 1 teksti 250-400 sanaa + 6-8 kysymystä. Tämä on infra-stubi.",
-  "passage": null,
-  "questions": []
+  "version": 1,
+  "status": "ready",
+  "note": "Mini-YO Part B — Spanish reading comprehension. ~250 sanaa teksti + 6 kysymystä (sisältö, päättely, sanaston päättely kontekstista, pääajatus). Aihe: kaupunkipyöräily Madridissa, neutraali ympäristö-aiheinen.",
+  "passage_title": "Madrid se llena de bicicletas",
+  "passage": "En los últimos años, Madrid ha cambiado mucho. Antes, casi nadie usaba la bicicleta en el centro de la ciudad porque había demasiados coches y pocas zonas seguras. Ahora la situación es muy distinta. El ayuntamiento ha construido más de 200 kilómetros de carriles bici nuevos y ha creado un sistema público de bicicletas eléctricas llamado BiciMAD.\n\nSegún un estudio reciente, el número de personas que va al trabajo en bicicleta se ha duplicado en cinco años. Los jóvenes son los que más utilizan este transporte, aunque también hay muchos adultos y jubilados que prefieren la bici al coche. Una de las razones principales es la contaminación: el aire en Madrid es uno de los peores de Europa, y muchos vecinos están preocupados por su salud.\n\nSin embargo, no todo es positivo. Algunos conductores se quejan porque los carriles bici les quitan espacio y dicen que el tráfico es ahora más lento. También hay accidentes entre bicicletas y peatones, especialmente en zonas céntricas donde hay mucha gente. El ayuntamiento ha respondido con nuevas campañas de seguridad vial y multas más altas para quienes no respeten las normas.\n\nMaría, una profesora de 38 años, dice: 'Antes iba en coche todos los días y tardaba 45 minutos. Ahora voy en bici y llego en media hora, además de ahorrar dinero y hacer ejercicio.' Su experiencia es cada vez más común. Los expertos creen que en diez años, Madrid podría parecerse a otras grandes capitales europeas como Ámsterdam o Copenhague, donde la bicicleta es el transporte favorito de muchos ciudadanos.",
+  "questions": [
+    {
+      "id": "es_b_001",
+      "topic": "main_idea",
+      "level": "B",
+      "type": "mc",
+      "question": "Mikä on tekstin pääajatus?",
+      "options": [
+        "Madridin liikenneongelmat pahenevat joka vuosi.",
+        "Pyöräily on lisääntynyt Madridissa merkittävästi viime vuosina.",
+        "Madridin kaupunki kieltää autoja keskustasta.",
+        "Pyöräilijät ja jalankulkijat eivät tule toimeen keskenään."
+      ],
+      "answer": 1,
+      "distractor_rationale": {
+        "0": "teksti puhuu paranemisesta, ei pahenevista ongelmista",
+        "2": "ei mainita autokieltoa",
+        "3": "konflikti mainitaan mutta ei ole pääajatus"
+      },
+      "explanation": "Teksti kuvaa pyöräilyn kasvua Madridissa: 200 km carril bici, BiciMAD, kaksinkertaistunut käyttö. Pääajatus on tämä muutos."
+    },
+    {
+      "id": "es_b_002",
+      "topic": "vocabulary_in_context",
+      "level": "B",
+      "type": "mc",
+      "question": "Mitä 'carril bici' tarkoittaa kontekstissa?",
+      "options": [
+        "polkupyörä",
+        "polkupyörävuokraus",
+        "pyörätie",
+        "pyöräilykypärä"
+      ],
+      "answer": 2,
+      "distractor_rationale": {
+        "0": "carril = kaista, bici = pyörä → ei tarkoita itse pyörää",
+        "1": "BiciMAD on vuokrajärjestelmä, mut carril bici ei",
+        "3": "kypärä = casco espanjaksi"
+      },
+      "explanation": "'Carril' = kaista, 'bici' = pyörä (lyhennetty bicicleta-sanasta). 'Carril bici' = pyörätie/pyöräkaista."
+    },
+    {
+      "id": "es_b_003",
+      "topic": "vocabulary_in_context",
+      "level": "B",
+      "type": "mc",
+      "question": "Mitä tarkoittaa 'se ha duplicado' tässä yhteydessä?",
+      "options": [
+        "on pysynyt samana",
+        "on kaksinkertaistunut",
+        "on vähentynyt",
+        "on katoonut"
+      ],
+      "answer": 1,
+      "distractor_rationale": {
+        "0": "duplicar = kaksinkertaistaa, ei pysyä samana",
+        "2": "vähenemistä ilmaistaisiin 'disminuir/reducir'",
+        "3": "katoamista olisi 'desaparecer'"
+      },
+      "explanation": "Duplicar = kaksinkertaistaa. 'Se ha duplicado' = 'on kaksinkertaistunut'. Sukua sanalle 'doble' (kaksinkertainen)."
+    },
+    {
+      "id": "es_b_004",
+      "topic": "main_idea",
+      "level": "B",
+      "type": "mc",
+      "question": "Miksi monet madridilaiset valitsevat pyörän auton sijaan?",
+      "options": [
+        "Pyörä on hauskempaa.",
+        "Saastuminen huolettaa heitä.",
+        "Autot on kielletty keskustassa.",
+        "Pyöräily on pakollista."
+      ],
+      "answer": 1,
+      "distractor_rationale": {
+        "0": "ei mainita hauskuutta syynä",
+        "2": "ei autokieltoa mainittu",
+        "3": "ei pakollista"
+      },
+      "explanation": "Teksti sanoo: 'el aire en Madrid es uno de los peores de Europa, y muchos vecinos están preocupados por su salud'. Saastuminen + huoli terveydestä."
+    },
+    {
+      "id": "es_b_005",
+      "topic": "inference",
+      "level": "C",
+      "type": "mc",
+      "question": "Mitä Marian esimerkki kertoo pyöräilyn hyödyistä?",
+      "options": [
+        "Pyörällä matkustaa hitaammin kuin autolla.",
+        "Pyöräily säästää aikaa, rahaa ja edistää terveyttä.",
+        "Autoilu on Madridissa nopeampaa.",
+        "Pyöräily vaatii erikoiskoulutusta."
+      ],
+      "answer": 1,
+      "distractor_rationale": {
+        "0": "Maria sanoo päinvastaista: 45 min auto → 30 min pyörä",
+        "2": "ei tekstissä",
+        "3": "ei tekstissä"
+      },
+      "explanation": "Maria mainitsee kolme hyötyä: nopeampi (30 vs 45 min), rahan säästö ('ahorrar dinero'), ja liikunta ('hacer ejercicio')."
+    },
+    {
+      "id": "es_b_006",
+      "topic": "inference",
+      "level": "M",
+      "type": "short",
+      "question": "Mitä tekstistä voi päätellä Madridin tulevaisuudesta? Vastaa lyhyesti suomeksi (1–2 lausetta).",
+      "expected_keywords": ["Ámsterdam", "Kööpenhamina", "Amsterdam", "Copenhague", "pyörä", "pohjoismainen", "eurooppalainen", "kymmenen vuotta", "yleinen"],
+      "explanation": "Asiantuntijat sanovat että Madrid voi muistuttaa kymmenessä vuodessa muita eurooppalaisia pääkaupunkeja kuten Amsterdam tai Kööpenhamina, missä pyörä on yleisin liikennemuoto. Vastauksen pitäisi mainita tämä."
+    }
+  ]
 }
