@@ -3242,9 +3242,16 @@ select option { background: var(--surface-2); }
   cursor: pointer;
 }
 .app-countdown-close:hover { color: var(--ink); background: color-mix(in srgb, var(--ink) 8%, transparent); }
-/* Shift sidebar + main down when countdown is visible. */
-body:has(.app-countdown:not(.hidden)) .app-sidebar { top: 34px; }
+/* L-V287-SHELL-TOP-1: sidebar stays pinned at viewport top in every state —
+   the old `body:has(.app-countdown:not(.hidden)) .app-sidebar { top: 34px }`
+   rule left a white band between the URL bar and the Puheo logo for any
+   user who hadn't dismissed the countdown. The countdown now offsets its
+   left edge by the sidebar width on desktop so it sits above the main
+   column only and never crosses the brand surface on the left. */
 body:has(.app-countdown:not(.hidden)) #app-main { padding-top: 34px; }
+@media (min-width: 1024px) {
+  .app-countdown { left: var(--app-sidebar, 220px); }
+}
 
 /* ═══════════════════════════════════════════════════════════════════════════
    ONBOARDING S3 — PATH
