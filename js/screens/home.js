@@ -1,21 +1,25 @@
 /**
- * HOME — v271 dashboard-redesign (2026-05-22).
+ * HOME — v289 anti-slop redesign (2026-05-23, L-V289-ALOITUS-REDESIGN-1).
  *
- * Implements docs/briefs/2026-05-22-dashboard-redesign.md.
+ * The v271 dashboard ("Hei!" + date pill + Jatka-card + goal-bar + 4 track
+ * tiles) read as AI slop to the user, reported 5 times. This rebuild
+ * collapses everything to three honest surfaces and bans:
  *
- * Old shell (Ohjaamo 5-cell + 4 identical mode cards + italic "Päivää.")
- * was portfolio-page slop — it answered "what does Puheo *contain*"
- * instead of "what do I do next." The new shell collapses to four
- * answerable surfaces:
+ *   - Date pill chip
+ *   - Orphan greeting
+ *   - "Jatka tästä" container card (replaced with inline call-to-action)
+ *   - Identical 4-card grid for tracks (replaced with hairline list)
+ *   - Empty "0 / 30 min" placeholder bar (hidden when streak + minutes are 0)
+ *   - Orphan Koeharjoitus footer link (integrated into paths list)
  *
- *   1. Greeting + date  — personal anchor, no italic Fraunces
- *   2. "Jatka tästä?"   — single primary card with one brick CTA
- *   3. Päivän tavoite   — streak + minute-goal bar
- *   4. Kurssipolku      — 4 micro-tiles for sanasto/kielioppi/luetun/kirjoitus
+ * Composition is now:
+ *   1. home-tabs   — language switcher, only when 2+ langs enabled
+ *   2. home-next   — inline greeting + next-action + one brick CTA
+ *   3. home-pulse  — streak + today's minutes, only when there is real data
+ *   4. home-paths  — secondary actions as hairline-separated rows
  *
- * Language tabs stay (multi-lang feature exists), Koeharjoitus survives
- * as a small secondary link in the footer until the sidebar rebuild
- * picks it up (SidebarShell-brief).
+ * One CTA on the screen carries data-cta-primary. The anti-slop spec
+ * (tests/e2e-aloitus-anti-slop.spec.js) enforces this contract.
  */
 
 import { API, apiFetch, isLoggedIn, authHeader, fetchDashboardV2 } from "../api.js";
@@ -33,10 +37,6 @@ const LANGS = [
 const ENABLED_LANGS_KEY = "puheo:enabled-langs";
 const LANG_KEY = "puheo:lang";
 const DEFAULT_GOAL_MIN = 15;
-// L-RENDER-PERF-1: shared cache via fetchDashboardV2 in api.js. The local
-// _ohjaamoData wrapper stays for the warm-cache fast-path check (timestamp
-// gate) but the actual fetch is deduped at the api.js layer so dashboard.js
-// + home.js share one network roundtrip.
 let _ohjaamoData = null;
 
 function readEnabledLangs() {
@@ -70,22 +70,9 @@ function writeActiveLang(code) {
 }
 
 async function fetchOhjaamo() {
-  // L-RENDER-PERF-1: delegate to shared coalesced fetcher. If dashboard.js
-  // already kicked off a /api/dashboard/v2 request, we await the same
-  // in-flight promise instead of firing a second one.
   const data = await fetchDashboardV2();
   if (data) _ohjaamoData = { ts: Date.now(), payload: data };
   return data;
-}
-
-// Finnish localised "Perjantai 22. toukokuuta" — Intl gives us the parts
-// but capitalises the weekday lowercase. Manual title-case keeps it tidy.
-function finnishDateLabel(now = new Date()) {
-  const weekday = now.toLocaleDateString("fi-FI", { weekday: "long" });
-  const day = now.getDate();
-  const month = now.toLocaleDateString("fi-FI", { month: "long" });
-  const w = weekday.charAt(0).toUpperCase() + weekday.slice(1);
-  return `${w} ${day}. ${month}`;
 }
 
 function renderTabs(activeLang) {
@@ -104,29 +91,11 @@ function renderTabs(activeLang) {
   `).join("");
 }
 
-function renderGreeting(profile) {
-  const name = profile?.preferred_name
-    || profile?.full_name
-    || window._userProfile?.preferred_name
-    || "";
-  const greeting = name ? `Hei, ${escapeHtml(name)}!` : "Hei!";
-  const dateLabel = escapeHtml(finnishDateLabel());
-  return `
-    <header class="home-head">
-      <h1 class="home-greeting">${greeting}</h1>
-      <p class="home-date-pill" aria-label="Päivämäärä">${dateLabel}</p>
-    </header>`;
-}
-
-// "Jatka tästä?" — the only primary surface on the screen. Brief mandates
-// EI tyhjää placeholderia: empty-state shows "Aloita ensimmäinen kurssi".
-//
-// We don't yet ship a /api/curriculum/continue endpoint that knows the
-// last lesson — sessionStorage["currentLesson"] is session-scoped (clears
-// on tab close), so a fresh tab still empty-states. Truthful for now;
-// a future iteration writes localStorage["puheo:last-lesson"] from
-// curriculum.js openLesson() and we read it here.
-function renderContinueCard(dashboard, lang) {
+// Single inline next-action. Greeting is integrated into the headline so
+// "Hei!" never floats alone, and the call sits in flowing text instead of
+// in a container card. One brick CTA, marked data-cta-primary so the
+// anti-slop spec can lock the count to exactly one.
+function renderNext(dashboard, profile, lang) {
   const sessions = Number(dashboard?.totalSessions ?? 0);
   let lastLesson = null;
   try {
@@ -134,128 +103,132 @@ function renderContinueCard(dashboard, lang) {
     if (raw) lastLesson = JSON.parse(raw);
   } catch { /* private mode */ }
 
+  const firstName = profile?.preferred_name
+    || (profile?.full_name ? profile.full_name.split(" ")[0] : "")
+    || "";
+  const namePart = firstName ? `Hei, ${escapeHtml(firstName)}. ` : "Hei. ";
+
   const isFresh = sessions === 0 && !lastLesson;
-  const title = isFresh ? "Aloita ensimmäinen kurssi" : "Jatka oppimispolulla";
-  const sub = isFresh
-    ? "Yksi oppitunti per päivä riittää alkuun."
-    : "Avaa viimeisin kurssisi ja jatka siitä mihin jäit.";
-  const eyebrow = isFresh ? "Tervetuloa" : "Jatka tästä";
-  const cta = isFresh ? "Aloita →" : "Jatka →";
+  let title, meta, ctaLabel, ctaHref;
+  if (isFresh) {
+    title = `${namePart}Aloita ensimmäinen oppitunti.`;
+    meta = "Yksi oppitunti päivässä riittää alkuun.";
+    ctaLabel = "Aloita";
+    ctaHref = `#/oppimispolku?lang=${escapeHtml(lang)}`;
+  } else if (lastLesson?.title) {
+    const lessonTitle = String(lastLesson.title).slice(0, 80);
+    title = `${namePart}Jatka oppituntiin: ${escapeHtml(lessonTitle)}.`;
+    meta = "Avaa viimeisin tehtäväsi siitä mihin jäit.";
+    ctaLabel = "Jatka oppituntiin";
+    ctaHref = lastLesson.href || `#/oppimispolku?lang=${escapeHtml(lang)}`;
+  } else {
+    title = `${namePart}Jatka oppimispolulla.`;
+    meta = "Avaa viimeisin kurssisi ja valitse seuraava oppitunti.";
+    ctaLabel = "Avaa oppimispolku";
+    ctaHref = `#/oppimispolku?lang=${escapeHtml(lang)}`;
+  }
 
   return `
-    <a class="home-continue ${isFresh ? "is-fresh" : ""}"
-       href="#/oppimispolku?lang=${escapeHtml(lang)}"
-       data-action="continue">
-      <div class="home-continue__body">
-        <p class="home-continue__eyebrow">${escapeHtml(eyebrow)}</p>
-        <h2 class="home-continue__title">${escapeHtml(title)}</h2>
-        <p class="home-continue__sub">${escapeHtml(sub)}</p>
-      </div>
-      <span class="home-continue__cta">${escapeHtml(cta)}</span>
-    </a>`;
+    <section class="home-next" aria-label="Seuraava askel">
+      <h1 class="home-next__title">${title}</h1>
+      <p class="home-next__meta">${escapeHtml(meta)}</p>
+      <a class="home-next__cta"
+         data-cta-primary="true"
+         href="${ctaHref}"
+         data-action="continue">
+        ${escapeHtml(ctaLabel)}
+        <span class="home-next__cta-arrow" aria-hidden="true">→</span>
+      </a>
+    </section>`;
 }
 
-// Päivän tavoite — streak chip on the left, minute-goal bar on the right.
-// Both surfaces are real data, not placeholders. When streak is 0 the
-// chip swaps to a softer "Aloita putki tänään" instead of "0 pv".
-function renderGoalRow(data) {
+// Pulse = streak chip + today's minutes, in one sentence. Hidden entirely
+// when both signals are zero, so a fresh tab never sees the placeholder
+// "0 / 30 min" empty bar that the v271 dashboard shipped.
+function renderPulse(data) {
   const dashboard = data?.dashboard || {};
   const profile = data?.profile?.profile || window._userProfile || {};
   const streak = Number(dashboard.streak ?? 0);
   const goalMin = Number(profile.preferred_session_length || DEFAULT_GOAL_MIN);
 
-  // Today's minutes — estimate from chartData (3 min/session, same heuristic
-  // dashboard.js used). chartData lives on the v2 payload's dashboard core.
   const today = new Date().toISOString().slice(0, 10);
   const chartData = Array.isArray(dashboard.chartData) ? dashboard.chartData : [];
   const todaySessions = chartData.filter((l) => l?.createdAt?.slice(0, 10) === today).length;
   const todayMin = Math.min(goalMin, todaySessions * 3);
-  const pct = Math.max(0, Math.min(100, Math.round((todayMin / goalMin) * 100)));
+
+  if (streak < 1 && todayMin <= 0) return "";
+
+  const parts = [];
+  if (streak >= 1) {
+    parts.push(`<strong class="home-pulse__num">${streak}</strong> päivän putki`);
+  }
+  if (todayMin > 0) {
+    parts.push(`tänään <strong class="home-pulse__num">${todayMin}</strong> / ${goalMin} min`);
+  }
+
   const goalMet = todayMin >= goalMin;
-
-  const streakLabel = streak >= 1
-    ? `<span class="home-goal__streak-num">${streak}</span><span class="home-goal__streak-unit">pv putki</span>`
-    : `<span class="home-goal__streak-empty">Aloita putki tänään</span>`;
-  const streakHot = streak >= 7;
-
   return `
-    <section class="home-goal" aria-label="Päivän tavoite">
-      <div class="home-goal__streak ${streakHot ? "is-hot" : ""} ${streak === 0 ? "is-empty" : ""}">
-        ${streakLabel}
-      </div>
-      <div class="home-goal__progress">
-        <div class="home-goal__progress-head">
-          <span class="home-goal__progress-label">Päivän tavoite</span>
-          <span class="home-goal__progress-val">${todayMin} / ${goalMin} min</span>
-        </div>
-        <div class="home-goal__bar" role="progressbar"
-             aria-valuemin="0" aria-valuemax="${goalMin}" aria-valuenow="${todayMin}">
-          <div class="home-goal__fill ${goalMet ? "is-met" : ""}" style="width:${pct}%"></div>
-        </div>
-      </div>
+    <section class="home-pulse ${goalMet ? "is-met" : ""}" aria-label="Päivän eteneminen">
+      <p class="home-pulse__line">${parts.join(", ")}.</p>
     </section>`;
 }
 
-// Kurssipolku snapshot — four micro-tiles, NOT the four big mode cards.
-// Sanasto + Kielioppi live inside the oppimispolku flow; luetun + kirjoitus
-// each have a dedicated mode page. Linking accordingly.
-const TRACKS = [
-  { id: "sanasto",   name: "Sanasto",             modeKey: "vocab",   href: (l) => `#/oppimispolku?lang=${l}` },
-  { id: "kielioppi", name: "Kielioppi",           modeKey: "grammar", href: (l) => `#/oppimispolku?lang=${l}` },
-  { id: "luetun",    name: "Luetun ymmärtäminen", modeKey: "reading", href: (l) => `#/luetun?lang=${l}` },
-  { id: "kirjoitus", name: "Kirjoitus",           modeKey: "writing", href: (l) => `#/kirjoitus?lang=${l}` },
-];
-
-function renderTracks(dashboard, lang) {
+// Secondary paths — five row entries in a single column with hairline
+// separators. No cards, no icons, no per-row accent. The row title and
+// meta carry the entire signal; brick is reserved for the primary CTA.
+function buildPathRows(dashboard, lang, isPro) {
   const modeStats = dashboard?.modeStats || {};
-  const tiles = TRACKS.map((t) => {
-    const s = modeStats[t.modeKey] || {};
+  const fmt = (mode) => {
+    const s = modeStats[mode] || {};
     const sessions = Number(s.sessions ?? 0);
-    // Track-progress is session-count scaled against 30 (~one month of
-    // daily practice). Honest signal of effort, not a fake course-counter.
-    const fillPct = Math.max(0, Math.min(100, Math.round((sessions / 30) * 100)));
-    const countLabel = sessions === 0
-      ? "Ei vielä aloitettu"
-      : `${sessions} ${sessions === 1 ? "harjoitus" : "harjoitusta"}`;
-    return `
-      <a class="home-track" href="${t.href(lang)}" data-track="${t.id}">
-        <h3 class="home-track__name">${escapeHtml(t.name)}</h3>
-        <div class="home-track__bar" aria-hidden="true">
-          <div class="home-track__bar-fill" style="width:${fillPct}%"></div>
-        </div>
-        <p class="home-track__meta">${escapeHtml(countLabel)}</p>
-      </a>`;
-  }).join("");
-  return `
-    <section class="home-tracks" aria-label="Kurssipolku">
-      <p class="home-tracks__eyebrow">Kurssipolku</p>
-      <div class="home-tracks__grid">${tiles}</div>
-    </section>`;
+    if (sessions === 0) return "Ei vielä aloitettu";
+    return `${sessions} ${sessions === 1 ? "harjoitus" : "harjoitusta"}`;
+  };
+
+  return [
+    { id: "sanasto",   label: "Sanasto",             meta: fmt("vocab"),   href: `#/oppimispolku?lang=${lang}` },
+    { id: "kielioppi", label: "Kielioppi",           meta: fmt("grammar"), href: `#/oppimispolku?lang=${lang}` },
+    { id: "luetun",    label: "Luetun ymmärtäminen", meta: fmt("reading"), href: `#/luetun?lang=${lang}` },
+    { id: "kirjoitus", label: "Kirjoitustehtävä",    meta: fmt("writing"), href: `#/kirjoitus?lang=${lang}` },
+    {
+      id: "koeharjoitus",
+      label: "Koeharjoitus",
+      meta: isPro ? "Täysi YO-koerunko" : "Pro-jäsenille",
+      href: `#/koeharjoitus?lang=${lang}`,
+      locked: !isPro,
+    },
+  ];
 }
 
-// Small footer with secondary actions — until the sidebar rebuild lands
-// (SidebarShell-brief), Koeharjoitus needs a discoverable entry point.
-function renderFooter(lang, isPro) {
-  const lockHint = isPro ? "" : `<span class="home-footer__lock" aria-hidden="true">🔒</span>`;
+function renderPaths(dashboard, lang, isPro) {
+  const rows = buildPathRows(dashboard, lang, isPro)
+    .map((r) => `
+      <li class="home-path">
+        <a class="home-path__row ${r.locked ? "is-locked" : ""}"
+           href="${r.href}"
+           data-path="${r.id}"
+           ${r.locked ? `data-unlocked="0" data-action="exam"` : ""}>
+          <span class="home-path__label">${escapeHtml(r.label)}</span>
+          <span class="home-path__meta">${escapeHtml(r.meta)}</span>
+          <span class="home-path__arrow" aria-hidden="true">→</span>
+        </a>
+      </li>`)
+    .join("");
   return `
-    <footer class="home-footer">
-      <a class="home-footer__link" href="#/koeharjoitus?lang=${escapeHtml(lang)}" data-action="exam">
-        ${lockHint}<span>Koeharjoitus</span>
-        <span class="home-footer__arrow" aria-hidden="true">→</span>
-      </a>
-    </footer>`;
+    <section class="home-paths" aria-label="Muut harjoitukset">
+      <ol class="home-paths__list">${rows}</ol>
+    </section>`;
 }
 
 function renderShell(activeLang, data, isPro) {
   const dashboard = data?.dashboard || {};
   const profile = data?.profile?.profile || window._userProfile || null;
+  const tabsHtml = renderTabs(activeLang);
   return `
-    ${renderGreeting(profile)}
-    ${renderTabs(activeLang) ? `<div class="home-tabs" role="tablist" aria-label="Kielet">${renderTabs(activeLang)}</div>` : ""}
-    ${renderContinueCard(dashboard, activeLang)}
-    ${renderGoalRow(data)}
-    ${renderTracks(dashboard, activeLang)}
-    ${renderFooter(activeLang, isPro)}
+    ${tabsHtml ? `<div class="home-tabs" role="tablist" aria-label="Kielet">${tabsHtml}</div>` : ""}
+    ${renderNext(dashboard, profile, activeLang)}
+    ${renderPulse(data)}
+    ${renderPaths(dashboard, activeLang, isPro)}
   `;
 }
 
@@ -265,73 +238,50 @@ function wireTabs(root) {
       const lang = tab.dataset.lang;
       if (!lang) return;
       writeActiveLang(lang);
-      // Full re-render is cheaper than rewriting every href in place
-      // (continue card, tracks, footer, lang-aware data all need it).
       loadHome();
     });
   });
 }
 
-// Layout-matching skeleton — renders BEFORE /api/dashboard/v2 resolves
-// so the white content area never sits empty. Same shapes the live
-// shell uses (greeting, primary card, goal bar, four micro-tracks) so
-// the swap is reflow-free. No italic "Ladataan…" — the brief explicitly
-// bans that AI-slop pattern.
 function renderShellSkeleton(activeLang) {
   const tabs = renderTabs(activeLang);
-  const trackTiles = Array.from({ length: 4 }).map(() => `
-    <div class="home-track home-track--skel" aria-hidden="true">
-      <span class="home-skel home-skel--track-name"></span>
-      <span class="home-skel home-skel--track-bar"></span>
-      <span class="home-skel home-skel--track-meta"></span>
-    </div>`).join("");
+  const pathRows = Array.from({ length: 5 }).map(() => `
+    <li class="home-path home-path--skel" aria-hidden="true">
+      <span class="home-skel home-skel--path-label"></span>
+      <span class="home-skel home-skel--path-meta"></span>
+    </li>`).join("");
   return `
     <div class="home-skel-root" role="status" aria-live="polite">
-      <span class="sr-only">Ladataan kotinäyttöä…</span>
-      <header class="home-head" aria-hidden="true">
-        <span class="home-skel home-skel--greeting"></span>
-        <span class="home-skel home-skel--date"></span>
-      </header>
+      <span class="sr-only">Ladataan kotinäyttöä.</span>
       ${tabs ? `<div class="home-tabs" aria-hidden="true">${tabs}</div>` : ""}
-      <div class="home-continue home-continue--skel" aria-hidden="true">
-        <div class="home-continue__body">
-          <span class="home-skel home-skel--eyebrow"></span>
-          <span class="home-skel home-skel--title"></span>
-          <span class="home-skel home-skel--sub"></span>
-        </div>
-        <span class="home-skel home-skel--cta"></span>
-      </div>
-      <section class="home-goal home-goal--skel" aria-hidden="true">
-        <span class="home-skel home-skel--streak"></span>
-        <span class="home-skel home-skel--goal-bar"></span>
+      <section class="home-next home-next--skel" aria-hidden="true">
+        <span class="home-skel home-skel--next-title"></span>
+        <span class="home-skel home-skel--next-meta"></span>
+        <span class="home-skel home-skel--next-cta"></span>
       </section>
-      <section class="home-tracks" aria-hidden="true">
-        <span class="home-skel home-skel--eyebrow"></span>
-        <div class="home-tracks__grid">${trackTiles}</div>
+      <section class="home-paths" aria-hidden="true">
+        <ol class="home-paths__list">${pathRows}</ol>
       </section>
     </div>`;
 }
 
-// v282 perf — warm the next-screen chunk + its API payload on hover so
-// the Aloitus → Oppimispolku / Luetun / Kirjoitus jump runs against an
-// already-resolved cache instead of cold imports + cold fetches.
 function wireHoverPrefetch(root, lang) {
-  const continueCard = root.querySelector(".home-continue");
-  if (continueCard) {
-    onHoverIntent(continueCard, () => {
+  const cta = root.querySelector(".home-next__cta");
+  if (cta) {
+    onHoverIntent(cta, () => {
       prefetchChunk("oppimispolkuIndex", () => import("./oppimispolkuIndex.js"));
       prefetchCurriculumList(lang);
     });
   }
-  root.querySelectorAll(".home-track").forEach((a) => {
-    const track = a.dataset.track;
+  root.querySelectorAll(".home-path__row").forEach((a) => {
+    const id = a.dataset.path;
     onHoverIntent(a, () => {
-      if (track === "sanasto" || track === "kielioppi") {
+      if (id === "sanasto" || id === "kielioppi") {
         prefetchChunk("oppimispolkuIndex", () => import("./oppimispolkuIndex.js"));
         prefetchCurriculumList(lang);
-      } else if (track === "luetun") {
+      } else if (id === "luetun") {
         prefetchChunk("reading", () => import("./reading.js"));
-      } else if (track === "kirjoitus") {
+      } else if (id === "kirjoitus") {
         prefetchChunk("writing", () => import("./writing.js"));
       }
     });
@@ -358,8 +308,6 @@ export async function loadHome() {
   if (!root) return;
   const activeLang = readActiveLang();
 
-  // Warm-cache fast path: paint the live shell synchronously if we already
-  // have ohjaamo data <60s old. Eliminates the skeleton flash on tab return.
   if (_ohjaamoData && (Date.now() - _ohjaamoData.ts) < 60_000) {
     const cached = _ohjaamoData.payload;
     const isPro = isProTier(cached?.profile?.profile);
