@@ -326,7 +326,6 @@ body:has(#screen-digikirja.active) #screen-digikirja.screen.active {
 }
 .dk__sidemenu-logo span {
   color: var(--ed-accent);
-  font-style: italic;
 }
 .dk__sidemenu-course {
   font-family: var(--ed-sans);
@@ -608,8 +607,7 @@ color: var(--ed-ink-faint);
   max-width: 24ch;
 }
 .dk__page-title em {
-  font-style: italic;
-  color: var(--ed-accent);
+color: var(--ed-accent);
 }
 
 .dk__page-body {
@@ -648,8 +646,7 @@ color: var(--ed-accent);
 .dk__teoria-h2 {
   font-family: var(--ed-display);
   font-weight: 500;
-  font-style: italic;
-  font-size: clamp(20px, 1.4vw + 12px, 26px);
+font-size: clamp(20px, 1.4vw + 12px, 26px);
   line-height: 1.2;
   letter-spacing: -0.005em;
   color: var(--ed-ink);
@@ -673,7 +670,8 @@ color: var(--ed-ink-muted);
   color: var(--ed-ink);
 }
 .dk__teoria-p strong { color: var(--ed-accent); font-weight: 600; }
-.dk__teoria-p em { font-style: italic; color: var(--ed-ink-muted); }
+.dk__teoria-p em {
+color: var(--ed-ink-muted); }
 
 .dk__teoria-ul {
   margin: 8px 0 18px;
@@ -794,8 +792,7 @@ color: var(--ed-ink-muted);
 }
 .dk__obs-label {
   font-family: var(--ed-display);
-  font-style: italic;
-  font-weight: 600;
+font-weight: 600;
   font-size: 17px;
   letter-spacing: -0.005em;
   color: var(--ed-accent);
@@ -813,8 +810,7 @@ color: var(--ed-ink-muted);
 .dk__obs-body p:last-child { margin-bottom: 0; }
 .dk__obs-body strong { color: var(--ed-accent); font-weight: 600; }
 .dk__obs-body em {
-  font-style: italic;
-  font-family: var(--ed-display);
+font-family: var(--ed-display);
   color: var(--ed-ink);
 }
 
@@ -875,8 +871,7 @@ color: var(--ed-ink-faint);
 }
 .dk__exercise-hint {
   font-family: var(--ed-sans);
-  font-style: italic;
-  font-size: 14px;
+font-size: 14px;
   color: var(--ed-ink-muted);
   margin: -6px 0 16px;
 }
@@ -1208,8 +1203,7 @@ color: var(--ed-ink-faint);
 }
 .dk__testi-summary-num {
   font-family: var(--ed-display);
-  font-style: italic;
-  font-weight: 600;
+font-weight: 600;
   font-size: 30px;
   color: var(--ed-accent);
   line-height: 1;
@@ -1221,8 +1215,7 @@ color: var(--ed-ink-faint);
 }
 .dk__testi-summary-headline {
   font-family: var(--ed-display);
-  font-style: italic;
-  font-size: 18px;
+font-size: 18px;
   color: var(--ed-ink);
   margin: 0;
   max-width: 38ch;
@@ -1246,8 +1239,7 @@ color: var(--ed-ink-faint);
 }
 .dk__arvio-lede {
   font-family: var(--ed-display);
-  font-style: italic;
-  font-size: 17px;
+font-size: 17px;
   color: var(--ed-ink);
   margin: 4px 0 18px;
   max-width: 48ch;
@@ -1414,8 +1406,7 @@ background: var(--ed-bg-deep);
 
 .dk__flashcard-word {
   font-family: var(--ed-display);
-  font-style: italic;
-  font-weight: 500;
+font-weight: 500;
   font-size: clamp(28px, 2.6vw + 16px, 40px);
   line-height: 1.1;
   letter-spacing: -0.01em;
@@ -1430,8 +1421,7 @@ background: var(--ed-bg-deep);
 
 .dk__flashcard-example {
   font-family: var(--ed-display);
-  font-style: italic;
-  font-size: 16px;
+font-size: 16px;
   line-height: 1.45;
   color: var(--ed-ink);
   margin: 4px 0;
@@ -1452,8 +1442,7 @@ background: var(--ed-bg-deep);
 
 .dk__flash-hint {
   font-family: var(--ed-sans);
-  font-style: italic;
-  font-size: 13.5px;
+font-size: 13.5px;
   color: var(--ed-ink-muted);
   text-align: center;
   margin: 6px 0 0;
@@ -1479,8 +1468,7 @@ background: var(--ed-bg-deep);
 }
 .dk__flashdone-headline {
   font-family: var(--ed-display);
-  font-style: italic;
-  font-size: 22px;
+font-size: 22px;
   color: var(--ed-ink);
   margin: 0 0 6px;
 }
