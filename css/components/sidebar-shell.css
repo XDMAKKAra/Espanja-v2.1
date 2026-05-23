@@ -46,7 +46,8 @@
 .app-sidebar [data-mode-only] { display: none; }
 .app-sidebar[data-mode="home"] [data-mode-only="home"] { display: contents; }
 .app-sidebar[data-mode="mode"] [data-mode-only="mode"] { display: contents; }
-.app-sidebar[data-mode="book"] [data-mode-only="book"] { display: contents; }
+/* book mode hides the entire sidebar (see BOOK mode block below),
+   so [data-mode-only="book"] reveals would never apply. */
 
 /* Mode-state header: shows current section name + sticky back-link.
    L-EYEBROW-EMDASH-1: dropped mono-UPPERCASE, sentence case + soft tracking. */
@@ -141,40 +142,19 @@
 }
 
 /* ── BOOK mode (digikirja) ───────────────────────────────────
-   Replaces the old `body:has(#screen-digikirja.active) .app-sidebar
-   { display: none }` band-aid in digikirja.css. The book screen
-   now owns its own internal sidemenu (.dk__sidemenu); we collapse
-   the global sidebar to a compact 56px rail so the header path
-   (Aloitus → Asetukset) is still reachable without a hard hide. */
-@media (min-width: 1024px) {
-  .app-sidebar[data-mode="book"] {
-    width: 56px;
-  }
-  .app-sidebar[data-mode="book"] .sidebar-logo span:not(:first-child),
-  .app-sidebar[data-mode="book"] .sidebar-item:not(.sidebar-item-icon-only) > *:not(.sidebar-item-icon),
-  .app-sidebar[data-mode="book"] .sidebar-mode-title,
-  .app-sidebar[data-mode="book"] .sidebar-pro-slot,
-  .app-sidebar[data-mode="book"] .sidebar-user {
-    display: none;
-  }
-  .app-sidebar[data-mode="book"] .sidebar-logo {
-    padding: 0;
-    text-align: center;
-    overflow: hidden;
-    white-space: nowrap;
-    text-indent: -2px;
-  }
-  .app-sidebar[data-mode="book"] .sidebar-item {
-    justify-content: center;
-    padding: 10px 0;
-  }
-}
+   L-V288-LESSON-SHELL-1 (three-strikes restructure): the v277 rail
+   approach (56px collapsed shell + dk__sidemenu inside the lesson)
+   produced literal sidebar overlap because both sidebars anchored
+   at x=0, rail selectors didn't match the actual markup
+   (`.sidebar-item-icon-only` doesn't exist; `:not(:first-child)`
+   missed the only logo span), and the rail tarjosi nothing the
+   dk__sidemenu didn't already (Puheo logo, Aloitus, käyttäjä-affordanssi).
 
-/* Below 1024px the off-canvas drawer handles its own visibility;
-   don't override it here. The digikirja screen also has its own
-   in-screen sidemenu that takes over the visual role. */
-@media (max-width: 1023px) {
-  .app-sidebar[data-mode="book"] { /* let off-canvas-nav.css drive */ }
+   Decision (suunta A): hide the global sidebar entirely on the
+   book screen. The lesson's .dk__sidemenu + .dk__topbar own all
+   navigation affordances — see digikirja.css line 306, 131. */
+.app-sidebar[data-mode="book"] {
+  display: none;
 }
 
 /* ── Settings-modal jitter fix ───────────────────────────────

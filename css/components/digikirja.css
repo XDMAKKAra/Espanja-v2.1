@@ -44,10 +44,13 @@
    mobile-only topbar) is suppressed: it would otherwise overlap the
    dk__topbar title or eat horizontal space.
 
-   v277: the .app-sidebar `display: none` band-aid is replaced by
-   [data-mode="book"] in css/components/sidebar-shell.css — the sidebar
-   collapses to a 56px rail instead of vanishing, so the Aloitus path
-   stays clickable from anywhere in the app. */
+   L-V288-LESSON-SHELL-1: the global .app-sidebar is now hidden entirely
+   in book mode via [data-mode="book"] in sidebar-shell.css (was a 56px
+   rail in v277 but that produced literal sidebar overlap because both
+   sidebars anchored at x=0; the dk__sidemenu already carries Puheo +
+   Aloitus and the dk__topbar carries a second Aloitus, so the rail was
+   redundant). The grid override below collapses .app-shell to a single
+   column so .app-main can fill the viewport. */
 body:has(#screen-digikirja.active) .profile-menu-wrap { display: none; }
 body:has(#screen-digikirja.active) .app-countdown { display: none; }
 body:has(#screen-digikirja.active) .app-topbar { display: none; }
