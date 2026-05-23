@@ -1,8 +1,268 @@
 {
   "lang": "fr",
   "part": "a_grammar",
-  "version": 0,
-  "status": "placeholder",
-  "note": "Sisältö generoidaan L-V293-1d -loopissa: 15 kysymystä jotka kattavat articles (def/indef/partitif), accord, présent, passé composé, imparfait, futur, conditionnel, subjonctif, si-hypoteesit. Tämä on infra-stubi.",
-  "questions": []
+  "version": 1,
+  "status": "ready",
+  "note": "Mini-YO Part A — French B3 lyhyt oppimäärä diagnostic grammar. 15 questions cover LOPS RAB3-relevant topics: articles (def/indef/partitif), accord genre/nombre, présent régulier/irrégulier, négation, passé composé avec auxiliaire avoir/être, accord du participe, imparfait, passé composé vs imparfait (YO-klassikko), futur simple, conditionnel, subjonctif présent (laukaisijat), pronoms relatifs, si-hypoteesilauseet. Difficulty A→M; tavoitetaso A2 → B1.1.",
+  "topic_taxonomy": "curriculumData.js grammar_focus keys (FR)",
+  "questions": [
+    {
+      "id": "fr_a_001",
+      "topic": "definite_articles",
+      "level": "A",
+      "type": "mc",
+      "question": "Valitse oikea määräinen artikkeli.",
+      "sentence_prefix": "Je regarde",
+      "sentence_blank": "____",
+      "sentence_suffix": "film tous les soirs.",
+      "options": ["le", "la", "les", "l'"],
+      "answer": 0,
+      "distractor_rationale": {
+        "1": "la = femin, mut film on maskuliini",
+        "2": "les = monikko, mut tässä yks",
+        "3": "l' = vain vokaalin/h:n edessä (l'ami), mut film alkaa konsonantilla"
+      },
+      "explanation": "Film on maskuliini ja alkaa konsonantilla → le film. Femin = la, monikko = les, vokaali/h-muet edessä = l'."
+    },
+    {
+      "id": "fr_a_002",
+      "topic": "present_regular",
+      "level": "A",
+      "type": "mc",
+      "question": "Valitse oikea muoto: parler, je.",
+      "sentence_prefix": "Je",
+      "sentence_blank": "____",
+      "sentence_suffix": "français avec mes amis.",
+      "options": ["parle", "parles", "parlons", "parlent"],
+      "answer": 0,
+      "distractor_rationale": {
+        "1": "parles = tu-muoto",
+        "2": "parlons = nous-muoto",
+        "3": "parlent = ils/elles-muoto"
+      },
+      "explanation": "-er-verbin preesensin yks: je parl-e, tu parl-es, il/elle parl-e (kaikki yks lausutaan samalla tavalla)."
+    },
+    {
+      "id": "fr_a_003",
+      "topic": "negation_ne_pas",
+      "level": "A",
+      "type": "mc",
+      "question": "Valitse oikea kieltomuoto.",
+      "sentence_prefix": "Elle",
+      "sentence_blank": "____",
+      "sentence_suffix": "le café.",
+      "options": ["ne aime pas", "n'aime pas", "non aime", "aime ne pas"],
+      "answer": 1,
+      "distractor_rationale": {
+        "0": "ne aime → n'aime (elisio vokaalin edessä)",
+        "2": "non = 'ei' vastauksessa, mut kieltomuoto vaatii ne...pas",
+        "3": "väärä sananjärjestys"
+      },
+      "explanation": "Negaatio = ne...pas verbin ympärillä. Vokaalin (aimer, écouter) tai h-muet:n edessä ne → n'. 'Elle n'aime pas le café.'"
+    },
+    {
+      "id": "fr_a_004",
+      "topic": "partitive_articles",
+      "level": "B",
+      "type": "mc",
+      "question": "Valitse oikea partitiivi.",
+      "sentence_prefix": "Je voudrais",
+      "sentence_blank": "____",
+      "sentence_suffix": "eau, s'il vous plaît.",
+      "options": ["du", "de la", "de l'", "des"],
+      "answer": 2,
+      "distractor_rationale": {
+        "0": "du = mask konsonantin edessä, mut eau alkaa vokaalilla",
+        "1": "de la = femin konsonantin edessä",
+        "3": "des = monikko"
+      },
+      "explanation": "Partitiivi vokaalin/h-muet:n edessä = de l' (riippumatta suvusta). 'De l'eau' = vettä."
+    },
+    {
+      "id": "fr_a_005",
+      "topic": "gender_number_agreement",
+      "level": "B",
+      "type": "mc",
+      "question": "Valitse oikea adjektiivimuoto.",
+      "sentence_prefix": "Les filles sont très",
+      "sentence_blank": "____",
+      "sentence_suffix": ".",
+      "options": ["intelligent", "intelligente", "intelligents", "intelligentes"],
+      "answer": 3,
+      "distractor_rationale": {
+        "0": "yks mask muoto",
+        "1": "yks fem muoto, mut filles on mon",
+        "2": "mon mask, mut filles on fem"
+      },
+      "explanation": "Adjektiivi mukautuu sukuun + lukuun. Les filles = fem mon → adjektiivi saa -es:n. Intelligent → intelligentes."
+    },
+    {
+      "id": "fr_a_006",
+      "topic": "present_irregular",
+      "level": "B",
+      "type": "mc",
+      "question": "Valitse oikea muoto: avoir, nous.",
+      "sentence_prefix": "Nous",
+      "sentence_blank": "____",
+      "sentence_suffix": "deux chats à la maison.",
+      "options": ["avons", "avez", "ont", "as"],
+      "answer": 0,
+      "distractor_rationale": {
+        "1": "avez = vous-muoto",
+        "2": "ont = ils/elles-muoto",
+        "3": "as = tu-muoto"
+      },
+      "explanation": "Avoir on epäsäännöllinen: j'ai, tu as, il a, nous avons, vous avez, ils ont. Nous-muoto avons päättyy -ons:iin (yleinen)."
+    },
+    {
+      "id": "fr_a_007",
+      "topic": "passe_compose",
+      "level": "B",
+      "type": "fill",
+      "question": "Täydennä passé composé:ssa (je): apuverbi avoir + partisiippi.",
+      "sentence_prefix": "Hier soir",
+      "sentence_blank": "____",
+      "sentence_suffix": "un film au cinéma.",
+      "verb_infinitive": "regarder",
+      "answer": "j'ai regardé",
+      "accepted_alternates": ["jai regardé", "ai regardé"],
+      "explanation": "Passé composé = avoir/être (taivutettu) + partisiippi. -er-verbin partisiippi: -é. 'Regarder → regardé'. 'J'ai regardé' = 'olen katsonut/katsoin'."
+    },
+    {
+      "id": "fr_a_008",
+      "topic": "etre_vs_avoir_aux",
+      "level": "B",
+      "type": "mc",
+      "question": "Valitse oikea apuverbi passé composé:ssa: aller.",
+      "sentence_prefix": "Hier, je",
+      "sentence_blank": "____",
+      "sentence_suffix": "au marché avec ma mère.",
+      "options": ["ai allé", "suis allé", "as allé", "est allé"],
+      "answer": 1,
+      "distractor_rationale": {
+        "0": "avoir + allé — väärin, aller on DR/MRS VANDERTRAMP -verbi → être",
+        "2": "as = tu-muoto",
+        "3": "est = il/elle-muoto, ei je"
+      },
+      "explanation": "DR/MRS VANDERTRAMP -liikkumisverbit (aller, venir, partir, arriver, monter, descendre, jne.) ottavat être:n passé composé:ssa. 'Je suis allé(e)'."
+    },
+    {
+      "id": "fr_a_009",
+      "topic": "imparfait",
+      "level": "B",
+      "type": "mc",
+      "question": "Valitse oikea muoto: kuvaileva mennyt.",
+      "sentence_prefix": "Quand j'étais petit, je",
+      "sentence_blank": "____",
+      "sentence_suffix": "toujours avec mes voisins.",
+      "options": ["joue", "ai joué", "jouais", "jouerais"],
+      "answer": 2,
+      "distractor_rationale": {
+        "0": "joue = preesens, ei mennyt",
+        "1": "passé composé = kertaluonteinen, mut 'toujours' = toistuva → imparfait",
+        "3": "conditionnel, ei imparfait"
+      },
+      "explanation": "Imparfait kuvaa toistuvia tai jatkuvia menneitä tapahtumia. 'Toujours, souvent, tous les jours' ovat selvät imparfait-merkit. Päätteet: -ais, -ais, -ait, -ions, -iez, -aient."
+    },
+    {
+      "id": "fr_a_010",
+      "topic": "passe_compose_vs_imparfait",
+      "level": "B",
+      "type": "fill",
+      "question": "Täydennä imparfaitissa: tausta keskeytyy. (lire, je)",
+      "sentence_prefix": "Je",
+      "sentence_blank": "____",
+      "sentence_suffix": "un livre quand le téléphone a sonné.",
+      "verb_infinitive": "lire",
+      "answer": "lisais",
+      "accepted_alternates": [],
+      "explanation": "YO-klassikko: 'a sonné' (passé composé) on pisteittäinen tapahtuma, ja sen tausta vaatii imparfait:n. Lire imparfaitissa: je lis-ais, tu lis-ais, il lis-ait."
+    },
+    {
+      "id": "fr_a_011",
+      "topic": "futur_simple",
+      "level": "C",
+      "type": "fill",
+      "question": "Täydennä futur simple:ssa (nous).",
+      "sentence_prefix": "L'année prochaine",
+      "sentence_blank": "____",
+      "sentence_suffix": "en Espagne en vacances.",
+      "verb_infinitive": "partir",
+      "answer": "nous partirons",
+      "accepted_alternates": ["partirons"],
+      "explanation": "Futur simple = infinitiivi + päätteet (-ai, -as, -a, -ons, -ez, -ont). -re-verbeillä e poistuu (prendre → prendr-). Partir → partir + ons = partirons."
+    },
+    {
+      "id": "fr_a_012",
+      "topic": "conditionnel_present",
+      "level": "C",
+      "type": "mc",
+      "question": "Valitse oikea muoto: kohtelias pyyntö.",
+      "sentence_prefix": "Je",
+      "sentence_blank": "____",
+      "sentence_suffix": "un café, s'il vous plaît.",
+      "options": ["veux", "voudrais", "voulais", "voudrai"],
+      "answer": 1,
+      "distractor_rationale": {
+        "0": "veux = preesens, liian suora ravintolassa",
+        "2": "voulais = imparfait, ei kohtelias muoto",
+        "3": "voudrai = futur, ei conditionnel"
+      },
+      "explanation": "Conditionnel présent = kohtelias muoto pyynnöissä. 'Je voudrais...' = 'haluaisin'. Vouloir → je voudrais, tu voudrais, il voudrait."
+    },
+    {
+      "id": "fr_a_013",
+      "topic": "subjonctif_present",
+      "level": "M",
+      "type": "mc",
+      "question": "Valitse oikea muoto: subjonctifin laukaisija.",
+      "sentence_prefix": "Il faut que tu",
+      "sentence_blank": "____",
+      "sentence_suffix": "à l'heure demain.",
+      "options": ["es", "sois", "serais", "étais"],
+      "answer": 1,
+      "distractor_rationale": {
+        "0": "es = indikatiivi, mut 'il faut que' laukaisee subjunktiivin",
+        "2": "serais = conditionnel",
+        "3": "étais = imparfait"
+      },
+      "explanation": "'Il faut que', 'je veux que', 'bien que', 'pour que' laukaisevat subjonctifin. Être subjonctifissa: que je sois, que tu sois, qu'il soit, que nous soyons, que vous soyez, qu'ils soient."
+    },
+    {
+      "id": "fr_a_014",
+      "topic": "relative_pronouns",
+      "level": "M",
+      "type": "mc",
+      "question": "Valitse oikea relatiivipronomini: subjekti vai objekti.",
+      "sentence_prefix": "Le livre",
+      "sentence_blank": "____",
+      "sentence_suffix": "j'ai lu hier est très intéressant.",
+      "options": ["qui", "que", "dont", "où"],
+      "answer": 1,
+      "distractor_rationale": {
+        "0": "qui = subjekti ('Le livre QUI est sur la table'), mut tässä j'ai lu (objekti)",
+        "2": "dont = josta/jonka (de-rakenne)",
+        "3": "où = jossa (paikka)"
+      },
+      "explanation": "Qui = subjekti (lauseessa joka tulee perään), que = objekti. 'Le livre QUE j'ai lu' = 'kirja jonka olen lukenut'. Lue myös: 'le livre QUI est intéressant' = 'kirja joka on kiinnostava'."
+    },
+    {
+      "id": "fr_a_015",
+      "topic": "si_hypotheses",
+      "level": "M",
+      "type": "mc",
+      "question": "Valitse oikea muoto: si-hypoteesilause, imparfait + conditionnel.",
+      "sentence_prefix": "Si j'avais plus de temps, je",
+      "sentence_blank": "____",
+      "sentence_suffix": "au cinéma avec toi.",
+      "options": ["irai", "irais", "vais", "suis allé"],
+      "answer": 1,
+      "distractor_rationale": {
+        "0": "irai = futur, mut 'si j'avais' (imparfait) vaatii conditionnel päälauseessa",
+        "2": "vais = preesens",
+        "3": "suis allé = passé composé, ei sovi hypoteesiin"
+      },
+      "explanation": "Si-hypoteesilauseen 2. tyyppi: si + imparfait → conditionnel présent. 'Si j'avais... j'irais' = 'jos minulla olisi... menisin'."
+    }
+  ]
 }
