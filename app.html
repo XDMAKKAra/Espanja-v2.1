@@ -47,6 +47,8 @@
   <!-- L-ONBOARDING-REDESIGN-1, V3 onboarding styles. Loaded outside bundle
        so the redesign is testable before the next `npm run build`. -->
   <link rel="stylesheet" href="/css/components/onboarding-v3.css" />
+  <!-- L-V293-ONBOARDING-DIAGNOSTIC-1a, diagnostic-first V4 styles. -->
+  <link rel="stylesheet" href="/css/components/onboarding-v4.css" />
   <!-- L-LANG-INFRA-1, coming-soon screen + settings language modal styles. -->
   <link rel="stylesheet" href="/css/components/coming-soon.css" />
   <!-- L-HERO-COUNTDOWN-AND-OFFCANVAS-1, off-canvas slide-in sidebar for <1024px. -->
@@ -681,6 +683,204 @@
         <button type="submit" class="ob3-cta">Liity jonoon</button>
       </form>
       <p class="ob3-modal__success hidden" id="ob3-waitlist-success">Kiitos, kuulet meistä ensimmäisten joukossa.</p>
+    </div>
+  </div>
+
+  <!-- ─── L-V293-ONBOARDING-DIAGNOSTIC-1a (V4) — diagnostic-first, 5 stepit ── -->
+
+  <!-- V4 step 1: intro -->
+  <div id="screen-ob-v4-intro" class="screen ob4">
+    <div class="ob4-shell">
+      <p class="ob4-step">Vaihe 1 / 5</p>
+      <h1 class="ob4-title">Räätälöidään sinun polkusi</h1>
+      <p class="ob4-sub">Lyhyt taso-arvio kattaa kieliopin, luetun ymmärtämisen ja kirjoittamisen. Saat henkilökohtaisen 3 viikon suunnitelman ja säästät tunteja, koska et harjoittele sitä mitä jo osaat. Voit jatkaa myöhemmin missä jäit.</p>
+      <p class="ob4-hint">Voit pilkkoa testin useaan istuntoon. Kirjoitelman voi ohittaa, jos on kiire.</p>
+      <div class="ob4-actions">
+        <button type="button" class="ob4-btn ob4-btn--primary" id="ob-v4-intro-start">Aloita taso-arvio</button>
+        <button type="button" class="ob4-btn ob4-btn--ghost" id="ob-v4-intro-skip">Ohita kokonaan</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- V4 step 2: test runner (a/b/c parts) -->
+  <div id="screen-ob-v4-test" class="screen ob4">
+    <div class="ob4-shell">
+      <div class="ob4-test-meta">
+        <p class="ob4-step" id="ob-v4-test-part-label">Osa A</p>
+        <p class="ob4-step" id="ob-v4-test-progress">0/0</p>
+      </div>
+      <h1 class="ob4-title" id="ob-v4-test-title">Lyhyitä kysymyksiä kieliopista ja sanastosta</h1>
+      <div class="ob4-test-body" id="ob-v4-test-body">
+        <p class="ob-v4-empty__hint">Ladataan…</p>
+      </div>
+      <div class="ob4-actions">
+        <button type="button" class="ob4-btn ob4-btn--primary" id="ob-v4-test-next-part">Seuraava osa</button>
+        <button type="button" class="ob4-btn ob4-btn--ghost" id="ob-v4-test-skip-part">Ohita tämä osa</button>
+        <button type="button" class="ob4-btn ob4-btn--ghost" id="ob-v4-test-skip-all">Ohita koko taso-arvio</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- V4 step 3: multi-select kurssit + arvosanat -->
+  <div id="screen-ob-v4-courses" class="screen ob4">
+    <div class="ob4-shell">
+      <p class="ob4-step">Vaihe 3 / 5</p>
+      <h1 class="ob4-title">Mitä lukio-kursseja olet käynyt?</h1>
+      <p class="ob4-sub">Valitse kaikki käymäsi kurssit, missä tahansa järjestyksessä. Voit lisätä arvosanan jos muistat.</p>
+      <div class="ob4-courses" id="ob-v4-courses-list">
+        <div class="ob4-course" data-course="1">
+          <input type="checkbox" class="ob4-course__check" data-course-num="1" id="ob-v4-c1" />
+          <label class="ob4-course__label" for="ob-v4-c1">
+            <span class="ob4-course__num">Kurssi 1</span>
+            <span class="ob4-course__title">Perussanasto ja preesens</span>
+          </label>
+          <select class="ob4-course__grade" data-course-num="1" aria-label="Arvosana kurssista 1">
+            <option value="skipped">En muista</option>
+            <option value="4">4</option><option value="5">5</option><option value="6">6</option>
+            <option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option>
+          </select>
+        </div>
+        <div class="ob4-course" data-course="2">
+          <input type="checkbox" class="ob4-course__check" data-course-num="2" id="ob-v4-c2" />
+          <label class="ob4-course__label" for="ob-v4-c2">
+            <span class="ob4-course__num">Kurssi 2</span>
+            <span class="ob4-course__title">Arki ja epäsäännölliset verbit</span>
+          </label>
+          <select class="ob4-course__grade" data-course-num="2" aria-label="Arvosana kurssista 2">
+            <option value="skipped">En muista</option>
+            <option value="4">4</option><option value="5">5</option><option value="6">6</option>
+            <option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option>
+          </select>
+        </div>
+        <div class="ob4-course" data-course="3">
+          <input type="checkbox" class="ob4-course__check" data-course-num="3" id="ob-v4-c3" />
+          <label class="ob4-course__label" for="ob-v4-c3">
+            <span class="ob4-course__num">Kurssi 3</span>
+            <span class="ob4-course__title">Mennyt aika ja matkustaminen</span>
+          </label>
+          <select class="ob4-course__grade" data-course-num="3" aria-label="Arvosana kurssista 3">
+            <option value="skipped">En muista</option>
+            <option value="4">4</option><option value="5">5</option><option value="6">6</option>
+            <option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option>
+          </select>
+        </div>
+        <div class="ob4-course" data-course="4">
+          <input type="checkbox" class="ob4-course__check" data-course-num="4" id="ob-v4-c4" />
+          <label class="ob4-course__label" for="ob-v4-c4">
+            <span class="ob4-course__num">Kurssi 4</span>
+            <span class="ob4-course__title">Ennen ja nyt, imperfekti</span>
+          </label>
+          <select class="ob4-course__grade" data-course-num="4" aria-label="Arvosana kurssista 4">
+            <option value="skipped">En muista</option>
+            <option value="4">4</option><option value="5">5</option><option value="6">6</option>
+            <option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option>
+          </select>
+        </div>
+        <div class="ob4-course" data-course="5">
+          <input type="checkbox" class="ob4-course__check" data-course-num="5" id="ob-v4-c5" />
+          <label class="ob4-course__label" for="ob-v4-c5">
+            <span class="ob4-course__num">Kurssi 5</span>
+            <span class="ob4-course__title">Tulevaisuus ja unelmat</span>
+          </label>
+          <select class="ob4-course__grade" data-course-num="5" aria-label="Arvosana kurssista 5">
+            <option value="skipped">En muista</option>
+            <option value="4">4</option><option value="5">5</option><option value="6">6</option>
+            <option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option>
+          </select>
+        </div>
+        <div class="ob4-course" data-course="6">
+          <input type="checkbox" class="ob4-course__check" data-course-num="6" id="ob-v4-c6" />
+          <label class="ob4-course__label" for="ob-v4-c6">
+            <span class="ob4-course__num">Kurssi 6</span>
+            <span class="ob4-course__title">Maailman ongelmat, subjunktiivi</span>
+          </label>
+          <select class="ob4-course__grade" data-course-num="6" aria-label="Arvosana kurssista 6">
+            <option value="skipped">En muista</option>
+            <option value="4">4</option><option value="5">5</option><option value="6">6</option>
+            <option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option>
+          </select>
+        </div>
+        <div class="ob4-course" data-course="7">
+          <input type="checkbox" class="ob4-course__check" data-course-num="7" id="ob-v4-c7" />
+          <label class="ob4-course__label" for="ob-v4-c7">
+            <span class="ob4-course__num">Kurssi 7</span>
+            <span class="ob4-course__title">Kulttuuri ja yhteiskunta</span>
+          </label>
+          <select class="ob4-course__grade" data-course-num="7" aria-label="Arvosana kurssista 7">
+            <option value="skipped">En muista</option>
+            <option value="4">4</option><option value="5">5</option><option value="6">6</option>
+            <option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option>
+          </select>
+        </div>
+        <div class="ob4-course" data-course="8">
+          <input type="checkbox" class="ob4-course__check" data-course-num="8" id="ob-v4-c8" />
+          <label class="ob4-course__label" for="ob-v4-c8">
+            <span class="ob4-course__num">Kurssi 8</span>
+            <span class="ob4-course__title">Yo-koevalmiiksi</span>
+          </label>
+          <select class="ob4-course__grade" data-course-num="8" aria-label="Arvosana kurssista 8">
+            <option value="skipped">En muista</option>
+            <option value="4">4</option><option value="5">5</option><option value="6">6</option>
+            <option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option>
+          </select>
+        </div>
+      </div>
+      <div class="ob4-actions">
+        <button type="button" class="ob4-btn ob4-btn--primary" id="ob-v4-courses-continue">Jatka</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- V4 step 4: biografia -->
+  <div id="screen-ob-v4-biography" class="screen ob4">
+    <div class="ob4-shell">
+      <p class="ob4-step">Vaihe 4 / 5</p>
+      <h1 class="ob4-title">Pari kysymystä taustastasi</h1>
+      <p class="ob4-sub">Auttaa kalibroimaan harjoitukset oikealle tasolle.</p>
+      <form class="ob4-bio-form" id="ob-v4-bio-form">
+        <fieldset class="ob4-bio-group">
+          <legend class="ob4-bio-question">Puhutko kieltä kotona?</legend>
+          <div class="ob4-bio-options">
+            <label class="ob4-bio-radio"><input type="radio" name="home_usage" value="yes" /> Kyllä</label>
+            <label class="ob4-bio-radio"><input type="radio" name="home_usage" value="some" /> Vähän</label>
+            <label class="ob4-bio-radio"><input type="radio" name="home_usage" value="no" /> En</label>
+          </div>
+        </fieldset>
+        <fieldset class="ob4-bio-group">
+          <legend class="ob4-bio-question">Oletko asunut maassa jossa kieltä puhutaan?</legend>
+          <div class="ob4-bio-options">
+            <label class="ob4-bio-radio"><input type="radio" name="lived_abroad" value="over_year" /> Yli vuoden</label>
+            <label class="ob4-bio-radio"><input type="radio" name="lived_abroad" value="months" /> 1–12 kk</label>
+            <label class="ob4-bio-radio"><input type="radio" name="lived_abroad" value="vacations" /> Lyhyitä lomamatkoja</label>
+            <label class="ob4-bio-radio"><input type="radio" name="lived_abroad" value="never" /> En</label>
+          </div>
+        </fieldset>
+        <fieldset class="ob4-bio-group">
+          <legend class="ob4-bio-question">Kuinka usein käytät kieltä viimeisen vuoden aikana?</legend>
+          <div class="ob4-bio-options">
+            <label class="ob4-bio-radio"><input type="radio" name="frequency" value="daily" /> Päivittäin</label>
+            <label class="ob4-bio-radio"><input type="radio" name="frequency" value="weekly" /> Viikoittain</label>
+            <label class="ob4-bio-radio"><input type="radio" name="frequency" value="monthly" /> Kuukausittain</label>
+            <label class="ob4-bio-radio"><input type="radio" name="frequency" value="rarely" /> Hyvin harvoin</label>
+          </div>
+        </fieldset>
+      </form>
+      <div class="ob4-actions">
+        <button type="button" class="ob4-btn ob4-btn--primary" id="ob-v4-bio-continue">Jatka</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- V4 step 5: yhteenveto + polun preview -->
+  <div id="screen-ob-v4-summary" class="screen ob4">
+    <div class="ob4-shell">
+      <p class="ob4-step">Vaihe 5 / 5</p>
+      <h1 class="ob4-title">Polkusi on valmis</h1>
+      <p class="ob4-sub">Henkilökohtainen 3 viikon suunnitelma rakentuu kerätyn tiedon pohjalta. Reasoner-logiikka julkaistaan L-V294-loopissa.</p>
+      <div class="ob4-summary" id="ob-v4-summary-recap"></div>
+      <div class="ob4-actions">
+        <button type="button" class="ob4-btn ob4-btn--primary" id="ob-v4-summary-start">Aloita oppimispolku</button>
+      </div>
     </div>
   </div>
 

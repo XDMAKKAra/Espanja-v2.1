@@ -24,6 +24,7 @@ import { initAdaptive, masteryNext, masteryDone } from "./screens/adaptive.js";
 import { initOnboarding, checkOnboarding } from "./screens/onboarding.js";
 import { initOnboardingV2, showOnboardingV2 } from "./screens/onboardingV2.js";
 import { initOnboardingV3, showOnboardingV3 } from "./screens/onboardingV3.js";
+import { initOnboardingV4, showOnboardingV4 } from "./screens/onboardingV4.js";
 import { initPlacement, checkPlacementNeeded, showPlacementIntro, startPlacementFromRetake } from "./screens/placement.js";
 import { initLearningPath, submitMasteryResult } from "./screens/learningPath.js";
 import { loadCurriculum } from "./screens/curriculum.js";
@@ -183,10 +184,13 @@ const lazyVerbReference = makeLazyScreen({
 initOnboarding({ loadDashboard, loadNextBatch });
 initOnboardingV2({ loadDashboard });
 initOnboardingV3({ loadDashboard });
+initOnboardingV4({ loadDashboard });
 window._onboardingV2 = { show: showOnboardingV2 };
 window._onboardingV3 = { show: showOnboardingV3 };
+window._onboardingV4 = { show: showOnboardingV4 };
 // Hash entry: /app.html#/aloitus → V3 (L-ONBOARDING-REDESIGN-1) by default.
 // Legacy V2 still reachable via /app.html#/aloitus-v2 for fallback testing.
+// L-V293-1a V4 reachable via /app.html#/aloitus-v4 for diagnostic-first preview.
 // BUGFIX: only trigger onboarding from hash if the user is NOT logged in. For
 // logged-in users, the startup `checkOnboarding()` path below is authoritative
 // — re-running showOnboardingV3() here would leave `screen-ob-v3-reveal` with
@@ -196,6 +200,8 @@ if (!isLoggedIn()) {
     setTimeout(() => showOnboardingV3(), 0);
   } else if (location.hash === "#/aloitus-v2") {
     setTimeout(() => showOnboardingV2(), 0);
+  } else if (location.hash === "#/aloitus-v4") {
+    setTimeout(() => showOnboardingV4(), 0);
   }
 }
 initPlacement({ loadDashboard });

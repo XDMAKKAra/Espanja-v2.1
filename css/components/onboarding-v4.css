@@ -1,0 +1,215 @@
+/* L-V293-ONBOARDING-DIAGNOSTIC-1a — diagnostic-first onboarding (V4).
+   Reuses --bg, --surface, --text, --text-2, --accent, --line, --radius tokens
+   from the global theme. Mobile-first; no italic; no em-dash; sentence-case. */
+
+.ob4 {
+  min-height: 100dvh;
+  background: var(--bg, #faf7f2);
+  color: var(--text, #1f1d1a);
+  padding: clamp(20px, 5vw, 56px) clamp(16px, 4vw, 32px);
+  align-items: center;
+  justify-content: center;
+}
+
+.ob4-shell {
+  width: 100%;
+  max-width: 720px;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(20px, 3vw, 28px);
+}
+
+.ob4-step {
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: var(--text-2, #6f6a62);
+  margin: 0;
+}
+
+.ob4-title {
+  font-size: clamp(26px, 4.2vw, 40px);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  font-weight: 600;
+  margin: 0;
+}
+
+.ob4-sub {
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--text-2, #5e5a52);
+  margin: 0;
+  max-width: 56ch;
+}
+
+.ob4-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.ob4-btn {
+  appearance: none;
+  border: 1px solid var(--line, #d8d4cb);
+  background: var(--surface, #fff);
+  color: var(--text, #1f1d1a);
+  padding: 12px 20px;
+  border-radius: 10px;
+  font: inherit;
+  font-weight: 500;
+  cursor: pointer;
+  transition: transform 160ms cubic-bezier(0.23, 1, 0.32, 1), background 160ms ease, border-color 160ms ease;
+}
+.ob4-btn:hover { border-color: var(--accent, #a0341f); }
+.ob4-btn:active { transform: scale(0.98); }
+
+.ob4-btn--primary {
+  background: var(--accent, #a0341f);
+  color: var(--surface, #fff);
+  border-color: var(--accent, #a0341f);
+}
+.ob4-btn--primary:hover { background: #8c2c1a; }
+
+.ob4-btn--ghost {
+  background: transparent;
+  border-color: transparent;
+  color: var(--text-2, #6f6a62);
+  padding-inline: 4px;
+}
+.ob4-btn--ghost:hover { color: var(--text, #1f1d1a); }
+
+.ob4-hint {
+  font-size: 14px;
+  color: var(--text-2, #6f6a62);
+  margin: 0;
+}
+
+/* Test step (empty-state in commit 1a) ------------------------------------ */
+.ob4-test-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 13px;
+  color: var(--text-2, #6f6a62);
+}
+.ob4-test-body {
+  border: 1px solid var(--line, #d8d4cb);
+  border-radius: var(--radius, 12px);
+  padding: clamp(20px, 3vw, 28px);
+  background: var(--surface, #fff);
+}
+.ob-v4-empty__hint {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--text-2, #5e5a52);
+}
+
+/* Courses step ------------------------------------------------------------ */
+.ob4-courses {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.ob4-course {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border: 1px solid var(--line, #d8d4cb);
+  border-radius: 10px;
+  background: var(--surface, #fff);
+  transition: border-color 160ms ease, background 160ms ease;
+}
+.ob4-course:hover { border-color: #c9c2b6; }
+.ob4-course.is-selected { border-color: var(--accent, #a0341f); background: #fbf4f1; }
+
+.ob4-course__check {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--accent, #a0341f);
+  cursor: pointer;
+}
+.ob4-course__label {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  cursor: pointer;
+}
+.ob4-course__num {
+  font-size: 13px;
+  color: var(--text-2, #6f6a62);
+}
+.ob4-course__title {
+  font-size: 15px;
+  font-weight: 500;
+}
+.ob4-course__grade {
+  appearance: none;
+  border: 1px solid var(--line, #d8d4cb);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font: inherit;
+  background: #fff;
+  min-width: 88px;
+  cursor: pointer;
+}
+
+/* Biography step ---------------------------------------------------------- */
+.ob4-bio-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.ob4-bio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.ob4-bio-question {
+  font-size: 15px;
+  font-weight: 500;
+  margin: 0;
+}
+.ob4-bio-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.ob4-bio-radio {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border: 1px solid var(--line, #d8d4cb);
+  border-radius: 999px;
+  font-size: 14px;
+  cursor: pointer;
+  user-select: none;
+  background: var(--surface, #fff);
+}
+.ob4-bio-radio input { accent-color: var(--accent, #a0341f); }
+.ob4-bio-radio:has(input:checked) {
+  border-color: var(--accent, #a0341f);
+  background: #fbf4f1;
+}
+
+/* Summary step ------------------------------------------------------------ */
+.ob4-summary {
+  border: 1px solid var(--line, #d8d4cb);
+  border-radius: var(--radius, 12px);
+  padding: clamp(20px, 3vw, 28px);
+  background: var(--surface, #fff);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.ob4-summary p {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--text, #1f1d1a);
+}
