@@ -1,8 +1,278 @@
 {
   "lang": "de",
   "part": "a_grammar",
-  "version": 0,
-  "status": "placeholder",
-  "note": "Sisältö generoidaan L-V293-1c -loopissa: 15 kysymystä jotka kattavat artikkelit+sijat, Präsens, Perfekt, Präteritum, V2/sivulauseet, Konjunktiv II, Passiv. Tämä on infra-stubi.",
-  "questions": []
+  "version": 1,
+  "status": "ready",
+  "note": "Mini-YO Part A — German B3 lyhyt oppimäärä diagnostic grammar. 15 questions cover LOPS SAB3-relevant topics: articles+cases, Präsens regular/irregular, Akkusativ/Dativ, modal verbs, Perfekt haben/sein, Präteritum, V2-Satzbau, weil/dass/wenn, Futur I, Konjunktiv II höflich, Passiv, Genitiv. Difficulty A→M; targets A2.1 → B1.1 (DE B3 tavoitetaso on yhden askeleen alempi kuin espanjan B3).",
+  "topic_taxonomy": "curriculumData.js grammar_focus keys (DE)",
+  "questions": [
+    {
+      "id": "de_a_001",
+      "topic": "articles_nominative",
+      "level": "A",
+      "type": "mc",
+      "question": "Valitse oikea määräinen artikkeli nominatiivissa.",
+      "sentence_prefix": "",
+      "sentence_blank": "____",
+      "sentence_suffix": "Mann arbeitet als Lehrer.",
+      "options": ["Der", "Die", "Das", "Den"],
+      "answer": 0,
+      "distractor_rationale": {
+        "1": "die = femin yks tai mon, Mann on mask",
+        "2": "das = neutr, Mann on mask",
+        "3": "den = akkusatiivi mask, mut subjekti tarvitsee nominatiivin"
+      },
+      "explanation": "Mann on maskuliini ja toimii lauseen subjektina → nominatiivi der. Saksan artikkeli sopii sukuun + sijaan."
+    },
+    {
+      "id": "de_a_002",
+      "topic": "present_irregular",
+      "level": "A",
+      "type": "mc",
+      "question": "Valitse oikea muoto: sein, du.",
+      "sentence_prefix": "Du",
+      "sentence_blank": "____",
+      "sentence_suffix": "heute sehr müde.",
+      "options": ["bist", "ist", "bin", "sind"],
+      "answer": 0,
+      "distractor_rationale": {
+        "1": "ist = er/sie/es-muoto, ei du",
+        "2": "bin = ich-muoto",
+        "3": "sind = wir/sie/Sie-muoto"
+      },
+      "explanation": "Sein on epäsäännöllinen: ich bin, du bist, er ist, wir sind, ihr seid, sie sind."
+    },
+    {
+      "id": "de_a_003",
+      "topic": "accusative_case",
+      "level": "A",
+      "type": "mc",
+      "question": "Valitse oikea akkusatiivi-muoto: määräinen objekti.",
+      "sentence_prefix": "Ich sehe",
+      "sentence_blank": "____",
+      "sentence_suffix": "Hund im Park.",
+      "options": ["der", "den", "die", "dem"],
+      "answer": 1,
+      "distractor_rationale": {
+        "0": "der = nominatiivi mask, mut sehen vaatii akkusatiivin",
+        "2": "die = femin tai mon, Hund on mask",
+        "3": "dem = datiivi mask, mut sehen + Akk"
+      },
+      "explanation": "Sehen on transitiiviverbi → suora objekti akkusatiivissa. Maskuliini der → den akkusatiivissa. Vain mask vaihtaa muotoa Nom→Akk."
+    },
+    {
+      "id": "de_a_004",
+      "topic": "modal_verbs",
+      "level": "B",
+      "type": "mc",
+      "question": "Valitse oikea muoto: können, ich.",
+      "sentence_prefix": "Ich",
+      "sentence_blank": "____",
+      "sentence_suffix": "gut Deutsch sprechen.",
+      "options": ["kann", "kannst", "können", "konnte"],
+      "answer": 0,
+      "distractor_rationale": {
+        "1": "kannst = du-muoto",
+        "2": "können = infinitiivi tai wir/sie-muoto, ei ich",
+        "3": "konnte = preteriti yks, mut tässä preesens"
+      },
+      "explanation": "Modaaliverbeillä yks-muodot ovat epäsäännöllisiä: ich kann, du kannst, er kann (huom: ich ja er ovat samanlaisia)."
+    },
+    {
+      "id": "de_a_005",
+      "topic": "perfekt",
+      "level": "B",
+      "type": "mc",
+      "question": "Valitse oikea apuverbi Perfektissä: liikkumisverbi.",
+      "sentence_prefix": "Gestern",
+      "sentence_blank": "____",
+      "sentence_suffix": "ich nach Berlin gefahren.",
+      "options": ["habe", "bin", "hatte", "wurde"],
+      "answer": 1,
+      "distractor_rationale": {
+        "0": "habe = haben-apuverbi, mut fahren (liikkuminen) ottaa sein:n",
+        "2": "hatte = Plusquamperfekt, ei Perfekt",
+        "3": "wurde = passiivi/Präteritum"
+      },
+      "explanation": "Liikumisverbit (fahren, gehen, kommen, fliegen) + tilanmuutosverbit (werden, sterben) ottavat sein-apuverbin Perfektissä. Muut ottavat haben."
+    },
+    {
+      "id": "de_a_006",
+      "topic": "past_participles",
+      "level": "B",
+      "type": "fill",
+      "question": "Täydennä Partizip II -muoto verbistä spielen.",
+      "sentence_prefix": "Ich habe gestern Fußball",
+      "sentence_blank": "____",
+      "sentence_suffix": ".",
+      "verb_infinitive": "spielen",
+      "answer": "gespielt",
+      "accepted_alternates": [],
+      "explanation": "Heikon (säännöllisen) verbin Partizip II: ge- + verbi-runko + -t. Spielen → ge-spiel-t = gespielt."
+    },
+    {
+      "id": "de_a_007",
+      "topic": "v2_word_order",
+      "level": "B",
+      "type": "mc",
+      "question": "Valitse oikea sananjärjestys: adverbi alussa, taivutettu verbi 2. paikalla.",
+      "sentence_prefix": "",
+      "sentence_blank": "____",
+      "sentence_suffix": "in die Schule.",
+      "options": [
+        "Morgen ich gehe",
+        "Morgen gehe ich",
+        "Ich morgen gehe",
+        "Gehe ich morgen"
+      ],
+      "answer": 1,
+      "distractor_rationale": {
+        "0": "Suomi-vaikutteinen sanajärjestys: ich pitäisi tulla VERBIN JÄLKEEN",
+        "2": "morgen ei ole 2. paikalla, mutta ich gehe morgen toimii — tässä morgen halutaan alkuun",
+        "3": "Inversio kysymyksessä, ei toteamuksessa"
+      },
+      "explanation": "Saksan V2-sääntö: päälauseen taivutettu verbi on AINA 2. paikalla. Kun aikamääre etumäärittää (morgen), subjekti siirtyy verbin perään."
+    },
+    {
+      "id": "de_a_008",
+      "topic": "perfekt",
+      "level": "B",
+      "type": "mc",
+      "question": "Valitse oikea apuverbi: tavallinen toimintaverbi.",
+      "sentence_prefix": "Wir",
+      "sentence_blank": "____",
+      "sentence_suffix": "den ganzen Tag im Café gesessen.",
+      "options": ["haben", "sind", "hatten", "werden"],
+      "answer": 0,
+      "distractor_rationale": {
+        "1": "sind = sein-apuverbi, mut sitzen on staattinen toiminta → haben",
+        "2": "hatten = Plusquamperfekt, ei Perfekt",
+        "3": "werden = futuuri/passiivi"
+      },
+      "explanation": "Sitzen, stehen, liegen ottavat haben:n (ei liikettä). Klassikko-virhe: oletetaan että sein:llä mennään mutta sijaintiverbi ei ole liikettä."
+    },
+    {
+      "id": "de_a_009",
+      "topic": "praeteritum",
+      "level": "B",
+      "type": "fill",
+      "question": "Täydennä Präteritumissa (ich) verbistä haben.",
+      "sentence_prefix": "Als Kind",
+      "sentence_blank": "____",
+      "sentence_suffix": "ich einen Hund namens Bello.",
+      "verb_infinitive": "haben",
+      "answer": "hatte",
+      "accepted_alternates": [],
+      "explanation": "Haben Präteritumissa on epäsäännöllinen ja yleisin kirjoitetussa kielessä: ich hatte, du hattest, er hatte, wir hatten, ihr hattet, sie hatten."
+    },
+    {
+      "id": "de_a_010",
+      "topic": "dative_prepositions",
+      "level": "C",
+      "type": "mc",
+      "question": "Valitse oikea sija: mit + ___",
+      "sentence_prefix": "Ich fahre mit",
+      "sentence_blank": "____",
+      "sentence_suffix": "Bus zur Arbeit.",
+      "options": ["der", "den", "dem", "das"],
+      "answer": 2,
+      "distractor_rationale": {
+        "0": "der = nominatiivi mask, mut mit vaatii datiivin",
+        "1": "den = akkusatiivi mask, mut mit + Dativ",
+        "3": "das = neutr, mut Bus on mask"
+      },
+      "explanation": "Mit vaatii aina datiivin. Bus on mask → mask datiivi = dem. Datiivipreposit (mit, von, zu, bei, nach, aus, seit) ovat YO-kokeessa keskeisiä."
+    },
+    {
+      "id": "de_a_011",
+      "topic": "subordinate_clauses_weil_dass",
+      "level": "C",
+      "type": "mc",
+      "question": "Valitse oikea sananjärjestys weil-lauseessa.",
+      "sentence_prefix": "Ich gehe heute nicht zur Arbeit, weil",
+      "sentence_blank": "____",
+      "sentence_suffix": ".",
+      "options": [
+        "ich bin krank",
+        "ich krank bin",
+        "bin ich krank",
+        "krank bin ich"
+      ],
+      "answer": 1,
+      "distractor_rationale": {
+        "0": "päälauseen sananjärjestys, mut weil = sivulause → verbi loppuun",
+        "2": "inversio, ei sovi sivulauseeseen",
+        "3": "epäluonnollinen, painokas; weil-Satz vaatii subjekti + objekti/adjektiivi + verbi"
+      },
+      "explanation": "Sivulauseen (weil/dass/wenn/obwohl) taivutettu verbi siirtyy LOPPUUN. 'Ich bin krank' (päälause) → '...weil ich krank bin' (sivulause)."
+    },
+    {
+      "id": "de_a_012",
+      "topic": "futur",
+      "level": "C",
+      "type": "fill",
+      "question": "Täydennä Futur I -muoto (ich): apuverbi werden.",
+      "sentence_prefix": "Nächste Woche",
+      "sentence_blank": "____",
+      "sentence_suffix": "ich nach Italien fliegen.",
+      "verb_infinitive": "werden",
+      "answer": "werde",
+      "accepted_alternates": [],
+      "explanation": "Futur I = werden (taivutettu) + Infinitiv (lauseen lopussa). ich werde, du wirst, er wird, wir werden, ihr werdet, sie werden."
+    },
+    {
+      "id": "de_a_013",
+      "topic": "konjunktiv_ii_polite",
+      "level": "M",
+      "type": "mc",
+      "question": "Valitse oikea kohtelias muoto.",
+      "sentence_prefix": "Ich",
+      "sentence_blank": "____",
+      "sentence_suffix": "gern einen Kaffee, bitte.",
+      "options": ["habe", "hätte", "hatte", "hätten"],
+      "answer": 1,
+      "distractor_rationale": {
+        "0": "indikatiivi 'ich habe' on liian suora pyyntö",
+        "2": "hatte = Präteritum (mennyt aika), ei kohtelias muoto",
+        "3": "hätten = wir/sie-muoto"
+      },
+      "explanation": "Kohtelias pyyntö ravintolassa/kahvilassa: 'Ich hätte gern...' = 'Saisinko...'. Konjunktiv II haben-verbistä: ich hätte, du hättest, er hätte."
+    },
+    {
+      "id": "de_a_014",
+      "topic": "passive_voice",
+      "level": "M",
+      "type": "mc",
+      "question": "Valitse oikea passiivirakenne: werden + Partizip II.",
+      "sentence_prefix": "Der Brief",
+      "sentence_blank": "____",
+      "sentence_suffix": "morgen geschickt.",
+      "options": ["ist", "wird", "hat", "war"],
+      "answer": 1,
+      "distractor_rationale": {
+        "0": "'ist geschickt' = Zustandspassiv (tila), ei prosessi-passiivi",
+        "2": "'hat geschickt' = Aktiv Perfekt, ei passiivi",
+        "3": "'war' Präteritum sein, mut prosessi-passiiviin tarvitaan werden"
+      },
+      "explanation": "Saksan prosessipassiivi: werden (taivutettu) + Partizip II (lopussa). 'Der Brief wird geschickt' = 'Kirje lähetetään'."
+    },
+    {
+      "id": "de_a_015",
+      "topic": "genitive_case",
+      "level": "M",
+      "type": "mc",
+      "question": "Valitse oikea genetiivimuoto.",
+      "sentence_prefix": "Das ist das Auto",
+      "sentence_blank": "____",
+      "sentence_suffix": "Lehrers.",
+      "options": ["der", "des", "dem", "den"],
+      "answer": 1,
+      "distractor_rationale": {
+        "0": "der = nominatiivi mask tai genetiivi femin",
+        "2": "dem = datiivi mask",
+        "3": "den = akkusatiivi mask"
+      },
+      "explanation": "Genetiivi (omistus 'X:n'): mask + neutr saavat des + substantiivi+s. 'Das Auto DES Lehrers' = 'Opettajan auto'. YO-kokeessa harvinaisempi, mutta tärkeä tunnistaa."
+    }
+  ]
 }
