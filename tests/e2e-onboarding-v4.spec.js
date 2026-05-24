@@ -149,6 +149,98 @@ test("V4 biography → summary → start dashboard link", async ({ page }) => {
   await expect(page.locator("#ob-v4-summary-recap")).toBeVisible();
 });
 
+// ─── L-V293-1f: Step 4 textbook disambiguator + Step 5 summary structure ───
+
+test("V4 textbook step appears when at least one course was selected", async ({ page }) => {
+  await page.goto(`${BASE}/app.html#/aloitus-v4`);
+  await page.locator("#ob-v4-intro-skip").click();
+
+  await page.locator("#ob-v4-c3").check();
+  await page.locator('select[data-course-num="3"]').selectOption("8");
+  await page.locator("#ob-v4-courses-continue").click();
+
+  // Biography (leave radios untouched, just continue)
+  await page.locator("#ob-v4-bio-continue").click();
+
+  // Textbook step must show
+  await expect(page.locator("#screen-ob-v4-textbook")).toHaveClass(/active/);
+  await expect(page.locator("#ob-v4-textbook-list .ob4-textbook__card")).toHaveCount(5);
+  await expect(page.locator("#ob-v4-textbook-hint")).toContainText(/Ei haittaa/i);
+});
+
+test("V4 textbook step is skipped when zero courses were selected", async ({ page }) => {
+  await page.goto(`${BASE}/app.html#/aloitus-v4`);
+  await page.locator("#ob-v4-intro-skip").click();
+  // No course selection
+  await page.locator("#ob-v4-courses-continue").click();
+  // No biography selection
+  await page.locator("#ob-v4-bio-continue").click();
+  // Should skip textbook entirely and land on summary
+  await expect(page.locator("#screen-ob-v4-summary")).toHaveClass(/active/);
+  await expect(page.locator("#screen-ob-v4-textbook")).not.toHaveClass(/active/);
+});
+
+test("V4 textbook 'Muu' reveals free-text input; selection persists to continue", async ({ page }) => {
+  await page.goto(`${BASE}/app.html#/aloitus-v4`);
+  await page.locator("#ob-v4-intro-skip").click();
+  await page.locator("#ob-v4-c4").check();
+  await page.locator("#ob-v4-courses-continue").click();
+  await page.locator("#ob-v4-bio-continue").click();
+
+  await expect(page.locator("#ob-v4-textbook-other-wrap")).toBeHidden();
+  await page.locator('.ob4-textbook__card[data-textbook-key="other"]').click();
+  await expect(page.locator("#ob-v4-textbook-other-wrap")).toBeVisible();
+  await page.locator("#ob-v4-textbook-other").fill("Buenos días");
+
+  await page.locator("#ob-v4-textbook-continue").click();
+  await expect(page.locator("#screen-ob-v4-summary")).toHaveClass(/active/);
+});
+
+test("V4 textbook skip routes to summary without textbook selection", async ({ page }) => {
+  await page.goto(`${BASE}/app.html#/aloitus-v4`);
+  await page.locator("#ob-v4-intro-skip").click();
+  await page.locator("#ob-v4-c2").check();
+  await page.locator("#ob-v4-courses-continue").click();
+  await page.locator("#ob-v4-bio-continue").click();
+  await page.locator("#ob-v4-textbook-skip").click();
+  await expect(page.locator("#screen-ob-v4-summary")).toHaveClass(/active/);
+});
+
+test("V4 summary renders strengths, growth and 3-week plan structure", async ({ page }) => {
+  await page.goto(`${BASE}/app.html#/aloitus-v4`);
+  await page.locator("#ob-v4-intro-skip").click();
+  // Select a higher course so heuristic strengths kicks in
+  await page.locator("#ob-v4-c6").check();
+  await page.locator('select[data-course-num="6"]').selectOption("9");
+  await page.locator("#ob-v4-courses-continue").click();
+
+  await page.locator('input[name="home_usage"][value="some"]').check();
+  await page.locator('input[name="lived_abroad"][value="vacations"]').check();
+  await page.locator('input[name="frequency"][value="weekly"]').check();
+  await page.locator("#ob-v4-bio-continue").click();
+
+  // Skip textbook for this test
+  await page.locator("#ob-v4-textbook-skip").click();
+
+  await expect(page.locator("#screen-ob-v4-summary")).toHaveClass(/active/);
+  await expect(page.locator(".ob4-summary__h2").first()).toContainText(/vahvuutesi/i);
+  // Three plan steps
+  const planItems = page.locator(".ob4-summary__plan-list li");
+  await expect(planItems).toHaveCount(3);
+  // No em-dash in summary copy
+  const summaryText = await page.locator("#screen-ob-v4-summary").innerText();
+  expect(summaryText).not.toMatch(/—/);
+});
+
+test("V4 summary step counter reflects whether textbook was shown", async ({ page }) => {
+  await page.goto(`${BASE}/app.html#/aloitus-v4`);
+  await page.locator("#ob-v4-intro-skip").click();
+  // Path A: no courses → textbook skipped → 5/5
+  await page.locator("#ob-v4-courses-continue").click();
+  await page.locator("#ob-v4-bio-continue").click();
+  await expect(page.locator("#ob-v4-summary-step")).toContainText("5 / 5");
+});
+
 test("V4 no italic + no Fraunces in onboarding chrome (anti-slop)", async ({ page }) => {
   await page.goto(`${BASE}/app.html#/aloitus-v4`);
   const italics = await page.evaluate(() => {
