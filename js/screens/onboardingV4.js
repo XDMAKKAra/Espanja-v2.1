@@ -26,13 +26,14 @@ import {
   renderWritingPrompt,
 } from "../features/miniYO.js";
 
-const STAGE_ORDER = ["intro", "test", "courses", "biography", "summary"];
+const STAGE_ORDER = ["intro", "test", "courses", "biography", "textbook", "summary"];
 
 const SCREEN_ID = {
   intro: "screen-ob-v4-intro",
   test: "screen-ob-v4-test",
   courses: "screen-ob-v4-courses",
   biography: "screen-ob-v4-biography",
+  textbook: "screen-ob-v4-textbook",
   summary: "screen-ob-v4-summary",
 };
 
@@ -47,6 +48,9 @@ const state = {
   coursesCompleted: [],
   courseGrades: {},
   biography: { home_usage: null, lived_abroad: null, frequency: null },
+  textbookKey: null,
+  textbookFreeText: "",
+  miniYoStatus: "in_progress",
 };
 
 let _deps = {};
@@ -57,6 +61,7 @@ export function initOnboardingV4(deps = {}) {
   wireTest();
   wireCourses();
   wireBiography();
+  wireTextbook();
   wireSummary();
 }
 
@@ -87,7 +92,23 @@ function gotoStage(stage) {
   const id = SCREEN_ID[stage];
   if (id) show(id);
   if (stage === "test") renderTest();
+  if (stage === "textbook") renderTextbook();
   if (stage === "summary") renderSummary();
+}
+
+// Decide whether to show the textbook disambiguator. Show when at least
+// one course was selected (textbook signal only meaningful in that context).
+// Skip when user blew through everything (no signal to disambiguate against).
+function shouldShowTextbook() {
+  return state.coursesCompleted.length > 0;
+}
+
+function advanceFromBiography() {
+  if (shouldShowTextbook()) {
+    gotoStage("textbook");
+  } else {
+    gotoStage("summary");
+  }
 }
 
 // ─── Step 1: Intro ──────────────────────────────────────────────────────────
@@ -97,6 +118,7 @@ function wireIntro() {
     gotoStage("test");
   });
   $("ob-v4-intro-skip")?.addEventListener("click", async () => {
+    state.miniYoStatus = "skipped";
     await completeDiagnostic({ language: state.language, status: "skipped" });
     track("ob_v4_skipped_at_intro", { language: state.language });
     gotoStage("courses");
@@ -107,6 +129,7 @@ function wireIntro() {
 function wireTest() {
   $("ob-v4-test-skip-part")?.addEventListener("click", () => advanceTestPart("partial"));
   $("ob-v4-test-skip-all")?.addEventListener("click", async () => {
+    state.miniYoStatus = "partial";
     await completeDiagnostic({ language: state.language, status: "partial" });
     gotoStage("courses");
   });
@@ -246,7 +269,9 @@ function renderTestProgressHint() {
 function advanceTestPart(statusIfLast) {
   const idx = TEST_PARTS.indexOf(state.currentPart);
   if (idx < 0 || idx === TEST_PARTS.length - 1) {
-    completeDiagnostic({ language: state.language, status: statusIfLast || "partial" });
+    const finalStatus = statusIfLast || "partial";
+    state.miniYoStatus = finalStatus === "completed" ? "completed" : finalStatus;
+    completeDiagnostic({ language: state.language, status: state.miniYoStatus });
     gotoStage("courses");
     return;
   }
@@ -413,8 +438,125 @@ function wireBiography() {
         console.warn("biography save failed (non-fatal):", err.message);
       }
     }
+    advanceFromBiography();
+  });
+}
+
+// ─── Step 4: Oppikirja-disambiguator ────────────────────────────────────────
+function wireTextbook() {
+  const list = $("ob-v4-textbook-list");
+  const freeText = $("ob-v4-textbook-other");
+  const freeTextWrap = $("ob-v4-textbook-other-wrap");
+
+  if (list) {
+    list.addEventListener("click", (e) => {
+      const btn = e.target.closest(".ob4-textbook__card");
+      if (!btn) return;
+      const key = btn.dataset.textbookKey;
+      if (!key) return;
+      state.textbookKey = key;
+      list.querySelectorAll(".ob4-textbook__card").forEach(el => {
+        el.classList.toggle("is-selected", el === btn);
+        el.setAttribute("aria-pressed", el === btn ? "true" : "false");
+      });
+      if (freeTextWrap) freeTextWrap.hidden = key !== "other";
+      if (key !== "other" && freeText) freeText.value = "";
+    });
+  }
+
+  if (freeText) {
+    freeText.addEventListener("input", () => {
+      state.textbookFreeText = freeText.value.trim().slice(0, 80);
+    });
+  }
+
+  $("ob-v4-textbook-skip")?.addEventListener("click", () => {
+    state.textbookKey = null;
+    state.textbookFreeText = "";
     gotoStage("summary");
   });
+
+  $("ob-v4-textbook-continue")?.addEventListener("click", async () => {
+    if (!state.textbookKey) {
+      gotoStage("summary");
+      return;
+    }
+    const textbookKey = state.textbookKey === "other" && state.textbookFreeText
+      ? `other:${state.textbookFreeText}`.slice(0, 32)
+      : state.textbookKey;
+    if (isLoggedIn()) {
+      await completeDiagnostic({
+        language: state.language,
+        status: state.miniYoStatus || "in_progress",
+        textbookKey,
+      });
+    }
+    track("ob_v4_textbook_chosen", { language: state.language, textbook: state.textbookKey });
+    gotoStage("summary");
+  });
+}
+
+function renderTextbook() {
+  const listEl = $("ob-v4-textbook-list");
+  const hintEl = $("ob-v4-textbook-hint");
+  if (!listEl) return;
+
+  const books = textbooksForLanguage(state.language);
+  listEl.innerHTML = books.map(b => `
+    <button type="button"
+            class="ob4-textbook__card"
+            data-textbook-key="${escapeAttr(b.key)}"
+            aria-pressed="false">
+      <span class="ob4-textbook__cover" data-cover="${escapeAttr(b.key)}" aria-hidden="true">
+        <span class="ob4-textbook__cover-label">${escapeHtml(b.coverLabel)}</span>
+      </span>
+      <span class="ob4-textbook__name">${escapeHtml(b.title)}</span>
+      <span class="ob4-textbook__publisher">${escapeHtml(b.publisher)}</span>
+    </button>
+  `).join("");
+
+  if (hintEl) {
+    hintEl.textContent = "Ei haittaa jos et muista, taso-arvio jo kertoo paljon.";
+  }
+  const freeTextWrap = $("ob-v4-textbook-other-wrap");
+  if (freeTextWrap) freeTextWrap.hidden = true;
+  state.textbookKey = null;
+  state.textbookFreeText = "";
+}
+
+// Top-3 textbooks per language. Free of fabricated stats — these are real
+// Finnish lukio textbook series (publishers Otava / Sanoma Pro).
+function textbooksForLanguage(lang) {
+  if (lang === "es") {
+    return [
+      { key: "es_mi_mundo",      title: "Mi mundo",      publisher: "Sanoma Pro", coverLabel: "MM" },
+      { key: "es_accion",        title: "¡Acción!",      publisher: "Otava",      coverLabel: "AC" },
+      { key: "es_otra_vez",      title: "Otra vez",      publisher: "Otava",      coverLabel: "OV" },
+      { key: "other",            title: "Muu",           publisher: "Kerro mikä", coverLabel: "?"  },
+      { key: "unknown",          title: "En muista",     publisher: "Ohitetaan",  coverLabel: "·"  },
+    ];
+  }
+  if (lang === "de") {
+    return [
+      { key: "de_panorama",      title: "Panorama Deutsch", publisher: "Sanoma Pro", coverLabel: "PD" },
+      { key: "de_magazin",       title: "Magazin.de",       publisher: "Otava",      coverLabel: "MD" },
+      { key: "de_kompass",       title: "Kompass",          publisher: "Otava",      coverLabel: "KO" },
+      { key: "other",            title: "Muu",              publisher: "Kerro mikä", coverLabel: "?"  },
+      { key: "unknown",          title: "En muista",        publisher: "Ohitetaan",  coverLabel: "·"  },
+    ];
+  }
+  // fr
+  return [
+    { key: "fr_voila",           title: "Voilà!",           publisher: "Otava",      coverLabel: "VO" },
+    { key: "fr_escalier",        title: "Escalier",         publisher: "Sanoma Pro", coverLabel: "ES" },
+    { key: "fr_chez_moi",        title: "Chez moi",         publisher: "Otava",      coverLabel: "CM" },
+    { key: "other",              title: "Muu",              publisher: "Kerro mikä", coverLabel: "?"  },
+    { key: "unknown",            title: "En muista",        publisher: "Ohitetaan",  coverLabel: "·"  },
+  ];
+}
+
+function escapeAttr(s) {
+  return String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 }
 
 // ─── Step 5: Yhteenveto (mockup) ────────────────────────────────────────────
@@ -433,13 +575,109 @@ function renderSummary() {
   const recapEl = $("ob-v4-summary-recap");
   if (!recapEl) return;
 
-  const courses = state.coursesCompleted.length
-    ? state.coursesCompleted.map(n => `K${n}`).join(", ")
-    : "et merkinnyt yhtään";
+  const stepEl = $("ob-v4-summary-step");
+  if (stepEl) {
+    const total = shouldShowTextbook() ? 6 : 5;
+    stepEl.textContent = `Vaihe ${total} / ${total}`;
+  }
+
+  const { strengths, growth, plan } = synthesizeSummary(state);
+
   recapEl.innerHTML = `
-    <p>Käydyt lukio-kurssit: <b>${escapeHtml(courses)}</b></p>
-    <p>Henkilökohtainen polkusi rakennetaan, kun L-V294 reasoner käynnistyy. Tällä välin näet kaikki kurssit ja voit valita mistä haluat aloittaa.</p>
+    <div class="ob4-summary__col">
+      <h2 class="ob4-summary__h2">Sinun vahvuutesi</h2>
+      <ul class="ob4-summary__list">
+        ${strengths.map(s => `<li>${escapeHtml(s)}</li>`).join("")}
+      </ul>
+    </div>
+    <div class="ob4-summary__col">
+      <h2 class="ob4-summary__h2">Kehittämiskohteet</h2>
+      <ul class="ob4-summary__list">
+        ${growth.map(s => `<li>${escapeHtml(s)}</li>`).join("")}
+      </ul>
+    </div>
+    <div class="ob4-summary__plan">
+      <h2 class="ob4-summary__h2">Ehdotettu 3 viikon polku</h2>
+      <ol class="ob4-summary__plan-list">
+        ${plan.map(s => `<li>${escapeHtml(s)}</li>`).join("")}
+      </ol>
+      <p class="ob4-summary__plan-note">Tarkka polku rakentuu kun reasoner käynnistyy (L-V294). Saat henkilökohtaisen sequence-ehdotuksen ensimmäisellä viikolla.</p>
+    </div>
   `;
+}
+
+// Heuristic placeholder summary until L-V294 reasoner is live. Uses the
+// captured state (courses, biography, mini-yo status) to produce something
+// truthful instead of fake stats.
+function synthesizeSummary(s) {
+  const strengths = [];
+  const growth = [];
+  const plan = [];
+
+  const courses = Array.isArray(s.coursesCompleted) ? s.coursesCompleted : [];
+  const grades = s.courseGrades || {};
+  const numericGrades = courses
+    .map(k => grades[k])
+    .filter(g => Number.isInteger(g));
+  const avgGrade = numericGrades.length
+    ? Math.round((numericGrades.reduce((a, b) => a + b, 0) / numericGrades.length) * 10) / 10
+    : null;
+  const maxCourse = courses.length ? Math.max(...courses) : 0;
+
+  // Strengths
+  if (s.biography?.home_usage === "yes") {
+    strengths.push("Kuulet kieltä päivittäin kotona, joten suullinen ymmärrys ja sanaston laajuus ovat etunasi.");
+  } else if (s.biography?.home_usage === "some") {
+    strengths.push("Saat kieleen kosketuspintaa kotioloissa, mikä auttaa intuitiivisessa hahmottamisessa.");
+  }
+  if (s.biography?.lived_abroad === "over_year" || s.biography?.lived_abroad === "months") {
+    strengths.push("Olet asunut kohdemaassa, joten kuullun ymmärtäminen ja arkikieli ovat vahvempia kuin tyypillisellä lukio-opiskelijalla.");
+  }
+  if (maxCourse >= 6) {
+    strengths.push(`Olet käynyt syvempiä kursseja (K${maxCourse} asti). Pitkän kaaren rakenteet ovat sinulle tuttuja.`);
+  } else if (maxCourse >= 3) {
+    strengths.push(`Perustaso ja menneen ajan rakenteet ovat hallussa (käynyt K${maxCourse} asti).`);
+  }
+  if (avgGrade !== null && avgGrade >= 8) {
+    strengths.push(`Lukio-arvosanasi keskiarvo on ${avgGrade}, mikä viittaa hyvään tarkkuuteen.`);
+  }
+  if (strengths.length === 0) {
+    strengths.push("Aloitat puhtaalta pöydältä. Etuna on, että polku rakentuu täysin omaan tahtiisi.");
+  }
+
+  // Growth
+  if (maxCourse < 6) {
+    growth.push("Subjunktiivi ja hypoteettiset rakenteet (K6+) ovat seuraava luonnollinen askel.");
+  }
+  if (maxCourse < 8) {
+    growth.push("YO-koetehtävien rakenne ja kirjoitelman pisteytyskriteerit kannattaa käydä läpi ennen koetta.");
+  }
+  if (avgGrade !== null && avgGrade < 7) {
+    growth.push("Peruskielioppi (preteriti, artikkelit, kongruenssit) hyötyy lisäharjoituksesta ennen edistyneitä rakenteita.");
+  }
+  if (s.biography?.frequency === "rarely" || s.biography?.frequency === "monthly") {
+    growth.push("Säännöllinen päivittäinen kosketus (10–15 min) tuo nopeampaa edistystä kuin pidemmät harvat sessiot.");
+  }
+  if (growth.length === 0) {
+    growth.push("Tarkka analyysi näkyy ensimmäisten harjoitusten jälkeen, kun saamme datapointit tasostasi.");
+  }
+
+  // 3-week plan
+  if (maxCourse <= 2) {
+    plan.push("Viikko 1: perusverbit, artikkelit ja preesens. Luot pohjan jolle myöhemmät rakenteet nojaavat.");
+    plan.push("Viikko 2: arjen sanasto ja epäsäännölliset verbit, lyhyitä luetun tehtäviä.");
+    plan.push("Viikko 3: ensimmäiset menneen ajan rakenteet ja mini-kirjoitelmat.");
+  } else if (maxCourse <= 5) {
+    plan.push("Viikko 1: preteritin ja imperfektin ero (YO-klassikko), paljon harjoitusta kontekstissa.");
+    plan.push("Viikko 2: futuuri, konditionaali ja luetun ymmärtämistehtäviä YO-tyyliin.");
+    plan.push("Viikko 3: kirjoitelmaharjoituksia palautteen kanssa, sanaston laajennus.");
+  } else {
+    plan.push("Viikko 1: subjunktiivin laukaisijat ja si-lauseet. Varmistat että edistyneet rakenteet tulevat automaattisesti.");
+    plan.push("Viikko 2: koko YO-koe-rakenne harjoituksena, ajan käyttö per osio.");
+    plan.push("Viikko 3: kirjoitelmien hiominen pisteytyskriteereihin ja heikoimpien aiheiden täsmäharjoittelu.");
+  }
+
+  return { strengths: strengths.slice(0, 4), growth: growth.slice(0, 4), plan };
 }
 
 function escapeHtml(s) {

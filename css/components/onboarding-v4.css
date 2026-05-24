@@ -391,19 +391,171 @@
   background: #fbf4f1;
 }
 
-/* Summary step ------------------------------------------------------------ */
-.ob4-summary {
+/* Textbook step (conditional) ------------------------------------------- */
+.ob4-textbooks {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+.ob4-textbooks .ob4-textbook__card[data-textbook-key="other"],
+.ob4-textbooks .ob4-textbook__card[data-textbook-key="unknown"] {
+  grid-column: span 1;
+}
+@media (max-width: 640px) {
+  .ob4-textbooks {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 380px) {
+  .ob4-textbooks {
+    grid-template-columns: 1fr;
+  }
+}
+.ob4-textbook__card {
+  appearance: none;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+  padding: 14px;
   border: 1px solid var(--line, #d8d4cb);
   border-radius: var(--radius, 12px);
-  padding: clamp(20px, 3vw, 28px);
+  background: var(--surface, #fff);
+  color: var(--text, #1f1d1a);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 160ms ease, background 160ms ease, transform 120ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+.ob4-textbook__card:hover { border-color: #c9c2b6; }
+.ob4-textbook__card:active { transform: scale(0.985); }
+.ob4-textbook__card.is-selected {
+  border-color: var(--accent, #a0341f);
+  background: #fbf4f1;
+}
+.ob4-textbook__cover {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 3 / 4;
+  border-radius: 8px;
+  background: linear-gradient(140deg, #f1ece2 0%, #e3dccc 100%);
+  border: 1px solid #e0d8c6;
+  color: var(--text-2, #6f6a62);
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.ob4-textbook__card[data-textbook-key="other"] .ob4-textbook__cover,
+.ob4-textbook__card[data-textbook-key="unknown"] .ob4-textbook__cover {
+  background: #faf6f0;
+  color: var(--text-2, #6f6a62);
+  font-size: 22px;
+}
+.ob4-textbook__cover-label {
+  font-family: inherit;
+}
+.ob4-textbook__name {
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--text, #1f1d1a);
+}
+.ob4-textbook__publisher {
+  font-size: 12px;
+  color: var(--text-2, #6f6a62);
+}
+
+.ob4-textbook-other {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: -4px;
+}
+.ob4-textbook-other[hidden] { display: none; }
+.ob4-textbook-other__label {
+  font-size: 13px;
+  color: var(--text-2, #6f6a62);
+}
+.ob4-textbook-other__input {
+  appearance: none;
+  border: 1px solid var(--line, #d8d4cb);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font: inherit;
+  font-size: 15px;
+  background: var(--surface, #fff);
+  color: var(--text, #1f1d1a);
+}
+.ob4-textbook-other__input:focus {
+  outline: none;
+  border-color: var(--accent, #a0341f);
+}
+
+/* Summary step ------------------------------------------------------------ */
+.ob4-summary {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.ob4-summary__col {
+  border: 1px solid var(--line, #d8d4cb);
+  border-radius: var(--radius, 12px);
+  padding: clamp(16px, 2.5vw, 22px);
   background: var(--surface, #fff);
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
 }
-.ob4-summary p {
-  margin: 0;
+.ob4-summary__h2 {
   font-size: 15px;
+  font-weight: 600;
+  margin: 0;
+  color: var(--text, #1f1d1a);
+  letter-spacing: 0.005em;
+}
+.ob4-summary__list {
+  margin: 0;
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.ob4-summary__list li {
+  font-size: 14px;
   line-height: 1.55;
   color: var(--text, #1f1d1a);
+}
+.ob4-summary__plan {
+  grid-column: 1 / -1;
+  border: 1px solid var(--line, #d8d4cb);
+  border-radius: var(--radius, 12px);
+  padding: clamp(16px, 2.5vw, 22px);
+  background: #fbf8f3;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.ob4-summary__plan-list {
+  margin: 0;
+  padding-left: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.ob4-summary__plan-list li {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--text, #1f1d1a);
+}
+.ob4-summary__plan-note {
+  margin: 4px 0 0;
+  font-size: 13px;
+  color: var(--text-2, #6f6a62);
+  line-height: 1.5;
+}
+@media (max-width: 640px) {
+  .ob4-summary {
+    grid-template-columns: 1fr;
+  }
 }

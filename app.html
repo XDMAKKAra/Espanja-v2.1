@@ -871,12 +871,31 @@
     </div>
   </div>
 
+  <!-- V4 step 4 (conditional): oppikirja-disambiguator -->
+  <div id="screen-ob-v4-textbook" class="screen ob4">
+    <div class="ob4-shell">
+      <p class="ob4-step" id="ob-v4-textbook-step">Vaihe 5 / 6</p>
+      <h1 class="ob4-title">Mikä oppikirja koulussa?</h1>
+      <p class="ob4-sub">Eri kirjat opettavat asiat eri järjestyksessä. Tieto auttaa kalibroimaan, mitä rakenteita olet jo nähnyt.</p>
+      <p class="ob4-hint" id="ob-v4-textbook-hint">Ei haittaa jos et muista, taso-arvio jo kertoo paljon.</p>
+      <div class="ob4-textbooks" id="ob-v4-textbook-list"></div>
+      <div class="ob4-textbook-other" id="ob-v4-textbook-other-wrap" hidden>
+        <label class="ob4-textbook-other__label" for="ob-v4-textbook-other">Minkä niminen kirja?</label>
+        <input type="text" class="ob4-textbook-other__input" id="ob-v4-textbook-other" maxlength="80" autocomplete="off" placeholder="esim. Buenos días" />
+      </div>
+      <div class="ob4-actions">
+        <button type="button" class="ob4-btn ob4-btn--primary" id="ob-v4-textbook-continue">Jatka</button>
+        <button type="button" class="ob4-btn ob4-btn--ghost" id="ob-v4-textbook-skip">Ohita</button>
+      </div>
+    </div>
+  </div>
+
   <!-- V4 step 5: yhteenveto + polun preview -->
   <div id="screen-ob-v4-summary" class="screen ob4">
     <div class="ob4-shell">
-      <p class="ob4-step">Vaihe 5 / 5</p>
+      <p class="ob4-step" id="ob-v4-summary-step">Vaihe 5 / 5</p>
       <h1 class="ob4-title">Polkusi on valmis</h1>
-      <p class="ob4-sub">Henkilökohtainen 3 viikon suunnitelma rakentuu kerätyn tiedon pohjalta. Reasoner-logiikka julkaistaan L-V294-loopissa.</p>
+      <p class="ob4-sub">Tämä on alustava arvio antamiesi vastauksien perusteella. Tarkempi henkilökohtainen sequence-ehdotus rakentuu ensimmäisten harjoitusten aikana.</p>
       <div class="ob4-summary" id="ob-v4-summary-recap"></div>
       <div class="ob4-actions">
         <button type="button" class="ob4-btn ob4-btn--primary" id="ob-v4-summary-start">Aloita oppimispolku</button>
