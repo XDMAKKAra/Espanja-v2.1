@@ -1,4 +1,4 @@
-const CACHE_VERSION = "puheo-v309";
+const CACHE_VERSION = "puheo-v310";
 const STATIC_ASSETS = [
   "/app.html",
   "/index.html",
@@ -48,6 +48,14 @@ const STATIC_ASSETS = [
   "/favicon-32.png",
   "/icon-192.png",
   "/icon-512.png",
+  // L-V317 — new wordmark + favicon system (lowercase "puheo" + brick punctuation).
+  "/public/brand/logo.svg",
+  "/public/brand/logo-mono.svg",
+  "/public/brand/logo-dark.svg",
+  "/public/brand/favicon-master.svg",
+  "/public/favicon/favicon-16.png",
+  "/public/favicon/favicon-48.png",
+  "/public/favicon/apple-touch-icon.png",
   "/css/components/typography.css",
   "/css/components/app-shell.css",
   "/css/components/dashboard.css",

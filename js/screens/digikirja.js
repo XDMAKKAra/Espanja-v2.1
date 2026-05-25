@@ -185,6 +185,13 @@ function langLabel(lang) {
   return lang === "fr" ? "Ranska" : lang === "de" ? "Saksa" : "Espanja";
 }
 
+// L-V317 — render kurssi keys ("kurssi_2") as "Kurssi 2" for UI surfaces.
+// Keep the raw key for URLs, fetch paths, and storage.
+function prettyKurssi(kurssiKey) {
+  const m = /^kurssi_(\d+)$/.exec(String(kurssiKey || ""));
+  return m ? `Kurssi ${m[1]}` : (kurssiKey || "");
+}
+
 function lessonFileUrl(route) {
   // The static repo root is mounted at /, so data/courses/... is fetchable
   // directly without an API hop. This keeps the digikirja screen working
@@ -400,7 +407,7 @@ function renderSidemenu() {
     <aside class="dk__sidemenu" id="dk-sidemenu" aria-label="Oppitunnin sisällys">
       <div class="dk__sidemenu-top">
         <a class="dk__sidemenu-logo" href="#home" data-dk-nav="home" aria-label="Puheo etusivulle">Puhe<span>o</span></a>
-        <div class="dk__sidemenu-course">${escapeHtml(langLabel(_route.lang))} · ${escapeHtml(_route.kurssiKey || "")}</div>
+        <div class="dk__sidemenu-course">${escapeHtml(langLabel(_route.lang))} · ${escapeHtml(prettyKurssi(_route.kurssiKey))}</div>
       </div>
       <div class="dk__sidemenu-head">
         <span class="dk__sidemenu-eyebrow">Sisällys</span>
