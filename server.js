@@ -38,6 +38,7 @@ import digikirjaRoutes from "./routes/digikirja.js";
 import statusRoutes from "./routes/status.js";
 import dashboardV2Routes from "./routes/dashboardV2.js";
 import onboardingRoutes from "./routes/onboarding.js";
+import personalizationRoutes from "./routes/personalization.js";
 import { waitlistLimiter } from "./middleware/rateLimit.js";
 import supabase from "./supabase.js";
 
@@ -170,6 +171,7 @@ app.use("/api/status", statusRoutes);
 // L-LIVE-AUDIT-P2 UPDATE 3 — batched dashboard endpoint at /api/dashboard/v2.
 app.use("/api", dashboardV2Routes);
 app.use("/api/onboarding", onboardingRoutes);
+app.use("/api/personalization", personalizationRoutes);
 
 // ─── Waitlist (public, no auth) ─────────────────────────────────────────────
 app.post("/api/waitlist", waitlistLimiter, async (req, res) => {

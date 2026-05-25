@@ -581,8 +581,41 @@ function renderSummary() {
     stepEl.textContent = `Vaihe ${total} / ${total}`;
   }
 
-  const { strengths, growth, plan } = synthesizeSummary(state);
+  // Skeleton-tilaa varten käytetään heuristiikkaa rakenteen pitämiseksi
+  // näytöllä siihen asti, kunnes reasoner-vastaus saapuu.
+  const heuristic = synthesizeSummary(state);
+  renderSummaryBody(recapEl, {
+    strengths: heuristic.strengths,
+    gaps: heuristic.growth,
+    plan: heuristic.plan,
+    note: "Rakennetaan henkilökohtaista polkua...",
+    loading: true,
+  });
 
+  // Kutsu reasoneria taustalla. Jos onnistuu, korvaa heuristiikka
+  // LLM-pohjaisella tuloksella. Jos epäonnistuu, jätä heuristiikka näkyviin.
+  buildReasonerProfile(state.language).then((result) => {
+    if (!result) return;
+    const planFromResult = []
+      .concat(result.plan?.week1 || [])
+      .concat(result.plan?.week2 || [])
+      .concat(result.plan?.week3 || []);
+    renderSummaryBody(recapEl, {
+      strengths: Array.isArray(result.strengths) && result.strengths.length ? result.strengths : heuristic.strengths,
+      gaps: Array.isArray(result.gaps) && result.gaps.length ? result.gaps : heuristic.growth,
+      plan: planFromResult.length ? planFromResult : heuristic.plan,
+      note: result.meta?.planSource === "fallback"
+        ? "Tarkka polku rakentuu kun ensimmäisten harjoitusten data kerääntyy."
+        : "Polku perustuu kurssihistoriaasi, diagnostiikkaasi ja taustatietoihisi.",
+      loading: false,
+    });
+  }).catch(() => {
+    // pidetään heuristiikka
+  });
+}
+
+function renderSummaryBody(recapEl, { strengths, gaps, plan, note, loading }) {
+  const planByWeek = chunkPlanByWeek(plan);
   recapEl.innerHTML = `
     <div class="ob4-summary__col">
       <h2 class="ob4-summary__h2">Sinun vahvuutesi</h2>
@@ -593,17 +626,47 @@ function renderSummary() {
     <div class="ob4-summary__col">
       <h2 class="ob4-summary__h2">Kehittämiskohteet</h2>
       <ul class="ob4-summary__list">
-        ${growth.map(s => `<li>${escapeHtml(s)}</li>`).join("")}
+        ${gaps.map(s => `<li>${escapeHtml(s)}</li>`).join("")}
       </ul>
     </div>
-    <div class="ob4-summary__plan">
+    <div class="ob4-summary__plan${loading ? " ob4-summary__plan--loading" : ""}">
       <h2 class="ob4-summary__h2">Ehdotettu 3 viikon polku</h2>
       <ol class="ob4-summary__plan-list">
-        ${plan.map(s => `<li>${escapeHtml(s)}</li>`).join("")}
+        ${planByWeek.map(item => `<li>${escapeHtml(item)}</li>`).join("")}
       </ol>
-      <p class="ob4-summary__plan-note">Tarkka polku rakentuu kun reasoner käynnistyy (L-V294). Saat henkilökohtaisen sequence-ehdotuksen ensimmäisellä viikolla.</p>
+      <p class="ob4-summary__plan-note">${escapeHtml(note)}</p>
     </div>
   `;
+}
+
+function chunkPlanByWeek(items) {
+  if (!Array.isArray(items) || items.length === 0) return [];
+  if (items.length <= 4) return items;
+  // Jos LLM palautti viikot erikseen ja flatatut item:it, järjestele takaisin
+  // viikko-otsikoiksi näkyvyyden vuoksi.
+  const out = [];
+  const week1 = items.slice(0, Math.ceil(items.length / 3));
+  const week2 = items.slice(week1.length, week1.length + Math.ceil((items.length - week1.length) / 2));
+  const week3 = items.slice(week1.length + week2.length);
+  if (week1.length) out.push(`Viikko 1: ${week1.join(" ")}`);
+  if (week2.length) out.push(`Viikko 2: ${week2.join(" ")}`);
+  if (week3.length) out.push(`Viikko 3: ${week3.join(" ")}`);
+  return out;
+}
+
+async function buildReasonerProfile(language) {
+  try {
+    if (!isLoggedIn()) return null;
+    const resp = await apiFetch(`${API}/api/personalization/build-profile`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ language }),
+    });
+    if (!resp.ok) return null;
+    return await resp.json();
+  } catch (_e) {
+    return null;
+  }
 }
 
 // Heuristic placeholder summary until L-V294 reasoner is live. Uses the
