@@ -602,12 +602,16 @@ h4 {
   margin-bottom: 24px;
 }
 .config-block label {
+  /* L-V306 — was font-mono + 0.12em tracking which read as a small-caps
+     CONSOLE LABEL ("HARJOITTELUTAPA", "AIHE") instead of a normal
+     sentence-case label. Drop both so the words read at body weight. */
   display: block;
-  font-size: 11px;
-  font-family: var(--font-mono);
-  letter-spacing: 0.12em;
+  font-size: 13px;
+  font-family: inherit;
+  font-weight: 600;
+  letter-spacing: 0.01em;
   color: var(--ink-soft);
-margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 .level-picker {
@@ -1494,7 +1498,7 @@ margin-bottom: 12px;
 .mode-btn:hover .mode-icon { color: var(--accent-hover); }
 .mode-btn.active .mode-icon { color: var(--accent-hover); }
 .mode-title { font-size: 13px; font-weight: 700; }
-.mode-desc { font-size: 10px; color: var(--ink-soft); font-family: var(--font-mono); }
+.mode-desc { font-size: 12px; color: var(--ink-soft); font-family: inherit; line-height: 1.35; }
 
 /* ── TASK TYPE PICKER ── */
 .task-type-picker { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
@@ -5071,9 +5075,14 @@ margin-bottom: 8px;
 .settings-row:last-child { border-bottom: none; }
 .settings-row-main { flex: 1; min-width: 0; }
 .settings-row-label {
-  font-family: var(--font-mono); font-size: 11px;
-  color: var(--ink-soft); letter-spacing: 0.08em;
-margin-bottom: 3px;
+  /* L-V307 — was font-mono (DM Mono) + 0.08em tracking, which read as
+     a developer-console placeholder rather than a sentence label. The
+     audit flagged all four meta-labels ("Kutsumanimi", "Teema",
+     "Sähköposti", "Kirjaudu ulos") as AI-slop. Switch to the body sans
+     at the same visual weight (small caps via font-size + ink-soft). */
+  font-family: inherit; font-size: 12px;
+  color: var(--ink-soft); letter-spacing: 0.01em;
+  margin-bottom: 3px;
 }
 .settings-row-value {
   font-size: 15px; font-weight: 600;

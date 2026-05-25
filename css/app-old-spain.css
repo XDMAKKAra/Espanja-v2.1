@@ -2097,10 +2097,12 @@ body.app.auth-mode .config-block {
   margin-bottom: 22px;
 }
 body.app.auth-mode .config-block label {
+  /* L-V306 — was 11px / 0.14em tracking, reads as small-caps stencil.
+     Bump size and drop tracking so it presents as a normal sentence label. */
   font-family: var(--ed-sans);
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 600;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.01em;
   color: var(--ed-ink-muted);
   display: block;
   margin-bottom: 8px;
