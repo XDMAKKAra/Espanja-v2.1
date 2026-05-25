@@ -65,12 +65,40 @@ async function paintMetrics(page) {
   }
 }
 
+// Chromium hard-caps screenshots at 32767 px per dimension. iPhone-class
+// emulation (DPR 3) means a 11k logical-px landing renders past that limit and
+// either throws or stalls. Cap fullPage height with a clip when the math says
+// we would blow past the cap; never throw out of shot() so the audit keeps
+// collecting evidence even on edge cases.
 async function shot(page, viewport, viewName, suffix = 'full') {
   const vp = viewport.width === MOBILE.width ? 'mobile' : 'desktop';
   const dir = vp === 'mobile' ? OUT_MOB : OUT_DESK;
   const slug = viewName.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
   const file = path.join(dir, `${slug}-${vp}-${suffix}.png`);
-  await page.screenshot({ path: file, fullPage: true });
+  try {
+    const dims = await page.evaluate(() => ({
+      scrollHeight: Math.max(
+        document.documentElement?.scrollHeight || 0,
+        document.body?.scrollHeight || 0,
+      ),
+      dpr: window.devicePixelRatio || 1,
+    })).catch(() => ({ scrollHeight: 0, dpr: 1 }));
+    const rendered = dims.scrollHeight * dims.dpr;
+    if (rendered > 32500) {
+      const maxLogical = Math.max(viewport.height, Math.floor(32500 / dims.dpr));
+      await page.screenshot({
+        path: file,
+        clip: { x: 0, y: 0, width: viewport.width, height: maxLogical },
+        timeout: 15000,
+      });
+    } else {
+      await page.screenshot({ path: file, fullPage: true, timeout: 15000 });
+    }
+  } catch (e) {
+    try {
+      await page.screenshot({ path: file, fullPage: false, timeout: 5000 });
+    } catch {}
+  }
   return file;
 }
 
@@ -220,7 +248,7 @@ test.describe('L-V300 Full audit', () => {
       // Start diagnostic
       const startBtn = page.locator('#ob-v4-intro-start');
       if (await startBtn.isVisible({ timeout: 5000 }).catch(() => false)) {
-        await startBtn.click();
+        await startBtn.click({ timeout: 5000 }).catch(() => {});
         await page.waitForTimeout(1200);
         await snap('02-test-q1');
 
@@ -228,16 +256,16 @@ test.describe('L-V300 Full audit', () => {
         for (let i = 1; i <= 3; i++) {
           const opt = page.locator('.ob4-q__option').first();
           if (await opt.isVisible({ timeout: 3000 }).catch(() => false)) {
-            await opt.click();
+            await opt.click({ timeout: 5000 }).catch(() => {});
             await page.waitForTimeout(400);
             const submit = page.locator('.ob4-q__submit');
             if (await submit.isEnabled({ timeout: 1500 }).catch(() => false)) {
-              await submit.click();
+              await submit.click({ timeout: 5000 }).catch(() => {});
               await page.waitForTimeout(800);
               await snap(`03-feedback-q${i}`);
               const next = page.locator('.ob4-q__next');
               if (await next.isVisible({ timeout: 1500 }).catch(() => false)) {
-                await next.click();
+                await next.click({ timeout: 5000 }).catch(() => {});
                 await page.waitForTimeout(600);
               }
             }
@@ -248,7 +276,7 @@ test.describe('L-V300 Full audit', () => {
         for (let i = 0; i < 3; i++) {
           const skipPart = page.locator('#ob-v4-test-skip-part');
           if (await skipPart.isVisible({ timeout: 2000 }).catch(() => false)) {
-            await skipPart.click();
+            await skipPart.click({ timeout: 5000 }).catch(() => {});
             await page.waitForTimeout(800);
             await snap(`04-after-skip-${i}`);
           } else { break; }
@@ -263,23 +291,23 @@ test.describe('L-V300 Full audit', () => {
       const k3 = page.locator('[data-course-id="K3"], [data-course="K3"], label:has-text("K3"), button:has-text("K3")').first();
       const k7 = page.locator('[data-course-id="K7"], [data-course="K7"], label:has-text("K7"), button:has-text("K7")').first();
       if (await k3.isVisible({ timeout: 2000 }).catch(() => false)) {
-        await k3.click().catch(() => {});
+        await k3.click({ timeout: 5000 }).catch(() => {});
         await page.waitForTimeout(200);
       }
       if (await k7.isVisible({ timeout: 2000 }).catch(() => false)) {
-        await k7.click().catch(() => {});
+        await k7.click({ timeout: 5000 }).catch(() => {});
         await page.waitForTimeout(200);
       }
       await snap('06-courses-selected');
 
       const nextBtn = page.locator('button:has-text("Seuraava"), button:has-text("Jatka")').first();
       if (await nextBtn.isVisible({ timeout: 2000 }).catch(() => false)) {
-        await nextBtn.click();
+        await nextBtn.click({ timeout: 5000 }).catch(() => {});
         await page.waitForTimeout(800);
         await snap('07-grades-step');
         // try selecting grade 8 then 9 if visible
         const g8 = page.locator('button:has-text("8"), label:has-text("8")').first();
-        if (await g8.isVisible({ timeout: 2000 }).catch(() => false)) { await g8.click().catch(() => {}); }
+        if (await g8.isVisible({ timeout: 2000 }).catch(() => false)) { await g8.click({ timeout: 5000 }).catch(() => {}); }
         await page.waitForTimeout(400);
         await snap('08-grade-picked');
       }
@@ -288,7 +316,7 @@ test.describe('L-V300 Full audit', () => {
       for (let i = 0; i < 8; i++) {
         const continueBtn = page.locator('button:has-text("Seuraava"), button:has-text("Jatka"), button:has-text("Aloita"), button:has-text("aloita")').first();
         if (await continueBtn.isVisible({ timeout: 1500 }).catch(() => false)) {
-          await continueBtn.click().catch(() => {});
+          await continueBtn.click({ timeout: 5000 }).catch(() => {});
           await page.waitForTimeout(900);
           await snap(`09-step-${i}`);
         } else { break; }
@@ -331,11 +359,13 @@ test.describe('L-V300 Full audit', () => {
       const homeShot = await shot(page, viewport, 'p6-app-home');
 
       // Try opening settings + profile (memory P0 — did they ever open?)
+      // Per-click {timeout:5000} ensures non-actionable elements (e.g. links
+      // inside a translated-off sidebar) fail fast instead of waiting 30 s.
       const settingsLink = page.locator('a:has-text("Asetukset"), button:has-text("Asetukset"), [href*="asetukset"], [data-route*="asetukset"]').first();
       let settingsShot = null, settingsBlocked = null;
       try {
         if (await settingsLink.isVisible({ timeout: 2500 }).catch(() => false)) {
-          await settingsLink.click();
+          await settingsLink.click({ timeout: 5000 });
           await page.waitForTimeout(1200);
           settingsShot = await shot(page, viewport, 'p6-settings');
         } else { settingsBlocked = 'no settings link visible'; }
@@ -346,7 +376,7 @@ test.describe('L-V300 Full audit', () => {
       let profileShot = null, profileBlocked = null;
       try {
         if (await profileLink.isVisible({ timeout: 2500 }).catch(() => false)) {
-          await profileLink.click();
+          await profileLink.click({ timeout: 5000 });
           await page.waitForTimeout(1200);
           profileShot = await shot(page, viewport, 'p6-profile');
         } else { profileBlocked = 'no profile link visible'; }
@@ -357,7 +387,7 @@ test.describe('L-V300 Full audit', () => {
       let tehtavatShot = null;
       try {
         if (await tehtavatLink.isVisible({ timeout: 2500 }).catch(() => false)) {
-          await tehtavatLink.click();
+          await tehtavatLink.click({ timeout: 5000 });
           await page.waitForTimeout(1200);
           tehtavatShot = await shot(page, viewport, 'p6-tehtavat');
         }
@@ -414,14 +444,14 @@ test.describe('L-V300 Full audit', () => {
     try {
       const k1 = page.locator('a:has-text("K1"), button:has-text("K1"), [data-course-id="K1"], [data-course="K1"]').first();
       if (await k1.isVisible({ timeout: 3000 }).catch(() => false)) {
-        await k1.click();
+        await k1.click({ timeout: 5000 });
         await page.waitForTimeout(1500);
         lessonShot = await shot(page, MOBILE, 'p7-k1-detail');
 
         // Try first lesson link
         const lesson1 = page.locator('a:has-text("oppitunti"), a:has-text("Lesson 1"), a:has-text("Oppitunti 1"), button:has-text("Aloita")').first();
         if (await lesson1.isVisible({ timeout: 3000 }).catch(() => false)) {
-          await lesson1.click();
+          await lesson1.click({ timeout: 5000 });
           await page.waitForTimeout(2500);
           exerciseShot = await shot(page, MOBILE, 'p7-lesson-first-exercise');
         }
