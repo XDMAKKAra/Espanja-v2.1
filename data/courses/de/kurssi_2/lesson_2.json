@@ -10,12 +10,12 @@
     "estimated_minutes_median": 12
   },
   "teaching": {
-    "intro_md": "# Ruoka, ateriat ja mieltymykset\n\n## Kolme ateriaa\n\nSaksalaisessa kulttuurissa on perinteisesti kolme ateriaa:\n\n- **das Frühstück** — aamiainen (*Brot, Brötchen, Wurst, Käse* — hyvin erilainen kuin suomalainen puuro!)\n- **das Mittagessen** — lounas (kunnon lämmin ateria päivällä)\n- **das Abendessen** — päivällinen/illallinen (usein kylmä: *Brot und Käse*)\n\n## Ruokasanastoa\n\n> *Zum Frühstück esse ich ein Brötchen mit Butter und Käse.* — Aamiaiseksi syön sämpylän voin ja juuston kanssa.\n\n- **das Brot** — leipä\n- **das Brötchen** — sämpylä\n- **die Wurst** — makkara, leikkele\n- **der Käse** — juusto\n- **das Fleisch** — liha\n- **das Gemüse** — kasvikset, vihannekset\n- **das Obst** — hedelmät\n- **die Milch** — maito\n\n## Mieltymykset\n\n- **gerne** — mielellään: *Ich esse gerne Pizza.*\n- **nicht gerne** — ei mielellään: *Ich esse nicht gerne Fisch.*\n- **lieber** — mieluummin: *Ich esse lieber Nudeln als Reis.*\n- **am liebsten** — kaikkein mieluiten: *Am liebsten esse ich Schokolade.*",
+    "intro_md": "# Ruoka, ateriat ja mieltymykset\n\n## Kolme ateriaa\n\nSaksalaisessa kulttuurissa on perinteisesti kolme ateriaa:\n\n- **das Frühstück**, aamiainen (*Brot, Brötchen, Wurst, Käse*, hyvin erilainen kuin suomalainen puuro!)\n- **das Mittagessen**, lounas (kunnon lämmin ateria päivällä)\n- **das Abendessen**, päivällinen/illallinen (usein kylmä: *Brot und Käse*)\n\n## Ruokasanastoa\n\n> *Zum Frühstück esse ich ein Brötchen mit Butter und Käse.*, Aamiaiseksi syön sämpylän voin ja juuston kanssa.\n\n- **das Brot**, leipä\n- **das Brötchen**, sämpylä\n- **die Wurst**, makkara, leikkele\n- **der Käse**, juusto\n- **das Fleisch**, liha\n- **das Gemüse**, kasvikset, vihannekset\n- **das Obst**, hedelmät\n- **die Milch**, maito\n\n## Mieltymykset\n\n- **gerne**, mielellään: *Ich esse gerne Pizza.*\n- **nicht gerne**, ei mielellään: *Ich esse nicht gerne Fisch.*\n- **lieber**, mieluummin: *Ich esse lieber Nudeln als Reis.*\n- **am liebsten**, kaikkein mieluiten: *Am liebsten esse ich Schokolade.*",
     "key_points": [
       "das Frühstück = aamiainen, das Mittagessen = lounas, das Abendessen = illallinen.",
       "gerne + verbi = mielellään (Ich esse gerne…).",
       "lieber = mieluummin (vertailu), am liebsten = kaikkein mieluiten.",
-      "Saksalainen aamiainen: Brot, Brötchen, Wurst, Käse — YO-kokeessa kulttuuritieto plussaa.",
+      "Saksalainen aamiainen: Brot, Brötchen, Wurst, Käse, YO-kokeessa kulttuuritieto plussaa.",
       "das Gemüse (kasvikset) on neutri, ei mon. muutosta: viel Gemüse."
     ]
   },
@@ -23,7 +23,7 @@
     {
       "phase_id": "p1-recognition-mc-ruoka",
       "phase_type": "recognition_mc",
-      "title": "Tunnista — ruokasanasto",
+      "title": "Tunnista, ruokasanasto",
       "instruction": "Valitse oikea suomennos.",
       "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
       "skip_for_targets": [],
@@ -41,14 +41,14 @@
         { "item_type": "mc", "stem": "die Nudeln", "choices": ["riisi", "pasta, nuudelit", "perunat", "leipä"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "die Nudeln = pasta, nuudelit (monikkomuoto). Suosittu arkiruoka Saksassa." },
         { "item_type": "mc", "stem": "der Reis", "choices": ["riisi", "puuro", "leipä", "pasta"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "der Reis = riisi." },
         { "item_type": "mc", "stem": "gerne", "choices": ["aina", "usein", "mielellään", "harvoin"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "gerne = mielellään. Ich esse gerne Pizza = syön mielelläni pizzaa." },
-        { "item_type": "mc", "stem": "das Brötchen", "choices": ["sämpylä", "leipä", "keksi", "pulla"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "das Brötchen = sämpylä. Pieni Brot — -chen-pääte tekee diminutiivin." },
+        { "item_type": "mc", "stem": "das Brötchen", "choices": ["sämpylä", "leipä", "keksi", "pulla"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "das Brötchen = sämpylä. Pieni Brot, -chen-pääte tekee diminutiivin." },
         { "item_type": "mc", "stem": "die Butter", "choices": ["margariini", "kerma", "voi", "juusto"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "die Butter = voi." }
       ]
     },
     {
       "phase_id": "p2-recognition-match-ateriat",
       "phase_type": "recognition_match",
-      "title": "Yhdistä — ruoat ja juomat",
+      "title": "Yhdistä: ruoat ja juomat",
       "instruction": "Yhdistä saksan sana ja suomennos.",
       "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
       "skip_for_targets": ["I"],
@@ -121,7 +121,7 @@
     {
       "phase_id": "p5-application-gap-helppo",
       "phase_type": "application_gap_fill",
-      "title": "Lauseen täydennys — perustaso",
+      "title": "Lauseen täydennys, perustaso",
       "instruction": "Täydennä lause oikealla sanalla.",
       "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
       "skip_for_targets": ["I", "A"],
@@ -141,7 +141,7 @@
     {
       "phase_id": "p6-application-gap-vaativa",
       "phase_type": "application_gap_fill",
-      "title": "Lauseen täydennys — vaativa",
+      "title": "Lauseen täydennys, vaativa",
       "instruction": "Täydennä ilman sanapankkia.",
       "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
       "skip_for_targets": ["I", "A", "B"],
@@ -208,7 +208,7 @@
     {
       "phase_id": "p10-cumulative-review",
       "phase_type": "application_gap_fill",
-      "title": "Kertaus — ruoka ja ateriat",
+      "title": "Kertaus: ruoka ja ateriat",
       "instruction": "Sekoitettu kertaus ruoka- ja ateriasanastosta.",
       "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
       "skip_for_targets": ["I", "A", "B"],
@@ -265,12 +265,12 @@
       {
         "id": "vocab",
         "title": "Sanasto",
-        "content_md": "## Ateriat\n\n- **das Frühstück** — aamiainen\n- **das Mittagessen** — lounas\n- **das Abendessen** — illallinen\n\n## Ruoka — perus\n\n- **das Brot** — leipä\n- **das Brötchen** — sämpylä\n- **die Wurst** — makkara, leikkele\n- **der Käse** — juusto\n- **die Butter** — voi\n- **das Ei** — kananmuna\n- **das Fleisch** — liha\n- **der Fisch** — kala\n- **das Hähnchen** — kana\n\n## Kasvikset ja hedelmät\n\n- **das Gemüse** — kasvikset\n- **das Obst** — hedelmät\n- **die Kartoffel** — peruna\n- **die Tomate** — tomaatti\n- **der Apfel** — omena\n- **die Banane** — banaani\n\n## Juomat\n\n- **die Milch** — maito\n- **das Wasser** — vesi\n- **der Saft** — mehu\n- **das Getränk** — juoma\n\n## Mieltymykset\n\n- **gerne** — mielellään\n- **nicht gerne** — ei mielellään\n- **lieber** — mieluummin\n- **am liebsten** — kaikkein mieluiten\n\n## Verbit\n\n- **essen** — syödä\n- **trinken** — juoda\n- **kochen** — laittaa ruokaa"
+        "content_md": "## Ateriat\n\n- **das Frühstück**, aamiainen\n- **das Mittagessen**, lounas\n- **das Abendessen**, illallinen\n\n## Ruoka, perus\n\n- **das Brot**, leipä\n- **das Brötchen**, sämpylä\n- **die Wurst**, makkara, leikkele\n- **der Käse**, juusto\n- **die Butter**, voi\n- **das Ei**, kananmuna\n- **das Fleisch**, liha\n- **der Fisch**, kala\n- **das Hähnchen**, kana\n\n## Kasvikset ja hedelmät\n\n- **das Gemüse**, kasvikset\n- **das Obst**, hedelmät\n- **die Kartoffel**, peruna\n- **die Tomate**, tomaatti\n- **der Apfel**, omena\n- **die Banane**, banaani\n\n## Juomat\n\n- **die Milch**, maito\n- **das Wasser**, vesi\n- **der Saft**, mehu\n- **das Getränk**, juoma\n\n## Mieltymykset\n\n- **gerne**, mielellään\n- **nicht gerne**, ei mielellään\n- **lieber**, mieluummin\n- **am liebsten**, kaikkein mieluiten\n\n## Verbit\n\n- **essen**, syödä\n- **trinken**, juoda\n- **kochen**, laittaa ruokaa"
       },
       {
         "id": "tips",
         "title": "YO-vinkki",
-        "content_md": "## YO-koe — ruoka-aihe\n\nRuoka-aihe toistuu Teil 2 luetun ymmärtämisessä. Teil 4 kirjoitelmassa tyypillinen aihe: *'Schreib deinem Freund, was du gerne isst.'*\n\n## Mieltymykset — tärkeä rakenne\n\n- *Ich esse **gerne** Fleisch.* (mielellään)\n- *Ich esse **lieber** Fleisch als Fisch.* (mieluummin kuin)\n- *Am **liebsten** esse ich Schokolade.* (kaikkein mieluiten)\n\n## Saksalainen ruokakulttuuri\n\nYO-kokeessa voi tulla kulttuurikysymyksiä:\n- **Brot ja Brötchen** ovat aamiaisessa keskeisiä\n- Illallinen (Abendessen) on perinteisesti kylmä — vain Brot ja Wurst\n- Mittagessen on päivän pääateria\n\n## Essen-verbin taivutus (epäsäännöllinen!)\n\n| Persoona | Muoto |\n|---|---|\n| ich | esse |\n| du | **isst** |\n| er/sie | **isst** |\n| wir | essen |\n| ihr | esst |\n| sie/Sie | essen |"
+        "content_md": "## YO-koe, ruoka-aihe\n\nRuoka-aihe toistuu Teil 2 luetun ymmärtämisessä. Teil 4 kirjoitelmassa tyypillinen aihe: *'Schreib deinem Freund, was du gerne isst.'*\n\n## Mieltymykset, tärkeä rakenne\n\n- *Ich esse **gerne** Fleisch.* (mielellään)\n- *Ich esse **lieber** Fleisch als Fisch.* (mieluummin kuin)\n- *Am **liebsten** esse ich Schokolade.* (kaikkein mieluiten)\n\n## Saksalainen ruokakulttuuri\n\nYO-kokeessa voi tulla kulttuurikysymyksiä:\n- **Brot ja Brötchen** ovat aamiaisessa keskeisiä\n- Illallinen (Abendessen) on perinteisesti kylmä, vain Brot ja Wurst\n- Mittagessen on päivän pääateria\n\n## Essen-verbin taivutus (epäsäännöllinen!)\n\n| Persoona | Muoto |\n|---|---|\n| ich | esse |\n| du | **isst** |\n| er/sie | **isst** |\n| wir | essen |\n| ihr | esst |\n| sie/Sie | essen |"
       }
     ]
   }

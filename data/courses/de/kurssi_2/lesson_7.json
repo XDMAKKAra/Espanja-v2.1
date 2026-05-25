@@ -10,12 +10,12 @@
     "estimated_minutes_median": 15
   },
   "teaching": {
-    "intro_md": "# Possessivit + Akkusativ\n\nPossessivit (minun, sinun, hänen…) taipuvat **samoin kuin artikkelit**.\n\n## Nominativ vs. Akkusativ\n\n| Suku | Nominativ | Akkusativ |\n|---|---|---|\n| maskuliini | mein**∅** Vater | mein**en** Vater |\n| feminiini | mein**e** Mutter | mein**e** Mutter |\n| neutri | mein**∅** Kind | mein**∅** Kind |\n| monikko | mein**e** Eltern | mein**e** Eltern |\n\n## Kaikki possessivit\n\n| Persoona | Possessiivi |\n|---|---|\n| ich | **mein** |\n| du | **dein** |\n| er | **sein** |\n| sie (hän) | **ihr** |\n| wir | **unser** |\n| ihr | **euer** |\n| sie/Sie | **ihr/Ihr** |\n\n> *Ich sehe **meinen** Vater.* — Näen isäni. (maskuliini, Akkusativ)\n> *Ich habe **meine** Mutter.* — Minulla on äitini. (feminiini, ei muutu)\n> *Er vermisst **seinen** Hund.* — Hän ikävöi koiraansa.\n\n## Muistisääntö\n\nVain maskuliini saa -en-päätteen Akkusativissa: **mein → meinen, dein → deinen** jne.",
+    "intro_md": "# Possessivit + Akkusativ\n\nPossessivit (minun, sinun, hänen…) taipuvat **samoin kuin artikkelit**.\n\n## Nominativ vs. Akkusativ\n\n| Suku | Nominativ | Akkusativ |\n|---|---|---|\n| maskuliini | mein**∅** Vater | mein**en** Vater |\n| feminiini | mein**e** Mutter | mein**e** Mutter |\n| neutri | mein**∅** Kind | mein**∅** Kind |\n| monikko | mein**e** Eltern | mein**e** Eltern |\n\n## Kaikki possessivit\n\n| Persoona | Possessiivi |\n|---|---|\n| ich | **mein** |\n| du | **dein** |\n| er | **sein** |\n| sie (hän) | **ihr** |\n| wir | **unser** |\n| ihr | **euer** |\n| sie/Sie | **ihr/Ihr** |\n\n> *Ich sehe **meinen** Vater.*, Näen isäni. (maskuliini, Akkusativ)\n> *Ich habe **meine** Mutter.*, Minulla on äitini. (feminiini, ei muutu)\n> *Er vermisst **seinen** Hund.*, Hän ikävöi koiraansa.\n\n## Muistisääntö\n\nVain maskuliini saa -en-päätteen Akkusativissa: **mein → meinen, dein → deinen** jne.",
     "key_points": [
       "Possessivit taipuvat samoin kuin ein/eine/ein.",
       "Maskuliini Akkusativissa: mein → meinen, dein → deinen, sein → seinen, ihr → ihren.",
       "Feminiini ja neutri eivät muutu: meine Mutter (Nom.) = meine Mutter (Akk.).",
-      "ihr voi tarkoittaa 'hänen (fem.)' tai 'heidän' — konteksti ratkaisee.",
+      "ihr voi tarkoittaa 'hänen (fem.)' tai 'heidän', konteksti ratkaisee.",
       "Cross-pollination: perhe- ja kotisanasto L1:stä ja K1:stä."
     ]
   },
@@ -23,7 +23,7 @@
     {
       "phase_id": "p1-recognition-mc-possessiv",
       "phase_type": "recognition_mc",
-      "title": "Tunnista — oikea possessiivi",
+      "title": "Tunnista, oikea possessiivi",
       "instruction": "Valitse oikea possessiivi Akkusativissa.",
       "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
       "skip_for_targets": [],
@@ -34,7 +34,7 @@
         { "item_type": "mc", "stem": "Ich vermisse ___ Bruder. (minun veljeäni)", "choices": ["meinen", "mein", "meine", "meiner"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "Bruder on maskuliini → meinen." },
         { "item_type": "mc", "stem": "Sie liebt ___ Familie. (hänen perhettään, she)", "choices": ["ihre", "ihren", "ihr", "ihrem"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "Familie on feminiini → ihre (ei muutu). ihren olisi maskuliinin Akkusativ." },
         { "item_type": "mc", "stem": "Wir besuchen ___ Großvater. (meidän isoisäämme)", "choices": ["unseren", "unser", "unsere", "unserem"], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "Großvater on maskuliini → Akkusativissa unseren." },
-        { "item_type": "mc", "stem": "Er kauft ___ Schwester ein Geschenk. (hänen sisarelleen)", "choices": ["seinen", "sein", "seiner", "seine"], "correct_index": 3, "distractor_difficulty": "medium", "explanation": "Schwester on feminiini → seine (Akkusativissa feminiini ei muutu). Datiivi tulisi jos 'hänelle' — mutta tässä objekti on Geschenk." },
+        { "item_type": "mc", "stem": "Er kauft ___ Schwester ein Geschenk. (hänen sisarelleen)", "choices": ["seinen", "sein", "seiner", "seine"], "correct_index": 3, "distractor_difficulty": "medium", "explanation": "Schwester on feminiini → seine (Akkusativissa feminiini ei muutu). Datiivi tulisi jos 'hänelle', mutta tässä objekti on Geschenk." },
         { "item_type": "mc", "stem": "Ich sehe ___ Wohnung. (minun asuntoani)", "choices": ["meine", "meinen", "mein", "meiner"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "Wohnung on feminiini → meine (ei muutu Akkusativissa)." },
         { "item_type": "mc", "stem": "Du nimmst ___ Computer mit. (sinun tietokoneesi)", "choices": ["deine", "deinen", "dein", "deiner"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Computer on maskuliini → Akkusativissa deinen." },
         { "item_type": "mc", "stem": "Sie besuchen ___ Eltern. (heidän vanhempiaan, they)", "choices": ["ihren", "ihre", "ihrer", "ihr"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "Eltern on monikko → Akkusativissa ihre (monikko ei muutu)." },
@@ -45,7 +45,7 @@
     {
       "phase_id": "p2-recognition-match-possessiv",
       "phase_type": "recognition_match",
-      "title": "Yhdistä — possessiivi oikeaan muotoon",
+      "title": "Yhdistä: possessiivi oikeaan muotoon",
       "instruction": "Yhdistä tilanne oikeaan possessiivi-muotoon.",
       "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
       "skip_for_targets": ["I"],
@@ -92,7 +92,7 @@
     {
       "phase_id": "p4-recall-typed-fi-de",
       "phase_type": "recall_typed_fi_to_es",
-      "title": "Suomesta saksaksi — possessiivit",
+      "title": "Suomesta saksaksi: possessiivit",
       "instruction": "Käännä ilmaisu saksaksi oikeassa muodossa.",
       "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
       "skip_for_targets": ["I", "A"],
@@ -112,7 +112,7 @@
     {
       "phase_id": "p5-application-gap-helppo",
       "phase_type": "application_gap_fill",
-      "title": "Lauseen täydennys — perustaso",
+      "title": "Lauseen täydennys, perustaso",
       "instruction": "Täydennä oikea possessiivi-muoto.",
       "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
       "skip_for_targets": ["I", "A"],
@@ -132,7 +132,7 @@
     {
       "phase_id": "p6-application-gap-vaativa",
       "phase_type": "application_gap_fill",
-      "title": "Lauseen täydennys — vaativa",
+      "title": "Lauseen täydennys, vaativa",
       "instruction": "Täydennä ilman sanapankkia. Päättele kontekstista.",
       "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
       "skip_for_targets": ["I", "A", "B"],
@@ -175,7 +175,7 @@
       "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
       "skip_for_targets": ["I", "A", "B", "C"],
       "items": [
-        { "item_type": "translate", "direction": "fi_to_es", "source": "Rakastan perhettäni — vanhempiani, veljeäni ja sisartani.", "accept": ["Ich liebe meine Familie — meine Eltern, meinen Bruder und meine Schwester.", "Ich liebe meine Familie: meine Eltern, meinen Bruder und meine Schwester."] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Rakastan perhettäni, vanhempiani, veljeäni ja sisartani.", "accept": ["Ich liebe meine Familie, meine Eltern, meinen Bruder und meine Schwester.", "Ich liebe meine Familie: meine Eltern, meinen Bruder und meine Schwester."] },
         { "item_type": "translate", "direction": "fi_to_es", "source": "Hän näkee ystävänsä joka viikko.", "accept": ["Er sieht seinen Freund jede Woche.", "Sie sieht ihre Freundin jede Woche."] },
         { "item_type": "translate", "direction": "fi_to_es", "source": "Vierailemme isovanhempiemme luona joka kesä.", "accept": ["Wir besuchen unsere Großeltern jeden Sommer.", "Jedes Jahr besuchen wir unsere Großeltern."] },
         { "item_type": "translate", "direction": "fi_to_es", "source": "Sinä tarvitset tietokonettasi koulussa joka päivä.", "accept": ["Du brauchst deinen Computer jeden Tag in der Schule.", "Du brauchst täglich deinen Computer in der Schule."] },
@@ -199,7 +199,7 @@
     {
       "phase_id": "p10-cumulative-review",
       "phase_type": "application_gap_fill",
-      "title": "Kertaus — possessivit + Akkusativ",
+      "title": "Kertaus: possessivit + Akkusativ",
       "instruction": "Sekoitettu kertaus. Täydennä sopiva possessiivi.",
       "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
       "skip_for_targets": ["I", "A", "B"],
@@ -239,12 +239,12 @@
       {
         "id": "grammar",
         "title": "Kielioppi",
-        "content_md": "## Possessivit — Akkusativ\n\n| | maskuliini | feminiini | neutri | monikko |\n|---|---|---|---|---|\n| mein | **meinen** | meine | mein | meine |\n| dein | **deinen** | deine | dein | deine |\n| sein | **seinen** | seine | sein | seine |\n| ihr | **ihren** | ihre | ihr | ihre |\n| unser | **unseren** | unsere | unser | unsere |\n\n**Muistisääntö:** Vain maskuliini saa -en päätteen Akkusativissa!\n\n## Nominativ vs. Akkusativ\n\n- *Das ist **mein** Vater.* (Nom.) — Tämä on isäni.\n- *Ich sehe **meinen** Vater.* (Akk.) — Näen isäni.\n\n## ihr on monitulkintainen\n\n- **ihr** Hund = hänen koiransa (feminiinin omistus)\n- **ihr** Hund = heidän koiransa (monikon omistus)\n- **Ihr** Hund = Teidän koiranne (kohtelias Sie)"
+        "content_md": "## Possessivit, Akkusativ\n\n| | maskuliini | feminiini | neutri | monikko |\n|---|---|---|---|---|\n| mein | **meinen** | meine | mein | meine |\n| dein | **deinen** | deine | dein | deine |\n| sein | **seinen** | seine | sein | seine |\n| ihr | **ihren** | ihre | ihr | ihre |\n| unser | **unseren** | unsere | unser | unsere |\n\n**Muistisääntö:** Vain maskuliini saa -en päätteen Akkusativissa!\n\n## Nominativ vs. Akkusativ\n\n- *Das ist **mein** Vater.* (Nom.), Tämä on isäni.\n- *Ich sehe **meinen** Vater.* (Akk.), Näen isäni.\n\n## ihr on monitulkintainen\n\n- **ihr** Hund = hänen koiransa (feminiinin omistus)\n- **ihr** Hund = heidän koiransa (monikon omistus)\n- **Ihr** Hund = Teidän koiranne (kohtelias Sie)"
       },
       {
         "id": "tips",
         "title": "YO-vinkki",
-        "content_md": "## YO-koe — possessivit\n\nPossessiivien oikea muoto on Teil 3:n yleinen testikohde. Kirjoitelmassa tarvitaan joka lauseessa.\n\n## Yleisin virhe\n\n*Ich sehe **mein** Vater.* ❌\n*Ich sehe **meinen** Vater.* ✅\n\nMuista: maskuliini Akkusativissa → -en loppuun!\n\n## Kirjoitelmassa\n\nKun kirjoitat 'Meine Familie' -aiheesta:\n- *Ich habe **einen** Bruder und **eine** Schwester.*\n- *Ich liebe **meine** Eltern sehr.*\n- *Ich vermisse **meinen** Vater, wenn ich weg bin.*"
+        "content_md": "## YO-koe, possessivit\n\nPossessiivien oikea muoto on Teil 3:n yleinen testikohde. Kirjoitelmassa tarvitaan joka lauseessa.\n\n## Yleisin virhe\n\n*Ich sehe **mein** Vater.* ❌\n*Ich sehe **meinen** Vater.* ✅\n\nMuista: maskuliini Akkusativissa → -en loppuun!\n\n## Kirjoitelmassa\n\nKun kirjoitat 'Meine Familie' -aiheesta:\n- *Ich habe **einen** Bruder und **eine** Schwester.*\n- *Ich liebe **meine** Eltern sehr.*\n- *Ich vermisse **meinen** Vater, wenn ich weg bin.*"
       }
     ]
   }

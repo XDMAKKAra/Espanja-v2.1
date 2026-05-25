@@ -707,11 +707,17 @@ color: var(--ed-ink-muted); }
   border-radius: 14px;
   max-width: var(--dk-prose-max);
 }
+/* L-V316b: eyebrow used to be 11px DM-Mono + 0.18em tracking + accent
+   color, which read as the AI-eyebrow chip the user has flagged twice
+   on other surfaces (vrt. L-V306 "HARJOITTELUTAPA"). Match the page's
+   h3/h4 hierarchy so "Muista nämä" reads as an actual subheading. */
 .dk__key-points-title {
-  font-family: var(--ed-mono);
-  font-size: 11px;
-  letter-spacing: 0.18em;
-color: var(--ed-accent);
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--ed-ink, inherit);
   margin: 0 0 12px;
 }
 .dk__key-points ol {
@@ -722,9 +728,8 @@ color: var(--ed-accent);
 }
 .dk__key-points ol li { margin-bottom: 8px; }
 .dk__key-points ol li::marker {
-  font-family: var(--ed-mono);
-  color: var(--ed-accent);
   font-weight: 600;
+  color: var(--ed-ink, inherit);
 }
 
 /* ── BilingualTable ───────────────────────────────────────────────── */

@@ -22,7 +22,7 @@
     {
       "phase_id": "p1-recognition-paatteet-er-ir",
       "phase_type": "recognition_mc",
-      "title": "Tunnista — verbin persoona (-er/-ir)",
+      "title": "Tunnista, verbin persoona (-er/-ir)",
       "instruction": "Mikä persoona puhuu?",
       "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.7, "C": 0.75, "M": 0.8, "E": 0.85, "L": 0.9 },
       "skip_for_targets": [],
@@ -44,7 +44,7 @@
     {
       "phase_id": "p2-recognition-translate",
       "phase_type": "recognition_mc",
-      "title": "Tunnista — käännös",
+      "title": "Tunnista, käännös",
       "instruction": "Valitse oikea käännös suomeksi.",
       "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.7, "C": 0.75, "M": 0.8, "E": 0.85, "L": 0.9 },
       "skip_for_targets": [],
@@ -66,7 +66,7 @@
     {
       "phase_id": "p3-recognition-match",
       "phase_type": "recognition_match",
-      "title": "Yhdistä — pronomini ja muoto",
+      "title": "Yhdistä: pronomini ja muoto",
       "instruction": "Yhdistä subjekti ja oikea muoto.",
       "mastery_threshold": { "I": 0.6, "A": 0.65, "B": 0.75, "C": 0.8, "M": 0.85, "E": 0.9, "L": 0.95 },
       "skip_for_targets": ["I"],
@@ -114,32 +114,32 @@
     {
       "phase_id": "p4-recall-typed-fi-es",
       "phase_type": "recall_typed_fi_to_es",
-      "title": "Tuota — verbinmuoto",
+      "title": "Tuota: verbinmuoto",
       "instruction": "Kirjoita oikea verbi annetussa persoonassa.",
       "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.7, "C": 0.75, "M": 0.8, "E": 0.85, "L": 0.92 },
       "skip_for_targets": ["I", "A"],
       "items": [
-        { "item_type": "typed", "direction": "fi_to_es", "prompt": "comer — yo", "accept": ["como"] },
-        { "item_type": "typed", "direction": "fi_to_es", "prompt": "comer — nosotros", "accept": ["comemos"] },
-        { "item_type": "typed", "direction": "fi_to_es", "prompt": "vivir — yo", "accept": ["vivo"] },
-        { "item_type": "typed", "direction": "fi_to_es", "prompt": "vivir — nosotros", "accept": ["vivimos"] },
-        { "item_type": "typed", "direction": "fi_to_es", "prompt": "vivir — vosotros", "accept": ["vivís", "vivis"] },
-        { "item_type": "typed", "direction": "fi_to_es", "prompt": "leer — él", "accept": ["lee"] },
-        { "item_type": "typed", "direction": "fi_to_es", "prompt": "beber — tú", "accept": ["bebes"] },
-        { "item_type": "typed", "direction": "fi_to_es", "prompt": "escribir — yo", "accept": ["escribo"] },
-        { "item_type": "typed", "direction": "fi_to_es", "prompt": "escribir — ellos", "accept": ["escriben"] },
-        { "item_type": "typed", "direction": "fi_to_es", "prompt": "abrir — nosotros", "accept": ["abrimos"] },
-        { "item_type": "typed", "direction": "fi_to_es", "prompt": "aprender — ella", "accept": ["aprende"] },
-        { "item_type": "typed", "direction": "fi_to_es", "prompt": "recibir — yo", "accept": ["recibo"] },
-        { "item_type": "typed", "direction": "fi_to_es", "prompt": "decidir — nosotros", "accept": ["decidimos"] },
-        { "item_type": "typed", "direction": "fi_to_es", "prompt": "comprender — vosotros", "accept": ["comprendéis", "comprendeis"] },
-        { "item_type": "typed", "direction": "fi_to_es", "prompt": "vender — yo", "accept": ["vendo"] }
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "comer, yo", "accept": ["como"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "comer, nosotros", "accept": ["comemos"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "vivir, yo", "accept": ["vivo"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "vivir, nosotros", "accept": ["vivimos"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "vivir, vosotros", "accept": ["vivís", "vivis"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "leer, él", "accept": ["lee"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "beber, tú", "accept": ["bebes"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "escribir, yo", "accept": ["escribo"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "escribir, ellos", "accept": ["escriben"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "abrir, nosotros", "accept": ["abrimos"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "aprender, ella", "accept": ["aprende"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "recibir, yo", "accept": ["recibo"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "decidir, nosotros", "accept": ["decidimos"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "comprender, vosotros", "accept": ["comprendéis", "comprendeis"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "vender, yo", "accept": ["vendo"] }
       ]
     },
     {
       "phase_id": "p5-application-gap-helppo",
       "phase_type": "application_gap_fill",
-      "title": "Lauseen täydennys — perustaso",
+      "title": "Lauseen täydennys, perustaso",
       "instruction": "Täydennä oikealla muodolla.",
       "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.75, "C": 0.8, "M": 0.85, "E": 0.9, "L": 0.92 },
       "skip_for_targets": ["I", "A"],
@@ -161,7 +161,7 @@
     {
       "phase_id": "p6-application-gap-vaativa",
       "phase_type": "application_gap_fill",
-      "title": "Lauseen täydennys — vaativa",
+      "title": "Lauseen täydennys, vaativa",
       "instruction": "Ei sanapankkia. Päätä persoona kontekstista.",
       "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.65, "C": 0.75, "M": 0.85, "E": 0.9, "L": 0.95 },
       "skip_for_targets": ["I", "A", "B"],
@@ -254,12 +254,12 @@
       {
         "id": "vocab",
         "title": "Sanasto",
-        "content_md": "## -er-verbit\n\n- **comer** — syödä\n- **beber** — juoda\n- **leer** — lukea\n- **aprender** — oppia\n- **comprender** — ymmärtää\n- **vender** — myydä\n- **responder** — vastata\n\n## -ir-verbit\n\n- **vivir** — asua, elää\n- **escribir** — kirjoittaa\n- **abrir** — avata\n- **recibir** — saada\n- **decidir** — päättää\n- **subir** — nousta\n- **discutir** — keskustella, kiistellä"
+        "content_md": "## -er-verbit\n\n- **comer**, syödä\n- **beber**, juoda\n- **leer**, lukea\n- **aprender**, oppia\n- **comprender**, ymmärtää\n- **vender**, myydä\n- **responder**, vastata\n\n## -ir-verbit\n\n- **vivir**, asua, elää\n- **escribir**, kirjoittaa\n- **abrir**, avata\n- **recibir**, saada\n- **decidir**, päättää\n- **subir**, nousta\n- **discutir**, keskustella, kiistellä"
       },
       {
         "id": "tips",
         "title": "YO-vinkki",
-        "content_md": "## YO-koe — kuullun ymmärtäminen\n\n-er- ja -ir-verbien ainoa ero on me- ja te-muodoissa: **comemos** (er) vs **vivimos** (ir).\n\n## Yleisin ansa\n\nKuullun ymmärtämisessä **comemos** ja **comen** voi kuulostaa samalta. Yksi tavu lisää (-mos) ratkaisee.\n\n## Kirjoituksessa\n\nÄlä sekoita -emos ja -imos. *Comemos pasta* (syömme pastaa), *Vivimos en Madrid* (asumme Madridissa).\n\n## Yhteenveto kaikista preesenseistä\n\nKun olet osannut -ar-, -er- ja -ir-verbit, sinulla on koko espanjan säännöllinen preesens. ~80 % YO-kokeen verbeistä on näistä ryhmistä."
+        "content_md": "## YO-koe, kuullun ymmärtäminen\n\n-er- ja -ir-verbien ainoa ero on me- ja te-muodoissa: **comemos** (er) vs **vivimos** (ir).\n\n## Yleisin ansa\n\nKuullun ymmärtämisessä **comemos** ja **comen** voi kuulostaa samalta. Yksi tavu lisää (-mos) ratkaisee.\n\n## Kirjoituksessa\n\nÄlä sekoita -emos ja -imos. *Comemos pasta* (syömme pastaa), *Vivimos en Madrid* (asumme Madridissa).\n\n## Yhteenveto kaikista preesenseistä\n\nKun olet osannut -ar-, -er- ja -ir-verbit, sinulla on koko espanjan säännöllinen preesens. ~80 % YO-kokeen verbeistä on näistä ryhmistä."
       }
     ]
   }

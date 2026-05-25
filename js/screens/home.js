@@ -28,6 +28,74 @@ import { isProTier } from "../lib/tier.js";
 import { prefetchChunk, onHoverIntent } from "../lib/prefetch.js";
 import { prefetchCurriculumList } from "../lib/curriculumCache.js";
 
+// L-V316a: when the user clicks "Jatka opintoja" / "Avaa oppimispolku",
+// ask the reasoner for a weighted next topic so future generation calls
+// can lean on the user's diagnostic gaps. Result is stashed in
+// sessionStorage; downstream lesson/exercise flows can read it without
+// requiring a synchronous round-trip on every click.
+const NEXT_TOPIC_SESSION_KEY = "puheo:next_topic_v1";
+const NEXT_TOPIC_LOG_KEY = "puheo:next_topic_log_v1";
+const NEXT_TOPIC_POOL = {
+  es: [
+    "general vocabulary", "society and politics", "environment and nature",
+    "health and body", "travel and transport", "culture and arts", "work and economy",
+    "ser_estar", "hay_estar", "subjunctive", "conditional",
+    "preterite_imperfect", "pronouns",
+  ],
+  fr: [
+    "general vocabulary", "society and politics", "environment and nature",
+    "health and body", "travel and transport", "culture and arts", "work and economy",
+    "subjunctive", "conditional", "imparfait_passe_compose", "pronouns",
+  ],
+  de: [
+    "general vocabulary", "society and politics", "environment and nature",
+    "health and body", "travel and transport", "culture and arts", "work and economy",
+    "perfekt_praeteritum", "konjunktiv", "modalverben", "praepositionen",
+  ],
+};
+
+async function fetchWeightedNextTopic(lang) {
+  if (!isLoggedIn()) return null;
+  const pool = NEXT_TOPIC_POOL[lang] || NEXT_TOPIC_POOL.es;
+  try {
+    const res = await apiFetch(`${API}/api/personalization/next-topic`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", ...authHeader() },
+      body: JSON.stringify({ language: lang, availableTopics: pool }),
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    if (!data?.topic) return null;
+    return {
+      topic: data.topic,
+      source: data.source || "uniform",
+      gapsCount: data.gapsCount || 0,
+      at: Date.now(),
+      lang,
+    };
+  } catch {
+    return null;
+  }
+}
+
+function recordNextTopic(entry) {
+  if (!entry) return;
+  try {
+    sessionStorage.setItem(NEXT_TOPIC_SESSION_KEY, JSON.stringify(entry));
+    let log = [];
+    try {
+      const raw = sessionStorage.getItem(NEXT_TOPIC_LOG_KEY);
+      if (raw) log = JSON.parse(raw);
+    } catch { /* ignore */ }
+    if (!Array.isArray(log)) log = [];
+    log.push(entry);
+    // Keep last 50 so the manual 10-click verification stays inspectable
+    // without unbounded growth.
+    if (log.length > 50) log = log.slice(-50);
+    sessionStorage.setItem(NEXT_TOPIC_LOG_KEY, JSON.stringify(log));
+  } catch { /* private mode */ }
+}
+
 const LANGS = [
   { code: "es", label: "Espanja", flag: "🇪🇸" },
   { code: "fr", label: "Ranska", flag: "🇫🇷" },
@@ -265,6 +333,34 @@ function renderShellSkeleton(activeLang) {
     </div>`;
 }
 
+function wireNextTopicHandler(root, lang) {
+  const cta = root.querySelector(".home-next__cta");
+  if (!cta) return;
+  cta.addEventListener("click", async (e) => {
+    // Hold the navigation a beat so the /next-topic response actually
+    // persists to sessionStorage before the page changes. Without this,
+    // the fetch is racing the browser's anchor navigation and the
+    // downstream lesson runner sees no topic. The 1.2s timeout keeps the
+    // CTA responsive when the API is slow / offline (fail-open).
+    if (cta.dataset.busy === "1") return;
+    e.preventDefault();
+    cta.dataset.busy = "1";
+    cta.setAttribute("aria-busy", "true");
+    const href = cta.getAttribute("href") || `#/oppimispolku?lang=${lang}`;
+    let entry = null;
+    try {
+      entry = await Promise.race([
+        fetchWeightedNextTopic(lang),
+        new Promise((resolve) => setTimeout(() => resolve(null), 1200)),
+      ]);
+    } catch { entry = null; }
+    if (entry) recordNextTopic(entry);
+    cta.dataset.busy = "0";
+    cta.removeAttribute("aria-busy");
+    location.hash = href.startsWith("#") ? href : `#${href}`;
+  });
+}
+
 function wireHoverPrefetch(root, lang) {
   const cta = root.querySelector(".home-next__cta");
   if (cta) {
@@ -316,6 +412,7 @@ export async function loadHome() {
     wireTabs(root);
     wirePaywallTriggers(root);
     wireHoverPrefetch(root, activeLang);
+    wireNextTopicHandler(root, activeLang);
     return;
   }
   root.innerHTML = renderShellSkeleton(activeLang);
@@ -326,4 +423,5 @@ export async function loadHome() {
   wireTabs(root);
   wirePaywallTriggers(root);
   wireHoverPrefetch(root, activeLang);
+  wireNextTopicHandler(root, activeLang);
 }

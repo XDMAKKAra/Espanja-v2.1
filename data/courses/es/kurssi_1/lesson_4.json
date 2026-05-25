@@ -6,7 +6,7 @@
     "level": "A",
     "title": "Koulu ja värit",
     "description": "Opettelet lukioarjen sanaston (instituto, asignatura, profesor, libro, examen…) ja 14 väriä. Sekä koulu- että värisanat ovat YO-kokeen kuullun ja luetun perussanastoa.",
-    "yo_relevance": "Kouluympäristö ja värit toistuvat YO-kokeen luetun ymmärtämisessä — erityisesti tekstit lukioelämästä, opiskelusta ja kuvauksista. Yleinen ansa: värin sukupuolitaivutus (rojo/roja, blanco/blanca).",
+    "yo_relevance": "Kouluympäristö ja värit toistuvat YO-kokeen luetun ymmärtämisessä, erityisesti tekstit lukioelämästä, opiskelusta ja kuvauksista. Yleinen ansa: värin sukupuolitaivutus (rojo/roja, blanco/blanca).",
     "estimated_minutes_median": 12
   },
   "teaching": {
@@ -21,7 +21,7 @@
     {
       "phase_id": "p1-recognition-koulu",
       "phase_type": "recognition_mc",
-      "title": "Tunnista — kouluympäristö",
+      "title": "Tunnista, kouluympäristö",
       "instruction": "Valitse oikea käännös.",
       "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.7, "C": 0.75, "M": 0.8, "E": 0.85, "L": 0.9 },
       "skip_for_targets": [],
@@ -43,7 +43,7 @@
     {
       "phase_id": "p2-recognition-aineet-varit",
       "phase_type": "recognition_mc",
-      "title": "Tunnista — kouluaineet ja värit",
+      "title": "Tunnista, kouluaineet ja värit",
       "instruction": "Valitse oikea käännös.",
       "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.7, "C": 0.75, "M": 0.8, "E": 0.85, "L": 0.9 },
       "skip_for_targets": [],
@@ -157,7 +157,7 @@
     {
       "phase_id": "p6-application-gap-helppo",
       "phase_type": "application_gap_fill",
-      "title": "Lauseen täydennys — perustaso",
+      "title": "Lauseen täydennys, perustaso",
       "instruction": "Täydennä oikealla sanalla. Huomioi sukupuoli/luku.",
       "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.75, "C": 0.8, "M": 0.85, "E": 0.9, "L": 0.92 },
       "skip_for_targets": ["I", "A"],
@@ -177,7 +177,7 @@
     {
       "phase_id": "p7-application-gap-vaativa",
       "phase_type": "application_gap_fill",
-      "title": "Lauseen täydennys — vaativa",
+      "title": "Lauseen täydennys, vaativa",
       "instruction": "Ei sanapankkia. Mieti sukupuoli ja luku.",
       "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.65, "C": 0.75, "M": 0.85, "E": 0.9, "L": 0.95 },
       "skip_for_targets": ["I", "A", "B"],
@@ -279,12 +279,12 @@
       {
         "id": "vocab",
         "title": "Sanasto",
-        "content_md": "## Lukioarki\n\n- **instituto** — lukio\n- **asignatura** — kouluaine\n- **profesor / profesora** — opettaja\n- **alumno / alumna** — oppilas\n- **examen** — koe\n- **deberes** — läksyt\n- **nota** — arvosana\n- **aula** — luokkahuone\n\n## Koulutarvikkeet\n\n- **mochila** — reppu\n- **libro** — kirja\n- **cuaderno** — vihko\n- **bolígrafo** — kuulakärkikynä\n- **lápiz** — lyijykynä\n\n## Kouluaineet\n\n- **matemáticas** — matematiikka\n- **historia** — historia\n- **geografía** — maantieto\n- **biología** — biologia\n- **química** — kemia\n\n## Värit — perusvärit\n\n- **rojo / roja** — punainen\n- **azul** — sininen (sama mies/nainen)\n- **verde** — vihreä (sama)\n- **amarillo / amarilla** — keltainen\n- **negro / negra** — musta\n- **blanco / blanca** — valkoinen\n\n## Värit — laajemmin\n\n- **gris** — harmaa\n- **marrón** — ruskea\n- **naranja** — oranssi\n- **rosa** — vaaleanpunainen\n- **morado / morada** — violetti"
+        "content_md": "## Lukioarki\n\n- **instituto**, lukio\n- **asignatura**, kouluaine\n- **profesor / profesora**, opettaja\n- **alumno / alumna**, oppilas\n- **examen**, koe\n- **deberes**, läksyt\n- **nota**, arvosana\n- **aula**, luokkahuone\n\n## Koulutarvikkeet\n\n- **mochila**, reppu\n- **libro**, kirja\n- **cuaderno**, vihko\n- **bolígrafo**, kuulakärkikynä\n- **lápiz**, lyijykynä\n\n## Kouluaineet\n\n- **matemáticas**, matematiikka\n- **historia**, historia\n- **geografía**, maantieto\n- **biología**, biologia\n- **química**, kemia\n\n## Värit, perusvärit\n\n- **rojo / roja**, punainen\n- **azul**, sininen (sama mies/nainen)\n- **verde**, vihreä (sama)\n- **amarillo / amarilla**, keltainen\n- **negro / negra**, musta\n- **blanco / blanca**, valkoinen\n\n## Värit, laajemmin\n\n- **gris**, harmaa\n- **marrón**, ruskea\n- **naranja**, oranssi\n- **rosa**, vaaleanpunainen\n- **morado / morada**, violetti"
       },
       {
         "id": "tips",
         "title": "YO-vinkki",
-        "content_md": "## YO-koe — kuullun ymmärtäminen\n\nLukioteksti on YO-kokeen yleisin tekstityyppi. Kuulet **profesor**, **examen**, **asignatura**, **alumno** lähes joka vuosi.\n\n## Värin sukupuolitaivutus\n\nVärit jotka loppuvat -o:han taipuvat:\n- el coche **rojo** → la mochila **roja**\n- los libros **rojos** → las mochilas **rojas**\n\nVärit jotka loppuvat -e tai konsonanttiin (verde, azul, marrón) eivät taivu sukupuoleen:\n- el coche **azul** → la mochila **azul**\n- los coches **azules** → las mochilas **azules**\n\n## Yleisin ansa\n\n- **rosa** ja **naranja** ovat substantiiveja jotka toimivat värejä — eivät taivu: las flores rosa, las camisetas naranja.\n- **marrón** saa monikossa -es: marrones."
+        "content_md": "## YO-koe, kuullun ymmärtäminen\n\nLukioteksti on YO-kokeen yleisin tekstityyppi. Kuulet **profesor**, **examen**, **asignatura**, **alumno** lähes joka vuosi.\n\n## Värin sukupuolitaivutus\n\nVärit jotka loppuvat -o:han taipuvat:\n- el coche **rojo** → la mochila **roja**\n- los libros **rojos** → las mochilas **rojas**\n\nVärit jotka loppuvat -e tai konsonanttiin (verde, azul, marrón) eivät taivu sukupuoleen:\n- el coche **azul** → la mochila **azul**\n- los coches **azules** → las mochilas **azules**\n\n## Yleisin ansa\n\n- **rosa** ja **naranja** ovat substantiiveja jotka toimivat värejä, eivät taivu: las flores rosa, las camisetas naranja.\n- **marrón** saa monikossa -es: marrones."
       }
     ]
   }

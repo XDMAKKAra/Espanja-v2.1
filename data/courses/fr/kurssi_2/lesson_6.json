@@ -10,20 +10,20 @@
     "estimated_minutes_median": 14
   },
   "teaching": {
-    "intro_md": "# Adjektiivin accord — sukupuoli ja luku\n\nRanskassa adjektiivi sopeutuu substantiivin sukupuoleen ja lukuun:\n\n| | Maskuliini | Feminiini |\n|---|---|---|\n| Yksikkö | un chat **noir** | une voiture **noire** |\n| Monikko | les chats **noirs** | les voitures **noires** |\n\n## Tyypilliset päätteet\n\n- Perusmuoto → feminiini lisää **-e**: petit → petit**e**, grand → grand**e**\n- Jos jo päättyy -e: même → même (ei muutu)\n- Erityiset: beau → belle, nouveau → nouvelle, vieux → vieille\n- -eux → -euse: heureux → heureu**se**\n- -ien → -ienne: musicien → musicien**ne**\n\n## Adjektiivi YLEENSÄ substantiivin jälkeen\n\n> *une voiture **rouge*** (punainen auto)\n> *un livre **intéressant*** (kiinnostava kirja)\n\n**BAGS-adjektiivit edessä** (Beauty, Age, Goodness, Size):\n> *un **grand** salon* — *une **petite** chambre* — *un **bon** repas* — *une **belle** maison*\n\n## Omistuspronominit\n\n| | Maskuliini yks | Feminiini yks | Monikko |\n|---|---|---|---|\n| minun | **mon** | **ma** | **mes** |\n| sinun | **ton** | **ta** | **tes** |\n| hänen | **son** | **sa** | **ses** |\n| meidän | **notre** | **notre** | **nos** |\n| teidän | **votre** | **votre** | **vos** |\n| heidän | **leur** | **leur** | **leurs** |\n\n**TÄRKEÄÄ:** Valinta mon/ma sen mukaan mikä sukupuoli SEURAAVALLA sanalla on:\n> *mon amie* (ei *ma amie* — vokaali edessä!)\n> *mon appartement* (maskuliini)\n> *ma chambre* (feminiini)",
+    "intro_md": "# Adjektiivin accord, sukupuoli ja luku\n\nRanskassa adjektiivi sopeutuu substantiivin sukupuoleen ja lukuun:\n\n| | Maskuliini | Feminiini |\n|---|---|---|\n| Yksikkö | un chat **noir** | une voiture **noire** |\n| Monikko | les chats **noirs** | les voitures **noires** |\n\n## Tyypilliset päätteet\n\n- Perusmuoto → feminiini lisää **-e**: petit → petit**e**, grand → grand**e**\n- Jos jo päättyy -e: même → même (ei muutu)\n- Erityiset: beau → belle, nouveau → nouvelle, vieux → vieille\n- -eux → -euse: heureux → heureu**se**\n- -ien → -ienne: musicien → musicien**ne**\n\n## Adjektiivi YLEENSÄ substantiivin jälkeen\n\n> *une voiture **rouge*** (punainen auto)\n> *un livre **intéressant*** (kiinnostava kirja)\n\n**BAGS-adjektiivit edessä** (Beauty, Age, Goodness, Size):\n> *un **grand** salon*, *une **petite** chambre*, *un **bon** repas*, *une **belle** maison*\n\n## Omistuspronominit\n\n| | Maskuliini yks | Feminiini yks | Monikko |\n|---|---|---|---|\n| minun | **mon** | **ma** | **mes** |\n| sinun | **ton** | **ta** | **tes** |\n| hänen | **son** | **sa** | **ses** |\n| meidän | **notre** | **notre** | **nos** |\n| teidän | **votre** | **votre** | **vos** |\n| heidän | **leur** | **leur** | **leurs** |\n\n**TÄRKEÄÄ:** Valinta mon/ma sen mukaan mikä sukupuoli SEURAAVALLA sanalla on:\n> *mon amie* (ei *ma amie*, vokaali edessä!)\n> *mon appartement* (maskuliini)\n> *ma chambre* (feminiini)",
     "key_points": [
       "Adjektiivi sopeutuu substantiivin sukupuoleen ja lukuun: blanc → blanche → blancs → blanches.",
       "Feminiini lisää -e (usein), erityiset: beau → belle, vieux → vieille, heureux → heureuse.",
       "mon/ma/mes: valitaan seuraavan sanan sukupuolen mukaan (ei omistajan).",
-      "mon + vokaalialkuinen sana AINA (mon amie, mon école) — vaikka amie on feminiini.",
-      "son frère = hänen veljensä; sa sœur = hänen sisarensa — son/sa ei kerro omistajan sukupuolta!"
+      "mon + vokaalialkuinen sana AINA (mon amie, mon école), vaikka amie on feminiini.",
+      "son frère = hänen veljensä; sa sœur = hänen sisarensa, son/sa ei kerro omistajan sukupuolta!"
     ]
   },
   "phases": [
     {
       "phase_id": "p1-recognition-mc-accord",
       "phase_type": "recognition_mc",
-      "title": "Tunnista — oikea adjektiivimuoto",
+      "title": "Tunnista, oikea adjektiivimuoto",
       "instruction": "Valitse oikea adjektiivimuoto lauseeseen.",
       "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.90 },
       "skip_for_targets": [],
@@ -47,14 +47,14 @@
     {
       "phase_id": "p2-recognition-mc-omistuspronominit",
       "phase_type": "recognition_mc",
-      "title": "Tunnista — oikea omistuspronominit",
+      "title": "Tunnista, oikea omistuspronominit",
       "instruction": "Valitse oikea omistuspronominit.",
       "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.90 },
       "skip_for_targets": [],
       "items": [
         { "item_type": "mc", "stem": "___ livre (minun / maskuliini)", "choices": ["mon", "ma", "mes", "son"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "le livre = maskuliini → mon. minun + maskuliini = mon." },
         { "item_type": "mc", "stem": "___ chambre (minun / feminiini)", "choices": ["mon", "ma", "mes", "ta"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "la chambre = feminiini → ma. minun + feminiini = ma." },
-        { "item_type": "mc", "stem": "___ amie (minun / feminiini, mutta vokaali!)", "choices": ["ma", "mon", "mes", "ton"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "mon amie — vaikka amie on feminiini, vokaali edessä → mon (ei *ma amie). Élision-sääntö." },
+        { "item_type": "mc", "stem": "___ amie (minun / feminiini, mutta vokaali!)", "choices": ["ma", "mon", "mes", "ton"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "mon amie, vaikka amie on feminiini, vokaali edessä → mon (ei *ma amie). Élision-sääntö." },
         { "item_type": "mc", "stem": "___ parents (sinun / monikko)", "choices": ["ta", "ton", "tes", "ses"], "correct_index": 2, "distractor_difficulty": "easy", "explanation": "les parents = monikko → tes. sinun + monikko = tes." },
         { "item_type": "mc", "stem": "___ sœur (hänen)", "choices": ["son", "sa", "ses", "leur"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "la sœur = feminiini → sa. HUOM: sa voi tarkoittaa hänen (maskuliinisubjekti) tai hänen (feminiinisubjekti)." },
         { "item_type": "mc", "stem": "___ frère (hänen)", "choices": ["son", "sa", "ses", "leur"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "le frère = maskuliini → son. son/sa määräytyy seuraavan sanan sukupuolen mukaan, ei omistajan." },
@@ -111,7 +111,7 @@
     {
       "phase_id": "p5-application-gap-fill",
       "phase_type": "application_gap_fill",
-      "title": "Aukkotehtävä — accord ja pronominit",
+      "title": "Aukkotehtävä: accord ja pronominit",
       "instruction": "Kirjoita oikea muoto. Substantiivin sukupuoli annettu.",
       "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.70, "C": 0.75, "M": 0.85, "E": 0.90, "L": 0.95 },
       "skip_for_targets": ["I", "A"],
@@ -120,10 +120,10 @@
         { "item_type": "gap_fill", "sentence_template": "J'ai un chat {1} et une chienne {2}. (noir / blanc)", "answers": [["noir"], ["blanche"]], "word_bank": null },
         { "item_type": "gap_fill", "sentence_template": "{1} parents habitent à Marseille.", "answers": [["mes", "Mes"]], "word_bank": ["Mes", "Mon", "Ma", "Ses"] },
         { "item_type": "gap_fill", "sentence_template": "Elle aime {1} appartement. (son/sa/ses)", "answers": [["son"]], "word_bank": null },
-        { "item_type": "gap_fill", "sentence_template": "C'est {1} amie — je la connais depuis dix ans. (mon/ma)", "answers": [["mon"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "C'est {1} amie: je la connais depuis dix ans. (mon/ma)", "answers": [["mon"]], "word_bank": null },
         { "item_type": "gap_fill", "sentence_template": "Ils habitent dans une {1} maison avec un grand jardin. (vieux)", "answers": [["vieille"]], "word_bank": null },
         { "item_type": "gap_fill", "sentence_template": "Nous avons deux chats {1} et un chien {2}. (gris / blanc)", "answers": [["gris"], ["blanc"]], "word_bank": null },
-        { "item_type": "gap_fill", "sentence_template": "C'est {1} livre préféré — je l'ai lu trois fois. (mon/ma/mes)", "answers": [["mon"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "C'est {1} livre préféré: je l'ai lu trois fois. (mon/ma/mes)", "answers": [["mon"]], "word_bank": null },
         { "item_type": "gap_fill", "sentence_template": "Voici {1} frère et {2} sœur. (son/sa)", "answers": [["son"], ["sa"]], "word_bank": null },
         { "item_type": "gap_fill", "sentence_template": "Ce sont des histoires {1}. (intéressant)", "answers": [["intéressantes"]], "word_bank": null }
       ]
@@ -136,12 +136,12 @@
       "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.60, "C": 0.68, "M": 0.80, "E": 0.90, "L": 0.95 },
       "skip_for_targets": ["I", "A", "B"],
       "items": [
-        { "item_type": "gap_fill", "sentence_template": "Ma sœur est très {1} — elle chante et joue de la guitare. (talentueux)", "answers": [["talentueuse"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Ma sœur est très {1}: elle chante et joue de la guitare. (talentueux)", "answers": [["talentueuse"]], "word_bank": null },
         { "item_type": "gap_fill", "sentence_template": "Mon frère est {1} et {2}. (sportif / intelligent)", "answers": [["sportif"], ["intelligent"]], "word_bank": null },
         { "item_type": "gap_fill", "sentence_template": "Elle a les yeux {1} et les cheveux {2}. (bleu / brun)", "answers": [["bleus"], ["bruns"]], "word_bank": null },
-        { "item_type": "gap_fill", "sentence_template": "C'est {1} école — {2} professeurs sont excellents. (notre/nos)", "answers": [["notre"], ["nos"]], "word_bank": null },
-        { "item_type": "gap_fill", "sentence_template": "Ils sont {1} — ils ont gagné la compétition! (heureux)", "answers": [["heureux"]], "word_bank": null },
-        { "item_type": "gap_fill", "sentence_template": "Ce sont {1} chaussures — où sont {2} ? (mon/ma/mes/ton/ta/tes)", "answers": [["mes"], ["les tiennes"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "C'est {1} école: {2} professeurs sont excellents. (notre/nos)", "answers": [["notre"], ["nos"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Ils sont {1}, ils ont gagné la compétition! (heureux)", "answers": [["heureux"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Ce sont {1} chaussures, où sont {2} ? (mon/ma/mes/ton/ta/tes)", "answers": [["mes"], ["les tiennes"]], "word_bank": null },
         { "item_type": "gap_fill", "sentence_template": "Vous avez une {1} voiture ! (beau)", "answers": [["belle"]], "word_bank": null },
         { "item_type": "gap_fill", "sentence_template": "Ces histoires sont {1} et {2}. (court / amusant)", "answers": [["courtes"], ["amusantes"]], "word_bank": null }
       ]
@@ -158,7 +158,7 @@
         { "item_type": "typed", "direction": "fi_to_es", "prompt": "Meillä on pieni valkoinen talo.", "accept": ["nous avons une petite maison blanche", "on a une petite maison blanche"] },
         { "item_type": "typed", "direction": "fi_to_es", "prompt": "Heidän lapsensa ovat iloiset.", "accept": ["leurs enfants sont heureux", "leurs enfants sont contents"] },
         { "item_type": "typed", "direction": "fi_to_es", "prompt": "Tämä on kiinnostava kirja.", "accept": ["c'est un livre intéressant", "ce livre est intéressant"] },
-        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Hänen ystävänsä (nainen) on lahjakas pianisti.", "accept": ["son amie est une pianiste talentueuse", "son amie est talentueuse — elle est pianiste"] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Hänen ystävänsä (nainen) on lahjakas pianisti.", "accept": ["son amie est une pianiste talentueuse", "son amie est talentueuse, elle est pianiste"] },
         { "item_type": "typed", "direction": "fi_to_es", "prompt": "Minun vanhempani ovat ranskalaisia.", "accept": ["mes parents sont français", "mes parents sont francais"] },
         { "item_type": "typed", "direction": "fi_to_es", "prompt": "Se on vanha kaunis rakennus.", "accept": ["c'est un vieux beau bâtiment", "c'est un beau vieux bâtiment", "c'est un bel et ancien bâtiment"] },
         { "item_type": "typed", "direction": "fi_to_es", "prompt": "Meidän opettajamme ovat hyviä.", "accept": ["nos professeurs sont bons", "nos professeurs sont très bien", "nos enseignants sont bons"] }
@@ -173,7 +173,7 @@
       "skip_for_targets": ["I", "A", "B", "C"],
       "items": [
         { "item_type": "translate", "direction": "fi_to_es", "source": "Veli on pitkä ja komea, sisar on lyhyt mutta kaunis.", "accept": ["mon frère est grand et beau, ma sœur est petite mais belle", "le frère est grand et beau, la sœur est petite mais belle"] },
-        { "item_type": "translate", "direction": "fi_to_es", "source": "Hänen äitinsä on lääkäri — hän on hyvin taitava.", "accept": ["sa mère est médecin — elle est très compétente", "sa mère est médecin et elle est très talentueuse"] },
+        { "item_type": "translate", "direction": "fi_to_es", "source": "Hänen äitinsä on lääkäri, hän on hyvin taitava.", "accept": ["sa mère est médecin, elle est très compétente", "sa mère est médecin et elle est très talentueuse"] },
         { "item_type": "translate", "direction": "fi_to_es", "source": "Tämä on kiinnostava ja hauska tarina.", "accept": ["c'est une histoire intéressante et amusante", "cette histoire est intéressante et amusante"] },
         { "item_type": "translate", "direction": "fi_to_es", "source": "Meidän koulullamme on uusi iso puutarha.", "accept": ["notre école a un nouveau grand jardin", "il y a un nouveau grand jardin dans notre école", "notre école a un grand jardin nouveau"] },
         { "item_type": "translate", "direction": "fi_to_es", "source": "Hänen (miehen) tyttöystävänsä on musiikillisesti lahjakas.", "accept": ["sa petite amie est musicalement talentueuse", "son amie est musicalement talentueuse", "sa petite amie est très douée pour la musique"] },
@@ -183,18 +183,18 @@
     {
       "phase_id": "p9-application-gap-kertaus",
       "phase_type": "application_gap_fill",
-      "title": "Kokoava kertaus — accord ja pronominit",
+      "title": "Kokoava kertaus: accord ja pronominit",
       "instruction": "Sekoitettu kertaus.",
       "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.60, "C": 0.68, "M": 0.80, "E": 0.90, "L": 0.95 },
       "skip_for_targets": ["I", "A", "B"],
       "items": [
         { "item_type": "gap_fill", "sentence_template": "Elle a un chat {1} et un chien {2}. (noir/blanc maskuliini)", "answers": [["noir"], ["blanc"]], "word_bank": null },
         { "item_type": "gap_fill", "sentence_template": "{1} frère s'appelle Thomas et {2} sœur s'appelle Marie. (mon/ma)", "answers": [["Mon", "mon"], ["ma"]], "word_bank": null },
-        { "item_type": "gap_fill", "sentence_template": "C'est {1} amie — elle est {2}. (mon/ma / gentil)", "answers": [["mon"], ["gentille"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "C'est {1} amie: elle est {2}. (mon/ma / gentil)", "answers": [["mon"], ["gentille"]], "word_bank": null },
         { "item_type": "gap_fill", "sentence_template": "Ils habitent dans une {1} maison {2}. (vieux/rouge)", "answers": [["vieille"], ["rouge"]], "word_bank": null },
         { "item_type": "gap_fill", "sentence_template": "Ces étudiantes sont {1} et {2}. (intelligent/motivé)", "answers": [["intelligentes"], ["motivées"]], "word_bank": null },
-        { "item_type": "gap_fill", "sentence_template": "C'est le livre de Marie — c'est {1} livre. (son/sa/ses)", "answers": [["son"]], "word_bank": null },
-        { "item_type": "gap_fill", "sentence_template": "Les enfants sont {1} — ils adorent {2} école. (heureux/notre/nos)", "answers": [["heureux"], ["leur"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "C'est le livre de Marie: c'est {1} livre. (son/sa/ses)", "answers": [["son"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Les enfants sont {1}, ils adorent {2} école. (heureux/notre/nos)", "answers": [["heureux"], ["leur"]], "word_bank": null },
         { "item_type": "gap_fill", "sentence_template": "Elle a les cheveux {1} et les yeux {2}. (blond/vert)", "answers": [["blonds"], ["verts"]], "word_bank": null }
       ]
     }
@@ -223,12 +223,12 @@
       {
         "id": "grammar",
         "title": "Accord-taulukko",
-        "content_md": "## Adjektiivin accord\n\n| | Maskuliini | Feminiini |\n|---|---|---|\n| Yksikkö | un salon **grand** | une chambre **grande** |\n| Monikko | des salons **grands** | des chambres **grandes** |\n\n## Epäsäännölliset adjektiivit\n\n| Maskuliini | Feminiini | Suomi |\n|---|---|---|\n| beau | belle | kaunis |\n| vieux | vieille | vanha |\n| nouveau | nouvelle | uusi |\n| heureux | heureuse | onnellinen |\n| bon | bonne | hyvä |\n\n## Omistuspronominit\n\n| | m. yks | f. yks | monikko |\n|---|---|---|---|\n| minun | **mon** | **ma** | **mes** |\n| sinun | **ton** | **ta** | **tes** |\n| hänen | **son** | **sa** | **ses** |\n| meidän | **notre** | **notre** | **nos** |\n| teidän | **votre** | **votre** | **vos** |\n| heidän | **leur** | **leur** | **leurs** |\n\n## Vokaali-sääntö\n\nmon / ton / son + vokaalialkuinen sana — vaikka sana olisi feminiini!\n*mon amie* (ei *ma amie*), *mon école*"
+        "content_md": "## Adjektiivin accord\n\n| | Maskuliini | Feminiini |\n|---|---|---|\n| Yksikkö | un salon **grand** | une chambre **grande** |\n| Monikko | des salons **grands** | des chambres **grandes** |\n\n## Epäsäännölliset adjektiivit\n\n| Maskuliini | Feminiini | Suomi |\n|---|---|---|\n| beau | belle | kaunis |\n| vieux | vieille | vanha |\n| nouveau | nouvelle | uusi |\n| heureux | heureuse | onnellinen |\n| bon | bonne | hyvä |\n\n## Omistuspronominit\n\n| | m. yks | f. yks | monikko |\n|---|---|---|---|\n| minun | **mon** | **ma** | **mes** |\n| sinun | **ton** | **ta** | **tes** |\n| hänen | **son** | **sa** | **ses** |\n| meidän | **notre** | **notre** | **nos** |\n| teidän | **votre** | **votre** | **vos** |\n| heidän | **leur** | **leur** | **leurs** |\n\n## Vokaali-sääntö\n\nmon / ton / son + vokaalialkuinen sana, vaikka sana olisi feminiini!\n*mon amie* (ei *ma amie*), *mon école*"
       },
       {
         "id": "tips",
         "title": "YO-vinkki",
-        "content_md": "## YO-koe — accord on rakennetehtävän ansa\n\n## Tyypillisin YO-virhe\n\n- *une histoire intéressant* — VÄÄRIN (intéressante, feminiini)\n- *un livre intéressante* — VÄÄRIN (intéressant, maskuliini)\n\nTarkista aina: mikä on substantiivin sukupuoli?\n\n## Omistuspronominit — son/sa ansa\n\n*Son livre* voi tarkoittaa:\n- hänen kirjansa (hänestä mies) TAI\n- hänen kirjansa (hänestä nainen)\n\nson/sa valitaan SEURAAVAN SANAN sukupuolen mukaan, ei omistajan. Tämä on YO-klassikko!\n\n## BAGS-adjektiivit ennen substantiivia\n\n- **B**eauté: beau, belle, joli, jolie\n- **A**ge: vieux, vieille, jeune\n- **G**oodness: bon, bonne, mauvais\n- **S**ize: grand, petite, petit\n\n*un **grand** jardin* — *une **belle** maison*"
+        "content_md": "## YO-koe, accord on rakennetehtävän ansa\n\n## Tyypillisin YO-virhe\n\n- *une histoire intéressant*, VÄÄRIN (intéressante, feminiini)\n- *un livre intéressante*, VÄÄRIN (intéressant, maskuliini)\n\nTarkista aina: mikä on substantiivin sukupuoli?\n\n## Omistuspronominit, son/sa ansa\n\n*Son livre* voi tarkoittaa:\n- hänen kirjansa (hänestä mies) TAI\n- hänen kirjansa (hänestä nainen)\n\nson/sa valitaan SEURAAVAN SANAN sukupuolen mukaan, ei omistajan. Tämä on YO-klassikko!\n\n## BAGS-adjektiivit ennen substantiivia\n\n- **B**eauté: beau, belle, joli, jolie\n- **A**ge: vieux, vieille, jeune\n- **G**oodness: bon, bonne, mauvais\n- **S**ize: grand, petite, petit\n\n*un **grand** jardin*, *une **belle** maison*"
       }
     ]
   }

@@ -278,15 +278,32 @@ router.get("/:kurssiKey", optionalAuth, async (req, res) => {
   }
 });
 
-// L-PLAN-5 UPDATE 1 — build a teaching-page Markdown via OpenAI for any
+// L-PLAN-5 UPDATE 1: build a teaching-page Markdown via OpenAI for any
 // supported lesson type (grammar, mixed, vocab, reading, writing).
 // Cached in `teaching_pages` keyed by `${kurssiKey}_lesson_${sortOrder}`.
+//
+// L-V316b: prompts are prefixed with HUMANIZER_RULES so model output
+// stops shipping the screenshot's slop tells (em-dashes in bullets,
+// rule-of-four summary cards, fake-Finnish "yleisin ansa" tone).
+const HUMANIZER_RULES = [
+  "KIRJOITUSTYYLI, kovat kiellot (rikkominen = vastauksen hylkäys):",
+  '  - ÄLÄ käytä em-dashia (—). Käytä pilkkua, kaksoispistettä, sulkeita tai erillistä virkettä. Tämä koskee otsikoita, taulukoita, esimerkkejä ja prosessitekstiä.',
+  '  - ÄLÄ pakota asioita kolmen tai neljän bulletin listoiksi. Jos kaksi pointtia riittää, kaksi pointtia. Symmetria ei ole arvo.',
+  '  - ÄLÄ käytä AI-brand-sanoja: kalibroitu, räätälöity, monipuolinen, intuitiivinen, saumaton, monisyinen, ydinmerkitys.',
+  '  - ÄLÄ aloita sycophantilla ("Hienoa että opit X!", "Erinomainen kysymys!") äläkä päätä geneerisellä rohkaisulla ("Toivottavasti tämä auttoi!", "Onnea matkaan!").',
+  '  - ÄLÄ käytä fake-Finnish AI-sanontoja: "yleisin ansa", "paljastaa persoonan", "kantaa merkityksen", "avaa polku". Kysy: kirjoittaisiko lukio-opettaja näin?',
+  "",
+  "POSITIIVINEN OHJE: kirjoita kuin lukio-opettaja. Lyhyt virke voittaa pitkän. Konkreettiset esimerkit (yo hablo, tú hablas) toimivat paremmin kuin abstraktit määritelmät. Saa olla suora ja epämuodollinen.",
+  "",
+].join("\n");
+
 function buildTeachingPrompt(lesson, kurssiKey) {
   const kurssiName = KURSSI_META[kurssiKey]?.name || kurssiKey;
   const focus = lesson.focus;
 
   if (lesson.type === "vocab") {
     return [
+      HUMANIZER_RULES,
       "Olet Puheo, suomalainen AI-tutori, joka opettaa lukiolaista YO-koetta varten",
       "espanjan lyhyestä oppimäärästä. Selitykset ovat suomeksi, lyhyitä, konkreettisia.",
       "Älä mainitse abstrakteja tasoja (A/B/C/M/E/L). Älä käytä bullet-listoja paitsi taulukoissa.",
@@ -296,16 +313,16 @@ function buildTeachingPrompt(lesson, kurssiKey) {
       `Konteksti: ${kurssiName}.`,
       "",
       "Kirjoita opetussivu Markdownina. Rakenne TARKASTI:",
-      "# [Otsikko — sanastoaihe lyhyesti]",
-      "[1 kappale (max 80 sanaa) selkokielistä suomea — kerro mistä sanastosta on kyse, miksi se on tärkeä, ja miten YO-koe testaa sitä.]",
+      "# [Otsikko, sanastoaihe lyhyesti]",
+      "[1 kappale (max 80 sanaa) selkokielistä suomea. Kerro mistä sanastosta on kyse, miksi se on tärkeä, ja miten YO-koe testaa sitä.]",
       "## Tärkeimmät sanat",
       "| Suomeksi | Espanjaksi | Esimerkki |",
       "|----------|-----------|-----------|",
       "[Listaa 8–12 ydinsanaa tästä aiheesta. Esimerkkisarakkeessa lyhyt lause espanjaksi.]",
       "## Muista nämä",
-      "[2–3 lausetta yleisimmistä sudenkuopista. Esim. ääntämys, kirjoitusasu tai sukumuoto.]",
-      "## YO-vinkki 💡",
-      "[1–2 lausetta YO-kokeen näkökulmasta. Mitä testataan, mitä kannattaa hallita.]",
+      "[2 tai 3 lausetta yleisimmistä sudenkuopista. Esim. ääntämys, kirjoitusasu tai sukumuoto.]",
+      "## YO-vinkki",
+      "[1 tai 2 lausetta YO-kokeen näkökulmasta. Mitä testataan, mitä kannattaa hallita.]",
       "",
       'Palauta JSON: { "contentMd": "..." }',
     ].join("\n");
@@ -313,6 +330,7 @@ function buildTeachingPrompt(lesson, kurssiKey) {
 
   if (lesson.type === "reading") {
     return [
+      HUMANIZER_RULES,
       "Olet Puheo, suomalainen AI-tutori, joka opettaa lukiolaista YO-koetta varten",
       "espanjan lyhyestä oppimäärästä. Selitykset ovat suomeksi, lyhyitä, konkreettisia.",
       "Älä käytä bullet-listoja paitsi vinkkien kohdalla.",
@@ -322,12 +340,12 @@ function buildTeachingPrompt(lesson, kurssiKey) {
       `Konteksti: ${kurssiName}.`,
       "",
       "Kirjoita lyhyt valmistautumissivu ENNEN luetun ymmärtämistehtävää. Rakenne TARKASTI:",
-      "# [Otsikko — luetun ymmärtäminen aiheesta]",
+      "# [Otsikko, luetun ymmärtäminen aiheesta]",
       "[1 kappale (max 70 sanaa) selkokielistä suomea: rauhoita lukijaa, muistuta että koko tekstiä ei tarvitse ymmärtää sana sanalta. Mainitse mitä sanastoa kannattaa odottaa.]",
       "## Lukustrategia",
-      "[2–3 lyhyttä bullet-pointtia: silmäile ensin, etsi avainsanoja, vasta sitten yksityiskohdat.]",
-      "## YO-vinkki 💡",
-      "[1–2 lausetta YO-luetun ymmärtämisen näkökulmasta — mitä monivalinnoissa testataan.]",
+      "[Lyhyitä bullet-pointteja: silmäile ensin, etsi avainsanoja, vasta sitten yksityiskohdat.]",
+      "## YO-vinkki",
+      "[1 tai 2 lausetta YO-luetun ymmärtämisen näkökulmasta. Mitä monivalinnoissa testataan.]",
       "",
       'Palauta JSON: { "contentMd": "..." }',
     ].join("\n");
@@ -335,6 +353,7 @@ function buildTeachingPrompt(lesson, kurssiKey) {
 
   if (lesson.type === "writing") {
     return [
+      HUMANIZER_RULES,
       "Olet Puheo, suomalainen AI-tutori, joka opettaa lukiolaista YO-koetta varten",
       "espanjan lyhyestä oppimäärästä. Selitykset ovat suomeksi, lyhyitä, konkreettisia.",
       "Käytä sinä-muotoa. Bullet-listoja saa käyttää rakenne-osassa.",
@@ -365,6 +384,7 @@ function buildTeachingPrompt(lesson, kurssiKey) {
 
   // grammar / mixed (default)
   return [
+    HUMANIZER_RULES,
     "Olet Puheo, suomalainen AI-tutori, joka opettaa lukiolaista YO-koetta varten",
     "espanjan lyhyestä oppimäärästä. Selitykset ovat suomeksi, lyhyitä, konkreettisia.",
     "Älä mainitse abstrakteja tasoja (A/B/C/M/E/L). Älä käytä bullet-listoja paitsi taulukoissa.",
@@ -375,14 +395,14 @@ function buildTeachingPrompt(lesson, kurssiKey) {
     `Konteksti: ${kurssiName}.`,
     "",
     "Kirjoita opetussivu Markdownina. Rakenne TARKASTI:",
-    "# [Otsikko — lyhyt ja konkreettinen, ei aikamuotojen latinaa]",
+    "# [Otsikko, lyhyt ja konkreettinen, ei aikamuotojen latinaa]",
     "[1 kappale, max 80 sanaa, selkokielinen suomi, ilman jargonia]",
     "## Muodostus",
-    "[Joko taulukko tai 2–4 lyhyttä riviä — vain jos aihe sitä vaatii]",
+    "[Joko taulukko tai muutama lyhyt rivi. Vain jos aihe sitä vaatii.]",
     "## Esimerkki",
-    "> [1–2 lausetta espanjaksi + suomenkieliset käännökset suluissa]",
-    "## YO-vinkki 💡",
-    "[1–2 lausetta mitä YO-koe testaa tästä aiheesta — konkreettisesti]",
+    "> [1 tai 2 lausetta espanjaksi, suomenkieliset käännökset suluissa]",
+    "## YO-vinkki",
+    "[1 tai 2 konkreettista lausetta siitä mitä YO-koe testaa tästä aiheesta.]",
     "",
     'Palauta JSON: { "contentMd": "..." }',
   ].join("\n");
@@ -402,7 +422,7 @@ function buildTeachingFallback(lesson) {
       "",
       "| Suomeksi | Espanjaksi | Esimerkki |",
       "|----------|-----------|-----------|",
-      "| (sanasto avautuu harjoittelun aikana) | — | — |",
+      "| (sanasto avautuu harjoittelun aikana) | … | … |",
       "",
       "## Muista nämä",
       "",
@@ -467,7 +487,7 @@ function buildTeachingFallback(lesson) {
     "",
     "## Esimerkki",
     "",
-    "> Harjoittelu alkaa heti — ratkaiset 8 lyhyttä tehtävää.",
+    "> Harjoittelu alkaa heti: ratkaiset 8 lyhyttä tehtävää.",
     "",
     "## YO-vinkki 💡",
     "",

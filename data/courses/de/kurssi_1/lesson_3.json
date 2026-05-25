@@ -10,9 +10,9 @@
     "estimated_minutes_median": 11
   },
   "teaching": {
-    "intro_md": "# Numerot, kellonajat ja viikonpäivät\n\n## Perusnumerot\n\n- 1 = eins, 2 = zwei, 3 = drei, 4 = vier, 5 = fünf\n- 6 = sechs, 7 = sieben, 8 = acht, 9 = neun, 10 = zehn\n- 11 = elf, 12 = zwölf, 13 = dreizehn...\n- 20 = zwanzig, 21 = einundzwanzig...\n- 100 = hundert\n\n## Kellonajat\n\nVirallinen aika (24h): **Es ist 14:30 Uhr** = kello on 14.30.\n\nEpävirallinen aika: **Es ist halb drei** = kello on puoli kolme (2:30). **Viertel nach zwei** = vartin yli kaksi.\n\n## Viikonpäivät\n\n- **Montag** — maanantai\n- **Dienstag** — tiistai\n- **Mittwoch** — keskiviikko\n- **Donnerstag** — torstai\n- **Freitag** — perjantai\n- **Samstag** — lauantai\n- **Sonntag** — sunnuntai\n\nViikon alku on Saksassa **Montag**.",
+    "intro_md": "# Numerot, kellonajat ja viikonpäivät\n\n## Perusnumerot\n\n- 1 = eins, 2 = zwei, 3 = drei, 4 = vier, 5 = fünf\n- 6 = sechs, 7 = sieben, 8 = acht, 9 = neun, 10 = zehn\n- 11 = elf, 12 = zwölf, 13 = dreizehn...\n- 20 = zwanzig, 21 = einundzwanzig...\n- 100 = hundert\n\n## Kellonajat\n\nVirallinen aika (24h): **Es ist 14:30 Uhr** = kello on 14.30.\n\nEpävirallinen aika: **Es ist halb drei** = kello on puoli kolme (2:30). **Viertel nach zwei** = vartin yli kaksi.\n\n## Viikonpäivät\n\n- **Montag**, maanantai\n- **Dienstag**, tiistai\n- **Mittwoch**, keskiviikko\n- **Donnerstag**, torstai\n- **Freitag**, perjantai\n- **Samstag**, lauantai\n- **Sonntag**, sunnuntai\n\nViikon alku on Saksassa **Montag**.",
     "key_points": [
-      "halb drei = 2:30 (ei 3:30!) — puoli on edellisen tunnin puolivälissä.",
+      "halb drei = 2:30 (ei 3:30!), puoli on edellisen tunnin puolivälissä.",
       "Numerot 13–19: -zehn pääte (dreizehn, vierzehn...).",
       "Kymmenluvut: zwanzig, dreißig (huom. ß!), vierzig, fünfzig, sechzig, siebzig, achtzig, neunzig.",
       "Viikonpäivät isolla alkukirjaimella, kuten kaikki substantiivit."
@@ -22,7 +22,7 @@
     {
       "phase_id": "p1-recognition-numerot",
       "phase_type": "recognition_mc",
-      "title": "Tunnista — numerot",
+      "title": "Tunnista, numerot",
       "instruction": "Valitse oikea numero tai käännös.",
       "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
       "skip_for_targets": [],
@@ -45,7 +45,7 @@
     {
       "phase_id": "p2-recognition-match-viikonpaivat",
       "phase_type": "recognition_match",
-      "title": "Yhdistä — viikonpäivät ja kuukaudet",
+      "title": "Yhdistä: viikonpäivät ja kuukaudet",
       "instruction": "Yhdistä saksan sana ja suomennos.",
       "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
       "skip_for_targets": ["I"],
@@ -93,7 +93,7 @@
     {
       "phase_id": "p3-recognition-kellonajat",
       "phase_type": "recognition_mc",
-      "title": "Tunnista — kellonajat",
+      "title": "Tunnista, kellonajat",
       "instruction": "Valitse oikea kellonaika tai käännös.",
       "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
       "skip_for_targets": ["I"],
@@ -159,39 +159,39 @@
     {
       "phase_id": "p6-application-gap-helppo",
       "phase_type": "application_gap_fill",
-      "title": "Lauseen täydennys — perustaso",
+      "title": "Lauseen täydennys, perustaso",
       "instruction": "Täydennä lause sanapankista.",
       "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
       "skip_for_targets": ["I", "A"],
       "items": [
-        { "item_type": "gap_fill", "sentence_template": "Heute ist {1} — morgen ist Dienstag.", "answers": [["Montag"]], "word_bank": ["Montag", "Mittwoch", "Donnerstag"] },
-        { "item_type": "gap_fill", "sentence_template": "Es ist {1} Uhr — Zeit für das Frühstück!", "answers": [["acht", "sieben"]], "word_bank": ["acht", "zwölf", "zwanzig"] },
+        { "item_type": "gap_fill", "sentence_template": "Heute ist {1}: morgen ist Dienstag.", "answers": [["Montag"]], "word_bank": ["Montag", "Mittwoch", "Donnerstag"] },
+        { "item_type": "gap_fill", "sentence_template": "Es ist {1} Uhr: Zeit für das Frühstück!", "answers": [["acht", "sieben"]], "word_bank": ["acht", "zwölf", "zwanzig"] },
         { "item_type": "gap_fill", "sentence_template": "Der Unterricht beginnt um {1} Uhr.", "answers": [["acht", "neun"]], "word_bank": ["acht", "zwanzig", "hundert"] },
         { "item_type": "gap_fill", "sentence_template": "Ich bin am {1} Dezember geboren.", "answers": [["dritten", "fünften", "zehnten", "zwanzigsten"]], "word_bank": ["dritten", "dreißigsten", "zwanzigsten"] },
         { "item_type": "gap_fill", "sentence_template": "Am {1} haben wir keine Schule.", "answers": [["Sonntag", "Samstag"]], "word_bank": ["Sonntag", "Montag", "Freitag"] },
-        { "item_type": "gap_fill", "sentence_template": "Es ist halb {1} — also 14:30 Uhr.", "answers": [["drei"]], "word_bank": ["drei", "zwei", "vier"] },
+        { "item_type": "gap_fill", "sentence_template": "Es ist halb {1}: also 14:30 Uhr.", "answers": [["drei"]], "word_bank": ["drei", "zwei", "vier"] },
         { "item_type": "gap_fill", "sentence_template": "Ich stehe {1} um sieben Uhr auf.", "answers": [["jeden Morgen", "morgens"]], "word_bank": ["jeden Morgen", "Abend", "Nacht"] },
-        { "item_type": "gap_fill", "sentence_template": "Der {1} beginnt um Mitternacht — um null Uhr.", "answers": [["Tag", "neue Tag"]], "word_bank": ["Tag", "Abend", "Morgen"] },
+        { "item_type": "gap_fill", "sentence_template": "Der {1} beginnt um Mitternacht, um null Uhr.", "answers": [["Tag", "neue Tag"]], "word_bank": ["Tag", "Abend", "Morgen"] },
         { "item_type": "gap_fill", "sentence_template": "Im {1} ist es sehr kalt in Finnland.", "answers": [["Januar", "Februar", "Dezember"]], "word_bank": ["Januar", "Juli", "August"] },
-        { "item_type": "gap_fill", "sentence_template": "Mein Geburtstag ist im {1} — im Sommer!", "answers": [["Juli", "Juni", "August"]], "word_bank": ["Juli", "Januar", "Februar"] }
+        { "item_type": "gap_fill", "sentence_template": "Mein Geburtstag ist im {1}, im Sommer!", "answers": [["Juli", "Juni", "August"]], "word_bank": ["Juli", "Januar", "Februar"] }
       ]
     },
     {
       "phase_id": "p7-application-gap-vaativa",
       "phase_type": "application_gap_fill",
-      "title": "Lauseen täydennys — vaativa",
+      "title": "Lauseen täydennys, vaativa",
       "instruction": "Täydennä ilman sanapankkia.",
       "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.65, "C": 0.75, "M": 0.80, "E": 0.85, "L": 0.95 },
       "skip_for_targets": ["I", "A", "B"],
       "items": [
-        { "item_type": "gap_fill", "sentence_template": "Ich bin am {1} Februar geboren — am Valentinstag!", "answers": [["vierzehnten", "14."]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Ich bin am {1} Februar geboren, am Valentinstag!", "answers": [["vierzehnten", "14."]], "word_bank": null },
         { "item_type": "gap_fill", "sentence_template": "Der Film beginnt um {1} Uhr dreißig.", "answers": [["acht", "neun", "sieben", "zehn"]], "word_bank": null },
-        { "item_type": "gap_fill", "sentence_template": "Heute ist {1} — wir haben fünf Tage Schule diese Woche.", "answers": [["Montag", "Dienstag"]], "word_bank": null },
-        { "item_type": "gap_fill", "sentence_template": "Es ist {1} sechs — also 17:30 Uhr.", "answers": [["halb"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Heute ist {1}: wir haben fünf Tage Schule diese Woche.", "answers": [["Montag", "Dienstag"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Es ist {1} sechs: also 17:30 Uhr.", "answers": [["halb"]], "word_bank": null },
         { "item_type": "gap_fill", "sentence_template": "Ich schlafe von Mitternacht bis {1} Uhr morgens.", "answers": [["sieben", "acht", "sechs"]], "word_bank": null },
         { "item_type": "gap_fill", "sentence_template": "Im {1} feiern wir Weihnachten.", "answers": [["Dezember"]], "word_bank": null },
         { "item_type": "gap_fill", "sentence_template": "Es sind {1} Minuten in einer Stunde.", "answers": [["sechzig", "60"]], "word_bank": null },
-        { "item_type": "gap_fill", "sentence_template": "Am {1} kommen meine Eltern zu Besuch — also übermorgen.", "answers": [["Donnerstag", "Freitag"]], "word_bank": null }
+        { "item_type": "gap_fill", "sentence_template": "Am {1} kommen meine Eltern zu Besuch, also übermorgen.", "answers": [["Donnerstag", "Freitag"]], "word_bank": null }
       ]
     },
     {
@@ -207,7 +207,7 @@
         { "item_type": "typed", "direction": "fi_to_es", "prompt": "Lauantaina menen elokuviin.", "accept": ["Am Samstag gehe ich ins Kino.", "Samstag gehe ich ins Kino."] },
         { "item_type": "typed", "direction": "fi_to_es", "prompt": "Koulussa on oppitunteja maanantaista perjantaihin.", "accept": ["In der Schule gibt es Unterricht von Montag bis Freitag.", "Die Schule geht von Montag bis Freitag."] },
         { "item_type": "typed", "direction": "fi_to_es", "prompt": "Syntymäpäiväni on helmikuun 14. päivänä.", "accept": ["Mein Geburtstag ist am vierzehnten Februar.", "Ich habe am vierzehnten Februar Geburtstag."] },
-        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Tänään on torstai — huomenna on perjantai.", "accept": ["Heute ist Donnerstag — morgen ist Freitag.", "Heute ist Donnerstag, morgen ist Freitag."] },
+        { "item_type": "typed", "direction": "fi_to_es", "prompt": "Tänään on torstai, huomenna on perjantai.", "accept": ["Heute ist Donnerstag, morgen ist Freitag.", "Heute ist Donnerstag, morgen ist Freitag."] },
         { "item_type": "typed", "direction": "fi_to_es", "prompt": "Bussi lähtee kello kahdeksan.", "accept": ["Der Bus fährt um acht Uhr ab.", "Der Bus fährt um acht Uhr."] },
         { "item_type": "typed", "direction": "fi_to_es", "prompt": "Maaliskuussa on 31 päivää.", "accept": ["Im März gibt es 31 Tage.", "Der März hat 31 Tage."] }
       ]
@@ -266,12 +266,12 @@
       {
         "id": "vocab",
         "title": "Sanasto",
-        "content_md": "## Numerot 1–20\n\n- 1 eins, 2 zwei, 3 drei, 4 vier, 5 fünf\n- 6 sechs, 7 sieben, 8 acht, 9 neun, 10 zehn\n- 11 elf, 12 zwölf, 13 dreizehn, 14 vierzehn, 15 fünfzehn\n- 16 sechzehn, 17 siebzehn, 18 achtzehn, 19 neunzehn, 20 zwanzig\n\n## Kymmenet\n\n- 20 zwanzig, 30 dreißig, 40 vierzig\n- 50 fünfzig, 60 sechzig, 70 siebzig\n- 80 achtzig, 90 neunzig, 100 hundert\n\n## Viikonpäivät\n\n- **Montag** — maanantai\n- **Dienstag** — tiistai\n- **Mittwoch** — keskiviikko\n- **Donnerstag** — torstai\n- **Freitag** — perjantai\n- **Samstag** — lauantai\n- **Sonntag** — sunnuntai\n\n## Kellonajat\n\n- **Es ist acht Uhr** — kello on 8:00\n- **Es ist halb drei** — kello on 2:30 (puoli on ENNEN!)\n- **Viertel nach zwei** — 2:15\n- **Viertel vor vier** — 3:45\n\n## Ajanilmaisut\n\n- **heute** — tänään\n- **morgen** — huomenna\n- **gestern** — eilen\n- **übermorgen** — ylihuomenna"
+        "content_md": "## Numerot 1–20\n\n- 1 eins, 2 zwei, 3 drei, 4 vier, 5 fünf\n- 6 sechs, 7 sieben, 8 acht, 9 neun, 10 zehn\n- 11 elf, 12 zwölf, 13 dreizehn, 14 vierzehn, 15 fünfzehn\n- 16 sechzehn, 17 siebzehn, 18 achtzehn, 19 neunzehn, 20 zwanzig\n\n## Kymmenet\n\n- 20 zwanzig, 30 dreißig, 40 vierzig\n- 50 fünfzig, 60 sechzig, 70 siebzig\n- 80 achtzig, 90 neunzig, 100 hundert\n\n## Viikonpäivät\n\n- **Montag**, maanantai\n- **Dienstag**, tiistai\n- **Mittwoch**, keskiviikko\n- **Donnerstag**, torstai\n- **Freitag**, perjantai\n- **Samstag**, lauantai\n- **Sonntag**, sunnuntai\n\n## Kellonajat\n\n- **Es ist acht Uhr**, kello on 8:00\n- **Es ist halb drei**, kello on 2:30 (puoli on ENNEN!)\n- **Viertel nach zwei**, 2:15\n- **Viertel vor vier**, 3:45\n\n## Ajanilmaisut\n\n- **heute**, tänään\n- **morgen**, huomenna\n- **gestern**, eilen\n- **übermorgen**, ylihuomenna"
       },
       {
         "id": "tips",
         "title": "YO-vinkki",
-        "content_md": "## YO-koe — Numerot ja kellonajat\n\nTeil 3 (Struktur und Vokabular) sisältää usein tehtäviä joissa pitää tunnistaa numerot kontekstista. Teil 2 (Lesen) -teksteissä aikataulut ovat yleisiä.\n\n**Yleisin virhe: halb**\n- halb drei = **2:30** ei 3:30!\n- Saksa laskee puolen tuntia EDELLISESTÄ tunnista.\n\n**dreißig vs. dreizehn**\n- dreißig = 30 (ß!)\n- dreizehn = 13 (pelkkä -zehn)\n\n**Teil 2 -strategia:**\nKun näet Uhr-sanan tai kellonajan tekstissä, etsi kysymyksen kannalta oleellinen yhteys: onko kyse alkamisajasta, lopetusajasta vai kestosta?"
+        "content_md": "## YO-koe, Numerot ja kellonajat\n\nTeil 3 (Struktur und Vokabular) sisältää usein tehtäviä joissa pitää tunnistaa numerot kontekstista. Teil 2 (Lesen) -teksteissä aikataulut ovat yleisiä.\n\n**Yleisin virhe: halb**\n- halb drei = **2:30** ei 3:30!\n- Saksa laskee puolen tuntia EDELLISESTÄ tunnista.\n\n**dreißig vs. dreizehn**\n- dreißig = 30 (ß!)\n- dreizehn = 13 (pelkkä -zehn)\n\n**Teil 2 -strategia:**\nKun näet Uhr-sanan tai kellonajan tekstissä, etsi kysymyksen kannalta oleellinen yhteys: onko kyse alkamisajasta, lopetusajasta vai kestosta?"
       }
     ]
   }

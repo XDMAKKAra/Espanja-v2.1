@@ -10,10 +10,10 @@
     "estimated_minutes_median": 12
   },
   "teaching": {
-    "intro_md": "# Koti ja asuminen\n\nRanskassa asunto on **un appartement** (kerrostaloasunto) tai **une maison** (talo). Kaupungeissa ihmiset asuvat yleensä kerrostaloissa.\n\n## Kodin tilat\n\n> Dans mon appartement, il y a **une cuisine**, **un salon**, **deux chambres** et **une salle de bains**.\n> (Asunnossani on keittiö, olohuone, kaksi makuuhuonetta ja kylpyhuone.)\n\n- **la chambre** = makuuhuone (älä sekoita: *la chambre d'hôtel* = hotellihuone)\n- **le salon** = olohuone\n- **la salle de bains** = kylpyhuone\n- **la cuisine** = keittiö\n- **les toilettes / les WC** = vessa\n\n## Huonekalut\n\n- **le lit** — sänky\n- **la table** — pöytä\n- **la chaise** — tuoli\n- **le canapé** — sohva\n- **l'armoire** (f) — vaatekaappi\n- **l'étagère** (f) — hylly\n\n## Asumisverbit\n\n- **habiter à / dans** + paikka: *J'habite à Paris / J'habite dans un appartement*\n- **vivre** = elää, asua: *Je vis avec mes parents*\n- **louer** = vuokrata: *Nous louons un appartement*\n- **il y a** = on/sijaitsee: *Il y a un canapé dans le salon*",
+    "intro_md": "# Koti ja asuminen\n\nRanskassa asunto on **un appartement** (kerrostaloasunto) tai **une maison** (talo). Kaupungeissa ihmiset asuvat yleensä kerrostaloissa.\n\n## Kodin tilat\n\n> Dans mon appartement, il y a **une cuisine**, **un salon**, **deux chambres** et **une salle de bains**.\n> (Asunnossani on keittiö, olohuone, kaksi makuuhuonetta ja kylpyhuone.)\n\n- **la chambre** = makuuhuone (älä sekoita: *la chambre d'hôtel* = hotellihuone)\n- **le salon** = olohuone\n- **la salle de bains** = kylpyhuone\n- **la cuisine** = keittiö\n- **les toilettes / les WC** = vessa\n\n## Huonekalut\n\n- **le lit**, sänky\n- **la table**, pöytä\n- **la chaise**, tuoli\n- **le canapé**, sohva\n- **l'armoire** (f), vaatekaappi\n- **l'étagère** (f), hylly\n\n## Asumisverbit\n\n- **habiter à / dans** + paikka: *J'habite à Paris / J'habite dans un appartement*\n- **vivre** = elää, asua: *Je vis avec mes parents*\n- **louer** = vuokrata: *Nous louons un appartement*\n- **il y a** = on/sijaitsee: *Il y a un canapé dans le salon*",
     "key_points": [
       "appartement = kerrostaloasunto, maison = talo.",
-      "la chambre = makuuhuone — ei sekoita 'la salle' (huone/sali) -sanaan.",
+      "la chambre = makuuhuone, ei sekoita 'la salle' (huone/sali) -sanaan.",
       "il y a + artikkeli + huonekalu = paikan kuvaukseen.",
       "habiter à + kaupunki, habiter dans + rakennus.",
       "la salle de bains = kylpyhuone, les toilettes/WC = vessa (eri tila)."
@@ -23,7 +23,7 @@
     {
       "phase_id": "p1-recognition-mc-tilat",
       "phase_type": "recognition_mc",
-      "title": "Tunnista — kodin tilat",
+      "title": "Tunnista, kodin tilat",
       "instruction": "Valitse oikea suomennos.",
       "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.90 },
       "skip_for_targets": [],
@@ -37,18 +37,18 @@
         { "item_type": "mc", "stem": "le balcon", "choices": ["parveke", "terassi", "puutarha", "katto"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "le balcon = parveke. la terrasse = terassi (isompi)." },
         { "item_type": "mc", "stem": "le couloir", "choices": ["käytävä", "eteinen", "portaikko", "ulko-ovi"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "le couloir = käytävä asunnon sisällä." },
         { "item_type": "mc", "stem": "la cave", "choices": ["ullakko", "kellari", "varasto", "autotalli"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "la cave = kellari. le grenier = ullakko." },
-        { "item_type": "mc", "stem": "le grenier", "choices": ["kellari", "autotalli", "varasto", "ullakko"], "correct_index": 3, "distractor_difficulty": "hard", "explanation": "le grenier = ullakko. la cave = kellari — pari joka sekoittuu." },
+        { "item_type": "mc", "stem": "le grenier", "choices": ["kellari", "autotalli", "varasto", "ullakko"], "correct_index": 3, "distractor_difficulty": "hard", "explanation": "le grenier = ullakko. la cave = kellari, pari joka sekoittuu." },
         { "item_type": "mc", "stem": "le garage", "choices": ["varasto", "autotalli", "piha", "porras"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "le garage = autotalli." },
         { "item_type": "mc", "stem": "le jardin", "choices": ["parveke", "puutarha", "terassi", "piha"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "le jardin = puutarha / piha." },
         { "item_type": "mc", "stem": "les toilettes", "choices": ["kylpyhuone", "pesuhuone", "vessa, WC", "suihkuhuone"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "les toilettes = vessa / WC. Eri tila kuin la salle de bains!" },
         { "item_type": "mc", "stem": "la fenêtre", "choices": ["ovi", "ikkuna", "seinä", "katto"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "la fenêtre = ikkuna. la porte = ovi." },
-        { "item_type": "mc", "stem": "la porte", "choices": ["ikkuna", "ovi", "portaikko", "käytävä"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "la porte = ovi. la fenêtre = ikkuna — klassinen sekaannus." }
+        { "item_type": "mc", "stem": "la porte", "choices": ["ikkuna", "ovi", "portaikko", "käytävä"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "la porte = ovi. la fenêtre = ikkuna, klassinen sekaannus." }
       ]
     },
     {
       "phase_id": "p2-recognition-match-huonekalut",
       "phase_type": "recognition_match",
-      "title": "Yhdistä — huonekalut",
+      "title": "Yhdistä: huonekalut",
       "instruction": "Yhdistä ranskankielinen sana ja suomennos.",
       "mastery_threshold": { "I": 0.60, "A": 0.65, "B": 0.70, "C": 0.75, "M": 0.85, "E": 0.90, "L": 0.95 },
       "skip_for_targets": ["I"],
@@ -121,7 +121,7 @@
     {
       "phase_id": "p5-application-gap-helppo",
       "phase_type": "application_gap_fill",
-      "title": "Lauseen täydennys — perustaso",
+      "title": "Lauseen täydennys, perustaso",
       "instruction": "Täydennä lause oikealla sanalla.",
       "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.70, "C": 0.75, "M": 0.85, "E": 0.90, "L": 0.92 },
       "skip_for_targets": ["I", "A"],
@@ -141,7 +141,7 @@
     {
       "phase_id": "p6-application-gap-vaativa",
       "phase_type": "application_gap_fill",
-      "title": "Lauseen täydennys — vaativa",
+      "title": "Lauseen täydennys, vaativa",
       "instruction": "Täydennä ilman sanapankkia. Muista artikkeli.",
       "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.60, "C": 0.70, "M": 0.80, "E": 0.90, "L": 0.95 },
       "skip_for_targets": ["I", "A", "B"],
@@ -208,7 +208,7 @@
     {
       "phase_id": "p10-cumulative-review",
       "phase_type": "application_gap_fill",
-      "title": "Kertaus — koko sanasto",
+      "title": "Kertaus: koko sanasto",
       "instruction": "Sekoitettu kertaus. Täydennä sopiva sana tai muoto.",
       "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.88, "L": 0.95 },
       "skip_for_targets": ["I", "A", "B"],
@@ -220,8 +220,8 @@
         { "item_type": "gap_fill", "sentence_template": "Dans le salon, il y a un canapé, {1} et une télévision.", "answers": [["une table", "un tapis", "une étagère", "une lampe"]], "word_bank": null },
         { "item_type": "gap_fill", "sentence_template": "Nous {1} un appartement de deux pièces en centre-ville. (louer)", "answers": [["louons"]], "word_bank": null },
         { "item_type": "gap_fill", "sentence_template": "Le matin, je me regarde dans {1} de la salle de bains.", "answers": [["le miroir"]], "word_bank": null },
-        { "item_type": "gap_fill", "sentence_template": "Il fait chaud — j'ouvre {1} du salon.", "answers": [["la fenêtre", "le balcon"]], "word_bank": null },
-        { "item_type": "gap_fill", "sentence_template": "J'aime lire le soir sur {1} — il y a une belle vue.", "answers": [["le balcon", "la terrasse"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Il fait chaud: j'ouvre {1} du salon.", "answers": [["la fenêtre", "le balcon"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "J'aime lire le soir sur {1}: il y a une belle vue.", "answers": [["le balcon", "la terrasse"]], "word_bank": null },
         { "item_type": "gap_fill", "sentence_template": "La voiture de mes parents est dans {1}.", "answers": [["le garage"]], "word_bank": null }
       ]
     }
@@ -268,17 +268,17 @@
       {
         "id": "vocab",
         "title": "Sanasto",
-        "content_md": "## Asuminen\n\n- **l'appartement** (m) — kerrostaloasunto\n- **la maison** — talo, omakotitalo\n- **l'étage** (m) — kerros\n\n## Kodin tilat\n\n- **la cuisine** — keittiö\n- **la chambre** — makuuhuone\n- **le salon** — olohuone\n- **la salle de bains** — kylpyhuone\n- **les toilettes / les WC** — vessa\n- **la salle à manger** — ruokailuhuone\n- **l'entrée** (f) — eteinen\n- **le couloir** — käytävä\n- **le balcon** — parveke\n- **le jardin** — puutarha\n- **le garage** — autotalli\n- **la cave** — kellari\n- **le grenier** — ullakko\n\n## Ovet ja ikkunat\n\n- **la fenêtre** — ikkuna\n- **la porte** — ovi\n\n## Huonekalut\n\n- **le lit** — sänky\n- **la table** — pöytä\n- **la chaise** — tuoli\n- **le canapé** — sohva\n- **le bureau** — työpöytä\n- **l'armoire** (f) — vaatekaappi\n- **l'étagère** (f) — hylly\n- **la lampe** — lamppu\n- **le tapis** — matto\n- **le miroir** — peili\n- **le rideau** — verho\n- **le réfrigérateur / le frigo** — jääkaappi\n\n## Verbit\n\n- **habiter à / dans** — asua jossakin\n- **vivre** — elää, asua\n- **louer** — vuokrata\n- **il y a** — on, sijaitsee"
+        "content_md": "## Asuminen\n\n- **l'appartement** (m), kerrostaloasunto\n- **la maison**, talo, omakotitalo\n- **l'étage** (m), kerros\n\n## Kodin tilat\n\n- **la cuisine**, keittiö\n- **la chambre**, makuuhuone\n- **le salon**, olohuone\n- **la salle de bains**, kylpyhuone\n- **les toilettes / les WC**, vessa\n- **la salle à manger**, ruokailuhuone\n- **l'entrée** (f), eteinen\n- **le couloir**, käytävä\n- **le balcon**, parveke\n- **le jardin**, puutarha\n- **le garage**, autotalli\n- **la cave**, kellari\n- **le grenier**, ullakko\n\n## Ovet ja ikkunat\n\n- **la fenêtre**, ikkuna\n- **la porte**, ovi\n\n## Huonekalut\n\n- **le lit**, sänky\n- **la table**, pöytä\n- **la chaise**, tuoli\n- **le canapé**, sohva\n- **le bureau**, työpöytä\n- **l'armoire** (f), vaatekaappi\n- **l'étagère** (f), hylly\n- **la lampe**, lamppu\n- **le tapis**, matto\n- **le miroir**, peili\n- **le rideau**, verho\n- **le réfrigérateur / le frigo**, jääkaappi\n\n## Verbit\n\n- **habiter à / dans**, asua jossakin\n- **vivre**, elää, asua\n- **louer**, vuokrata\n- **il y a**, on, sijaitsee"
       },
       {
         "id": "grammar",
         "title": "Kielioppi",
-        "content_md": "## il y a — paikan kuvaus\n\nKäytä **il y a** + artikkeli + substantiivi:\n\n- *Il y a **un** canapé dans le salon.* (Olohuoneessa on sohva.)\n- *Il y a **une** armoire dans la chambre.* (Makuuhuoneessa on vaatekaappi.)\n- *Il y a **des** livres sur l'étagère.* (Hyllyllä on kirjoja.)\n\n## habiter — asuinpaikan ilmaiseminen\n\n- **habiter à** + kaupunki: *J'habite à Helsinki.*\n- **habiter dans** + rakennus: *J'habite dans un appartement.*\n- **habiter** + katu/alue: *J'habite rue de la Paix.*\n\n## Artikkelit sukupuolen mukaan\n\n- **le** (maskuliini): le salon, le lit, le balcon\n- **la** (feminiini): la cuisine, la chambre, la fenêtre\n- **l'** (vokaali tai h-alkuinen): l'appartement, l'étagère, l'entrée\n\nMuista: sukupuoli on opeteltava sanastona — ei loogisia sääntöjä!"
+        "content_md": "## il y a, paikan kuvaus\n\nKäytä **il y a** + artikkeli + substantiivi:\n\n- *Il y a **un** canapé dans le salon.* (Olohuoneessa on sohva.)\n- *Il y a **une** armoire dans la chambre.* (Makuuhuoneessa on vaatekaappi.)\n- *Il y a **des** livres sur l'étagère.* (Hyllyllä on kirjoja.)\n\n## habiter, asuinpaikan ilmaiseminen\n\n- **habiter à** + kaupunki: *J'habite à Helsinki.*\n- **habiter dans** + rakennus: *J'habite dans un appartement.*\n- **habiter** + katu/alue: *J'habite rue de la Paix.*\n\n## Artikkelit sukupuolen mukaan\n\n- **le** (maskuliini): le salon, le lit, le balcon\n- **la** (feminiini): la cuisine, la chambre, la fenêtre\n- **l'** (vokaali tai h-alkuinen): l'appartement, l'étagère, l'entrée\n\nMuista: sukupuoli on opeteltava sanastona, ei loogisia sääntöjä!"
       },
       {
         "id": "tips",
         "title": "YO-vinkki",
-        "content_md": "## YO-koe — koti-aihe\n\nKoti-sanasto näkyy YO-kokeessa usein luetun ymmärtämisen teksteissä (asunnon kuvaukset, ilmoitukset) ja lyhyen kirjoitelman aiheissa.\n\n## Klassinen YO-ansa\n\n- **la chambre** = makuuhuone — EI huone yleensä (= la pièce)\n- **la salle de bains** ≠ **les toilettes** — eri tilat ranskassa!\n- **habiter à Helsinki** (kaupunki, ei artikkelia) vs **habiter dans un appartement** (rakennus, artikkeli)\n\n## Kirjoitelmassa käytä il y a\n\n*Il y a un grand salon, deux chambres et une cuisine moderne.* — Näin kerrot huoneet luontevasti. Tämä rakenne näkyy lähes kaikissa A-B -tason koti-kuvauksissa.\n\n## Kerros ranskaksi\n\n- rez-de-chaussée = katutaso (0. kerros Suomessa)\n- premier étage = 1. kerros (Suomessa 2. kerros!)\n- deuxième étage = 2. kerros (Suomessa 3. kerros!)\n\nRanskalainen laskutapa on eri kuin suomalainen — tärkeä tieto luetun ymmärtämisessä."
+        "content_md": "## YO-koe, koti-aihe\n\nKoti-sanasto näkyy YO-kokeessa usein luetun ymmärtämisen teksteissä (asunnon kuvaukset, ilmoitukset) ja lyhyen kirjoitelman aiheissa.\n\n## Klassinen YO-ansa\n\n- **la chambre** = makuuhuone, EI huone yleensä (= la pièce)\n- **la salle de bains** ≠ **les toilettes**, eri tilat ranskassa!\n- **habiter à Helsinki** (kaupunki, ei artikkelia) vs **habiter dans un appartement** (rakennus, artikkeli)\n\n## Kirjoitelmassa käytä il y a\n\n*Il y a un grand salon, deux chambres et une cuisine moderne.*, Näin kerrot huoneet luontevasti. Tämä rakenne näkyy lähes kaikissa A-B -tason koti-kuvauksissa.\n\n## Kerros ranskaksi\n\n- rez-de-chaussée = katutaso (0. kerros Suomessa)\n- premier étage = 1. kerros (Suomessa 2. kerros!)\n- deuxième étage = 2. kerros (Suomessa 3. kerros!)\n\nRanskalainen laskutapa on eri kuin suomalainen, tärkeä tieto luetun ymmärtämisessä."
       }
     ]
   }

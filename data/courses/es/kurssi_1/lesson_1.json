@@ -5,8 +5,8 @@
     "lesson_type": "vocab",
     "level": "A",
     "title": "Perhe ja kansallisuudet",
-    "description": "Opettelet 30 perheenjäsen- ja kansallisuussanaa. YO-kokeen kuullun ymmärtämisessä nämä toistuvat lähes joka vuosi — testataan tunnistus, tuotanto ja soveltava käyttö.",
-    "yo_relevance": "Perhe- ja kansallisuussanasto näkyy YO-kokeen kuullun ymmärtämisessä yleensä 6–10 sanan verran. Tarkimmat distraktorit ovat hermano/hermana ja primo/prima — sukupuolen ero on yksi kirjain.",
+    "description": "Opettelet 30 perheenjäsen- ja kansallisuussanaa. YO-kokeen kuullun ymmärtämisessä nämä toistuvat lähes joka vuosi, testataan tunnistus, tuotanto ja soveltava käyttö.",
+    "yo_relevance": "Perhe- ja kansallisuussanasto näkyy YO-kokeen kuullun ymmärtämisessä yleensä 6–10 sanan verran. Tarkimmat distraktorit ovat hermano/hermana ja primo/prima, sukupuolen ero on yksi kirjain.",
     "estimated_minutes_median": 12
   },
   "teaching": {
@@ -22,7 +22,7 @@
     {
       "phase_id": "p1-recognition-perhe-ydin",
       "phase_type": "recognition_mc",
-      "title": "Tunnista — perhesanat (ydin)",
+      "title": "Tunnista, perhesanat (ydin)",
       "instruction": "Valitse oikea käännös.",
       "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.7, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
       "skip_for_targets": [],
@@ -44,7 +44,7 @@
     {
       "phase_id": "p2-recognition-perhe-laajempi",
       "phase_type": "recognition_mc",
-      "title": "Tunnista — laajempi suku ja pari",
+      "title": "Tunnista, laajempi suku ja pari",
       "instruction": "Valitse oikea käännös.",
       "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.7, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
       "skip_for_targets": ["I"],
@@ -57,7 +57,7 @@
         { "item_type": "mc", "stem": "suegra", "choices": ["isoäiti", "anoppi", "äitipuoli", "kummiäiti"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "suegra = anoppi." },
         { "item_type": "mc", "stem": "cuñado", "choices": ["lanko", "appi", "veljenpoika", "isäpuoli"], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "cuñado = lanko (puolison veli tai sisaren mies)." },
         { "item_type": "mc", "stem": "cuñada", "choices": ["käly", "anoppi", "kummitäti", "veljen tytär"], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "cuñada = käly." },
-        { "item_type": "mc", "stem": "pareja", "choices": ["pari, kumppani", "perhe", "vanhempi", "kaveri"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "pareja = pari, kumppani — sukupuolineutraali." },
+        { "item_type": "mc", "stem": "pareja", "choices": ["pari, kumppani", "perhe", "vanhempi", "kaveri"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "pareja = pari, kumppani, sukupuolineutraali." },
         { "item_type": "mc", "stem": "novio", "choices": ["poikaystävä, sulhanen", "lanko", "serkku", "appi"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "novio = poikaystävä tai sulhanen. Novia = tyttöystävä, morsian." },
         { "item_type": "mc", "stem": "padrastro", "choices": ["isäpuoli", "appi", "kummi-isä", "isoisä"], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "padrastro = isäpuoli (äidin uusi mies). Suegro = appi." },
         { "item_type": "mc", "stem": "gemelos", "choices": ["serkukset", "kaksoset", "lapsenlapset", "veljekset"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "gemelos = kaksoset (identtiset)." }
@@ -66,7 +66,7 @@
     {
       "phase_id": "p3-recognition-kansallisuudet",
       "phase_type": "recognition_mc",
-      "title": "Tunnista — kansallisuudet",
+      "title": "Tunnista, kansallisuudet",
       "instruction": "Valitse oikea käännös.",
       "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.7, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
       "skip_for_targets": [],
@@ -74,7 +74,7 @@
         { "item_type": "mc", "stem": "finlandés", "choices": ["ranskalainen", "suomalainen (mies)", "suomalainen (nainen)", "espanjalainen"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "finlandés = suomalainen (mies). Naismuoto: finlandesa." },
         { "item_type": "mc", "stem": "finlandesa", "choices": ["suomalainen (nainen)", "suomalainen (mies)", "ranskalainen (nainen)", "ruotsalainen"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "finlandesa = suomalainen nainen." },
         { "item_type": "mc", "stem": "española", "choices": ["espanjalainen (mies)", "ranskalainen", "espanjalainen (nainen)", "italialainen"], "correct_index": 2, "distractor_difficulty": "medium", "explanation": "española = espanjalainen nainen. Mies: español." },
-        { "item_type": "mc", "stem": "español", "choices": ["espanjalainen (mies)", "espanjan kieli", "molemmat — sekä että", "ranskalainen"], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "español tarkoittaa sekä kieltä että miesespanjalaista — kontekstista päätellään." },
+        { "item_type": "mc", "stem": "español", "choices": ["espanjalainen (mies)", "espanjan kieli", "molemmat, sekä että", "ranskalainen"], "correct_index": 2, "distractor_difficulty": "hard", "explanation": "español tarkoittaa sekä kieltä että miesespanjalaista, kontekstista päätellään." },
         { "item_type": "mc", "stem": "francesa", "choices": ["ranskalainen (mies)", "ranskalainen (nainen)", "saksalainen", "italialainen"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "francesa = ranskalainen nainen. Mies: francés." },
         { "item_type": "mc", "stem": "alemán", "choices": ["amerikkalainen", "saksalainen", "italialainen", "ruotsalainen"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "alemán = saksalainen. Älä sekoita: americano." },
         { "item_type": "mc", "stem": "alemana", "choices": ["saksalainen (nainen)", "amerikkalainen", "italialainen", "australialainen"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "alemana = saksalainen nainen." },
@@ -82,7 +82,7 @@
         { "item_type": "mc", "stem": "italiano", "choices": ["espanjalainen", "italialainen", "kreikkalainen", "intialainen"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "italiano = italialainen." },
         { "item_type": "mc", "stem": "sueco", "choices": ["sveitsiläinen", "ruotsalainen (mies)", "norjalainen", "tanskalainen"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "sueco = ruotsalainen (mies). Sveitsiläinen = suizo." },
         { "item_type": "mc", "stem": "ruso", "choices": ["romanialainen", "venäläinen (mies)", "ruotsalainen", "puolalainen"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "ruso = venäläinen mies. Rusa = venäläinen nainen." },
-        { "item_type": "mc", "stem": "estadounidense", "choices": ["yhdysvaltalainen", "amerikkalainen yleisesti", "meksikolainen", "argentiinalainen"], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "estadounidense = yhdysvaltalainen — sama muoto naisille ja miehille." }
+        { "item_type": "mc", "stem": "estadounidense", "choices": ["yhdysvaltalainen", "amerikkalainen yleisesti", "meksikolainen", "argentiinalainen"], "correct_index": 0, "distractor_difficulty": "hard", "explanation": "estadounidense = yhdysvaltalainen, sama muoto naisille ja miehille." }
       ]
     },
     {
@@ -99,7 +99,7 @@
         { "item_type": "typed", "direction": "es_to_fi", "prompt": "hermana", "accept": ["sisko", "sisar"] },
         { "item_type": "typed", "direction": "es_to_fi", "prompt": "abuelo", "accept": ["isoisä"] },
         { "item_type": "typed", "direction": "es_to_fi", "prompt": "tío", "accept": ["setä", "eno"], "hint": "yksi yleisistä käännöksistä riittää" },
-        { "item_type": "typed", "direction": "es_to_fi", "prompt": "primo", "accept": ["serkku"], "hint": "miesserkku — myös pelkkä \"serkku\" käy" },
+        { "item_type": "typed", "direction": "es_to_fi", "prompt": "primo", "accept": ["serkku"], "hint": "miesserkku, myös pelkkä \"serkku\" käy" },
         { "item_type": "typed", "direction": "es_to_fi", "prompt": "sobrina", "accept": ["sisarentytär", "veljentytär", "tytärpuoli"], "hint": "sisaren tai veljen lapsi" },
         { "item_type": "typed", "direction": "es_to_fi", "prompt": "finlandés", "accept": ["suomalainen"] },
         { "item_type": "typed", "direction": "es_to_fi", "prompt": "alemán", "accept": ["saksalainen"] },
@@ -111,7 +111,7 @@
       "phase_id": "p5-recall-typed-fi-es",
       "phase_type": "recall_typed_fi_to_es",
       "title": "Käännä espanjaksi",
-      "instruction": "Kirjoita käännös espanjaksi (pienellä, ilman aksentteja jos hankalia — järjestelmä hyväksyy ne).",
+      "instruction": "Kirjoita käännös espanjaksi (pienellä, ilman aksentteja jos hankalia, järjestelmä hyväksyy ne).",
       "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
       "skip_for_targets": ["I", "A"],
       "items": [
@@ -132,12 +132,12 @@
     {
       "phase_id": "p6-application-gap-helppo",
       "phase_type": "application_gap_fill",
-      "title": "Lauseen täydennys — perustaso",
+      "title": "Lauseen täydennys, perustaso",
       "instruction": "Täydennä lause oikealla sanalla.",
       "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.75, "C": 0.8, "M": 0.85, "E": 0.9, "L": 0.92 },
       "skip_for_targets": ["I", "A"],
       "items": [
-        { "item_type": "gap_fill", "sentence_template": "Mi {1} se llama Ana — es la madre de mi padre.", "answers": [["abuela"]], "word_bank": ["abuela", "abuelo", "hermana"] },
+        { "item_type": "gap_fill", "sentence_template": "Mi {1} se llama Ana, es la madre de mi padre.", "answers": [["abuela"]], "word_bank": ["abuela", "abuelo", "hermana"] },
         { "item_type": "gap_fill", "sentence_template": "Tengo dos {1}: un chico y una chica.", "answers": [["hermanos"]], "word_bank": ["hermanos", "hermanas", "primos"] },
         { "item_type": "gap_fill", "sentence_template": "Mi padre es {1} y mi madre es española.", "answers": [["finlandés", "finlandes"]], "word_bank": null },
         { "item_type": "gap_fill", "sentence_template": "La {1} de mi tío es mi prima.", "answers": [["hija"]], "word_bank": ["hija", "hijo", "hermana"] },
@@ -152,18 +152,18 @@
     {
       "phase_id": "p7-application-gap-vaativa",
       "phase_type": "application_gap_fill",
-      "title": "Lauseen täydennys — vaativa",
+      "title": "Lauseen täydennys, vaativa",
       "instruction": "Täydennä ilman sanapankkia. Kirjoita oikea muoto.",
       "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.65, "C": 0.75, "M": 0.85, "E": 0.9, "L": 0.95 },
       "skip_for_targets": ["I", "A", "B"],
       "items": [
         { "item_type": "gap_fill", "sentence_template": "La madre de mi padre es mi {1}.", "answers": [["abuela"]], "word_bank": null },
-        { "item_type": "gap_fill", "sentence_template": "Mi madre tiene una hermana — es mi {1}.", "answers": [["tía", "tia"]], "word_bank": null },
-        { "item_type": "gap_fill", "sentence_template": "Yo tengo dos hijos — su abuela es mi {1}.", "answers": [["madre", "suegra"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Mi madre tiene una hermana, es mi {1}.", "answers": [["tía", "tia"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Yo tengo dos hijos, su abuela es mi {1}.", "answers": [["madre", "suegra"]], "word_bank": null },
         { "item_type": "gap_fill", "sentence_template": "El marido de mi hermana es mi {1}.", "answers": [["cuñado", "cunado"]], "word_bank": null },
-        { "item_type": "gap_fill", "sentence_template": "Mi tía vive en Berlín — es {1}.", "answers": [["alemana"]], "word_bank": null },
-        { "item_type": "gap_fill", "sentence_template": "Vienen de Nueva York — son {1}.", "answers": [["estadounidenses"]], "word_bank": null },
-        { "item_type": "gap_fill", "sentence_template": "Mi novia es de París — ella es {1}.", "answers": [["francesa"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Mi tía vive en Berlín, es {1}.", "answers": [["alemana"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Vienen de Nueva York, son {1}.", "answers": [["estadounidenses"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Mi novia es de París, ella es {1}.", "answers": [["francesa"]], "word_bank": null },
         { "item_type": "gap_fill", "sentence_template": "Los hijos de mi hijo son mis {1}.", "answers": [["nietos"]], "word_bank": null }
       ]
     },
@@ -261,12 +261,12 @@
       {
         "id": "vocab",
         "title": "Sanasto",
-        "content_md": "## Perhe — ydin\n\n- **madre** / **padre** — äiti / isä\n- **hermano** / **hermana** — veli / sisko\n- **abuelo** / **abuela** — isoisä / isoäiti\n- **hijo** / **hija** — poika / tytär\n- **primo** / **prima** — serkku\n- **tío** / **tía** — setä, eno / täti\n\n## Perhe — laajempi suku\n\n- **sobrino** / **sobrina** — sisaren-/veljenpoika tai -tytär\n- **nieto** / **nieta** — lapsenlapsi\n- **suegro** / **suegra** — appi / anoppi\n- **cuñado** / **cuñada** — lanko / käly\n- **padrastro** — isäpuoli\n- **gemelos** — kaksoset\n\n## Pari ja kumppani\n\n- **pareja** — pari, kumppani (sukupuolineutraali)\n- **novio** / **novia** — poika-/tyttöystävä, sulhanen, morsian\n\n## Kansallisuudet — yleiset\n\n- **finlandés** / **finlandesa** — suomalainen\n- **español** / **española** — espanjalainen\n- **francés** / **francesa** — ranskalainen\n- **alemán** / **alemana** — saksalainen\n- **inglés** / **inglesa** — englantilainen\n- **italiano** / **italiana** — italialainen\n\n## Kansallisuudet — laajemmin\n\n- **sueco** / **sueca** — ruotsalainen\n- **ruso** / **rusa** — venäläinen\n- **estadounidense** — yhdysvaltalainen (sama mies/nainen)"
+        "content_md": "## Perhe, ydin\n\n- **madre** / **padre**, äiti / isä\n- **hermano** / **hermana**, veli / sisko\n- **abuelo** / **abuela**, isoisä / isoäiti\n- **hijo** / **hija**, poika / tytär\n- **primo** / **prima**, serkku\n- **tío** / **tía**, setä, eno / täti\n\n## Perhe, laajempi suku\n\n- **sobrino** / **sobrina**, sisaren-/veljenpoika tai -tytär\n- **nieto** / **nieta**, lapsenlapsi\n- **suegro** / **suegra**, appi / anoppi\n- **cuñado** / **cuñada**, lanko / käly\n- **padrastro**, isäpuoli\n- **gemelos**, kaksoset\n\n## Pari ja kumppani\n\n- **pareja**, pari, kumppani (sukupuolineutraali)\n- **novio** / **novia**, poika-/tyttöystävä, sulhanen, morsian\n\n## Kansallisuudet, yleiset\n\n- **finlandés** / **finlandesa**, suomalainen\n- **español** / **española**, espanjalainen\n- **francés** / **francesa**, ranskalainen\n- **alemán** / **alemana**, saksalainen\n- **inglés** / **inglesa**, englantilainen\n- **italiano** / **italiana**, italialainen\n\n## Kansallisuudet, laajemmin\n\n- **sueco** / **sueca**, ruotsalainen\n- **ruso** / **rusa**, venäläinen\n- **estadounidense**, yhdysvaltalainen (sama mies/nainen)"
       },
       {
         "id": "tips",
         "title": "YO-vinkki",
-        "content_md": "## YO-koe — kuullun ymmärtäminen\n\nPerhe- ja kansallisuussanat tulevat YO-kokeessa joka vuosi. Yleisin ansa: kuulet **hermano** ja monivalinnassa on sekä \"veli\" että \"sisko\" — pieni -o/-a-ero ratkaisee.\n\n**Kuuntele tarkkaan viimeinen tavu:**\n- *-o* loppu → maskuliini\n- *-a* loppu → feminiini\n- *-ense* → sama molemmilla (estadounidense, canadiense)\n\n## Yleiset hämäykset\n\n- **suegro** (appi) ≠ **abuelo** (isoisä)\n- **cuñado** (lanko) ≠ **sobrino** (sisarenpoika)\n- **alemán** (saksalainen) ≠ **americano** (amerikkalainen yleisesti)\n- **estadounidense** = nimenomaan USA:sta\n\n## Kirjoitustehtävässä\n\nPerhesanasto näkyy lyhyessä kirjoituksessa lähes aina. Käytä konkreetteja muotoja: *mi padre trabaja como ingeniero*, *mi hermana mayor estudia medicina*."
+        "content_md": "## YO-koe, kuullun ymmärtäminen\n\nPerhe- ja kansallisuussanat tulevat YO-kokeessa joka vuosi. Yleisin ansa: kuulet **hermano** ja monivalinnassa on sekä \"veli\" että \"sisko\", pieni -o/-a-ero ratkaisee.\n\n**Kuuntele tarkkaan viimeinen tavu:**\n- *-o* loppu → maskuliini\n- *-a* loppu → feminiini\n- *-ense* → sama molemmilla (estadounidense, canadiense)\n\n## Yleiset hämäykset\n\n- **suegro** (appi) ≠ **abuelo** (isoisä)\n- **cuñado** (lanko) ≠ **sobrino** (sisarenpoika)\n- **alemán** (saksalainen) ≠ **americano** (amerikkalainen yleisesti)\n- **estadounidense** = nimenomaan USA:sta\n\n## Kirjoitustehtävässä\n\nPerhesanasto näkyy lyhyessä kirjoituksessa lähes aina. Käytä konkreetteja muotoja: *mi padre trabaja como ingeniero*, *mi hermana mayor estudia medicina*."
       }
     ]
   }

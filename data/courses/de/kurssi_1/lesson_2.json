@@ -10,10 +10,10 @@
     "estimated_minutes_median": 12
   },
   "teaching": {
-    "intro_md": "# Koulu ja arki saksaksi\n\nSaksan koulujärjestelmä eroaa suomalaisesta: saksalaiset nuoret käyvät usein **das Gymnasium** (lukio) tai **die Realschule**. Koulupäivä alkaa usein aikaisemmin kuin Suomessa.\n\n## Avainsanat\n\n- **die Schule** — koulu\n- **der Lehrer / die Lehrerin** — opettaja\n- **das Fach** — oppiaine\n- **die Hausaufgaben** — läksyt (aina monikko!)\n- **die Klasse** — luokka\n\n## Esimerkki\n\n> Ich gehe jeden Tag in die **Schule**. Mein Lieblingsfach ist **Mathematik**. Die **Hausaufgaben** mache ich nachmittags.\n\n## Huomio\n\nHausaufgaben on aina monikko — kuten suomen \"läksyt\". Yksikkömuotoa ei käytetä.",
+    "intro_md": "# Koulu ja arki saksaksi\n\nSaksan koulujärjestelmä eroaa suomalaisesta: saksalaiset nuoret käyvät usein **das Gymnasium** (lukio) tai **die Realschule**. Koulupäivä alkaa usein aikaisemmin kuin Suomessa.\n\n## Avainsanat\n\n- **die Schule**, koulu\n- **der Lehrer / die Lehrerin**, opettaja\n- **das Fach**, oppiaine\n- **die Hausaufgaben**, läksyt (aina monikko!)\n- **die Klasse**, luokka\n\n## Esimerkki\n\n> Ich gehe jeden Tag in die **Schule**. Mein Lieblingsfach ist **Mathematik**. Die **Hausaufgaben** mache ich nachmittags.\n\n## Huomio\n\nHausaufgaben on aina monikko, kuten suomen \"läksyt\". Yksikkömuotoa ei käytetä.",
     "key_points": [
       "die Hausaufgaben on aina monikkomuoto.",
-      "das Fach (oppiaine) — monikko: die Fächer.",
+      "das Fach (oppiaine), monikko: die Fächer.",
       "der Lehrer (miespuolinen opettaja) / die Lehrerin (naispuolinen).",
       "Koulupäivä: der Unterricht = oppitunti/opetus, die Pause = välitunti."
     ]
@@ -22,7 +22,7 @@
     {
       "phase_id": "p1-recognition-koulu-ydin",
       "phase_type": "recognition_mc",
-      "title": "Tunnista — koulun perussanasto",
+      "title": "Tunnista, koulun perussanasto",
       "instruction": "Valitse oikea suomenkielinen käännös.",
       "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
       "skip_for_targets": [],
@@ -45,7 +45,7 @@
     {
       "phase_id": "p2-recognition-match-koulu",
       "phase_type": "recognition_match",
-      "title": "Yhdistä — koulun ja arjen sanat",
+      "title": "Yhdistä: koulun ja arjen sanat",
       "instruction": "Yhdistä saksan sana ja suomennos.",
       "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
       "skip_for_targets": ["I"],
@@ -93,7 +93,7 @@
     {
       "phase_id": "p3-recognition-oppiaineet",
       "phase_type": "recognition_mc",
-      "title": "Tunnista — oppiaineet",
+      "title": "Tunnista, oppiaineet",
       "instruction": "Valitse oikea suomennos oppiaineelle.",
       "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
       "skip_for_targets": ["I"],
@@ -159,27 +159,27 @@
     {
       "phase_id": "p6-application-gap-helppo",
       "phase_type": "application_gap_fill",
-      "title": "Lauseen täydennys — perustaso",
+      "title": "Lauseen täydennys, perustaso",
       "instruction": "Täydennä lause oikealla sanalla sanapankista.",
       "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
       "skip_for_targets": ["I", "A"],
       "items": [
         { "item_type": "gap_fill", "sentence_template": "Jeden Tag gehe ich in die {1}.", "answers": [["Schule"]], "word_bank": ["Schule", "Klasse", "Bibliothek"] },
-        { "item_type": "gap_fill", "sentence_template": "Mein Lieblingsfach ist {1} — ich rechne gerne.", "answers": [["Mathematik"]], "word_bank": ["Mathematik", "Geschichte", "Biologie"] },
+        { "item_type": "gap_fill", "sentence_template": "Mein Lieblingsfach ist {1}, ich rechne gerne.", "answers": [["Mathematik"]], "word_bank": ["Mathematik", "Geschichte", "Biologie"] },
         { "item_type": "gap_fill", "sentence_template": "Ich mache meine {1} am Nachmittag.", "answers": [["Hausaufgaben"]], "word_bank": ["Hausaufgaben", "Pause", "Prüfung"] },
         { "item_type": "gap_fill", "sentence_template": "Um 10 Uhr haben wir eine kurze {1} von 15 Minuten.", "answers": [["Pause"]], "word_bank": ["Pause", "Stunde", "Prüfung"] },
         { "item_type": "gap_fill", "sentence_template": "Der {1} erklärt die Grammatik an der Tafel.", "answers": [["Lehrer"]], "word_bank": ["Lehrer", "Schüler", "Direktor"] },
-        { "item_type": "gap_fill", "sentence_template": "Morgen haben wir eine {1} in Mathematik — ich lerne heute Abend.", "answers": [["Prüfung"]], "word_bank": ["Prüfung", "Pause", "Note"] },
+        { "item_type": "gap_fill", "sentence_template": "Morgen haben wir eine {1} in Mathematik, ich lerne heute Abend.", "answers": [["Prüfung"]], "word_bank": ["Prüfung", "Pause", "Note"] },
         { "item_type": "gap_fill", "sentence_template": "Ich stehe um 7 Uhr auf und {1} Frühstück.", "answers": [["esse", "frühstücke"]], "word_bank": ["esse", "trinke", "lerne"] },
-        { "item_type": "gap_fill", "sentence_template": "Am Wochenende {1} ich viel — am Samstag und am Sonntag.", "answers": [["schlafe"]], "word_bank": ["schlafe", "lerne", "esse"] },
+        { "item_type": "gap_fill", "sentence_template": "Am Wochenende {1} ich viel, am Samstag und am Sonntag.", "answers": [["schlafe"]], "word_bank": ["schlafe", "lerne", "esse"] },
         { "item_type": "gap_fill", "sentence_template": "Wir haben sechs {1} heute: Deutsch, Mathe, Sport, Geschichte, Biologie und Musik.", "answers": [["Fächer", "Stunden"]], "word_bank": ["Fächer", "Klassen", "Noten"] },
-        { "item_type": "gap_fill", "sentence_template": "Meine Freundin bekommt immer gute {1} — sie ist sehr fleißig.", "answers": [["Noten"]], "word_bank": ["Noten", "Fächer", "Hausaufgaben"] }
+        { "item_type": "gap_fill", "sentence_template": "Meine Freundin bekommt immer gute {1}, sie ist sehr fleißig.", "answers": [["Noten"]], "word_bank": ["Noten", "Fächer", "Hausaufgaben"] }
       ]
     },
     {
       "phase_id": "p7-application-gap-vaativa",
       "phase_type": "application_gap_fill",
-      "title": "Lauseen täydennys — vaativa",
+      "title": "Lauseen täydennys, vaativa",
       "instruction": "Täydennä ilman sanapankkia.",
       "mastery_threshold": { "I": 0.55, "A": 0.55, "B": 0.65, "C": 0.75, "M": 0.80, "E": 0.85, "L": 0.95 },
       "skip_for_targets": ["I", "A", "B"],
@@ -188,10 +188,10 @@
         { "item_type": "gap_fill", "sentence_template": "Das Gymnasium {1} mit dem Abitur ab.", "answers": [["schließt", "endet"]], "word_bank": null },
         { "item_type": "gap_fill", "sentence_template": "Wir {1} Deutsch als Fremdsprache in der Schule.", "answers": [["lernen"]], "word_bank": null },
         { "item_type": "gap_fill", "sentence_template": "In Finland {1} die Schüler sehr gute Noten in PISA.", "answers": [["bekommen"]], "word_bank": null },
-        { "item_type": "gap_fill", "sentence_template": "Mein Lieblingsfach ist {1} — ich mag Experimente.", "answers": [["Biologie", "Chemie", "Physik"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Mein Lieblingsfach ist {1}, ich mag Experimente.", "answers": [["Biologie", "Chemie", "Physik"]], "word_bank": null },
         { "item_type": "gap_fill", "sentence_template": "Die {1} beginnt um 8 Uhr und endet um 15 Uhr.", "answers": [["Schule", "Unterricht"]], "word_bank": null },
         { "item_type": "gap_fill", "sentence_template": "Nach der {1} treffe ich meine Freunde.", "answers": [["Schule", "Pause"]], "word_bank": null },
-        { "item_type": "gap_fill", "sentence_template": "Ich {1} gerne Bücher — besonders Geschichtsbücher.", "answers": [["lese"]], "word_bank": null }
+        { "item_type": "gap_fill", "sentence_template": "Ich {1} gerne Bücher, besonders Geschichtsbücher.", "answers": [["lese"]], "word_bank": null }
       ]
     },
     {
@@ -279,12 +279,12 @@
       {
         "id": "vocab",
         "title": "Sanasto",
-        "content_md": "## Koulu\n\n- **die Schule** — koulu\n- **das Gymnasium** — lukio (akateeminen)\n- **die Klasse** — luokka\n- **der Lehrer / die Lehrerin** — opettaja\n- **der Schüler / die Schülerin** — koululainen\n- **das Fach** — oppiaine (mon. die Fächer)\n- **die Note** — arvosana\n- **die Prüfung** — koe, tentti\n- **die Hausaufgaben** — läksyt (aina mon.)\n- **die Pause** — välitunti\n- **der Stundenplan** — lukujärjestys\n- **das Buch** — kirja\n\n## Oppiaineet\n\n- **Mathematik** — matematiikka\n- **Deutsch** — saksa\n- **Geschichte** — historia\n- **Biologie** — biologia\n- **Sport** — liikunta\n- **Musik** — musiikki\n- **Kunst** — kuvataide\n- **Physik** — fysiikka\n- **Chemie** — kemia\n- **Geographie** — maantieto\n- **Informatik** — tietotekniikka\n\n## Arki ja aika\n\n- **der Morgen** — aamu\n- **der Abend** — ilta\n- **der Tag** — päivä\n- **die Woche** — viikko\n- **das Wochenende** — viikonloppu\n- **aufstehen** — nousta ylös\n- **schlafen** — nukkua\n- **essen** — syödä\n- **trinken** — juoda\n- **lernen** — oppia, opiskella"
+        "content_md": "## Koulu\n\n- **die Schule**, koulu\n- **das Gymnasium**, lukio (akateeminen)\n- **die Klasse**, luokka\n- **der Lehrer / die Lehrerin**, opettaja\n- **der Schüler / die Schülerin**, koululainen\n- **das Fach**, oppiaine (mon. die Fächer)\n- **die Note**, arvosana\n- **die Prüfung**, koe, tentti\n- **die Hausaufgaben**, läksyt (aina mon.)\n- **die Pause**, välitunti\n- **der Stundenplan**, lukujärjestys\n- **das Buch**, kirja\n\n## Oppiaineet\n\n- **Mathematik**, matematiikka\n- **Deutsch**, saksa\n- **Geschichte**, historia\n- **Biologie**, biologia\n- **Sport**, liikunta\n- **Musik**, musiikki\n- **Kunst**, kuvataide\n- **Physik**, fysiikka\n- **Chemie**, kemia\n- **Geographie**, maantieto\n- **Informatik**, tietotekniikka\n\n## Arki ja aika\n\n- **der Morgen**, aamu\n- **der Abend**, ilta\n- **der Tag**, päivä\n- **die Woche**, viikko\n- **das Wochenende**, viikonloppu\n- **aufstehen**, nousta ylös\n- **schlafen**, nukkua\n- **essen**, syödä\n- **trinken**, juoda\n- **lernen**, oppia, opiskella"
       },
       {
         "id": "tips",
         "title": "YO-vinkki",
-        "content_md": "## YO-koe — Koulu-aihe\n\nKouluaihe on yleinen sekä luetunymmärtämisessä (Teil 2) että kirjoitelmassa (Teil 4). Tyypillisiä tehtävänantoja: 'Schreibe eine E-Mail an deinen deutschen Freund über deine Schule.'\n\n**Muista:**\n- die Hausaufgaben — AINA monikko, ei yksikköä\n- Saksan arvosana-asteikko: **1 = paras**, 6 = heikoin (päinvastoin kuin Suomessa!)\n- das Gymnasium → Abitur (saksan yo-koe)\n\n**Teil 2 -vihje:**\nKun luet tekstiä koulusta, etsi avainsanoja: Schüler, Lehrer, Fach, Note, Stunde. Ne auttavat vastaamaan nopeasti."
+        "content_md": "## YO-koe, Koulu-aihe\n\nKouluaihe on yleinen sekä luetunymmärtämisessä (Teil 2) että kirjoitelmassa (Teil 4). Tyypillisiä tehtävänantoja: 'Schreibe eine E-Mail an deinen deutschen Freund über deine Schule.'\n\n**Muista:**\n- die Hausaufgaben, AINA monikko, ei yksikköä\n- Saksan arvosana-asteikko: **1 = paras**, 6 = heikoin (päinvastoin kuin Suomessa!)\n- das Gymnasium → Abitur (saksan yo-koe)\n\n**Teil 2 -vihje:**\nKun luet tekstiä koulusta, etsi avainsanoja: Schüler, Lehrer, Fach, Note, Stunde. Ne auttavat vastaamaan nopeasti."
       }
     ]
   }
