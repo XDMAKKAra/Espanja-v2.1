@@ -1,5 +1,5 @@
 import { $, show } from "../ui/nav.js";
-import { API, authHeader, apiFetch, getAuthEmail, clearAuth, invalidateProfileCache } from "../api.js";
+import { API, authHeader, apiFetch, getAuthEmail, clearAuth, invalidateProfileCache, isLoggedIn } from "../api.js";
 import { state, setLanguage } from "../state.js";
 import { track } from "../analytics.js";
 import { computeStartingLevel, YTL_LEVELS } from "../features/startingLevel.js";
@@ -518,6 +518,15 @@ export async function openSettingsEditor(fieldKey) {
 }
 
 export async function showSettings() {
+  // L-V301 — settings is auth-gated. Without this guard, an unauthenticated
+  // visit to #/asetukset (logged-out user, expired token, deep-link from
+  // email) renders the screen with a cascade of failed-fetch placeholders:
+  // "Profiilin lataus epäonnistui", "Ei sähköpostia", empty Tilaus section,
+  // hanging Opiskelukieli skeleton. Audit p6-settings-2026-05-24 captured
+  // this exact state. Redirect to auth screen instead so the page never
+  // shows the broken-fetch UI to an unauthed caller.
+  if (!isLoggedIn()) { show("screen-auth"); return; }
+
   show("screen-settings");
   // Wire the theme toggle + account section once per session, idempotent.
   wireThemeToggle();
@@ -528,6 +537,11 @@ export async function showSettings() {
 
   try {
     const res = await apiFetch(`${API}/api/profile`, { headers: authHeader() });
+    // 401 means the token was rejected after a refresh attempt (apiFetch
+    // already tries the refresh path once). At that point the session is
+    // effectively dead — bounce to auth instead of leaving the user
+    // staring at a broken settings shell.
+    if (res.status === 401) { clearAuth(); show("screen-auth"); return; }
     if (!res.ok) throw new Error("fetch failed");
     const { profile } = await res.json();
     _profile = profile || {};
