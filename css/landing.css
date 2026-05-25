@@ -699,7 +699,7 @@
   text-wrap: pretty;
 }
 
-/* ─── 8-card grid: 4-col desktop → 2-col tablet → 1-col mobile ── */
+/* ─── 8-card grid: 4-col desktop → 2-col tablet → mobile scroll-strip ── */
 .landing .courses__grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -713,9 +713,53 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
-@media (max-width: 580px) {
+/* Mobile: horizontal scroll-snap strip. Quizletmäinen swipe-UX kompressoi
+   8 korttia ~1500 px → ~280 px korkuiseksi nauhaksi ilman sisällön
+   piilottamista. ~1.15 korttia näkyvissä vihjaa swipattavuudesta; reuna-
+   bleedi (margin-inline: calc(-1 * sp-2)) ulottaa nauhan section-paddingin
+   yli niin että ensimmäinen kortti alkaa screen-edgestä. */
+@media (max-width: 768px) {
   .landing .courses__grid {
-    grid-template-columns: 1fr;
+    display: flex;
+    grid-template-columns: none;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scroll-snap-type: x mandatory;
+    gap: var(--sp-2);
+    margin-inline: calc(-1 * var(--sp-2));
+    padding: 0 var(--sp-2);
+    scroll-padding-inline: var(--sp-2);
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .landing .courses__grid::-webkit-scrollbar {
+    display: none;
+  }
+  .landing .course-card {
+    flex: 0 0 calc(85vw - var(--sp-2) * 2);
+    min-width: 240px;
+    max-width: 320px;
+    scroll-snap-align: start;
+  }
+  .landing .course-card:hover {
+    /* Tactile feedback is reserved for desktop hover; touch devices fall
+       through to :active state handled by the cards default transition. */
+    transform: none;
+  }
+}
+
+/* Mobile-only swipe hint shown below courses__sub. Hidden on every other
+   viewport to avoid clutter where the 4-col / 2-col grid is self-evident. */
+.landing .courses__hint {
+  display: none;
+}
+@media (max-width: 768px) {
+  .landing .courses__hint {
+    display: block;
+    margin: var(--sp-2) 0 var(--sp-3);
+    font-size: 12px;
+    color: var(--text-subtle);
+    letter-spacing: var(--tracking-snug);
   }
 }
 

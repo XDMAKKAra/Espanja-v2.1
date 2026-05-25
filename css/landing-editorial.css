@@ -662,6 +662,52 @@ body.landing > * { position: relative; z-index: 1; }
   list-style: none;
   padding: 0;
 }
+/* Mobile: collapse the auto-fill grid into a horizontal scroll-snap strip so
+   the eight kurssit fit a single ~280px row instead of stacking ~2400px tall.
+   Lukio-edustaja näkee sisällön swipella; desktop pysyy auto-fill grid. */
+@media (max-width: 768px) {
+  .landing .catalog__grid {
+    display: flex;
+    grid-template-columns: none;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scroll-snap-type: x mandatory;
+    gap: var(--ed-sp-3);
+    padding-inline: clamp(16px, 4vw, 24px);
+    margin-inline: calc(-1 * clamp(16px, 4vw, 24px));
+    scroll-padding-inline: clamp(16px, 4vw, 24px);
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .landing .catalog__grid::-webkit-scrollbar {
+    display: none;
+  }
+  .landing .catalog-card {
+    flex: 0 0 calc(85vw - 32px);
+    min-width: 240px;
+    max-width: 320px;
+    scroll-snap-align: start;
+  }
+  .landing .catalog-card:hover {
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+/* Mobile-only swipe hint, hidden on every other viewport */
+.landing .catalog__hint {
+  display: none;
+}
+@media (max-width: 768px) {
+  .landing .catalog__hint {
+    display: block;
+    margin: var(--ed-sp-3) 0 var(--ed-sp-4);
+    font-family: var(--ed-mono);
+    font-size: var(--ed-fs-micro);
+    color: var(--ed-ink-subtle);
+    letter-spacing: var(--ed-tracking-meta);
+  }
+}
 .landing .catalog-card {
   background: var(--ed-bg-card);
   border: 1px solid var(--ed-rule);
