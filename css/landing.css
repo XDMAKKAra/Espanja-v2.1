@@ -841,6 +841,9 @@
   margin-top: auto;
   padding-top: var(--sp-2);
   border-top: 1px solid var(--border);
+  font-size: 12px;
+  color: var(--text-subtle);
+  letter-spacing: 0.01em;
 }
 .landing .course-card__count {
   font-family: var(--font-mono);
@@ -848,6 +851,25 @@
   letter-spacing: var(--tracking-wide);
   text-transform: uppercase;
   color: var(--text-subtle);
+}
+/* L-V303 — release-window pill replaces the bare ⌛ glyph so each
+   card communicates its actual opening date instead of repeating the
+   same lock symbol eight times. Renders inline next to the card number. */
+.landing .course-card__chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 9px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-pill);
+  font-size: 11px;
+  letter-spacing: 0.01em;
+  color: var(--text-subtle);
+  background: transparent;
+  white-space: nowrap;
+}
+.landing .course-card--finale .course-card__chip {
+  border-color: color-mix(in srgb, var(--accent) 35%, var(--border));
+  color: var(--accent);
 }
 
 /* ─── Bottom CTA row ─────────────────────────────────────────── */
