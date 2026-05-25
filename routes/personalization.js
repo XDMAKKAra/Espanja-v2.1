@@ -6,7 +6,11 @@
 import { Router } from "express";
 import supabase from "../supabase.js";
 import { requireAuth } from "../middleware/auth.js";
-import { buildSkillProfile, summarizeMiniYOFromRows } from "../lib/personalization.js";
+import {
+  buildSkillProfile,
+  selectWeightedTopic,
+  summarizeMiniYOFromRows,
+} from "../lib/personalization.js";
 
 const router = Router();
 
@@ -99,6 +103,53 @@ router.post("/build-profile", requireAuth, async (req, res) => {
     return res.json(result);
   } catch (err) {
     console.error("personalization: unexpected error:", err.message);
+    return res.status(500).json({ error: "Palvelinvirhe" });
+  }
+});
+
+// ─── POST /api/personalization/next-topic ─────────────────────────────────
+// L-V315b Task 2: palauttaa painotetusti valitun aiheen heikkojen aiheiden
+// puolesta (3x sample-prob) ja vahvojen vastaan (0.3x). Frontend voi kutsua
+// tätä ennen /api/generate -callia jotta exercise-pool painottuu profiilin
+// mukaan. Jos käyttäjällä ei ole skill_profilea tai availableTopics on tyhjä,
+// palautetaan uniform-sample (current behavior).
+router.post("/next-topic", requireAuth, async (req, res) => {
+  try {
+    const userId = req.user.userId;
+    const language = typeof req.body?.language === "string" ? req.body.language : null;
+    const availableTopics = Array.isArray(req.body?.availableTopics)
+      ? req.body.availableTopics.filter(t => typeof t === "string" && t.length > 0)
+      : [];
+
+    if (!VALID_LANGS.has(language)) {
+      return res.status(400).json({ error: "Tuntematon kieli" });
+    }
+    if (availableTopics.length === 0) {
+      return res.status(400).json({ error: "availableTopics on pakollinen" });
+    }
+
+    const { data: diagnostic } = await supabase
+      .from("user_onboarding_diagnostic")
+      .select("inferred_skill_profile")
+      .eq("user_id", userId)
+      .eq("language", language)
+      .order("created_at", { ascending: false })
+      .limit(1)
+      .maybeSingle();
+
+    const reasoned = diagnostic?.inferred_skill_profile || null;
+    const skillProfile = reasoned?.skillProfile || null;
+    const courseWeights = reasoned?.courseWeights || null;
+
+    const topic = selectWeightedTopic(skillProfile, courseWeights, availableTopics, language);
+
+    return res.json({
+      topic,
+      source: skillProfile ? "weighted" : "uniform",
+      gapsCount: reasoned?.meta?.gapsCount ?? 0,
+    });
+  } catch (err) {
+    console.error("personalization next-topic error:", err.message);
     return res.status(500).json({ error: "Palvelinvirhe" });
   }
 });

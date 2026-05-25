@@ -12,7 +12,7 @@ vi.mock("../lib/openai.js", async () => {
   };
 });
 
-import { buildSkillProfile, summarizeMiniYOFromRows, __test } from "../lib/personalization.js";
+import { buildSkillProfile, selectWeightedTopic, summarizeMiniYOFromRows, __test } from "../lib/personalization.js";
 
 const {
   buildBaselineProfile,
@@ -168,6 +168,62 @@ describe("summarizeMiniYOFromRows", () => {
     const out = summarizeMiniYOFromRows(rows);
     expect(out.partA.overallAccuracy).toBeCloseTo(2 / 3, 2);
     expect(out.partB.score).toBe(1);
+  });
+});
+
+describe("selectWeightedTopic (L-V315b Task 2)", () => {
+  it("returns null for empty available topics", () => {
+    expect(selectWeightedTopic({}, {}, [], "es")).toBeNull();
+  });
+
+  it("samples uniformly when profile is missing", () => {
+    const topics = ["a", "b", "c"];
+    const counts = { a: 0, b: 0, c: 0 };
+    for (let i = 0; i < 3000; i++) counts[selectWeightedTopic(null, null, topics, "es")] += 1;
+    // Each topic should land within 25-40% of 1/3 in 3000 trials (~1000 each, σ≈26)
+    expect(counts.a).toBeGreaterThan(800);
+    expect(counts.b).toBeGreaterThan(800);
+    expect(counts.c).toBeGreaterThan(800);
+  });
+
+  it("weak topics get sampled ~10x more often than strong ones across 1000 trials", () => {
+    const skillProfile = {
+      subjunctive: { level: 1, confidence: 0.9, source: "diagnostic" },
+      pronouns:    { level: 5, confidence: 0.9, source: "diagnostic" },
+    };
+    // 18 muuta topicia neutraalitasossa
+    for (let i = 0; i < 18; i++) skillProfile[`mid_${i}`] = { level: 3, confidence: 0.5, source: "grade_inferred" };
+
+    const topics = Object.keys(skillProfile);
+    const counts = Object.fromEntries(topics.map(t => [t, 0]));
+    for (let i = 0; i < 1000; i++) counts[selectWeightedTopic(skillProfile, {}, topics, "es")] += 1;
+
+    // Expected freq: weak=3.0/total, strong=0.3/total, mid×18=1.0/total each
+    // total = 3.0 + 0.3 + 18 = 21.3 → weak ~140, strong ~14, mid ~47 each
+    expect(counts.subjunctive).toBeGreaterThan(80);
+    expect(counts.pronouns).toBeLessThan(40);
+    expect(counts.subjunctive / Math.max(1, counts.pronouns)).toBeGreaterThanOrEqual(4);
+
+    // Ei "dead pools": kaikki topicit sampletaan vähintään kerran
+    for (const t of topics) expect(counts[t]).toBeGreaterThan(0);
+  });
+
+  it("falls back to courseWeights when topic missing from profile", () => {
+    const courseWeights = {
+      kurssi_1: 1.0, kurssi_2: 1.0, kurssi_3: 1.0, kurssi_4: 1.0,
+      kurssi_5: 1.0, kurssi_6: 3.0, kurssi_7: 1.0, kurssi_8: 1.0,
+    };
+    // subjunctive_present in es is mapped to kurssi_6 by TOPIC_TO_PUHEO_COURSE
+    const topics = ["subjunctive_present", "saludos"]; // saludos hits kurssi_1
+    const counts = { subjunctive_present: 0, saludos: 0 };
+    for (let i = 0; i < 1000; i++) counts[selectWeightedTopic({}, courseWeights, topics, "es")] += 1;
+    expect(counts.subjunctive_present).toBeGreaterThan(counts.saludos);
+  });
+
+  it("uniform random within a single deterministic call", () => {
+    // RNG-injectable for deterministic test
+    const fakeRng = () => 0.0; // always pick first
+    expect(selectWeightedTopic({}, {}, ["x", "y", "z"], "es", fakeRng)).toBe("x");
   });
 });
 
