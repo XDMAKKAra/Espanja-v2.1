@@ -315,17 +315,19 @@ test.describe('L-V300 Full audit', () => {
       await page.goto(`${PROD}/app.html`, { waitUntil: 'domcontentloaded', timeout: 30_000 });
       await page.waitForTimeout(1500);
 
-      // Login if auth form is visible
+      // Login if auth form is visible. L-V312 spec-fix: target the submit
+      // button explicitly ('Kirjaudu sisään'), not the tab button ('Kirjaudu'),
+      // and wait for screen-home.active instead of an arbitrary timeout.
       const emailField = page.locator('#auth-email, input[name="email"][type="email"]').first();
       let loggedIn = false;
       if (await emailField.isVisible({ timeout: 4000 }).catch(() => false)) {
         await emailField.fill(EMAIL);
         await page.locator('#auth-password, input[type="password"]').first().fill(PASS);
-        await page.locator('button:has-text("Kirjaudu")').first().click().catch(() => {});
-        await page.waitForTimeout(4000);
+        const submitBtn = page.locator('button[type="submit"]:has-text("Kirjaudu sisään"), button:has-text("Kirjaudu sisään")').first();
+        await submitBtn.click().catch(() => {});
+        await page.waitForSelector('#screen-home.active, .screen.active', { timeout: 15000 }).catch(() => {});
         loggedIn = true;
       }
-      await page.waitForTimeout(1500);
       const homeShot = await shot(page, viewport, 'p6-app-home');
 
       // Try opening settings + profile (memory P0 — did they ever open?)
@@ -391,13 +393,14 @@ test.describe('L-V300 Full audit', () => {
     await page.goto(`${PROD}/app.html`, { waitUntil: 'domcontentloaded', timeout: 30_000 });
     await page.waitForTimeout(1500);
 
-    // login if needed
+    // login if needed (L-V312 spec-fix: target submit, wait for home)
     const emailField = page.locator('#auth-email, input[name="email"][type="email"]').first();
     if (await emailField.isVisible({ timeout: 4000 }).catch(() => false)) {
       await emailField.fill(EMAIL);
       await page.locator('#auth-password, input[type="password"]').first().fill(PASS);
-      await page.locator('button:has-text("Kirjaudu")').first().click().catch(() => {});
-      await page.waitForTimeout(4000);
+      const submitBtn = page.locator('button[type="submit"]:has-text("Kirjaudu sisään"), button:has-text("Kirjaudu sisään")').first();
+      await submitBtn.click().catch(() => {});
+      await page.waitForSelector('#screen-home.active, .screen.active', { timeout: 15000 }).catch(() => {});
     }
 
     // Go to learning path / curriculum
@@ -454,8 +457,10 @@ test.describe('L-V300 Full audit', () => {
       if (await emailField.isVisible({ timeout: 4000 }).catch(() => false)) {
         await emailField.fill(EMAIL);
         await page.locator('#auth-password, input[type="password"]').first().fill(PASS);
-        await page.locator('button:has-text("Kirjaudu")').first().click().catch(() => {});
-        await page.waitForTimeout(4000);
+        // L-V312 spec-fix: target the SUBMIT button, not the tab.
+        const submitBtn = page.locator('button[type="submit"]:has-text("Kirjaudu sisään"), button:has-text("Kirjaudu sisään")').first();
+        await submitBtn.click().catch(() => {});
+        await page.waitForSelector('#screen-home.active, .screen.active', { timeout: 15000 }).catch(() => {});
       }
 
       await page.goto(`${PROD}/app.html#/asetukset`, { waitUntil: 'domcontentloaded', timeout: 20_000 }).catch(() => {});
