@@ -48,6 +48,20 @@ router.post("/build-profile", requireAuth, async (req, res) => {
     let miniYO = null;
     if (diagnostic.mini_yo_status !== "skipped") {
       miniYO = summarizeMiniYOFromRows(progressRows || []);
+      // Part A: prefer per-topic scores stored in mini_yo_part_a_scores
+      // (jsonb shape: { scoresByTopic: { subjunctive_present: 0.2, ... } }).
+      // Aggregated mini_yo_progress overall accuracy stays as a fallback.
+      if (diagnostic.mini_yo_part_a_scores && typeof diagnostic.mini_yo_part_a_scores === "object") {
+        const stored = diagnostic.mini_yo_part_a_scores;
+        miniYO = miniYO || {};
+        miniYO.partA = miniYO.partA || {};
+        if (stored.scoresByTopic && typeof stored.scoresByTopic === "object") {
+          miniYO.partA.scoresByTopic = stored.scoresByTopic;
+        }
+        if (typeof stored.overallAccuracy === "number") {
+          miniYO.partA.overallAccuracy = stored.overallAccuracy;
+        }
+      }
       // Part C on AI-graded ja talletettu erilliseen kenttään.
       if (diagnostic.mini_yo_part_c_writing && typeof diagnostic.mini_yo_part_c_writing === "object") {
         miniYO = miniYO || {};
