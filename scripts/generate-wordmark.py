@@ -1,15 +1,19 @@
 #!/usr/bin/env python3
 """
-Generate the Puheo wordmark SVG with outline paths (no <text> element).
+Generate Puheo wordmark variations as outline-path SVGs (no <text> element).
 
-Pulls glyph outlines from Inter-700.woff2 (already in /fonts/) and composes
-the lowercase wordmark `puheo` with an ornamental brick-red square replacing
-the dot center of the 'o' glyph.
+Variations supported via --variant flag:
+  naked      — pure wordmark, no ornament
+  accent     — small acute over the 'o' (puheó — Spanish-class hint)
+  underline  — solid brick underline under the wordmark
 
-Run: python scripts/generate-wordmark.py
-Outputs three SVGs under public/brand/.
+Default: naked  (per the Finnish edu-brand sample research: SanomaPro,
+Otava, Mafy, Wilma all ship wordmark-only — ornament is a child-segment tell).
+
+Outputs 4 files under public/brand/ for the selected variant.
 """
 
+import argparse
 from pathlib import Path
 from fontTools.ttLib import TTFont
 from fontTools.pens.svgPathPen import SVGPathPen
@@ -23,17 +27,12 @@ WORD = "puheo"
 BRICK = "#A0341F"
 INK = "#2A1F1A"
 CREAM = "#F5EDE0"
-
-# Visual target: cap-height ~48 px in the rendered SVG (matches the 64-unit viewBox of L-V317)
 TARGET_CAP_HEIGHT_PX = 48
 
 
 def extract_glyphs(font: TTFont):
     cmap = font.getBestCmap()
     glyph_set = font.getGlyphSet()
-    units_per_em = font["head"].unitsPerEm
-    hhea_ascent = font["hhea"].ascent
-
     glyphs = []
     for char in WORD:
         glyph_name = cmap[ord(char)]
@@ -42,69 +41,24 @@ def extract_glyphs(font: TTFont):
         glyph.draw(pen)
         bounds_pen = ControlBoundsPen(glyph_set)
         glyph.draw(bounds_pen)
-        glyphs.append(
-            {
-                "char": char,
-                "path": pen.getCommands(),
-                "advance": glyph.width,
-                "bounds": bounds_pen.bounds,  # (xMin, yMin, xMax, yMax) in font units
-            }
-        )
-    return glyphs, units_per_em, hhea_ascent
+        glyphs.append({
+            "char": char,
+            "path": pen.getCommands(),
+            "advance": glyph.width,
+            "bounds": bounds_pen.bounds,
+        })
+    return glyphs, font["hhea"].ascent
 
 
-def compose_svg(glyphs, units_per_em, hhea_ascent, fill_text, fill_dot, bg=None):
-    """
-    Compose SVG with cumulative x-translation per glyph.
-    Y axis: Inter uses font-units with Y up; SVG uses Y down. We flip via outer
-    transform `scale(1 -1)` and translate the baseline.
-    """
-    # Scale to target cap-height. Inter cap-height ≈ 1490 in 2048 units → ratio 0.728.
-    # For wordmark visual: pick scale so x-height fits 48-unit display.
-    # Simpler: use unitsPerEm as the natural canvas, then let CSS resize.
-    scale = TARGET_CAP_HEIGHT_PX / hhea_ascent  # so ascent maps to TARGET px
-    cumulative_x_units = 0
+def compose(glyphs, hhea_ascent, fill_text, fill_ornament, variant, bg=None):
+    scale = TARGET_CAP_HEIGHT_PX / hhea_ascent
+    pad = 2
     paths = []
+    cumulative_x = 0
     o_bounds_px = None
 
     for g in glyphs:
-        tx = cumulative_x_units
-        # Path needs to be flipped: SVG Y-down, font Y-up.
-        # Build inner group with translate + scale(1, -1) + translate baseline.
-        transform = (
-            f"translate({tx * scale:.3f} {hhea_ascent * scale:.3f}) "
-            f"scale({scale:.6f} {-scale:.6f})"
-        )
-        paths.append(
-            f'  <path d="{g["path"]}" fill="{fill_text}" transform="{transform}"/>'
-        )
-
-        if g["char"] == "o" and g["bounds"]:
-            xMin, yMin, xMax, yMax = g["bounds"]
-            # Convert to pixel space (apply translate + scale + Y-flip)
-            o_left_px = (xMin + tx) * scale
-            o_right_px = (xMax + tx) * scale
-            o_top_px = (hhea_ascent - yMax) * scale  # flipped
-            o_bottom_px = (hhea_ascent - yMin) * scale
-            o_bounds_px = (o_left_px, o_top_px, o_right_px, o_bottom_px)
-
-        cumulative_x_units += g["advance"]
-
-    total_width_px = cumulative_x_units * scale
-    # Add small left/right padding so the brick stroke doesn't clip
-    pad = 2
-    view_width = total_width_px + pad * 2
-    # Visual viewBox height: a little more than cap-height so descender of 'p' fits
-    descent_px = abs(font_descent) * scale if False else 16
-    view_height = TARGET_CAP_HEIGHT_PX + descent_px
-
-    # Translate all paths right by `pad` for the padding
-    inner = "\n".join(p.replace("translate(", f"translate({pad}+") for p in paths)
-    # Simpler: re-emit with pad added
-    paths = []
-    cumulative_x_units = 0
-    for g in glyphs:
-        tx = cumulative_x_units
+        tx = cumulative_x
         transform = (
             f"translate({tx * scale + pad:.3f} {hhea_ascent * scale:.3f}) "
             f"scale({scale:.6f} {-scale:.6f})"
@@ -112,98 +66,125 @@ def compose_svg(glyphs, units_per_em, hhea_ascent, fill_text, fill_dot, bg=None)
         paths.append(
             f'  <path d="{g["path"]}" fill="{fill_text}" transform="{transform}"/>'
         )
-        cumulative_x_units += g["advance"]
+        if g["char"] == "o" and g["bounds"]:
+            xMin, yMin, xMax, yMax = g["bounds"]
+            o_bounds_px = (
+                (xMin + tx) * scale + pad,
+                (hhea_ascent - yMax) * scale,
+                (xMax + tx) * scale + pad,
+                (hhea_ascent - yMin) * scale,
+            )
+        cumulative_x += g["advance"]
 
-    # Ornamental gesture: 4 px brick-red square at the geometric center of 'o',
-    # offset 1 px to the upper-right.
-    dot = ""
-    if o_bounds_px:
+    total_width = cumulative_x * scale + pad * 2
+    descent_px = 16
+    extra_top = 12 if variant == "accent" else 0  # accent floats above cap
+    extra_bot = 8 if variant == "underline" else 0
+    view_h = TARGET_CAP_HEIGHT_PX + descent_px + extra_top + extra_bot
+
+    # All paths translated down by extra_top so accent has room
+    if extra_top:
+        new_paths = []
+        for p in paths:
+            new_paths.append(p.replace(
+                f"translate(", f"translate(", 1
+            ))
+        # Re-emit with offset
+        paths = []
+        cumulative_x = 0
+        for g in glyphs:
+            tx = cumulative_x
+            transform = (
+                f"translate({tx * scale + pad:.3f} {hhea_ascent * scale + extra_top:.3f}) "
+                f"scale({scale:.6f} {-scale:.6f})"
+            )
+            paths.append(
+                f'  <path d="{g["path"]}" fill="{fill_text}" transform="{transform}"/>'
+            )
+            cumulative_x += g["advance"]
+        # Recompute o_bounds for accent placement
+        if o_bounds_px:
+            ol, ot, orr, ob = o_bounds_px
+            o_bounds_px = (ol, ot + extra_top, orr, ob + extra_top)
+
+    ornament = ""
+    if variant == "accent" and o_bounds_px:
+        # Acute accent (´) above the 'o' — a single rotated rect, brick-colored.
+        # Position: 4 px above the o-glyph top, rotated -25°, 8 px wide, 2.5 px tall.
         ol, ot, orr, ob = o_bounds_px
-        cx = (ol + orr) / 2 + pad
-        cy = (ot + ob) / 2
-        size = 4
-        x = cx - size / 2 + 1  # offset 1 px right
-        y = cy - size / 2 - 1  # offset 1 px up
-        dot = (
-            f'  <rect x="{x:.3f}" y="{y:.3f}" width="{size}" height="{size}" '
-            f'rx="0.5" fill="{fill_dot}"/>'
+        cx = (ol + orr) / 2
+        cy = ot - 5  # 5 px above the o-top
+        w, h = 8, 2.5
+        ornament = (
+            f'  <rect x="{cx - w/2:.3f}" y="{cy - h/2:.3f}" '
+            f'width="{w}" height="{h}" rx="1" fill="{fill_ornament}" '
+            f'transform="rotate(-22 {cx:.3f} {cy:.3f})"/>'
         )
+    elif variant == "underline":
+        # Brick underline spanning the full wordmark, 3 px tall, sits below baseline.
+        y = TARGET_CAP_HEIGHT_PX + 6 + extra_top
+        ornament = (
+            f'  <rect x="{pad}" y="{y:.3f}" '
+            f'width="{total_width - pad * 2:.3f}" height="3" rx="1.5" fill="{fill_ornament}"/>'
+        )
+    # "naked" variant: ornament = ""
 
     bg_rect = (
-        f'  <rect width="{view_width:.3f}" height="{view_height:.3f}" fill="{bg}"/>\n'
-        if bg
-        else ""
+        f'  <rect width="{total_width:.3f}" height="{view_h:.3f}" fill="{bg}"/>\n'
+        if bg else ""
     )
 
     svg = (
         f'<svg xmlns="http://www.w3.org/2000/svg" '
-        f'viewBox="0 0 {view_width:.3f} {view_height:.3f}" role="img" aria-label="Puheo">\n'
+        f'viewBox="0 0 {total_width:.3f} {view_h:.3f}" role="img" aria-label="Puheo" fill-rule="evenodd">\n'
         f"  <title>puheo</title>\n"
         f"{bg_rect}"
         + "\n".join(paths)
-        + (f"\n{dot}\n" if dot else "\n")
+        + (f"\n{ornament}\n" if ornament else "\n")
         + "</svg>\n"
     )
-    return svg
+    return svg, total_width, view_h
 
 
 def main():
-    assert FONT_PATH.exists(), f"Font not found: {FONT_PATH}"
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--variant", choices=["naked", "accent", "underline"], default="naked")
+    args = ap.parse_args()
+
     font = TTFont(str(FONT_PATH))
-    global font_descent
-    font_descent = font["hhea"].descent
+    glyphs, hhea_ascent = extract_glyphs(font)
 
-    glyphs, units_per_em, hhea_ascent = extract_glyphs(font)
-
-    # Primary: brick on cream (no bg, transparent — cream applied by surrounding container)
-    primary = compose_svg(glyphs, units_per_em, hhea_ascent, BRICK, BRICK)
+    primary, _, _ = compose(glyphs, hhea_ascent, BRICK, BRICK, args.variant)
     (OUT_DIR / "logo.svg").write_text(primary, encoding="utf-8")
 
-    # Mono: ink on cream, the dot stays ink too
-    mono = compose_svg(glyphs, units_per_em, hhea_ascent, INK, INK)
+    mono, _, _ = compose(glyphs, hhea_ascent, INK, INK, args.variant)
     (OUT_DIR / "logo-mono.svg").write_text(mono, encoding="utf-8")
 
-    # Dark: cream on ink — note this version includes the ink background so it
-    # renders correctly on neutral surfaces like Slack previews.
-    dark = compose_svg(glyphs, units_per_em, hhea_ascent, CREAM, BRICK, bg=INK)
+    dark, _, _ = compose(glyphs, hhea_ascent, CREAM, BRICK, args.variant, bg=INK)
     (OUT_DIR / "logo-dark.svg").write_text(dark, encoding="utf-8")
 
-    print(f"Wrote: {OUT_DIR / 'logo.svg'}")
-    print(f"Wrote: {OUT_DIR / 'logo-mono.svg'}")
-    print(f"Wrote: {OUT_DIR / 'logo-dark.svg'}")
-
-    # Favicon master: isolated lowercase "p" + ornamental dot (recognizable at 16px)
+    # Favicon stays the same — single 'p' on brick tile, no ornament needed
     p_glyph = next(g for g in glyphs if g["char"] == "p")
-    o_glyph = next(g for g in glyphs if g["char"] == "o")
     scale = TARGET_CAP_HEIGHT_PX / hhea_ascent
     p_width = p_glyph["advance"] * scale
-    # Use ornamental dot adjacent to 'p' (so the favicon still has the brand gesture)
-    o_left, o_top, o_right, o_bottom = (
-        o_glyph["bounds"][0] * scale,
-        (hhea_ascent - o_glyph["bounds"][3]) * scale,
-        o_glyph["bounds"][2] * scale,
-        (hhea_ascent - o_glyph["bounds"][1]) * scale,
-    )
-    o_w = o_right - o_left
-    o_h = o_bottom - o_top
     favicon_size = TARGET_CAP_HEIGHT_PX + 8
-    # Center 'p' in the favicon, large enough to read at 16px (bold + tight)
-    p_scale = scale * 1.0
     pad_x = (favicon_size - p_width) / 2
     transform = (
-        f"translate({pad_x:.3f} {hhea_ascent * p_scale:.3f}) "
-        f"scale({p_scale:.6f} {-p_scale:.6f})"
+        f"translate({pad_x:.3f} {hhea_ascent * scale:.3f}) "
+        f"scale({scale:.6f} {-scale:.6f})"
     )
     favicon = (
         f'<svg xmlns="http://www.w3.org/2000/svg" '
-        f'viewBox="0 0 {favicon_size:.3f} {favicon_size:.3f}" role="img" aria-label="Puheo">\n'
+        f'viewBox="0 0 {favicon_size:.3f} {favicon_size:.3f}" role="img" aria-label="Puheo" fill-rule="evenodd">\n'
         f"  <title>puheo</title>\n"
         f'  <rect width="{favicon_size:.3f}" height="{favicon_size:.3f}" rx="8" fill="{BRICK}"/>\n'
         f'  <path d="{p_glyph["path"]}" fill="{CREAM}" transform="{transform}"/>\n'
         f"</svg>\n"
     )
     (OUT_DIR / "favicon-master.svg").write_text(favicon, encoding="utf-8")
-    print(f"Wrote: {OUT_DIR / 'favicon-master.svg'}")
+
+    print(f"Variant: {args.variant}")
+    print(f"  logo.svg, logo-mono.svg, logo-dark.svg, favicon-master.svg")
 
 
 if __name__ == "__main__":
