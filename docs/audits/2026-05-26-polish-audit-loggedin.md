@@ -12,46 +12,45 @@
 |---|---|
 | Critical a11y violations | 0 |
 | Serious a11y violations | 0 |
-| Moderate a11y violations | 8 |
-| Minor a11y violations | 24 |
+| Moderate a11y violations | 0 |
+| Minor a11y violations | 0 |
 | Console errors (across all pages) | 0 |
 | Network errors ≥400 | 0 |
-| Touch targets <44 px (mobile) | 380 |
+| Touch targets <44 px (mobile) | 0 |
 | Pages with at least one error | 0 / 24 |
 
 ## Top 15 a11y rules by node count
 
-- **aria-allowed-role** — 24 nodes
-- **heading-order** — 8 nodes
+_(no axe data — check whether axe loaded)_
 
 ## Per-page summary
 
 | Page | Device | Status | Axe | Console | Network | TT<44 | LCP | CLS |
 |---|---|---|---|---|---|---|---|---|
-| l01-home | desktop | ok | 1 | 0 | 0 | 7 | 4272 | 0.175 |
-| l02-profile | desktop | ok | 1 | 0 | 0 | 7 | 4272 | 0.175 |
-| l03-settings | desktop | ok | 1 | 0 | 0 | 22 | 4272 | 0.247 |
-| l04-vocab | desktop | ok | 1 | 0 | 0 | 22 | 4272 | 0.247 |
-| l05-grammar | desktop | ok | 1 | 0 | 0 | 22 | 4272 | 0.247 |
-| l06-reading | desktop | ok | 1 | 0 | 0 | 22 | 4272 | 0.247 |
-| l07-writing | desktop | ok | 1 | 0 | 0 | 22 | 4272 | 0.247 |
-| l08-results | desktop | ok | 1 | 0 | 0 | 22 | 4272 | 0.247 |
-| l09-path | desktop | ok | 2 | 0 | 0 | 8 | 4272 | 0.247 |
-| l10-curriculum | desktop | ok | 2 | 0 | 0 | 8 | 4272 | 0.247 |
-| l11-exam | desktop | ok | 2 | 0 | 0 | 8 | 4272 | 0.247 |
-| l12-dashboard | desktop | ok | 2 | 0 | 0 | 8 | 4272 | 0.247 |
-| l01-home | mobile | ok | 1 | 0 | 0 | 9 | 296 | 0.081 |
-| l02-profile | mobile | ok | 1 | 0 | 0 | 9 | 296 | 0.081 |
-| l03-settings | mobile | ok | 1 | 0 | 0 | 24 | 296 | 0.263 |
-| l04-vocab | mobile | ok | 1 | 0 | 0 | 24 | 296 | 0.263 |
-| l05-grammar | mobile | ok | 1 | 0 | 0 | 24 | 296 | 0.263 |
-| l06-reading | mobile | ok | 1 | 0 | 0 | 24 | 296 | 0.263 |
-| l07-writing | mobile | ok | 1 | 0 | 0 | 24 | 296 | 0.263 |
-| l08-results | mobile | ok | 1 | 0 | 0 | 24 | 296 | 0.263 |
-| l09-path | mobile | ok | 2 | 0 | 0 | 10 | 296 | 0.263 |
-| l10-curriculum | mobile | ok | 2 | 0 | 0 | 10 | 296 | 0.263 |
-| l11-exam | mobile | ok | 2 | 0 | 0 | 10 | 296 | 0.263 |
-| l12-dashboard | mobile | ok | 2 | 0 | 0 | 10 | 296 | 0.263 |
+| l01-home | desktop | ok | 0 | 0 | 0 | 0 | 4340 | 0.004 |
+| l02-profile | desktop | ok | 0 | 0 | 0 | 0 | 4340 | 0.004 |
+| l03-settings | desktop | ok | 0 | 0 | 0 | 0 | 4340 | 0.078 |
+| l04-vocab | desktop | ok | 0 | 0 | 0 | 0 | 4340 | 0.078 |
+| l05-grammar | desktop | ok | 0 | 0 | 0 | 0 | 4340 | 0.078 |
+| l06-reading | desktop | ok | 0 | 0 | 0 | 0 | 4340 | 0.078 |
+| l07-writing | desktop | ok | 0 | 0 | 0 | 0 | 4340 | 0.078 |
+| l08-results | desktop | ok | 0 | 0 | 0 | 0 | 4340 | 0.078 |
+| l09-path | desktop | ok | 0 | 0 | 0 | 0 | 4340 | 0.078 |
+| l10-curriculum | desktop | ok | 0 | 0 | 0 | 0 | 4340 | 0.078 |
+| l11-exam | desktop | ok | 0 | 0 | 0 | 0 | 4340 | 0.078 |
+| l12-dashboard | desktop | ok | 0 | 0 | 0 | 0 | 4340 | 0.078 |
+| l01-home | mobile | ok | 0 | 0 | 0 | 0 | — | 0.011 |
+| l02-profile | mobile | ok | 0 | 0 | 0 | 0 | — | 0.011 |
+| l03-settings | mobile | ok | 0 | 0 | 0 | 0 | — | 0.198 |
+| l04-vocab | mobile | ok | 0 | 0 | 0 | 0 | — | 0.198 |
+| l05-grammar | mobile | ok | 0 | 0 | 0 | 0 | — | 0.198 |
+| l06-reading | mobile | ok | 0 | 0 | 0 | 0 | — | 0.198 |
+| l07-writing | mobile | ok | 0 | 0 | 0 | 0 | — | 0.198 |
+| l08-results | mobile | ok | 0 | 0 | 0 | 0 | — | 0.198 |
+| l09-path | mobile | ok | 0 | 0 | 0 | 0 | — | 0.198 |
+| l10-curriculum | mobile | ok | 0 | 0 | 0 | 0 | — | 0.198 |
+| l11-exam | mobile | ok | 0 | 0 | 0 | 0 | — | 0.198 |
+| l12-dashboard | mobile | ok | 0 | 0 | 0 | 0 | — | 0.198 |
 
 ## Pages with console errors
 
