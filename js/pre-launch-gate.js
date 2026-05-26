@@ -22,12 +22,20 @@
   try {
     if (localStorage.getItem(KEY) === "1") return;
   } catch (e) { /* localStorage may be unavailable; fall through */ }
-  var input = window.prompt("Salasana:");
+  // Some mobile browsers + automation harnesses (Playwright iOS UA) either block
+  // prompt() outright or return null without showing UI. Wrap so we don't throw
+  // an UNCAUGHT error in those contexts — the wipe below stops the page either way.
+  var input = null;
+  try {
+    input = window.prompt("Salasana:");
+  } catch (e) {
+    input = null;
+  }
   if (input === PASSWORD) {
     try { localStorage.setItem(KEY, "1"); } catch (e) { /* ignore */ }
     return;
   }
+  // Wipe DOM so the page is unusable without throwing; the wipe alone is enough
+  // to halt remaining inline/deferred scripts that haven't started yet.
   document.documentElement.innerHTML = "<body style=\"background:#000;color:#fff;font-family:sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;\">V&auml;&auml;r&auml; salasana.</body>";
-  // Stop further script execution on this page.
-  throw new Error("gate");
 })();
