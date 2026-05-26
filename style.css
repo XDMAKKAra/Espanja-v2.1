@@ -5827,3 +5827,39 @@ color: var(--ink-faint);
   opacity: 1;
 }
 
+/* L-V318c — wordmark as CSS-styled text. Renders identically on every
+   browser (Inter-700 is self-hosted as woff2). Replaces the prior
+   SVG-img approach which had fontTools-extraction rendering bugs on
+   iOS Safari. SVG files in public/brand/ stay reserved for external
+   surfaces (social cards, presentations, etc.). */
+.brand-wordmark {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+  font-weight: 700 !important;
+  font-size: 1.5rem;
+  line-height: 1;
+  letter-spacing: -0.025em;
+  color: #A0341F !important;
+  text-transform: lowercase;
+  display: inline-block;
+  white-space: nowrap;
+}
+.brand-wordmark--sm { font-size: 1.25rem; }
+.brand-wordmark--lg { font-size: 2rem; }
+/* Specificity override — parent .nav__brand etc. set color via body cascade
+   (var(--ed-ink)); win that battle so the wordmark stays brick. */
+.nav__brand .brand-wordmark,
+.app-topbar__brand .brand-wordmark,
+.sidebar-logo .brand-wordmark,
+.nav-logo .brand-wordmark,
+.auth-aside__logo .brand-wordmark,
+.auth-inner__logo .brand-wordmark,
+.logo .brand-wordmark {
+  color: var(--ed-accent, #A0341F);
+}
+/* Dark surfaces (auth-aside on ink, sidebar dark variant) get cream */
+[data-theme="dark"] .brand-wordmark,
+.auth-aside .brand-wordmark,
+.app-sidebar[data-mode="dark"] .brand-wordmark {
+  color: var(--ed-cream, #F5EDE0);
+}
+
