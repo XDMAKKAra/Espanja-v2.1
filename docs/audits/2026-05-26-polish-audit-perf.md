@@ -16,34 +16,52 @@
 
 ## Headline
 
-- **22 pages good · 0 needs improvement · 0 poor (by LCP)**
+- **38 pages good · 2 needs improvement · 0 poor (by LCP)**
 
 ## All pages ranked by LCP (worst first)
 
 | Slug | Viewport | LCP (ms) | CLS | FCP (ms) | TTFB (ms) | Bytes | Status |
 |---|---|---|---|---|---|---|---|
-| p11-app-unauth | desktop | 404 | 0.001 | 404 | 70 | 101 KB | ok |
-| p04-landing-fr | mobile | 396 | 0.001 | 396 | 70 | 58 KB | ok |
-| p01-index | desktop | 380 | 0 | 264 | 77 | 82 KB | ok |
-| p02-landing-es | desktop | 336 | 0.001 | 336 | 66 | 58 KB | ok |
-| p01-index | mobile | 324 | 0 | 240 | 64 | 82 KB | ok |
-| p04-landing-fr | desktop | 288 | 0.001 | 288 | 102 | 58 KB | ok |
-| p10-blog | mobile | 280 | 0.003 | 280 | 72 | 81 KB | ok |
-| p03-landing-de | desktop | 256 | 0.001 | 256 | 71 | 58 KB | ok |
-| p10-blog | desktop | 256 | 0.004 | 256 | 77 | 82 KB | ok |
-| p11-app-unauth | mobile | 256 | 0 | 172 | 68 | 101 KB | ok |
-| p03-landing-de | mobile | 236 | 0.001 | 236 | 92 | 58 KB | ok |
-| p02-landing-es | mobile | 224 | 0.043 | 224 | 71 | 58 KB | ok |
-| p09-refund | desktop | 220 | 0.002 | 220 | 101 | 82 KB | ok |
-| p08-privacy | desktop | 196 | 0.002 | 196 | 75 | 82 KB | ok |
-| p07-terms | desktop | 192 | 0.005 | 192 | 77 | 82 KB | ok |
-| p05-diagnose | desktop | 188 | 0.002 | 188 | 81 | 62 KB | ok |
-| p05-diagnose | mobile | 188 | 0.006 | 188 | 78 | 56 KB | ok |
-| p06-pricing | mobile | 188 | 0.019 | 188 | 70 | 58 KB | ok |
-| p07-terms | mobile | 188 | 0 | 188 | 72 | 81 KB | ok |
-| p09-refund | mobile | 188 | 0.085 | 188 | 79 | 81 KB | ok |
-| p06-pricing | desktop | 184 | 0.007 | 184 | 67 | 58 KB | ok |
-| p08-privacy | mobile | 176 | 0.008 | 176 | 70 | 81 KB | ok |
+| p01-index | desktop | 3940 ⚠️ | 0 | 3824 | 2820 | 82 KB | ok |
+| l02-profile | desktop | 3060 ⚠️ | 0 | 92 | 31 | 126 KB | ok |
+| l01-home | desktop | 2216 | 0 | 84 | 30 | 127 KB | ok |
+| l01-home | mobile | 1976 | 0.001 | 124 | 84 | 126 KB | ok |
+| l06-reading | mobile | 1860 | 0.001 | 60 | 27 | 126 KB | ok |
+| l06-reading | desktop | 1476 | 0 | 88 | 35 | 126 KB | ok |
+| l02-profile | mobile | 1460 | 0.001 | 72 | 38 | 126 KB | ok |
+| l09-exam | desktop | 1456 | 0 | 76 | 28 | 126 KB | ok |
+| l05-grammar | mobile | 1372 | 0.001 | 80 | 26 | 126 KB | ok |
+| l04-vocab | desktop | 1352 | 0 | 64 | 29 | 126 KB | ok |
+| l08-results | mobile | 1220 | 0.001 | 64 | 31 | 126 KB | ok |
+| l08-results | desktop | 1192 | 0 | 60 | 25 | 126 KB | ok |
+| l07-writing | desktop | 1172 | 0 | 68 | 28 | 126 KB | ok |
+| l07-writing | mobile | 1172 | 0.001 | 68 | 26 | 126 KB | ok |
+| l09-exam | mobile | 1168 | 0.001 | 72 | 28 | 126 KB | ok |
+| l04-vocab | mobile | 1148 | 0 | 68 | 26 | 126 KB | ok |
+| l05-grammar | desktop | 1132 | 0 | 76 | 28 | 126 KB | ok |
+| p11-app-unauth | desktop | 1056 | 0.001 | 1056 | 70 | 101 KB | ok |
+| p03-landing-de | desktop | 732 | 0.001 | 732 | 71 | 58 KB | ok |
+| p04-landing-fr | desktop | 596 | 0.001 | 596 | 79 | 58 KB | ok |
+| p01-index | mobile | 496 | 0 | 396 | 74 | 82 KB | ok |
+| p02-landing-es | desktop | 480 | 0.001 | 480 | 74 | 58 KB | ok |
+| p09-refund | desktop | 440 | 0.002 | 440 | 74 | 82 KB | ok |
+| p05-diagnose | desktop | 404 | 0.002 | 404 | 74 | 62 KB | ok |
+| p10-blog | desktop | 388 | 0.003 | 388 | 70 | 82 KB | ok |
+| p08-privacy | desktop | 368 | 0.002 | 368 | 76 | 82 KB | ok |
+| p06-pricing | desktop | 360 | 0.007 | 360 | 71 | 58 KB | ok |
+| p07-terms | desktop | 360 | 0.005 | 360 | 75 | 82 KB | ok |
+| p11-app-unauth | mobile | 260 | 0 | 176 | 70 | 101 KB | ok |
+| p04-landing-fr | mobile | 256 | 0.001 | 256 | 78 | 58 KB | ok |
+| p02-landing-es | mobile | 232 | 0.043 | 232 | 74 | 58 KB | ok |
+| p03-landing-de | mobile | 228 | 0.001 | 228 | 72 | 58 KB | ok |
+| p06-pricing | mobile | 192 | 0.019 | 192 | 73 | 58 KB | ok |
+| p08-privacy | mobile | 188 | 0.008 | 188 | 80 | 81 KB | ok |
+| p10-blog | mobile | 188 | 0.003 | 188 | 68 | 81 KB | ok |
+| p09-refund | mobile | 184 | 0.091 | 184 | 73 | 81 KB | ok |
+| p05-diagnose | mobile | 176 | 0.006 | 176 | 75 | 56 KB | ok |
+| p07-terms | mobile | 172 | 0 | 172 | 67 | 81 KB | ok |
+| l03-settings | desktop | 108 | 0.085 | 68 | 26 | 157 KB | ok |
+| l03-settings | mobile | 108 | 0.213 | 60 | 25 | 156 KB | ok |
 
 ## Poor LCP pages (>4s)
 
@@ -51,12 +69,13 @@ _(none — all pages ≤4s LCP)_
 
 ## Needs-improvement LCP pages (2.5–4s)
 
-_(none — all pages ≤2.5s LCP)_
+- **p01-index desktop** — LCP 3940ms
+- **l02-profile desktop** — LCP 3060ms
 
 ## CLS issues (>0.1)
 
-_(none)_
+- **l03-settings mobile** — CLS 0.213
 
 ## TTFB issues (>800ms)
 
-_(none)_
+- **p01-index desktop** — TTFB 2820ms

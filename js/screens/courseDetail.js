@@ -42,18 +42,23 @@ function renderLessonRow(l, lang, kurssiKey, courseStep) {
   const minutes = Number(l.estimated_minutes) || 14;
   const href = `#/oppitunti/${lang}/${encodeURIComponent(kurssiKey)}/${num}`;
 
+  // L-V322: anchor wrapped in <li> for valid <ol> children + screen-reader
+  // list semantics ("list, N items, item M of N"). .op-row-li strips bullet
+  // and margins so the inner grid row stays visually unchanged.
   return `
-    <a class="${cls}" href="${href}" data-lesson="${num}">
-      <span class="op-row__num">${courseStep}.${num}</span>
-      <div class="op-row__body">
-        <p class="op-row__type">${escapeHtml(type)}</p>
-        <h2 class="op-row__title">${escapeHtml(title)}</h2>
-      </div>
-      <div class="op-row__meta">
-        <span class="op-row__minutes">~${minutes} min</span>
-        <span class="op-row__status">${escapeHtml(status)}</span>
-      </div>
-    </a>`;
+    <li class="op-row-li">
+      <a class="${cls}" href="${href}" data-lesson="${num}">
+        <span class="op-row__num">${courseStep}.${num}</span>
+        <div class="op-row__body">
+          <p class="op-row__type">${escapeHtml(type)}</p>
+          <h2 class="op-row__title">${escapeHtml(title)}</h2>
+        </div>
+        <div class="op-row__meta">
+          <span class="op-row__minutes">~${minutes} min</span>
+          <span class="op-row__status">${escapeHtml(status)}</span>
+        </div>
+      </a>
+    </li>`;
 }
 
 // scoped so renderLessonRow can see it inside the same closure
@@ -90,7 +95,7 @@ function renderShell(lang, kurssi, lessons) {
         <span class="op-progress-text mono-num">${doneCount} / ${totalLessons} oppituntia · ${pct} %</span>
       </div>
     </header>
-    <ol class="op-list" role="list">
+    <ol class="op-list">
       ${lessons.map((l) => renderLessonRow(l, lang, kurssi?.key || "", stepNumber)).join("")}
     </ol>`;
 }

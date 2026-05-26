@@ -203,8 +203,12 @@ function classify(metric, value) {
           const r = await loginCtx(browser, v);
           lctx = r.ctx;
           const lpage = r.page;
-          // Goto with hash as part of full reload
-          const res = await measure(lpage, BASE + "/app.html" + p.hash, v, p.slug);
+          // Force fresh navigation: hash-only URL changes don't trigger a
+          // Playwright goto (returns null → "goto-no-response"). Adding a
+          // cache-busting query param makes the URL differ in more than
+          // just the fragment, so the browser does a real document load
+          // and PerformanceObserver captures fresh nav timing.
+          const res = await measure(lpage, `${BASE}/app.html?t=${Date.now()}${p.hash}`, v, p.slug);
           console.log(`  ${res.slug} · ${res.status} · LCP=${res.lcp}ms CLS=${res.cls} FCP=${res.fcp}ms`);
           RESULTS.pages.push(res);
         } catch (err) {

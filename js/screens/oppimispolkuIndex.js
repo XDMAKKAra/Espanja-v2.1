@@ -96,7 +96,7 @@ function renderShell(lang, kurssit) {
       <h1 class="op-title display display--serif">Oppimispolku</h1>
       <p class="op-sub">${totalCourses} kurssia · ${done} suoritettu · Etene järjestyksessä.</p>
     </header>
-    <ol class="op-list" role="list">
+    <ol class="op-list">
       ${kurssit.map((k, i) => renderRow(k, i + 1, lang)).join("")}
     </ol>`;
 }
