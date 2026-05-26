@@ -7,76 +7,141 @@
       "url": "/",
       "device": "desktop",
       "status": "ok",
-      "consoleErrors": [
-        "Loading the script 'https://unpkg.com/axe-core@4.8.2/axe.min.js' violates the following Content Security Policy directive: \"script-src 'self' https://cdn.jsdelivr.net https://browser.sentry-cdn.com\". Note that 'script-src-elem' was not expl"
-      ],
+      "consoleErrors": [],
       "networkErrors": [],
-      "axeViolations": [],
+      "axeViolations": [
+        {
+          "id": "aria-allowed-attr",
+          "impact": "critical",
+          "help": "Elements must only use supported ARIA attributes",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.8/aria-allowed-attr?application=axeAPI",
+          "nodes": [
+            {
+              "target": ".catalog__lang-btn[data-lang=\"es\"][aria-controls=\"catalog-grid\"]",
+              "html": "<button class=\"catalog__lang-btn\" type=\"button\" role=\"tab\" data-lang=\"es\" aria-pressed=\"true\" aria-controls=\"catalog-grid\">Español</button>",
+              "failureSummary": "Fix all of the following:\n  ARIA attribute is not allowed: aria-pressed=\"true\""
+            },
+            {
+              "target": ".catalog__lang-btn[data-lang=\"fr\"][aria-controls=\"catalog-grid\"]",
+              "html": "<button class=\"catalog__lang-btn\" type=\"button\" role=\"tab\" data-lang=\"fr\" aria-pressed=\"false\" aria-controls=\"catalog-grid\">Français</button>",
+              "failureSummary": "Fix all of the following:\n  ARIA attribute is not allowed: aria-pressed=\"false\""
+            },
+            {
+              "target": ".catalog__lang-btn[data-lang=\"de\"][aria-controls=\"catalog-grid\"]",
+              "html": "<button class=\"catalog__lang-btn\" type=\"button\" role=\"tab\" data-lang=\"de\" aria-pressed=\"false\" aria-controls=\"catalog-grid\">Deutsch</button>",
+              "failureSummary": "Fix all of the following:\n  ARIA attribute is not allowed: aria-pressed=\"false\""
+            }
+          ],
+          "nodeCount": 3
+        },
+        {
+          "id": "aria-prohibited-attr",
+          "impact": "serious",
+          "help": "Elements must only use permitted ARIA attributes",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.8/aria-prohibited-attr?application=axeAPI",
+          "nodes": [
+            {
+              "target": "span[aria-label=\"Saludos-aihe\"]",
+              "html": "<span class=\"catalog-card__icon\" aria-label=\"Saludos-aihe\">",
+              "failureSummary": "Fix all of the following:\n  aria-label attribute cannot be used on a span with no valid role attribute."
+            },
+            {
+              "target": "span[aria-label=\"Comida-aihe\"]",
+              "html": "<span class=\"catalog-card__icon\" aria-label=\"Comida-aihe\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M3 2v8a3",
+              "failureSummary": "Fix all of the following:\n  aria-label attribute cannot be used on a span with no valid role attribute."
+            },
+            {
+              "target": "span[aria-label=\"Viajes-aihe\"]",
+              "html": "<span class=\"catalog-card__icon\" aria-label=\"Viajes-aihe\">",
+              "failureSummary": "Fix all of the following:\n  aria-label attribute cannot be used on a span with no valid role attribute."
+            }
+          ],
+          "nodeCount": 8
+        },
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.8/color-contrast?application=axeAPI",
+          "nodes": [
+            {
+              "target": ".stat-subrow > span:nth-child(1)",
+              "html": "<span><b>3</b> kieltä</span>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.15 (foreground color: #7b7270, background color: #f3f1ef, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": ".stat-subrow > span:nth-child(2)",
+              "html": "<span><b>90</b> oppituntia / kieli</span>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.15 (foreground color: #7b7270, background color: #f3f1ef, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": ".stat-subrow > span:nth-child(3)",
+              "html": "<span><b>270</b> yhteensä</span>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.15 (foreground color: #7b7270, background color: #f3f1ef, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "nodeCount": 13
+        }
+      ],
       "touchTargetFailures": [
         {
           "selector": ".nav__link",
-          "width": 49,
-          "height": 24,
-          "text": "Kurssit"
-        },
-        {
-          "selector": ".nav__link",
-          "width": 42,
-          "height": 24,
-          "text": "Näyte"
-        },
-        {
-          "selector": ".nav__link",
-          "width": 79,
-          "height": 24,
-          "text": "Hinnoittelu"
-        },
-        {
-          "selector": ".nav__link",
-          "width": 28,
-          "height": 24,
+          "width": 36,
+          "height": 44,
           "text": "FAQ"
         },
         {
-          "selector": ".catalog__lang-btn",
-          "width": 90,
-          "height": 39,
-          "text": "Español"
+          "selector": ".faq__mail",
+          "width": 109,
+          "height": 23,
+          "text": "tuki@puheo.fi"
         },
         {
-          "selector": ".catalog__lang-btn",
-          "width": 93,
-          "height": 39,
-          "text": "Français"
+          "selector": "a",
+          "width": 52,
+          "height": 22,
+          "text": "saksan"
         },
         {
-          "selector": ".catalog__lang-btn",
-          "width": 94,
-          "height": 39,
-          "text": "Deutsch"
+          "selector": "a",
+          "width": 59,
+          "height": 22,
+          "text": "ranskan"
         },
         {
-          "selector": "#proof-tab-es",
-          "width": 90,
-          "height": 35,
-          "text": "Español"
+          "selector": ".landing-footer__brandmark",
+          "width": 83,
+          "height": 36,
+          "text": "Puheo"
         },
         {
-          "selector": "#proof-tab-fr",
-          "width": 93,
-          "height": 35,
-          "text": "Français"
+          "selector": "a",
+          "width": 38,
+          "height": 44,
+          "text": "Näyte"
         },
         {
-          "selector": "#proof-tab-de",
-          "width": 94,
-          "height": 35,
-          "text": "Deutsch"
+          "selector": "a",
+          "width": 26,
+          "height": 44,
+          "text": "UKK"
+        },
+        {
+          "selector": "a",
+          "width": 38,
+          "height": 44,
+          "text": "Saksa"
+        },
+        {
+          "selector": "a",
+          "width": 32,
+          "height": 44,
+          "text": "Blogi"
         }
       ],
       "metrics": {
-        "lcp": 4096,
-        "cls": 0.004
+        "lcp": 3760,
+        "cls": 0.006
       }
     },
     {
@@ -84,77 +149,149 @@
       "url": "/",
       "device": "mobile",
       "status": "ok",
-      "consoleErrors": [
-        "UNCAUGHT: gate",
-        "Loading the script 'https://unpkg.com/axe-core@4.8.2/axe.min.js' violates the following Content Security Policy directive: \"script-src 'self' https://cdn.jsdelivr.net https://browser.sentry-cdn.com\". Note that 'script-src-elem' was not expl"
-      ],
+      "consoleErrors": [],
       "networkErrors": [],
-      "axeViolations": [],
-      "touchTargetFailures": [
+      "axeViolations": [
         {
-          "selector": ".skip-link",
-          "width": 97,
-          "height": 17,
-          "text": "Siirry sisältöön"
+          "id": "aria-allowed-attr",
+          "impact": "critical",
+          "help": "Elements must only use supported ARIA attributes",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.8/aria-allowed-attr?application=axeAPI",
+          "nodes": [
+            {
+              "target": ".catalog__lang-btn[data-lang=\"es\"][aria-controls=\"catalog-grid\"]",
+              "html": "<button class=\"catalog__lang-btn\" type=\"button\" role=\"tab\" data-lang=\"es\" aria-pressed=\"true\" aria-controls=\"catalog-grid\">Español</button>",
+              "failureSummary": "Fix all of the following:\n  ARIA attribute is not allowed: aria-pressed=\"true\""
+            },
+            {
+              "target": ".catalog__lang-btn[data-lang=\"fr\"][aria-controls=\"catalog-grid\"]",
+              "html": "<button class=\"catalog__lang-btn\" type=\"button\" role=\"tab\" data-lang=\"fr\" aria-pressed=\"false\" aria-controls=\"catalog-grid\">Français</button>",
+              "failureSummary": "Fix all of the following:\n  ARIA attribute is not allowed: aria-pressed=\"false\""
+            },
+            {
+              "target": ".catalog__lang-btn[data-lang=\"de\"][aria-controls=\"catalog-grid\"]",
+              "html": "<button class=\"catalog__lang-btn\" type=\"button\" role=\"tab\" data-lang=\"de\" aria-pressed=\"false\" aria-controls=\"catalog-grid\">Deutsch</button>",
+              "failureSummary": "Fix all of the following:\n  ARIA attribute is not allowed: aria-pressed=\"false\""
+            }
+          ],
+          "nodeCount": 3
         },
         {
-          "selector": ".nav__brand",
-          "width": 40,
-          "height": 17,
+          "id": "aria-prohibited-attr",
+          "impact": "serious",
+          "help": "Elements must only use permitted ARIA attributes",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.8/aria-prohibited-attr?application=axeAPI",
+          "nodes": [
+            {
+              "target": "span[aria-label=\"Saludos-aihe\"]",
+              "html": "<span class=\"catalog-card__icon\" aria-label=\"Saludos-aihe\">",
+              "failureSummary": "Fix all of the following:\n  aria-label attribute cannot be used on a span with no valid role attribute."
+            },
+            {
+              "target": "span[aria-label=\"Comida-aihe\"]",
+              "html": "<span class=\"catalog-card__icon\" aria-label=\"Comida-aihe\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M3 2v8a3",
+              "failureSummary": "Fix all of the following:\n  aria-label attribute cannot be used on a span with no valid role attribute."
+            },
+            {
+              "target": "span[aria-label=\"Viajes-aihe\"]",
+              "html": "<span class=\"catalog-card__icon\" aria-label=\"Viajes-aihe\">",
+              "failureSummary": "Fix all of the following:\n  aria-label attribute cannot be used on a span with no valid role attribute."
+            }
+          ],
+          "nodeCount": 8
+        },
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.8/color-contrast?application=axeAPI",
+          "nodes": [
+            {
+              "target": ".stat-subrow > span:nth-child(1)",
+              "html": "<span><b>3</b> kieltä</span>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.15 (foreground color: #7b7270, background color: #f3f1ef, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": ".stat-subrow > span:nth-child(2)",
+              "html": "<span><b>90</b> oppituntia / kieli</span>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.15 (foreground color: #7b7270, background color: #f3f1ef, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": ".stat-subrow > span:nth-child(3)",
+              "html": "<span><b>270</b> yhteensä</span>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.15 (foreground color: #7b7270, background color: #f3f1ef, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "nodeCount": 13
+        },
+        {
+          "id": "scrollable-region-focusable",
+          "impact": "serious",
+          "help": "Scrollable region must have keyboard access",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.8/scrollable-region-focusable?application=axeAPI",
+          "nodes": [
+            {
+              "target": "#catalog-grid",
+              "html": "<ul class=\"catalog__grid\" id=\"catalog-grid\" data-active-lang=\"es\">",
+              "failureSummary": "Fix any of the following:\n  Element should have focusable content\n  Element should be focusable"
+            }
+          ],
+          "nodeCount": 1
+        }
+      ],
+      "touchTargetFailures": [
+        {
+          "selector": ".faq__mail",
+          "width": 109,
+          "height": 23,
+          "text": "tuki@puheo.fi"
+        },
+        {
+          "selector": "a",
+          "width": 52,
+          "height": 22,
+          "text": "saksan"
+        },
+        {
+          "selector": "a",
+          "width": 59,
+          "height": 22,
+          "text": "ranskan"
+        },
+        {
+          "selector": ".landing-footer__brandmark",
+          "width": 83,
+          "height": 36,
           "text": "Puheo"
         },
         {
-          "selector": ".nav__link",
-          "width": 46,
-          "height": 17,
-          "text": "Kurssit"
-        },
-        {
-          "selector": ".nav__link",
+          "selector": "a",
           "width": 38,
-          "height": 17,
+          "height": 44,
           "text": "Näyte"
         },
         {
-          "selector": ".nav__link",
-          "width": 73,
-          "height": 17,
-          "text": "Hinnoittelu"
+          "selector": "a",
+          "width": 26,
+          "height": 44,
+          "text": "UKK"
         },
         {
-          "selector": ".nav__link",
-          "width": 31,
-          "height": 17,
-          "text": "FAQ"
+          "selector": "a",
+          "width": 38,
+          "height": 44,
+          "text": "Saksa"
         },
         {
-          "selector": "#nav-login",
-          "width": 57,
-          "height": 17,
-          "text": "Kirjaudu"
-        },
-        {
-          "selector": "#nav-signup",
-          "width": 109,
-          "height": 17,
-          "text": "Aloita ilmaiseksi"
-        },
-        {
-          "selector": ".btn.btn--primary",
-          "width": 133,
-          "height": 17,
-          "text": "Aloita ilmaiseksi"
-        },
-        {
-          "selector": ".btn.btn--ghost",
-          "width": 359,
-          "height": 35,
-          "text": "Katso miten kirjoitukset arvioidaan →"
+          "selector": "a",
+          "width": 32,
+          "height": 44,
+          "text": "Blogi"
         }
       ],
       "metrics": {
-        "lcp": 136,
-        "cls": null
+        "lcp": 360,
+        "cls": 0
       }
     },
     {
@@ -162,11 +299,34 @@
       "url": "/espanja-yo-koe",
       "device": "desktop",
       "status": "ok",
-      "consoleErrors": [
-        "Loading the script 'https://unpkg.com/axe-core@4.8.2/axe.min.js' violates the following Content Security Policy directive: \"script-src 'self' https://cdn.jsdelivr.net https://browser.sentry-cdn.com\". Note that 'script-src-elem' was not expl"
-      ],
+      "consoleErrors": [],
       "networkErrors": [],
-      "axeViolations": [],
+      "axeViolations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.8/color-contrast?application=axeAPI",
+          "nodes": [
+            {
+              "target": ".mock-grade__score",
+              "html": "<span class=\"mock-grade__score\">13 / 20 · E</span>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 1.71 (foreground color: #2dd4bf, background color: #e6faf6, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": ".mock-err:nth-child(1)",
+              "html": "<span class=\"mock-err\">tendrémos</span>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 1.89 (foreground color: #fca5a5, background color: #fffffe, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": ".mock-err:nth-child(2)",
+              "html": "<span class=\"mock-err\">espero que vienes</span>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 1.89 (foreground color: #fca5a5, background color: #fffffe, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "nodeCount": 3
+        }
+      ],
       "touchTargetFailures": [
         {
           "selector": ".skip-link",
@@ -176,26 +336,8 @@
         },
         {
           "selector": ".nav__link",
-          "width": 40,
-          "height": 25,
-          "text": "Tuote"
-        },
-        {
-          "selector": ".nav__link",
-          "width": 50,
-          "height": 25,
-          "text": "Kurssit"
-        },
-        {
-          "selector": ".nav__link",
-          "width": 78,
-          "height": 25,
-          "text": "Hinnoittelu"
-        },
-        {
-          "selector": ".nav__link",
-          "width": 30,
-          "height": 25,
+          "width": 38,
+          "height": 44,
           "text": "FAQ"
         },
         {
@@ -218,7 +360,7 @@
         }
       ],
       "metrics": {
-        "lcp": 452,
+        "lcp": 468,
         "cls": 0.001
       }
     },
@@ -227,77 +369,77 @@
       "url": "/espanja-yo-koe",
       "device": "mobile",
       "status": "ok",
-      "consoleErrors": [
-        "UNCAUGHT: gate",
-        "Loading the script 'https://unpkg.com/axe-core@4.8.2/axe.min.js' violates the following Content Security Policy directive: \"script-src 'self' https://cdn.jsdelivr.net https://browser.sentry-cdn.com\". Note that 'script-src-elem' was not expl"
-      ],
+      "consoleErrors": [],
       "networkErrors": [],
-      "axeViolations": [],
+      "axeViolations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.8/color-contrast?application=axeAPI",
+          "nodes": [
+            {
+              "target": ".mock-grade__score",
+              "html": "<span class=\"mock-grade__score\">13 / 20 · E</span>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 1.71 (foreground color: #2dd4bf, background color: #e6faf6, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": ".mock-err:nth-child(1)",
+              "html": "<span class=\"mock-err\">tendrémos</span>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 1.89 (foreground color: #fca5a5, background color: #fffffe, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": ".mock-err:nth-child(2)",
+              "html": "<span class=\"mock-err\">espero que vienes</span>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 1.89 (foreground color: #fca5a5, background color: #fffffe, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "nodeCount": 3
+        },
+        {
+          "id": "scrollable-region-focusable",
+          "impact": "serious",
+          "help": "Scrollable region must have keyboard access",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.8/scrollable-region-focusable?application=axeAPI",
+          "nodes": [
+            {
+              "target": ".courses__grid",
+              "html": "<ol class=\"courses__grid\" aria-label=\"Puheon 8 kurssia järjestyksessä\">",
+              "failureSummary": "Fix any of the following:\n  Element should have focusable content\n  Element should be focusable"
+            }
+          ],
+          "nodeCount": 1
+        }
+      ],
       "touchTargetFailures": [
         {
           "selector": ".skip-link",
-          "width": 97,
-          "height": 17,
+          "width": 137,
+          "height": 43,
           "text": "Siirry sisältöön"
         },
         {
-          "selector": ".nav__brand",
-          "width": 40,
-          "height": 17,
+          "selector": ".faq__mail",
+          "width": 100,
+          "height": 21,
+          "text": "tuki@puheo.fi"
+        },
+        {
+          "selector": ".landing-footer__brandmark",
+          "width": 74,
+          "height": 31,
           "text": "Puheo"
         },
         {
-          "selector": ".nav__link",
-          "width": 37,
-          "height": 17,
-          "text": "Tuote"
-        },
-        {
-          "selector": ".nav__link",
-          "width": 46,
-          "height": 17,
-          "text": "Kurssit"
-        },
-        {
-          "selector": ".nav__link",
-          "width": 73,
-          "height": 17,
-          "text": "Hinnoittelu"
-        },
-        {
-          "selector": ".nav__link",
+          "selector": "a",
           "width": 31,
-          "height": 17,
-          "text": "FAQ"
-        },
-        {
-          "selector": "#nav-login",
-          "width": 57,
-          "height": 17,
-          "text": "Kirjaudu"
-        },
-        {
-          "selector": "#nav-signup",
-          "width": 109,
-          "height": 17,
-          "text": "Aloita ilmaiseksi"
-        },
-        {
-          "selector": ".btn.btn--primary",
-          "width": 133,
-          "height": 17,
-          "text": "Aloita ilmaiseksi"
-        },
-        {
-          "selector": ".btn.btn--ghost",
-          "width": 167,
-          "height": 17,
-          "text": "Näe esimerkkiarviointi →"
+          "height": 44,
+          "text": "UKK"
         }
       ],
       "metrics": {
-        "lcp": 116,
-        "cls": null
+        "lcp": 228,
+        "cls": 0.043
       }
     },
     {
@@ -305,12 +447,34 @@
       "url": "/saksan-yo-koe",
       "device": "desktop",
       "status": "ok",
-      "consoleErrors": [
-        "Executing inline script violates the following Content Security Policy directive 'script-src 'self' https://cdn.jsdelivr.net https://browser.sentry-cdn.com'. Either the 'unsafe-inline' keyword, a hash ('sha256-TI/TQ2R06mGyGjN58KyEe5y35oexVB",
-        "Loading the script 'https://unpkg.com/axe-core@4.8.2/axe.min.js' violates the following Content Security Policy directive: \"script-src 'self' https://cdn.jsdelivr.net https://browser.sentry-cdn.com\". Note that 'script-src-elem' was not expl"
-      ],
+      "consoleErrors": [],
       "networkErrors": [],
-      "axeViolations": [],
+      "axeViolations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.8/color-contrast?application=axeAPI",
+          "nodes": [
+            {
+              "target": "#wl-open-btn",
+              "html": "<a class=\"btn btn--primary\" id=\"wl-open-btn\" href=\"#wl-modal\">Liity waitlistille</a>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.71 (foreground color: #ffffff, background color: #4f7cff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": "#hero-wl-btn",
+              "html": "<button class=\"btn btn--primary btn--lg\" id=\"hero-wl-btn\" type=\"button\">",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.71 (foreground color: #ffffff, background color: #4f7cff, font size: 13.5pt (18px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": ".mock-grade__score",
+              "html": "<span class=\"mock-grade__score\">12 / 20 · M</span>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.19 (foreground color: #4f7cff, background color: #e8eefe, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "nodeCount": 9
+        }
+      ],
       "touchTargetFailures": [
         {
           "selector": ".skip-link",
@@ -320,26 +484,8 @@
         },
         {
           "selector": ".nav__link",
-          "width": 40,
-          "height": 25,
-          "text": "Tuote"
-        },
-        {
-          "selector": ".nav__link",
-          "width": 50,
-          "height": 25,
-          "text": "Kurssit"
-        },
-        {
-          "selector": ".nav__link",
-          "width": 78,
-          "height": 25,
-          "text": "Hinnoittelu"
-        },
-        {
-          "selector": ".nav__link",
-          "width": 30,
-          "height": 25,
+          "width": 38,
+          "height": 44,
           "text": "FAQ"
         },
         {
@@ -362,7 +508,7 @@
         }
       ],
       "metrics": {
-        "lcp": 640,
+        "lcp": 584,
         "cls": 0.001
       }
     },
@@ -371,78 +517,77 @@
       "url": "/saksan-yo-koe",
       "device": "mobile",
       "status": "ok",
-      "consoleErrors": [
-        "UNCAUGHT: gate",
-        "Executing inline script violates the following Content Security Policy directive 'script-src 'self' https://cdn.jsdelivr.net https://browser.sentry-cdn.com'. Either the 'unsafe-inline' keyword, a hash ('sha256-TI/TQ2R06mGyGjN58KyEe5y35oexVB",
-        "Loading the script 'https://unpkg.com/axe-core@4.8.2/axe.min.js' violates the following Content Security Policy directive: \"script-src 'self' https://cdn.jsdelivr.net https://browser.sentry-cdn.com\". Note that 'script-src-elem' was not expl"
-      ],
+      "consoleErrors": [],
       "networkErrors": [],
-      "axeViolations": [],
+      "axeViolations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.8/color-contrast?application=axeAPI",
+          "nodes": [
+            {
+              "target": "#wl-open-btn",
+              "html": "<a class=\"btn btn--primary\" id=\"wl-open-btn\" href=\"#wl-modal\">Liity waitlistille</a>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.71 (foreground color: #ffffff, background color: #4f7cff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": "#hero-wl-btn",
+              "html": "<button class=\"btn btn--primary btn--lg\" id=\"hero-wl-btn\" type=\"button\">",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.71 (foreground color: #ffffff, background color: #4f7cff, font size: 13.5pt (18px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": ".mock-grade__score",
+              "html": "<span class=\"mock-grade__score\">12 / 20 · M</span>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.19 (foreground color: #4f7cff, background color: #e8eefe, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "nodeCount": 9
+        },
+        {
+          "id": "scrollable-region-focusable",
+          "impact": "serious",
+          "help": "Scrollable region must have keyboard access",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.8/scrollable-region-focusable?application=axeAPI",
+          "nodes": [
+            {
+              "target": ".courses__grid",
+              "html": "<ol class=\"courses__grid courses__grid--de\" aria-label=\"Saksan 8 kurssia\">",
+              "failureSummary": "Fix any of the following:\n  Element should have focusable content\n  Element should be focusable"
+            }
+          ],
+          "nodeCount": 1
+        }
+      ],
       "touchTargetFailures": [
         {
           "selector": ".skip-link",
-          "width": 97,
-          "height": 17,
+          "width": 137,
+          "height": 43,
           "text": "Siirry sisältöön"
         },
         {
-          "selector": ".nav__brand",
-          "width": 40,
-          "height": 17,
+          "selector": ".faq__mail",
+          "width": 100,
+          "height": 21,
+          "text": "tuki@puheo.fi"
+        },
+        {
+          "selector": ".landing-footer__brandmark",
+          "width": 74,
+          "height": 31,
           "text": "Puheo"
         },
         {
-          "selector": ".nav__link",
+          "selector": "a",
           "width": 37,
-          "height": 17,
-          "text": "Tuote"
-        },
-        {
-          "selector": ".nav__link",
-          "width": 46,
-          "height": 17,
-          "text": "Kurssit"
-        },
-        {
-          "selector": ".nav__link",
-          "width": 73,
-          "height": 17,
-          "text": "Hinnoittelu"
-        },
-        {
-          "selector": ".nav__link",
-          "width": 31,
-          "height": 17,
-          "text": "FAQ"
-        },
-        {
-          "selector": ".btn.btn--quiet",
-          "width": 57,
-          "height": 17,
-          "text": "Kirjaudu"
-        },
-        {
-          "selector": "#wl-open-btn",
-          "width": 103,
-          "height": 17,
-          "text": "Liity waitlistille"
-        },
-        {
-          "selector": "#hero-wl-btn",
-          "width": 119,
-          "height": 25,
-          "text": "Liity waitlistille"
-        },
-        {
-          "selector": ".btn.btn--ghost",
-          "width": 144,
-          "height": 17,
-          "text": "Tutustu tuotteeseen →"
+          "height": 44,
+          "text": "Blogi"
         }
       ],
       "metrics": {
-        "lcp": 148,
-        "cls": null
+        "lcp": 256,
+        "cls": 0.001
       }
     },
     {
@@ -450,12 +595,34 @@
       "url": "/ranskan-yo-koe",
       "device": "desktop",
       "status": "ok",
-      "consoleErrors": [
-        "Executing inline script violates the following Content Security Policy directive 'script-src 'self' https://cdn.jsdelivr.net https://browser.sentry-cdn.com'. Either the 'unsafe-inline' keyword, a hash ('sha256-CTXOSVC6RVhOTVr6+w1Y49CZ4NZXFb",
-        "Loading the script 'https://unpkg.com/axe-core@4.8.2/axe.min.js' violates the following Content Security Policy directive: \"script-src 'self' https://cdn.jsdelivr.net https://browser.sentry-cdn.com\". Note that 'script-src-elem' was not expl"
-      ],
+      "consoleErrors": [],
       "networkErrors": [],
-      "axeViolations": [],
+      "axeViolations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.8/color-contrast?application=axeAPI",
+          "nodes": [
+            {
+              "target": ".mock-err:nth-child(1)",
+              "html": "<span class=\"mock-err\">j'ai allé</span>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 1.89 (foreground color: #fca5a5, background color: #fffffe, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": ".mock-err:nth-child(2)",
+              "html": "<span class=\"mock-err\">c'était très bien</span>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 1.89 (foreground color: #fca5a5, background color: #fffffe, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": ".pricing-card__chip",
+              "html": "<span class=\"pricing-card__chip\">Ennakkohinta</span>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #052924, background color: #a8324a, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "nodeCount": 3
+        }
+      ],
       "touchTargetFailures": [
         {
           "selector": ".skip-link",
@@ -465,26 +632,8 @@
         },
         {
           "selector": ".nav__link",
-          "width": 40,
-          "height": 25,
-          "text": "Tuote"
-        },
-        {
-          "selector": ".nav__link",
-          "width": 50,
-          "height": 25,
-          "text": "Kurssit"
-        },
-        {
-          "selector": ".nav__link",
-          "width": 78,
-          "height": 25,
-          "text": "Hinnoittelu"
-        },
-        {
-          "selector": ".nav__link",
-          "width": 30,
-          "height": 25,
+          "width": 38,
+          "height": 44,
           "text": "FAQ"
         },
         {
@@ -507,7 +656,7 @@
         }
       ],
       "metrics": {
-        "lcp": 668,
+        "lcp": 596,
         "cls": 0.001
       }
     },
@@ -516,78 +665,77 @@
       "url": "/ranskan-yo-koe",
       "device": "mobile",
       "status": "ok",
-      "consoleErrors": [
-        "UNCAUGHT: gate",
-        "Executing inline script violates the following Content Security Policy directive 'script-src 'self' https://cdn.jsdelivr.net https://browser.sentry-cdn.com'. Either the 'unsafe-inline' keyword, a hash ('sha256-CTXOSVC6RVhOTVr6+w1Y49CZ4NZXFb",
-        "Loading the script 'https://unpkg.com/axe-core@4.8.2/axe.min.js' violates the following Content Security Policy directive: \"script-src 'self' https://cdn.jsdelivr.net https://browser.sentry-cdn.com\". Note that 'script-src-elem' was not expl"
-      ],
+      "consoleErrors": [],
       "networkErrors": [],
-      "axeViolations": [],
+      "axeViolations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.8/color-contrast?application=axeAPI",
+          "nodes": [
+            {
+              "target": ".mock-err:nth-child(1)",
+              "html": "<span class=\"mock-err\">j'ai allé</span>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 1.89 (foreground color: #fca5a5, background color: #fffffe, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": ".mock-err:nth-child(2)",
+              "html": "<span class=\"mock-err\">c'était très bien</span>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 1.89 (foreground color: #fca5a5, background color: #fffffe, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": ".pricing-card__chip",
+              "html": "<span class=\"pricing-card__chip\">Ennakkohinta</span>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 2.38 (foreground color: #052924, background color: #a8324a, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "nodeCount": 3
+        },
+        {
+          "id": "scrollable-region-focusable",
+          "impact": "serious",
+          "help": "Scrollable region must have keyboard access",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.8/scrollable-region-focusable?application=axeAPI",
+          "nodes": [
+            {
+              "target": ".courses__grid",
+              "html": "<ol class=\"courses__grid courses__grid--fr\" aria-label=\"Ranskan 8 kurssia\">",
+              "failureSummary": "Fix any of the following:\n  Element should have focusable content\n  Element should be focusable"
+            }
+          ],
+          "nodeCount": 1
+        }
+      ],
       "touchTargetFailures": [
         {
           "selector": ".skip-link",
-          "width": 97,
-          "height": 17,
+          "width": 137,
+          "height": 43,
           "text": "Siirry sisältöön"
         },
         {
-          "selector": ".nav__brand",
-          "width": 40,
-          "height": 17,
+          "selector": ".faq__mail",
+          "width": 100,
+          "height": 21,
+          "text": "tuki@puheo.fi"
+        },
+        {
+          "selector": ".landing-footer__brandmark",
+          "width": 74,
+          "height": 31,
           "text": "Puheo"
         },
         {
-          "selector": ".nav__link",
+          "selector": "a",
           "width": 37,
-          "height": 17,
-          "text": "Tuote"
-        },
-        {
-          "selector": ".nav__link",
-          "width": 46,
-          "height": 17,
-          "text": "Kurssit"
-        },
-        {
-          "selector": ".nav__link",
-          "width": 73,
-          "height": 17,
-          "text": "Hinnoittelu"
-        },
-        {
-          "selector": ".nav__link",
-          "width": 31,
-          "height": 17,
-          "text": "FAQ"
-        },
-        {
-          "selector": ".btn.btn--quiet",
-          "width": 57,
-          "height": 17,
-          "text": "Kirjaudu"
-        },
-        {
-          "selector": "#wl-open-btn",
-          "width": 103,
-          "height": 17,
-          "text": "Liity waitlistille"
-        },
-        {
-          "selector": "#hero-wl-btn",
-          "width": 119,
-          "height": 25,
-          "text": "Liity waitlistille"
-        },
-        {
-          "selector": ".btn.btn--ghost",
-          "width": 144,
-          "height": 17,
-          "text": "Tutustu tuotteeseen →"
+          "height": 44,
+          "text": "Blogi"
         }
       ],
       "metrics": {
-        "lcp": 148,
-        "cls": null
+        "lcp": 228,
+        "cls": 0.001
       }
     },
     {
@@ -596,11 +744,73 @@
       "device": "desktop",
       "status": "ok",
       "consoleErrors": [
-        "Executing inline script violates the following Content Security Policy directive 'script-src 'self' https://cdn.jsdelivr.net https://browser.sentry-cdn.com'. Either the 'unsafe-inline' keyword, a hash ('sha256-/rG85k8Gu+0TbjdlqftNIV4fncCQRU",
-        "Loading the script 'https://unpkg.com/axe-core@4.8.2/axe.min.js' violates the following Content Security Policy directive: \"script-src 'self' https://cdn.jsdelivr.net https://browser.sentry-cdn.com\". Note that 'script-src-elem' was not expl"
+        "Executing inline script violates the following Content Security Policy directive 'script-src 'self' https://cdn.jsdelivr.net https://browser.sentry-cdn.com'. Either the 'unsafe-inline' keyword, a hash ('sha256-/rG85k8Gu+0TbjdlqftNIV4fncCQRU"
       ],
       "networkErrors": [],
-      "axeViolations": [],
+      "axeViolations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.8/color-contrast?application=axeAPI",
+          "nodes": [
+            {
+              "target": ".nav-cta",
+              "html": "<a href=\"app.html\" class=\"nav-cta\">Aloita ilmaiseksi</a>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 2.48 (foreground color: #ffffff, background color: #14b8a6, font size: 9.8pt (13px), font weight: bold). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": ".intro-stat:nth-child(1) > .intro-stat-num",
+              "html": "<span class=\"intro-stat-num\">15</span>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 2.05 (foreground color: #e0a820, background color: #f0fdf9, font size: 21.0pt (28px), font weight: bold). Expected contrast ratio of 3:1"
+            },
+            {
+              "target": ".intro-stat:nth-child(2) > .intro-stat-num",
+              "html": "<span class=\"intro-stat-num\">~2 min</span>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 2.05 (foreground color: #e0a820, background color: #f0fdf9, font size: 21.0pt (28px), font weight: bold). Expected contrast ratio of 3:1"
+            }
+          ],
+          "nodeCount": 4
+        },
+        {
+          "id": "landmark-one-main",
+          "impact": "moderate",
+          "help": "Document should have one main landmark",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.8/landmark-one-main?application=axeAPI",
+          "nodes": [
+            {
+              "target": "html",
+              "html": "<html lang=\"fi\">",
+              "failureSummary": "Fix all of the following:\n  Document does not have a main landmark"
+            }
+          ],
+          "nodeCount": 1
+        },
+        {
+          "id": "region",
+          "impact": "moderate",
+          "help": "All page content should be contained by landmarks",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.8/region?application=axeAPI",
+          "nodes": [
+            {
+              "target": ".intro-icon",
+              "html": "<div class=\"intro-icon\">🎯</div>",
+              "failureSummary": "Fix any of the following:\n  Some page content is not contained by landmarks"
+            },
+            {
+              "target": "h1",
+              "html": "<h1>Testaa <em>espanjan tasosi</em></h1>",
+              "failureSummary": "Fix any of the following:\n  Some page content is not contained by landmarks"
+            },
+            {
+              "target": ".intro-desc",
+              "html": "<p class=\"intro-desc\">\n        Adaptiivinen diagnostinen testi arvioi YO-arvosanasi 2 minuutissa.\n        Sanastoa, kielioppia ja luetun ymmärtämistä, kuten oikeassa kokeessa.\n      </p>",
+              "failureSummary": "Fix any of the following:\n  Some page content is not contained by landmarks"
+            }
+          ],
+          "nodeCount": 6
+        }
+      ],
       "touchTargetFailures": [
         {
           "selector": ".nav-logo",
@@ -622,7 +832,7 @@
         }
       ],
       "metrics": {
-        "lcp": 424,
+        "lcp": 384,
         "cls": 0.002
       }
     },
@@ -632,11 +842,73 @@
       "device": "mobile",
       "status": "ok",
       "consoleErrors": [
-        "Executing inline script violates the following Content Security Policy directive 'script-src 'self' https://cdn.jsdelivr.net https://browser.sentry-cdn.com'. Either the 'unsafe-inline' keyword, a hash ('sha256-/rG85k8Gu+0TbjdlqftNIV4fncCQRU",
-        "Loading the script 'https://unpkg.com/axe-core@4.8.2/axe.min.js' violates the following Content Security Policy directive: \"script-src 'self' https://cdn.jsdelivr.net https://browser.sentry-cdn.com\". Note that 'script-src-elem' was not expl"
+        "Executing inline script violates the following Content Security Policy directive 'script-src 'self' https://cdn.jsdelivr.net https://browser.sentry-cdn.com'. Either the 'unsafe-inline' keyword, a hash ('sha256-/rG85k8Gu+0TbjdlqftNIV4fncCQRU"
       ],
       "networkErrors": [],
-      "axeViolations": [],
+      "axeViolations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.8/color-contrast?application=axeAPI",
+          "nodes": [
+            {
+              "target": ".nav-cta",
+              "html": "<a href=\"app.html\" class=\"nav-cta\">Aloita ilmaiseksi</a>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 2.48 (foreground color: #ffffff, background color: #14b8a6, font size: 9.8pt (13px), font weight: bold). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": ".intro-stat:nth-child(1) > .intro-stat-num",
+              "html": "<span class=\"intro-stat-num\">15</span>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 2.05 (foreground color: #e0a820, background color: #f0fdf9, font size: 21.0pt (28px), font weight: bold). Expected contrast ratio of 3:1"
+            },
+            {
+              "target": ".intro-stat:nth-child(2) > .intro-stat-num",
+              "html": "<span class=\"intro-stat-num\">~2 min</span>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 2.05 (foreground color: #e0a820, background color: #f0fdf9, font size: 21.0pt (28px), font weight: bold). Expected contrast ratio of 3:1"
+            }
+          ],
+          "nodeCount": 4
+        },
+        {
+          "id": "landmark-one-main",
+          "impact": "moderate",
+          "help": "Document should have one main landmark",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.8/landmark-one-main?application=axeAPI",
+          "nodes": [
+            {
+              "target": "html",
+              "html": "<html lang=\"fi\">",
+              "failureSummary": "Fix all of the following:\n  Document does not have a main landmark"
+            }
+          ],
+          "nodeCount": 1
+        },
+        {
+          "id": "region",
+          "impact": "moderate",
+          "help": "All page content should be contained by landmarks",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.8/region?application=axeAPI",
+          "nodes": [
+            {
+              "target": ".intro-icon",
+              "html": "<div class=\"intro-icon\">🎯</div>",
+              "failureSummary": "Fix any of the following:\n  Some page content is not contained by landmarks"
+            },
+            {
+              "target": "h1",
+              "html": "<h1>Testaa <em>espanjan tasosi</em></h1>",
+              "failureSummary": "Fix any of the following:\n  Some page content is not contained by landmarks"
+            },
+            {
+              "target": ".intro-desc",
+              "html": "<p class=\"intro-desc\">\n        Adaptiivinen diagnostinen testi arvioi YO-arvosanasi 2 minuutissa.\n        Sanastoa, kielioppia ja luetun ymmärtämistä, kuten oikeassa kokeessa.\n      </p>",
+              "failureSummary": "Fix any of the following:\n  Some page content is not contained by landmarks"
+            }
+          ],
+          "nodeCount": 6
+        }
+      ],
       "touchTargetFailures": [
         {
           "selector": ".nav-logo",
@@ -668,41 +940,31 @@
       "device": "desktop",
       "status": "ok",
       "consoleErrors": [
-        "Executing inline script violates the following Content Security Policy directive 'script-src 'self' https://cdn.jsdelivr.net https://browser.sentry-cdn.com'. Either the 'unsafe-inline' keyword, a hash ('sha256-A+CAYsOOcXz6nhYohqUug4Eck+rNKb",
-        "Loading the script 'https://unpkg.com/axe-core@4.8.2/axe.min.js' violates the following Content Security Policy directive: \"script-src 'self' https://cdn.jsdelivr.net https://browser.sentry-cdn.com\". Note that 'script-src-elem' was not expl"
+        "Executing inline script violates the following Content Security Policy directive 'script-src 'self' https://cdn.jsdelivr.net https://browser.sentry-cdn.com'. Either the 'unsafe-inline' keyword, a hash ('sha256-A+CAYsOOcXz6nhYohqUug4Eck+rNKb"
       ],
       "networkErrors": [],
-      "axeViolations": [],
+      "axeViolations": [
+        {
+          "id": "heading-order",
+          "impact": "moderate",
+          "help": "Heading levels should only increase by one",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.8/heading-order?application=axeAPI",
+          "nodes": [
+            {
+              "target": "article:nth-child(1) > .price-card__head > .price-name",
+              "html": "<h3 class=\"price-name\">Free</h3>",
+              "failureSummary": "Fix any of the following:\n  Heading order invalid"
+            }
+          ],
+          "nodeCount": 1
+        }
+      ],
       "touchTargetFailures": [
         {
           "selector": ".skip-link",
           "width": 137,
           "height": 43,
           "text": "Siirry sisältöön"
-        },
-        {
-          "selector": ".nav__link",
-          "width": 40,
-          "height": 25,
-          "text": "Tuote"
-        },
-        {
-          "selector": ".nav__link",
-          "width": 50,
-          "height": 25,
-          "text": "Kurssit"
-        },
-        {
-          "selector": ".nav__link",
-          "width": 78,
-          "height": 25,
-          "text": "Hinnoittelu"
-        },
-        {
-          "selector": ".nav__link",
-          "width": 37,
-          "height": 25,
-          "text": "Blogi"
         },
         {
           "selector": "#pricing-switch-toggle",
@@ -736,8 +998,8 @@
         }
       ],
       "metrics": {
-        "lcp": 464,
-        "cls": 0.006
+        "lcp": 412,
+        "cls": 0.007
       }
     },
     {
@@ -746,11 +1008,39 @@
       "device": "mobile",
       "status": "ok",
       "consoleErrors": [
-        "Executing inline script violates the following Content Security Policy directive 'script-src 'self' https://cdn.jsdelivr.net https://browser.sentry-cdn.com'. Either the 'unsafe-inline' keyword, a hash ('sha256-A+CAYsOOcXz6nhYohqUug4Eck+rNKb",
-        "Loading the script 'https://unpkg.com/axe-core@4.8.2/axe.min.js' violates the following Content Security Policy directive: \"script-src 'self' https://cdn.jsdelivr.net https://browser.sentry-cdn.com\". Note that 'script-src-elem' was not expl"
+        "Executing inline script violates the following Content Security Policy directive 'script-src 'self' https://cdn.jsdelivr.net https://browser.sentry-cdn.com'. Either the 'unsafe-inline' keyword, a hash ('sha256-A+CAYsOOcXz6nhYohqUug4Eck+rNKb"
       ],
       "networkErrors": [],
-      "axeViolations": [],
+      "axeViolations": [
+        {
+          "id": "heading-order",
+          "impact": "moderate",
+          "help": "Heading levels should only increase by one",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.8/heading-order?application=axeAPI",
+          "nodes": [
+            {
+              "target": "article:nth-child(1) > .price-card__head > .price-name",
+              "html": "<h3 class=\"price-name\">Free</h3>",
+              "failureSummary": "Fix any of the following:\n  Heading order invalid"
+            }
+          ],
+          "nodeCount": 1
+        },
+        {
+          "id": "scrollable-region-focusable",
+          "impact": "serious",
+          "help": "Scrollable region must have keyboard access",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.8/scrollable-region-focusable?application=axeAPI",
+          "nodes": [
+            {
+              "target": ".compare-section",
+              "html": "<section class=\"compare-section\">",
+              "failureSummary": "Fix any of the following:\n  Element should have focusable content\n  Element should be focusable"
+            }
+          ],
+          "nodeCount": 1
+        }
+      ],
       "touchTargetFailures": [
         {
           "selector": ".skip-link",
@@ -790,7 +1080,7 @@
         }
       ],
       "metrics": {
-        "lcp": 200,
+        "lcp": 212,
         "cls": 0.019
       }
     },
@@ -799,11 +1089,34 @@
       "url": "/terms.html",
       "device": "desktop",
       "status": "ok",
-      "consoleErrors": [
-        "Loading the script 'https://unpkg.com/axe-core@4.8.2/axe.min.js' violates the following Content Security Policy directive: \"script-src 'self' https://cdn.jsdelivr.net https://browser.sentry-cdn.com\". Note that 'script-src-elem' was not expl"
-      ],
+      "consoleErrors": [],
       "networkErrors": [],
-      "axeViolations": [],
+      "axeViolations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.8/color-contrast?application=axeAPI",
+          "nodes": [
+            {
+              "target": "nav[aria-label=\"Tuote\"] > h3",
+              "html": "<h3 class=\"landing-footer__col-title\">Tuote</h3>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.15 (foreground color: #7b7270, background color: #f3f1ef, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": "nav[aria-label=\"Tili\"] > h3",
+              "html": "<h3 class=\"landing-footer__col-title\">Tili</h3>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.15 (foreground color: #7b7270, background color: #f3f1ef, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": "nav[aria-label=\"Tieto\"] > h3",
+              "html": "<h3 class=\"landing-footer__col-title\">Tieto</h3>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.15 (foreground color: #7b7270, background color: #f3f1ef, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "nodeCount": 4
+        }
+      ],
       "touchTargetFailures": [
         {
           "selector": ".nav__brand",
@@ -813,26 +1126,8 @@
         },
         {
           "selector": ".nav__link",
-          "width": 41,
-          "height": 24,
-          "text": "Tuote"
-        },
-        {
-          "selector": ".nav__link",
-          "width": 49,
-          "height": 24,
-          "text": "Kurssit"
-        },
-        {
-          "selector": ".nav__link",
-          "width": 79,
-          "height": 24,
-          "text": "Hinnoittelu"
-        },
-        {
-          "selector": ".nav__link",
-          "width": 35,
-          "height": 24,
+          "width": 43,
+          "height": 44,
           "text": "Blogi"
         },
         {
@@ -864,11 +1159,83 @@
           "width": 377,
           "height": 36,
           "text": "Puheo"
+        },
+        {
+          "selector": "a",
+          "width": 91,
+          "height": 19,
+          "text": "Ominaisuudet"
+        },
+        {
+          "selector": "a",
+          "width": 44,
+          "height": 19,
+          "text": "Kurssit"
+        },
+        {
+          "selector": "a",
+          "width": 71,
+          "height": 19,
+          "text": "Hinnoittelu"
+        },
+        {
+          "selector": "a",
+          "width": 26,
+          "height": 19,
+          "text": "UKK"
+        },
+        {
+          "selector": "a",
+          "width": 53,
+          "height": 19,
+          "text": "Kirjaudu"
+        },
+        {
+          "selector": "a",
+          "width": 102,
+          "height": 19,
+          "text": "Aloita ilmaiseksi"
+        },
+        {
+          "selector": "a",
+          "width": 71,
+          "height": 19,
+          "text": "Hinnoittelu"
+        },
+        {
+          "selector": "a",
+          "width": 69,
+          "height": 19,
+          "text": "Tietosuoja"
+        },
+        {
+          "selector": "a",
+          "width": 80,
+          "height": 19,
+          "text": "Käyttöehdot"
+        },
+        {
+          "selector": "a",
+          "width": 77,
+          "height": 19,
+          "text": "Palautukset"
+        },
+        {
+          "selector": "a",
+          "width": 32,
+          "height": 19,
+          "text": "Blogi"
+        },
+        {
+          "selector": "a",
+          "width": 81,
+          "height": 19,
+          "text": "Ota yhteyttä"
         }
       ],
       "metrics": {
-        "lcp": 676,
-        "cls": 0.004
+        "lcp": 364,
+        "cls": 0.005
       }
     },
     {
@@ -876,11 +1243,34 @@
       "url": "/terms.html",
       "device": "mobile",
       "status": "ok",
-      "consoleErrors": [
-        "Loading the script 'https://unpkg.com/axe-core@4.8.2/axe.min.js' violates the following Content Security Policy directive: \"script-src 'self' https://cdn.jsdelivr.net https://browser.sentry-cdn.com\". Note that 'script-src-elem' was not expl"
-      ],
+      "consoleErrors": [],
       "networkErrors": [],
-      "axeViolations": [],
+      "axeViolations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.8/color-contrast?application=axeAPI",
+          "nodes": [
+            {
+              "target": "nav[aria-label=\"Tuote\"] > h3",
+              "html": "<h3 class=\"landing-footer__col-title\">Tuote</h3>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.15 (foreground color: #7b7270, background color: #f3f1ef, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": "nav[aria-label=\"Tili\"] > h3",
+              "html": "<h3 class=\"landing-footer__col-title\">Tili</h3>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.15 (foreground color: #7b7270, background color: #f3f1ef, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": "nav[aria-label=\"Tieto\"] > h3",
+              "html": "<h3 class=\"landing-footer__col-title\">Tieto</h3>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.15 (foreground color: #7b7270, background color: #f3f1ef, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "nodeCount": 4
+        }
+      ],
       "touchTargetFailures": [
         {
           "selector": ".nav__brand",
@@ -941,10 +1331,58 @@
           "width": 26,
           "height": 19,
           "text": "UKK"
+        },
+        {
+          "selector": "a",
+          "width": 53,
+          "height": 19,
+          "text": "Kirjaudu"
+        },
+        {
+          "selector": "a",
+          "width": 102,
+          "height": 19,
+          "text": "Aloita ilmaiseksi"
+        },
+        {
+          "selector": "a",
+          "width": 71,
+          "height": 19,
+          "text": "Hinnoittelu"
+        },
+        {
+          "selector": "a",
+          "width": 69,
+          "height": 19,
+          "text": "Tietosuoja"
+        },
+        {
+          "selector": "a",
+          "width": 80,
+          "height": 19,
+          "text": "Käyttöehdot"
+        },
+        {
+          "selector": "a",
+          "width": 77,
+          "height": 19,
+          "text": "Palautukset"
+        },
+        {
+          "selector": "a",
+          "width": 32,
+          "height": 19,
+          "text": "Blogi"
+        },
+        {
+          "selector": "a",
+          "width": 81,
+          "height": 19,
+          "text": "Ota yhteyttä"
         }
       ],
       "metrics": {
-        "lcp": 336,
+        "lcp": 184,
         "cls": 0
       }
     },
@@ -953,11 +1391,34 @@
       "url": "/privacy.html",
       "device": "desktop",
       "status": "ok",
-      "consoleErrors": [
-        "Loading the script 'https://unpkg.com/axe-core@4.8.2/axe.min.js' violates the following Content Security Policy directive: \"script-src 'self' https://cdn.jsdelivr.net https://browser.sentry-cdn.com\". Note that 'script-src-elem' was not expl"
-      ],
+      "consoleErrors": [],
       "networkErrors": [],
-      "axeViolations": [],
+      "axeViolations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.8/color-contrast?application=axeAPI",
+          "nodes": [
+            {
+              "target": "nav[aria-label=\"Tuote\"] > h3",
+              "html": "<h3 class=\"landing-footer__col-title\">Tuote</h3>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.15 (foreground color: #7b7270, background color: #f3f1ef, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": "nav[aria-label=\"Tili\"] > h3",
+              "html": "<h3 class=\"landing-footer__col-title\">Tili</h3>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.15 (foreground color: #7b7270, background color: #f3f1ef, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": "nav[aria-label=\"Tieto\"] > h3",
+              "html": "<h3 class=\"landing-footer__col-title\">Tieto</h3>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.15 (foreground color: #7b7270, background color: #f3f1ef, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "nodeCount": 4
+        }
+      ],
       "touchTargetFailures": [
         {
           "selector": ".nav__brand",
@@ -967,26 +1428,8 @@
         },
         {
           "selector": ".nav__link",
-          "width": 41,
-          "height": 24,
-          "text": "Tuote"
-        },
-        {
-          "selector": ".nav__link",
-          "width": 49,
-          "height": 24,
-          "text": "Kurssit"
-        },
-        {
-          "selector": ".nav__link",
-          "width": 79,
-          "height": 24,
-          "text": "Hinnoittelu"
-        },
-        {
-          "selector": ".nav__link",
-          "width": 35,
-          "height": 24,
+          "width": 43,
+          "height": 44,
           "text": "Blogi"
         },
         {
@@ -1018,10 +1461,76 @@
           "width": 91,
           "height": 19,
           "text": "Ominaisuudet"
+        },
+        {
+          "selector": "a",
+          "width": 44,
+          "height": 19,
+          "text": "Kurssit"
+        },
+        {
+          "selector": "a",
+          "width": 71,
+          "height": 19,
+          "text": "Hinnoittelu"
+        },
+        {
+          "selector": "a",
+          "width": 26,
+          "height": 19,
+          "text": "UKK"
+        },
+        {
+          "selector": "a",
+          "width": 53,
+          "height": 19,
+          "text": "Kirjaudu"
+        },
+        {
+          "selector": "a",
+          "width": 102,
+          "height": 19,
+          "text": "Aloita ilmaiseksi"
+        },
+        {
+          "selector": "a",
+          "width": 71,
+          "height": 19,
+          "text": "Hinnoittelu"
+        },
+        {
+          "selector": "a",
+          "width": 69,
+          "height": 19,
+          "text": "Tietosuoja"
+        },
+        {
+          "selector": "a",
+          "width": 80,
+          "height": 19,
+          "text": "Käyttöehdot"
+        },
+        {
+          "selector": "a",
+          "width": 77,
+          "height": 19,
+          "text": "Palautukset"
+        },
+        {
+          "selector": "a",
+          "width": 32,
+          "height": 19,
+          "text": "Blogi"
+        },
+        {
+          "selector": "a",
+          "width": 81,
+          "height": 19,
+          "text": "Ota yhteyttä"
         }
       ],
       "metrics": {
-        "lcp": 384,
+        "lcp": 408,
         "cls": 0.002
       }
     },
@@ -1030,11 +1539,34 @@
       "url": "/privacy.html",
       "device": "mobile",
       "status": "ok",
-      "consoleErrors": [
-        "Loading the script 'https://unpkg.com/axe-core@4.8.2/axe.min.js' violates the following Content Security Policy directive: \"script-src 'self' https://cdn.jsdelivr.net https://browser.sentry-cdn.com\". Note that 'script-src-elem' was not expl"
-      ],
+      "consoleErrors": [],
       "networkErrors": [],
-      "axeViolations": [],
+      "axeViolations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.8/color-contrast?application=axeAPI",
+          "nodes": [
+            {
+              "target": "nav[aria-label=\"Tuote\"] > h3",
+              "html": "<h3 class=\"landing-footer__col-title\">Tuote</h3>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.15 (foreground color: #7b7270, background color: #f3f1ef, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": "nav[aria-label=\"Tili\"] > h3",
+              "html": "<h3 class=\"landing-footer__col-title\">Tili</h3>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.15 (foreground color: #7b7270, background color: #f3f1ef, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": "nav[aria-label=\"Tieto\"] > h3",
+              "html": "<h3 class=\"landing-footer__col-title\">Tieto</h3>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.15 (foreground color: #7b7270, background color: #f3f1ef, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "nodeCount": 4
+        }
+      ],
       "touchTargetFailures": [
         {
           "selector": ".nav__brand",
@@ -1095,10 +1627,52 @@
           "width": 53,
           "height": 19,
           "text": "Kirjaudu"
+        },
+        {
+          "selector": "a",
+          "width": 102,
+          "height": 19,
+          "text": "Aloita ilmaiseksi"
+        },
+        {
+          "selector": "a",
+          "width": 71,
+          "height": 19,
+          "text": "Hinnoittelu"
+        },
+        {
+          "selector": "a",
+          "width": 69,
+          "height": 19,
+          "text": "Tietosuoja"
+        },
+        {
+          "selector": "a",
+          "width": 80,
+          "height": 19,
+          "text": "Käyttöehdot"
+        },
+        {
+          "selector": "a",
+          "width": 77,
+          "height": 19,
+          "text": "Palautukset"
+        },
+        {
+          "selector": "a",
+          "width": 32,
+          "height": 19,
+          "text": "Blogi"
+        },
+        {
+          "selector": "a",
+          "width": 81,
+          "height": 19,
+          "text": "Ota yhteyttä"
         }
       ],
       "metrics": {
-        "lcp": 192,
+        "lcp": 200,
         "cls": 0.008
       }
     },
@@ -1107,11 +1681,34 @@
       "url": "/refund.html",
       "device": "desktop",
       "status": "ok",
-      "consoleErrors": [
-        "Loading the script 'https://unpkg.com/axe-core@4.8.2/axe.min.js' violates the following Content Security Policy directive: \"script-src 'self' https://cdn.jsdelivr.net https://browser.sentry-cdn.com\". Note that 'script-src-elem' was not expl"
-      ],
+      "consoleErrors": [],
       "networkErrors": [],
-      "axeViolations": [],
+      "axeViolations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.8/color-contrast?application=axeAPI",
+          "nodes": [
+            {
+              "target": "nav[aria-label=\"Tuote\"] > h3",
+              "html": "<h3 class=\"landing-footer__col-title\">Tuote</h3>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.15 (foreground color: #7b7270, background color: #f3f1ef, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": "nav[aria-label=\"Tili\"] > h3",
+              "html": "<h3 class=\"landing-footer__col-title\">Tili</h3>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.15 (foreground color: #7b7270, background color: #f3f1ef, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": "nav[aria-label=\"Tieto\"] > h3",
+              "html": "<h3 class=\"landing-footer__col-title\">Tieto</h3>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.15 (foreground color: #7b7270, background color: #f3f1ef, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "nodeCount": 4
+        }
+      ],
       "touchTargetFailures": [
         {
           "selector": ".nav__brand",
@@ -1121,26 +1718,8 @@
         },
         {
           "selector": ".nav__link",
-          "width": 41,
-          "height": 24,
-          "text": "Tuote"
-        },
-        {
-          "selector": ".nav__link",
-          "width": 49,
-          "height": 24,
-          "text": "Kurssit"
-        },
-        {
-          "selector": ".nav__link",
-          "width": 79,
-          "height": 24,
-          "text": "Hinnoittelu"
-        },
-        {
-          "selector": ".nav__link",
-          "width": 35,
-          "height": 24,
+          "width": 43,
+          "height": 44,
           "text": "Blogi"
         },
         {
@@ -1172,11 +1751,71 @@
           "width": 44,
           "height": 19,
           "text": "Kurssit"
+        },
+        {
+          "selector": "a",
+          "width": 71,
+          "height": 19,
+          "text": "Hinnoittelu"
+        },
+        {
+          "selector": "a",
+          "width": 26,
+          "height": 19,
+          "text": "UKK"
+        },
+        {
+          "selector": "a",
+          "width": 53,
+          "height": 19,
+          "text": "Kirjaudu"
+        },
+        {
+          "selector": "a",
+          "width": 102,
+          "height": 19,
+          "text": "Aloita ilmaiseksi"
+        },
+        {
+          "selector": "a",
+          "width": 71,
+          "height": 19,
+          "text": "Hinnoittelu"
+        },
+        {
+          "selector": "a",
+          "width": 69,
+          "height": 19,
+          "text": "Tietosuoja"
+        },
+        {
+          "selector": "a",
+          "width": 80,
+          "height": 19,
+          "text": "Käyttöehdot"
+        },
+        {
+          "selector": "a",
+          "width": 77,
+          "height": 19,
+          "text": "Palautukset"
+        },
+        {
+          "selector": "a",
+          "width": 32,
+          "height": 19,
+          "text": "Blogi"
+        },
+        {
+          "selector": "a",
+          "width": 81,
+          "height": 19,
+          "text": "Ota yhteyttä"
         }
       ],
       "metrics": {
-        "lcp": 392,
-        "cls": 0.001
+        "lcp": 572,
+        "cls": 0.002
       }
     },
     {
@@ -1184,11 +1823,34 @@
       "url": "/refund.html",
       "device": "mobile",
       "status": "ok",
-      "consoleErrors": [
-        "Loading the script 'https://unpkg.com/axe-core@4.8.2/axe.min.js' violates the following Content Security Policy directive: \"script-src 'self' https://cdn.jsdelivr.net https://browser.sentry-cdn.com\". Note that 'script-src-elem' was not expl"
-      ],
+      "consoleErrors": [],
       "networkErrors": [],
-      "axeViolations": [],
+      "axeViolations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.8/color-contrast?application=axeAPI",
+          "nodes": [
+            {
+              "target": "nav[aria-label=\"Tuote\"] > h3",
+              "html": "<h3 class=\"landing-footer__col-title\">Tuote</h3>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.15 (foreground color: #7b7270, background color: #f3f1ef, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": "nav[aria-label=\"Tili\"] > h3",
+              "html": "<h3 class=\"landing-footer__col-title\">Tili</h3>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.15 (foreground color: #7b7270, background color: #f3f1ef, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": "nav[aria-label=\"Tieto\"] > h3",
+              "html": "<h3 class=\"landing-footer__col-title\">Tieto</h3>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.15 (foreground color: #7b7270, background color: #f3f1ef, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "nodeCount": 4
+        }
+      ],
       "touchTargetFailures": [
         {
           "selector": ".nav__brand",
@@ -1249,11 +1911,47 @@
           "width": 102,
           "height": 19,
           "text": "Aloita ilmaiseksi"
+        },
+        {
+          "selector": "a",
+          "width": 71,
+          "height": 19,
+          "text": "Hinnoittelu"
+        },
+        {
+          "selector": "a",
+          "width": 69,
+          "height": 19,
+          "text": "Tietosuoja"
+        },
+        {
+          "selector": "a",
+          "width": 80,
+          "height": 19,
+          "text": "Käyttöehdot"
+        },
+        {
+          "selector": "a",
+          "width": 77,
+          "height": 19,
+          "text": "Palautukset"
+        },
+        {
+          "selector": "a",
+          "width": 32,
+          "height": 19,
+          "text": "Blogi"
+        },
+        {
+          "selector": "a",
+          "width": 81,
+          "height": 19,
+          "text": "Ota yhteyttä"
         }
       ],
       "metrics": {
-        "lcp": 232,
-        "cls": 0.085
+        "lcp": 180,
+        "cls": 0.074
       }
     },
     {
@@ -1261,11 +1959,34 @@
       "url": "/blog/",
       "device": "desktop",
       "status": "ok",
-      "consoleErrors": [
-        "Loading the script 'https://unpkg.com/axe-core@4.8.2/axe.min.js' violates the following Content Security Policy directive: \"script-src 'self' https://cdn.jsdelivr.net https://browser.sentry-cdn.com\". Note that 'script-src-elem' was not expl"
-      ],
+      "consoleErrors": [],
       "networkErrors": [],
-      "axeViolations": [],
+      "axeViolations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.8/color-contrast?application=axeAPI",
+          "nodes": [
+            {
+              "target": "nav[aria-label=\"Tuote\"] > h3",
+              "html": "<h3 class=\"landing-footer__col-title\">Tuote</h3>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.15 (foreground color: #7b7270, background color: #f3f1ef, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": "nav[aria-label=\"Tili\"] > h3",
+              "html": "<h3 class=\"landing-footer__col-title\">Tili</h3>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.15 (foreground color: #7b7270, background color: #f3f1ef, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": "nav[aria-label=\"Tieto\"] > h3",
+              "html": "<h3 class=\"landing-footer__col-title\">Tieto</h3>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.15 (foreground color: #7b7270, background color: #f3f1ef, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "nodeCount": 4
+        }
+      ],
       "touchTargetFailures": [
         {
           "selector": ".nav__brand",
@@ -1275,26 +1996,8 @@
         },
         {
           "selector": ".nav__link",
-          "width": 41,
-          "height": 24,
-          "text": "Tuote"
-        },
-        {
-          "selector": ".nav__link",
-          "width": 49,
-          "height": 24,
-          "text": "Kurssit"
-        },
-        {
-          "selector": ".nav__link",
-          "width": 79,
-          "height": 24,
-          "text": "Hinnoittelu"
-        },
-        {
-          "selector": ".nav__link",
-          "width": 35,
-          "height": 24,
+          "width": 43,
+          "height": 44,
           "text": "Blogi"
         },
         {
@@ -1326,11 +2029,125 @@
           "width": 307,
           "height": 27,
           "text": "Ser vs estar, milloin kumpaakin"
+        },
+        {
+          "selector": ".blog-card__cta",
+          "width": 373,
+          "height": 23,
+          "text": "Lue opas →"
+        },
+        {
+          "selector": "a",
+          "width": 331,
+          "height": 27,
+          "text": "Por vs para, selkeä ero ja säännöt"
+        },
+        {
+          "selector": ".blog-card__cta",
+          "width": 373,
+          "height": 23,
+          "text": "Lue opas →"
+        },
+        {
+          "selector": ".blog-card__cta",
+          "width": 373,
+          "height": 23,
+          "text": "Lue opas →"
+        },
+        {
+          "selector": "a",
+          "width": 324,
+          "height": 27,
+          "text": "Akkusativ vs Dativ, neljä sääntöä"
+        },
+        {
+          "selector": ".blog-card__cta",
+          "width": 373,
+          "height": 23,
+          "text": "Lue opas →"
+        },
+        {
+          "selector": ".landing-footer__brandmark",
+          "width": 377,
+          "height": 36,
+          "text": "Puheo"
+        },
+        {
+          "selector": "a",
+          "width": 91,
+          "height": 19,
+          "text": "Ominaisuudet"
+        },
+        {
+          "selector": "a",
+          "width": 44,
+          "height": 19,
+          "text": "Kurssit"
+        },
+        {
+          "selector": "a",
+          "width": 71,
+          "height": 19,
+          "text": "Hinnoittelu"
+        },
+        {
+          "selector": "a",
+          "width": 26,
+          "height": 19,
+          "text": "UKK"
+        },
+        {
+          "selector": "a",
+          "width": 53,
+          "height": 19,
+          "text": "Kirjaudu"
+        },
+        {
+          "selector": "a",
+          "width": 102,
+          "height": 19,
+          "text": "Aloita ilmaiseksi"
+        },
+        {
+          "selector": "a",
+          "width": 71,
+          "height": 19,
+          "text": "Hinnoittelu"
+        },
+        {
+          "selector": "a",
+          "width": 69,
+          "height": 19,
+          "text": "Tietosuoja"
+        },
+        {
+          "selector": "a",
+          "width": 80,
+          "height": 19,
+          "text": "Käyttöehdot"
+        },
+        {
+          "selector": "a",
+          "width": 77,
+          "height": 19,
+          "text": "Palautukset"
+        },
+        {
+          "selector": "a",
+          "width": 32,
+          "height": 19,
+          "text": "Blogi"
+        },
+        {
+          "selector": "a",
+          "width": 81,
+          "height": 19,
+          "text": "Ota yhteyttä"
         }
       ],
       "metrics": {
-        "lcp": 408,
-        "cls": 0.003
+        "lcp": 440,
+        "cls": 0.004
       }
     },
     {
@@ -1338,11 +2155,34 @@
       "url": "/blog/",
       "device": "mobile",
       "status": "ok",
-      "consoleErrors": [
-        "Loading the script 'https://unpkg.com/axe-core@4.8.2/axe.min.js' violates the following Content Security Policy directive: \"script-src 'self' https://cdn.jsdelivr.net https://browser.sentry-cdn.com\". Note that 'script-src-elem' was not expl"
-      ],
+      "consoleErrors": [],
       "networkErrors": [],
-      "axeViolations": [],
+      "axeViolations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.8/color-contrast?application=axeAPI",
+          "nodes": [
+            {
+              "target": "nav[aria-label=\"Tuote\"] > h3",
+              "html": "<h3 class=\"landing-footer__col-title\">Tuote</h3>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.15 (foreground color: #7b7270, background color: #f3f1ef, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": "nav[aria-label=\"Tili\"] > h3",
+              "html": "<h3 class=\"landing-footer__col-title\">Tili</h3>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.15 (foreground color: #7b7270, background color: #f3f1ef, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": "nav[aria-label=\"Tieto\"] > h3",
+              "html": "<h3 class=\"landing-footer__col-title\">Tieto</h3>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.15 (foreground color: #7b7270, background color: #f3f1ef, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "nodeCount": 4
+        }
+      ],
       "touchTargetFailures": [
         {
           "selector": ".nav__brand",
@@ -1403,11 +2243,77 @@
           "width": 91,
           "height": 19,
           "text": "Ominaisuudet"
+        },
+        {
+          "selector": "a",
+          "width": 44,
+          "height": 19,
+          "text": "Kurssit"
+        },
+        {
+          "selector": "a",
+          "width": 71,
+          "height": 19,
+          "text": "Hinnoittelu"
+        },
+        {
+          "selector": "a",
+          "width": 26,
+          "height": 19,
+          "text": "UKK"
+        },
+        {
+          "selector": "a",
+          "width": 53,
+          "height": 19,
+          "text": "Kirjaudu"
+        },
+        {
+          "selector": "a",
+          "width": 102,
+          "height": 19,
+          "text": "Aloita ilmaiseksi"
+        },
+        {
+          "selector": "a",
+          "width": 71,
+          "height": 19,
+          "text": "Hinnoittelu"
+        },
+        {
+          "selector": "a",
+          "width": 69,
+          "height": 19,
+          "text": "Tietosuoja"
+        },
+        {
+          "selector": "a",
+          "width": 80,
+          "height": 19,
+          "text": "Käyttöehdot"
+        },
+        {
+          "selector": "a",
+          "width": 77,
+          "height": 19,
+          "text": "Palautukset"
+        },
+        {
+          "selector": "a",
+          "width": 32,
+          "height": 19,
+          "text": "Blogi"
+        },
+        {
+          "selector": "a",
+          "width": 81,
+          "height": 19,
+          "text": "Ota yhteyttä"
         }
       ],
       "metrics": {
-        "lcp": 244,
-        "cls": 0.002
+        "lcp": 180,
+        "cls": 0.003
       }
     },
     {
@@ -1415,11 +2321,24 @@
       "url": "/app.html",
       "device": "desktop",
       "status": "ok",
-      "consoleErrors": [
-        "Loading the script 'https://unpkg.com/axe-core@4.8.2/axe.min.js' violates the following Content Security Policy directive: \"script-src 'self' https://cdn.jsdelivr.net https://browser.sentry-cdn.com\". Note that 'script-src-elem' was not expl"
-      ],
+      "consoleErrors": [],
       "networkErrors": [],
-      "axeViolations": [],
+      "axeViolations": [
+        {
+          "id": "aria-allowed-role",
+          "impact": "minor",
+          "help": "ARIA role should be appropriate for the element",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.8/aria-allowed-role?application=axeAPI",
+          "nodes": [
+            {
+              "target": "#app-sidebar",
+              "html": "<aside class=\"app-sidebar\" id=\"app-sidebar\" role=\"navigation\" aria-label=\"Päävalikko\" data-mode=\"home\" style=\"display: none;\">",
+              "failureSummary": "Fix any of the following:\n  ARIA role navigation is not allowed for given element"
+            }
+          ],
+          "nodeCount": 1
+        }
+      ],
       "touchTargetFailures": [
         {
           "selector": ".sidebar-logo",
@@ -1471,7 +2390,7 @@
         }
       ],
       "metrics": {
-        "lcp": 1508,
+        "lcp": 976,
         "cls": 0.001
       }
     },
@@ -1480,11 +2399,24 @@
       "url": "/app.html",
       "device": "mobile",
       "status": "ok",
-      "consoleErrors": [
-        "Loading the script 'https://unpkg.com/axe-core@4.8.2/axe.min.js' violates the following Content Security Policy directive: \"script-src 'self' https://cdn.jsdelivr.net https://browser.sentry-cdn.com\". Note that 'script-src-elem' was not expl"
-      ],
+      "consoleErrors": [],
       "networkErrors": [],
-      "axeViolations": [],
+      "axeViolations": [
+        {
+          "id": "aria-allowed-role",
+          "impact": "minor",
+          "help": "ARIA role should be appropriate for the element",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.8/aria-allowed-role?application=axeAPI",
+          "nodes": [
+            {
+              "target": "#app-sidebar",
+              "html": "<aside class=\"app-sidebar\" id=\"app-sidebar\" role=\"navigation\" aria-label=\"Päävalikko\" data-mode=\"home\" style=\"display: none;\">",
+              "failureSummary": "Fix any of the following:\n  ARIA role navigation is not allowed for given element"
+            }
+          ],
+          "nodeCount": 1
+        }
+      ],
       "touchTargetFailures": [
         {
           "selector": ".sidebar-logo",
@@ -1536,7 +2468,7 @@
         }
       ],
       "metrics": {
-        "lcp": null,
+        "lcp": 272,
         "cls": null
       }
     }
