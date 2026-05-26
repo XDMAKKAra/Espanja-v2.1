@@ -3,7 +3,7 @@ import{a as u,b as d}from"./app-chunk-7KFQ2POU.js";import{a as m,d as h}from"./a
       <a class="${f}" href="${b}" data-kurssi="${t(e.key)}" ${r?'aria-disabled="true"':""} aria-label="Kurssi ${a}: ${t(e.title)}, ${t(p)}">
         <span class="op-row__num" aria-hidden="true">${a}</span>
         <div class="op-row__body">
-          <h3 class="op-row__title">${t(e.title)}</h3>
+          <h2 class="op-row__title">${t(e.title)}</h2>
           ${e.description?`<p class="op-row__desc">${t(e.description)}</p>`:""}
         </div>
         <div class="op-row__meta">
@@ -33,5 +33,5 @@ import{a as u,b as d}from"./app-chunk-7KFQ2POU.js";import{a as m,d as h}from"./a
     <div class="op-error" role="alert">
       <p>${t(a||"Kursseja ei l\xF6ytynyt.")}</p>
       <a class="btn-primary" href="#/aloitus">Palaa aloitukseen</a>
-    </div>`}async function y(e){c("screen-oppimispolku-index");let a=document.getElementById("op-root");if(!a)return;let l=e||v();a.innerHTML='<div class="op-loading" role="status" aria-label="Ladataan kursseja"><span class="sr-only">Ladataan kursseja\u2026</span></div>';let o=await m(l);if(o.length===0){_(a,"Kursseja ei viel\xE4 julkaistu t\xE4lle kielelle.");return}a.innerHTML=k(l,o),a.querySelectorAll(".op-row.is-locked").forEach(r=>{r.addEventListener("click",s=>s.preventDefault())}),a.querySelectorAll(".op-row.is-clickable").forEach(r=>{let s=r.dataset.kurssi;s&&d(r,()=>{u("courseDetail",()=>import("./app-courseDetail-7FVBWOS5.js")),h(l,s)})})}function L(e){return/^#\/oppimispolku(\?|$)/.test(e||"")?(y(),!0):!1}export{y as loadOppimispolkuIndex,L as tryRouteOppimispolkuIndex};
-//# sourceMappingURL=app-oppimispolkuIndex-56TW5ETA.js.map
+    </div>`}async function y(e){c("screen-oppimispolku-index");let a=document.getElementById("op-root");if(!a)return;let l=e||v();a.innerHTML='<div class="op-loading" role="status" aria-label="Ladataan kursseja"><span class="sr-only">Ladataan kursseja\u2026</span></div>';let o=await m(l);if(o.length===0){_(a,"Kursseja ei viel\xE4 julkaistu t\xE4lle kielelle.");return}a.innerHTML=k(l,o),a.querySelectorAll(".op-row.is-locked").forEach(r=>{r.addEventListener("click",s=>s.preventDefault())}),a.querySelectorAll(".op-row.is-clickable").forEach(r=>{let s=r.dataset.kurssi;s&&d(r,()=>{u("courseDetail",()=>import("./app-courseDetail-UPYEV2CX.js")),h(l,s)})})}function L(e){return/^#\/oppimispolku(\?|$)/.test(e||"")?(y(),!0):!1}export{y as loadOppimispolkuIndex,L as tryRouteOppimispolkuIndex};
+//# sourceMappingURL=app-oppimispolkuIndex-6UHZATKZ.js.map

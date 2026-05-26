@@ -47,7 +47,7 @@ function renderLessonRow(l, lang, kurssiKey, courseStep) {
       <span class="op-row__num">${courseStep}.${num}</span>
       <div class="op-row__body">
         <p class="op-row__type">${escapeHtml(type)}</p>
-        <h3 class="op-row__title">${escapeHtml(title)}</h3>
+        <h2 class="op-row__title">${escapeHtml(title)}</h2>
       </div>
       <div class="op-row__meta">
         <span class="op-row__minutes">~${minutes} min</span>

@@ -1911,11 +1911,36 @@ body.app .btn-manage-sub {
   background: transparent;
   border: 0;
   cursor: pointer;
-  padding: 0;
+  padding: 10px 0;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
   text-decoration: underline;
   text-underline-offset: 2px;
 }
 body.app .btn-manage-sub:hover { color: var(--ed-accent); }
+
+/* ── L-V321 a11y touch-targets ────────────────────────────────
+   WCAG 2.5.5 — interactive controls in the settings screen must
+   be at least 44 × 44 px. These selectors were unstyled before,
+   so visual layout stays identical except buttons grow vertically. */
+body.app .settings-row-edit {
+  min-height: 44px;
+  padding-block: 10px;
+  display: inline-flex;
+  align-items: center;
+}
+body.app .settings-theme-btn {
+  min-height: 44px;
+  min-width: 44px;
+  padding: 10px 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+body.app #settings-nickname-input {
+  min-height: 44px;
+}
 
 /* ═══════════════════════════════════════════════════════════════
    AUTH SCREEN — Old-Spain editorial reskin (PR auth-and-shell)

@@ -67,7 +67,7 @@ function renderRow(k, stepNumber, lang) {
       <a class="${cls}" href="${href}" data-kurssi="${escapeHtml(k.key)}" ${locked ? 'aria-disabled="true"' : ""} aria-label="Kurssi ${stepNumber}: ${escapeHtml(k.title)}, ${escapeHtml(status)}">
         <span class="op-row__num" aria-hidden="true">${stepNumber}</span>
         <div class="op-row__body">
-          <h3 class="op-row__title">${escapeHtml(k.title)}</h3>
+          <h2 class="op-row__title">${escapeHtml(k.title)}</h2>
           ${k.description ? `<p class="op-row__desc">${escapeHtml(k.description)}</p>` : ""}
         </div>
         <div class="op-row__meta">

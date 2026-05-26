@@ -3,7 +3,7 @@ import{b as m}from"./app-chunk-UF63D4UW.js";import"./app-chunk-ECRDZOTG.js";impo
       <span class="op-row__num">${o}.${t}</span>
       <div class="op-row__body">
         <p class="op-row__type">${r(i)}</p>
-        <h3 class="op-row__title">${r(l)}</h3>
+        <h2 class="op-row__title">${r(l)}</h2>
       </div>
       <div class="op-row__meta">
         <span class="op-row__minutes">~${f} min</span>
@@ -40,4 +40,4 @@ import{b as m}from"./app-chunk-UF63D4UW.js";import"./app-chunk-ECRDZOTG.js";impo
       <p>${r(s||"Kurssia ei l\xF6ytynyt.")}</p>
       <a class="btn-primary" href="#/oppimispolku?lang=${encodeURIComponent(a||"es")}">Palaa kurssilistaan</a>
     </div>`}async function y(e,s){d("screen-course-detail");let a=document.getElementById("cd-root");if(!a)return;if(a.innerHTML='<div class="op-loading" role="status" aria-label="Ladataan kurssia"><span class="sr-only">Ladataan kurssia\u2026</span></div>',!e||!s){c(a,"Kurssin tunnistetta ei annettu.",e);return}let{kurssi:o,lessons:t}=await m(e,s);if(!o){c(a,"Kurssia ei l\xF6ytynyt.",e);return}if(t.length===0){c(a,"Oppitunteja ei viel\xE4 julkaistu t\xE4lle kurssille.",e);return}a.innerHTML=v(e,o,t)}function g(e){let s=/^#\/oppimispolku\/([a-z]{2})\/([^/?#]+)/i.exec(e||"");if(!s)return!1;let a=s[1].toLowerCase(),o=decodeURIComponent(s[2]);return y(a,o),!0}export{y as loadCourseDetail,g as tryRouteCourseDetail};
-//# sourceMappingURL=app-courseDetail-7FVBWOS5.js.map
+//# sourceMappingURL=app-courseDetail-UPYEV2CX.js.map
