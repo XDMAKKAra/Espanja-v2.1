@@ -500,9 +500,9 @@ body.landing > * { position: relative; z-index: 1; }
   margin: var(--ed-sp-2) 0;
 }
 .landing .hero__lang-label {
-  font-family: var(--ed-mono);
+  font-family: var(--ed-sans);
   font-size: var(--ed-fs-micro);
-  letter-spacing: var(--ed-tracking-meta);
+  letter-spacing: 0.01em;
   color: var(--ed-ink-subtle);
 }
 .landing .hero__lang-pills {
@@ -520,6 +520,31 @@ body.landing > * { position: relative; z-index: 1; }
   padding: 4px 10px;
   border-radius: var(--ed-r-pill);
   letter-spacing: 0.01em;
+}
+
+/* V329 — secondary hero CTA reads as a text link, not a competing box. */
+.landing .hero__link-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--ed-accent);
+  font-family: var(--ed-sans);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  padding-bottom: 1px;
+  transition: color var(--ed-t-fast), border-color var(--ed-t-fast);
+}
+.landing .hero__link-secondary:hover,
+.landing .hero__link-secondary:focus-visible {
+  color: var(--ed-accent-hover);
+  border-bottom-color: currentColor;
+}
+.landing .hero__link-secondary:focus-visible {
+  outline: 2px solid var(--ed-accent);
+  outline-offset: 4px;
+  border-radius: 2px;
 }
 
 .landing .hero__ctas {

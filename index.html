@@ -135,7 +135,8 @@
           </h1>
 
           <p class="hero__sub">
-            Espanja, ranska tai saksa. Kirjoituksesi arvioidaan samalla mittarilla kuin oikeassa YO-kokeessa, ja jokainen virhe selitetään suomeksi.
+            Espanja, ranska tai saksa. Kirjoituksesi arvioidaan samalla mittarilla kuin oikeassa YO-kokeessa.<br>
+            Jokainen virhe selitetään suomeksi.
           </p>
 
           <div class="hero__lang-row" aria-label="Tarjotut kielet">
@@ -152,7 +153,7 @@
               Aloita ilmaiseksi
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
             </a>
-            <a class="btn btn--ghost btn--lg" href="#nayte">Katso miten kirjoitukset arvioidaan →</a>
+            <a class="hero__link-secondary" href="#nayte">Katso miten kirjoitukset arvioidaan →</a>
           </div>
 
           <p class="hero__trust">
@@ -162,17 +163,172 @@
             <span class="hero__trust-sep" aria-hidden="true">·</span>
             6 mallikoetta
           </p>
-
-          <a class="hero__teaser" href="#nayte" aria-label="Katso esimerkkinäyte arvioidusta kirjoituksesta">
-            <p class="hero__teaser-prose">
-              <span aria-hidden="true">&ldquo;</span>Espero que <span class="ge-mini">vienes</span> con tu hermano<span aria-hidden="true">&rdquo;</span>, subjunktiivivirhe, selitys suomeksi.
-            </p>
-            <span class="hero__teaser-score" aria-label="YTL-pisteet 24/33">
-              YTL
-              <b>24 / 33</b>
-            </span>
-          </a>
         </div>
+      </div>
+    </section>
+
+    <!-- ═══ PROOF, grader card as standalone artifact section. -->
+    <section id="nayte" class="proof" aria-labelledby="proof-title">
+      <p class="pagenum" aria-hidden="true">Luku <b>III.</b> · Arviointi</p>
+      <div class="proof__inner">
+        <div class="proof__head">
+          <p class="section-eyebrow">Näyte arvioinnista</p>
+          <h2 class="section-title" id="proof-title">
+            YTL:n <em>rubriikki</em>, ei yleinen mittari.
+          </h2>
+          <p class="proof__lede">
+            Arvio tulee tekoälymallilta, joka on treenattu YTL:n julkaisemiin
+            koejakoihin ja virallisen rubriikin pisteytysohjeisiin. Sama malli
+            arvioi jokaisen kirjoituksen, niin Freessä kuin Mestarissa.
+          </p>
+        </div>
+
+        <div class="proof__lang-switch" role="tablist" aria-label="Valitse näytekortin kieli">
+          <button class="proof__lang-btn" type="button" role="tab" id="proof-tab-es"
+                  data-lang="es" aria-selected="true" aria-controls="proof-panel-es" tabindex="0">Español</button>
+          <button class="proof__lang-btn" type="button" role="tab" id="proof-tab-fr"
+                  data-lang="fr" aria-selected="false" aria-controls="proof-panel-fr" tabindex="-1">Français</button>
+          <button class="proof__lang-btn" type="button" role="tab" id="proof-tab-de"
+                  data-lang="de" aria-selected="false" aria-controls="proof-panel-de" tabindex="-1">Deutsch</button>
+        </div>
+
+        <div class="proof__panels" data-active-lang="es">
+
+          <div class="grader-card" role="tabpanel" id="proof-panel-es" aria-labelledby="proof-tab-es" data-lang="es" aria-label="Espanjankielinen synttärikutsu, lyhyt tehtävä 24 / 33 pistettä.">
+            <div class="grader-card__head">
+              <p class="grader-card__title">Sähköposti ystävälle · lyhyt · espanja</p>
+              <span class="grader-card__badge">24 / 33 p</span>
+            </div>
+
+            <p class="grader-prose">Hola Marta,
+
+¡Te escribo para invitarte a mi cumpleaños el sábado que viene! La fiesta empieza a las siete en mi casa. Mi madre va a cocinar mucha comida y <span class="ge" data-cat="spelling" tabindex="0">tendrémos<span class="ge-tip"><strong>Oikein: tendremos</strong>Painollinen tavu on toiseksi viimeinen, joten 'tendremos' kirjoitetaan ilman aksenttia.</span></span> también música. <span class="ge" data-cat="grammar" tabindex="0">Espero que vienes<span class="ge-tip"><strong>Oikein: Espero que vengas</strong>Subjunktiivi pakollinen 'esperar que' jälkeen, kun toivot jonkun tekevän jotakin: 'venir' → 'vengas'.</span></span> con tu hermano. La semana pasada <span class="ge" data-cat="grammar" tabindex="0">estaba en Madrid<span class="ge-tip"><strong>Oikein: estuve en Madrid</strong>Loppuun saatettu, ajallisesti rajattu matka → preteriti ('estuve'), ei imperfekti.</span></span> con la clase y <span class="ge" data-cat="grammar" tabindex="0">era muy divertido<span class="ge-tip"><strong>Oikein: fue muy divertido</strong>Kokonaisarvio päättyneestä tapahtumasta → preteriti 'fue'. 'Era' kuvaisi kestävää tilaa.</span></span>. Dime antes del miércoles si puedes venir.
+
+¡Hasta pronto!
+Aino</p>
+
+            <div class="rubric">
+              <div class="rubric-row">
+                <span class="rubric-row__name">Viestinnällisyys</span>
+                <span class="rubric-row__score">8 / 9</span>
+                <span class="rubric-row__fb">Kutsu, paikka, aika ja vastauspyyntö täytetty selkeästi.</span>
+              </div>
+              <div class="rubric-row">
+                <span class="rubric-row__name">Kielen rakenteet</span>
+                <span class="rubric-row__score">4 / 9</span>
+                <span class="rubric-row__fb">Toistuvia preteriti / imperfekti -valintoja ja yksi subjunktiivivirhe.</span>
+              </div>
+              <div class="rubric-row">
+                <span class="rubric-row__name">Sanasto</span>
+                <span class="rubric-row__score">7 / 9</span>
+                <span class="rubric-row__fb">Sopiva epämuodollinen rekisteri, lukio-tason sanasto.</span>
+              </div>
+              <div class="rubric-row">
+                <span class="rubric-row__name">Kokonaisuus</span>
+                <span class="rubric-row__score">5 / 6</span>
+                <span class="rubric-row__fb">Tervehdys ja lopetus paikallaan; sidossanoja niukasti.</span>
+              </div>
+              <div class="rubric-total">
+                <span class="rubric-total__label">Lyhyt kirjoitustehtävä</span>
+                <span class="rubric-total__score">24 / 33</span>
+                <span class="rubric-total__note">Vastaa tyypillisesti C–M-tason kirjoittajan suoritusta. Aikamuotojen hallinta erottaisi M:stä.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="grader-card" role="tabpanel" id="proof-panel-fr" aria-labelledby="proof-tab-fr" data-lang="fr" hidden aria-label="Ranskankielinen mielipidekirjoitus, pitkä tehtävä 43 / 66 pistettä.">
+            <div class="grader-card__head">
+              <p class="grader-card__title">Mielipidekirjoitus · pitkä · ranska</p>
+              <span class="grader-card__badge">43 / 66 p</span>
+            </div>
+
+            <p class="grader-prose">Aujourd'hui, beaucoup de lycées en France et en Finlande interdisent les téléphones portables pendant les cours. Je trouve que cette règle est raisonnable mais difficile à appliquer.
+
+D'un côté, le téléphone distrait l'attention pendant le cours. Mes camarades regardent souvent leurs notifications et ils <span class="ge" data-cat="grammar" tabindex="0">oubliaient<span class="ge-tip"><strong>Oikein: oublient</strong>Kuvaa nykyhetken toistuvaa tilannetta → présent, ei imparfait. Imparfait kuvaisi mennyttä toistuvaa toimintaa.</span></span> de noter ce que le prof dit. De l'autre côté, le téléphone est utile pour chercher un mot dans un dictionnaire.
+
+À mon avis, il faut que les profs trouvent un équilibre: le téléphone peut rester dans le sac, mais on peut le sortir <span class="ge" data-cat="grammar" tabindex="0">quand il y a besoin<span class="ge-tip"><strong>Oikein: quand c'est nécessaire</strong>Ranskan idiomi: 'avoir besoin' vaatii subjektin ('j'ai besoin de…'), ei persoonatonta 'il y a besoin' -rakennetta. Luontevampi: 'quand c'est nécessaire' tai 'au besoin'.</span></span>. Si on avait des règles claires, on respecterait mieux la règle.</p>
+
+            <div class="rubric">
+              <div class="rubric-row">
+                <span class="rubric-row__name">Viestinnällisyys</span>
+                <span class="rubric-row__score">16 / 18</span>
+                <span class="rubric-row__fb">Selkeä mielipide, perustelut puolesta ja vastaan, tehtävänanto täytetty.</span>
+              </div>
+              <div class="rubric-row">
+                <span class="rubric-row__name">Kielen rakenteet</span>
+                <span class="rubric-row__score">11 / 18</span>
+                <span class="rubric-row__fb">Si-hypoteesi (imparfait + conditionnel) ja subjunktiivi 'il faut que' jälkeen oikein; yksi aikamuotovirhe.</span>
+              </div>
+              <div class="rubric-row">
+                <span class="rubric-row__name">Sanasto</span>
+                <span class="rubric-row__score">12 / 18</span>
+                <span class="rubric-row__fb">Selkeää lukio-tason sanastoa; yksi suomenkielinen idiomi-käännös.</span>
+              </div>
+              <div class="rubric-row">
+                <span class="rubric-row__name">Kokonaisuus</span>
+                <span class="rubric-row__score">4 / 6</span>
+                <span class="rubric-row__fb">Vahvat sidossanat (d'un côté / de l'autre / à mon avis), kappalejako selvä.</span>
+              </div>
+              <div class="rubric-total">
+                <span class="rubric-total__label">Pitkä kirjoitustehtävä</span>
+                <span class="rubric-total__score">43 / 66</span>
+                <span class="rubric-total__note">Vastaa tyypillisesti C–M-tason kirjoittajan suoritusta. Mielipiderakenne on M-tasoa; idiomi vetää C-puolelle.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="grader-card" role="tabpanel" id="proof-panel-de" aria-labelledby="proof-tab-de" data-lang="de" hidden aria-label="Saksankielinen blogikommentti, lyhyt tehtävä 25 / 33 pistettä.">
+            <div class="grader-card__head">
+              <p class="grader-card__title">Blogikommentti · lyhyt · saksa</p>
+              <span class="grader-card__badge">25 / 33 p</span>
+            </div>
+
+            <p class="grader-prose">Hallo Lena,
+
+dein Blogeintrag über das Auslandsjahr hat mich richtig inspiriert. Ich <span class="ge" data-cat="grammar" tabindex="0">bin<span class="ge-tip"><strong>Oikein: habe</strong>Perfektissä 'wohnen' ottaa 'haben'-apuverbin, ei 'sein'. 'sein' vain liike- tai tilanmuutosverbeillä (gehen, werden, sterben).</span></span> drei Monate in Berlin gewohnt und es war die beste Zeit meines Lebens. Am Anfang konnte ich nur wenig Deutsch, aber nach zwei Wochen <span class="ge" data-cat="grammar" tabindex="0">habe ich verstanden fast alles<span class="ge-tip"><strong>Oikein: habe ich fast alles verstanden</strong>Pääosalauseessa partisiippi viimeiseksi, kun apuverbi on käytössä. Sanajärjestys: subjekti — apuverbi — muut osat — partisiippi.</span></span> im Alltag.
+
+Mein Tipp: nimm einen Sprachkurs, bevor du fährst — im Ausland ist es viel einfacher, neue Freunde zu finden, wenn man schon ein bisschen sprechen kann.
+
+Liebe Grüße,
+Anna</p>
+
+            <div class="rubric">
+              <div class="rubric-row">
+                <span class="rubric-row__name">Viestinnällisyys</span>
+                <span class="rubric-row__score">8 / 9</span>
+                <span class="rubric-row__fb">Reagoi blogiin, jakaa oman kokemuksen ja antaa konkreettisen vinkin.</span>
+              </div>
+              <div class="rubric-row">
+                <span class="rubric-row__name">Kielen rakenteet</span>
+                <span class="rubric-row__score">5 / 9</span>
+                <span class="rubric-row__fb">Apuverbi-virhe Perfektissä ja sanajärjestysvirhe pääosalauseessa; Genitiv ('meines Lebens') oikein.</span>
+              </div>
+              <div class="rubric-row">
+                <span class="rubric-row__name">Sanasto</span>
+                <span class="rubric-row__score">7 / 9</span>
+                <span class="rubric-row__fb">Sopiva rekisteri, idiomaattinen ('die beste Zeit meines Lebens').</span>
+              </div>
+              <div class="rubric-row">
+                <span class="rubric-row__name">Kokonaisuus</span>
+                <span class="rubric-row__score">5 / 6</span>
+                <span class="rubric-row__fb">Tervehdys, lopetus ja perusteltu vinkki; sivulauseen sanajärjestys ('bevor du fährst') oikein.</span>
+              </div>
+              <div class="rubric-total">
+                <span class="rubric-total__label">Lyhyt kirjoitustehtävä</span>
+                <span class="rubric-total__score">25 / 33</span>
+                <span class="rubric-total__note">Vastaa tyypillisesti C–M-tason kirjoittajan suoritusta. Genitiv on M-tasoa; Perfekt-apuverbi vetää C-puolelle.</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <p class="proof__caveat">
+          Pisteet ovat YTL:n julkaisemien pisteytysohjeiden mukaisia: lyhyt
+          tehtävä 0–33 p, pitkä 0–66 p. Lopullinen arvosana määräytyy koko
+          kokeen yhteispisteistä (kuullun + luetun + kirjoitus), ei yhdestä
+          kirjoituksesta.
+        </p>
       </div>
     </section>
 
@@ -349,171 +505,6 @@
           <p class="catalog-card__body" data-i18n="body-8" data-es="Mallikokeet aikarajalla, YTL-rubriikilla pisteytetyt simulaatiot, subjunktiivi imperfekti (si tuviera)." data-fr="Mallikokeet aikarajalla. Si-hypoteesilauseet (présent/imparfait/plus-que-parfait + conditionnel), kertaus." data-de="Mallikokeet aikarajalla. Konjunktiv II syvemmin, indirekte Rede, kaikkien rakenteiden kertaus.">Mallikokeet aikarajalla, YTL-rubriikilla pisteytetyt simulaatiot, subjunktiivi imperfekti (si tuviera).</p>
         </li>
       </ul>
-    </section>
-
-    <!-- ═══ PROOF, grader card as standalone artifact section. -->
-    <section id="nayte" class="proof" aria-labelledby="proof-title">
-      <p class="pagenum" aria-hidden="true">Luku <b>III.</b> · Arviointi</p>
-      <div class="proof__inner">
-        <div class="proof__head">
-          <p class="section-eyebrow">Näyte arvioinnista</p>
-          <h2 class="section-title" id="proof-title">
-            YTL:n <em>rubriikki</em>, ei yleinen mittari.
-          </h2>
-          <p class="proof__lede">
-            Arvio tulee tekoälymallilta, joka on treenattu YTL:n julkaisemiin
-            koejakoihin ja virallisen rubriikin pisteytysohjeisiin. Sama malli
-            arvioi jokaisen kirjoituksen, niin Freessä kuin Mestarissa.
-          </p>
-        </div>
-
-        <div class="proof__lang-switch" role="tablist" aria-label="Valitse näytekortin kieli">
-          <button class="proof__lang-btn" type="button" role="tab" id="proof-tab-es"
-                  data-lang="es" aria-selected="true" aria-controls="proof-panel-es" tabindex="0">Español</button>
-          <button class="proof__lang-btn" type="button" role="tab" id="proof-tab-fr"
-                  data-lang="fr" aria-selected="false" aria-controls="proof-panel-fr" tabindex="-1">Français</button>
-          <button class="proof__lang-btn" type="button" role="tab" id="proof-tab-de"
-                  data-lang="de" aria-selected="false" aria-controls="proof-panel-de" tabindex="-1">Deutsch</button>
-        </div>
-
-        <div class="proof__panels" data-active-lang="es">
-
-          <div class="grader-card" role="tabpanel" id="proof-panel-es" aria-labelledby="proof-tab-es" data-lang="es" aria-label="Espanjankielinen synttärikutsu, lyhyt tehtävä 24 / 33 pistettä.">
-            <div class="grader-card__head">
-              <p class="grader-card__title">Sähköposti ystävälle · lyhyt · espanja</p>
-              <span class="grader-card__badge">24 / 33 p</span>
-            </div>
-
-            <p class="grader-prose">Hola Marta,
-
-¡Te escribo para invitarte a mi cumpleaños el sábado que viene! La fiesta empieza a las siete en mi casa. Mi madre va a cocinar mucha comida y <span class="ge" data-cat="spelling" tabindex="0">tendrémos<span class="ge-tip"><strong>Oikein: tendremos</strong>Painollinen tavu on toiseksi viimeinen, joten 'tendremos' kirjoitetaan ilman aksenttia.</span></span> también música. <span class="ge" data-cat="grammar" tabindex="0">Espero que vienes<span class="ge-tip"><strong>Oikein: Espero que vengas</strong>Subjunktiivi pakollinen 'esperar que' jälkeen, kun toivot jonkun tekevän jotakin: 'venir' → 'vengas'.</span></span> con tu hermano. La semana pasada <span class="ge" data-cat="grammar" tabindex="0">estaba en Madrid<span class="ge-tip"><strong>Oikein: estuve en Madrid</strong>Loppuun saatettu, ajallisesti rajattu matka → preteriti ('estuve'), ei imperfekti.</span></span> con la clase y <span class="ge" data-cat="grammar" tabindex="0">era muy divertido<span class="ge-tip"><strong>Oikein: fue muy divertido</strong>Kokonaisarvio päättyneestä tapahtumasta → preteriti 'fue'. 'Era' kuvaisi kestävää tilaa.</span></span>. Dime antes del miércoles si puedes venir.
-
-¡Hasta pronto!
-Aino</p>
-
-            <div class="rubric">
-              <div class="rubric-row">
-                <span class="rubric-row__name">Viestinnällisyys</span>
-                <span class="rubric-row__score">8 / 9</span>
-                <span class="rubric-row__fb">Kutsu, paikka, aika ja vastauspyyntö täytetty selkeästi.</span>
-              </div>
-              <div class="rubric-row">
-                <span class="rubric-row__name">Kielen rakenteet</span>
-                <span class="rubric-row__score">4 / 9</span>
-                <span class="rubric-row__fb">Toistuvia preteriti / imperfekti -valintoja ja yksi subjunktiivivirhe.</span>
-              </div>
-              <div class="rubric-row">
-                <span class="rubric-row__name">Sanasto</span>
-                <span class="rubric-row__score">7 / 9</span>
-                <span class="rubric-row__fb">Sopiva epämuodollinen rekisteri, lukio-tason sanasto.</span>
-              </div>
-              <div class="rubric-row">
-                <span class="rubric-row__name">Kokonaisuus</span>
-                <span class="rubric-row__score">5 / 6</span>
-                <span class="rubric-row__fb">Tervehdys ja lopetus paikallaan; sidossanoja niukasti.</span>
-              </div>
-              <div class="rubric-total">
-                <span class="rubric-total__label">Lyhyt kirjoitustehtävä</span>
-                <span class="rubric-total__score">24 / 33</span>
-                <span class="rubric-total__note">Vastaa tyypillisesti C–M-tason kirjoittajan suoritusta. Aikamuotojen hallinta erottaisi M:stä.</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="grader-card" role="tabpanel" id="proof-panel-fr" aria-labelledby="proof-tab-fr" data-lang="fr" hidden aria-label="Ranskankielinen mielipidekirjoitus, pitkä tehtävä 43 / 66 pistettä.">
-            <div class="grader-card__head">
-              <p class="grader-card__title">Mielipidekirjoitus · pitkä · ranska</p>
-              <span class="grader-card__badge">43 / 66 p</span>
-            </div>
-
-            <p class="grader-prose">Aujourd'hui, beaucoup de lycées en France et en Finlande interdisent les téléphones portables pendant les cours. Je trouve que cette règle est raisonnable mais difficile à appliquer.
-
-D'un côté, le téléphone distrait l'attention pendant le cours. Mes camarades regardent souvent leurs notifications et ils <span class="ge" data-cat="grammar" tabindex="0">oubliaient<span class="ge-tip"><strong>Oikein: oublient</strong>Kuvaa nykyhetken toistuvaa tilannetta → présent, ei imparfait. Imparfait kuvaisi mennyttä toistuvaa toimintaa.</span></span> de noter ce que le prof dit. De l'autre côté, le téléphone est utile pour chercher un mot dans un dictionnaire.
-
-À mon avis, il faut que les profs trouvent un équilibre: le téléphone peut rester dans le sac, mais on peut le sortir <span class="ge" data-cat="grammar" tabindex="0">quand il y a besoin<span class="ge-tip"><strong>Oikein: quand c'est nécessaire</strong>Ranskan idiomi: 'avoir besoin' vaatii subjektin ('j'ai besoin de…'), ei persoonatonta 'il y a besoin' -rakennetta. Luontevampi: 'quand c'est nécessaire' tai 'au besoin'.</span></span>. Si on avait des règles claires, on respecterait mieux la règle.</p>
-
-            <div class="rubric">
-              <div class="rubric-row">
-                <span class="rubric-row__name">Viestinnällisyys</span>
-                <span class="rubric-row__score">16 / 18</span>
-                <span class="rubric-row__fb">Selkeä mielipide, perustelut puolesta ja vastaan, tehtävänanto täytetty.</span>
-              </div>
-              <div class="rubric-row">
-                <span class="rubric-row__name">Kielen rakenteet</span>
-                <span class="rubric-row__score">11 / 18</span>
-                <span class="rubric-row__fb">Si-hypoteesi (imparfait + conditionnel) ja subjunktiivi 'il faut que' jälkeen oikein; yksi aikamuotovirhe.</span>
-              </div>
-              <div class="rubric-row">
-                <span class="rubric-row__name">Sanasto</span>
-                <span class="rubric-row__score">12 / 18</span>
-                <span class="rubric-row__fb">Selkeää lukio-tason sanastoa; yksi suomenkielinen idiomi-käännös.</span>
-              </div>
-              <div class="rubric-row">
-                <span class="rubric-row__name">Kokonaisuus</span>
-                <span class="rubric-row__score">4 / 6</span>
-                <span class="rubric-row__fb">Vahvat sidossanat (d'un côté / de l'autre / à mon avis), kappalejako selvä.</span>
-              </div>
-              <div class="rubric-total">
-                <span class="rubric-total__label">Pitkä kirjoitustehtävä</span>
-                <span class="rubric-total__score">43 / 66</span>
-                <span class="rubric-total__note">Vastaa tyypillisesti C–M-tason kirjoittajan suoritusta. Mielipiderakenne on M-tasoa; idiomi vetää C-puolelle.</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="grader-card" role="tabpanel" id="proof-panel-de" aria-labelledby="proof-tab-de" data-lang="de" hidden aria-label="Saksankielinen blogikommentti, lyhyt tehtävä 25 / 33 pistettä.">
-            <div class="grader-card__head">
-              <p class="grader-card__title">Blogikommentti · lyhyt · saksa</p>
-              <span class="grader-card__badge">25 / 33 p</span>
-            </div>
-
-            <p class="grader-prose">Hallo Lena,
-
-dein Blogeintrag über das Auslandsjahr hat mich richtig inspiriert. Ich <span class="ge" data-cat="grammar" tabindex="0">bin<span class="ge-tip"><strong>Oikein: habe</strong>Perfektissä 'wohnen' ottaa 'haben'-apuverbin, ei 'sein'. 'sein' vain liike- tai tilanmuutosverbeillä (gehen, werden, sterben).</span></span> drei Monate in Berlin gewohnt und es war die beste Zeit meines Lebens. Am Anfang konnte ich nur wenig Deutsch, aber nach zwei Wochen <span class="ge" data-cat="grammar" tabindex="0">habe ich verstanden fast alles<span class="ge-tip"><strong>Oikein: habe ich fast alles verstanden</strong>Pääosalauseessa partisiippi viimeiseksi, kun apuverbi on käytössä. Sanajärjestys: subjekti — apuverbi — muut osat — partisiippi.</span></span> im Alltag.
-
-Mein Tipp: nimm einen Sprachkurs, bevor du fährst — im Ausland ist es viel einfacher, neue Freunde zu finden, wenn man schon ein bisschen sprechen kann.
-
-Liebe Grüße,
-Anna</p>
-
-            <div class="rubric">
-              <div class="rubric-row">
-                <span class="rubric-row__name">Viestinnällisyys</span>
-                <span class="rubric-row__score">8 / 9</span>
-                <span class="rubric-row__fb">Reagoi blogiin, jakaa oman kokemuksen ja antaa konkreettisen vinkin.</span>
-              </div>
-              <div class="rubric-row">
-                <span class="rubric-row__name">Kielen rakenteet</span>
-                <span class="rubric-row__score">5 / 9</span>
-                <span class="rubric-row__fb">Apuverbi-virhe Perfektissä ja sanajärjestysvirhe pääosalauseessa; Genitiv ('meines Lebens') oikein.</span>
-              </div>
-              <div class="rubric-row">
-                <span class="rubric-row__name">Sanasto</span>
-                <span class="rubric-row__score">7 / 9</span>
-                <span class="rubric-row__fb">Sopiva rekisteri, idiomaattinen ('die beste Zeit meines Lebens').</span>
-              </div>
-              <div class="rubric-row">
-                <span class="rubric-row__name">Kokonaisuus</span>
-                <span class="rubric-row__score">5 / 6</span>
-                <span class="rubric-row__fb">Tervehdys, lopetus ja perusteltu vinkki; sivulauseen sanajärjestys ('bevor du fährst') oikein.</span>
-              </div>
-              <div class="rubric-total">
-                <span class="rubric-total__label">Lyhyt kirjoitustehtävä</span>
-                <span class="rubric-total__score">25 / 33</span>
-                <span class="rubric-total__note">Vastaa tyypillisesti C–M-tason kirjoittajan suoritusta. Genitiv on M-tasoa; Perfekt-apuverbi vetää C-puolelle.</span>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-        <p class="proof__caveat">
-          Pisteet ovat YTL:n julkaisemien pisteytysohjeiden mukaisia: lyhyt
-          tehtävä 0–33 p, pitkä 0–66 p. Lopullinen arvosana määräytyy koko
-          kokeen yhteispisteistä (kuullun + luetun + kirjoitus), ei yhdestä
-          kirjoituksesta.
-        </p>
-      </div>
     </section>
 
     <!-- ═══ MITÄ SAAT, three numbered editorial blocks. -->

@@ -178,7 +178,10 @@
 @media (max-width: 720px) {
   .landing .nav__inner { padding: 0 var(--sp-2); }
   .landing .nav__links { display: none; }
-  .landing .nav__cta .btn--quiet { display: none; }
+  /* V329 — Hide the brick "Aloita ilmaiseksi" CTA on mobile so it does not
+     compete with the hero primary. Keep ghost "Kirjaudu" for logged-out users
+     and keep the logged-in chip (toggled by landing-nav.js). */
+  .landing .nav__cta #nav-signup { display: none; }
 }
 
 /* ─── Hero ───────────────────────────────────────────────────── */
