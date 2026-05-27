@@ -192,7 +192,7 @@ Tämä lista on kerätty toistuvista turhautumisista. Jokainen on automaattinen 
   - Verification-before-completion -skilli on pakollinen — todenna OMILLA TOOLEILLA, älä siirrä työtä käyttäjälle
 - Cachen syyttäminen kun käyttäjä raportoi saman bugin toisen kerran → debug oikeasti
 - 3. kerran samasta bugista → restrukturoi rakenne, älä band-aid (three-strikes)
-- Auto-push Verceliin pienistä muutoksista — vain isot näkyvät muutokset
+- Push Verceliin ilman että muutos näkyy käyttäjälle — sääntö on "näkyy käyttäjälle = push, ei näy = jää lokaaliin". Claude-internal (CLAUDE.md, memory, briefit, tests, dev-skriptit) ei pushata.
 - Stripe-toimet ilman eksplisiittistä lupaa
 - "Skills invoked: X" -valehtelu (yllä)
 - Pitkien briefien aikana hiljaisuus → ilmoita ETA jos kestää
@@ -244,7 +244,7 @@ User-asetuksissa on jo perussäännöt (no em-dash, no glazing, stress-test firs
 - **Frontti-muutokset → muista `npm run build` ennen committia.** Vercel ei rakenna paikallisesti, missing build = rikkinäinen deploy.
 - **`sw.js` CACHE_VERSION ⇆ STATIC_ASSETS:** Jos muutat STATIC_ASSETS-listaa, BUMP CACHE_VERSION. Service worker ei muuten päivity.
 - **Supabase-migraatiot:** käytä `mcp__claude_ai_Supabase__apply_migration`. Älä kopioi SQL:ää käyttäjälle SQL-editoriin.
-- **Auto-push Verceliin:** vain isot näkyvät muutokset käyttäjän vahvistuksella. Pikku-fix:eistä → vain commit, ei pushia. Jätä push käyttäjälle.
+- **Push Verceliin = vain käyttäjälle näkyvät muutokset.** Sääntö: jos käyttäjä näkee muutoksen selaimessa tai appissa, push. Jos ei näe, älä pushaa (commit on OK, jää lokaaliin). Push-OK:t: koodi joka muuttaa UI:ta/copyä/dataa/API-vastausta, asset-tiedostot, CSS, JS, sw.js, manifest. EI-push: CLAUDE.md, MEMORY/*, docs/briefs/*, .claude/*, Playwright-spec:it (tests/*), dev-skriptit (scripts/*), graphify-out/*, kommentit-only-muutokset. Jos commit sisältää sekä user-facing että Claude-internal -muutoksia, push on OK (näkyvä osa veturoi). Älä kysele lupaa joka pushiin — sääntö päättää.
 - **IMPROVEMENTS.md päivitys:** kun teet ison muutoksen (uusi feature, iso bug-fix, arkkitehti-muutos), lisää yksi rivi loppuun: `<päivämäärä> — <yksi virke>`.
 
 ---
