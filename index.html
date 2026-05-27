@@ -412,16 +412,46 @@ Anna</p>
             paikallisesti.
           </p>
         </div>
-        <div class="catalog__lang-switch" role="tablist" aria-label="Valitse kieli">
-          <button class="catalog__lang-btn" type="button" role="tab"
-                  data-lang="es" aria-pressed="true" aria-controls="catalog-grid">Español</button>
-          <button class="catalog__lang-btn" type="button" role="tab"
-                  data-lang="fr" aria-pressed="false" aria-controls="catalog-grid">Français</button>
-          <button class="catalog__lang-btn" type="button" role="tab"
-                  data-lang="de" aria-pressed="false" aria-controls="catalog-grid">Deutsch</button>
-        </div>
-        <p class="catalog__hint" aria-hidden="true">Pyyhkäise sivuttain selataksesi kursseja →</p>
       </div>
+
+      <!-- V330 — Catalog default-collapsed accordion (variant B council pick
+           2026-05-27). Stat-summary näkyy ensin; kortit + kieli-vaihtaja
+           paljastuvat klikkauksesta. -->
+      <details class="catalog__accordion" id="catalog-accordion">
+        <summary class="catalog__accordion-summary">
+          <span class="catalog__accordion-stats" aria-hidden="true">
+            <span class="catalog__accordion-stat">
+              <b>8 kurssia</b>
+              <span>aiheittain</span>
+            </span>
+            <span class="catalog__accordion-divider"></span>
+            <span class="catalog__accordion-stat">
+              <b>3 kieltä</b>
+              <span>es · fr · de</span>
+            </span>
+            <span class="catalog__accordion-divider"></span>
+            <span class="catalog__accordion-stat">
+              <b>A → E</b>
+              <span>YTL-progressio</span>
+            </span>
+          </span>
+          <span class="catalog__accordion-cta">
+            <span class="catalog__accordion-cta-label" data-closed>Näytä kaikki kurssit</span>
+            <span class="catalog__accordion-cta-label" data-open>Piilota kurssit</span>
+            <svg class="catalog__accordion-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+          </span>
+        </summary>
+
+        <div class="catalog__accordion-body">
+          <div class="catalog__lang-switch" role="tablist" aria-label="Valitse kieli">
+            <button class="catalog__lang-btn" type="button" role="tab"
+                    data-lang="es" aria-pressed="true" aria-controls="catalog-grid">Español</button>
+            <button class="catalog__lang-btn" type="button" role="tab"
+                    data-lang="fr" aria-pressed="false" aria-controls="catalog-grid">Français</button>
+            <button class="catalog__lang-btn" type="button" role="tab"
+                    data-lang="de" aria-pressed="false" aria-controls="catalog-grid">Deutsch</button>
+          </div>
+          <p class="catalog__hint" aria-hidden="true">Pyyhkäise sivuttain selataksesi kursseja →</p>
 
       <ul class="catalog__grid" id="catalog-grid" data-active-lang="es">
         <li class="catalog-card" data-icon="1">
@@ -505,6 +535,8 @@ Anna</p>
           <p class="catalog-card__body" data-i18n="body-8" data-es="Mallikokeet aikarajalla, YTL-rubriikilla pisteytetyt simulaatiot, subjunktiivi imperfekti (si tuviera)." data-fr="Mallikokeet aikarajalla. Si-hypoteesilauseet (présent/imparfait/plus-que-parfait + conditionnel), kertaus." data-de="Mallikokeet aikarajalla. Konjunktiv II syvemmin, indirekte Rede, kaikkien rakenteiden kertaus.">Mallikokeet aikarajalla, YTL-rubriikilla pisteytetyt simulaatiot, subjunktiivi imperfekti (si tuviera).</p>
         </li>
       </ul>
+        </div>
+      </details>
     </section>
 
     <!-- ═══ MITÄ SAAT, three numbered editorial blocks. -->

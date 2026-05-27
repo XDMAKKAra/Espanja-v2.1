@@ -800,6 +800,115 @@ body.landing > * { position: relative; z-index: 1; }
   margin: 0;
 }
 
+/* V330 — Catalog default-collapsed accordion (variant B council pick).
+   Summary näyttää 3-stat-rivin + "Näytä kaikki kurssit ↓". Klikkaus
+   paljastaa olemassaolevan lang-switch + kortit. Native <details> +
+   <summary> hoitaa state:n ilman JS:ää. */
+.landing .catalog__accordion {
+  max-width: var(--ed-content-max);
+  margin: 0 auto;
+  background: var(--ed-bg-card);
+  border: 1px solid var(--ed-rule);
+  border-radius: var(--ed-r-lg);
+  overflow: hidden;
+}
+.landing .catalog__accordion[open] {
+  background: transparent;
+  border-color: transparent;
+}
+.landing .catalog__accordion-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ed-sp-5) var(--ed-sp-7);
+  align-items: center;
+  justify-content: space-between;
+  padding: clamp(20px, 3vw, 36px) clamp(20px, 4vw, 40px);
+  cursor: pointer;
+  list-style: none;
+  transition: background var(--ed-t-fast);
+}
+.landing .catalog__accordion-summary::-webkit-details-marker { display: none; }
+.landing .catalog__accordion-summary::marker { display: none; content: ""; }
+.landing .catalog__accordion-summary:hover {
+  background: color-mix(in oklch, var(--ed-accent) 4%, transparent);
+}
+.landing .catalog__accordion[open] .catalog__accordion-summary {
+  border-bottom: 1px solid var(--ed-rule);
+  margin-bottom: var(--ed-sp-5);
+  background: var(--ed-bg-card);
+  border-radius: var(--ed-r-lg) var(--ed-r-lg) 0 0;
+  border: 1px solid var(--ed-rule);
+}
+.landing .catalog__accordion-summary:focus-visible {
+  outline: 2px solid var(--ed-accent);
+  outline-offset: 3px;
+  border-radius: var(--ed-r-lg);
+}
+.landing .catalog__accordion-stats {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: clamp(16px, 2.4vw, 32px);
+}
+.landing .catalog__accordion-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.landing .catalog__accordion-stat b {
+  font-family: var(--ed-display);
+  font-variation-settings: "opsz" 36, "SOFT" 40;
+  font-weight: 500;
+  font-size: clamp(1.5rem, 1vw + 1.1rem, 1.875rem);
+  color: var(--ed-ink);
+  letter-spacing: -0.015em;
+  line-height: 1.05;
+}
+.landing .catalog__accordion-stat span {
+  font-family: var(--ed-sans);
+  font-size: var(--ed-fs-micro);
+  letter-spacing: 0.04em;
+  color: var(--ed-ink-subtle);
+}
+.landing .catalog__accordion-divider {
+  width: 1px;
+  height: 28px;
+  background: var(--ed-rule-strong);
+}
+.landing .catalog__accordion-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--ed-accent);
+  font-family: var(--ed-sans);
+  font-weight: 600;
+  font-size: 0.9375rem;
+}
+.landing .catalog__accordion-cta-label { white-space: nowrap; }
+.landing .catalog__accordion-cta-label[data-open] { display: none; }
+.landing .catalog__accordion[open] .catalog__accordion-cta-label[data-closed] { display: none; }
+.landing .catalog__accordion[open] .catalog__accordion-cta-label[data-open] { display: inline; }
+.landing .catalog__accordion-chevron {
+  transition: transform var(--ed-t-mid);
+}
+.landing .catalog__accordion[open] .catalog__accordion-chevron {
+  transform: rotate(180deg);
+}
+.landing .catalog__accordion-body {
+  padding: 0 clamp(20px, 4vw, 40px) var(--ed-sp-5);
+}
+
+@media (max-width: 768px) {
+  .landing .catalog__accordion-summary {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--ed-sp-4);
+  }
+  .landing .catalog__accordion-divider { display: none; }
+  .landing .catalog__accordion-stats { gap: clamp(14px, 4vw, 24px); }
+  .landing .catalog__accordion-body { padding: 0 16px var(--ed-sp-4); }
+}
+
 /* ═══════════════════════════════════════════════════════════ */
 /*  GRADER CARD — hero artifact, moved to its own section.      */
 /* ═══════════════════════════════════════════════════════════ */
