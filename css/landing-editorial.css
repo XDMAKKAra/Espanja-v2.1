@@ -766,16 +766,6 @@ body.landing > * { position: relative; z-index: 1; }
   transform: translateY(-2px);
   box-shadow: var(--ed-shadow-md);
 }
-.landing .catalog-card__num {
-  font-family: var(--ed-display);
-  font-variation-settings: "opsz" 72, "SOFT" 60;
-  font-size: 1.5rem;
-  font-weight: 500;
-  color: var(--ed-gold);
-  line-height: 1;
-  margin: 0;
-  letter-spacing: -0.01em;
-}
 .landing .catalog-card__title {
   font-family: var(--ed-display);
   font-variation-settings: "opsz" 36, "SOFT" 40;
@@ -1733,30 +1723,11 @@ body.landing > * { position: relative; z-index: 1; }
   opacity: 0.7;
 }
 
-/* Section "stamp" page-number — appears top-left of a section as if
-   the section were a textbook page. Anchored absolutely, decorative. */
+/* Sections still need position: relative for marginalia + badge anchors. */
 .landing .landing-section,
 .landing .catalog,
 .landing .proof {
   position: relative;
-}
-.landing .pagenum {
-  position: absolute;
-  top: clamp(16px, 2.4vw, 28px);
-  left: clamp(16px, 4vw, 48px);
-  font-family: var(--ed-mono);
-  font-size: var(--ed-fs-micro);
-  letter-spacing: var(--ed-tracking-meta);
-  color: var(--ed-ink-faint);
-  pointer-events: none;
-}
-.landing .pagenum b {
-  font-family: var(--ed-display);
-  font-variation-settings: "opsz" 36, "SOFT" 60;
-  font-weight: 500;
-  font-size: 1.125rem;
-  color: var(--ed-accent);
-  letter-spacing: -0.01em;
 }
 
 /* Notebook-paper subtle horizontal rule pattern on the grade-flow
