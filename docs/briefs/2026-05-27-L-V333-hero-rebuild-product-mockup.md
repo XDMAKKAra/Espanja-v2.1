@@ -106,6 +106,8 @@ Vaihtoehdot:
 
 Suositus: **(b).** Säilytä Humaaans brand-systeemi mutta siirrä se sekundääriseksi. Student-reading.svg sopii Grade-flow:n yläosaan jossa puhutaan kirjoittamisesta + oppimisesta — kontekstuaalinen, ei dekoraatio.
 
+**Marcel päätös 2026-05-27:** vahvistettu (b). Humaaans-figuuri siirtyy Grade-flow-sektioon, hero saa puhtaan product-mockup-fokuksen. Ei (a) tausta-ornamentti, ei (c) poistoa.
+
 **Verify Phase 2:** 
 - Screenshot vertailu: nykyinen hero vs uusi hero 1920px:ssä. Uuden pitäisi näyttää ammattimaiselta, tuotteen näyttävältä, ei "joku piirsi Humaaans-figuurin".
 - Mobile-versio toimii edelleen (kuvitukset/mockupit kaikki piilossa, copy ottaa fold:n).
