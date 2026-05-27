@@ -169,3 +169,64 @@ L-V326 ratkaisi "kuvitus dominoi foldia". Tämä loop ratkaisee "otsikko ei kerr
 Ei muokkaa rakennetta, lisää uusia elementtejä, eikä koske desktop-CSS:ään. Pelkkä copy + olemassaolevan rakenteen säätö.
 
 Realistinen scope: 45-90 min kun headline-variantit on kirjoitettu ja Marcelin valinta tehty.
+
+---
+
+## Step 1 output — headline-variantit (2026-05-27)
+
+Constraint-tarkistus per variantti tehty: ei em-dashia, ei AI-brand-sanaa, ei rule-of-three-pakkomielle, ei sycophantic, ei keksittyjä %-väittämiä. Italic-accent merkitty `*kursiivilla*`.
+
+### V1 — Kielet eksplisiittisesti
+> Espanjan, ranskan ja saksan YO-koe on *kirjoituskoe*.
+
+- Signaloi kohderyhmän heti: kaikki kolme lyhyttä kieltä, ei pelkkä lang-row-pill-rivi alempana
+- Säilyttää alkuperäisen italic-accentin (`kirjoituskoe`) joka on copy:n ydin
+- Antaa sub-rivin keskittyä YTL-rubriikkiin ja sisältö-mittariin
+- Riski: kolme kieltä = looks like rule-of-three, mutta kyseessä on factual list ei retoorinen triplet
+
+### V2 — Lukio-eksplisiittinen
+> Lukion lyhyt kieli, *kirjoituskoe* lopussa.
+
+- Vanhempi näkee "lukion" → tietää tuotteen audienssin
+- "Kirjoituskoe lopussa" = paljastaa että YO-koe = kirjoituskoe (sama intent kuin V1 mutta lyhempi)
+- Ei nimeä kieliä, mutta lang-row pillit foldissa täydentävät
+- Riski: "lopussa" jättää vihjeen että emme käsittele suullista — joka on totta (lyhyt oppimäärä = vain kirjoitettu) mutta turhaa eksplisiittisesti mainita
+
+### V3 — Action-imperatiivi
+> *Kirjoita* läpi lyhyen kielen YO-koe.
+
+- Verbi ekana, lupaus-action, copy "ostaa" jotain konkreettista
+- Italic-accent verbissä, ei substantiivissa (variation V1:stä)
+- Riski: "läpi" voi tuntua yli-lupaavalta (emme takaa läpi-pääsyä), mutta same risk on jokaisessa prep-mainoksessa
+
+### V4 — YTL-rigour-emphasis
+> Lyhyen kielen YO-koe, *YTL:n rubriikilla* pisteytettynä.
+
+- Tuo rigour-signaalin otsikkoon: sama mittari kuin oikeassa YO-arvioinnissa
+- Lukiolainen ja vanhempi näkevät että emme ole geneerinen kielikurssi
+- Riski: "rubriikki" + "pisteytettynä" on pidempi, vähemmän iskevä kuin V1
+- Riski: vanhempi joka ei tiedä mikä YTL on saattaa skipata
+
+### V5 — Tiivis kombo (kielet + audienssi)
+> Espanja, ranska, saksa. Lukion *lyhyen kielen* YO-treeni.
+
+- Kaksi virkettä: kielet ekana (kuten alkuperäisessä sub:ssa), sitten audience+product
+- "YO-treeni" on rentompi sana kuin "valmennus" (humanizer-positive)
+- Italic-accent koko frasalla `lyhyen kielen` joka erottuu visuaalisesti
+- Riski: kaksiosainen lause vähemmän iskevä kuin yksilauseinen
+- Riski: "treeni" voi tuntua liian rento (gym/sports-kaiku)
+
+---
+
+### Päätös 2026-05-27 (loopin lopuksi)
+
+**Council 1** (5 advisoria + 5 peer-reviewerit) hylkäsi kaikki viisi alkuvaihtoehtoa (V1-V5): kaikki kuvaavat koetta, eivät tarjousta; V3:n "Kirjoita läpi" on rikkinäistä suomea (overpromise); lang-row tekee kielilistauksen otsikossa redundantiksi; V5:n "Espanja, ranska, saksa" on banned rule-of-three. Chairman synthesoi kolme uutta kandidaattia (C1/C2/C3) konsensus-sääntöjen pohjalta.
+
+**Council 2** äänesti C2:n voittajaksi 3-2 (Contrarian + First Principles + Executor: clean wrap, complete claim, forward-able elevator pitch. Expansionist + Outsider: C3 stops parent-scroll, but risk = alienates already-paid parents). Marcel hyväksyi.
+
+**Lopulliset stringit (shipped):**
+- Headline: `Treenaa lyhyen kielen *YO-kirjoituskoetta* YTL:n rubriikilla.`
+- Sub: `90 oppituntia espanjaa, ranskaa tai saksaa. Kuusi mallikoetta, jokainen virhe selitetty suomeksi.`
+- Trust: `Lukion lyhyt oppimäärä · 8 kurssia · YTL:n rubriikilla pisteytetty`
+
+**Humanizer-tarkistus PASS:** ei em-dashia, ei AI-brand-sanaa, kielilista subissa on faktinen ei retoorinen triple, lukio-konteksti + kvantitatiivinen kuvio (8 kurssia) trust:ssa.
