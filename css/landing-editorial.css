@@ -415,6 +415,14 @@ body.landing > * { position: relative; z-index: 1; }
   .landing .hero__copy { order: 2; }
 }
 
+/* L-V326 — mobile hero: kuvitus piiloon <720px, copy ekana näkyväksi.
+   Council-päätös 2026-05-27 (B-vaihtoehto): Humaaans-kuvitus on
+   desktop-affordance, mobile-foldissa otsikko + CTA painavat enemmän. */
+@media (max-width: 720px) {
+  .landing .hero__visual { display: none; }
+  .landing .hero__copy { order: 1; }
+}
+
 /* Hero eyebrow / countdown pill */
 .landing .hero__eyebrow {
   display: inline-flex;
