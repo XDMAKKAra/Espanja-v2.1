@@ -533,7 +533,12 @@ export async function showSettings() {
   wireAccountSection();
   const rowsEl = $("settings-profile-rows");
   rowsEl.setAttribute("aria-busy", "true");
-  rowsEl.innerHTML = `<p class="settings-loading">Ladataan profiilia…</p>`;
+  // L-V324 — keep the static skeleton (8 row-shaped placeholders in app.html)
+  // until renderRows() lands. Earlier code replaced it with a single-line
+  // "Ladataan profiilia…" text which collapsed the container to ~30px and
+  // pushed every section below up, then back down when 8 real rows landed
+  // → mobile CLS 0.213. The skeleton already announces "Ladataan profiilia…"
+  // via .sr-only for screen-readers.
 
   try {
     const res = await apiFetch(`${API}/api/profile`, { headers: authHeader() });

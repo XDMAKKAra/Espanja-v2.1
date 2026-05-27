@@ -5086,6 +5086,12 @@ margin-bottom: 8px;
   border-bottom: 1px solid var(--border);
 }
 .settings-row:last-child { border-bottom: none; }
+/* L-V324 — skeleton row reserves the same outer height as a real
+   `.settings-row` so the container doesn't shift when /api/profile
+   resolves. Minimum height matches typical mobile row (label 11px +
+   value 16px + 14px×2 padding ≈ 55px); real rows that wrap longer
+   values grow past this without re-flowing siblings above. */
+.settings-row--skel { min-height: 56px; }
 .settings-row-main { flex: 1; min-width: 0; }
 .settings-row-label {
   /* L-V307 — was font-mono (DM Mono) + 0.08em tracking, which read as

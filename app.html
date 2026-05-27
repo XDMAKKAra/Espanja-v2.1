@@ -2524,10 +2524,19 @@
 
       <section class="settings-section">
         <h2 class="settings-section-title">Opiskeluprofiili</h2>
+        <!-- L-V324 — skeleton matches final 8-row layout (FIELDS.length in
+             js/screens/settings.js) using real `.settings-row` shells so the
+             container reserves the same outer height before /api/profile
+             resolves. Drops the mobile CLS from 0.213 → ≤0.1. -->
         <div class="settings-rows" id="settings-profile-rows" aria-busy="true">
-          <div class="skel skel--text" style="height:18px; max-width:65%; margin:14px 0;"></div>
-          <div class="skel skel--text" style="height:18px; max-width:55%; margin:14px 0;"></div>
-          <div class="skel skel--text" style="height:18px; max-width:60%; margin:14px 0;"></div>
+          <div class="settings-row settings-row--skel"><div class="settings-row-main"><div class="skel skel--text" style="height:11px;max-width:30%;margin-bottom:6px;"></div><div class="skel skel--text" style="height:16px;max-width:62%;"></div></div></div>
+          <div class="settings-row settings-row--skel"><div class="settings-row-main"><div class="skel skel--text" style="height:11px;max-width:34%;margin-bottom:6px;"></div><div class="skel skel--text" style="height:16px;max-width:18%;"></div></div></div>
+          <div class="settings-row settings-row--skel"><div class="settings-row-main"><div class="skel skel--text" style="height:11px;max-width:26%;margin-bottom:6px;"></div><div class="skel skel--text" style="height:16px;max-width:14%;"></div></div></div>
+          <div class="settings-row settings-row--skel"><div class="settings-row-main"><div class="skel skel--text" style="height:11px;max-width:32%;margin-bottom:6px;"></div><div class="skel skel--text" style="height:16px;max-width:58%;"></div></div></div>
+          <div class="settings-row settings-row--skel"><div class="settings-row-main"><div class="skel skel--text" style="height:11px;max-width:28%;margin-bottom:6px;"></div><div class="skel skel--text" style="height:16px;max-width:70%;"></div></div></div>
+          <div class="settings-row settings-row--skel"><div class="settings-row-main"><div class="skel skel--text" style="height:11px;max-width:30%;margin-bottom:6px;"></div><div class="skel skel--text" style="height:16px;max-width:48%;"></div></div></div>
+          <div class="settings-row settings-row--skel"><div class="settings-row-main"><div class="skel skel--text" style="height:11px;max-width:28%;margin-bottom:6px;"></div><div class="skel skel--text" style="height:16px;max-width:24%;"></div></div></div>
+          <div class="settings-row settings-row--skel"><div class="settings-row-main"><div class="skel skel--text" style="height:11px;max-width:36%;margin-bottom:6px;"></div><div class="skel skel--text" style="height:16px;max-width:78%;"></div></div></div>
           <span class="sr-only">Ladataan profiilia…</span>
         </div>
       </section>
@@ -2536,7 +2545,7 @@
       <section class="settings-section" id="settings-language-section">
         <h2 class="settings-section-title">Opiskelukieli</h2>
         <div class="settings-rows" id="settings-language-rows">
-          <div class="skel skel--text" style="height:18px; max-width:50%; margin:14px 0;"></div>
+          <div class="settings-row settings-row--skel"><div class="settings-row-main"><div class="skel skel--text" style="height:11px;max-width:28%;margin-bottom:6px;"></div><div class="skel skel--text" style="height:16px;max-width:24%;"></div></div></div>
         </div>
       </section>
 
@@ -2561,6 +2570,11 @@
       <section class="settings-section" id="settings-subscription-section">
         <h2 class="settings-section-title">Tilaus</h2>
         <div class="settings-rows settings-sub-section" id="settings-subscription-rows" aria-busy="true">
+          <!-- L-V324 — placeholder height matches a tier-badge row (~120px on
+               mobile: 22px badge + 8px gap + 38px button row + 28px padding).
+               Reserves space so the "Tili" section below doesn't shift when
+               wireSubscriptionSection() lands. -->
+          <div class="settings-row settings-row--skel" style="min-height:96px;align-items:flex-start;"><div class="settings-row-main" style="display:flex;flex-direction:column;gap:10px;"><div class="skel skel--text" style="height:22px;width:96px;border-radius:999px;"></div><div class="skel skel--text" style="height:34px;max-width:220px;border-radius:999px;"></div></div></div>
           <span class="sr-only">Ladataan tilauksen tietoja…</span>
         </div>
       </section>
