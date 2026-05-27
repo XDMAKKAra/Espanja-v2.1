@@ -80,14 +80,14 @@ Raskaat luokat (FRONTEND, EXERCISE, TESTING) on jaettu S/M/L-tasoihin. **Triage 
 | Luokka | Taso | Mitä se on | Skill-stack (kutsu KAIKKI tason) |
 |---|---|---|---|
 | **FRONTEND** | S | yksi CSS-arvo, yhden napin teksti, color-fix, padding/margin-säätö, typo | `frontend-design` |
-| | M | koko komponentti (modaali, kortti, nav-item), state-flow, animaatio, a11y-fix | `frontend-design`, `design-taste-frontend`, `ui-ux-pro-max` |
-| | L | koko screen-redesign, landing, app-shell, uusi mobile-responsive layout | `frontend-design`, `design-taste-frontend`, `ui-ux-pro-max`, `impeccable`, `emil-design-eng` |
+| | M | koko komponentti (modaali, kortti, nav-item), state-flow, animaatio, a11y-fix | `frontend-design`, `ui-ux-pro-max` |
+| | L | koko screen-redesign, landing, app-shell, uusi mobile-responsive layout | `frontend-design`, `ui-ux-pro-max` |
 | **EXERCISE** | S | yhden tehtävän teksti/optio-fix, typo, käännös | `humanizer` (jos suomi-tekstiä) |
 | | M | uusi yksittäinen tehtävä (vocab/grammar/reading) tai pisteytys-fix | `practice-problem-sequence-designer`, `retrieval-practice-generator` |
-| | L | kokonainen oppituntiset, tasotesti, adaptiivinen sekvenssi, hinttiketju, rubric | `practice-problem-sequence-designer`, `variation-theory-task-designer`, `retrieval-practice-generator`, `scaffolded-task-modifier`, `worked-example-fading-designer`, `cognitive-load-analyser`, `criterion-referenced-rubric-generator`, `adaptive-hint-sequence-designer` |
+| | L | kokonainen oppituntiset, tasotesti, adaptiivinen sekvenssi, hinttiketju, rubric | **Core (lataa aina):** `practice-problem-sequence-designer`, `retrieval-practice-generator`, `variation-theory-task-designer`, `cognitive-load-analyser`. **Conditional (lataa jos task vaatii):** `scaffolded-task-modifier` (jos EAL/tasoeroitus), `worked-example-fading-designer` (jos proseduraalinen kielioppi), `criterion-referenced-rubric-generator` (jos rubric-output), `adaptive-hint-sequence-designer` (jos hint-cascade). Älä lataa kaikkia kahdeksaa, valitse mitä task tarvitsee. |
 | **TESTING** | S | yksi olemassaolevan spec:n korjaus, selector-fix | `webapp-testing` |
-| | M | uusi spec yhdelle käyttäjäpolulle, bug-scan | `webapp-testing`, `superpowers:test-driven-development`, `superpowers:verification-before-completion` |
-| | L | regression-suite, screenshot-vertailu-flow, koko audit | `webapp-testing`, `superpowers:test-driven-development`, `superpowers:verification-before-completion`, `superpowers:systematic-debugging` |
+| | M | uusi spec yhdelle käyttäjäpolulle, bug-scan | `webapp-testing` |
+| | L | regression-suite, screenshot-vertailu-flow, koko audit | `webapp-testing` |
 | **PLANNING / BRIEF** | — | planner-istunto, brief-kirjoitus, scope-keskustelu, queue-päivitys | `superpowers:brainstorming`, `superpowers:writing-plans` |
 | **SUPABASE / BACKEND** | — | migraatio, RLS, taulu-muutos, edge function, API-reitti, palvelinpuolen logiikka | `supabase`, `supabase-postgres-best-practices` |
 | **COPY / SUOMI-TEKSTI** | — | mikä tahansa käyttäjälle näkyvä suomi-teksti: blog, microcopy, hero, virheviesti, email, oppitunnin selitys, landing-myyntiteksti | `humanizer` |
