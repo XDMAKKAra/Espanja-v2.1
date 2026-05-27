@@ -371,7 +371,9 @@ body.landing > * { position: relative; z-index: 1; }
 /*  HERO — 70/30 asymmetric, illustration left, copy right     */
 /* ═══════════════════════════════════════════════════════════ */
 .landing .hero {
-  padding: clamp(48px, 8vw, 120px) clamp(16px, 4vw, 48px) clamp(48px, 7vw, 100px);
+  /* L-V333: ylälaita 120px → 140px desktopille, alalaita 120px, antaa
+     mockupille hengen. */
+  padding: clamp(48px, 8vw, 140px) clamp(16px, 4vw, 56px) clamp(56px, 7vw, 120px);
   position: relative;
   overflow: hidden;
 }
@@ -380,39 +382,59 @@ body.landing > * { position: relative; z-index: 1; }
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr;
-  gap: clamp(32px, 5vw, 64px);
+  gap: clamp(32px, 5vw, 72px);
   align-items: center;
 }
 @media (min-width: 980px) {
   .landing .hero__inner {
-    /* 70/30 asymmetric, illustration wider on left */
-    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    /* 980-1439px: 2-col left mockup + right copy, copy wider than V332. */
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     gap: clamp(40px, 5vw, 80px);
+  }
+}
+@media (min-width: 1440px) {
+  .landing .hero__inner {
+    /* L-V333: 3-col on >=1440px. Left mockup | centre copy | right mockup.
+       Centre column ≈420-540px (readable measure) so copy never sprawls.
+       Outer columns inherit fluid width for product mockups. */
+    grid-template-columns: minmax(0, 1fr) minmax(420px, 540px) minmax(0, 1fr);
+    gap: clamp(48px, 4vw, 88px);
   }
 }
 
 .landing .hero__visual {
   position: relative;
-  order: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* Explicit grid-column placement at 1440px+ so copy stays centred between
+   the two mockups (order: 1 on a shared selector would otherwise stack
+   both visuals before copy). */
+.landing .hero__visual--left { order: 1; }
+.landing .hero__copy         { order: 2; }
+.landing .hero__visual--right{ order: 3; display: none; }
+
+@media (min-width: 1440px) {
+  .landing .hero__visual--right {
+    display: flex;
+  }
 }
 .landing .hero__illustration {
   display: block;
   width: 100%;
-  max-width: 540px;
+  /* L-V333: was 540px, now scales up to 620px on wider columns so the
+     hero visual doesn't float as a stamp in empty space. */
+  max-width: 620px;
   height: auto;
   margin: 0 auto;
   filter: drop-shadow(0 18px 30px oklch(20% 0.05 30 / 0.10));
 }
 
 .landing .hero__copy {
-  order: 2;
   display: flex;
   flex-direction: column;
   gap: var(--ed-sp-5);
-}
-@media (min-width: 980px) {
-  .landing .hero__visual { order: 1; }
-  .landing .hero__copy { order: 2; }
 }
 
 /* L-V326 — mobile hero: kuvitus piiloon <720px, copy ekana näkyväksi.
@@ -420,7 +442,6 @@ body.landing > * { position: relative; z-index: 1; }
    desktop-affordance, mobile-foldissa otsikko + CTA painavat enemmän. */
 @media (max-width: 720px) {
   .landing .hero__visual { display: none; }
-  .landing .hero__copy { order: 1; }
 }
 
 /* Hero eyebrow / countdown pill */
@@ -565,9 +586,11 @@ body.landing > * { position: relative; z-index: 1; }
   color: var(--ed-ink-faint);
 }
 
-/* Decorative gold rule under hero illustration on wide screens */
+/* Decorative gold rule under hero illustration on wide screens.
+   Only on the legacy single-visual hero (illustration), not the new
+   phone-mockup hero variant — the phone has its own shadow. */
 @media (min-width: 980px) {
-  .landing .hero__visual::after {
+  .landing .hero__visual:has(.hero__illustration)::after {
     content: "";
     position: absolute;
     bottom: -24px;
@@ -578,6 +601,98 @@ body.landing > * { position: relative; z-index: 1; }
     opacity: 0.5;
   }
 }
+
+/* ═══════════════════════════════════════════════════════════ */
+/*  PHONE MOCKUP — L-V333.                                      */
+/*  CSS-rendered modern phone frame: bezel + notch + screen.    */
+/*  No Apple trademarks; geometry mirrors a generic flagship.   */
+/*  Used in hero to carry product screenshots (lesson-writing,  */
+/*  lesson-grade) at competitor-parity prominence.              */
+/* ═══════════════════════════════════════════════════════════ */
+.landing .hero-phone {
+  position: relative;
+  width: 100%;
+  max-width: 320px;
+  aspect-ratio: 9 / 19.5;
+  margin: 0 auto;
+  border-radius: 44px;
+  /* Tinted near-black bezel — never pure #000. */
+  background: oklch(16% 0.012 30);
+  padding: 10px;
+  box-shadow:
+    0 1px 0 oklch(100% 0 0 / 0.06) inset,
+    0 0 0 1px oklch(20% 0.012 30 / 0.85),
+    0 30px 60px -20px oklch(20% 0.05 30 / 0.32),
+    0 14px 32px -16px oklch(20% 0.05 30 / 0.20);
+  transform: translateZ(0);
+}
+.landing .hero-phone__screen {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 34px;
+  overflow: hidden;
+  background: var(--ed-bg-card);
+  display: flex;
+}
+.landing .hero-phone__screen img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+/* Notch (centred pill) — generic flagship, not iPhone Dynamic Island. */
+.landing .hero-phone::before {
+  content: "";
+  position: absolute;
+  top: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 86px;
+  height: 22px;
+  border-radius: 999px;
+  background: oklch(10% 0.008 30);
+  z-index: 3;
+}
+/* Side-button hint, single tick — pure ornament. */
+.landing .hero-phone::after {
+  content: "";
+  position: absolute;
+  right: -2px;
+  top: 28%;
+  width: 3px;
+  height: 64px;
+  border-radius: 0 2px 2px 0;
+  background: oklch(20% 0.012 30);
+  z-index: 1;
+}
+
+/* Asymmetric tilt for the two mockups so they don't read as twins. */
+.landing .hero-phone--left  { transform: rotate(-2.5deg); }
+.landing .hero-phone--right { transform: rotate(2.5deg); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .landing .hero-phone {
+    transition: transform var(--ed-t-slow);
+  }
+  .landing .hero-phone--left:hover  { transform: rotate(-1deg); }
+  .landing .hero-phone--right:hover { transform: rotate(1deg); }
+}
+
+/* On narrower laptop (980-1439px) we only show the left phone — make it
+   a touch larger so it carries the visual column on its own. */
+@media (min-width: 980px) and (max-width: 1439px) {
+  .landing .hero-phone--left { max-width: 340px; }
+}
+@media (min-width: 1440px) {
+  .landing .hero-phone--left,
+  .landing .hero-phone--right { max-width: 300px; }
+}
+
+/* Mobile: hero__visual is already display:none below 720px, so phones
+   never render on phones — by design (V326 mobile-fold decision). */
+
 
 /* ═══════════════════════════════════════════════════════════ */
 /*  STAT ROW — verifiable numbers only                          */
@@ -698,7 +813,10 @@ body.landing > * { position: relative; z-index: 1; }
   max-width: var(--ed-content-max);
   margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  /* L-V333: bumped minmax 240→280 so 1440-1920px viewports show 4 cards
+     per row instead of 5–6, keeping each card readable. <1024px auto-fills
+     to 2-3 cards as before. */
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: var(--ed-sp-4);
   list-style: none;
   padding: 0;
@@ -2117,7 +2235,48 @@ body.landing > * { position: relative; z-index: 1; }
 .landing .grade-flow__head {
   max-width: var(--ed-content-max);
   margin: 0 auto var(--ed-sp-7);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--ed-sp-6);
+  align-items: center;
   text-align: center;
+}
+@media (min-width: 980px) {
+  .landing .grade-flow__head {
+    /* L-V333: Humaaans-figuuri siirtyi tänne hero:sta. Layout 2-col
+       desktopilla: teksti vasen, kuvitus oikea. */
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    text-align: left;
+    gap: var(--ed-sp-8);
+  }
+}
+.landing .grade-flow__head-text {
+  max-width: 56ch;
+  margin: 0 auto;
+}
+@media (min-width: 980px) {
+  .landing .grade-flow__head-text { margin: 0; }
+}
+.landing .grade-flow__aside {
+  display: block;
+  width: 100%;
+  max-width: 260px;
+  height: auto;
+  margin: 0 auto;
+  filter: drop-shadow(0 14px 24px oklch(20% 0.05 30 / 0.10));
+}
+@media (max-width: 720px) {
+  .landing .grade-flow__aside {
+    /* Mobile: pienennä mutta säilytä brand-DNA. */
+    max-width: 180px;
+  }
+}
+@media (min-width: 980px) {
+  .landing .grade-flow__aside {
+    max-width: 320px;
+    margin: 0;
+    justify-self: end;
+  }
 }
 .landing .grade-flow__title {
   font-family: var(--ed-display);
@@ -2126,7 +2285,7 @@ body.landing > * { position: relative; z-index: 1; }
   font-size: var(--ed-fs-h2);
   line-height: var(--ed-lh-h2);
   letter-spacing: -0.012em;
-  margin: 0 auto var(--ed-sp-3);
+  margin: 0 0 var(--ed-sp-3);
   max-width: 24ch;
   color: var(--ed-ink);
 }
@@ -2137,7 +2296,7 @@ body.landing > * { position: relative; z-index: 1; }
   font-size: var(--ed-fs-body);
   line-height: 1.55;
   color: var(--ed-ink-muted);
-  margin: 0 auto;
+  margin: 0;
   max-width: 52ch;
 }
 .landing .grade-flow__steps {

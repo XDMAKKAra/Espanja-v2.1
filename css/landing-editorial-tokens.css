@@ -125,9 +125,13 @@
   --ed-t-mid:  240ms cubic-bezier(0.23, 1, 0.32, 1);
   --ed-t-slow: 480ms cubic-bezier(0.23, 1, 0.32, 1);
 
-  /* ─── Layout widths. */
-  --ed-content-max: 1180px;
-  --ed-content-narrow: 880px;
+  /* ─── Layout widths.
+       L-V333: bumped 1180→1440 to stop landing feeling like a mobile screen
+       centred on a 1920px monitor. Competitor B2C language-learning sites
+       (WordDive, Studeo, 10monkeys) fill ~100% on desktop with product
+       mockups; cf. docs/briefs (V333). Narrow scope tightened in proportion. */
+  --ed-content-max: 1440px;
+  --ed-content-narrow: 1040px;
   --ed-prose-max:   62ch;
 
   /* ─── Shadows — diffuse, tinted to terracotta-warm. */

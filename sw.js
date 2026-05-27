@@ -1,4 +1,4 @@
-const CACHE_VERSION = "puheo-v329";
+const CACHE_VERSION = "puheo-v333";
 const STATIC_ASSETS = [
   "/app.html",
   "/index.html",
@@ -35,6 +35,9 @@ const STATIC_ASSETS = [
   "/img/illustrations/student-walking.svg",
   "/img/illustrations/quill-inkwell.svg",
   "/img/illustrations/ornament-rosette.svg",
+  // L-V333 hero product mockups (replace student-reading.svg as hero centrepiece).
+  "/img/product/lesson-writing.png",
+  "/img/product/lesson-grade.png",
   "/js/features/offCanvasNav.js",
   "/js/features/geTip.js",
   "/css/components/off-canvas-nav.css",

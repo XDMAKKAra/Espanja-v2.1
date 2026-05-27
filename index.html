@@ -116,17 +116,25 @@
   </header>
 
   <main>
-    <!-- ═══ HERO, Ship 1.5 (70/30 asymmetric, illustration left, copy right).
-         Headline covers all three short-language tracks (es/fr/de).
-         Italic-emphasis on a single noun: "kirjoituskoe". -->
+    <!-- ═══ HERO, L-V333 product-mockup rebuild.
+         Competitor B2C language-learning landings (WordDive, Studeo,
+         10monkeys) carry product mockups in the hero, not illustrations.
+         Layout:
+           <720px  : copy only (mobile-first, V326 decision)
+           980-1439: left phone mockup + right copy
+           >=1440  : 3-col, left + centre copy + right phone mockup
+         Mockups source: scripts/capture-product-screenshots.mjs. -->
     <section class="hero" id="hero" aria-labelledby="hero-title">
       <div class="hero__inner">
 
-        <div class="hero__visual">
-          <img class="hero__illustration"
-               src="/img/illustrations/student-reading.svg"
-               alt="Kuvitus lukiolaisesta lukemassa Mediterranean-iltavalossa"
-               width="520" height="620" />
+        <div class="hero__visual hero__visual--left">
+          <div class="hero-phone hero-phone--left" aria-hidden="true">
+            <div class="hero-phone__screen">
+              <img src="/img/product/lesson-writing.png"
+                   alt="Puheo-sovellus: kirjoitustehtävä espanjaksi, oppilas täyttää tekstikenttää"
+                   width="300" height="650" loading="eager" decoding="async" />
+            </div>
+          </div>
         </div>
 
         <div class="hero__copy">
@@ -163,6 +171,16 @@
             <span class="hero__trust-sep" aria-hidden="true">·</span>
             6 mallikoetta
           </p>
+        </div>
+
+        <div class="hero__visual hero__visual--right">
+          <div class="hero-phone hero-phone--right" aria-hidden="true">
+            <div class="hero-phone__screen">
+              <img src="/img/product/lesson-grade.png"
+                   alt="Puheo-sovellus: YTL-rubriikilla annettu arvio kirjoitustehtävästä"
+                   width="300" height="650" loading="eager" decoding="async" />
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -337,13 +355,23 @@ Anna</p>
          into a small sub-row underneath. -->
     <section class="grade-flow" aria-labelledby="grade-flow-title">
       <div class="grade-flow__head">
-        <h2 class="grade-flow__title" id="grade-flow-title">
-          Yksi <em>kirjoitustehtävä</em>, kolme vaihetta.
-        </h2>
-        <p class="grade-flow__lede">
-          Kirjoittaminen on YO-kokeen erottelevin osa. Näin Puheo käsittelee sen,
-          alusta kertaukseen.
-        </p>
+        <div class="grade-flow__head-text">
+          <h2 class="grade-flow__title" id="grade-flow-title">
+            Yksi <em>kirjoitustehtävä</em>, kolme vaihetta.
+          </h2>
+          <p class="grade-flow__lede">
+            Kirjoittaminen on YO-kokeen erottelevin osa. Näin Puheo käsittelee sen,
+            alusta kertaukseen.
+          </p>
+        </div>
+        <!-- L-V333: Humaaans-illustraatio siirtyi tänne hero:sta. Hero kantaa
+             nyt product-mockupit (kuten WordDive/Studeo/10monkeys), brand-DNA
+             säilyy tämän kuvituksen kautta opin/lukemisen kontekstissa. -->
+        <img class="grade-flow__aside"
+             src="/img/illustrations/student-reading.svg"
+             alt=""
+             aria-hidden="true"
+             width="280" height="340" loading="lazy" decoding="async" />
       </div>
 
       <ol class="grade-flow__steps" aria-label="Kirjoitustehtävän vaiheet">
