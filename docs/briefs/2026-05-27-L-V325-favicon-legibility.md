@@ -146,3 +146,11 @@ Total: 3-4 skilliä.
 L-V317:ssä ja L-V318:ssa shipattiin oikea brand-systeemi (wordmark + sigili) mutta sigilin glyfi-koko 56 px viewBox:ssa ei kestä 16 px favicon-pakkaamista. Yhden SVG-attribuutin (`font-size` tai outline-path-vaihto) + 5 PNG-regenin korjaus. Ei brand-redesign, ei wordmark-koskettelu.
 
 Realistinen scope: 30-45 min kun varianttivertailu on tehty.
+
+---
+
+### Päätös 2026-05-27
+
+**Variantti A valittu.** Sama embedded-Inter + `<text>`-mekanismi kuin nykyinen master, vain font-size 42 → 52 + letter-spacing -2.0. Pienin riski (ei pipeline-vaihtoa), paras 16 px legibility. C hylättiin koska polariteetti-flip menettää brick-neliön brand-identiteetin sigilinä; B hylättiin koska fontTools-counter-bugien historia (L-V318e) ja A saavutti saman luettavuuden ilman uutta pipelinea.
+
+Master ja PNG:t shipattu, SW v320 → v321, e2e+bug-scan PASS. Ledger-rivi IMPROVEMENTS.md:ssä.
