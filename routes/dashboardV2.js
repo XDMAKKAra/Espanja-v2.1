@@ -364,8 +364,9 @@ async function loadAdaptiveStatus(userId, mode = "vocab", language = "spanish") 
 router.get("/dashboard/v2", requireAuth, async (req, res) => {
   const userId = req.user.userId;
   const adaptiveMode = req.query.adaptiveMode || "vocab";
-  // Normalize so a stray short code ("es") still matches stored "spanish" rows.
-  const language = normalizeLang(req.query.language);
+  // Accept the app's `?lang=` convention (es/fr/de) as well as `?language=`;
+  // normalizeLang maps both short codes and full words to the stored full word.
+  const language = normalizeLang(req.query.lang ?? req.query.language);
 
   // L-RENDER-PERF-1: per-user response cache (30s TTL) — login triggers two
   // sequential dashboard/v2 fetches (loadHome then post-login loadDashboard);

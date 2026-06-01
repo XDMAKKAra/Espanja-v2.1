@@ -22,7 +22,8 @@
  * (tests/e2e-aloitus-anti-slop.spec.js) enforces this contract.
  */
 
-import { API, apiFetch, isLoggedIn, authHeader, fetchDashboardV2 } from "../api.js";
+import { API, apiFetch, isLoggedIn, authHeader, fetchDashboardV2, clearDashboardV2 } from "../api.js";
+import { setLanguage } from "../state.js";
 import { show } from "../ui/nav.js";
 import { isProTier } from "../lib/tier.js";
 import { prefetchChunk, onHoverIntent } from "../lib/prefetch.js";
@@ -264,6 +265,13 @@ function wireTabs(root) {
       const lang = tab.dataset.lang;
       if (!lang) return;
       writeActiveLang(lang);
+      // Sync the API-facing language too (state.language drives injectLangParam),
+      // so the dashboard + progress writes follow the selected tab. (L-V339)
+      setLanguage(lang);
+      // Bust the per-language caches so the switch shows this language's data,
+      // not the previous language's (both caches are language-agnostic).
+      clearDashboardV2();
+      _ohjaamoData = null;
       loadHome();
     });
   });

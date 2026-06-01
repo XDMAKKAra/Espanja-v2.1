@@ -15,9 +15,9 @@ const ADAPTIVE_MODES = new Set(["vocab", "grammar", "reading"]);
 router.post("/progress", requireAuth, async (req, res) => {
   const { mode, level, scoreCorrect, scoreTotal, ytlGrade } = req.body;
   // Stamp every session with its language so the dashboard can scope per
-  // language. Client sends the active language; default "spanish" keeps
-  // existing single-language behaviour for callers that omit it.
-  const language = normalizeLang(req.body.language);
+  // language. Client sends the active language (?lang= via injectLangParam, or
+  // in the body); default "spanish" keeps single-language behaviour otherwise.
+  const language = normalizeLang(req.body.lang ?? req.body.language ?? req.query.lang);
 
   if (!mode || !VALID_MODES.has(mode)) {
     return res.status(400).json({ error: "Virheellinen harjoittelutapa" });
@@ -119,7 +119,7 @@ router.post("/progress", requireAuth, async (req, res) => {
 
 router.get("/dashboard", requireAuth, async (req, res) => {
   const userId = req.user.userId;
-  const language = normalizeLang(req.query.language);
+  const language = normalizeLang(req.query.lang ?? req.query.language);
 
   const { data: logs, error } = await supabase
     .from("exercise_logs")
@@ -227,7 +227,7 @@ router.post("/mistake", requireAuth, async (req, res) => {
     topics, exerciseType, level, question,
     wrongAnswer, correctAnswer, explanation,
   } = req.body;
-  const language = normalizeLang(req.body.language);
+  const language = normalizeLang(req.body.lang ?? req.body.language ?? req.query.lang);
 
   // Normalize/validate topics (infer from content if not provided)
   let validTopics = normalizeTopics(topics);

@@ -2,30 +2,35 @@
 
 export const API = window.location.origin;
 
-// L-LANG-INFRA-1: AI routes that must receive ?lang= so the backend can select
-// the right language model/prompt. Matched as prefix against the request URL.
-const AI_ROUTE_PREFIXES = [
-  "/api/exercises",
-  "/api/writing",
-  "/api/exam",
-  "/api/reading",
+// Routes that must receive ?lang= so the backend serves/scopes the right
+// language. Matched as prefix against the request path.
+//   - L-LANG-INFRA-1: AI routes (model/prompt selection).
+//   - L-V339: progress/dashboard data routes (per-language scoping + write
+//     stamping). Without lang here, fr/de progress defaults to spanish on the
+//     server and bleeds into the Spanish dashboard.
+const LANG_ROUTE_PREFIXES = [
+  // AI generation
+  "/api/exercises", "/api/writing", "/api/exam", "/api/reading",
+  // progress reads + writes (language-scoped)
+  "/api/dashboard", "/api/progress", "/api/mistake", "/api/mistakes-by-topic",
+  "/api/weak-topics", "/api/sr", "/api/adaptive", "/api/placement",
+  "/api/learning-path", "/api/onboarding", "/api/digikirja", "/api/curriculum",
+  "/api/personalization",
 ];
 
-// Inject ?lang=<state.language> onto AI routes. Lazy-imports state to avoid a
-// circular dep at module parse time (api.js → state.js is fine; state.js has
-// no imports, but the import() guard keeps things clean across bundlers).
+// Inject ?lang=<state.language> onto language-scoped routes. Uses a function
+// set by setLangFn() so api.js doesn't import state.js (avoids a circular dep).
 function injectLangParam(url) {
   try {
-    // Import state synchronously — state.js is a plain ES module with no async
-    // code, so by the time any fetch fires it will already be evaluated.
-    // We access it via a module-level cache set by setStateFn() below.
     if (!_stateFn) return url;
     const lang = _stateFn();
     if (!lang || lang === "es") return url; // es is backend default — no-op
     const u = new URL(url, window.location.origin);
-    const isAiRoute = AI_ROUTE_PREFIXES.some((p) => u.pathname.startsWith(p));
-    if (!isAiRoute) return url;
-    u.searchParams.set("lang", lang);
+    const isLangRoute = LANG_ROUTE_PREFIXES.some((p) => u.pathname.startsWith(p));
+    if (!isLangRoute) return url;
+    // Respect an explicit ?lang= a caller already set (e.g. curriculum prefetch
+    // of a specific language); only fill it in when absent.
+    if (!u.searchParams.has("lang")) u.searchParams.set("lang", lang);
     return u.toString();
   } catch {
     return url;

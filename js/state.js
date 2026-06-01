@@ -73,6 +73,11 @@ export function resetState(overrides = {}) {
 export function setLanguage(lang) {
   const allowed = ["es", "de", "fr"];
   state.language = allowed.includes(lang) ? lang : "es";
+  // Keep the home-screen tab store ("puheo:lang") in sync so there is a single
+  // effective active language: injectLangParam (state.language) and the home
+  // tabs (puheo:lang) never diverge. Otherwise a tab switch would change the
+  // visible language but not what the API calls send. (L-V339)
+  try { localStorage.setItem("puheo:lang", state.language); } catch { /* private mode */ }
 }
 
 // Convert the 2-letter session code ("es"/"de"/"fr") into the full
