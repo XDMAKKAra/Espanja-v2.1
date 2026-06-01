@@ -297,6 +297,58 @@
   .landing .hero__sub { max-width: none; }
 }
 
+/* ─── Feature row (L-V344) — 3 features, each its own illustration ─── */
+.landing .features {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: 24px var(--sp-3) 72px;
+}
+.landing .features__title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(26px, 3.5vw, 36px);
+  line-height: 1.1;
+  color: var(--text);
+  text-align: center;
+  margin: 0 0 40px;
+}
+.landing .features__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--sp-5);
+}
+.landing .feature { text-align: left; }
+.landing .feature__art {
+  border-radius: 24px;
+  padding: 22px;
+  margin-bottom: 18px;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 8 / 7;
+}
+.landing .feature__art img { width: 100%; height: auto; }
+.landing .feature__art--green  { background: var(--green-pale); }
+.landing .feature__art--brick  { background: var(--brick-pale); }
+.landing .feature__art--yellow { background: var(--yellow-pale); }
+.landing .feature__title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 21px;
+  color: var(--text);
+  margin: 0 0 8px;
+}
+.landing .feature__body {
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--text-muted);
+  margin: 0;
+  max-width: 34ch;
+}
+@media (max-width: 860px) {
+  .landing .features { padding: 8px var(--sp-2) 56px; }
+  .landing .features__grid { grid-template-columns: 1fr; gap: var(--sp-6); max-width: 420px; margin: 0 auto; }
+}
+
 /* ─── Browser-frame component (≈40 lines) ───────────────────── */
 .landing .browser-frame {
   position: relative;
