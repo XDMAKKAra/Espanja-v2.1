@@ -1,6 +1,20 @@
 let app;
 
 try {
+  // Sentry (backend, production only). Init before express so its
+  // instrumentation can hook. Mirrors server.js: capture only production,
+  // never preview/dev, so the dashboard stays free of non-prod noise.
+  const Sentry = await import("@sentry/node");
+  const __SENTRY_ENV = process.env.VERCEL_ENV || process.env.NODE_ENV;
+  const __SENTRY_ON = !!process.env.SENTRY_DSN && __SENTRY_ENV === "production";
+  if (__SENTRY_ON) {
+    Sentry.init({
+      dsn: process.env.SENTRY_DSN,
+      environment: "production",
+      tracesSampleRate: 0.1,
+    });
+  }
+
   const { default: express } = await import("express");
   const { default: cors } = await import("cors");
 
@@ -99,6 +113,11 @@ try {
       res.status(500).json({ error: "Jokin meni pieleen" });
     }
   });
+
+  // Sentry error handler — must be after all routes.
+  if (__SENTRY_ON) {
+    Sentry.setupExpressErrorHandler(app);
+  }
 
 } catch (e) {
   // Boot failed. Log the full error server-side; do NOT leak the stack to
