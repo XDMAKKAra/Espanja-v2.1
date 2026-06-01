@@ -116,70 +116,45 @@
   </header>
 
   <main>
-    <!-- ═══ HERO, L-V333 product-mockup rebuild.
-         Competitor B2C language-learning landings (WordDive, Studeo,
-         10monkeys) carry product mockups in the hero, not illustrations.
-         Layout:
-           <720px  : copy only (mobile-first, V326 decision)
-           980-1439: left phone mockup + right copy
-           >=1440  : 3-col, left + centre copy + right phone mockup
-         Mockups source: scripts/capture-product-screenshots.mjs. -->
+    <!-- ═══ HERO, L-V344 WordDive split.
+         Copy left + custom flat illustration (hand + phone showing a YTL
+         grade, three-language speech bubbles) on a yellow-pale panel right.
+         <860px stacks to one column, panel above copy. -->
     <section class="hero" id="hero" aria-labelledby="hero-title">
       <div class="hero__inner">
 
-        <div class="hero__visual hero__visual--left">
-          <div class="hero-phone hero-phone--left" aria-hidden="true">
-            <div class="hero-phone__screen">
-              <img src="/img/product/lesson-writing.png"
-                   alt="Puheo-sovellus: kirjoitustehtävä espanjaksi, oppilas täyttää tekstikenttää"
-                   width="300" height="650" loading="eager" decoding="async" />
-            </div>
-          </div>
-        </div>
-
         <div class="hero__copy">
+          <span class="hero__eyebrow">Espanja · ranska · saksa</span>
+
           <h1 class="hero__title" id="hero-title">
             Treenaa lyhyiden kielten <span class="hero__title-accent">ylppäreihin</span>.
           </h1>
 
           <p class="hero__sub">
-            Espanja, ranska tai saksa. Kirjoituksesi arvioidaan samalla mittarilla kuin oikeassa YO-kokeessa.<br>
+            Kirjoituksesi arvioidaan samalla mittarilla kuin oikeassa YO-kokeessa.
             Jokainen virhe selitetään suomeksi.
           </p>
-
-          <div class="hero__lang-row" aria-label="Tarjotut kielet">
-            <span class="hero__lang-label">Kielet</span>
-            <span class="hero__lang-pills">
-              <span class="hero__lang-pill" lang="es">Español</span>
-              <span class="hero__lang-pill" lang="fr">Français</span>
-              <span class="hero__lang-pill" lang="de">Deutsch</span>
-            </span>
-          </div>
 
           <div class="hero__ctas">
             <a class="btn btn--primary btn--lg" href="/app.html#rekisteroidy">
               Aloita ilmaiseksi
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
             </a>
-            <a class="hero__link-secondary" href="#nayte">Katso miten kirjoitukset arvioidaan →</a>
+            <a class="hero__link-secondary" href="#nayte">Katso miten arviointi toimii →</a>
           </div>
 
-          <p class="hero__trust">
-            Lukion lyhyt oppimäärä
-            <span class="hero__trust-sep" aria-hidden="true">·</span>
-            90 oppituntia
-            <span class="hero__trust-sep" aria-hidden="true">·</span>
-            6 mallikoetta
-          </p>
+          <div class="hero__chips" aria-label="Mitä saat">
+            <span class="hero__chip">Lyhyt oppimäärä</span>
+            <span class="hero__chip">YTL-rubriikki</span>
+            <span class="hero__chip">Ilmainen aloitus</span>
+          </div>
         </div>
 
-        <div class="hero__visual hero__visual--right">
-          <div class="hero-phone hero-phone--right" aria-hidden="true">
-            <div class="hero-phone__screen">
-              <img src="/img/product/lesson-grade.png"
-                   alt="Puheo-sovellus: YTL-rubriikilla annettu arvio kirjoitustehtävästä"
-                   width="300" height="650" loading="eager" decoding="async" />
-            </div>
+        <div class="hero__art">
+          <div class="hero__art-panel">
+            <img src="/img/illustrations/hero-grade.svg"
+                 alt="Käsi pitelee puhelinta, jossa tekoäly arvioi kirjoitelman; espanja, ranska ja saksa puhekuplina"
+                 width="520" height="520" loading="eager" decoding="async" />
           </div>
         </div>
       </div>

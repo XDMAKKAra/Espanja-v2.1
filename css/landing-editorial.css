@@ -367,71 +367,55 @@ body.landing > * { position: relative; z-index: 1; }
   position: relative;
   overflow: hidden;
 }
+/* L-V344 WordDive hero — 2-col split: copy left + illustration panel right. */
 .landing .hero__inner {
   max-width: var(--ed-content-max);
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr;
-  gap: clamp(32px, 5vw, 72px);
+  gap: clamp(28px, 5vw, 56px);
   align-items: center;
 }
-@media (min-width: 980px) {
+@media (min-width: 860px) {
   .landing .hero__inner {
-    /* 980-1439px: 2-col left mockup + right copy, copy wider than V332. */
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.02fr);
     gap: clamp(40px, 5vw, 80px);
   }
-}
-@media (min-width: 1440px) {
-  .landing .hero__inner {
-    /* L-V333: 3-col on >=1440px. Left mockup | centre copy | right mockup.
-       Centre column ≈420-540px (readable measure) so copy never sprawls.
-       Outer columns inherit fluid width for product mockups. */
-    grid-template-columns: minmax(0, 1fr) minmax(420px, 540px) minmax(0, 1fr);
-    gap: clamp(48px, 4vw, 88px);
-  }
-}
-
-.landing .hero__visual {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-/* Explicit grid-column placement at 1440px+ so copy stays centred between
-   the two mockups (order: 1 on a shared selector would otherwise stack
-   both visuals before copy). */
-.landing .hero__visual--left { order: 1; }
-.landing .hero__copy         { order: 2; }
-.landing .hero__visual--right{ order: 3; display: none; }
-
-@media (min-width: 1440px) {
-  .landing .hero__visual--right {
-    display: flex;
-  }
-}
-.landing .hero__illustration {
-  display: block;
-  width: 100%;
-  /* L-V333: was 540px, now scales up to 620px on wider columns so the
-     hero visual doesn't float as a stamp in empty space. */
-  max-width: 620px;
-  height: auto;
-  margin: 0 auto;
-  filter: drop-shadow(0 18px 30px oklch(20% 0.05 30 / 0.10));
 }
 
 .landing .hero__copy {
   display: flex;
   flex-direction: column;
   gap: var(--ed-sp-5);
+  max-width: 600px;
 }
 
-/* L-V326 — mobile hero: kuvitus piiloon <720px, copy ekana näkyväksi.
-   Council-päätös 2026-05-27 (B-vaihtoehto): Humaaans-kuvitus on
-   desktop-affordance, mobile-foldissa otsikko + CTA painavat enemmän. */
-@media (max-width: 720px) {
-  .landing .hero__visual { display: none; }
+/* Illustration on a soft yellow-pale rounded panel (right column). */
+.landing .hero__art {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.landing .hero__art-panel {
+  background: var(--yellow-pale);
+  border-radius: 36px;
+  padding: 26px;
+  width: 100%;
+  max-width: 520px;
+  aspect-ratio: 1 / 1;
+  display: grid;
+  place-items: center;
+}
+.landing .hero__art-panel img { width: 100%; height: auto; }
+
+/* Mobile: panel above copy, smaller; no horizontal scroll. */
+@media (max-width: 860px) {
+  .landing .hero__art { order: -1; }
+  .landing .hero__art-panel {
+    max-width: 360px;
+    border-radius: 28px;
+    padding: 18px;
+  }
 }
 
 /* Hero eyebrow / countdown pill */
@@ -439,14 +423,14 @@ body.landing > * { position: relative; z-index: 1; }
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  padding: 8px 14px;
-  font-family: var(--ed-mono);
-  font-size: var(--ed-fs-micro);
-  font-weight: 500;
-  letter-spacing: var(--ed-tracking-meta);
-  color: var(--ed-accent);
-  background: var(--ed-accent-soft);
-  border: 1px solid color-mix(in oklch, var(--ed-accent) 20%, transparent);
+  padding: 8px 16px;
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0;
+  color: var(--green);
+  background: var(--green-pale);
+  border: none;
   border-radius: var(--ed-r-pill);
   align-self: flex-start;
   margin: 0;
@@ -477,22 +461,20 @@ body.landing > * { position: relative; z-index: 1; }
 }
 
 .landing .hero__title {
-  font-family: var(--ed-display);
-  font-variation-settings: var(--ed-fvs-display);
-  font-weight: 500;
-  font-size: var(--ed-fs-display);
-  line-height: var(--ed-lh-display);
-  letter-spacing: var(--ed-tracking-display);
-  color: var(--ed-ink);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(40px, 6.5vw, 62px);
+  line-height: 1.04;
+  letter-spacing: -0.01em;
+  color: var(--text);
   margin: 0;
-  max-width: 16ch;
+  max-width: 14ch;
   text-wrap: balance;
 }
 .landing .hero__title-accent {
   font-style: normal;
   font-weight: 700;
-  color: var(--ed-accent);
-  /* One word emphasis only — wrap as inline */
+  color: var(--brick);
 }
 
 .landing .hero__sub {
@@ -538,8 +520,8 @@ body.landing > * { position: relative; z-index: 1; }
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  color: var(--ed-accent);
-  font-family: var(--ed-sans);
+  color: var(--brick);
+  font-family: var(--font-display);
   font-size: 0.9375rem;
   font-weight: 600;
   text-decoration: none;
@@ -549,7 +531,7 @@ body.landing > * { position: relative; z-index: 1; }
 }
 .landing .hero__link-secondary:hover,
 .landing .hero__link-secondary:focus-visible {
-  color: var(--ed-accent-hover);
+  color: var(--brick-dark);
   border-bottom-color: currentColor;
 }
 .landing .hero__link-secondary:focus-visible {
