@@ -11,40 +11,46 @@
    only in surface theme (dark) and type pairing (Geist vs Inter).
    ============================================================ */
 
-@font-face {
-  font-family: "Geist Fallback";
-  src: local("Inter"), local("system-ui");
-  size-adjust: 100%;
-}
-
 .landing {
-  /* ─── Surfaces — v272: dark Zinc-950 base flipped to near-white so
-     per-lang landings match the app shell + main landing. Tinted
-     whites at chroma 0.001–0.004 around the 75° warm-paper hue keep
-     things off-#fff. Brick + teal accents stay so brand DNA reads. */
-  --bg:            oklch(99% 0.002 75);
-  --bg-elevated:   oklch(100% 0.001 75);
-  --bg-gradient:   radial-gradient(ellipse 80% 60% at 50% -10%, rgba(45, 212, 191, 0.06) 0%, transparent 55%);
-  --surface:       rgba(20, 16, 14, 0.03);
-  --surface-hover: rgba(20, 16, 14, 0.05);
-  --border:        rgba(20, 16, 14, 0.08);
-  --border-strong: rgba(20, 16, 14, 0.14);
+  /* ─── WordDive palette (L-V344): warm cream canvas, brick + yellow +
+     green accents. Flat colours only — no gradient washes or glow. */
+  --cream:        #FBF7EF;
+  --paper:        #FFFFFF;
+  --brick:        #9B2D2A;
+  --brick-dark:   #832421;
+  --yellow:       #F4C84A;
+  --green:        #2E5E4E;
+  --yellow-pale:  #FBEEC6;
+  --green-pale:   #DCE8E0;
+  --brick-pale:   #F4DAD3;
+  --skin:         #E7B58C;
+  --skin-dk:      #D29E72;
+  --line:         #E9DFCF;
 
-  /* ─── Text ─────────────────────────────────────────────────── */
-  --text:          oklch(18% 0.012 30);
-  --text-muted:    oklch(38% 0.012 30);
-  --text-subtle:   oklch(48% 0.012 30);
+  /* ─── Surfaces ─────────────────────────────────────────────── */
+  --bg:            var(--cream);
+  --bg-elevated:   var(--paper);
+  --bg-gradient:   none;
+  --surface:       var(--paper);
+  --surface-hover: #F6F0E2;
+  --border:        var(--line);
+  --border-strong: #DBCDB4;
 
-  /* ─── Accent — same teal as the app for landing→app continuity ── */
-  --accent:        #2DD4BF;
-  --accent-hover:  #14B8A6;
-  --accent-soft:   rgba(45, 212, 191, 0.12);
-  --accent-glow:   rgba(45, 212, 191, 0.20);
+  /* ─── Text — warm near-black, never pure #000 ──────────────── */
+  --text:          #241C15;
+  --text-muted:    #5C5145;
+  --text-subtle:   #897C6A;
 
-  /* ─── Type ─────────────────────────────────────────────────── */
-  --font-display:  "Geist", "Geist Fallback", "Inter", system-ui, -apple-system, sans-serif;
-  --font-body:     "Geist", "Geist Fallback", "Inter", system-ui, -apple-system, sans-serif;
-  --font-mono:     "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  /* ─── Accent — brick brand + CTA ───────────────────────────── */
+  --accent:        var(--brick);
+  --accent-hover:  var(--brick-dark);
+  --accent-soft:   var(--brick-pale);
+  --accent-glow:   transparent;
+
+  /* ─── Type — Fredoka display + Mulish body (L-V344) ────────── */
+  --font-display:  "Fredoka", system-ui, -apple-system, sans-serif;
+  --font-body:     "Mulish", system-ui, -apple-system, sans-serif;
+  --font-mono:     "Mulish", system-ui, -apple-system, sans-serif;
 
   /* Type scale (px): 14 16 18 24 32 48 72 96 */
   --fs-xs:  14px;

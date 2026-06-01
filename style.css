@@ -17,23 +17,40 @@
 @import url('css/components/side-panel.css');
 
 :root {
-  /* Base + surfaces — quiet modern study tool: cool mint neutrals */
-  --bg:             #F0FDF9;
-  --surface:        #FFFFFF;
-  --surface-2:      #ECFDF5;
-  --border:         #D1FAE5;
-  --border-strong:  #A7F3D0;
+  /* ─── WordDive palette (L-V344) — flat warm colours, no gradients/glow.
+     Named tokens are the source of truth; the --bg/--surface/--ink/--accent
+     aliases below map onto them so the whole app sweeps to cream/brick in
+     one place. Skin tones drive the SVG illustrations. */
+  --cream:        #FBF7EF;
+  --paper:        #FFFFFF;
+  --brick:        #9B2D2A;
+  --brick-dark:   #832421;
+  --yellow:       #F4C84A;
+  --green:        #2E5E4E;
+  --yellow-pale:  #FBEEC6;
+  --green-pale:   #DCE8E0;
+  --brick-pale:   #F4DAD3;
+  --skin:         #E7B58C;
+  --skin-dk:      #D29E72;
+  --line:         #E9DFCF;
 
-  /* Ink — navy-based text system (all pairs pass WCAG AA on light surfaces) */
-  --ink:        #111827;
-  --ink-soft:   #374151;
-  --ink-faint:  #6B7280;
+  /* Base + surfaces — warm cream canvas, paper cards */
+  --bg:             var(--cream);
+  --surface:        var(--paper);
+  --surface-2:      #F6F0E2;   /* soft warm tint for subtle elevation */
+  --border:         var(--line);
+  --border-strong:  #DBCDB4;
 
-  /* Accent — mint (never used for text on white; see DESIGN.md §1) */
-  --accent:        #2DD4BF;
-  --accent-hover:  #14B8A6;
-  --accent-soft:   #CCFBF1;
-  --accent-dark:   #0F766E;   /* teal-700, 5.47:1 on white — AA normal / AAA large. Use ONLY for mint-as-TEXT on light surfaces. */
+  /* Ink — warm near-black (never pure #000) */
+  --ink:        #241C15;
+  --ink-soft:   #5C5145;
+  --ink-faint:  #897C6A;
+
+  /* Accent — brick (brand + CTA). #9B2D2A is 5.9:1 on cream → AA as text. */
+  --accent:        var(--brick);
+  --accent-hover:  var(--brick-dark);
+  --accent-soft:   var(--brick-pale);
+  --accent-dark:   var(--brick);
 
   /* Feedback */
   --success: #059669;
@@ -94,16 +111,16 @@
   --s-8:  48px;
   --s-10: 64px;
 
-  /* Radius */
-  --r-sm:   6px;
-  --r-md:   10px;
-  --r-lg:   16px;
+  /* Radius — WordDive rounder geometry (L-V344): inputs ~16, cards 22+, pills full */
+  --r-sm:   10px;
+  --r-md:   16px;
+  --r-lg:   22px;
   --r-full: 9999px;
 
-  /* Shadows — navy-based, only used on card hover, modals, button :active */
-  --sh-rest:  0 1px 3px rgba(17, 24, 39, 0.08);
-  --sh-hover: 0 4px 12px rgba(17, 24, 39, 0.10);
-  --sh-lift:  0 12px 32px rgba(17, 24, 39, 0.14);
+  /* Shadows — warm-tinted + soft (L-V344), no neon/glow */
+  --sh-rest:  0 1px 3px rgba(60, 38, 20, 0.10);
+  --sh-hover: 0 8px 20px -8px rgba(60, 38, 20, 0.22);
+  --sh-lift:  0 18px 40px -22px rgba(60, 38, 20, 0.35);
 
   /* Breakpoints + container widths (see DESIGN §6) */
   --bp-tablet:  768px;
@@ -121,10 +138,13 @@
   --ease-out:   cubic-bezier(0, 0, .2, 1);
   --ease-inout: cubic-bezier(.4, 0, .2, 1);
 
-  /* Fonts — Inter single-family for all text; DM Mono for data/countdown */
-  --font-display: 'Inter', system-ui, -apple-system, sans-serif;
-  --font-body:    'Inter', system-ui, -apple-system, sans-serif;
-  --font-mono:    'DM Mono', ui-monospace, monospace;
+  /* Fonts — WordDive direction (L-V344). Fredoka = display (chunky round),
+     Mulish = body/UI. No mono family in the system; --font-mono kept as an
+     alias to Mulish so legacy `font-family: var(--font-mono)` callers (small
+     data labels) stay readable until phases 2–3 retire them. */
+  --font-display: 'Fredoka', system-ui, -apple-system, sans-serif;
+  --font-body:    'Mulish', system-ui, -apple-system, sans-serif;
+  --font-mono:    'Mulish', system-ui, -apple-system, sans-serif;
 
   /* Typography scale (Inter single-family) */
   --fs-h1:      clamp(2.5rem, 5vw, 3.5rem);
@@ -254,17 +274,13 @@ body {
   min-height: 100vh;
 }
 
-/* Background texture — single warm amber wash for parchment atmosphere */
+/* L-V344: WordDive direction uses a flat warm cream canvas — the old mint
+   radial-gradient atmosphere is removed (no glow/gradient washes). */
 body::before {
-  /* Two-orb mint atmosphere — top-right warm, bottom-left soft. Stronger than
-     the previous 6% single-pass which was so faint it read as a render glitch.
-     Now intentional brand layer; bottom orb anchors the eye on long pages. */
   content: '';
   position: fixed;
   inset: 0;
-  background:
-    radial-gradient(ellipse 600px 480px at 88% 8%, rgba(45, 212, 191, 0.11) 0%, transparent 60%),
-    radial-gradient(ellipse 720px 520px at 8% 92%, rgba(20, 184, 166, 0.07) 0%, transparent 60%);
+  background: none;
   pointer-events: none;
   z-index: 0;
 }

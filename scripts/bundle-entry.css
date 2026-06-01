@@ -2,6 +2,7 @@
    style.css is first because it owns design tokens + @imports the legacy primitives
    (button.css, input.css, card.css, skeleton.css, feedback.css, modal.css, top-nav.css,
    bottom-nav.css, side-panel.css). esbuild resolves all @imports recursively. */
+@import url('../css/fonts.css');
 @import url('../style.css');
 @import url('../css/components/typography.css');
 @import url('../css/components/app-shell.css');

@@ -1,4 +1,4 @@
-const CACHE_VERSION = "puheo-v343";
+const CACHE_VERSION = "puheo-v344";
 const STATIC_ASSETS = [
   "/app.html",
   "/index.html",
@@ -15,14 +15,20 @@ const STATIC_ASSETS = [
   // on app.html cold load. Source files stay in repo + cached below for offline robustness.
   "/app.bundle.css",
   "/app.bundle.js",
-  // L-LIVE-AUDIT-P2 UPDATE 8 — self-hosted fonts (Inter + DM Mono).
-  "/fonts/inter-latin-400-normal.woff2",
-  "/fonts/inter-latin-500-normal.woff2",
-  "/fonts/inter-latin-600-normal.woff2",
-  "/fonts/inter-latin-700-normal.woff2",
-  "/fonts/inter-latin-800-normal.woff2",
-  "/fonts/dm-mono-latin-400-normal.woff2",
-  "/fonts/dm-mono-latin-500-normal.woff2",
+  // L-V344 — self-hosted WordDive fonts (Fredoka display + Mulish body).
+  "/css/fonts.css",
+  "/fonts/fredoka-latin-600-normal.woff2",
+  "/fonts/fredoka-latin-700-normal.woff2",
+  "/fonts/fredoka-latin-ext-600-normal.woff2",
+  "/fonts/fredoka-latin-ext-700-normal.woff2",
+  "/fonts/mulish-latin-400-normal.woff2",
+  "/fonts/mulish-latin-500-normal.woff2",
+  "/fonts/mulish-latin-600-normal.woff2",
+  "/fonts/mulish-latin-700-normal.woff2",
+  "/fonts/mulish-latin-ext-400-normal.woff2",
+  "/fonts/mulish-latin-ext-500-normal.woff2",
+  "/fonts/mulish-latin-ext-600-normal.woff2",
+  "/fonts/mulish-latin-ext-700-normal.woff2",
   "/js/pre-launch-gate.js",
   "/js/landing-init.js",
   "/js/landing-nav.js",
@@ -36,6 +42,13 @@ const STATIC_ASSETS = [
   "/img/illustrations/student-walking.svg",
   "/img/illustrations/quill-inkwell.svg",
   "/img/illustrations/ornament-rosette.svg",
+  // L-V344 — WordDive illustration set.
+  "/img/illustrations/hero-grade.svg",
+  "/img/illustrations/feature-tasks.svg",
+  "/img/illustrations/feature-ai.svg",
+  "/img/illustrations/feature-langs.svg",
+  "/img/illustrations/empty-progress.svg",
+  "/img/illustrations/empty-lessons.svg",
   // L-V333 hero product mockups (replace student-reading.svg as hero centrepiece).
   "/img/product/lesson-writing.png",
   "/img/product/lesson-grade.png",
