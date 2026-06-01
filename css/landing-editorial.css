@@ -1045,8 +1045,8 @@ body.landing > * { position: relative; z-index: 1; }
   color: var(--ed-ink);
 }
 .landing .proof__lang-btn[aria-selected="true"] {
-  background: var(--ed-ink);
-  color: var(--ed-bg);
+  background: var(--brick);
+  color: #FBF7EF;
 }
 .landing .proof__lang-btn:focus-visible {
   outline: 2px solid var(--ed-accent);
@@ -1107,11 +1107,13 @@ body.landing > * { position: relative; z-index: 1; }
   border-bottom: 1px solid var(--ed-rule);
 }
 .landing .grader-card__title {
-  font-family: var(--ed-mono);
+  font-family: var(--ed-sans);
+  font-weight: 600;
   font-size: var(--ed-fs-meta);
   color: var(--ed-ink-muted);
   margin: 0;
   letter-spacing: 0.01em;
+  text-transform: none;
 }
 .landing .grader-card__badge {
   background: var(--ed-score-bg);
@@ -2670,8 +2672,8 @@ body.landing > * { position: relative; z-index: 1; }
 }
 .landing .kokeile__lang-btn:hover { color: var(--ed-ink); }
 .landing .kokeile__lang-btn[aria-selected="true"] {
-  background: var(--ed-ink);
-  color: var(--ed-bg);
+  background: var(--brick);
+  color: #FBF7EF;
 }
 .landing .kokeile__lang-btn:focus-visible {
   outline: 2px solid var(--ed-accent);
