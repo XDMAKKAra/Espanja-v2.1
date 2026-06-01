@@ -123,8 +123,10 @@
       gap: 20px;
       align-items: stretch;
     }
+    /* L-V344 two-tier model: two centred cards. */
+    .pricing-grid--duo { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 760px; margin: 0 auto; }
     @media (max-width: 1080px) { .pricing-grid { grid-template-columns: repeat(2, 1fr); max-width: 820px; margin: 0 auto; } }
-    @media (max-width: 720px)  { .pricing-grid { grid-template-columns: 1fr; max-width: 480px; } }
+    @media (max-width: 720px)  { .pricing-grid, .pricing-grid--duo { grid-template-columns: 1fr; max-width: 480px; } }
 
     .price-card {
       position: relative;
@@ -410,62 +412,55 @@
   <main class="pricing-shell" id="pricing">
     <section class="pricing-hero">
       <p class="pricing-hero__eyebrow">Hinnoittelu</p>
-      <h1>Kolme tasoa. <em>Valitse omasi.</em></h1>
-      <p class="pricing-hero__lead">Aloita Freellä, treenaa Treenillä, valmistaudu Mestarilla. Vaihtaminen onnistuu milloin vain.</p>
-
-      <div class="pricing-switch" role="group" aria-label="Valitse laskutusjakso">
-        <span class="pricing-switch__label pricing-switch__label--on" id="pricing-switch-label-monthly">Kuukausi</span>
-        <button type="button" class="pricing-switch__toggle" id="pricing-switch-toggle"
-                role="switch" aria-checked="false" aria-labelledby="pricing-switch-label-monthly pricing-switch-label-package"></button>
-        <span class="pricing-switch__label" id="pricing-switch-label-package">8 viikon paketti</span>
-      </div>
+      <h1>Yksi hinta, <em>kaikki kolme kieltä.</em></h1>
+      <p class="pricing-hero__lead">Osta koko oppimispolku kertamaksulla ja pidä se ylioppilaskokeeseen asti. Tai maksa kuukausittain pelkästä arvioinnista.</p>
     </section>
 
-    <div class="pricing-grid" id="pricing-grid" data-mode="monthly">
+    <div class="pricing-grid pricing-grid--duo" id="pricing-grid">
 
-      <!-- Free -->
-      <article class="price-card">
+      <!-- Kurssi (kertaostos, popular) -->
+      <article class="price-card featured">
+        <span class="price-card__chip">Suosituin</span>
         <div class="price-card__head">
-          <h3 class="price-name">Free</h3>
-          <p class="price-desc">Kokeile ennen kuin valitset.</p>
-          <div class="price-amount">0 <span class="price-amount__unit">€</span></div>
-          <p class="price-period">Aina ilmainen, ei luottokorttia.</p>
+          <h3 class="price-name">Kurssi</h3>
+          <p class="price-desc">Koko oppimispolku ylioppilaskokeeseen, yhdellä kertaostolla.</p>
+          <div class="price-amount">49 <span class="price-amount__unit">€</span></div>
+          <p class="price-period">Kertaostos, käyttö koepäivään asti</p>
         </div>
         <hr class="price-card__sep" aria-hidden="true" />
         <div class="price-card__body">
           <ul class="price-features">
-            <li><svg class="price-features__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg><span>1 oppitunti</span></li>
-            <li><svg class="price-features__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg><span>1 kirjoitustehtävä</span></li>
-            <li><svg class="price-features__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg><span>1 luetun ymmärtäminen</span></li>
-            <li><svg class="price-features__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg><span>1 harjoituskoe</span></li>
+            <li><svg class="price-features__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg><span>Koko 8-kurssin polku (90 oppituntia / kieli)</span></li>
+            <li><svg class="price-features__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg><span>Kaikki kolme kieltä (es / fr / de)</span></li>
+            <li><svg class="price-features__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg><span>YTL-rubriikin arviointi ja mallikokeet</span></li>
+            <li><svg class="price-features__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg><span>Adaptiivinen vaikeus ja YO-valmiusmittari</span></li>
+            <li><svg class="price-features__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg><span>Käyttöoikeus ylioppilaskokeeseen asti</span></li>
           </ul>
         </div>
         <div class="price-card__footer">
-          <a class="price-cta is-quiet" href="/app.html#rekisteroidy">
-            Aloita ilmaiseksi
+          <a class="price-cta is-primary" href="/app.html#rekisteroidy?tier=kurssi" data-tier="kurssi">
+            Osta kurssi
             <svg class="price-cta__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
           </a>
-          <span class="price-cta__no-cc">Ei luottokorttia tarvita</span>
+          <span class="price-cta__no-cc">14 päivän rahat takaisin</span>
         </div>
       </article>
 
-      <!-- Treeni -->
+      <!-- Treeni (kuukausi) -->
       <article class="price-card">
         <div class="price-card__head">
           <h3 class="price-name">Treeni</h3>
-          <p class="price-desc">Rajaton harjoittelu, kun YO-koe lähestyy.</p>
-          <div class="price-amount price--monthly">9 <span class="price-amount__unit">€ / kk</span></div>
-          <div class="price-amount price--package">19 <span class="price-amount__unit">€ / 8 vk</span></div>
-          <p class="price-period price--monthly">Peruuta milloin vain</p>
-          <p class="price-period price--package">Kertamaksu, sopii loppukirin</p>
+          <p class="price-desc">Rajaton kirjoitusten arviointi ilman kurssia.</p>
+          <div class="price-amount">9 <span class="price-amount__unit">€ / kk</span></div>
+          <p class="price-period">Peruuta milloin vain</p>
         </div>
         <hr class="price-card__sep" aria-hidden="true" />
         <div class="price-card__body">
           <ul class="price-features">
-            <li><svg class="price-features__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg><span>Rajaton kirjoitustehtävät</span></li>
-            <li><svg class="price-features__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg><span>Rajaton luetun ymmärtäminen</span></li>
-            <li><svg class="price-features__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg><span>Rajaton harjoituskokeet</span></li>
-            <li><svg class="price-features__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg><span>YTL-rubriikin arviointi</span></li>
+            <li><svg class="price-features__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg><span>Rajaton kirjoitusten arviointi</span></li>
+            <li><svg class="price-features__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg><span>YTL-rubriikki ja suomenkieliset selitykset</span></li>
+            <li><svg class="price-features__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg><span>Kaikki kolme kieltä (es / fr / de)</span></li>
+            <li><svg class="price-features__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg><span>Ei rakenteellista oppimispolkua</span></li>
           </ul>
         </div>
         <div class="price-card__footer">
@@ -477,37 +472,6 @@
         </div>
       </article>
 
-      <!-- Mestari (popular) -->
-      <article class="price-card featured">
-        <span class="price-card__chip">Suosituin</span>
-        <div class="price-card__head">
-          <h3 class="price-name">Mestari</h3>
-          <p class="price-desc">Koko YO-valmennus, alusta YO-koevalmiiksi.</p>
-          <div class="price-amount price--monthly">19 <span class="price-amount__unit">€ / kk</span></div>
-          <div class="price-amount price--package">39 <span class="price-amount__unit">€ / 8 vk</span></div>
-          <p class="price-period price--monthly">Peruuta milloin vain</p>
-          <p class="price-period price--package">Säästä, jos rekisteröidyt 3+ vk ennen koetta</p>
-        </div>
-        <hr class="price-card__sep" aria-hidden="true" />
-        <div class="price-card__body">
-          <p class="price-card__pre">Kaikki Treenin ominaisuudet, ja:</p>
-          <ul class="price-features">
-            <li><svg class="price-features__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg><span>Koko 8-kurssin polku (90 oppituntia)</span></li>
-            <li><svg class="price-features__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg><span>Adaptiivinen vaikeustaso</span></li>
-            <li><svg class="price-features__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg><span>YO-valmiusmittari</span></li>
-            <li><svg class="price-features__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg><span>Henkilökohtainen lukusuunnitelma</span></li>
-            <li><svg class="price-features__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg><span>Virheseuranta + adaptiiviset koesimulaatiot</span></li>
-          </ul>
-        </div>
-        <div class="price-card__footer">
-          <a class="price-cta is-primary" href="/app.html#rekisteroidy?tier=mestari" data-tier="mestari">
-            Valitse Mestari
-            <svg class="price-cta__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
-          </a>
-          <span class="price-cta__no-cc">14 päivän rahat-takaisin -takuu</span>
-        </div>
-      </article>
-
     </div>
 
     <section class="compare-section">
@@ -516,28 +480,25 @@
         <thead>
           <tr>
             <th scope="col">Ominaisuus</th>
-            <th scope="col">Free</th>
+            <th scope="col">Kurssi</th>
             <th scope="col">Treeni</th>
-            <th scope="col">Mestari</th>
           </tr>
         </thead>
         <tbody>
-          <tr><td>Kirjoitustehtävät</td><td>1</td><td>Rajaton</td><td>Rajaton</td></tr>
-          <tr><td>Luetun ymmärtäminen</td><td>1</td><td>Rajaton</td><td>Rajaton</td></tr>
-          <tr><td>Harjoituskokeet</td><td>1</td><td>Rajaton</td><td>Rajaton</td></tr>
-          <tr><td>Oppitunnit</td><td>1 demo</td><td><span class="no">–</span></td><td>Kaikki 90</td></tr>
-          <tr><td>YTL-rubriikin arviointi</td><td><span class="no">–</span></td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
-          <tr><td>8-kurssin polku</td><td><span class="no">–</span></td><td><span class="no">–</span></td><td><span class="yes">✓</span></td></tr>
-          <tr><td>Adaptiivinen vaikeus</td><td><span class="no">–</span></td><td><span class="no">–</span></td><td><span class="yes">✓</span></td></tr>
-          <tr><td>YO-valmiusmittari</td><td><span class="no">–</span></td><td><span class="no">–</span></td><td><span class="yes">✓</span></td></tr>
-          <tr><td>Henkilökohtainen lukusuunnitelma</td><td><span class="no">–</span></td><td><span class="no">–</span></td><td><span class="yes">✓</span></td></tr>
-          <tr><td>Virheseuranta</td><td><span class="no">–</span></td><td><span class="no">–</span></td><td><span class="yes">✓</span></td></tr>
+          <tr><td>Kirjoitusten arviointi</td><td>Rajaton</td><td>Rajaton</td></tr>
+          <tr><td>YTL-rubriikki ja selitykset</td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
+          <tr><td>Kaikki kolme kieltä</td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
+          <tr><td>8-kurssin oppimispolku (90 oppituntia)</td><td><span class="yes">✓</span></td><td><span class="no">–</span></td></tr>
+          <tr><td>Mallikokeet</td><td><span class="yes">✓</span></td><td><span class="no">–</span></td></tr>
+          <tr><td>Adaptiivinen vaikeus</td><td><span class="yes">✓</span></td><td><span class="no">–</span></td></tr>
+          <tr><td>YO-valmiusmittari</td><td><span class="yes">✓</span></td><td><span class="no">–</span></td></tr>
+          <tr><td>Hinta</td><td>49 € kertaostos</td><td>9 € / kk</td></tr>
         </tbody>
       </table>
     </section>
 
     <p class="pricing-faq">
-      Paketit ovat voimassa 8 viikkoa ostosta tai koepäiväsi + 7 päivää, kumpi tulee ensin. Kuukausitilauksen voi peruuttaa milloin vain, peruutus astuu voimaan laskutusjakson lopussa. Kysyttävää? <a href="mailto:tuki@puheo.fi">tuki@puheo.fi</a>
+      Kurssi on kertaostos, jonka käyttöoikeus kestää ylioppilaskokeeseen asti, ja siihen kuuluu 14 päivän rahat takaisin. Treeni-tilauksen voi peruuttaa milloin vain, jolloin peruutus astuu voimaan laskutusjakson lopussa. Kysyttävää? <a href="mailto:tuki@puheo.fi">tuki@puheo.fi</a>
     </p>
   </main>
 
@@ -587,27 +548,7 @@
     </div>
   </footer>
 
-  <script>
-    (function () {
-      const grid = document.getElementById("pricing-grid");
-      const toggle = document.getElementById("pricing-switch-toggle");
-      const labelMonthly = document.getElementById("pricing-switch-label-monthly");
-      const labelPackage = document.getElementById("pricing-switch-label-package");
-      function setMode(mode) {
-        grid.dataset.mode = mode;
-        const isPackage = mode === "package";
-        toggle.setAttribute("aria-checked", String(isPackage));
-        labelMonthly.classList.toggle("pricing-switch__label--on", !isPackage);
-        labelPackage.classList.toggle("pricing-switch__label--on", isPackage);
-      }
-      toggle.addEventListener("click", () => {
-        setMode(toggle.getAttribute("aria-checked") === "true" ? "monthly" : "package");
-      });
-      toggle.addEventListener("keydown", (e) => {
-        if (e.key === " " || e.key === "Enter") { e.preventDefault(); toggle.click(); }
-      });
-    })();
-  </script>
+  <!-- L-V344 — billing toggle removed (Kurssi is a one-time purchase). -->
   <script src="/js/landing-nav.js" defer></script>
 </body>
 </html>
