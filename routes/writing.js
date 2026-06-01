@@ -3,7 +3,7 @@ import { callOpenAI, getUserProfileContext, LANGUAGE_META, VALID_LANGUAGES } fro
 import { buildGradingPrompt, processGradingResult, SHORT_MAX, LONG_MAX } from "../lib/writingGrading.js";
 import { requireAuth, requirePro, checkFeatureAccess, incrementFreeUsage } from "../middleware/auth.js";
 import { requireSupportedLanguage, resolveLang } from "../middleware/language.js";
-import { aiStrictLimiter, demoGradeLimiter, demoGradeGlobalLimiter, clientIp } from "../middleware/rateLimit.js";
+import { aiStrictLimiter, aiGlobalDailyLimiter, demoGradeLimiter, demoGradeGlobalLimiter, clientIp } from "../middleware/rateLimit.js";
 import { checkMonthlyCostLimit } from "../middleware/costLimit.js";
 import { logAiUsage } from "../lib/aiCost.js";
 import { pickWritingTaskFromBank } from "../lib/writingBank.js";
@@ -107,7 +107,7 @@ router.post("/writing/demo-grade", demoOriginGuard, validateDemoInput, demoGrade
   }
 });
 
-router.post("/writing-task", requireAuth, aiStrictLimiter, checkMonthlyCostLimit, async (req, res) => {
+router.post("/writing-task", requireAuth, aiStrictLimiter, aiGlobalDailyLimiter, checkMonthlyCostLimit, async (req, res) => {
   if (requireSupportedLanguage(req, res)) return;
 
   const { taskType = "short", topic = "general", language = "spanish", recentWeaknesses = [] } = req.body;
@@ -207,7 +207,7 @@ Return ONLY JSON:
   }
 });
 
-router.post("/grade-writing", requireAuth, aiStrictLimiter, checkMonthlyCostLimit, async (req, res) => {
+router.post("/grade-writing", requireAuth, aiStrictLimiter, aiGlobalDailyLimiter, checkMonthlyCostLimit, async (req, res) => {
   if (requireSupportedLanguage(req, res)) return;
   const lang = resolveLang(req);
 

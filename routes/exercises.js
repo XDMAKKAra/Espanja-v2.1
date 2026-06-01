@@ -12,9 +12,9 @@ import {
 } from "../lib/openai.js";
 import { requireSupportedLanguage, resolveLang } from "../middleware/language.js";
 import { requireAuth, requirePro, softReadingGate, incrementReadingPieces, checkFeatureAccess, incrementFreeUsage } from "../middleware/auth.js";
-import { aiLimiter, aiStrictLimiter, reportLimiter } from "../middleware/rateLimit.js";
+import { aiLimiter, aiStrictLimiter, aiGlobalDailyLimiter, reportLimiter } from "../middleware/rateLimit.js";
 import { checkMonthlyCostLimit } from "../middleware/costLimit.js";
-import { logAiUsage } from "../lib/aiCost.js";
+import { logAiUsage, getDailyUsage } from "../lib/aiCost.js";
 import { getUserLevel, refreshUserLevel, processCheckpointResult, progressToNextLevel } from "../lib/levelEngine.js";
 import { pointsToYoGrade } from "../lib/grading.js";
 import { dispatchGrade } from "../lib/grading/dispatcher.js";
@@ -228,7 +228,7 @@ async function saveToBankBulk(mode, level, topic, language, exercises) {
 
 // ─── Vocab exercises ───────────────────────────────────────────────────────
 
-router.post("/generate", requireAuth, aiLimiter, checkMonthlyCostLimit, async (req, res) => {
+router.post("/generate", requireAuth, aiLimiter, aiGlobalDailyLimiter, checkMonthlyCostLimit, async (req, res) => {
   if (requireSupportedLanguage(req, res)) return;
   const lang = resolveLang(req);
 
@@ -607,7 +607,7 @@ router.get("/seed-counts", requireAuth, (_req, res) => {
 
 // ─── Grammar exercises ─────────────────────────────────────────────────────
 
-router.post("/grammar-drill", requireAuth, aiLimiter, checkMonthlyCostLimit, async (req, res) => {
+router.post("/grammar-drill", requireAuth, aiLimiter, aiGlobalDailyLimiter, checkMonthlyCostLimit, async (req, res) => {
   if (requireSupportedLanguage(req, res)) return;
   const lang = resolveLang(req);
 
@@ -777,7 +777,7 @@ Return ONLY a JSON object with shape {"exercises":[ ... ]} (no markdown).${lang 
 
 // ─── Reading exercises ─────────────────────────────────────────────────────
 
-router.post("/reading-task", requireAuth, aiStrictLimiter, checkMonthlyCostLimit, async (req, res) => {
+router.post("/reading-task", requireAuth, aiStrictLimiter, aiGlobalDailyLimiter, checkMonthlyCostLimit, async (req, res) => {
   if (requireSupportedLanguage(req, res)) return;
   const lang = resolveLang(req);
 
@@ -1000,7 +1000,11 @@ router.get("/admin/costs-by-user", requireAuth, async (req, res) => {
       .slice(0, 20)
       .map((u) => ({ ...u, totalCost: Math.round(u.totalCost * 10000) / 10000 }));
 
-    res.json({ users: sorted, month: startOfMonth.toISOString().slice(0, 7) });
+    // Today's global spend — the number that maps to the aiGlobalDailyLimiter
+    // budget and the daily-cost alert threshold.
+    const today = await getDailyUsage();
+
+    res.json({ users: sorted, month: startOfMonth.toISOString().slice(0, 7), today });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -1008,7 +1012,7 @@ router.get("/admin/costs-by-user", requireAuth, async (req, res) => {
 
 // ─── Gap-fill exercises (write the missing word) ─────────────────────────────
 
-router.post("/gap-fill", requireAuth, aiLimiter, checkMonthlyCostLimit, async (req, res) => {
+router.post("/gap-fill", requireAuth, aiLimiter, aiGlobalDailyLimiter, checkMonthlyCostLimit, async (req, res) => {
   const { level = "B", count = 6, language = "spanish" } = req.body;
 
   if (!VALID_LEVELS.has(level)) return res.status(400).json({ error: "Virheellinen taso" });
@@ -1059,7 +1063,7 @@ Return ONLY JSON array:
 
 // ─── Matching exercises (connect pairs) ──────────────────────────────────────
 
-router.post("/matching", requireAuth, aiLimiter, checkMonthlyCostLimit, async (req, res) => {
+router.post("/matching", requireAuth, aiLimiter, aiGlobalDailyLimiter, checkMonthlyCostLimit, async (req, res) => {
   const { level = "B", language = "spanish" } = req.body;
 
   if (!VALID_LEVELS.has(level)) return res.status(400).json({ error: "Virheellinen taso" });
@@ -1109,7 +1113,7 @@ Return ONLY JSON:
 
 // ─── Reorder exercises (arrange words into sentence) ─────────────────────────
 
-router.post("/reorder", requireAuth, aiLimiter, checkMonthlyCostLimit, async (req, res) => {
+router.post("/reorder", requireAuth, aiLimiter, aiGlobalDailyLimiter, checkMonthlyCostLimit, async (req, res) => {
   const { level = "B", count = 4, language = "spanish" } = req.body;
 
   if (!VALID_LEVELS.has(level)) return res.status(400).json({ error: "Virheellinen taso" });
@@ -1161,7 +1165,7 @@ Return ONLY JSON array:
 
 // ─── Translate-mini (short Finnish→Spanish, AI-graded) ───────────────────────
 
-router.post("/translate-mini", requireAuth, aiLimiter, checkMonthlyCostLimit, async (req, res) => {
+router.post("/translate-mini", requireAuth, aiLimiter, aiGlobalDailyLimiter, checkMonthlyCostLimit, async (req, res) => {
   const { level = "B", count = 3, language = "spanish" } = req.body;
 
   if (!VALID_LEVELS.has(level)) return res.status(400).json({ error: "Virheellinen taso" });
@@ -1219,7 +1223,7 @@ Return ONLY JSON array:
 // OpenAI call. Successful AI grades (>= 2) are written back to the table
 // so the corpus learns over time.
 
-router.post("/grade-translate", requireAuth, aiLimiter, checkMonthlyCostLimit, async (req, res) => {
+router.post("/grade-translate", requireAuth, aiLimiter, aiGlobalDailyLimiter, checkMonthlyCostLimit, async (req, res) => {
   const { userAnswer, acceptedTranslations, finnishSentence, taskId, lang } = req.body;
 
   if (!userAnswer || !finnishSentence) {
@@ -1388,7 +1392,7 @@ router.get("/adaptive-state", requireAuth, async (req, res) => {
 
 // ─── Generate adaptive exercise ─────────────────────────────────────────────
 
-router.post("/adaptive-exercise", requireAuth, aiLimiter, checkMonthlyCostLimit, async (req, res) => {
+router.post("/adaptive-exercise", requireAuth, aiLimiter, aiGlobalDailyLimiter, checkMonthlyCostLimit, async (req, res) => {
   const { topic: reqTopic, count = 4, language = "spanish", recentTypes = [], mode = "normaali" } = req.body;
 
   if (!VALID_LANGUAGES.has(language)) return res.status(400).json({ error: "Virheellinen kieli" });
@@ -1494,7 +1498,7 @@ router.post("/adaptive-answer", requireAuth, async (req, res) => {
 
 // ─── Checkpoint test (20 questions, next level, no scaffolding) ─────────────
 
-router.post("/checkpoint/start", requireAuth, aiLimiter, checkMonthlyCostLimit, async (req, res) => {
+router.post("/checkpoint/start", requireAuth, aiLimiter, aiGlobalDailyLimiter, checkMonthlyCostLimit, async (req, res) => {
   const { language = "spanish" } = req.body;
 
   {
@@ -1608,7 +1612,7 @@ router.post("/checkpoint/submit", requireAuth, async (req, res) => {
 
 // ─── Focus session: topic-targeted exercises based on past mistakes ────────
 
-router.post("/focus-session", requireAuth, aiLimiter, checkMonthlyCostLimit, async (req, res) => {
+router.post("/focus-session", requireAuth, aiLimiter, aiGlobalDailyLimiter, checkMonthlyCostLimit, async (req, res) => {
   const { topic, count = 10, language = "spanish" } = req.body;
 
   if (!topic || !VALID_TOPICS.has(topic)) {
@@ -1743,7 +1747,7 @@ router.get("/learning-path", requireAuth, async (req, res) => {
   }
 });
 
-router.post("/mastery-test/start", requireAuth, aiLimiter, checkMonthlyCostLimit, async (req, res) => {
+router.post("/mastery-test/start", requireAuth, aiLimiter, aiGlobalDailyLimiter, checkMonthlyCostLimit, async (req, res) => {
   const { topicKey, language = "spanish" } = req.body;
   const topic = getTopicByKey(topicKey);
   if (!topic) return res.status(400).json({ error: "Virheellinen aihe" });
@@ -1858,7 +1862,7 @@ router.post("/mastery-test/submit", requireAuth, async (req, res) => {
 });
 
 // Mixed review of all mastered topics
-router.post("/mixed-review", requireAuth, aiLimiter, checkMonthlyCostLimit, async (req, res) => {
+router.post("/mixed-review", requireAuth, aiLimiter, aiGlobalDailyLimiter, checkMonthlyCostLimit, async (req, res) => {
   const { count = 15, language = "spanish" } = req.body;
 
   {

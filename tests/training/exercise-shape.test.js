@@ -69,7 +69,7 @@ vi.mock("../../lib/openai.js", async (importOriginal) => {
 // Neutralise rate limiting + cost gate so tests hit the handler.
 vi.mock("../../middleware/rateLimit.js", () => {
   const pass = (req, res, next) => next();
-  return { aiLimiter: pass, aiStrictLimiter: pass, authLimiter: pass, registerLimiter: pass,
+  return { aiLimiter: pass, aiStrictLimiter: pass, aiGlobalDailyLimiter: pass, authLimiter: pass, registerLimiter: pass,
            forgotPasswordLimiter: pass, reportLimiter: pass, waitlistLimiter: pass,
            demoGradeLimiter: pass, demoGradeGlobalLimiter: pass,
            clientIp: (req) => req.ip || "", default: { aiLimiter: pass } };

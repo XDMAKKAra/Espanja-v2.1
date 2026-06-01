@@ -63,7 +63,7 @@ vi.mock("../../lib/openai.js", async (importOriginal) => {
 vi.mock("../../middleware/rateLimit.js", () => {
   const pass = (_req, _res, next) => next();
   return {
-    aiLimiter: pass, aiStrictLimiter: pass, authLimiter: pass, registerLimiter: pass,
+    aiLimiter: pass, aiStrictLimiter: pass, aiGlobalDailyLimiter: pass, authLimiter: pass, registerLimiter: pass,
     forgotPasswordLimiter: pass, reportLimiter: pass, waitlistLimiter: pass,
     demoGradeLimiter: pass, demoGradeGlobalLimiter: pass,
     clientIp: (req) => req.ip || "", default: { aiLimiter: pass },

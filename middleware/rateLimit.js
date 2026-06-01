@@ -22,7 +22,7 @@ function memoryRateLimit(key, windowMs, max) {
 
 // ─── Supabase-backed rate limiting (sliding window) ────────────────────────
 
-async function supabaseRateLimit(key, windowMs, max) {
+async function supabaseRateLimit(key, windowMs, max, failClosed = false) {
   // Single atomic round-trip: the increment_rate_limit RPC bumps the current
   // minute bucket and returns the sliding-window total (see migration
   // 20260601_rate_limit_atomic_increment). This replaces the old read+upsert
@@ -34,11 +34,20 @@ async function supabaseRateLimit(key, windowMs, max) {
   });
 
   if (error) {
-    // RPC errored or isn't present (DB blip, rollback, env without the
-    // migration). Don't fall wide open — degrade to the per-instance in-memory
-    // sliding window so SOME enforcement always holds. The AI limiters also
-    // have the AUTHED_AI_DAILY_CAP backstop above. This makes the limiter
-    // robust to the increment_rate_limit RPC being missing for any reason.
+    if (failClosed) {
+      // Cost ceiling (aiGlobalDailyLimiter): a DB failure must NOT silently
+      // lift the cap. Degrading to a per-instance memory bucket would mean N
+      // serverless instances each get their own fresh budget during an outage
+      // — exactly the runaway we are guarding against. Signal the caller to
+      // deny. The per-user limiters stay fail-open; only the wallet does not.
+      const e = new Error(`rate-limit DB error (fail-closed): ${error.message}`);
+      e._failClosed = true;
+      throw e;
+    }
+    // Per-user limiters (fail-open): RPC errored or isn't present (DB blip,
+    // rollback, env without the migration). Don't fall wide open — degrade to
+    // the per-instance in-memory sliding window so SOME enforcement always
+    // holds. The AI limiters also have the AUTHED_AI_DAILY_CAP backstop above.
     console.error("Rate limit DB error, falling back to in-memory:", error.message);
     return memoryRateLimit(key, windowMs, max);
   }
@@ -50,9 +59,9 @@ async function supabaseRateLimit(key, windowMs, max) {
 
 // ─── Rate limit check ──────────────────────────────────────────────────────
 
-async function checkRateLimit(key, windowMs, max) {
+async function checkRateLimit(key, windowMs, max, failClosed = false) {
   if (!isProd) return memoryRateLimit(key, windowMs, max);
-  return supabaseRateLimit(key, windowMs, max);
+  return supabaseRateLimit(key, windowMs, max, failClosed);
 }
 
 // ─── Client IP resolution ──────────────────────────────────────────────────
@@ -101,7 +110,7 @@ function authedAiBackstopExceeded() {
 // to the limiters-on run. Inert unless explicitly enabled by the load driver.
 const LOAD_TEST_RL_OFF = process.env.LOAD_TEST_RL_OFF === "1";
 
-function createLimiter({ windowMs, max, keyGenerator, message, backstop }) {
+function createLimiter({ windowMs, max, keyGenerator, message, backstop, failClosed, staticKey }) {
   const errorMsg = message?.error || "Liian monta pyyntöä. Yritä hetken kuluttua uudelleen.";
 
   return async (req, res, next) => {
@@ -113,11 +122,14 @@ function createLimiter({ windowMs, max, keyGenerator, message, backstop }) {
       return res.status(429).json({ error: errorMsg });
     }
 
-    const key = keyGenerator ? keyGenerator(req) : req.ip;
-    const prefixedKey = `rl:${req.path}:${key}`;
+    // A staticKey gives every route that mounts this limiter ONE shared bucket
+    // (a true cross-route/-instance budget), instead of the default per-path,
+    // per-IP/-user key. Used by the global cost ceiling.
+    const prefixedKey = staticKey
+      || `rl:${req.path}:${keyGenerator ? keyGenerator(req) : req.ip}`;
 
     try {
-      const { allowed, remaining } = await checkRateLimit(prefixedKey, windowMs, max);
+      const { allowed, remaining } = await checkRateLimit(prefixedKey, windowMs, max, failClosed);
 
       res.set("X-RateLimit-Limit", String(max));
       res.set("X-RateLimit-Remaining", String(Math.max(0, remaining)));
@@ -128,7 +140,14 @@ function createLimiter({ windowMs, max, keyGenerator, message, backstop }) {
 
       next();
     } catch (err) {
-      // Fail open on unexpected errors
+      if (failClosed) {
+        // Cost ceiling can't verify the budget → deny rather than risk
+        // unbounded OpenAI spend. Protects the wallet, not the individual user.
+        console.error("Global AI cost cap failing closed on error:", err.message);
+        return res.status(429).json({ error: errorMsg });
+      }
+      // Per-user limiters fail open on unexpected errors (availability for the
+      // individual matters more; the global cap above guards the cost).
       console.error("Rate limit error:", err.message);
       next();
     }
@@ -169,6 +188,26 @@ export const aiStrictLimiter = createLimiter({
   keyGenerator: (req) => req.user?.userId || req.ip,
   message: { error: "Olet käyttänyt tuntikysyntäsi. Yritä myöhemmin." },
   backstop: true,
+});
+
+// ─── Global daily AI cost ceiling (shared, cross-instance) ──────────────────
+// The per-user aiLimiter/aiStrictLimiter cap one user; the in-memory
+// AUTHED_AI_DAILY_CAP backstop caps one serverless instance. Neither caps the
+// fleet: with N instances live, the real global ceiling is N × the in-memory
+// cap. This DB-backed limiter is the one true cross-instance budget — all AI
+// routes funnel through a single "global" bucket. Unlike the per-user
+// limiters it is fail-CLOSED: if the DB check errors it denies, because a cost
+// ceiling that evaporates under load is no ceiling. The in-memory backstop
+// still covers the case where the DB is fully down (this limiter denies then;
+// the backstop bounds per-instance spend either way). Tune with
+// AI_DAILY_GLOBAL_CAP.
+const AI_DAILY_GLOBAL_CAP = Number(process.env.AI_DAILY_GLOBAL_CAP) || 2000;
+export const aiGlobalDailyLimiter = createLimiter({
+  windowMs: 24 * 60 * 60 * 1000,
+  max: AI_DAILY_GLOBAL_CAP,
+  staticKey: "rl:ai-global-daily",
+  failClosed: true,
+  message: { error: "AI-palvelu on juuri nyt tauolla kovan kysynnän vuoksi. Yritä hetken kuluttua uudelleen." },
 });
 
 // Per-user limiter for /report-exercise: prevents abusive bulk-reporting.

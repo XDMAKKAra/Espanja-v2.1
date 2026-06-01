@@ -111,6 +111,7 @@ vi.mock("../middleware/rateLimit.js", () => {
     forgotPasswordLimiter: pass,
     aiLimiter: pass,
     aiStrictLimiter: pass,
+    aiGlobalDailyLimiter: pass,
     reportLimiter: pass,
   };
 });

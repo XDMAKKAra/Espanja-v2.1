@@ -1,7 +1,7 @@
 import { Router } from "express";
 import supabase from "../supabase.js";
 import { requireAuth } from "../middleware/auth.js";
-import { aiLimiter } from "../middleware/rateLimit.js";
+import { aiLimiter, aiGlobalDailyLimiter } from "../middleware/rateLimit.js";
 import {
   computeEligibility,
   scoreMasteryTest,
@@ -126,7 +126,7 @@ router.get("/adaptive/status", requireAuth, async (req, res) => {
 //  routes/exercises.js's learning-path mastery-test endpoint.)
 // ═══════════════════════════════════════════════════════════════════════════
 
-router.post("/adaptive/mastery-test/start", requireAuth, aiLimiter, async (req, res) => {
+router.post("/adaptive/mastery-test/start", requireAuth, aiLimiter, aiGlobalDailyLimiter, async (req, res) => {
   const { mode } = req.body;
   if (!mode || !VALID_MODES.has(mode)) {
     return res.status(400).json({ error: "Virheellinen mode" });
