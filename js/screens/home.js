@@ -160,11 +160,85 @@ function renderTabs(activeLang) {
   `).join("");
 }
 
-// Single inline next-action. Greeting is integrated into the headline so
-// "Hei!" never floats alone, and the call sits in flowing text instead of
-// in a container card. One brick CTA, marked data-cta-primary so the
-// anti-slop spec can lock the count to exactly one.
-function renderNext(dashboard, profile, lang) {
+// L-V344 dashboard = WordDive data surface. Three honest blocks built from
+// the real /dashboard/v2 payload:
+//   1. Koepäivä-countdown (yellow)   — fixed YTL date, big Fredoka number
+//   2. Kurssiedistyminen (green)      — learningPath mastered / total + bar
+//   3. Seuraava oppitunti (paper)     — greeting + next action + brick CTA
+//                                       + heikkous-chipit + putki
+// Blocks degrade gracefully: progress hides until the learning path exists.
+
+// YTL syksyn koe — sama päivä kuin landingin --exam-date-iso (28.9.2026).
+const EXAM_DATE_ISO = "2026-09-28";
+
+function daysUntilExam() {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const exam = new Date(`${EXAM_DATE_ISO}T00:00:00`);
+  return Math.max(0, Math.round((exam - today) / 86_400_000));
+}
+
+function formatExamDate() {
+  const [y, m, d] = EXAM_DATE_ISO.split("-").map(Number);
+  return `${d}.${m}.${y}`;
+}
+
+// Countdown — always shown; the exam date is universal, not per-user.
+function renderCountdown() {
+  const days = daysUntilExam();
+  return `
+    <section class="dash-block dash-block--countdown" aria-label="Aikaa ylioppilaskokeeseen">
+      <p class="dash-block__label">Ylioppilaskokeeseen</p>
+      <p class="dash-block__big"><span class="dash-block__num">${days}</span> päivää</p>
+      <p class="dash-block__sub">Syksyn koe ${formatExamDate()}</p>
+    </section>`;
+}
+
+// Course progress — mastered topics on the learning path. Hidden until the
+// path has been generated (fresh accounts see countdown + next-card only).
+function renderProgress(data) {
+  const lp = data?.learningPath;
+  const total = Number(lp?.totalTopics ?? 0);
+  if (!lp || total < 1) return "";
+  const done = Math.min(total, Number(lp.masteredCount ?? 0));
+  const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+  return `
+    <section class="dash-block dash-block--progress" aria-label="Kurssiedistyminen">
+      <p class="dash-block__label">Oppimispolku</p>
+      <p class="dash-block__big"><span class="dash-block__num">${done}</span> / ${total} aihetta</p>
+      <div class="dash-bar" role="progressbar" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100">
+        <span class="dash-bar__fill" style="width:${pct}%"></span>
+      </div>
+      <p class="dash-block__sub">${pct}&nbsp;% hallussa</p>
+    </section>`;
+}
+
+// Weakness chips — the user's top recent mistake topics, as practice targets.
+function renderWeakChips(data) {
+  const topics = data?.weakTopics?.topics;
+  if (!Array.isArray(topics) || topics.length === 0) return "";
+  const chips = topics.slice(0, 3).map((t) =>
+    `<span class="dash-chip">${escapeHtml(t.label || t.topic || "")}</span>`).join("");
+  return `
+    <div class="dash-card__weak">
+      <span class="dash-card__weak-label">Harjoittele:</span>
+      <span class="dash-chips">${chips}</span>
+    </div>`;
+}
+
+// Streak line, inline in the next-lesson card. Hidden when there is no streak.
+function renderStreakLine(data) {
+  const streak = Number(data?.dashboard?.streak ?? 0);
+  if (streak < 1) return "";
+  return `<p class="dash-card__streak"><strong>${streak}</strong> päivän putki</p>`;
+}
+
+// Next-lesson paper card — carries the greeting, the next action, the single
+// brick CTA (data-cta-primary, wired to the next-topic reasoner), plus the
+// weakness chips and streak so the card reads as a real "what now" surface.
+function renderNextCard(data, lang) {
+  const dashboard = data?.dashboard || {};
+  const profile = data?.profile?.profile || window._userProfile || null;
   const sessions = Number(dashboard?.totalSessions ?? 0);
   let lastLesson = null;
   try {
@@ -198,64 +272,35 @@ function renderNext(dashboard, profile, lang) {
   }
 
   return `
-    <section class="home-next" aria-label="Seuraava askel">
-      <h1 class="home-next__title">${title}</h1>
-      <p class="home-next__meta">${escapeHtml(meta)}</p>
-      <a class="home-next__cta"
+    <section class="dash-card" aria-label="Seuraava askel">
+      <div class="dash-card__head">
+        <h1 class="home-next__title dash-card__title">${title}</h1>
+        ${renderStreakLine(data)}
+      </div>
+      <p class="dash-card__meta">${escapeHtml(meta)}</p>
+      <a class="home-next__cta dash-card__cta"
          data-cta-primary="true"
          href="${ctaHref}"
          data-action="continue">
         ${escapeHtml(ctaLabel)}
         <span class="home-next__cta-arrow" aria-hidden="true">→</span>
       </a>
+      ${renderWeakChips(data)}
     </section>`;
 }
 
-// Pulse = streak chip + today's minutes, in one sentence. Hidden entirely
-// when both signals are zero, so a fresh tab never sees the placeholder
-// "0 / 30 min" empty bar that the v271 dashboard shipped.
-function renderPulse(data) {
-  const dashboard = data?.dashboard || {};
-  const profile = data?.profile?.profile || window._userProfile || {};
-  const streak = Number(dashboard.streak ?? 0);
-  const goalMin = Number(profile.preferred_session_length || DEFAULT_GOAL_MIN);
-
-  const today = new Date().toISOString().slice(0, 10);
-  const chartData = Array.isArray(dashboard.chartData) ? dashboard.chartData : [];
-  const todaySessions = chartData.filter((l) => l?.createdAt?.slice(0, 10) === today).length;
-  const todayMin = Math.min(goalMin, todaySessions * 3);
-
-  if (streak < 1 && todayMin <= 0) return "";
-
-  const parts = [];
-  if (streak >= 1) {
-    parts.push(`<strong class="home-pulse__num">${streak}</strong> päivän putki`);
-  }
-  if (todayMin > 0) {
-    parts.push(`tänään <strong class="home-pulse__num">${todayMin}</strong> / ${goalMin} min`);
-  }
-
-  const goalMet = todayMin >= goalMin;
-  return `
-    <section class="home-pulse ${goalMet ? "is-met" : ""}" aria-label="Päivän eteneminen">
-      <p class="home-pulse__line">${parts.join(", ")}.</p>
-    </section>`;
-}
-
-// L-V335: koti = tervehdys + Avaa oppimispolku -CTA + viimeisin kurssi
-// (renderNext) + päivän putki kun dataa on (renderPulse). Vanha
-// kategoriarivi-lohko (Sanasto / Kielioppi / Luetun / Kirjoitus /
-// Koeharjoitus) poistettu: rivit lupasivat "N harjoitusta" mutta
-// jokainen klikkaus vei samaan oppimispolkuun. Mode-first-hierarkiassa
-// koti ei ole kategoriaselain, oppimispolku on.
+// Dashboard composition: language tabs, a two-up block row (countdown +
+// progress), then the next-lesson card spanning full width.
 function renderShell(activeLang, data, isPro) {
-  const dashboard = data?.dashboard || {};
-  const profile = data?.profile?.profile || window._userProfile || null;
   const tabsHtml = renderTabs(activeLang);
+  const progressHtml = renderProgress(data);
   return `
     ${tabsHtml ? `<div class="home-tabs" role="tablist" aria-label="Kielet">${tabsHtml}</div>` : ""}
-    ${renderNext(dashboard, profile, activeLang)}
-    ${renderPulse(data)}
+    <div class="dash-grid${progressHtml ? "" : " dash-grid--solo"}">
+      ${renderCountdown()}
+      ${progressHtml}
+    </div>
+    ${renderNextCard(data, activeLang)}
   `;
 }
 
@@ -283,7 +328,11 @@ function renderShellSkeleton(activeLang) {
     <div class="home-skel-root" role="status" aria-live="polite">
       <span class="sr-only">Ladataan kotinäyttöä.</span>
       ${tabs ? `<div class="home-tabs" aria-hidden="true">${tabs}</div>` : ""}
-      <section class="home-next home-next--skel" aria-hidden="true">
+      <div class="dash-grid" aria-hidden="true">
+        <section class="dash-block dash-block--skel"><span class="home-skel home-skel--block"></span></section>
+        <section class="dash-block dash-block--skel"><span class="home-skel home-skel--block"></span></section>
+      </div>
+      <section class="dash-card dash-card--skel" aria-hidden="true">
         <span class="home-skel home-skel--next-title"></span>
         <span class="home-skel home-skel--next-meta"></span>
         <span class="home-skel home-skel--next-cta"></span>

@@ -1,14 +1,10 @@
-// v271 dashboard-redesign verification (2026-05-22).
-// Brief: docs/briefs/2026-05-22-dashboard-redesign.md.
-//
-// Asserts the new Aloitus surface:
-//   - body is near-white (NOT cream beige)
-//   - Hei-greeting + date pill render
-//   - Primary "Jatka tästä" card with brick CTA exists
-//   - Päivän tavoite (goal bar) renders
-//   - Kurssipolku snapshot ships exactly 4 micro-tiles
-//   - AI-slop bans hold: no italic-Fraunces greeting, no UPPERCASE "8 KURSSIA"
-//     eyebrow, no em-dashes in copy.
+// L-V344 WordDive dashboard verification (2026-06-01).
+// Supersedes the v271/v289 assertions. Asserts the new Aloitus surface:
+//   - app canvas is warm CREAM (not near-white)
+//   - koepäivä-countdown block renders with a numeric "N päivää"
+//   - next-lesson card carries exactly one brick CTA (data-cta-primary)
+//   - the card title is Fredoka (display font), never Fraunces/serif
+//   - no em-dashes in Finnish copy
 import { test, expect } from '@playwright/test';
 import fs from 'fs';
 import path from 'path';
@@ -21,12 +17,10 @@ test.beforeAll(() => {
   if (!fs.existsSync(OUT_DIR)) fs.mkdirSync(OUT_DIR, { recursive: true });
 });
 
-test('home renders the v271 redesign shell', async ({ page }) => {
+test('home renders the L-V344 WordDive dashboard', async ({ page }) => {
   test.setTimeout(120_000);
 
-  // Pre-launch gate bypass — addInitScript runs before any inline JS so the
-  // prompt() in pre-launch-gate.js never throws (memory:
-  // feedback_playwright_gate.md).
+  // Pre-launch gate bypass (memory: feedback_playwright_gate.md).
   await page.addInitScript(() => {
     try { localStorage.setItem('puheo_gate_ok_v1', '1'); } catch {}
   });
@@ -40,52 +34,45 @@ test('home renders the v271 redesign shell', async ({ page }) => {
     await page.locator('#auth-password').fill(PASS);
     await page.locator('button:has-text("Kirjaudu sisään")').first().click();
     await page.waitForLoadState('networkidle').catch(() => {});
-    await page.waitForTimeout(2500);
+    await page.waitForTimeout(3000);
   }
 
-  // 1. App canvas is near-white. RGB tolerance because OKLCH→RGB rounds.
+  // 1. App canvas is warm cream (#FBF7EF ≈ rgb(251,247,239)): warm, NOT white.
+  //    b-channel sits clearly below the r-channel, which a neutral white never does.
   const bg = await page.evaluate(() => getComputedStyle(document.body).backgroundColor);
   const rgb = bg.match(/\d+/g)?.map(Number) || [];
   expect(rgb.length).toBeGreaterThanOrEqual(3);
-  expect(rgb[0]).toBeGreaterThanOrEqual(248);
-  expect(rgb[1]).toBeGreaterThanOrEqual(248);
-  expect(rgb[2]).toBeGreaterThanOrEqual(245);
+  expect(rgb[0]).toBeGreaterThanOrEqual(246);          // light
+  expect(rgb[0] - rgb[2]).toBeGreaterThanOrEqual(6);   // warm (r > b)
 
-  // 2. Greeting reads "Hei" and is NOT italic Fraunces.
-  const greeting = page.locator('#home-root .home-greeting').first();
-  await expect(greeting).toBeVisible();
-  await expect(greeting).toContainText(/Hei/);
-  const greetingStyle = await greeting.evaluate((el) => {
-    const cs = getComputedStyle(el);
-    return { style: cs.fontStyle, family: cs.fontFamily };
-  });
-  expect(greetingStyle.style).toBe('normal');
-  expect(greetingStyle.family).toMatch(/Fraunces/i);
+  // 2. Countdown block renders with a numeric day count.
+  const countdown = page.locator('#home-root .dash-block--countdown');
+  await expect(countdown).toBeVisible();
+  await expect(countdown).toContainText(/päivää/);
+  const days = await countdown.locator('.dash-block__num').innerText();
+  expect(Number(days)).toBeGreaterThan(0);
 
-  // 3. Date pill renders.
-  await expect(page.locator('#home-root .home-date-pill')).toBeVisible();
-
-  // 4. Primary "Jatka tästä?" card exists with a single brick CTA.
-  const card = page.locator('#home-root .home-continue');
+  // 3. Next-lesson card with exactly one primary brick CTA.
+  const card = page.locator('#home-root .dash-card').first();
   await expect(card).toBeVisible();
-  await expect(card.locator('.home-continue__cta')).toContainText(/Jatka|Aloita/);
+  const cta = page.locator('#home-root [data-cta-primary="true"]');
+  await expect(cta).toHaveCount(1);
+  await expect(cta).toContainText(/Jatka|Aloita|Avaa/);
 
-  // 5. Päivän tavoite renders with a progressbar.
-  await expect(page.locator('#home-root .home-goal__bar')).toBeVisible();
+  // 4. Title uses the Fredoka display font, never Fraunces / a serif.
+  const titleFamily = await card.locator('.dash-card__title').evaluate(
+    (el) => getComputedStyle(el).fontFamily,
+  );
+  expect(titleFamily).toMatch(/^["']?Fredoka/i);
+  expect(titleFamily).not.toMatch(/Fraunces|Plus Jakarta|Manrope/i);
 
-  // 6. Kurssipolku snapshot ships exactly 4 micro-tiles.
-  await expect(page.locator('#home-root .home-track')).toHaveCount(4);
-
-  // 7. AI-slop bans — none of the killed strings can appear.
+  // 5. No em-dashes anywhere in the dashboard copy.
   const bodyText = await page.locator('#home-root').innerText();
-  expect(bodyText).not.toMatch(/Päivää\./);
-  expect(bodyText).not.toMatch(/8 KURSSIA · 80 OPPITUNTIA/);
-  expect(bodyText).not.toMatch(/YO-VALMIUS\s*—/);
-  expect(bodyText).not.toMatch(/—/); // em-dash banned in Finnish copy
+  expect(bodyText).not.toMatch(/—/);
 
-  // 8. Capture screenshots for visual review.
+  // 6. Capture screenshots for visual review.
   await page.setViewportSize({ width: 1440, height: 900 });
-  await page.screenshot({ path: path.join(OUT_DIR, 'dashboard-v271-desktop.png'), fullPage: true });
+  await page.screenshot({ path: path.join(OUT_DIR, 'dashboard-v344-desktop.png'), fullPage: true });
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.screenshot({ path: path.join(OUT_DIR, 'dashboard-v271-mobile.png'), fullPage: true });
+  await page.screenshot({ path: path.join(OUT_DIR, 'dashboard-v344-mobile.png'), fullPage: true });
 });

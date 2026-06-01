@@ -32,16 +32,18 @@ body.app {
        Brick + olive accents kept so Puheo's DNA still reads on every
        screen. Tinted whites (chroma 0.001–0.004 around the 75° hue)
        avoid the sterile pure-#fff feel impeccable forbids. ───────── */
-  --ed-bg:           oklch(99% 0.002 75);   /* near-white app canvas */
-  --ed-bg-card:      oklch(100% 0.001 75);  /* lifted card surface */
-  --ed-bg-deep:      oklch(96% 0.004 75);   /* shelves, sidebar nav rest */
-  --ed-bg-tint:      oklch(94% 0.020 30);   /* terracotta-tinted wash */
-  --ed-rule:         oklch(20% 0.012 30 / 0.10);
-  --ed-rule-strong:  oklch(20% 0.012 30 / 0.20);
+  /* L-V344 WordDive: app canvas goes warm cream (matches landing), flat
+     colours only — paper grain wash neutralised below. */
+  --ed-bg:           #FBF7EF;   /* cream app canvas */
+  --ed-bg-card:      #FFFFFF;   /* paper card surface */
+  --ed-bg-deep:      #F6F0E2;   /* shelves, sidebar nav rest */
+  --ed-bg-tint:      #F4DAD3;   /* brick-pale wash */
+  --ed-rule:         #E9DFCF;
+  --ed-rule-strong:  #DBCDB4;
 
   /* ─── Ink (warm near-black) ─────────────────────────────── */
-  --ed-ink:          oklch(18% 0.012 30);
-  --ed-ink-muted:    oklch(38% 0.012 30);
+  --ed-ink:          #241C15;
+  --ed-ink-muted:    #5C5145;
   /* Darker than the landing's --ed-ink-subtle (L=56%) — the dashboard uses
      this colour on 11px mono labels everywhere, where AA needs ≥4.5:1
      against cream. L=48% pulls every meta label / chart legend above the
@@ -49,12 +51,12 @@ body.app {
   --ed-ink-subtle:   oklch(48% 0.012 30);
   --ed-ink-faint:    oklch(64% 0.010 30);
 
-  /* ─── Terracotta primary accent ─────────────────────────── */
-  --ed-accent:       oklch(42% 0.15 28);
-  --ed-accent-hover: oklch(36% 0.15 28);
-  --ed-accent-soft:  oklch(42% 0.15 28 / 0.10);
-  --ed-accent-tint:  oklch(91% 0.040 30);
-  --ed-accent-ink:   oklch(96% 0.012 75);
+  /* ─── Brick primary accent (L-V344) ─────────────────────── */
+  --ed-accent:       #9B2D2A;
+  --ed-accent-hover: #832421;
+  --ed-accent-soft:  rgba(155, 45, 42, 0.10);
+  --ed-accent-tint:  #F4DAD3;
+  --ed-accent-ink:   #FBF7EF;
 
   /* ─── Brand brick aliases (v276) ─────────────────────────
      Same terracotta family as --ed-accent, named after the
@@ -66,21 +68,21 @@ body.app {
   --brand-brick-soft:     var(--ed-accent-tint);
   --brand-brick-on-light: var(--ed-accent-ink);
 
-  /* ─── Olive secondary ───────────────────────────────────── */
-  --ed-olive:        oklch(38% 0.07 110);
-  --ed-olive-hover:  oklch(32% 0.07 110);
-  --ed-olive-soft:   oklch(38% 0.07 110 / 0.12);
-  --ed-olive-tint:   oklch(91% 0.030 105);
+  /* ─── Green secondary (L-V344, was olive) ───────────────── */
+  --ed-olive:        #2E5E4E;
+  --ed-olive-hover:  #254C40;
+  --ed-olive-soft:   rgba(46, 94, 78, 0.12);
+  --ed-olive-tint:   #DCE8E0;
 
-  /* ─── Gold marginalia ───────────────────────────────────── */
-  --ed-gold:         oklch(62% 0.11 78);
-  --ed-gold-soft:    oklch(62% 0.11 78 / 0.18);
+  /* ─── Yellow accent (L-V344, was gold) ──────────────────── */
+  --ed-gold:         #C99A22;   /* yellow darkened for AA as text/marginalia */
+  --ed-gold-soft:    rgba(244, 200, 74, 0.30);
 
-  /* ─── Type ──────────────────────────────────────────────── */
-  --ed-display: "Plus Jakarta Sans", "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --ed-serif:   "Plus Jakarta Sans", "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --ed-sans:    "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --ed-mono:    "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  /* ─── Type — Fredoka display + Mulish body (L-V344) ─────── */
+  --ed-display: "Fredoka", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --ed-serif:   "Fredoka", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --ed-sans:    "Mulish", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --ed-mono:    "Mulish", system-ui, -apple-system, "Segoe UI", sans-serif;
   --ed-fvs-display: "wght" 600;
   --ed-fvs-display-italic: "wght" 500;
 
@@ -160,9 +162,8 @@ body.app::before {
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  background-image:
-    radial-gradient(circle at 18% 20%, oklch(70% 0.05 60 / 0.05) 0, transparent 30%),
-    radial-gradient(circle at 84% 76%, oklch(60% 0.10 28 / 0.04) 0, transparent 32%);
+  /* L-V344: flat cream canvas, no gradient grain wash. */
+  background-image: none;
 }
 body.app > * { position: relative; z-index: 1; }
 /* v246 — the broad rule above downgrades the intentional `position: fixed`
