@@ -1,7 +1,7 @@
 import { Router } from "express";
 import supabase from "../supabase.js";
 import { requireAuth } from "../middleware/auth.js";
-import { callOpenAI } from "../lib/openai.js";
+import { callOpenAI, normalizeLang } from "../lib/openai.js";
 import { KURSSI_META, readLessonFile } from "../lib/curriculum.js";
 import {
   CURRICULUM_KURSSIT,
@@ -799,6 +799,7 @@ router.post("/:kurssiKey/lesson/:lessonIndex/complete", requireAuth, async (req,
       await supabase.from("exercise_logs").insert({
         user_id: req.user.userId,
         mode: STREAK_MODE,
+        language: normalizeLang(completeLang),
         level: null,
         score_correct: scoreCorrect,
         score_total: scoreTotal,

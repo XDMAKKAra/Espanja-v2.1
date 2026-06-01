@@ -3,7 +3,7 @@ import { readFileSync } from "fs";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
 import supabase from "../supabase.js";
-import { callOpenAI, LANG_LABEL } from "../lib/openai.js";
+import { callOpenAI, LANG_LABEL, normalizeLang } from "../lib/openai.js";
 import { requireAuth, checkFeatureAccess, incrementFreeUsage } from "../middleware/auth.js";
 import { requireSupportedLanguage, resolveLang } from "../middleware/language.js";
 import { pointsToYoGrade } from "../lib/grading.js";
@@ -217,6 +217,7 @@ router.post("/start", requireAuth, async (req, res) => {
 
   const { durationMode = "demo" } = req.body;
   const userId = req.user.userId;
+  const language = normalizeLang(resolveLang(req));
 
   const examAccess = await checkFeatureAccess(userId, "exam");
   if (!examAccess.allowed) {
@@ -261,6 +262,7 @@ router.post("/start", requireAuth, async (req, res) => {
       .insert({
         user_id: userId,
         status: "in_progress",
+        language,
         duration_mode: durationMode === "full" ? "full" : "demo",
         seconds_remaining: secondsRemaining,
         current_part: 1,

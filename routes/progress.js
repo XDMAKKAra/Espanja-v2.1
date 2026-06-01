@@ -1,7 +1,7 @@
 import { Router } from "express";
 import supabase from "../supabase.js";
 import { requireAuth, isPro, getUserTier } from "../middleware/auth.js";
-import { GRADES, GRADE_ORDER, DAY_MS, WEEK_MS, calculateStreak, calculateEstLevel } from "../lib/openai.js";
+import { GRADES, GRADE_ORDER, DAY_MS, WEEK_MS, calculateStreak, calculateEstLevel, normalizeLang } from "../lib/openai.js";
 import { computeGradeEstimate } from "../lib/gradeThreshold.js";
 import { computeEligibility, LEVEL_ORDER } from "../lib/adaptive.js";
 import { getMonthlyUsage } from "../lib/aiCost.js";
@@ -14,6 +14,10 @@ const ADAPTIVE_MODES = new Set(["vocab", "grammar", "reading"]);
 
 router.post("/progress", requireAuth, async (req, res) => {
   const { mode, level, scoreCorrect, scoreTotal, ytlGrade } = req.body;
+  // Stamp every session with its language so the dashboard can scope per
+  // language. Client sends the active language; default "spanish" keeps
+  // existing single-language behaviour for callers that omit it.
+  const language = normalizeLang(req.body.language);
 
   if (!mode || !VALID_MODES.has(mode)) {
     return res.status(400).json({ error: "Virheellinen harjoittelutapa" });
@@ -22,6 +26,7 @@ router.post("/progress", requireAuth, async (req, res) => {
   const { error } = await supabase.from("exercise_logs").insert({
     user_id: req.user.userId,
     mode,
+    language,
     level: level ?? null,
     score_correct: scoreCorrect ?? null,
     score_total: scoreTotal ?? null,
@@ -53,6 +58,7 @@ router.post("/progress", requireAuth, async (req, res) => {
           .from("exercise_logs")
           .select("score_correct, score_total")
           .eq("user_id", req.user.userId)
+          .eq("language", language)
           .eq("mode", mode)
           .eq("level", ulp.current_level)
           .gt("score_total", 0)
@@ -67,6 +73,7 @@ router.post("/progress", requireAuth, async (req, res) => {
           .from("exercise_logs")
           .select("id", { count: "exact", head: true })
           .eq("user_id", req.user.userId)
+          .eq("language", language)
           .eq("mode", mode)
           .eq("level", ulp.current_level)
           .gte("created_at", ulp.level_started_at);
@@ -112,11 +119,13 @@ router.post("/progress", requireAuth, async (req, res) => {
 
 router.get("/dashboard", requireAuth, async (req, res) => {
   const userId = req.user.userId;
+  const language = normalizeLang(req.query.language);
 
   const { data: logs, error } = await supabase
     .from("exercise_logs")
     .select("*")
     .eq("user_id", userId)
+    .eq("language", language)
     .order("created_at", { ascending: false });
 
   if (error) return res.status(500).json({ error: "Failed to load dashboard" });
@@ -218,6 +227,7 @@ router.post("/mistake", requireAuth, async (req, res) => {
     topics, exerciseType, level, question,
     wrongAnswer, correctAnswer, explanation,
   } = req.body;
+  const language = normalizeLang(req.body.language);
 
   // Normalize/validate topics (infer from content if not provided)
   let validTopics = normalizeTopics(topics);
@@ -233,6 +243,7 @@ router.post("/mistake", requireAuth, async (req, res) => {
     const { error } = await supabase.from("user_mistakes").insert({
       user_id: req.user.userId,
       topics: validTopics,
+      language,
       exercise_type: exerciseType || null,
       level: level || null,
       question: question ? String(question).slice(0, 500) : null,

@@ -97,12 +97,30 @@ Eli Supabase-stressissä **sekä tuntiraja että kuukauden €-katto pettävät*
 ## Korjattu tässä passissa
 - `tests/lesson-labels.test.js` — stale assertio: odotti `getLessonLabel("nonsense") === "nonsense"`, mutta impl palauttaa tarkoituksella `"Kertaus"` (ei vuoda raakaa avainta UI:hin). Spec päivitetty vastaamaan tarkoitettua käytöstä. (Claude-internal, ei pushata.)
 
-## Avoimeksi jää (prioriteetilla)
-| Prioriteetti | Löydös | Korjaus |
-|---|---|---|
-| **P1** | Cross-language progress bleed | Migraatio + read/write-skooppaus kielellä — oma loop |
-| **P2** | AI-€-suoja failaa auki kirjautuneille | Globaali authed päivä-katto backstopiksi — oma loop, cap = Marcel |
-| **P3** | Leaked-password-protection pois | 1 klikki Supabase-dashboard |
+## ✅ RESOLUTION — "korjaa kaikki" (2026-06-01, samassa sessiossa)
+
+### P1 — Cross-language bleed: KORJATTU (backend-foundation) ✅
+Tutkinnassa paljastui että bleed ei ole niin laaja kuin pelättiin:
+- SR / curriculum / digikirja -edistymä oli **jo** kielellä skoupattu (`sr_cards.language`, `user_curriculum_progress.lang` jne.).
+- `user_level_progress` **ei ole olemassa skeemassa** → adaptiivinen taso on jo inertti (kyselyt erroroivat → null). Ei migroitu.
+- Todellinen vuoto rajautui neljään dashboardin taustatauluun.
+
+Tehty:
+- **Migraatio** (`supabase/migrations/20260601_progress_language_scoping.sql`, ajettu prod-DB:hen MCP:llä): `language text not null default 'spanish'` + komposiitti-indeksit tauluihin `exercise_logs`, `user_mistakes`, `exam_sessions`, `diagnostic_results`. Backfill 'spanish' (15/9/5/2 riviä — kaikki nykysisältö on espanjaa).
+- **`normalizeLang()`** (`lib/openai.js`): es/spanish→spanish, fr/french→french, de/german→german, default spanish. Kaksi konventiota (täysi sana vs es/fr/de) yhtenäistetty kirjoitus/lukurajalla.
+- **Luku skoupattu kielellä:** kaikki `/dashboard/v2`-loaderit (`loadDashboardCore`, `loadWeakTopics`, `loadExamHistory`, `loadPlacementStatus`, `loadAdaptiveStatus`) + legacy `GET /dashboard` + adaptiivisen blokin log-kyselyt.
+- **Kirjoitus leimattu kielellä:** `progress.js` (exercise_logs + user_mistakes), `curriculum.js` (lesson-bridge), `exam.js` (exam_sessions via `resolveLang`), `placement.js` (diagnostic_results).
+- **Regressiotesti** `tests/language-scoping.test.js`.
+
+**Tietoisesti globaaleiksi jätetty (ei bug, vaan design):** `email.js` streak-muistutukset (aktiivisuus on kieliriippumaton) ja `levelEngine.js` → `user_level` (yksi globaali YO-valmiustaso per käyttäjä, taulu on user_id-keyed).
+
+**Jää jäljelle (client-aktivointi, additiivinen):** client ei vielä lähetä aktiivista kieltä `/dashboard/v2`:lle eikä `saveProgress`/`mistake`-kutsuihin (`readActiveLang()` palauttaa es/fr/de, dashboard-fetch ei välitä paramia). Backend normalisoi sen heti kun client alkaa lähettää. Tämä + tuotepäätös (per-kieli vs jaettu streak) aktivoituu kun fr/de saa sisältöä — vaatii live-E2E:n. **Tänään käytös on identtinen** (es-only → kaikki 'spanish').
+
+### P2 — AI-€-fail-open: KORJATTU ✅
+`middleware/rateLimit.js`: lisätty **DB-riippumaton globaali päivä-backstop** authed-AI-kutsuille (`aiLimiter`/`aiStrictLimiter`, `backstop:true`). Puhdas moduulimuisti, ei nojaa juuri kaatuneeseen Supabaseen. Kun `AUTHED_AI_DAILY_CAP` (default 4000/pv/instanssi) ylittyy → 429 vaikka DB-limitteri + cost-limit failaisivat auki. Per-instanssi (ei jaettua tilaa serverlessissä) → rajaa per-instanssi-ryntäyksen, joka on realistinen outage-failure-mode. Regressiotesti `tests/ai-cost-backstop.test.js` todistaa että backstop blokkaa per-user-ikkunasta riippumatta.
+
+### P3 — Leaked-password-protection: EI OHJELMALLISTA POLKUA ⚠️
+Tämä on GoTrue **auth-config** (`auth.password_hibp`), ei DB-objekti. Supabase-MCP:ssä ei ole auth-config-työkalua eikä `execute_sql` ylety GoTrue-configiin. **En voi kytkeä sitä käytettävissä olevilla työkaluilla** — vaatii joko dashboard-toggleen (Auth → Password security → enable HaveIBeenPwned) tai Management API -tokenin jota minulla ei ole. Tämä on alustarajoite, ei delegointi. Jos haluat, scriptaan sen Management API:lla jos annat tokenin.
 
 ## Out-of-scope (tehty oikein)
 - Kuormatesti / concurrency = L-V340.

@@ -23,7 +23,7 @@ import supabase from "../supabase.js";
 import { requireAuth, isPro, isTestProEmail } from "../middleware/auth.js";
 import {
   GRADES, GRADE_ORDER, DAY_MS, WEEK_MS,
-  calculateStreak, calculateEstLevel,
+  calculateStreak, calculateEstLevel, normalizeLang,
 } from "../lib/openai.js";
 import { computeGradeEstimate } from "../lib/gradeThreshold.js";
 import { computeEligibility } from "../lib/adaptive.js";
@@ -119,11 +119,12 @@ async function loadProfile(userId, email) {
 // the per-mode "X harjoitusta" count understates by definition — acceptable
 // trade-off for cutting query time from ~3-5s to <500ms on busy accounts.
 // If exact lifetime counts matter later, add a separate head:true count(*).
-async function loadDashboardCore(userId) {
+async function loadDashboardCore(userId, language = "spanish") {
   const { data: logs, error } = await supabase
     .from("exercise_logs")
     .select("*")
     .eq("user_id", userId)
+    .eq("language", language)
     .order("created_at", { ascending: false })
     .limit(500);
   if (error) throw error;
@@ -194,12 +195,13 @@ async function loadDashboardCore(userId) {
 }
 
 // ─── Section: weak topics (last 7 days) ─────────────────────────────────────
-async function loadWeakTopics(userId, days = 7) {
+async function loadWeakTopics(userId, days = 7, language = "spanish") {
   const since = new Date(Date.now() - days * DAY_MS).toISOString();
   const { data: mistakes, error } = await supabase
     .from("user_mistakes")
     .select("topics, created_at")
     .eq("user_id", userId)
+    .eq("language", language)
     .gte("created_at", since);
   if (error) throw error;
   const topicCounts = {};
@@ -256,11 +258,12 @@ async function loadSrForecast(userId, language = "spanish", days = 30) {
 }
 
 // ─── Section: exam history ──────────────────────────────────────────────────
-async function loadExamHistory(userId) {
+async function loadExamHistory(userId, language = "spanish") {
   const { data, error } = await supabase
     .from("exam_sessions")
     .select("id, status, started_at, ended_at, duration_mode, total_points, max_points, final_grade, part_scores")
     .eq("user_id", userId)
+    .eq("language", language)
     .eq("status", "completed")
     .order("ended_at", { ascending: false })
     .limit(20);
@@ -282,11 +285,12 @@ async function loadLearningPath(userId) {
 }
 
 // ─── Section: placement status ──────────────────────────────────────────────
-async function loadPlacementStatus(userId) {
+async function loadPlacementStatus(userId, language = "spanish") {
   const { data, error } = await supabase
     .from("diagnostic_results")
     .select("placement_level, chosen_level, created_at")
     .eq("user_id", userId)
+    .eq("language", language)
     .order("created_at", { ascending: false })
     .limit(1)
     .single();
@@ -300,8 +304,8 @@ async function loadPlacementStatus(userId) {
 }
 
 // ─── Section: adaptive status (with 30s LRU cache, UPDATE 6) ────────────────
-async function loadAdaptiveStatus(userId, mode = "vocab") {
-  const cacheKey = `${userId}::${mode}`;
+async function loadAdaptiveStatus(userId, mode = "vocab", language = "spanish") {
+  const cacheKey = `${userId}::${mode}::${language}`;
   const cached = adaptiveCacheGet(cacheKey);
   if (cached) return cached;
 
@@ -327,14 +331,14 @@ async function loadAdaptiveStatus(userId, mode = "vocab") {
     supabase
       .from("exercise_logs")
       .select("score_correct, score_total")
-      .eq("user_id", userId).eq("mode", mode).eq("level", progress.current_level)
+      .eq("user_id", userId).eq("language", language).eq("mode", mode).eq("level", progress.current_level)
       .gt("score_total", 0)
       .order("created_at", { ascending: false })
       .limit(20),
     supabase
       .from("exercise_logs")
       .select("id", { count: "exact", head: true })
-      .eq("user_id", userId).eq("mode", mode).eq("level", progress.current_level)
+      .eq("user_id", userId).eq("language", language).eq("mode", mode).eq("level", progress.current_level)
       .gte("created_at", progress.level_started_at),
   ]);
   const sessionPcts = (sessionPctsLogs.data || [])
@@ -360,7 +364,8 @@ async function loadAdaptiveStatus(userId, mode = "vocab") {
 router.get("/dashboard/v2", requireAuth, async (req, res) => {
   const userId = req.user.userId;
   const adaptiveMode = req.query.adaptiveMode || "vocab";
-  const language = req.query.language || "spanish";
+  // Normalize so a stray short code ("es") still matches stored "spanish" rows.
+  const language = normalizeLang(req.query.language);
 
   // L-RENDER-PERF-1: per-user response cache (30s TTL) — login triggers two
   // sequential dashboard/v2 fetches (loadHome then post-login loadDashboard);
@@ -385,14 +390,14 @@ router.get("/dashboard/v2", requireAuth, async (req, res) => {
     examHistory, learningPath, placement, adaptiveStatus,
   ] = await Promise.all([
     settle(() => loadProfile(userId, req.user.email)),
-    settle(() => loadDashboardCore(userId)),
-    settle(() => loadWeakTopics(userId, 7)),
+    settle(() => loadDashboardCore(userId, language)),
+    settle(() => loadWeakTopics(userId, 7, language)),
     settle(() => loadSrCount(userId, language)),
     settle(() => loadSrForecast(userId, language, 30)),
-    settle(() => loadExamHistory(userId)),
+    settle(() => loadExamHistory(userId, language)),
     settle(() => loadLearningPath(userId)),
-    settle(() => loadPlacementStatus(userId)),
-    settle(() => loadAdaptiveStatus(userId, adaptiveMode)),
+    settle(() => loadPlacementStatus(userId, language)),
+    settle(() => loadAdaptiveStatus(userId, adaptiveMode, language)),
   ]);
 
   const payload = {

@@ -12,7 +12,7 @@ import {
   fallbackTutorAssessment,
   KURSSI_META,
 } from "../lib/curriculum.js";
-import { callOpenAI } from "../lib/openai.js";
+import { callOpenAI, normalizeLang } from "../lib/openai.js";
 
 const router = Router();
 
@@ -121,6 +121,7 @@ router.post("/submit", requireAuth, async (req, res) => {
     // so a silent failure here meant users saw the placement flow every login.
     const { error: insertError } = await supabase.from("diagnostic_results").insert({
       user_id: req.user.userId,
+      language: normalizeLang(req.query?.lang || req.body?.lang),
       placement_level: result.placementLevel,
       chosen_level: result.placementLevel, // updated later if user picks alternative
       total_correct: result.totalCorrect,

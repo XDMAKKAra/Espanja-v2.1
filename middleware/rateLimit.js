@@ -106,12 +106,42 @@ export function clientIp(req) {
   return req.ip || "";
 }
 
+// ─── In-memory global daily backstop for authenticated AI (L-V339 P2) ───────
+// Both supabaseRateLimit (fail-open on DB error) and checkMonthlyCostLimit
+// (fail-open in its catch) drop every cost ceiling for logged-in AI calls when
+// Supabase errors. This counter is deliberately DB-independent: even with the
+// DB down, once the day's global authed-AI budget is spent the call is
+// refused. It lives in module memory per serverless instance (no shared
+// state), so it bounds per-instance runaway — the realistic stampede-during-
+// outage failure mode — without leaning on the very DB that just failed. The
+// per-user aiLimiter (20/h) and monthly cost limit remain the primary gates;
+// this only catches the fail-open hole. Tune with AUTHED_AI_DAILY_CAP.
+const AUTHED_AI_DAILY_CAP = Number(process.env.AUTHED_AI_DAILY_CAP) || 4000;
+let _authedAiDay = "";
+let _authedAiCount = 0;
+function authedAiBackstopExceeded() {
+  const today = new Date().toISOString().slice(0, 10);
+  if (today !== _authedAiDay) {
+    _authedAiDay = today;
+    _authedAiCount = 0;
+  }
+  _authedAiCount++;
+  return _authedAiCount > AUTHED_AI_DAILY_CAP;
+}
+
 // ─── Middleware factory ────────────────────────────────────────────────────
 
-function createLimiter({ windowMs, max, keyGenerator, message }) {
+function createLimiter({ windowMs, max, keyGenerator, message, backstop }) {
   const errorMsg = message?.error || "Liian monta pyyntöä. Yritä hetken kuluttua uudelleen.";
 
   return async (req, res, next) => {
+    // DB-independent global daily backstop runs first so it still bites when
+    // the Supabase-backed limiter below would fail open.
+    if (backstop && authedAiBackstopExceeded()) {
+      console.error("Authed-AI daily backstop hit:", _authedAiCount, "/", AUTHED_AI_DAILY_CAP);
+      return res.status(429).json({ error: errorMsg });
+    }
+
     const key = keyGenerator ? keyGenerator(req) : req.ip;
     const prefixedKey = `rl:${req.path}:${key}`;
 
@@ -159,6 +189,7 @@ export const aiLimiter = createLimiter({
   max: 20,
   keyGenerator: (req) => req.user?.userId || req.ip,
   message: { error: "Olet käyttänyt tuntikysyntäsi. Yritä myöhemmin." },
+  backstop: true,
 });
 
 export const aiStrictLimiter = createLimiter({
@@ -166,6 +197,7 @@ export const aiStrictLimiter = createLimiter({
   max: 10,
   keyGenerator: (req) => req.user?.userId || req.ip,
   message: { error: "Olet käyttänyt tuntikysyntäsi. Yritä myöhemmin." },
+  backstop: true,
 });
 
 // Per-user limiter for /report-exercise: prevents abusive bulk-reporting.
