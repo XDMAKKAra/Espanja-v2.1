@@ -118,6 +118,16 @@ Regressiotesti: `routes-auth.test.js`-mock päivitetty (authClient erillisenä);
 
 ---
 
+## ✅ KOKO AUTH-PINNAN SWEEP ("fix kaikki", P0-fixin jälkeen)
+
+`tests/verify-sweep.mjs` (oikea server + Supabase, PRO + FREE):
+- **Funktionaalinen:** 16 autentikoitua GET-reittiä × 2 käyttäjää → **ei yhtään 5xx**. Ainoa ei-200 on `/api/user-level → 400` (vaatii `?mode=`-paramin, oikea validointi, client lähettää sen aina).
+- **Concurrency-eristys-stressi:** 40 lomitettua rinnakkaista `/api/dashboard`-pyyntöä (20 PRO + 20 FREE yhtä aikaa Promise.all) → **PRO aina 16 sessiota, FREE aina 0**. Nolla vuotoa. Tämä todistaa että P0-fix (authClient) kestää oikean rinnakkaisuuden koko pinnalla, ei vain peräkkäisissä kutsuissa.
+
+Eli koko autentikoitu backend on rikkimätön ja eristyksen osalta puhdas. Ei muita session/state-vuotoja löytynyt.
+
+---
+
 ## ✅ RESOLUTION — "korjaa kaikki" (2026-06-01, samassa sessiossa)
 
 ### P1 — Cross-language bleed: KORJATTU (backend-foundation) ✅
