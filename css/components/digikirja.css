@@ -545,9 +545,10 @@ color: var(--ed-ink-faint);
   background: rgba(255, 255, 255, 0.16);
   border: 1px solid rgba(255, 255, 255, 0.30);
   color: #fbfaf6;
-  font-family: var(--ed-mono);
-  font-size: 11.5px;
-  letter-spacing: 0.08em;
+  font-family: var(--ed-sans);
+  font-weight: 600;
+  font-size: 12.5px;
+  letter-spacing: 0.01em;
   font-variant-numeric: tabular-nums;
 }
 .dk__progress-chip[data-full="true"] {
@@ -576,7 +577,11 @@ color: var(--ed-ink-faint);
 
 .dk__content {
   padding: 36px clamp(20px, 4vw, 64px) 48px;
-  min-height: 0;
+  /* L-V336: fill the viewport below the fixed topbar so the flex column has
+     free space and .dk__prevnext--bottom (margin-top:auto) pins to the bottom
+     edge. Short phases (a single translate/MC item) previously stranded the
+     nav mid-page with a tall empty cream band beneath it. */
+  min-height: calc(100dvh - var(--dk-topbar-height));
   min-width: 0;
   /* Flex column so .dk__prevnext--bottom can pin to the viewport bottom on
      short lessons. Without this the page ended after PrevNext and left an
@@ -589,10 +594,11 @@ color: var(--ed-ink-faint);
 }
 
 .dk__page-meta {
-  font-family: var(--ed-mono);
-  font-size: 11px;
-  letter-spacing: 0.16em;
-color: var(--ed-ink-faint);
+  font-family: var(--ed-sans);
+  font-weight: 600;
+  font-size: 12.5px;
+  letter-spacing: 0.01em;
+  color: var(--ed-ink-muted);
   margin: 0 0 14px;
 }
 
@@ -634,10 +640,11 @@ color: var(--ed-accent);
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-family: var(--ed-mono);
-  font-size: 11px;
-  letter-spacing: 0.16em;
-color: var(--ed-accent);
+  font-family: var(--ed-sans);
+  font-weight: 600;
+  font-size: 12.5px;
+  letter-spacing: 0.01em;
+  color: var(--ed-accent);
   margin-bottom: 10px;
 }
 
@@ -759,11 +766,11 @@ color: var(--ed-ink-muted); }
   background: var(--ed-bg-deep);
   border-top: 0;
   border-bottom: 1px solid var(--ed-rule);
-  font-family: var(--ed-mono);
-  font-size: 10.5px;
-  letter-spacing: 0.16em;
-color: var(--ed-ink-muted);
-  font-weight: 500;
+  font-family: var(--ed-sans);
+  font-size: 12px;
+  letter-spacing: 0.01em;
+  color: var(--ed-ink-muted);
+  font-weight: 600;
 }
 .dk__bilingual tbody tr:first-child td { border-top: 0; }
 .dk__bilingual tbody td:first-child {
@@ -842,10 +849,11 @@ font-family: var(--ed-display);
 }
 .dk__exercise-eyebrow,
 .dk__exercise-eyebrow-tag {
-  font-family: var(--ed-mono);
-  font-size: 11px;
-  letter-spacing: 0.16em;
-color: var(--ed-ink-faint);
+  font-family: var(--ed-sans);
+  font-weight: 600;
+  font-size: 12.5px;
+  letter-spacing: 0.01em;
+  color: var(--ed-ink-muted);
 }
 .dk__exercise-eyebrow-tag {
   display: inline-block;
@@ -964,10 +972,11 @@ font-size: 14px;
   max-width: 44ch;
 }
 .dk__input-label {
-  font-family: var(--ed-mono);
-  font-size: 11px;
-  letter-spacing: 0.14em;
-color: var(--ed-ink-faint);
+  font-family: var(--ed-sans);
+  font-weight: 600;
+  font-size: 12.5px;
+  letter-spacing: 0.01em;
+  color: var(--ed-ink-muted);
 }
 .dk__input {
   font-family: var(--ed-sans);
@@ -1056,9 +1065,10 @@ color: var(--ed-ink-faint);
   gap: 8px;
   padding: 4px 10px;
   border-radius: 999px;
-  font-family: var(--ed-mono);
-  font-size: 11.5px;
-  letter-spacing: 0.14em;
+  font-family: var(--ed-sans);
+  font-weight: 600;
+  font-size: 12.5px;
+  letter-spacing: 0.01em;
 }
 .dk__feedback-chip.is-correct {
   background: color-mix(in oklch, var(--ed-accent) 14%, var(--ed-bg-card));
@@ -1075,10 +1085,11 @@ color: var(--ed-ink-faint);
   color: var(--ed-ink);
 }
 .dk__feedback-expected span {
-  font-family: var(--ed-mono);
-  font-size: 11px;
-  letter-spacing: 0.14em;
-color: var(--ed-ink-faint);
+  font-family: var(--ed-sans);
+  font-weight: 600;
+  font-size: 12.5px;
+  letter-spacing: 0.01em;
+  color: var(--ed-ink-muted);
   margin-right: 8px;
 }
 .dk__feedback-text {
@@ -1309,10 +1320,11 @@ font-size: 17px;
   justify-content: space-between;
   max-width: 360px;
   margin-top: 6px;
-  font-family: var(--ed-mono);
-  font-size: 10.5px;
-  letter-spacing: 0.14em;
-color: var(--ed-ink-faint);
+  font-family: var(--ed-sans);
+  font-weight: 500;
+  font-size: 11.5px;
+  letter-spacing: 0.01em;
+  color: var(--ed-ink-muted);
 }
 
 .dk__arvio-actions {
@@ -1385,19 +1397,21 @@ color: var(--ed-ink-faint);
   margin-bottom: 18px;
 }
 .dk__flashcard-eyebrow {
-  font-family: var(--ed-mono);
-  font-size: 10.5px;
-  letter-spacing: 0.18em;
-color: var(--ed-ink-faint);
+  font-family: var(--ed-sans);
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.01em;
+  color: var(--ed-ink-muted);
 }
 .dk__flashcard-tag {
   display: inline-block;
   padding: 3px 9px;
   border-radius: 999px;
-  font-family: var(--ed-mono);
-  font-size: 10.5px;
-  letter-spacing: 0.14em;
-background: var(--ed-bg-deep);
+  font-family: var(--ed-sans);
+  font-weight: 600;
+  font-size: 11.5px;
+  letter-spacing: 0.01em;
+  background: var(--ed-bg-deep);
   color: var(--ed-ink-muted);
 }
 .dk__flashcard-tag--again {
@@ -1553,10 +1567,11 @@ font-size: 22px;
 }
 .dk__prevnext-btn--next { margin-left: auto; text-align: right; }
 .dk__prevnext-dir {
-  font-family: var(--ed-mono);
-  font-size: 10px;
-  letter-spacing: 0.18em;
-color: var(--ed-ink-faint);
+  font-family: var(--ed-sans);
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.01em;
+  color: var(--ed-ink-muted);
   display: block;
 }
 .dk__prevnext-label {
@@ -1681,8 +1696,8 @@ color: var(--ed-ink-faint);
   line-height: 1.6;
   color: var(--ed-ink);
   background: var(--ed-bg-card);
-  border-left: 3px solid var(--ed-accent);
-  border-radius: 4px;
+  border: 1px solid var(--ed-rule);
+  border-radius: 12px;
   padding: 16px 20px;
   margin: 0;
 }

@@ -106,10 +106,10 @@ body.app .op-head {
 }
 body.app .op-eyebrow {
   font-family: var(--ed-sans, system-ui);
-  font-size: 11px;
+  font-size: 12.5px;
   font-weight: 600;
-  letter-spacing: 0.18em;
-color: var(--ed-accent, var(--accent));
+  letter-spacing: 0.02em;
+  color: var(--ed-accent, var(--accent));
   margin: 0;
 }
 body.app .op-title {
@@ -175,6 +175,16 @@ body.app .op-row.is-locked .op-row__title,
 body.app .op-row.is-locked .op-row__desc {
   color: var(--ed-ink-faint, var(--ink-faint));
 }
+/* "You are here" — the in-progress course gets a quiet terracotta wash and a
+   slightly heavier title so the eye lands on it first. No card, no shadow:
+   the row still reads as a shelf entry, just the current chapter. */
+body.app .op-row.is-progress {
+  background: color-mix(in oklch, var(--ed-accent, var(--accent)) 5%, transparent);
+}
+body.app .op-row.is-progress .op-row__title {
+  font-weight: 600;
+  color: var(--ed-ink, var(--ink));
+}
 body.app .op-row.is-progress::before,
 body.app .op-row.is-done::before {
   /* Brick stripe at left to mark current/done, like a bookmark. */
@@ -191,13 +201,15 @@ body.app .op-row.is-done::before {
 body.app .op-row.is-done::before { background: var(--ed-olive, var(--accent)); }
 
 body.app .op-row__num {
-  font-family: var(--ed-mono, monospace);
-  font-size: 28px;
-  font-weight: 400;
+  font-family: var(--ed-display, "Fraunces", Georgia, serif);
+  font-variation-settings: "opsz" 48, "SOFT" 40;
+  font-size: 30px;
+  font-weight: 500;
   text-align: right;
   color: var(--ed-ink-faint, var(--ink-faint));
   line-height: 1;
   padding-right: 4px;
+  font-variant-numeric: lining-nums;
 }
 body.app .op-row.is-progress .op-row__num,
 body.app .op-row.is-done .op-row__num { color: var(--ed-accent, var(--accent)); }
@@ -245,9 +257,9 @@ body.app .op-row__progress-fill {
 body.app .op-row.is-done .op-row__progress-fill { background: var(--ed-olive, var(--accent)); }
 body.app .op-row__status {
   font-family: var(--ed-sans, system-ui);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.01em;
   color: var(--ed-ink-muted, var(--ink-soft));
 }
 body.app .op-row.is-progress .op-row__status,
@@ -306,10 +318,10 @@ body.app .op-progress-text {
 
 body.app .op-row__type {
   font-family: var(--ed-sans, system-ui);
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 600;
-  letter-spacing: 0.16em;
-  color: var(--ed-ink-subtle, var(--ink-muted));
+  letter-spacing: 0.01em;
+  color: var(--ed-ink-muted, var(--ink-soft));
   margin: 0 0 4px;
 }
 body.app .op-row.is-progress .op-row__type,

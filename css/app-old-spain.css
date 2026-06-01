@@ -310,8 +310,10 @@ body.app .dash-kpi-tile__val {
   font-feature-settings: "tnum" 1, "zero" 0;
 }
 body.app .dash-kpi-tile__label {
-  font-family: var(--ed-mono);
-  color: var(--ed-ink-subtle);
+  font-family: var(--ed-sans);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--ed-ink-muted);
 }
 
 /* Daily challenge card — single warm tile, terracotta accent rule. */
@@ -322,7 +324,7 @@ body.app .daily-challenge {
   border-top: 2px solid var(--ed-accent);
   border-radius: 10px;
 }
-body.app .daily-challenge__kicker { color: var(--ed-accent); font-family: var(--ed-mono); }
+body.app .daily-challenge__kicker { color: var(--ed-accent); font-family: var(--ed-sans); font-weight: 600; letter-spacing: 0.01em; }
 body.app .daily-challenge__title {
   font-family: var(--ed-display);
   font-variation-settings: "opsz" 36, "SOFT" 40;
@@ -374,8 +376,9 @@ body.app .dash-mode-cta-btn {
   border-color: var(--ed-accent);
   background: var(--ed-accent-soft);
   color: var(--ed-accent);
-  font-family: var(--ed-mono);
-  letter-spacing: 0.06em;
+  font-family: var(--ed-sans);
+  font-weight: 600;
+  letter-spacing: 0.01em;
 }
 body.app .dash-mode-card:hover .dash-mode-cta-btn {
   background: color-mix(in oklch, var(--ed-accent) 18%, var(--ed-bg-card));
@@ -413,9 +416,10 @@ body.app .dash-hero-sub {
   color: var(--ed-ink);
 }
 body.app .dash-hero-label {
-  font-family: var(--ed-mono);
-  color: var(--ed-ink-subtle);
-  letter-spacing: 0.12em;
+  font-family: var(--ed-sans);
+  font-weight: 600;
+  color: var(--ed-ink-muted);
+  letter-spacing: 0.01em;
 }
 body.app .dash-hero-scale span {
   background: var(--ed-bg-deep);
@@ -457,7 +461,7 @@ body.app .dash-adaptive-card.level-progress-card {
   border-color: var(--ed-rule);
   border-radius: 10px;
 }
-body.app .lpc-eyebrow { color: var(--ed-ink-subtle); font-family: var(--ed-mono); }
+body.app .lpc-eyebrow { color: var(--ed-ink-muted); font-family: var(--ed-sans); font-weight: 600; letter-spacing: 0.01em; }
 body.app .lpc-title {
   font-family: var(--ed-display);
   font-variation-settings: "opsz" 32, "SOFT" 40;
@@ -473,7 +477,9 @@ body.app .lpc-badge {
   color: var(--ed-accent);
   background: var(--ed-accent-soft);
   border-color: color-mix(in oklch, var(--ed-accent) 30%, transparent);
-  font-family: var(--ed-mono);
+  font-family: var(--ed-sans);
+  font-weight: 600;
+  letter-spacing: 0.01em;
 }
 
 /* AI tutor card — single Fraunces-italic line, marginalia in olive. */
@@ -497,8 +503,10 @@ body.app .dash-readiness {
   border-radius: 10px;
 }
 body.app .dash-readiness-title {
-  font-family: var(--ed-mono);
-  color: var(--ed-ink-subtle);
+  font-family: var(--ed-sans);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--ed-ink-muted);
 }
 body.app .dash-readiness-pct {
   font-family: var(--ed-display);
@@ -541,7 +549,7 @@ body.app .dash-weak__name {
 }
 body.app .dash-weak__n { color: var(--ed-gold); font-family: var(--ed-display); font-weight: 600; }
 body.app .dash-weak__err { color: var(--ed-accent); }
-body.app .dash-weak__blog { font-family: var(--ed-mono); color: var(--ed-ink-subtle); }
+body.app .dash-weak__blog { font-family: var(--ed-sans); font-weight: 600; letter-spacing: 0.01em; color: var(--ed-ink-muted); }
 
 /* Full-exam CTA card — terracotta-tinted, hard-offset shadow on hover. */
 body.app .dash-full-exam-card {
@@ -566,7 +574,9 @@ body.app .dash-free-chip {
   border-color: var(--ed-rule);
 }
 body.app .dash-free-chip__badge {
-  font-family: var(--ed-mono);
+  font-family: var(--ed-sans);
+  font-weight: 600;
+  letter-spacing: 0.01em;
   background: var(--ed-bg-card);
   border-color: var(--ed-rule-strong);
   color: var(--ed-ink-muted);
@@ -574,7 +584,7 @@ body.app .dash-free-chip__badge {
 body.app .dash-free-meter { background: var(--ed-bg-card); border-color: var(--ed-rule); }
 body.app .dash-free-meter__fill--ok { background: var(--ed-olive); }
 body.app .dash-free-meter__fill--warn { background: var(--ed-gold); }
-body.app .dash-free-chip__cta { color: var(--ed-accent); font-family: var(--ed-mono); }
+body.app .dash-free-chip__cta { color: var(--ed-accent); font-family: var(--ed-sans); font-weight: 600; letter-spacing: 0.01em; }
 
 /* Onboarding banner — single warm tint, no purple gradient. */
 body.app .dash-onboarding-banner {
@@ -788,12 +798,13 @@ body.app *:focus-visible {
   }
 }
 
-/* Eyebrow row — chapter-tag look. */
+/* Eyebrow row — chapter-tag look. L-V336: sans + weight, not mono-UPPERCASE. */
 body.app .exercise__top .eyebrow,
 body.app .exercise__meta .ex-type-badge {
-  font-family: var(--ed-mono);
-  letter-spacing: 0.12em;
-  color: var(--ed-ink-subtle);
+  font-family: var(--ed-sans);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--ed-ink-muted);
 }
 body.app .exercise__sep { color: var(--ed-ink-faint); font-family: var(--ed-mono); }
 body.app .exercise__exit { color: var(--ed-ink-subtle); }
@@ -1034,9 +1045,10 @@ body.app .gap-fill-hint-btn {
   color: var(--ed-ink-muted);
   border-radius: 999px;
   padding: 6px 14px;
-  font-family: var(--ed-mono);
-  font-size: 11px;
-  letter-spacing: 0.06em;
+  font-family: var(--ed-sans);
+  font-weight: 600;
+  font-size: 12.5px;
+  letter-spacing: 0.01em;
   cursor: pointer;
   transition: color var(--ed-t-fast), border-color var(--ed-t-fast), background var(--ed-t-fast);
 }
@@ -1101,9 +1113,10 @@ body.app .reading-self-wrong {
   border: 1px solid var(--ed-rule);
   border-radius: 8px;
   color: var(--ed-ink-muted);
-  font-family: var(--ed-mono);
+  font-family: var(--ed-sans);
+  font-weight: 600;
   font-size: 0.8125rem;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.01em;
   transition: border-color var(--ed-t-fast), color var(--ed-t-fast), background var(--ed-t-fast);
 }
 body.app .reading-self-correct:hover {
@@ -1343,9 +1356,10 @@ body.app .fullExam-tab {
   border: 1px solid var(--ed-rule);
   border-radius: 999px;
   color: var(--ed-ink-muted);
-  font-family: var(--ed-mono);
-  font-size: 0.75rem;
-  letter-spacing: 0.08em;
+  font-family: var(--ed-sans);
+  font-weight: 600;
+  font-size: 0.8125rem;
+  letter-spacing: 0.01em;
   padding: 6px 12px;
 }
 body.app .full-exam-section-tabs button.is-current,
@@ -1370,9 +1384,10 @@ body.app .lr-shell {
 }
 body.app .lr-step-label,
 body.app .lr-progress-label {
-  font-family: var(--ed-mono);
-  letter-spacing: 0.08em;
-  color: var(--ed-ink-subtle);
+  font-family: var(--ed-sans);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--ed-ink-muted);
 }
 body.app .lr-progress-bar { background: var(--ed-rule); height: 2px; }
 body.app .lr-progress-bar__fill { background: var(--ed-accent); }
@@ -1451,10 +1466,10 @@ body.app #screen-grammar #gram-counter {
    chapter heading, all-caps with proper spaced letterforms. */
 body.app #screen-exercise #ex-topic,
 body.app #screen-grammar #gram-topic-badge {
-  font-family: var(--ed-mono);
+  font-family: var(--ed-sans);
   font-size: 0.8125rem;
   font-weight: 600;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.04em;
   color: var(--ed-accent);
 }
 
@@ -1521,10 +1536,10 @@ body.app #screen-grammar .question-block .display {
    a marginalia mono kicker rather than a body sentence. */
 body.app #screen-exercise #question-label,
 body.app #screen-grammar #gram-instruction {
-  font-family: var(--ed-mono);
-  font-size: 0.6875rem;
-  letter-spacing: 0.14em;
-  color: var(--ed-ink-subtle);
+  font-family: var(--ed-sans);
+  font-size: 0.8125rem;
+  letter-spacing: 0.01em;
+  color: var(--ed-ink-muted);
   margin: 0 0 10px;
   font-weight: 600;
 }
@@ -1702,10 +1717,11 @@ body.app .vs-person-row {
   gap: 10px;
 }
 body.app .vs-person-label {
-  font-family: var(--ed-mono);
-  font-size: 0.6875rem;
-  letter-spacing: 0.14em;
-  color: var(--ed-ink-subtle);
+  font-family: var(--ed-sans);
+  font-weight: 600;
+  font-size: 0.8125rem;
+  letter-spacing: 0.01em;
+  color: var(--ed-ink-muted);
 }
 body.app .vs-person {
   font-family: var(--ed-display);
@@ -1723,8 +1739,10 @@ body.app #vs-tense-badge {
   font-size: 1rem;
 }
 body.app #vs-paradigms-badge {
-  font-family: var(--ed-mono);
-  font-size: 0.75rem;
+  font-family: var(--ed-sans);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  font-size: 0.8125rem;
   color: var(--ed-ink-muted);
   background: var(--ed-accent-soft);
   border: 1px solid color-mix(in oklch, var(--ed-accent) 24%, transparent);
@@ -1862,10 +1880,11 @@ body.app .writing-word-counter { display: none !important; }
   margin: 0 0 12px;
 }
 .lr-feedback__accent-hint {
-  font-family: var(--ed-mono);
-  font-size: 0.75rem;
+  font-family: var(--ed-sans);
+  font-weight: 500;
+  font-size: 0.8125rem;
   color: var(--ed-gold);
-  letter-spacing: 0.04em;
+  letter-spacing: 0.01em;
   margin: 0 0 12px;
 }
 .lr-feedback__next {
@@ -1900,13 +1919,14 @@ body.app .sidebar-pro-badge--lifetime {
      sidebar identity matches the landing palette. Brick on cream ≈ 8.2:1. */
   background: var(--brand-brick);
   color: var(--brand-brick-on-light);
-  font-family: var(--ed-mono);
-  font-weight: 600;
-  letter-spacing: 0.12em;
+  font-family: var(--ed-sans);
+  font-weight: 700;
+  letter-spacing: 0.04em;
 }
 body.app .btn-manage-sub {
-  font-family: var(--ed-mono);
-  font-size: 10px;
+  font-family: var(--ed-sans);
+  font-weight: 600;
+  font-size: 12px;
   color: var(--ed-ink-muted);
   background: transparent;
   border: 0;
@@ -2013,7 +2033,7 @@ body.app.auth-mode .auth-aside__eyebrow {
   font-family: var(--ed-sans);
   color: var(--ed-accent);
   font-weight: 600;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.02em;
   margin-top: 28px;
 }
 

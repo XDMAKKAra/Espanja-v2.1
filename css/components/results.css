@@ -32,9 +32,11 @@
   flex-wrap: wrap;
 }
 .results__sub small {
-  font-family: var(--font-mono);
-  font-size: var(--fs-mono-sm);
-  color: var(--ink-faint);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 12.5px;
+  letter-spacing: 0.01em;
+  color: var(--ink-soft);
 }
 .results__sub .exercise__sep {
   color: var(--ink-faint);
@@ -80,10 +82,11 @@
   color: var(--ink);
 }
 .results__stat-l {
-  font-family: var(--font-mono);
-  font-size: var(--fs-mono-sm, 11px);
-  letter-spacing: 0.06em;
-color: var(--ink-faint);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.01em;
+  color: var(--ink-soft);
   margin-top: 2px;
 }
 /* Correct count: success green (5.5:1 on white / dark surfaces) */

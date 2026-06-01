@@ -321,29 +321,19 @@ body.landing > * { position: relative; z-index: 1; }
   margin: 0 auto;
 }
 
-/* Section eyebrow — uppercase tracked label, ornament-anchored */
+/* Section eyebrow — quiet sans sublabel (L-V336: dropped mono + the
+   flanking rule that read as an em-dash ornament). */
 .landing .section-eyebrow,
 .landing .testimoniaalit__eyebrow,
 .landing .pricing__eyebrow,
 .landing .faq__eyebrow {
-  font-family: var(--ed-mono);
+  font-family: var(--ed-sans);
   font-size: var(--ed-fs-micro);
-  font-weight: 500;
-  letter-spacing: var(--ed-tracking-meta);
+  font-weight: 600;
+  letter-spacing: 0.02em;
   color: var(--ed-accent);
   margin: 0 0 var(--ed-sp-4);
-  display: inline-flex;
-  align-items: center;
-  gap: var(--ed-sp-3);
-}
-.landing .section-eyebrow::before,
-.landing .testimoniaalit__eyebrow::before,
-.landing .pricing__eyebrow::before,
-.landing .faq__eyebrow::before {
-  content: "";
-  width: 32px;
-  height: 1px;
-  background: var(--ed-accent);
+  display: block;
 }
 
 .landing .section-title,
@@ -1102,13 +1092,7 @@ body.landing > * { position: relative; z-index: 1; }
   margin-bottom: var(--ed-sp-7);
 }
 .landing .proof__head .section-eyebrow {
-  justify-content: center;
-}
-.landing .proof__head .section-eyebrow::after {
-  content: "";
-  width: 32px;
-  height: 1px;
-  background: var(--ed-accent);
+  text-align: center;
 }
 .landing .proof__head .section-title {
   margin-inline: auto;
