@@ -43,9 +43,8 @@
     "operatingSystem": "Web, PWA (iOS, Android)",
     "inLanguage": "fi",
     "offers": [
-      { "@type": "Offer", "name": "Free",    "price": "0",  "priceCurrency": "EUR" },
-      { "@type": "Offer", "name": "Treeni",  "price": "9",  "priceCurrency": "EUR", "billingDuration": "P1M" },
-      { "@type": "Offer", "name": "Mestari", "price": "19", "priceCurrency": "EUR", "billingDuration": "P1M" }
+      { "@type": "Offer", "name": "Kurssi", "price": "49", "priceCurrency": "EUR" },
+      { "@type": "Offer", "name": "Treeni", "price": "9",  "priceCurrency": "EUR", "billingDuration": "P1M" }
     ],
     "audience": {
       "@type": "EducationalAudience",
@@ -131,8 +130,9 @@
           </h1>
 
           <p class="hero__sub">
-            Kirjoituksesi arvioidaan samalla mittarilla kuin oikeassa YO-kokeessa.
-            Jokainen virhe selitetään suomeksi.
+            Kahdeksan kurssin oppimispolku, rakennettu YO-kokeen mukaan.
+            Harjoittele oikeita tehtäviä, ja tekoäly arvioi kirjoitelmasi
+            YTL:n mittarilla.
           </p>
 
           <div class="hero__ctas">
@@ -167,27 +167,27 @@
       <div class="features__grid">
 
         <article class="feature">
+          <div class="feature__art feature__art--yellow">
+            <img src="/img/illustrations/feature-langs.svg" alt="Ylioppilaslakki ja kolme kieltä puhekuplina: espanja, ranska, saksa" width="320" height="280" loading="lazy" decoding="async" />
+          </div>
+          <h3 class="feature__title">Kurssi YO-kokeen mukaan</h3>
+          <p class="feature__body">Kahdeksan kurssin oppimispolku, 90 oppituntia kielessä, A-tasolta E-tasolle. Sama runko espanjassa, ranskassa ja saksassa.</p>
+        </article>
+
+        <article class="feature">
           <div class="feature__art feature__art--green">
             <img src="/img/illustrations/feature-tasks.svg" alt="YO-koepaperi rastitettuna, espanjan, ranskan ja saksan aksenttitiilet" width="320" height="280" loading="lazy" decoding="async" />
           </div>
-          <h3 class="feature__title">Oikeat YO-tehtävät</h3>
-          <p class="feature__body">Samat tehtävätyypit kuin kokeessa: sähköpostit, mielipidekirjoitukset ja luetunymmärtäminen, lyhyen oppimäärän tasolla.</p>
+          <h3 class="feature__title">Oikeat tehtävätyypit</h3>
+          <p class="feature__body">Kielioppi, sanasto, luetun ymmärtäminen, kirjoittaminen ja koeharjoitus, samoilla tehtävämuodoilla kuin kokeessa.</p>
         </article>
 
         <article class="feature">
           <div class="feature__art feature__art--brick">
             <img src="/img/illustrations/feature-ai.svg" alt="Tekoäly arvioi kirjoitelman ja antaa pistemäärän heti" width="320" height="280" loading="lazy" decoding="async" />
           </div>
-          <h3 class="feature__title">Tekoäly arvioi heti</h3>
-          <p class="feature__body">Saat pisteet YTL:n rubriikilla ja suomenkielisen selityksen jokaisesta virheestä sekunneissa, et päivien päästä.</p>
-        </article>
-
-        <article class="feature">
-          <div class="feature__art feature__art--yellow">
-            <img src="/img/illustrations/feature-langs.svg" alt="Kolme kieltä puhekuplina ja ylioppilaslakki: espanja, ranska, saksa" width="320" height="280" loading="lazy" decoding="async" />
-          </div>
-          <h3 class="feature__title">Kolme kieltä, yksi mittari</h3>
-          <p class="feature__body">Espanja, ranska ja saksa saman arvioinnin takana. Vaihda kieltä, mittari pysyy samana.</p>
+          <h3 class="feature__title">Tekoäly arvioi kirjoitelmat</h3>
+          <p class="feature__body">Kirjoitustehtävästä saat pisteet YTL:n rubriikilla ja suomenkielisen selityksen virheistä sekunneissa, et päivien päästä.</p>
         </article>
 
       </div>
@@ -204,7 +204,7 @@
           <p class="proof__lede">
             Arvio tulee tekoälymallilta, joka on treenattu YTL:n julkaisemiin
             koejakoihin ja virallisen rubriikin pisteytysohjeisiin. Sama malli
-            arvioi jokaisen kirjoituksen, niin Freessä kuin Mestarissa.
+            arvioi jokaisen kirjoituksen samalla tarkkuudella.
           </p>
         </div>
 
@@ -738,7 +738,7 @@ Anna</p>
               <p>
                 Espanja: koko 8-kurssin polku saatavilla. Saksa ja ranska:
                 lukukauden mittainen alkukurssipohja valmis, loput kurssit
-                avautuvat syksyn 2026 ja kevään 2027 aikana. Mestari-tilaajat
+                avautuvat syksyn 2026 ja kevään 2027 aikana. Kurssin ostaneet
                 saavat uudet kurssit automaattisesti ilman lisämaksua.
                 Voit liittyä saksan ja ranskan waitlistille
                 <a href="/saksan-yo-koe">saksan</a> tai
@@ -755,8 +755,8 @@ Anna</p>
             <div class="faq-item__a">
               <p>
                 Seuraamme YTL:n ohjeistusta ja päivitämme harjoitukset, rubriikin
-                ja tehtävätyypit jokaisen julkaistun muutoksen jälkeen. Treeni- ja
-                Mestari-tilaajat saavat päivitykset automaattisesti, uusia
+                ja tehtävätyypit jokaisen julkaistun muutoksen jälkeen. Treeni-tilaajat
+                ja kurssin ostaneet saavat päivitykset automaattisesti, uusia
                 versioita ei tarvitse asentaa erikseen.
               </p>
             </div>
@@ -800,7 +800,7 @@ Anna</p>
             </summary>
             <div class="faq-item__a">
               <p>
-                Kyllä. Voit peruuttaa Treeni- tai Mestari-tilauksen
+                Kyllä. Voit peruuttaa Treeni-tilauksen
                 sisäänkirjautuneena yhdellä klikkauksella, ja tilaus päättyy
                 kuluvan laskutusjakson loppuun. Kertaostoille (esim. 8 viikon
                 paketti) myönnämme 14 päivän rahat-takaisin-takuun ilman
