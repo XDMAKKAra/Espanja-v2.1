@@ -71,7 +71,8 @@ vi.mock("../../middleware/rateLimit.js", () => {
   const pass = (req, res, next) => next();
   return { aiLimiter: pass, aiStrictLimiter: pass, authLimiter: pass, registerLimiter: pass,
            forgotPasswordLimiter: pass, reportLimiter: pass, waitlistLimiter: pass,
-           demoGradeLimiter: pass, default: { aiLimiter: pass } };
+           demoGradeLimiter: pass, demoGradeGlobalLimiter: pass,
+           clientIp: (req) => req.ip || "", default: { aiLimiter: pass } };
 });
 vi.mock("../../middleware/costLimit.js", () => ({ checkMonthlyCostLimit: (req, res, next) => next() }));
 vi.mock("../../middleware/auth.js", () => ({

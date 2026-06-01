@@ -90,6 +90,22 @@ async function checkRateLimit(key, windowMs, max) {
   return supabaseRateLimit(key, windowMs, max);
 }
 
+// ─── Client IP resolution ──────────────────────────────────────────────────
+// We do NOT set Express `trust proxy` globally (it would change keying for
+// every existing limiter and can't be safely re-tested here), so on Vercel
+// `req.ip` is the platform proxy, not the visitor. Read the left-most
+// X-Forwarded-For entry (Vercel sets it to the real client) and fall back to
+// req.ip. This is best-effort and spoofable; the global demo cap is the real
+// cost backstop.
+export function clientIp(req) {
+  const xff = req.headers?.["x-forwarded-for"];
+  if (xff) {
+    const first = (Array.isArray(xff) ? xff[0] : String(xff)).split(",")[0].trim();
+    if (first) return first;
+  }
+  return req.ip || "";
+}
+
 // ─── Middleware factory ────────────────────────────────────────────────────
 
 function createLimiter({ windowMs, max, keyGenerator, message }) {
@@ -173,10 +189,25 @@ export const waitlistLimiter = createLimiter({
 
 // Per-IP limiter for the anonymous landing writing demo (L-V332). One AI
 // grade per device per 24h — the demo is a taste, not a free-tier substitute.
-// Keyed by IP (no auth on this route); the frontend also sets a localStorage
-// flag, but that is cosmetic and this is the real abuse gate.
+// Keyed by the resolved client IP (X-Forwarded-For aware) so it actually
+// distinguishes visitors behind the Vercel proxy. The frontend localStorage
+// flag is cosmetic; this + the global cap below are the real abuse gates.
 export const demoGradeLimiter = createLimiter({
   windowMs: 24 * 60 * 60 * 1000,
   max: 1,
+  keyGenerator: clientIp,
   message: { error: "Olet jo kokeillut tänään. Tee oma tili niin saat arvioinnit rajattomasti." },
+});
+
+// Global daily cap on demo grades across ALL visitors — the hard cost ceiling.
+// Survives IP rotation, X-Forwarded-For spoofing, the per-IP limiter failing
+// open on a DB error, and localStorage bypass: every one of those still funnels
+// through this single counter. Once the day's budget is spent, the demo pauses
+// and points visitors at a real account. Tune with DEMO_GRADE_DAILY_CAP.
+const DEMO_DAILY_CAP = Number(process.env.DEMO_GRADE_DAILY_CAP) || 300;
+export const demoGradeGlobalLimiter = createLimiter({
+  windowMs: 24 * 60 * 60 * 1000,
+  max: DEMO_DAILY_CAP,
+  keyGenerator: () => "global",
+  message: { error: "Demo on juuri nyt tauolla. Tee oma tili, niin pääset kirjoittamaan heti." },
 });

@@ -3,7 +3,7 @@ import { callOpenAI, getUserProfileContext, LANGUAGE_META, VALID_LANGUAGES } fro
 import { buildGradingPrompt, processGradingResult, SHORT_MAX, LONG_MAX } from "../lib/writingGrading.js";
 import { requireAuth, requirePro, checkFeatureAccess, incrementFreeUsage } from "../middleware/auth.js";
 import { requireSupportedLanguage, resolveLang } from "../middleware/language.js";
-import { aiStrictLimiter, demoGradeLimiter } from "../middleware/rateLimit.js";
+import { aiStrictLimiter, demoGradeLimiter, demoGradeGlobalLimiter, clientIp } from "../middleware/rateLimit.js";
 import { checkMonthlyCostLimit } from "../middleware/costLimit.js";
 import { logAiUsage } from "../lib/aiCost.js";
 import { pickWritingTaskFromBank } from "../lib/writingBank.js";
@@ -18,14 +18,18 @@ const router = Router();
 const VALID_TASK_TYPES = new Set(["short", "long"]);
 
 // ─── Anonymous landing writing demo (L-V332) ────────────────────────────────
-// One slim AI grade per device per 24h (demoGradeLimiter, keyed by IP). No
-// auth, no DB write of user text — only a budget-monitoring log line so a bot
-// spike is visible. Sits BEFORE the requireAuth routes below; the limiter is
-// the abuse gate.
+// One slim AI grade per device per 24h. No auth, no DB write of user text —
+// only a budget-monitoring log line so a bot spike is visible. Sits BEFORE the
+// requireAuth routes below. Three gates, in order:
+//   1. validateDemoInput — reject bad input before any limiter counts it.
+//   2. demoGradeLimiter   — per-IP, 1/24h (the per-visitor taste limit).
+//   3. demoGradeGlobalLimiter — global daily cap, the hard cost ceiling that
+//      survives IP rotation / spoofing / DB fail-open. Runs AFTER the per-IP
+//      gate so a single hammering IP can't drain the global budget for others.
 //
 // Test/dev escape hatch: DEMO_GRADE_FAKE=1 returns a canned grade without
 // calling OpenAI, so rate-limit / validation tests cost nothing.
-// Validate BEFORE the limiter so a malformed request never burns the one
+// Validate BEFORE the limiters so a malformed request never burns the one
 // daily grade. Stashes the cleaned lang/text on req for the handler.
 function validateDemoInput(req, res, next) {
   const lang = String(req.body?.lang || "").trim();
@@ -42,12 +46,12 @@ function validateDemoInput(req, res, next) {
   next();
 }
 
-router.post("/writing/demo-grade", validateDemoInput, demoGradeLimiter, async (req, res) => {
+router.post("/writing/demo-grade", validateDemoInput, demoGradeLimiter, demoGradeGlobalLimiter, async (req, res) => {
   const { lang, text } = req.demo;
 
   // Budget-monitoring log: language + timestamp + salted IP-hash only.
   // No raw IP, no student text — enough to spot a bot spike in the logs.
-  const ipHash = createHash("sha256").update(String(req.ip || "")).digest("hex").slice(0, 12);
+  const ipHash = createHash("sha256").update(clientIp(req)).digest("hex").slice(0, 12);
   console.log("[demo-grade]", JSON.stringify({ lang, ts: new Date().toISOString(), ipHash }));
 
   if (process.env.DEMO_GRADE_FAKE === "1") {
