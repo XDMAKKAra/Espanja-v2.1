@@ -23,6 +23,7 @@ try {
   const { default: onboardingRoutes } = await import("../routes/onboarding.js");
   const { default: personalizationRoutes } = await import("../routes/personalization.js");
   const { waitlistLimiter } = await import("../middleware/rateLimit.js");
+  const { requestContextMiddleware } = await import("../lib/requestContext.js");
   const { default: supabase } = await import("../supabase.js");
 
   app = express();
@@ -31,6 +32,10 @@ try {
   // so every per-IP rate limiter would key on one shared address. Trust the
   // proxy so req.ip reflects the real client from X-Forwarded-For.
   app.set("trust proxy", true);
+
+  // Per-request memo context (L-V340 #3): dedupes redundant Supabase
+  // round-trips within a single request. Register before the routes.
+  app.use(requestContextMiddleware);
 
   // CORS — fail-safe default. If env vars are unset we still restrict to
   // puheo.fi rather than fall through to cors(undefined) which would allow

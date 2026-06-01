@@ -1,4 +1,5 @@
 import { adminClient, createUserClient } from "../supabase.js";
+import { memoizeRequest } from "../lib/requestContext.js";
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
@@ -47,6 +48,13 @@ function parseEmailList(envValue) {
  * @returns {Promise<boolean>} True if user is Pro
  */
 export async function isPro(userId) {
+  // Memoized per request: isPro is called from both checkMonthlyCostLimit and
+  // (transitively) getUserTier, so without this it runs its 2-4 Supabase
+  // round-trips twice per AI request. See lib/requestContext.js (L-V340 #3).
+  return memoizeRequest(`isPro:${userId}`, () => _isProUncached(userId));
+}
+
+async function _isProUncached(userId) {
   // Union of file-based test accounts (data/test-accounts.json) and optional
   // env overrides (PRO_TEST_LIST / TEST_PRO_EMAILS). File is the reliable
   // source — env var support is kept only for future ops convenience.
@@ -112,6 +120,13 @@ function isPayingRow(row) {
 }
 
 export async function getUserTier(userId) {
+  // Memoized per request — checkFeatureAccess can be reached more than once in
+  // a single handler, and this also dedupes the user_profile read it shares
+  // with isPro. See lib/requestContext.js (L-V340 #3).
+  return memoizeRequest(`getUserTier:${userId}`, () => _getUserTierUncached(userId));
+}
+
+async function _getUserTierUncached(userId) {
   // 1) user_profile is the source-of-truth for paid users (Stripe webhook
   //    writes here). When subscription_tier is populated AND the row is in
   //    a paying state, return that exact tier.

@@ -40,9 +40,14 @@ import dashboardV2Routes from "./routes/dashboardV2.js";
 import onboardingRoutes from "./routes/onboarding.js";
 import personalizationRoutes from "./routes/personalization.js";
 import { waitlistLimiter } from "./middleware/rateLimit.js";
+import { requestContextMiddleware } from "./lib/requestContext.js";
 import supabase from "./supabase.js";
 
 const app = express();
+
+// Per-request memo context (L-V340 #3): dedupes redundant Supabase round-trips
+// within a single request. Must wrap the whole pipeline, so register first.
+app.use(requestContextMiddleware);
 
 // Behind the Vercel proxy `req.ip` is the platform edge, not the visitor,
 // which makes every per-IP rate limiter (auth, register, forgot-password,

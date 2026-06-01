@@ -23,64 +23,29 @@ function memoryRateLimit(key, windowMs, max) {
 // ─── Supabase-backed rate limiting (sliding window) ────────────────────────
 
 async function supabaseRateLimit(key, windowMs, max) {
-  const now = new Date();
-  const windowStart = new Date(now.getTime() - windowMs);
-
-  // Count requests in the current window
-  const { data, error } = await adminClient
-    .from("rate_limit_buckets")
-    .select("count")
-    .eq("key", key)
-    .gte("window_start", windowStart.toISOString());
+  // Single atomic round-trip: the increment_rate_limit RPC bumps the current
+  // minute bucket and returns the sliding-window total (see migration
+  // 20260601_rate_limit_atomic_increment). This replaces the old read+upsert
+  // dance whose upsert overwrote count to 1 on conflict — so concentrated
+  // bursts were never counted and the limit never bit (L-V340 finding #1).
+  const { data, error } = await adminClient.rpc("increment_rate_limit", {
+    p_key: key,
+    p_window_ms: windowMs,
+  });
 
   if (error) {
-    // On DB error, allow the request (fail open)
-    console.error("Rate limit DB error:", error.message);
-    return { allowed: true, remaining: max };
+    // RPC errored or isn't present (DB blip, rollback, env without the
+    // migration). Don't fall wide open — degrade to the per-instance in-memory
+    // sliding window so SOME enforcement always holds. The AI limiters also
+    // have the AUTHED_AI_DAILY_CAP backstop above. This makes the limiter
+    // robust to the increment_rate_limit RPC being missing for any reason.
+    console.error("Rate limit DB error, falling back to in-memory:", error.message);
+    return memoryRateLimit(key, windowMs, max);
   }
 
-  const totalCount = (data || []).reduce((sum, row) => sum + row.count, 0);
-
-  if (totalCount >= max) {
-    return { allowed: false, remaining: 0 };
-  }
-
-  // Round to nearest minute for bucket grouping
-  const bucketStart = new Date(Math.floor(now.getTime() / 60000) * 60000).toISOString();
-
-  // Upsert: increment counter for current minute bucket
-  await adminClient.rpc("increment_rate_limit", undefined).catch(() => null);
-  // Fallback: direct upsert
-  const { error: upsertErr } = await adminClient
-    .from("rate_limit_buckets")
-    .upsert(
-      { key, window_start: bucketStart, count: 1 },
-      { onConflict: "key,window_start", ignoreDuplicates: false }
-    );
-
-  if (upsertErr) {
-    // Try increment instead
-    const { data: existing } = await adminClient
-      .from("rate_limit_buckets")
-      .select("count")
-      .eq("key", key)
-      .eq("window_start", bucketStart)
-      .single();
-
-    if (existing) {
-      await adminClient
-        .from("rate_limit_buckets")
-        .update({ count: existing.count + 1 })
-        .eq("key", key)
-        .eq("window_start", bucketStart);
-    } else {
-      await adminClient
-        .from("rate_limit_buckets")
-        .insert({ key, window_start: bucketStart, count: 1 });
-    }
-  }
-
-  return { allowed: true, remaining: max - totalCount - 1 };
+  const total = Number(data) || 0;
+  // The just-counted request is included in `total`, so allow up to `max`.
+  return { allowed: total <= max, remaining: Math.max(0, max - total) };
 }
 
 // ─── Rate limit check ──────────────────────────────────────────────────────
@@ -131,10 +96,16 @@ function authedAiBackstopExceeded() {
 
 // ─── Middleware factory ────────────────────────────────────────────────────
 
+// L-V340: when set, every limiter passes straight through. Lets the load test
+// measure raw route capacity with zero limiter DB round-trips, as a contrast
+// to the limiters-on run. Inert unless explicitly enabled by the load driver.
+const LOAD_TEST_RL_OFF = process.env.LOAD_TEST_RL_OFF === "1";
+
 function createLimiter({ windowMs, max, keyGenerator, message, backstop }) {
   const errorMsg = message?.error || "Liian monta pyyntöä. Yritä hetken kuluttua uudelleen.";
 
   return async (req, res, next) => {
+    if (LOAD_TEST_RL_OFF) return next();
     // DB-independent global daily backstop runs first so it still bites when
     // the Supabase-backed limiter below would fail open.
     if (backstop && authedAiBackstopExceeded()) {
