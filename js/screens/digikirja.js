@@ -252,19 +252,6 @@ async function hydrateFromServer(route) {
 // Build the SideMenu sivut array from real lesson data. PR 2 keeps the
 // phase mapping simple: one numbered exercise sivu per phase. PR 3+ may
 // split long phases into a/b sub-sivu pairs to match the Otava idiom.
-// A phase can be shown only when its item type has a renderer. Writing and
-// reading_mc have dedicated paths; the rest must be in SUPPORTED_ITEM_TYPES
-// (mc / typed / gap_fill / translate). "match" (yhdistämistehtävä) has no
-// reader-flow renderer yet, so its phase is hidden rather than shown as a
-// coming-soon placeholder. Empty phases are hidden too — nothing to do there.
-function phaseIsRenderable(phase) {
-  const items = Array.isArray(phase?.items) ? phase.items : [];
-  if (items.length === 0) return false;
-  const firstKind = items[0]?.item_type;
-  if (firstKind === "writing" || firstKind === "reading_mc") return true;
-  return SUPPORTED_ITEM_TYPES.has(firstKind);
-}
-
 function buildSivut(lesson) {
   const out = [];
   // 1. Teoriasivu — always first.
@@ -276,15 +263,10 @@ function buildSivut(lesson) {
     meta: "Opetussivu",
   });
 
-  // 2. Exercise sivut — one per phase, numbered 1..N. L-V335: skip phases
-  // whose item type has no renderer yet (e.g. "match" / yhdistämistehtävä).
-  // Showing them produced a dead "Tämä tehtävätyyppi avautuu pian" page,
-  // which is on the banned coming-soon list. Hide the phase entirely instead.
-  // Numbering follows the visible phases so the sidebar reads 1..N with no gaps.
+  // 2. Exercise sivut — one per phase, numbered 1..N.
   const phases = Array.isArray(lesson?.phases) ? lesson.phases : [];
   phases.forEach((phase, i) => {
-    if (!phaseIsRenderable(phase)) return;
-    const num = String(out.filter((s) => s.kind === "tehtava").length + 1);
+    const num = String(i + 1);
     const title = prettifyPhaseTitle(phase.title) || `Vaihe ${num}`;
     const itemCount = Array.isArray(phase.items) ? phase.items.length : 0;
     out.push({
@@ -1241,13 +1223,18 @@ function renderExerciseContent(sivu) {
     return renderReadingPhase(sivu, phase, items);
   }
 
-  // Defensive fallback for item types without a reader-flow renderer (match).
-  // Such phases are hidden from the sidemenu in buildSivut, so this branch is
-  // only reachable via a stale direct link. No coming-soon copy (banned).
+  // Bail to placeholder for unsupported item types (match) until their PRs land.
+  // The "match" / yhdistämistehtävä renderer is wired up in L-V338 (existing
+  // js/renderers/yhdistaminen.js + gradeMatchingPair). Until then the phase
+  // stays visible with this placeholder — do not hide it or strip the copy.
   if (!SUPPORTED_ITEM_TYPES.has(firstKind)) {
+    const label = firstKind === "match"
+      ? "Yhdistämistehtävä"
+      : `Tehtävätyyppi "${firstKind}"`;
     return `
       <div class="dk__placeholder" data-kind="tehtava">
-        <p>Valitse vaihe sivuvalikosta.</p>
+        <p class="dk__placeholder-kind">${escapeHtml(label)}</p>
+        <p>Tämä tehtävätyyppi avautuu pian. Voit jatkaa muista vaiheista sivuvalikosta.</p>
       </div>`;
   }
 

@@ -1,13 +1,14 @@
 // L-V335 — app functional-fix regression contract.
 //
-// Locks the five trust-breakers fixed in this loop:
+// Locks the trust-breakers fixed in this loop:
 //   1. Home has no category rows (Sanasto/Kielioppi/... linking to the same view)
-//   2. No "avautuu pian" / coming-soon copy renders in the app
+//   2. The dead "(tulossa)" reader-topbar tool buttons are gone
 //   3. The exercise score counter does not render as "0 / 0" before scoring
 //   5. The reader shell uses the current .brand-wordmark logo
 //
-// (Bug 4, the stray brick box, was the home category-row block removed in #1;
-//  it is covered by the "no category rows" assertion.)
+// NOTE: the match / yhdistämistehtävä "avautuu pian" placeholder is intentionally
+// kept until L-V338 wires up the real renderer, so it is NOT asserted against here.
+// (Bug 4, the stray brick box, was the home category-row block removed in #1.)
 import { test, expect } from '@playwright/test';
 
 const EMAIL = process.env.TEST_PRO_EMAIL || 'testpro123@gmail.com';
@@ -47,7 +48,7 @@ test('home shows no category rows, only greeting + one primary CTA', async ({ pa
   expect(txt).not.toMatch(/Luetun ymmärtäminen/);
 });
 
-test('no coming-soon copy renders anywhere in the reader', async ({ page }) => {
+test('reader topbar has no dead "(tulossa)" tool buttons', async ({ page }) => {
   test.setTimeout(60_000);
   await login(page);
   await page.setViewportSize({ width: 1440, height: 900 });
@@ -57,14 +58,11 @@ test('no coming-soon copy renders anywhere in the reader', async ({ page }) => {
   const active = await page.evaluate(() => document.querySelector('.screen.active')?.id);
   expect(active).toBe('screen-digikirja');
 
-  // Sidemenu must not list a dead phase, and the body must carry no
-  // coming-soon copy in any rendered phase.
-  const navText = (await page.locator('.dk__sidemenu').allTextContents()).join(' ');
-  const bodyText = (await page.locator('#screen-digikirja').allTextContents()).join(' ');
-  for (const phrase of ['avautuu pian', 'coming soon', 'Coming soon']) {
-    expect(navText.toLowerCase()).not.toContain(phrase.toLowerCase());
-    expect(bodyText.toLowerCase()).not.toContain(phrase.toLowerCase());
-  }
+  // The non-functional search + help buttons (title="… (tulossa)") were removed.
+  await expect(page.locator('#dk-search')).toHaveCount(0);
+  await expect(page.locator('#dk-help')).toHaveCount(0);
+  const toolsText = (await page.locator('.dk__topbar .dk__tools').allTextContents()).join(' ');
+  expect(toolsText.toLowerCase()).not.toContain('tulossa');
 });
 
 test('exercise score does not render as "0 / 0" before scoring', async ({ page }) => {
