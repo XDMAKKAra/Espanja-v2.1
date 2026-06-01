@@ -1,0 +1,109 @@
+# L-V339 — Funktionaalinen + backend-terveys-audit: LÖYDÖKSET
+
+**Päivä:** 2026-06-01
+**Ajaja:** Claude Code (writer)
+**Scope:** Oikeellisuus + tilan eristys (EI kuormatesti, = L-V340)
+**Verifiointi:** kaikki väitteet alla ajettu omilla työkaluilla, ei oletuksia.
+
+---
+
+## TL;DR
+
+Server-side **muistin eristys on kunnossa** — ei jaettua mutable-käyttäjätilaa, RLS-advisor puhdas, ei vuotaneita secrettejä. Yksi todellinen P1 (cross-language progress bleed, vahvistettu — ei korjattu, vaatii migraation) ja yksi P2 (AI-kustannussuoja failaa auki kirjautuneille). Acceptance-gate (build + bug-scan + vitest) vihreä.
+
+---
+
+## Mitä ajettiin (evidenssi)
+
+| Tarkistus | Komento | Tulos |
+|---|---|---|
+| Yksikkötestit | `npx vitest run` | **1308/1308 PASS** (oli 1307/1308; korjattu stale lesson-labels-spec) |
+| Build | `npm run build` | **PASS** — app.bundle.js + .css + chunks |
+| Bug-scan E2E | `npx playwright test tests/e2e-bug-scan.spec.js` | **38 PASS, 2 skip** (kirjautunut-walk skipattu: TEST_*_EMAILS env ei asetettu lokaalisti) |
+| Secret-scan | `npm run security:scan` | **PASS** — ei kovakoodattuja secrettejä |
+| Bundle-secrets | grep `service_role\|sk-\|OPENAI_API_KEY` app.bundle.js/app.js/index.html | **0 osumaa** |
+| RLS / security advisors | Supabase `get_advisors security` | **1 WARN** (leaked-password-protection), 0 RLS-puutetta |
+
+API-virhetilat (401/403/429/400/500) ja auth-middleware ovat yksikkötestattuja ja vihreät:
+`middleware-auth.test.js`, `middleware-rate-limit.test.js`, `middleware-cost-limit.test.js`, `routes-auth.test.js`, `routes-smoke.test.js`.
+
+---
+
+## Osa A2 — Tilan eristys (Marcelin varsinainen huoli)
+
+### ✅ Ei jaettua mutable-käyttäjätilaa palvelimella
+Kävin läpi jokaisen moduulitason `Map`/`Set`/objektin `routes/`, `lib/`, `middleware/`:
+
+- `routes/dashboardV2.js` `adaptiveCache`, `dashboardV2Cache` — **keyed per käyttäjä**: `${userId}::${mode}` ja `${userId}::${adaptiveMode}::${language}`. Ei vuoda.
+- `lib/openai.js _memCache` — keyed promptilla (sisältö, ei käyttäjädata). OK (brief sallii).
+- `lib/readingBank.js`, `lib/writingBank.js` `_cache` — keyed `${lang}/${slug|type}` (staattinen sisältö). OK.
+- `middleware/rateLimit.js _memBuckets` — keyed `rl:${path}:${userId|ip}`. OK.
+- Loput ovat vakioita (`VALID_MODES`, `SUPPORTED_LANGS` jne.).
+
+**Johtopäätös:** kaksi eri tiliä yhtä aikaa ei voi nähdä toistensa dataa palvelinmuistin kautta. Eristys nojaa user_id-keyyn + RLS:ään, molemmat kunnossa.
+
+### 🔴 P1 — Cross-language progress bleed (VAHVISTETTU, EI korjattu)
+Tämä on `project_open_issues_2026_05_19`:n tunnettu bugi. Testattiin eksplisiittisesti, **on yhä rikki**.
+
+**Juurisyy (ei pintavika):** edistymädataa **ei skoupata kielellä lainkaan data-layerissa.**
+- `routes/progress.js:22` `exercise_logs`-insert kirjoittaa: `user_id, mode, level, score_correct, score_total, ytl_grade` — **ei `language`-saraketta.**
+- `user_level_progress` on keyed `(user_id, mode)` — ei kieltä. Adaptiivinen taso-eteneminen on siis yhteinen es/fr/de:lle.
+- `/dashboard/v2`-loaderit (`dashboardV2.js:383-395`): `loadDashboardCore`, `loadWeakTopics`, `loadExamHistory`, `loadLearningPath`, `loadPlacementStatus`, `loadAdaptiveStatus` hakevat **pelkällä user_id:llä**. Vain `loadSrCount`/`loadSrForecast` ottavat kielen.
+- Cache-key sisältää `${language}`, mutta alla oleva data on identtinen → sama edistymä tarjoillaan eri kielille eri avaimen alla.
+
+**Vaikutus:** käyttäjä joka tekee espanjaa ja sitten ranskaa jakaa saman streakin, tasonousun, heikkoustopikit ja tilastot. "Lyhyt-oppimäärä ES/FR/DE" -tuotelupaus rikkoutuu heti kun joku vaihtaa kieltä.
+
+**Korjaus ( EI pieni → ei tehty tässä passissa):**
+1. Migraatio: `language` (text, NOT NULL default 'es') -sarake tauluihin `exercise_logs` + `user_level_progress` + indeksit `(user_id, language, mode)`.
+2. Backfill: olemassa olevat rivit → `'es'` (ainoa jolla sisältöä).
+3. Kirjoita `language` insertteihin (`progress.js`, sr/exam-reitit).
+4. Filtteröi KAIKKI yllä luetellut loaderit + `user_level_progress`-kyselyt kielellä.
+5. Adaptiivinen taso per (user, language, mode).
+
+Tämä ansaitsee oman loopin (L-V339-FIX-LANG tms.) + Marcelin päätöksen siitä, halutaanko per-kieli täysin erillinen eteneminen vai jaettu (esim. YO-valmius-mittari voi olla per-kieli, mutta motivaatio-streak globaali).
+
+---
+
+## Osa B — Backend-integraatio + virhetilat
+
+### 🟠 P2 — AI-kustannussuoja failaa auki kirjautuneille (worth fixing)
+Brief epäili tätä; **vahvistui ja on itse asiassa pahempi** kuin briefissä:
+
+DB-virheessä **kaksi** suojaa failaa auki yhtä aikaa kirjautuneelle AI-pyynnölle:
+1. `middleware/rateLimit.js:36-40` ja `:130-133` — fail-open (`aiLimiter` max 20/h).
+2. `middleware/costLimit.js:30-33` — `checkMonthlyCostLimit` fail-open catchissä.
+
+Eli Supabase-stressissä **sekä tuntiraja että kuukauden €-katto pettävät**, eikä kirjautuneilla ole demon kaltaista globaalia päivä-€-kattoa (`demoGradeGlobalLimiter`, rateLimit.js:208 — vain anonyymille demolle).
+
+**Suositus (ei tehty — muuttaa kustannuskäyttäytymistä, kuuluu omaan loopiin + cap-arvo Marcelin päätös):**
+- Lisää moduulitason in-memory **globaali authed-AI päivä-counter** (kuten `demoGradeGlobalLimiter`), joka selviää DB-katkosta, backstoppina. ÄLÄ fail-close per-käyttäjä-cost-limittiä (DB-blippi blokkaisi kaikki maksavat).
+- Tai siirrä cost-tracking pois pelkän DB:n varasta.
+
+### ✅ Muu Osa B
+- Happy path + 401/403/429/400 yksikkötestattu (ks. taulukko).
+- Stripe-reitit palauttavat placeholderin, eivät kaadu (`routes/stripe.js`, vrt. memory `feedback_keep_payment_infra`). Ei Stripe-toimia tehty.
+- CORS rajattu `ALLOWED_ORIGINS`:iin (ei muutettu).
+
+---
+
+## Osa C — Security-pikatarkistus
+- ✅ Ei secrettejä bundlessa eikä sourcessa (kaksi eri tarkistusta yllä).
+- ✅ RLS-advisor puhdas user-datalle (0 missing-RLS).
+- 🟡 P3 — Supabase **leaked-password-protection pois päältä** (auth-config WARN). Yhden klikin fix Supabase-dashboardista (Auth → Password security → enable HaveIBeenPwned). Ei data-eristysasia, mutta halpa kovennus.
+  Remediation: https://supabase.com/docs/guides/auth/password-security
+
+---
+
+## Korjattu tässä passissa
+- `tests/lesson-labels.test.js` — stale assertio: odotti `getLessonLabel("nonsense") === "nonsense"`, mutta impl palauttaa tarkoituksella `"Kertaus"` (ei vuoda raakaa avainta UI:hin). Spec päivitetty vastaamaan tarkoitettua käytöstä. (Claude-internal, ei pushata.)
+
+## Avoimeksi jää (prioriteetilla)
+| Prioriteetti | Löydös | Korjaus |
+|---|---|---|
+| **P1** | Cross-language progress bleed | Migraatio + read/write-skooppaus kielellä — oma loop |
+| **P2** | AI-€-suoja failaa auki kirjautuneille | Globaali authed päivä-katto backstopiksi — oma loop, cap = Marcel |
+| **P3** | Leaked-password-protection pois | 1 klikki Supabase-dashboard |
+
+## Out-of-scope (tehty oikein)
+- Kuormatesti / concurrency = L-V340.
+- Kirjautunut-tila E2E-walk: spec on olemassa (bug-scan rivit 155+), skipattiin lokaalisti koska TEST_*_EMAILS env puuttuu. Ajetaan CI:ssä missä env on.

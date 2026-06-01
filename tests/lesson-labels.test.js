@@ -14,8 +14,8 @@ describe("getLessonLabel", () => {
     expect(out).toMatch(/yleiskertaus/);
   });
 
-  it("returns the raw key on unknown shape", () => {
-    expect(getLessonLabel("nonsense")).toBe("nonsense");
+  it("returns the friendly fallback on unknown shape (never leaks raw key to UI)", () => {
+    expect(getLessonLabel("nonsense")).toBe("Kertaus");
   });
 
   it("handles empty / null input", () => {
