@@ -2005,44 +2005,63 @@
 
       <div class="exercise-skeleton-slot hidden" id="writing-skeleton-slot" aria-live="polite"></div>
 
-      <div class="writing-situation" id="writing-situation"></div>
+      <!-- L-V346 — Stitch-exercise layout: leveä kirjoitusalue + arviointikriteeri-sivupalkki. -->
+      <div class="writing-grid">
+        <div class="writing-canvas">
+          <div class="writing-situation" id="writing-situation"></div>
 
-      <div class="writing-prompt-block">
-        <p class="writing-prompt-label">Tehtävä</p>
-        <p class="writing-prompt-text loading-shimmer" id="writing-prompt-text" aria-live="polite">Generoidaan tehtävää…</p>
-      </div>
+          <div class="writing-prompt-block">
+            <p class="writing-prompt-label">Tehtävä</p>
+            <p class="writing-prompt-text loading-shimmer" id="writing-prompt-text" aria-live="polite">Generoidaan tehtävää…</p>
+          </div>
 
-      <div class="writing-requirements" id="writing-requirements"></div>
+          <div class="writing-requirements" id="writing-requirements"></div>
 
-      <div class="textarea-wrapper">
-        <textarea
-          id="writing-input"
-          placeholder="Kirjoita vastauksesi tähän espanjaksi..."
-          spellcheck="false"
-          aria-label="Kirjoita vastauksesi espanjaksi"
-        ></textarea>
-        <div class="char-counter" id="char-counter">
-          <span id="char-count">0</span>
-          <span class="char-sep">/</span>
-          <span id="char-max">240</span>
-          <span class="char-label">merkkiä</span>
-          <span class="writing-word-counter" id="writing-word-counter" aria-live="polite">
-            <span class="writing-word-counter-label">sanaa</span>
-            <span id="writing-word-count">0</span>
-            <span id="writing-word-target" class="char-sep">/ —</span>
-          </span>
+          <div class="textarea-wrapper">
+            <textarea
+              id="writing-input"
+              placeholder="Kirjoita vastauksesi tähän espanjaksi..."
+              spellcheck="false"
+              aria-label="Kirjoita vastauksesi espanjaksi"
+            ></textarea>
+            <div class="char-counter" id="char-counter">
+              <span id="char-count">0</span>
+              <span class="char-sep">/</span>
+              <span id="char-max">240</span>
+              <span class="char-label">merkkiä</span>
+              <span class="writing-word-counter" id="writing-word-counter" aria-live="polite">
+                <span class="writing-word-counter-label">sanaa</span>
+                <span id="writing-word-count">0</span>
+                <span id="writing-word-target" class="char-sep">/ sanaa</span>
+              </span>
+            </div>
+            <div class="char-bar-wrap">
+              <div class="char-bar-min" id="char-bar-min"></div>
+              <div class="char-bar-fill" id="char-bar-fill"></div>
+            </div>
+          </div>
+
+          <div class="writing-meta-row">
+            <span class="writing-autosave-indicator is-hidden" id="writing-autosave-indicator" aria-live="polite"></span>
+          </div>
+
+          <div class="writing-actions">
+            <button class="btn-primary" id="btn-submit-writing" disabled>Tarkista</button>
+            <button type="button" class="btn-secondary" id="btn-save-draft">Tallenna luonnos</button>
+          </div>
         </div>
-        <div class="char-bar-wrap">
-          <div class="char-bar-min" id="char-bar-min"></div>
-          <div class="char-bar-fill" id="char-bar-fill"></div>
-        </div>
-      </div>
 
-      <div class="writing-meta-row">
-        <span class="writing-autosave-indicator is-hidden" id="writing-autosave-indicator" aria-live="polite"></span>
+        <aside class="writing-rubric" aria-label="Arviointikriteerit">
+          <h3 class="writing-rubric__title">Arviointikriteerit</h3>
+          <ul class="writing-rubric__list">
+            <li><strong>Viestinnällisyys</strong><span>Vastaatko tehtävänantoon selkeästi ja oikealla sävyllä.</span></li>
+            <li><strong>Kielen rakenteet</strong><span>Verbi- ja aikamuodot, lauserakenteet.</span></li>
+            <li><strong>Sanasto</strong><span>Aiheeseen sopivat sanat, vältä toistoa.</span></li>
+            <li><strong>Kokonaisuus</strong><span>Aloitus, lopetus ja sidesanat sitovat tekstin yhteen.</span></li>
+          </ul>
+          <p class="writing-rubric__note">Arvio annetaan YTL:n lyhyen oppimäärän rubriikilla, 0–20 pistettä.</p>
+        </aside>
       </div>
-
-      <button class="btn-primary" id="btn-submit-writing" disabled>Lähetä arvioitavaksi →</button>
     </div>
   </div>
 

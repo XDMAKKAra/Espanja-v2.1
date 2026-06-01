@@ -423,6 +423,24 @@ $("writing-input").addEventListener("input", updateCharCounter);
 $("writing-input").addEventListener("input", queueWritingAutosave);
 attachAccentBar($("writing-input"));
 
+// L-V346 — eksplisiittinen "Tallenna luonnos" -nappi. Autosave hoitaa
+// taustalla, mutta nappi antaa oppilaalle varmuuden että teksti säilyy.
+const saveDraftBtn = $("btn-save-draft");
+if (saveDraftBtn) {
+  saveDraftBtn.addEventListener("click", () => {
+    const inputEl = $("writing-input");
+    const ind = $("writing-autosave-indicator");
+    if (!inputEl || !inputEl.value.trim()) {
+      if (ind) {
+        ind.textContent = "Kirjoita ensin jotain tallennettavaksi.";
+        ind.classList.remove("is-hidden", "is-restored");
+      }
+      return;
+    }
+    autosaveWriting();
+  });
+}
+
 $("btn-submit-writing").addEventListener("click", async () => {
   const text = $("writing-input").value.trim();
   if (!text) return;
