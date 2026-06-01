@@ -168,21 +168,89 @@
   display: grid !important;
 }
 
-/* ── Active state polish — keep v276 brand-brick visuals ─────
-   No side-stripe border; bg + text-color shift only. */
-.app-sidebar .sidebar-item.active {
-  background: var(--brand-brick-soft, var(--accent-soft));
-  color: var(--brand-brick, var(--ink));
-  font-weight: 600;
+/* ── L-V346 — iso logo-lohko (Stitch-referenssi) ─────────────
+   brick-tile + Fredoka-wordmark + suomenkielinen sublabel.
+   Korvaa vanhan tekstilogon (.brand-wordmark Inter-paino). */
+.app-sidebar .sidebar-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 2px 18px 6px;
+  margin-bottom: 12px;
+  min-height: auto;
+  text-decoration: none;
 }
+.app-sidebar .sidebar-logo:active { transform: scale(0.98); }
+.sidebar-logo__tile {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: var(--brand-brick, #9B2D2A);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--ed-shadow-sm);
+}
+.sidebar-logo__tile svg { width: 24px; height: 24px; display: block; }
+.sidebar-logo__text {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  line-height: 1.05;
+  min-width: 0;
+}
+.sidebar-logo__name {
+  font-family: var(--ed-display, "Fredoka", sans-serif);
+  font-weight: 700;
+  font-size: 22px;
+  letter-spacing: -0.01em;
+  color: var(--ed-ink, #241C15);
+}
+.sidebar-logo__sub {
+  font-family: var(--ed-sans, "Mulish", sans-serif);
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.01em;
+  color: var(--ink-soft, #5C5145);
+}
+
+/* ── L-V346 — home-state nav as pills + keltainen aktiivinen ──
+   Aktiivinen = täytetty keltainen pill + pieni translate-x
+   (Stitch-tyyli). Mode-state lesson-lista pitää oman tyylinsä yllä. */
+.app-sidebar [data-mode-only="home"] .sidebar-item,
+.app-sidebar .sidebar-footer .sidebar-item {
+  border-radius: 999px;
+  transition: background-color var(--ed-t-fast, 160ms ease),
+              color var(--ed-t-fast, 160ms ease),
+              transform var(--ed-t-fast, 160ms ease);
+}
+.app-sidebar .sidebar-item.active {
+  background: var(--yellow, #F4C84A);
+  color: var(--ed-ink, #241C15);
+  font-weight: 700;
+  transform: translateX(4px);
+}
+.app-sidebar .sidebar-item.active .sidebar-item-icon { color: var(--ed-ink, #241C15); }
+.app-sidebar .sidebar-item.active:hover {
+  background: var(--yellow, #F4C84A);
+  color: var(--ed-ink, #241C15);
+}
+.app-sidebar .sidebar-item:active { transform: scale(0.985); }
+.app-sidebar .sidebar-item.active:active { transform: translateX(4px) scale(0.985); }
 .app-sidebar .sidebar-item:focus-visible {
   outline: 2px solid var(--brand-brick, var(--accent));
   outline-offset: 2px;
 }
 
-/* Mode-items hover/active reuses base .sidebar-item rules
-   from style.css — nothing extra needed. */
-
 /* L-V345 — home-state destinations are anchors (hash routes), so kill the
    default link underline and inherit the button look. */
 .app-sidebar a.sidebar-item { text-decoration: none; }
+
+/* L-V346 — mobiilin Tehtävät-linkki on <a>; pidä se napin näköisenä. */
+.mobile-nav a.mobile-nav-item { text-decoration: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .app-sidebar [data-mode-only="home"] .sidebar-item,
+  .app-sidebar .sidebar-footer .sidebar-item { transition: none; }
+}
