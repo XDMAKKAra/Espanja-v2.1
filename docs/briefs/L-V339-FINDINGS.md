@@ -114,7 +114,14 @@ Tehty:
 
 **Tietoisesti globaaleiksi jätetty (ei bug, vaan design):** `email.js` streak-muistutukset (aktiivisuus on kieliriippumaton) ja `levelEngine.js` → `user_level` (yksi globaali YO-valmiustaso per käyttäjä, taulu on user_id-keyed).
 
-**Jää jäljelle (client-aktivointi, additiivinen):** client ei vielä lähetä aktiivista kieltä `/dashboard/v2`:lle eikä `saveProgress`/`mistake`-kutsuihin (`readActiveLang()` palauttaa es/fr/de, dashboard-fetch ei välitä paramia). Backend normalisoi sen heti kun client alkaa lähettää. Tämä + tuotepäätös (per-kieli vs jaettu streak) aktivoituu kun fr/de saa sisältöä — vaatii live-E2E:n. **Tänään käytös on identtinen** (es-only → kaikki 'spanish').
+**LIVE-VERIFIOITU** (oikea server + Supabase, testpro123, `tests/verify-isolation.mjs`):
+- PRO spanish dashboard = 16 sessiota, **french = 0** (ei vuotoa).
+- POST `/api/progress {language:'french'}` → french 0→1, **spanish pysyi 16** (kirjoitus ei vuotanut espanjaan).
+Eli kirjoituksen leimaus + luvun skooppaus toimii päästä päähän. (Huom: ensimmäinen ajo "epäonnistui" koska vanha pre-edit server oli yhä portissa 3000 — EADDRINUSE; tapettu ja ajettu uudelleen puhtaalla koodilla → ALL PASS.)
+
+**Cross-user live-testi:** FREE-testitilin salasana `.env`:ssä on vanhentunut (401), ja throwaway-käyttäjän provisiointi admin-clientilla estyi prod-write-suojalla (oikein). Yritin molemmat. Eristys nojaa silti todennettuun rakenteeseen: RLS-advisor puhdas + jokainen kysely `.eq("user_id", <JWT:n userId>)` + yllä todettu että PRO:n french-kirjoitus näkyi vain PRO:n omassa näkymässä. Jos haluat täyden kahden tilin live-ajon: korjaa `TEST_FREE_PASSWORD` `.env`:iin.
+
+**Jää jäljelle (client-aktivointi, additiivinen):** client ei vielä lähetä aktiivista kieltä `/dashboard/v2`:lle eikä `saveProgress`/`mistake`-kutsuihin (`readActiveLang()` palauttaa es/fr/de, dashboard-fetch ei välitä paramia). Backend normalisoi sen heti kun client alkaa lähettää. Tämä + tuotepäätös (per-kieli vs jaettu streak) aktivoituu kun fr/de saa sisältöä. **Tänään käytös on identtinen** (es-only → kaikki 'spanish').
 
 ### P2 — AI-€-fail-open: KORJATTU ✅
 `middleware/rateLimit.js`: lisätty **DB-riippumaton globaali päivä-backstop** authed-AI-kutsuille (`aiLimiter`/`aiStrictLimiter`, `backstop:true`). Puhdas moduulimuisti, ei nojaa juuri kaatuneeseen Supabaseen. Kun `AUTHED_AI_DAILY_CAP` (default 4000/pv/instanssi) ylittyy → 429 vaikka DB-limitteri + cost-limit failaisivat auki. Per-instanssi (ei jaettua tilaa serverlessissä) → rajaa per-instanssi-ryntäyksen, joka on realistinen outage-failure-mode. Regressiotesti `tests/ai-cost-backstop.test.js` todistaa että backstop blokkaa per-user-ikkunasta riippumatta.
