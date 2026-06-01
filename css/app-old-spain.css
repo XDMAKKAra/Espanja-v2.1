@@ -2227,6 +2227,23 @@ body.app.auth-mode .auth-inner .btn-ghost:hover {
   background: var(--ed-bg-deep);
 }
 
+body.app.auth-mode .auth-inner .auth-legal {
+  margin-top: 18px;
+  font-family: var(--ed-sans);
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--ed-ink-muted);
+  text-align: center;
+}
+body.app.auth-mode .auth-inner .auth-legal a {
+  color: var(--ed-ink-muted);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+body.app.auth-mode .auth-inner .auth-legal a:hover {
+  color: var(--ed-ink);
+}
+
 body.app.auth-mode .auth-error {
   background: var(--ed-accent-soft);
   border: 1px solid var(--ed-accent);

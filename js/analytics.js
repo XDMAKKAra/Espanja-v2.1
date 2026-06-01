@@ -32,9 +32,10 @@ export async function initAnalytics(userId, email) {
     } catch { /* silent */ }
   }
 
-  // Sentry (browser)
+  // Sentry (browser) — production only, never on localhost (dev noise).
   const sentryDsn = window.__SENTRY_DSN;
-  if (sentryDsn) {
+  const isLocalhost = /^(localhost|127\.0\.0\.1|\[::1\])$/.test(window.location.hostname);
+  if (sentryDsn && !isLocalhost) {
     try {
       // Use dynamic import for Sentry browser SDK
       const script = document.createElement("script");

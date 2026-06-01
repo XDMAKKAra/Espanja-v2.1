@@ -9,10 +9,13 @@ import { fileURLToPath } from "url";
 dotenv.config();
 
 // ─── Sentry (backend) ─────────────────────────────────────────────────────
-if (process.env.SENTRY_DSN) {
+// Capture production only. Local dev (NODE_ENV !== "production") was flooding
+// the dashboard with EADDRINUSE :3000 noise from restart loops, 0 real users.
+const __SENTRY_ENV = process.env.VERCEL_ENV || process.env.NODE_ENV;
+if (process.env.SENTRY_DSN && __SENTRY_ENV === "production") {
   Sentry.init({
     dsn: process.env.SENTRY_DSN,
-    environment: process.env.NODE_ENV || "development",
+    environment: "production",
     tracesSampleRate: 0.1,
   });
 }
@@ -206,10 +209,29 @@ app.post("/api/waitlist", waitlistLimiter, async (req, res) => {
   }
 });
 
+// ─── 404 (must be after all routes, before error handlers) ─────────────────
+app.use((req, res) => {
+  if (req.path.startsWith("/api/")) {
+    return res.status(404).json({ error: "Reittiä ei löytynyt" });
+  }
+  res.status(404).sendFile(path.join(__dirname, "404.html"));
+});
+
 // ─── Sentry error handler (must be after routes) ──────────────────────────
-if (process.env.SENTRY_DSN) {
+if (process.env.SENTRY_DSN && __SENTRY_ENV === "production") {
   Sentry.setupExpressErrorHandler(app);
 }
+
+// ─── Final error handler — never leak a stack trace to the user ────────────
+// eslint-disable-next-line no-unused-vars
+app.use((err, req, res, next) => {
+  console.error("Unhandled error:", err);
+  if (res.headersSent) return;
+  if (req.path.startsWith("/api/")) {
+    return res.status(500).json({ error: "Jokin meni pieleen" });
+  }
+  res.status(500).sendFile(path.join(__dirname, "404.html"));
+});
 
 // ─── Start ───────────────────────────────────────────────────────────────────
 

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Puheo · Sivua ei löytynyt</title>
+  <meta name="robots" content="noindex" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700&family=Manrope:wght@400;500;600&display=swap&subset=latin,latin-ext" rel="stylesheet" />
+  <style>
+    :root {
+      --ed-bg:        oklch(99% 0.002 75);
+      --ed-bg-deep:   oklch(96% 0.004 75);
+      --ed-ink:       oklch(18% 0.012 30);
+      --ed-ink-muted: oklch(38% 0.012 30);
+      --ed-rule:      oklch(86% 0.008 60);
+      --ed-accent:    oklch(42% 0.15 28);
+      --ed-accent-hover: oklch(36% 0.15 28);
+      --ed-serif: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+      --ed-sans:  "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      background: var(--ed-bg);
+      color: var(--ed-ink);
+      font-family: var(--ed-sans);
+      display: flex; align-items: center; justify-content: center;
+      min-height: 100vh; margin: 0; padding: 24px;
+    }
+    .nf {
+      max-width: 460px; width: 100%;
+    }
+    .nf__code {
+      font-family: var(--ed-serif);
+      font-weight: 700;
+      font-size: 64px;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      color: var(--ed-accent);
+      margin: 0 0 8px;
+    }
+    .nf__title {
+      font-family: var(--ed-serif);
+      font-weight: 700;
+      font-size: 26px;
+      line-height: 1.2;
+      margin: 0 0 12px;
+    }
+    .nf__body {
+      color: var(--ed-ink-muted);
+      font-size: 15px;
+      line-height: 1.6;
+      margin: 0 0 28px;
+    }
+    .nf__actions { display: flex; flex-wrap: wrap; gap: 12px; }
+    .nf__btn {
+      display: inline-block;
+      background: var(--ed-accent);
+      color: oklch(96% 0.012 75);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 14px;
+      padding: 12px 22px;
+      border-radius: 6px;
+      transition: background 200ms ease;
+    }
+    .nf__btn:hover { background: var(--ed-accent-hover); }
+    .nf__link {
+      display: inline-block;
+      color: var(--ed-ink-muted);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      font-size: 14px;
+      padding: 12px 8px;
+    }
+    .nf__link:hover { color: var(--ed-ink); }
+  </style>
+</head>
+<body>
+  <main class="nf">
+    <p class="nf__code">404</p>
+    <h1 class="nf__title">Sivua ei löytynyt</h1>
+    <p class="nf__body">Etsimääsi sivua ei ole tai sen osoite on muuttunut. Pääset takaisin alta.</p>
+    <div class="nf__actions">
+      <a class="nf__btn" href="/">Takaisin etusivulle</a>
+      <a class="nf__link" href="/app.html">Siirry sovellukseen</a>
+    </div>
+  </main>
+</body>
+</html>
