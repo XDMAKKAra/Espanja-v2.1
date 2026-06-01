@@ -1608,55 +1608,57 @@ body.landing > * { position: relative; z-index: 1; }
   margin: 0;
   display: grid;
   grid-template-columns: 1fr;
-  gap: clamp(28px, 4vw, 40px);
+  gap: clamp(22px, 3vw, 30px);
 }
 @media (min-width: 880px) {
   .landing .pricing-tiers {
-    grid-template-columns: repeat(3, 1fr);
-    gap: clamp(20px, 2vw, 28px);
+    /* Mestari (center) gets the wider column so the eye lands there first */
+    grid-template-columns: 1fr 1.25fr 1fr;
+    gap: clamp(16px, 1.8vw, 24px);
     align-items: stretch;
-    padding-top: 24px;
+    padding-top: 28px;
     padding-bottom: 16px;
   }
 }
 
 .landing .pricing-tier {
   position: relative;
-  background: var(--ed-bg-card);
-  border: 1.5px solid var(--ed-ink);
+  /* Secondary tiers sit recessed; the featured tier lifts above them */
+  background: var(--ed-bg-deep);
+  border: 1px solid var(--ed-rule-strong);
   border-radius: var(--ed-r-lg);
-  padding: clamp(24px, 3vw, 32px) clamp(22px, 2.4vw, 28px);
+  padding: clamp(24px, 3vw, 30px) clamp(22px, 2.4vw, 28px);
   display: flex;
   flex-direction: column;
   gap: var(--ed-sp-4);
-  box-shadow: 5px 5px 0 0 var(--ed-ink);
-  transition: transform 260ms cubic-bezier(0.23, 1, 0.32, 1),
-              box-shadow 260ms cubic-bezier(0.23, 1, 0.32, 1);
+  box-shadow: 0 1px 2px oklch(20% 0.012 30 / 0.04);
+  transition: transform 220ms cubic-bezier(0.23, 1, 0.32, 1),
+              box-shadow 220ms cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-/* Tilt variants — only on wide screens, never on mobile */
+/* Featured tier — elevated white card with brick edge, no tilt */
+.landing .pricing-tier--featured {
+  background: var(--ed-bg-card);
+  border: 1.5px solid var(--ed-accent);
+  box-shadow: 0 16px 36px -16px oklch(42% 0.15 28 / 0.28);
+}
+
 @media (min-width: 880px) {
-  .landing .pricing-tier--free     { transform: rotate(-1.2deg); }
-  .landing .pricing-tier--treeni   { transform: rotate(1deg); }
   .landing .pricing-tier--featured {
-    transform: rotate(0deg) translateY(-8px);
-    background: var(--ed-bg);
-    border-color: var(--ed-accent);
-    box-shadow: 6px 6px 0 0 var(--ed-accent);
+    transform: translateY(-10px);
     z-index: 2;
   }
 
   .landing .pricing-tier:hover {
-    transform: rotate(0deg) translate(-3px, -3px);
-    box-shadow: 8px 8px 0 0 var(--ed-ink);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 26px -14px oklch(20% 0.012 30 / 0.16);
   }
   .landing .pricing-tier--featured:hover {
-    transform: translate(-3px, -11px);
-    box-shadow: 9px 9px 0 0 var(--ed-accent);
+    transform: translateY(-13px);
+    box-shadow: 0 22px 44px -16px oklch(42% 0.15 28 / 0.32);
   }
 }
 
-/* Tilt-disabled fallback (mobile + reduced motion) */
 @media (prefers-reduced-motion: reduce) {
   .landing .pricing-tier { transform: none !important; }
 }
@@ -1666,15 +1668,15 @@ body.landing > * { position: relative; z-index: 1; }
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 4px 10px;
-  font-family: var(--ed-mono);
+  padding: 4px 11px;
+  font-family: var(--ed-sans);
   font-size: var(--ed-fs-micro);
-  font-weight: 500;
-  letter-spacing: var(--ed-tracking-meta);
+  font-weight: 600;
+  letter-spacing: 0;
   color: var(--ed-ink-muted);
-  background: var(--ed-bg-deep);
+  background: var(--ed-bg-card);
   border: 1px solid var(--ed-rule);
-  border-radius: var(--ed-r-sm);
+  border-radius: 999px;
 }
 .landing .pricing-tier--featured .pricing-tier__chip {
   color: var(--ed-accent);
@@ -1682,22 +1684,21 @@ body.landing > * { position: relative; z-index: 1; }
   border-color: color-mix(in oklch, var(--ed-accent) 30%, transparent);
 }
 
+/* Straight, integrated badge — brick pill centered on the top edge */
 .landing .pricing-tier__badge {
   position: absolute;
-  top: -14px;
-  right: 18px;
-  padding: 6px 14px;
-  background: var(--ed-gold);
-  color: var(--ed-ink);
-  font-family: var(--ed-display);
-  font-variation-settings: "opsz" 30, "SOFT" 60;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 5px 15px;
+  background: var(--ed-accent);
+  color: var(--ed-accent-ink);
+  font-family: var(--ed-sans);
   font-weight: 600;
-  font-size: 0.875rem;
-  border: 1.5px solid var(--ed-ink);
-  border-radius: var(--ed-r-md);
-  transform: rotate(8deg);
-  letter-spacing: -0.005em;
-  box-shadow: 2px 2px 0 0 var(--ed-ink);
+  font-size: 0.8rem;
+  letter-spacing: 0.005em;
+  border-radius: 999px;
+  box-shadow: 0 5px 12px -4px oklch(42% 0.15 28 / 0.4);
 }
 
 .landing .pricing-tier__name {
