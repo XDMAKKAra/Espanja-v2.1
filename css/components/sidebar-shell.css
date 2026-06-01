@@ -182,3 +182,7 @@
 
 /* Mode-items hover/active reuses base .sidebar-item rules
    from style.css — nothing extra needed. */
+
+/* L-V345 — home-state destinations are anchors (hash routes), so kill the
+   default link underline and inherit the button look. */
+.app-sidebar a.sidebar-item { text-decoration: none; }

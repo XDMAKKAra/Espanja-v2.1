@@ -289,8 +289,52 @@ function renderNextCard(data, lang) {
     </section>`;
 }
 
+// Activity tiles — the three things you actually do inside a course. The
+// L-V344 dashboard only linked to the learning path, so writing + mock exam
+// were unreachable once logged in (L-V345 fix). Course is the product; the
+// AI writing grade is one tile of three, not the whole surface.
+function renderActivities(lang) {
+  const lp = `#/oppimispolku?lang=${escapeHtml(lang)}`;
+  const tiles = [
+    {
+      kind: "path", href: lp,
+      title: "Jatka oppimispolkua",
+      sub: "Kahdeksan kurssin polku, kielioppi ja sanasto mukana",
+      icon: '<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>',
+    },
+    {
+      kind: "exam", href: "#/koeharjoitus",
+      title: "Harjoittele YO-koetta",
+      sub: "Mallikoe aikarajalla, kuten oikeassa kokeessa",
+      icon: '<path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5a6 3 0 0 0 12 0v-5"/>',
+    },
+    {
+      kind: "write", href: "#/kirjoitus",
+      title: "Kirjoita ja saa arvio",
+      sub: "Tekoäly pisteyttää kirjoituksesi YTL:n rubriikilla",
+      icon: '<path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/>',
+    },
+  ];
+  const items = tiles.map((t) => `
+    <a class="dash-action dash-action--${t.kind}" href="${t.href}">
+      <span class="dash-action__icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">${t.icon}</svg>
+      </span>
+      <span class="dash-action__text">
+        <span class="dash-action__title">${escapeHtml(t.title)}</span>
+        <span class="dash-action__sub">${escapeHtml(t.sub)}</span>
+      </span>
+      <span class="dash-action__arrow" aria-hidden="true">→</span>
+    </a>`).join("");
+  return `
+    <nav class="dash-actions" aria-label="Mitä haluat tehdä">
+      ${items}
+    </nav>`;
+}
+
 // Dashboard composition: language tabs, a two-up block row (countdown +
-// progress), then the next-lesson card spanning full width.
+// progress), the next-lesson card, then the three activity tiles that open
+// the learning path, the mock exam, and the writing grader.
 function renderShell(activeLang, data, isPro) {
   const tabsHtml = renderTabs(activeLang);
   const progressHtml = renderProgress(data);
@@ -301,6 +345,7 @@ function renderShell(activeLang, data, isPro) {
       ${progressHtml}
     </div>
     ${renderNextCard(data, activeLang)}
+    ${renderActivities(activeLang)}
   `;
 }
 

@@ -2144,7 +2144,7 @@ function renderContent() {
   const next = idx < _sivut.length - 1 ? _sivut[idx + 1] : null;
 
   const pageMeta = [
-    meta.course_key || _route.kurssiKey,
+    prettyKurssi(meta.course_key || _route.kurssiKey),
     `Oppitunti ${meta.lesson_index || _route.lessonIndex}`,
   ].filter(Boolean).join(" · ");
 

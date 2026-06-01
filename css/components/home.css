@@ -166,8 +166,84 @@ body.app .dash-chip {
   padding: 6px 13px;
 }
 
+/* ── Activity tiles ─ the three things you do inside a course.
+   Flat colour blocks (WordDive palette), round icon badge, Fredoka title.
+   Course path + mock exam + writing grader, one weight each. */
+body.app .dash-actions {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(12px, 1.6vw, 16px);
+}
+body.app .dash-action {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: clamp(16px, 2vw, 20px);
+  border-radius: var(--r-lg, 22px);
+  text-decoration: none;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  transition: transform 160ms cubic-bezier(0.23, 1, 0.32, 1),
+              box-shadow 200ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+body.app .dash-action--path  { background: var(--green-pale);  border-color: transparent; }
+body.app .dash-action--exam  { background: var(--yellow-pale); border-color: transparent; }
+body.app .dash-action--write { background: var(--brick-pale);  border-color: transparent; }
+body.app .dash-action:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--sh-rest, 0 18px 40px -22px rgba(60, 38, 20, 0.35));
+}
+body.app .dash-action:active { transform: translateY(0) scale(0.98); transition-duration: 90ms; }
+body.app .dash-action:focus-visible { outline: 2px solid var(--brick); outline-offset: 3px; }
+
+body.app .dash-action__icon {
+  flex: none;
+  width: 46px;
+  height: 46px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  background: var(--paper);
+}
+body.app .dash-action--path  .dash-action__icon { color: var(--green); }
+body.app .dash-action--exam  .dash-action__icon { color: var(--brick); }
+body.app .dash-action--write .dash-action__icon { color: var(--brick); }
+
+body.app .dash-action__text { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+body.app .dash-action__title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 1.1;
+  color: var(--ink);
+}
+body.app .dash-action__sub {
+  font-family: var(--font-body);
+  font-size: 12.5px;
+  line-height: 1.35;
+  color: var(--ink-soft);
+}
+body.app .dash-action__arrow {
+  flex: none;
+  margin-left: auto;
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--ink-soft);
+  transition: transform 200ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+body.app .dash-action:hover .dash-action__arrow { transform: translateX(3px); }
+
+@media (prefers-reduced-motion: reduce) {
+  body.app .dash-action,
+  body.app .dash-action__arrow { transition: none; }
+}
+
 body.app .home-skel--block { height: 110px; width: 100%; border-radius: var(--r-lg, 22px); }
 
+@media (max-width: 860px) {
+  body.app .dash-actions { grid-template-columns: 1fr; }
+}
 @media (max-width: 680px) {
   body.app .dash-grid { grid-template-columns: 1fr; }
   body.app .dash-card__head { flex-direction: column; gap: 8px; }
