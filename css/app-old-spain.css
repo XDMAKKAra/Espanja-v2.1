@@ -2822,3 +2822,42 @@ body.app #screen-path.screen,
 body.app #screen-path.screen.active {
   display: none !important;
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   L-V336 round 2 — remaining mono text-labels → sans.
+
+   dashboard.css and profile.css base rules render these deep-widget
+   labels in JetBrains Mono (the legacy --font-mono). Round 1 fixed the
+   most-visible dashboard/lpc/free-chip labels inline above; this block
+   sweeps the deep dashboard widgets + the profile screen that round 1
+   left untouched. body.app specificity (0,2,1) shadows the bare base
+   rules (0,1,0) without !important. Numbers (KPI vals, stat-value,
+   countdown-num, scores, pct, char counters) keep mono — they are not
+   listed here. Reduced letter-spacing kills the mono-UPPERCASE feel.
+   ═══════════════════════════════════════════════════════════════ */
+body.app .dash-mode-sessions,
+body.app .dash-mode-stat-label,
+body.app .dash-recent-time,
+body.app .dash-forecast-legend,
+body.app .dash-level-detail,
+body.app .dash-sr-sub,
+body.app .dash-ai-usage,
+body.app .dash-total,
+body.app .heatmap-label,
+body.app .dash-rec-sub,
+body.app .dash-empty,
+body.app .daily-challenge__mode,
+body.app .dash-writing-progression-title,
+body.app .dash-writing-progression-empty,
+body.app .profile-handle,
+body.app .profile-hero-countdown-label,
+body.app .profile-hero-countdown-unit,
+body.app .profile-badge,
+body.app .profile-stat-label,
+body.app .profile-stat-unit,
+body.app .profile-stat-hint,
+body.app .profile-section-title,
+body.app .profile-section-link {
+  font-family: var(--ed-sans);
+  letter-spacing: 0.01em;
+}
