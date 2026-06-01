@@ -216,6 +216,16 @@ router.post("/grade-writing", requireAuth, aiStrictLimiter, aiGlobalDailyLimiter
   if (!task || !studentText || typeof studentText !== "string" || studentText.trim().length === 0) {
     return res.status(400).json({ error: "Tehtävä ja vastaus vaaditaan" });
   }
+
+  // L-V346 — student's nickname for humane, name-addressed feedback. Only used
+  // to personalise prose, never for auth. Sanitise: first token, letters only,
+  // capped, newlines/quotes stripped so it can't escape the prompt.
+  const studentName = String(req.body.studentName || "")
+    .replace(/[\r\n"'`{}]/g, " ")
+    .trim()
+    .split(/\s+/)[0]
+    .slice(0, 40)
+    .replace(/[^\p{L}\p{M}-]/gu, "");
   if (!task.taskType || !task.charMin || !task.charMax || !task.points) {
     return res.status(400).json({ error: "Virheellinen tehtävädata" });
   }
@@ -234,7 +244,7 @@ router.post("/grade-writing", requireAuth, aiStrictLimiter, aiGlobalDailyLimiter
   const isShort = task.taskType === "short";
   const charCount = studentText.replace(/\s/g, "").length;
 
-  const prompt = buildGradingPrompt(task, studentText, isShort, lang);
+  const prompt = buildGradingPrompt(task, studentText, isShort, lang, studentName);
 
   try {
     // Per puheo-ai-prompt skill: graders use temp 0.2 for determinism + force

@@ -458,6 +458,8 @@ $("btn-submit-writing").addEventListener("click", async () => {
       body: JSON.stringify({
         task: state.currentWritingTask,
         studentText: text,
+        // L-V346 — nimi humaania, nimellä puhuttelevaa palautetta varten.
+        studentName: (() => { try { return (localStorage.getItem("puheo:nickname") || "").trim(); } catch { return ""; } })(),
       }),
     }), { attempts: 3, baseDelayMs: 800 });
     const data = await res.json();
