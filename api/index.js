@@ -12,6 +12,20 @@ try {
       dsn: process.env.SENTRY_DSN,
       environment: "production",
       tracesSampleRate: 0.1,
+      // GDPR: strip user PII before any event leaves the server.
+      sendDefaultPii: false,
+      beforeSend(event) {
+        if (event.request) {
+          delete event.request.data;
+          delete event.request.cookies;
+          if (event.request.headers) {
+            delete event.request.headers.authorization;
+            delete event.request.headers.cookie;
+          }
+        }
+        delete event.user;
+        return event;
+      },
     });
   }
 
@@ -36,6 +50,7 @@ try {
   const { default: dashboardV2Routes } = await import("../routes/dashboardV2.js");
   const { default: onboardingRoutes } = await import("../routes/onboarding.js");
   const { default: personalizationRoutes } = await import("../routes/personalization.js");
+  const { default: gdprRoutes } = await import("../routes/gdpr.js");
   const { waitlistLimiter } = await import("../middleware/rateLimit.js");
   const { requestContextMiddleware } = await import("../lib/requestContext.js");
   const { default: supabase } = await import("../supabase.js");
@@ -96,6 +111,7 @@ try {
   app.use("/api", dashboardV2Routes);
   app.use("/api/onboarding", onboardingRoutes);
   app.use("/api/personalization", personalizationRoutes);
+  app.use("/api/gdpr", gdprRoutes);
 
   app.post("/api/waitlist", waitlistLimiter, async (req, res) => {
     const { email, product } = req.body;

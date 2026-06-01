@@ -32,7 +32,8 @@ import { initQuickReview } from "./screens/quickReview.js";
 // F-ARCH-1 §A — these screens are lazy. Their static imports moved out.
 // See makeLazyScreen wrappers below (lazyFullExam, lazySettings, …).
 import { wireTopicPicker, topicLabel, loadBriefing } from "./screens/mode-page.js";
-import { initAnalytics } from "./analytics.js";
+import { initErrorMonitoring } from "./analytics.js";
+import { initConsentGate } from "./features/consent.js";
 // L-PLAN-4 UPDATE 4 — floating profile button (replaces the right rail).
 import { initProfileMenu, syncProfileMenu } from "./features/profileMenu.js";
 // L-PLAN-5 UPDATE 4 — re-readable teaching page (side-panel desktop / modal mobile).
@@ -940,7 +941,10 @@ if (!resetToken && isLoggedIn()) {
     }
   });
   initPushNotifications();
-  initAnalytics(null, getAuthEmail());
+  // Error monitoring (legitimate interest) runs immediately; analytics waits
+  // for consent via the banner / stored choice.
+  initErrorMonitoring();
+  initConsentGate();
 }
 
 // Expose for use by screens that load the profile (auth.js, settings.js, etc.)

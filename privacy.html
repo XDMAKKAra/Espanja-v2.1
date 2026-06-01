@@ -101,20 +101,23 @@
   <main class="legal-shell" id="legal">
     <p class="eyebrow">Lakisivut</p>
     <h1>Tietosuojaseloste</h1>
-    <p class="legal-shell__updated">Päivitetty 15.5.2026</p>
+    <p class="legal-shell__updated">Päivitetty 1.6.2026</p>
 
     <h2>1. Rekisterinpitäjä</h2>
-    <p>Puheo, yksityishenkilön ylläpitämä palvelu.<br/>Yhteydenotot: <a href="mailto:tuki@puheo.fi">tuki@puheo.fi</a></p>
+    <p><span data-legal-controller>Puheo, yksityishenkilön ylläpitämä palvelu</span>.<br/>
+    <span data-legal-businessid hidden></span>
+    Yhteydenotot: <a data-legal-email href="mailto:marcel.catchot@gmail.com">marcel.catchot@gmail.com</a></p>
 
     <h2>2. Tietojen keräämisen tarkoitus</h2>
     <p>Käsittelemme henkilötietoja palvelun toimittamiseen, käyttäjäkokemuksen parantamiseen, oppimispolun adaptiiviseen kohdentamiseen sekä maksullisten ominaisuuksien laskutukseen.</p>
 
     <h2>3. Kerättävät tiedot</h2>
     <ul>
-      <li><strong>Tilin tiedot:</strong> sähköpostiosoite ja palvelimella suolatusti hashattu salasana.</li>
-      <li><strong>Oppimisdata:</strong> harjoitushistoria, vastausten oikeellisuus, hallintatasot kurssikohtaisesti, YO-valmius-arvio.</li>
+      <li><strong>Tilin tiedot:</strong> sähköpostiosoite ja palvelimella suolattu, hashattu salasana. Voit halutessasi lisätä kutsumanimen.</li>
+      <li><strong>Oppimisdata:</strong> harjoitushistoria ja vastausten oikeellisuus, kirjoittamasi tekstit ja niiden AI-arviot, tasotestien ja harjoituskokeiden tulokset, hallintatasot kurssikohtaisesti sekä YO-valmiusarvio.</li>
+      <li><strong>Profiilin tiedot:</strong> antamasi taustatiedot, kuten tavoitearvosana, kokeen ajankohta, opiskelutausta ja heikkoudet, joiden avulla harjoittelu kohdennetaan.</li>
       <li><strong>Tilauksen tiedot:</strong> aktiivisen Treeni- tai Mestari-tilauksen tieto ja laskutusjaksot. Korttitietoja Puheo ei näe, ne menevät suoraan Stripelle.</li>
-      <li><strong>Tekniset tiedot:</strong> IP-osoite, selaintyyppi, käyttöjärjestelmä ja palvelimen virhelokit virheenkorjausta varten.</li>
+      <li><strong>Tekniset tiedot:</strong> IP-osoite, selaintyyppi, käyttöjärjestelmä ja palvelimen virhelokit vianetsintää varten.</li>
     </ul>
 
     <h2>4. Tietojen käsittelyn peruste</h2>
@@ -128,33 +131,39 @@
     <p>Henkilötietoja ei myydä. Käytämme seuraavia tunnistettuja käsittelijöitä:</p>
     <ul>
       <li><strong>Supabase</strong>, tietokanta ja autentikaatio (EU-palvelimet, Frankfurt).</li>
+      <li><strong>OpenAI</strong>, tekoälypalvelu, jolla luodaan ja arvioidaan harjoituksia ja kirjoitelmia. Lähetämme tehtävän sisällön, vastauksesi ja kirjoitelmasi sekä karkean oppimiskontekstin, kuten tason ja harjoiteltavat aiheet. Emme lähetä sähköpostiosoitettasi tai nimeäsi. OpenAI ei käytä rajapinnan kautta lähetettyä sisältöä mallien kouluttamiseen.</li>
       <li><strong>Stripe</strong>, maksunkäsittely ja tilausten hallinta. Stripe näkee korttitiedot, Puheo ei.</li>
-      <li><strong>OpenAI / Anthropic</strong>, tekoälypalvelut, joilla luodaan ja arvioidaan harjoituksia. Pyynnöissä ei lähetetä käyttäjän sähköpostia, nimeä tai muita tunnistetietoja, vain tehtävän sisältö.</li>
-      <li><strong>Resend</strong>, transaktiosähköpostit (kirjautumislinkit, kuittauset).</li>
+      <li><strong>Resend</strong>, transaktio- ja muistutussähköpostit (kirjautumislinkit, kuittaukset, viikkokooste).</li>
+      <li><strong>PostHog</strong>, kävijäanalytiikka (EU-palvelimet, eu.i.posthog.com). Käynnistyy vain antamallasi suostumuksella. Sähköpostiosoitettasi ei lähetetä sellaisenaan, vain siitä laskettu peruuttamaton tiiviste.</li>
+      <li><strong>Sentry</strong>, virheiden seuranta ja tekninen vianetsintä (EU-palvelimet). Käytämme tätä oikeutetun edun perusteella palvelun vakauden varmistamiseen. Karsimme virheraporteista henkilötiedot, kuten sähköpostit ja pyyntöjen sisällöt.</li>
       <li><strong>Vercel</strong>, palvelinkäyttö ja CDN.</li>
     </ul>
 
     <h2>6. Tietojen säilytys</h2>
-    <p>Säilytämme käyttäjän oppimisdataa niin kauan kuin tili on aktiivinen. Käyttäjä voi pyytää tilin ja kaiken siihen liittyvän datan poistamista milloin tahansa kirjoittamalla osoitteeseen <a href="mailto:tuki@puheo.fi">tuki@puheo.fi</a>, poisto suoritetaan 30 päivän kuluessa.</p>
-    <p>Laskutustiedot säilytetään kirjanpitolain edellyttämän ajan, kuusi vuotta.</p>
+    <p>Säilytämme tietojasi niin kauan kuin tilisi on aktiivinen. Voit ladata kaikki tietosi tai poistaa tilisi ja siihen liittyvän datan itse sovelluksen Asetukset-sivulta milloin tahansa. Poisto tapahtuu heti ja on peruuttamaton. Voit myös pyytää poistoa sähköpostitse osoitteesta <a data-legal-email href="mailto:marcel.catchot@gmail.com">marcel.catchot@gmail.com</a>.</p>
+    <p>Laskutustiedot säilytetään kirjanpitolain edellyttämän ajan, kuusi vuotta, vaikka tili poistettaisiin.</p>
 
     <h2>7. Käyttäjän oikeudet (GDPR)</h2>
     <ul>
       <li>Oikeus tarkastaa, mitä tietoja itsestäsi on tallennettu.</li>
       <li>Oikeus pyytää tietojen oikaisua tai poistoa.</li>
       <li>Oikeus rajoittaa käsittelyä tai vastustaa sitä.</li>
-      <li>Oikeus siirtää tietosi toiseen palveluun (data export).</li>
+      <li>Oikeus siirtää tietosi toiseen palveluun. Pääset oikeuksiisi suoraan Asetukset-sivulta: voit ladata tietosi koneellesi tai poistaa tilisi itse.</li>
       <li>Oikeus tehdä valitus tietosuojavaltuutetun toimistolle (tietosuoja.fi).</li>
     </ul>
 
-    <h2>8. Evästeet</h2>
-    <p>Käytämme välttämättömiä evästeitä kirjautumistilan ylläpitoon ja CSRF-suojaukseen. Käyttäjän mieltymyksiä (teema, kieli) tallennetaan selaimen localStorage-tilaan. Kolmannen osapuolen markkinointi- tai seurantaevästeitä emme käytä.</p>
+    <h2>8. Ikäraja ja alaikäiset</h2>
+    <p>Palvelu on tarkoitettu lukio-ikäisille ja sitä vanhemmille. Suomessa alaikäinen voi antaa suostumuksensa tietoyhteiskunnan palvelun käyttöön 13 vuotta täytettyään, joten emme pyydä erillistä huoltajan suostumusta emmekä kerää tietoa iästäsi. Jos olet alle 13-vuotias, älä luo tiliä.</p>
 
-    <h2>9. Tietoturva</h2>
-    <p>Yhteydet kulkevat HTTPS-salauksella. Salasanat hashataan bcrypt-algoritmilla. Tietokantapääsy on suojattu Supabase Row Level Security -säännöillä, käyttäjä näkee vain oman datansa.</p>
+    <h2>9. Evästeet ja analytiikka</h2>
+    <p>Käytämme välttämättömiä evästeitä ja selaimen localStorage-tilaa kirjautumisen ylläpitoon, CSRF-suojaukseen ja omiin asetuksiisi, kuten teemaan ja opiskelukieleen. Nämä ovat palvelun toiminnan kannalta pakollisia, eikä niihin tarvita suostumusta.</p>
+    <p>Sovelluksessa käytämme lisäksi PostHog-kävijäanalytiikkaa, joka tallentaa selaimeesi tunnisteen ja kerää tietoa siitä, miten sovellusta käytetään. Analytiikka käynnistyy vasta kun annat siihen suostumuksen sovelluksen suostumusbannerista. Voit perua suostumuksen milloin tahansa Asetukset-sivulta, jolloin analytiikka kytkeytyy pois. Markkinointi- tai mainosseurantaevästeitä emme käytä.</p>
 
-    <h2>10. Yhteystiedot</h2>
-    <p>Tietosuojaan liittyvät kysymykset ja oikeuksien käyttö: <a href="mailto:tuki@puheo.fi">tuki@puheo.fi</a></p>
+    <h2>10. Tietoturva</h2>
+    <p>Yhteydet kulkevat HTTPS-salauksella. Salasanat tallennetaan vain hashattuina. Tietokantapääsy on suojattu Supabase Row Level Security -säännöillä, joten käyttäjä näkee vain oman datansa.</p>
+
+    <h2>11. Yhteystiedot</h2>
+    <p>Tietosuojaan liittyvät kysymykset ja oikeuksien käyttö: <a data-legal-email href="mailto:marcel.catchot@gmail.com">marcel.catchot@gmail.com</a></p>
   </main>
 
   <footer class="landing-footer" role="contentinfo">
@@ -194,7 +203,7 @@
             <li><a href="/terms.html">Käyttöehdot</a></li>
             <li><a href="/refund.html">Palautukset</a></li>
             <li><a href="/blog/">Blogi</a></li>
-            <li><a href="mailto:tuki@puheo.fi">Ota yhteyttä</a></li>
+            <li><a data-legal-email href="mailto:marcel.catchot@gmail.com">Ota yhteyttä</a></li>
           </ul>
         </nav>
       </div>
@@ -204,6 +213,7 @@
     </div>
   </footer>
 
+  <script src="/js/legal-config.js" defer></script>
   <script src="/js/landing-nav.js" defer></script>
 </body>
 </html>

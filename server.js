@@ -17,7 +17,24 @@ if (process.env.SENTRY_DSN && __SENTRY_ENV === "production") {
     dsn: process.env.SENTRY_DSN,
     environment: "production",
     tracesSampleRate: 0.1,
+    // GDPR: never ship user PII to Sentry. Drop request bodies, auth headers,
+    // cookies and any captured user object before the event leaves the server.
+    sendDefaultPii: false,
+    beforeSend: scrubSentryPii,
   });
+}
+
+function scrubSentryPii(event) {
+  if (event.request) {
+    delete event.request.data;
+    delete event.request.cookies;
+    if (event.request.headers) {
+      delete event.request.headers.authorization;
+      delete event.request.headers.cookie;
+    }
+  }
+  delete event.user;
+  return event;
 }
 
 const __filename = fileURLToPath(import.meta.url);
@@ -42,6 +59,7 @@ import statusRoutes from "./routes/status.js";
 import dashboardV2Routes from "./routes/dashboardV2.js";
 import onboardingRoutes from "./routes/onboarding.js";
 import personalizationRoutes from "./routes/personalization.js";
+import gdprRoutes from "./routes/gdpr.js";
 import { waitlistLimiter } from "./middleware/rateLimit.js";
 import { requestContextMiddleware } from "./lib/requestContext.js";
 import supabase from "./supabase.js";
@@ -186,6 +204,7 @@ app.use("/api/status", statusRoutes);
 app.use("/api", dashboardV2Routes);
 app.use("/api/onboarding", onboardingRoutes);
 app.use("/api/personalization", personalizationRoutes);
+app.use("/api/gdpr", gdprRoutes);
 
 // ─── Waitlist (public, no auth) ─────────────────────────────────────────────
 app.post("/api/waitlist", waitlistLimiter, async (req, res) => {

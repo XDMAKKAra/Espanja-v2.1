@@ -138,7 +138,7 @@ router.post("/streak-reminders", async (req, res) => {
           name: user.email.split("@")[0],
           streak,
           lastPracticeDate: yesterdayStr,
-        }).catch((err) => console.error("Streak reminder failed for", user.email, err));
+        }).catch((err) => console.error("Streak reminder failed for user", userId, err?.message || err));
       }
       sent++;
     }

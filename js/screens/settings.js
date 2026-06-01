@@ -5,6 +5,7 @@ import { track } from "../analytics.js";
 import { computeStartingLevel, YTL_LEVELS } from "../features/startingLevel.js";
 import { toast } from "../ui/toast.js";
 import { initPaywallModal } from "../features/paywallModal.js";
+import { getConsent, setAnalyticsEnabled } from "../features/consent.js";
 
 const THEME_LABELS = {
   auto:  "Vaalea, seuraa järjestelmää",
@@ -106,6 +107,95 @@ function wireAccountSection() {
       show("screen-auth");
     });
   }
+  renderAnalyticsRow();
+  wireExportData();
+  wireDeleteAccount();
+}
+
+// Analytics-consent toggle. Reflects the stored choice and lets the user flip
+// it. setAnalyticsEnabled() owns starting/stopping PostHog.
+function renderAnalyticsRow() {
+  const valueEl = document.getElementById("settings-analytics-value");
+  const btn = document.getElementById("settings-analytics-toggle");
+  if (!btn) return;
+  const on = getConsent() === "granted";
+  if (valueEl) {
+    valueEl.textContent = on
+      ? "Sallittu. Voit perua milloin tahansa."
+      : "Ei käytössä. Vapaaehtoinen, auttaa kehittämään sovellusta.";
+  }
+  btn.textContent = on ? "Peru" : "Salli";
+  if (!btn.dataset.wired) {
+    btn.dataset.wired = "1";
+    btn.addEventListener("click", () => {
+      const nowOn = getConsent() === "granted";
+      setAnalyticsEnabled(!nowOn);
+      renderAnalyticsRow();
+      toast({ message: nowOn ? "Analytiikka peruttu." : "Analytiikka sallittu.", variant: "success" });
+    });
+  }
+}
+
+function wireExportData() {
+  const btn = document.getElementById("settings-export-data");
+  if (!btn || btn.dataset.wired) return;
+  btn.dataset.wired = "1";
+  btn.addEventListener("click", async () => {
+    btn.disabled = true;
+    const orig = btn.textContent;
+    btn.textContent = "Ladataan…";
+    try {
+      const res = await apiFetch(`${API}/api/gdpr/export`, { headers: authHeader() });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `puheo-tietosi-${new Date().toISOString().slice(0, 10)}.json`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+      toast({ message: "Tietosi ladattiin.", variant: "success" });
+    } catch (err) {
+      toast({ message: "Lataus epäonnistui. Kokeile hetken kuluttua uudelleen.", variant: "error" });
+      track("gdpr_export_error", { message: String(err?.message || err) });
+    } finally {
+      btn.disabled = false;
+      btn.textContent = orig;
+    }
+  });
+}
+
+function wireDeleteAccount() {
+  const btn = document.getElementById("settings-delete-account");
+  if (!btn || btn.dataset.wired) return;
+  btn.dataset.wired = "1";
+  btn.addEventListener("click", async () => {
+    const ok = window.confirm(
+      "Haluatko varmasti poistaa tilisi? Kaikki harjoitushistoria, kirjoitelmat ja profiilitiedot poistetaan pysyvästi. Tätä ei voi peruuttaa.",
+    );
+    if (!ok) return;
+    btn.disabled = true;
+    const orig = btn.textContent;
+    btn.textContent = "Poistetaan…";
+    try {
+      const res = await apiFetch(`${API}/api/gdpr/delete-account`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", ...authHeader() },
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      track("gdpr_account_deleted", {});
+      clearAuth();
+      show("screen-auth");
+      toast({ message: "Tilisi on poistettu.", variant: "success" });
+    } catch (err) {
+      toast({ message: "Poisto epäonnistui. Kokeile uudelleen tai ota yhteyttä tukeen.", variant: "error" });
+      track("gdpr_delete_error", { message: String(err?.message || err) });
+      btn.disabled = false;
+      btn.textContent = orig;
+    }
+  });
 }
 
 // ─── Subscription section ─────────────────────────────────────────────────────
