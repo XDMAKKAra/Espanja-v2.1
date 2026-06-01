@@ -103,8 +103,20 @@ export function humanizeApiError(input) {
   const key = (input instanceof Error ? input.message : String(input || "")).trim();
   if (!key) return { title: "Jokin meni pieleen", subtext: "Yritä hetken päästä uudelleen." };
   if (API_ERROR_COPY[key]) return API_ERROR_COPY[key];
-  // Long messages = already humane; pass through. Short snake_case = raw key.
+  // Empty-body / parse / network failures (server returned nothing or the
+  // connection dropped — e.g. "Failed to execute 'json' on 'Response':
+  // Unexpected end of JSON input", "NetworkError", "Load failed"). These are
+  // raw JS exceptions; a student must never see them. Show a calm Finnish line.
+  if (/Unexpected (end|token)|Failed to (execute|fetch)|NetworkError|Load failed|JSON|TypeError|ReferenceError|Cannot read|is not a function|aborted|timed? ?out/i.test(key)) {
+    return { title: "Yhteys katkesi hetkeksi", subtext: "Palvelimeen ei juuri nyt saatu yhteyttä. Yritä uudelleen." };
+  }
+  // Short snake_case = raw backend key, not user copy.
   if (/^[a-z][a-z0-9_]+$/.test(key) && key.length < 40) {
+    return { title: "Lataus epäonnistui", subtext: "Yritä hetken päästä uudelleen." };
+  }
+  // Stray English exception text (no Finnish letters, sentence-like) → fallback,
+  // so no raw error ever leaks. Genuine Finnish backend copy passes through.
+  if (key.length > 40 && !/[äöåÄÖÅ]/.test(key) && /[A-Za-z]/.test(key) && / [a-z]/.test(key)) {
     return { title: "Lataus epäonnistui", subtext: "Yritä hetken päästä uudelleen." };
   }
   return { title: "Lataus epäonnistui", subtext: key };

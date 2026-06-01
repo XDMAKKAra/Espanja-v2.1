@@ -7,90 +7,13 @@ import { toast } from "../ui/toast.js";
 import { initPaywallModal } from "../features/paywallModal.js";
 import { getConsent, setAnalyticsEnabled } from "../features/consent.js";
 
-const THEME_LABELS = {
-  auto:  "Vaalea, seuraa järjestelmää",
-  light: "Vaalea",
-  dark:  "Tumma",
-};
-function resolveEffectiveTheme(choice) {
-  if (choice === "auto") {
-    const m = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)");
-    return m && m.matches ? "dark" : "light";
-  }
-  return choice;
-}
-function applyThemeChoice(value) {
-  const v = ["auto", "light", "dark"].includes(value) ? value : "auto";
-  try { localStorage.setItem("puheo_theme", v); } catch {}
-  // Auto resolves to light/dark via prefers-color-scheme, write the
-  // effective value to data-theme so the CSS [data-theme="dark"] block
-  // matches whether the user chose Dark explicitly or Auto-on-dark-OS.
-  document.documentElement.setAttribute("data-theme", resolveEffectiveTheme(v));
-  const buttons = document.querySelectorAll(".settings-theme-btn");
-  buttons.forEach((b) => {
-    const on = b.dataset.theme === v;
-    b.classList.toggle("is-current", on);
-    b.setAttribute("aria-checked", on ? "true" : "false");
-  });
-  const valueEl = document.getElementById("settings-theme-value");
-  if (valueEl) valueEl.textContent = THEME_LABELS[v];
-}
-
-// L-LIVE-AUDIT-P2 UPDATE 7, Magic UI animated-theme-toggler ported to vanilla.
-// View Transitions API expands a clip-path circle from the click point so the
-// new theme reveals as a wipe instead of a hard flash. Falls back to instant
-// when the browser lacks the API or the user prefers reduced motion.
-function applyThemeChoiceWithTransition(value, evt) {
-  const reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (!document.startViewTransition || reduced) {
-    applyThemeChoice(value);
-    return;
-  }
-  let originX, originY;
-  if (evt && Number.isFinite(evt.clientX) && evt.clientX > 0) {
-    originX = evt.clientX;
-    originY = evt.clientY;
-  } else {
-    // Keyboard / programmatic click, origin from the active element's centre.
-    const target = (evt?.currentTarget) || document.activeElement;
-    if (target?.getBoundingClientRect) {
-      const r = target.getBoundingClientRect();
-      originX = r.left + r.width / 2;
-      originY = r.top + r.height / 2;
-    } else {
-      originX = window.innerWidth / 2;
-      originY = window.innerHeight / 2;
-    }
-  }
-  document.documentElement.style.setProperty("--vt-origin-x", `${originX}px`);
-  document.documentElement.style.setProperty("--vt-origin-y", `${originY}px`);
-  document.startViewTransition(() => applyThemeChoice(value));
-}
-
-let _themeMqlBound = false;
+// L-V346 — teemavalitsin poistettu Asetuksista. Vaihto ei tehnyt mitään
+// (WordDive-redesignissa ei ole erillistä dark-palettia), joten se luki vain
+// rikkinäiseltä. Appi on aina vaalea; siivotaan vanha valinta pois ettei
+// aiemmin valittu "dark" jää data-themeen.
 function wireThemeToggle() {
-  document.querySelectorAll(".settings-theme-btn").forEach((b) => {
-    b.addEventListener("click", (evt) => applyThemeChoiceWithTransition(b.dataset.theme, evt));
-  });
-  // Initial state from localStorage if set.
-  try {
-    const saved = localStorage.getItem("puheo_theme");
-    if (saved) applyThemeChoice(saved);
-  } catch {}
-
-  // Re-apply when the OS-level scheme flips, but only when the user
-  // is on Auto. Explicit Light/Dark choices win.
-  if (!_themeMqlBound && window.matchMedia) {
-    _themeMqlBound = true;
-    const mql = window.matchMedia("(prefers-color-scheme: dark)");
-    const onChange = () => {
-      let saved = "auto";
-      try { saved = localStorage.getItem("puheo_theme") || "auto"; } catch {}
-      if (saved === "auto") applyThemeChoice("auto");
-    };
-    if (mql.addEventListener) mql.addEventListener("change", onChange);
-    else if (mql.addListener) mql.addListener(onChange);
-  }
+  try { localStorage.removeItem("puheo_theme"); } catch { /* ignore */ }
+  document.documentElement.setAttribute("data-theme", "light");
 }
 function wireAccountSection() {
   const emailEl = document.getElementById("settings-account-email");

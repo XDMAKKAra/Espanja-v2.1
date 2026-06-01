@@ -14,13 +14,10 @@
     if (!loggedIn) {
       document.body.classList.add("auth-mode");
     }
-    var saved = localStorage.getItem("puheo_theme") || "auto";
-    var effective = saved;
-    if (saved === "auto") {
-      var m = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)");
-      effective = (m && m.matches) ? "dark" : "light";
-    }
-    document.documentElement.setAttribute("data-theme", effective);
+    // L-V346 — teemavalitsin poistettu; appi on aina vaalea (WordDive-paletti).
+    // Siivoa vanha tallennettu valinta, ettei aiempi "dark" jää data-themeen.
+    try { localStorage.removeItem("puheo_theme"); } catch (e2) {}
+    document.documentElement.setAttribute("data-theme", "light");
 
     // BUGFIX: pick the correct initial screen based on auth state so logged-in
     // users don't flash `screen-auth` (the previous default-active screen)

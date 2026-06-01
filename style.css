@@ -4901,7 +4901,8 @@ margin-bottom: 6px;
   border-color: var(--accent-hover);
   color: var(--accent-hover);
 }
-.verb-ref-btn-icon { font-size: 15px; line-height: 1; }
+.verb-ref-btn-icon { display: inline-flex; align-items: center; }
+.verb-ref-btn-icon svg { width: 16px; height: 16px; display: block; }
 
 .verbref-overlay {
   position: fixed; inset: 0; z-index: 500;
