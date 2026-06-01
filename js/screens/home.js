@@ -241,53 +241,12 @@ function renderPulse(data) {
     </section>`;
 }
 
-// Secondary paths — five row entries in a single column with hairline
-// separators. No cards, no icons, no per-row accent. The row title and
-// meta carry the entire signal; brick is reserved for the primary CTA.
-function buildPathRows(dashboard, lang, isPro) {
-  const modeStats = dashboard?.modeStats || {};
-  const fmt = (mode) => {
-    const s = modeStats[mode] || {};
-    const sessions = Number(s.sessions ?? 0);
-    if (sessions === 0) return "Ei vielä aloitettu";
-    return `${sessions} ${sessions === 1 ? "harjoitus" : "harjoitusta"}`;
-  };
-
-  return [
-    { id: "sanasto",   label: "Sanasto",             meta: fmt("vocab"),   href: `#/oppimispolku?lang=${lang}` },
-    { id: "kielioppi", label: "Kielioppi",           meta: fmt("grammar"), href: `#/oppimispolku?lang=${lang}` },
-    { id: "luetun",    label: "Luetun ymmärtäminen", meta: fmt("reading"), href: `#/luetun?lang=${lang}` },
-    { id: "kirjoitus", label: "Kirjoitustehtävä",    meta: fmt("writing"), href: `#/kirjoitus?lang=${lang}` },
-    {
-      id: "koeharjoitus",
-      label: "Koeharjoitus",
-      meta: isPro ? "Täysi YO-koerunko" : "Pro-jäsenille",
-      href: `#/koeharjoitus?lang=${lang}`,
-      locked: !isPro,
-    },
-  ];
-}
-
-function renderPaths(dashboard, lang, isPro) {
-  const rows = buildPathRows(dashboard, lang, isPro)
-    .map((r) => `
-      <li class="home-path">
-        <a class="home-path__row ${r.locked ? "is-locked" : ""}"
-           href="${r.href}"
-           data-path="${r.id}"
-           ${r.locked ? `data-unlocked="0" data-action="exam"` : ""}>
-          <span class="home-path__label">${escapeHtml(r.label)}</span>
-          <span class="home-path__meta">${escapeHtml(r.meta)}</span>
-          <span class="home-path__arrow" aria-hidden="true">→</span>
-        </a>
-      </li>`)
-    .join("");
-  return `
-    <section class="home-paths" aria-label="Muut harjoitukset">
-      <ol class="home-paths__list">${rows}</ol>
-    </section>`;
-}
-
+// L-V335: koti = tervehdys + Avaa oppimispolku -CTA + viimeisin kurssi
+// (renderNext) + päivän putki kun dataa on (renderPulse). Vanha
+// kategoriarivi-lohko (Sanasto / Kielioppi / Luetun / Kirjoitus /
+// Koeharjoitus) poistettu: rivit lupasivat "N harjoitusta" mutta
+// jokainen klikkaus vei samaan oppimispolkuun. Mode-first-hierarkiassa
+// koti ei ole kategoriaselain, oppimispolku on.
 function renderShell(activeLang, data, isPro) {
   const dashboard = data?.dashboard || {};
   const profile = data?.profile?.profile || window._userProfile || null;
@@ -296,7 +255,6 @@ function renderShell(activeLang, data, isPro) {
     ${tabsHtml ? `<div class="home-tabs" role="tablist" aria-label="Kielet">${tabsHtml}</div>` : ""}
     ${renderNext(dashboard, profile, activeLang)}
     ${renderPulse(data)}
-    ${renderPaths(dashboard, activeLang, isPro)}
   `;
 }
 
@@ -313,11 +271,6 @@ function wireTabs(root) {
 
 function renderShellSkeleton(activeLang) {
   const tabs = renderTabs(activeLang);
-  const pathRows = Array.from({ length: 5 }).map(() => `
-    <li class="home-path home-path--skel" aria-hidden="true">
-      <span class="home-skel home-skel--path-label"></span>
-      <span class="home-skel home-skel--path-meta"></span>
-    </li>`).join("");
   return `
     <div class="home-skel-root" role="status" aria-live="polite">
       <span class="sr-only">Ladataan kotinäyttöä.</span>
@@ -326,9 +279,6 @@ function renderShellSkeleton(activeLang) {
         <span class="home-skel home-skel--next-title"></span>
         <span class="home-skel home-skel--next-meta"></span>
         <span class="home-skel home-skel--next-cta"></span>
-      </section>
-      <section class="home-paths" aria-hidden="true">
-        <ol class="home-paths__list">${pathRows}</ol>
       </section>
     </div>`;
 }
@@ -369,33 +319,6 @@ function wireHoverPrefetch(root, lang) {
       prefetchCurriculumList(lang);
     });
   }
-  root.querySelectorAll(".home-path__row").forEach((a) => {
-    const id = a.dataset.path;
-    onHoverIntent(a, () => {
-      if (id === "sanasto" || id === "kielioppi") {
-        prefetchChunk("oppimispolkuIndex", () => import("./oppimispolkuIndex.js"));
-        prefetchCurriculumList(lang);
-      } else if (id === "luetun") {
-        prefetchChunk("reading", () => import("./reading.js"));
-      } else if (id === "kirjoitus") {
-        prefetchChunk("writing", () => import("./writing.js"));
-      }
-    });
-  });
-}
-
-function wirePaywallTriggers(root) {
-  root.querySelectorAll("[data-action='exam']").forEach((a) => {
-    a.addEventListener("click", (e) => {
-      const isPro = a.dataset.unlocked === "1";
-      if (!isPro && !window._isPro) {
-        e.preventDefault();
-        import("../features/paywallModal.js")
-          .then((m) => m.openPaywallModal?.())
-          .catch(() => {});
-      }
-    });
-  });
 }
 
 export async function loadHome() {
@@ -410,7 +333,6 @@ export async function loadHome() {
     window._isPro = isPro;
     root.innerHTML = renderShell(activeLang, cached, isPro);
     wireTabs(root);
-    wirePaywallTriggers(root);
     wireHoverPrefetch(root, activeLang);
     wireNextTopicHandler(root, activeLang);
     return;
@@ -421,7 +343,6 @@ export async function loadHome() {
   window._isPro = isPro;
   root.innerHTML = renderShell(activeLang, data, isPro);
   wireTabs(root);
-  wirePaywallTriggers(root);
   wireHoverPrefetch(root, activeLang);
   wireNextTopicHandler(root, activeLang);
 }

@@ -252,6 +252,19 @@ async function hydrateFromServer(route) {
 // Build the SideMenu sivut array from real lesson data. PR 2 keeps the
 // phase mapping simple: one numbered exercise sivu per phase. PR 3+ may
 // split long phases into a/b sub-sivu pairs to match the Otava idiom.
+// A phase can be shown only when its item type has a renderer. Writing and
+// reading_mc have dedicated paths; the rest must be in SUPPORTED_ITEM_TYPES
+// (mc / typed / gap_fill / translate). "match" (yhdistämistehtävä) has no
+// reader-flow renderer yet, so its phase is hidden rather than shown as a
+// coming-soon placeholder. Empty phases are hidden too — nothing to do there.
+function phaseIsRenderable(phase) {
+  const items = Array.isArray(phase?.items) ? phase.items : [];
+  if (items.length === 0) return false;
+  const firstKind = items[0]?.item_type;
+  if (firstKind === "writing" || firstKind === "reading_mc") return true;
+  return SUPPORTED_ITEM_TYPES.has(firstKind);
+}
+
 function buildSivut(lesson) {
   const out = [];
   // 1. Teoriasivu — always first.
@@ -263,10 +276,15 @@ function buildSivut(lesson) {
     meta: "Opetussivu",
   });
 
-  // 2. Exercise sivut — one per phase, numbered 1..N.
+  // 2. Exercise sivut — one per phase, numbered 1..N. L-V335: skip phases
+  // whose item type has no renderer yet (e.g. "match" / yhdistämistehtävä).
+  // Showing them produced a dead "Tämä tehtävätyyppi avautuu pian" page,
+  // which is on the banned coming-soon list. Hide the phase entirely instead.
+  // Numbering follows the visible phases so the sidebar reads 1..N with no gaps.
   const phases = Array.isArray(lesson?.phases) ? lesson.phases : [];
   phases.forEach((phase, i) => {
-    const num = String(i + 1);
+    if (!phaseIsRenderable(phase)) return;
+    const num = String(out.filter((s) => s.kind === "tehtava").length + 1);
     const title = prettifyPhaseTitle(phase.title) || `Vaihe ${num}`;
     const itemCount = Array.isArray(phase.items) ? phase.items.length : 0;
     out.push({
@@ -338,20 +356,7 @@ function renderTopbar() {
       </div>
       <h1 class="dk__title">${escapeHtml(title)}</h1>
       <div class="dk__tools">
-        <span class="dk__progress-chip" id="dk-progress-chip" aria-live="polite">0 / 0 valmis</span>
-        <button type="button" class="dk__tool dk__tool--invert" id="dk-search" aria-label="Etsi" title="Etsi (tulossa)">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <circle cx="11" cy="11" r="7"/>
-            <line x1="16.5" y1="16.5" x2="21" y2="21"/>
-          </svg>
-        </button>
-        <button type="button" class="dk__tool dk__tool--invert" id="dk-help" aria-label="Opas" title="Opas (tulossa)">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <circle cx="12" cy="12" r="9"/>
-            <path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.9.4-1.5 1-1.5 2"/>
-            <circle cx="12" cy="17" r="0.5"/>
-          </svg>
-        </button>
+        <span class="dk__progress-chip" id="dk-progress-chip" aria-live="polite"></span>
       </div>
     </header>`;
 }
@@ -406,7 +411,7 @@ function renderSidemenu() {
   return `
     <aside class="dk__sidemenu" id="dk-sidemenu" aria-label="Oppitunnin sisällys">
       <div class="dk__sidemenu-top">
-        <a class="dk__sidemenu-logo" href="#home" data-dk-nav="home" aria-label="Puheo etusivulle">Puhe<span>o</span></a>
+        <a class="dk__sidemenu-logo" href="#home" data-dk-nav="home" aria-label="Puheo etusivulle"><span class="brand-wordmark">puheo</span></a>
         <div class="dk__sidemenu-course">${escapeHtml(langLabel(_route.lang))} · ${escapeHtml(prettyKurssi(_route.kurssiKey))}</div>
       </div>
       <div class="dk__sidemenu-head">
@@ -1236,15 +1241,13 @@ function renderExerciseContent(sivu) {
     return renderReadingPhase(sivu, phase, items);
   }
 
-  // Bail to placeholder for unsupported item types (match) until their PRs land.
+  // Defensive fallback for item types without a reader-flow renderer (match).
+  // Such phases are hidden from the sidemenu in buildSivut, so this branch is
+  // only reachable via a stale direct link. No coming-soon copy (banned).
   if (!SUPPORTED_ITEM_TYPES.has(firstKind)) {
-    const label = firstKind === "match"
-      ? "Yhdistämistehtävä"
-      : `Tehtävätyyppi "${firstKind}"`;
     return `
       <div class="dk__placeholder" data-kind="tehtava">
-        <p class="dk__placeholder-kind">${escapeHtml(label)}</p>
-        <p>Tämä tehtävätyyppi avautuu pian. Voit jatkaa muista vaiheista sivuvalikosta.</p>
+        <p>Valitse vaihe sivuvalikosta.</p>
       </div>`;
   }
 
@@ -1257,7 +1260,9 @@ function renderExerciseContent(sivu) {
     <section class="dk__exercise" data-sivu="${escapeHtml(sivu.id)}" data-index="${i}">
       <header class="dk__exercise-head">
         <span class="dk__exercise-eyebrow">Tehtävä ${i + 1} / ${items.length}</span>
-        <span class="dk__exercise-score" aria-label="Tulos">${st.scoreCorrect} / ${st.scoreTotal}</span>
+        ${st.scoreTotal > 0
+          ? `<span class="dk__exercise-score" aria-label="Tulos">${st.scoreCorrect} / ${st.scoreTotal}</span>`
+          : ""}
       </header>
       ${renderItemBody(item, answer)}
       ${renderExerciseFooter(item, answer, i, items.length)}
