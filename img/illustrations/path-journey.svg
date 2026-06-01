@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Puheo L-V346 — WordDive-palettin mukainen oppimispolku-kuvitus.
+  Geometrinen, litteä, ei gradientteja, ei figuratiivisia käsiä (slop-riski).
+  Motiivi: kiemurteleva polku, virstanpylväät (keltainen/vihreä), huipulla
+  ylioppilaslakki + sparkle, aksenttitiilet ñ/é (espanja). Paletti lukittu:
+  cream FBF7EF, paper FFFFFF, brick 9B2D2A, yellow F4C84A, green 2E5E4E,
+  yellow-pale FBEEC6, green-pale DCE8E0, line E9DFCF, ink 241C15.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 200" role="img" aria-label="Oppimispolku virstanpylväineen ja ylioppilaslakkeineen">
+  <!-- pale rounded backdrop blob -->
+  <rect x="6" y="10" width="248" height="180" rx="34" fill="#FBEEC6"/>
+  <circle cx="210" cy="48" r="40" fill="#DCE8E0"/>
+
+  <!-- winding path (brick), rounded caps -->
+  <path d="M 36 168 C 70 168 78 132 108 130 C 142 128 150 96 132 80 C 116 66 150 48 196 50"
+        fill="none" stroke="#9B2D2A" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- dashed center line on the path -->
+  <path d="M 36 168 C 70 168 78 132 108 130 C 142 128 150 96 132 80 C 116 66 150 48 196 50"
+        fill="none" stroke="#FBF7EF" stroke-width="2.4" stroke-linecap="round"
+        stroke-dasharray="2 12" opacity="0.85"/>
+
+  <!-- milestone 1 (start, green) -->
+  <circle cx="36" cy="168" r="12" fill="#FFFFFF" stroke="#2E5E4E" stroke-width="4"/>
+  <circle cx="36" cy="168" r="4" fill="#2E5E4E"/>
+  <!-- milestone 2 (yellow) -->
+  <circle cx="108" cy="130" r="12" fill="#F4C84A" stroke="#9B2D2A" stroke-width="3"/>
+  <!-- milestone 3 (green) -->
+  <circle cx="132" cy="80" r="11" fill="#2E5E4E"/>
+  <path d="M 127 80 l 4 4 l 6 -8" fill="none" stroke="#FBF7EF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- summit: graduation cap on a paper tile -->
+  <rect x="178" y="30" width="44" height="40" rx="12" fill="#FFFFFF" stroke="#E9DFCF" stroke-width="2"/>
+  <!-- cap board -->
+  <path d="M 200 40 l 18 7 l -18 7 l -18 -7 z" fill="#241C15"/>
+  <!-- cap base -->
+  <path d="M 192 50 l 8 3 l 8 -3 v 7 q -8 4 -16 0 z" fill="#241C15"/>
+  <!-- tassel -->
+  <path d="M 218 47 v 10" stroke="#9B2D2A" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="218" cy="59" r="2.4" fill="#F4C84A"/>
+
+  <!-- sparkle -->
+  <path d="M 168 18 l 3 7 l 7 3 l -7 3 l -3 7 l -3 -7 l -7 -3 l 7 -3 z" fill="#F4C84A"/>
+
+  <!-- accent tiles ñ / é (Spanish), bottom-right, flat -->
+  <rect x="206" y="148" width="30" height="30" rx="9" fill="#FFFFFF" stroke="#E9DFCF" stroke-width="2"/>
+  <text x="221" y="170" font-family="Fredoka, sans-serif" font-size="18" font-weight="700" fill="#9B2D2A" text-anchor="middle">ñ</text>
+  <rect x="170" y="158" width="28" height="28" rx="9" fill="#2E5E4E"/>
+  <text x="184" y="179" font-family="Fredoka, sans-serif" font-size="16" font-weight="700" fill="#FBF7EF" text-anchor="middle">é</text>
+</svg>

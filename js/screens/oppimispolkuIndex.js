@@ -92,9 +92,12 @@ function renderShell(lang, kurssit) {
       <span class="op-breadcrumb__crumb is-current" aria-current="page">Oppimispolku</span>
     </nav>
     <header class="op-head">
-      <p class="op-eyebrow">${escapeHtml(langLabel)} · YO-koevalmennus</p>
-      <h1 class="op-title display display--serif">Oppimispolku</h1>
-      <p class="op-sub">${totalCourses} kurssia · ${done} suoritettu · Etene järjestyksessä.</p>
+      <div class="op-head__text">
+        <p class="op-eyebrow">${escapeHtml(langLabel)} · YO-koevalmennus</p>
+        <h1 class="op-title display display--serif">Oppimispolku</h1>
+        <p class="op-sub">${totalCourses} kurssia · ${done} suoritettu · Etene järjestyksessä.</p>
+      </div>
+      <img class="op-head__art" src="/img/illustrations/path-journey.svg" alt="" aria-hidden="true" width="260" height="200" loading="lazy" />
     </header>
     <ol class="op-list">
       ${kurssit.map((k, i) => renderRow(k, i + 1, lang)).join("")}

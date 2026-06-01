@@ -98,11 +98,23 @@ body.app .op-breadcrumb__crumb.is-current { color: var(--ed-ink, var(--ink)); fo
 
 body.app .op-head {
   display: flex;
-  flex-direction: column;
-  gap: 6px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
   margin-bottom: 8px;
   padding-bottom: 16px;
   border-bottom: 1px solid var(--ed-rule-strong, color-mix(in srgb, var(--ink-faint, #71717a) 30%, transparent));
+}
+body.app .op-head__text { min-width: 0; }
+/* L-V346 — brändikuvitus (path-journey.svg) oppimispolun otsikossa. */
+body.app .op-head__art {
+  flex-shrink: 0;
+  width: clamp(180px, 24vw, 260px);
+  height: auto;
+}
+@media (max-width: 720px) {
+  body.app .op-head { flex-direction: column; align-items: flex-start; gap: 14px; }
+  body.app .op-head__art { width: 100%; max-width: 320px; align-self: center; }
 }
 body.app .op-eyebrow {
   font-family: var(--ed-sans, system-ui);
