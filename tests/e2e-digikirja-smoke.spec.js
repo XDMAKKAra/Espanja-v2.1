@@ -55,10 +55,10 @@ test('digikirja shell renders the real Ruoka ja ateriat lesson', async ({ page }
   // TopBar title comes from lesson_3.json meta.title.
   await expect(page.locator('.dk__topbar .dk__title')).toHaveText(/Ruoka ja ateriat/);
 
-  // SideMenu is built from lesson phases: 1 teoria + 10 phases + 1 flashcards
-  // + 2 tests + 1 itsearvio = 15 rows.
+  // SideMenu is built from lesson data: 1 teoria + 10 phases + 1 flashcards
+  // = 12 rows. Per-lesson Testit + Itsearviointi were removed 2026-05-20.
   const rowCount = await page.locator('.dk__sidemenu-list .dk__row').count();
-  expect(rowCount).toBe(15);
+  expect(rowCount).toBe(12);
 
   // First row is the teoria sivu, active by default.
   await expect(page.locator('.dk__row.is-active')).toHaveAttribute('data-sivu', 'teoria');
@@ -97,27 +97,36 @@ test('Prev/Next walks teoria → phase-0 → phase-1', async ({ page }) => {
   expect(await page.evaluate(() => location.hash)).toContain('/3/phase-1');
 });
 
-test('PR3 — SVG glyphs render per sivu kind + scroll-to-active', async ({ page }) => {
+test('PR3 — rows carry a non-emoji marker + data-kind + scroll-to-active', async ({ page }) => {
   test.setTimeout(60_000);
   await login(page);
   await page.setViewportSize({ width: 1440, height: 900 });
 
+  // The SideMenu defaults to collapsed; open it so the rows render and
+  // scroll-to-active has something to scroll.
+  await page.evaluate(() => { try { localStorage.setItem('puheo:dk:sidemenu', 'open'); } catch {} });
+
   // Land on a sivu deep in the SideMenu so scroll-to-active has work to do.
-  await page.evaluate(() => { location.hash = '#/oppitunti/es/kurssi_2/3/test-2'; });
+  await page.evaluate(() => { location.hash = '#/oppitunti/es/kurssi_2/3/phase-9'; });
   await page.waitForTimeout(1200);
+  await expect(page.locator('#dk-root[data-sidemenu="open"]')).toBeVisible();
 
-  // Every row carries an SVG glyph (not emoji) and a data-kind attribute.
+  // Every row carries a styled bullet marker (not an emoji) and a data-kind.
   const totalRows = await page.locator('.dk__sidemenu-list .dk__row').count();
-  const rowsWithGlyph = await page.locator('.dk__sidemenu-list .dk__row .dk__row-glyph').count();
-  expect(rowsWithGlyph).toBe(totalRows);
+  const rowsWithMarker = await page.locator('.dk__sidemenu-list .dk__row .dk__row-bullet').count();
+  expect(rowsWithMarker).toBe(totalRows);
 
-  // Verify each kind has a glyph by checking representative rows.
-  for (const sivu of ['teoria', 'phase-0', 'kortit-1', 'test-1', 'arvio']) {
-    await expect(page.locator(`.dk__row[data-sivu="${sivu}"] .dk__row-glyph`)).toBeVisible();
+  // Representative rows (teoria / exercise phase / deep phase / flashcards)
+  // are visible, carry a marker, and expose their kind via data-kind.
+  for (const sivu of ['teoria', 'phase-0', 'phase-9', 'kortit-1']) {
+    const row = page.locator(`.dk__row[data-sivu="${sivu}"]`);
+    await expect(row).toBeVisible();
+    await expect(row.locator('.dk__row-bullet')).toBeAttached();
+    await expect(row).toHaveAttribute('data-kind', /.+/);
   }
 
-  // The active row (test-2) must be scrolled into the visible portion of
-  // the SideMenu list — i.e. its bounding box overlaps the list's box.
+  // The active row must be scrolled into the visible portion of the
+  // SideMenu list — i.e. its bounding box overlaps the list's box.
   const inView = await page.evaluate(() => {
     const active = document.querySelector('.dk__row.is-active');
     const list = document.getElementById('dk-sidemenu-list');
@@ -240,100 +249,10 @@ test('PR5 — Flashcard flips, "Tiedän" advances + persists', async ({ page }) 
   });
 });
 
-test('PR6 — Testi submits all items, shows summary + per-item chips', async ({ page }) => {
-  test.setTimeout(90_000);
-  await login(page);
-  await page.setViewportSize({ width: 1440, height: 900 });
-
-  // test-2 is the mc-based test (6 kohtaa from phase-0 of lesson_3).
-  await page.evaluate(() => { location.hash = '#/oppitunti/es/kurssi_2/3/test-2'; });
-  await page.waitForTimeout(1200);
-
-  await expect(page.locator('.dk__testi')).toBeVisible();
-  const itemCount = await page.locator('.dk__testi-item').count();
-  expect(itemCount).toBe(6);
-
-  // No live feedback before submit — Tarkista testi button visible, no
-  // summary panel yet.
-  await expect(page.locator('#dk-testi-submit')).toBeVisible();
-  await expect(page.locator('.dk__testi-summary')).toHaveCount(0);
-
-  // Answer all 6 items: first item correctly (choice 1 = "aamiainen"),
-  // remaining 5 with choice 0 (deliberately probably wrong → mixed score).
-  await page.locator('.dk__testi-item[data-testi-item="0"] .dk__choice[data-choice="1"]').click();
-  for (let i = 1; i < 6; i++) {
-    await page.locator(`.dk__testi-item[data-testi-item="${i}"] .dk__choice[data-choice="0"]`).click();
-  }
-
-  await page.locator('#dk-testi-submit').click();
-  await page.waitForTimeout(250);
-
-  // Summary panel, per-item chips, reset + next-sivu buttons all present.
-  await expect(page.locator('.dk__testi-summary')).toBeVisible();
-  await expect(page.locator('.dk__testi-summary-num')).toContainText('/ 6');
-  const correctChips = await page.locator('.dk__testi-item .dk__feedback-chip.is-correct').count();
-  expect(correctChips).toBeGreaterThanOrEqual(1);
-  await expect(page.locator('#dk-testi-reset')).toBeVisible();
-  await expect(page.locator('#dk-testi-next-sivu')).toBeVisible();
-
-  await page.screenshot({
-    path: path.resolve('audit-screens', 'digikirja-pr6-testi.png'),
-    fullPage: true,
-  });
-});
-
-test('PR7 — Itsearviointi rates 4 statements, persists, averages', async ({ page }) => {
-  test.setTimeout(90_000);
-  await login(page);
-  await page.setViewportSize({ width: 1440, height: 900 });
-
-  // Clear any prior itsearvio result (both local cache + server row).
-  await page.evaluate(() => {
-    Object.keys(localStorage).forEach((k) => {
-      if (k.startsWith('puheo:dk:itsearvio')) localStorage.removeItem(k);
-    });
-  });
-  await clearDigikirjaServerProgress(page);
-
-  await page.evaluate(() => { location.hash = '#/oppitunti/es/kurssi_2/3/arvio'; });
-  await page.waitForTimeout(1200);
-
-  await expect(page.locator('.dk__arvio')).toBeVisible();
-  const rowCount = await page.locator('.dk__arvio-row').count();
-  expect(rowCount).toBe(4);
-
-  // Submit is disabled until all four are rated.
-  await expect(page.locator('#dk-arvio-submit')).toBeDisabled();
-
-  // Pick 5 / 4 / 3 / 4 → avg 4.0.
-  const picks = [5, 4, 3, 4];
-  for (let i = 0; i < 4; i++) {
-    await page.locator(`.dk__arvio-row >> nth=${i}`).locator(`.dk__arvio-btn[data-value="${picks[i]}"]`).click();
-  }
-
-  await expect(page.locator('#dk-arvio-submit')).toBeEnabled();
-  await page.locator('#dk-arvio-submit').click();
-  await page.waitForTimeout(200);
-
-  // Summary chip appears + score = 4.0 / 5.
-  await expect(page.locator('.dk__testi-summary')).toBeVisible();
-  await expect(page.locator('.dk__testi-summary-num')).toContainText('4.0 / 5');
-  await expect(page.locator('#dk-arvio-reset')).toBeVisible();
-  await expect(page.locator('#dk-arvio-back')).toBeVisible();
-
-  // Persistence.
-  const persisted = await page.evaluate(() => {
-    const key = Object.keys(localStorage).find((k) => k.startsWith('puheo:dk:itsearvio'));
-    return key ? JSON.parse(localStorage.getItem(key)) : null;
-  });
-  expect(persisted).toBeTruthy();
-  expect(Object.values(persisted.ratings)).toEqual([5, 4, 3, 4]);
-
-  await page.screenshot({
-    path: path.resolve('audit-screens', 'digikirja-pr7-itsearvio.png'),
-    fullPage: true,
-  });
-});
+// PR6 (Testi) and PR7 (Itsearviointi) specs removed 2026-06-01: the per-lesson
+// Testit + Itsearviointi sivut were dropped from buildSivut on 2026-05-20, so
+// no route renders them anymore. The renderers remain in digikirja.js as dead
+// code for a possible future course-level screen; if that lands, re-add specs.
 
 test('PR8 — legacy 4-segment lesson route redirects to digikirja /teoria', async ({ page }) => {
   test.setTimeout(60_000);
@@ -350,16 +269,18 @@ test('PR8 — legacy 4-segment lesson route redirects to digikirja /teoria', asy
   expect(await page.evaluate(() => location.hash)).toContain('/3/teoria');
 });
 
-test('PR8 — progress chip + SideMenu is-done update on submit', async ({ page }) => {
+test('PR8 — progress chip + SideMenu is-done update on completion', async ({ page }) => {
   test.setTimeout(90_000);
   await login(page);
   await page.setViewportSize({ width: 1440, height: 900 });
 
-  // Wipe progress (both local cache + server row) so the count starts
-  // at 0 and the hydrate-from-server step doesn't carry prior runs.
+  // Wipe progress (both local cache + server row) plus any flashcard state so
+  // the count starts at 0 and hydrate-from-server doesn't carry prior runs.
   await page.evaluate(() => {
     Object.keys(localStorage).forEach((k) => {
-      if (k.startsWith('puheo:dk:progress')) localStorage.removeItem(k);
+      if (k.startsWith('puheo:dk:progress') || k.startsWith('puheo:dk:flashcards')) {
+        localStorage.removeItem(k);
+      }
     });
   });
   await clearDigikirjaServerProgress(page);
@@ -367,22 +288,25 @@ test('PR8 — progress chip + SideMenu is-done update on submit', async ({ page 
   await page.evaluate(() => { location.hash = '#/oppitunti/es/kurssi_2/3/teoria'; });
   await page.waitForTimeout(1200);
 
-  // teoria flips the chip to 1/15 (lesson_3 has 15 sivut).
-  await expect(page.locator('#dk-progress-chip')).toContainText('1 / 15 valmis');
-  await expect(page.locator('.dk__row[data-sivu="teoria"].is-done')).toBeVisible();
+  // teoria flips the chip to 1/12 (lesson_3 has 12 sivut). The sidemenu
+  // defaults to collapsed, so assert the row's done STATE (class), not
+  // its visibility.
+  await expect(page.locator('#dk-progress-chip')).toContainText('1 / 12 valmis');
+  await expect(page.locator('.dk__row[data-sivu="teoria"]')).toHaveClass(/is-done/);
 
-  // Submit test-2 (6 mc items). Picks don't matter — the test merely
-  // checks that submitting marks the sivu done.
-  await page.evaluate(() => { location.hash = '#/oppitunti/es/kurssi_2/3/test-2'; });
+  // Complete the flashcard sivu (5 cards: flip + "Tiedän" each) — finishing
+  // the pack marks the sivu done and bumps the chip to 2/12.
+  await page.evaluate(() => { location.hash = '#/oppitunti/es/kurssi_2/3/kortit-1'; });
   await page.waitForTimeout(1000);
-  for (let i = 0; i < 6; i++) {
-    await page.locator(`.dk__testi-item[data-testi-item="${i}"] .dk__choice[data-choice="0"]`).click();
+  for (let c = 0; c < 5; c++) {
+    await page.locator('#dk-flash-flip').click();
+    await page.waitForTimeout(120);
+    await page.locator('#dk-flash-know').click();
+    await page.waitForTimeout(120);
   }
-  await page.locator('#dk-testi-submit').click();
-  await page.waitForTimeout(250);
 
-  await expect(page.locator('.dk__row[data-sivu="test-2"].is-done')).toBeVisible();
-  await expect(page.locator('#dk-progress-chip')).toContainText('2 / 15 valmis');
+  await expect(page.locator('.dk__row[data-sivu="kortit-1"]')).toHaveClass(/is-done/);
+  await expect(page.locator('#dk-progress-chip')).toContainText('2 / 12 valmis');
 
   await page.screenshot({
     path: path.resolve('audit-screens', 'digikirja-pr8-progress.png'),
@@ -440,9 +364,11 @@ test('SideMenu toggle persists across navigation', async ({ page }) => {
   // (PR8b) adds an async round-trip whose duration depends on Supabase
   // latency. Asserting on the visible toggle gives us a reliable signal.
   await expect(page.locator('#dk-toggle-sidemenu')).toBeVisible();
-  await expect(page.locator('#dk-root[data-sidemenu="open"]')).toBeVisible();
+  // Default is COLLAPSED (panel hidden until the user opens it); only a saved
+  // "open" choice is honoured. With the pref cleared above we start collapsed.
+  await expect(page.locator('#dk-root[data-sidemenu="collapsed"]')).toBeVisible();
 
   await page.locator('#dk-toggle-sidemenu').click();
-  await expect(page.locator('#dk-root[data-sidemenu="collapsed"]')).toBeVisible();
-  expect(await page.evaluate(() => localStorage.getItem('puheo:dk:sidemenu'))).toBe('collapsed');
+  await expect(page.locator('#dk-root[data-sidemenu="open"]')).toBeVisible();
+  expect(await page.evaluate(() => localStorage.getItem('puheo:dk:sidemenu'))).toBe('open');
 });
