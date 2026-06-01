@@ -77,6 +77,15 @@ test.describe("landing writing demo (#kokeile)", () => {
     await expect(card.locator(".kokeile__cta")).toBeVisible();
   });
 
+  test("honeypot field is present but off-screen for users", async ({ page }) => {
+    await openLanding(page);
+    const hp = page.locator("[data-demo-hp]");
+    await expect(hp).toHaveCount(1);
+    const box = await hp.boundingBox();
+    // Off-screen (left:-9999px) or removed from layout — never on-screen.
+    expect(box === null || box.x + box.width <= 0).toBeTruthy();
+  });
+
   test("no horizontal overflow at the section", async ({ page }) => {
     await openLanding(page);
     const overflow = await page.evaluate(() => {

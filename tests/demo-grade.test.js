@@ -52,6 +52,21 @@ describe("POST /api/writing/demo-grade", () => {
   let app;
   beforeAll(async () => { app = await buildApp(); });
 
+  it("rejects a cross-origin request (Origin host != request host) with 403", async () => {
+    const res = await request(app)
+      .post("/api/writing/demo-grade")
+      .set("Origin", "https://evil.example")
+      .send({ lang: "es", text: VALID_TEXT });
+    expect(res.status).toBe(403);
+  });
+
+  it("rejects a tripped honeypot with 400 (before any limiter or OpenAI call)", async () => {
+    const res = await request(app)
+      .post("/api/writing/demo-grade")
+      .send({ lang: "es", text: VALID_TEXT, hp: "i am a bot" });
+    expect(res.status).toBe(400);
+  });
+
   it("rejects an unsupported language with 400 (and does not consume the limit)", async () => {
     const res = await request(app)
       .post("/api/writing/demo-grade")

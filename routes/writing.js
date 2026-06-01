@@ -20,18 +20,49 @@ const VALID_TASK_TYPES = new Set(["short", "long"]);
 // ─── Anonymous landing writing demo (L-V332) ────────────────────────────────
 // One slim AI grade per device per 24h. No auth, no DB write of user text —
 // only a budget-monitoring log line so a bot spike is visible. Sits BEFORE the
-// requireAuth routes below. Three gates, in order:
-//   1. validateDemoInput — reject bad input before any limiter counts it.
-//   2. demoGradeLimiter   — per-IP, 1/24h (the per-visitor taste limit).
-//   3. demoGradeGlobalLimiter — global daily cap, the hard cost ceiling that
+// requireAuth routes below. Gates, in order:
+//   1. demoOriginGuard   — must be a same-origin request from our own landing.
+//   2. validateDemoInput — honeypot + lang/length, before any limiter counts it.
+//   3. demoGradeLimiter   — per-IP, 1/24h (per-visitor taste limit; req.ip is
+//      the real client now that the app trusts the Vercel proxy).
+//   4. demoGradeGlobalLimiter — global daily cap, the hard cost ceiling that
 //      survives IP rotation / spoofing / DB fail-open. Runs AFTER the per-IP
 //      gate so a single hammering IP can't drain the global budget for others.
 //
 // Test/dev escape hatch: DEMO_GRADE_FAKE=1 returns a canned grade without
 // calling OpenAI, so rate-limit / validation tests cost nothing.
+// Same-origin guard: the demo POST must come from our own landing. A real
+// browser fetch sends Origin (or at least Referer) matching the request host;
+// puheo.fi, the *.vercel.app previews and localhost all pass automatically
+// without an env allowlist. A naive cross-origin curl bot (Origin evil.com, or
+// no Origin/Referer in prod) is rejected before it can spend any budget.
+// Forgeable by a determined attacker — the global cap is the cost backstop.
+function demoOriginGuard(req, res, next) {
+  const host = req.headers.host || "";
+  const hostOf = (u) => { try { return new URL(u).host; } catch { return ""; } };
+  const reject = () => res.status(403).json({ error: "Pyyntöä ei voitu käsitellä." });
+
+  const origin = req.headers.origin;
+  if (origin) return hostOf(origin) === host ? next() : reject();
+
+  const referer = req.headers.referer || req.headers.referrer;
+  if (referer) return hostOf(referer) === host ? next() : reject();
+
+  // Neither header present: a same-origin browser POST always sends Origin, so
+  // in prod this is a non-browser client → reject. Allow in dev (tests/curl).
+  if (process.env.NODE_ENV === "production" || process.env.VERCEL) return reject();
+  return next();
+}
+
 // Validate BEFORE the limiters so a malformed request never burns the one
 // daily grade. Stashes the cleaned lang/text on req for the handler.
 function validateDemoInput(req, res, next) {
+  // Honeypot: a hidden field real users never fill. A bot that auto-fills every
+  // input trips it and is rejected here — before any limiter or OpenAI spend.
+  if (typeof req.body?.hp === "string" && req.body.hp.trim() !== "") {
+    return res.status(400).json({ error: "Pyyntöä ei voitu käsitellä." });
+  }
+
   const lang = String(req.body?.lang || "").trim();
   const rawText = typeof req.body?.text === "string" ? req.body.text : "";
   const text = rawText.trim().slice(0, DEMO_MAX_CHARS);
@@ -46,7 +77,7 @@ function validateDemoInput(req, res, next) {
   next();
 }
 
-router.post("/writing/demo-grade", validateDemoInput, demoGradeLimiter, demoGradeGlobalLimiter, async (req, res) => {
+router.post("/writing/demo-grade", demoOriginGuard, validateDemoInput, demoGradeLimiter, demoGradeGlobalLimiter, async (req, res) => {
   const { lang, text } = req.demo;
 
   // Budget-monitoring log: language + timestamp + salted IP-hash only.

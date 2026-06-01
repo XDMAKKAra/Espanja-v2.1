@@ -44,6 +44,12 @@ import supabase from "./supabase.js";
 
 const app = express();
 
+// Behind the Vercel proxy `req.ip` is the platform edge, not the visitor,
+// which makes every per-IP rate limiter (auth, register, forgot-password,
+// waitlist, demo) key on a single shared address. Trust the proxy so req.ip
+// reflects the real client from X-Forwarded-For.
+app.set("trust proxy", true);
+
 // ─── Security headers ──────────────────────────────────────────────────────
 // HSTS and `upgrade-insecure-requests` are production-only. On localhost
 // (NODE_ENV !== "production") the dev server speaks plain HTTP, and either

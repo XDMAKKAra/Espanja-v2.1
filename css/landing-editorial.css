@@ -2705,6 +2705,15 @@ body.landing > * { position: relative; z-index: 1; }
 }
 
 .landing .kokeile__form { display: block; }
+/* Honeypot — kept in the layout (not display:none, which some bots skip) but
+   pushed off-screen and out of the tab order. Real users never reach it. */
+.landing .kokeile__hp {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
 .landing .kokeile__prompt {
   display: block;
   font-family: var(--ed-sans);

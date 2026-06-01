@@ -50,6 +50,7 @@
     var hint = card.querySelector("[data-demo-hint]");
     var submit = card.querySelector("[data-demo-submit]");
     var result = card.querySelector("[data-demo-result]");
+    var honeypot = card.querySelector("[data-demo-hp]");
     var tabs = Array.prototype.slice.call(card.querySelectorAll(".kokeile__lang-btn"));
     if (!form || !input || !submit || !result) return;
 
@@ -185,7 +186,7 @@
       fetch("/api/writing/demo-grade", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ lang: lang, text: text }),
+        body: JSON.stringify({ lang: lang, text: text, hp: honeypot ? honeypot.value : "" }),
       })
         .then(function (res) {
           return res.json().catch(function () { return {}; }).then(function (body) {

@@ -27,6 +27,11 @@ try {
 
   app = express();
 
+  // Behind the Vercel proxy `req.ip` is the platform edge, not the visitor,
+  // so every per-IP rate limiter would key on one shared address. Trust the
+  // proxy so req.ip reflects the real client from X-Forwarded-For.
+  app.set("trust proxy", true);
+
   // CORS — fail-safe default. If env vars are unset we still restrict to
   // puheo.fi rather than fall through to cors(undefined) which would allow
   // every origin with credentials.

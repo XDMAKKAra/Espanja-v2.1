@@ -374,6 +374,13 @@ Anna</p>
           </div>
 
           <form class="kokeile__form" data-demo-form novalidate>
+            <!-- Honeypot: off-screen, real users never see or fill it. A bot
+                 that auto-fills inputs trips it and is rejected server-side. -->
+            <div class="kokeile__hp" aria-hidden="true">
+              <label for="kokeile-company">Älä täytä tätä kenttää</label>
+              <input id="kokeile-company" type="text" name="hp" data-demo-hp
+                     tabindex="-1" autocomplete="off" />
+            </div>
             <label class="kokeile__prompt" for="kokeile-input" data-demo-prompt>
               Kirjoita 1-3 lausetta espanjaksi: kerro mitä teit viime kesälomalla.
             </label>
