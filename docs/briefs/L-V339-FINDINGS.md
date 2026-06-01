@@ -97,6 +97,27 @@ Eli Supabase-stressissä **sekä tuntiraja että kuukauden €-katto pettävät*
 ## Korjattu tässä passissa
 - `tests/lesson-labels.test.js` — stale assertio: odotti `getLessonLabel("nonsense") === "nonsense"`, mutta impl palauttaa tarkoituksella `"Kertaus"` (ei vuoda raakaa avainta UI:hin). Spec päivitetty vastaamaan tarkoitettua käytöstä. (Claude-internal, ei pushata.)
 
+## 🔴🔴 P0 — CROSS-USER SESSION HIJACK (löytyi live-testissä, KORJATTU)
+
+**Tämä on se "toimii kun minä käytän, mutta ei kun käyttäjiä tulee lisää" -bugi.** Ei löytynyt staattisesti — paljastui vasta kun ajoin kahden tilin live-isolaatiotestin (`tests/verify-isolation.mjs`) oikeilla testitileillä.
+
+**Oire:** Kun FREE-tili kirjautui sisään PRO:n jälkeen, PRO:n dashboard palautti **0 sessiota** (oikeasti 16) ja PRO:n `/api/progress` palautti **500**. Eli kuka tahansa joka kirjautui viimeisenä, kaappasi kaikkien muiden saman serveri-instanssin pyynnöt.
+
+**Juurisyy:** `routes/auth.js` kutsui `signInWithPassword`/`refreshSession`-funktioita **jaetulla `adminClient`-instanssilla** (service-role). supabase-js tallentaa sisäänkirjautuneen session client-instanssiin ja alkaa lähettää **sen käyttäjän JWT:n PostgREST-Authorization-headerina service-role-keyn sijaan** (`persistSession:false` estää vain levytallennukset, ei in-memory-sessiota). Tulos: jokainen `adminClient`-datakysely login-kutsun jälkeen ajoi viimeksi kirjautuneena käyttäjänä, RLS-rajattuna. Tuotannossa katastrofi heti kun kaksi käyttäjää osuu samaan lämpimään serverless-instanssiin: toinen näkee toisen datan / oma data katoaa / kirjoitukset failaavat.
+
+**Korjaus:** Lisätty erillinen `authClient`-instanssi (`lib/supabase.js`) pelkästään sisäänkirjautumis-/refresh-operaatioille. `adminClient` pysyy puhtaana service-rolena. `authClient`:n sessio saa vuotaa rinnakkaisten loginien välillä — vaaratonta, koska sitä ei käytetä datakyselyihin (luetaan vain signIn:n paluuarvo). `routes/auth.js`:n 3 kutsupaikkaa (login, register, refresh) reititetty `authClient`:lle.
+
+**LIVE-VERIFIOITU FIXIN JÄLKEEN** (molemmat tilit kirjautuneena yhtä aikaa):
+```
+PASS  PRO spanish = 16  (FREE-login EI enää kaappaa PRO:n kyselyitä)
+PASS  french-kirjoitus 0->1, spanish pysyy 16
+PASS  FREE french = 0   (cross-user-eristys)
+PASS  PRO ja FREE = eri käyttäjät
+```
+Regressiotesti: `routes-auth.test.js`-mock päivitetty (authClient erillisenä); live-guard `tests/verify-isolation.mjs` (aja kahdella creds-parilla).
+
+---
+
 ## ✅ RESOLUTION — "korjaa kaikki" (2026-06-01, samassa sessiossa)
 
 ### P1 — Cross-language bleed: KORJATTU (backend-foundation) ✅

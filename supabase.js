@@ -10,4 +10,4 @@
 // (adminClient, createUserClient) are also forwarded for files that
 // want to be explicit.
 
-export { adminClient as default, adminClient, createUserClient } from "./lib/supabase.js";
+export { adminClient as default, adminClient, authClient, createUserClient } from "./lib/supabase.js";

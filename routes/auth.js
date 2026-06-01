@@ -1,6 +1,6 @@
 import { Router } from "express";
 import crypto from "crypto";
-import supabase from "../supabase.js";
+import supabase, { authClient } from "../supabase.js";
 import {
   sendWelcomeEmail,
   sendPasswordResetEmail,
@@ -37,7 +37,9 @@ router.post("/register", registerLimiter, async (req, res) => {
     }
     return res.status(500).json({ error: "Rekisteröinti epäonnistui" });
   }
-  const { data: session, error: signInErr } = await supabase.auth.signInWithPassword({
+  // Sign-in on the dedicated authClient, never the shared adminClient — see
+  // lib/supabase.js authClient docs (prevents service-role session hijack).
+  const { data: session, error: signInErr } = await authClient.auth.signInWithPassword({
     email: email.toLowerCase().trim(),
     password,
   });
@@ -70,7 +72,7 @@ router.post("/register", registerLimiter, async (req, res) => {
 router.post("/login", authLimiter, async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) return res.status(400).json({ error: "Täytä kaikki kentät" });
-  const { data, error } = await supabase.auth.signInWithPassword({
+  const { data, error } = await authClient.auth.signInWithPassword({
     email: email.toLowerCase().trim(),
     password,
   });
@@ -85,7 +87,7 @@ router.post("/login", authLimiter, async (req, res) => {
 router.post("/refresh", async (req, res) => {
   const { refreshToken } = req.body;
   if (!refreshToken) return res.status(400).json({ error: "Refresh token puuttuu" });
-  const { data, error } = await supabase.auth.refreshSession({ refresh_token: refreshToken });
+  const { data, error } = await authClient.auth.refreshSession({ refresh_token: refreshToken });
   if (error || !data.session) return res.status(401).json({ error: "Istunto vanhentunut" });
   res.json({
     token: data.session.access_token,

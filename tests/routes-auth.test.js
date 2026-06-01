@@ -85,6 +85,15 @@ vi.mock("../supabase.js", () => ({
     },
     from: (name) => table(name),
   },
+  // Dedicated sign-in/refresh client (L-V339 auth-session-isolation fix).
+  // routes/auth.js routes signInWithPassword/refreshSession here, not the
+  // shared admin client.
+  authClient: {
+    auth: {
+      signInWithPassword: vi.fn(async () => state.signIn),
+      refreshSession: vi.fn(async () => state.refreshSession),
+    },
+  },
 }));
 
 vi.mock("../email.js", () => ({
