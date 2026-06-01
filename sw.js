@@ -1,4 +1,4 @@
-const CACHE_VERSION = "puheo-v333";
+const CACHE_VERSION = "puheo-v334";
 const STATIC_ASSETS = [
   "/app.html",
   "/index.html",
@@ -29,6 +29,7 @@ const STATIC_ASSETS = [
   "/js/landing-countdown.js",
   "/js/landing-catalog-lang.js",
   "/js/landing-proof-lang.js",
+  "/js/landing-writing-demo.js",
   "/js/landing-waitlist-de.js",
   "/js/landing-waitlist-fr.js",
   "/img/illustrations/student-reading.svg",

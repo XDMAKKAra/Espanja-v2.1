@@ -170,3 +170,13 @@ export const waitlistLimiter = createLimiter({
   max: 20,
   message: { error: "Liian monta pyyntöä. Yritä hetken kuluttua uudelleen." },
 });
+
+// Per-IP limiter for the anonymous landing writing demo (L-V332). One AI
+// grade per device per 24h — the demo is a taste, not a free-tier substitute.
+// Keyed by IP (no auth on this route); the frontend also sets a localStorage
+// flag, but that is cosmetic and this is the real abuse gate.
+export const demoGradeLimiter = createLimiter({
+  windowMs: 24 * 60 * 60 * 1000,
+  max: 1,
+  message: { error: "Olet jo kokeillut tänään. Tee oma tili niin saat arvioinnit rajattomasti." },
+});

@@ -35,6 +35,8 @@ vi.mock("../middleware/rateLimit.js", () => {
     aiLimiter: pass,
     aiStrictLimiter: pass,
     reportLimiter: pass,
+    waitlistLimiter: pass,
+    demoGradeLimiter: pass,
   };
 });
 

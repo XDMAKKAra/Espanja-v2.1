@@ -349,6 +349,51 @@ Anna</p>
       </div>
     </section>
 
+    <!-- ═══ KOKEILE, anonymous live writing demo (L-V332). One AI grade per
+         device per day; POST /api/writing/demo-grade. Sits right after Proof:
+         Proof shows what a grade looks like, this lets you trigger one. -->
+    <section id="kokeile" class="kokeile" aria-labelledby="kokeile-title">
+      <div class="kokeile__inner">
+        <div class="kokeile__head">
+          <p class="section-eyebrow">Yksi arvio ilman tiliä</p>
+          <h2 class="section-title" id="kokeile-title">Kokeile itse</h2>
+          <p class="kokeile__lede">
+            Kirjoita pari lausetta, niin näytämme miltä YO-tyylinen arvio
+            näyttää.
+          </p>
+        </div>
+
+        <div class="kokeile__card" data-demo data-lang="es">
+          <div class="kokeile__lang-switch" role="tablist" aria-label="Valitse kirjoituskieli">
+            <button class="kokeile__lang-btn" type="button" role="tab" data-lang="es"
+                    aria-selected="true" tabindex="0">Español</button>
+            <button class="kokeile__lang-btn" type="button" role="tab" data-lang="fr"
+                    aria-selected="false" tabindex="-1">Français</button>
+            <button class="kokeile__lang-btn" type="button" role="tab" data-lang="de"
+                    aria-selected="false" tabindex="-1">Deutsch</button>
+          </div>
+
+          <form class="kokeile__form" data-demo-form novalidate>
+            <label class="kokeile__prompt" for="kokeile-input" data-demo-prompt>
+              Kirjoita 1-3 lausetta espanjaksi: kerro mitä teit viime kesälomalla.
+            </label>
+            <textarea id="kokeile-input" class="kokeile__input" data-demo-input
+                      maxlength="200" rows="4" autocomplete="off" spellcheck="false"
+                      placeholder="Ayer fui a la playa con mi familia…"></textarea>
+            <div class="kokeile__meta">
+              <span class="kokeile__count" data-demo-count aria-live="polite">0 / 200 merkkiä</span>
+              <span class="kokeile__hint" data-demo-hint>Vähintään 80 merkkiä</span>
+            </div>
+            <button class="btn btn--primary kokeile__submit" type="submit" data-demo-submit disabled>
+              Arvostele kirjoitukseni
+            </button>
+          </form>
+
+          <div class="kokeile__result" data-demo-result hidden aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+
     <!-- ═══ STAT ROW, verifiable numbers only (no disputable %). -->
     <!-- ═══ GRADE-FLOW, replaces flat 4-number stat row with a concrete
          3-step preview of the writing-grade loop. Verifiable numbers move
@@ -860,5 +905,6 @@ Anna</p>
   <script src="/js/landing-nav.js"></script>
   <script src="/js/landing-catalog-lang.js"></script>
   <script src="/js/landing-proof-lang.js"></script>
+  <script src="/js/landing-writing-demo.js"></script>
 </body>
 </html>

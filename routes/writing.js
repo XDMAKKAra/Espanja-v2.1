@@ -3,14 +3,74 @@ import { callOpenAI, getUserProfileContext, LANGUAGE_META, VALID_LANGUAGES } fro
 import { buildGradingPrompt, processGradingResult, SHORT_MAX, LONG_MAX } from "../lib/writingGrading.js";
 import { requireAuth, requirePro, checkFeatureAccess, incrementFreeUsage } from "../middleware/auth.js";
 import { requireSupportedLanguage, resolveLang } from "../middleware/language.js";
-import { aiStrictLimiter } from "../middleware/rateLimit.js";
+import { aiStrictLimiter, demoGradeLimiter } from "../middleware/rateLimit.js";
 import { checkMonthlyCostLimit } from "../middleware/costLimit.js";
 import { logAiUsage } from "../lib/aiCost.js";
 import { pickWritingTaskFromBank } from "../lib/writingBank.js";
+import {
+  buildDemoGradingPrompt, shapeDemoResult,
+  DEMO_MIN_CHARS, DEMO_MAX_CHARS, DEMO_VALID_LANGS,
+} from "../lib/demoGrading.js";
+import { createHash } from "node:crypto";
 
 const router = Router();
 
 const VALID_TASK_TYPES = new Set(["short", "long"]);
+
+// ─── Anonymous landing writing demo (L-V332) ────────────────────────────────
+// One slim AI grade per device per 24h (demoGradeLimiter, keyed by IP). No
+// auth, no DB write of user text — only a budget-monitoring log line so a bot
+// spike is visible. Sits BEFORE the requireAuth routes below; the limiter is
+// the abuse gate.
+//
+// Test/dev escape hatch: DEMO_GRADE_FAKE=1 returns a canned grade without
+// calling OpenAI, so rate-limit / validation tests cost nothing.
+// Validate BEFORE the limiter so a malformed request never burns the one
+// daily grade. Stashes the cleaned lang/text on req for the handler.
+function validateDemoInput(req, res, next) {
+  const lang = String(req.body?.lang || "").trim();
+  const rawText = typeof req.body?.text === "string" ? req.body.text : "";
+  const text = rawText.trim().slice(0, DEMO_MAX_CHARS);
+
+  if (!DEMO_VALID_LANGS.has(lang)) {
+    return res.status(400).json({ error: "Virheellinen kieli." });
+  }
+  if (text.length < DEMO_MIN_CHARS) {
+    return res.status(400).json({ error: "Kirjoita vähintään 80 merkkiä, niin arvio on luotettava." });
+  }
+  req.demo = { lang, text };
+  next();
+}
+
+router.post("/writing/demo-grade", validateDemoInput, demoGradeLimiter, async (req, res) => {
+  const { lang, text } = req.demo;
+
+  // Budget-monitoring log: language + timestamp + salted IP-hash only.
+  // No raw IP, no student text — enough to spot a bot spike in the logs.
+  const ipHash = createHash("sha256").update(String(req.ip || "")).digest("hex").slice(0, 12);
+  console.log("[demo-grade]", JSON.stringify({ lang, ts: new Date().toISOString(), ipHash }));
+
+  if (process.env.DEMO_GRADE_FAKE === "1") {
+    return res.json(shapeDemoResult({
+      score: 12,
+      errors: [{ excerpt: text.slice(0, 12), corrected: "—", explanation_fi: "Demo-tila: esimerkkivirhe." }],
+    }));
+  }
+
+  try {
+    const prompt = buildDemoGradingPrompt(lang, text);
+    const aiResult = await callOpenAI(prompt, 700, {
+      temperature: 0.2,
+      responseFormat: { type: "json_object" },
+    });
+    logAiUsage(null, "demo-grade", aiResult._usage).catch(() => {});
+    delete aiResult._usage;
+    return res.json(shapeDemoResult(aiResult));
+  } catch (err) {
+    console.error("demo-grade error:", err.message);
+    return res.status(502).json({ error: "Arviointi ei nyt onnistunut. Kokeile hetken päästä uudelleen tai tee tili." });
+  }
+});
 
 router.post("/writing-task", requireAuth, aiStrictLimiter, checkMonthlyCostLimit, async (req, res) => {
   if (requireSupportedLanguage(req, res)) return;

@@ -64,7 +64,8 @@ vi.mock("../../middleware/rateLimit.js", () => {
   const pass = (_req, _res, next) => next();
   return {
     aiLimiter: pass, aiStrictLimiter: pass, authLimiter: pass, registerLimiter: pass,
-    forgotPasswordLimiter: pass, reportLimiter: pass, default: { aiLimiter: pass },
+    forgotPasswordLimiter: pass, reportLimiter: pass, waitlistLimiter: pass,
+    demoGradeLimiter: pass, default: { aiLimiter: pass },
   };
 });
 

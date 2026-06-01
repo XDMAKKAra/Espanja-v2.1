@@ -2617,6 +2617,250 @@ body.landing > * { position: relative; z-index: 1; }
 
 
 /* ═══════════════════════════════════════════════════════════ */
+/*  KOKEILE — anonymous live writing demo (L-V332)              */
+/* ═══════════════════════════════════════════════════════════ */
+.landing .kokeile {
+  padding: var(--ed-sp-9) clamp(16px, 4vw, 48px);
+  background: var(--ed-bg);
+}
+.landing .kokeile__inner {
+  max-width: 760px;
+  margin: 0 auto;
+}
+.landing .kokeile__head {
+  text-align: center;
+  margin-bottom: var(--ed-sp-7);
+}
+.landing .kokeile__head .section-eyebrow {
+  justify-content: center;
+}
+.landing .kokeile__head .section-eyebrow::after {
+  content: "";
+  width: 32px;
+  height: 1px;
+  background: var(--ed-accent);
+}
+.landing .kokeile__head .section-title {
+  margin-inline: auto;
+  text-align: center;
+}
+.landing .kokeile__lede {
+  max-width: 48ch;
+  margin: var(--ed-sp-4) auto 0;
+  text-align: center;
+  font-size: var(--ed-fs-body);
+  line-height: 1.55;
+  color: var(--ed-ink-muted);
+}
+
+.landing .kokeile__card {
+  background: var(--ed-bg-card);
+  border: 1px solid var(--ed-rule);
+  border-radius: var(--ed-r-xl);
+  padding: clamp(20px, 3vw, 32px);
+  box-shadow: var(--ed-shadow-md);
+}
+
+/* Language switch — same pill grammar as the Proof card switch. */
+.landing .kokeile__lang-switch {
+  display: flex;
+  width: max-content;
+  max-width: 100%;
+  gap: 2px;
+  margin: 0 0 var(--ed-sp-5);
+  padding: 4px;
+  background: var(--ed-bg-deep);
+  border: 1px solid var(--ed-rule);
+  border-radius: 999px;
+}
+.landing .kokeile__lang-btn {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  font-family: var(--ed-sans);
+  font-size: var(--ed-fs-meta);
+  font-weight: 600;
+  color: var(--ed-ink-muted);
+  padding: 10px 16px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background var(--ed-t-fast), color var(--ed-t-fast);
+}
+.landing .kokeile__lang-btn:hover { color: var(--ed-ink); }
+.landing .kokeile__lang-btn[aria-selected="true"] {
+  background: var(--ed-ink);
+  color: var(--ed-bg);
+}
+.landing .kokeile__lang-btn:focus-visible {
+  outline: 2px solid var(--ed-accent);
+  outline-offset: 2px;
+}
+.landing .kokeile__lang-btn[disabled] {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.landing .kokeile__form { display: block; }
+.landing .kokeile__prompt {
+  display: block;
+  font-family: var(--ed-sans);
+  font-size: var(--ed-fs-body-lg);
+  font-weight: 600;
+  color: var(--ed-ink);
+  line-height: 1.45;
+  margin-bottom: var(--ed-sp-3);
+}
+.landing .kokeile__input {
+  width: 100%;
+  box-sizing: border-box;
+  font-family: var(--ed-serif);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: var(--ed-ink);
+  background: var(--ed-bg);
+  border: 1px solid var(--ed-rule-strong);
+  border-radius: var(--ed-r-lg);
+  padding: var(--ed-sp-4);
+  resize: vertical;
+  min-height: 108px;
+  transition: border-color var(--ed-t-fast), box-shadow var(--ed-t-fast);
+}
+.landing .kokeile__input:focus {
+  outline: none;
+  border-color: var(--ed-accent);
+  box-shadow: 0 0 0 3px var(--ed-accent-soft);
+}
+.landing .kokeile__input::placeholder { color: var(--ed-ink-faint); }
+.landing .kokeile__input[disabled] {
+  background: var(--ed-bg-deep);
+  color: var(--ed-ink-muted);
+}
+
+.landing .kokeile__meta {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--ed-sp-3);
+  margin: var(--ed-sp-2) 0 var(--ed-sp-4);
+  font-family: var(--ed-mono);
+  font-size: var(--ed-fs-micro);
+  color: var(--ed-ink-subtle);
+}
+.landing .kokeile__hint--ok { color: var(--ed-olive); }
+
+.landing .kokeile__submit { width: 100%; }
+.landing .kokeile__submit[disabled] { opacity: 0.45; cursor: default; }
+.landing .kokeile__submit.is-loading { opacity: 0.7; cursor: progress; }
+.landing .kokeile__form--done { display: none; }
+
+/* Result */
+.landing .kokeile__result {
+  margin-top: var(--ed-sp-5);
+  padding-top: var(--ed-sp-5);
+  border-top: 1px solid var(--ed-rule);
+}
+.landing .kokeile__result-head {
+  display: flex;
+  align-items: baseline;
+  gap: var(--ed-sp-3);
+  margin-bottom: var(--ed-sp-4);
+}
+.landing .kokeile__score {
+  font-family: var(--ed-mono);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--ed-score-ink);
+}
+.landing .kokeile__score-label {
+  font-family: var(--ed-sans);
+  font-size: var(--ed-fs-meta);
+  color: var(--ed-ink-muted);
+}
+.landing .kokeile__errors {
+  list-style: none;
+  margin: 0 0 var(--ed-sp-5);
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--ed-sp-3);
+}
+.landing .kokeile__error {
+  background: var(--ed-bg-deep);
+  border-left: 2px solid var(--ed-accent);
+  border-radius: var(--ed-r-sm);
+  padding: var(--ed-sp-3) var(--ed-sp-4);
+}
+.landing .kokeile__error-excerpt {
+  font-family: var(--ed-serif);
+  text-decoration: line-through;
+  text-decoration-color: var(--ed-accent);
+  color: var(--ed-ink-muted);
+}
+.landing .kokeile__error-arrow {
+  margin: 0 6px;
+  color: var(--ed-ink-subtle);
+}
+.landing .kokeile__error-fix {
+  font-family: var(--ed-serif);
+  font-weight: 600;
+  color: var(--ed-ink);
+}
+.landing .kokeile__error-why {
+  margin: var(--ed-sp-2) 0 0;
+  font-size: var(--ed-fs-meta);
+  line-height: 1.5;
+  color: var(--ed-ink-muted);
+}
+.landing .kokeile__result-foot {
+  font-size: var(--ed-fs-meta);
+  color: var(--ed-ink-muted);
+  margin: 0 0 var(--ed-sp-4);
+}
+.landing .kokeile__result-error {
+  font-size: var(--ed-fs-body);
+  color: var(--ed-ink);
+  margin: 0 0 var(--ed-sp-4);
+}
+.landing .kokeile__cta { width: 100%; }
+
+/* Skeleton — replaces an italic "Ladataan…" spinner (CLAUDE.md slop rule). */
+.landing .kokeile__skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ed-sp-3);
+}
+.landing .kokeile__skeleton-bar {
+  height: 14px;
+  border-radius: var(--ed-r-sm);
+  background: linear-gradient(
+    90deg,
+    var(--ed-bg-deep) 0%,
+    var(--ed-rule) 50%,
+    var(--ed-bg-deep) 100%);
+  background-size: 200% 100%;
+  animation: kokeile-shimmer 1.2s ease-in-out infinite;
+}
+.landing .kokeile__skeleton-bar:nth-child(1) { width: 40%; }
+.landing .kokeile__skeleton-bar:nth-child(3) { width: 85%; }
+.landing .kokeile__skeleton-bar:nth-child(4) { width: 60%; }
+@keyframes kokeile-shimmer {
+  from { background-position: 200% 0; }
+  to   { background-position: -200% 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .landing .kokeile__skeleton-bar { animation: none; }
+}
+
+@media (max-width: 640px) {
+  .landing .kokeile { padding: var(--ed-sp-8) 16px; }
+  .landing .kokeile__lang-switch { width: 100%; justify-content: space-between; }
+  .landing .kokeile__lang-btn { flex: 1; padding: 10px 8px; }
+}
+
+/* ═══════════════════════════════════════════════════════════ */
 /*  MOBILE OVERRIDES                                            */
 /* ═══════════════════════════════════════════════════════════ */
 @media (max-width: 640px) {
