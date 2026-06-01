@@ -14,6 +14,7 @@
 import { show } from "../ui/nav.js";
 import { renderTeoriaMarkdown } from "../lib/markdownLite.js";
 import { isAcceptable } from "../lib/accentTolerance.js";
+import { gradeMatchingPair } from "../features/answerGrading.js";
 import { API, isLoggedIn, authHeader, apiFetch, getAuthEmail } from "../api.js";
 
 const LS_SIDEMENU = "puheo:dk:sidemenu";
@@ -165,6 +166,16 @@ function escapeHtml(s) {
   return String(s ?? "").replace(/[&<>"']/g, (c) => ({
     "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
   }[c]));
+}
+
+// Fisher-Yates, non-mutating. Used to shuffle the right column of match items.
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
 }
 
 function readSidemenuPref() {
@@ -1178,7 +1189,10 @@ function wireFlashcards() {
 // switching away and coming back resumes where the student left off.
 
 const _exerciseState = new Map(); // sivuId → { itemIndex, answered, scoreCorrect, scoreTotal }
+// Testi (summative) flow renders these locally-graded types stacked.
 const SUPPORTED_ITEM_TYPES = new Set(["mc", "typed", "gap_fill", "translate"]);
+// Item-by-item exercise flow additionally handles match (yhdistämistehtävä).
+const CARD_ITEM_TYPES = new Set(["mc", "typed", "gap_fill", "translate", "match"]);
 
 function phaseForSivu(sivu) {
   if (!sivu || sivu.kind !== "tehtava") return null;
@@ -1223,17 +1237,13 @@ function renderExerciseContent(sivu) {
     return renderReadingPhase(sivu, phase, items);
   }
 
-  // Bail to placeholder for unsupported item types (match) until their PRs land.
-  // The "match" / yhdistämistehtävä renderer is wired up in L-V338 (existing
-  // js/renderers/yhdistaminen.js + gradeMatchingPair). Until then the phase
-  // stays visible with this placeholder — do not hide it or strip the copy.
-  if (!SUPPORTED_ITEM_TYPES.has(firstKind)) {
-    const label = firstKind === "match"
-      ? "Yhdistämistehtävä"
-      : `Tehtävätyyppi "${firstKind}"`;
+  // match (yhdistämistehtävä) is wired into the item-by-item flow below
+  // (renderItemMatch + gradeMatchingPair). Only genuinely unrendered types
+  // fall through to the placeholder.
+  if (!CARD_ITEM_TYPES.has(firstKind)) {
     return `
       <div class="dk__placeholder" data-kind="tehtava">
-        <p class="dk__placeholder-kind">${escapeHtml(label)}</p>
+        <p class="dk__placeholder-kind">Tehtävätyyppi "${escapeHtml(firstKind)}"</p>
         <p>Tämä tehtävätyyppi avautuu pian. Voit jatkaa muista vaiheista sivuvalikosta.</p>
       </div>`;
   }
@@ -1706,6 +1716,7 @@ function renderItemBody(item, answer) {
     case "typed":     return renderItemTyped(item, answer);
     case "gap_fill":  return renderItemGapFill(item, answer);
     case "translate": return renderItemTranslate(item, answer);
+    case "match":     return renderItemMatch(item, answer);
     default:          return `<p class="dk__teoria-p">Tehtävätyyppi ”${escapeHtml(item.item_type)}” ei ole vielä käytettävissä.</p>`;
   }
 }
@@ -1803,6 +1814,53 @@ function renderItemTranslate(item, answer) {
     </div>`;
 }
 
+function renderItemMatch(item, answer) {
+  const pairs = Array.isArray(item.pairs) ? item.pairs : [];
+
+  // Graded: show each left with the right the student attached, coloured,
+  // and reveal the correct right where they missed.
+  if (answer) {
+    const rows = Array.isArray(answer.rows) ? answer.rows : [];
+    const rowsHtml = rows.map((r) => `
+      <li class="dk__match-result ${r.ok ? "is-correct" : "is-wrong"}">
+        <span class="dk__match-result-left">${escapeHtml(r.left)}</span>
+        <span class="dk__match-result-arrow" aria-hidden="true">→</span>
+        <span class="dk__match-result-right">${escapeHtml(r.studentRight || "—")}</span>
+        ${r.ok ? "" : `<span class="dk__match-result-fix">oikein: ${escapeHtml(r.correctRight)}</span>`}
+      </li>`).join("");
+    return `
+      <p class="dk__exercise-stem">Yhdistämistehtävä</p>
+      <p class="dk__match-score">${answer.correctCount} / ${answer.total} oikein</p>
+      <ul class="dk__match-results">${rowsHtml}</ul>`;
+  }
+
+  // Live: pick a left, then its pair on the right. Right column is shuffled.
+  const rights = shuffle(pairs.map((p) => p.right));
+  return `
+    <p class="dk__exercise-stem">Valitse vasemmalta sana, sitten sen pari oikealta.</p>
+    <div class="dk__match" data-match>
+      <div class="dk__match-cols">
+        <ul class="dk__match-col" data-col="left"${item.left_label ? ` aria-label="${escapeHtml(item.left_label)}"` : ""}>
+          ${pairs.map((p, i) => `
+            <li>
+              <button type="button" class="dk__match-cell" data-side="left" data-idx="${i}">
+                <span class="dk__match-cell-text">${escapeHtml(p.left)}</span>
+                <span class="dk__match-cell-slot" data-slot></span>
+              </button>
+            </li>`).join("")}
+        </ul>
+        <ul class="dk__match-col" data-col="right"${item.right_label ? ` aria-label="${escapeHtml(item.right_label)}"` : ""}>
+          ${rights.map((r) => `
+            <li>
+              <button type="button" class="dk__match-cell" data-side="right" data-val="${escapeHtml(r)}">
+                ${escapeHtml(r)}
+              </button>
+            </li>`).join("")}
+        </ul>
+      </div>
+    </div>`;
+}
+
 function renderExerciseFooter(item, answer, i, total) {
   if (!answer) {
     return `
@@ -1859,6 +1917,8 @@ function canonicalExpected(item) {
         return Array.isArray(cell) ? (cell[0] || "—") : "—";
       });
     }
+    // match reveals corrections per row inside the grid, no single "expected".
+    case "match": return "";
     default: return "";
   }
 }
@@ -1894,6 +1954,25 @@ function gradeItem(item, raw) {
       }
       return { correct: allOk, userAnswer: vals };
     }
+    case "match": {
+      const pairs = Array.isArray(item.pairs) ? item.pairs : [];
+      const assigned = Array.isArray(raw) ? raw : [];
+      let correctCount = 0;
+      const rows = pairs.map((p, idx) => {
+        const studentRight = assigned[idx] || "";
+        // left is fixed per row, so this checks the student's right vs correct.
+        const ok = gradeMatchingPair(p.left, studentRight, p.left, p.right);
+        if (ok) correctCount++;
+        return { left: p.left, studentRight, correctRight: p.right, ok };
+      });
+      return {
+        correct: pairs.length > 0 && correctCount === pairs.length,
+        userAnswer: assigned,
+        rows,
+        correctCount,
+        total: pairs.length,
+      };
+    }
     default:
       return { correct: false };
   }
@@ -1910,6 +1989,14 @@ function readExerciseInput(item) {
     }
     case "gap_fill": {
       return [...root.querySelectorAll(".dk__input--gap")].map((el) => el.value);
+    }
+    case "match": {
+      // Read each left cell's assigned right, ordered by its data-idx.
+      const out = [];
+      root.querySelectorAll('.dk__match-cell[data-side="left"]').forEach((c) => {
+        out[Number(c.dataset.idx)] = c.dataset.assigned || "";
+      });
+      return out;
     }
     default: return null;
   }
@@ -1989,6 +2076,52 @@ function wireExerciseCard() {
       }
     });
   });
+
+  // Match: click a left cell to select it, then a right cell to pair them.
+  // Re-clicking reassigns. The pairing lives on each left cell's
+  // data-assigned attribute so Tarkista (readExerciseInput) can read it.
+  if (item.item_type === "match" && !st.answered[i]) {
+    let selectedLeft = null;
+    const setSelected = (cell) => {
+      root.querySelectorAll('.dk__match-cell[data-side="left"]')
+        .forEach((c) => c.classList.remove("is-active"));
+      if (cell) cell.classList.add("is-active");
+      selectedLeft = cell;
+    };
+    const freeRight = (val) => {
+      if (!val) return;
+      root.querySelectorAll('.dk__match-cell[data-side="left"]').forEach((c) => {
+        if (c.dataset.assigned === val) {
+          delete c.dataset.assigned;
+          c.classList.remove("is-assigned");
+          const slot = c.querySelector("[data-slot]");
+          if (slot) slot.textContent = "";
+        }
+      });
+      root.querySelectorAll('.dk__match-cell[data-side="right"]').forEach((c) => {
+        if (c.dataset.val === val) c.classList.remove("is-assigned");
+      });
+    };
+    root.querySelectorAll('.dk__match-cell[data-side="left"]').forEach((cell) => {
+      cell.addEventListener("click", () => {
+        setSelected(cell === selectedLeft ? null : cell);
+      });
+    });
+    root.querySelectorAll('.dk__match-cell[data-side="right"]').forEach((cell) => {
+      cell.addEventListener("click", () => {
+        if (!selectedLeft) return;
+        const val = cell.dataset.val;
+        freeRight(selectedLeft.dataset.assigned); // free the left's previous right
+        freeRight(val);                           // free this right from any other left
+        selectedLeft.dataset.assigned = val;
+        selectedLeft.classList.add("is-assigned");
+        const slot = selectedLeft.querySelector("[data-slot]");
+        if (slot) slot.textContent = val;
+        cell.classList.add("is-assigned");
+        setSelected(null);
+      });
+    });
+  }
 
   // Next item — advance within the phase or jump to the next sivu when done.
   document.getElementById("dk-next-item")?.addEventListener("click", () => {
