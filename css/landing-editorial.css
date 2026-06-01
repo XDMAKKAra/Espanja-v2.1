@@ -1991,9 +1991,13 @@ body.landing > * { position: relative; z-index: 1; }
 /* ═══════════════════════════════════════════════════════════ */
 /*  FOOTER                                                      */
 /* ═══════════════════════════════════════════════════════════ */
+/* L-V344 — brick-wall footer (pun: "kielimuuri", brand colour is literally
+   brick). Running-bond mortar pattern as an SVG tile over flat brick. */
 .landing .landing-footer {
-  background: var(--ed-bg-deep);
-  border-top: 1px solid var(--ed-rule);
+  background-color: var(--brick);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Cg stroke='%23832421' stroke-width='2'%3E%3Cline x1='0' y1='1' x2='80' y2='1'/%3E%3Cline x1='0' y1='41' x2='80' y2='41'/%3E%3Cline x1='40' y1='1' x2='40' y2='41'/%3E%3Cline x1='0' y1='41' x2='0' y2='81'/%3E%3Cline x1='20' y1='41' x2='20' y2='81'/%3E%3Cline x1='60' y1='41' x2='60' y2='81'/%3E%3C/g%3E%3C/svg%3E");
+  color: #FBF7EF;
+  border-top: none;
   padding: var(--ed-sp-8) clamp(16px, 4vw, 48px) var(--ed-sp-5);
 }
 .landing .landing-footer__inner {
@@ -2013,11 +2017,10 @@ body.landing > * { position: relative; z-index: 1; }
   gap: var(--ed-sp-3);
 }
 .landing .landing-footer__brandmark {
-  font-family: var(--ed-display);
-  font-variation-settings: "opsz" 36, "SOFT" 60;
-  font-weight: 600;
-  font-size: 1.375rem;
-  color: var(--ed-ink);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: #FBF7EF;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
@@ -2025,14 +2028,14 @@ body.landing > * { position: relative; z-index: 1; }
   letter-spacing: -0.01em;
 }
 .landing .landing-footer__brand-dot {
-  width: 8px;
-  height: 8px;
-  background: var(--ed-accent);
+  width: 9px;
+  height: 9px;
+  background: var(--yellow);
   border-radius: 50%;
 }
 .landing .landing-footer__tagline {
   font-size: var(--ed-fs-meta);
-  color: var(--ed-ink-muted);
+  color: rgba(251, 247, 239, 0.82);
   max-width: 38ch;
   line-height: 1.55;
   margin: 0;
@@ -2046,11 +2049,12 @@ body.landing > * { position: relative; z-index: 1; }
   .landing .landing-footer__cols { grid-template-columns: repeat(4, 1fr); }
 }
 .landing .landing-footer__col-title {
-  font-family: var(--ed-mono);
-  font-size: var(--ed-fs-micro);
-  font-weight: 500;
-  letter-spacing: var(--ed-tracking-meta);
-  color: var(--ed-ink-subtle);
+  font-family: var(--font-display);
+  font-size: 0.9375rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--yellow);
   margin: 0 0 var(--ed-sp-3);
 }
 .landing .landing-footer__links {
@@ -2061,21 +2065,21 @@ body.landing > * { position: relative; z-index: 1; }
   gap: 8px;
 }
 .landing .landing-footer__links a {
-  color: var(--ed-ink-muted);
+  color: rgba(251, 247, 239, 0.82);
   text-decoration: none;
   font-size: var(--ed-fs-meta);
   transition: color var(--ed-t-fast);
 }
-.landing .landing-footer__links a:hover { color: var(--ed-accent); }
+.landing .landing-footer__links a:hover { color: #FBF7EF; }
 .landing .landing-footer__bottom {
   margin-top: var(--ed-sp-6);
   padding-top: var(--ed-sp-4);
-  border-top: 1px solid var(--ed-rule);
+  border-top: 1px solid rgba(251, 247, 239, 0.2);
   display: flex;
   justify-content: space-between;
   font-size: var(--ed-fs-micro);
-  color: var(--ed-ink-subtle);
-  font-family: var(--ed-mono);
+  color: rgba(251, 247, 239, 0.7);
+  font-family: var(--font-body);
   letter-spacing: 0.02em;
 }
 .landing .landing-footer__copy { margin: 0; }
