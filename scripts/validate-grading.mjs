@@ -1,22 +1,25 @@
-// L-V349 / L-V350 — Blind validation of the production writing-grading engine
-// against YTL's official sample answers. Multilingual: Spanish (in-sample, the
-// set the L-V349 bias was diagnosed on) + German (held-out, never used to tune
-// the calibration prompt — the key methodological control).
+// L-V349 / L-V350 / L-V351 — Blind validation of the writing-grading engine
+// against YTL's official sample answers. Trilingual: Spanish (in-sample) +
+// German + French (both held-out — never used to tune the prompt).
 //
-// Pipeline (identical for every language):
-//   1. Parse the language's ground-truth txt into cases
-//      ({ id, taskType, taskNum, title, answer, officialScore, officialRationale }).
-//   2. Grade each case BLIND with the SAME production functions the routes use:
-//      buildGradingPrompt + callOpenAI(temp 0.2, json_object) + processGradingResult.
-//      The engine never sees officialScore / officialRationale.
-//   3. Per-task-type metrics (short vs long; YTL scales 33 vs 66, engine 0–20):
-//      MAE, ±2/±4 hit rate, max miss, Spearman ρ, signed bias.
-//   4. Compare against the locked L-V349 thresholds.
+// L-V351 changes vs L-V350:
+//   1. Grading model swapped to gpt-5.4-mini (harness-only; production default
+//      in lib/openai.js is untouched until this run PASSes).
+//   2. Few-shot anchoring: 6 real YTL-scored Spanish answers (lib/gradingAnchors)
+//      are injected into the prompt as calibration references, and the model is
+//      asked to score on the NATIVE YTL scale (0–33 short / 0–66 long) instead
+//      of rescaling a 0–20 total.
+//   3. Anti-leak: the 6 anchor answers are dropped from the Spanish test set
+//      (isAnchorAnswer). German + French are fully held-out (anchors are
+//      Spanish, so those languages never appear in the prompt).
 //
-// Engine total is 0–20; rescaled to YTL points: predYtl = finalScore/20*pointsMax
-// (33 short / 66 long). Spearman uses the raw 0–20 total (rank-invariant).
+// Pipeline (identical per language):
+//   parse ground-truth txt → grade each case BLIND with the production
+//   buildGradingPrompt + callOpenAI(gpt-5.4-mini, temp 0.2, json) +
+//   processGradingResult → per-task-type metrics (MAE, ±2/±4, max miss,
+//   Spearman ρ, bias) on the native YTL scale → compare to locked thresholds.
 //
-// Run:  node scripts/validate-grading.mjs            (both languages)
+// Run:  node scripts/validate-grading.mjs            (all three: es+de+fr)
 //       node scripts/validate-grading.mjs es         (one language)
 // Needs OPENAI_API_KEY in .env. No DB writes (dev cache is in-memory).
 
@@ -26,17 +29,32 @@ import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 import { buildGradingPrompt, processGradingResult } from "../lib/writingGrading.js";
 import { callOpenAI } from "../lib/openai.js";
+import { buildFewShotBlock, isAnchorAnswer } from "../lib/gradingAnchors.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "..");
 const AUDITS = join(ROOT, "docs", "audits");
-const OUT_JSON = join(AUDITS, "2026-06-02-L-V350-grading-calibration.json");
-const OUT_MD = join(AUDITS, "2026-06-02-L-V350-grading-calibration.md");
-// L-V349 raw per-case JSON = the pre-calibration Spanish baseline ("before").
-const V349_JSON = join(AUDITS, "2026-06-02-L-V349-grading-validation.json");
+const OUT_JSON = join(AUDITS, "2026-06-02-L-V351-grading-gpt54mini-fewshot.json");
+const OUT_MD = join(AUDITS, "2026-06-02-L-V351-grading-gpt54mini-fewshot.md");
+// L-V350 raw metrics = the "before" baseline (gpt-4o-mini, no few-shot).
+const V350_JSON = join(AUDITS, "2026-06-02-L-V350-grading-calibration.json");
+
+// Grading model for this run. Production (lib/openai.js OPENAI_MODEL) stays
+// gpt-4o-mini until this harness PASSes — only the harness passes opts.model.
+const GRADING_MODEL = "gpt-5.4-mini";
+
+// Few-shot reference block (Spanish anchors) — built once, reused every language.
+const FEWSHOT = buildFewShotBlock();
 
 const SHORT = { charMin: 160, charMax: 240, points: 33 };
 const LONG = { charMin: 300, charMax: 450, points: 66 };
+
+// ── Pricing assumption for the €/100 estimate ───────────────────────────────
+// gpt-5.4-mini list price is NOT hard-coded into the SDK — VERIFY before quoting
+// to a customer. Token counts below are the real run; the € figure is tokens ×
+// this assumed price (USD per 1M tokens, treated 1:1 as EUR).
+const PRICE_IN_PER_M = 0.25;
+const PRICE_OUT_PER_M = 2.00;
 
 // ── Task definitions, keyed by [lang][taskType][taskNum] ───────────────────────
 const TASK_DEFS = {
@@ -66,6 +84,18 @@ const TASK_DEFS = {
       3: { title: "Wie war dein Sommer (Bildergeschichte)", situation: "Ystäväsi haluaa tietää, miten kesälomasi sujui. Kirjoita oheisten lomakuviesi avulla, mitä matkalla tapahtui (lento, vuokra-auto, kolari, pyörät, jne.).", prompt: "Schreibe deinem Freund anhand deiner Urlaubsbilder, was in den Sommerferien auf der Reise passiert ist.", requirements: ["Kerro mitä matkalla tapahtui", "Käytä mennyttä aikaa johdonmukaisesti", "Sidosteinen kerronta"], textType: "viesti" },
     },
   },
+  fr: {
+    short: {
+      1: { title: "Pardon !", situation: "Olet joutunut lähtemään kesken ranskalaisen ystäväsi syntymäpäiväjuhlista. Kirjoita hänelle Facebook-viesti, jossa pyydät anteeksi ja selität, mikä sai sinut poistumaan yllättäen.", prompt: "Écris un message Facebook à ton ami(e): demande pardon d'être parti(e) de sa fête d'anniversaire et explique ce qui t'a fait partir soudainement.", requirements: ["Pyydä anteeksi", "Selitä miksi lähdit yllättäen", "Sopiva some-rekisteri"], textType: "Facebook-viesti" },
+      2: { title: "Silence !", situation: "Osallistut ranskan kesäkurssille Toulousessa ja asut asuntolassa. Naapurisi aiheuttama melu häiritsee sinua. Kirjoita hänelle viesti pudotettavaksi hänen postilaatikkoonsa.", prompt: "Écris un message à ton voisin de résidence au sujet du bruit qu'il fait et demande-lui d'en faire moins.", requirements: ["Kerro melusta", "Pyydä vähentämään melua", "Kohtelias rekisteri"], textType: "viesti" },
+      3: { title: "Au restaurant", situation: "Olet käynyt ravintolassa, josta pidit erityisesti. Koulussasi on ranskalainen vaihto-oppilas, jolle haluat lähettää ääniviestin kehottaaksesi häntä käymään kyseisessä ravintolassa.", prompt: "Écris (sous forme de message vocal) à l'élève d'échange pour lui recommander un restaurant où tu es allé(e) et que tu as aimé.", requirements: ["Kerro ravintolasta", "Suosittele käymään", "Sopiva puhuttu rekisteri"], textType: "ääniviesti" },
+    },
+    long: {
+      1: { title: "Ma meilleure soirée d'été", situation: "Nuortenlehti Phosphore valmistelee lokakuun numeroa ja pyytää lukijoita lähettämään kesämuiston otsikolla 'Ma meilleure soirée d'été'. Kirjoita oma kesämuistosi.", prompt: "Écris ton souvenir d'été « Ma meilleure soirée d'été » à envoyer au magazine Phosphore.", requirements: ["Kerro yhdestä kesäillasta", "Kuvaile mitä tapahtui", "Sidosteinen kerronta"], textType: "lehtiteksti" },
+      2: { title: "La journée mondiale des animaux", situation: "Olet vaihto-oppilaana Ranskassa ja pidät koulussasi puheen kansainvälisenä eläinten päivänä 4. lokakuuta. Kirjoita puheesi ranskaksi.", prompt: "Écris ton discours en français pour la Journée mondiale des animaux (le 4 octobre).", requirements: ["Pidä puhe eläinten päivänä", "Perustele miksi eläimet ovat tärkeitä", "Puheen rekisteri"], textType: "puhe" },
+      3: { title: "Au pair", situation: "Perheesi haluaa löytää ranskankielisen au pairin pikkusisaruksiasi hoitamaan. Kirjoita au paireja välittävälle sivustolle viesti, jossa kerrot, mitä perheesi odottaa au pairilta.", prompt: "Écris un message sur un site d'au pair: explique ce que ta famille attend d'un(e) au pair.", requirements: ["Kuvaile mitä perhe odottaa", "Kerro tehtävistä", "Ilmoitusrekisteri"], textType: "ilmoitus" },
+    },
+  },
 };
 
 // ── Parsers ────────────────────────────────────────────────────────────────────
@@ -92,6 +122,8 @@ function parseSpanish(raw) {
     const def = TASK_DEFS.es[taskType]?.[taskNum];
     if (!def) { unparsed.push({ seq: i, taskType, taskNum, reason: "no task def" }); continue; }
     if (answer.length < 20) { unparsed.push({ seq: i, taskType, taskNum, reason: `answer ${answer.length} chars` }); continue; }
+    // L-V351 anti-leak: anchor answers are in the prompt, so they can't be tests.
+    if (isAnchorAnswer(answer)) { unparsed.push({ seq: i, taskType, taskNum, officialScore, reason: "few-shot anchor (excluded)" }); continue; }
     cases.push(mkCase("es", taskType, taskNum, def.title, answer, officialScore, officialRationale, cases));
   }
   return { cases, unparsed };
@@ -108,7 +140,6 @@ function parseGerman(raw) {
   if (longBoundary < 0) longBoundary = text.search(/PITEMPI TEHTÄVÄ/i);
   if (longBoundary < 0) throw new Error("DE: long-section boundary not found.");
 
-  // Block-split on the "#NN" case markers.
   const markers = [...text.matchAll(/#(\d+)/g)];
   const cases = [], unparsed = [];
   for (let k = 0; k < markers.length; k++) {
@@ -118,11 +149,10 @@ function parseGerman(raw) {
     const tag = markers[k][1];
 
     const scoreMatch = block.match(/^[ \t]*(\d{1,2})\s*p\.\s*$/m);
-    if (!scoreMatch) { continue; } // not a scored case block (e.g. a "#tag" inside prose)
+    if (!scoreMatch) { continue; }
     const officialScore = parseInt(scoreMatch[1], 10);
     const beforeScore = block.slice(0, scoreMatch.index);
 
-    // Split answer / rationale at the first Finnish rationale bullet.
     const vMatch = beforeScore.match(/[-–]\s*Viesti\b/);
     let answerRegion, rationale;
     if (vMatch) {
@@ -137,12 +167,9 @@ function parseGerman(raw) {
     const taskNum = codeMatch ? parseInt(codeMatch[1], 10) : null;
     const taskType = start > longBoundary ? "long" : "short";
 
-    // Strip the leading "#NN" remnant + the task-code token wherever it sits
-    // (handles "SC_LYH1Hallo!" glued to the answer). Then drop a leading bare
-    // tag number / separators.
     let answer = answerRegion
-      .replace(/^\s*#?\s*\d+\s*/, "")  // strip the leading "#NN" case marker
-      .replace(DE_CODE, "")             // strip the task code (incl. glued "SC_LYH1Hallo!")
+      .replace(/^\s*#?\s*\d+\s*/, "")
+      .replace(DE_CODE, "")
       .replace(/^[\s_–-]+/, "")
       .trim();
 
@@ -150,6 +177,73 @@ function parseGerman(raw) {
     if (!def) { unparsed.push({ seq: k + 1, tag, taskType, taskNum, reason: "no task def / code unparsed" }); continue; }
     if (answer.length < 15) { unparsed.push({ seq: k + 1, tag, taskType, taskNum, reason: `answer ${answer.length} chars` }); continue; }
     cases.push(mkCase("de", taskType, taskNum, def.title, answer, officialScore, rationale, cases, tag));
+  }
+  return { cases, unparsed };
+}
+
+// French: no inline task code. Cases are separated by lines of 5+ underscores or
+// dashes; each answer ends with a "Pisteet NN" line (sometimes "Pisteet: NN" or
+// "Pisteet 30 (31-1. …)" → take the first number). Task number is inferred from
+// distinctive keywords (classifyFrench). Long answers live after the
+// "TEHTÄVÄNANNOT: laajempi" header.
+const FR_KEYWORDS = {
+  short: {
+    1: ["anniversaire", "fête", "désolé", "désolée", "partie", "parti", "pardon"],
+    2: ["bruit", "voisin", "voisine", "dormir", "silence", "résidence"],
+    3: ["restaurant", "restourant", "mangé", "plat", "salmon", "fromage", "dessert", "glace"],
+  },
+  long: {
+    1: ["soirée", "souvenir", "chalet", "londres", "pique-nique", "été"],
+    2: ["animaux", "journée mondiale", "animal"],
+    3: ["au pair", "pair"],
+  },
+};
+function classifyFrench(answer, taskType) {
+  const a = answer.toLowerCase();
+  let best = null, bestScore = -1;
+  for (const [num, kws] of Object.entries(FR_KEYWORDS[taskType])) {
+    let s = 0;
+    for (const kw of kws) {
+      const re = new RegExp(kw.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g");
+      s += (a.match(re) || []).length;
+    }
+    if (s > bestScore) { bestScore = s; best = parseInt(num, 10); }
+  }
+  return bestScore > 0 ? best : null;
+}
+function parseFrench(raw) {
+  // Strip the one-off legal disclaimer so it can't bleed into the first answer.
+  const text = clean(raw).replace(/Ylioppilastutkintolautakunta on saanut[\s\S]*?pisteiden menetys\.\s*/g, "");
+  let longBoundary = text.search(/TEHTÄVÄNANNOT:\s*laajempi/i);
+  if (longBoundary < 0) longBoundary = text.search(/laajempi kirjoitustehtävä/i);
+  if (longBoundary < 0) throw new Error("FR: long-section boundary not found.");
+
+  // Manual split on separator lines, preserving each segment's start index.
+  const sepRe = /^[ \t]*[_–-]{5,}[ \t]*$/gm;
+  const bounds = [];
+  let m;
+  while ((m = sepRe.exec(text)) !== null) bounds.push([m.index, sepRe.lastIndex]);
+  const segments = [];
+  let prev = 0;
+  for (const [s, e] of bounds) { segments.push([prev, s]); prev = e; }
+  segments.push([prev, text.length]);
+
+  const cases = [], unparsed = [];
+  let i = 0;
+  for (const [s, e] of segments) {
+    const block = text.slice(s, e);
+    const scoreMatch = block.match(/Pisteet\s*:?\s*(\d+)/i);
+    if (!scoreMatch) continue;
+    i++;
+    const officialScore = parseInt(scoreMatch[1], 10);
+    // Strip a leading bare page-number digit (OCR leftover like "2  Salut!").
+    const answer = block.slice(0, scoreMatch.index).trim().replace(/^\d{1,2}\s+/, "").trim();
+    const taskType = s > longBoundary ? "long" : "short";
+    const taskNum = classifyFrench(answer, taskType);
+    const def = taskNum && TASK_DEFS.fr[taskType]?.[taskNum];
+    if (!def) { unparsed.push({ seq: i, taskType, taskNum, officialScore, reason: "no task def / unclassified" }); continue; }
+    if (answer.length < 20) { unparsed.push({ seq: i, taskType, taskNum, reason: `answer ${answer.length} chars` }); continue; }
+    cases.push(mkCase("fr", taskType, taskNum, def.title, answer, officialScore, "", cases));
   }
   return { cases, unparsed };
 }
@@ -162,12 +256,16 @@ function mkCase(lang, taskType, taskNum, title, answer, officialScore, officialR
   };
 }
 
-const PARSERS = { es: parseSpanish, de: parseGerman };
+const PARSERS = { es: parseSpanish, de: parseGerman, fr: parseFrench };
 const SOURCES = {
   es: join(ROOT, "docs", "yo-espanja-naytevastaukset.txt"),
   de: join(ROOT, "docs", "yo-saksa-naytevastaukset.txt"),
+  fr: join(ROOT, "docs", "yo-ranska-naytevastaukset.txt"),
 };
-const LANG_NAME = { es: "Espanja (in-sample)", de: "Saksa (held-out)" };
+const LANG_NAME = { es: "Espanja (in-sample, ankkurit poistettu)", de: "Saksa (held-out)", fr: "Ranska (held-out)" };
+
+// ── Token accounting (real run cost) ────────────────────────────────────────
+let _tokIn = 0, _tokOut = 0, _calls = 0;
 
 // ── Grade one case BLIND ───────────────────────────────────────────────────────
 async function gradeCase(c) {
@@ -179,17 +277,27 @@ async function gradeCase(c) {
   };
   const isShort = c.taskType === "short";
   const charCount = c.answer.replace(/\s/g, "").length;
-  // Same call as routes/writing.js /grade-writing. studentName="" → no name leak,
-  // held constant. officialScore/Rationale are NOT passed to the engine.
-  const prompt = buildGradingPrompt(task, c.answer, isShort, c.lang, "");
-  const aiResult = await callOpenAI(prompt, 2500, { temperature: 0.2, responseFormat: { type: "json_object" } });
+  // L-V351: few-shot anchors + native-scale scoring + gpt-5.4-mini. studentName=""
+  // → no name leak. officialScore/Rationale are NOT passed to the engine.
+  const prompt = buildGradingPrompt(task, c.answer, isShort, c.lang, "", { nativeScale: true, fewShotBlock: FEWSHOT });
+  const aiResult = await callOpenAI(prompt, 2500, { temperature: 0.2, responseFormat: { type: "json_object" }, model: GRADING_MODEL });
+  const usage = aiResult._usage || {};
+  _tokIn += usage.inputTokens || 0; _tokOut += usage.outputTokens || 0; _calls += 1;
   delete aiResult._usage;
   const result = processGradingResult(aiResult, charCount, task.charMin, isShort, c.answer);
-  const predYtl = (result.finalScore / 20) * base.points;
+
+  // Native-scale prediction: trust the model's ytl_points; fall back to the old
+  // 0–20 rescale if the model omitted it.
+  let ytlPoints = Number(aiResult.ytl_points);
+  if (!Number.isFinite(ytlPoints)) ytlPoints = (result.finalScore / 20) * base.points;
+  ytlPoints = Math.max(0, Math.min(base.points, ytlPoints));
+  const predYtl = round1(ytlPoints);
+
   return {
     ...c, charCount, penalty: result.penalty,
     engineRaw20: result.finalScore,
-    predYtl: round1(predYtl),
+    ytlPoints: round1(Number(aiResult.ytl_points)) || null,
+    predYtl,
     diff: round1(predYtl - c.officialScore),
     dims: {
       viestinnallisyys: result.viestinnallisyys.score, kielen_rakenteet: result.kielen_rakenteet.score,
@@ -239,17 +347,17 @@ function metricsFor(rows) {
     within2: round((abs.filter((d) => d <= 2).length / n) * 100),
     within4: round((abs.filter((d) => d <= 4).length / n) * 100),
     maxMiss: round(Math.max(...abs)),
-    spearman: round(spearman(rows.map((r) => r.engineRaw20), rows.map((r) => r.officialScore))),
+    // Native-scale prediction vs official score (rank-invariant).
+    spearman: round(spearman(rows.map((r) => r.predYtl), rows.map((r) => r.officialScore))),
   };
 }
 
-// Recompute metrics from L-V349 raw cases (pre-calibration ES baseline).
-function metricsFromV349(taskType) {
-  if (!existsSync(V349_JSON)) return null;
+// L-V350 precomputed "before" metrics (gpt-4o-mini, no few-shot).
+function metricsFromV350(lang, taskType) {
+  if (!existsSync(V350_JSON)) return null;
   try {
-    const p = JSON.parse(readFileSync(V349_JSON, "utf8"));
-    const rows = (p.cases || []).filter((c) => c.taskType === taskType && !c.error);
-    return rows.length ? metricsFor(rows) : null;
+    const p = JSON.parse(readFileSync(V350_JSON, "utf8"));
+    return p.langs?.[lang]?.metricsAfter?.[taskType] || null;
   } catch { return null; }
 }
 
@@ -276,9 +384,9 @@ function verdict(m, type) {
 
 // ── Report formatting ──────────────────────────────────────────────────────────
 function fmtTable(rows) {
-  const head = "| case-id | tehtävä | YTL | moottori 0–20 | ennuste-YTL | ero | V/R/S/K | band |\n|---|---|---|---|---|---|---|---|";
+  const head = "| case-id | tehtävä | YTL | ennuste (natiivi) | ero | V/R/S/K | 0–20 | band |\n|---|---|---|---|---|---|---|---|";
   return head + "\n" + rows.map((r) =>
-    `| ${r.id} | ${r.title} | ${r.officialScore} | ${r.engineRaw20} | ${r.predYtl} | ${r.diff >= 0 ? "+" : ""}${r.diff} | ${r.dims.viestinnallisyys}/${r.dims.kielen_rakenteet}/${r.dims.sanasto}/${r.dims.kokonaisuus} | ${r.band} |`
+    `| ${r.id} | ${r.title} | ${r.officialScore} | ${r.predYtl} | ${r.diff >= 0 ? "+" : ""}${r.diff} | ${r.dims.viestinnallisyys}/${r.dims.kielen_rakenteet}/${r.dims.sanasto}/${r.dims.kokonaisuus} | ${r.engineRaw20} | ${r.band} |`
   ).join("\n");
 }
 function fmtMetrics(m, type) {
@@ -289,11 +397,11 @@ function fmtMetrics(m, type) {
     `- **${v.pass ? "PASS ✅" : "FAIL ❌"}** ${v.checks.map((c) => `${c.ok ? "✅" : "❌"}${c.name}(${c.got})`).join(" · ")}`,
   ].join("\n");
 }
-function fmtBeforeAfter(before, after, type) {
-  if (!before) return "_(L-V349 baseline puuttuu)_";
+function fmtBeforeAfter(before, after) {
+  if (!before) return "_(L-V350 baseline puuttuu)_";
   const d = (a, b) => { const x = round(b - a); return `${x >= 0 ? "+" : ""}${x}`; };
   return [
-    `| mittari | ennen (L-V349) | jälkeen (L-V350) | muutos |`,
+    `| mittari | ennen (L-V350, 4o-mini) | jälkeen (L-V351, 5.4-mini+few-shot) | muutos |`,
     `|---|---|---|---|`,
     `| MAE | ${before.mae} | ${after.mae} | ${d(before.mae, after.mae)} |`,
     `| max-heitto | ${before.maxMiss} | ${after.maxMiss} | ${d(before.maxMiss, after.maxMiss)} |`,
@@ -305,10 +413,39 @@ function fmtBeforeAfter(before, after, type) {
 // ── Main ─────────────────────────────────────────────────────────────────────────
 async function main() {
   if (!process.env.OPENAI_API_KEY) { console.error("OPENAI_API_KEY puuttuu (.env)."); process.exit(1); }
-  const arg = (process.argv[2] || "both").toLowerCase();
-  const langs = arg === "both" ? ["es", "de"] : [arg];
+  const arg = (process.argv[2] || "all").toLowerCase();
 
-  const out = { generatedFor: "L-V350", date: "2026-06-02", calibration: "lib/writingGrading.js buildGradingPrompt — SCORING CALIBRATION -lohko (E/L-yläpää-ankkuri, rakenne-5 pehmennys, laajan syvyyspalkkio)", blind: true, langs: {} };
+  // Dev-only: `node scripts/validate-grading.mjs parse` parses every language and
+  // prints cases (no API spend) so the parsers/classification can be sanity-checked.
+  if (arg === "parse") {
+    for (const lang of ["es", "de", "fr"]) {
+      const { cases, unparsed } = PARSERS[lang](readFileSync(SOURCES[lang], "utf8"));
+      console.log(`\n[${lang}] cases ${cases.length} (short ${cases.filter((c) => c.taskType === "short").length}, long ${cases.filter((c) => c.taskType === "long").length}), unparsed ${unparsed.length}`);
+      for (const c of cases) console.log(`  ${c.id.padEnd(14)} ${c.taskType.padEnd(5)} t${c.taskNum} YTL ${String(c.officialScore).padStart(2)}  ${c.answer.slice(0, 50).replace(/\n/g, " ")}`);
+      for (const u of unparsed) console.log(`  UNPARSED ${JSON.stringify(u)}`);
+    }
+    return;
+  }
+
+  const langs = (arg === "all" || arg === "both") ? ["es", "de", "fr"] : [arg];
+
+  // Preflight: one call with the grading model so a bad model name / param
+  // mismatch fails loudly ONCE instead of erroring on every case.
+  console.log(`[preflight] testaan mallia ${GRADING_MODEL}…`);
+  try {
+    const r = await callOpenAI('Return ONLY {"ok":true} as JSON.', 50, { temperature: 0.2, responseFormat: { type: "json_object" }, model: GRADING_MODEL });
+    console.log(`[preflight] OK — malli vastasi: ${JSON.stringify(r).slice(0, 80)}`);
+  } catch (e) {
+    console.error(`[preflight] MALLIKUTSU EPÄONNISTUI (${GRADING_MODEL}): ${e.message}`);
+    console.error(`[preflight] Keskeytetään ennen kalliita ajoja. Tarkista mallinimi / API-parametrit.`);
+    process.exit(2);
+  }
+
+  const out = {
+    generatedFor: "L-V351", date: "2026-06-02", model: GRADING_MODEL,
+    calibration: "few-shot anchoring (lib/gradingAnchors.js, 6 ES-ankkuria) + natiiviasteikko (ytl_points 0–33/0–66)",
+    blind: true, anchorsExcludedFromES: true, langs: {},
+  };
 
   for (const lang of langs) {
     const raw = readFileSync(SOURCES[lang], "utf8");
@@ -329,7 +466,9 @@ async function main() {
       counts: { parsed: cases.length, graded: ok.length, errored: graded.length - ok.length, unparsed: unparsed.length },
       unparsed,
       metricsAfter: { short: metricsFor(short), long: metricsFor(long) },
-      metricsBefore: lang === "es" ? { short: metricsFromV349("short"), long: metricsFromV349("long") } : null,
+      metricsBefore: (lang === "es" || lang === "de")
+        ? { short: metricsFromV350(lang, "short"), long: metricsFromV350(lang, "long") }
+        : null,
       cases: ok, errored: graded.filter((r) => r.error),
     };
     const ms = metricsFor(short), ml = metricsFor(long);
@@ -337,40 +476,59 @@ async function main() {
     console.log(`  [${lang}] LAAJA MAE ${ml?.mae} ρ ${ml?.spearman} → ${verdict(ml, "long").pass ? "PASS" : "FAIL"}`);
   }
 
+  // Cost accounting from the real run.
+  const costUsd = (_tokIn / 1e6) * PRICE_IN_PER_M + (_tokOut / 1e6) * PRICE_OUT_PER_M;
+  out.cost = {
+    calls: _calls, inputTokens: _tokIn, outputTokens: _tokOut,
+    avgInPerCall: _calls ? Math.round(_tokIn / _calls) : 0,
+    avgOutPerCall: _calls ? Math.round(_tokOut / _calls) : 0,
+    priceAssumption: { inputPerM: PRICE_IN_PER_M, outputPerM: PRICE_OUT_PER_M, currency: "USD (≈EUR), VERIFY" },
+    estPer100Usd: _calls ? round((costUsd / _calls) * 100) : 0,
+  };
+
   writeFileSync(OUT_JSON, JSON.stringify(out, null, 2), "utf8");
   writeFileSync(OUT_MD, renderMd(out), "utf8");
   console.log(`\nKirjoitettu:\n  ${OUT_JSON}\n  ${OUT_MD}`);
+  console.log(`Kustannus: ${_calls} kutsua, in ${_tokIn} / out ${_tokOut} tok → ~$${out.cost.estPer100Usd}/100 arviointia (oletettu hinta, VARMISTA).`);
 }
 
 function renderMd(out) {
   const parts = [];
-  parts.push(`# L-V350 — Arviointimoottorin kalibrointi + held-out-validointi (espanja + saksa)
+  parts.push(`# L-V351 — Arviointi: gpt-5.4-mini + few-shot-ankkurointi (espanja + saksa + ranska)
 
 **Päivä:** 2026-06-02
-**Kalibrointi:** \`lib/writingGrading.js\` → \`buildGradingPrompt\` sai \`SCORING CALIBRATION\` -lohkon: (a) eksplisiittinen E/L-yläpää-ankkuri, (b) \`kielen_rakenteet\`-5 ei vaadi virheettömyyttä, (c) laajan tehtävän syvyyspalkkio. **Lukittu ENNEN saksan ajoa** (anti-ylisovitus).
+**Malli:** \`${out.model}\` (harness; tuotanto pysyy gpt-4o-minissä kunnes tämä PASS).
+**Kalibrointi:** few-shot-ankkurointi — 6 oikeaa YTL-pisteytettyä espanja-vastausta (\`lib/gradingAnchors.js\`, skaala 15/25/33 lyhyt + 34/50/66 laaja) upotettu promptiin + **natiiviasteikko** (\`ytl_points\` 0–33 / 0–66, ei 0–20→skaalaus).
+**Anti-vuoto:** 6 ankkuria poistettu espanjan testisetistä (\`isAnchorAnswer\`). Saksa + ranska ovat täysin held-out (ankkurit ovat espanjaa → eivät esiinny promptissa näille kielille).
 **Sokkous:** moottori sai vain oppilaan tekstin + tehtäväkontekstin; \`officialScore\`/\`officialRationale\` stripattiin ennen kutsua.
-**Skaala:** moottori 0–20 → YTL-pisteet ×33/20 (lyhyt), ×66/20 (laaja). Spearman raa'asta 0–20-summasta.
-**Metodi:** espanja = in-sample (sama setti jolla L-V349 diagnosoi biaksen, "ennen" = L-V349:n pre-kalibrointiluvut). **Saksa = held-out** (uusi setti, EI käytetty promptin viritykseen) → yleistymistesti.
-**Lukitut rajat:** lyhyt MAE ≤ 3, max ≤ 6, ρ ≥ 0.8 · laaja MAE ≤ 6, ρ ≥ 0.8.
+**Lukitut rajat:** lyhyt MAE ≤ 3, max ≤ 6, ρ ≥ 0.8 · laaja MAE ≤ 6, ρ ≥ 0.8. PASS = kaikki kolme kieltä läpäisevät molemmat tehtävätyypit.
 `);
 
-  // Overall verdict line
   const v = (lang, type) => verdict(out.langs[lang]?.metricsAfter?.[type], type).pass;
-  const allPass = ["es", "de"].filter((l) => out.langs[l]).every((l) => v(l, "short") && v(l, "long"));
-  parts.push(`## Verdict\n\n**${allPass ? "PASS molemmilla kielillä ✅" : "EI vielä PASS ❌"}** — ${allPass ? "ydin luotettava; scope-laajennus (englanti/ruotsi/äidinkieli) perusteltu." : "katso kieli/tehtävätyyppi-kohtaiset rivit alla. Älä laajenna ennen kuin molemmat PASS."}\n`);
+  const langsPresent = ["es", "de", "fr"].filter((l) => out.langs[l]);
+  const allPass = langsPresent.every((l) => v(l, "short") && v(l, "long"));
+  parts.push(`## Verdict\n\n**${allPass ? "PASS kaikilla kolmella kielellä ✅" : "EI PASS ❌"}** — ${allPass ? "ydin luotettava; tuotannon mallivaihto + few-shot perusteltu, scope-laajennus (englanti/ruotsi/äidinkieli) avautuu." : "katso kieli/tehtävätyyppi-kohtaiset rivit alla. Älä vaihda tuotantoa eikä laajenna ennen kuin kaikki kolme PASS."}\n`);
 
-  for (const lang of Object.keys(out.langs)) {
+  // Cost
+  const c = out.cost || {};
+  parts.push(`## Kustannus (ajon todelliset token-luvut)
+- ${c.calls} arviointikutsua · input ${c.inputTokens} tok (ka ${c.avgInPerCall}/kutsu) · output ${c.outputTokens} tok (ka ${c.avgOutPerCall}/kutsu).
+- **~$${c.estPer100Usd} / 100 arviointia** oletetulla hinnalla $${c.priceAssumption?.inputPerM}/1M in + $${c.priceAssumption?.outputPerM}/1M out. ⚠️ gpt-5.4-minin listahinta on VARMISTETTAVA — token-luvut ovat todelliset, € on arvio.
+- Few-shot nostaa input-tokeneita (~1500 → ${c.avgInPerCall}/kutsu) odotetusti.
+`);
+
+  for (const lang of langsPresent) {
     const L = out.langs[lang];
-    const short = L.cases.filter((c) => c.taskType === "short").sort((a, b) => b.officialScore - a.officialScore);
-    const long = L.cases.filter((c) => c.taskType === "long").sort((a, b) => b.officialScore - a.officialScore);
+    const short = L.cases.filter((cc) => cc.taskType === "short").sort((a, b) => b.officialScore - a.officialScore);
+    const long = L.cases.filter((cc) => cc.taskType === "long").sort((a, b) => b.officialScore - a.officialScore);
     parts.push(`\n---\n\n## ${LANG_NAME[lang]} — ${lang.toUpperCase()}\n`);
-    parts.push(`Caset: parsittu ${L.counts.parsed}, arvioitu ${L.counts.graded}, virheitä ${L.counts.errored}, parsimatta ${L.counts.unparsed}.`);
-    if (L.unparsed.length) parts.push(`\n> Parsimatta:\n${L.unparsed.map((u) => `> - ${JSON.stringify(u)}`).join("\n")}`);
+    parts.push(`Caset: parsittu ${L.counts.parsed}, arvioitu ${L.counts.graded}, virheitä ${L.counts.errored}, parsimatta/poissuljettu ${L.counts.unparsed}.`);
+    if (L.unparsed.length) parts.push(`\n> Parsimatta / poissuljettu:\n${L.unparsed.map((u) => `> - ${JSON.stringify(u)}`).join("\n")}`);
 
     parts.push(`\n### Lyhyt (max 33 p)\n${fmtMetrics(L.metricsAfter.short, "short")}`);
-    if (L.metricsBefore?.short) parts.push(`\n**Ennen vs. jälkeen (kalibroinnin vaikutus):**\n${fmtBeforeAfter(L.metricsBefore.short, L.metricsAfter.short, "short")}`);
+    if (L.metricsBefore?.short) parts.push(`\n**Ennen vs. jälkeen:**\n${fmtBeforeAfter(L.metricsBefore.short, L.metricsAfter.short)}`);
     parts.push(`\n### Laaja (max 66 p)\n${fmtMetrics(L.metricsAfter.long, "long")}`);
-    if (L.metricsBefore?.long) parts.push(`\n**Ennen vs. jälkeen:**\n${fmtBeforeAfter(L.metricsBefore.long, L.metricsAfter.long, "long")}`);
+    if (L.metricsBefore?.long) parts.push(`\n**Ennen vs. jälkeen:**\n${fmtBeforeAfter(L.metricsBefore.long, L.metricsAfter.long)}`);
 
     parts.push(`\n#### Caset — lyhyt\n${fmtTable(short)}`);
     parts.push(`\n#### Caset — laaja\n${fmtTable(long)}`);
@@ -378,11 +536,11 @@ function renderMd(out) {
   }
 
   parts.push(`\n---\n\n## Caveatit
-- Saksan setissä ei ole 66 p -huippua (korkein 62 p), joten laajan yläpää-erottelu testautuu hieman heikommin kuin espanjassa.
-- PDF→teksti-purku tuottaa OCR-artefakteja molemmissa kielissä. Saksan caset tarkistettu silmämääräisesti parsittaessa (Viesti-ankkuri erottaa vastauksen rationaalista).
-- Tehtävänannot syötettiin tiivistettyinä (YTL antaa ne suomeksi). Ei vaikuta arvioitavaan tekstiin.
-- Anti-ylisovitus: prompt-muutos tehtiin pelkästään L-V349:n espanja-diagnoosista ja lukittiin ennen saksan ajoa. Saksa ajettiin kerran. Jos saksa ei läpäise, sitä EI viritetä erikseen.
-- temp 0.2 ei ole täysin deterministinen; "ennen"-luvut ovat L-V349:n erillisestä ajosta, joten pienet erot voivat johtua myös ajovariaatiosta, eivät pelkästä promptista. Suunta + suuruusluokka ovat silti todisteita.
+- **Yläpään erottelu testautuu ensisijaisesti espanjan ei-ankkuri-caseilla.** Ranska on matalapainotteinen (lyhyt huippu 30, laaja 50) eikä stressi-testaa yläpäätä; saksan huippu 62; vain espanjassa on 66 p. Ranskan PASS ei ole todiste yläpäästä.
+- **Ranskan tehtävänumero päätellään avainsanoista** (classifyFrench), koska tiedostossa ei ole inline-koodia. Tarkista parsimatta-lista jos jokin case putosi.
+- PDF→teksti-purku tuottaa OCR-artefakteja kaikissa kolmessa (ankkureissakin näkyy liimautuneita sanoja — jätetty tarkoituksella aidoiksi).
+- temp 0.2 ei ole täysin deterministinen; "ennen"-luvut ovat L-V350:n erillisestä ajosta (gpt-4o-mini, ei few-shotia), joten pienet erot voivat olla ajovariaatiota — suunta + suuruusluokka ratkaisevat.
+- ⚠️ gpt-5.4-minin parametrit: harness käyttää \`max_completion_tokens\` + oletuslämpötilaa jos malli on gpt-5-perhettä (ks. lib/openai.js). temp 0.2 toteutuu vain jos malli sallii sen.
 `);
   return parts.join("\n");
 }
