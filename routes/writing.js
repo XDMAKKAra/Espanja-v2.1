@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { callOpenAI, getUserProfileContext, LANGUAGE_META, VALID_LANGUAGES } from "../lib/openai.js";
-import { buildGradingPrompt, processGradingResult, SHORT_MAX, LONG_MAX } from "../lib/writingGrading.js";
+import { buildGradingPrompt, processGradingResult, computeScoreRange, MICRO_CHAR_FLOOR, SHORT_MAX, LONG_MAX } from "../lib/writingGrading.js";
+import { buildFewShotBlock } from "../lib/gradingAnchors.js";
 import { requireAuth, requirePro, checkFeatureAccess, incrementFreeUsage } from "../middleware/auth.js";
 import { requireSupportedLanguage, resolveLang } from "../middleware/language.js";
 import { aiStrictLimiter, aiGlobalDailyLimiter, demoGradeLimiter, demoGradeGlobalLimiter, clientIp } from "../middleware/rateLimit.js";
@@ -16,6 +17,14 @@ import { createHash } from "node:crypto";
 const router = Router();
 
 const VALID_TASK_TYPES = new Set(["short", "long"]);
+
+// L-V354 — graded writing now runs the validated pipeline: gpt-5.4-mini +
+// few-shot anchors + native-scale ytl_points. This is the exact pipeline the
+// V351 validation data was generated on, which is what makes the coverage-
+// calibrated SCORE_RANGE_CAL offsets (lib/writingGrading.js) valid in production.
+// The few-shot block is static, so build it once at module load.
+const GRADING_MODEL = "gpt-5.4-mini";
+const FEWSHOT = buildFewShotBlock();
 
 // ─── Anonymous landing writing demo (L-V332) ────────────────────────────────
 // One slim AI grade per device per 24h. No auth, no DB write of user text —
@@ -244,19 +253,44 @@ router.post("/grade-writing", requireAuth, aiStrictLimiter, aiGlobalDailyLimiter
   const isShort = task.taskType === "short";
   const charCount = studentText.replace(/\s/g, "").length;
 
-  const prompt = buildGradingPrompt(task, studentText, isShort, lang, studentName);
+  // L-V354 — few-shot anchors + native-scale scoring so the model emits
+  // ytl_points on the 0–33 / 0–66 scale we build the display range around.
+  const prompt = buildGradingPrompt(task, studentText, isShort, lang, studentName, {
+    nativeScale: true,
+    fewShotBlock: FEWSHOT,
+  });
 
   try {
-    // Per puheo-ai-prompt skill: graders use temp 0.2 for determinism + force
-    // JSON object response so we don't have to regex strip markdown fences.
+    // Per puheo-ai-prompt skill: graders force a JSON object response so we don't
+    // have to regex strip markdown fences. gpt-5.4-mini ignores temperature (uses
+    // its default) — callOpenAI handles the gpt-5 token/temperature differences.
     const aiResult = await callOpenAI(prompt, 2500, {
       temperature: 0.2,
       responseFormat: { type: "json_object" },
+      model: GRADING_MODEL,
     });
     logAiUsage(req.user?.userId, "grade-writing", aiResult._usage).catch(() => {});
     delete aiResult._usage;
     const result = processGradingResult(aiResult, charCount, task.charMin, isShort, studentText);
     result.originalText = studentText;
+
+    // Native-scale prediction → coverage-calibrated display range. Trust the
+    // model's ytl_points; fall back to rescaling the 0–20 total if it is missing.
+    const max = isShort ? 33 : 66;
+    let predNative = Number(aiResult.ytl_points);
+    if (!Number.isFinite(predNative)) predNative = result.finalScore * (max / 20);
+    predNative = Math.max(0, Math.min(max, predNative));
+
+    if (charCount >= MICRO_CHAR_FLOOR) {
+      const range = computeScoreRange(predNative, lang, isShort);
+      result.scoreRange = range;
+      result.ytlGrade = range.band; // de-biased native band is the shown letter
+      result._predNative = Math.round(predNative); // debug only
+    } else {
+      // Below a real kirjotelma attempt → no point range, just the letter.
+      result.scoreRange = null;
+    }
+
     if (access.tier === "free") await incrementFreeUsage(req.user.userId, "writing");
     res.json({ result });
   } catch (err) {

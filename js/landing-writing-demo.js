@@ -56,14 +56,25 @@
 
     var lang = card.getAttribute("data-lang") || "es";
 
+    // L-V354 — this demo grades 1-3 sentences on a slim 0-18 communicative
+    // scale, not a full kirjotelma on the YTL point scale. Showing a bare
+    // "13 / 18" reads as false precision on a microtext, so we show a short
+    // qualitative verdict instead and steer to the app for the real YTL range.
+    function verdictFor(score) {
+      if (score <= 0)  return "Kirjoita kohdekielellä";
+      if (score <= 6)  return "Viesti jää osin epäselväksi";
+      if (score <= 10) return "Viesti välittyy";
+      if (score <= 14) return "Selkeä viesti";
+      return "Luonteva viesti";
+    }
+
     // ── Result rendering ──────────────────────────────────────────────
     function renderResult(data) {
       result.innerHTML = "";
 
       var head = el("div", "kokeile__result-head");
-      var max = data.scoreMax || 18;
-      head.appendChild(el("span", "kokeile__score", data.score + " / " + max));
-      head.appendChild(el("span", "kokeile__score-label", "viestinnällisyys"));
+      head.appendChild(el("span", "kokeile__score", verdictFor(Number(data.score) || 0)));
+      head.appendChild(el("span", "kokeile__score-label", "viestinnällisyyden pika-arvio"));
       result.appendChild(head);
 
       var errors = Array.isArray(data.errors) ? data.errors : [];
@@ -88,7 +99,7 @@
       }
 
       result.appendChild(el("p", "kokeile__result-foot",
-        "Tämä on yksi näyte. Täyden arvioinnin saat ilmaisella tilillä."));
+        "Tämä on pikanäyte parista lauseesta. Täyden YTL-pistehaarukan ja perustelun saat, kun kirjoitat koko vastauksen ilmaisella tilillä."));
 
       var cta = el("a", "btn btn--primary kokeile__cta", "Aloita ilmaiseksi");
       cta.setAttribute("href", "/app.html#rekisteroidy");

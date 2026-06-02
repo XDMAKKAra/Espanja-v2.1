@@ -1,8 +1,12 @@
 import { describe, it, expect } from "vitest";
+import { readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
+import { dirname, join } from "node:path";
 import {
   RUBRIC_MAX, SHORT_MAX, LONG_MAX,
   calculatePenalty, sumScores, applyPenalty,
   pointsToGrade, processGradingResult,
+  computeScoreRange, SCORE_RANGE_CAL,
 } from "../lib/writingGrading.js";
 
 // ─── Constants ─────────────────────────────────────────────────────────────
@@ -212,4 +216,92 @@ describe("processGradingResult", () => {
     const result = processGradingResult(lowScore, 0, 160, true);
     expect(result.finalScore).toBe(0);
   });
+});
+
+// ─── L-V354: computeScoreRange ──────────────────────────────────────────────
+
+describe("computeScoreRange", () => {
+  it("applies the es-short offsets [+3,+9] around the native prediction", () => {
+    // pred 18 → [18+3, 18+9] = [21, 27]
+    const r = computeScoreRange(18, "es", true);
+    expect(r.lo).toBe(21);
+    expect(r.hi).toBe(27);
+    expect(r.max).toBe(33);
+    expect(r.mid).toBe(24);
+  });
+
+  it("applies the long offsets on the 0–66 scale", () => {
+    // es-long [+6,+19], pred 38 → [44, 57]
+    const r = computeScoreRange(38, "es", false);
+    expect(r.lo).toBe(44);
+    expect(r.hi).toBe(57);
+    expect(r.max).toBe(66);
+  });
+
+  it("clamps to [0, max] and keeps lo <= hi at the ceiling", () => {
+    const r = computeScoreRange(33, "es", true); // 33+3, 33+9 both clamp to 33
+    expect(r.lo).toBe(33);
+    expect(r.hi).toBe(33);
+    expect(r.lo).toBeLessThanOrEqual(r.hi);
+  });
+
+  it("handles a lenient cell (fr-short, negative lo offset)", () => {
+    // fr-short [-6,+2], pred 20 → [14, 22]
+    const r = computeScoreRange(20, "fr", true);
+    expect(r.lo).toBe(14);
+    expect(r.hi).toBe(22);
+  });
+
+  it("falls back to the es cell for an unknown language", () => {
+    const r = computeScoreRange(18, "xx", true);
+    expect(r.lo).toBe(21); // es-short offsets
+  });
+
+  it("band follows the range midpoint on the native scale", () => {
+    // es-short pred 24 → [27,33] mid 30 → 30/33 ≈ 18.2/20 → L
+    expect(computeScoreRange(24, "es", true).band).toBe("L");
+    // es-short pred 8 → [11,17] mid 14 → 14/33 ≈ 8.5/20 → C
+    expect(computeScoreRange(8, "es", true).band).toBe("C");
+  });
+});
+
+// ─── L-V354: coverage guarantee re-derived from the V351 validation data ─────
+// The whole point of the range is that the official score lands inside it for
+// ≥80 % of the validation cases. We re-prove that here against the BAKED
+// SCORE_RANGE_CAL offsets, so a future edit to the constants that breaks the
+// guarantee fails CI. Zero API calls — reads V351's saved predictions.
+
+describe("SCORE_RANGE_CAL coverage (V351 data, 0 API)", () => {
+  const __dirname = dirname(fileURLToPath(import.meta.url));
+  const V351 = JSON.parse(readFileSync(
+    join(__dirname, "..", "docs", "audits", "2026-06-02-L-V351-grading-gpt54mini-fewshot.json"),
+    "utf8",
+  ));
+
+  // Group saved (predYtl, officialScore) by lang × taskType.
+  const cells = {};
+  for (const lang of ["es", "de", "fr"]) {
+    for (const c of (V351.langs?.[lang]?.cases || [])) {
+      if (!Number.isFinite(c.predYtl) || !Number.isFinite(c.officialScore)) continue;
+      const key = `${lang}-${c.taskType}`;
+      (cells[key] ||= []).push(c);
+    }
+  }
+
+  for (const key of Object.keys(SCORE_RANGE_CAL)) {
+    const cal = SCORE_RANGE_CAL[key];
+    if (cal.mode !== "range") continue;
+    const [lang, taskType] = key.split("-");
+    const isShort = taskType === "short";
+
+    it(`${key}: official lands in the range for ≥80 % of cases`, () => {
+      const cases = cells[key] || [];
+      expect(cases.length).toBe(cal.n); // sample size matches what was baked
+      const inside = cases.filter((c) => {
+        const r = computeScoreRange(c.predYtl, lang, isShort);
+        return c.officialScore >= r.lo && c.officialScore <= r.hi;
+      }).length;
+      expect(inside / cases.length).toBeGreaterThanOrEqual(0.80);
+    });
+  }
 });

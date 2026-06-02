@@ -2856,12 +2856,15 @@ html.landing { scroll-padding-top: 92px; }
 .landing .kokeile__result-head {
   display: flex;
   align-items: baseline;
-  gap: var(--ed-sp-3);
+  flex-wrap: wrap;
+  gap: 4px var(--ed-sp-3);
   margin-bottom: var(--ed-sp-4);
 }
+/* L-V354 — the head now holds a short qualitative verdict, not a number, so it
+   uses the sans face and wraps cleanly on narrow screens. */
 .landing .kokeile__score {
-  font-family: var(--ed-mono);
-  font-size: 1.5rem;
+  font-family: var(--ed-sans);
+  font-size: 1.25rem;
   font-weight: 700;
   color: var(--ed-score-ink);
 }

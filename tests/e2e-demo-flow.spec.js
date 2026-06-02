@@ -48,12 +48,13 @@ test.describe("landing writing demo (#kokeile)", () => {
 
     await submit.click();
 
-    // Score + at least one error render inline.
-    await expect(card.locator(".kokeile__score")).toContainText("12 / 18");
+    // L-V354 — qualitative verdict (not a bare number) + at least one error.
+    // score 12 → "Selkeä viesti" (verdictFor: 11–14).
+    await expect(card.locator(".kokeile__score")).toContainText("Selkeä viesti");
     await expect(card.locator(".kokeile__error").first()).toBeVisible();
 
     // Footer line + CTA.
-    await expect(card.locator(".kokeile__result-foot")).toContainText("yksi näyte");
+    await expect(card.locator(".kokeile__result-foot")).toContainText("pikanäyte");
     const cta = card.locator(".kokeile__cta");
     await expect(cta).toBeVisible();
     expect(await cta.getAttribute("href")).toBe("/app.html#rekisteroidy");

@@ -654,12 +654,29 @@ function renderAnnotatedText(originalText, errors, annotations) {
 function renderWritingFeedback(result) {
   _lastFeedback = result;
 
-  $("feedback-score-num").textContent = result.finalScore;
-  $("feedback-score-denom").textContent = `/ ${result.maxScore}`;
+  // L-V354 — show a coverage-calibrated point RANGE, not one exact number.
+  // The engine ranks reliably but is systematically harsh, so a single point
+  // would be false precision; the range is what it can honestly stand behind.
+  const range = result.scoreRange;
+  const rangeEl = $("feedback-score-range");
+  const denomEl = $("feedback-score-denom");
+  const labelEl = $("feedback-score-label");
+  const mainEl = $("feedback-score-main");
 
   const gradeBadge = $("feedback-grade-badge");
   gradeBadge.textContent = result.ytlGrade;
   gradeBadge.className = "feedback-grade-badge grade-" + result.ytlGrade;
+
+  if (range && range.mode === "range") {
+    if (rangeEl) rangeEl.textContent = `${range.lo}–${range.hi}`;
+    if (denomEl) denomEl.textContent = `/ ${range.max}`;
+    if (labelEl) labelEl.textContent = "Arvioitu pistehaarukka";
+    if (mainEl) mainEl.classList.remove("hidden");
+  } else {
+    // Band-only cell or a too-short answer: show the level, not a point range.
+    if (mainEl) mainEl.classList.add("hidden");
+    if (labelEl) labelEl.textContent = "Arvioitu taso";
+  }
 
   // Inline annotated text (the centerpiece)
   renderAnnotatedText(result.originalText || "", result.errors || [], result.annotations || []);

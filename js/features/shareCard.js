@@ -51,9 +51,12 @@ function fillRoundedRect(ctx, x, y, w, h, r) {
 
 export async function generateWritingShareCard(result) {
   const accent = readAccent();
-  const finalScore = Number(result?.finalScore) || 0;
-  const maxScore   = Number(result?.maxScore) || 33;
   const grade      = String(result?.ytlGrade || "—");
+  // L-V354 — share the calibrated point RANGE, not one exact number.
+  const range = result?.scoreRange;
+  const hasRange = range && range.mode === "range" && Number.isFinite(range.lo) && Number.isFinite(range.hi);
+  const rangeText = hasRange ? `${range.lo}–${range.hi}` : "";
+  const rangeMax = hasRange ? range.max : (Number(result?.maxScore) || 33);
 
   const canvas = document.createElement("canvas");
   canvas.width = W;
@@ -108,16 +111,26 @@ export async function generateWritingShareCard(result) {
   ctx.fillText(grade, W / 2, badgeY + 4);
   ctx.textBaseline = "alphabetic";
 
-  // ── Score line
-  ctx.fillStyle = PALETTE.text;
-  ctx.font = "700 96px 'Inter', system-ui, sans-serif";
-  ctx.textAlign = "center";
-  ctx.fillText(`${finalScore}`, W / 2 - 52, 640);
-
-  ctx.fillStyle = PALETTE.muted;
-  ctx.font = "500 56px 'Inter', system-ui, sans-serif";
-  ctx.textAlign = "left";
-  ctx.fillText(` / ${maxScore} pistettä`, W / 2 - 28, 640);
+  // ── Score line (calibrated range, centered). Band-only answers skip this.
+  if (hasRange) {
+    ctx.textAlign = "center";
+    ctx.fillStyle = PALETTE.text;
+    ctx.font = "700 84px 'Inter', system-ui, sans-serif";
+    const numText = rangeText;
+    const denomText = ` / ${rangeMax} p`;
+    ctx.font = "700 84px 'Inter', system-ui, sans-serif";
+    const numW = ctx.measureText(numText).width;
+    ctx.font = "500 48px 'Inter', system-ui, sans-serif";
+    const denomW = ctx.measureText(denomText).width;
+    const startX = W / 2 - (numW + denomW) / 2;
+    ctx.textAlign = "left";
+    ctx.fillStyle = PALETTE.text;
+    ctx.font = "700 84px 'Inter', system-ui, sans-serif";
+    ctx.fillText(numText, startX, 640);
+    ctx.fillStyle = PALETTE.muted;
+    ctx.font = "500 48px 'Inter', system-ui, sans-serif";
+    ctx.fillText(denomText, startX + numW, 640);
+  }
 
   // ── Criteria block
   const blockX = 80;
@@ -170,7 +183,7 @@ export async function generateWritingShareCard(result) {
   ctx.textAlign = "center";
   ctx.fillText("puheo.fi · oma harjoittelukaveri yo-kokeeseen", W / 2, H - 60);
 
-  await downloadCanvas(canvas, `puheo-arvio-${grade}-${finalScore}-${maxScore}.png`);
+  await downloadCanvas(canvas, `puheo-arvio-${grade}${hasRange ? `-${range.lo}-${range.hi}` : ""}.png`);
 }
 
 async function downloadCanvas(canvas, filename) {
