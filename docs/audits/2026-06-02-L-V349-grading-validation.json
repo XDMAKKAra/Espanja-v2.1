@@ -1,0 +1,1051 @@
+{
+  "generatedFor": "L-V349",
+  "date": "2026-06-02",
+  "source": "docs/yo-espanja-naytevastaukset.txt",
+  "engine": "lib/writingGrading.js + callOpenAI(gpt-4o-mini, temp 0.2) [production path]",
+  "scaleNote": "Engine total is 0–20; rescaled to YTL points (short ×33/20, long ×66/20). Spearman uses raw engine total.",
+  "blind": true,
+  "counts": {
+    "parsed": 37,
+    "graded": 37,
+    "errored": 0,
+    "unparsed": 0
+  },
+  "unparsed": [],
+  "metrics": {
+    "short": {
+      "n": 18,
+      "mae": 5.61,
+      "bias": -4.63,
+      "within2": 16.67,
+      "within4": 44.44,
+      "maxMiss": 11.5,
+      "spearman": 0.88
+    },
+    "long": {
+      "n": 19,
+      "mae": 11.98,
+      "bias": -11.74,
+      "within2": 5.26,
+      "within4": 10.53,
+      "maxMiss": 23.1,
+      "spearman": 0.82
+    }
+  },
+  "passThresholds": {
+    "short": {
+      "mae": 3,
+      "maxMiss": 6,
+      "spearman": 0.8
+    },
+    "long": {
+      "mae": 6,
+      "spearman": 0.8
+    }
+  },
+  "verdict": {
+    "short": {
+      "pass": false,
+      "checks": [
+        {
+          "name": "MAE ≤ 3",
+          "ok": false,
+          "got": 5.61
+        },
+        {
+          "name": "Spearman ρ ≥ 0.8",
+          "ok": true,
+          "got": 0.88
+        },
+        {
+          "name": "max-heitto ≤ 6",
+          "ok": false,
+          "got": 11.5
+        }
+      ]
+    },
+    "long": {
+      "pass": false,
+      "checks": [
+        {
+          "name": "MAE ≤ 6",
+          "ok": false,
+          "got": 11.98
+        },
+        {
+          "name": "Spearman ρ ≥ 0.8",
+          "ok": true,
+          "got": 0.82
+        }
+      ]
+    }
+  },
+  "cases": [
+    {
+      "id": "short-1-1",
+      "taskType": "short",
+      "aihe": 1,
+      "title": "En los probadores",
+      "titleLineRaw": "En los probadores",
+      "answer": "Estimada señora López,  \n \nle escribo para informarle que encontré su diario en los probadores del Corte Inglés. Creo \nque lo ha olvidado allí. ¿Dónde quiere que lo dejo? ¿En el punto de información de la \ntienda?  \n \n¡Cualquier lugar que le parezca bien, me parece bien!  \n \nUn cordial saludo,  \n \n[Nimi]",
+      "officialScore": 33,
+      "officialRationale": " Kirjoittaja pystyy välittämään viestin selkeästi, luontevasti ja sujuvasti. \n Kirjoittajan teksti vastaa täysin tehtävänantoa. \n Kirjoittaja käyttää monipuolista ilmaisuvarastoa ja hallitsee sen erittäin hyvin. \n Tekstissä on vain erittäin vähän virheitä, jotka eivät vaikuta tekstin ymmärtämiseen \neikä sujuvuuteen. Esim. ¿Dónde quiere que lo deje? - ¿Dónde quiere que lo dejo?; \nde el Corte Inglés - del Corte Inglés Kannattaa pitää mielessä RAE:n ohjeistus viestin \nja kirjeiden aloituksesta: https://www.rae.es/espanol-al-dia/despues-del-saludo-en-\nun-correo-se-escribe-coma-o-dos-puntos",
+      "charCount": 239,
+      "penalty": 0,
+      "engineRaw20": 15,
+      "predYtl": 24.8,
+      "diff": -8.2,
+      "dims": {
+        "viestinnallisyys": 4,
+        "kielen_rakenteet": 3,
+        "sanasto": 4,
+        "kokonaisuus": 4
+      },
+      "band": "E",
+      "overall_feedback_fi": "Hyvin kirjoitettu viesti, jossa kerrot selkeästi, mitä tapahtui. Seuraavaksi kannattaa harjoitella menneisyyden aikamuotojen käyttöä ja lisää yhdistäviä sanoja tekstin sujuvuuden parantamiseksi. Jatka samaan malliin!",
+      "next_action_fi": "Harjoittele menneisyyden aikamuotojen käyttöä."
+    },
+    {
+      "id": "short-1-2",
+      "taskType": "short",
+      "aihe": 1,
+      "title": "En los probadores",
+      "titleLineRaw": "En los probadores",
+      "answer": "¡Hola, chica!  \nSoy Jenna y encontré tu diario en los probadores en Zara. Pensé que quizás estuvieras en la \ntienda, pero no pude verte. Menos mal, me di cuenta de que habías escrito tu correo en la \nprimera página. ¿Vives cerca? Podría traer el diario a tu casa.  \n¡Escríbeme! \n \n[Nimi]",
+      "officialScore": 33,
+      "officialRationale": " Kirjoittaja pystyy välittämään viestin selkeästi, luontevasti ja sujuvasti. \n Kirjoittajan teksti vastaa täysin tehtävänantoa. \n Tekstissä on vain erittäin vähän virheitä, jotka eivät vaikuta tekstin ymmärtämiseen \neikä luontevuuteen. Esim. Afortunadamente – Menos mal; llevar – traer. \n Viestin aloitus ja lopetus eivät ole täysin luontevia eikä tilanteeseen sopivia.",
+      "charCount": 229,
+      "penalty": 0,
+      "engineRaw20": 14,
+      "predYtl": 23.1,
+      "diff": -9.9,
+      "dims": {
+        "viestinnallisyys": 4,
+        "kielen_rakenteet": 3,
+        "sanasto": 4,
+        "kokonaisuus": 3
+      },
+      "band": "E",
+      "overall_feedback_fi": "On hienoa, että käytit selkeää kieltä ja esittelit asian hyvin. Seuraavaksi voit harjoitella menneitä aikamuotoja, jotta voit ilmaista tapahtumia tarkemmin. Myös tekstin sujuvuus ja liitännäiset kaipaavat hieman kehittämistä.",
+      "next_action_fi": "Harjoittele menneitä aikamuotoja ja niiden käyttöä."
+    },
+    {
+      "id": "short-2-1",
+      "taskType": "short",
+      "aihe": 2,
+      "title": "Una nueva vecina",
+      "titleLineRaw": "Una nueva vecina",
+      "answer": "¡Hola! \n \n¡Bienvenida a Finlandia! Estaba pensando si te gustaría salir conmigo y mis amigos. \nPodríamos tomar café y visitar algunos lugares juntos. ¿Qué te parece? \n \n¡Espero que nos veamos pronto! \n \n[Nimi], tu vecina",
+      "officialScore": 33,
+      "officialRationale": " Kirjoittaja pystyy välittämään viestin selkeästi, luontevasti ja sujuvasti. \n Kirjoittaja käyttää monipuolista, tilanteeseen sopivaa ilmaisuvarastoa ja hallitsee sen \nerittäin hyvin. \n Kirjoittajan teksti vastaa lähes täysin tehtävänantoa. Kuitenkin olisi ollut hyvä \nmainita viestin kirjoittamisen syy: Me he enterado de que acabas de mudarte tms.",
+      "charCount": 178,
+      "penalty": 0,
+      "engineRaw20": 13,
+      "predYtl": 21.5,
+      "diff": -11.5,
+      "dims": {
+        "viestinnallisyys": 4,
+        "kielen_rakenteet": 3,
+        "sanasto": 3,
+        "kokonaisuus": 3
+      },
+      "band": "E",
+      "overall_feedback_fi": "Tervehdys ja toivotus ovat hyvin kirjoitettuja. Seuraavaksi kannattaa harjoitella menneitä aikamuotoja ja laajentaa sanastoa. Muista myös käyttää enemmän liittäjiä, jotta tekstisi virtaus paranee.",
+      "next_action_fi": "Harjoittele menneitä aikamuotoja ja niiden käyttöä."
+    },
+    {
+      "id": "short-4-1",
+      "taskType": "short",
+      "aihe": 4,
+      "title": "Mensaje a un amigo",
+      "titleLineRaw": "Mensaje a un amigo",
+      "answer": "Hola Jaime!  \n \nHe oído que te rompiste la pierna. ¡Qué pena! ¿Te duele mucho? ¿Ya has pedido una cita al \nmédico?  \n \nAhora estoy cerca de tu casa y puedo traer algo para ti si necesitas por ejemplo \nmedicamento. Llamáme si quieres algo.  \n \nOjalá que te sientas mejor pronto.  \n \n Besos,  \n \n[Nimi]",
+      "officialScore": 33,
+      "officialRationale": " Kirjoittaja pystyy välittämään viestin selkeästi, luontevasti ja sujuvasti. \n Kirjoittajan teksti vastaa lähes täysin tehtävänantoa. \n Kirjoittaja käyttää monipuolista, tilanteeseen sopivaa ilmaisuvarastoa ja hallitsee sen \nerittäin hyvin. Hän tekee kuitenkin joitakin virheitä. Esim. que te has roto la pierna/ \nque la semana pasada te rompiste la pierna – He oído que te rompiste la pierna \n(aloittaa perfektilla jatkaa preteritillä); llevar – traer + pronomiini - prepositio, puedo \nllevarte algo – puedo traer algo para ti",
+      "charCount": 228,
+      "penalty": 0,
+      "engineRaw20": 15,
+      "predYtl": 24.8,
+      "diff": -8.2,
+      "dims": {
+        "viestinnallisyys": 4,
+        "kielen_rakenteet": 3,
+        "sanasto": 4,
+        "kokonaisuus": 4
+      },
+      "band": "E",
+      "overall_feedback_fi": "On hienoa, että käytit ystävällisiä ja huolehtivia ilmauksia viestissäsi. Seuraavaksi voit harjoitella menneitä aikoja ja niiden käyttöä viesteissä. Tämä parantaa viestintääsi entisestään.",
+      "next_action_fi": "Harjoittele menneitä aikoja ja niiden käyttöä viesteissä."
+    },
+    {
+      "id": "short-2-2",
+      "taskType": "short",
+      "aihe": 2,
+      "title": "Una nueva vecina",
+      "titleLineRaw": "Una nueva vecina",
+      "answer": "Querida vecina: \nMe llamo Erin y vivo en la casa al lado de la tuya. Creo que estamos de la misma edad y sé \nque eres de México. Estoy aprendiendo español y puedo hablarlo un poco. Si quieres, puedo \nenseñarte la ciudad y todos mis lugares favoritos. \nSaludos,  \n[Nimi]",
+      "officialScore": 31,
+      "officialRationale": " Kirjoittaja pystyy välittämään viestin selkeästi, luontevasti ja sujuvasti. Tekstissä \nkaivataan silti joitakin kohteliaisuusfraaseja, jotka auttaisivat myös ymmärtämään \nviestin kirjoittamisen motiivit (esim. Bienvenida al barrio). \n Kirjoittaja käyttää laajaa, monipuolista ja tilanteeseen sopivaa ilmaisuvarastoa ja \nhallitsee sen erittäin hyvin. Hän tekee ainoastaan yhden virheen: estamos - somos de \nla misma edad. \n Kirjoittajan teksti vastaa lähes täysin tehtävänantoa. Kirjoittaja ei mainitse \ntekstissään mitään samanikäisistä nuorista. \n Kirjoittaja käyttää laajaa, monipuolista ja tilanteeseen sopivaa ilmaisuvarastoa ja \nhallitsee sen erittäin hyvin.",
+      "charCount": 215,
+      "penalty": 0,
+      "engineRaw20": 13,
+      "predYtl": 21.5,
+      "diff": -9.5,
+      "dims": {
+        "viestinnallisyys": 4,
+        "kielen_rakenteet": 3,
+        "sanasto": 3,
+        "kokonaisuus": 3
+      },
+      "band": "E",
+      "overall_feedback_fi": "On hienoa, että esittelit itsesi ja tarjosit apua kaupungin tutkimisessa. Seuraavaksi kannattaa keskittyä aikamuotojen tarkkuuteen ja laajentaa sanastoa, erityisesti aiheeseen liittyvissä sanoissa. Jatka harjoittelua, se auttaa sinua kehittymään!",
+      "next_action_fi": "Harjoittele ser- ja estar-verbin käyttöä eri tilanteissa."
+    },
+    {
+      "id": "short-2-3",
+      "taskType": "short",
+      "aihe": 2,
+      "title": "Una nueva vecina",
+      "titleLineRaw": "Una nueva vecina",
+      "answer": "¡Hola! \n¿Te has mudado a Finlandia? Soy tu nueva vecina. He vivido toda mi vida aquí en Finlandia y \npor eso podría mostrarte unos lugares que me gustan en esta ciudad. Además, mi madre me \ndijo que yo y tú somosla misma edad. Por lo tanto, podemos salir con mis amigos también. \nSaludos, \n[Nimi]",
+      "officialScore": 31,
+      "officialRationale": " Kirjoittaja käyttää laajaa, monipuolista ja tilanteeseen sopivaa ilmaisuvarastoa ja \nhallitsee sen erittäin hyvin. \n Kirjoittaja pystyy välittämään viestin selkeästi, luontevasti ja sujuvasti. \n Kirjoittaja tekee joitakin virheitä, jotka eivät kuitenkaan vaikeuta viestin välittymistä. \nEsim. Siempre he vivido aquí.../ Vivo aquí desde (hace)... (järkevämpi kuin sanoa \nSuomessa) ; ser de – ser (somos de la misma edad – somos la misma edad). \n Kirjoittaja käyttää tilanteeseen ja tekstiin sopivaa perfektiä, mutta virkettä pitäisi \njatkaa edelleen perfektillä. Jos vaihdetaan preteritiin, tarvitaan ajanmääre. Esim. Mi \nmadre (también) me ha dicho/me dijo ayer que... - Mi madre me dijo que... \n Tekstissä kaivataan joitakin kohteliaisuusilmaisuja, esim. Bienvenida a Finlandia, Si \nquieres/Si te apetece – Por lo tanto, podemos salir... Lisäksi, ilmaisu “yo y tú” on \nepäkohtelias (sen sijaan kuin ”tú y yo). \n Tekstin tyylissä ja kielimuodossa on epäjohdonmukaisuuksia. Esim. Querida vecina: \n... Saludos - ¡Hola! ... Saludos.",
+      "charCount": 238,
+      "penalty": 0,
+      "engineRaw20": 13,
+      "predYtl": 21.5,
+      "diff": -9.5,
+      "dims": {
+        "viestinnallisyys": 4,
+        "kielen_rakenteet": 3,
+        "sanasto": 3,
+        "kokonaisuus": 3
+      },
+      "band": "E",
+      "overall_feedback_fi": "On hienoa, että esittelit itsesi ja kerroit, että voitte tavata ystäviesi kanssa. Seuraavaksi kannattaa keskittyä verbimuotojen tarkkuuteen ja sanavalintoihin, jotta viesti olisi vielä selkeämpi. Muista myös tarkistaa, että lauseet virtaavat hyvin yhteen.",
+      "next_action_fi": "Harjoittele verbimuotojen käyttöä ja tarkista sanavalinnat."
+    },
+    {
+      "id": "short-2-4",
+      "taskType": "short",
+      "aihe": 2,
+      "title": "Una nueva vecina",
+      "titleLineRaw": "Una nueva vecina",
+      "answer": "Hola,  \n \nVivo al lado de vuestra familia. Si quieres, te podría presentar tu nuevo barrio y mis lugares \nfavoritos.  \nTambién tengo unos amigos que podrías gustar a conocer. Son muy simpáticos. Cuéntame si \nte interesa y vamos a hacer un plan.  \n \n ¡Ojalá que te gustará vivir aquí!  \n \n[Nimi]",
+      "officialScore": 29,
+      "officialRationale": " KirjoittaJa pystyy välittämään viestin selkeästi, luontevasti ja sujuvasti. Hänen \ntekstiään on helppo lukea. \n Kirjoittajan teksti vastaa täysin tehtävänantoa ja hän käsittelee aihetta \nmonipuolisesti. \n Kirjoittaja käyttää tilanteeseen sopivaa ilmaisuvarastoa ja hallitsee sen erittäin hyvin. \nHän tekee joitakin virheitä. Esim. mostrar/enseñar – presentar tu nuevo barrio; te \npodría gustar - tengo unos amigos que podrías gustar a conocer; Ojalá que te guste - \ngustará.",
+      "charCount": 230,
+      "penalty": 0,
+      "engineRaw20": 13,
+      "predYtl": 21.5,
+      "diff": -7.5,
+      "dims": {
+        "viestinnallisyys": 4,
+        "kielen_rakenteet": 3,
+        "sanasto": 3,
+        "kokonaisuus": 3
+      },
+      "band": "E",
+      "overall_feedback_fi": "Hyvin tehty esittely ja ystävällinen sävy. Voisit kuitenkin tarkistaa verbimuotoja ja sanavalintoja, jotta viestisi olisi vielä selkeämpi. Harjoittele myös liittämistä ja virtausta tekstissäsi, jotta se olisi sujuvampaa.",
+      "next_action_fi": "Harjoittele verbimuotojen käyttöä, erityisesti subjunktiivissa."
+    },
+    {
+      "id": "short-4-2",
+      "taskType": "short",
+      "aihe": 4,
+      "title": "Mensaje a un amigo",
+      "titleLineRaw": "Mensaje a un amigo",
+      "answer": "¡Hola Maria! \n¿Qué tal? Espero que todo vaya bien. \nJuan me contó que algún mal te había ocurrido. Cada persona tiene tiempos difíciles en su \nvida. Y espero que sepas yo siempre puedo escucharte. Tú eres muy amable y te quiero un \nmontón. \n¿Querrías tomar un café? \nBesos,  \n[Nimi]",
+      "officialScore": 29,
+      "officialRationale": " Kirjoittaja pystyy välittämään viestin luontevasti. \n Kirjoittajan teksti vastaa täysin tehtävänantoa. \n Kirjoittaja käyttää monipuolista, tilanteeseen sopivaa ilmaisuvarastoa ja hallitsee sen \nhyvin. On kuitenkin virkkeitä, joiden merkitys avautuu hieman heikosti tai virkkeet \neivät ole idiomaattisia. Esim. algo malo – algún mal; Todo el mundo pasa por \nmomentos difíciles – Cada persona tiene tiempos difíciles; Eres una gran/ buena \npersona – amable",
+      "charCount": 226,
+      "penalty": 0,
+      "engineRaw20": 14,
+      "predYtl": 23.1,
+      "diff": -5.9,
+      "dims": {
+        "viestinnallisyys": 4,
+        "kielen_rakenteet": 3,
+        "sanasto": 4,
+        "kokonaisuus": 3
+      },
+      "band": "E",
+      "overall_feedback_fi": "Olet käyttänyt hyviä ystävällisiä ilmauksia, kuten 'te quiero un montón'. Seuraavaksi kannattaa keskittyä menneisyyden aikamuotojen käyttöön ja varmistaa, että ne ovat oikein. Yritä myös käyttää monipuolisempia liitännäisiä viestin sujuvuuden parantamiseksi.",
+      "next_action_fi": "Harjoittele menneisyyden aikamuotojen käyttöä."
+    },
+    {
+      "id": "short-2-5",
+      "taskType": "short",
+      "aihe": 2,
+      "title": "Una nueva vecina",
+      "titleLineRaw": "Una nueva vecina",
+      "answer": "!Hola! \n¡Bienvenido a este barrio! Soy tu vecina y vivo a la derecha de tu apartamiento con mi \nperro. Pienso que estaría super aconocernos. Puedo recomendar mis lugares favoritos en \nesta ciudad eintroducir mis amigos de la misma edad que nosotras.  \n¿Vamos al café algún día? \nBesos,  \n[Nimi]",
+      "officialScore": 27,
+      "officialRationale": " Kirjoittaja pystyy välittämään viestin suhteellisen luontevasti. \n Teksti on hieman luettelomainen, mikä heikentää sen luettavuutta. \n Kirjoittaja käyttää riittävää, pääosin tilanteeseen sopivaa ilmaisuvarastoa ja hallitsee \nsen suhteellisen hyvin, mutta tekee joitakin virheitä. Esim. apartamento-sanan \noikeinkirjoitus (kokelaalla “apartamiento”), ylimääräinen ja virheellinen a-prepositio \n\nkohdassa “a conocernos”, virheellinen maskuliinimuoto kohdassa “bienvenido a este \nbarrio”, vaikka otsikossa puhutaan feminiinissä “tu nueva vecina”. \n Kirjoittaja käyttää anglisismia “introducir”, joka ei sovi tähän yhteyteen (introducir = \nottaa käyttöön; työntää sisään; vrt. presentar = esitellä) ja hankaloittaa \nymmärtämistä.",
+      "charCount": 239,
+      "penalty": 0,
+      "engineRaw20": 13,
+      "predYtl": 21.5,
+      "diff": -5.6,
+      "dims": {
+        "viestinnallisyys": 4,
+        "kielen_rakenteet": 3,
+        "sanasto": 3,
+        "kokonaisuus": 3
+      },
+      "band": "E",
+      "overall_feedback_fi": "On hienoa, että esittelit itsesi ja kutsuit naapurisi kahville. Seuraavaksi kannattaa keskittyä menneen ajan rakenteiden käyttöön ja sanaston tarkkuuteen. Yritä käyttää enemmän erilaisia liittäjiä tekstin sujuvuuden parantamiseksi.",
+      "next_action_fi": "Harjoittele menneen ajan rakenteita ja niiden käyttöä."
+    },
+    {
+      "id": "short-1-3",
+      "taskType": "short",
+      "aihe": 1,
+      "title": "En los probadores",
+      "titleLineRaw": "En los probadores",
+      "answer": "¡Hola!  \n \nSoy Oskari y hoy estaba de compras y encontré tu diario en el probador. Hay tu email en la \npagína primera y decidió a mandar un mensaje. Tengo el diario y te lo podría enviar por  \ncorreo o podríamos encontrarnos si vivimos cerca.  \n \n Espero que veas este mensaje.  \n \nSaludos,  \n \n[Nimi]",
+      "officialScore": 27,
+      "officialRationale": " Kirjoittaja pystyy välittämään viestin suhteellisen luontevasti ja hänen tekstiään on \nkohtalaisen helppo lukea. \n Kirjoittaja käyttää riittävää, tavallista, pääosin tilanteeseen sopivaa ilmaisuvarastoa \nja hallitsee sen suhteellisen hyvin, mutta tekee joitakin virheitä. Esim. Tu (dirección \nde) e-mail está... - Hay tu email; y he decidido mandarte - (yo) decidió a mandar.",
+      "charCount": 231,
+      "penalty": 0,
+      "engineRaw20": 13,
+      "predYtl": 21.5,
+      "diff": -5.6,
+      "dims": {
+        "viestinnallisyys": 4,
+        "kielen_rakenteet": 3,
+        "sanasto": 3,
+        "kokonaisuus": 3
+      },
+      "band": "E",
+      "overall_feedback_fi": "Löysit hyvin tavan kertoa, mistä päiväkirja löytyi. Seuraavaksi kannattaa harjoitella menneitä aikamuotoja ja niiden käyttöä. Myös konnektoreiden monipuolisuus parantaisi tekstin sujuvuutta.",
+      "next_action_fi": "Harjoittele menneitä aikamuotoja ja niiden käyttöä."
+    },
+    {
+      "id": "short-2-6",
+      "taskType": "short",
+      "aihe": 2,
+      "title": "Una nueva vecina",
+      "titleLineRaw": "Una nueva vecina",
+      "answer": "¡Hola! \n \n¡Me llamo Meeri y soy tu vecina! Encantada. Hay muchos lugares cerca que pienso que \nestán muy bonitos. Por ejemplo, un parque natural y una montaña alta. ¿Tienes tiempo para \nir conmigo? Creo que sería buen para nuestros cuerpos. ¿Qué te parece?",
+      "officialScore": 25,
+      "officialRationale": " Kirjoittaja pystyy välittämään viestin suhteellisen luontevasti ja hänen tekstiään on \nkohtalaisen helppo lukea. \n Kirjoittaja käyttää pääosin tilanteeseen sopivaa ilmaisuvarastoa ja hallitsee sen \nsuhteellisen hyvin, mutta tekee joitakin virheitä. \n Kirjoittaja tekee joitakin virheitä ja tekstin lopussa on virke, jonka merkitys ei \navaudu: Creo que sería buen para nuestros cuerpos (?) \n\n Tekstistä puuttuu viestin lopetus.",
+      "charCount": 209,
+      "penalty": 0,
+      "engineRaw20": 13,
+      "predYtl": 21.5,
+      "diff": -3.6,
+      "dims": {
+        "viestinnallisyys": 4,
+        "kielen_rakenteet": 3,
+        "sanasto": 3,
+        "kokonaisuus": 3
+      },
+      "band": "E",
+      "overall_feedback_fi": "On hienoa, että esittelit itsesi ja kerroit kiinnostavista paikoista. Seuraavaksi kannattaa kiinnittää huomiota verbimuotojen tarkkuuteen ja laajentaa sanastoa. Harjoittele myös liitännäisten käyttöä, jotta tekstisi virtaavuus paranee entisestään.",
+      "next_action_fi": "Harjoittele verbimuotojen käyttöä ja tarkista niiden oikea muoto."
+    },
+    {
+      "id": "short-2-7",
+      "taskType": "short",
+      "aihe": 2,
+      "title": "Una nueva vecina",
+      "titleLineRaw": "Una nueva vecina",
+      "answer": "¡Bienvenidos a la España! Si quieres te puedo mostrar los lugares más famosos de \nnuestra ciudad. He vivido aquí por diez años y \nconozco todos los mejores sitios. Támbien puedes conocer a mis amigos españoles. \n¡Besos!",
+      "officialScore": 25,
+      "officialRationale": " Kirjoittajan teksti vastaa tehtävänantoa vain pääosin ja hän käsittelee aihetta melko \nsuppeasti ja toistaa itseään. Esim. hän ei esittele itseään eikä kontekstualisoi \nkirjoittamaansa viestiä mitenkään. Tekstistä ei käy ilmi, miksi ja kenelle hän kirjoittaa \neikä kirjoittaja puhu samanikäisistä nuorista. \n Teksti ei ole täysin luonteva ja viesti ei välity lukijalle täysin selkeästi. Kirjoittaja \nkäyttää tilanteeseen pääosin sopivaa ilmaisuvarastoa ja hallitsee sen suhteellisen \nhyvin, vaikka tekee joitakin virheitä. Esim. määräinen artikkeli erisnimen yhteydessä, \n”la España”.",
+      "charCount": 181,
+      "penalty": 0,
+      "engineRaw20": 13,
+      "predYtl": 21.5,
+      "diff": -3.6,
+      "dims": {
+        "viestinnallisyys": 4,
+        "kielen_rakenteet": 3,
+        "sanasto": 3,
+        "kokonaisuus": 3
+      },
+      "band": "E",
+      "overall_feedback_fi": "On hienoa, että käytit selkeää kieltä ja esittelit itsesi hyvin. Seuraavaksi kannattaa keskittyä aikamuotojen tarkkuuteen ja sanaston monipuolisuuteen. Harjoittele myös liittämistä ja virkkeiden sujuvuutta, jotta tekstisi virtaa paremmin.",
+      "next_action_fi": "Harjoittele aikamuotojen käyttöä ja tarkista sanaston monipuolisuutta."
+    },
+    {
+      "id": "short-2-8",
+      "taskType": "short",
+      "aihe": 2,
+      "title": "Una nueva vecina",
+      "titleLineRaw": "Una nueva vecina",
+      "answer": "¡Hola! \nSoy Emilia y vivo al lado de tu casa y pienso que podríamos conocersi quieres. Hace siempre \nestoy viviendo allíasi qué puedo monstarte la ciudad. También puedo introductirtea mis \namigas que también hablan español. \nSaludos, tu vecina",
+      "officialScore": 21,
+      "officialRationale": " Kirjoittaja pystyy välittämään viestin tyydyttävästi. Hänen tekstiään on yksittäisissä \nkohdissa vaikea lukea kielellisten epätarkkuuksien vuoksi. Esim. Kirjoittaja ei hallitse \nrakennetta “hace + aika + que + prees.; Puedo recomendarte – Puedo recomendar. \n Kirjoittaja käyttää anglisismia “introducir”, joka ei sovi tähän yhteyteen (introducir = \nottaa käyttöön; työntää sisään; vrt. presentar = esitellä) ja hankaloittaa \nymmärtämistä. \n\n Tekstistä ei käy ilmi, miksi ja kenelle hän kirjoittaa. Esim. He oído que te acabas de \nmudar/ Soy tu nueva vecina tms.",
+      "charCount": 202,
+      "penalty": 0,
+      "engineRaw20": 11,
+      "predYtl": 18.2,
+      "diff": -2.8,
+      "dims": {
+        "viestinnallisyys": 3,
+        "kielen_rakenteet": 2,
+        "sanasto": 3,
+        "kokonaisuus": 3
+      },
+      "band": "M",
+      "overall_feedback_fi": "Hyvin aloitettu esittely ja ystävällinen sävy ovat hyviä. Työskentele verbien taivutusten parissa ja tarkista, että käytät oikeita muotoja. Tämä auttaa selkeyttämään viestiäsi entisestään.",
+      "next_action_fi": "Harjoittele verbien taivutuksia ja käytä oikeita muotoja."
+    },
+    {
+      "id": "short-4-3",
+      "taskType": "short",
+      "aihe": 4,
+      "title": "Mensaje a un amigo",
+      "titleLineRaw": "Un mensaje a un amigo",
+      "answer": "¡Hola Javier! ¿Cómo estás? \nMe he oigo que estás un poquito de triste. ¿Es verdad? Puedo ir a Madrid ¿si quieres?  \n¡Podemos tomaun “Facetime” antes de mi viaje! Pero piensa cosas maravillosas y no te \npreocupes. Este momento se puede parecemalpero en el futuro tienes solamente las cosas \nbuenas.",
+      "officialScore": 19,
+      "officialRationale": " Kirjoittaja pystyy välittämään viestin tyydyttävästi. \n Hän käyttää suppeaa, rajoittunutta ilmaisuvarastoa ja tekee paljon virheitä, jotka \nvaikeuttavat tekstin ymmärtämistä. Esim. He oído – Me he oigo; un poquito triste – \nun poquito de triste (un poco de-ilmaisu + substantiivi); Podemos toma – Podemos \ntomar; te puede parecer malo – se puede parece mal",
+      "charCount": 244,
+      "penalty": 0,
+      "engineRaw20": 11,
+      "predYtl": 18.2,
+      "diff": -0.8,
+      "dims": {
+        "viestinnallisyys": 3,
+        "kielen_rakenteet": 2,
+        "sanasto": 3,
+        "kokonaisuus": 3
+      },
+      "band": "M",
+      "overall_feedback_fi": "On hienoa, että osoitat ystävällisyyttä ja haluat tukea ystävääsi. Työskentele erityisesti verbien taivutusten parissa, jotta viestisi olisi selkeämpi. Muista myös käyttää enemmän sidossanoja tekstin sujuvuuden parantamiseksi.",
+      "next_action_fi": "Harjoittele verbien taivutuksia ja käytä sidossanoja."
+    },
+    {
+      "id": "short-3-1",
+      "taskType": "short",
+      "aihe": 3,
+      "title": "Un trabajador en prácticas",
+      "titleLineRaw": "Un trabajador en prácticas",
+      "answer": "Querido Miguel \nLo siento porque no estaba por tu fiesta cuando tu saldrías. Mi perro estaba enferme y me \nsera con ella. ¡Ahora ella esbien y feliz! Ojalá tu viaje de Argentina es muy fácil. \nSaludos, \n[Nimi]",
+      "officialScore": 17,
+      "officialRationale": " Kirjoittaja pystyy välittämään viestin vai epäselvästi. Yksittäisiä kohtia jää \nepäselväksi, kuten esimerkiksi kohdassa “Ojalá tu viaje de Argentina es muy fácil” , \njosta ei käy ilmi, onko joku jo matkustanut Argentiinaan vai vasta menossa sinne. \n Kirjoittajan tekstiä on monin paikoin vaikea lukea, sillä hän tekee paljon virheitä \nmyös perusrakenteissa.",
+      "charCount": 169,
+      "penalty": 0,
+      "engineRaw20": 11,
+      "predYtl": 18.2,
+      "diff": 1.2,
+      "dims": {
+        "viestinnallisyys": 3,
+        "kielen_rakenteet": 2,
+        "sanasto": 3,
+        "kokonaisuus": 3
+      },
+      "band": "M",
+      "overall_feedback_fi": "Viestisi alku on hyvä ja kohtelias. Työskentele verbien taivutusten parissa ja tarkista sanavalintasi. Tämä auttaa viestisi selkeydessä ja ymmärrettävyydessä.",
+      "next_action_fi": "Harjoittele verbien taivutuksia ja käytä preteritiä."
+    },
+    {
+      "id": "short-4-4",
+      "taskType": "short",
+      "aihe": 4,
+      "title": "Mensaje a un amigo",
+      "titleLineRaw": "Un mensaje a un amigo",
+      "answer": "¡Hola Jorge! \n¿Eres triste? Que pena. No te envidio. ¿Es tu perro muerto? Me ha encanta tu perro y estoy \nmuy triste por este nota. Lo siento, pero todo es bien. Me encantas. Quieres jugar conmigo \nmañana? \nBesos, \n[Nimi]",
+      "officialScore": 17,
+      "officialRationale": " Kirjoittaja pystyy välittämään viestin vain epäselvästi ja hänen tekstiään on monin \npaikoin vaikea lukea kielellisen epätarkkuuden takia. \n Kirjoittaa käyttää suppeaa ilmaisuvarastoa, joka ei täysin sovi kontekstiin. Esimerkiksi \nkohdat “no te envidio” ja “me encantas” eivät sovi tehtävänannon mukaiseen \nkontekstiin vaikka ne ovatkin kielellisesti oikein kirjoitettuja. \n Kirjoittaja tekee paljon virheitä myös perusrakenteissa kuten olla-verbin käytössä. \nEsim. ¿Estás triste? - ¿Eres triste?”; está bien - es bien; Me encanta/Me ha \nencantado tu perro - Me ha encanta tu perro.",
+      "charCount": 178,
+      "penalty": 0,
+      "engineRaw20": 11,
+      "predYtl": 18.2,
+      "diff": 1.2,
+      "dims": {
+        "viestinnallisyys": 3,
+        "kielen_rakenteet": 2,
+        "sanasto": 3,
+        "kokonaisuus": 3
+      },
+      "band": "M",
+      "overall_feedback_fi": "Hyvin osoitettu myötätunto ystävällesi. Seuraavaksi kannattaa keskittyä verbien oikeaan taivutukseen ja sanavalintoihin, jotta viestisi olisi selkeämpi. Harjoittele myös lauseiden yhdistämistä sujuvammaksi.",
+      "next_action_fi": "Harjoittele verbien taivutuksia ja oikeita sanavalintoja."
+    },
+    {
+      "id": "short-3-2",
+      "taskType": "short",
+      "aihe": 3,
+      "title": "Un trabajador en prácticas",
+      "titleLineRaw": "Un trabajador en prácticas",
+      "answer": "Querido Miguel, \nLo siento me no bailar con tu en la fiesta. Mi coche no funcionar porque esta mucho nueve \nen las calles. \nMe no escribiendo una mensaje porque mi telefonotambien no funcionar. ¿Mala suerte, \nno? \n¡Muchos gracias por tú ayudar en el curso! \n  \nSaludos, \nTú amiga, Maria",
+      "officialScore": 15,
+      "officialRationale": " Kirjoittaja pystyy välittämään viestin heikosti ja merkitys jää monin paikoin \nepäselväksi. \n Hänen tekstiään on vaikea lukea, sillä kirjoittaja tekee erittäin paljon virheitä myös \nperusrakenteissa. Kirjoittaja ei esimerkiksi taivuta verbejä eikä ymmärrä eroa \npronominien yo ja me välillä.",
+      "charCount": 229,
+      "penalty": 0,
+      "engineRaw20": 11,
+      "predYtl": 18.2,
+      "diff": 3.2,
+      "dims": {
+        "viestinnallisyys": 3,
+        "kielen_rakenteet": 2,
+        "sanasto": 3,
+        "kokonaisuus": 3
+      },
+      "band": "M",
+      "overall_feedback_fi": "Kirjoituksessa on hyvä kohteliaisuus ja selkeä viestin tarkoitus. Työskentele verbien taivutusten parissa, jotta lauseet olisivat ymmärrettävämpiä. Huomioi myös sanavalintojen tarkkuus, erityisesti tärkeissä kohdissa.",
+      "next_action_fi": "Harjoittele verbien taivutuksia ja käytä oikeita muotoja."
+    },
+    {
+      "id": "short-3-3",
+      "taskType": "short",
+      "aihe": 3,
+      "title": "Un trabajador en prácticas",
+      "titleLineRaw": "Un trabajador en prácticas",
+      "answer": "Querido Miguel: \nCreo, que tienes interesante y divertido mes con nosotras. estoy triste porque no estaba en \ntus fiesta de adios pero yoimportante tiempo con doctor. Quero tu tienes un vuelto buen, \ncuandote vetes a casa. \nSaludos, \n[Nimi]",
+      "officialScore": 15,
+      "officialRationale": " Kirjoittaja pystyy välittämään viestin heikosti ja merkitys jää monin paikoin \nepäselväksi. Esimerkiksi kohdassa “Creo,que tienes interesante y divertido mes con \nnosotras” ei käy ilmi, että kyse on tehtävänannon mukaan menneestä tapahtumasta \n(harjoittelija on viettänyt kuukauden luokan kanssa ja hänelle on sen jälkeen \njärjestetty läksiäisjuhla). \n Hänen tekstiään on vaikea lukea, sillä kirjoittaja tekee erittäin paljon virheitä myös \nperusrakenteissa kuten verbien taivutuksessa (“quero”, “te vetes”) tai verbiä ei ole \nkirjoitettu lainkaan (“yo importante tiempo con doctor”).",
+      "charCount": 198,
+      "penalty": 0,
+      "engineRaw20": 11,
+      "predYtl": 18.2,
+      "diff": 3.2,
+      "dims": {
+        "viestinnallisyys": 3,
+        "kielen_rakenteet": 2,
+        "sanasto": 3,
+        "kokonaisuus": 3
+      },
+      "band": "M",
+      "overall_feedback_fi": "Olet käyttänyt kohteliasta kieltä ja avannut viestin hyvin. Seuraavaksi kannattaa keskittyä verbien taivutuksiin ja oikeisiin muotoihin, jotta viestisi olisi selkeämpi. Harjoittele myös lauseiden yhdistämistä sujuvammaksi tekstiksi.",
+      "next_action_fi": "Harjoittele verbien taivutuksia ja subjunktiivin käyttöä."
+    },
+    {
+      "id": "long-1-1",
+      "taskType": "long",
+      "aihe": 1,
+      "title": "#pequeñosactos #grandescambios",
+      "titleLineRaw": "#pequeñosactos #grandescambios",
+      "answer": "Hola a todos!  \n \nÚltimamente me he dado cuenta de que mucha gente solo habla sobre cosas que le \nmolestan en nuestra sociedad perohace nada. Tengo un consejo para todos ellos:  \nNo tienes que hacer algo gigante para mejorar el mundo. Por ejemplo, si escuchas que \n\nalguien dice algo discriminante, puedes decir que no es bien porque lo que dijo puede hacer \ndaño.  \n \nTodos nosotros queremos cambiar el mundo, pero es importante que cambiemos las \npalabras y los tuites por las acciones. No es difícil.  \n \n Besos,  \n Alicia",
+      "officialScore": 66,
+      "officialRationale": " Kirjoittaja välittää viestin selkeästi, luontevasti ja sujuvasti. \n Teksti on kielellisesti tarkkaa ja kirjoittaja hallitsee käyttämänsä ilmaisuvaraston \nerittäin hyvin. \n Kirjoittaja käsittelee aihetta monipuolisesti ja tekstin erityinen ansio on sen syvyys. \n Tekstissä on joitakin pieniä virheitä. Esim. pero no hace nada – pero hace nada; no \nestá bien – no es bien \n Espanjassa kaksoispisteen jälkeen seuraava sana kirjoitetaan pienellä alkukirjaimella. \nEsim. Tengo un consejo para todos ellos: no tienes que...",
+      "charCount": 417,
+      "penalty": 0,
+      "engineRaw20": 13,
+      "predYtl": 42.9,
+      "diff": -23.1,
+      "dims": {
+        "viestinnallisyys": 4,
+        "kielen_rakenteet": 3,
+        "sanasto": 3,
+        "kokonaisuus": 3
+      },
+      "band": "E",
+      "overall_feedback_fi": "Olet hyvin tuonut esiin, että pienet teot voivat muuttaa maailmaa. Seuraavaksi voit keskittyä menneiden aikamuotojen käyttöön ja konnektoreiden monipuolistamiseen. Tämä auttaa tekemään tekstistä sujuvampaa ja monipuolisempaa.",
+      "next_action_fi": "Harjoittele menneitä aikamuotoja, kuten pretérito indefinido."
+    },
+    {
+      "id": "long-1-2",
+      "taskType": "long",
+      "aihe": 1,
+      "title": "#pequeñosactos #grandescambios",
+      "titleLineRaw": "#pequeñosactos #grandescambios",
+      "answer": "Aunque a veces una puede pensar que es muy difícil hacer un cambio, en la actualidad hay \nmuchas cosas que todos pueden hacer para mejorar el mundo. La primera cosa que yo hice \nfue el reciclaje de basura. Separar la basura fue fácil, así que decidí renunciar a comprarme \nun coche. En cambio, empecé a usar el transporte público: el abono transporte es bastante \nbarato y muy conveniente. Además, ya no como carne y prefiero ducharme en vez de tomar",
+      "officialScore": 62,
+      "officialRationale": " Kirjoittaja pystyy välittämään viestin selkeästi, luontevasti ja sujuvasti. Tekstissä on \nsyvyyttä. \n Hän käsittelee aihetta monipuolisesti tuoden esiin uusia näkökulmia koko tekstin \najan. \n Kirjoittaja käyttää monipuolista, tilanteeseen sopivaa ilmaisuvarastoa ja hallitsee sen \nhyvin. \n\n Tekstissä on pieniä epäjohdonmukaisuuksia, jotka hankaloittavat ymmärtämistä \njonkin verran. Esim. Como separar la basura fue fácil, decidí hacer más cosas/tomar \nmás acciones, como renunciar a... - Separar la basura fue fácil, así que decidí \nrenunciar a comprarme un coche.",
+      "charCount": 367,
+      "penalty": 0,
+      "engineRaw20": 13,
+      "predYtl": 42.9,
+      "diff": -19.1,
+      "dims": {
+        "viestinnallisyys": 4,
+        "kielen_rakenteet": 3,
+        "sanasto": 3,
+        "kokonaisuus": 3
+      },
+      "band": "E",
+      "overall_feedback_fi": "On hienoa, että olet maininnut konkreettisia tekoja, kuten kierrätyksen ja julkisen liikenteen käytön. Seuraavaksi kannattaa keskittyä menneisyyden aikamuotojen tarkkuuteen ja konnektoreiden monipuoliseen käyttöön, jotta tekstisi virta olisi sujuvampaa.",
+      "next_action_fi": "Harjoittele menneisyyden aikamuotojen käyttöä tarkemmin."
+    },
+    {
+      "id": "long-3-1",
+      "taskType": "long",
+      "aihe": 3,
+      "title": "Maneras de vivir",
+      "titleLineRaw": "Maneras de vivir",
+      "answer": "Hola todos! \nPienso que estaría bueno vivir con tus padres cuando estudias, para que no tengas que \ntrabajar tanto y puedas concentrarte en tus estudios. Sin embargo, a veces es mejor vivir \nsolo síno te llevas bien con tus padres. Yo vivo con mis padres pero me mudaré en \nprimavera. Cuando vives solo, hay más responsibilidad pero también privacidad. No me \ngustaría vivir con mis amigos porque necesito mucha privacidad, pero para algunos está \nbien.  \nSí viviera con amigos, me quería un piso grande para que no sea estrecho.",
+      "officialScore": 62,
+      "officialRationale": " Kirjoittaja pystyy välittämään viestin selkeästi ja luontevasti. Hänen tekstiään on \nhelppo lukea. \n Tekstissä on joitakin virheitä. Esim. Si viviera con mis amigos, me gustaría \n(konditionaali) tener/ que fuera un piso grande - Sí viviera con amigos, me quería... \n Tekstin viimeinen virke vaatii pohtimista, jotta sen merkitys avautuu: para tener \nmucho/suficiente espacio (para todos).",
+      "charCount": 433,
+      "penalty": 0,
+      "engineRaw20": 13,
+      "predYtl": 42.9,
+      "diff": -19.1,
+      "dims": {
+        "viestinnallisyys": 4,
+        "kielen_rakenteet": 3,
+        "sanasto": 3,
+        "kokonaisuus": 3
+      },
+      "band": "E",
+      "overall_feedback_fi": "Kirjoituksessa on hyviä ajatuksia asumismuodoista ja käytät selkeää kieltä. Seuraavaksi kannattaa harjoitella menneitä aikamuotoja ja niiden käyttöä. Myös konnektoreiden monipuolisuus voisi parantaa tekstin sujuvuutta.",
+      "next_action_fi": "Harjoittele menneiden aikamuotojen käyttöä ja niiden yhdistämistä."
+    },
+    {
+      "id": "long-3-2",
+      "taskType": "long",
+      "aihe": 3,
+      "title": "Maneras de vivir",
+      "titleLineRaw": "Maneras de vivir",
+      "answer": "¡Guau, que interesante discurso! Esto ha sido divertido de leer. Vivo con mis padres y me \ngusta hasta ahora. Por otro lado, me gustaría mudarme pronto a vivir solo. No sé cuál es la \nmejor manera de vivir, porque depende de cada persona y de la situación. Creo que me \ndisfrutaría mucho vivir solo. Vivir con amigos puede ser agradable al principio, pero no por \nmucho tiempo, porque me encanta estar en casa en paz.  \n \n ¡Espero poder leer más de sus experiencias!",
+      "officialScore": 58,
+      "officialRationale": " Kirjoittaja pystyy välittämään viestin selkeästi, luontevasti ja sujuvasti. Hänen \ntekstiään on helppo lukea. Kuitenkin tekstin toinen lause on hieman irrallinen, eikä \nlukijalle käy ilmi, mikä tai miksi oli hauskaa lukea. \n Kirjoittajan teksti vastaa hyvin tehtävänantoa, mutta hän ei käsittele aihetta \nmonipuolisesti vaan toistaa samaa ajatusta läpi tekstin lisäämättä juurikaan mitään \nuutta jo aiemmin sanomaansa. \n Tekstissä on vain vähän kielioppivirheitä. Esim. Creo que (yo) disfrutaría mucho \nviviendo(/vivir) solo - Creo que me disfrutaría. \n Painomerkkien perussäännöt on syytä hallita, jotta tekstin luettavuus ei kärsi. Esim. \nkysymys- ja huudahdussanoihin tulevat painomerkit (qué interesante – que \ninteresante).",
+      "charCount": 376,
+      "penalty": 0,
+      "engineRaw20": 13,
+      "predYtl": 42.9,
+      "diff": -15.1,
+      "dims": {
+        "viestinnallisyys": 4,
+        "kielen_rakenteet": 3,
+        "sanasto": 3,
+        "kokonaisuus": 3
+      },
+      "band": "E",
+      "overall_feedback_fi": "Olet käyttänyt hyviä konnektoreita, mikä tekee tekstistä sujuvampaa. Seuraavaksi voit harjoitella menneitä aikamuotoja ja niiden käyttöä. Myös aiheeseen liittyvän sanaston laajentaminen auttaisi viestin selkeydessä.",
+      "next_action_fi": "Harjoittele menneitä aikamuotoja ja niiden käyttöä."
+    },
+    {
+      "id": "long-3-3",
+      "taskType": "long",
+      "aihe": 3,
+      "title": "Maneras de vivir",
+      "titleLineRaw": "Maneras de vivir",
+      "answer": "¡Hola a todos! \nCreo que ambos las opciones tienen ventajas y desventajas y en mi opinión quien es mejor \ndepende mucho de tu situación. Si vives con tu familia, no tienes que por ejemplo pagar el \nalquiler. Sin embargo, no tienes tanta libertad y tranquilidad como si vivieras solo. Si tienes \nun trabajo y eres independiente, pienso que es una buena idea mudarte a vivir solo o con un \namigo o una amiga.",
+      "officialScore": 58,
+      "officialRationale": " Kirjoittajan tekstiä on helppo lukea ja viesti välittyy selkeästi, mutta teksti ei ole \ntäysin sujuvaa pienten kielellisten epätarkkuuksien vuoksi. Esim. ”ambos las \nopciones”. Virheellinen kysymyspronominin valinta (quién - cuál) kohdassa “en mi \nopinión quienes mejor depende mucho de tu situación” vähentää sujuvuttaa, sillä \nlukijalle tulee käsitys, että puhutaankin jostakin henkilöstä. \n Kirjoittaja ei hyvästele lukijoitaan tekstin lopussa, vaikka aloitus (hola a todos) ja \ntehtävänanto antavat ymmärtää, että kirjoitus osoitetaan tietylle lukijakunnalle. \n Välimerkkien käyttö (erityisesti pilkkujen puuttuminen monin paikoin) vähentää \ntekstin sujuvuutta.",
+      "charCount": 329,
+      "penalty": 0,
+      "engineRaw20": 13,
+      "predYtl": 42.9,
+      "diff": -15.1,
+      "dims": {
+        "viestinnallisyys": 4,
+        "kielen_rakenteet": 3,
+        "sanasto": 3,
+        "kokonaisuus": 3
+      },
+      "band": "E",
+      "overall_feedback_fi": "Kirjoituksesi on selkeä ja esität hyviä näkemyksiä asumismuodoista. Seuraavaksi voit parantaa kielioppia ja käyttää enemmän erilaisia aikamuotoja. Yhdistäviä sanoja voisi myös lisätä, jotta teksti virtaa paremmin.",
+      "next_action_fi": "Harjoittele aikamuotojen käyttöä, erityisesti subjunktiivin ja imperfektin."
+    },
+    {
+      "id": "long-4-1",
+      "taskType": "long",
+      "aihe": 4,
+      "title": "Un buen sitio para visitar",
+      "titleLineRaw": "Un buen sitio para visitar",
+      "answer": "La catedral de Turku y la plaza en frente son sitiostienes que visitar absolutamente. La \ncatedral es muy vieja y tiene muchos cuentos emocionanteslos guías gustan contar. Si te \ninteresa la historia puedes visitar los mercados medievales que organizan en la plaza. La \n\nrecomiendo durante todas las estaciones del año. Antes de Navidad llevan un árbol enorme \ncon ornamentos y durante verano tiene puestos de cerveza en frente de la catedral. Allí \npuede tomar un poco y disfrutar de las vistas de la ciudad y la ría Aura.",
+      "officialScore": 54,
+      "officialRationale": " Kirjoittaja välittää viestin kohtalaisen selkeästi ja suhteellisen luontevasti. \n Kirjoittaja hallitsee käyttämänsä ilmaisuvaraston suhteellisen hyvin, mutta \nesimerkiksi relatiivipronomini puuttuu joissain kohdissa (“son sitios tienes que \nvisitar”). \n Tekstissä on joitakin virheitä. Esim. Hay muchas historias sobre la catedral – La \ncatedral (...) tiene cuentos; a los guías les gusta contar (los cuentos) – cuentos \nemocionantes los guías gustan contar; durante el verano haypuestos... – durante \nverano tiene puestos...",
+      "charCount": 430,
+      "penalty": 0,
+      "engineRaw20": 13,
+      "predYtl": 42.9,
+      "diff": -11.1,
+      "dims": {
+        "viestinnallisyys": 4,
+        "kielen_rakenteet": 3,
+        "sanasto": 3,
+        "kokonaisuus": 3
+      },
+      "band": "E",
+      "overall_feedback_fi": "Catedral de Turku ja sen ympäristö on kuvattu hyvin. Harjoittele menneitä aikamuotoja ja lisää yhdistäviä sanoja, jotta tekstisi virtaus paranee.",
+      "next_action_fi": "Harjoittele menneitä aikamuotoja ja niiden käyttöä."
+    },
+    {
+      "id": "long-1-3",
+      "taskType": "long",
+      "aihe": 1,
+      "title": "#pequeñosactos #grandescambios",
+      "titleLineRaw": "#pequeñosactos #grandescambios",
+      "answer": "¡Hola todos! \nTus maneras para cambiar el mundo sueñan muy bonitas e interesantes. Me parece que \ncada persona tiene sus propias maneras para hacer eso y yo no soy una excepción. \nA mí me gusta cambiar las perspectivas negativas de la gente. Aquí en Finlandia, nuestros \nproblemas son muy pequeños y es importante recordarlo. Además, intento cuidar al \nmedioambiente: por ejemplo separo la basura y suelo viajar en elautobús. \nLas maneras no tienen que ser grandes. Cada manera es un cambio interesante para el \nmundo y para la gente.",
+      "officialScore": 54,
+      "officialRationale": "– Kirjoittajan teksti vastaa hyvin tehtävänantoa. \n– Kirjoittaja pystyy välittämäään viestin suhteellisen luontevasti. Sanan “manera” \nkäyttö ei ole kovin luontevaa tekstissä, ja se toistuu läpi kirjoituksen. Luontevuutta ja \nsujuvuutta vähäntää myös se, että tekstistä ei käy ilmi, kenelle kirjoittaa osoittaa \ntekstinsä. Yhdelle (“tus maneras”) vai usealle (“hola todos”) vastaanottajalle.",
+      "charCount": 439,
+      "penalty": 0,
+      "engineRaw20": 13,
+      "predYtl": 42.9,
+      "diff": -11.1,
+      "dims": {
+        "viestinnallisyys": 4,
+        "kielen_rakenteet": 3,
+        "sanasto": 3,
+        "kokonaisuus": 3
+      },
+      "band": "E",
+      "overall_feedback_fi": "On hienoa, että tuot esiin positiivista ajattelua ihmisten näkemyksistä. Seuraavaksi kannattaa keskittyä menneen ajan rakenteisiin ja niiden käyttöön. Lisäksi voit kokeilla käyttää enemmän aiheeseen liittyvää sanastoa, jotta viestisi olisi vieläkin vahvempi.",
+      "next_action_fi": "Harjoittele menneen ajan käyttöä, erityisesti pretérito."
+    },
+    {
+      "id": "long-3-4",
+      "taskType": "long",
+      "aihe": 3,
+      "title": "Maneras de vivir",
+      "titleLineRaw": "Maneras de vivir",
+      "answer": "¡Hola! \n\nEn mi opinión, la mejor manera de vivir es vivir solo. Cuando vives solo, puedes hacer que \nquieres cuando quieres. Tienes libertad que no tienes enla misma manera cuando vives con \ntus padres o con un compañero de piso. Nadie te dice que tienes que hacer algo, pero \ntampoco nadie te ayuda con las tareas del hogar, por ejemplo. Tienes que cocinar, limpiar y \nhacer las compras. Si eres un estudiante como yo, no es fácil hacer todo solo. En mi opinión, \nla mejor cosa cuando vives solo es la independencia. \nSaludos, [nimi]",
+      "officialScore": 54,
+      "officialRationale": " Kirjoittaja pystyy välittämään viestin kohtalaisen selkeästi ja hänen tekstiään on \nkohtalaisen helppo lukea. \n Kirjoittajan teksti vastaa hyvin tehtävänantoa ja hän käsittelee aihetta \ntavanomaisesti, mutta hieman itseään toistaen. Kirjoittaja toistaa samaa ajatusta läpi \ntekstin eikä käsittele aihetta monipuolisesti. \n Kirjoittaja tekee joitakin virheitä, jotka eivät kuitenkaan vaikuta kovin paljon tekstin \nluettavuuteen. Esim. puedes hacer lo que quieras cuando quieras; que no tienes (de \nla misma manera) cuando vives solo; Nadie te dice qué/ lo que tienes que hacer.",
+      "charCount": 433,
+      "penalty": 0,
+      "engineRaw20": 13,
+      "predYtl": 42.9,
+      "diff": -11.1,
+      "dims": {
+        "viestinnallisyys": 4,
+        "kielen_rakenteet": 3,
+        "sanasto": 3,
+        "kokonaisuus": 3
+      },
+      "band": "E",
+      "overall_feedback_fi": "Kirjoituksessa on hyviä ajatuksia itsenäisyydestä. Seuraavaksi kannattaa keskittyä menneen ajan käyttöön ja sanaston laajentamiseen. Yritä käyttää enemmän aiheeseen liittyviä sanoja ja lauseita, jotta viestisi olisi vieläkin vahvempi.",
+      "next_action_fi": "Harjoittele menneen ajan käyttöä ja laajenna sanastoasi."
+    },
+    {
+      "id": "long-4-2",
+      "taskType": "long",
+      "aihe": 4,
+      "title": "Un buen sitio para visitar",
+      "titleLineRaw": "Un buen sitio para visitar",
+      "answer": "Turku es una bonita ciudad donde están un montón lugares únicos. Pero lo mejor es el \nparque de Puolala. Me encanta el rollo del parque. \nEl parque de Puolala es tranquilo, aunque está situada en el centro. Hay muchos árboles y \nbancos. Me gustan también los edificios antiguos que están al lado del parque.  \nEn verano la gente pasa mucho tiempo en el parque, especialmente por las noches. En mi \nopinión es un buen lugarleer libros y disfrutar del sol. Si te gustan los picnics, sería también \nhermoso para los. \n¡Espero que visites!",
+      "officialScore": 54,
+      "officialRationale": " Kirjoittajan teksti on kohtalaisen selkeää ja suhteellisen luontevaa. \n Kirjoittaja käsittelee aihetta tavanomaisesti. \n Kirjoittaja hallitsee käyttämänsä ilmaisuvaraston suhteellisen hyvin, mutta tekee \njoitakin virheitä. Esim. Olla-verbin valinnan kanssa (hay/estar) ja preposition kanssa \n(puuttuva prepositio kohdassa ”un buen lugar - - leer libros”). \n Viestin välittyminen hankaloituu erityisesti kirjoituksen lopussa kielellisen \nepätarkkuuden vuoksi kohdassa ”sería también hermoso para los”, josta ei käy ilmi, \nmihin ”los” viittaa. \n\n Luontevaan ja sujuvaan kieleen kuuluu myös lisätä jokin paikka visitar-verbin \nyhteyteen (¡Espero que visites + paikan nimi!) tai objektin pronomini ( ¡Espero que \nme/lo/... visites!) \n Kirjoittaja käyttää joitain puhekielen sanoja, jotka eivät täysin sovi kontekstiin.Esim. \ndonde hay muchos lugares únicos / un montón de lugares únicos; Me encanta el \nambiente – Me encanta el rollo",
+      "charCount": 435,
+      "penalty": 0,
+      "engineRaw20": 13,
+      "predYtl": 42.9,
+      "diff": -11.1,
+      "dims": {
+        "viestinnallisyys": 4,
+        "kielen_rakenteet": 3,
+        "sanasto": 3,
+        "kokonaisuus": 3
+      },
+      "band": "E",
+      "overall_feedback_fi": "Kuvaus Puolalan puistosta on hyvin tehty ja se herättää kiinnostusta. Seuraavaksi voit harjoitella menneitä aikamuotoja ja liittimien käyttöä, jotta tekstisi virtaisi paremmin. Muista myös käyttää tarkempia aiheeseen liittyviä sanoja, jotta kuvastasi tulee vieläkin elävämpi.",
+      "next_action_fi": "Harjoittele menneitä aikamuotoja ja liittimien käyttöä."
+    },
+    {
+      "id": "long-4-3",
+      "taskType": "long",
+      "aihe": 4,
+      "title": "Un buen sitio para visitar",
+      "titleLineRaw": "Un buen sitio para visitar",
+      "answer": "¡Hola los lectores de TripAdvisor! \nVivo en Turku y pienso que tengo un buen sitio para visitar si viajas aquí. Hay un río que \natraviesa la ciudad. Se llama Aurajoki. Es muy bonito en todas las estaciones del año. En \nverano toda es verde y en invierno es congelado. También es muy romántico caminar junto \nal río. Puedes ir de pícnic ahí, pero hay las gaviotas que tu debes tener en cuenta. Es \nbastante limpio y espero que todaspersonas limpien después. Creo que esas son las cosas \nmás importantes. Espero que tengas una buena visita a Turku.",
+      "officialScore": 54,
+      "officialRationale": " Kirjoittajan teksti on kohtalaisen selkeää ja suhteellisen luontevaa. \n Kirjoittaja hallitsee käyttämänsä ilmaisuvaraston suhteellisen hyvin, mutta tekee \njoitakin virheitä, esim. Määräisen artikkelin virheellinen käyttö yhdessä espanjan \nkielen perusrakenteista hay-verbin yhteydessä (”hay las gaviotas” > pitäisi olla ”hay \ngaviotas”) ja olla-verbin valinta (esim. ”es bastante limpio” > pitäisi olla estar-verbi). \n Teksti on hieman luettelomainen, mikä heikentää sen luettavuutta. \nLuettelomaisuutta voisi pienentää käyttämällä sidossanoja.",
+      "charCount": 444,
+      "penalty": 0,
+      "engineRaw20": 13,
+      "predYtl": 42.9,
+      "diff": -11.1,
+      "dims": {
+        "viestinnallisyys": 4,
+        "kielen_rakenteet": 3,
+        "sanasto": 3,
+        "kokonaisuus": 3
+      },
+      "band": "E",
+      "overall_feedback_fi": "Kuvaus Aurajoesta on hyvin tehty ja se herättää kiinnostusta. Seuraavaksi kannattaa harjoitella menneitä aikamuotoja ja tarkistaa sanavalintoja. Yritä myös käyttää enemmän konnektoreita, jotta tekstin virtaus paranee.",
+      "next_action_fi": "Harjoittele menneitä aikamuotoja ja niiden käyttöä."
+    },
+    {
+      "id": "long-1-4",
+      "taskType": "long",
+      "aihe": 1,
+      "title": "#pequeñosactos #grandescambios",
+      "titleLineRaw": "#pequeñosactos #grandescambios",
+      "answer": "Cómo puedo cambiar el mundo, pero con los maneras realisticos? Soy un joven muy \npreocupado por nuestro tierra, y por que eso soy vegetariana. Ser vegetariano es fácil \naquí en Finlandia y a causa de eso es un acto pequeño. Los otros actos pequeños para la \ntierra son reciclaje y recolección de basura. Además, me quiero hacer el mundo una mejor \nlugar con mi sonrisa y ayuda. Siempre soy una persona amable y confiable, por que \nquizás puedo mejorar el día de alguien. Como puedes ver, cualquiera puede hacer los actos \nmuy pequeños cada día!",
+      "officialScore": 50,
+      "officialRationale": " Kirjoittaja pystyy välittämään viestin suhteellisen luontevasti ja tekstiä on \nkohtalaisen helppo lukea. Teksti ei ole täysin luontevaa ja sujuvaa, sillä kirjoittaja \nkirjoittaa itsestään vuoroin sekä maskuliinissa että feminiinissä. Lisäksi tekstissä on \npieniä kielellisiä epätarkkuuksia, vaikka kirjoittaja hallitseekin käyttämänsä \nilmaisuvaraston suhteellisen hyvin. \n Tekstissä on useita virheitä. Esim. de manera realista – con los maneras realisticos; \nnuestra tierra/nuestro planeta – nuestro tierra; y por eso – y porque eso; Además, \nquiero hacer del mundo un lugar mejor - Además, me quiero hacer __el mundo. \n Tekstissä on joitakin kohtia, joita on vaikea ymmärtää. Esim. Siempre soy una \npersona amable y confiable, por que quizás puedo mejorar el día de alguien (?)",
+      "charCount": 444,
+      "penalty": 0,
+      "engineRaw20": 13,
+      "predYtl": 42.9,
+      "diff": -7.1,
+      "dims": {
+        "viestinnallisyys": 4,
+        "kielen_rakenteet": 3,
+        "sanasto": 3,
+        "kokonaisuus": 3
+      },
+      "band": "E",
+      "overall_feedback_fi": "Olet tuonut esiin hyviä konkreettisia tekoja, kuten kasvissyönnin. Seuraavaksi kannattaa keskittyä verbimuotojen tarkkuuteen ja sanaston monipuolisuuteen. Yritä käyttää enemmän aiheeseen liittyviä sanoja ja liittimiä, jotta tekstisi virtaus paranee.",
+      "next_action_fi": "Harjoittele verbimuotojen käyttöä ja sanaston laajentamista."
+    },
+    {
+      "id": "long-2-1",
+      "taskType": "long",
+      "aihe": 2,
+      "title": "Un estudiante chileno",
+      "titleLineRaw": "Un estudiante chileno",
+      "answer": "Hola: \n \nAhora te voy a decir cosas que haces en Helsinki. Todos estos son gratis que puedes hacer \nen tu tiempo libre. Para empezar mi favorito. Patinaje es una forma muy famosa de pasar tu \ntiempo. Aunque solo hacerlo en invierno. Puedes jugar al hockey sobre hielo también. Vas a \nestudiar en biblioteca. Es totalmente gratis. Por ejemplo puedes jugar juegos de mesa \ny estar con tus amigos también. La biblioteca famosa en Helsinki se llama Oodi. \nLa recomiendo. La última recomendación es naturaleza. Es muy hermosa. \n \nNos vemos!",
+      "officialScore": 50,
+      "officialRationale": " Kirjoittajan tekstiä on kohtalaisen helppo lukea, vaikka hän tekee joitakin virheitä. \n Kirjoittajan teksti vastaa hyvin tehtävänantoa. \n Tekstissä on useita virheitä, jotka heikentävät sen luettavuutta. Esim. cosas que \npuedes hacer /que se pueden hacer (suositus) – cosas que haces en Helsinki (ilman \npoder-verbiä kuulostaa käskyltä tai velvoitteelta); popular – famosa; solo se hace – \nsolo hacerlo; Puedes ir a estudiar – Vas a estudiar (käskyltä tai velvoitteelta)",
+      "charCount": 436,
+      "penalty": 0,
+      "engineRaw20": 12,
+      "predYtl": 39.6,
+      "diff": -10.4,
+      "dims": {
+        "viestinnallisyys": 3,
+        "kielen_rakenteet": 3,
+        "sanasto": 3,
+        "kokonaisuus": 3
+      },
+      "band": "M",
+      "overall_feedback_fi": "Kuvailit hyvin Helsingin aktiviteetteja, kuten patinointia ja kirjastoa. Seuraavaksi kannattaa keskittyä verbien taivutukseen ja aikamuotojen käyttöön. Myös sidosten käyttö voisi olla monipuolisempaa, jotta teksti virtaisi paremmin.",
+      "next_action_fi": "Harjoittele verbien taivutuksia ja passiivimuotoja."
+    },
+    {
+      "id": "long-3-5",
+      "taskType": "long",
+      "aihe": 3,
+      "title": "Maneras de vivir",
+      "titleLineRaw": "Maneras de vivir",
+      "answer": "Estoy viviendo solo y no me gusta mucho. Cuándo viví con mi familia nunca tenía que hacer \nalgo por ejelempo sacar la basura, cocinar o limpiar la casa. Hoy tengo que limpiar y hacer \notracosas cada día y es muy aburrido. Nunca he visto con una compañera pero creo que lo \n\nme gustaría. No tendríahacer todo solo pero podría ser más independentcomo cuándo viví \ncon mi familia. Por eso en mi opinión vivir con un amigo o una amiga es el mejor optión.",
+      "officialScore": 50,
+      "officialRationale": " Kirjoittajan teksti vastaa hyvin tehtävänantoa, mutta hän käsittelee aihetta osittain \ntoistaen itseään. \n Kirjoittaja pystyy välittämään viestin kohtalaisen selkeästi ja hänen tekstiään on \nkohtalaisen helppo lukea. Lukeminen ja ymmärtäminen hankaloituvat esimerkiksi \nkohdassa “Nunca he visto con una compañera”, jossa kirjoittaa sekoittaa nähdä-\nverbin (ver) asua-verbiin (vivir). \n Kirjoittaja käyttää riittävää, pääosin tilanteeseen sopivaa ilmaisuvarastoa ja hallitsee \nsen suhteellisen hyvin, mutta tekee joitakin virheitä, esim. gustar-rakenteessa (”lo \nme gustaría”) ja suvussa ja oikeinkirjoituksessa (”el mejor optión”).",
+      "charCount": 363,
+      "penalty": 0,
+      "engineRaw20": 10,
+      "predYtl": 33,
+      "diff": -17,
+      "dims": {
+        "viestinnallisyys": 3,
+        "kielen_rakenteet": 2,
+        "sanasto": 3,
+        "kokonaisuus": 2
+      },
+      "band": "M",
+      "overall_feedback_fi": "Olet hyvin tuonut esiin mielipiteesi asumismuodoista. Seuraavaksi kannattaa keskittyä aikamuotojen tarkkuuteen ja liittää enemmän yhteyksiä lauseiden välille. Harjoittele myös aiheeseen liittyvää sanastoa, jotta tekstisi olisi monipuolisempaa.",
+      "next_action_fi": "Harjoittele aikamuotojen käyttöä ja liitä lauseita toisiinsa."
+    },
+    {
+      "id": "long-4-4",
+      "taskType": "long",
+      "aihe": 4,
+      "title": "Un buen sitio para visitar",
+      "titleLineRaw": "Un buen sitio para visitar",
+      "answer": "Si viajes a Helsinki tienes visitar Suomenlinna. Suomenlinna es la isla al frente de Helsinki. \nTiene muchos lugares bonitos.Historia de Suomenlinna es interesante. Tienes \nmuchos edificios y lugares históricos. No es caro visitar allí. ¡Solo necesitas billete para \nel ferry! Los museos cuestan unos euros, pero no tiene visitar allí. Hay muchas otras cosas \npara ver y hacer.",
+      "officialScore": 46,
+      "officialRationale": " Kirjoittaja pystyy välittämään viestin tyydyttävästi. \n Kirjoittaja tekee useita virheitä, jotka hankaloittavat viestin välittymistä ja \nvähentävät sujuvuutta. Esim. pero no tienes por qué visitarlos - no tiene visitar allí; \nverbien käytössä on epätarkkuutta (viajas - viajes). \n Kirjoittaja toistaa samaa ajatusta lisäämättä mitään uutta ja käsittelee aihetta melko \npinnallisesti. \n Teksti on luettelomainen, mikä heikentää sen luettavuutta. Sidossanoja ei käytetä.",
+      "charCount": 316,
+      "penalty": 0,
+      "engineRaw20": 10,
+      "predYtl": 33,
+      "diff": -13,
+      "dims": {
+        "viestinnallisyys": 3,
+        "kielen_rakenteet": 2,
+        "sanasto": 3,
+        "kokonaisuus": 2
+      },
+      "band": "M",
+      "overall_feedback_fi": "Kuvaus Suomenlinnasta on hyvä ja kiinnostava. Seuraavaksi kannattaa keskittyä verbien taivutukseen ja aikamuotojen käyttöön. Myös liitännäisten monipuolistaminen parantaisi tekstin virtaavuutta.",
+      "next_action_fi": "Harjoittele verbien taivutusta ja aikamuotojen käyttöä."
+    },
+    {
+      "id": "long-2-2",
+      "taskType": "long",
+      "aihe": 2,
+      "title": "Un estudiante chileno",
+      "titleLineRaw": "Un estudiante chileno",
+      "answer": "Hola: \n  \nQue rico que vienesa Helsinki. Aquí hay muchas actividades que puedes hacer sin \n pegar nada. Por ejemplo, podemos visitar museos diferentes. Me gustanmucho a \n\nAmosRex. Es un museo que está en el centro de Helsinki. En el centro de Helsinki está \ntambién una biblioteca muy popular. Oodi es grande y moderno. Necesitas visitar ahí. \nEs, por supuesto, gratis para tí. Recuerdo tocar muchas fotos. Puedes presentar fotos \npara tus padres. \n \nHasta luego, [nimi]",
+      "officialScore": 46,
+      "officialRationale": " Kirjoittajan tekstiä on yksittäisissä kohdissa vaikea lukea. \n Tekstin ymmärrettävyyttä ja viestin välittymistä vaikeuttavat kielelliset virheet ja \nepätarkkuudet. Esim. pagar - pegar; Me gusta mucho Amos Rex - Me gustan mucho a \nAmosRex; sacar fotos - tocas fotos. \n Tekstin toisessa virkkeessä subjekti on yksikön toisessa persoonassa, mutta \nkolmannessa se on monikon ensimmäisessä. Sen takia tekstistä ei käy ilmi, aikovatko \nkirjoittaja ja viestin vastaanottaja viettää aikaa yhdessä kaupungilla vai antaako \nkirjoittaja vastaanottajalle vain neuvoja siitä, mitä tämä voisi itsekseen tehdä. \n Espanjaksi kirjeet ja viestit aloitetaan seuraavasti: Hola, Luis: / Querido Luis: / ¡Hola, \nLuis! Lopetuksessa kirjoittajan nimi laitetaan lopputervehdyksen ja pilkun jälkeen \nseuraavalle riville, muuten kyseessä on puhuttelusana. Esim. tekstissä ”Hasta luego, \n[nimi]” nimi on puhuttelusanana.",
+      "charCount": 383,
+      "penalty": 0,
+      "engineRaw20": 11,
+      "predYtl": 36.3,
+      "diff": -9.7,
+      "dims": {
+        "viestinnallisyys": 3,
+        "kielen_rakenteet": 2,
+        "sanasto": 3,
+        "kokonaisuus": 3
+      },
+      "band": "M",
+      "overall_feedback_fi": "On hienoa, että mainitsit Oodin ja AmosRexin, ne ovat hyviä esimerkkejä. Seuraavaksi kannattaa keskittyä verbien taivutukseen ja oikeisiin muotoihin, jotta viestisi olisi selkeämpi. Harjoittele myös sidoksia, jotta tekstisi virtaus paranee.",
+      "next_action_fi": "Harjoittele verbien taivutusta ja oikeita muotoja."
+    },
+    {
+      "id": "long-4-5",
+      "taskType": "long",
+      "aihe": 4,
+      "title": "Un buen sitio para visitar",
+      "titleLineRaw": "Un buen sitio para visitar",
+      "answer": "¡Hola! \n  \nYo recomiendo visitar Suomenlinna. Esta un isla grande y mayor, más quetrescientos años. \nHay naturaleza bonita, casas mayores, una iglesía y ochosientos gentes vivír en la isla. La isla \nes una importante parte en la historia de Helsinki y tambienFinlandia y haymuseo de guerra. \nEn varano puedes nadar, comer en restaurantes y aprender historia muy interesante. El \nbillete de barco costar tres euros y partir en una mercado llaman Kauppatori. \nSi estás interesado enhistoria de guerra y naturaleza de mar, visitarSuomenlinna!",
+      "officialScore": 46,
+      "officialRationale": " Kirjoittaja pystyy välittämään viestin tyydyttävästi. \n Viestin välittymiseen ja tekstin sujuvuuteen vaikuttavat virheet, joita kirjoittaja \ntekee, esim. Verbien käytössä (“el billete de barco costar...” > pitäisi olla “cuesta”; \n\nllamarse-verbiä ei ole käytetty refleksiivisenä “un mercado llaman Kauppatori” > “Se \nllama”). Virheiden vuoksi tekstiä on yksittäisissä kohdissa vaikea lukea. \n Kirjoittaja tekee useita virheitä. Esim. Es una isla grande e importante, de más de \ntrescientos años de antigüedad – Esta un isla grande y mayor, más que trescientos \naños; La naturaleza es muy bonita allí – Hay naturaleza bonita; la isla tiene \nochocientos habitantes(/ochocientas personas viven en la isla) - ochosientos gentes \nvivír en la isla.",
+      "charCount": 449,
+      "penalty": 0,
+      "engineRaw20": 11,
+      "predYtl": 36.3,
+      "diff": -9.7,
+      "dims": {
+        "viestinnallisyys": 3,
+        "kielen_rakenteet": 2,
+        "sanasto": 3,
+        "kokonaisuus": 3
+      },
+      "band": "M",
+      "overall_feedback_fi": "Suomenlinnan kuvaus on hyvä ja siinä on mielenkiintoisia yksityiskohtia. Seuraavaksi kannattaa keskittyä verbien taivutuksiin ja sanavalintoihin, jotta viesti olisi selkeämpi. Yritä myös käyttää enemmän sidoksia tekstin sujuvuuden parantamiseksi.",
+      "next_action_fi": "Harjoittele verbien taivutuksia ja käytä tarkempia sanoja."
+    },
+    {
+      "id": "long-2-3",
+      "taskType": "long",
+      "aihe": 2,
+      "title": "Un estudiante chileno",
+      "titleLineRaw": "Un estudiante chileno",
+      "answer": "Exultemos, porque te pones aquí en fin de semana. Tenemos muchas cosas que puedes \nhacer aquí. Porque este invierno puedes ver la nieve y hacer muchas divertidas cosas con \nnieve y hielo. Tunecesitas probar patinaje. Es un poco difícil si nunca pruebashasta ahora. En \nFinlandia tenemos muy bonita naturaleza. Aquí las bibliotecas son sitios tranquilos además \ntienen muchos libros juegos y computadoras. Los museos aquí son baratos para estudiantes \ny gratis para niños. Nosotras clase es muy desiderativo para ver estos sitios contigo.",
+      "officialScore": 46,
+      "officialRationale": " Kirjoittajan tekstiä on kohtalaisen helppo lukea. \n Kirjoittajan teksti vastaa hyvin tehtävänantoa. \n Kirjoittaja käyttää riittävää ilmaisuvarastoa ja hallitsee sen suhteellisen hyvin, mutta \ntekee joitakin virheitä, esim. (tú > painomerkki puuttuu), possesiivipronominin \npuuttuminen ja sen korvaaminen persoonapronominilla ”nosotros clase”; si nunca \npruebas (has probado) hasta ahora \n Tekstissä on virheitä, jotka vaikeuttavat tekstin luettavuutta ja ymmärtävyyttä. Esim. \nExultemos*, porque ... (?); Nosotras clase es muy desiderativo para ver estos sitios \ncontigo (?) \n Viestin aloistus ja lopetus puuttuvat kokonaan.",
+      "charCount": 450,
+      "penalty": 0,
+      "engineRaw20": 11,
+      "predYtl": 36.3,
+      "diff": -9.7,
+      "dims": {
+        "viestinnallisyys": 3,
+        "kielen_rakenteet": 2,
+        "sanasto": 3,
+        "kokonaisuus": 3
+      },
+      "band": "M",
+      "overall_feedback_fi": "On hienoa, että mainitsit luonnon kauneuden ja aktiviteetit. Seuraavaksi kannattaa keskittyä verbien oikeaan taivutukseen ja sanavalintoihin. Tämä parantaa tekstin ymmärrettävyyttä ja sujuvuutta.",
+      "next_action_fi": "Harjoittele verbien taivutusta ja käytä oikeita muotoja."
+    },
+    {
+      "id": "long-1-5",
+      "taskType": "long",
+      "aihe": 1,
+      "title": "#pequeñosactos #grandescambios",
+      "titleLineRaw": "#pequeñosactos #grandescambios",
+      "answer": "¡Hola a todos! A mí me gustan los grandes cambios que son actualmente pequeños. Hago \npequeños actos todos los días, por ejemplo: soy vegetariano, a mí me pasa mucho, no tengo \ncoche y no me viajar mucho. Esto es un poquito brutal pero tampoco tengo hijos e animales. \n  \nEspero que en el futuro todo el mundo pueden viajar solamente con transporte público. \nTambién la gente podría comer más vegetales. En el futuro tengo que dejar a beber leche, \neso  es mal a mí salud también. ¡Voy a esperar sus comentarios!",
+      "officialScore": 38,
+      "officialRationale": " Kirjoittaja pystyy välittämään viestin vain epäselvästi. \n Kirjoittajan tekstiä on yksittäisissä kohdissa vaikea ymmärtää, Esim. a mí me pasa \nmucho (?); Esto es un poquito brutal pero tampoco tengo hijos e animales (?) \n Kirjoittaja tekee useita virheita. Esim. que son pequeños en realidad – que son \nactualmente pequeños (actualmente = nykyään); no viajo mucho – no me viajar \nmucho; Espero que en el futuro todo el mundo pueda (verbi samassa persoonassa \nkuin subjekti + subjunktiivi) - Espero que en el futuro todo el mundo pueden",
+      "charCount": 414,
+      "penalty": 0,
+      "engineRaw20": 11,
+      "predYtl": 36.3,
+      "diff": -1.7,
+      "dims": {
+        "viestinnallisyys": 3,
+        "kielen_rakenteet": 2,
+        "sanasto": 3,
+        "kokonaisuus": 3
+      },
+      "band": "M",
+      "overall_feedback_fi": "Olet käyttänyt hyviä esimerkkejä, kuten vegetarismi, joka tukee viestiäsi. Seuraavaksi kannattaa keskittyä verbien taivutuksiin ja oikeisiin muotoihin, jotta viestisi olisi selkeämpi. Myös sanaston laajentaminen voisi auttaa viestin vahvistamisessa.",
+      "next_action_fi": "Harjoittele verbien taivutuksia ja käytä enemmän aiheeseen liittyvää sanastoa."
+    },
+    {
+      "id": "long-2-4",
+      "taskType": "long",
+      "aihe": 2,
+      "title": "Un estudiante chileno",
+      "titleLineRaw": "Un estudiante chileno",
+      "answer": "Hola la niña o el niño de Chile. !Bienvenidos a Helsinki! \nEste es muchas cosas para hacer en Helsinki. \n  \nPrimero ir a en museo, Ateneum. Está muy barato. En entrada es solo 12€, pero suno tiene \npagar sí eres menor de edad. Segundo visitas en la biblioteca, Oodi. Oodi es un nuevo \nbiblioteca en Helsinki y está gratis por todo. En Oodi puedes hacer mucho. Último ir a \nrestaurantes y cafés. Aquí está muchos restaurantes y cafés cómodos. Tienes pagar solo 10-\n20€ maximum. \n  \n¡Nos vemos pronto!",
+      "officialScore": 34,
+      "officialRationale": " Kirjoittaja pystyy välittämään viestin vain epäselvästi ja tekstiä on moninpaikoin \nvaikea lukea. \n Kirjoittaja tekee paljon virheitä perusrakenteissa kuten esim. olla-verbeissä; Hay \nmuchas cosas... – Este es muchas cosas; Para ir al museo – Para ir a en museo; Está \nmuy barato – Es muy barato. \n Teksti on osittain vaikea ymmärtää siinä olevien virheiden vuoksi. Esim. Segundo \nvisitas en la biblioteca (?); está gratis por todo (?); Último ir a restaurantes y cafés. \n Viestin oikeanlaiseen aloittamiseen on syytä kiinnittää huomiota. Esim. Hola, Luis: / \nQuerida Sandra:",
+      "charCount": 401,
+      "penalty": 0,
+      "engineRaw20": 11,
+      "predYtl": 36.3,
+      "diff": 2.3,
+      "dims": {
+        "viestinnallisyys": 3,
+        "kielen_rakenteet": 2,
+        "sanasto": 3,
+        "kokonaisuus": 3
+      },
+      "band": "M",
+      "overall_feedback_fi": "On hienoa, että käytit erilaisia aktiviteetteja esittelemään Helsinkiä. Seuraavaksi kannattaa keskittyä verbien taivutuksiin ja oikeisiin muotoihin, jotta viestisi olisi selkeämpi. Muista myös tarkistaa sanavalintojasi, jotta ne olisivat tarkempia ja monipuolisempia.",
+      "next_action_fi": "Harjoittele verbien taivutuksia ja käytä oikeita muotoja."
+    }
+  ],
+  "errored": [],
+  "outliers": [
+    {
+      "id": "long-1-1",
+      "taskType": "long",
+      "official": 66,
+      "predYtl": 42.9,
+      "diff": -23.1,
+      "officialRationale": " Kirjoittaja välittää viestin selkeästi, luontevasti ja sujuvasti. \n Teksti on kielellisesti tarkkaa ja kirjoittaja hallitsee käyttämänsä ilmaisuvaraston \nerittäin hyvin. \n Kirjoittaja käsittelee aihetta monipuolisesti ja tekstin erityinen ansio on sen syvyys. \n Tekstissä on joitakin pieniä virheitä. Esim. pero no hace nada – pero hace nada; no \nestá bien – no es bien \n Espanjassa kaksoispisteen jälkeen seuraava sana kirjoitetaan pienellä alkukirjaimella. \nEsim. Tengo un consejo para todos ellos: no tienes que...",
+      "engineFeedback": "Olet hyvin tuonut esiin, että pienet teot voivat muuttaa maailmaa. Seuraavaksi voit keskittyä menneiden aikamuotojen käyttöön ja konnektoreiden monipuolistamiseen. Tämä auttaa tekemään tekstistä sujuvampaa ja monipuolisempaa.",
+      "dims": {
+        "viestinnallisyys": 4,
+        "kielen_rakenteet": 3,
+        "sanasto": 3,
+        "kokonaisuus": 3
+      }
+    },
+    {
+      "id": "long-1-2",
+      "taskType": "long",
+      "official": 62,
+      "predYtl": 42.9,
+      "diff": -19.1,
+      "officialRationale": " Kirjoittaja pystyy välittämään viestin selkeästi, luontevasti ja sujuvasti. Tekstissä on \nsyvyyttä. \n Hän käsittelee aihetta monipuolisesti tuoden esiin uusia näkökulmia koko tekstin \najan. \n Kirjoittaja käyttää monipuolista, tilanteeseen sopivaa ilmaisuvarastoa ja hallitsee sen \nhyvin. \n\n Tekstissä on pieniä epäjohdonmukaisuuksia, jotka hankaloittavat ymmärtämistä \njonkin verran. Esim. Como separar la basura fue fácil, decidí hacer más cosas/tomar \nmás acciones, como renunciar a... - Separar la basura fue fácil, así que decidí \nrenunciar a comprarme un coche.",
+      "engineFeedback": "On hienoa, että olet maininnut konkreettisia tekoja, kuten kierrätyksen ja julkisen liikenteen käytön. Seuraavaksi kannattaa keskittyä menneisyyden aikamuotojen tarkkuuteen ja konnektoreiden monipuoliseen käyttöön, jotta tekstisi virta olisi sujuvampaa.",
+      "dims": {
+        "viestinnallisyys": 4,
+        "kielen_rakenteet": 3,
+        "sanasto": 3,
+        "kokonaisuus": 3
+      }
+    },
+    {
+      "id": "long-3-1",
+      "taskType": "long",
+      "official": 62,
+      "predYtl": 42.9,
+      "diff": -19.1,
+      "officialRationale": " Kirjoittaja pystyy välittämään viestin selkeästi ja luontevasti. Hänen tekstiään on \nhelppo lukea. \n Tekstissä on joitakin virheitä. Esim. Si viviera con mis amigos, me gustaría \n(konditionaali) tener/ que fuera un piso grande - Sí viviera con amigos, me quería... \n Tekstin viimeinen virke vaatii pohtimista, jotta sen merkitys avautuu: para tener \nmucho/suficiente espacio (para todos).",
+      "engineFeedback": "Kirjoituksessa on hyviä ajatuksia asumismuodoista ja käytät selkeää kieltä. Seuraavaksi kannattaa harjoitella menneitä aikamuotoja ja niiden käyttöä. Myös konnektoreiden monipuolisuus voisi parantaa tekstin sujuvuutta.",
+      "dims": {
+        "viestinnallisyys": 4,
+        "kielen_rakenteet": 3,
+        "sanasto": 3,
+        "kokonaisuus": 3
+      }
+    },
+    {
+      "id": "long-3-5",
+      "taskType": "long",
+      "official": 50,
+      "predYtl": 33,
+      "diff": -17,
+      "officialRationale": " Kirjoittajan teksti vastaa hyvin tehtävänantoa, mutta hän käsittelee aihetta osittain \ntoistaen itseään. \n Kirjoittaja pystyy välittämään viestin kohtalaisen selkeästi ja hänen tekstiään on \nkohtalaisen helppo lukea. Lukeminen ja ymmärtäminen hankaloituvat esimerkiksi \nkohdassa “Nunca he visto con una compañera”, jossa kirjoittaa sekoittaa nähdä-\nverbin (ver) asua-verbiin (vivir). \n Kirjoittaja käyttää riittävää, pääosin tilanteeseen sopivaa ilmaisuvarastoa ja hallitsee \nsen suhteellisen hyvin, mutta tekee joitakin virheitä, esim. gustar-rakenteessa (”lo \nme gustaría”) ja suvussa ja oikeinkirjoituksessa (”el mejor optión”).",
+      "engineFeedback": "Olet hyvin tuonut esiin mielipiteesi asumismuodoista. Seuraavaksi kannattaa keskittyä aikamuotojen tarkkuuteen ja liittää enemmän yhteyksiä lauseiden välille. Harjoittele myös aiheeseen liittyvää sanastoa, jotta tekstisi olisi monipuolisempaa.",
+      "dims": {
+        "viestinnallisyys": 3,
+        "kielen_rakenteet": 2,
+        "sanasto": 3,
+        "kokonaisuus": 2
+      }
+    },
+    {
+      "id": "long-3-2",
+      "taskType": "long",
+      "official": 58,
+      "predYtl": 42.9,
+      "diff": -15.1,
+      "officialRationale": " Kirjoittaja pystyy välittämään viestin selkeästi, luontevasti ja sujuvasti. Hänen \ntekstiään on helppo lukea. Kuitenkin tekstin toinen lause on hieman irrallinen, eikä \nlukijalle käy ilmi, mikä tai miksi oli hauskaa lukea. \n Kirjoittajan teksti vastaa hyvin tehtävänantoa, mutta hän ei käsittele aihetta \nmonipuolisesti vaan toistaa samaa ajatusta läpi tekstin lisäämättä juurikaan mitään \nuutta jo aiemmin sanomaansa. \n Tekstissä on vain vähän kielioppivirheitä. Esim. Creo que (yo) disfrutaría mucho \nviviendo(/vivir) solo - Creo que me disfrutaría. \n Painomerkkien perussäännöt on syytä hallita, jotta tekstin luettavuus ei kärsi. Esim. \nkysymys- ja huudahdussanoihin tulevat painomerkit (qué interesante – que \ninteresante).",
+      "engineFeedback": "Olet käyttänyt hyviä konnektoreita, mikä tekee tekstistä sujuvampaa. Seuraavaksi voit harjoitella menneitä aikamuotoja ja niiden käyttöä. Myös aiheeseen liittyvän sanaston laajentaminen auttaisi viestin selkeydessä.",
+      "dims": {
+        "viestinnallisyys": 4,
+        "kielen_rakenteet": 3,
+        "sanasto": 3,
+        "kokonaisuus": 3
+      }
+    }
+  ]
+}
