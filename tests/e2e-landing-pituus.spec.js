@@ -1,7 +1,12 @@
-// L-V314 regression: mobile landing pituus must stay under 10500 px.
-// Tightens the L-V308 trim (11931 px) with the kurssit horizontal-scroll
-// strip; if a future change re-stacks the 8 cards vertically, this catches
-// the ~1500 px regression before it ships.
+// L-V314 regression: mobile landing pituus guard. The kurssit cards stay in a
+// horizontal-scroll strip; if a future change re-stacks the 8 cards vertically,
+// the ~1500 px jump must be caught before it ships.
+//
+// L-V359 re-baseline: index.html grew to ~12100 px through approved loops
+// (L-V332 grade-flow demo, L-V356 catalog, L-V357 menu) without any strip
+// re-stack — the 10500 ceiling was stale, not a regression. Raised to 13000 so
+// the real guard (strip re-stack → ~13500) still trips while legitimate content
+// passes. The strip-structure assertions below are the primary intent.
 //
 // Aja: BASE_URL=http://localhost:3000 npx playwright test tests/e2e-landing-pituus
 // Tai vasten prodia: AUDIT_BASE_URL=https://espanja-v2-1.vercel.app npx playwright test tests/e2e-landing-pituus
@@ -20,7 +25,7 @@ const PATHS = {
 };
 
 const MOBILE = { width: 393, height: 852 };
-const MAX_PITUUS = 10500;
+const MAX_PITUUS = 13000;
 
 test.describe('Landing mobile pituus regression (L-V314)', () => {
   for (const [name, path] of Object.entries(PATHS)) {
