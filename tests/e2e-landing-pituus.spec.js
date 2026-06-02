@@ -37,27 +37,25 @@ test.describe('Landing mobile pituus regression (L-V314)', () => {
         document.body.scrollHeight,
       ));
 
-      const gridInfo = await page.evaluate(() => {
-        const grid = document.querySelector('.courses__grid') || document.querySelector('.catalog__grid');
-        if (!grid) return null;
-        const cs = getComputedStyle(grid);
-        return {
-          display: cs.display,
-          overflowX: cs.overflowX,
-          scrollSnap: cs.scrollSnapType,
-          scrollWidth: grid.scrollWidth,
-          clientWidth: grid.clientWidth,
-        };
-      });
-
-      console.log(`[${name} mobile] scrollHeight=${scrollHeight}px, grid=`, gridInfo);
+      console.log(`[${name} mobile] scrollHeight=${scrollHeight}px`);
       expect(scrollHeight).toBeLessThan(MAX_PITUUS);
-      // Strip-rakenne: ensimmäisellä kortilla pitää olla vähemmän kuin
-      // ~30% client-leveyttä jättääkseen vihjeen swipattavasta sisällöstä.
-      // (gridWidth >> clientWidth tarkoittaa että kortit overflowaa oikealle.)
-      expect(gridInfo).not.toBeNull();
-      expect(gridInfo.scrollSnap).toBe('x mandatory');
-      expect(gridInfo.scrollWidth).toBeGreaterThan(gridInfo.clientWidth);
+
+      if (name === 'espanja') {
+        // index.html keeps the horizontal kurssit strip (L-V314 regression guard).
+        const gridInfo = await page.evaluate(() => {
+          const grid = document.querySelector('.courses__grid') || document.querySelector('.catalog__grid');
+          if (!grid) return null;
+          const cs = getComputedStyle(grid);
+          return { scrollSnap: cs.scrollSnapType, scrollWidth: grid.scrollWidth, clientWidth: grid.clientWidth };
+        });
+        expect(gridInfo).not.toBeNull();
+        expect(gridInfo.scrollSnap).toBe('x mandatory');
+        expect(gridInfo.scrollWidth).toBeGreaterThan(gridInfo.clientWidth);
+      } else {
+        // L-V358 — de/fr are compact info pages: 8-step course ladder, no strip.
+        const rows = await page.locator('.lp-ladder__row').count();
+        expect(rows).toBe(8);
+      }
     });
   }
 });

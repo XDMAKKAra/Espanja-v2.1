@@ -1,4 +1,4 @@
-const CACHE_VERSION = "puheo-v357";
+const CACHE_VERSION = "puheo-v358";
 const STATIC_ASSETS = [
   "/app.html",
   "/index.html",
@@ -12,6 +12,8 @@ const STATIC_ASSETS = [
   "/public/landing/ranska.html",
   "/css/landing-editorial-tokens.css",
   "/css/landing-editorial.css",
+  // L-V358 — compact language info page layout (es/de/fr).
+  "/css/landing-langpage.css",
   // L-LIVE-AUDIT-P2 UPDATE 1+2 — bundled CSS+JS replace 16 CSS links + 28 JS modules
   // on app.html cold load. Source files stay in repo + cached below for offline robustness.
   "/app.bundle.css",

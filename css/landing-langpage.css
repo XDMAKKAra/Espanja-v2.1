@@ -1,0 +1,287 @@
+/* ============================================================
+   L-V358 — Compact language info page (es/de/fr).
+   Shared layout; only the HTML content differs per language.
+   Reuses .landing tokens (landing-tokens.css), the nav, buttons,
+   and the .grader-card / .rubric styles from landing(-editorial).css.
+
+   Goal: a short, self-contained info page — NOT a full landing scroll.
+   ============================================================ */
+
+.landing .lp {
+  --lp-max: 1040px;
+}
+
+.landing .lp-section {
+  padding: 56px 24px;
+}
+.landing .lp-section__inner {
+  max-width: var(--lp-max);
+  margin: 0 auto;
+}
+.landing .lp-section--tint {
+  background: #F6F0E2;
+  border-block: 1px solid var(--line);
+}
+
+.landing .lp-eyebrow {
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--brick);
+  background: var(--brick-pale);
+  padding: 5px 12px;
+  border-radius: var(--r-pill);
+  margin: 0 0 16px;
+}
+
+.landing .lp-h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(26px, 4vw, 34px);
+  line-height: 1.1;
+  letter-spacing: var(--tracking-snug);
+  color: var(--text);
+  margin: 0 0 12px;
+}
+.landing .lp-lede {
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--text-muted);
+  max-width: 60ch;
+  margin: 0;
+}
+
+/* ─── HERO (compact) ─────────────────────────────────────── */
+.landing .lp-hero {
+  padding: 72px 24px 48px;
+}
+.landing .lp-hero__inner {
+  max-width: var(--lp-max);
+  margin: 0 auto;
+}
+.landing .lp-hero__title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(34px, 6vw, 52px);
+  line-height: 1.04;
+  letter-spacing: var(--tracking-tight);
+  color: var(--text);
+  margin: 0 0 16px;
+  max-width: 16ch;
+}
+.landing .lp-hero__title em {
+  font-style: normal;
+  color: var(--brick);
+}
+.landing .lp-hero__sub {
+  font-size: 18px;
+  line-height: 1.55;
+  color: var(--text-muted);
+  max-width: 54ch;
+  margin: 0 0 28px;
+}
+.landing .lp-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 20px;
+}
+.landing .lp-crosslang {
+  font-size: 15px;
+  color: var(--text-subtle);
+  margin: 28px 0 0;
+}
+.landing .lp-crosslang a {
+  color: var(--brick);
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1.5px solid var(--brick-pale);
+}
+.landing .lp-crosslang a:hover { border-bottom-color: var(--brick); }
+
+/* ─── COURSE LADDER (8 courses, A→E) ─────────────────────── */
+.landing .lp-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 48px;
+  align-items: start;
+  margin-top: 32px;
+}
+.landing .lp-ladder {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--line);
+}
+.landing .lp-ladder__row {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+}
+.landing .lp-ladder__level {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  background: var(--green-pale);
+  color: var(--green);
+  font-weight: 700;
+  font-size: 14px;
+  font-family: var(--font-display);
+}
+.landing .lp-ladder__row[data-cap="E"] .lp-ladder__level,
+.landing .lp-ladder__row[data-cap="M"] .lp-ladder__level {
+  background: var(--yellow-pale);
+  color: #8A6A12;
+}
+.landing .lp-ladder__name {
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--text);
+  margin: 0 0 2px;
+}
+.landing .lp-ladder__desc {
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.landing .lp-facts {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  padding: 24px;
+}
+.landing .lp-facts__h {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 18px;
+  color: var(--text);
+  margin: 0 0 6px;
+}
+.landing .lp-facts__h:not(:first-child) { margin-top: 22px; }
+.landing .lp-facts p {
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--text-muted);
+  margin: 0;
+}
+.landing .lp-facts__stats {
+  display: flex;
+  gap: 28px;
+  margin: 0 0 4px;
+}
+.landing .lp-facts__stat b {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 26px;
+  color: var(--brick);
+  line-height: 1;
+}
+.landing .lp-facts__stat span {
+  font-size: 13px;
+  color: var(--text-subtle);
+}
+
+/* ─── DEMO (real app screenshot) ─────────────────────────── */
+.landing .lp-demo__frame {
+  margin-top: 28px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  background: var(--cream);
+  box-shadow: 0 24px 48px -28px rgba(36, 28, 21, 0.35);
+}
+.landing .lp-demo__bar {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 11px 16px;
+  background: var(--paper);
+  border-bottom: 1px solid var(--line);
+}
+.landing .lp-demo__dot {
+  width: 11px; height: 11px; border-radius: 50%;
+  background: var(--line);
+}
+.landing .lp-demo__bar span:last-child {
+  margin-left: 10px;
+  font-size: 13px;
+  color: var(--text-subtle);
+}
+.landing .lp-demo__frame img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.landing .lp-demo__cap {
+  font-size: 14px;
+  color: var(--text-subtle);
+  margin: 14px 0 0;
+}
+
+/* ─── WHY US (numbered rows, NOT a card grid) ────────────── */
+.landing .lp-why {
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+.landing .lp-why__row {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 22px;
+  align-items: baseline;
+  max-width: 72ch;
+}
+.landing .lp-why__num {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 30px;
+  color: var(--brick);
+  line-height: 1;
+}
+.landing .lp-why__h {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 19px;
+  color: var(--text);
+  margin: 0 0 5px;
+}
+.landing .lp-why__b {
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+/* ─── WRITING SAMPLE wrapper (reuses .grader-card) ───────── */
+.landing .lp-sample {
+  margin-top: 28px;
+  max-width: 760px;
+}
+.landing .lp-sample .grader-card {
+  margin: 0;
+}
+.landing .lp-caveat {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-subtle);
+  max-width: 70ch;
+  margin: 20px 0 0;
+}
+
+/* ─── MOBILE ─────────────────────────────────────────────── */
+@media (max-width: 760px) {
+  .landing .lp-section { padding: 44px 18px; }
+  .landing .lp-hero { padding: 56px 18px 36px; }
+  .landing .lp-grid { grid-template-columns: 1fr; gap: 32px; }
+  .landing .lp-hero__actions { gap: 14px; }
+  .landing .lp-why__row { grid-template-columns: auto 1fr; gap: 16px; }
+}
