@@ -18,6 +18,12 @@ const root = resolve(__dirname, "..");
 
 const styleCss = readFileSync(resolve(root, "style.css"), "utf8");
 const landingCss = readFileSync(resolve(root, "landing.css"), "utf8");
+// Shared @font-face stylesheet (Fredoka/Mulish, L-V344 WordDive system). The
+// legal/pricing shells deliver their webfonts through this rather than via an
+// inline /fonts/ preload + style.css.
+const fontsCss = existsSync(resolve(root, "css/fonts.css"))
+  ? readFileSync(resolve(root, "css/fonts.css"), "utf8")
+  : "";
 
 const FS_TOKENS = [
   "--fs-h1", "--fs-h2", "--fs-h3", "--fs-h4", "--fs-h5",
@@ -78,7 +84,11 @@ describe("HTML shells load a webfont with latin-ext support", () => {
       // latin-ext @font-face declarations.
       const usesSelfHosted = /\/fonts\/[^"'\s]+latin[^"'\s]*\.woff2/.test(html)
         && /latin-ext-\d+-normal\.woff2/.test(styleCss);
-      expect(usesGoogleFonts || usesSelfHosted).toBe(true);
+      // Shared-stylesheet path: the shell links /css/fonts.css AND that file
+      // ships latin-ext @font-face declarations (Fredoka/Mulish).
+      const usesFontsCss = /css\/fonts\.css/.test(html)
+        && /latin-ext[^"'\s]*\.woff2/.test(fontsCss);
+      expect(usesGoogleFonts || usesSelfHosted || usesFontsCss).toBe(true);
     });
   }
 });
