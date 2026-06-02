@@ -4,13 +4,13 @@
     "silent": true
   },
   "functions": {
-    "api/index.js": {
+    "api/app.js": {
       "includeFiles": "{routes,middleware,lib}/**/*.js,supabase.js,email.js,data/**/*.json",
       "maxDuration": 60
     }
   },
   "rewrites": [
-    { "source": "/api/(.*)", "destination": "/api" },
+    { "source": "/api/(.*)", "destination": "/api/app" },
     { "source": "/espanjan-abikurssi", "destination": "/public/landing/espanja.html" },
     { "source": "/saksan-abikurssi",   "destination": "/public/landing/saksa.html" },
     { "source": "/ranskan-abikurssi",  "destination": "/public/landing/ranska.html" },
