@@ -32,12 +32,12 @@
   padding: 0 var(--s-6);
   padding-left: max(var(--s-6), env(safe-area-inset-left, 0));
   padding-right: max(var(--s-6), env(safe-area-inset-right, 0));
-  background: color-mix(in srgb, var(--surface) 88%, transparent);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  /* L-V347 — solid, not frosted (see bottom-nav). The is-scrolled state
+     already used an opaque var(--surface); matching the base removes the
+     per-frame backdrop-filter re-raster that janked scrolling. */
+  background: var(--surface);
   border-bottom: 1px solid var(--border);
-  transition: border-color var(--dur-slow) var(--ease-out),
-              background var(--dur-slow) var(--ease-out);
+  transition: border-color var(--dur-slow) var(--ease-out);
 }
 
 .top-nav.is-scrolled {

@@ -108,6 +108,42 @@ const LANG_KEY = "puheo:lang";
 const DEFAULT_GOAL_MIN = 15;
 let _ohjaamoData = null;
 
+// L-V347 — stale-while-revalidate cache for the dashboard payload.
+// Before: loadHome blocked on a fresh /dashboard/v2 roundtrip whenever the
+// 60s in-memory TTL had lapsed (a lesson easily outlasts it), so returning
+// to home on a cold serverless instance meant a ~3-5s skeleton stall. Now we
+// mirror the payload into localStorage keyed by language, paint it instantly,
+// and revalidate in the background. Lang-keyed so a tab switch never paints
+// the previous language's numbers.
+const OHJAAMO_LS_KEY = "puheo:ohjaamo_cache_v1";
+
+function persistOhjaamo(payload, lang) {
+  if (!payload) return;
+  const entry = { ts: Date.now(), payload, lang };
+  _ohjaamoData = entry;
+  try { localStorage.setItem(OHJAAMO_LS_KEY, JSON.stringify(entry)); } catch { /* private mode */ }
+}
+
+function readOhjaamoCache(lang) {
+  if (_ohjaamoData && _ohjaamoData.lang === lang) return _ohjaamoData;
+  try {
+    const raw = localStorage.getItem(OHJAAMO_LS_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (parsed && parsed.payload && parsed.lang === lang) {
+        _ohjaamoData = parsed;
+        return parsed;
+      }
+    }
+  } catch { /* private mode */ }
+  return null;
+}
+
+function clearOhjaamoCache() {
+  _ohjaamoData = null;
+  try { localStorage.removeItem(OHJAAMO_LS_KEY); } catch { /* private mode */ }
+}
+
 function readEnabledLangs() {
   try {
     const raw = localStorage.getItem(ENABLED_LANGS_KEY);
@@ -138,9 +174,9 @@ function writeActiveLang(code) {
   try { localStorage.setItem(LANG_KEY, code); } catch { /* ignore */ }
 }
 
-async function fetchOhjaamo() {
+async function fetchOhjaamo(lang) {
   const data = await fetchDashboardV2();
-  if (data) _ohjaamoData = { ts: Date.now(), payload: data };
+  if (data) persistOhjaamo(data, lang);
   return data;
 }
 
@@ -359,9 +395,10 @@ function wireTabs(root) {
       // so the dashboard + progress writes follow the selected tab. (L-V339)
       setLanguage(lang);
       // Bust the per-language caches so the switch shows this language's data,
-      // not the previous language's (both caches are language-agnostic).
+      // not the previous language's. clearOhjaamoCache() also drops the
+      // localStorage mirror so the SWR path can't repaint stale numbers.
       clearDashboardV2();
-      _ohjaamoData = null;
+      clearOhjaamoCache();
       loadHome();
     });
   });
@@ -388,27 +425,19 @@ function renderShellSkeleton(activeLang) {
 function wireNextTopicHandler(root, lang) {
   const cta = root.querySelector(".home-next__cta");
   if (!cta) return;
-  cta.addEventListener("click", async (e) => {
-    // Hold the navigation a beat so the /next-topic response actually
-    // persists to sessionStorage before the page changes. Without this,
-    // the fetch is racing the browser's anchor navigation and the
-    // downstream lesson runner sees no topic. The 1.2s timeout keeps the
-    // CTA responsive when the API is slow / offline (fail-open).
-    if (cta.dataset.busy === "1") return;
-    e.preventDefault();
-    cta.dataset.busy = "1";
-    cta.setAttribute("aria-busy", "true");
+  cta.addEventListener("click", (e) => {
+    // L-V347 — navigate THIS frame. The weighted-topic call is pure
+    // weighting telemetry stashed for later generation; nothing reads it
+    // synchronously on the next screen, so it must not gate the click.
+    // (The old code awaited it behind a 1.2s race timeout, costing up to
+    // 1.2s of dead time on every "Jatka".) Fire it in the background and
+    // persist whenever it lands; the hash navigation keeps this document
+    // alive so the fetch survives.
     const href = cta.getAttribute("href") || `#/oppimispolku?lang=${lang}`;
-    let entry = null;
-    try {
-      entry = await Promise.race([
-        fetchWeightedNextTopic(lang),
-        new Promise((resolve) => setTimeout(() => resolve(null), 1200)),
-      ]);
-    } catch { entry = null; }
-    if (entry) recordNextTopic(entry);
-    cta.dataset.busy = "0";
-    cta.removeAttribute("aria-busy");
+    fetchWeightedNextTopic(lang)
+      .then((entry) => { if (entry) recordNextTopic(entry); })
+      .catch(() => { /* fail-open: downstream falls back to uniform topics */ });
+    e.preventDefault();
     location.hash = href.startsWith("#") ? href : `#${href}`;
   });
 }
@@ -429,22 +458,35 @@ export async function loadHome() {
   if (!root) return;
   const activeLang = readActiveLang();
 
-  if (_ohjaamoData && (Date.now() - _ohjaamoData.ts) < 60_000) {
-    const cached = _ohjaamoData.payload;
-    const isPro = isProTier(cached?.profile?.profile);
+  const paint = (data) => {
+    const isPro = isProTier(data?.profile?.profile);
     window._isPro = isPro;
-    root.innerHTML = renderShell(activeLang, cached, isPro);
+    root.innerHTML = renderShell(activeLang, data, isPro);
     wireTabs(root);
     wireHoverPrefetch(root, activeLang);
     wireNextTopicHandler(root, activeLang);
+  };
+
+  const cached = readOhjaamoCache(activeLang);
+  if (cached) {
+    // Stale-while-revalidate: paint real data this frame (never block on the
+    // network). If the copy is stale, refresh quietly in the background and
+    // only repaint when the user is still on home and on the same language.
+    paint(cached.payload);
+    if (Date.now() - cached.ts >= 60_000) {
+      fetchOhjaamo(activeLang)
+        .then((data) => {
+          if (!data) return;
+          const screen = document.getElementById("screen-home");
+          if (screen && !screen.hidden && readActiveLang() === activeLang) paint(data);
+        })
+        .catch(() => { /* keep the stale paint */ });
+    }
     return;
   }
+
+  // First-ever load (cold cache everywhere): show the skeleton, await once.
   root.innerHTML = renderShellSkeleton(activeLang);
-  const data = await fetchOhjaamo();
-  const isPro = isProTier(data?.profile?.profile);
-  window._isPro = isPro;
-  root.innerHTML = renderShell(activeLang, data, isPro);
-  wireTabs(root);
-  wireHoverPrefetch(root, activeLang);
-  wireNextTopicHandler(root, activeLang);
+  const data = await fetchOhjaamo(activeLang);
+  paint(data);
 }

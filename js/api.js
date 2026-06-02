@@ -75,6 +75,9 @@ export function clearAuth() {
   _dashboardV2 = null;
   _dashboardV2CacheTs = 0;
   _dashboardV2Inflight = null;
+  // L-V347 — also drop the home SWR localStorage mirror so a different user
+  // logging in on this device never sees the previous user's dashboard.
+  try { localStorage.removeItem("puheo:ohjaamo_cache_v1"); } catch { /* private mode */ }
 }
 
 // L-PRO-TIER-AND-QUOTA-UX — map server error codes to humane Finnish copy
