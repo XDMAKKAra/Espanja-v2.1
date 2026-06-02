@@ -1124,6 +1124,8 @@ body.landing > * { position: relative; z-index: 1; }
   padding: 4px 10px;
   border-radius: var(--ed-r-sm);
   letter-spacing: 0.02em;
+  /* keep the "p" in "24 / 33 p" lowercase; landing.css base uppercases it */
+  text-transform: none;
 }
 
 .landing .grader-prose {
@@ -1258,6 +1260,11 @@ body.landing > * { position: relative; z-index: 1; }
   font-family: var(--ed-sans);
   font-weight: 600;
   font-size: var(--ed-fs-body);
+  /* landing.css base sets this label to mono + uppercase + wide tracking.
+     Editorial only swapped the family, so the uppercase leaked through on
+     every viewport (visible as "LYHYT KIRJOITUSTEHTÄVÄ"). Reset it here. */
+  text-transform: none;
+  letter-spacing: normal;
 }
 .landing .rubric-total__score {
   font-family: var(--ed-display);
@@ -1276,6 +1283,101 @@ body.landing > * { position: relative; z-index: 1; }
   font-size: var(--ed-fs-meta);
   color: var(--ed-ink-muted);
   line-height: 1.5;
+}
+
+/* ═══════════════════════════════════════════════════════════ */
+/*  L-V348 — sticky-nav anchor offset + wide two-column proof   */
+/* ═══════════════════════════════════════════════════════════ */
+
+/* Sticky nav is ~77px tall. Without this, every in-page anchor jump
+   (#nayte, #kurssit, #hinnoittelu, #faq) lands with the section title
+   tucked under the bar. scroll-padding-top on the scroll root offsets it. */
+html.landing { scroll-padding-top: 92px; }
+
+/* The proof card was a single ~720px column floating in the middle of a
+   wide section. On desktop it now spans wider and splits into the writing
+   (left, roomier) and the YTL evaluation (right). Mobile stays one column:
+   writing, then criteria, then the written feedback. */
+.landing .proof__panels { max-width: 1140px; }
+
+.landing .grader-card__cols {
+  display: grid;
+  gap: var(--ed-sp-6);
+}
+@media (min-width: 900px) {
+  .landing .grader-card__cols {
+    grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+    gap: var(--ed-sp-7);
+    align-items: start;
+  }
+}
+
+.landing .grader-card__eval {
+  display: grid;
+  gap: var(--ed-sp-5);
+  align-content: start;
+}
+
+/* Inside the two-column card the rubric reads as its own score panel,
+   so it drops the top divider it used when it sat under the prose. */
+.landing .grader-card__cols .rubric {
+  margin-top: 0;
+  padding: var(--ed-sp-5);
+  border-top: none;
+  background: var(--ed-bg-deep);
+  border: 1px solid var(--ed-rule);
+  border-radius: var(--ed-r-lg);
+}
+
+/* Highlight legend under the writing: yellow = spelling, terracotta
+   underline = structure. Mirrors the .ge mark colours exactly. */
+.landing .grader-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ed-sp-4);
+  margin-top: var(--ed-sp-4);
+}
+.landing .grader-legend__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--ed-fs-meta);
+  color: var(--ed-ink-subtle);
+}
+.landing .grader-legend__sw {
+  width: 22px;
+  height: 12px;
+  border-radius: 2px;
+  flex: 0 0 auto;
+}
+.landing .grader-legend__sw--spelling {
+  background: var(--ed-mark-spelling);
+  border-bottom: 2px solid var(--ed-mark-spelling-rule);
+}
+.landing .grader-legend__sw--grammar {
+  background: var(--ed-mark-grammar);
+  border-bottom: 2px solid var(--ed-mark-grammar-rule);
+}
+
+/* Written feedback — the part numbers can't say. Quiet block, teacher
+   voice. No side stripe, no glow. */
+.landing .grader-feedback {
+  padding: var(--ed-sp-5);
+  background: var(--ed-accent-soft);
+  border-radius: var(--ed-r-lg);
+}
+.landing .grader-feedback__label {
+  margin: 0 0 var(--ed-sp-2);
+  font-family: var(--ed-sans);
+  font-weight: 600;
+  font-size: var(--ed-fs-meta);
+  color: var(--ed-accent);
+}
+.landing .grader-feedback__body {
+  margin: 0;
+  font-size: var(--ed-fs-body);
+  line-height: 1.6;
+  color: var(--ed-ink);
 }
 
 /* ═══════════════════════════════════════════════════════════ */
