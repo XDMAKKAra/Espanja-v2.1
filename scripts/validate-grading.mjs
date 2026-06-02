@@ -1,23 +1,26 @@
-// L-V349 / L-V350 / L-V351 — Blind validation of the writing-grading engine
-// against YTL's official sample answers. Trilingual: Spanish (in-sample) +
-// German + French (both held-out — never used to tune the prompt).
+// L-V349 / L-V350 / L-V351 / L-V352 — Blind validation of the writing-grading
+// engine against YTL's official sample answers. Trilingual: Spanish (in-sample)
+// + German + French (both held-out — never used to tune the prompt or the fit).
 //
-// L-V351 changes vs L-V350:
-//   1. Grading model swapped to gpt-5.4-mini (harness-only; production default
-//      in lib/openai.js is untouched until this run PASSes).
-//   2. Few-shot anchoring: 6 real YTL-scored Spanish answers (lib/gradingAnchors)
-//      are injected into the prompt as calibration references, and the model is
-//      asked to score on the NATIVE YTL scale (0–33 short / 0–66 long) instead
-//      of rescaling a 0–20 total.
-//   3. Anti-leak: the 6 anchor answers are dropped from the Spanish test set
-//      (isAnchorAnswer). German + French are fully held-out (anchors are
-//      Spanish, so those languages never appear in the prompt).
+// L-V351 layers (kept): gpt-5.4-mini + few-shot anchoring (lib/gradingAnchors,
+// 6 real YTL-scored Spanish answers) + native-scale scoring (ytl_points
+// 0–33 short / 0–66 long). Anti-leak: the 6 anchors are dropped from the Spanish
+// test set; DE+FR never enter the prompt (anchors are Spanish).
 //
-// Pipeline (identical per language):
-//   parse ground-truth txt → grade each case BLIND with the production
-//   buildGradingPrompt + callOpenAI(gpt-5.4-mini, temp 0.2, json) +
-//   processGradingResult → per-task-type metrics (MAE, ±2/±4, max miss,
-//   Spearman ρ, bias) on the native YTL scale → compare to locked thresholds.
+// L-V352 new layer — AFFINE POST-CALIBRATION:
+//   V351 proved ranking is solved (ρ 0.84–0.95) but the absolute score is
+//   systematically harsh, ~constant per task type. We fit `official ≈ a·pred + b`
+//   by least squares on the SPANISH non-anchor cases ONLY (train), separately
+//   for short and long, then apply the SAME (a,b) to every language. DE+FR are
+//   held-out: they are never used to fit (a,b), so they measure generalisation.
+//   ρ is invariant under a positive affine map, so ranking is preserved.
+//   The fitted (a,b) are baked into lib/writingGrading.js (AFFINE_REMAP) so
+//   production applies the identical transform; this harness applies them via the
+//   shared affineRemap() so report == production by construction.
+//
+// Metrics (MAE, ±2/±4, max miss, ρ, bias) are reported on BOTH the raw native
+// prediction and the affine-CORRECTED score; the locked thresholds are checked
+// against the CORRECTED score. Band shown follows the corrected score.
 //
 // Run:  node scripts/validate-grading.mjs            (all three: es+de+fr)
 //       node scripts/validate-grading.mjs es         (one language)
@@ -27,16 +30,16 @@ import "dotenv/config";
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
-import { buildGradingPrompt, processGradingResult } from "../lib/writingGrading.js";
+import { buildGradingPrompt, processGradingResult, affineRemap, pointsToGradeNative } from "../lib/writingGrading.js";
 import { callOpenAI } from "../lib/openai.js";
 import { buildFewShotBlock, isAnchorAnswer } from "../lib/gradingAnchors.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "..");
 const AUDITS = join(ROOT, "docs", "audits");
-const OUT_JSON = join(AUDITS, "2026-06-02-L-V351-grading-gpt54mini-fewshot.json");
-const OUT_MD = join(AUDITS, "2026-06-02-L-V351-grading-gpt54mini-fewshot.md");
-// L-V350 raw metrics = the "before" baseline (gpt-4o-mini, no few-shot).
+const OUT_JSON = join(AUDITS, "2026-06-02-L-V352-grading-affine-remap.json");
+const OUT_MD = join(AUDITS, "2026-06-02-L-V352-grading-affine-remap.md");
+// L-V350 raw metrics = the earliest baseline (gpt-4o-mini, no few-shot).
 const V350_JSON = join(AUDITS, "2026-06-02-L-V350-grading-calibration.json");
 
 // Grading model for this run. Production (lib/openai.js OPENAI_MODEL) stays
@@ -298,12 +301,14 @@ async function gradeCase(c) {
     engineRaw20: result.finalScore,
     ytlPoints: round1(Number(aiResult.ytl_points)) || null,
     predYtl,
-    diff: round1(predYtl - c.officialScore),
+    rawDiff: round1(predYtl - c.officialScore),
+    // corrected / corrDiff / bandCorr are filled in main() after the affine fit.
+    corrected: null, corrDiff: null, bandCorr: null,
     dims: {
       viestinnallisyys: result.viestinnallisyys.score, kielen_rakenteet: result.kielen_rakenteet.score,
       sanasto: result.sanasto.score, kokonaisuus: result.kokonaisuus.score,
     },
-    band: result.ytlGrade,
+    band20: result.ytlGrade,
     overall_feedback_fi: result.overall_feedback_fi,
   };
 }
@@ -335,9 +340,33 @@ function pearson(x, y) {
 }
 const spearman = (x, y) => pearson(averageRanks(x), averageRanks(y));
 
-function metricsFor(rows) {
+// Least-squares fit of `official ≈ a·pred + b`. Returns slope, intercept, R²
+// (fraction of variance in `official` explained by the fitted line) and n.
+function fitAffine(preds, officials) {
+  const n = preds.length;
+  if (n < 2) return { a: 1, b: 0, r2: NaN, n };
+  const mp = mean(preds), mo = mean(officials);
+  let cov = 0, vp = 0, vo = 0;
+  for (let i = 0; i < n; i++) {
+    cov += (preds[i] - mp) * (officials[i] - mo);
+    vp += (preds[i] - mp) ** 2;
+    vo += (officials[i] - mo) ** 2;
+  }
+  const a = vp === 0 ? 1 : cov / vp;
+  const b = mo - a * mp;
+  // R² = 1 − SS_res/SS_tot of the fitted line on the training points.
+  let ssRes = 0;
+  for (let i = 0; i < n; i++) { const e = officials[i] - (a * preds[i] + b); ssRes += e * e; }
+  const r2 = vo === 0 ? NaN : 1 - ssRes / vo;
+  return { a: round(a * 1000) / 1000, b: round(b * 1000) / 1000, r2: round(r2 * 1000) / 1000, n };
+}
+
+// Metrics over a set of rows for a given diff field ("rawDiff" or "corrDiff").
+// Spearman is always computed on predYtl (rank-invariant under the affine map,
+// so raw and corrected ρ are identical) vs the official score.
+function metricsFromRows(rows, diffKey) {
   if (!rows.length) return null;
-  const diffs = rows.map((r) => r.diff);
+  const diffs = rows.map((r) => r[diffKey]);
   const abs = diffs.map(Math.abs);
   const n = rows.length;
   return {
@@ -347,10 +376,11 @@ function metricsFor(rows) {
     within2: round((abs.filter((d) => d <= 2).length / n) * 100),
     within4: round((abs.filter((d) => d <= 4).length / n) * 100),
     maxMiss: round(Math.max(...abs)),
-    // Native-scale prediction vs official score (rank-invariant).
     spearman: round(spearman(rows.map((r) => r.predYtl), rows.map((r) => r.officialScore))),
   };
 }
+const metricsCorr = (rows) => metricsFromRows(rows, "corrDiff");
+const metricsRaw = (rows) => metricsFromRows(rows, "rawDiff");
 
 // L-V350 precomputed "before" metrics (gpt-4o-mini, no few-shot).
 function metricsFromV350(lang, taskType) {
@@ -384,30 +414,57 @@ function verdict(m, type) {
 
 // ── Report formatting ──────────────────────────────────────────────────────────
 function fmtTable(rows) {
-  const head = "| case-id | tehtävä | YTL | ennuste (natiivi) | ero | V/R/S/K | 0–20 | band |\n|---|---|---|---|---|---|---|---|";
+  const head = "| case-id | tehtävä | YTL | raaka | korjattu | ero | V/R/S/K | 0–20 | band |\n|---|---|---|---|---|---|---|---|---|";
   return head + "\n" + rows.map((r) =>
-    `| ${r.id} | ${r.title} | ${r.officialScore} | ${r.predYtl} | ${r.diff >= 0 ? "+" : ""}${r.diff} | ${r.dims.viestinnallisyys}/${r.dims.kielen_rakenteet}/${r.dims.sanasto}/${r.dims.kokonaisuus} | ${r.engineRaw20} | ${r.band} |`
+    `| ${r.id} | ${r.title} | ${r.officialScore} | ${r.predYtl} | ${r.corrected} | ${r.corrDiff >= 0 ? "+" : ""}${r.corrDiff} | ${r.dims.viestinnallisyys}/${r.dims.kielen_rakenteet}/${r.dims.sanasto}/${r.dims.kokonaisuus} | ${r.engineRaw20} | ${r.bandCorr} |`
   ).join("\n");
 }
-function fmtMetrics(m, type) {
-  if (!m) return "_(ei caseja)_";
-  const v = verdict(m, type);
+function fmtMetrics(mCorr, mRaw, type) {
+  if (!mCorr) return "_(ei caseja)_";
+  const v = verdict(mCorr, type);
+  const line = (label, m) => `- ${label}: n ${m.n} · MAE ${m.mae} p · ±2p ${m.within2}% · ±4p ${m.within4}% · max ${m.maxMiss} p · ρ ${m.spearman} · bias ${m.bias >= 0 ? "+" : ""}${m.bias} p ${m.bias > 0 ? "(lepsu)" : m.bias < 0 ? "(ankara)" : ""}`;
   return [
-    `- n ${m.n} · MAE ${m.mae} p · ±2p ${m.within2}% · ±4p ${m.within4}% · max ${m.maxMiss} p · ρ ${m.spearman} · bias ${m.bias >= 0 ? "+" : ""}${m.bias} p ${m.bias > 0 ? "(lepsu)" : m.bias < 0 ? "(ankara)" : ""}`,
-    `- **${v.pass ? "PASS ✅" : "FAIL ❌"}** ${v.checks.map((c) => `${c.ok ? "✅" : "❌"}${c.name}(${c.got})`).join(" · ")}`,
+    mRaw ? line("raaka (ennen remapia)", mRaw) : null,
+    line("**korjattu (affiininen remap)**", mCorr),
+    `- **${v.pass ? "PASS ✅" : "FAIL ❌"}** ${v.checks.map((cc) => `${cc.ok ? "✅" : "❌"}${cc.name}(${cc.got})`).join(" · ")}`,
+  ].filter(Boolean).join("\n");
+}
+// Before→after chain: V350 (4o-mini) → this run RAW (5.4-mini+few-shot) → this
+// run CORRECTED (+affine remap). Columns are emitted only where data exists.
+function fmtChain(v350, raw, corr) {
+  if (!corr) return "_(ei dataa)_";
+  const cells = (pick) => [
+    v350 ? pick(v350) : null,
+    raw ? pick(raw) : null,
+    pick(corr),
+  ].filter((x) => x !== null);
+  const heads = [v350 ? "L-V350 (4o-mini)" : null, raw ? "raaka (5.4+few-shot)" : null, "korjattu (+remap)"].filter(Boolean);
+  const row = (label, pick) => `| ${label} | ${cells(pick).join(" | ")} |`;
+  return [
+    `| mittari | ${heads.join(" | ")} |`,
+    `|${" --- |".repeat(heads.length + 1)}`,
+    row("MAE", (m) => m.mae),
+    row("max-heitto", (m) => m.maxMiss),
+    row("Spearman ρ", (m) => m.spearman),
+    row("bias", (m) => `${m.bias >= 0 ? "+" : ""}${m.bias}`),
   ].join("\n");
 }
-function fmtBeforeAfter(before, after) {
-  if (!before) return "_(L-V350 baseline puuttuu)_";
-  const d = (a, b) => { const x = round(b - a); return `${x >= 0 ? "+" : ""}${x}`; };
+function fmtFit(fit) {
+  const f = (p) => `a=${p.a}, b=${p.b >= 0 ? "+" : ""}${p.b}, R²=${p.r2} (n=${p.n}, max=${p.max})`;
   return [
-    `| mittari | ennen (L-V350, 4o-mini) | jälkeen (L-V351, 5.4-mini+few-shot) | muutos |`,
-    `|---|---|---|---|`,
-    `| MAE | ${before.mae} | ${after.mae} | ${d(before.mae, after.mae)} |`,
-    `| max-heitto | ${before.maxMiss} | ${after.maxMiss} | ${d(before.maxMiss, after.maxMiss)} |`,
-    `| Spearman ρ | ${before.spearman} | ${after.spearman} | ${d(before.spearman, after.spearman)} |`,
-    `| bias | ${before.bias} | ${after.bias} | ${d(before.bias, after.bias)} |`,
+    `- **Lyhyt:** \`korjattu = ${fit.short.a}·raaka ${fit.short.b >= 0 ? "+ " + fit.short.b : "− " + Math.abs(fit.short.b)}\` → ${f(fit.short)}`,
+    `- **Laaja:** \`korjattu = ${fit.long.a}·raaka ${fit.long.b >= 0 ? "+ " + fit.long.b : "− " + Math.abs(fit.long.b)}\` → ${f(fit.long)}`,
   ].join("\n");
+}
+
+// Apply the fitted affine map to one row (mutates it): corrected score, corrected
+// diff vs official, and the native-scale band derived from the corrected score.
+function applyRemapToRow(r, fit) {
+  const p = r.taskType === "short" ? fit.short : fit.long;
+  r.corrected = affineRemap(r.predYtl, { a: p.a, b: p.b, max: p.max });
+  r.corrDiff = round1(r.corrected - r.officialScore);
+  r.bandCorr = pointsToGradeNative(r.corrected, p.max);
+  return r;
 }
 
 // ── Main ─────────────────────────────────────────────────────────────────────────
@@ -442,11 +499,13 @@ async function main() {
   }
 
   const out = {
-    generatedFor: "L-V351", date: "2026-06-02", model: GRADING_MODEL,
-    calibration: "few-shot anchoring (lib/gradingAnchors.js, 6 ES-ankkuria) + natiiviasteikko (ytl_points 0–33/0–66)",
+    generatedFor: "L-V352", date: "2026-06-02", model: GRADING_MODEL,
+    calibration: "few-shot anchoring (6 ES) + natiiviasteikko (0–33/0–66) + affiininen remap (fit ES-train, sovellettu kaikkiin)",
     blind: true, anchorsExcludedFromES: true, langs: {},
   };
 
+  // ── Phase 1: grade every case in every language BLIND, store raw rows. ──────
+  const parsed = {};
   for (const lang of langs) {
     const raw = readFileSync(SOURCES[lang], "utf8");
     const { cases, unparsed } = PARSERS[lang](raw);
@@ -458,22 +517,55 @@ async function main() {
       try { const r = await gradeCase(c); if (++done % 5 === 0 || done === cases.length) console.log(`  [${lang}] ${done}/${cases.length}`); return r; }
       catch (e) { console.error(`  [${lang}] VIRHE ${c.id}: ${e.message}`); return { ...c, error: e.message }; }
     });
+    parsed[lang] = {
+      ok: graded.filter((r) => !r.error),
+      errored: graded.filter((r) => r.error),
+      counts: { parsed: cases.length },
+      unparsed,
+    };
+  }
 
-    const ok = graded.filter((r) => !r.error);
+  // ── Phase 2: fit the affine map on SPANISH non-anchor cases ONLY (train). ───
+  // Separate (a,b) for short and long. DE+FR are NEVER used here → held-out.
+  const esOk = parsed.es ? parsed.es.ok : [];
+  const esShort = esOk.filter((r) => r.taskType === "short");
+  const esLong = esOk.filter((r) => r.taskType === "long");
+  let fit;
+  if (esShort.length >= 2 && esLong.length >= 2) {
+    fit = {
+      short: { ...fitAffine(esShort.map((r) => r.predYtl), esShort.map((r) => r.officialScore)), max: 33 },
+      long: { ...fitAffine(esLong.map((r) => r.predYtl), esLong.map((r) => r.officialScore)), max: 66 },
+      fittedOn: "ES non-anchor train (es+de+fr ajossa); DE+FR held-out",
+    };
+  } else {
+    // Single-language run without ES (e.g. `node … de`): cannot fit. Fall back to
+    // identity so raw == corrected, and warn loudly. The PASS verdict needs ES.
+    console.warn("[fit] VAROITUS: espanjaa ei ajettu → ei voida sovittaa affiinia. Identiteetti (a=1,b=0). Aja `all`.");
+    fit = { short: { a: 1, b: 0, r2: NaN, n: esShort.length, max: 33 }, long: { a: 1, b: 0, r2: NaN, n: esLong.length, max: 66 }, fittedOn: "IDENTITY (es puuttui ajosta)" };
+  }
+  out.fit = fit;
+  console.log(`\n[fit] LYHYT korjattu = ${fit.short.a}·raaka + ${fit.short.b} (R² ${fit.short.r2}, n ${fit.short.n})`);
+  console.log(`[fit] LAAJA  korjattu = ${fit.long.a}·raaka + ${fit.long.b} (R² ${fit.long.r2}, n ${fit.long.n})`);
+
+  // ── Phase 3: apply the SAME (a,b) to every row, compute corrected metrics. ──
+  for (const lang of langs) {
+    const P = parsed[lang];
+    const ok = P.ok.map((r) => applyRemapToRow(r, fit));
     const short = ok.filter((r) => r.taskType === "short").sort((a, b) => b.officialScore - a.officialScore);
     const long = ok.filter((r) => r.taskType === "long").sort((a, b) => b.officialScore - a.officialScore);
     out.langs[lang] = {
-      counts: { parsed: cases.length, graded: ok.length, errored: graded.length - ok.length, unparsed: unparsed.length },
-      unparsed,
-      metricsAfter: { short: metricsFor(short), long: metricsFor(long) },
-      metricsBefore: (lang === "es" || lang === "de")
+      counts: { parsed: P.counts.parsed, graded: ok.length, errored: P.errored.length, unparsed: P.unparsed.length },
+      unparsed: P.unparsed,
+      metricsAfter: { short: metricsCorr(short), long: metricsCorr(long) },   // corrected — checked vs thresholds
+      metricsRaw: { short: metricsRaw(short), long: metricsRaw(long) },        // pre-remap (V351-style)
+      metricsV350: (lang === "es" || lang === "de")
         ? { short: metricsFromV350(lang, "short"), long: metricsFromV350(lang, "long") }
         : null,
-      cases: ok, errored: graded.filter((r) => r.error),
+      cases: ok, errored: P.errored,
     };
-    const ms = metricsFor(short), ml = metricsFor(long);
-    console.log(`  [${lang}] LYHYT MAE ${ms?.mae} ρ ${ms?.spearman} max ${ms?.maxMiss} → ${verdict(ms, "short").pass ? "PASS" : "FAIL"}`);
-    console.log(`  [${lang}] LAAJA MAE ${ml?.mae} ρ ${ml?.spearman} → ${verdict(ml, "long").pass ? "PASS" : "FAIL"}`);
+    const ms = metricsCorr(short), ml = metricsCorr(long);
+    console.log(`  [${lang}] LYHYT korjattu MAE ${ms?.mae} ρ ${ms?.spearman} max ${ms?.maxMiss} → ${verdict(ms, "short").pass ? "PASS" : "FAIL"}`);
+    console.log(`  [${lang}] LAAJA korjattu MAE ${ml?.mae} ρ ${ml?.spearman} → ${verdict(ml, "long").pass ? "PASS" : "FAIL"}`);
   }
 
   // Cost accounting from the real run.
@@ -489,46 +581,58 @@ async function main() {
   writeFileSync(OUT_JSON, JSON.stringify(out, null, 2), "utf8");
   writeFileSync(OUT_MD, renderMd(out), "utf8");
   console.log(`\nKirjoitettu:\n  ${OUT_JSON}\n  ${OUT_MD}`);
+  // Only bake into lib/writingGrading.js AFFINE_REMAP if held-out (DE+FR) PASSes.
+  // A flat/degenerate long fit (low R²) or a failing held-out means the single
+  // ES-fit does not generalise — baking it would ship a miscalibrated transform.
+  console.log(`\n>>> Sovitetut (a,b) — BAKE lib/writingGrading.js:ään VAIN jos held-out PASS:`);
+  console.log(`    short: { a: ${fit.short.a}, b: ${fit.short.b}, max: 33 },  (R² ${fit.short.r2})`);
+  console.log(`    long:  { a: ${fit.long.a}, b: ${fit.long.b}, max: 66 },  (R² ${fit.long.r2})`);
   console.log(`Kustannus: ${_calls} kutsua, in ${_tokIn} / out ${_tokOut} tok → ~$${out.cost.estPer100Usd}/100 arviointia (oletettu hinta, VARMISTA).`);
 }
 
 function renderMd(out) {
   const parts = [];
-  parts.push(`# L-V351 — Arviointi: gpt-5.4-mini + few-shot-ankkurointi (espanja + saksa + ranska)
+  parts.push(`# L-V352 — Arviointi: affiininen jälkikalibrointi (espanja + saksa + ranska)
 
 **Päivä:** 2026-06-02
 **Malli:** \`${out.model}\` (harness; tuotanto pysyy gpt-4o-minissä kunnes tämä PASS).
-**Kalibrointi:** few-shot-ankkurointi — 6 oikeaa YTL-pisteytettyä espanja-vastausta (\`lib/gradingAnchors.js\`, skaala 15/25/33 lyhyt + 34/50/66 laaja) upotettu promptiin + **natiiviasteikko** (\`ytl_points\` 0–33 / 0–66, ei 0–20→skaalaus).
-**Anti-vuoto:** 6 ankkuria poistettu espanjan testisetistä (\`isAnchorAnswer\`). Saksa + ranska ovat täysin held-out (ankkurit ovat espanjaa → eivät esiinny promptissa näille kielille).
-**Sokkous:** moottori sai vain oppilaan tekstin + tehtäväkontekstin; \`officialScore\`/\`officialRationale\` stripattiin ennen kutsua.
-**Lukitut rajat:** lyhyt MAE ≤ 3, max ≤ 6, ρ ≥ 0.8 · laaja MAE ≤ 6, ρ ≥ 0.8. PASS = kaikki kolme kieltä läpäisevät molemmat tehtävätyypit.
+**Kerrokset:** few-shot-ankkurointi (6 ES-vastausta, \`lib/gradingAnchors.js\`) + **natiiviasteikko** (\`ytl_points\` 0–33 / 0–66) + **affiininen remap** (\`korjattu = a·raaka + b\`, sovitettu ES-trainilla, sovellettu kaikkiin kieliin).
+**Sovitus puhtaasti:** \`(a,b)\` sovitettu VAIN espanjan ei-ankkuri-caseilla (pienin neliösumma, erikseen lyhyt/laaja). **Saksa + ranska held-out** — niitä ei käytetty sovitukseen, joten ne mittaavat yleistymistä. ρ on invariantti positiivisen affiinin alla → ranking säilyy.
+**Anti-vuoto:** 6 ankkuria poistettu espanjan testisetistä (\`isAnchorAnswer\`); DE+FR eivät esiinny promptissa (ankkurit espanjaa).
+**Sokkous:** moottori sai vain oppilaan tekstin + tehtäväkontekstin; \`officialScore\`/\`officialRationale\` stripattiin.
+**Lukitut rajat (korjatuista pisteistä):** lyhyt MAE ≤ 3, max ≤ 6, ρ ≥ 0.8 · laaja MAE ≤ 6, ρ ≥ 0.8. PASS = kaikki kolme kieltä läpäisevät molemmat tehtävätyypit; **päämittari = held-out DE+FR**.
 `);
 
   const v = (lang, type) => verdict(out.langs[lang]?.metricsAfter?.[type], type).pass;
   const langsPresent = ["es", "de", "fr"].filter((l) => out.langs[l]);
+  const heldOut = langsPresent.filter((l) => l !== "es");
   const allPass = langsPresent.every((l) => v(l, "short") && v(l, "long"));
-  parts.push(`## Verdict\n\n**${allPass ? "PASS kaikilla kolmella kielellä ✅" : "EI PASS ❌"}** — ${allPass ? "ydin luotettava; tuotannon mallivaihto + few-shot perusteltu, scope-laajennus (englanti/ruotsi/äidinkieli) avautuu." : "katso kieli/tehtävätyyppi-kohtaiset rivit alla. Älä vaihda tuotantoa eikä laajenna ennen kuin kaikki kolme PASS."}\n`);
+  const heldOutPass = heldOut.length > 0 && heldOut.every((l) => v(l, "short") && v(l, "long"));
+  parts.push(`## Verdict\n\n**${allPass ? "PASS kaikilla kolmella kielellä ✅" : "EI PASS ❌"}** — held-out (DE+FR) ${heldOutPass ? "läpäisi ✅" : "EI läpäissyt ❌"} (tämä on päämittari; ES on in-sample ja näyttää aina paremmalta). ${allPass ? "Tuotannon mallivaihto + remap perusteltu." : "Älä vaihda tuotantoa ennen kuin kaikki kolme PASS; katso rivit alla + reunaehto-osio."}\n`);
+
+  parts.push(`## Affiininen sovitus (ES-train, pienin neliösumma)\n${fmtFit(out.fit)}\n\n_R² on sovitussuoran selitysaste espanjan train-pisteillä; korkea R² = lähes lineaarinen vinouma, jonka suora poistaa. Matala R² (laaja) = sovitus regressoi keskiarvoon eikä kalibroi. \`(a,b)\` baketaan \`lib/writingGrading.js\` → \`AFFINE_REMAP\`:iin VAIN jos held-out PASS; muuten AFFINE_REMAP pysyy identiteettinä (remap pois päältä tuotannossa)._`);
 
   // Cost
   const c = out.cost || {};
   parts.push(`## Kustannus (ajon todelliset token-luvut)
 - ${c.calls} arviointikutsua · input ${c.inputTokens} tok (ka ${c.avgInPerCall}/kutsu) · output ${c.outputTokens} tok (ka ${c.avgOutPerCall}/kutsu).
-- **~$${c.estPer100Usd} / 100 arviointia** oletetulla hinnalla $${c.priceAssumption?.inputPerM}/1M in + $${c.priceAssumption?.outputPerM}/1M out. ⚠️ gpt-5.4-minin listahinta on VARMISTETTAVA — token-luvut ovat todelliset, € on arvio.
-- Few-shot nostaa input-tokeneita (~1500 → ${c.avgInPerCall}/kutsu) odotetusti.
+- **~$${c.estPer100Usd} / 100 arviointia** oletetulla hinnalla $${c.priceAssumption?.inputPerM}/1M in + $${c.priceAssumption?.outputPerM}/1M out. ⚠️ gpt-5.4-minin listahinta on VARMISTETTAVA — token-luvut todelliset, € on arvio.
+- Remap on ilmainen (matematiikka). Few-shot pitää input-tokenit ~${c.avgInPerCall}/kutsu.
 `);
 
   for (const lang of langsPresent) {
     const L = out.langs[lang];
+    const heldTag = lang === "es" ? "in-sample (sovitusdata)" : "**held-out**";
     const short = L.cases.filter((cc) => cc.taskType === "short").sort((a, b) => b.officialScore - a.officialScore);
     const long = L.cases.filter((cc) => cc.taskType === "long").sort((a, b) => b.officialScore - a.officialScore);
-    parts.push(`\n---\n\n## ${LANG_NAME[lang]} — ${lang.toUpperCase()}\n`);
+    parts.push(`\n---\n\n## ${LANG_NAME[lang]} — ${lang.toUpperCase()} · ${heldTag}\n`);
     parts.push(`Caset: parsittu ${L.counts.parsed}, arvioitu ${L.counts.graded}, virheitä ${L.counts.errored}, parsimatta/poissuljettu ${L.counts.unparsed}.`);
     if (L.unparsed.length) parts.push(`\n> Parsimatta / poissuljettu:\n${L.unparsed.map((u) => `> - ${JSON.stringify(u)}`).join("\n")}`);
 
-    parts.push(`\n### Lyhyt (max 33 p)\n${fmtMetrics(L.metricsAfter.short, "short")}`);
-    if (L.metricsBefore?.short) parts.push(`\n**Ennen vs. jälkeen:**\n${fmtBeforeAfter(L.metricsBefore.short, L.metricsAfter.short)}`);
-    parts.push(`\n### Laaja (max 66 p)\n${fmtMetrics(L.metricsAfter.long, "long")}`);
-    if (L.metricsBefore?.long) parts.push(`\n**Ennen vs. jälkeen:**\n${fmtBeforeAfter(L.metricsBefore.long, L.metricsAfter.long)}`);
+    parts.push(`\n### Lyhyt (max 33 p)\n${fmtMetrics(L.metricsAfter.short, L.metricsRaw?.short, "short")}`);
+    parts.push(`\n**Ketju L-V350 → raaka → korjattu:**\n${fmtChain(L.metricsV350?.short, L.metricsRaw?.short, L.metricsAfter.short)}`);
+    parts.push(`\n### Laaja (max 66 p)\n${fmtMetrics(L.metricsAfter.long, L.metricsRaw?.long, "long")}`);
+    parts.push(`\n**Ketju L-V350 → raaka → korjattu:**\n${fmtChain(L.metricsV350?.long, L.metricsRaw?.long, L.metricsAfter.long)}`);
 
     parts.push(`\n#### Caset — lyhyt\n${fmtTable(short)}`);
     parts.push(`\n#### Caset — laaja\n${fmtTable(long)}`);
@@ -536,11 +640,12 @@ function renderMd(out) {
   }
 
   parts.push(`\n---\n\n## Caveatit
-- **Yläpään erottelu testautuu ensisijaisesti espanjan ei-ankkuri-caseilla.** Ranska on matalapainotteinen (lyhyt huippu 30, laaja 50) eikä stressi-testaa yläpäätä; saksan huippu 62; vain espanjassa on 66 p. Ranskan PASS ei ole todiste yläpäästä.
-- **Ranskan tehtävänumero päätellään avainsanoista** (classifyFrench), koska tiedostossa ei ole inline-koodia. Tarkista parsimatta-lista jos jokin case putosi.
-- PDF→teksti-purku tuottaa OCR-artefakteja kaikissa kolmessa (ankkureissakin näkyy liimautuneita sanoja — jätetty tarkoituksella aidoiksi).
-- temp 0.2 ei ole täysin deterministinen; "ennen"-luvut ovat L-V350:n erillisestä ajosta (gpt-4o-mini, ei few-shotia), joten pienet erot voivat olla ajovariaatiota — suunta + suuruusluokka ratkaisevat.
-- ⚠️ gpt-5.4-minin parametrit: harness käyttää \`max_completion_tokens\` + oletuslämpötilaa jos malli on gpt-5-perhettä (ks. lib/openai.js). temp 0.2 toteutuu vain jos malli sallii sen.
+- **Affiininen remap korjaa keskiarvon ja laajan, muttei yksittäisten caseiden jäännöshajontaa.** Jos lyhyt failaa \`max-heitto ≤ 6\` remapin jälkeen, syy on case-kohtainen (ei systemaattinen vinouma) — katso lyhyt-taulukon suurimmat \`ero\`-arvot. Niitä ei viritetä paramilla pois.
+- **Held-out DE+FR on päämittari.** Jos ES PASS mutta DE/FR FAIL, ES-trainin \`(a,b)\` ei yleisty → vinouma ei ole kieliriippumaton vakio (oletus pettää). Tämä näkyy DE/FR-biasissa korjauksen jälkeen.
+- **Yläpään erottelu** testautuu lähinnä espanjalla (ainoa 66 p); ranska matalapainotteinen (lyhyt huippu 30, laaja 50). Ranskan PASS ei todista yläpäätä.
+- Ranskan tehtävänumero päätellään avainsanoista (classifyFrench); tarkista parsimatta-lista.
+- PDF→teksti-purku tuottaa OCR-artefakteja; alkuperäisiä YTL-PDF:iä ei ole repossa, joten OCR-pohjaista uudelleentranskriptiota ei voitu tehdä — silppuuntuneet caset jäävät aidoiksi jäännösheitoiksi.
+- temp 0.2 ei ole täysin deterministinen; "L-V350"-luvut ovat erillisestä 4o-mini-ajosta. Suunta + suuruusluokka ratkaisevat.
 `);
   return parts.join("\n");
 }
