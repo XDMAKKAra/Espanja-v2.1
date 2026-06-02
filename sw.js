@@ -1,16 +1,17 @@
-const CACHE_VERSION = "puheo-v355";
+const CACHE_VERSION = "puheo-v356";
 const STATIC_ASSETS = [
   "/app.html",
   "/index.html",
   "/pricing.html",
   // F-ARCH-1 §B — design tokens single source of truth.
   "/css/tokens.css",
-  // L-LANG-LANDINGS-1 — per-language SEO landing pages.
+  // L-LANG-LANDINGS-1 / L-V356 — per-language abikurssi SEO landing pages
+  // (WordDive-brändi, jaettu index.html:n editorial-CSS-pinon kanssa).
   "/public/landing/espanja.html",
   "/public/landing/saksa.html",
   "/public/landing/ranska.html",
-  "/css/landing-de.css",
-  "/css/landing-fr.css",
+  "/css/landing-editorial-tokens.css",
+  "/css/landing-editorial.css",
   // L-LIVE-AUDIT-P2 UPDATE 1+2 — bundled CSS+JS replace 16 CSS links + 28 JS modules
   // on app.html cold load. Source files stay in repo + cached below for offline robustness.
   "/app.bundle.css",
@@ -36,8 +37,7 @@ const STATIC_ASSETS = [
   "/js/landing-catalog-lang.js",
   "/js/landing-proof-lang.js",
   "/js/landing-writing-demo.js",
-  "/js/landing-waitlist-de.js",
-  "/js/landing-waitlist-fr.js",
+  "/js/landing-lang-cta.js",
   "/img/illustrations/student-reading.svg",
   "/img/illustrations/student-walking.svg",
   "/img/illustrations/quill-inkwell.svg",
