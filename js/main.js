@@ -189,20 +189,20 @@ initOnboardingV4({ loadDashboard });
 window._onboardingV2 = { show: showOnboardingV2 };
 window._onboardingV3 = { show: showOnboardingV3 };
 window._onboardingV4 = { show: showOnboardingV4 };
-// Hash entry: /app.html#/aloitus → V3 (L-ONBOARDING-REDESIGN-1) by default.
-// Legacy V2 still reachable via /app.html#/aloitus-v2 for fallback testing.
-// L-V293-1a V4 reachable via /app.html#/aloitus-v4 for diagnostic-first preview.
+// Hash entry: /app.html#/aloitus → V4 (L-V359 diagnostic-first + product choice)
+// by default. Legacy V2/V3 still reachable via /app.html#/aloitus-v2 and
+// /app.html#/aloitus-v3 for fallback testing.
 // BUGFIX: only trigger onboarding from hash if the user is NOT logged in. For
 // logged-in users, the startup `checkOnboarding()` path below is authoritative
-// — re-running showOnboardingV3() here would leave `screen-ob-v3-reveal` with
-// the `.active` class and bleed through behind the dashboard/path screen.
+// — re-running the onboarding here would leave its screen with the `.active`
+// class and bleed through behind the dashboard/path screen.
 if (!isLoggedIn()) {
-  if (location.hash === "#/aloitus") {
-    setTimeout(() => showOnboardingV3(), 0);
+  if (location.hash === "#/aloitus" || location.hash === "#/aloitus-v4") {
+    setTimeout(() => showOnboardingV4(), 0);
   } else if (location.hash === "#/aloitus-v2") {
     setTimeout(() => showOnboardingV2(), 0);
-  } else if (location.hash === "#/aloitus-v4") {
-    setTimeout(() => showOnboardingV4(), 0);
+  } else if (location.hash === "#/aloitus-v3") {
+    setTimeout(() => showOnboardingV3(), 0);
   }
 }
 initPlacement({ loadDashboard });

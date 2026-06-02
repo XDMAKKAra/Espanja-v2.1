@@ -26,7 +26,7 @@ import {
   renderWritingPrompt,
 } from "../features/miniYO.js";
 
-const STAGE_ORDER = ["intro", "test", "courses", "biography", "textbook", "summary"];
+const STAGE_ORDER = ["intro", "test", "courses", "biography", "textbook", "summary", "choice"];
 
 const SCREEN_ID = {
   intro: "screen-ob-v4-intro",
@@ -35,6 +35,13 @@ const SCREEN_ID = {
   biography: "screen-ob-v4-biography",
   textbook: "screen-ob-v4-textbook",
   summary: "screen-ob-v4-summary",
+  choice: "screen-ob-v4-choice",
+};
+
+// L-V359 — product → backend tier/billing contract (routes/stripe.js).
+const PRODUCT_TIER = {
+  kurssi: { tier: "mestari", billing: "package" },
+  treeni: { tier: "treeni", billing: "monthly" },
 };
 
 const TEST_PARTS = ["a_grammar", "b_reading", "c_writing"];
@@ -63,6 +70,7 @@ export function initOnboardingV4(deps = {}) {
   wireBiography();
   wireTextbook();
   wireSummary();
+  wireChoice();
 }
 
 export async function showOnboardingV4(opts = {}) {
@@ -559,16 +567,78 @@ function escapeAttr(s) {
   return String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 }
 
-// ─── Step 5: Yhteenveto (mockup) ────────────────────────────────────────────
+// ─── Step 5: Yhteenveto (tulokset) ──────────────────────────────────────────
 function wireSummary() {
   $("ob-v4-summary-start")?.addEventListener("click", () => {
     track("ob_v4_completed", { language: state.language, courses: state.coursesCompleted.length });
-    if (typeof _deps.loadDashboard === "function") {
-      _deps.loadDashboard();
-    } else {
-      window.location.hash = "#/dashboard";
-    }
+    // L-V359 — results now lead into the product choice, not straight to app.
+    gotoStage("choice");
   });
+}
+
+// ─── Step 6: Tuotevalinta (L-V359) ──────────────────────────────────────────
+function wireChoice() {
+  $("ob-v4-choice-kurssi")?.addEventListener("click", () => beginCheckout("kurssi"));
+  $("ob-v4-choice-treeni")?.addEventListener("click", () => beginCheckout("treeni"));
+  $("ob-v4-choice-free")?.addEventListener("click", () => finishToApp("free_continue"));
+  $("ob-v4-choice-status-free")?.addEventListener("click", () => finishToApp("free_after_checkout_pending"));
+}
+
+// Calls the real checkout endpoint. When Stripe is live the response carries a
+// hosted-checkout URL and we redirect; while it is unwired the endpoint answers
+// 503, so we show a calm "tulossa pian" state with a free exit instead of an
+// error. Same call works unchanged once Stripe is connected.
+async function beginCheckout(product) {
+  const map = PRODUCT_TIER[product];
+  if (!map) return;
+  track("ob_v4_checkout_started", { product, language: state.language });
+
+  const btn = $(product === "kurssi" ? "ob-v4-choice-kurssi" : "ob-v4-choice-treeni");
+  const original = btn ? btn.textContent : "";
+  if (btn) { btn.disabled = true; btn.textContent = "Avataan maksua…"; }
+
+  try {
+    if (!isLoggedIn()) {
+      // Signup precedes this step in the flow, but route safely if not.
+      try { localStorage.setItem("puheo:pending_product", product); } catch { /* private mode */ }
+      window.location.hash = "#/rekisteroidy";
+      return;
+    }
+    const resp = await apiFetch(`${API}/api/stripe/checkout-session`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(map),
+    });
+    if (resp.ok) {
+      const data = await resp.json().catch(() => ({}));
+      if (data && data.url) {
+        window.location.href = data.url; // Stripe live → hosted checkout
+        return;
+      }
+    }
+    showCheckoutPending(product); // 503 or missing url → graceful state
+  } catch (_e) {
+    showCheckoutPending(product);
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = original; }
+  }
+}
+
+function showCheckoutPending(product) {
+  track("ob_v4_checkout_unavailable", { product, language: state.language });
+  const status = $("ob-v4-choice-status");
+  if (!status) return;
+  status.hidden = false;
+  status.scrollIntoView({ behavior: "smooth", block: "center" });
+}
+
+function finishToApp(reason) {
+  track("ob_v4_choice_resolved", { reason, language: state.language });
+  if (typeof _deps.loadDashboard === "function") {
+    _deps.loadDashboard();
+  } else {
+    window.location.hash = "#/dashboard";
+  }
 }
 
 function renderSummary() {

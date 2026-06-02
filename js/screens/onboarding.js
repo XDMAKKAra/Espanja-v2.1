@@ -8,7 +8,7 @@ import { deriveWeakness } from "../../lib/weakness.js";
 // V1 screens (showWelcome / wirePath / wireGoal) stay in this module for now
 // so #/aloitus + previously-half-done sessions keep working; they will be
 // removed in a follow-up loop after V2 has soaked in production.
-import { showOnboardingV2 } from "./onboardingV2.js";
+import { showOnboardingV4 } from "./onboardingV4.js";
 
 // YO-koe 28.9.2026 klo 9:00 Helsinki (EEST = UTC+3)
 const EXAM_MS = Date.parse("2026-09-28T09:00:00+03:00");
@@ -31,10 +31,10 @@ export async function checkOnboarding() {
     if (!res.ok) return false;
     const { profile } = await res.json();
     if (!profile || !profile.onboarding_completed) {
-      // L-PLAN-4 UPDATE 7, route every fresh-account / mid-onboarding boot to
-      // the V2 flow. Legacy V1 screens stay reachable via direct screen-id
-      // navigation but no longer enter the boot path.
-      showOnboardingV2();
+      // L-V359 — route every fresh-account / mid-onboarding boot to the V4
+      // diagnostic-first flow (kartoitus → tulokset → tuotevalinta). Legacy V2
+      // stays reachable via direct screen-id navigation for fallback testing.
+      showOnboardingV4();
       return true;
     }
     window._userProfile = profile;
