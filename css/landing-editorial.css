@@ -407,11 +407,17 @@ body.landing > * { position: relative; z-index: 1; }
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 6px;
   min-height: 44px;
-  padding: 8px;
+  /* L-V361 — separate the secondary "Kirjaudu" from the brick primary with a
+     hairline and extra space so the two stop reading as a clumsy stacked pair.
+     Lighter weight + muted colour keep it clearly subordinate. */
+  margin-top: var(--ed-sp-2);
+  padding: var(--ed-sp-4) 8px 8px;
+  border-top: 1px solid var(--ed-rule);
   font-family: var(--ed-sans);
-  font-size: 1rem;
-  font-weight: 600;
+  font-size: 0.9375rem;
+  font-weight: 500;
   color: var(--ed-ink-muted);
   text-decoration: none;
   transition: color var(--ed-t-fast);

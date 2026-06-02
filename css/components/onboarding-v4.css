@@ -696,3 +696,93 @@
   .ob4-plan__unit { display: inline; }
   .ob4-plan__cta, .ob4-choice__pending .ob4-btn { align-self: stretch; text-align: center; }
 }
+
+/* ─── Intro language picker (L-V359) ───────────────────────────────────── */
+.ob4-lang {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.ob4-lang__label {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text, #1f1d1a);
+}
+.ob4-lang__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.ob4-lang__chip {
+  appearance: none;
+  border: 1px solid var(--line, #d8d4cb);
+  background: var(--surface, #fff);
+  color: var(--text, #1f1d1a);
+  padding: 9px 18px;
+  border-radius: 999px;
+  font: inherit;
+  font-size: 15px;
+  cursor: pointer;
+  transition: border-color 160ms ease, background 160ms ease, transform 120ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+.ob4-lang__chip:hover { border-color: #c9c2b6; }
+.ob4-lang__chip:active { transform: scale(0.97); }
+.ob4-lang__chip.is-selected {
+  border-color: var(--accent, #a0341f);
+  background: #fbf4f1;
+  font-weight: 600;
+}
+
+/* ─── Account step (L-V359) ────────────────────────────────────────────── */
+.ob4-acct-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 420px;
+}
+.ob4-acct-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.ob4-acct-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text, #1f1d1a);
+}
+.ob4-acct-optional {
+  font-weight: 400;
+  color: var(--text-2, #6f6a62);
+}
+.ob4-acct-input {
+  appearance: none;
+  border: 1px solid var(--line, #d8d4cb);
+  border-radius: 10px;
+  padding: 12px 14px;
+  font: inherit;
+  font-size: 16px;
+  background: var(--surface, #fff);
+  color: var(--text, #1f1d1a);
+}
+.ob4-acct-input:focus {
+  outline: none;
+  border-color: var(--accent, #a0341f);
+}
+.ob4-acct-help {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-2, #6f6a62);
+  line-height: 1.45;
+}
+.ob4-acct-error {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--accent, #a0341f);
+  background: #fbf3ef;
+  border: 1px solid var(--accent, #a0341f);
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+.ob4-acct-error[hidden] { display: none; }

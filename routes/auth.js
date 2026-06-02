@@ -20,16 +20,25 @@ function validatePassword(pw) {
 }
 
 router.post("/register", registerLimiter, async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, name, phone } = req.body;
   if (!email || !password) {
     return res.status(400).json({ error: "Sähköposti ja salasana vaaditaan" });
   }
   const pwError = validatePassword(password);
   if (pwError) return res.status(400).json({ error: pwError });
+
+  // Name + phone are profile fields, not authorization data, so user_metadata
+  // is the right home (never read these in RLS / auth decisions). Name is
+  // required; phone is optional. Trim and length-cap to keep the row tidy.
+  const cleanName = typeof name === "string" ? name.trim().slice(0, 80) : "";
+  if (!cleanName) return res.status(400).json({ error: "Kerro nimesi" });
+  const cleanPhone = typeof phone === "string" ? phone.trim().slice(0, 32) : "";
+
   const { data: created, error: createErr } = await supabase.auth.admin.createUser({
     email: email.toLowerCase().trim(),
     password,
     email_confirm: true,
+    user_metadata: cleanPhone ? { full_name: cleanName, phone: cleanPhone } : { full_name: cleanName },
   });
   if (createErr) {
     if (createErr.message.toLowerCase().includes("already")) {

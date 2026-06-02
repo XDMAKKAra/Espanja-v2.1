@@ -8,7 +8,7 @@
 // Entrypoint hash: #/aloitus-v4 (V3 stays default until V4 is content-complete).
 
 import { $, show } from "../ui/nav.js";
-import { API, isLoggedIn, apiFetch } from "../api.js";
+import { API, isLoggedIn, apiFetch, setAuth, humanizeApiError } from "../api.js";
 import { setLanguage } from "../state.js";
 import { track } from "../analytics.js";
 import {
@@ -26,7 +26,7 @@ import {
   renderWritingPrompt,
 } from "../features/miniYO.js";
 
-const STAGE_ORDER = ["intro", "test", "courses", "biography", "textbook", "summary", "choice"];
+const STAGE_ORDER = ["intro", "test", "courses", "biography", "textbook", "summary", "account", "choice"];
 
 const SCREEN_ID = {
   intro: "screen-ob-v4-intro",
@@ -35,8 +35,11 @@ const SCREEN_ID = {
   biography: "screen-ob-v4-biography",
   textbook: "screen-ob-v4-textbook",
   summary: "screen-ob-v4-summary",
+  account: "screen-ob-v4-account",
   choice: "screen-ob-v4-choice",
 };
+
+const SUPPORTED_LANGS = ["es", "de", "fr"];
 
 // L-V359 — product → backend tier/billing contract (routes/stripe.js).
 const PRODUCT_TIER = {
@@ -70,12 +73,14 @@ export function initOnboardingV4(deps = {}) {
   wireBiography();
   wireTextbook();
   wireSummary();
+  wireAccount();
   wireChoice();
 }
 
 export async function showOnboardingV4(opts = {}) {
   state.language = opts.language || resolveLanguage();
   if (state.language) setLanguage(state.language);
+  reflectLanguageChips();
   show(SCREEN_ID.intro);
   track("ob_v4_started", { language: state.language });
 
@@ -90,10 +95,24 @@ export async function showOnboardingV4(opts = {}) {
 
 function resolveLanguage() {
   try {
-    return localStorage.getItem("puheo:lang") || "es";
+    const stored = localStorage.getItem("puheo:lang");
+    return SUPPORTED_LANGS.includes(stored) ? stored : "es";
   } catch {
     return "es";
   }
+}
+
+// Mark the chip matching the current language as selected. Pre-selects the
+// language carried over from the landing page (puheo:lang) while still letting
+// the user switch.
+function reflectLanguageChips() {
+  const langWrap = $("ob-v4-lang");
+  if (!langWrap) return;
+  langWrap.querySelectorAll(".ob4-lang__chip").forEach((chip) => {
+    const on = chip.dataset.lang === state.language;
+    chip.classList.toggle("is-selected", on);
+    chip.setAttribute("aria-checked", on ? "true" : "false");
+  });
 }
 
 function gotoStage(stage) {
@@ -121,6 +140,19 @@ function advanceFromBiography() {
 
 // ─── Step 1: Intro ──────────────────────────────────────────────────────────
 function wireIntro() {
+  const langWrap = $("ob-v4-lang");
+  if (langWrap) {
+    langWrap.addEventListener("click", (e) => {
+      const chip = e.target.closest(".ob4-lang__chip");
+      if (!chip) return;
+      const lang = chip.dataset.lang;
+      if (!SUPPORTED_LANGS.includes(lang)) return;
+      state.language = lang;
+      try { localStorage.setItem("puheo:lang", lang); } catch { /* private mode */ }
+      setLanguage(lang);
+      reflectLanguageChips();
+    });
+  }
   $("ob-v4-intro-start")?.addEventListener("click", () => {
     state.currentPart = "a_grammar";
     gotoStage("test");
@@ -571,9 +603,123 @@ function escapeAttr(s) {
 function wireSummary() {
   $("ob-v4-summary-start")?.addEventListener("click", () => {
     track("ob_v4_completed", { language: state.language, courses: state.coursesCompleted.length });
-    // L-V359 — results now lead into the product choice, not straight to app.
+    // L-V359 — results lead into the account step (create account or continue
+    // without one), then the product choice. Logged-in users skip the account
+    // step since their results already persist as they go.
+    gotoStage(isLoggedIn() ? "choice" : "account");
+  });
+}
+
+// ─── Step: tilin luonti (kartoituksen JÄLKEEN, ennen tuotevalintaa) ──────────
+function wireAccount() {
+  const form = $("ob-v4-acct-form");
+  if (form) {
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      submitAccount();
+    });
+  }
+  $("ob-v4-acct-skip")?.addEventListener("click", () => {
+    track("ob_v4_account_skipped", { language: state.language });
     gotoStage("choice");
   });
+}
+
+function showAccountError(msg) {
+  const el = $("ob-v4-acct-error");
+  if (!el) return;
+  el.textContent = msg;
+  el.hidden = !msg;
+}
+
+async function submitAccount() {
+  const name = $("ob-v4-acct-name")?.value.trim() || "";
+  const phone = $("ob-v4-acct-phone")?.value.trim() || "";
+  const email = $("ob-v4-acct-email")?.value.trim() || "";
+  const password = $("ob-v4-acct-password")?.value || "";
+
+  if (!name) return showAccountError("Kerro nimesi.");
+  if (!email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return showAccountError("Tarkista sähköpostiosoite.");
+  if (password.length < 8) return showAccountError("Salasanan tulee olla vähintään 8 merkkiä.");
+  showAccountError("");
+
+  const btn = $("ob-v4-acct-submit");
+  const original = btn ? btn.textContent : "";
+  if (btn) { btn.disabled = true; btn.textContent = "Luodaan tiliä…"; }
+
+  try {
+    const resp = await apiFetch(`${API}/api/auth/register`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, phone, email, password }),
+    });
+    const data = await resp.json().catch(() => ({}));
+    if (!resp.ok) {
+      showAccountError(data.error || "Rekisteröinti epäonnistui. Yritä uudelleen.");
+      return;
+    }
+    setAuth(data.token, data.refreshToken, data.email);
+    track("ob_v4_account_created", { language: state.language });
+    // Persist the anonymous results onto the new account before moving on.
+    await flushDiagnosticToAccount();
+    // If the user got here by tapping a paid product first, resume that
+    // checkout now that they have an account. Otherwise show the choice.
+    let pending = null;
+    try { pending = localStorage.getItem("puheo:pending_product"); localStorage.removeItem("puheo:pending_product"); } catch { /* private mode */ }
+    gotoStage("choice");
+    if (pending && PRODUCT_TIER[pending]) beginCheckout(pending);
+  } catch (err) {
+    showAccountError(humanizeApiError(err));
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = original; }
+  }
+}
+
+// Replay the in-session diagnostic onto the freshly-created account. Each call
+// is best-effort: a single failed write must not block the user from reaching
+// the product choice, and the diagnostic endpoints are idempotent UPSERTs.
+async function flushDiagnosticToAccount() {
+  const lang = state.language;
+  try {
+    for (const p of state.progress) {
+      await saveAnswer({
+        language: lang,
+        part: p.part,
+        questionIndex: p.question_index,
+        questionId: p.question_id,
+        userAnswer: p.user_answer,
+        isCorrect: p.is_correct,
+      });
+    }
+    if (state.coursesCompleted.length || Object.keys(state.courseGrades).length) {
+      await apiFetch(`${API}/api/onboarding/diagnostic/courses`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          language: lang,
+          courses_completed: state.coursesCompleted,
+          course_grades: state.courseGrades,
+        }),
+      });
+    }
+    if (state.biography.home_usage || state.biography.lived_abroad || state.biography.frequency) {
+      await apiFetch(`${API}/api/onboarding/diagnostic/biography`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ language: lang, ...state.biography }),
+      });
+    }
+    const textbookKey = state.textbookKey === "other" && state.textbookFreeText
+      ? `other:${state.textbookFreeText}`.slice(0, 32)
+      : state.textbookKey;
+    await completeDiagnostic({
+      language: lang,
+      status: state.miniYoStatus || "in_progress",
+      textbookKey: textbookKey || undefined,
+    });
+  } catch (err) {
+    console.warn("diagnostic flush after signup failed (non-fatal):", err.message);
+  }
 }
 
 // ─── Step 6: Tuotevalinta (L-V359) ──────────────────────────────────────────
@@ -599,9 +745,12 @@ async function beginCheckout(product) {
 
   try {
     if (!isLoggedIn()) {
-      // Signup precedes this step in the flow, but route safely if not.
+      // A paid product needs an account. The user reached here via "jatka ilman
+      // tiliä", so send them back to the inline account step rather than the
+      // legacy email-only register screen. Stash the choice so we can resume it.
       try { localStorage.setItem("puheo:pending_product", product); } catch { /* private mode */ }
-      window.location.hash = "#/rekisteroidy";
+      if (btn) { btn.disabled = false; btn.textContent = original; }
+      gotoStage("account");
       return;
     }
     const resp = await apiFetch(`${API}/api/stripe/checkout-session`, {

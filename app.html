@@ -717,6 +717,14 @@
       <h1 class="ob4-title">Räätälöidään sinun polkusi</h1>
       <p class="ob4-sub">Lyhyt taso-arvio kattaa kieliopin, luetun ymmärtämisen ja kirjoittamisen. Saat henkilökohtaisen 3 viikon suunnitelman ja säästät tunteja, koska et harjoittele sitä mitä jo osaat. Voit jatkaa myöhemmin missä jäit.</p>
       <p class="ob4-hint">Voit pilkkoa testin useaan istuntoon. Kirjoitelman voi ohittaa, jos on kiire.</p>
+      <div class="ob4-lang" id="ob-v4-lang" role="radiogroup" aria-label="Valitse kieli">
+        <p class="ob4-lang__label">Mitä kieltä harjoittelet?</p>
+        <div class="ob4-lang__chips">
+          <button type="button" class="ob4-lang__chip" data-lang="es" role="radio" aria-checked="false">Espanja</button>
+          <button type="button" class="ob4-lang__chip" data-lang="de" role="radio" aria-checked="false">Saksa</button>
+          <button type="button" class="ob4-lang__chip" data-lang="fr" role="radio" aria-checked="false">Ranska</button>
+        </div>
+      </div>
       <div class="ob4-actions">
         <button type="button" class="ob4-btn ob4-btn--primary" id="ob-v4-intro-start">Aloita taso-arvio</button>
         <button type="button" class="ob4-btn ob4-btn--ghost" id="ob-v4-intro-skip">Ohita kokonaan</button>
@@ -922,6 +930,39 @@
       <div class="ob4-actions">
         <button type="button" class="ob4-btn ob4-btn--primary" id="ob-v4-summary-start">Jatka</button>
       </div>
+    </div>
+  </div>
+
+  <!-- ─── L-V359 account step (after results, before product choice) ──── -->
+  <div id="screen-ob-v4-account" class="screen ob4">
+    <div class="ob4-shell">
+      <p class="ob4-step">Melkein valmista</p>
+      <h1 class="ob4-title">Tallenna tuloksesi</h1>
+      <p class="ob4-sub">Luo tili, niin tasoarviosi ja oppimispolkusi säilyvät, ja pääset jatkamaan samasta kohdasta millä tahansa laitteella. Voit myös jatkaa ilman tiliä, mutta tulokset katoavat kun suljet sivun.</p>
+      <form class="ob4-acct-form" id="ob-v4-acct-form" novalidate>
+        <div class="ob4-acct-field">
+          <label class="ob4-acct-label" for="ob-v4-acct-name">Nimi</label>
+          <input type="text" class="ob4-acct-input" id="ob-v4-acct-name" name="name" autocomplete="name" maxlength="80" />
+        </div>
+        <div class="ob4-acct-field">
+          <label class="ob4-acct-label" for="ob-v4-acct-phone">Puhelinnumero <span class="ob4-acct-optional">(valinnainen)</span></label>
+          <input type="tel" class="ob4-acct-input" id="ob-v4-acct-phone" name="phone" autocomplete="tel" maxlength="32" inputmode="tel" />
+        </div>
+        <div class="ob4-acct-field">
+          <label class="ob4-acct-label" for="ob-v4-acct-email">Sähköposti</label>
+          <input type="email" class="ob4-acct-input" id="ob-v4-acct-email" name="email" autocomplete="email" maxlength="120" />
+        </div>
+        <div class="ob4-acct-field">
+          <label class="ob4-acct-label" for="ob-v4-acct-password">Salasana</label>
+          <input type="password" class="ob4-acct-input" id="ob-v4-acct-password" name="password" autocomplete="new-password" maxlength="120" />
+          <p class="ob4-acct-help">Vähintään 8 merkkiä, mukana iso ja pieni kirjain sekä numero.</p>
+        </div>
+        <p class="ob4-acct-error" id="ob-v4-acct-error" hidden role="alert"></p>
+        <div class="ob4-actions">
+          <button type="submit" class="ob4-btn ob4-btn--primary" id="ob-v4-acct-submit">Luo tili</button>
+          <button type="button" class="ob4-btn ob4-btn--ghost" id="ob-v4-acct-skip">Jatka ilman tiliä</button>
+        </div>
+      </form>
     </div>
   </div>
 
@@ -1660,10 +1701,10 @@
       </p>
 
       <div class="mode-page__cta-row">
-        <button class="btn--cta" id="btn-start-writing" data-target="writing" data-cta-meta="LYHYT · {TOPIC}">
+        <button class="btn--cta" id="btn-start-writing" data-target="writing" data-cta-meta="Lyhyt · {TOPIC}">
           <span class="btn--cta__l">
             <span class="btn--cta__title">Aloita kirjoittaminen</span>
-            <span class="btn--cta__meta">LYHYT · SEKALAISET</span>
+            <span class="btn--cta__meta">Lyhyt · sekalaiset</span>
           </span>
           <span class="btn--cta__arrow" aria-hidden="true">→</span>
         </button>

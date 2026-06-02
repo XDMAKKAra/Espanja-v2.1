@@ -76,7 +76,7 @@ vi.mock("../supabase.js", () => ({
   default: {
     auth: {
       admin: {
-        createUser: vi.fn(async () => state.createUser),
+        createUser: vi.fn(async (args) => { state.createUserArgs = args; return state.createUser; }),
         listUsers: vi.fn(async () => state.listUsers),
         updateUserById: vi.fn(async () => state.updateUserById),
       },
@@ -120,6 +120,7 @@ let request, app;
 
 beforeEach(async () => {
   state.createUser = null;
+  state.createUserArgs = null;
   state.signIn = null;
   state.refreshSession = null;
   state.listUsers = { data: { users: [] } };
@@ -170,7 +171,7 @@ describe("POST /api/auth/register — validation", () => {
   });
 
   it("400 on password missing a digit", async () => {
-    const res = await request(app).post("/api/auth/register").send({ email: "a@b.com", password: "Abcdefgh" });
+    const res = await request(app).post("/api/auth/register").send({ email: "a@b.com", password: "Abcdefgh", name: "Maija" });
     expect(res.status).toBe(400);
     expect(res.body.error).toMatch(/numero/);
   });
@@ -179,14 +180,14 @@ describe("POST /api/auth/register — validation", () => {
 describe("POST /api/auth/register — supabase failures", () => {
   it("400 'already in use' when Supabase says the email is taken", async () => {
     state.createUser = { data: null, error: { message: "User already registered" } };
-    const res = await request(app).post("/api/auth/register").send({ email: "a@b.com", password: "Abcdefg1" });
+    const res = await request(app).post("/api/auth/register").send({ email: "a@b.com", password: "Abcdefg1", name: "Maija" });
     expect(res.status).toBe(400);
     expect(res.body.error).toMatch(/käytössä/);
   });
 
   it("500 on a generic Supabase error", async () => {
     state.createUser = { data: null, error: { message: "server exploded" } };
-    const res = await request(app).post("/api/auth/register").send({ email: "a@b.com", password: "Abcdefg1" });
+    const res = await request(app).post("/api/auth/register").send({ email: "a@b.com", password: "Abcdefg1", name: "Maija" });
     expect(res.status).toBe(500);
   });
 });
@@ -201,7 +202,7 @@ describe("POST /api/auth/register — happy path", () => {
       },
       error: null,
     };
-    const res = await request(app).post("/api/auth/register").send({ email: "A@B.COM", password: "Abcdefg1" });
+    const res = await request(app).post("/api/auth/register").send({ email: "A@B.COM", password: "Abcdefg1", name: "Maija" });
     expect(res.status).toBe(200);
     expect(res.body.token).toBe("access");
     expect(res.body.refreshToken).toBe("refresh");
@@ -209,6 +210,34 @@ describe("POST /api/auth/register — happy path", () => {
     expect(res.body.email).toBe("a@b.com");
     // A verification row should be upserted
     expect(state.inserted.some((i) => i.name === "email_verifications")).toBe(true);
+  });
+
+  it("400 when name is missing (L-V359 name required)", async () => {
+    const res = await request(app).post("/api/auth/register").send({ email: "a@b.com", password: "Abcdefg1" });
+    expect(res.status).toBe(400);
+    expect(res.body.error).toMatch(/nime/i);
+  });
+
+  it("stores name + phone in user_metadata (L-V359)", async () => {
+    state.createUser = { data: { user: { id: "u1", email: "a@b.com" } }, error: null };
+    state.signIn = {
+      data: { session: { access_token: "access", refresh_token: "refresh" }, user: { email: "a@b.com" } },
+      error: null,
+    };
+    await request(app).post("/api/auth/register").send({
+      email: "a@b.com", password: "Abcdefg1", name: "  Maija M  ", phone: " 040 123 4567 ",
+    });
+    expect(state.createUserArgs.user_metadata).toEqual({ full_name: "Maija M", phone: "040 123 4567" });
+  });
+
+  it("omits phone from user_metadata when not given (L-V359)", async () => {
+    state.createUser = { data: { user: { id: "u1", email: "a@b.com" } }, error: null };
+    state.signIn = {
+      data: { session: { access_token: "access", refresh_token: "refresh" }, user: { email: "a@b.com" } },
+      error: null,
+    };
+    await request(app).post("/api/auth/register").send({ email: "a@b.com", password: "Abcdefg1", name: "Maija" });
+    expect(state.createUserArgs.user_metadata).toEqual({ full_name: "Maija" });
   });
 });
 

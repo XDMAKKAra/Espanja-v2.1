@@ -676,14 +676,45 @@ body.app .btn--cta--accent .btn--cta__title,
 body.app .btn--cta--accent .btn--cta__arrow { color: var(--ed-accent-ink); }
 body.app .btn--cta--accent .btn--cta__meta { color: color-mix(in oklch, var(--ed-accent-ink) 82%, transparent); }
 
-/* Default .btn--cta variant is dark-on-cream-page. Legacy mint/teal
-   meta-text (#5EEAD4 / #99F6E4 from button.css) reads neon next to
-   the warm palette. Re-tint to a warm cream-with-saffron-undertone. */
+/* L-V361 — the home CTAs ("Aloita kirjoittaminen" / "Käännä lauseet") used the
+   legacy near-black --ink fill, which reads as off-brand next to the cream/brick
+   palette. Repaint the primary as brick-on-cream and demote the secondary to a
+   quiet bordered card so the two no longer look like twin black bars. */
+body.app .btn--cta {
+  background: var(--ed-accent);
+  color: var(--ed-accent-ink);
+  box-shadow: 0 1px 0 rgba(155, 45, 42, 0.14), 0 16px 30px -22px rgba(155, 45, 42, 0.5);
+}
+body.app .btn--cta:hover {
+  background: color-mix(in oklch, var(--ed-accent) 88%, black 12%);
+  box-shadow: 0 1px 0 rgba(155, 45, 42, 0.18), 0 20px 34px -22px rgba(155, 45, 42, 0.55);
+}
+body.app .btn--cta__title { color: var(--ed-accent-ink); }
+body.app .btn--cta__arrow { color: var(--ed-accent-ink); }
 body.app .btn--cta .btn--cta__meta {
-  color: color-mix(in oklch, var(--ed-bg) 78%, var(--ed-accent) 22%);
+  color: color-mix(in oklch, var(--ed-accent-ink) 80%, transparent);
 }
 body.app .btn--cta:hover .btn--cta__meta {
-  color: color-mix(in oklch, var(--ed-bg) 88%, var(--ed-accent) 12%);
+  color: var(--ed-accent-ink);
+}
+
+/* Secondary CTA — bordered cream card, brick accent. Clearly subordinate to
+   the brick primary so the action hierarchy reads at a glance. */
+body.app .btn--cta--secondary {
+  background: var(--ed-bg-card);
+  color: var(--ed-ink);
+  border: 1px solid var(--ed-rule-strong);
+  box-shadow: none;
+}
+body.app .btn--cta--secondary:hover {
+  background: var(--ed-bg-card);
+  border-color: var(--ed-accent);
+}
+body.app .btn--cta--secondary .btn--cta__title { color: var(--ed-ink); }
+body.app .btn--cta--secondary .btn--cta__arrow { color: var(--ed-accent); }
+body.app .btn--cta--secondary .btn--cta__meta,
+body.app .btn--cta--secondary:hover .btn--cta__meta {
+  color: var(--ed-ink-muted);
 }
 
 /* Keyboard-hint label — legacy opacity:0.28 on dark ink hits 7:1 on the
