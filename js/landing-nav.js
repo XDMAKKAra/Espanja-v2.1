@@ -47,7 +47,7 @@
     let closeTimer = null;
 
     const visibleFocusable = () =>
-      Array.from(menu.querySelectorAll('a[href], button:not([disabled])'))
+      Array.from(menu.querySelectorAll('a[href], button:not([disabled]), summary'))
         .filter((el) => el.offsetParent !== null);
 
     const onKeydown = (e) => {
@@ -108,10 +108,21 @@
       if (e.target === menu) closeMenu();
     });
 
-    // Section links close the menu after navigating to the anchor.
-    menu.querySelectorAll(".nav-menu__link").forEach((a) =>
+    // Section/abikurssi links close the menu after navigating. The accordion
+    // <summary> is excluded so a tap toggles the group instead of closing.
+    menu.querySelectorAll("a.nav-menu__link, a.nav-menu__sublink").forEach((a) =>
       a.addEventListener("click", closeMenu)
     );
+
+    // Kurssit-accordion (L-V357): mirror the native <details> open state onto
+    // aria-expanded so AT and tests see the toggle clearly.
+    const kurssit = document.getElementById("nav-menu-kurssit");
+    if (kurssit) {
+      const summary = kurssit.querySelector("summary");
+      kurssit.addEventListener("toggle", () => {
+        if (summary) summary.setAttribute("aria-expanded", kurssit.open ? "true" : "false");
+      });
+    }
 
     // Closing on hashchange covers links + browser back/forward to anchors.
     window.addEventListener("hashchange", () => {

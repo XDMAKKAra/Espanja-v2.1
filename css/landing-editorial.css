@@ -344,12 +344,58 @@ body.landing > * { position: relative; z-index: 1; }
 }
 .landing .nav-menu__link:hover,
 .landing .nav-menu__link:active { color: var(--ed-accent); }
+
+/* ─── Kurssit-accordion (L-V357) — native <details>/<summary> ─── */
+.landing .nav-menu__group { border-bottom: 1px solid var(--ed-rule); }
+.landing .nav-menu__summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: none;
+  cursor: pointer;
+  list-style: none;
+}
+.landing .nav-menu__summary::-webkit-details-marker { display: none; }
+.landing .nav-menu__summary:focus-visible {
+  outline: 2px solid var(--ed-accent);
+  outline-offset: 2px;
+  border-radius: var(--ed-r-md);
+}
+.landing .nav-menu__pm {
+  display: inline-flex;
+  color: var(--ed-ink-muted);
+}
+.landing .nav-menu__pm svg { display: block; }
+.landing .nav-menu__pm-v {
+  transform-origin: center;
+  transition: transform var(--ed-t-fast);
+}
+.landing .nav-menu__group[open] .nav-menu__summary { color: var(--ed-accent); }
+.landing .nav-menu__group[open] .nav-menu__pm { color: var(--ed-accent); }
+.landing .nav-menu__group[open] .nav-menu__pm-v { transform: scaleY(0); }
+.landing .nav-menu__sub {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 8px;
+}
+.landing .nav-menu__sublink {
+  font-family: var(--ed-display);
+  font-weight: 500;
+  font-size: 1.125rem;
+  color: var(--ed-ink-muted);
+  text-decoration: none;
+  padding: 13px 4px 13px 18px;
+  transition: color var(--ed-t-fast);
+}
+.landing .nav-menu__sublink:hover,
+.landing .nav-menu__sublink:active { color: var(--ed-accent); }
+
 .landing .nav-menu__cta {
   display: flex;
   flex-direction: column;
   align-items: stretch;
   gap: var(--ed-sp-4);
-  margin-top: var(--ed-sp-6);
+  margin-top: var(--ed-sp-5);
 }
 .landing .nav-menu__primary {
   width: 100%;

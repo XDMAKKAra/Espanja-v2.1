@@ -45,9 +45,8 @@ test.describe('landing mobile menu — logged out (390px)', () => {
     await expect(page.locator('#nav-menu-chip')).toBeHidden();
   });
 
-  test('all four section links navigate to anchor and close menu', async ({ page }) => {
+  test('section links navigate to anchor and close menu', async ({ page }) => {
     const links = [
-      ['Kurssit', 'kurssit'],
       ['Näyte', 'nayte'],
       ['Hinnoittelu', 'hinnoittelu'],
       ['FAQ', 'faq'],
@@ -55,10 +54,84 @@ test.describe('landing mobile menu — logged out (390px)', () => {
     for (const [label, anchor] of links) {
       await page.locator('#nav-hamburger').click();
       await expect(page.locator('#nav-menu')).toBeVisible();
-      await page.locator('.nav-menu__link', { hasText: new RegExp(`^${label}$`) }).click();
+      await page.locator('a.nav-menu__link', { hasText: new RegExp(`^${label}$`) }).click();
       await expect(page).toHaveURL(new RegExp(`#${anchor}$`));
       await expect(page.locator('#nav-menu')).toBeHidden();
     }
+  });
+
+  test('Kurssit accordion: collapsed hides abikurssi links, toggle reveals 3 + Kaikki kurssit', async ({ page }) => {
+    await page.locator('#nav-hamburger').click();
+    await expect(page.locator('#nav-menu')).toBeVisible();
+
+    const group = page.locator('#nav-menu-kurssit');
+    const summary = group.locator('summary');
+    const es = page.locator('.nav-menu__sublink', { hasText: 'Espanjan abikurssi' });
+
+    // Collapsed: sublinks present in DOM but not visible, aria-expanded false.
+    await expect(group).not.toHaveAttribute('open', /.*/);
+    await expect(summary).toHaveAttribute('aria-expanded', 'false');
+    await expect(es).toBeHidden();
+
+    // Open it.
+    await summary.click();
+    await expect(group).toHaveAttribute('open', '');
+    await expect(summary).toHaveAttribute('aria-expanded', 'true');
+    await expect(page.locator('.nav-menu__sublink')).toHaveCount(4);
+    await expect(es).toBeVisible();
+    await expect(page.locator('.nav-menu__sublink', { hasText: 'Saksan abikurssi' })).toBeVisible();
+    await expect(page.locator('.nav-menu__sublink', { hasText: 'Ranskan abikurssi' })).toBeVisible();
+
+    // Menu must NOT close when toggling the accordion.
+    await expect(page.locator('#nav-menu')).toBeVisible();
+
+    // Close it again.
+    await summary.click();
+    await expect(group).not.toHaveAttribute('open', /.*/);
+    await expect(es).toBeHidden();
+  });
+
+  test('abikurssi sublinks resolve to the right URLs', async ({ page }) => {
+    await page.locator('#nav-hamburger').click();
+    await page.locator('#nav-menu-kurssit summary').click();
+    const cases = [
+      ['Espanjan abikurssi', '/espanjan-abikurssi'],
+      ['Saksan abikurssi', '/saksan-abikurssi'],
+      ['Ranskan abikurssi', '/ranskan-abikurssi'],
+    ];
+    for (const [label, href] of cases) {
+      const link = page.locator('.nav-menu__sublink', { hasText: label });
+      await expect(link).toHaveAttribute('href', href);
+    }
+  });
+
+  test('Kaikki kurssit reaches #kurssit and closes menu', async ({ page }) => {
+    await page.locator('#nav-hamburger').click();
+    await page.locator('#nav-menu-kurssit summary').click();
+    const all = page.locator('.nav-menu__sublink', { hasText: 'Kaikki kurssit' });
+    await expect(all).toHaveAttribute('href', '#kurssit');
+    await all.click();
+    await expect(page).toHaveURL(/#kurssit$/);
+    await expect(page.locator('#nav-menu')).toBeHidden();
+  });
+
+  test('accordion summary is keyboard-operable (Enter toggles)', async ({ page }) => {
+    await page.locator('#nav-hamburger').click();
+    const summary = page.locator('#nav-menu-kurssit summary');
+    await summary.focus();
+    await expect(summary).toBeFocused();
+    await page.keyboard.press('Enter');
+    await expect(page.locator('#nav-menu-kurssit')).toHaveAttribute('open', '');
+    await expect(summary).toHaveAttribute('aria-expanded', 'true');
+  });
+
+  test('separate flat abikurssi rows no longer exist as top-level links', async ({ page }) => {
+    await page.locator('#nav-hamburger').click();
+    // The only abikurssi entries are inside the accordion (sublink class),
+    // never as a top-level .nav-menu__link.
+    await expect(
+      page.locator('a.nav-menu__link', { hasText: /abikurssi/ })
+    ).toHaveCount(0);
   });
 
   test('Esc closes', async ({ page }) => {

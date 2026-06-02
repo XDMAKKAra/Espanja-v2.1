@@ -132,15 +132,6 @@
           </svg>
         </button>
       </div>
-      <nav class="nav-menu__links" aria-label="Sivun osiot">
-        <a class="nav-menu__link" href="#kurssit">Kurssit</a>
-        <a class="nav-menu__link" href="#nayte">Näyte</a>
-        <a class="nav-menu__link" href="#hinnoittelu">Hinnoittelu</a>
-        <a class="nav-menu__link" href="#faq">FAQ</a>
-        <a class="nav-menu__link" href="/espanjan-abikurssi">Espanjan abikurssi</a>
-        <a class="nav-menu__link" href="/saksan-abikurssi">Saksan abikurssi</a>
-        <a class="nav-menu__link" href="/ranskan-abikurssi">Ranskan abikurssi</a>
-      </nav>
       <div class="nav-menu__cta">
         <a class="btn btn--primary nav-menu__primary" id="nav-menu-signup" href="/app.html#rekisteroidy">Aloita</a>
         <a class="btn btn--primary nav-menu__primary" id="nav-menu-chip" href="/app.html" hidden>
@@ -149,6 +140,27 @@
         </a>
         <a class="nav-menu__login" id="nav-menu-login" href="/app.html#kirjaudu">Kirjaudu</a>
       </div>
+      <nav class="nav-menu__links" aria-label="Sivun osiot">
+        <details class="nav-menu__group" id="nav-menu-kurssit">
+          <summary class="nav-menu__link nav-menu__summary" aria-expanded="false" aria-controls="nav-menu-kurssit-list">
+            Kurssit
+            <span class="nav-menu__pm" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+                <line x1="5" y1="12" x2="19" y2="12" /><line class="nav-menu__pm-v" x1="12" y1="5" x2="12" y2="19" />
+              </svg>
+            </span>
+          </summary>
+          <div class="nav-menu__sub" id="nav-menu-kurssit-list">
+            <a class="nav-menu__sublink" href="#kurssit">Kaikki kurssit</a>
+            <a class="nav-menu__sublink" href="/espanjan-abikurssi">Espanjan abikurssi</a>
+            <a class="nav-menu__sublink" href="/saksan-abikurssi">Saksan abikurssi</a>
+            <a class="nav-menu__sublink" href="/ranskan-abikurssi">Ranskan abikurssi</a>
+          </div>
+        </details>
+        <a class="nav-menu__link" href="#nayte">Näyte</a>
+        <a class="nav-menu__link" href="#hinnoittelu">Hinnoittelu</a>
+        <a class="nav-menu__link" href="#faq">FAQ</a>
+      </nav>
     </div>
   </div>
 
