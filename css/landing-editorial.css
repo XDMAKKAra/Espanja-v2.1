@@ -234,6 +234,155 @@ body.landing > * { position: relative; z-index: 1; }
   align-items: center;
 }
 
+/* ─── Mobile hamburger + full-screen menu (L-V355) ─────────────
+   Hamburger shows ≤720px and replaces the nav CTAs; desktop nav
+   keeps section links + buttons unchanged. */
+.landing .nav__hamburger {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin-right: -8px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--ed-ink);
+  border-radius: var(--ed-r-md);
+  cursor: pointer;
+  transition: background var(--ed-t-fast), transform var(--ed-t-fast);
+}
+.landing .nav__hamburger:hover { background: var(--ed-accent-soft); }
+.landing .nav__hamburger:active { transform: scale(0.94); }
+.landing .nav__hamburger:focus-visible {
+  outline: 2px solid var(--ed-accent);
+  outline-offset: 2px;
+}
+.landing .nav__hamburger svg { display: block; }
+
+@media (max-width: 720px) {
+  .landing .nav__cta { display: none; }
+  .landing .nav__hamburger { display: inline-flex; }
+}
+
+.landing .nav-menu {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  background: var(--ed-bg);
+  padding: 16px clamp(16px, 5vw, 32px) 40px;
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: opacity var(--ed-t-mid), transform var(--ed-t-mid);
+  -webkit-overflow-scrolling: touch;
+  overflow-y: auto;
+}
+.landing .nav-menu[hidden] { display: none; }
+.landing .nav-menu [hidden] { display: none !important; }
+.landing .nav-menu[data-open="true"] {
+  opacity: 1;
+  transform: translateY(0);
+}
+.landing .nav-menu__panel {
+  display: flex;
+  flex-direction: column;
+}
+.landing .nav-menu__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 44px;
+}
+.landing .nav-menu__brand {
+  font-family: var(--ed-display);
+  font-variation-settings: "opsz" 48, "SOFT" 50;
+  font-weight: 600;
+  font-size: 1.5rem;
+  line-height: 1;
+  color: var(--ed-ink);
+}
+.landing .nav-menu__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin-right: -8px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--ed-ink);
+  border-radius: var(--ed-r-md);
+  cursor: pointer;
+  transition: background var(--ed-t-fast), transform var(--ed-t-fast);
+}
+.landing .nav-menu__close:hover { background: var(--ed-accent-soft); }
+.landing .nav-menu__close:active { transform: scale(0.94); }
+.landing .nav-menu__close:focus-visible {
+  outline: 2px solid var(--ed-accent);
+  outline-offset: 2px;
+}
+.landing .nav-menu__close svg { display: block; }
+.landing .nav-menu__links {
+  display: flex;
+  flex-direction: column;
+  margin-top: var(--ed-sp-5);
+  border-top: 1px solid var(--ed-rule);
+}
+.landing .nav-menu__link {
+  font-family: var(--ed-display);
+  font-weight: 500;
+  font-size: 1.5rem;
+  letter-spacing: -0.005em;
+  color: var(--ed-ink);
+  text-decoration: none;
+  padding: 18px 4px;
+  border-bottom: 1px solid var(--ed-rule);
+  transition: color var(--ed-t-fast);
+}
+.landing .nav-menu__link:hover,
+.landing .nav-menu__link:active { color: var(--ed-accent); }
+.landing .nav-menu__cta {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--ed-sp-4);
+  margin-top: var(--ed-sp-6);
+}
+.landing .nav-menu__primary {
+  width: 100%;
+  min-height: 52px;
+  font-size: 1.0625rem;
+}
+.landing .nav-menu__primary[hidden] { display: none; }
+.landing .nav-menu__login {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 8px;
+  font-family: var(--ed-sans);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--ed-ink-muted);
+  text-decoration: none;
+  transition: color var(--ed-t-fast);
+}
+.landing .nav-menu__login:hover { color: var(--ed-accent); }
+
+@media (min-width: 721px) {
+  .landing .nav-menu { display: none !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .landing .nav-menu,
+  .landing .nav-menu[data-open="true"] {
+    transition: opacity 120ms ease;
+    transform: none;
+  }
+}
+
 /* ─── Buttons ─────────────────────────────────────────────── */
 .landing .btn {
   display: inline-flex;

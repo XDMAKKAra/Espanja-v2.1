@@ -111,8 +111,43 @@
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
         </a>
       </div>
+
+      <button class="nav__hamburger" id="nav-hamburger" type="button" aria-label="Valikko" aria-expanded="false" aria-controls="nav-menu">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+          <line x1="3" y1="7" x2="21" y2="7" /><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="17" x2="21" y2="17" />
+        </svg>
+      </button>
     </div>
   </header>
+
+  <!-- ─── MOBILE MENU (≤720px) — L-V355. Hamburger opens this full-screen
+       overlay; desktop nav untouched. -->
+  <div class="nav-menu" id="nav-menu" hidden>
+    <div class="nav-menu__panel" role="dialog" aria-modal="true" aria-label="Valikko">
+      <div class="nav-menu__head">
+        <span class="nav-menu__brand brand-wordmark">puheo</span>
+        <button class="nav-menu__close" id="nav-menu-close" type="button" aria-label="Sulje valikko">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+            <line x1="6" y1="6" x2="18" y2="18" /><line x1="18" y1="6" x2="6" y2="18" />
+          </svg>
+        </button>
+      </div>
+      <nav class="nav-menu__links" aria-label="Sivun osiot">
+        <a class="nav-menu__link" href="#kurssit">Kurssit</a>
+        <a class="nav-menu__link" href="#nayte">Näyte</a>
+        <a class="nav-menu__link" href="#hinnoittelu">Hinnoittelu</a>
+        <a class="nav-menu__link" href="#faq">FAQ</a>
+      </nav>
+      <div class="nav-menu__cta">
+        <a class="btn btn--primary nav-menu__primary" id="nav-menu-signup" href="/app.html#rekisteroidy">Aloita</a>
+        <a class="btn btn--primary nav-menu__primary" id="nav-menu-chip" href="/app.html" hidden>
+          Jatka harjoittelua
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" /></svg>
+        </a>
+        <a class="nav-menu__login" id="nav-menu-login" href="/app.html#kirjaudu">Kirjaudu</a>
+      </div>
+    </div>
+  </div>
 
   <main>
     <!-- ═══ HERO, L-V344 WordDive split.
