@@ -9,12 +9,55 @@
 
 body.app #home-root {
   width: 100%;
-  max-width: 920px;
+  max-width: 1080px;
   margin: 0 auto;
   padding: clamp(28px, 5vw, 64px) clamp(16px, 4vw, 32px) 96px;
   display: flex;
   flex-direction: column;
   gap: clamp(20px, 3vw, 28px);
+}
+
+/* ── Desktop canvas ─ main column + right rail ─────────────────
+   Splits the dashboard into a primary column (next-lesson card +
+   activity rows) and a narrower rail (countdown + progress) so the
+   surface uses the desktop width instead of stacking as one short
+   pillar. Collapses to a single column below 900px with the rail on
+   top (countdown/progress lead the small screen). */
+body.app .home-canvas {
+  display: grid;
+  grid-template-columns: minmax(0, 1.65fr) minmax(260px, 1fr);
+  grid-template-areas: "main rail";
+  gap: clamp(18px, 2.4vw, 28px);
+  align-items: stretch;
+}
+body.app .home-canvas--solo {
+  /* No learning path yet → no progress block. Keep two columns so the
+     countdown still anchors the rail and the card never goes full-bleed. */
+  grid-template-columns: minmax(0, 1.65fr) minmax(240px, 0.8fr);
+}
+body.app .home-canvas__main {
+  grid-area: main;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(14px, 1.8vw, 20px);
+  min-width: 0;
+}
+body.app .home-canvas__rail {
+  grid-area: rail;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(12px, 1.6vw, 16px);
+}
+/* Let the two rail blocks share the column height so the rail tracks the
+   taller main column instead of leaving a void beneath it. */
+body.app .home-canvas__rail .dash-block { flex: 1 1 0; }
+
+@media (max-width: 900px) {
+  body.app .home-canvas,
+  body.app .home-canvas--solo {
+    grid-template-columns: 1fr;
+    grid-template-areas: "rail" "main";
+  }
 }
 
 /* ── L-V344 WordDive dashboard blocks ──────────────────────────
@@ -170,15 +213,18 @@ body.app .dash-chip {
    Flat colour blocks (WordDive palette), round icon badge, Fredoka title.
    Course path + mock exam + writing grader, one weight each. */
 body.app .dash-actions {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: clamp(12px, 1.6vw, 16px);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(10px, 1.4vw, 14px);
+  flex: 1 1 auto;
 }
 body.app .dash-action {
   display: flex;
   align-items: center;
-  gap: 14px;
-  padding: clamp(16px, 2vw, 20px);
+  gap: 16px;
+  flex: 1 1 0;
+  min-height: 78px;
+  padding: clamp(16px, 2vw, 22px) clamp(18px, 2.2vw, 24px);
   border-radius: var(--r-lg, 22px);
   text-decoration: none;
   color: var(--ink);
@@ -214,14 +260,14 @@ body.app .dash-action__text { display: flex; flex-direction: column; gap: 3px; m
 body.app .dash-action__title {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: 16px;
-  line-height: 1.1;
+  font-size: 17px;
+  line-height: 1.15;
   color: var(--ink);
 }
 body.app .dash-action__sub {
   font-family: var(--font-body);
-  font-size: 12.5px;
-  line-height: 1.35;
+  font-size: 13.5px;
+  line-height: 1.4;
   color: var(--ink-soft);
 }
 body.app .dash-action__arrow {
@@ -239,13 +285,10 @@ body.app .dash-action:hover .dash-action__arrow { transform: translateX(3px); }
   body.app .dash-action__arrow { transition: none; }
 }
 
-body.app .home-skel--block { height: 110px; width: 100%; border-radius: var(--r-lg, 22px); }
+body.app .home-skel--block { height: 100%; min-height: 150px; width: 100%; border-radius: var(--r-lg, 22px); }
+body.app .home-skel--action { height: 78px; width: 100%; border-radius: var(--r-lg, 22px); }
 
-@media (max-width: 860px) {
-  body.app .dash-actions { grid-template-columns: 1fr; }
-}
 @media (max-width: 680px) {
-  body.app .dash-grid { grid-template-columns: 1fr; }
   body.app .dash-card__head { flex-direction: column; gap: 8px; }
 }
 

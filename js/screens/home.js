@@ -371,17 +371,26 @@ function renderActivities(lang) {
 // Dashboard composition: language tabs, a two-up block row (countdown +
 // progress), the next-lesson card, then the three activity tiles that open
 // the learning path, the mock exam, and the writing grader.
+// Desktop composition: a main column (next-lesson card + the three activity
+// rows) and a narrower right rail (countdown + course progress). On <900px the
+// rail drops above the main column so the countdown/progress lead, then the
+// next-action card, then the activities. The two-column canvas is what stops
+// the dashboard from sitting as one short top-left pillar over empty cream.
 function renderShell(activeLang, data, isPro) {
   const tabsHtml = renderTabs(activeLang);
   const progressHtml = renderProgress(data);
   return `
     ${tabsHtml ? `<div class="home-tabs" role="tablist" aria-label="Kielet">${tabsHtml}</div>` : ""}
-    <div class="dash-grid${progressHtml ? "" : " dash-grid--solo"}">
-      ${renderCountdown()}
-      ${progressHtml}
+    <div class="home-canvas${progressHtml ? "" : " home-canvas--solo"}">
+      <div class="home-canvas__main">
+        ${renderNextCard(data, activeLang)}
+        ${renderActivities(activeLang)}
+      </div>
+      <aside class="home-canvas__rail" aria-label="Tilanne">
+        ${renderCountdown()}
+        ${progressHtml}
+      </aside>
     </div>
-    ${renderNextCard(data, activeLang)}
-    ${renderActivities(activeLang)}
   `;
 }
 
@@ -410,15 +419,22 @@ function renderShellSkeleton(activeLang) {
     <div class="home-skel-root" role="status" aria-live="polite">
       <span class="sr-only">Ladataan kotinäyttöä.</span>
       ${tabs ? `<div class="home-tabs" aria-hidden="true">${tabs}</div>` : ""}
-      <div class="dash-grid" aria-hidden="true">
-        <section class="dash-block dash-block--skel"><span class="home-skel home-skel--block"></span></section>
-        <section class="dash-block dash-block--skel"><span class="home-skel home-skel--block"></span></section>
+      <div class="home-canvas" aria-hidden="true">
+        <div class="home-canvas__main">
+          <section class="dash-card dash-card--skel">
+            <span class="home-skel home-skel--next-title"></span>
+            <span class="home-skel home-skel--next-meta"></span>
+            <span class="home-skel home-skel--next-cta"></span>
+          </section>
+          <span class="home-skel home-skel--action"></span>
+          <span class="home-skel home-skel--action"></span>
+          <span class="home-skel home-skel--action"></span>
+        </div>
+        <aside class="home-canvas__rail">
+          <section class="dash-block dash-block--skel"><span class="home-skel home-skel--block"></span></section>
+          <section class="dash-block dash-block--skel"><span class="home-skel home-skel--block"></span></section>
+        </aside>
       </div>
-      <section class="dash-card dash-card--skel" aria-hidden="true">
-        <span class="home-skel home-skel--next-title"></span>
-        <span class="home-skel home-skel--next-meta"></span>
-        <span class="home-skel home-skel--next-cta"></span>
-      </section>
     </div>`;
 }
 

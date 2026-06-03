@@ -187,30 +187,60 @@ body.app .op-row.is-locked .op-row__title,
 body.app .op-row.is-locked .op-row__desc {
   color: var(--ed-ink-faint, var(--ink-faint));
 }
-/* "You are here" — the in-progress course gets a quiet terracotta wash and a
-   slightly heavier title so the eye lands on it first. No card, no shadow:
-   the row still reads as a shelf entry, just the current chapter. */
+/* "Jatka tästä" — the next unfinished lesson is promoted out of the row
+   rhythm into a soft terracotta card so the eye lands on it first. Bigger
+   title, extra height, a filled CTA pill, and no hairline rule. This is the
+   single emphasised tier that breaks the ten-identical-rows monotony. */
 body.app .op-row.is-progress {
-  background: color-mix(in oklch, var(--ed-accent, var(--accent)) 5%, transparent);
+  background: color-mix(in oklch, var(--ed-accent, var(--accent)) 9%, var(--ed-bg-card, var(--surface)));
+  border-radius: 16px;
+  border-bottom-color: transparent;
+  padding-block: 26px;
+  margin: 10px 0;
+  align-items: center;
+}
+body.app .op-row.is-progress:hover {
+  padding-left: 8px;
+  background: color-mix(in oklch, var(--ed-accent, var(--accent)) 13%, var(--ed-bg-card, var(--surface)));
 }
 body.app .op-row.is-progress .op-row__title {
   font-weight: 600;
+  font-size: 21px;
   color: var(--ed-ink, var(--ink));
 }
-body.app .op-row.is-progress::before,
-body.app .op-row.is-done::before {
-  /* Brick stripe at left to mark current/done, like a bookmark. */
-  content: "";
-  position: absolute;
-  left: -8px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 3px;
-  height: 60%;
+body.app .op-row.is-progress .op-row__status {
   background: var(--ed-accent, var(--accent));
-  border-radius: 0 2px 2px 0;
+  color: var(--ed-accent-ink, #fbf7ef);
+  padding: 9px 18px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  transition: background 160ms ease, transform 120ms ease;
 }
-body.app .op-row.is-done::before { background: var(--ed-olive, var(--accent)); }
+body.app .op-row.is-progress:hover .op-row__status {
+  background: var(--ed-accent-hover, var(--accent-hover, var(--ed-accent)));
+}
+body.app .op-row.is-progress:active .op-row__status { transform: scale(0.97); }
+
+/* Completed lessons recede: lighter title, reduced contrast, and an olive
+   check in front of the "Suoritettu" label so done reads at a glance. */
+body.app .op-row.is-done { opacity: 0.72; }
+body.app .op-row.is-done:hover { opacity: 1; }
+body.app .op-row.is-done .op-row__title { font-weight: 500; }
+body.app .op-row.is-done .op-row__status::before {
+  content: "";
+  display: inline-block;
+  width: 13px;
+  height: 13px;
+  margin-right: 6px;
+  vertical-align: -1px;
+  background-color: currentColor;
+  -webkit-mask: var(--op-check) center / contain no-repeat;
+  mask: var(--op-check) center / contain no-repeat;
+}
+:root {
+  --op-check: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E");
+}
 
 body.app .op-row__num {
   font-family: var(--ed-display, "Fraunces", Georgia, serif);
@@ -274,8 +304,7 @@ body.app .op-row__status {
   letter-spacing: 0.01em;
   color: var(--ed-ink-muted, var(--ink-soft));
 }
-body.app .op-row.is-progress .op-row__status,
-body.app .op-row.is-done .op-row__status { color: var(--ed-accent, var(--accent)); }
+/* is-progress status colour is owned by the filled-pill rule above. */
 body.app .op-row.is-done .op-row__status { color: var(--ed-olive, var(--accent)); }
 body.app .op-row.is-locked .op-row__status { color: var(--ed-ink-faint, var(--ink-faint)); }
 
