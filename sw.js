@@ -1,4 +1,4 @@
-const CACHE_VERSION = "puheo-v370c";
+const CACHE_VERSION = "puheo-v373";
 const STATIC_ASSETS = [
   "/app.html",
   "/index.html",
@@ -14,6 +14,12 @@ const STATIC_ASSETS = [
   "/css/landing-editorial.css",
   // L-V358 — compact language info page layout (es/de/fr).
   "/css/landing-langpage.css",
+  // L-V373 — landing product screenshots (hero is eager; precache so the
+  // first paint shows real app UI instead of a blank frame).
+  "/public/shots/app-writing-rubric.png",
+  "/public/shots/app-lesson.png",
+  "/public/shots/app-results.png",
+  "/public/shots/app-home-path.png",
   // L-LIVE-AUDIT-P2 UPDATE 1+2 — bundled CSS+JS replace 16 CSS links + 28 JS modules
   // on app.html cold load. Source files stay in repo + cached below for offline robustness.
   "/app.bundle.css",
@@ -44,11 +50,8 @@ const STATIC_ASSETS = [
   "/img/illustrations/student-walking.svg",
   "/img/illustrations/quill-inkwell.svg",
   "/img/illustrations/ornament-rosette.svg",
-  // L-V344 — WordDive illustration set.
-  "/img/illustrations/hero-grade.svg",
-  "/img/illustrations/feature-tasks.svg",
-  "/img/illustrations/feature-ai.svg",
-  "/img/illustrations/feature-langs.svg",
+  // L-V373 — hero-grade + feature-* SVGs removed (replaced by product
+  // screenshots on the landing). empty-state illustrations stay.
   "/img/illustrations/empty-progress.svg",
   "/img/illustrations/empty-lessons.svg",
   // L-V333 hero product mockups (replace student-reading.svg as hero centrepiece).

@@ -187,10 +187,14 @@
       <div class="hero__inner">
 
         <div class="hero__copy">
-          <span class="hero__eyebrow">Espanja · ranska · saksa</span>
+          <nav class="hero__langs" aria-label="Valitse kieli">
+            <a class="hero__lang-link" href="/espanjan-abikurssi">Espanja</a>
+            <a class="hero__lang-link" href="/ranskan-abikurssi">Ranska</a>
+            <a class="hero__lang-link" href="/saksan-abikurssi">Saksa</a>
+          </nav>
 
           <h1 class="hero__title" id="hero-title">
-            Treenaa lyhyiden kielten <span class="hero__title-accent">ylppäreihin</span>.
+            Varmuutta ylioppilaskokeeseen. Stressitöntä kertausta.
           </h1>
 
           <p class="hero__sub">
@@ -207,51 +211,54 @@
             <a class="hero__link-secondary" href="#nayte">Katso miten arviointi toimii →</a>
           </div>
 
-          <div class="hero__chips" aria-label="Mitä saat">
-            <span class="hero__chip">Lyhyt oppimäärä</span>
-            <span class="hero__chip">YTL-rubriikki</span>
-            <span class="hero__chip">Ilmainen aloitus</span>
-          </div>
+          <p class="hero__trust">Ilmainen aloitus, ei korttia.</p>
         </div>
 
         <div class="hero__art">
-          <div class="hero__art-panel">
-            <img src="/img/illustrations/hero-grade.svg"
-                 alt="Käsi pitelee puhelinta, jossa tekoäly arvioi kirjoitelman; espanja, ranska ja saksa puhekuplina"
-                 width="520" height="520" loading="eager" decoding="async" />
-          </div>
+          <figure class="hero__art-panel shot-frame shot-frame--hero">
+            <img src="/public/shots/app-writing-rubric.png"
+                 alt="Puheon kirjoitustehtävä: espanjankielinen tehtävänanto, vastauskenttä ja YTL:n arviointikriteerit sivupalkissa"
+                 width="1320" height="885" loading="eager" decoding="async" />
+          </figure>
         </div>
       </div>
     </section>
 
-    <!-- ═══ FEATURE ROW, L-V344. Three features, each carried by its own
-         flat illustration (no identical cards). -->
+    <!-- ═══ FEATURE ROW, L-V344. Zig-zag: kuvitus ja teksti vaihtelevat
+         puolta (ei kolmea identtistä korttia). Romahtaa yhteen sarakkeeseen
+         <860px, kuvitus aina tekstin yllä. -->
     <section class="features" aria-labelledby="features-title">
       <h2 class="features__title" id="features-title">Miten Puheo treenaa ylppäreihin</h2>
-      <div class="features__grid">
+      <div class="features__zig">
 
-        <article class="feature">
-          <div class="feature__art feature__art--yellow">
-            <img src="/img/illustrations/feature-langs.svg" alt="Ylioppilaslakki ja kolme kieltä puhekuplina: espanja, ranska, saksa" width="320" height="280" loading="lazy" decoding="async" />
+        <article class="feature feature--art-left">
+          <div class="feature__art shot-frame">
+            <img src="/public/shots/app-lesson.png" alt="Oppimispolku: kahdeksan kurssin lista A-tasolta E-tasolle espanjassa" width="1100" height="1524" loading="lazy" decoding="async" />
           </div>
-          <h3 class="feature__title">Kurssi YO-kokeen mukaan</h3>
-          <p class="feature__body">Kahdeksan kurssin oppimispolku, 90 oppituntia kielessä, A-tasolta E-tasolle. Sama runko espanjassa, ranskassa ja saksassa.</p>
+          <div class="feature__text">
+            <h3 class="feature__title">Kurssi YO-kokeen mukaan</h3>
+            <p class="feature__body">Kahdeksan kurssin oppimispolku, 90 oppituntia kielessä, A-tasolta E-tasolle. Sama runko espanjassa, ranskassa ja saksassa.</p>
+          </div>
         </article>
 
-        <article class="feature">
-          <div class="feature__art feature__art--green">
-            <img src="/img/illustrations/feature-tasks.svg" alt="YO-koepaperi rastitettuna, espanjan, ranskan ja saksan aksenttitiilet" width="320" height="280" loading="lazy" decoding="async" />
+        <article class="feature feature--art-right">
+          <div class="feature__art shot-frame">
+            <img src="/public/shots/app-results.png" alt="Kurssin sisältö: oppitunnit eri tehtävätyypeillä, sanasto, kielioppi ja yhdistelmä" width="1100" height="771" loading="lazy" decoding="async" />
           </div>
-          <h3 class="feature__title">Oikeat tehtävätyypit</h3>
-          <p class="feature__body">Kielioppi, sanasto, luetun ymmärtäminen, kirjoittaminen ja koeharjoitus, samoilla tehtävämuodoilla kuin kokeessa.</p>
+          <div class="feature__text">
+            <h3 class="feature__title">Oikeat tehtävätyypit</h3>
+            <p class="feature__body">Kielioppi, sanasto, luetun ymmärtäminen, kirjoittaminen ja koeharjoitus, samoilla tehtävämuodoilla kuin kokeessa.</p>
+          </div>
         </article>
 
-        <article class="feature">
-          <div class="feature__art feature__art--brick">
-            <img src="/img/illustrations/feature-ai.svg" alt="Tekoäly arvioi kirjoitelman ja antaa pistemäärän heti" width="320" height="280" loading="lazy" decoding="async" />
+        <article class="feature feature--art-left">
+          <div class="feature__art shot-frame">
+            <img src="/public/shots/app-home-path.png" alt="Puheon etusivu: oppimispolku, YO-koepäivän laskuri ja kirjoitusarvioon vievä kortti" width="1200" height="861" loading="lazy" decoding="async" />
           </div>
-          <h3 class="feature__title">Tekoäly arvioi kirjoitelmat</h3>
-          <p class="feature__body">Kirjoitustehtävästä saat pisteet YTL:n rubriikilla ja suomenkielisen selityksen virheistä sekunneissa, et päivien päästä.</p>
+          <div class="feature__text">
+            <h3 class="feature__title">Tekoäly arvioi kirjoitelmat</h3>
+            <p class="feature__body">Kirjoitustehtävästä saat pisteet YTL:n rubriikilla ja suomenkielisen selityksen virheistä sekunneissa, et päivien päästä.</p>
+          </div>
         </article>
 
       </div>
