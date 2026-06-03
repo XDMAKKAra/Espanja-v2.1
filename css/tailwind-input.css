@@ -76,20 +76,80 @@
     padding: 0.75rem 1.5rem;
     gap: 1rem;
   }
+  /* Brand wordmark — matches the landing exactly: lowercase "puheo", Inter
+     (system fallback when Inter isn't self-hosted), terracotta. Deliberately
+     NOT Fredoka — the live landing uses this and migrated pages must agree. */
   .site-nav__brand {
-    @apply font-display text-ink no-underline;
-    font-weight: 600;
-    font-size: 1.375rem;
-    letter-spacing: -0.02em;
+    @apply no-underline inline-block;
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    line-height: 1;
+    letter-spacing: -0.025em;
+    text-transform: lowercase;
+    color: #A0341F;
   }
   .site-nav__links { @apply hidden md:flex items-center gap-7; }
   .site-nav__link {
-    @apply font-body no-underline;
+    @apply font-body no-underline bg-transparent border-0 cursor-pointer p-0;
     color: theme(colors.ink.muted);
     font-size: 0.95rem;
     transition: color 160ms ease-out;
   }
   .site-nav__link:hover { color: theme(colors.ink.DEFAULT); }
+
+  /* ── Courses dropdown (CSS-only) ──────────────────────────────────────
+     Desktop: reveals on hover + focus-within (keyboard reachable, no JS).
+     Mobile: flattened inside the open burger menu (see media query below).
+     Mirrors the landing's .nav__dropdown so abikurssi pages stay reachable
+     from the top bar on desktop. */
+  .site-nav__dropdown { @apply relative; }
+  .site-nav__dropdown-trigger { @apply inline-flex items-center gap-1; }
+  .site-nav__chevron { transition: transform 160ms ease-out; }
+  .site-nav__dropdown:hover .site-nav__chevron,
+  .site-nav__dropdown:focus-within .site-nav__chevron { transform: rotate(180deg); }
+  .site-nav__dropdown-menu {
+    @apply absolute flex flex-col;
+    top: calc(100% + 10px);
+    left: 0;
+    min-width: 220px;
+    padding: 6px;
+    background: theme(colors.paper);
+    border: 1px solid theme(colors.line);
+    border-radius: theme(borderRadius.lg);
+    box-shadow: 0 18px 40px -28px rgb(36 28 21 / 0.34);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-6px) scale(0.98);
+    transform-origin: top left;
+    transition: opacity 160ms ease-out, transform 160ms cubic-bezier(0.23, 1, 0.32, 1);
+    z-index: 30;
+  }
+  /* invisible bridge so the pointer can cross the 10px gap without closing */
+  .site-nav__dropdown-menu::before {
+    content: "";
+    @apply absolute left-0 right-0;
+    top: -10px;
+    height: 10px;
+  }
+  .site-nav__dropdown:hover .site-nav__dropdown-menu,
+  .site-nav__dropdown:focus-within .site-nav__dropdown-menu {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0) scale(1);
+  }
+  .site-nav__dropdown-item {
+    @apply block font-body no-underline;
+    padding: 9px 12px;
+    border-radius: theme(borderRadius.md);
+    color: theme(colors.ink.muted);
+    font-size: 0.95rem;
+    transition: background-color 160ms ease-out, color 160ms ease-out;
+  }
+  .site-nav__dropdown-item:hover {
+    color: theme(colors.ink.DEFAULT);
+    background-color: rgb(36 28 21 / 0.05);
+  }
 
   /* checkbox-hack toggle */
   .site-nav__toggle { @apply hidden; }
@@ -101,18 +161,48 @@
   }
   .site-nav__burger:hover { background-color: rgb(36 28 21 / 0.06); }
 
-  /* ── Footer ───────────────────────────────────────────────────────── */
+  /* ── Footer ───────────────────────────────────────────────────────────
+     Multi-column to match the landing: brand + tagline beside a 4-column
+     link grid (2-up on mobile), with a copyright bottom rule. */
   .site-footer {
     @apply w-full border-t bg-cream;
     border-color: theme(colors.line);
   }
   .site-footer__inner {
-    @apply mx-auto flex flex-col gap-4 md:flex-row md:items-center md:justify-between;
+    @apply mx-auto grid gap-10;
     max-width: 1200px;
-    padding: 2rem 1.5rem;
+    padding: 3rem 1.5rem;
   }
-  .site-footer__brand { @apply font-display text-ink; font-weight: 600; font-size: 1.1rem; }
-  .site-footer__links { @apply flex flex-wrap gap-x-6 gap-y-2; }
+  @media (min-width: 768px) {
+    .site-footer__inner { grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); }
+  }
+  .site-footer__brand { @apply flex flex-col gap-3; }
+  .site-footer__brandmark {
+    @apply inline-flex items-center gap-2 font-display text-ink no-underline;
+    font-weight: 600;
+    font-size: 1.25rem;
+  }
+  .site-footer__brand-dot {
+    @apply inline-block rounded-pill bg-brick;
+    width: 0.6rem;
+    height: 0.6rem;
+  }
+  .site-footer__tagline {
+    @apply font-body;
+    color: theme(colors.ink.muted);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    max-width: 34ch;
+    margin: 0;
+  }
+  .site-footer__cols { @apply grid grid-cols-2 gap-8 sm:grid-cols-4; }
+  .site-footer__col-title {
+    @apply font-display text-ink;
+    font-size: 0.9375rem;
+    font-weight: 700;
+    margin: 0 0 0.75rem;
+  }
+  .site-footer__links { @apply flex flex-col gap-2 list-none p-0 m-0; }
   .site-footer__link {
     @apply font-body no-underline;
     color: theme(colors.ink.muted);
@@ -120,6 +210,17 @@
     transition: color 160ms ease-out;
   }
   .site-footer__link:hover { color: theme(colors.ink.DEFAULT); }
+  .site-footer__bottom {
+    @apply border-t;
+    border-color: theme(colors.line);
+    padding-top: 1.25rem;
+    grid-column: 1 / -1;
+  }
+  .site-footer__copy {
+    @apply font-body m-0;
+    color: theme(colors.ink.subtle);
+    font-size: 0.85rem;
+  }
 
   /* ── Cards ────────────────────────────────────────────────────────────
      Warm-tinted soft shadow, never a hard black box. Use only when
@@ -193,6 +294,22 @@
     border-bottom: 1px solid #E9DFCF;
   }
   .site-nav__toggle:checked ~ .site-nav__links { display: flex; }
+
+  /* No hover on touch — flatten the courses dropdown so its items are always
+     reachable inside the open burger menu, indented under the trigger. */
+  .site-nav__dropdown { position: static; }
+  .site-nav__dropdown-trigger { display: none; }
+  .site-nav__dropdown-menu {
+    position: static;
+    opacity: 1;
+    pointer-events: auto;
+    transform: none;
+    min-width: 0;
+    padding: 0;
+    border: 0;
+    box-shadow: none;
+    background: transparent;
+  }
 }
 
 /* Respect reduced-motion: drop movement, keep the components usable. */
@@ -200,6 +317,9 @@
   .btn,
   .card--hover,
   .site-nav__link,
+  .site-nav__chevron,
+  .site-nav__dropdown-menu,
+  .site-nav__dropdown-item,
   .site-footer__link,
   .field__input {
     transition: none;

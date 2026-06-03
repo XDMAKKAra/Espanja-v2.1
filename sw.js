@@ -1,10 +1,13 @@
-const CACHE_VERSION = "puheo-v373";
+const CACHE_VERSION = "puheo-v374";
 const STATIC_ASSETS = [
   "/app.html",
   "/index.html",
   "/pricing.html",
   // F-ARCH-1 §B — design tokens single source of truth.
   "/css/tokens.css",
+  // L-V374 — shared Tailwind component layer (nav/footer/btn/card/pill/field).
+  // Now a production dependency of 404.html; precache so it survives offline.
+  "/css/tailwind.css",
   // L-LANG-LANDINGS-1 / L-V356 — per-language abikurssi SEO landing pages
   // (WordDive-brändi, jaettu index.html:n editorial-CSS-pinon kanssa).
   "/public/landing/espanja.html",

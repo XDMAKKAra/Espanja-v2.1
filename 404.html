@@ -5,84 +5,48 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Puheo · Sivua ei löytynyt</title>
   <meta name="robots" content="noindex" />
+  <link rel="preload" href="/fonts/fredoka-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/mulish-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="/css/fonts.css" />
+  <link rel="stylesheet" href="/css/tailwind.css" />
+  <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
   <style>
-    :root {
-      --ed-bg:        oklch(99% 0.002 75);
-      --ed-bg-deep:   oklch(96% 0.004 75);
-      --ed-ink:       oklch(18% 0.012 30);
-      --ed-ink-muted: oklch(38% 0.012 30);
-      --ed-rule:      oklch(86% 0.008 60);
-      --ed-accent:    oklch(42% 0.15 28);
-      --ed-accent-hover: oklch(36% 0.15 28);
-      --ed-serif: "Fredoka", system-ui, -apple-system, "Segoe UI", sans-serif;
-      --ed-sans:  "Mulish", system-ui, -apple-system, "Segoe UI", sans-serif;
-    }
-    * { box-sizing: border-box; }
+    /* Page chrome only — components/tokens come from tailwind.css. */
     body {
-      background: var(--ed-bg);
-      color: var(--ed-ink);
-      font-family: var(--ed-sans);
-      display: flex; align-items: center; justify-content: center;
-      min-height: 100vh; margin: 0; padding: 24px;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background: #FBF7EF;
+      color: #241C15;
+      font-family: "Mulish", system-ui, -apple-system, sans-serif;
+      -webkit-font-smoothing: antialiased;
     }
-    .nf {
-      max-width: 460px; width: 100%;
-    }
-    .nf__code {
-      font-family: var(--ed-serif);
-      font-weight: 700;
-      font-size: 64px;
-      line-height: 1;
-      letter-spacing: -0.02em;
-      color: var(--ed-accent);
-      margin: 0 0 8px;
-    }
-    .nf__title {
-      font-family: var(--ed-serif);
-      font-weight: 700;
-      font-size: 26px;
-      line-height: 1.2;
-      margin: 0 0 12px;
-    }
-    .nf__body {
-      color: var(--ed-ink-muted);
-      font-size: 15px;
-      line-height: 1.6;
-      margin: 0 0 28px;
-    }
-    .nf__actions { display: flex; flex-wrap: wrap; gap: 12px; }
-    .nf__btn {
-      display: inline-block;
-      background: var(--ed-accent);
-      color: oklch(96% 0.012 75);
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 14px;
-      padding: 12px 22px;
-      border-radius: 6px;
-      transition: background 200ms ease;
-    }
-    .nf__btn:hover { background: var(--ed-accent-hover); }
-    .nf__link {
-      display: inline-block;
-      color: var(--ed-ink-muted);
-      text-decoration: underline;
-      text-underline-offset: 3px;
-      font-size: 14px;
-      padding: 12px 8px;
-    }
-    .nf__link:hover { color: var(--ed-ink); }
   </style>
 </head>
 <body>
-  <main class="nf">
-    <p class="nf__code">404</p>
-    <h1 class="nf__title">Sivua ei löytynyt</h1>
-    <p class="nf__body">Etsimääsi sivua ei ole tai sen osoite on muuttunut. Pääset takaisin alta.</p>
-    <div class="nf__actions">
-      <a class="nf__btn" href="/">Takaisin etusivulle</a>
-      <a class="nf__link" href="/app.html">Siirry sovellukseen</a>
+  <header class="site-nav">
+    <div class="site-nav__inner">
+      <a class="site-nav__brand" href="/" aria-label="Puheo etusivu">puheo</a>
+      <div class="site-nav__links">
+        <a class="site-nav__link" href="/#kurssit">Kurssit</a>
+        <a class="site-nav__link" href="/pricing.html">Hinnat</a>
+        <a class="btn btn-primary btn-sm" href="/app.html">Sovellukseen</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="flex-1 flex items-center px-6 py-16">
+    <div class="mx-auto w-full" style="max-width: 460px;">
+      <p class="font-display" style="font-weight:700;font-size:clamp(56px,12vw,72px);line-height:1;letter-spacing:-0.02em;color:#9B2D2A;margin:0 0 8px;">404</p>
+      <h1 class="font-display text-ink" style="font-weight:700;font-size:clamp(24px,5vw,28px);line-height:1.2;margin:0 0 12px;">Sivua ei löytynyt</h1>
+      <p class="text-ink-muted" style="font-size:15px;line-height:1.6;margin:0 0 28px;max-width:42ch;">
+        Etsimääsi sivua ei ole tai sen osoite on muuttunut. Pääset takaisin alta.
+      </p>
+      <div class="flex flex-wrap gap-3">
+        <a class="btn btn-primary" href="/">Takaisin etusivulle</a>
+        <a class="btn btn-secondary" href="/app.html">Siirry sovellukseen</a>
+      </div>
     </div>
   </main>
 </body>

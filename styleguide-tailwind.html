@@ -64,19 +64,30 @@
     <div class="demo">
       <h2 class="demo__title">Navigaatio</h2>
       <p class="demo__note">Yksi jaettu yläpalkki. Desktop-rivi muuttuu mobiilissa CSS-only-dropdowniksi (hampurilainen, ei JS:ää).</p>
-      <div class="frame" style="position:relative">
+      <div class="frame" style="position:relative;overflow:visible;padding-bottom:180px">
         <nav class="site-nav" style="position:relative">
           <div class="site-nav__inner">
-            <a href="#" class="site-nav__brand">Puheo</a>
+            <a href="/" class="site-nav__brand">puheo</a>
             <input type="checkbox" id="navtoggle" class="site-nav__toggle" />
             <label for="navtoggle" class="site-nav__burger" aria-label="Avaa valikko">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
             </label>
             <div class="site-nav__links">
-              <a href="#" class="site-nav__link">Harjoittele</a>
-              <a href="#" class="site-nav__link">Kurssit</a>
-              <a href="#" class="site-nav__link">Hinnat</a>
-              <a href="#" class="btn btn-primary btn-sm">Kirjaudu</a>
+              <div class="site-nav__dropdown">
+                <button type="button" class="site-nav__link site-nav__dropdown-trigger" aria-expanded="false" aria-haspopup="true">
+                  Kurssit
+                  <svg class="site-nav__chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="site-nav__dropdown-menu" role="menu" aria-label="Kurssit">
+                  <a class="site-nav__dropdown-item" role="menuitem" href="/#kurssit">Kaikki kurssit</a>
+                  <a class="site-nav__dropdown-item" role="menuitem" href="/espanjan-abikurssi">Espanjan abikurssi</a>
+                  <a class="site-nav__dropdown-item" role="menuitem" href="/saksan-abikurssi">Saksan abikurssi</a>
+                  <a class="site-nav__dropdown-item" role="menuitem" href="/ranskan-abikurssi">Ranskan abikurssi</a>
+                </div>
+              </div>
+              <a href="/#nayte" class="site-nav__link">Näyte</a>
+              <a href="/pricing.html" class="site-nav__link">Hinnat</a>
+              <a href="/app.html#rekisteroidy" class="btn btn-primary btn-sm">Aloita ilmaiseksi</a>
             </div>
           </div>
         </nav>
@@ -137,13 +148,49 @@
       <div class="frame">
         <footer class="site-footer">
           <div class="site-footer__inner">
-            <span class="site-footer__brand">Puheo</span>
-            <nav class="site-footer__links" aria-label="Footer">
-              <a href="#" class="site-footer__link">Hinnat</a>
-              <a href="#" class="site-footer__link">Tietosuoja</a>
-              <a href="#" class="site-footer__link">Ehdot</a>
-              <a href="#" class="site-footer__link">Palautukset</a>
-            </nav>
+            <div class="site-footer__brand">
+              <a class="site-footer__brandmark" href="/" aria-label="Puheo etusivu">
+                <span class="site-footer__brand-dot" aria-hidden="true"></span>
+                Puheo
+              </a>
+              <p class="site-footer__tagline">Lyhyen oppimäärän YO-koe valmennus espanjaan, ranskaan ja saksaan. Rakennettu YTL:n rubriikin päälle.</p>
+            </div>
+            <div class="site-footer__cols">
+              <nav class="site-footer__col" aria-label="Tuote">
+                <h3 class="site-footer__col-title">Tuote</h3>
+                <ul class="site-footer__links">
+                  <li><a class="site-footer__link" href="/#kurssit">Kurssit</a></li>
+                  <li><a class="site-footer__link" href="/#nayte">Näyte</a></li>
+                  <li><a class="site-footer__link" href="/pricing.html">Hinnat</a></li>
+                </ul>
+              </nav>
+              <nav class="site-footer__col" aria-label="Abikurssit">
+                <h3 class="site-footer__col-title">Abikurssit</h3>
+                <ul class="site-footer__links">
+                  <li><a class="site-footer__link" href="/espanjan-abikurssi">Espanjan abikurssi</a></li>
+                  <li><a class="site-footer__link" href="/saksan-abikurssi">Saksan abikurssi</a></li>
+                  <li><a class="site-footer__link" href="/ranskan-abikurssi">Ranskan abikurssi</a></li>
+                </ul>
+              </nav>
+              <nav class="site-footer__col" aria-label="Tili">
+                <h3 class="site-footer__col-title">Tili</h3>
+                <ul class="site-footer__links">
+                  <li><a class="site-footer__link" href="/app.html#kirjaudu">Kirjaudu</a></li>
+                  <li><a class="site-footer__link" href="/app.html#rekisteroidy">Aloita ilmaiseksi</a></li>
+                </ul>
+              </nav>
+              <nav class="site-footer__col" aria-label="Tieto">
+                <h3 class="site-footer__col-title">Tieto</h3>
+                <ul class="site-footer__links">
+                  <li><a class="site-footer__link" href="/privacy.html">Tietosuoja</a></li>
+                  <li><a class="site-footer__link" href="/terms.html">Käyttöehdot</a></li>
+                  <li><a class="site-footer__link" href="/refund.html">Palautukset</a></li>
+                </ul>
+              </nav>
+            </div>
+            <div class="site-footer__bottom">
+              <p class="site-footer__copy">© 2026 Puheo · Tehty Suomessa</p>
+            </div>
           </div>
         </footer>
       </div>

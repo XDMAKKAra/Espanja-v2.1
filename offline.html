@@ -3,25 +3,69 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Puheo, Ei yhteyttä</title>
+  <title>Puheo, ei yhteyttä</title>
   <link rel="stylesheet" href="/css/fonts.css" />
+  <!--
+    Offline fallback served by the service worker with no network. Kept
+    self-contained (inline CSS, no /css/tailwind.css dependency) on purpose:
+    tailwind.css is not in the SW precache, so an external link would render
+    unstyled when offline. Colours/fonts mirror the brand tokens by hand.
+  -->
   <style>
-    body { background: #FBF7EF; color: #241C15; font-family: "Mulish", system-ui, -apple-system, sans-serif; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; text-align: center; padding: 24px; }
-    .offline-box { max-width: 400px; }
-    h1 { font-size: 2rem; margin-bottom: 12px; font-family: "Fredoka", system-ui, sans-serif; font-weight: 700; }
-    p { color: #5C5145; font-size: 14px; line-height: 1.6; margin-bottom: 24px; }
-    .btn { background: #9B2D2A; color: #fff; border: none; padding: 12px 24px; border-radius: 999px; font-size: 14px; font-weight: 700; cursor: pointer; font-family: "Fredoka", system-ui, sans-serif; }
-    .btn:active { transform: scale(.97); }
-    .btn:hover { background: #832421; }
-    .icon { font-size: 48px; margin-bottom: 16px; }
+    :root {
+      --cream: #FBF7EF; --ink: #241C15; --ink-muted: #5C5145;
+      --brick: #9B2D2A; --brick-dark: #832421; --line: #E9DFCF;
+    }
+    * { box-sizing: border-box; }
+    body {
+      background: var(--cream); color: var(--ink);
+      font-family: "Mulish", system-ui, -apple-system, sans-serif;
+      display: flex; align-items: center; justify-content: center;
+      min-height: 100vh; margin: 0; text-align: center; padding: 24px;
+      -webkit-font-smoothing: antialiased;
+    }
+    .offline { max-width: 400px; }
+    .offline__icon {
+      width: 56px; height: 56px; margin: 0 auto 20px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 999px; background: #F4DAD3; color: var(--brick);
+    }
+    h1 {
+      font-family: "Fredoka", system-ui, sans-serif; font-weight: 700;
+      font-size: 1.75rem; line-height: 1.2; margin: 0 0 12px;
+    }
+    p { color: var(--ink-muted); font-size: 15px; line-height: 1.6; margin: 0 0 24px; }
+    .btn {
+      -webkit-appearance: none; appearance: none; cursor: pointer;
+      display: inline-flex; align-items: center; justify-content: center;
+      min-height: 2.75rem; padding: 0.625rem 1.5rem;
+      background: var(--brick); color: var(--cream);
+      border: 0; border-radius: 999px;
+      font-family: "Mulish", system-ui, sans-serif; font-weight: 600; font-size: 1rem;
+      transition: transform 160ms ease-out, background-color 160ms ease-out;
+    }
+    .btn:hover { background: var(--brick-dark); }
+    .btn:active { transform: scale(0.97); }
+    .btn:focus-visible { outline: none; box-shadow: 0 0 0 3px rgb(155 45 42 / 0.32); }
+    @media (prefers-reduced-motion: reduce) { .btn { transition: none; } .btn:active { transform: none; } }
   </style>
 </head>
 <body>
-  <div class="offline-box">
-    <div class="icon">📡</div>
+  <main class="offline">
+    <div class="offline__icon" aria-hidden="true">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M1 1l22 22" />
+        <path d="M16.72 11.06A10.94 10.94 0 0 1 19 12.55" />
+        <path d="M5 12.55a10.94 10.94 0 0 1 5.17-2.39" />
+        <path d="M10.71 5.05A16 16 0 0 1 22.58 9" />
+        <path d="M1.42 9a15.91 15.91 0 0 1 4.7-2.88" />
+        <path d="M8.53 16.11a6 6 0 0 1 6.95 0" />
+        <line x1="12" y1="20" x2="12.01" y2="20" />
+      </svg>
+    </div>
     <h1>Ei yhteyttä</h1>
-    <p>Tarkista internet-yhteytesi ja yritä uudelleen. Harjoitukset vaativat verkkoyhteyden tekoälyn generoimien tehtävien vuoksi.</p>
+    <p>Tarkista internet-yhteytesi ja yritä uudelleen. Harjoitukset tarvitsevat verkon, koska tehtävät syntyvät tekoälyllä.</p>
     <button class="btn" onclick="location.reload()">Yritä uudelleen</button>
-  </div>
+  </main>
 </body>
 </html>
