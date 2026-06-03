@@ -116,9 +116,9 @@
             <a class="nav__dropdown-item" role="menuitem" href="/ranskan-abikurssi">Ranskan abikurssi</a>
           </div>
         </div>
-        <a class="nav__link" href="#nayte">Näyte</a>
+        <a class="nav__link" href="/nayte">Näyte</a>
         <a class="nav__link" href="#hinnoittelu">Hinnoittelu</a>
-        <a class="nav__link" href="#faq">FAQ</a>
+        <a class="nav__link" href="/ukk">FAQ</a>
       </nav>
 
       <div class="nav__cta" id="nav-cta">
@@ -175,9 +175,9 @@
             <a class="nav-menu__sublink" href="/ranskan-abikurssi">Ranskan abikurssi</a>
           </div>
         </details>
-        <a class="nav-menu__link" href="#nayte">Näyte</a>
+        <a class="nav-menu__link" href="/nayte">Näyte</a>
         <a class="nav-menu__link" href="#hinnoittelu">Hinnoittelu</a>
-        <a class="nav-menu__link" href="#faq">FAQ</a>
+        <a class="nav-menu__link" href="/ukk">FAQ</a>
       </nav>
     </div>
   </div>
@@ -215,7 +215,7 @@
               Aloita ilmaiseksi
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
             </a>
-            <a class="hero__link-secondary" href="#nayte">Katso miten arviointi toimii →</a>
+            <a class="hero__link-secondary" href="/nayte">Katso miten arviointi toimii →</a>
           </div>
 
           <p class="hero__trust">Ilmainen aloitus, ei korttia.</p>
@@ -286,211 +286,24 @@
     </section>
 
     <!-- ═══ PROOF, grader card as standalone artifact section. -->
-    <section id="nayte" class="proof" aria-labelledby="proof-title">
+    <!-- ═══ PROOF TEASER (L-V382) — the full per-language grader sample +
+         rubric explainer moved to the dedicated /nayte page; the live demo
+         above stays the landing centrepiece, this is just the doorway. -->
+    <section id="nayte" class="proof proof--teaser" aria-labelledby="proof-title" data-reveal>
       <div class="proof__inner">
-        <div class="proof__head" data-reveal>
+        <div class="proof__head">
           <p class="section-eyebrow">Näyte arvioinnista</p>
-          <h2 class="section-title" id="proof-title">
-            YTL:n rubriikki, ei yleinen mittari.
-          </h2>
+          <h2 class="section-title" id="proof-title">YTL:n rubriikki, ei yleinen mittari.</h2>
           <p class="proof__lede">
             Arvio pohjaa YTL:n julkaisemiin koejakoihin ja viralliseen
-            pisteytysrubriikkiin. Saat pistehaarukan ja sanallisen perustelun:
-            mikä nostaa tekstiä ylöspäin ja mikä pitää sen alhaalla.
+            pisteytysrubriikkiin: pistehaarukka ja sanallinen perustelu, ei
+            luvattua yksittäispistettä. Katso oikeat esimerkkiarviot espanjaksi,
+            ranskaksi ja saksaksi sekä rubriikin neljä osa-aluetta.
           </p>
+          <div class="proof-teaser__actions">
+            <a class="proof-teaser__link" href="/nayte">Katso koko näyte ja rubriikki →</a>
+          </div>
         </div>
-
-        <div class="proof__lang-switch" role="tablist" aria-label="Valitse näytekortin kieli">
-          <button class="proof__lang-btn" type="button" role="tab" id="proof-tab-es"
-                  data-lang="es" aria-selected="true" aria-controls="proof-panel-es" tabindex="0">Español</button>
-          <button class="proof__lang-btn" type="button" role="tab" id="proof-tab-fr"
-                  data-lang="fr" aria-selected="false" aria-controls="proof-panel-fr" tabindex="-1">Français</button>
-          <button class="proof__lang-btn" type="button" role="tab" id="proof-tab-de"
-                  data-lang="de" aria-selected="false" aria-controls="proof-panel-de" tabindex="-1">Deutsch</button>
-        </div>
-
-        <div class="proof__panels" data-active-lang="es">
-
-          <div class="grader-card" role="tabpanel" id="proof-panel-es" aria-labelledby="proof-tab-es" data-lang="es" aria-label="Espanjankielinen synttärikutsu, lyhyt tehtävä, arvioitu pistehaarukka 21–27 / 33.">
-            <div class="grader-card__head">
-              <p class="grader-card__title">Sähköposti ystävälle · lyhyt · espanja</p>
-              <span class="grader-card__badge">21&ndash;27 / 33 p</span>
-            </div>
-
-            <div class="grader-card__cols">
-            <div class="grader-card__text">
-            <p class="grader-prose">Hola Marta,
-
-¡Te escribo para invitarte a mi cumpleaños el sábado que viene! La fiesta empieza a las siete en mi casa. Mi madre va a cocinar mucha comida y <span class="ge" data-cat="spelling" tabindex="0">tendrémos<span class="ge-tip"><strong>Oikein: tendremos</strong>Painollinen tavu on toiseksi viimeinen, joten 'tendremos' kirjoitetaan ilman aksenttia.</span></span> también música. <span class="ge" data-cat="grammar" tabindex="0">Espero que vienes<span class="ge-tip"><strong>Oikein: Espero que vengas</strong>Subjunktiivi pakollinen 'esperar que' jälkeen, kun toivot jonkun tekevän jotakin: 'venir' → 'vengas'.</span></span> con tu hermano. La semana pasada <span class="ge" data-cat="grammar" tabindex="0">estaba en Madrid<span class="ge-tip"><strong>Oikein: estuve en Madrid</strong>Loppuun saatettu, ajallisesti rajattu matka → preteriti ('estuve'), ei imperfekti.</span></span> con la clase y <span class="ge" data-cat="grammar" tabindex="0">era muy divertido<span class="ge-tip"><strong>Oikein: fue muy divertido</strong>Kokonaisarvio päättyneestä tapahtumasta → preteriti 'fue'. 'Era' kuvaisi kestävää tilaa.</span></span>. Dime antes del miércoles si puedes venir.
-
-¡Hasta pronto!
-Aino</p>
-            <div class="grader-legend" aria-hidden="true">
-              <span class="grader-legend__item"><span class="grader-legend__sw grader-legend__sw--spelling"></span>Kirjoitusasu</span>
-              <span class="grader-legend__item"><span class="grader-legend__sw grader-legend__sw--grammar"></span>Rakenne</span>
-            </div>
-            </div>
-
-            <div class="grader-card__eval">
-            <div class="rubric">
-              <div class="rubric-row">
-                <span class="rubric-row__name">Viestinnällisyys</span>
-                <span class="rubric-row__score">8 / 9</span>
-                <span class="rubric-row__fb">Kutsu, paikka, aika ja vastauspyyntö täytetty selkeästi.</span>
-              </div>
-              <div class="rubric-row">
-                <span class="rubric-row__name">Kielen rakenteet</span>
-                <span class="rubric-row__score">4 / 9</span>
-                <span class="rubric-row__fb">Toistuvia preteriti / imperfekti -valintoja ja yksi subjunktiivivirhe.</span>
-              </div>
-              <div class="rubric-row">
-                <span class="rubric-row__name">Sanasto</span>
-                <span class="rubric-row__score">7 / 9</span>
-                <span class="rubric-row__fb">Sopiva epämuodollinen rekisteri, lukio-tason sanasto.</span>
-              </div>
-              <div class="rubric-row">
-                <span class="rubric-row__name">Kokonaisuus</span>
-                <span class="rubric-row__score">5 / 6</span>
-                <span class="rubric-row__fb">Tervehdys ja lopetus paikallaan; sidossanoja niukasti.</span>
-              </div>
-              <div class="rubric-total">
-                <span class="rubric-total__label">Lyhyt kirjoitustehtävä</span>
-                <span class="rubric-total__score">21&ndash;27 / 33</span>
-                <span class="rubric-total__note">Arvioitu pistehaarukka. Vastaa tyypillisesti C–M-tason suoritusta; aikamuotojen hallinta nostaisi haarukan yläpäähän.</span>
-              </div>
-            </div>
-
-            <div class="grader-feedback">
-              <p class="grader-feedback__label">Sanallinen palaute</p>
-              <p class="grader-feedback__body">Kutsusta tulee selvä heti ensimmäisestä lauseesta, ja rekisteri on juuri oikea ystävälle. Eniten pudotat pisteitä menneessä ajassa: Madridin reissu on päättynyt ja rajattu tapahtuma, joten se vaatii preteritin (estuve, fue), ei imperfektiä. Yksi subjunktiivi jäi myös puuttumaan 'esperar que' -rakenteesta. Korjaa aikamuodot, niin tämä on M-tason vastaus.</p>
-            </div>
-            </div>
-          </div>
-          </div>
-
-          <div class="grader-card" role="tabpanel" id="proof-panel-fr" aria-labelledby="proof-tab-fr" data-lang="fr" hidden aria-label="Ranskankielinen mielipidekirjoitus, pitkä tehtävä, arvioitu pistehaarukka 38–48 / 66.">
-            <div class="grader-card__head">
-              <p class="grader-card__title">Mielipidekirjoitus · pitkä · ranska</p>
-              <span class="grader-card__badge">38&ndash;48 / 66 p</span>
-            </div>
-
-            <div class="grader-card__cols">
-            <div class="grader-card__text">
-            <p class="grader-prose">Aujourd'hui, beaucoup de lycées en France et en Finlande interdisent les téléphones portables pendant les cours. Je trouve que cette règle est raisonnable mais difficile à appliquer.
-
-D'un côté, le téléphone distrait l'attention pendant le cours. Mes camarades regardent souvent leurs notifications et ils <span class="ge" data-cat="grammar" tabindex="0">oubliaient<span class="ge-tip"><strong>Oikein: oublient</strong>Kuvaa nykyhetken toistuvaa tilannetta → présent, ei imparfait. Imparfait kuvaisi mennyttä toistuvaa toimintaa.</span></span> de noter ce que le prof dit. De l'autre côté, le téléphone est utile pour chercher un mot dans un dictionnaire.
-
-À mon avis, il faut que les profs trouvent un équilibre: le téléphone peut rester dans le sac, mais on peut le sortir <span class="ge" data-cat="grammar" tabindex="0">quand il y a besoin<span class="ge-tip"><strong>Oikein: quand c'est nécessaire</strong>Ranskan idiomi: 'avoir besoin' vaatii subjektin ('j'ai besoin de…'), ei persoonatonta 'il y a besoin' -rakennetta. Luontevampi: 'quand c'est nécessaire' tai 'au besoin'.</span></span>. Si on avait des règles claires, on respecterait mieux la règle.</p>
-            <div class="grader-legend" aria-hidden="true">
-              <span class="grader-legend__item"><span class="grader-legend__sw grader-legend__sw--spelling"></span>Kirjoitusasu</span>
-              <span class="grader-legend__item"><span class="grader-legend__sw grader-legend__sw--grammar"></span>Rakenne</span>
-            </div>
-            </div>
-
-            <div class="grader-card__eval">
-            <div class="rubric">
-              <div class="rubric-row">
-                <span class="rubric-row__name">Viestinnällisyys</span>
-                <span class="rubric-row__score">16 / 18</span>
-                <span class="rubric-row__fb">Selkeä mielipide, perustelut puolesta ja vastaan, tehtävänanto täytetty.</span>
-              </div>
-              <div class="rubric-row">
-                <span class="rubric-row__name">Kielen rakenteet</span>
-                <span class="rubric-row__score">11 / 18</span>
-                <span class="rubric-row__fb">Si-hypoteesi (imparfait + conditionnel) ja subjunktiivi 'il faut que' jälkeen oikein; yksi aikamuotovirhe.</span>
-              </div>
-              <div class="rubric-row">
-                <span class="rubric-row__name">Sanasto</span>
-                <span class="rubric-row__score">12 / 18</span>
-                <span class="rubric-row__fb">Selkeää lukio-tason sanastoa; yksi suomenkielinen idiomi-käännös.</span>
-              </div>
-              <div class="rubric-row">
-                <span class="rubric-row__name">Kokonaisuus</span>
-                <span class="rubric-row__score">4 / 6</span>
-                <span class="rubric-row__fb">Vahvat sidossanat (d'un côté / de l'autre / à mon avis), kappalejako selvä.</span>
-              </div>
-              <div class="rubric-total">
-                <span class="rubric-total__label">Pitkä kirjoitustehtävä</span>
-                <span class="rubric-total__score">38&ndash;48 / 66</span>
-                <span class="rubric-total__note">Arvioitu pistehaarukka. Vastaa tyypillisesti C–M-tason suoritusta; mielipiderakenne on M-tasoa, idiomivirhe vetää C-puolelle.</span>
-              </div>
-            </div>
-
-            <div class="grader-feedback">
-              <p class="grader-feedback__label">Sanallinen palaute</p>
-              <p class="grader-feedback__body">Mielipiteesi on heti selvä, ja perustelet sen molemmilta puolilta, mikä on juuri sitä mitä pitkä tehtävä hakee. Si-hypoteesi ja 'il faut que' -subjunktiivi menivät oikein, ja se nostaa rakennepisteitä. Kompastut nykyhetkeen: kun kuvaat tapaa joka toistuu nyt, käytä présensiä (oublient), ei imparfaitia. Yksi suomesta käännetty idiomi ('il y a besoin') vetää sanastoa alas, muuten taso on jo lähellä M:ää.</p>
-            </div>
-            </div>
-          </div>
-          </div>
-
-          <div class="grader-card" role="tabpanel" id="proof-panel-de" aria-labelledby="proof-tab-de" data-lang="de" hidden aria-label="Saksankielinen blogikommentti, lyhyt tehtävä, arvioitu pistehaarukka 21–30 / 33.">
-            <div class="grader-card__head">
-              <p class="grader-card__title">Blogikommentti · lyhyt · saksa</p>
-              <span class="grader-card__badge">21&ndash;30 / 33 p</span>
-            </div>
-
-            <div class="grader-card__cols">
-            <div class="grader-card__text">
-            <p class="grader-prose">Hallo Lena,
-
-dein Blogeintrag über das Auslandsjahr hat mich richtig inspiriert. Ich <span class="ge" data-cat="grammar" tabindex="0">bin<span class="ge-tip"><strong>Oikein: habe</strong>Perfektissä 'wohnen' ottaa 'haben'-apuverbin, ei 'sein'. 'sein' vain liike- tai tilanmuutosverbeillä (gehen, werden, sterben).</span></span> drei Monate in Berlin gewohnt und es war die beste Zeit meines Lebens. Am Anfang konnte ich nur wenig Deutsch, aber nach zwei Wochen <span class="ge" data-cat="grammar" tabindex="0">habe ich verstanden fast alles<span class="ge-tip"><strong>Oikein: habe ich fast alles verstanden</strong>Pääosalauseessa partisiippi viimeiseksi, kun apuverbi on käytössä. Sanajärjestys: subjekti — apuverbi — muut osat — partisiippi.</span></span> im Alltag.
-
-Mein Tipp: nimm einen Sprachkurs, bevor du fährst — im Ausland ist es viel einfacher, neue Freunde zu finden, wenn man schon ein bisschen sprechen kann.
-
-Liebe Grüße,
-Anna</p>
-            <div class="grader-legend" aria-hidden="true">
-              <span class="grader-legend__item"><span class="grader-legend__sw grader-legend__sw--spelling"></span>Kirjoitusasu</span>
-              <span class="grader-legend__item"><span class="grader-legend__sw grader-legend__sw--grammar"></span>Rakenne</span>
-            </div>
-            </div>
-
-            <div class="grader-card__eval">
-            <div class="rubric">
-              <div class="rubric-row">
-                <span class="rubric-row__name">Viestinnällisyys</span>
-                <span class="rubric-row__score">8 / 9</span>
-                <span class="rubric-row__fb">Reagoi blogiin, jakaa oman kokemuksen ja antaa konkreettisen vinkin.</span>
-              </div>
-              <div class="rubric-row">
-                <span class="rubric-row__name">Kielen rakenteet</span>
-                <span class="rubric-row__score">5 / 9</span>
-                <span class="rubric-row__fb">Apuverbi-virhe Perfektissä ja sanajärjestysvirhe pääosalauseessa; Genitiv ('meines Lebens') oikein.</span>
-              </div>
-              <div class="rubric-row">
-                <span class="rubric-row__name">Sanasto</span>
-                <span class="rubric-row__score">7 / 9</span>
-                <span class="rubric-row__fb">Sopiva rekisteri, idiomaattinen ('die beste Zeit meines Lebens').</span>
-              </div>
-              <div class="rubric-row">
-                <span class="rubric-row__name">Kokonaisuus</span>
-                <span class="rubric-row__score">5 / 6</span>
-                <span class="rubric-row__fb">Tervehdys, lopetus ja perusteltu vinkki; sivulauseen sanajärjestys ('bevor du fährst') oikein.</span>
-              </div>
-              <div class="rubric-total">
-                <span class="rubric-total__label">Lyhyt kirjoitustehtävä</span>
-                <span class="rubric-total__score">21&ndash;30 / 33</span>
-                <span class="rubric-total__note">Arvioitu pistehaarukka. Vastaa tyypillisesti C–M-tason suoritusta; Genitiv on M-tasoa, Perfekt-apuverbi vetää C-puolelle.</span>
-              </div>
-            </div>
-
-            <div class="grader-feedback">
-              <p class="grader-feedback__label">Sanallinen palaute</p>
-              <p class="grader-feedback__body">Vastaat blogiin luontevasti ja annat konkreettisen vinkin, joten viesti toimii. Kaksi rakennetta jää korjattavaksi: 'wohnen' ottaa Perfektissä apuverbin haben, ei sein, ja partisiippi kuuluu päälauseen loppuun (habe ich fast alles verstanden). Genitiivi ('meines Lebens') meni jo oikein, mikä on M-tason merkki. Kun sanajärjestys vakiintuu, nouset sieltä ylöspäin.</p>
-            </div>
-            </div>
-          </div>
-          </div>
-
-        </div>
-
-        <p class="proof__caveat">
-          Näytetty luku on arvioitu pistehaarukka YTL:n asteikolla (lyhyt
-          tehtävä 0–33 p, pitkä 0–66 p), ei luvattu yksittäispiste. Lopullinen
-          arvosana määräytyy koko kokeen yhteispisteistä (kuullun + luetun +
-          kirjoitus), ei yhdestä kirjoituksesta.
-        </p>
       </div>
     </section>
 
@@ -726,138 +539,6 @@ Anna</p>
       </div>
     </section>
 
-    <!-- ═══ FAQ ─────────────────────────────────────────────── -->
-    <section id="faq" class="landing-section landing-section--faq" aria-labelledby="faq-otsikko">
-      <div class="landing-section__inner faq__inner">
-        <header class="faq__head" data-reveal>
-          <p class="faq__eyebrow">UKK</p>
-          <h2 class="faq__title" id="faq-otsikko">
-            Usein <em>kysyttyä</em> Puheosta.
-          </h2>
-          <p class="faq__sub">
-            Et löytänyt etsimääsi? Lähetä kysymys osoitteeseen
-            <a class="faq__mail" href="mailto:tuki@puheo.fi">tuki@puheo.fi</a>.
-            Vastaamme yleensä saman päivän aikana.
-          </p>
-        </header>
-
-        <div class="faq__list">
-          <details class="faq-item" name="puheo-faq">
-            <summary class="faq-item__q">
-              <span class="faq-item__q-text">Miten Puheo eroaa Mafystä, Studeosta tai SanomaPron kursseista?</span>
-              <svg class="faq-item__chev" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 6 15 12 9 18"/></svg>
-            </summary>
-            <div class="faq-item__a">
-              <p>
-                Mafy, Studeo ja SanomaPro ovat hyviä yleisiä kertausalustoja,
-                pääosin matematiikalle ja äidinkielelle. Puheo on rakennettu
-                yhdelle ainetyypille: lyhyen oppimäärän kielikokeelle. Kirjoitukset
-                pisteytetään YTL:n omalla rubriikilla, ei yleisellä mittarilla,
-                ja jokainen virhe selitetään suomeksi sillä kieliopin termillä
-                jota lukiossa käytetään.
-              </p>
-            </div>
-          </details>
-
-          <details class="faq-item" name="puheo-faq">
-            <summary class="faq-item__q">
-              <span class="faq-item__q-text">Onko Puheo YTL:n virallisesti hyväksymä?</span>
-              <svg class="faq-item__chev" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 6 15 12 9 18"/></svg>
-            </summary>
-            <div class="faq-item__a">
-              <p>
-                Ei. YTL ei myönnä yksittäisille palveluille hyväksyntöjä, eikä
-                Puheo ole YTL:n tuottama. Arviointi on kalibroitu YTL:n julkaiseman
-                vieraan kielen lyhyen oppimäärän rubriikin pohjalta: viestinnällisyys,
-                kielen rakenteet, sanasto ja kokonaisuus pisteytetään samoilla
-                kriteereillä kuin oikeassa kokeessa.
-              </p>
-            </div>
-          </details>
-
-          <details class="faq-item" name="puheo-faq">
-            <summary class="faq-item__q">
-              <span class="faq-item__q-text">Mille kielille abikurssi on saatavilla?</span>
-              <svg class="faq-item__chev" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 6 15 12 9 18"/></svg>
-            </summary>
-            <div class="faq-item__a">
-              <p>
-                Kaikki kolme kieltä ovat käytössä, koko 8-kurssin polku
-                ylioppilaskokeeseen asti: katso
-                <a href="/espanjan-abikurssi">espanjan abikurssi</a>,
-                <a href="/saksan-abikurssi">saksan abikurssi</a> ja
-                <a href="/ranskan-abikurssi">ranskan abikurssi</a>. Yksi
-                Kurssi-ostos kattaa kaikki kolme, ja YTL-vaatimusten myötä
-                päivittyvät kurssit tulevat automaattisesti ilman lisämaksua.
-              </p>
-            </div>
-          </details>
-
-          <details class="faq-item" name="puheo-faq">
-            <summary class="faq-item__q">
-              <span class="faq-item__q-text">Mitä jos YO-kokeen formaatti muuttuu?</span>
-              <svg class="faq-item__chev" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 6 15 12 9 18"/></svg>
-            </summary>
-            <div class="faq-item__a">
-              <p>
-                Seuraamme YTL:n ohjeistusta ja päivitämme harjoitukset, rubriikin
-                ja tehtävätyypit jokaisen julkaistun muutoksen jälkeen. Treeni-tilaajat
-                ja kurssin ostaneet saavat päivitykset automaattisesti, uusia
-                versioita ei tarvitse asentaa erikseen.
-              </p>
-            </div>
-          </details>
-
-          <details class="faq-item" name="puheo-faq">
-            <summary class="faq-item__q">
-              <span class="faq-item__q-text">Mitä tietoja keräätte ja missä ne säilytetään?</span>
-              <svg class="faq-item__chev" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 6 15 12 9 18"/></svg>
-            </summary>
-            <div class="faq-item__a">
-              <p>
-                Vain rekisteröitymiseen tarvittavat tiedot ja harjoitusdata
-                (vastaukset, edistyminen): ei kolmansille osapuolille, ei
-                mainostajille. Palvelu on GDPR-yhteensopiva ja kaikki data
-                säilytetään EU-alueella sijaitsevilla palvelimilla. Voit pyytää
-                tietojesi poistamisen milloin tahansa.
-              </p>
-            </div>
-          </details>
-
-          <details class="faq-item" name="puheo-faq">
-            <summary class="faq-item__q">
-              <span class="faq-item__q-text">Voinko käyttää Puheoa puhelimella?</span>
-              <svg class="faq-item__chev" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 6 15 12 9 18"/></svg>
-            </summary>
-            <div class="faq-item__a">
-              <p>
-                Kyllä. Puheo on selainpohjainen ja toimii iOS:n ja Androidin
-                kosketusnäytöillä. Voit halutessasi lisätä Puheon kotinäytölle
-                PWA:na (progressive web app), silloin se aukeaa kuin sovellus,
-                ilman erillistä asennusta.
-              </p>
-            </div>
-          </details>
-
-          <details class="faq-item" name="puheo-faq">
-            <summary class="faq-item__q">
-              <span class="faq-item__q-text">Voinko peruuttaa tilauksen milloin tahansa?</span>
-              <svg class="faq-item__chev" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 6 15 12 9 18"/></svg>
-            </summary>
-            <div class="faq-item__a">
-              <p>
-                Kyllä. Voit peruuttaa Treeni-tilauksen
-                sisäänkirjautuneena yhdellä klikkauksella, ja tilaus päättyy
-                kuluvan laskutusjakson loppuun. Kertaostoille (esim. 8 viikon
-                paketti) myönnämme 14 päivän rahat-takaisin-takuun ilman
-                erillistä perustelua.
-              </p>
-            </div>
-          </details>
-        </div>
-      </div>
-    </section>
-
     <!-- ═══ FINAL CTA, quieter than Ship 1, no glow card. -->
     <section id="rekisteroidy-cta" class="landing-section landing-section--cta" aria-labelledby="cta-otsikko">
       <div class="landing-section__inner">
@@ -906,9 +587,9 @@ Anna</p>
           <h3 class="landing-footer__col-title">Tuote</h3>
           <ul class="landing-footer__links">
             <li><a href="#kurssit">Kurssit</a></li>
-            <li><a href="#nayte">Näyte</a></li>
+            <li><a href="/nayte">Näyte</a></li>
             <li><a href="#hinnoittelu">Hinnoittelu</a></li>
-            <li><a href="#faq">UKK</a></li>
+            <li><a href="/ukk">UKK</a></li>
           </ul>
         </nav>
         <nav class="landing-footer__col" aria-label="Abikurssit">

@@ -156,6 +156,10 @@ const LANDING_REWRITES = {
   "/espanja-yo-koe":     "public/landing/espanja.html",
   "/saksan-yo-koe":      "public/landing/saksa.html",
   "/ranskan-yo-koe":     "public/landing/ranska.html",
+  "/nayte":              "nayte.html",
+  "/arviointi":          "nayte.html",
+  "/ukk":                "ukk.html",
+  "/faq":                "ukk.html",
   "/styleguide":         "styleguide.html",
 };
 const LANDING_REDIRECTS = {
