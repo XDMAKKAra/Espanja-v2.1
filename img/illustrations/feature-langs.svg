@@ -18,21 +18,17 @@
     <text x="158" y="225" font-family="Fredoka, sans-serif" font-weight="700" font-size="21" fill="#241C15" text-anchor="middle">Hallo!</text>
   </g>
 
-  <!-- valkoinen ylioppilaslakki: valkoinen kupoli, musta nauha + lippa,
-       kultainen lyyra-aksentti (ei mortarboardia) -->
+  <!-- valkoinen ylioppilaslakki: leveä valkoinen kupoli, musta nauha,
+       musta kiiltävä lippa eteen, pyöreä kultainen kokardi (ei mortarboardia) -->
   <g>
-    <!-- crown / kupoli -->
-    <path d="M104 92C104 56 126 44 160 44C194 44 216 56 216 92Z" fill="#FFFFFF" stroke="#241C15" stroke-width="3" stroke-linejoin="round"/>
-    <!-- band / nauha -->
-    <path d="M100 92H220V104C220 108 216 110 212 110H108C104 110 100 108 100 104Z" fill="#241C15"/>
-    <!-- visor / lippa -->
-    <path d="M124 110C140 126 180 126 196 110C180 118 140 118 124 110Z" fill="#241C15"/>
-    <!-- gold lyre badge / lyyra -->
-    <g stroke="#F4C84A" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M152 106C148 98 151 90 160 90C169 90 172 98 168 106"/>
-      <path d="M157 92V106M163 92V106"/>
-      <path d="M154 92H166"/>
-    </g>
-    <circle cx="160" cy="108" r="2.6" fill="#F4C84A"/>
+    <!-- white crown: wide puffy top overhanging the band -->
+    <path d="M92 90C92 62 118 50 160 50C202 50 228 62 228 90C228 99 201 104 160 104C119 104 92 99 92 90Z" fill="#FFFFFF" stroke="#241C15" stroke-width="3" stroke-linejoin="round"/>
+    <!-- black band, narrower than the crown -->
+    <path d="M110 100C110 98 132 97 160 97C188 97 210 98 210 100V110C210 117 188 121 160 121C132 121 110 117 110 110Z" fill="#241C15"/>
+    <!-- black glossy visor projecting forward -->
+    <path d="M124 118C140 139 180 139 196 118C198 130 180 138 160 138C140 138 126 130 124 118Z" fill="#241C15"/>
+    <!-- round gold cockade / kokardi -->
+    <circle cx="160" cy="109" r="5.6" fill="#F4C84A" stroke="#241C15" stroke-width="1.3"/>
+    <circle cx="160" cy="109" r="2" fill="#9B2D2A"/>
   </g>
 </svg>
