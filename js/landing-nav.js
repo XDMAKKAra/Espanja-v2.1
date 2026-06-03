@@ -38,6 +38,37 @@
     show("nav-menu-chip", true);
   }
 
+  // ─── Desktop Kurssit dropdown (L-V367) ──────────────────────
+  // CSS owns hover + focus-within. JS adds click-toggle (touch / trackpad
+  // tap, where there is no hover) plus Escape + outside-click close, and
+  // keeps aria-expanded honest for assistive tech.
+  const dd = document.getElementById("nav-kurssit-dd");
+  const ddTrigger = dd && dd.querySelector(".nav__dropdown-trigger");
+  if (dd && ddTrigger) {
+    const setOpen = (open) => {
+      dd.setAttribute("data-open", open ? "true" : "false");
+      ddTrigger.setAttribute("aria-expanded", open ? "true" : "false");
+    };
+    ddTrigger.addEventListener("click", (e) => {
+      e.preventDefault();
+      setOpen(dd.getAttribute("data-open") !== "true");
+    });
+    dd.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") { setOpen(false); ddTrigger.focus(); }
+    });
+    // Close when focus or a click leaves the dropdown entirely.
+    dd.addEventListener("focusout", (e) => {
+      if (!dd.contains(e.relatedTarget)) setOpen(false);
+    });
+    document.addEventListener("pointerdown", (e) => {
+      if (!dd.contains(e.target)) setOpen(false);
+    });
+    // A menu-item click navigates; collapse the open state behind it.
+    dd.querySelectorAll(".nav__dropdown-item").forEach((a) =>
+      a.addEventListener("click", () => setOpen(false))
+    );
+  }
+
   // ─── Mobile menu (L-V355) ───────────────────────────────────
   const hamburger = document.getElementById("nav-hamburger");
   const menu = document.getElementById("nav-menu");

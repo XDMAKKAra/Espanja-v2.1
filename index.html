@@ -97,7 +97,21 @@
       <a class="nav__brand" href="/" aria-label="Puheo etusivu"><span class="brand-wordmark">puheo</span></a>
 
       <nav class="nav__links" aria-label="Sivun osiot">
-        <a class="nav__link" href="#kurssit">Kurssit</a>
+        <!-- L-V367 — desktop Kurssit-pudotus: abikurssi-sivut olivat vain
+             mobiilin hampurilaisvalikossa, joten desktopilta ei pääsyt niihin
+             navista. Peilaa mobiilivalikon Kurssit-ryhmää. -->
+        <div class="nav__dropdown" id="nav-kurssit-dd">
+          <button class="nav__link nav__dropdown-trigger" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="nav-kurssit-menu">
+            Kurssit
+            <svg class="nav__dropdown-chevron" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="nav__dropdown-menu" id="nav-kurssit-menu" role="menu" aria-label="Kurssit">
+            <a class="nav__dropdown-item" role="menuitem" href="#kurssit">Kaikki kurssit</a>
+            <a class="nav__dropdown-item" role="menuitem" href="/espanjan-abikurssi">Espanjan abikurssi</a>
+            <a class="nav__dropdown-item" role="menuitem" href="/saksan-abikurssi">Saksan abikurssi</a>
+            <a class="nav__dropdown-item" role="menuitem" href="/ranskan-abikurssi">Ranskan abikurssi</a>
+          </div>
+        </div>
         <a class="nav__link" href="#nayte">Näyte</a>
         <a class="nav__link" href="#hinnoittelu">Hinnoittelu</a>
         <a class="nav__link" href="#faq">FAQ</a>

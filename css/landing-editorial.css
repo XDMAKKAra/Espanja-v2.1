@@ -234,6 +234,82 @@ body.landing > * { position: relative; z-index: 1; }
   align-items: center;
 }
 
+/* ─── Desktop Kurssit dropdown (L-V367) ────────────────────────
+   Opens on hover + focus-within (CSS) and click/keyboard (JS sets
+   data-open). Only rendered inside .nav__links, which is display:none
+   below 860px — mobile keeps using the hamburger menu. */
+.landing .nav__dropdown { position: relative; }
+.landing .nav__dropdown-trigger {
+  border: none;
+  background: none;
+  font: inherit;
+  cursor: pointer;
+  gap: 4px;
+}
+.landing .nav__dropdown-chevron {
+  transition: transform var(--ed-t-fast);
+}
+.landing .nav__dropdown[data-open="true"] .nav__dropdown-chevron,
+.landing .nav__dropdown:hover .nav__dropdown-chevron {
+  transform: rotate(180deg);
+}
+.landing .nav__dropdown-menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 50%;
+  min-width: 220px;
+  display: flex;
+  flex-direction: column;
+  padding: 6px;
+  background: var(--ed-bg-card);
+  border: 1px solid var(--ed-ink-faint);
+  border-radius: var(--ed-r-lg);
+  box-shadow: var(--ed-shadow-md);
+  transform-origin: top center;
+  transform: translate(-50%, -6px) scale(0.98);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--ed-t-fast), transform var(--ed-t-fast);
+  z-index: 60;
+}
+/* A hover bridge over the 10px gap so the menu doesn't close mid-travel. */
+.landing .nav__dropdown-menu::before {
+  content: "";
+  position: absolute;
+  top: -10px; left: 0; right: 0;
+  height: 10px;
+}
+.landing .nav__dropdown:hover .nav__dropdown-menu,
+.landing .nav__dropdown:focus-within .nav__dropdown-menu,
+.landing .nav__dropdown[data-open="true"] .nav__dropdown-menu {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate(-50%, 0) scale(1);
+}
+.landing .nav__dropdown-item {
+  display: block;
+  padding: 9px 12px;
+  border-radius: var(--ed-r-md);
+  color: var(--ed-ink-muted);
+  text-decoration: none;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: background var(--ed-t-fast), color var(--ed-t-fast);
+}
+.landing .nav__dropdown-item:hover,
+.landing .nav__dropdown-item:focus-visible {
+  background: var(--ed-accent-soft);
+  color: var(--ed-ink);
+}
+@media (prefers-reduced-motion: reduce) {
+  .landing .nav__dropdown-menu { transition: opacity var(--ed-t-fast); transform: translate(-50%, 0); }
+  .landing .nav__dropdown:hover .nav__dropdown-menu,
+  .landing .nav__dropdown:focus-within .nav__dropdown-menu,
+  .landing .nav__dropdown[data-open="true"] .nav__dropdown-menu { transform: translate(-50%, 0); }
+  .landing .nav__dropdown-chevron { transition: none; }
+}
+
 /* ─── Mobile hamburger + full-screen menu (L-V355) ─────────────
    Hamburger shows ≤720px and replaces the nav CTAs; desktop nav
    keeps section links + buttons unchanged. */
