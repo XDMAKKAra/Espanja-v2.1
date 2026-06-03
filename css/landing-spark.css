@@ -1,0 +1,126 @@
+/* ============================================================
+   Puheo Landing — spark + block-rhythm layer (L-V381).
+
+   Loaded LAST, so its rules win the cascade at equal specificity.
+   Brand is unchanged: every value below resolves to an existing
+   editorial token (landing-editorial-tokens.css). No new colour,
+   no new font. This file only does three things:
+
+     1. Activates the existing scroll-reveal engine (already defined
+        in landing.css) with an index-based stagger.
+     2. Styles the new compact .trust band that replaced the old
+        duplicate grade-flow section.
+     3. Adds restrained life: a warm-tint section rhythm break, a
+        heavier shadow under the demo centrepiece, gated hover lifts,
+        and a one-time hero entrance.
+
+   All motion is transform/opacity only and collapses under
+   prefers-reduced-motion.
+   ============================================================ */
+
+/* ─── 1. Reveal stagger ──────────────────────────────────────
+   landing.css owns the [data-reveal] base (dim + 20px down) and the
+   .is-revealed end state. Here we let a block stagger its children by
+   setting --reveal-i on each, instead of the fixed data-reveal-delay
+   steps. Default 0 = no delay, so untouched reveals are unaffected. */
+.landing [data-reveal] {
+  transition-delay: calc(var(--reveal-i, 0) * 80ms);
+}
+
+/* ─── 2. Trust band (new) ────────────────────────────────────
+   Sits on the terracotta-tinted wash so the scroll rhythm breaks the
+   run of near-white sections (cream → warm band → deep → brick CTA). */
+.landing .trust {
+  padding: var(--ed-sp-9) clamp(16px, 4vw, 48px);
+  background: var(--ed-bg-tint);
+  border-top: 1px solid var(--ed-rule);
+  border-bottom: 1px solid var(--ed-rule);
+}
+.landing .trust__inner {
+  max-width: var(--ed-content-narrow);
+  margin: 0 auto;
+  text-align: center;
+}
+.landing .trust__title {
+  margin: var(--ed-sp-3) 0 0;
+}
+.landing .trust__lede {
+  max-width: 58ch;
+  margin: var(--ed-sp-4) auto 0;
+  color: var(--ed-ink-muted);
+  font-size: var(--ed-fs-body-lg);
+  line-height: var(--ed-lh-body);
+}
+.landing .trust__stats {
+  list-style: none;
+  margin: var(--ed-sp-7) 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--ed-sp-4);
+}
+.landing .trust__stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: var(--ed-sp-5) var(--ed-sp-3);
+  background: var(--ed-bg-card);
+  border: 1px solid var(--ed-rule);
+  border-radius: var(--ed-r-lg);
+  box-shadow: var(--ed-shadow-sm);
+}
+.landing .trust__stat-num {
+  font-family: var(--ed-display);
+  font-weight: 600;
+  font-size: clamp(2rem, 3.4vw, 2.75rem);
+  line-height: 1;
+  color: var(--ed-accent);
+  font-variant-numeric: tabular-nums;
+}
+.landing .trust__stat-label {
+  font-size: var(--ed-fs-meta);
+  color: var(--ed-ink-muted);
+  line-height: 1.35;
+}
+@media (max-width: 720px) {
+  .landing .trust__stats { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ─── 3a. Demo centrepiece — a touch more presence ───────────
+   The interactive grader is the page's proof, so it lifts a little
+   further off the canvas than the default card shadow. */
+.landing .kokeile__card {
+  box-shadow: var(--ed-shadow-lg);
+}
+
+/* ─── 3b. Gated hover lifts ──────────────────────────────────
+   Pointer devices only; touch taps never trigger a phantom hover.
+   Transform/opacity-friendly: translateY + shadow swap. */
+@media (hover: hover) and (pointer: fine) {
+  .landing .trust__stat {
+    transition: transform var(--ed-t-fast), box-shadow var(--ed-t-fast);
+  }
+  .landing .trust__stat:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--ed-shadow-md);
+  }
+}
+
+/* ─── 3c. One-time hero entrance ─────────────────────────────
+   Plays once on load. At rest the elements return to their natural
+   (visible) styles, so a non-firing animation degrades to plain
+   content. Copy leads, the product shot follows a beat later. */
+@media (prefers-reduced-motion: no-preference) {
+  .landing .hero__copy {
+    animation: spark-rise 560ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  .landing .hero__art {
+    animation: spark-rise 560ms cubic-bezier(0.16, 1, 0.3, 1) 110ms both;
+  }
+}
+
+@keyframes spark-rise {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}

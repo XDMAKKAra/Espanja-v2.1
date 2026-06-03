@@ -13,15 +13,15 @@
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
   <meta name="google-site-verification" content="ZdvxnGbBDKI5J3Zl2GmJt_fRfFQ3CdoIo-K00QvZnk4" />
 
-  <link rel="canonical" href="https://espanja-v2-1.vercel.app/" />
+  <link rel="canonical" href="https://puheo.fi/" />
 
   <!-- Open Graph -->
   <meta property="og:site_name" content="Puheo" />
   <meta property="og:title" content="Puheo, Lyhyen kielen YO-koe: espanja, ranska, saksa" />
   <meta property="og:description" content="YTL:n rubriikilla kalibroitu valmennus lyhyen oppimäärän espanjaan, ranskaan ja saksaan. 90 oppituntia, 6 mallikoetta." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://espanja-v2-1.vercel.app/" />
-  <meta property="og:image" content="https://espanja-v2-1.vercel.app/og-image.png" />
+  <meta property="og:url" content="https://puheo.fi/" />
+  <meta property="og:image" content="https://puheo.fi/og-image.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta property="og:locale" content="fi_FI" />
@@ -30,7 +30,7 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Puheo, Lyhyen kielen YO-koe: espanja, ranska, saksa" />
   <meta name="twitter:description" content="YTL:n rubriikilla kalibroitu valmennus lyhyen oppimäärän espanjaan, ranskaan ja saksaan." />
-  <meta name="twitter:image" content="https://espanja-v2-1.vercel.app/og-image.png" />
+  <meta name="twitter:image" content="https://puheo.fi/og-image.png" />
 
   <!-- JSON-LD: SoftwareApplication -->
   <script type="application/ld+json">
@@ -60,8 +60,8 @@
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "Puheo",
-    "url": "https://espanja-v2-1.vercel.app/",
-    "logo": "https://espanja-v2-1.vercel.app/og-image.png",
+    "url": "https://puheo.fi/",
+    "logo": "https://puheo.fi/og-image.png",
     "email": "tuki@puheo.fi",
     "sameAs": []
   }
@@ -86,6 +86,10 @@
        rules win the cascade. -->
   <link rel="stylesheet" href="/css/landing-editorial-tokens.css" />
   <link rel="stylesheet" href="/css/landing-editorial.css" />
+  <!-- L-V381 — block-rhythm + spark layer, loaded LAST so its section
+       rhythm, layered warm shadows and scroll-reveal win the cascade.
+       Brand tokens unchanged: this only restructures rhythm and adds motion. -->
+  <link rel="stylesheet" href="/css/landing-spark.css" />
 </head>
 
 <body class="landing">
@@ -234,7 +238,7 @@
          poistettu (sisälsi väärän etusivu-kuvan "Tekoäly arvioi" -kohdalla). -->
     <section id="kokeile" class="kokeile" aria-labelledby="kokeile-title">
       <div class="kokeile__inner">
-        <div class="kokeile__head">
+        <div class="kokeile__head" data-reveal>
           <p class="section-eyebrow">Yksi arvio ilman tiliä</p>
           <h2 class="section-title" id="kokeile-title">Kokeile itse</h2>
           <p class="kokeile__lede">
@@ -243,7 +247,7 @@
           </p>
         </div>
 
-        <div class="kokeile__card" data-demo data-lang="es">
+        <div class="kokeile__card" data-demo data-lang="es" data-reveal>
           <div class="kokeile__lang-switch" role="tablist" aria-label="Valitse kirjoituskieli">
             <button class="kokeile__lang-btn" type="button" role="tab" data-lang="es"
                     aria-selected="true" tabindex="0">Español</button>
@@ -284,7 +288,7 @@
     <!-- ═══ PROOF, grader card as standalone artifact section. -->
     <section id="nayte" class="proof" aria-labelledby="proof-title">
       <div class="proof__inner">
-        <div class="proof__head">
+        <div class="proof__head" data-reveal>
           <p class="section-eyebrow">Näyte arvioinnista</p>
           <h2 class="section-title" id="proof-title">
             YTL:n rubriikki, ei yleinen mittari.
@@ -490,85 +494,46 @@ Anna</p>
       </div>
     </section>
 
-    <!-- ═══ STAT ROW, verifiable numbers only (no disputable %). -->
-    <!-- ═══ GRADE-FLOW, replaces flat 4-number stat row with a concrete
-         3-step preview of the writing-grade loop. Verifiable numbers move
-         into a small sub-row underneath. -->
-    <section class="grade-flow" aria-labelledby="grade-flow-title">
-      <div class="grade-flow__head">
-        <div class="grade-flow__head-text">
-          <h2 class="grade-flow__title" id="grade-flow-title">
-            Yksi <em>kirjoitustehtävä</em>, kolme vaihetta.
-          </h2>
-          <p class="grade-flow__lede">
-            Kirjoittaminen on YO-kokeen erottelevin osa. Näin Puheo käsittelee sen,
-            alusta kertaukseen.
-          </p>
-        </div>
-        <!-- L-V333: Humaaans-illustraatio siirtyi tänne hero:sta. Hero kantaa
-             nyt product-mockupit (kuten WordDive/Studeo/10monkeys), brand-DNA
-             säilyy tämän kuvituksen kautta opin/lukemisen kontekstissa. -->
-        <img class="grade-flow__aside"
-             src="/img/illustrations/student-reading.svg"
-             alt=""
-             aria-hidden="true"
-             width="280" height="340" loading="lazy" decoding="async" />
-      </div>
-
-      <ol class="grade-flow__steps" aria-label="Kirjoitustehtävän vaiheet">
-        <li class="grade-step grade-step--write">
-          <span class="grade-step__chip">
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18z"/></svg>
-            Kirjoita (espanja)
-          </span>
-          <h3 class="grade-step__title">Aito YO-tehtävä, aikarajalla.</h3>
-          <p class="grade-step__preview">Hola Marta, ¡te escribo para invitarte a mi cumpleaños el sábado que viene!<span class="cursor" aria-hidden="true"></span></p>
-          <p class="grade-step__note">Lyhyt tehtävä 33&nbsp;p (160–240 merkkiä) tai pitkä 66&nbsp;p (240–400 merkkiä). Aiheet kuten YTL:n julkaisemissa kokeissa.</p>
-        </li>
-
-        <li class="grade-step grade-step--grade">
-          <span class="grade-step__chip">
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-            Tekoäly arvioi (ranska)
-          </span>
-          <h3 class="grade-step__title">Sama rubriikki kuin YTL:n sensoreilla.</h3>
-          <p class="grade-step__preview">Mes camarades regardent souvent leurs notifications et ils <span class="ge-mini">oubliaient</span> de noter ce que le prof dit.</p>
-          <div class="grade-step__rubric">
-            <span>Viestinnällisyys <b>16/18</b></span>
-            <span>Rakenteet <b>11/18</b></span>
-            <span>Sanasto <b>12/18</b></span>
-            <span>Kokonaisuus <b>4/6</b></span>
-          </div>
-        </li>
-
-        <li class="grade-step grade-step--learn">
-          <span class="grade-step__chip">
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2v6M12 16v6M2 12h6M16 12h6"/><circle cx="12" cy="12" r="3"/></svg>
-            Opit virheen (saksa)
-          </span>
-          <h3 class="grade-step__title">Suomeksi, sillä termillä jota lukiossa käytetään.</h3>
-          <p class="grade-step__note">
-            <strong>habe ich fast alles verstanden</strong>, ei <em>habe ich
-            verstanden fast alles</em>: pääosalauseessa partisiippi viimeiseksi
-            kun apuverbi on käytössä. Sama virhe palaa kertausjonoosi neljän
-            päivän päästä.
-          </p>
-        </li>
-      </ol>
-
-      <div class="stat-subrow" aria-label="Sisällön volyymi">
-        <span><b>3</b> kieltä</span>
-        <span><b>90</b> oppituntia / kieli</span>
-        <span><b>270</b> yhteensä</span>
-        <span><b>6</b> mallikoetta / kieli</span>
-        <span><b>4</b> rubriikin osa-aluetta</span>
+    <!-- ═══ TRUST STRIP (L-V381) — compact band that replaces the old
+         grade-flow section (it duplicated the proof section above and carried
+         an amateur flat-SVG illustration the screenshot pivot dropped). Three
+         languages, the syllabus, the honest grading line, and content volume. -->
+    <section class="trust" aria-labelledby="trust-title" data-reveal>
+      <div class="trust__inner">
+        <p class="section-eyebrow">Mihin Puheo on tehty</p>
+        <h2 class="section-title trust__title" id="trust-title">
+          Yksi ainetyyppi, tehty kunnolla.
+        </h2>
+        <p class="trust__lede">
+          Lyhyen oppimäärän kielikoe espanjassa, ranskassa ja saksassa.
+          Kirjoitukset pisteytetään YTL:n omalla rubriikilla, ja saat
+          pistehaarukan perusteluineen, et luvattua yksittäispistettä.
+        </p>
+        <ul class="trust__stats" aria-label="Sisällön volyymi">
+          <li class="trust__stat" style="--reveal-i:0">
+            <span class="trust__stat-num">3</span>
+            <span class="trust__stat-label">kieltä · es&thinsp;/&thinsp;fr&thinsp;/&thinsp;de</span>
+          </li>
+          <li class="trust__stat" style="--reveal-i:1">
+            <span class="trust__stat-num">90</span>
+            <span class="trust__stat-label">oppituntia / kieli</span>
+          </li>
+          <li class="trust__stat" style="--reveal-i:2">
+            <span class="trust__stat-num">6</span>
+            <span class="trust__stat-label">mallikoetta / kieli</span>
+          </li>
+          <li class="trust__stat" style="--reveal-i:3">
+            <span class="trust__stat-num">4</span>
+            <span class="trust__stat-label">rubriikin osa-aluetta</span>
+          </li>
+        </ul>
       </div>
     </section>
 
     <!-- ═══ COURSE CATALOG, visible on landing, language switcher. -->
     <section id="kurssit" class="catalog landing-section" aria-labelledby="kurssit-otsikko">
       <div class="catalog__head landing-section__inner">
-        <div class="catalog__intro">
+        <div class="catalog__intro" data-reveal>
           <p class="section-eyebrow">Kurssipolku</p>
           <h2 class="section-title" id="kurssit-otsikko">
             Kahdeksan kurssia. A&thinsp;→&thinsp;E-progressio.
@@ -709,13 +674,13 @@ Anna</p>
     <!-- ═══ PRICING, table preserved from Ship 1 (worked), maroon column softened. -->
     <section id="hinnoittelu" class="landing-section landing-section--pricing">
       <div class="landing-section__inner">
-        <header class="pricing__head">
+        <header class="pricing__head" data-reveal>
           <h2 class="pricing__title">Hinnoittelu.</h2>
           <p class="pricing__sub">Yksi kertaostos kattaa koko oppimispolun ylioppilaskokeeseen asti. Kaikki kolme kieltä samassa hinnassa. Tai maksa kuukausittain pelkästä arvioinnista.</p>
         </header>
 
         <ul class="pricing-tiers pricing-tiers--duo" aria-label="Hinnoittelun vaihtoehdot">
-          <li class="pricing-tier pricing-tier--featured" data-popular="true">
+          <li class="pricing-tier pricing-tier--featured" data-popular="true" data-reveal style="--reveal-i:0">
             <span class="pricing-tier__badge" aria-label="Suosituin">Suosituin</span>
             <span class="pricing-tier__chip">Koko oppimispolku</span>
             <h3 class="pricing-tier__name">Kurssi</h3>
@@ -736,7 +701,7 @@ Anna</p>
             <a class="btn btn--primary pricing-tier__cta" href="/app.html#rekisteroidy?tier=kurssi">Osta kurssi</a>
           </li>
 
-          <li class="pricing-tier pricing-tier--treeni">
+          <li class="pricing-tier pricing-tier--treeni" data-reveal style="--reveal-i:1">
             <span class="pricing-tier__chip">Pelkkä arviointi</span>
             <h3 class="pricing-tier__name">Treeni</h3>
             <p class="pricing-tier__lede">Rajaton kirjoitusten arviointi YTL-rubriikilla. Ei kurssia, vain harjoittelu.</p>
@@ -764,7 +729,7 @@ Anna</p>
     <!-- ═══ FAQ ─────────────────────────────────────────────── -->
     <section id="faq" class="landing-section landing-section--faq" aria-labelledby="faq-otsikko">
       <div class="landing-section__inner faq__inner">
-        <header class="faq__head">
+        <header class="faq__head" data-reveal>
           <p class="faq__eyebrow">UKK</p>
           <h2 class="faq__title" id="faq-otsikko">
             Usein <em>kysyttyä</em> Puheosta.
@@ -896,7 +861,7 @@ Anna</p>
     <!-- ═══ FINAL CTA, quieter than Ship 1, no glow card. -->
     <section id="rekisteroidy-cta" class="landing-section landing-section--cta" aria-labelledby="cta-otsikko">
       <div class="landing-section__inner">
-        <div class="cta-card cta-card--drenched">
+        <div class="cta-card cta-card--drenched" data-reveal>
           <div class="cta-card__inner">
             <h2 class="cta-card__title" id="cta-otsikko">
               Kokeile <em>ilmaiseksi</em>.
@@ -917,9 +882,6 @@ Anna</p>
               <span class="cta-card__sep" aria-hidden="true">·</span>
               Päivittyy YTL:n julkaisemien koejakojen myötä
             </p>
-          </div>
-          <div class="cta-walker" aria-hidden="true">
-            <img src="/img/illustrations/student-walking.svg" alt="" width="160" height="200" />
           </div>
         </div>
       </div>
