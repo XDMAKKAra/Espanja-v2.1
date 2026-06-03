@@ -28,8 +28,11 @@
     var HASH_TO_SCREEN = {
       "koti": "screen-path",
       "oppimispolku": "screen-path",
-      "sanasto": "screen-mode-vocab",
-      "puheoppi": "screen-mode-grammar",
+      // L-V366 — sanasto/puheoppi mode pages were deleted; main.js redirects
+      // these legacy hashes to #/oppimispolku. Paint the path shell first so
+      // we don't land on a dead screen id (which previously fell through).
+      "sanasto": "screen-path",
+      "puheoppi": "screen-path",
       "luetun": "screen-mode-reading",
       "kirjoitus": "screen-mode-writing",
       "asetukset": "screen-settings",

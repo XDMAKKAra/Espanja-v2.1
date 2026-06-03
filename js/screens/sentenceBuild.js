@@ -1,6 +1,6 @@
 // v279 — Sentence build (Käännä lauseet) screen controller.
 //
-// Wires #screen-sentence-build to /api/exercises/reorder. Click-to-add +
+// Wires #screen-sentence-build to /api/reorder. Click-to-add +
 // click-to-remove. Local exact-match grading (the backend already returns
 // the `correct` array, no second round-trip needed). Mistakes logged via
 // /api/mistake fire-and-forget so the SR engine sees them.
@@ -59,14 +59,19 @@ function setError(msg) {
 }
 
 async function fetchExercises({ level, count, language }) {
-  const res = await apiFetch(`${API}/api/exercises/reorder`, {
+  // Mounted at app.use("/api", exerciseRoutes) → the route is /api/reorder,
+  // NOT /api/exercises/reorder (every other exercise call is bare too).
+  const res = await apiFetch(`${API}/api/reorder`, {
     method: "POST",
     headers: { "Content-Type": "application/json", ...authHeader() },
     body: JSON.stringify({ level, count, language }),
   });
   if (!res.ok) {
     const err = await res.json().catch(() => ({}));
-    throw new Error(humanizeApiError(err?.error) || "Lauseiden lataus epäonnistui.");
+    // humanizeApiError returns { title, subtext } — never pass the object
+    // straight to new Error() or the box renders the literal "[object Object]".
+    const human = humanizeApiError(err?.error);
+    throw new Error(human.subtext || human.title || "Lauseiden lataus epäonnistui.");
   }
   const data = await res.json();
   if (!Array.isArray(data?.exercises) || data.exercises.length === 0) {

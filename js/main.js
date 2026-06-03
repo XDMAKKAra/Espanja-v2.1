@@ -229,6 +229,44 @@ const NAV_HASH = {
 };
 const HASH_NAV = Object.fromEntries(Object.entries(NAV_HASH).map(([k, v]) => [v, k]));
 
+// L-V366 BUG-2 — sanasto/puheoppi mode pages were deleted (Task 4 2026-05-19),
+// but curriculum.js + lessonResults.js still stamp #/sanasto / #/puheoppi via
+// replaceState at lesson end. On reload those hashes had no router entry and
+// fell through (landing on Asetukset). Redirect them to Tehtävät. Returns true
+// when it handled (and replaced) the hash so callers can stop.
+function redirectLegacyModeHash() {
+  if (/^#\/?(sanasto|puheoppi)$/i.test(location.hash)) {
+    location.replace("#/oppimispolku");
+    return true;
+  }
+  return false;
+}
+
+// L-V366 BUG-3 — the active sidebar/mobile pill must follow the current route,
+// not the last click. "Tehtävät" is a plain <a href="#/oppimispolku"> (no
+// data-nav, marked data-nav-active="path"), and several routes return early
+// before navigateTo() runs, so the pill used to stay stuck on "Koti". Derive
+// the active item from the hash on every route change.
+function navKeyForHash(hashRaw) {
+  const h = (hashRaw || "").split("?")[0].replace(/^#\/?/, "");
+  if (h === "asetukset") return "settings";
+  if (h === "oma-sivu") return "profile";
+  if (h === "" || h === "koti" || /^aloitus(-v[234])?$/.test(h)) return "home";
+  if (h === "oppimispolku" || h.startsWith("oppimispolku/") ||
+      h.startsWith("kurssi/") || h.startsWith("oppitunti/") || h === "lauseet") return "path";
+  // Reading/writing mode pages switch the sidebar to mode-state; no top pill.
+  return null;
+}
+
+function syncActiveNav(hashRaw = location.hash) {
+  const key = navKeyForHash(hashRaw);
+  if (key == null) return; // mode pages own their own sidebar state — leave it.
+  document.querySelectorAll(".sidebar-item, .mobile-nav-item").forEach((el) => {
+    const elKey = el.dataset.nav || el.dataset.navActive || null;
+    el.classList.toggle("active", elKey === key);
+  });
+}
+
 function navigateTo(nav, { updateHash = true } = {}) {
   if (!nav) return;
   // L-MERGE-DASH-PATH — "dashboard" nav redirects to merged home (path).
@@ -339,6 +377,11 @@ document.querySelectorAll(".sidebar-item[data-nav], .mobile-nav-item[data-nav], 
 
 window.addEventListener("hashchange", () => {
   if (!isLoggedIn()) return;
+  // L-V366 BUG-2 — fold dead mode hashes onto Tehtävät before anything else.
+  if (redirectLegacyModeHash()) return;
+  // L-V366 BUG-3 — keep the active pill in sync with the route on every change,
+  // including the early-return branches (oppimispolku, course, lesson, lauseet).
+  syncActiveNav();
   if (location.hash === "#/lauseet") {
     lazySentenceBuild().then((m) => m.openSentenceBuild({})).catch(() => { /* fall through */ });
     return;
@@ -396,6 +439,12 @@ window.addEventListener("hashchange", () => {
 // On boot, restore screen from hash (only if logged in — auth flow handles otherwise).
 window._restoreFromHash = function restoreFromHash() {
   if (!isLoggedIn()) return false;
+  // L-V366 BUG-2 — redirect dead mode hashes on cold load too (handled async
+  // via the hashchange the replace fires; treat as handled so boot doesn't
+  // also paint HOME on top).
+  if (redirectLegacyModeHash()) return true;
+  // L-V366 BUG-3 — set the active pill from the boot hash (direct deep links).
+  syncActiveNav();
   if (location.hash === "#/lauseet") {
     lazySentenceBuild().then((m) => m.openSentenceBuild({})).catch(() => { /* ignore */ });
     return true;
