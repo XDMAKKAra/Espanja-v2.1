@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="fi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Puheo · Tailwind-komponentit (V372)</title>
+
+  <!--
+    L-V372 component preview. Loads ONLY the same CSS a real static
+    marketing page loads (self-hosted fonts + the compiled Tailwind layer) so
+    the components render exactly as they will on landing/pricing/privacy.
+    Deliberately does NOT load app.bundle.css: the app defines its own
+    .btn/.btn-primary/.card/.field, which would collide. The app styleguide
+    (styleguide.html) stays untouched.
+  -->
+  <link rel="preload" href="/fonts/fredoka-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/mulish-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="/css/fonts.css" />
+  <link rel="stylesheet" href="/css/tailwind.css" />
+
+  <style>
+    /* Page chrome only — the components themselves come from tailwind.css. */
+    body {
+      margin: 0;
+      background: #FBF7EF;            /* cream */
+      color: #241C15;                /* ink */
+      font-family: "Mulish", system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    .pg { max-width: 1100px; margin: 0 auto; padding: clamp(24px, 4vw, 56px) clamp(20px, 4vw, 40px); }
+    .pg__eyebrow { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: #897C6A; margin: 0 0 6px; }
+    .pg__title { font-family: "Fredoka", system-ui, sans-serif; font-weight: 600; font-size: clamp(28px, 4vw, 40px); letter-spacing: -0.02em; margin: 0 0 4px; }
+    .pg__lede { color: #5C5145; margin: 0 0 40px; max-width: 60ch; }
+    .demo { margin: 0 0 44px; }
+    .demo__title { font-family: "Fredoka", system-ui, sans-serif; font-weight: 600; font-size: 1.15rem; margin: 0 0 4px; }
+    .demo__note { color: #897C6A; font-size: 0.85rem; margin: 0 0 16px; }
+    .row { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; }
+    .grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+    .frame { border: 1px solid #E9DFCF; border-radius: 16px; overflow: hidden; }
+    hr { border: 0; border-top: 1px solid #E9DFCF; margin: 40px 0; }
+  </style>
+</head>
+<body>
+  <div class="pg">
+    <p class="pg__eyebrow">Puheo · sisäinen referenssi</p>
+    <h1 class="pg__title">Tailwind-komponentit</h1>
+    <p class="pg__lede">Jaettu kerros (L-V372): <code>/css/tailwind.css</code>. Tokenit elävät <code>tailwind.config.js</code>:ssä, joten yksi muutos pätee kaikkiin sivuihin jotka käyttävät näitä luokkia. Migraatio sivuille on V373–V374.</p>
+
+    <!-- Napit -->
+    <div class="demo">
+      <h2 class="demo__title">Napit</h2>
+      <p class="demo__note">Pill-muoto, tactile painallus (scale 0.97), brick-täyttö tai outline. Ei glowta.</p>
+      <div class="row">
+        <button class="btn btn-primary">Aloita harjoittelu</button>
+        <button class="btn btn-secondary">Katso hinnat</button>
+        <button class="btn btn-primary btn-lg">Iso CTA</button>
+        <a href="#" class="btn btn-secondary btn-sm">Pieni linkki-nappi</a>
+        <button class="btn btn-primary" disabled>Ei käytössä</button>
+      </div>
+    </div>
+
+    <!-- Navigaatio -->
+    <div class="demo">
+      <h2 class="demo__title">Navigaatio</h2>
+      <p class="demo__note">Yksi jaettu yläpalkki. Desktop-rivi muuttuu mobiilissa CSS-only-dropdowniksi (hampurilainen, ei JS:ää).</p>
+      <div class="frame" style="position:relative">
+        <nav class="site-nav" style="position:relative">
+          <div class="site-nav__inner">
+            <a href="#" class="site-nav__brand">Puheo</a>
+            <input type="checkbox" id="navtoggle" class="site-nav__toggle" />
+            <label for="navtoggle" class="site-nav__burger" aria-label="Avaa valikko">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+            </label>
+            <div class="site-nav__links">
+              <a href="#" class="site-nav__link">Harjoittele</a>
+              <a href="#" class="site-nav__link">Kurssit</a>
+              <a href="#" class="site-nav__link">Hinnat</a>
+              <a href="#" class="btn btn-primary btn-sm">Kirjaudu</a>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Kortit -->
+    <div class="demo">
+      <h2 class="demo__title">Kortit</h2>
+      <p class="demo__note">Lämmin pehmeä varjo, ei kovaa mustaa laatikkoa. <code>card--hover</code> nostaa klikattavan kortin.</p>
+      <div class="grid">
+        <div class="card">
+          <h3 class="font-display text-ink" style="margin:0 0 6px">Sanasto</h3>
+          <p class="text-ink-muted" style="margin:0;font-size:.95rem">Tasainen cream-pohja, lämmin pehmeä varjo. Käytä korttia vain kun elevaatio palvelee hierarkiaa.</p>
+        </div>
+        <div class="card card--hover">
+          <h3 class="font-display text-ink" style="margin:0 0 6px">Klikattava</h3>
+          <p class="text-ink-muted" style="margin:0;font-size:.95rem">Nousee 2px hoverissa. Vie käyttäjän eteenpäin.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pillit -->
+    <div class="demo">
+      <h2 class="demo__title">Pillit ja merkit</h2>
+      <p class="demo__note">Lausetyyli, ei mono-UPPERCASE. Pale-tintti + sama ink-väri.</p>
+      <div class="row">
+        <span class="pill pill-brick">YO-koe 28.9.</span>
+        <span class="pill pill-keltainen">Uusi tehtävä</span>
+        <span class="pill pill-vihrea">Taso M</span>
+        <span class="pill pill-neutral">Luonnos</span>
+      </div>
+    </div>
+
+    <!-- Lomake -->
+    <div class="demo">
+      <h2 class="demo__title">Lomake-elementit</h2>
+      <p class="demo__note">Label yllä, input, hint/error alla. Brick-fokusrengas.</p>
+      <div class="grid" style="max-width:560px">
+        <label class="field">
+          <span class="field__label">Sähköposti</span>
+          <input class="field__input" type="email" placeholder="nimi@esimerkki.fi" />
+          <span class="field__hint">Käytämme tätä vain kirjautumiseen.</span>
+        </label>
+        <label class="field field--invalid">
+          <span class="field__label">Salasana</span>
+          <input class="field__input" type="password" value="123" />
+          <span class="field__error">Vähintään 8 merkkiä.</span>
+        </label>
+      </div>
+    </div>
+
+    <hr />
+
+    <!-- Footer -->
+    <div class="demo">
+      <h2 class="demo__title">Footer</h2>
+      <div class="frame">
+        <footer class="site-footer">
+          <div class="site-footer__inner">
+            <span class="site-footer__brand">Puheo</span>
+            <nav class="site-footer__links" aria-label="Footer">
+              <a href="#" class="site-footer__link">Hinnat</a>
+              <a href="#" class="site-footer__link">Tietosuoja</a>
+              <a href="#" class="site-footer__link">Ehdot</a>
+              <a href="#" class="site-footer__link">Palautukset</a>
+            </nav>
+          </div>
+        </footer>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

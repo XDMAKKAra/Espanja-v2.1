@@ -1,13 +1,211 @@
-/* Puheo Tailwind entry — L-V371 (FOUNDATION).
+/* Puheo Tailwind entry — L-V371 + L-V372.
  *
  * Compiled by the Tailwind CLI in the npm `build` script into css/tailwind.css.
  * With preflight disabled (tailwind.config.js), `@tailwind base` emits no
- * browser reset, so including it is harmless and keeps the file forward-
- * compatible. components + utilities carry the brand-token utility classes.
+ * browser reset, so each component class below must fully define its own
+ * appearance (we cannot lean on a normalize/reset). That is intentional: the
+ * output can be linked onto a page without restyling anything else on it.
  *
- * This output is intentionally NOT linked into any page in this phase. Later
- * phases wire it into specific static surfaces. Do not add hand-written CSS
- * here — brand tokens live in css/landing-tokens.css and css/tokens.css. */
+ * V372 adds the shared component layer (buttons, nav, footer, card, pill,
+ * form field). One source of truth -> a token tweak in tailwind.config.js
+ * ripples through every page that adopts these classes (migration is V373+).
+ * Brand: WordDive palette (cream/brick/keltainen/vihrea, Fredoka/Mulish),
+ * flat colours, no neon glow, tactile :active feedback (emil-design-eng). */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  /* ── Buttons ──────────────────────────────────────────────────────────
+     Pill-shaped, tactile. 160ms ease-out, scale(0.97) on press (emil). No
+     glow, no gradient. Preflight off -> kill native chrome explicitly. */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 font-body font-semibold
+           leading-none rounded-pill border border-transparent cursor-pointer
+           select-none no-underline;
+    -webkit-appearance: none;
+    appearance: none;
+    min-height: 2.75rem;            /* 44px touch target */
+    padding: 0.625rem 1.25rem;
+    font-size: 1rem;
+    background-color: transparent;
+    transition: transform 160ms ease-out, background-color 160ms ease-out,
+                color 160ms ease-out, border-color 160ms ease-out;
+  }
+  .btn:active { transform: scale(0.97); }
+  .btn:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgb(155 45 42 / 0.32);
+  }
+  .btn:disabled,
+  .btn[disabled],
+  .btn[aria-disabled='true'] {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .btn-primary { @apply bg-brick text-cream; }
+  .btn-primary:hover { @apply bg-brick-dark; }
+
+  .btn-secondary {
+    @apply bg-transparent text-ink;
+    border-color: rgb(36 28 21 / 0.20);
+  }
+  .btn-secondary:hover {
+    @apply bg-cream;
+    border-color: rgb(36 28 21 / 0.34);
+  }
+
+  .btn-sm { min-height: 2.25rem; padding: 0.4rem 0.9rem;   font-size: 0.875rem; }
+  .btn-lg { min-height: 3.25rem; padding: 0.875rem 1.75rem; font-size: 1.125rem; }
+
+  /* ── Navigation ───────────────────────────────────────────────────────
+     One shared top bar. Desktop row collapses to a CSS-only dropdown on
+     mobile (no JS, because the styleguide CSP blocks inline <script> and the
+     app-side JS is off-limits). Pages adopt this markup in V373+. */
+  .site-nav {
+    @apply sticky top-0 z-20 w-full border-b;
+    background-color: rgb(251 247 239 / 0.92);
+    border-color: theme(colors.line);
+    backdrop-filter: saturate(140%) blur(10px);
+  }
+  .site-nav__inner {
+    @apply mx-auto flex items-center justify-between;
+    max-width: 1200px;
+    padding: 0.75rem 1.5rem;
+    gap: 1rem;
+  }
+  .site-nav__brand {
+    @apply font-display text-ink no-underline;
+    font-weight: 600;
+    font-size: 1.375rem;
+    letter-spacing: -0.02em;
+  }
+  .site-nav__links { @apply hidden md:flex items-center gap-7; }
+  .site-nav__link {
+    @apply font-body no-underline;
+    color: theme(colors.ink.muted);
+    font-size: 0.95rem;
+    transition: color 160ms ease-out;
+  }
+  .site-nav__link:hover { color: theme(colors.ink.DEFAULT); }
+
+  /* checkbox-hack toggle */
+  .site-nav__toggle { @apply hidden; }
+  .site-nav__burger {
+    @apply md:hidden inline-flex items-center justify-center cursor-pointer text-ink;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 12px;
+  }
+  .site-nav__burger:hover { background-color: rgb(36 28 21 / 0.06); }
+
+  /* ── Footer ───────────────────────────────────────────────────────── */
+  .site-footer {
+    @apply w-full border-t bg-cream;
+    border-color: theme(colors.line);
+  }
+  .site-footer__inner {
+    @apply mx-auto flex flex-col gap-4 md:flex-row md:items-center md:justify-between;
+    max-width: 1200px;
+    padding: 2rem 1.5rem;
+  }
+  .site-footer__brand { @apply font-display text-ink; font-weight: 600; font-size: 1.1rem; }
+  .site-footer__links { @apply flex flex-wrap gap-x-6 gap-y-2; }
+  .site-footer__link {
+    @apply font-body no-underline;
+    color: theme(colors.ink.muted);
+    font-size: 0.9rem;
+    transition: color 160ms ease-out;
+  }
+  .site-footer__link:hover { color: theme(colors.ink.DEFAULT); }
+
+  /* ── Cards ────────────────────────────────────────────────────────────
+     Warm-tinted soft shadow, never a hard black box. Use only when
+     elevation communicates hierarchy. --hover adds lift for clickable. */
+  .card {
+    @apply bg-paper rounded-lg border;
+    border-color: theme(colors.line);
+    padding: 1.5rem;
+    box-shadow: 0 18px 40px -28px rgb(36 28 21 / 0.28);
+  }
+  .card--hover {
+    cursor: pointer;
+    transition: transform 200ms cubic-bezier(0.23, 1, 0.32, 1),
+                box-shadow 200ms ease-out;
+  }
+  .card--hover:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 26px 54px -28px rgb(36 28 21 / 0.34);
+  }
+
+  /* ── Pills / badges ──────────────────────────────────────────────────
+     Sentence-case, not mono-UPPERCASE. Pale tint + matching ink colour. */
+  .pill {
+    @apply inline-flex items-center gap-1.5 rounded-pill font-body font-semibold;
+    padding: 0.25rem 0.7rem;
+    font-size: 0.8125rem;          /* 13px */
+    line-height: 1.2;
+  }
+  .pill-brick     { @apply bg-brick-pale text-brick; }
+  .pill-keltainen { @apply bg-keltainen-pale text-ink; }
+  .pill-vihrea    { @apply bg-vihrea-pale text-vihrea; }
+  .pill-neutral   { @apply text-ink-muted; background-color: rgb(36 28 21 / 0.06); }
+
+  /* ── Form fields ──────────────────────────────────────────────────────
+     Label above, input, hint/error below. Brick focus ring. */
+  .field { @apply flex flex-col gap-1.5; }
+  .field__label { @apply font-body font-semibold text-ink; font-size: 0.875rem; }
+  .field__input {
+    @apply w-full bg-paper rounded-md border text-ink font-body;
+    -webkit-appearance: none;
+    appearance: none;
+    border-color: theme(colors.line);
+    padding: 0.625rem 0.875rem;
+    font-size: 1rem;
+    transition: border-color 160ms ease-out, box-shadow 160ms ease-out;
+  }
+  .field__input::placeholder { color: theme(colors.ink.subtle); }
+  .field__input:focus {
+    outline: none;
+    border-color: theme(colors.brick.DEFAULT);
+    box-shadow: 0 0 0 3px rgb(155 45 42 / 0.16);
+  }
+  .field__hint  { @apply font-body; color: theme(colors.ink.subtle);  font-size: 0.8125rem; }
+  .field__error { @apply font-body; color: theme(colors.brick.DEFAULT); font-size: 0.8125rem; }
+  .field--invalid .field__input { border-color: theme(colors.brick.DEFAULT); }
+}
+
+/* mobile nav dropdown (CSS-only checkbox hack) — kept outside @layer so the
+   :checked combinator reliably out-specifies the `hidden` utility. */
+@media (max-width: 767.98px) {
+  .site-nav__links {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.25rem;
+    padding: 0.75rem 1.5rem 1.25rem;
+    background-color: #FBF7EF;
+    border-bottom: 1px solid #E9DFCF;
+  }
+  .site-nav__toggle:checked ~ .site-nav__links { display: flex; }
+}
+
+/* Respect reduced-motion: drop movement, keep the components usable. */
+@media (prefers-reduced-motion: reduce) {
+  .btn,
+  .card--hover,
+  .site-nav__link,
+  .site-footer__link,
+  .field__input {
+    transition: none;
+  }
+  .btn:active,
+  .card--hover:hover {
+    transform: none;
+  }
+}
