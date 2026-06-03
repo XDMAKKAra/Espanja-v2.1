@@ -29,15 +29,19 @@
   <circle cx="132" cy="80" r="11" fill="#2E5E4E"/>
   <path d="M 127 80 l 4 4 l 6 -8" fill="none" stroke="#FBF7EF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
 
-  <!-- summit: graduation cap on a paper tile -->
+  <!-- summit: valkoinen ylioppilaslakki paperilaatalla (ei mortarboardia) -->
   <rect x="178" y="30" width="44" height="40" rx="12" fill="#FFFFFF" stroke="#E9DFCF" stroke-width="2"/>
-  <!-- cap board -->
-  <path d="M 200 40 l 18 7 l -18 7 l -18 -7 z" fill="#241C15"/>
-  <!-- cap base -->
-  <path d="M 192 50 l 8 3 l 8 -3 v 7 q -8 4 -16 0 z" fill="#241C15"/>
-  <!-- tassel -->
-  <path d="M 218 47 v 10" stroke="#9B2D2A" stroke-width="2" stroke-linecap="round"/>
-  <circle cx="218" cy="59" r="2.4" fill="#F4C84A"/>
+  <!-- crown / kupoli -->
+  <path d="M 185 52 C 185 40 191 36 200 36 C 209 36 215 40 215 52 Z" fill="#FFFFFF" stroke="#241C15" stroke-width="2.4" stroke-linejoin="round"/>
+  <!-- band / nauha -->
+  <path d="M 183 52 H 217 V 56 Q 217 58 215 58 H 185 Q 183 58 183 56 Z" fill="#241C15"/>
+  <!-- visor / lippa -->
+  <path d="M 189 58 C 194 63 206 63 211 58 C 206 61 194 61 189 58 Z" fill="#241C15"/>
+  <!-- gold lyre accent / lyyra -->
+  <g stroke="#F4C84A" stroke-width="1.6" fill="none" stroke-linecap="round">
+    <path d="M 197 56 C 195 51 197 48 200 48 C 203 48 205 51 203 56"/>
+    <path d="M 199 49 V 56 M 201 49 V 56"/>
+  </g>
 
   <!-- sparkle -->
   <path d="M 168 18 l 3 7 l 7 3 l -7 3 l -3 7 l -3 -7 l -7 -3 l 7 -3 z" fill="#F4C84A"/>

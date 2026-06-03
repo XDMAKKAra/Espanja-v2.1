@@ -18,13 +18,21 @@
     <text x="158" y="225" font-family="Fredoka, sans-serif" font-weight="700" font-size="21" fill="#241C15" text-anchor="middle">Hallo!</text>
   </g>
 
-  <!-- graduation cap (ylioppilaslakki) up top -->
+  <!-- valkoinen ylioppilaslakki: valkoinen kupoli, musta nauha + lippa,
+       kultainen lyyra-aksentti (ei mortarboardia) -->
   <g>
-    <path d="M160 40l72 28-72 28-72-28Z" fill="#241C15"/>
-    <path d="M160 76v26c20 0 38-7 38-15v-15" fill="none" stroke="#241C15" stroke-width="3"/>
-    <path d="M122 81v16c0 9 17 16 38 16s38-7 38-16V81l-38 15Z" fill="#9B2D2A"/>
-    <circle cx="232" cy="68" r="5" fill="#F4C84A"/>
-    <path d="M232 68v22" stroke="#F4C84A" stroke-width="3"/>
-    <path d="M232 90l-6 12h12Z" fill="#F4C84A"/>
+    <!-- crown / kupoli -->
+    <path d="M104 92C104 56 126 44 160 44C194 44 216 56 216 92Z" fill="#FFFFFF" stroke="#241C15" stroke-width="3" stroke-linejoin="round"/>
+    <!-- band / nauha -->
+    <path d="M100 92H220V104C220 108 216 110 212 110H108C104 110 100 108 100 104Z" fill="#241C15"/>
+    <!-- visor / lippa -->
+    <path d="M124 110C140 126 180 126 196 110C180 118 140 118 124 110Z" fill="#241C15"/>
+    <!-- gold lyre badge / lyyra -->
+    <g stroke="#F4C84A" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M152 106C148 98 151 90 160 90C169 90 172 98 168 106"/>
+      <path d="M157 92V106M163 92V106"/>
+      <path d="M154 92H166"/>
+    </g>
+    <circle cx="160" cy="108" r="2.6" fill="#F4C84A"/>
   </g>
 </svg>
