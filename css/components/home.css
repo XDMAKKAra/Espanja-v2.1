@@ -6,6 +6,20 @@
   align-items: flex-start;
   justify-content: stretch;
 }
+/* On tall viewports the dashboard content (≈620–700px) leaves a bottom void.
+   The .screen wrapper is content-height (absolute inset:0 of a content-height
+   shell), so centring there is a no-op — instead give #home-root a viewport
+   min-height and centre its own children. The calc() self-protects: when the
+   content is taller than the viewport (short screens), content wins and the
+   block stays its natural height, so it top-aligns and scrolls normally with
+   no heading ever pushed above the fold. Gated at min-height:820 to skip the
+   work on short viewports entirely. */
+@media (min-height: 820px) {
+  body.app #home-root {
+    min-height: calc(100dvh - 130px);
+    justify-content: center;
+  }
+}
 
 body.app #home-root {
   width: 100%;
