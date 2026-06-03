@@ -293,9 +293,9 @@ router.post("/d7-offer", async (req, res) => {
 
     const userIsPro = await isPro(u.id);
 
-    // L-PRICING-REVAMP-1 — 3-tier model. Treeni = open practice, Mestari = full
-    // YO-prep with course path. Both have 8-week packages priced as ~2× monthly.
-    const seasonalBlock = "Treeni 9 €/kk tai Mestari 19 €/kk. 8 viikon paketti Treeni 19 € · Mestari 39 €.";
+    // Pricing model: Treeni = open practice (9 €/kk), Kurssi = full YO-prep
+    // course path (49 € kertaostos). Course internal tier is "mestari".
+    const seasonalBlock = "Treeni 9 €/kk tai Kurssi 49 € (kertaostos, voimassa yo-kokeeseen asti).";
 
     const level = logs?.[0]?.level || "C";
 

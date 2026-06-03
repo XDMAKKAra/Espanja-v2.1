@@ -311,10 +311,11 @@ function renderDashboard({
   const proSlot = document.getElementById("sidebar-pro-slot");
   if (proSlot) {
     if (pro) {
-      // Reflect the concrete subscription tier in the badge, "MESTARI"
-      // for the full curriculum tier, "TREENI" for the practice tier, and
-      // the legacy "PRO" fallback when the tier field isn't available.
-      const badgeText = tier === "mestari" ? "MESTARI"
+      // Reflect the concrete subscription tier in the badge, "KURSSI"
+      // for the full curriculum tier (internal key "mestari"), "TREENI" for
+      // the practice tier, and the legacy "PRO" fallback when the tier field
+      // isn't available.
+      const badgeText = tier === "mestari" ? "KURSSI"
                       : tier === "treeni"  ? "TREENI"
                       : "PRO";
       proSlot.innerHTML = `<span class="sidebar-pro-badge sidebar-pro-badge--${tier || 'pro'}">${badgeText}</span> <button class="btn-manage-sub" id="btn-manage-sub">Hallinnoi tilausta</button>`;

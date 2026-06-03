@@ -1,8 +1,10 @@
 // ─── Paywall modal ────────────────────────────────────────────────────────────
 // Three variants:
 //   quota  , free user hit AI quota  → Avaa Treeni
-//   feature, feature locked to mestari → Avaa Mestari
-//   upgrade, treeni user, mestari feature → Päivitä Mestariin
+//   feature, feature locked to the course tier → Avaa Kurssi
+//   upgrade, treeni user, course feature → Päivitä Kurssiin
+// (The course product's internal subscription_tier is "mestari"; the
+//  user-facing name is "Kurssi".)
 //
 // Usage:
 //   import { openPaywall } from "./paywallModal.js";
@@ -19,18 +21,18 @@ const VARIANT_COPY = {
     href: (r) => `/pricing.html?from=quota&tier=treeni${r ? `&reason=${encodeURIComponent(r)}` : ""}`,
   },
   feature: {
-    badge: "Mestari",
-    title: "Tämä on Mestari-tason ominaisuus",
-    body: "Avaa koko 8-kurssin polku, adaptiivinen vaikeus ja yo-valmius-mittari Mestarilla.",
-    cta: "Avaa Mestari",
-    href: (r) => `/pricing.html?from=feature&tier=mestari${r ? `&reason=${encodeURIComponent(r)}` : ""}`,
+    badge: "Kurssi",
+    title: "Tämä ominaisuus kuuluu Kurssiin",
+    body: "Avaa koko 8-kurssin polku, adaptiivinen vaikeus ja yo-valmius-mittari Kurssilla.",
+    cta: "Avaa Kurssi",
+    href: (r) => `/pricing.html?from=feature&tier=kurssi${r ? `&reason=${encodeURIComponent(r)}` : ""}`,
   },
   upgrade: {
-    badge: "Mestari",
+    badge: "Kurssi",
     title: "Avaa kurssit ja yo-valmius-mittari",
-    body: "Päivitä Mestariin ja saat käyttöön koko 8-kurssin polun sekä yo-valmius-mittarin.",
-    cta: "Päivitä Mestariin",
-    href: (r) => `/pricing.html?from=upgrade&tier=mestari${r ? `&reason=${encodeURIComponent(r)}` : ""}`,
+    body: "Päivitä Kurssiin ja saat käyttöön koko 8-kurssin polun sekä yo-valmius-mittarin.",
+    cta: "Päivitä Kurssiin",
+    href: (r) => `/pricing.html?from=upgrade&tier=kurssi${r ? `&reason=${encodeURIComponent(r)}` : ""}`,
   },
 };
 

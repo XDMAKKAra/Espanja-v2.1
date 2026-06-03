@@ -687,8 +687,8 @@
       <div class="ob3-courses" id="ob3-reveal-courses" role="region" aria-label="Kurssit polullasi"></div>
       <div class="ob3-actions ob3-actions--reveal">
         <button type="button" class="ob3-cta ob3-cta--lg" data-ob3="next" data-from="reveal">Aloita ilmaiseksi</button>
-        <a class="ob3-link" href="/pricing.html" data-ob3="pricing">Avaa kaikki Mestarilla alkaen 19 €/kk</a>
-        <p class="ob3-fineprint">Ei luottokorttia · 1 oppitunti vapaa · Treeni alkaen 9 €/kk</p>
+        <a class="ob3-link" href="/pricing.html" data-ob3="pricing">Avaa kaikki Kurssilla, 49 €</a>
+        <p class="ob3-fineprint">Ei luottokorttia · 1 oppitunti vapaa · Treeni 9 €/kk</p>
       </div>
     </div>
   </div>
@@ -2772,6 +2772,75 @@
     </div>
   </div>
 
+  <!-- SCREEN: Oma sivu / profiili. Lives INSIDE .app-main-inner (L-V362) so
+       `.screen { position:absolute; inset:0 }` anchors to the main column,
+       not a stray <body> position. -->
+  <div id="screen-profile" class="screen">
+    <div class="profile-inner">
+      <!-- HERO STRIP, avatar | identity | level + countdown -->
+      <header class="profile-hero">
+        <div class="profile-avatar" id="profile-avatar" aria-hidden="true">—</div>
+        <div class="profile-hero-meta">
+          <h1 class="profile-name" id="profile-name">Käyttäjä</h1>
+          <p class="profile-handle" id="profile-handle">—</p>
+          <div class="profile-badges" id="profile-badges"></div>
+        </div>
+        <div class="profile-hero-countdown" id="profile-hero-countdown" hidden>
+          <span class="profile-hero-countdown-label">YO-koe</span>
+          <span class="profile-hero-countdown-num" id="profile-hero-countdown-num">—</span>
+          <span class="profile-hero-countdown-unit">pv</span>
+        </div>
+      </header>
+
+      <!-- STATS ROW, 4 cells: streak / total / week / readiness -->
+      <section class="profile-stats" aria-label="Tilastot">
+        <div class="profile-stat">
+          <span class="profile-stat-label">Putki</span>
+          <span class="profile-stat-value" id="profile-stat-streak">0<span class="profile-stat-unit">pv</span></span>
+        </div>
+        <div class="profile-stat">
+          <span class="profile-stat-label">Yhteensä</span>
+          <span class="profile-stat-value" id="profile-stat-total">0<span class="profile-stat-unit"></span></span>
+        </div>
+        <div class="profile-stat">
+          <span class="profile-stat-label">Tällä viikolla</span>
+          <span class="profile-stat-value" id="profile-stat-week">0<span class="profile-stat-unit"></span></span>
+        </div>
+        <div class="profile-stat profile-stat--accent">
+          <span class="profile-stat-label">YO-valmius</span>
+          <span class="profile-stat-value" id="profile-stat-readiness">0<span class="profile-stat-unit">%</span></span>
+        </div>
+      </section>
+
+      <!-- MODE BREAKDOWN, 4 single-number cells -->
+      <section class="profile-section profile-section--modes">
+        <div class="profile-modes" id="profile-modes"></div>
+      </section>
+
+      <!-- TWO-COLUMN: recent activity (3 rows) | settings chips -->
+      <section class="profile-grid">
+        <div class="profile-col profile-col--activity">
+          <div class="profile-section-head">
+            <h2 class="profile-section-title">Viimeisimmät</h2>
+          </div>
+          <div class="profile-activity" id="profile-activity"></div>
+          <div class="profile-empty hidden" id="profile-empty">
+            <p>Ei vielä harjoituksia, tee ensimmäinen, niin se ilmestyy tähän.</p>
+            <button type="button" class="btn-secondary" id="profile-empty-cta">Aloita harjoitus →</button>
+          </div>
+        </div>
+
+        <div class="profile-col profile-col--chips">
+          <div class="profile-section-head">
+            <h2 class="profile-section-title">Profiili</h2>
+            <button type="button" class="profile-section-link" id="profile-link-settings">Kaikki asetukset →</button>
+          </div>
+          <div class="profile-chips" id="profile-chips"></div>
+        </div>
+      </section>
+    </div>
+  </div>
+
     </div><!-- /app-main-inner -->
   </main><!-- /app-main -->
 
@@ -2843,73 +2912,12 @@
        in L-SECURITY-3 for strict CSP. Must precede the type=module
        main.js below so the globals are set before analytics.js boots. -->
   <script src="/js/app-config.js"></script>
-  <!-- SCREEN: Settings / profile editor -->
-  <div id="screen-profile" class="screen">
-    <div class="profile-inner">
-      <!-- HERO STRIP, avatar | identity | level + countdown -->
-      <header class="profile-hero">
-        <div class="profile-avatar" id="profile-avatar" aria-hidden="true">—</div>
-        <div class="profile-hero-meta">
-          <h1 class="profile-name" id="profile-name">Käyttäjä</h1>
-          <p class="profile-handle" id="profile-handle">—</p>
-          <div class="profile-badges" id="profile-badges"></div>
-        </div>
-        <div class="profile-hero-countdown" id="profile-hero-countdown" hidden>
-          <span class="profile-hero-countdown-label">YO-koe</span>
-          <span class="profile-hero-countdown-num" id="profile-hero-countdown-num">—</span>
-          <span class="profile-hero-countdown-unit">pv</span>
-        </div>
-      </header>
 
-      <!-- STATS ROW, 4 cells: streak / total / week / readiness -->
-      <section class="profile-stats" aria-label="Tilastot">
-        <div class="profile-stat">
-          <span class="profile-stat-label">Putki</span>
-          <span class="profile-stat-value" id="profile-stat-streak">0<span class="profile-stat-unit">pv</span></span>
-        </div>
-        <div class="profile-stat">
-          <span class="profile-stat-label">Yhteensä</span>
-          <span class="profile-stat-value" id="profile-stat-total">0<span class="profile-stat-unit"></span></span>
-        </div>
-        <div class="profile-stat">
-          <span class="profile-stat-label">Tällä viikolla</span>
-          <span class="profile-stat-value" id="profile-stat-week">0<span class="profile-stat-unit"></span></span>
-        </div>
-        <div class="profile-stat profile-stat--accent">
-          <span class="profile-stat-label">YO-valmius</span>
-          <span class="profile-stat-value" id="profile-stat-readiness">0<span class="profile-stat-unit">%</span></span>
-        </div>
-      </section>
-
-      <!-- MODE BREAKDOWN, 4 single-number cells -->
-      <section class="profile-section profile-section--modes">
-        <div class="profile-modes" id="profile-modes"></div>
-      </section>
-
-      <!-- TWO-COLUMN: recent activity (3 rows) | settings chips -->
-      <section class="profile-grid">
-        <div class="profile-col profile-col--activity">
-          <div class="profile-section-head">
-            <h2 class="profile-section-title">Viimeisimmät</h2>
-          </div>
-          <div class="profile-activity" id="profile-activity"></div>
-          <div class="profile-empty hidden" id="profile-empty">
-            <p>Ei vielä harjoituksia, tee ensimmäinen, niin se ilmestyy tähän.</p>
-            <button type="button" class="btn-secondary" id="profile-empty-cta">Aloita harjoitus →</button>
-          </div>
-        </div>
-
-        <div class="profile-col profile-col--chips">
-          <div class="profile-section-head">
-            <h2 class="profile-section-title">Profiili</h2>
-            <button type="button" class="profile-section-link" id="profile-link-settings">Kaikki asetukset →</button>
-          </div>
-          <div class="profile-chips" id="profile-chips"></div>
-        </div>
-      </section>
-    </div>
-  </div>
-
+  <!-- #screen-profile was relocated INSIDE .app-main-inner (L-V362) so its
+       `.screen { position:absolute; inset:0 }` resolves against the same
+       positioned container as every other screen. As a stray <body> child
+       after </app-shell> it rendered ~920px down on mobile (empty top, had
+       to scroll past it). See the v246 note on .app-main-inner positioning. -->
   <!-- L-LANG-INFRA-1: Coming-soon screen (DE/FR users) -->
   <div id="screen-coming-soon" class="screen" role="main" aria-labelledby="cs-title">
     <div class="cs-card">

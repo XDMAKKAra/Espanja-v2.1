@@ -152,7 +152,7 @@ function renderProfile(data = {}, learningPath = []) {
     recent = [],
     streak = 0,
     weekSessions = 0,
-    estLevel = null,
+    gradeEstimate = null,
     pro = false,
   } = data;
 
@@ -196,8 +196,16 @@ function renderProfile(data = {}, learningPath = []) {
     const chips = [];
     if (pro) chips.push(`<span class="profile-badge profile-badge--pro">Pro</span>`);
     if (streak >= 1) chips.push(`<span class="profile-badge profile-badge--streak">🔥 ${streak} pv</span>`);
-    const levelChip = estLevel || profile.starting_level || profile.current_grade;
-    if (levelChip) chips.push(`<span class="profile-badge">Taso ${escapeHtml(levelChip)}</span>`);
+    // L-V362 — näytä taso-merkki vain kun arvio on luotettava. Aiemmin badge
+    // luki `estLevel`in (calculateEstLevel keskiarvoisti viimeiset ≤5 arvosanaa),
+    // joten yksi kirjoitustehtävä tuotti "Taso E". Käytä dashboardin gradeEstimate-
+    // porrasta: kirjain näkyy vasta kun kartoitus on tehty JA dataa on tarpeeksi
+    // ("estimated" ≥30 suoritusta tai "full"). Muuten ei taso-chipiä lainkaan.
+    const reliableTier = gradeEstimate
+      && (gradeEstimate.tier === "estimated" || gradeEstimate.tier === "full");
+    if (profile.onboarding_completed === true && reliableTier && gradeEstimate.grade) {
+      chips.push(`<span class="profile-badge">Taso ${escapeHtml(gradeEstimate.grade)}</span>`);
+    }
     badgesEl.innerHTML = chips.join("");
   }
 

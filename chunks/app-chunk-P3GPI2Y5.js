@@ -1,4 +1,4 @@
-import{a as n,b as o}from"./app-chunk-2PNFTTVN.js";import{d as e}from"./app-chunk-L2TORAU4.js";var s="puheo_analytics_consent_v1";function i(){try{let t=localStorage.getItem(s);return t==="granted"||t==="denied"?t:null}catch{return null}}function c(t){try{localStorage.setItem(s,t)}catch{}}function l(){c("granted"),n(null,e())}function d(){c("denied"),o()}function f(t){return t?l():d(),i()}function x(){let t=i();if(t==="granted"){n(null,e());return}t!=="denied"&&u()}var r=!1;function b(){if(r)return;r=!0;let t=document.createElement("style");t.id="consent-banner-styles",t.textContent=`
+import{a as n,b as o}from"./app-chunk-2PNFTTVN.js";import{d as e}from"./app-chunk-T52YLBP4.js";var s="puheo_analytics_consent_v1";function i(){try{let t=localStorage.getItem(s);return t==="granted"||t==="denied"?t:null}catch{return null}}function c(t){try{localStorage.setItem(s,t)}catch{}}function l(){c("granted"),n(null,e())}function d(){c("denied"),o()}function f(t){return t?l():d(),i()}function x(){let t=i();if(t==="granted"){n(null,e());return}t!=="denied"&&u()}var r=!1;function b(){if(r)return;r=!0;let t=document.createElement("style");t.id="consent-banner-styles",t.textContent=`
 .consent-banner {
   position: fixed;
   left: 16px;
@@ -60,4 +60,4 @@ import{a as n,b as o}from"./app-chunk-2PNFTTVN.js";import{d as e}from"./app-chun
       <button type="button" class="consent-banner__btn consent-banner__btn--primary" id="consent-accept">Hyv\xE4ksy analytiikka</button>
     </div>
   `,document.body.appendChild(t),requestAnimationFrame(()=>t.setAttribute("data-shown","true"));let a=()=>{t.setAttribute("data-shown","false"),setTimeout(()=>t.remove(),260)};t.querySelector("#consent-accept").addEventListener("click",()=>{l(),a()}),t.querySelector("#consent-decline").addEventListener("click",()=>{d(),a()})}export{i as a,f as b,x as c};
-//# sourceMappingURL=app-chunk-CUGZBHRU.js.map
+//# sourceMappingURL=app-chunk-P3GPI2Y5.js.map

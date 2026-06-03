@@ -123,10 +123,13 @@ function wireDeleteAccount() {
 
 // ─── Subscription section ─────────────────────────────────────────────────────
 
+// Public product names: Treeni (9 €/kk) + Kurssi (49 €). The course product's
+// internal subscription_tier is still "mestari" (Stripe price keys, DB rows),
+// so keep the key and only relabel the user-facing string → "Kurssi".
 const TIER_LABELS = {
   free:    "Ilmainen",
   treeni:  "Treeni",
-  mestari: "Mestari",
+  mestari: "Kurssi",
   pro:     "Pro",         // legacy
 };
 
@@ -160,7 +163,7 @@ async function wireSubscriptionSection(profile) {
     actionsHtml = `
       <div class="settings-tier-actions">
         <a href="/pricing.html?from=settings&tier=treeni" class="btn-secondary">Avaa Treeni</a>
-        <a href="/pricing.html?from=settings&tier=mestari" class="btn-primary">Avaa Mestari</a>
+        <a href="/pricing.html?from=settings&tier=kurssi" class="btn-primary">Avaa Kurssi</a>
       </div>`;
   } else {
     // treeni, mestari, pro, show Stripe portal button
