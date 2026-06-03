@@ -157,16 +157,15 @@
   display: none;
 }
 
-/* ── Settings-modal jitter fix ───────────────────────────────
-   The old code path in settings.js sign-out handler set
-   .app-sidebar inline display:none, which tossed the grid and
-   left the next render with collapsed rows. Inline style is now
-   removed in JS (settings.js v277); this rule re-asserts the
-   layout if anything else ever sets display: none mid-session. */
-.app-sidebar[style*="display: none"],
-.app-sidebar[style*="display:none"] {
-  display: grid !important;
-}
+/* L-V378 — the v277 "[style*=display:none] → display:grid !important"
+   re-assertion was removed. It defeated the legitimate logged-out hide:
+   updateSidebarState() sets inline display:none for guests and
+   `body.auth-mode .app-sidebar` hides it on the login screen, but the
+   !important rule forced the shell back to grid, leaking the logged-in
+   sidebar onto the auth view. The original cause (settings.js sign-out
+   touching the inline style) was already fixed at source in v277, so the
+   defensive rule was obsolete. updateSidebarState() now solely owns the
+   inline display state. */
 
 /* ── L-V346 — iso logo-lohko (Stitch-referenssi) ─────────────
    brick-tile + Fredoka-wordmark + suomenkielinen sublabel.

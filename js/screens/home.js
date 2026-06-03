@@ -25,9 +25,10 @@
 import { API, apiFetch, isLoggedIn, authHeader, fetchDashboardV2, clearDashboardV2 } from "../api.js";
 import { setLanguage } from "../state.js";
 import { show } from "../ui/nav.js";
-import { isProTier } from "../lib/tier.js";
+import { getTier } from "../lib/tier.js";
+import { openPaywall } from "../features/paywallModal.js";
 import { prefetchChunk, onHoverIntent } from "../lib/prefetch.js";
-import { prefetchCurriculumList } from "../lib/curriculumCache.js";
+import { prefetchCurriculumList, prefetchCourseDetail, getCurriculumList, getCourseDetail } from "../lib/curriculumCache.js";
 
 // L-V316a: when the user clicks "Jatka opintoja" / "Avaa oppimispolku",
 // ask the reasoner for a weighted next topic so future generation calls
@@ -196,16 +197,19 @@ function renderTabs(activeLang) {
   `).join("");
 }
 
-// L-V344 dashboard = WordDive data surface. Three honest blocks built from
-// the real /dashboard/v2 payload:
-//   1. Koepäivä-countdown (yellow)   — fixed YTL date, big Fredoka number
-//   2. Kurssiedistyminen (green)      — learningPath mastered / total + bar
-//   3. Seuraava oppitunti (paper)     — greeting + next action + brick CTA
-//                                       + heikkous-chipit + putki
-// Blocks degrade gracefully: progress hides until the learning path exists.
+// L-V377 launchpad. The L-V344 dashboard opened with zero-state numerals
+// ("0 / 10 aihetta · 0 % hallussa") and duplicated "jatka" across a hero
+// card and three identical activity tiles. This rebuild answers one question
+// in two seconds — "what is my one thing right now" — with a single dominant
+// Jatka button that resolves the next task in one tap, a daily-goal ring that
+// completes and resets, a streak for loss-aversion, and a personalised
+// countdown. Tiers differ by one element each, not three separate screens.
 
 // YTL syksyn koe — sama päivä kuin landingin --exam-date-iso (28.9.2026).
 const EXAM_DATE_ISO = "2026-09-28";
+const DAILY_GOAL = 3;        // tasks/day that fill the ring
+const GOAL_MINUTES = 8;      // rough minutes for the full daily goal
+const GRADES = ["I", "A", "B", "C", "M", "E", "L"];
 
 function daysUntilExam() {
   const today = new Date();
@@ -219,63 +223,53 @@ function formatExamDate() {
   return `${d}.${m}.${y}`;
 }
 
-// Countdown — always shown; the exam date is universal, not per-user.
-function renderCountdown() {
-  const days = daysUntilExam();
-  return `
-    <section class="dash-block dash-block--countdown" aria-label="Aikaa ylioppilaskokeeseen">
-      <p class="dash-block__label">Ylioppilaskokeeseen</p>
-      <p class="dash-block__big"><span class="dash-block__num">${days}</span> päivää</p>
-      <p class="dash-block__sub">Syksyn koe ${formatExamDate()}</p>
-    </section>`;
+// Tasks completed today, derived from the recent-logs slice in the payload.
+// Self-resetting (only today's timestamps count) so the ring empties at
+// midnight without any stored counter.
+function getTodayCount(data) {
+  const recent = data?.dashboard?.recent;
+  if (!Array.isArray(recent)) return 0;
+  const start = new Date();
+  start.setHours(0, 0, 0, 0);
+  let n = 0;
+  for (const r of recent) {
+    const t = r?.createdAt || r?.created_at;
+    if (!t) continue;
+    const d = new Date(t);
+    if (!Number.isNaN(d.getTime()) && d >= start) n++;
+  }
+  return n;
 }
 
-// Course progress — mastered topics on the learning path. Hidden until the
-// path has been generated (fresh accounts see countdown + next-card only).
-function renderProgress(data) {
-  const lp = data?.learningPath;
-  const total = Number(lp?.totalTopics ?? 0);
-  if (!lp || total < 1) return "";
-  const done = Math.min(total, Number(lp.masteredCount ?? 0));
-  const pct = total > 0 ? Math.round((done / total) * 100) : 0;
-  return `
-    <section class="dash-block dash-block--progress" aria-label="Kurssiedistyminen">
-      <p class="dash-block__label">Oppimispolku</p>
-      <p class="dash-block__big"><span class="dash-block__num">${done}</span> / ${total} aihetta</p>
-      <div class="dash-bar" role="progressbar" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100">
-        <span class="dash-bar__fill" style="width:${pct}%"></span>
-      </div>
-      <p class="dash-block__sub">${pct}&nbsp;% hallussa</p>
-    </section>`;
+// Blurred grade band for the free wall: the estimate plus one grade up, e.g.
+// "M tai E". No dash (em-dash is banned and reads as a minus on letters).
+function gradeBand(grade) {
+  const i = GRADES.indexOf(grade);
+  if (i < 0) return grade;
+  const hi = GRADES[Math.min(GRADES.length - 1, i + 1)];
+  return hi === grade ? grade : `${grade} tai ${hi}`;
 }
 
-// Weakness chips — the user's top recent mistake topics, as practice targets.
-function renderWeakChips(data) {
-  const topics = data?.weakTopics?.topics;
-  if (!Array.isArray(topics) || topics.length === 0) return "";
-  const chips = topics.slice(0, 3).map((t) =>
-    `<span class="dash-chip">${escapeHtml(t.label || t.topic || "")}</span>`).join("");
-  return `
-    <div class="dash-card__weak">
-      <span class="dash-card__weak-label">Harjoittele:</span>
-      <span class="dash-chips">${chips}</span>
-    </div>`;
+// ── Streak pill — top-right of the hero. Loss-aversion anchor for daily
+// returns. A brand-new account shows a forward "Päivä 1" seed instead of a
+// zero; a lapsed account shows nothing (the goal ring carries the nudge).
+function renderStreakPill(streak, isFresh) {
+  if (streak >= 1) {
+    return `<p class="dash-hero__streak" aria-label="${streak} päivää putkeen">
+      <span class="dash-hero__streak-num">${streak}</span> päivää putkeen</p>`;
+  }
+  if (isFresh) return `<p class="dash-hero__streak dash-hero__streak--seed">Päivä 1</p>`;
+  return "";
 }
 
-// Streak line, inline in the next-lesson card. Hidden when there is no streak.
-function renderStreakLine(data) {
-  const streak = Number(data?.dashboard?.streak ?? 0);
-  if (streak < 1) return "";
-  return `<p class="dash-card__streak"><strong>${streak}</strong> päivän putki</p>`;
-}
-
-// Next-lesson paper card — carries the greeting, the next action, the single
-// brick CTA (data-cta-primary, wired to the next-topic reasoner), plus the
-// weakness chips and streak so the card reads as a real "what now" surface.
-function renderNextCard(data, lang) {
+// ── Hero — greeting + ONE dominant Jatka button + small secondary links.
+// The button resolves its destination on click (resolveNextTaskHref), so a
+// single tap lands inside a task, never on a course menu.
+function renderHero(data, lang) {
   const dashboard = data?.dashboard || {};
   const profile = data?.profile?.profile || window._userProfile || null;
   const sessions = Number(dashboard?.totalSessions ?? 0);
+  const streak = Number(dashboard?.streak ?? 0);
   let lastLesson = null;
   try {
     const raw = sessionStorage.getItem("currentLesson");
@@ -285,110 +279,199 @@ function renderNextCard(data, lang) {
   const firstName = profile?.preferred_name
     || (profile?.full_name ? profile.full_name.split(" ")[0] : "")
     || "";
-  const namePart = firstName ? `Hei, ${escapeHtml(firstName)}. ` : "Hei. ";
-
+  const hi = firstName ? `Hei, ${escapeHtml(firstName)}.` : "Hei.";
   const isFresh = sessions === 0 && !lastLesson;
-  let title, meta, ctaLabel, ctaHref;
+
+  let eyebrow, title, meta, ctaLabel;
   if (isFresh) {
-    title = `${namePart}Aloita ensimmäinen oppitunti.`;
-    meta = "Yksi oppitunti päivässä riittää alkuun.";
+    eyebrow = "Aloitetaan";
+    title = `${hi} Ensimmäinen tehtäväsi odottaa.`;
+    meta = "Yksi lyhyt tehtävä riittää alkuun. Painetaan käyntiin.";
     ctaLabel = "Aloita";
-    ctaHref = `#/oppimispolku?lang=${escapeHtml(lang)}`;
   } else if (lastLesson?.title) {
-    const lessonTitle = String(lastLesson.title).slice(0, 80);
-    title = `${namePart}Jatka oppituntiin: ${escapeHtml(lessonTitle)}.`;
-    meta = "Avaa viimeisin tehtäväsi siitä mihin jäit.";
-    ctaLabel = "Jatka oppituntiin";
-    ctaHref = lastLesson.href || `#/oppimispolku?lang=${escapeHtml(lang)}`;
+    eyebrow = "Jatketaan";
+    title = `${hi} Jatka siitä mihin jäit.`;
+    meta = `Seuraavana: ${escapeHtml(String(lastLesson.title).slice(0, 70))}.`;
+    ctaLabel = "Jatka";
   } else {
-    title = `${namePart}Jatka oppimispolulla.`;
-    meta = "Avaa viimeisin kurssisi ja valitse seuraava oppitunti.";
-    ctaLabel = "Avaa oppimispolku";
-    ctaHref = `#/oppimispolku?lang=${escapeHtml(lang)}`;
+    eyebrow = "Jatketaan";
+    title = `${hi} Seuraava tehtäväsi on valmiina.`;
+    meta = "Yksi napautus vie suoraan tekemiseen.";
+    ctaLabel = "Jatka";
   }
 
+  const fallbackHref = `#/oppimispolku?lang=${escapeHtml(lang)}`;
   return `
-    <section class="dash-card" aria-label="Seuraava askel">
-      <div class="dash-card__head">
-        <h1 class="home-next__title dash-card__title">${title}</h1>
-        ${renderStreakLine(data)}
+    <section class="dash-hero" aria-label="Jatka">
+      <div class="dash-hero__head">
+        <div class="dash-hero__greet">
+          <p class="dash-hero__eyebrow">${escapeHtml(eyebrow)}</p>
+          <h1 class="dash-hero__title">${title}</h1>
+          <p class="dash-hero__meta">${meta}</p>
+        </div>
+        ${renderStreakPill(streak, isFresh)}
       </div>
-      <p class="dash-card__meta">${escapeHtml(meta)}</p>
-      <a class="home-next__cta dash-card__cta"
-         data-cta-primary="true"
-         href="${ctaHref}"
-         data-action="continue">
-        ${escapeHtml(ctaLabel)}
-        <span class="home-next__cta-arrow" aria-hidden="true">→</span>
-      </a>
-      ${renderWeakChips(data)}
+      <button type="button" class="dash-hero__cta" data-cta-primary="true"
+              data-next-task data-fallback="${fallbackHref}">
+        <span class="dash-hero__cta-label">${escapeHtml(ctaLabel)}</span>
+        <span class="dash-hero__cta-arrow" aria-hidden="true">→</span>
+      </button>
+      <nav class="dash-hero__secondary" aria-label="Muut tehtävät">
+        <a class="dash-hero__link" href="#/koeharjoitus">Harjoittele YO-koetta</a>
+        <a class="dash-hero__link" href="#/kirjoitus">Kirjoita ja saa arvio</a>
+      </nav>
     </section>`;
 }
 
-// Activity tiles — the three things you actually do inside a course. The
-// L-V344 dashboard only linked to the learning path, so writing + mock exam
-// were unreachable once logged in (L-V345 fix). Course is the product; the
-// AI writing grade is one tile of three, not the whole surface.
-function renderActivities(lang) {
-  const lp = `#/oppimispolku?lang=${escapeHtml(lang)}`;
-  const tiles = [
-    {
-      kind: "path", href: lp,
-      title: "Jatka oppimispolkua",
-      sub: "Kahdeksan kurssin polku, kielioppi ja sanasto mukana",
-      icon: '<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>',
-    },
-    {
-      kind: "exam", href: "#/koeharjoitus",
-      title: "Harjoittele YO-koetta",
-      sub: "Mallikoe aikarajalla, kuten oikeassa kokeessa",
-      icon: '<path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5a6 3 0 0 0 12 0v-5"/>',
-    },
-    {
-      kind: "write", href: "#/kirjoitus",
-      title: "Kirjoita ja saa arvio",
-      sub: "Tekoäly pisteyttää kirjoituksesi YTL:n rubriikilla",
-      icon: '<path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/>',
-    },
-  ];
-  const items = tiles.map((t) => `
-    <a class="dash-action dash-action--${t.kind}" href="${t.href}">
-      <span class="dash-action__icon" aria-hidden="true">
-        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">${t.icon}</svg>
-      </span>
-      <span class="dash-action__text">
-        <span class="dash-action__title">${escapeHtml(t.title)}</span>
-        <span class="dash-action__sub">${escapeHtml(t.sub)}</span>
-      </span>
-      <span class="dash-action__arrow" aria-hidden="true">→</span>
-    </a>`).join("");
+// ── Progress ring (SVG). value/max → arc; check glyph when met.
+function renderRing(value, max, met) {
+  const r = 26;
+  const c = 2 * Math.PI * r;
+  const pct = max > 0 ? Math.min(1, value / max) : 0;
+  const off = (c * (1 - pct)).toFixed(1);
+  const center = met
+    ? `<svg class="dash-ring__check" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>`
+    : `<span class="dash-ring__num">${value}</span>`;
   return `
-    <nav class="dash-actions" aria-label="Mitä haluat tehdä">
-      ${items}
-    </nav>`;
+    <div class="dash-ring${met ? " is-met" : ""}">
+      <svg viewBox="0 0 64 64" width="62" height="62" aria-hidden="true">
+        <circle class="dash-ring__track" cx="32" cy="32" r="${r}" fill="none" stroke-width="7"/>
+        <circle class="dash-ring__fill" cx="32" cy="32" r="${r}" fill="none" stroke-width="7"
+                stroke-linecap="round" stroke-dasharray="${c.toFixed(1)}" stroke-dashoffset="${off}"
+                transform="rotate(-90 32 32)"/>
+      </svg>
+      <span class="dash-ring__center">${center}</span>
+    </div>`;
 }
 
-// Dashboard composition: language tabs, a two-up block row (countdown +
-// progress), the next-lesson card, then the three activity tiles that open
-// the learning path, the mock exam, and the writing grader.
-// Desktop composition: a main column (next-lesson card + the three activity
-// rows) and a narrower right rail (countdown + course progress). On <900px the
-// rail drops above the main column so the countdown/progress lead, then the
-// next-action card, then the activities. The two-column canvas is what stops
-// the dashboard from sitting as one short top-left pillar over empty cream.
-function renderShell(activeLang, data, isPro) {
+function goalBlockMarkup({ ring, label, count, sub, met, ariaLabel }) {
+  return `
+    <section class="dash-block dash-block--goal${met ? " is-met" : ""}" aria-label="${escapeHtml(ariaLabel)}">
+      ${ring}
+      <div class="dash-goal__text">
+        <p class="dash-block__label">${escapeHtml(label)}</p>
+        <p class="dash-goal__count">${escapeHtml(count)}</p>
+        <p class="dash-block__sub">${escapeHtml(sub)}</p>
+      </div>
+    </section>`;
+}
+
+// ── Daily-goal block. Completable, dopamine-shaped — the opposite of a
+// lifetime zero statistic. The course tier swaps this slot for course
+// progress once the curriculum loads (updateKurssiProgress); until then a
+// kurssi user simply sees the daily goal, which is a sensible default.
+function renderGoalBlock(data) {
+  const today = getTodayCount(data);
+  const met = today >= DAILY_GOAL;
+  const remainMin = Math.max(0, Math.round((DAILY_GOAL - today) * (GOAL_MINUTES / DAILY_GOAL)));
+  return goalBlockMarkup({
+    ring: renderRing(today, DAILY_GOAL, met),
+    label: "Tänään",
+    count: `${today} / ${DAILY_GOAL} tehtävää`,
+    sub: met ? "Päivän tavoite täynnä." : `Noin ${remainMin} min jäljellä.`,
+    met,
+    ariaLabel: "Päivän tavoite",
+  });
+}
+
+// ── Countdown — personal. Days to the exam plus a line tied to either the
+// projected grade (treeni/kurssi, the YTL engine is the unique edge) or the
+// pace needed to finish (free / thin data). No free-floating anxiety number.
+function personalCountdownLine(data, tier) {
+  const ge = data?.dashboard?.gradeEstimate;
+  if ((tier === "treeni" || tier === "kurssi") && ge && ge.tier !== "none" && ge.grade) {
+    return `Tällä tahdilla arviomme: ${escapeHtml(ge.grade)}.`;
+  }
+  const lp = data?.learningPath;
+  const total = Number(lp?.totalTopics ?? 0);
+  const done = Number(lp?.masteredCount ?? 0);
+  const left = total - done;
+  const days = daysUntilExam();
+  if (total > 0 && left > 0 && days > 7) {
+    const weeks = Math.max(1, Math.floor(days / 7));
+    const perWeek = Math.ceil(left / weeks);
+    return `Noin ${perWeek} aihetta viikossa pitää sinut aikataulussa.`;
+  }
+  return `Syksyn koe ${formatExamDate()}.`;
+}
+
+function renderCountdownBlock(data, tier) {
+  const days = daysUntilExam();
+  return `
+    <section class="dash-block dash-block--countdown" aria-label="Aikaa ylioppilaskokeeseen">
+      <p class="dash-block__label">Ylioppilaskokeeseen</p>
+      <p class="dash-block__big"><span class="dash-block__num">${days}</span> päivää</p>
+      <p class="dash-block__sub">${escapeHtml(personalCountdownLine(data, tier))}</p>
+    </section>`;
+}
+
+// ── Soft wall (free tier, daily goal met). Converts at the peak of
+// satisfaction, not by blocking the work. Teases the blurred grade estimate.
+function renderWall(data) {
+  const ge = data?.dashboard?.gradeEstimate;
+  const hasGrade = ge && ge.tier !== "none" && ge.grade;
+  const teaser = hasGrade
+    ? `<div class="dash-wall__teaser">
+         <span class="dash-wall__teaser-label">Arviomme YO-tasostasi</span>
+         <span class="dash-wall__teaser-grade" aria-hidden="true">${escapeHtml(gradeBand(ge.grade))}</span>
+         <span class="sr-only">Avaa Treeni nähdäksesi tarkan arvion.</span>
+       </div>`
+    : `<p class="dash-wall__hint">Tee muutama tehtävä lisää, niin arvioimme YO-tasosi.</p>`;
+  return `
+    <section class="dash-wall" aria-label="Treeni">
+      <p class="dash-wall__label">Päivän tavoite täynnä</p>
+      <h2 class="dash-wall__title">Huominen aukeaa Treenissä</h2>
+      <p class="dash-wall__meta">Ilmaisversiossa teet kolme tehtävää päivässä. Treenissä jatkat niin pitkälle kuin jaksat.</p>
+      ${teaser}
+      <button type="button" class="dash-wall__cta" data-open-paywall>Avaa Treeni</button>
+    </section>`;
+}
+
+// Resolve the next task in one tap. Priority: resume the exact lesson the user
+// left, else the first incomplete lesson on the first reachable course, else
+// fall back to the course list. Caches are warm from the hover prefetch.
+async function resolveNextTaskHref(lang) {
+  try {
+    const raw = sessionStorage.getItem("currentLesson");
+    if (raw) {
+      const last = JSON.parse(raw);
+      if (last?.href && /#\/oppitunti\//.test(last.href)) return last.href;
+    }
+  } catch { /* private mode */ }
+
+  try {
+    const kurssit = await getCurriculumList(lang);
+    if (Array.isArray(kurssit) && kurssit.length) {
+      const course = kurssit.find((k) => k.isUnlocked && !k.kertausPassed)
+        || kurssit.find((k) => k.isUnlocked)
+        || kurssit[0];
+      if (course?.key) {
+        const { lessons } = await getCourseDetail(lang, course.key);
+        if (Array.isArray(lessons) && lessons.length) {
+          const next = lessons.find((l) => !l.completed) || lessons[0];
+          const num = next?.sortOrder || 1;
+          return `#/oppitunti/${lang}/${encodeURIComponent(course.key)}/${num}`;
+        }
+      }
+    }
+  } catch { /* fall through to the list */ }
+
+  return `#/oppimispolku?lang=${encodeURIComponent(lang)}`;
+}
+
+function renderShell(activeLang, data, tier) {
   const tabsHtml = renderTabs(activeLang);
-  const progressHtml = renderProgress(data);
+  const wall = tier === "free" && getTodayCount(data) >= DAILY_GOAL ? renderWall(data) : "";
   return `
     ${tabsHtml ? `<div class="home-tabs" role="tablist" aria-label="Kielet">${tabsHtml}</div>` : ""}
-    <div class="home-canvas${progressHtml ? "" : " home-canvas--solo"}">
+    <div class="home-canvas">
       <div class="home-canvas__main">
-        ${renderNextCard(data, activeLang)}
-        ${renderActivities(activeLang)}
+        ${renderHero(data, activeLang)}
+        ${wall}
       </div>
       <aside class="home-canvas__rail" aria-label="Tilanne">
-        ${renderCountdown()}
-        ${progressHtml}
+        ${renderGoalBlock(data)}
+        ${renderCountdownBlock(data, tier)}
       </aside>
     </div>
   `;
@@ -421,14 +504,11 @@ function renderShellSkeleton(activeLang) {
       ${tabs ? `<div class="home-tabs" aria-hidden="true">${tabs}</div>` : ""}
       <div class="home-canvas" aria-hidden="true">
         <div class="home-canvas__main">
-          <section class="dash-card dash-card--skel">
+          <section class="dash-hero dash-hero--skel">
             <span class="home-skel home-skel--next-title"></span>
             <span class="home-skel home-skel--next-meta"></span>
             <span class="home-skel home-skel--next-cta"></span>
           </section>
-          <span class="home-skel home-skel--action"></span>
-          <span class="home-skel home-skel--action"></span>
-          <span class="home-skel home-skel--action"></span>
         </div>
         <aside class="home-canvas__rail">
           <section class="dash-block dash-block--skel"><span class="home-skel home-skel--block"></span></section>
@@ -438,34 +518,72 @@ function renderShellSkeleton(activeLang) {
     </div>`;
 }
 
-function wireNextTopicHandler(root, lang) {
-  const cta = root.querySelector(".home-next__cta");
+function wireNextTaskHandler(root, lang) {
+  const cta = root.querySelector("[data-next-task]");
   if (!cta) return;
-  cta.addEventListener("click", (e) => {
-    // L-V347 — navigate THIS frame. The weighted-topic call is pure
-    // weighting telemetry stashed for later generation; nothing reads it
-    // synchronously on the next screen, so it must not gate the click.
-    // (The old code awaited it behind a 1.2s race timeout, costing up to
-    // 1.2s of dead time on every "Jatka".) Fire it in the background and
-    // persist whenever it lands; the hash navigation keeps this document
-    // alive so the fetch survives.
-    const href = cta.getAttribute("href") || `#/oppimispolku?lang=${lang}`;
+  cta.addEventListener("click", async () => {
+    if (cta.dataset.busy) return;
+    cta.dataset.busy = "1";
+    cta.setAttribute("aria-busy", "true");
+    const labelEl = cta.querySelector(".dash-hero__cta-label");
+    if (labelEl) labelEl.textContent = "Avataan";
+    // Weighted next-topic call is pure telemetry stashed for later generation;
+    // it must not gate navigation, so fire-and-forget. (L-V347)
     fetchWeightedNextTopic(lang)
       .then((entry) => { if (entry) recordNextTopic(entry); })
       .catch(() => { /* fail-open: downstream falls back to uniform topics */ });
-    e.preventDefault();
+    let href = cta.dataset.fallback || `#/oppimispolku?lang=${lang}`;
+    try { href = await resolveNextTaskHref(lang); } catch { /* keep fallback */ }
     location.hash = href.startsWith("#") ? href : `#${href}`;
   });
 }
 
+function wireWallPaywall(root) {
+  const btn = root.querySelector("[data-open-paywall]");
+  if (btn) btn.addEventListener("click", () => openPaywall({ variant: "quota", reason: "daily-goal" }));
+}
+
 function wireHoverPrefetch(root, lang) {
-  const cta = root.querySelector(".home-next__cta");
+  const cta = root.querySelector("[data-next-task]");
   if (cta) {
-    onHoverIntent(cta, () => {
-      prefetchChunk("oppimispolkuIndex", () => import("./oppimispolkuIndex.js"));
+    onHoverIntent(cta, async () => {
+      prefetchChunk("lessonRunner", () => import("./lessonRunner.js"));
       prefetchCurriculumList(lang);
+      // Warm the course detail for the course the click will resolve to, so
+      // resolveNextTaskHref returns from cache and the tap feels instant.
+      try {
+        const kurssit = await getCurriculumList(lang);
+        const course = (kurssit || []).find((k) => k.isUnlocked && !k.kertausPassed)
+          || (kurssit || []).find((k) => k.isUnlocked);
+        if (course?.key) prefetchCourseDetail(lang, course.key);
+      } catch { /* prefetch is best-effort */ }
     });
   }
+}
+
+// Course tier: swap the daily-goal slot for "X / 8 kurssia". Needs the
+// curriculum list (not in the dashboard payload), fetched after first paint
+// so the rest of the screen never blocks on it.
+async function updateKurssiProgress(root, lang) {
+  try {
+    const kurssit = await getCurriculumList(lang);
+    if (!Array.isArray(kurssit) || !kurssit.length) return;
+    const block = root.querySelector(".dash-block--goal");
+    if (!block) return;
+    const total = kurssit.length;
+    const done = kurssit.filter((k) => k.kertausPassed).length;
+    const allDone = done >= total;
+    const current = Math.min(total, done + 1);
+    const nextCourse = kurssit.find((k) => !k.kertausPassed);
+    block.outerHTML = goalBlockMarkup({
+      ring: renderRing(done, total, allDone),
+      label: "Kurssietenemä",
+      count: allDone ? `Kaikki ${total} kurssia` : `Kurssi ${current} / ${total}`,
+      sub: allDone ? "Koko polku suoritettu." : (nextCourse?.title ? `Menossa: ${nextCourse.title}` : "Jatka polkua."),
+      met: allDone,
+      ariaLabel: "Kurssietenemä",
+    });
+  } catch { /* keep the interim block */ }
 }
 
 export async function loadHome() {
@@ -475,12 +593,14 @@ export async function loadHome() {
   const activeLang = readActiveLang();
 
   const paint = (data) => {
-    const isPro = isProTier(data?.profile?.profile);
-    window._isPro = isPro;
-    root.innerHTML = renderShell(activeLang, data, isPro);
+    const tier = getTier(data?.profile?.profile);
+    window._isPro = tier !== "free";
+    root.innerHTML = renderShell(activeLang, data, tier);
     wireTabs(root);
     wireHoverPrefetch(root, activeLang);
-    wireNextTopicHandler(root, activeLang);
+    wireNextTaskHandler(root, activeLang);
+    wireWallPaywall(root);
+    if (tier === "kurssi") updateKurssiProgress(root, activeLang);
   };
 
   const cached = readOhjaamoCache(activeLang);

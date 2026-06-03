@@ -272,12 +272,21 @@ function navigateTo(nav, { updateHash = true } = {}) {
   // L-MERGE-DASH-PATH — "dashboard" nav redirects to merged home (path).
   // Done first so active-class + hash assignment land on the right target.
   if (nav === "dashboard") nav = "path";
-  document.querySelectorAll(".sidebar-item[data-nav]").forEach((b) => b.classList.toggle("active", b.dataset.nav === nav));
-  document.querySelectorAll(".mobile-nav-item[data-nav]").forEach((b) => b.classList.toggle("active", b.dataset.nav === nav));
 
   if (updateHash && NAV_HASH[nav] && location.hash !== NAV_HASH[nav]) {
     history.replaceState(null, "", NAV_HASH[nav]);
   }
+
+  // L-V378 (3rd strike, BUG-2) — the active pill is derived from ONE source of
+  // truth, the current route, via syncActiveNav(). The old code toggled the
+  // active class straight from the clicked nav and only touched [data-nav]
+  // items, so the "Tehtävät" link (data-nav-active="path", no data-nav) was
+  // never cleared; replaceState above also doesn't fire `hashchange`, so the
+  // listener's syncActiveNav() never ran. Result: Koti + Tehtävät both stuck
+  // yellow. Now every navigation — clicks and programmatic replaceState —
+  // funnels through syncActiveNav(), which resets ALL pills and sets exactly
+  // the one matching the route (handles both data-nav and data-nav-active).
+  syncActiveNav();
 
   // v277: drive .app-sidebar [data-mode]. "home"/"path"/"profile"/"settings"
   // are all HOME-state from the sidebar's POV (no mode shell). vocab/grammar/

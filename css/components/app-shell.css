@@ -63,7 +63,10 @@
 
 /* === Auth-family screens: full-width, no shell columns === */
 /* Covers screen-auth, screen-reset-password, etc.          */
-body.auth-mode .app-sidebar { display: none; }
+/* L-V378 — !important so the auth view stays shell-free even on mobile,
+   where off-canvas-nav.css forces `.app-sidebar { display: flex !important }`
+   for the drawer. auth-mode is more specific and must win for guests. */
+body.auth-mode .app-sidebar { display: none !important; }
 body.auth-mode .app-rail { display: none; }
 body.auth-mode .app-shell {
   grid-template-columns: 1fr;
