@@ -143,6 +143,35 @@ app.use(express.json());
 // ─── Static files ───────────────────────────────────────────────────────────
 app.use(express.static(__dirname));
 
+// ─── Landing rewrites / redirects (dev parity with vercel.json) ─────────────
+// On Vercel these are handled by vercel.json. The local dev server has no
+// awareness of that file, so without this block the per-language landing
+// routes (e.g. /espanjan-abikurssi) 404 locally even though they work in
+// production. Mirroring them here keeps dev and prod identical and lets the
+// landing Playwright suite assert "no 404" against the real routes.
+const LANDING_REWRITES = {
+  "/espanjan-abikurssi": "public/landing/espanja.html",
+  "/saksan-abikurssi":   "public/landing/saksa.html",
+  "/ranskan-abikurssi":  "public/landing/ranska.html",
+  "/espanja-yo-koe":     "public/landing/espanja.html",
+  "/saksan-yo-koe":      "public/landing/saksa.html",
+  "/ranskan-yo-koe":     "public/landing/ranska.html",
+  "/styleguide":         "styleguide.html",
+};
+const LANDING_REDIRECTS = {
+  "/espanja": "/espanja-yo-koe",
+  "/saksa":   "/saksan-yo-koe",
+  "/saksan":  "/saksan-yo-koe",
+  "/ranska":  "/ranskan-yo-koe",
+  "/ranskan": "/ranskan-yo-koe",
+};
+for (const [from, to] of Object.entries(LANDING_REDIRECTS)) {
+  app.get(from, (req, res) => res.redirect(301, to));
+}
+for (const [route, file] of Object.entries(LANDING_REWRITES)) {
+  app.get(route, (req, res) => res.sendFile(path.join(__dirname, file)));
+}
+
 // ─── Health check ───────────────────────────────────────────────────────────
 app.get("/health", (req, res) => res.json({ status: "ok", uptime: process.uptime() }));
 

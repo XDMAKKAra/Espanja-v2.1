@@ -1,4 +1,4 @@
-const CACHE_VERSION = "puheo-v376";
+const CACHE_VERSION = "puheo-v380";
 const STATIC_ASSETS = [
   "/app.html",
   "/index.html",
@@ -24,9 +24,9 @@ const STATIC_ASSETS = [
   "/public/shots/app-writing-rubric-fr.png",
   "/public/shots/app-writing-rubric-de.png",
   "/js/landing-hero-lang.js",
-  "/public/shots/app-lesson.png",
-  "/public/shots/app-results.png",
-  "/public/shots/app-home-path.png",
+  // L-V380 — zig-zag feature wall removed from the landing; its three product
+  // screenshots (app-lesson/app-results/app-home-path) are no longer referenced
+  // anywhere, so they are dropped from the precache.
   // L-LIVE-AUDIT-P2 UPDATE 1+2 — bundled CSS+JS replace 16 CSS links + 28 JS modules
   // on app.html cold load. Source files stay in repo + cached below for offline robustness.
   "/app.bundle.css",
