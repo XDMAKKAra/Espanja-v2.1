@@ -15,6 +15,7 @@ import { show } from "../ui/nav.js";
 import { renderTeoriaMarkdown } from "../lib/markdownLite.js";
 import { isAcceptable } from "../lib/accentTolerance.js";
 import { gradeMatchingPair } from "../features/answerGrading.js";
+import { wordsToChars } from "../features/charCounter.js";
 import { API, isLoggedIn, authHeader, apiFetch, getAuthEmail } from "../api.js";
 
 const LS_SIDEMENU = "puheo:dk:sidemenu";
@@ -1287,12 +1288,28 @@ function ensureWritingState(sivuId) {
   return st;
 }
 
+// A writing item is treated as a real YO task only when the lesson data marks
+// it (item.yo_task / phase.yo_task). Default = normal lesson writing task:
+// max points shown up front, character counter, point total + feedback, but NO
+// YTL grade letter (I/A/B/C/M/E/L) — that would mislead, the engine's exact
+// grade is not what these low-stakes practice tasks are for (L-V379).
+function isYoWritingTask(item, phase) {
+  return !!(item?.yo_task || item?.is_yo || phase?.yo_task);
+}
+
 function renderWritingPhase(sivu, phase, items) {
   const st = ensureWritingState(sivu.id);
   const item = items[Math.min(st.promptIdx, items.length - 1)] || items[0];
-  const minW = item.min_words || 50;
-  const maxW = item.max_words || 120;
+  const minChars = wordsToChars(item.min_words || 50);
+  const maxChars = wordsToChars(item.max_words || 120);
   const instruction = phase.instruction || "";
+  const isYo = isYoWritingTask(item, phase);
+
+  // Max points are visible BEFORE writing so the student knows the target.
+  // Every lesson writing task grades on the 0–20 YTL rubric (RUBRIC_MAX), so
+  // the denominator is 20; the score is 0 until the answer is graded.
+  const maxPoints = (st.submitted && st.result && st.result.maxScore != null) ? st.result.maxScore : 20;
+  const curPoints = (st.submitted && st.result && st.result.finalScore != null) ? st.result.finalScore : 0;
 
   const switcher = items.length > 1 && !st.submitted
     ? `<div class="dk__writing-switcher" role="tablist" aria-label="Valitse aihe">
@@ -1308,30 +1325,30 @@ function renderWritingPhase(sivu, phase, items) {
     : "";
 
   const body = st.submitted && st.result
-    ? renderWritingResult(st)
-    : renderWritingComposer(item, st, minW, maxW, instruction);
+    ? renderWritingResult(st, isYo)
+    : renderWritingComposer(item, st, minChars, maxChars, instruction);
 
   return `
     <section class="dk__writing" data-sivu="${escapeHtml(sivu.id)}">
       <header class="dk__exercise-head">
-        <span class="dk__exercise-eyebrow">Kirjoitustehtävä</span>
-        <span class="dk__exercise-score" aria-label="Tavoite">${minW}–${maxW} sanaa</span>
+        <span class="dk__exercise-eyebrow">${isYo ? "YO-kirjoitustehtävä" : "Kirjoitustehtävä"}</span>
+        <span class="dk__exercise-score" aria-label="Pisteet">${curPoints} / ${maxPoints} p</span>
       </header>
       ${switcher}
       ${body}
     </section>`;
 }
 
-function renderWritingComposer(item, st, minW, maxW, instruction) {
+function renderWritingComposer(item, st, minChars, maxChars, instruction) {
   const promptHtml = escapeHtml(item.prompt || "")
     .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
-  const words = countWritingWords(st.text);
-  const counterCls = words >= minW && words <= maxW
+  const chars = countWritingChars(st.text);
+  const counterCls = chars >= minChars && chars <= maxChars
     ? "dk__writing-counter is-ok"
-    : words > maxW
+    : chars > maxChars
     ? "dk__writing-counter is-over"
     : "dk__writing-counter is-short";
-  const submitDisabled = words < minW || st.loading;
+  const submitDisabled = chars < minChars || st.loading;
   const submitLabel = st.loading ? "Arvioidaan…" : "Lähetä arvioitavaksi";
   const instructionHtml = instruction
     ? `<p class="dk__writing-instruction">${escapeHtml(instruction)}</p>`
@@ -1354,7 +1371,7 @@ function renderWritingComposer(item, st, minW, maxW, instruction) {
                 ${st.loading ? "disabled" : ""}>${escapeHtml(st.text)}</textarea>
       <div class="dk__writing-meta">
         <span class="${counterCls}" aria-live="polite">
-          <strong id="dk-writing-words">${words}</strong> / ${minW}–${maxW} sanaa
+          <strong id="dk-writing-chars">${chars}</strong> / ${minChars}–${maxChars} merkkiä
         </span>
         <span class="dk__writing-rubric">Arvioidaan YTL-rubriikilla</span>
       </div>
@@ -1370,11 +1387,14 @@ function renderWritingComposer(item, st, minW, maxW, instruction) {
     </div>`;
 }
 
-function renderWritingResult(st) {
+function renderWritingResult(st, isYo = false) {
   const r = st.result || {};
   const score = r.finalScore != null ? r.finalScore : "—";
   const max = r.maxScore != null ? r.maxScore : "";
-  const grade = r.ytlGrade ? `<span class="dk__writing-grade">YTL ${escapeHtml(String(r.ytlGrade))}</span>` : "";
+  // YTL grade letter only on real YO tasks. Normal lesson tasks show the point
+  // total alone (the AI still grades on the full YTL rubric, it just isn't
+  // surfaced as a matriculation grade — L-V379).
+  const grade = (isYo && r.ytlGrade) ? `<span class="dk__writing-grade">YTL ${escapeHtml(String(r.ytlGrade))}</span>` : "";
   const errors = Array.isArray(r.errors) ? r.errors : [];
   const positives = Array.isArray(r.annotations) ? r.annotations.filter(a => a?.type === "positive") : [];
   const overall = r.overall_feedback_fi ? `<p class="dk__writing-overall">${escapeHtml(r.overall_feedback_fi)}</p>` : "";
@@ -1419,25 +1439,25 @@ function renderWritingResult(st) {
     </div>`;
 }
 
-function countWritingWords(text) {
-  const t = String(text || "").trim();
-  if (!t) return 0;
-  return t.split(/\s+/).filter(Boolean).length;
+function countWritingChars(text) {
+  return String(text || "").length;
 }
 
 // Map a lesson writing item → /api/grade-writing task shape. The backend
 // validates { taskType, charMin, charMax, points }; the lesson schema gives
 // us min/max words, so we approximate chars at ~6 per word and pick task
 // type by word count threshold (>=200 words → "long", else "short").
+// points is the 0–20 YTL rubric max (RUBRIC_MAX) — the same denominator the
+// student sees up front and in the result.
 function writingTaskFromItem(item) {
   const minW = item.min_words || 50;
   const maxW = item.max_words || 120;
   const taskType = maxW >= 200 ? "long" : "short";
   return {
     taskType,
-    points: taskType === "long" ? 99 : 33,
-    charMin: Math.max(60, Math.round(minW * 6)),
-    charMax: Math.max(120, Math.round(maxW * 6)),
+    points: 20,
+    charMin: Math.max(60, wordsToChars(minW)),
+    charMax: Math.max(120, wordsToChars(maxW)),
     situation: "",
     prompt: item.prompt || "",
     requirements: [],
@@ -1470,21 +1490,21 @@ function wireWritingPhase() {
   });
 
   const textarea = root.querySelector("#dk-writing-input");
-  const counter = root.querySelector("#dk-writing-words");
+  const counter = root.querySelector("#dk-writing-chars");
   const submitBtn = root.querySelector("#dk-writing-submit");
   textarea?.addEventListener("input", () => {
     st.text = textarea.value;
-    const w = countWritingWords(st.text);
-    if (counter) counter.textContent = w;
+    const c = countWritingChars(st.text);
+    if (counter) counter.textContent = c;
     const item = items[st.promptIdx] || items[0];
-    const minW = item.min_words || 50;
-    const maxW = item.max_words || 120;
-    if (submitBtn) submitBtn.disabled = w < minW || st.loading;
+    const minChars = wordsToChars(item.min_words || 50);
+    const maxChars = wordsToChars(item.max_words || 120);
+    if (submitBtn) submitBtn.disabled = c < minChars || st.loading;
     const wrap = root.querySelector(".dk__writing-counter");
     if (wrap) {
       wrap.classList.remove("is-ok", "is-over", "is-short");
-      if (w > maxW) wrap.classList.add("is-over");
-      else if (w >= minW) wrap.classList.add("is-ok");
+      if (c > maxChars) wrap.classList.add("is-over");
+      else if (c >= minChars) wrap.classList.add("is-ok");
       else wrap.classList.add("is-short");
     }
   });
@@ -1492,8 +1512,8 @@ function wireWritingPhase() {
   submitBtn?.addEventListener("click", async () => {
     if (st.loading) return;
     const item = items[st.promptIdx] || items[0];
-    const minW = item.min_words || 50;
-    if (countWritingWords(st.text) < minW) return;
+    const minChars = wordsToChars(item.min_words || 50);
+    if (countWritingChars(st.text) < minChars) return;
     st.loading = true;
     st.error = null;
     reRenderWritingInPlace(sivuId);
