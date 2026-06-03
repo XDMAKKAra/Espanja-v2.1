@@ -133,63 +133,112 @@ border: 1px solid var(--border);
   color: var(--success);
 }
 
-/* ── STATS GRID ────────────────────────────────────────────────────── */
+/* ── READINESS ANCHOR ──────────────────────────────────────────────── */
+/* The single dominant metric. Green-pale surface echoes the home progress
+   block so the two screens speak the same brand language. */
 
-.profile-stats {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
-  margin-bottom: 14px;
+.profile-readiness {
+  background: var(--green-pale);
+  border: 1px solid color-mix(in srgb, var(--green) 18%, transparent);
+  border-radius: var(--r-lg, 18px);
+  padding: 16px 18px;
+  margin-bottom: 12px;
 }
 
-.profile-stat {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--r-md);
-  padding: 14px 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  min-width: 0;
-}
-
-.profile-stat-label {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.6px;
-color: var(--ink-soft);
-}
-
-.profile-stat-value {
-  font-family: var(--font-display);
-  font-size: 26px;
-  font-weight: 600;
-  line-height: 1.1;
-  color: var(--ink);
-  font-variant-numeric: tabular-nums;
+.profile-readiness__top {
   display: flex;
   align-items: baseline;
-  gap: 4px;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.profile-readiness__label {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: var(--green);
+}
+
+.profile-readiness__value {
+  font-family: var(--font-display);
+  font-size: 34px;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--green);
+  font-variant-numeric: tabular-nums;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 3px;
+}
+
+.profile-readiness__bar {
+  margin-top: 12px;
+  height: 8px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--green) 14%, var(--paper));
+  overflow: hidden;
+}
+
+.profile-readiness__fill {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: var(--green);
+  transition: width 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.profile-readiness__hint {
+  margin: 8px 0 0;
+  font-family: var(--font-body);
+  font-size: 12px;
+  color: color-mix(in srgb, var(--green) 78%, var(--ink-soft));
 }
 
 .profile-stat-unit {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  font-weight: 500;
-  color: var(--ink-soft);
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
   text-transform: lowercase;
 }
 
-.profile-stat-hint {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--ink-faint);
-  margin-top: 2px;
+/* ── ACTIVITY STRIP — hairline-divided trio, no card boxes ─────────── */
+
+.profile-activity-strip {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin-bottom: 16px;
+  padding: 2px 0;
 }
 
-.profile-stat--accent .profile-stat-value { color: var(--accent); }
-.profile-stat--success .profile-stat-value { color: var(--success); }
+.profile-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 6px 8px;
+  text-align: center;
+  min-width: 0;
+}
+.profile-cell + .profile-cell {
+  border-left: 1px solid var(--border);
+}
+
+.profile-cell__value {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.05;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.profile-cell__label {
+  font-family: var(--font-body);
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
 
 /* ── SECTIONS ──────────────────────────────────────────────────────── */
 
@@ -244,46 +293,63 @@ margin: 0;
   min-width: 0;
 }
 
-/* ── MODE BREAKDOWN — 4-up single number ───────────────────────────── */
+/* ── OSA-ALUEET — one grouped card, divided cells ──────────────────── */
+
+.profile-group-label {
+  margin: 0 0 8px;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: var(--ink-soft);
+}
 
 .profile-modes {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
-}
-
-.profile-mode-row {
-  display: grid;
-  grid-template-rows: auto auto auto;
-  row-gap: 6px;
-  padding: 14px 14px 12px;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--r-md);
+  overflow: hidden;
+}
+
+.profile-mode-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  padding: 12px 8px;
+  text-align: center;
+  min-width: 0;
+}
+.profile-mode-row + .profile-mode-row {
+  border-left: 1px solid var(--border);
 }
 
 .profile-mode-icon {
-  width: 22px;
-  height: 22px;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
   display: grid;
   place-items: center;
-  color: var(--ink-soft);
+  color: var(--accent);
 }
 .profile-mode-icon svg { width: 16px; height: 16px; }
 
 .profile-mode-name {
-  font-family: var(--font-mono);
-  font-size: 10px;
+  font-family: var(--font-body);
+  font-size: 11px;
   font-weight: 600;
-  letter-spacing: 0.4px;
-color: var(--ink-soft);
+  color: var(--ink-soft);
+  line-height: 1.2;
   min-width: 0;
+  order: 1; /* name sits below the count for a number-first read */
 }
 
 .profile-mode-count {
   font-family: var(--font-display);
-  font-size: 24px;
-  font-weight: 700;
+  font-size: 20px;
+  font-weight: 600;
   color: var(--ink);
   font-variant-numeric: tabular-nums;
   line-height: 1;
@@ -719,10 +785,12 @@ color: var(--surface);
   .profile-name { font-size: 18px; }
   .profile-hero-countdown { width: 100%; text-align: left; }
 
-  .profile-stats { grid-template-columns: repeat(2, 1fr); gap: 8px; }
-  .profile-stat-value { font-size: 22px; }
-
-  .profile-modes { grid-template-columns: repeat(2, 1fr); }
+  /* Modes stay 4-up so the single grouped card keeps its hairline rhythm.
+     Names shrink a touch to fit the narrow cells without horizontal scroll. */
+  .profile-mode-row { padding: 11px 5px; }
+  .profile-mode-name { font-size: 10px; }
+  .profile-mode-count { font-size: 18px; }
+  .profile-cell__value { font-size: 22px; }
 
   .profile-grid { grid-template-columns: 1fr; }
   .profile-achievements { grid-template-columns: 1fr; }

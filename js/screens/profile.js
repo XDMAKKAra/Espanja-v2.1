@@ -231,11 +231,22 @@ function renderProfile(data = {}, learningPath = []) {
     } catch { /* keep 0 */ }
   }
 
-  // Stats row
-  setStat("profile-stat-streak", streak, "pv");
+  // Activity strip + readiness anchor
+  setStat("profile-stat-streak", streak, "");
   setStat("profile-stat-total", totalSessions, "");
   setStat("profile-stat-week", weekSessions, "");
   setStat("profile-stat-readiness", readinessPct, "%");
+
+  // Readiness bar + contextual hint. When the user has done nothing yet we
+  // keep a neutral message instead of letting a stark 0% read as a verdict.
+  const fillEl = document.getElementById("profile-readiness-fill");
+  if (fillEl) fillEl.style.width = `${Math.max(0, Math.min(100, readinessPct))}%`;
+  const hintEl = document.getElementById("profile-readiness-hint");
+  if (hintEl) {
+    hintEl.textContent = readinessPct > 0
+      ? "Kuinka suuri osa kurssipolun aiheista on hallussa."
+      : "Tee oppitunteja, niin täytät tätä mittaria.";
+  }
 
   // Mode breakdown, 4 cells
   const modesEl = document.getElementById("profile-modes");

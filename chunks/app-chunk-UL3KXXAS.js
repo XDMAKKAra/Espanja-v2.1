@@ -1,4 +1,7 @@
-import{a as t,b as l}from"./app-chunk-PXMVMW5B.js";function v(s,i={}){l("screen-loading"),t("loading-text").textContent=s,t("loading-spinner").style.display="";let e=t("loading-subtext"),n=t("loading-retry");e.classList.add("hidden"),n.classList.add("hidden"),i.subtext&&(e.textContent=i.subtext,e.classList.remove("hidden"))}function c(s,i){t("loading-spinner").style.display="none",t("loading-text").textContent="Jokin meni pieleen";let e=t("loading-subtext");e.textContent=s,e.classList.remove("hidden");let n=t("loading-retry");i&&(n.classList.remove("hidden"),n.onclick=i)}var a={exercise:`
+import{a as i,b as r}from"./app-chunk-PXMVMW5B.js";var l=null;function c(){l&&(clearInterval(l),l=null);let e=i("loading-staged");e&&(e.classList.add("hidden"),e.innerHTML="")}function g(e,d={}){c(),r("screen-loading");let s=i("loading-text");s.classList.remove("hidden"),s.textContent=e,i("loading-spinner").style.display="";let n=i("loading-subtext"),t=i("loading-retry");n.classList.add("hidden"),t.classList.add("hidden"),d.subtext&&(n.textContent=d.subtext,n.classList.remove("hidden"))}function h(e,d={}){c(),r("screen-loading"),i("loading-spinner").style.display="none",i("loading-text").classList.add("hidden"),i("loading-subtext").classList.add("hidden"),i("loading-retry").classList.add("hidden");let s=i("loading-staged");if(!s||!Array.isArray(e)||e.length===0)return()=>{};s.classList.remove("hidden");let n=o=>{s.innerHTML=`<ul class="loading-steps">${e.map((u,v)=>`<li class="loading-step ${v<o?"is-done":v===o?"is-active":"is-pending"}">
+        <span class="loading-step__dot" aria-hidden="true"></span>
+        <span class="loading-step__label">${u}</span>
+      </li>`).join("")}</ul>`},t=0;n(t);let a=d.stepMs||1500;return l=setInterval(()=>{t<e.length-1?(t++,n(t)):(clearInterval(l),l=null)},a),function(){l&&(clearInterval(l),l=null)}}function x(e,d){c(),i("loading-spinner").style.display="none";let s=i("loading-text");s.classList.remove("hidden"),s.textContent="Jokin meni pieleen";let n=i("loading-subtext");n.textContent=e,n.classList.remove("hidden");let t=i("loading-retry");d&&(t.classList.remove("hidden"),t.onclick=d)}var k={exercise:`
     <div class="skeleton-exercise" data-testid="skeleton-exercise" aria-hidden="true">
       <div class="skeleton-bar skeleton-bar-wide"></div>
       <div class="skeleton-bar skeleton-bar-medium"></div>
@@ -51,10 +54,10 @@ import{a as t,b as l}from"./app-chunk-PXMVMW5B.js";function v(s,i={}){l("screen-
       <div class="skeleton-bar skeleton-bar-wide"></div>
       <div class="skeleton-bar skeleton-bar-medium"></div>
       <div class="skeleton-hint">Generoidaan kirjoitusteht\xE4v\xE4\xE4\u2026</div>
-    </div>`};function k(s,i="exercise"){let e=typeof s=="string"?document.getElementById(s):s;e&&(e.innerHTML=a[i]||a.exercise)}function b(s,{title:i,subtext:e,retryFn:n}={}){let d=typeof s=="string"?document.getElementById(s):s;if(!d)return;d.innerHTML=`
+    </div>`};function m(e,d="exercise"){let s=typeof e=="string"?document.getElementById(e):e;s&&(s.innerHTML=k[d]||k.exercise)}function f(e,{title:d,subtext:s,retryFn:n}={}){let t=typeof e=="string"?document.getElementById(e):e;if(!t)return;t.innerHTML=`
     <div class="fetch-error" role="alert" data-testid="fetch-error">
-      <div class="fetch-error-title">${i||"Jokin meni pieleen"}</div>
-      ${e?`<div class="fetch-error-sub">${e}</div>`:""}
+      <div class="fetch-error-title">${d||"Jokin meni pieleen"}</div>
+      ${s?`<div class="fetch-error-sub">${s}</div>`:""}
       <button type="button" class="btn-primary fetch-error-retry" data-testid="fetch-retry">Yrit\xE4 uudelleen</button>
-    </div>`;let o=d.querySelector(".fetch-error-retry");o&&typeof n=="function"&&o.addEventListener("click",n)}export{v as a,c as b,k as c,b as d};
-//# sourceMappingURL=app-chunk-7A2GA3W3.js.map
+    </div>`;let a=t.querySelector(".fetch-error-retry");a&&typeof n=="function"&&a.addEventListener("click",n)}export{g as a,h as b,x as c,m as d,f as e};
+//# sourceMappingURL=app-chunk-UL3KXXAS.js.map

@@ -1,8 +1,20 @@
 import { $, show } from "./nav.js";
 
+// Shared between the plain spinner and the staged loader so switching from one
+// to the other never leaves an orphaned interval ticking in the background.
+let _stagedTimer = null;
+function clearStaged() {
+  if (_stagedTimer) { clearInterval(_stagedTimer); _stagedTimer = null; }
+  const staged = $("loading-staged");
+  if (staged) { staged.classList.add("hidden"); staged.innerHTML = ""; }
+}
+
 export function showLoading(text, opts = {}) {
+  clearStaged();
   show("screen-loading");
-  $("loading-text").textContent = text;
+  const textEl = $("loading-text");
+  textEl.classList.remove("hidden");
+  textEl.textContent = text;
   $("loading-spinner").style.display = "";
   const subEl = $("loading-subtext");
   const retryEl = $("loading-retry");
@@ -14,9 +26,51 @@ export function showLoading(text, opts = {}) {
   }
 }
 
-export function showLoadingError(errorMsg, retryFn) {
+// Staged loader: instead of a lone spinner, walk the student through the real
+// phases of work so the wait reads as progress, not a stall. Steps advance on
+// a timer and the last one holds until the caller swaps the screen. Returns a
+// stop() so callers can halt early if needed.
+export function showStagedLoading(steps, opts = {}) {
+  clearStaged();
+  show("screen-loading");
   $("loading-spinner").style.display = "none";
-  $("loading-text").textContent = "Jokin meni pieleen";
+  $("loading-text").classList.add("hidden");
+  $("loading-subtext").classList.add("hidden");
+  $("loading-retry").classList.add("hidden");
+
+  const staged = $("loading-staged");
+  if (!staged || !Array.isArray(steps) || steps.length === 0) return () => {};
+  staged.classList.remove("hidden");
+
+  const render = (active) => {
+    staged.innerHTML = `<ul class="loading-steps">${steps.map((label, i) => {
+      const cls = i < active ? "is-done" : i === active ? "is-active" : "is-pending";
+      return `<li class="loading-step ${cls}">
+        <span class="loading-step__dot" aria-hidden="true"></span>
+        <span class="loading-step__label">${label}</span>
+      </li>`;
+    }).join("")}</ul>`;
+  };
+
+  let active = 0;
+  render(active);
+  const stepMs = opts.stepMs || 1500;
+  _stagedTimer = setInterval(() => {
+    if (active < steps.length - 1) { active++; render(active); }
+    else { clearInterval(_stagedTimer); _stagedTimer = null; }
+  }, stepMs);
+
+  return function stop() {
+    if (_stagedTimer) { clearInterval(_stagedTimer); _stagedTimer = null; }
+  };
+}
+
+export function showLoadingError(errorMsg, retryFn) {
+  clearStaged();
+  $("loading-spinner").style.display = "none";
+  const textEl = $("loading-text");
+  textEl.classList.remove("hidden");
+  textEl.textContent = "Jokin meni pieleen";
   const subEl = $("loading-subtext");
   subEl.textContent = errorMsg;
   subEl.classList.remove("hidden");

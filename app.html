@@ -1898,6 +1898,7 @@
     <div class="loading-inner" aria-busy="true">
       <div class="spinner" id="loading-spinner" aria-hidden="true"></div>
       <p id="loading-text" role="status" aria-live="polite">Ladataan…</p>
+      <div id="loading-staged" class="loading-staged hidden" role="status" aria-live="polite"></div>
       <p id="loading-subtext" class="loading-subtext hidden"></p>
       <button class="btn-primary hidden" id="loading-retry" style="margin-top:16px">Yritä uudelleen →</button>
     </div>
@@ -2792,28 +2793,37 @@
         </div>
       </header>
 
-      <!-- STATS ROW, 4 cells: streak / total / week / readiness -->
-      <section class="profile-stats" aria-label="Tilastot">
-        <div class="profile-stat">
-          <span class="profile-stat-label">Putki</span>
-          <span class="profile-stat-value" id="profile-stat-streak">0<span class="profile-stat-unit">pv</span></span>
+      <!-- READINESS ANCHOR — the one metric that drives everything else -->
+      <section class="profile-readiness" aria-label="YO-valmius">
+        <div class="profile-readiness__top">
+          <span class="profile-readiness__label">YO-valmius</span>
+          <span class="profile-readiness__value" id="profile-stat-readiness">0<span class="profile-stat-unit">%</span></span>
         </div>
-        <div class="profile-stat">
-          <span class="profile-stat-label">Yhteensä</span>
-          <span class="profile-stat-value" id="profile-stat-total">0<span class="profile-stat-unit"></span></span>
+        <div class="profile-readiness__bar" role="presentation">
+          <span class="profile-readiness__fill" id="profile-readiness-fill" style="width:0%"></span>
         </div>
-        <div class="profile-stat">
-          <span class="profile-stat-label">Tällä viikolla</span>
-          <span class="profile-stat-value" id="profile-stat-week">0<span class="profile-stat-unit"></span></span>
+        <p class="profile-readiness__hint" id="profile-readiness-hint">Kuinka suuri osa kurssipolun aiheista on hallussa.</p>
+      </section>
+
+      <!-- ACTIVITY STRIP, hairline-divided trio (no card boxes) -->
+      <section class="profile-activity-strip" aria-label="Harjoittelu">
+        <div class="profile-cell">
+          <span class="profile-cell__value" id="profile-stat-streak">0</span>
+          <span class="profile-cell__label">Putki (pv)</span>
         </div>
-        <div class="profile-stat profile-stat--accent">
-          <span class="profile-stat-label">YO-valmius</span>
-          <span class="profile-stat-value" id="profile-stat-readiness">0<span class="profile-stat-unit">%</span></span>
+        <div class="profile-cell">
+          <span class="profile-cell__value" id="profile-stat-total">0</span>
+          <span class="profile-cell__label">Harjoituksia</span>
+        </div>
+        <div class="profile-cell">
+          <span class="profile-cell__value" id="profile-stat-week">0</span>
+          <span class="profile-cell__label">Tällä viikolla</span>
         </div>
       </section>
 
-      <!-- MODE BREAKDOWN, 4 single-number cells -->
-      <section class="profile-section profile-section--modes">
+      <!-- OSA-ALUEET, grouped into one card so it reads as a set -->
+      <section class="profile-section profile-section--modes" aria-label="Osa-alueet">
+        <h2 class="profile-group-label">Osa-alueet</h2>
         <div class="profile-modes" id="profile-modes"></div>
       </section>
 

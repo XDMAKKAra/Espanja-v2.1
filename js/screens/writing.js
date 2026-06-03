@@ -3,7 +3,7 @@ import { API, isLoggedIn, authHeader, apiFetch, retryable, humanizeApiError } fr
 import { attachAccentBar } from "../features/accentBar.js";
 import { state, apiLang } from "../state.js";
 import { CRITERIA_LABELS } from "../state.js";
-import { showLoading, showLoadingError, showSkeleton, showFetchError } from "../ui/loading.js";
+import { showLoading, showStagedLoading, showLoadingError, showSkeleton, showFetchError } from "../ui/loading.js";
 import { trackCheckoutStarted, trackProUpsellShown, track } from "../analytics.js";
 import { shouldFireUpsell, UPSELL_TRIGGERS, LAST_FIRED_KEY, SESSION_COUNT_KEY } from "../../lib/paywall.js";
 import { recordWritingResult, getRecentErrorCategories } from "../features/writingProgression.js";
@@ -445,7 +445,12 @@ $("btn-submit-writing").addEventListener("click", async () => {
   const text = $("writing-input").value.trim();
   if (!text) return;
 
-  showLoading("Arvioidaan vastaustasi...");
+  showStagedLoading([
+    "Luetaan vastaustasi",
+    "Tarkistetaan kielen rakenteet",
+    "Kootaan perustelut",
+    "Viimeistellään arvio",
+  ], { stepMs: 1600 });
 
   // Persist textarea content so a grading-request failure never loses the
   // student's writing (Pass 6 C16 recovery contract).
