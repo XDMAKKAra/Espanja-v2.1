@@ -187,11 +187,14 @@
       <div class="hero__inner">
 
         <div class="hero__copy">
-          <nav class="hero__langs" aria-label="Valitse kieli">
-            <a class="hero__lang-link" href="/espanjan-abikurssi">Espanja</a>
-            <a class="hero__lang-link" href="/ranskan-abikurssi">Ranska</a>
-            <a class="hero__lang-link" href="/saksan-abikurssi">Saksa</a>
-          </nav>
+          <div class="hero__langs" id="hero-lang-switch" role="tablist" aria-label="Esikatsele tuotetta kielellä">
+            <button class="hero__lang-link" type="button" role="tab" data-lang="es"
+                    aria-selected="true" aria-controls="hero-shot" tabindex="0">Espanja</button>
+            <button class="hero__lang-link" type="button" role="tab" data-lang="fr"
+                    aria-selected="false" aria-controls="hero-shot" tabindex="-1">Ranska</button>
+            <button class="hero__lang-link" type="button" role="tab" data-lang="de"
+                    aria-selected="false" aria-controls="hero-shot" tabindex="-1">Saksa</button>
+          </div>
 
           <h1 class="hero__title" id="hero-title">
             Varmuutta ylioppilaskokeeseen. Stressitöntä kertausta.
@@ -216,9 +219,13 @@
 
         <div class="hero__art">
           <figure class="hero__art-panel shot-frame shot-frame--hero">
-            <img src="/public/shots/app-writing-rubric.png"
-                 alt="Puheon kirjoitustehtävä: espanjankielinen tehtävänanto, vastauskenttä ja YTL:n arviointikriteerit sivupalkissa"
-                 width="1320" height="885" loading="eager" decoding="async" />
+            <span class="shot-chrome" aria-hidden="true">
+              <span class="shot-chrome__dots"></span>
+              <span class="shot-chrome__url">puheo.fi</span>
+            </span>
+            <img id="hero-shot" src="/public/shots/app-writing-rubric-es.png"
+                 alt="Puheon kirjoitustehtävä espanjaksi: tehtävänanto, vastauskenttä ja YTL:n arviointikriteerit sivupalkissa"
+                 width="1012" height="739" loading="eager" decoding="async" />
           </figure>
         </div>
       </div>
@@ -233,6 +240,10 @@
 
         <article class="feature feature--art-left">
           <div class="feature__art shot-frame">
+            <span class="shot-chrome" aria-hidden="true">
+              <span class="shot-chrome__dots"></span>
+              <span class="shot-chrome__url">puheo.fi</span>
+            </span>
             <img src="/public/shots/app-lesson.png" alt="Oppimispolku: kahdeksan kurssin lista A-tasolta E-tasolle espanjassa" width="1100" height="1524" loading="lazy" decoding="async" />
           </div>
           <div class="feature__text">
@@ -243,6 +254,10 @@
 
         <article class="feature feature--art-right">
           <div class="feature__art shot-frame">
+            <span class="shot-chrome" aria-hidden="true">
+              <span class="shot-chrome__dots"></span>
+              <span class="shot-chrome__url">puheo.fi</span>
+            </span>
             <img src="/public/shots/app-results.png" alt="Kurssin sisältö: oppitunnit eri tehtävätyypeillä, sanasto, kielioppi ja yhdistelmä" width="1100" height="771" loading="lazy" decoding="async" />
           </div>
           <div class="feature__text">
@@ -253,6 +268,10 @@
 
         <article class="feature feature--art-left">
           <div class="feature__art shot-frame">
+            <span class="shot-chrome" aria-hidden="true">
+              <span class="shot-chrome__dots"></span>
+              <span class="shot-chrome__url">puheo.fi</span>
+            </span>
             <img src="/public/shots/app-home-path.png" alt="Puheon etusivu: oppimispolku, YO-koepäivän laskuri ja kirjoitusarvioon vievä kortti" width="1200" height="861" loading="lazy" decoding="async" />
           </div>
           <div class="feature__text">
@@ -1020,6 +1039,7 @@ Anna</p>
   <script type="module" src="/js/landing-init.js"></script>
   <script src="/js/landing-nav.js"></script>
   <script src="/js/landing-catalog-lang.js"></script>
+  <script src="/js/landing-hero-lang.js"></script>
   <script src="/js/landing-proof-lang.js"></script>
   <script src="/js/landing-writing-demo.js"></script>
 </body>

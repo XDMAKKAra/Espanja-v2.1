@@ -3297,6 +3297,7 @@ html.landing { scroll-padding-top: 92px; }
    Loaded last so it overrides the yellow/pale illustration panels.
    ─────────────────────────────────────────────────────────────── */
 .landing .shot-frame {
+  position: relative;
   background: #ffffff;
   border: 1px solid #e9dfcf;
   border-radius: 16px;
@@ -3315,22 +3316,69 @@ html.landing { scroll-padding-top: 92px; }
   height: auto;
 }
 
-/* Hero: show the full writing+rubric view at its natural aspect. */
-.landing .hero__art-panel.shot-frame--hero {
-  aspect-ratio: auto;
-  max-width: 600px;
-  place-items: stretch;
+/* L-V376 — Browser-window chrome so each shot reads as a real product view
+   instead of a bare image floating on cream. Warm-white strip, three muted
+   brand dots (brick/yellow/green), a small address pill. Purely decorative. */
+.landing .shot-chrome {
+  display: flex;
+  align-items: center;
+  height: 36px;
+  padding: 0 14px;
+  background: #faf4ea;
+  border-bottom: 1px solid #ece2d2;
+}
+.landing .shot-chrome__dots {
+  position: relative;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #e0a89e;
+  box-shadow: 17px 0 0 #ecd29a, 34px 0 0 #aecbb5;
+  flex: 0 0 auto;
+  margin-right: 34px;
+}
+.landing .shot-chrome__url {
+  margin: 0 auto;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: #9a8c79;
+  background: #fff;
+  border: 1px solid #ece2d2;
+  border-radius: 999px;
+  padding: 3px 16px;
+  /* nudge left so the pill sits optically centred despite the dots */
+  transform: translateX(-22px);
 }
 
-/* Feature shots: consistent landscape windows cropped to the top of
-   each screen (the most informative part), so the zig-zag rows stay
-   balanced regardless of the source image's height. */
+/* Hero: show the full writing+rubric view at its natural aspect. A soft warm
+   halo behind the frame lifts it off the cream without any glow on the card. */
+.landing .hero__art { position: relative; }
+.landing .hero__art::before {
+  content: "";
+  position: absolute;
+  inset: -8% -6% -12% -10%;
+  background: radial-gradient(120% 90% at 68% 28%,
+              rgba(244, 200, 74, 0.22), rgba(244, 200, 74, 0) 70%);
+  z-index: 0;
+  pointer-events: none;
+}
+.landing .hero__art-panel.shot-frame--hero {
+  position: relative;
+  z-index: 1;
+  aspect-ratio: auto;
+  max-width: 600px;
+}
+
+/* Feature shots: consistent landscape windows cropped to the top of each
+   screen (the most informative part), so the zig-zag rows stay balanced.
+   Aspect lives on the image now, leaving the chrome strip at natural height. */
 .landing .feature__art.shot-frame {
-  aspect-ratio: 4 / 3;
   border-radius: 14px;
 }
 .landing .feature__art.shot-frame img {
-  height: 100%;
+  aspect-ratio: 4 / 3;
   object-fit: cover;
   object-position: top center;
 }
@@ -3340,4 +3388,5 @@ html.landing { scroll-padding-top: 92px; }
     max-width: 460px;
     border-radius: 14px;
   }
+  .landing .shot-chrome { height: 32px; }
 }

@@ -201,16 +201,39 @@
 
 .landing .hero__copy { max-width: 600px; }
 
-.landing .hero__eyebrow {
-  display: inline-block;
+/* L-V376 — eyebrow on nyt segmentoitu kielikytkin: vaihtaa hero-screenshotin
+   ES/FR/DE-versioon. Per-kieli-sivut yhä saavutettavissa navista + footerista. */
+.landing .hero__langs {
+  display: inline-flex;
+  gap: 4px;
+  margin: 0 0 24px;
+  padding: 4px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+}
+.landing .hero__lang-link {
   font-family: var(--font-display);
   font-weight: 700;
   font-size: 14px;
-  background: var(--green-pale);
-  color: var(--green);
-  border-radius: var(--r-pill);
-  padding: 8px 16px;
-  margin: 0 0 22px;
+  color: var(--text-muted);
+  background: transparent;
+  border: 0;
+  border-radius: 999px;
+  padding: 7px 16px;
+  cursor: pointer;
+  transition: background-color 0.18s cubic-bezier(0.23, 1, 0.32, 1),
+              color 0.18s ease, transform 0.12s ease-out;
+}
+.landing .hero__lang-link:hover { color: var(--text); }
+.landing .hero__lang-link[aria-selected="true"] {
+  background: var(--brick);
+  color: #fff;
+}
+.landing .hero__lang-link:active { transform: scale(0.97); }
+.landing .hero__lang-link:focus-visible {
+  outline: 2px solid var(--brick);
+  outline-offset: 2px;
 }
 
 .landing .hero__title {
@@ -222,7 +245,6 @@
   color: var(--text);
   margin: 0 0 20px;
 }
-.landing .hero__title-accent { color: var(--brick); }
 
 .landing .hero__sub {
   font-size: var(--fs-md);
@@ -251,20 +273,10 @@
 }
 .landing .hero__link-secondary:hover { color: var(--brick); }
 
-.landing .hero__chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 9px;
-}
-.landing .hero__chip {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 13.5px;
-  background: var(--paper);
-  border: 2px solid var(--line);
-  border-radius: var(--r-pill);
-  padding: 8px 15px;
-  color: var(--text);
+.landing .hero__trust {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin: 0;
 }
 
 /* Right column — illustration on a soft rounded panel */
@@ -312,16 +324,25 @@
   text-align: center;
   margin: 0 0 40px;
 }
-.landing .features__grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--sp-5);
+/* Zig-zag: vuorottelevat kuva/teksti-rivit, ei kolmea identtistä korttia.
+   Kuvasarake on kapeampi kuin tekstisarake, mikä rikkoo symmetrian. */
+.landing .features__zig {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(40px, 6vw, 72px);
+  max-width: 920px;
+  margin: 0 auto;
 }
-.landing .feature { text-align: left; }
+.landing .feature {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: clamp(24px, 5vw, 56px);
+  align-items: center;
+}
+.landing .feature--art-right .feature__art { order: 2; }
 .landing .feature__art {
-  border-radius: 24px;
-  padding: 22px;
-  margin-bottom: 18px;
+  border-radius: 28px;
+  padding: 24px;
   display: grid;
   place-items: center;
   aspect-ratio: 8 / 7;
@@ -333,20 +354,29 @@
 .landing .feature__title {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: 21px;
+  font-size: clamp(21px, 2.5vw, 26px);
+  line-height: 1.15;
   color: var(--text);
-  margin: 0 0 8px;
+  margin: 0 0 10px;
 }
 .landing .feature__body {
-  font-size: 16px;
+  font-size: 17px;
   line-height: 1.55;
   color: var(--text-muted);
   margin: 0;
-  max-width: 34ch;
+  max-width: 42ch;
 }
 @media (max-width: 860px) {
   .landing .features { padding: 8px var(--sp-2) 56px; }
-  .landing .features__grid { grid-template-columns: 1fr; gap: var(--sp-6); max-width: 420px; margin: 0 auto; }
+  .landing .features__zig { gap: var(--sp-7); max-width: 440px; }
+  .landing .feature {
+    grid-template-columns: 1fr;
+    gap: var(--sp-4);
+    text-align: left;
+  }
+  /* Kuvitus aina tekstin yllä mobiilissa, vaikka rivi olisi art-right. */
+  .landing .feature--art-right .feature__art { order: 0; }
+  .landing .feature__art { max-width: 320px; }
 }
 
 /* ─── Browser-frame component (≈40 lines) ───────────────────── */

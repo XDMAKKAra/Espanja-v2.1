@@ -1,4 +1,4 @@
-const CACHE_VERSION = "puheo-v374";
+const CACHE_VERSION = "puheo-v376";
 const STATIC_ASSETS = [
   "/app.html",
   "/index.html",
@@ -17,9 +17,13 @@ const STATIC_ASSETS = [
   "/css/landing-editorial.css",
   // L-V358 — compact language info page layout (es/de/fr).
   "/css/landing-langpage.css",
-  // L-V373 — landing product screenshots (hero is eager; precache so the
-  // first paint shows real app UI instead of a blank frame).
-  "/public/shots/app-writing-rubric.png",
+  // L-V373/L-V376 — landing product screenshots (hero is eager; precache so
+  // the first paint shows real app UI instead of a blank frame). Hero now has
+  // one shot per language for the switcher.
+  "/public/shots/app-writing-rubric-es.png",
+  "/public/shots/app-writing-rubric-fr.png",
+  "/public/shots/app-writing-rubric-de.png",
+  "/js/landing-hero-lang.js",
   "/public/shots/app-lesson.png",
   "/public/shots/app-results.png",
   "/public/shots/app-home-path.png",
