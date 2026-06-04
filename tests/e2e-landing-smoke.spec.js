@@ -9,6 +9,17 @@
 
 import { test, expect } from "@playwright/test";
 
+// Pre-launch gate bypass. js/pre-launch-gate.js whitelists headless-Chrome UAs,
+// so the desktop project slips through, but the mobile project (iPhone 13 =
+// WebKit/iOS Safari UA) hits the gate: prompt() returns null and the DOM is
+// wiped to "Väärä salasana." → empty <title>. Set the unlock flag before any
+// navigation so every page renders normally on both projects.
+test.beforeEach(async ({ page }) => {
+  await page.addInitScript(() => {
+    try { localStorage.setItem("puheo_gate_ok_v1", "1"); } catch {}
+  });
+});
+
 test.describe("landing page", () => {
   test("loads with the Puheo brand + hero CTA", async ({ page }) => {
     await page.goto("/");

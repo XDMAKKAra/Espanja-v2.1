@@ -45,18 +45,30 @@ test.describe('landing mobile menu — logged out (390px)', () => {
     await expect(page.locator('#nav-menu-chip')).toBeHidden();
   });
 
-  test('section links navigate to anchor and close menu', async ({ page }) => {
-    const links = [
-      ['Näyte', 'nayte'],
-      ['Hinnoittelu', 'hinnoittelu'],
-      ['FAQ', 'faq'],
+  test('in-page anchor link scrolls and closes menu', async ({ page }) => {
+    // Hinnoittelu is the only on-page section left in the menu; Näyte and FAQ
+    // became standalone pages (/nayte, /ukk) in L-V386. Anchor click stays on
+    // the page and closes the overlay.
+    await page.locator('#nav-hamburger').click();
+    await expect(page.locator('#nav-menu')).toBeVisible();
+    await page.locator('a.nav-menu__link', { hasText: /^Hinnoittelu$/ }).click();
+    await expect(page).toHaveURL(/#hinnoittelu$/);
+    await expect(page.locator('#nav-menu')).toBeHidden();
+  });
+
+  test('standalone-page links route to their own pages', async ({ page }) => {
+    const pageLinks = [
+      ['Näyte', '/nayte'],
+      ['Oppaat', '/artikkelit/'],
+      ['FAQ', '/ukk'],
     ];
-    for (const [label, anchor] of links) {
+    for (const [label, path] of pageLinks) {
+      await page.goto('/');
+      await page.waitForLoadState('networkidle');
       await page.locator('#nav-hamburger').click();
       await expect(page.locator('#nav-menu')).toBeVisible();
       await page.locator('a.nav-menu__link', { hasText: new RegExp(`^${label}$`) }).click();
-      await expect(page).toHaveURL(new RegExp(`#${anchor}$`));
-      await expect(page.locator('#nav-menu')).toBeHidden();
+      await expect(page).toHaveURL(new RegExp(`${path.replace(/\//g, '\\/')}$`));
     }
   });
 
