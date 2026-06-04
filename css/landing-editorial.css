@@ -656,8 +656,15 @@ body.landing > * { position: relative; z-index: 1; }
 @media (min-width: 860px) {
   .landing .hero__inner {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1.02fr);
-    gap: clamp(40px, 5vw, 80px);
+    column-gap: clamp(40px, 5vw, 80px);
+    row-gap: var(--ed-sp-6);
+    align-items: start;
   }
+  /* L-V387: copy + luottamusblokki pinoutuvat vasempaan sarakkeeseen, kortti
+     täyttää oikean sarakkeen molemmat rivit → ei orpoa valkoista heron alle. */
+  .landing .hero__copy   { grid-column: 1; grid-row: 1; }
+  .landing .hero__social { grid-column: 1; grid-row: 2; }
+  .landing .hero__offer  { grid-column: 2; grid-row: 1 / span 2; align-self: start; }
 }
 
 .landing .hero__copy {
@@ -1011,6 +1018,104 @@ body.landing > * { position: relative; z-index: 1; }
 .landing .hero__trust-sep {
   margin: 0 8px;
   color: var(--ed-ink-faint);
+}
+
+/* ─── L-V387 — hero social proof block (stars + teacher quote + YTL badge) ── */
+.landing .hero__social {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ed-sp-4);
+  max-width: 480px;
+}
+.landing .hero__rating {
+  display: flex;
+  align-items: center;
+  gap: var(--ed-sp-3);
+  flex-wrap: wrap;
+}
+.landing .hero__rating-score {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+.landing .hero__rating-score b { font-weight: 700; }
+/* Star rating: grey track + gold fill clipped to the score width (8,9/10 = 89%). */
+.landing .hero__stars {
+  position: relative;
+  display: inline-block;
+  font-size: 17px;
+  letter-spacing: 2px;
+  line-height: 1;
+}
+.landing .hero__stars-track { color: var(--border-strong); }
+.landing .hero__stars-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  overflow: hidden;
+  white-space: nowrap;
+  color: var(--ed-gold);
+}
+.landing .hero__rating-note {
+  font-size: var(--ed-fs-meta);
+  color: var(--ed-ink-subtle);
+}
+.landing .hero__quote {
+  margin: 0;
+  padding: var(--ed-sp-5);
+  background: var(--ed-bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--ed-r-xl);
+  box-shadow: var(--ed-shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: var(--ed-sp-3);
+}
+.landing .hero__quote-eyebrow {
+  font-family: var(--ed-sans);
+  font-size: var(--ed-fs-micro);
+  font-weight: 700;
+  letter-spacing: var(--ed-tracking-meta);
+  text-transform: uppercase;
+  color: var(--green);
+  margin: 0;
+}
+.landing .hero__quote-text {
+  margin: 0;
+  font-size: var(--ed-fs-body-lg);
+  line-height: 1.55;
+  color: var(--text);
+  font-style: normal;
+}
+.landing .hero__quote-author {
+  margin: 0;
+  font-size: var(--ed-fs-meta);
+  font-weight: 600;
+  color: var(--ed-ink-muted);
+}
+.landing .hero__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  align-self: flex-start;
+  font-size: var(--ed-fs-meta);
+  font-weight: 700;
+  color: var(--green);
+  background: var(--green-pale);
+  padding: 7px 14px;
+  border-radius: var(--ed-r-pill);
+  line-height: 1.3;
+}
+.landing .hero__badge svg { width: 16px; height: 16px; flex: none; }
+
+/* Course-card "Mitä sisältyy" label above the checklist. */
+.landing .offer-card__incl-label {
+  font-size: var(--ed-fs-micro);
+  font-weight: 700;
+  letter-spacing: var(--ed-tracking-meta);
+  text-transform: uppercase;
+  color: var(--ed-ink-subtle);
+  margin: 0 0 calc(-1 * var(--ed-sp-1));
 }
 
 /* Decorative gold rule under hero illustration on wide screens.

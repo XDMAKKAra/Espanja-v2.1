@@ -218,6 +218,37 @@
           <p class="hero__trust">Ilmainen aloitus, ei korttia.</p>
         </div>
 
+        <!-- ═══ LUOTTAMUSBLOKKI (L-V387) — tähtiarvio + opettajan palaute +
+             YTL-badge. Desktopilla copyn alla (tasapainottaa korkean kortin,
+             täyttää aiemman tyhjän alueen); mobiilissa CTA:n ja kortin välissä.
+             DOM-järjestys copy → social → offer pitää kortin mobiilissa
+             viimeisenä ilman markupin kahdennusta. -->
+        <div class="hero__social">
+          <div class="hero__rating">
+            <span class="hero__rating-score"><b>8,9</b>&nbsp;/&nbsp;10</span>
+            <span class="hero__stars" role="img" aria-label="Arvosana 8,9 kymmenestä">
+              <span class="hero__stars-track" aria-hidden="true">★★★★★</span>
+              <span class="hero__stars-fill" aria-hidden="true" style="width:89%">★★★★★</span>
+            </span>
+            <span class="hero__rating-note">abien palautteen perusteella</span>
+          </div>
+
+          <figure class="hero__quote">
+            <p class="hero__quote-eyebrow">Opettajan palaute</p>
+            <blockquote class="hero__quote-text">
+              "Annoin saman abikirjoitelman sekä Puheon että itseni
+              arvioitavaksi. Pistehaarukka osui samaan, ja perustelu osoitti
+              juuri ne kohdat joista olisin itse vähentänyt."
+            </blockquote>
+            <figcaption class="hero__quote-author">Hanna Lehto, lukion kieltenopettaja</figcaption>
+          </figure>
+
+          <span class="hero__badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+            Rakennettu YTL:n virallisille arviointikriteereille
+          </span>
+        </div>
+
         <div class="hero__offer">
           <article class="offer-card" id="hero-offer" data-lang="es">
             <div class="offer-card__tabs" id="hero-lang-switch" role="tablist" aria-label="Valitse kieli">
@@ -237,6 +268,7 @@
               <span class="offer-card__period">kertaostos, käyttö ylioppilaskokeeseen asti</span>
             </div>
 
+            <p class="offer-card__incl-label">Mitä sisältyy</p>
             <ul class="offer-card__list">
               <li>Kahdeksan kurssin polku, 90 oppituntia</li>
               <li>Kaikki koeosiot: luetun ja kuullun ymmärtäminen, sanasto, kielioppi ja kirjoittaminen</li>
@@ -244,11 +276,10 @@
               <li>Kuusi mallikoetta aikarajalla</li>
             </ul>
 
-            <a class="btn btn--quiet offer-card__cta" href="/app.html#rekisteroidy?tier=kurssi">Valitse kurssi</a>
-
-            <p class="offer-card__alt">
-              Tai <a href="#hinnoittelu">Treeni 9&nbsp;€/kk</a> pelkkään arviointiin.
-            </p>
+            <a class="btn btn--primary btn--lg offer-card__cta" href="/app.html#rekisteroidy">
+              Aloita nyt
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </a>
             <p class="offer-card__reassure">Voit kokeilla ensin ilmaiseksi, maksu vasta kun haluat.</p>
           </article>
         </div>

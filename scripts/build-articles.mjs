@@ -65,6 +65,14 @@ const HEAD_LINKS = `
   <link rel="stylesheet" href="/css/fonts.css" />
   <link rel="stylesheet" href="/css/landing-tokens.css" />
   <link rel="stylesheet" href="/css/landing.css" />
+  <!-- L-V387: jaettu nav (.nav__hamburger, .nav-menu, .nav__dropdown) elää
+       editorial-tiedostoissa; ilman näitä artikkelit-sivun yläpalkki latautui
+       tyylittömänä (linkit päällekkäin, mobiilivalikko hajalla). Sama setti
+       kuin nayte.html/index.html. artikkeli.css viimeisenä = artikkelityylit
+       voittavat cascaden. -->
+  <link rel="stylesheet" href="/css/landing-editorial-tokens.css" />
+  <link rel="stylesheet" href="/css/landing-editorial.css" />
+  <link rel="stylesheet" href="/css/landing-spark.css" />
   <link rel="stylesheet" href="/css/artikkeli.css" />`;
 
 const NAV = `

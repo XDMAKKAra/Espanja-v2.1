@@ -15,9 +15,12 @@
        Tinted whites at chroma 0.001–0.004 around the 75° warm-paper hue
        so they never feel sterile-#fff. Brick + olive accents kept so
        Puheo's brand DNA still reads across landing ↔ app. */
-  --ed-bg:           oklch(99% 0.002 75);    /* near-white canvas */
-  --ed-bg-card:      oklch(100% 0.001 75);   /* lifted card surface */
-  --ed-bg-deep:      oklch(96% 0.004 75);    /* footer band, callouts */
+  /* L-V387: canvas oli near-white (99% L) → koko landing luki valkoisena,
+     ei lämpimänä. Kitin lämmin cream -setti (#FBF7EF / #FFFDF8 / #F4EEE1):
+     yhtenäinen lämmin pohja, kortit nousevat siitä omalla pinnallaan. */
+  --ed-bg:           #FBF7EF;    /* page canvas — warm cream */
+  --ed-bg-card:      #FFFDF8;    /* lifted card surface (a hair above cream) */
+  --ed-bg-deep:      #F4EEE1;    /* footer band, callouts */
   --ed-bg-tint:      oklch(94% 0.020 30);    /* terracotta-tinted wash */
   --ed-rule:         oklch(20% 0.012 30 / 0.10);
   --ed-rule-strong:  oklch(20% 0.012 30 / 0.20);

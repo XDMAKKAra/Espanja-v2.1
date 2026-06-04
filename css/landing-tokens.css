@@ -15,7 +15,10 @@
   /* ─── WordDive palette (L-V344): warm cream canvas, brick + yellow +
      green accents. Flat colours only — no gradient washes or glow. */
   --cream:        #FBF7EF;
-  --paper:        #FFFFFF;
+  /* L-V387: --paper oli pure white (#FFFFFF) → kortit ja pinnat hyppäsivät
+     kylmän valkoisiksi lämpimältä cream-taustalta. Lämmin near-white (kitin
+     --bg-card), nousee creamista hiuksenhienosti ilman valkoista katkoa. */
+  --paper:        #FFFDF8;
   --brick:        #9B2D2A;
   --brick-dark:   #832421;
   --yellow:       #F4C84A;
