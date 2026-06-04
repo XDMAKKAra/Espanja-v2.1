@@ -951,6 +951,10 @@ function finalizeLesson(root, state) {
       method: "POST",
       headers: { "Content-Type": "application/json", ...authHeader() },
       body: JSON.stringify({
+        // L-V390: stamp the completion with the active language so it is
+        // scoped per language. Without this the server defaulted to "es" and
+        // a German/French completion bled into the Spanish progress.
+        lang: (typeof state.language === "string" && state.language) || "es",
         scoreCorrect: totalCorrect,
         scoreTotal: totalAsked,
         wrongAnswers: [],

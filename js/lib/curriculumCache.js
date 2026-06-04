@@ -87,8 +87,11 @@ export async function getCourseDetail(lang, kurssiKey) {
   const promise = (async () => {
     try {
       const listP = getCurriculumList(lang);
+      // L-V390: pass ?lang so the server scopes completion state to this
+      // language. Without it the detail endpoint defaulted to "es" and a
+      // Spanish completion showed as done on the German/French course.
       const detailReq = apiFetch(
-        `${API}/api/curriculum/${encodeURIComponent(kurssiKey)}`,
+        `${API}/api/curriculum/${encodeURIComponent(kurssiKey)}?lang=${encodeURIComponent(lang)}`,
         { headers: authedHeaders() },
       );
       const [kurssit, detailRes] = await Promise.all([listP, detailReq]);

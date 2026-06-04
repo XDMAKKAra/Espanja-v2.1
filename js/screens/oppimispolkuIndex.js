@@ -11,6 +11,7 @@
  */
 
 import { show } from "../ui/nav.js";
+import { state } from "../state.js";
 import { getCurriculumList, prefetchCourseDetail } from "../lib/curriculumCache.js";
 import { prefetchChunk, onHoverIntent } from "../lib/prefetch.js";
 
@@ -20,11 +21,22 @@ function escapeHtml(s) {
   }[c]));
 }
 
+// L-V390: language resolution priority.
+//   1. explicit ?lang= in the hash (deep links / breadcrumb back-links)
+//   2. state.language — the canonical session language the rest of the app
+//      (every API exercise call) already uses, hydrated from
+//      user_profile.target_language and updated by the home language tabs.
+//   3. "es" default.
+// The old code read localStorage["puheo:lang"] directly. For a user with no
+// target_language (state.language stays "es"), a stale puheo:lang left behind
+// by a landing-page CTA ("de") opened the German path even though the active
+// language was Spanish. state.language is the single source of truth.
 function readLangFromHash() {
   const m = /lang=([a-z]{2})/i.exec(location.hash || "");
   if (m) return m[1].toLowerCase();
-  try { return localStorage.getItem("puheo:lang") || "es"; }
-  catch { return "es"; }
+  const allowed = ["es", "de", "fr"];
+  if (allowed.includes(state.language)) return state.language;
+  return "es";
 }
 
 function renderRow(k, stepNumber, lang) {

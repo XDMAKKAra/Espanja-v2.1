@@ -84,11 +84,17 @@ async function fetchLessonsDb(kurssiKey) {
   return data;
 }
 
-async function fetchUserProgressDb(userId, kurssiKey) {
+// L-V390: lang-scope the per-course progress read. Kurssi keys (kurssi_1..8)
+// are shared across all three languages, so without filtering by lang a
+// Spanish completion of kurssi_1/lesson_1 leaked into the German and French
+// course-detail views as "1.1 Suoritettu". The list endpoint (GET /) was
+// already lang-scoped (migration foundation); the detail endpoint was the gap.
+async function fetchUserProgressDb(userId, kurssiKey, lang = "es") {
   const { data, error } = await supabase
     .from("user_curriculum_progress")
     .select("kurssi_key, lesson_index, completed_at, score_correct, score_total")
     .eq("user_id", userId)
+    .eq("lang", lang)
     .eq(kurssiKey ? "kurssi_key" : "user_id", kurssiKey || userId);
   if (error) {
     if (tablesMissing(error)) return null;
@@ -210,6 +216,9 @@ router.get("/tutor-message", optionalAuth, (req, res, next) => _tutorMessageHand
 router.get("/:kurssiKey", optionalAuth, async (req, res) => {
   try {
     const { kurssiKey } = req.params;
+    // L-V390: read the language so progress is scoped to the course the user
+    // is actually viewing, not bled across languages by shared kurssi keys.
+    const lang = SUPPORTED_LANGS.has(req.query.lang) ? req.query.lang : "es";
     const fallback = findKurssi(kurssiKey);
     if (!fallback) return res.status(404).json({ error: "Kurssia ei löydy" });
 
@@ -238,7 +247,7 @@ router.get("/:kurssiKey", optionalAuth, async (req, res) => {
     let progressByIndex = {};
     if (req.user?.userId) {
       try {
-        const data = await fetchUserProgressDb(req.user.userId, kurssiKey);
+        const data = await fetchUserProgressDb(req.user.userId, kurssiKey, lang);
         for (const row of data || []) progressByIndex[row.lesson_index] = row;
       } catch (err) {
         console.error("progress fetch:", err.message);

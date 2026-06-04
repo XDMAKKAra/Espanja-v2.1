@@ -44,9 +44,17 @@ test.describe('L-V388 sidebar (logged in)', () => {
       page.waitForResponse((r) => r.url().includes('/api/auth/') && r.request().method() === 'POST', { timeout: 15000 }),
       page.locator('#btn-auth-submit').click(),
     ]);
+    // Let the post-login redirect settle before navigating, otherwise the async
+    // loadHome fires after our goto and switches the active screen (race).
+    await page.waitForLoadState('networkidle');
+    await page.waitForFunction(
+      () => !document.getElementById('screen-auth')?.classList.contains('active'),
+      { timeout: 15000 },
+    ).catch(() => {});
     await page.goto('/app.html#/oppimispolku');
     await page.waitForLoadState('networkidle');
-    await page.waitForTimeout(800);
+    await page.waitForSelector('#op-root', { timeout: 10000 }).catch(() => {});
+    await page.waitForTimeout(400);
   });
 
   test('nav has exactly the 4 export destinations, no Mestari', async ({ page }) => {
@@ -70,7 +78,11 @@ test.describe('L-V388 sidebar (logged in)', () => {
   });
 
   test('Oppimispolku index renders the 8-course library', async ({ page }) => {
-    await expect(page.locator('#op-root')).toBeVisible();
+    // Re-navigate in the test body (beforeEach already settled the post-login
+    // redirect) so this goto is the final navigation, then assert on content.
+    await page.goto('/app.html#/oppimispolku');
+    await page.waitForLoadState('networkidle');
+    await page.waitForSelector('#op-root .op-eyebrow', { timeout: 10000 });
     await expect(page.locator('#op-root')).toContainText('Kurssi 1');
   });
 });

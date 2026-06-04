@@ -595,6 +595,11 @@ export async function loadHome() {
   const paint = (data) => {
     const tier = getTier(data?.profile?.profile);
     window._isPro = tier !== "free";
+    // L-V390: HOME is the post-login landing screen, but syncProfileMenu only
+    // ran from the dashboard render path (renderRail). On HOME the profile-menu
+    // "Päivitä Pro" item kept its default state, so Pro users saw the upsell.
+    // Sync it here where the tier is already known.
+    try { window._profileMenuRef?.syncProfileMenu?.({ pro: window._isPro }); } catch { /* noop */ }
     root.innerHTML = renderShell(activeLang, data, tier);
     wireTabs(root);
     wireHoverPrefetch(root, activeLang);
