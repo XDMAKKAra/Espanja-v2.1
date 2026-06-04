@@ -3529,6 +3529,12 @@ html.landing { scroll-padding-top: 92px; }
   .landing .hero__ctas .btn { justify-content: center; }
   .landing .testimonial__shift { margin-left: 0; }
   .landing .pricing-table { font-size: 0.875rem; }
+  /* L-V389: tiivistä mobiilin yläosa — pois iso tyhjä sticky-navin alta ja
+     pienemmät väli-gapit herossa, jotta otsikko + ingressi + CTA + tähtiarvio
+     mahtuvat above-the-foldiin ilman kuollutta tilaa. */
+  .landing .hero { padding-top: var(--ed-sp-5); }   /* ~48px → 24px */
+  .landing .hero__copy { gap: var(--ed-sp-4); }      /* 24px → 16px */
+  .landing .hero__inner { gap: var(--ed-sp-5); }     /* 28px → 24px */
 }
 
 /* ═══════════════════════════════════════════════════════════ */

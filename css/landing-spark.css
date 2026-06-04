@@ -188,6 +188,13 @@
     grid-template-columns: 1fr;
     gap: 4px;
   }
+  /* L-V389: standalone-sivujen (/nayte, /ukk, pricing) ylätyhjä alas samaan
+     tiiviiseen rytmiin kuin landingin hero. page-head:n 112px min-top ja
+     ensimmäisen landing-sectionin 72px top olivat liian ilmavia mobiilissa.
+     :first-child osuu vain ukk/pricing-runkoihin — indexillä main:n
+     ensimmäinen lapsi on .hero, ei .landing-section, joten landing ei muutu. */
+  .landing .page-head { padding-top: var(--ed-sp-7); }            /* 112px → 48px */
+  .landing main > .landing-section:first-child { padding-top: var(--ed-sp-7); } /* 72px → 48px */
 }
 
 /* Closing CTA shared by both deep pages. */
