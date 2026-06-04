@@ -1,45 +1,46 @@
-/* Puheo landing — hero screenshot language switcher (L-V376).
-   The eyebrow ES/FR/DE tablist swaps the hero product shot between the three
-   captured language versions, so a French or German visitor sees the product
-   in their language with one click. Mirrors landing-proof-lang.js: ARIA
-   tablist + Left/Right/Home/End keyboard nav. Idempotent; bails if markup
-   is missing. */
+/* Puheo landing — hero course-card language switcher (L-V385).
+   The hero right column is a course/price card (Lara-style). The ES/FR/DE
+   tablist swaps the card context (which language's path you're looking at)
+   without changing the price, since the course is one product across all three
+   languages. Replaces the old screenshot swapper. ARIA tablist + Left/Right/
+   Home/End keyboard nav. Idempotent; bails if markup is missing. */
 (function () {
   if (typeof document === "undefined") return;
 
-  var SHOTS = {
+  var CONTEXT = {
     es: {
-      src: "/public/shots/app-writing-rubric-es.png",
-      alt: "Puheon kirjoitustehtävä espanjaksi: tehtävänanto, vastauskenttä ja YTL:n arviointikriteerit sivupalkissa",
+      context: "Espanjan koko oppimispolku",
+      arc: "Tervehdyksistä subjunktiiviin, A-tasolta YO-kokeeseen",
     },
     fr: {
-      src: "/public/shots/app-writing-rubric-fr.png",
-      alt: "Puheon kirjoitustehtävä ranskaksi: tehtävänanto, vastauskenttä ja YTL:n arviointikriteerit sivupalkissa",
+      context: "Ranskan koko oppimispolku",
+      arc: "Présentistä subjonctifiin, A-tasolta YO-kokeeseen",
     },
     de: {
-      src: "/public/shots/app-writing-rubric-de.png",
-      alt: "Puheon kirjoitustehtävä saksaksi: tehtävänanto, vastauskenttä ja YTL:n arviointikriteerit sivupalkissa",
+      context: "Saksan koko oppimispolku",
+      arc: "Präsensistä Konjunktiv II:een, A-tasolta YO-kokeeseen",
     },
   };
 
   function init() {
     var tablist = document.getElementById("hero-lang-switch");
-    var shot = document.getElementById("hero-shot");
-    if (!tablist || !shot) return;
+    var card = document.getElementById("hero-offer");
+    if (!tablist || !card) return;
+
+    var contextEl = card.querySelector("[data-offer-context]");
+    var arcEl = card.querySelector("[data-offer-arc]");
 
     var tabs = Array.prototype.slice.call(
-      tablist.querySelectorAll(".hero__lang-link")
+      tablist.querySelectorAll(".offer-card__tab")
     );
     if (!tabs.length) return;
 
     function setLang(lang, focusActiveTab) {
-      var conf = SHOTS[lang];
+      var conf = CONTEXT[lang];
       if (!conf) return;
-      // Only touch src if it actually changes, so we don't re-trigger loads.
-      if (shot.getAttribute("src") !== conf.src) {
-        shot.setAttribute("src", conf.src);
-      }
-      shot.setAttribute("alt", conf.alt);
+      if (contextEl) contextEl.textContent = conf.context;
+      if (arcEl) arcEl.textContent = conf.arc;
+      card.setAttribute("data-lang", lang);
       tabs.forEach(function (tab) {
         var match = tab.dataset.lang === lang;
         tab.setAttribute("aria-selected", match ? "true" : "false");
@@ -67,7 +68,7 @@
 
     // Default to the browser language when it's FR or DE, else Spanish.
     var nav = (navigator.language || "").slice(0, 2).toLowerCase();
-    var initial = SHOTS[nav] ? nav : "es";
+    var initial = CONTEXT[nav] ? nav : "es";
     setLang(initial);
   }
 

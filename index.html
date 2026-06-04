@@ -183,31 +183,26 @@
   </div>
 
   <main>
-    <!-- ═══ HERO, L-V344 WordDive split.
-         Copy left + custom flat illustration (hand + phone showing a YTL
-         grade, three-language speech bubbles) on a yellow-pale panel right.
-         <860px stacks to one column, panel above copy. -->
+    <!-- ═══ HERO, L-V385 Lara-rakenne.
+         Vasen: kicker + otsikko + alaotsikko (arviointilupaus sanoin) +
+         pää-CTA "Aloita ilmaiseksi" + sekundaarilinkki /nayte-demoon.
+         Oikea: kurssi-/hinta-kortti ES/FR/DE-välilehdillä. Ei tuotedemoa
+         landingilla, demo elää /nayte-sivulla. <860px pinoutuu, kortti
+         kopion alle (above-fold-painotus säilyy). -->
     <section class="hero" id="hero" aria-labelledby="hero-title">
       <div class="hero__inner">
 
         <div class="hero__copy">
-          <div class="hero__langs" id="hero-lang-switch" role="tablist" aria-label="Esikatsele tuotetta kielellä">
-            <button class="hero__lang-link" type="button" role="tab" data-lang="es"
-                    aria-selected="true" aria-controls="hero-shot" tabindex="0">Espanja</button>
-            <button class="hero__lang-link" type="button" role="tab" data-lang="fr"
-                    aria-selected="false" aria-controls="hero-shot" tabindex="-1">Ranska</button>
-            <button class="hero__lang-link" type="button" role="tab" data-lang="de"
-                    aria-selected="false" aria-controls="hero-shot" tabindex="-1">Saksa</button>
-          </div>
+          <p class="hero__kicker">Lyhyen oppimäärän YO-valmennus, espanja, ranska ja saksa</p>
 
           <h1 class="hero__title" id="hero-title">
             Varmuutta ylioppilaskokeeseen. Stressitöntä kertausta.
           </h1>
 
           <p class="hero__sub">
-            Kahdeksan kurssin oppimispolku, rakennettu YO-kokeen mukaan.
-            Harjoittele oikeita tehtäviä, ja tekoäly arvioi kirjoitelmasi
-            YTL:n mittarilla.
+            Kahdeksan kurssin polku, kaikki koeosiot mukana. Kirjoitat oikean
+            YO-tyylisen tehtävän, ja saat tekstistäsi YTL:n kriteereillä
+            pistehaarukan ja perustelun: missä menetit pisteitä ja miksi.
           </p>
 
           <div class="hero__ctas">
@@ -221,12 +216,39 @@
           <p class="hero__trust">Ilmainen aloitus, ei korttia.</p>
         </div>
 
-        <div class="hero__art">
-          <figure class="hero__art-panel shot-frame shot-frame--hero">
-            <img id="hero-shot" src="/public/shots/app-writing-rubric-es.png"
-                 alt="Puheon kirjoitustehtävä espanjaksi: tehtävänanto, vastauskenttä ja YTL:n arviointikriteerit sivupalkissa"
-                 width="1012" height="739" loading="eager" decoding="async" />
-          </figure>
+        <div class="hero__offer">
+          <article class="offer-card" id="hero-offer" data-lang="es">
+            <div class="offer-card__tabs" id="hero-lang-switch" role="tablist" aria-label="Valitse kieli">
+              <button class="offer-card__tab" type="button" role="tab" data-lang="es"
+                      aria-selected="true" tabindex="0">Espanja</button>
+              <button class="offer-card__tab" type="button" role="tab" data-lang="fr"
+                      aria-selected="false" tabindex="-1">Ranska</button>
+              <button class="offer-card__tab" type="button" role="tab" data-lang="de"
+                      aria-selected="false" tabindex="-1">Saksa</button>
+            </div>
+
+            <p class="offer-card__context" data-offer-context>Espanjan koko oppimispolku</p>
+            <p class="offer-card__arc" data-offer-arc>Tervehdyksistä subjunktiiviin, A-tasolta YO-kokeeseen</p>
+
+            <div class="offer-card__price">
+              <span class="offer-card__amount">49&nbsp;€</span>
+              <span class="offer-card__period">kertaostos, käyttö ylioppilaskokeeseen asti</span>
+            </div>
+
+            <ul class="offer-card__list">
+              <li>Kahdeksan kurssin polku, 90 oppituntia</li>
+              <li>Kaikki koeosiot: luetun ja kuullun ymmärtäminen, sanasto, kielioppi ja kirjoittaminen</li>
+              <li>Kirjoitelmista YTL:n rubriikilla pistehaarukka ja perustelu</li>
+              <li>Kuusi mallikoetta aikarajalla</li>
+            </ul>
+
+            <a class="btn btn--quiet offer-card__cta" href="/app.html#rekisteroidy?tier=kurssi">Valitse kurssi</a>
+
+            <p class="offer-card__alt">
+              Tai <a href="#hinnoittelu">Treeni 9&nbsp;€/kk</a> pelkkään arviointiin.
+            </p>
+            <p class="offer-card__reassure">Voit kokeilla ensin ilmaiseksi, maksu vasta kun haluat.</p>
+          </article>
         </div>
       </div>
     </section>
