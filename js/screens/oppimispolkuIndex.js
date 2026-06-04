@@ -1,13 +1,14 @@
 /**
- * OPPIMISPOLKU INDEX — PR auto/oppimispolku-shelf (2026-05-19).
+ * OPPIMISPOLKU INDEX — pixel-copy of docs/design-ref/app-export/Oppimispolku.jsx
+ * (L-V391). The 8-course library. Routed from HOME's "Oppimispolku" mode card
+ * at #/oppimispolku?lang=X and from the sidebar #/oppimispolku.
  *
- * The 8-course library page. Routed from HOME's "Oppimispolku" mode card
- * at #/oppimispolku?lang=X. Replaces the old #screen-path which mixed
- * dashboard widgets with course list — that screen is dying.
- *
- * Visual: library-shelf rows. No cover images, no gradient blocks. Just
- * a number gutter + course title/desc + progress bar. Reads as the
- * index page of a textbook.
+ * DOM + classes mirror the export (.lp-head / .lp-list / .lp-row / .lp-illu).
+ * The winding-route SVG is the export's PathIllu verbatim (NOT the invented
+ * yellow box). Real per-language progress (L-V390) drives the row states:
+ *   kertausPassed   → done   (clickable, green "Suoritettu")
+ *   isUnlocked      → active (brick row, "{done}/{total} oppituntia" + chevron)
+ *   otherwise       → locked (dashed, lock icon + "Avautuu vuorollaan")
  */
 
 import { show } from "../ui/nav.js";
@@ -15,22 +16,41 @@ import { state } from "../state.js";
 import { getCurriculumList, prefetchCourseDetail } from "../lib/curriculumCache.js";
 import { prefetchChunk, onHoverIntent } from "../lib/prefetch.js";
 
+// Lucide paths copied verbatim from docs/design-ref/app-export/Icons.jsx.
+const LUCIDE = {
+  "chevron-right": '<path d="m9 18 6-6-6-6"/>',
+  "lock": '<rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>',
+  "circle-check": '<circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/>',
+};
+function icon(name, attrs = "") {
+  return `<svg class="lucide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ${attrs}>${LUCIDE[name] || ""}</svg>`;
+}
+
+// The export's PathIllu — subtle winding route, done check, brick flag.
+const PATH_ILLU = `
+  <svg class="lp-illu" width="186" height="92" viewBox="0 0 186 92" fill="none" aria-hidden="true">
+    <path d="M8 76 C 44 76, 40 30, 78 30 S 130 64, 158 26" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="2 9"/>
+    <circle cx="8" cy="76" r="9" fill="var(--bg-card)" stroke="var(--success)" stroke-width="2.5" class="done"/>
+    <path d="M4.5 76 L7 78.5 L11.5 73.5" stroke="var(--success)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="78" cy="30" r="6" fill="var(--bg-card)" stroke="currentColor" stroke-width="2.5"/>
+    <circle cx="120" cy="48" r="5" fill="var(--bg-card)" stroke="currentColor" stroke-width="2.5"/>
+    <g class="flag">
+      <path d="M158 26 V 8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+      <path d="M158 9 h 16 l -4 6 l 4 6 h -16 z" fill="currentColor"/>
+    </g>
+  </svg>`;
+
 function escapeHtml(s) {
   return String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ({
     "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
   }[c]));
 }
 
-// L-V390: language resolution priority.
-//   1. explicit ?lang= in the hash (deep links / breadcrumb back-links)
-//   2. state.language — the canonical session language the rest of the app
-//      (every API exercise call) already uses, hydrated from
-//      user_profile.target_language and updated by the home language tabs.
-//   3. "es" default.
-// The old code read localStorage["puheo:lang"] directly. For a user with no
-// target_language (state.language stays "es"), a stale puheo:lang left behind
-// by a landing-page CTA ("de") opened the German path even though the active
-// language was Spanish. state.language is the single source of truth.
+// L-V390 language resolution: explicit ?lang= → canonical state.language → es.
+// state.language is the single source of truth every API call already uses
+// (hydrated from user_profile.target_language, updated by the home tabs). The
+// old code read a stale localStorage["puheo:lang"] which opened the wrong
+// language for users with no target_language.
 function readLangFromHash() {
   const m = /lang=([a-z]{2})/i.exec(location.hash || "");
   if (m) return m[1].toLowerCase();
@@ -39,91 +59,80 @@ function readLangFromHash() {
   return "es";
 }
 
+function langLabelFor(lang) {
+  return lang === "es" ? "Espanja" : lang === "fr" ? "Ranska" : lang === "de" ? "Saksa" : lang;
+}
+
 function renderRow(k, stepNumber, lang) {
   const done = !!k.kertausPassed;
   const locked = !k.isUnlocked;
   const completed = k.lessonsCompleted || 0;
   const total = k.lessonCount || 10;
-  const pct = Math.min(100, Math.round((completed / total) * 100));
+  const title = escapeHtml(k.title);
+  const desc = k.description ? `<div class="lp-row__desc">${escapeHtml(k.description)}</div>` : "";
+  const body = `<div><div class="lp-row__title">${title}</div>${desc}</div>`;
 
-  // L-PRO-LUKITTU-1: the gate is sequential progression, not Pro. The
-  // old "Lukittu" + dim styling read as a paywall and made Pro users
-  // think they'd been short-changed. Switch to progression language so
-  // the chip explains *why* the course isn't reachable yet.
-  const status = done
-    ? "Suoritettu"
-    : locked
-      ? "Avautuu vuorollaan"
-      : completed > 0
-        ? `${completed} / ${total} oppituntia`
-        : "Aloita →";
+  if (locked) {
+    return `
+      <div class="lp-row lp-row--locked" data-kurssi="${escapeHtml(k.key)}" aria-label="Kurssi ${stepNumber}: ${title}, lukittu">
+        <span class="lp-row__num num">${stepNumber}</span>
+        ${body}
+        <span class="lp-row__lock">${icon("lock")} Avautuu vuorollaan</span>
+      </div>`;
+  }
 
-  const cls = [
-    "op-row",
-    done ? "is-done" : "",
-    locked ? "is-locked" : "is-clickable",
-    completed > 0 && !done ? "is-progress" : "",
-  ].filter(Boolean).join(" ");
+  const href = `#/oppimispolku/${lang}/${encodeURIComponent(k.key)}`;
 
-  const href = locked
-    ? "#"
-    : `#/oppimispolku/${lang}/${encodeURIComponent(k.key)}`;
+  if (done) {
+    return `
+      <a class="lp-row lp-row--done" href="${href}" data-kurssi="${escapeHtml(k.key)}" aria-label="Kurssi ${stepNumber}: ${title}, suoritettu">
+        <span class="lp-row__num num">${stepNumber}</span>
+        ${body}
+        <span class="lp-row__status"><span class="lesson-done">${icon("circle-check")} Suoritettu</span></span>
+      </a>`;
+  }
 
-  // L-OPPIMISPOLKU-ROLES-1: wrap each row anchor in <li>. The outer <ol>
-  // previously held bare <a> children, which is invalid HTML and made
-  // screen readers announce the rows as a loose chain of links instead
-  // of "list, 8 items, item 1 of 8". <li> is implicit listitem; the
-  // anchor keeps its link role and aria-disabled state for locked rows.
   return `
-    <li class="op-row-li">
-      <a class="${cls}" href="${href}" data-kurssi="${escapeHtml(k.key)}" ${locked ? 'aria-disabled="true"' : ""} aria-label="Kurssi ${stepNumber}: ${escapeHtml(k.title)}, ${escapeHtml(status)}">
-        <span class="op-row__num" aria-hidden="true">${stepNumber}</span>
-        <div class="op-row__body">
-          <h2 class="op-row__title">${escapeHtml(k.title)}</h2>
-          ${k.description ? `<p class="op-row__desc">${escapeHtml(k.description)}</p>` : ""}
-        </div>
-        <div class="op-row__meta">
-          <div class="op-row__progress" role="progressbar" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100" aria-label="${pct} % suoritettu">
-            <div class="op-row__progress-fill" style="width:${pct}%"></div>
-          </div>
-          <span class="op-row__status">${escapeHtml(status)}</span>
-        </div>
-      </a>
-    </li>`;
+    <a class="lp-row lp-row--active" href="${href}" data-kurssi="${escapeHtml(k.key)}" aria-label="Kurssi ${stepNumber}: ${title}, ${completed} / ${total} oppituntia">
+      <span class="lp-row__num num">${stepNumber}</span>
+      ${body}
+      <span class="lp-row__status">
+        <span class="pill" style="background:var(--brick);color:var(--brick-ink)"><span class="num">${completed} / ${total}</span> oppituntia</span>
+        ${icon("chevron-right", 'style="color:var(--brick)"')}
+      </span>
+    </a>`;
 }
 
 function renderShell(lang, kurssit) {
   const done = kurssit.filter((k) => k.kertausPassed).length;
-  const totalCourses = kurssit.length;
-  const langLabel = lang === "es" ? "Espanja" : lang === "fr" ? "Ranska" : lang === "de" ? "Saksa" : lang;
+  const total = kurssit.length;
+  const langLabel = langLabelFor(lang);
 
   return `
-    <nav class="op-breadcrumb" aria-label="Sijainti">
-      <a class="op-breadcrumb__link" href="#/aloitus">Aloitus</a>
-      <span class="op-breadcrumb__sep" aria-hidden="true">/</span>
-      <span class="op-breadcrumb__crumb is-current" aria-current="page">Oppimispolku</span>
+    <nav class="crumbs" aria-label="Sijainti">
+      <a href="#/aloitus">Aloitus</a>
+      <span class="sep" aria-hidden="true">/</span>
+      <span class="here" aria-current="page">Oppimispolku</span>
     </nav>
-    <header class="op-head">
-      <div class="op-head__text">
-        <p class="op-eyebrow">${escapeHtml(langLabel)} · YO-koevalmennus</p>
-        <h1 class="op-title display display--serif">Oppimispolku</h1>
-        <p class="op-sub">${totalCourses} kurssia · ${done} suoritettu · Etene järjestyksessä.</p>
+    <div class="lp-head">
+      <div>
+        <span class="eyebrow">${escapeHtml(langLabel)} · YO-koevalmennus</span>
+        <h1>Oppimispolku</h1>
+        <p class="sub">${total} kurssia · ${done} suoritettu · Etene järjestyksessä.</p>
       </div>
-      <img class="op-head__art" src="/img/illustrations/path-journey.svg" alt="" aria-hidden="true" width="260" height="200" loading="lazy" />
-    </header>
-    <ol class="op-list">
+      ${PATH_ILLU}
+    </div>
+    <div class="lp-list">
       ${kurssit.map((k, i) => renderRow(k, i + 1, lang)).join("")}
-    </ol>`;
+    </div>`;
 }
 
 function renderError(root, msg) {
   root.innerHTML = `
-    <nav class="op-breadcrumb" aria-label="Sijainti">
-      <a class="op-breadcrumb__link" href="#/aloitus">Aloitus</a>
-    </nav>
+    <nav class="crumbs" aria-label="Sijainti"><a href="#/aloitus">Aloitus</a></nav>
     <div class="op-error" role="alert">
       <p>${escapeHtml(msg || "Kursseja ei löytynyt.")}</p>
-      <a class="btn-primary" href="#/aloitus">Palaa aloitukseen</a>
+      <a class="btn btn--primary btn--sm" href="#/aloitus">Palaa aloitukseen</a>
     </div>`;
 }
 
@@ -139,14 +148,11 @@ export async function loadOppimispolkuIndex(lang) {
     return;
   }
   root.innerHTML = renderShell(activeLang, kurssit);
-  // Locked rows: prevent click + paywall hint optional.
-  root.querySelectorAll(".op-row.is-locked").forEach((a) => {
-    a.addEventListener("click", (e) => e.preventDefault());
-  });
-  // v282 perf — hover-prefetch the courseDetail chunk + per-course payload
-  // so the next click resolves against a warm cache instead of two round-
-  // trips. Only clickable rows; locked rows wouldn't navigate anyway.
-  root.querySelectorAll(".op-row.is-clickable").forEach((a) => {
+
+  // v282 perf — hover-prefetch the courseDetail chunk + per-course payload so
+  // the next click resolves against a warm cache. Only the clickable rows
+  // (active + done); locked rows are non-links and won't navigate.
+  root.querySelectorAll("a.lp-row").forEach((a) => {
     const key = a.dataset.kurssi;
     if (!key) return;
     onHoverIntent(a, () => {
