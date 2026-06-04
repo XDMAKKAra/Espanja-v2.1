@@ -21,9 +21,13 @@
     { "source": "/arviointi", "destination": "/nayte.html" },
     { "source": "/ukk", "destination": "/ukk.html" },
     { "source": "/faq", "destination": "/ukk.html" },
-    { "source": "/styleguide", "destination": "/styleguide.html" }
+    { "source": "/styleguide", "destination": "/styleguide.html" },
+    { "source": "/artikkelit/:slug", "destination": "/artikkelit/:slug.html" }
   ],
   "redirects": [
+    { "source": "/blog", "destination": "/artikkelit/", "permanent": true },
+    { "source": "/blog/", "destination": "/artikkelit/", "permanent": true },
+    { "source": "/blog/:slug.html", "destination": "/artikkelit/:slug", "permanent": true },
     { "source": "/espanja",  "destination": "/espanja-yo-koe", "permanent": true },
     { "source": "/saksa",    "destination": "/saksan-yo-koe",  "permanent": true },
     { "source": "/saksan",   "destination": "/saksan-yo-koe",  "permanent": true },

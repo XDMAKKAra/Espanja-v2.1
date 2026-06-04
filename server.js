@@ -168,10 +168,18 @@ const LANDING_REDIRECTS = {
   "/saksan":  "/saksan-yo-koe",
   "/ranska":  "/ranskan-yo-koe",
   "/ranskan": "/ranskan-yo-koe",
+  // L-V386: /blog migratoitiin /artikkelit-hubiin. Säilytä linkkimehu 301:llä.
+  "/blog":  "/artikkelit/",
+  "/blog/": "/artikkelit/",
 };
 for (const [from, to] of Object.entries(LANDING_REDIRECTS)) {
   app.get(from, (req, res) => res.redirect(301, to));
 }
+// Vanhat /blog/<slug>.html -osoitteet → /artikkelit/<slug> (slugit säilyivät).
+app.get(/^\/blog\/([a-z0-9-]+)\.html$/, (req, res) => res.redirect(301, `/artikkelit/${req.params[0]}`));
+// Clean URL: /artikkelit/<slug> tarjoaa <slug>.html (vercel.json peilaa tämän tuotannossa).
+app.get(/^\/artikkelit\/([a-z0-9-]+)$/, (req, res) =>
+  res.sendFile(path.join(__dirname, "artikkelit", `${req.params[0]}.html`)));
 for (const [route, file] of Object.entries(LANDING_REWRITES)) {
   app.get(route, (req, res) => res.sendFile(path.join(__dirname, file)));
 }
