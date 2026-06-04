@@ -131,9 +131,12 @@ body.app {
   --accent-soft:    var(--ed-accent-soft);
   --accent-glow:    var(--ed-accent-soft);
 
-  --success:        var(--ed-olive);
+  /* L-V388: --success oli --ed-olive (mutainen oliivi → "oikein" ei lukenut
+     vihreänä, harhautti virheeksi) ja --error brick-lähellä terrakottapunainen.
+     Exportin selkeät palautevärit: vihreä erottuu oikeasta, punainen brickistä. */
+  --success:        #3C7A4E;
   --warn:           var(--ed-gold);
-  --error:          oklch(48% 0.18 28);
+  --error:          #B23B2E;
 
   --font-display:   var(--ed-display);
   --font-body:      var(--ed-sans);
@@ -932,21 +935,31 @@ body.app .ex-option__t {
 /* Correct / wrong states — olive for correct, deep terracotta for wrong.
    Strip the legacy 3px coloured left border (an "Absolute Ban" per impeccable):
    reach for a full-frame border tint instead. */
-body.app .ex-option.is-correct {
-  background: color-mix(in oklch, var(--ed-olive) 10%, var(--ed-bg-card));
-  border: 1px solid color-mix(in oklch, var(--ed-olive) 42%, transparent);
+/* L-V388: success/error-tokeneilla (oli --ed-olive/--ed-accent). Täytetty
+   kirjainmerkki (vihreä/punainen pohja) = exportin .option[data-state]-signaali.
+   .correct/.wrong-aliakset koska adaptive.js/yms. lisäävät ne ilman is-prefiksiä. */
+body.app .ex-option.is-correct,
+body.app .ex-option.correct {
+  background: color-mix(in oklch, var(--success) 10%, var(--ed-bg-card));
+  border: 1px solid color-mix(in oklch, var(--success) 42%, transparent);
 }
-body.app .ex-option.is-correct .ex-option__l {
-  color: var(--ed-olive);
+body.app .ex-option.is-correct .ex-option__l,
+body.app .ex-option.correct .ex-option__l {
+  background: var(--success);
+  color: var(--brick-ink, #FBF1EC);
 }
-body.app .ex-option.is-correct .ex-option__t { color: var(--ed-ink); }
+body.app .ex-option.is-correct .ex-option__t,
+body.app .ex-option.correct .ex-option__t { color: var(--ed-ink); }
 
-body.app .ex-option.is-wrong {
-  background: color-mix(in oklch, var(--ed-accent) 8%, var(--ed-bg-card));
-  border: 1px solid color-mix(in oklch, var(--ed-accent) 36%, transparent);
+body.app .ex-option.is-wrong,
+body.app .ex-option.wrong {
+  background: color-mix(in oklch, var(--error) 8%, var(--ed-bg-card));
+  border: 1px solid color-mix(in oklch, var(--error) 38%, transparent);
 }
-body.app .ex-option.is-wrong .ex-option__l {
-  color: var(--ed-accent);
+body.app .ex-option.is-wrong .ex-option__l,
+body.app .ex-option.wrong .ex-option__l {
+  background: var(--error);
+  color: var(--brick-ink, #FBF1EC);
 }
 
 body.app .ex-option.is-disabled { opacity: 0.6; }

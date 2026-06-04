@@ -212,24 +212,25 @@
    (Stitch-tyyli). Mode-state lesson-lista pitää oman tyylinsä yllä. */
 .app-sidebar [data-mode-only="home"] .sidebar-item,
 .app-sidebar .sidebar-footer .sidebar-item {
-  border-radius: 999px;
+  border-radius: var(--ed-r-lg, 10px);
   transition: background-color var(--ed-t-fast, 160ms ease),
               color var(--ed-t-fast, 160ms ease),
               transform var(--ed-t-fast, 160ms ease);
 }
+/* L-V388 — aktiivinen exportin .snav[data-active]: brick-soft pohja + brick
+   teksti/ikoni (oli keltainen Stitch-pill + translate). */
 .app-sidebar .sidebar-item.active {
-  background: var(--yellow, #F4C84A);
-  color: var(--ed-ink, #241C15);
+  background: var(--accent-soft);
+  color: var(--accent);
   font-weight: 700;
-  transform: translateX(4px);
 }
-.app-sidebar .sidebar-item.active .sidebar-item-icon { color: var(--ed-ink, #241C15); }
+.app-sidebar .sidebar-item.active .sidebar-item-icon { color: var(--accent); }
 .app-sidebar .sidebar-item.active:hover {
-  background: var(--yellow, #F4C84A);
-  color: var(--ed-ink, #241C15);
+  background: var(--accent-soft);
+  color: var(--accent);
 }
 .app-sidebar .sidebar-item:active { transform: scale(0.985); }
-.app-sidebar .sidebar-item.active:active { transform: translateX(4px) scale(0.985); }
+.app-sidebar .sidebar-item.active:active { transform: scale(0.985); }
 .app-sidebar .sidebar-item:focus-visible {
   outline: 2px solid var(--brand-brick, var(--accent));
   outline-offset: 2px;

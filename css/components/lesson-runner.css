@@ -505,16 +505,18 @@ font-weight: 400;
   outline: 2px solid var(--ed-accent, var(--accent));
   outline-offset: 3px;
 }
+/* L-V388: oli --ed-olive (oikea) / --ed-accent (väärä = brand-brick) → oikea
+   ei lukenut vihreänä, väärä sekoittui brändiväriin. Exportin success/error. */
 .lr-mc-choice.is-correct {
-  background: color-mix(in srgb, var(--ed-olive, var(--success, var(--accent))) 12%, transparent);
-  border-color: var(--ed-olive, var(--success, var(--accent)));
+  background: color-mix(in srgb, var(--success) 12%, transparent);
+  border-color: var(--success);
 }
 .lr-mc-choice.is-correct::before {
-  color: var(--ed-olive, var(--success, var(--accent)));
+  color: var(--success);
 }
 .lr-mc-choice.is-wrong {
-  background: color-mix(in srgb, var(--ed-accent, var(--error, #b91c1c)) 10%, transparent);
-  border-color: var(--ed-accent, var(--error, #b91c1c));
+  background: color-mix(in srgb, var(--error) 10%, transparent);
+  border-color: var(--error);
 }
 
 /* Typed */
