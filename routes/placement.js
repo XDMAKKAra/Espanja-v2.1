@@ -1,5 +1,5 @@
 import { Router } from "express";
-import supabase from "../supabase.js";
+import adminClient from "../supabase.js";
 import { requireAuth } from "../middleware/auth.js";
 import { selectDiagnosticQuestions } from "../lib/placementQuestions.js";
 import {
@@ -23,7 +23,7 @@ async function optionalAuth(req, _res, next) {
   const auth = req.headers.authorization;
   if (auth?.startsWith("Bearer ")) {
     try {
-      const { data: { user } } = await supabase.auth.getUser(auth.slice(7));
+      const { data: { user } } = await adminClient.auth.getUser(auth.slice(7));
       if (user) req.user = { userId: user.id, email: user.email };
     } catch { /* anonymous fall-through */ }
   }
@@ -32,6 +32,8 @@ async function optionalAuth(req, _res, next) {
 
 // GET /api/placement/questions — get diagnostic test questions
 router.get("/questions", requireAuth, async (req, res) => {
+  // L-V392 P1-3: user-owned data via per-request RLS client (see progress.js).
+  const supabase = req.supabase || adminClient;
   try {
     // Get user's reported grade from profile (if any)
     let reportedGrade = null;
@@ -66,6 +68,8 @@ router.get("/questions", requireAuth, async (req, res) => {
 
 // POST /api/placement/submit — submit diagnostic answers and get results
 router.post("/submit", requireAuth, async (req, res) => {
+  // L-V392 P1-3: user-owned data via per-request RLS client (see progress.js).
+  const supabase = req.supabase || adminClient;
   try {
     const { answers: clientAnswers } = req.body;
     // clientAnswers: [{ id: "A1", selected: "A" }, ...]
@@ -157,24 +161,10 @@ router.post("/submit", requireAuth, async (req, res) => {
       });
     }
 
-    // Update user_level_progress for all modes
-    const modes = ["vocab", "grammar"];
-    for (const mode of modes) {
-      const { error: lpError } = await supabase
-        .from("user_level_progress")
-        .upsert({
-          user_id: req.user.userId,
-          mode,
-          current_level: result.placementLevel,
-          level_started_at: new Date().toISOString(),
-          questions_at_level: 0,
-        }, { onConflict: "user_id,mode" });
-      if (lpError) {
-        console.error("Placement level_progress upsert error:", {
-          user_id: req.user.userId, mode, code: lpError.code || null, message: lpError.message,
-        });
-      }
-    }
+    // L-V392 P1-1: removed the upsert into the retired `user_level_progress`
+    // table (it errored silently). The placement level is persisted via
+    // diagnostic_results (above) + user_profile.current_grade, which GET
+    // /api/user-level and the rest of the app read.
 
     // Return full results with explanations
     res.json({
@@ -194,6 +184,8 @@ router.post("/submit", requireAuth, async (req, res) => {
 
 // POST /api/placement/choose-level — user picks a different level than suggested
 router.post("/choose-level", requireAuth, async (req, res) => {
+  // L-V392 P1-3: user-owned data via per-request RLS client (see progress.js).
+  const supabase = req.supabase || adminClient;
   try {
     const { level } = req.body;
     const VALID = ["A", "B", "C", "M", "E", "L"];
@@ -226,17 +218,8 @@ router.post("/choose-level", requireAuth, async (req, res) => {
       })
       .eq("user_id", req.user.userId);
 
-    for (const mode of ["vocab", "grammar"]) {
-      await supabase
-        .from("user_level_progress")
-        .upsert({
-          user_id: req.user.userId,
-          mode,
-          current_level: level,
-          level_started_at: new Date().toISOString(),
-          questions_at_level: 0,
-        }, { onConflict: "user_id,mode" });
-    }
+    // L-V392 P1-1: removed retired `user_level_progress` upsert (see /submit).
+    // chosen level lives in diagnostic_results.chosen_level + user_profile.
 
     res.json({ ok: true, level });
   } catch (err) {
@@ -247,6 +230,8 @@ router.post("/choose-level", requireAuth, async (req, res) => {
 
 // GET /api/placement/status — check if user has completed diagnostic
 router.get("/status", requireAuth, async (req, res) => {
+  // L-V392 P1-3: user-owned data via per-request RLS client (see progress.js).
+  const supabase = req.supabase || adminClient;
   try {
     const { data, error } = await supabase
       .from("diagnostic_results")
@@ -279,6 +264,8 @@ router.get("/status", requireAuth, async (req, res) => {
 //   because the OB-2 screen renders inline feedback per question. This is
 //   only the placement test; nothing here is gradeable in production.
 router.get("/onboarding-questions", optionalAuth, async (req, res) => {
+  // L-V392 P1-3: optionalAuth doesn't set req.supabase → resolves to admin here.
+  const supabase = req.supabase || adminClient;
   try {
     const { selectOnboardingQuestions } = await import(
       "../lib/placementQuestions.js"
@@ -294,6 +281,8 @@ router.get("/onboarding-questions", optionalAuth, async (req, res) => {
 
 // POST /api/placement/onboarding — score + persist + plan
 router.post("/onboarding", optionalAuth, async (req, res) => {
+  // L-V392 P1-3: optionalAuth doesn't set req.supabase → resolves to admin here.
+  const supabase = req.supabase || adminClient;
   try {
     const {
       answers,

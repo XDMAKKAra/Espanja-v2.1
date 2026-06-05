@@ -21,18 +21,11 @@ const VALID_MODES = new Set(["vocab", "grammar", "reading"]);
 
 // ─── Helper: fetch or init user_level_progress ─────────────────────────────
 
-async function getOrCreateProgress(userId, mode) {
-  const { data, error } = await supabase
-    .from("user_level_progress")
-    .select("*")
-    .eq("user_id", userId)
-    .eq("mode", mode)
-    .single();
-
-  if (data) return data;
-
-  // Create default row
-  const row = {
+// L-V392 P1-1: `user_level_progress` was retired (canonical leveling = levelEngine
+// + user_level). This legacy per-mode status reader only ever produced a default
+// row, so return it in-memory and stop the failing round-trips to a missing table.
+function getOrCreateProgress(userId, mode) {
+  return {
     user_id: userId,
     mode,
     current_level: "B",
@@ -42,13 +35,6 @@ async function getOrCreateProgress(userId, mode) {
     last_demotion_at: null,
     adaptive_enabled: true,
   };
-  const { data: created, error: insertErr } = await supabase
-    .from("user_level_progress")
-    .upsert(row)
-    .select()
-    .single();
-
-  return created || row;
 }
 
 // ─── Helper: fetch recent session percentages ──────────────────────────────

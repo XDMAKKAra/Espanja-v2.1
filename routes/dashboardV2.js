@@ -309,23 +309,17 @@ async function loadAdaptiveStatus(userId, mode = "vocab", language = "spanish") 
   const cached = adaptiveCacheGet(cacheKey);
   if (cached) return cached;
 
-  const { data: ulp } = await supabase
-    .from("user_level_progress")
-    .select("*")
-    .eq("user_id", userId)
-    .eq("mode", mode)
-    .single();
-
-  let progress = ulp;
-  if (!progress) {
-    progress = {
-      user_id: userId, mode, current_level: "B",
-      level_started_at: new Date().toISOString(),
-      questions_at_level: 0, mastery_test_eligible_at: null,
-      last_demotion_at: null, adaptive_enabled: true,
-    };
-    await supabase.from("user_level_progress").upsert(progress);
-  }
+  // L-V392 P1-1: the legacy per-mode `user_level_progress` table was retired
+  // (canonical leveling lives in lib/levelEngine.js + user_level). This widget's
+  // status is derived from exercise_logs below; the per-mode "progress" row only
+  // ever supplied a default here, so build that default in-memory and skip the
+  // two failing round-trips to a non-existent table.
+  const progress = {
+    user_id: userId, mode, current_level: "B",
+    level_started_at: new Date().toISOString(),
+    questions_at_level: 0, mastery_test_eligible_at: null,
+    last_demotion_at: null, adaptive_enabled: true,
+  };
 
   const [sessionPctsLogs, sessionsAtLevelRes] = await Promise.all([
     supabase

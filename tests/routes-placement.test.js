@@ -186,16 +186,17 @@ describe("POST /api/placement/choose-level", () => {
     expect(res.status).toBe(400);
   });
 
-  it("accepts a valid level and updates profile + level progress", async () => {
+  it("accepts a valid level and updates the profile grade", async () => {
     state.latestRow = { id: "diag-1" };
     const res = await request(app).post("/api/placement/choose-level").send({ level: "C" });
     expect(res.status).toBe(200);
     expect(res.body.level).toBe("C");
     const profileUpdate = state.captured.updates.find((u) => u.name === "user_profile");
     expect(profileUpdate.patch.current_grade).toBe("C");
-    // Two modes get level-progress upserts
-    const modeUpserts = state.captured.upserts.filter((u) => u.name === "user_level_progress");
-    expect(modeUpserts).toHaveLength(2);
+    // L-V392 P1-1: the retired user_level_progress upserts were removed; the
+    // chosen level now lives in diagnostic_results.chosen_level + user_profile.
+    const phantomUpserts = state.captured.upserts.filter((u) => u.name === "user_level_progress");
+    expect(phantomUpserts).toHaveLength(0);
   });
 });
 

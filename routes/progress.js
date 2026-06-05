@@ -1,18 +1,20 @@
 import { Router } from "express";
-import supabase from "../supabase.js";
+import adminClient from "../supabase.js";
 import { requireAuth, isPro, getUserTier } from "../middleware/auth.js";
 import { GRADES, GRADE_ORDER, DAY_MS, WEEK_MS, calculateStreak, calculateEstLevel, normalizeLang } from "../lib/openai.js";
 import { computeGradeEstimate } from "../lib/gradeThreshold.js";
-import { computeEligibility, LEVEL_ORDER } from "../lib/adaptive.js";
 import { getMonthlyUsage } from "../lib/aiCost.js";
 import { normalizeTopics, topicLabel, inferTopics } from "../lib/mistakeTaxonomy.js";
 
 const router = Router();
 
 const VALID_MODES = new Set(["vocab", "grammar", "reading", "writing", "exam"]);
-const ADAPTIVE_MODES = new Set(["vocab", "grammar", "reading"]);
 
 router.post("/progress", requireAuth, async (req, res) => {
+  // L-V392 P1-3: user-owned data goes through the per-request RLS-scoped client
+  // (req.supabase) so RLS enforces isolation even if a .eq("user_id") is dropped.
+  // Falls back to admin (unit tests mock requireAuth without req.supabase).
+  const supabase = req.supabase || adminClient;
   const { mode, level, scoreCorrect, scoreTotal, ytlGrade } = req.body;
   // Stamp every session with its language so the dashboard can scope per
   // language. Client sends the active language (?lang= via injectLangParam, or
@@ -34,90 +36,19 @@ router.post("/progress", requireAuth, async (req, res) => {
   });
   if (error) return res.status(500).json({ error: "Failed to save progress" });
 
-  // ─── Adaptive: increment questions_at_level + compute status ────────────
-  let adaptive = null;
-  if (ADAPTIVE_MODES.has(mode) && scoreTotal > 0) {
-    try {
-      // Increment questions_at_level
-      const { data: ulp } = await supabase
-        .from("user_level_progress")
-        .select("*")
-        .eq("user_id", req.user.userId)
-        .eq("mode", mode)
-        .single();
-
-      if (ulp) {
-        await supabase
-          .from("user_level_progress")
-          .update({ questions_at_level: ulp.questions_at_level + (scoreTotal || 0) })
-          .eq("user_id", req.user.userId)
-          .eq("mode", mode);
-
-        // Fetch recent session pcts for current level
-        const { data: logs } = await supabase
-          .from("exercise_logs")
-          .select("score_correct, score_total")
-          .eq("user_id", req.user.userId)
-          .eq("language", language)
-          .eq("mode", mode)
-          .eq("level", ulp.current_level)
-          .gt("score_total", 0)
-          .order("created_at", { ascending: false })
-          .limit(20);
-
-        const sessionPcts = (logs || []).map((l) =>
-          Math.round((l.score_correct / l.score_total) * 100)
-        );
-
-        const { count: sessionsAtLevel } = await supabase
-          .from("exercise_logs")
-          .select("id", { count: "exact", head: true })
-          .eq("user_id", req.user.userId)
-          .eq("language", language)
-          .eq("mode", mode)
-          .eq("level", ulp.current_level)
-          .gte("created_at", ulp.level_started_at);
-
-        adaptive = computeEligibility({
-          currentLevel: ulp.current_level,
-          sessionPcts,
-          questionsAtLevel: ulp.questions_at_level + (scoreTotal || 0),
-          levelStartedAt: new Date(ulp.level_started_at),
-          masteryTestEligibleAt: ulp.mastery_test_eligible_at
-            ? new Date(ulp.mastery_test_eligible_at)
-            : null,
-          lastDemotionAt: ulp.last_demotion_at
-            ? new Date(ulp.last_demotion_at)
-            : null,
-          sessionsAtLevel: sessionsAtLevel || 0,
-          adaptiveEnabled: ulp.adaptive_enabled,
-        });
-
-        // Handle silent demotion
-        if (adaptive.status === "needs_demotion") {
-          const prevLevel = LEVEL_ORDER[LEVEL_ORDER.indexOf(ulp.current_level) - 1];
-          if (prevLevel) {
-            await supabase
-              .from("user_level_progress")
-              .update({
-                current_level: prevLevel,
-                level_started_at: new Date().toISOString(),
-                questions_at_level: 0,
-                last_demotion_at: new Date().toISOString(),
-              })
-              .eq("user_id", req.user.userId)
-              .eq("mode", mode);
-            adaptive.demotedTo = prevLevel;
-          }
-        }
-      }
-    } catch { /* don't break progress saving */ }
-  }
-
-  res.json({ ok: true, adaptive });
+  // L-V392 P1-1: the legacy adaptive block here read/incremented the retired
+  // `user_level_progress` table on every submit — failing round-trips swallowed
+  // by a catch, so `adaptive` was always null in practice. Canonical leveling
+  // now lives in lib/levelEngine.js (user_level) on its own path. Block removed;
+  // `adaptive` stays in the response shape as null for client back-compat.
+  res.json({ ok: true, adaptive: null });
 });
 
 router.get("/dashboard", requireAuth, async (req, res) => {
+  // L-V392 P1-3: user-owned data goes through the per-request RLS-scoped client
+  // (req.supabase) so RLS enforces isolation even if a .eq("user_id") is dropped.
+  // Falls back to admin (unit tests mock requireAuth without req.supabase).
+  const supabase = req.supabase || adminClient;
   const userId = req.user.userId;
   const language = normalizeLang(req.query.lang ?? req.query.language);
 
@@ -223,6 +154,10 @@ router.get("/dashboard", requireAuth, async (req, res) => {
 // ─── Mistake logging ─────────────────────────────────────────────────────────
 
 router.post("/mistake", requireAuth, async (req, res) => {
+  // L-V392 P1-3: user-owned data goes through the per-request RLS-scoped client
+  // (req.supabase) so RLS enforces isolation even if a .eq("user_id") is dropped.
+  // Falls back to admin (unit tests mock requireAuth without req.supabase).
+  const supabase = req.supabase || adminClient;
   const {
     topics, exerciseType, level, question,
     wrongAnswer, correctAnswer, explanation,
@@ -266,6 +201,10 @@ router.post("/mistake", requireAuth, async (req, res) => {
 // ─── Weak topics (7-day aggregation) ────────────────────────────────────────
 
 router.get("/weak-topics", requireAuth, async (req, res) => {
+  // L-V392 P1-3: user-owned data goes through the per-request RLS-scoped client
+  // (req.supabase) so RLS enforces isolation even if a .eq("user_id") is dropped.
+  // Falls back to admin (unit tests mock requireAuth without req.supabase).
+  const supabase = req.supabase || adminClient;
   const days = Math.max(1, Math.min(30, Number(req.query.days) || 7));
   const since = new Date(Date.now() - days * DAY_MS).toISOString();
 
@@ -306,6 +245,10 @@ router.get("/weak-topics", requireAuth, async (req, res) => {
 // ─── Drill-down: individual mistakes for a topic ────────────────────────────
 
 router.get("/mistakes-by-topic/:topic", requireAuth, async (req, res) => {
+  // L-V392 P1-3: user-owned data goes through the per-request RLS-scoped client
+  // (req.supabase) so RLS enforces isolation even if a .eq("user_id") is dropped.
+  // Falls back to admin (unit tests mock requireAuth without req.supabase).
+  const supabase = req.supabase || adminClient;
   const { topic } = req.params;
   const days = Math.max(1, Math.min(30, Number(req.query.days) || 7));
   const since = new Date(Date.now() - days * DAY_MS).toISOString();
@@ -343,6 +286,10 @@ router.get("/mistakes-by-topic/:topic", requireAuth, async (req, res) => {
 // user_mastery table tracks status/best_pct, not per-topic CEFR level, so
 // topic-granularity would need a schema migration. See plans/00.6-…
 router.get("/user-level", requireAuth, async (req, res) => {
+  // L-V392 P1-3: user-owned data goes through the per-request RLS-scoped client
+  // (req.supabase) so RLS enforces isolation even if a .eq("user_id") is dropped.
+  // Falls back to admin (unit tests mock requireAuth without req.supabase).
+  const supabase = req.supabase || adminClient;
   try {
     const mode = String(req.query.mode || "");
     const DEFAULTS = { vocab: "B", grammar: "C", reading: "C", writing: "C", exam: "C" };
@@ -350,18 +297,9 @@ router.get("/user-level", requireAuth, async (req, res) => {
       return res.status(400).json({ error: "Virheellinen mode" });
     }
 
-    // 1. user_level_progress.current_level for this mode
-    const { data: lp } = await supabase
-      .from("user_level_progress")
-      .select("current_level")
-      .eq("user_id", req.user.userId)
-      .eq("mode", mode)
-      .maybeSingle();
-    if (lp?.current_level) {
-      return res.json({ mode, level: lp.current_level, source: "level_progress" });
-    }
-
-    // 2. diagnostic_results.placement_level (chosen_level wins if user picked alt)
+    // 1. diagnostic_results.placement_level (chosen_level wins if user picked alt)
+    //    L-V392 P1-1: the retired `user_level_progress` lookup was removed; the
+    //    placement test result is the persisted source of the starting level.
     const { data: diag } = await supabase
       .from("diagnostic_results")
       .select("placement_level, chosen_level")

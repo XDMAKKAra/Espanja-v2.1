@@ -2,7 +2,7 @@ import { Router } from "express";
 import { readFileSync } from "fs";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
-import supabase from "../supabase.js";
+import adminClient from "../supabase.js";
 import { callOpenAI, LANG_LABEL, normalizeLang } from "../lib/openai.js";
 import { requireAuth, checkFeatureAccess, incrementFreeUsage } from "../middleware/auth.js";
 import { requireSupportedLanguage, resolveLang } from "../middleware/language.js";
@@ -213,6 +213,8 @@ Return ONLY JSON:
 // ─── POST /api/exam/start ──────────────────────────────────────────────────
 
 router.post("/start", requireAuth, async (req, res) => {
+  // L-V392 P1-3: user-owned data via per-request RLS client (see progress.js).
+  const supabase = req.supabase || adminClient;
   if (requireSupportedLanguage(req, res)) return;
 
   const { durationMode = "demo" } = req.body;
@@ -285,6 +287,8 @@ router.post("/start", requireAuth, async (req, res) => {
 // ─── POST /api/exam/save ───────────────────────────────────────────────────
 
 router.post("/save", requireAuth, async (req, res) => {
+  // L-V392 P1-3: user-owned data via per-request RLS client (see progress.js).
+  const supabase = req.supabase || adminClient;
   const { sessionId, answers, secondsRemaining, currentPart } = req.body;
   if (!sessionId) return res.status(400).json({ error: "sessionId vaaditaan" });
 
@@ -307,6 +311,8 @@ router.post("/save", requireAuth, async (req, res) => {
 // ─── POST /api/exam/resume ─────────────────────────────────────────────────
 
 router.post("/resume", requireAuth, async (req, res) => {
+  // L-V392 P1-3: user-owned data via per-request RLS client (see progress.js).
+  const supabase = req.supabase || adminClient;
   try {
     const { data: session, error } = await supabase
       .from("exam_sessions")
@@ -336,6 +342,8 @@ router.post("/resume", requireAuth, async (req, res) => {
 // ─── POST /api/exam/submit ─────────────────────────────────────────────────
 
 router.post("/submit", requireAuth, async (req, res) => {
+  // L-V392 P1-3: user-owned data via per-request RLS client (see progress.js).
+  const supabase = req.supabase || adminClient;
   if (requireSupportedLanguage(req, res)) return;
   const lang = resolveLang(req);
 
@@ -415,6 +423,8 @@ router.post("/submit", requireAuth, async (req, res) => {
 // active session exists. The row stays in the DB with status='abandoned' so
 // history remains audit-accurate.
 router.post("/discard-active", requireAuth, async (req, res) => {
+  // L-V392 P1-3: user-owned data via per-request RLS client (see progress.js).
+  const supabase = req.supabase || adminClient;
   const userId = req.user.userId;
   try {
     const { data, error } = await supabase
@@ -435,6 +445,8 @@ router.post("/discard-active", requireAuth, async (req, res) => {
 // ─── GET /api/exam/history ─────────────────────────────────────────────────
 
 router.get("/history", requireAuth, async (req, res) => {
+  // L-V392 P1-3: user-owned data via per-request RLS client (see progress.js).
+  const supabase = req.supabase || adminClient;
   try {
     const { data, error } = await supabase
       .from("exam_sessions")

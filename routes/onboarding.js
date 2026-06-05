@@ -6,7 +6,7 @@
 // GET  /api/onboarding/waitlist/count?language=<es|de|fr> — real-data counter.
 
 import { Router } from "express";
-import supabase from "../supabase.js";
+import adminClient from "../supabase.js";
 import { requireAuth } from "../middleware/auth.js";
 import { computeStudyPlan } from "../lib/studyPlan.js";
 import { Resend } from "resend";
@@ -51,6 +51,8 @@ function sanitizeArray(input, allowed) {
 }
 
 router.post("/complete", requireAuth, async (req, res) => {
+  // L-V392 P1-3: user-owned data via per-request RLS client (see progress.js).
+  const supabase = req.supabase || adminClient;
   try {
     const {
       target_language,
@@ -116,7 +118,7 @@ router.post("/waitlist", async (req, res) => {
       email: email.toLowerCase().slice(0, 255),
       product: `${language}_${safeLevel}`,
     };
-    const { error } = await supabase.from("waitlist").insert(row);
+    const { error } = await adminClient.from("waitlist").insert(row);
     if (error) {
       console.error("Waitlist insert failed:", error.message);
       return res.status(500).json({ error: "Tallennus epäonnistui" });
@@ -170,7 +172,7 @@ router.get("/waitlist/count", async (req, res) => {
     if (!LANGS.includes(lang)) {
       return res.status(400).json({ error: "Tuntematon kieli" });
     }
-    const { count, error } = await supabase
+    const { count, error } = await adminClient
       .from("waitlist")
       .select("*", { count: "exact", head: true })
       .like("product", `${lang}_%`);
@@ -205,7 +207,9 @@ function clampInt(v, min, max) {
 }
 
 async function ensureDiagnosticRow(userId, language) {
-  const { data, error } = await supabase
+  // Server-internal helper (called outside a single user's RLS scope by some
+  // paths) — stays on the admin client. Row carries user_id so it's still scoped.
+  const { data, error } = await adminClient
     .from("user_onboarding_diagnostic")
     .upsert({ user_id: userId, language }, { onConflict: "user_id,language", ignoreDuplicates: false })
     .select()
@@ -219,6 +223,8 @@ async function ensureDiagnosticRow(userId, language) {
 
 // Returns saved progress so the client can resume mid-test.
 router.get("/diagnostic/state", requireAuth, async (req, res) => {
+  // L-V392 P1-3: user-owned data via per-request RLS client (see progress.js).
+  const supabase = req.supabase || adminClient;
   try {
     const language = req.query.language;
     if (!isValidLang(language)) {
@@ -253,6 +259,8 @@ router.get("/diagnostic/state", requireAuth, async (req, res) => {
 
 // Per-question UPSERT. Latest answer per (user, lang, part, question_index) wins.
 router.post("/diagnostic/answer", requireAuth, async (req, res) => {
+  // L-V392 P1-3: user-owned data via per-request RLS client (see progress.js).
+  const supabase = req.supabase || adminClient;
   try {
     const { language, part, question_index, question_id, user_answer, is_correct } = req.body || {};
     if (!isValidLang(language)) return res.status(400).json({ error: "Tuntematon kieli" });
@@ -293,6 +301,8 @@ router.post("/diagnostic/answer", requireAuth, async (req, res) => {
 });
 
 router.post("/diagnostic/courses", requireAuth, async (req, res) => {
+  // L-V392 P1-3: user-owned data via per-request RLS client (see progress.js).
+  const supabase = req.supabase || adminClient;
   try {
     const { language, courses_completed, course_grades } = req.body || {};
     if (!isValidLang(language)) return res.status(400).json({ error: "Tuntematon kieli" });
@@ -331,6 +341,8 @@ router.post("/diagnostic/courses", requireAuth, async (req, res) => {
 });
 
 router.post("/diagnostic/biography", requireAuth, async (req, res) => {
+  // L-V392 P1-3: user-owned data via per-request RLS client (see progress.js).
+  const supabase = req.supabase || adminClient;
   try {
     const { language, home_usage, lived_abroad, frequency } = req.body || {};
     if (!isValidLang(language)) return res.status(400).json({ error: "Tuntematon kieli" });
@@ -362,6 +374,8 @@ router.post("/diagnostic/biography", requireAuth, async (req, res) => {
 });
 
 router.post("/diagnostic/complete", requireAuth, async (req, res) => {
+  // L-V392 P1-3: user-owned data via per-request RLS client (see progress.js).
+  const supabase = req.supabase || adminClient;
   try {
     const { language, mini_yo_status, textbook_key } = req.body || {};
     if (!isValidLang(language)) return res.status(400).json({ error: "Tuntematon kieli" });

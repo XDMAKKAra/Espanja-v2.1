@@ -1,5 +1,5 @@
 import { Router } from "express";
-import supabase from "../supabase.js";
+import adminClient from "../supabase.js";
 import { requireAuth, isTestProEmail } from "../middleware/auth.js";
 
 const router = Router();
@@ -25,6 +25,8 @@ const VALID_MASTERY_TOPICS = new Set([
 
 // GET /api/profile — fetch user profile
 router.get("/profile", requireAuth, async (req, res) => {
+  // L-V392 P1-3: user-owned data via per-request RLS client (see progress.js).
+  const supabase = req.supabase || adminClient;
   try {
     const { data, error } = await supabase
       .from("user_profile")
@@ -60,6 +62,8 @@ router.get("/profile", requireAuth, async (req, res) => {
 
 // POST /api/profile — create or update user profile
 router.post("/profile", requireAuth, async (req, res) => {
+  // L-V392 P1-3: user-owned data via per-request RLS client (see progress.js).
+  const supabase = req.supabase || adminClient;
   try {
     const {
       current_grade,
@@ -220,6 +224,8 @@ router.post("/profile", requireAuth, async (req, res) => {
 // Correct answers pre-unlock that topic (status="available") without cascading.
 // Uses ignoreDuplicates so re-registering or re-seeding never overwrites real progress.
 router.post("/profile/mastery-seed", requireAuth, async (req, res) => {
+  // L-V392 P1-3: user-owned data via per-request RLS client (see progress.js).
+  const supabase = req.supabase || adminClient;
   try {
     const { mastery } = req.body;
     if (!Array.isArray(mastery)) {

@@ -17,7 +17,7 @@
  */
 
 import { Router } from "express";
-import supabase from "../supabase.js";
+import adminClient from "../supabase.js";
 import { requireAuth } from "../middleware/auth.js";
 
 const router = Router();
@@ -39,6 +39,8 @@ function parseRouteParams(src) {
 // ─── Itsearviointi ────────────────────────────────────────────────────
 
 router.get("/itsearvio", requireAuth, async (req, res) => {
+  // L-V392 P1-3: user-owned data via per-request RLS client (see progress.js).
+  const supabase = req.supabase || adminClient;
   const parsed = parseRouteParams(req.query);
   if (parsed.error) return res.status(400).json({ error: parsed.error });
   const { lang, kurssiKey, lessonIndex } = parsed;
@@ -64,6 +66,8 @@ router.get("/itsearvio", requireAuth, async (req, res) => {
 });
 
 router.delete("/itsearvio", requireAuth, async (req, res) => {
+  // L-V392 P1-3: user-owned data via per-request RLS client (see progress.js).
+  const supabase = req.supabase || adminClient;
   const parsed = parseRouteParams(req.query);
   if (parsed.error) return res.status(400).json({ error: parsed.error });
   const { lang, kurssiKey, lessonIndex } = parsed;
@@ -79,6 +83,8 @@ router.delete("/itsearvio", requireAuth, async (req, res) => {
 });
 
 router.post("/itsearvio", requireAuth, async (req, res) => {
+  // L-V392 P1-3: user-owned data via per-request RLS client (see progress.js).
+  const supabase = req.supabase || adminClient;
   const parsed = parseRouteParams(req.body);
   if (parsed.error) return res.status(400).json({ error: parsed.error });
   const { lang, kurssiKey, lessonIndex } = parsed;
@@ -120,6 +126,8 @@ router.post("/itsearvio", requireAuth, async (req, res) => {
 // ─── Per-sivu progress ────────────────────────────────────────────────
 
 router.get("/progress", requireAuth, async (req, res) => {
+  // L-V392 P1-3: user-owned data via per-request RLS client (see progress.js).
+  const supabase = req.supabase || adminClient;
   const parsed = parseRouteParams(req.query);
   if (parsed.error) return res.status(400).json({ error: parsed.error });
   const { lang, kurssiKey, lessonIndex } = parsed;
@@ -143,6 +151,8 @@ router.get("/progress", requireAuth, async (req, res) => {
 });
 
 router.post("/progress", requireAuth, async (req, res) => {
+  // L-V392 P1-3: user-owned data via per-request RLS client (see progress.js).
+  const supabase = req.supabase || adminClient;
   const parsed = parseRouteParams(req.body);
   if (parsed.error) return res.status(400).json({ error: parsed.error });
   const { lang, kurssiKey, lessonIndex } = parsed;
@@ -171,6 +181,8 @@ router.post("/progress", requireAuth, async (req, res) => {
 });
 
 router.delete("/progress", requireAuth, async (req, res) => {
+  // L-V392 P1-3: user-owned data via per-request RLS client (see progress.js).
+  const supabase = req.supabase || adminClient;
   const parsed = parseRouteParams(req.query);
   if (parsed.error) return res.status(400).json({ error: parsed.error });
   const { lang, kurssiKey, lessonIndex } = parsed;

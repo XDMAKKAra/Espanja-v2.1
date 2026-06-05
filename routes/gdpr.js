@@ -12,32 +12,55 @@ import { adminClient } from "../supabase.js";
 
 const router = express.Router();
 
-// Every table that stores data keyed by the user's id. Deletion walks these;
-// export reads them. Order matters for deletion only loosely (child rows
-// first, profile last), but each delete is independent and filtered by user_id.
-const USER_TABLES = [
-  "exercise_logs",
-  "user_mistakes",
-  "user_mastery",
-  "user_level_progress",
+// Tables that store data keyed by the user's id. Resolved DYNAMICALLY from the
+// live schema (any public table with a `user_id` column) via the
+// list_user_owned_tables() RPC, so this never drifts when a new user table is
+// added — a silent GDPR gap otherwise. FALLBACK_USER_TABLES is the complete
+// list as of L-V392 and is used only if the RPC is unavailable. Each delete is
+// independent and filtered by user_id, so order doesn't matter (every FK points
+// at auth.users, not at another public table).
+const FALLBACK_USER_TABLES = [
+  "ai_usage",
   "diagnostic_results",
-  "exam_sessions",
   "email_preferences",
-  "user_curriculum_progress",
-  "user_self_assessments",
-  "user_lesson_progress",
-  "user_onboarding_diagnostic",
-  "mini_yo_progress",
-  "sr_cards",
-  "mastery_test_attempts",
-  "push_subscriptions",
+  "exam_sessions",
+  "exercise_logs",
   "free_usage",
-  "seen_seed_items",
+  "hint_events",
+  "mini_yo_progress",
+  "push_subscriptions",
   "seen_exercises",
-  "translation_accepted",
+  "seen_seed_items",
+  "sr_cards",
   "subscriptions",
+  "translation_accepted",
+  "user_curriculum_progress",
+  "user_lesson_progress",
+  "user_level",
+  "user_mastery",
+  "user_mistakes",
+  "user_onboarding_diagnostic",
   "user_profile",
+  "user_self_assessments",
+  "user_session_state",
 ];
+
+// Memoized per process — the schema doesn't change between requests, and
+// export/delete are rare. Falls back to the static list if the RPC fails.
+let _userTablesCache = null;
+async function getUserTables() {
+  if (_userTablesCache) return _userTablesCache;
+  try {
+    const { data, error } = await adminClient.rpc("list_user_owned_tables");
+    if (!error && Array.isArray(data) && data.length) {
+      _userTablesCache = data.map((r) => (typeof r === "string" ? r : r.list_user_owned_tables)).filter(Boolean);
+      return _userTablesCache;
+    }
+  } catch (err) {
+    console.warn("[gdpr] list_user_owned_tables RPC failed, using fallback:", err?.message || err);
+  }
+  return FALLBACK_USER_TABLES;
+}
 
 // GET /api/gdpr/export — returns the caller's data as a downloadable JSON file.
 router.get("/export", requireAuth, async (req, res) => {
@@ -48,7 +71,8 @@ router.get("/export", requireAuth, async (req, res) => {
     data: {},
   };
 
-  for (const table of USER_TABLES) {
+  const tables = await getUserTables();
+  for (const table of tables) {
     try {
       const { data, error } = await adminClient
         .from(table)
@@ -71,7 +95,8 @@ router.post("/delete-account", requireAuth, async (req, res) => {
   const { userId, email } = req.user;
   const failed = [];
 
-  for (const table of USER_TABLES) {
+  const tables = await getUserTables();
+  for (const table of tables) {
     try {
       const { error } = await adminClient.from(table).delete().eq("user_id", userId);
       if (error) failed.push(table);

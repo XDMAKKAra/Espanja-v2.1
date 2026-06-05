@@ -1,14 +1,13 @@
 /**
  * Guards Pass 0.6 — manual taso-picker is gone; level now comes from
  * GET /api/user-level, which resolves to (in order):
- *   1. user_level_progress.current_level
- *   2. diagnostic_results.chosen_level || placement_level
- *   3. Mode-specific default (B vocab, C grammar/reading).
+ *   1. diagnostic_results.chosen_level || placement_level
+ *   2. Mode-specific default (B vocab, C grammar/reading).
+ * (L-V392 P1-1: the retired user_level_progress source was removed.)
  */
 import { describe, it, expect, beforeAll, vi } from "vitest";
 import request from "supertest";
 
-let _levelProgressRow = null;
 let _diagnosticRow = null;
 
 vi.mock("../supabase.js", () => {
@@ -17,7 +16,6 @@ vi.mock("../supabase.js", () => {
     const chain = ["select", "eq", "order", "limit"];
     chain.forEach((m) => { builder[m] = vi.fn(() => builder); });
     builder.maybeSingle = vi.fn(async () => {
-      if (table === "user_level_progress") return { data: _levelProgressRow, error: null };
       if (table === "diagnostic_results") return { data: _diagnosticRow, error: null };
       return { data: null, error: null };
     });
@@ -42,20 +40,11 @@ beforeAll(async () => {
 });
 
 function resetState() {
-  _levelProgressRow = null;
   _diagnosticRow = null;
 }
 
 describe("GET /api/user-level — resolution order", () => {
-  it("1. uses user_level_progress.current_level when present", async () => {
-    resetState();
-    _levelProgressRow = { current_level: "C" };
-    const res = await request(app).get("/api/user-level?mode=vocab&topic=ser_estar");
-    expect(res.status).toBe(200);
-    expect(res.body).toMatchObject({ mode: "vocab", level: "C", source: "level_progress" });
-  });
-
-  it("2. falls back to diagnostic_results when no level_progress row", async () => {
+  it("1. uses diagnostic_results placement/chosen level when present", async () => {
     resetState();
     _diagnosticRow = { placement_level: "E", chosen_level: null };
     const res = await request(app).get("/api/user-level?mode=grammar");

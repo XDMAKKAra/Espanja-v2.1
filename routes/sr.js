@@ -18,9 +18,14 @@ router.post("/review", requireAuth, async (req, res) => {
   }
 
   const userId = req.user.userId;
+  // L-V392 P1-3: route user-owned reads/writes through the per-request
+  // RLS-scoped client so Postgres RLS enforces isolation even if a manual
+  // .eq("user_id") filter is ever dropped. Falls back to the admin client
+  // (unit tests mock requireAuth without setting req.supabase).
+  const db = req.supabase || supabase;
 
   try {
-    const { data: existing } = await supabase
+    const { data: existing } = await db
       .from("sr_cards")
       .select("*")
       .eq("user_id", userId)
@@ -57,7 +62,7 @@ router.post("/review", requireAuth, async (req, res) => {
     if (updated.state === "mastered" && !current.mastered_at) upsertPayload.mastered_at = now;
     if (updated.state === "lapsed") upsertPayload.lapsed_at = now;
 
-    const { error } = await supabase
+    const { error } = await db
       .from("sr_cards")
       .upsert(upsertPayload, { onConflict: "user_id,word,language" });
 
@@ -80,10 +85,15 @@ router.post("/review", requireAuth, async (req, res) => {
 router.get("/due", requireAuth, async (req, res) => {
   const { language = "spanish", limit = 20 } = req.query;
   const userId = req.user.userId;
+  // L-V392 P1-3: route user-owned reads/writes through the per-request
+  // RLS-scoped client so Postgres RLS enforces isolation even if a manual
+  // .eq("user_id") filter is ever dropped. Falls back to the admin client
+  // (unit tests mock requireAuth without setting req.supabase).
+  const db = req.supabase || supabase;
   const today = new Date().toISOString().slice(0, 10);
 
   try {
-    const { data, error } = await supabase
+    const { data, error } = await db
       .from("sr_cards")
       .select("id, word, question, language, ease_factor, interval_days, repetitions, next_review, last_grade, created_at, updated_at")
       .eq("user_id", userId)
@@ -118,10 +128,15 @@ router.get("/due", requireAuth, async (req, res) => {
 router.get("/count", requireAuth, async (req, res) => {
   const { language = "spanish" } = req.query;
   const userId = req.user.userId;
+  // L-V392 P1-3: route user-owned reads/writes through the per-request
+  // RLS-scoped client so Postgres RLS enforces isolation even if a manual
+  // .eq("user_id") filter is ever dropped. Falls back to the admin client
+  // (unit tests mock requireAuth without setting req.supabase).
+  const db = req.supabase || supabase;
   const today = new Date().toISOString().slice(0, 10);
 
   try {
-    const { count, error } = await supabase
+    const { count, error } = await db
       .from("sr_cards")
       .select("*", { count: "exact", head: true })
       .eq("user_id", userId)
@@ -141,6 +156,11 @@ router.get("/count", requireAuth, async (req, res) => {
 router.get("/forecast", requireAuth, async (req, res) => {
   const { language = "spanish", days = 30 } = req.query;
   const userId = req.user.userId;
+  // L-V392 P1-3: route user-owned reads/writes through the per-request
+  // RLS-scoped client so Postgres RLS enforces isolation even if a manual
+  // .eq("user_id") filter is ever dropped. Falls back to the admin client
+  // (unit tests mock requireAuth without setting req.supabase).
+  const db = req.supabase || supabase;
   const clampedDays = Math.max(7, Math.min(60, Number(days) || 30));
 
   try {
@@ -149,7 +169,7 @@ router.get("/forecast", requireAuth, async (req, res) => {
     const endDate = new Date(today);
     endDate.setDate(endDate.getDate() + clampedDays);
 
-    const { data, error } = await supabase
+    const { data, error } = await db
       .from("sr_cards")
       .select("next_review")
       .eq("user_id", userId)

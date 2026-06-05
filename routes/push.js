@@ -1,6 +1,6 @@
 import { Router } from "express";
 import webpush from "web-push";
-import supabase from "../supabase.js";
+import adminClient from "../supabase.js";
 import { requireAuth } from "../middleware/auth.js";
 
 const router = Router();
@@ -23,6 +23,8 @@ router.get("/vapid-key", (req, res) => {
 // ─── POST /api/push/subscribe ──────────────────────────────────────────────
 
 router.post("/subscribe", requireAuth, async (req, res) => {
+  // L-V392 P1-3: user-owned data via per-request RLS client (see progress.js).
+  const supabase = req.supabase || adminClient;
   const { subscription } = req.body;
   if (!subscription?.endpoint || !subscription?.keys?.p256dh || !subscription?.keys?.auth) {
     return res.status(400).json({ error: "Virheellinen subscription" });
@@ -46,6 +48,8 @@ router.post("/subscribe", requireAuth, async (req, res) => {
 // ─── POST /api/push/unsubscribe ────────────────────────────────────────────
 
 router.post("/unsubscribe", requireAuth, async (req, res) => {
+  // L-V392 P1-3: user-owned data via per-request RLS client (see progress.js).
+  const supabase = req.supabase || adminClient;
   const { endpoint } = req.body;
   if (!endpoint) return res.status(400).json({ error: "endpoint vaaditaan" });
 
@@ -60,9 +64,9 @@ router.post("/unsubscribe", requireAuth, async (req, res) => {
 // ─── Send push to a user (internal helper) ─────────────────────────────────
 
 export async function sendPushToUser(userId, payload) {
-  if (!process.env.VAPID_PUBLIC_KEY || !supabase) return 0;
+  if (!process.env.VAPID_PUBLIC_KEY || !adminClient) return 0;
 
-  const { data: subs } = await supabase
+  const { data: subs } = await adminClient
     .from("push_subscriptions")
     .select("endpoint, p256dh, auth")
     .eq("user_id", userId);
@@ -79,8 +83,10 @@ export async function sendPushToUser(userId, payload) {
       sent++;
     } catch (err) {
       // 410 Gone or 404 = subscription expired, clean up
+      // RLS-OK: cron helper (admin) removing one expired sub by its globally
+      // unique endpoint, already selected under .eq("user_id", userId) above.
       if (err.statusCode === 410 || err.statusCode === 404) {
-        await supabase.from("push_subscriptions").delete().eq("endpoint", sub.endpoint);
+        await adminClient.from("push_subscriptions").delete().eq("endpoint", sub.endpoint);
       }
     }
   }

@@ -4,7 +4,7 @@
 // palauttaa frontille.
 
 import { Router } from "express";
-import supabase from "../supabase.js";
+import adminClient from "../supabase.js";
 import { requireAuth } from "../middleware/auth.js";
 import {
   buildSkillProfile,
@@ -17,6 +17,8 @@ const router = Router();
 const VALID_LANGS = new Set(["es", "de", "fr"]);
 
 router.post("/build-profile", requireAuth, async (req, res) => {
+  // L-V392 P1-3: user-owned data via per-request RLS client (see progress.js).
+  const supabase = req.supabase || adminClient;
   try {
     const userId = req.user.userId;
     const language = typeof req.body?.language === "string" ? req.body.language : null;
@@ -91,6 +93,8 @@ router.post("/build-profile", requireAuth, async (req, res) => {
 
     // 4. Persistoi inferred_skill_profile-kenttään (best-effort).
     try {
+      // RLS-OK: updates by diagnostic.id, a row already fetched above under
+      // .eq("user_id", userId); RLS (own-row update policy) re-checks ownership.
       await supabase
         .from("user_onboarding_diagnostic")
         .update({ inferred_skill_profile: result, updated_at: new Date().toISOString() })
@@ -114,6 +118,8 @@ router.post("/build-profile", requireAuth, async (req, res) => {
 // mukaan. Jos käyttäjällä ei ole skill_profilea tai availableTopics on tyhjä,
 // palautetaan uniform-sample (current behavior).
 router.post("/next-topic", requireAuth, async (req, res) => {
+  // L-V392 P1-3: user-owned data via per-request RLS client (see progress.js).
+  const supabase = req.supabase || adminClient;
   try {
     const userId = req.user.userId;
     const language = typeof req.body?.language === "string" ? req.body.language : null;
