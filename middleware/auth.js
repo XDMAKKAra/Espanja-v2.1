@@ -1,5 +1,5 @@
 import { adminClient, createUserClient } from "../supabase.js";
-import { memoizeRequest } from "../lib/requestContext.js";
+import { memoizeRequest, setRequestDb } from "../lib/requestContext.js";
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
@@ -32,6 +32,8 @@ export async function requireAuth(req, res, next) {
   if (error || !user) return res.status(401).json({ error: "Invalid token" });
   req.user = { userId: user.id, email: user.email };
   req.supabase = createUserClient(jwt);
+  // L-V392 P1-3: expose the RLS-scoped client to deep helpers via the request store.
+  setRequestDb(req.supabase);
   next();
 }
 
@@ -297,6 +299,7 @@ export async function softProGate(req, res, next) {
   if (error || !user) return next();
   req.user = { userId: user.id, email: user.email };
   req.supabase = createUserClient(jwt);
+  setRequestDb(req.supabase);
   const pro = await isPro(user.id);
   if (!pro) return res.status(403).json({ error: "pro_required", message: "Tämä toiminto vaatii Pro-tilin" });
   next();

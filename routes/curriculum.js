@@ -1,5 +1,6 @@
 import { Router } from "express";
-import supabase from "../supabase.js";
+import adminClient from "../supabase.js";
+import { getRequestDb } from "../lib/requestContext.js";
 import { requireAuth } from "../middleware/auth.js";
 import { callOpenAI, normalizeLang } from "../lib/openai.js";
 import { KURSSI_META, readLessonFile } from "../lib/curriculum.js";
@@ -25,7 +26,7 @@ async function optionalAuth(req, _res, next) {
   const auth = req.headers.authorization;
   if (auth?.startsWith("Bearer ")) {
     try {
-      const { data: { user } } = await supabase.auth.getUser(auth.slice(7));
+      const { data: { user } } = await adminClient.auth.getUser(auth.slice(7));
       if (user) req.user = { userId: user.id, email: user.email };
     } catch { /* anonymous fall-through */ }
   }
@@ -37,6 +38,7 @@ const PASS_THRESHOLD = 0.80;
 // L-PLAN-6 — fetch the user's target_grade for multiplier + threshold logic.
 // Falls back to "B" when the column is missing or the row has no value.
 async function fetchTargetGrade(userId) {
+  const supabase = getRequestDb(adminClient); // L-V392 P1-3: RLS-scoped per request
   if (!userId) return "B";
   try {
     const { data, error } = await supabase
@@ -60,6 +62,7 @@ function tablesMissing(err) {
 }
 
 async function fetchKurssitDb() {
+  const supabase = getRequestDb(adminClient);
   const { data, error } = await supabase
     .from("curriculum_kurssit")
     .select("*")
@@ -72,6 +75,7 @@ async function fetchKurssitDb() {
 }
 
 async function fetchLessonsDb(kurssiKey) {
+  const supabase = getRequestDb(adminClient);
   const { data, error } = await supabase
     .from("curriculum_lessons")
     .select("*")
@@ -90,6 +94,7 @@ async function fetchLessonsDb(kurssiKey) {
 // course-detail views as "1.1 Suoritettu". The list endpoint (GET /) was
 // already lang-scoped (migration foundation); the detail endpoint was the gap.
 async function fetchUserProgressDb(userId, kurssiKey, lang = "es") {
+  const supabase = getRequestDb(adminClient);
   const { data, error } = await supabase
     .from("user_curriculum_progress")
     .select("kurssi_key, lesson_index, completed_at, score_correct, score_total")
@@ -124,6 +129,7 @@ function summariseProgress(allProgress, kurssiKey, kertausLessonIndex) {
 const SUPPORTED_LANGS = new Set(["es", "de", "fr"]);
 
 router.get("/", optionalAuth, async (req, res) => {
+  const supabase = getRequestDb(adminClient);
   try {
     // L-LANG-INFRA-1 — ?lang= selects the language. Default "es".
     const lang = SUPPORTED_LANGS.has(req.query.lang) ? req.query.lang : "es";
@@ -214,6 +220,7 @@ router.get("/tutor-message", optionalAuth, (req, res, next) => _tutorMessageHand
 
 // ─── GET /api/curriculum/:kurssiKey ─────────────────────────────────────────
 router.get("/:kurssiKey", optionalAuth, async (req, res) => {
+  const supabase = getRequestDb(adminClient);
   try {
     const { kurssiKey } = req.params;
     // L-V390: read the language so progress is scoped to the course the user
@@ -507,6 +514,7 @@ function buildTeachingFallback(lesson) {
 const TEACHING_TYPES = new Set(["grammar", "mixed", "vocab", "reading", "writing"]);
 
 async function getOrGenerateTeachingPage(kurssiKey, sortOrder, lesson) {
+  const supabase = getRequestDb(adminClient);
   if (!lesson || !TEACHING_TYPES.has(lesson.type)) return null;
   const topicKey = `${kurssiKey}_lesson_${sortOrder}`;
 
@@ -537,9 +545,10 @@ async function getOrGenerateTeachingPage(kurssiKey, sortOrder, lesson) {
     contentMd = buildTeachingFallback(lesson);
   }
 
-  // Cache it (best-effort)
+  // Cache it (best-effort). teaching_pages is a shared table with no per-user
+  // RLS write policy, so this write stays on the admin client.
   try {
-    await supabase.from("teaching_pages").upsert({
+    await adminClient.from("teaching_pages").upsert({
       topic_key: topicKey,
       content_md: contentMd,
       generated_at: new Date().toISOString(),
@@ -732,6 +741,7 @@ function fallbackMetacognitive(scorePct, lessonFocus) {
 // score ≥ 85%. Returns true only when the user has just completed a third
 // such lesson in a row.
 async function checkFastTrack(userId, kurssiKey) {
+  const supabase = getRequestDb(adminClient);
   try {
     const { data, error } = await supabase
       .from("user_curriculum_progress")
@@ -754,6 +764,7 @@ async function checkFastTrack(userId, kurssiKey) {
 
 // ─── POST /api/curriculum/:kurssiKey/lesson/:lessonIndex/complete ───────────
 router.post("/:kurssiKey/lesson/:lessonIndex/complete", requireAuth, async (req, res) => {
+  const supabase = getRequestDb(adminClient);
   try {
     const { kurssiKey } = req.params;
     const lessonIndex = Number(req.params.lessonIndex);
@@ -968,6 +979,7 @@ function fallbackGreeting({ daysToExam, lastFocus, weakArea, kurssiTitle }) {
 }
 
 async function _tutorMessageHandler(req, res) {
+  const supabase = getRequestDb(adminClient);
   // Anonymous → no card.
   if (!req.user?.userId) return res.json({ message: null });
   const userId = req.user.userId;

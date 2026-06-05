@@ -40,7 +40,6 @@ try {
   const { default: paymentRoutes, handleWebhook } = await import("../routes/stripe.js");
   const { default: examRoutes } = await import("../routes/exam.js");
   const { default: srRoutes } = await import("../routes/sr.js");
-  const { default: adaptiveRoutes } = await import("../routes/adaptive.js");
   const { default: pushRoutes } = await import("../routes/push.js");
   const { default: profileRoutes } = await import("../routes/profile.js");
   const { default: configRoutes } = await import("../routes/config.js");
@@ -99,7 +98,6 @@ try {
   app.use("/api/stripe", paymentRoutes);
   app.use("/api/exam", examRoutes);
   app.use("/api/sr", srRoutes);
-  app.use("/api", adaptiveRoutes);
   app.use("/api/push", pushRoutes);
   app.use("/api", profileRoutes);
   app.use("/api/placement", placementRoutes);

@@ -20,7 +20,6 @@ import { initExam, startMockExam } from "./screens/exam.js";
 // behind makeLazyScreen() so they don't ship with the initial bundle. See
 // `js/lib/lazyScreen.js` for the cache + once-init contract.
 import { makeLazyScreen } from "./lib/lazyScreen.js";
-import { initAdaptive, masteryNext, masteryDone } from "./screens/adaptive.js";
 import { initOnboarding, checkOnboarding } from "./screens/onboarding.js";
 import { initOnboardingV2, showOnboardingV2 } from "./screens/onboardingV2.js";
 import { initOnboardingV3, showOnboardingV3 } from "./screens/onboardingV3.js";
@@ -55,7 +54,7 @@ setLangFn(() => state.language);
 // their text, so real exercise content doesn't keep pulsing.
 (function watchShimmerPlaceholders() {
   if (typeof MutationObserver === "undefined") return;
-  const ids = ["question-text", "writing-prompt-text", "gram-sentence", "reading-question-text", "mastery-question", "placement-question"];
+  const ids = ["question-text", "writing-prompt-text", "gram-sentence", "reading-question-text", "placement-question"];
   const obs = new MutationObserver((muts) => {
     for (const m of muts) {
       const el = m.target;
@@ -142,7 +141,6 @@ initWriting({ loadDashboard, saveProgress });
 wireAppWaitlist();
 if (isLoggedIn()) hydrateConfig();
 initExam({ loadDashboard, saveProgress, shareResult });
-initAdaptive({ loadDashboard });
 
 // v279 — Sentence build (Käännä lauseet). Lazy-loaded on first open from
 // the writing mode-page CTA or the #/lauseet hash.
@@ -606,13 +604,6 @@ if (reviewBtn) reviewBtn.addEventListener("click", () => startReviewSession());
 const topBarBtn = $("sr-top-btn");
 if (topBarBtn) topBarBtn.addEventListener("click", () => startReviewSession());
 
-// Mastery test navigation
-const masteryNextBtn = $("mastery-btn-next");
-if (masteryNextBtn) masteryNextBtn.addEventListener("click", () => masteryNext());
-
-const masteryDoneBtn = $("mastery-btn-done");
-if (masteryDoneBtn) masteryDoneBtn.addEventListener("click", () => masteryDone());
-
 // Retake placement test
 const retakeBtn = $("btn-retake-placement");
 if (retakeBtn) {
@@ -807,19 +798,6 @@ document.addEventListener("keydown", (e) => {
     return;
   }
 
-  // Mastery test screen
-  if ($("screen-mastery-test") && $("screen-mastery-test").classList.contains("active")) {
-    if (["A", "B", "C", "D"].includes(resolvedKey)) {
-      const btn = [...document.querySelectorAll("#mastery-options-grid .option-btn:not(:disabled)")]
-        .find((b) => b.textContent.trim()[0].toUpperCase() === resolvedKey);
-      if (btn) btn.click();
-    } else if ((e.key === "Enter" || e.key === " ") &&
-               !$("mastery-explanation-block").classList.contains("hidden")) {
-      e.preventDefault();
-      $("mastery-btn-next").click();
-    }
-    return;
-  }
 
   // Level transition screen
   if ($("screen-level").classList.contains("active") &&

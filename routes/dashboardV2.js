@@ -19,27 +19,19 @@
 // (30s TTL) so consecutive dashboard loads in the same serverless instance
 // don't re-run the slow eligibility query.
 import { Router } from "express";
-import supabase from "../supabase.js";
+import adminClient from "../supabase.js";
+import { getRequestDb } from "../lib/requestContext.js";
 import { requireAuth, isPro, isTestProEmail } from "../middleware/auth.js";
 import {
   GRADES, GRADE_ORDER, DAY_MS, WEEK_MS,
   calculateStreak, calculateEstLevel, normalizeLang,
 } from "../lib/openai.js";
 import { computeGradeEstimate } from "../lib/gradeThreshold.js";
-import { computeEligibility } from "../lib/adaptive.js";
 import { getMonthlyUsage } from "../lib/aiCost.js";
 import { topicLabel } from "../lib/mistakeTaxonomy.js";
 import { getUserPath } from "../lib/learningPath.js";
 
 const router = Router();
-
-// ─── Tiny in-memory LRU for adaptive status (UPDATE 6) ──────────────────────
-// Keyed by `${userId}::${mode}`. 30s TTL is short enough that progress feels
-// live but long enough to absorb dashboard re-renders + tab switches in the
-// same warm serverless instance. Cap at 1000 entries to bound memory.
-const ADAPTIVE_TTL_MS = 30_000;
-const ADAPTIVE_MAX = 1000;
-const adaptiveCache = new Map();
 
 // L-RENDER-PERF-1 (2026-05-22) — per-user response cache for /api/dashboard/v2.
 // Login flow triggers TWO fetches of this endpoint (home.js loadHome + the
@@ -71,29 +63,9 @@ function dashboardV2CacheSet(key, v) {
   dashboardV2Cache.set(key, { v, t: Date.now() });
 }
 
-function adaptiveCacheGet(key) {
-  const hit = adaptiveCache.get(key);
-  if (!hit) return null;
-  if (Date.now() - hit.t > ADAPTIVE_TTL_MS) {
-    adaptiveCache.delete(key);
-    return null;
-  }
-  // LRU bump
-  adaptiveCache.delete(key);
-  adaptiveCache.set(key, hit);
-  return hit.v;
-}
-
-function adaptiveCacheSet(key, v) {
-  if (adaptiveCache.size >= ADAPTIVE_MAX) {
-    const oldest = adaptiveCache.keys().next().value;
-    if (oldest !== undefined) adaptiveCache.delete(oldest);
-  }
-  adaptiveCache.set(key, { v, t: Date.now() });
-}
-
 // ─── Section: profile ───────────────────────────────────────────────────────
 async function loadProfile(userId, email) {
+  const supabase = getRequestDb(adminClient); // L-V392 P1-3: RLS-scoped per request
   const { data, error } = await supabase
     .from("user_profile")
     .select("*")
@@ -120,6 +92,7 @@ async function loadProfile(userId, email) {
 // trade-off for cutting query time from ~3-5s to <500ms on busy accounts.
 // If exact lifetime counts matter later, add a separate head:true count(*).
 async function loadDashboardCore(userId, language = "spanish") {
+  const supabase = getRequestDb(adminClient);
   const { data: logs, error } = await supabase
     .from("exercise_logs")
     .select("*")
@@ -196,6 +169,7 @@ async function loadDashboardCore(userId, language = "spanish") {
 
 // ─── Section: weak topics (last 7 days) ─────────────────────────────────────
 async function loadWeakTopics(userId, days = 7, language = "spanish") {
+  const supabase = getRequestDb(adminClient);
   const since = new Date(Date.now() - days * DAY_MS).toISOString();
   const { data: mistakes, error } = await supabase
     .from("user_mistakes")
@@ -216,6 +190,7 @@ async function loadWeakTopics(userId, days = 7, language = "spanish") {
 
 // ─── Section: SR count + forecast ───────────────────────────────────────────
 async function loadSrCount(userId, language = "spanish") {
+  const supabase = getRequestDb(adminClient);
   const today = new Date().toISOString().slice(0, 10);
   const { count, error } = await supabase
     .from("sr_cards")
@@ -228,6 +203,7 @@ async function loadSrCount(userId, language = "spanish") {
 }
 
 async function loadSrForecast(userId, language = "spanish", days = 30) {
+  const supabase = getRequestDb(adminClient);
   const clampedDays = Math.max(7, Math.min(60, Number(days) || 30));
   const today = new Date(); today.setHours(0, 0, 0, 0);
   const endDate = new Date(today); endDate.setDate(endDate.getDate() + clampedDays);
@@ -259,6 +235,7 @@ async function loadSrForecast(userId, language = "spanish", days = 30) {
 
 // ─── Section: exam history ──────────────────────────────────────────────────
 async function loadExamHistory(userId, language = "spanish") {
+  const supabase = getRequestDb(adminClient);
   const { data, error } = await supabase
     .from("exam_sessions")
     .select("id, status, started_at, ended_at, duration_mode, total_points, max_points, final_grade, part_scores")
@@ -286,6 +263,7 @@ async function loadLearningPath(userId) {
 
 // ─── Section: placement status ──────────────────────────────────────────────
 async function loadPlacementStatus(userId, language = "spanish") {
+  const supabase = getRequestDb(adminClient);
   const { data, error } = await supabase
     .from("diagnostic_results")
     .select("placement_level, chosen_level, created_at")
@@ -303,61 +281,11 @@ async function loadPlacementStatus(userId, language = "spanish") {
   };
 }
 
-// ─── Section: adaptive status (with 30s LRU cache, UPDATE 6) ────────────────
-async function loadAdaptiveStatus(userId, mode = "vocab", language = "spanish") {
-  const cacheKey = `${userId}::${mode}::${language}`;
-  const cached = adaptiveCacheGet(cacheKey);
-  if (cached) return cached;
-
-  // L-V392 P1-1: the legacy per-mode `user_level_progress` table was retired
-  // (canonical leveling lives in lib/levelEngine.js + user_level). This widget's
-  // status is derived from exercise_logs below; the per-mode "progress" row only
-  // ever supplied a default here, so build that default in-memory and skip the
-  // two failing round-trips to a non-existent table.
-  const progress = {
-    user_id: userId, mode, current_level: "B",
-    level_started_at: new Date().toISOString(),
-    questions_at_level: 0, mastery_test_eligible_at: null,
-    last_demotion_at: null, adaptive_enabled: true,
-  };
-
-  const [sessionPctsLogs, sessionsAtLevelRes] = await Promise.all([
-    supabase
-      .from("exercise_logs")
-      .select("score_correct, score_total")
-      .eq("user_id", userId).eq("language", language).eq("mode", mode).eq("level", progress.current_level)
-      .gt("score_total", 0)
-      .order("created_at", { ascending: false })
-      .limit(20),
-    supabase
-      .from("exercise_logs")
-      .select("id", { count: "exact", head: true })
-      .eq("user_id", userId).eq("language", language).eq("mode", mode).eq("level", progress.current_level)
-      .gte("created_at", progress.level_started_at),
-  ]);
-  const sessionPcts = (sessionPctsLogs.data || [])
-    .map((l) => Math.round((l.score_correct / l.score_total) * 100));
-
-  const eligibility = computeEligibility({
-    currentLevel: progress.current_level,
-    sessionPcts,
-    questionsAtLevel: progress.questions_at_level,
-    levelStartedAt: new Date(progress.level_started_at),
-    masteryTestEligibleAt: progress.mastery_test_eligible_at ? new Date(progress.mastery_test_eligible_at) : null,
-    lastDemotionAt: progress.last_demotion_at ? new Date(progress.last_demotion_at) : null,
-    sessionsAtLevel: sessionsAtLevelRes.count || 0,
-    adaptiveEnabled: progress.adaptive_enabled,
-  });
-  adaptiveCacheSet(cacheKey, eligibility);
-  return eligibility;
-}
-
 // ═══════════════════════════════════════════════════════════════════════════
 // GET /api/dashboard/v2 — batched response
 // ═══════════════════════════════════════════════════════════════════════════
 router.get("/dashboard/v2", requireAuth, async (req, res) => {
   const userId = req.user.userId;
-  const adaptiveMode = req.query.adaptiveMode || "vocab";
   // Accept the app's `?lang=` convention (es/fr/de) as well as `?language=`;
   // normalizeLang maps both short codes and full words to the stored full word.
   const language = normalizeLang(req.query.lang ?? req.query.language);
@@ -365,7 +293,7 @@ router.get("/dashboard/v2", requireAuth, async (req, res) => {
   // L-RENDER-PERF-1: per-user response cache (30s TTL) — login triggers two
   // sequential dashboard/v2 fetches (loadHome then post-login loadDashboard);
   // this turns the second one into a ~1ms memory hit. Bypass with ?fresh=1.
-  const cacheKey = `${userId}::${adaptiveMode}::${language}`;
+  const cacheKey = `${userId}::${language}`;
   if (req.query.fresh !== "1") {
     const cached = dashboardV2CacheGet(cacheKey);
     if (cached) {
@@ -382,7 +310,7 @@ router.get("/dashboard/v2", requireAuth, async (req, res) => {
 
   const [
     profile, dashboard, weakTopics, srCount, srForecast,
-    examHistory, learningPath, placement, adaptiveStatus,
+    examHistory, learningPath, placement,
   ] = await Promise.all([
     settle(() => loadProfile(userId, req.user.email)),
     settle(() => loadDashboardCore(userId, language)),
@@ -392,12 +320,11 @@ router.get("/dashboard/v2", requireAuth, async (req, res) => {
     settle(() => loadExamHistory(userId, language)),
     settle(() => loadLearningPath(userId)),
     settle(() => loadPlacementStatus(userId, language)),
-    settle(() => loadAdaptiveStatus(userId, adaptiveMode, language)),
   ]);
 
   const payload = {
     profile, dashboard, weakTopics, srCount, srForecast,
-    examHistory, learningPath, placement, adaptiveStatus,
+    examHistory, learningPath, placement,
   };
   dashboardV2CacheSet(cacheKey, payload);
   res.setHeader("X-Dashboard-Cache", "miss");

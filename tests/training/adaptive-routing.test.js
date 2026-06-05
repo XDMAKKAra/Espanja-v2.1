@@ -1,8 +1,8 @@
 /**
- * Verifies the adaptive mastery-test routing fix (Commit 1).
- * - POST /api/adaptive/mastery-test/start with {mode}   → adaptive.js handler
- * - POST /api/mastery-test/start          with {topicKey} → exercises.js handler
- * The two used to collide under /mastery-test/*, which silently 400'd the adaptive flow.
+ * Guards the canonical learning-path mastery-test route.
+ * - POST /api/mastery-test/start with {topicKey} → exercises.js handler.
+ * L-V392: the legacy /api/adaptive/* tasokoe was removed (it shared no screens
+ * with this canonical flow), so the old routing-collision tests are gone.
  */
 import { describe, it, expect, beforeAll } from "vitest";
 import { buildApp, setOpenAIResponse } from "../helpers/app.js";
@@ -14,22 +14,8 @@ beforeAll(async () => {
   app = await buildApp();
 });
 
-describe("Adaptive mastery-test routing", () => {
-  it("POST /api/adaptive/mastery-test/start with {mode} hits adaptive handler", async () => {
-    // Adaptive handler's valid modes are vocab/grammar/reading. It calls OpenAI for questions.
-    setOpenAIResponse([
-      { question: "q1", choices: ["a", "b", "c", "d"], correct: "A", isHigherLevel: false },
-      { question: "q2", choices: ["a", "b", "c", "d"], correct: "A", isHigherLevel: true  },
-    ]);
-    const res = await request(app)
-      .post("/api/adaptive/mastery-test/start")
-      .set("Authorization", "Bearer fake")
-      .send({ mode: "vocab" });
-    // Either 200 (success) or a specific application-level error, never a 404.
-    expect(res.status).not.toBe(404);
-  });
-
-  it("legacy POST /api/mastery-test/start with {topicKey} still hits exercises handler", async () => {
+describe("Mastery-test routing", () => {
+  it("POST /api/mastery-test/start with {topicKey} hits the exercises handler", async () => {
     setOpenAIResponse([
       { question: "q1", choices: ["a", "b", "c", "d"], correct: "A", explanation: "x" },
     ]);
@@ -39,13 +25,5 @@ describe("Adaptive mastery-test routing", () => {
       .send({ topicKey: "ser_estar" });
     // Not a 404 — the exercises.js handler is still mounted
     expect(res.status).not.toBe(404);
-  });
-
-  it("POST /api/adaptive/mastery-test/start rejects invalid mode with 400", async () => {
-    const res = await request(app)
-      .post("/api/adaptive/mastery-test/start")
-      .set("Authorization", "Bearer fake")
-      .send({ mode: "not-a-real-mode" });
-    expect(res.status).toBe(400);
   });
 });

@@ -103,7 +103,6 @@ export async function buildApp() {
   const express = (await import("express")).default;
   const { default: exerciseRoutes } = await import("../../routes/exercises.js");
   const { default: writingRoutes } = await import("../../routes/writing.js");
-  const { default: adaptiveRoutes } = await import("../../routes/adaptive.js");
   const { default: progressRoutes } = await import("../../routes/progress.js");
   const { default: examRoutes } = await import("../../routes/exam.js");
   const app = express();
@@ -111,7 +110,6 @@ export async function buildApp() {
   // Mount in the same order as api/index.js so route collision behavior matches prod
   app.use("/api", exerciseRoutes);
   app.use("/api", writingRoutes);
-  app.use("/api", adaptiveRoutes);
   app.use("/api", progressRoutes);
   app.use("/api/exam", examRoutes);
   return app;

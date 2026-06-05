@@ -1,5 +1,6 @@
 import { Router } from "express";
-import supabase from "../supabase.js";
+import adminClient from "../supabase.js";
+import { getRequestDb } from "../lib/requestContext.js";
 import { compareAnswer } from "../js/lib/accentTolerance.js";
 import {
   callOpenAI, coerceArrayResponse, getUserProfileContext,
@@ -117,6 +118,7 @@ const ADMIN_EMAILS = (process.env.ADMIN_EMAILS || "").split(",").map(e => e.trim
 const SEEN_WINDOW_MS = 30 * 24 * 60 * 60 * 1000;
 
 async function getSeenSeedIds(userId) {
+  const supabase = getRequestDb(adminClient); // L-V392 P1-3: RLS-scoped per request
   if (!userId) return [];
   const since = new Date(Date.now() - SEEN_WINDOW_MS).toISOString();
   const { data } = await supabase
@@ -128,6 +130,7 @@ async function getSeenSeedIds(userId) {
 }
 
 async function recordSeenSeedItems(userId, itemIds) {
+  const supabase = getRequestDb(adminClient);
   if (!userId || !itemIds.length) return;
   const now = new Date().toISOString();
   await supabase
@@ -143,12 +146,15 @@ async function recordSeenSeedItems(userId, itemIds) {
 async function getUserId(req) {
   const auth = req.headers.authorization;
   if (!auth?.startsWith("Bearer ")) return null;
-  const { data: { user }, error } = await supabase.auth.getUser(auth.slice(7));
+  const { data: { user }, error } = await adminClient.auth.getUser(auth.slice(7));
   if (error || !user) return null;
   return user.id;
 }
 
 async function tryBankExercise(mode, level, topic, language, userId) {
+  // Mixed: shared exercise_bank reads + user-owned seen_exercises both work
+  // through the RLS client (bank select is qual=true, seen_exercises is owner-scoped).
+  const supabase = getRequestDb(adminClient);
   // Always try the bank first. Candidates are filtered by seen_exercises so
   // a user who has already seen everything will still fall through to AI.
   // Prior code rolled a 50% dice here for "freshness" — removed to cut
@@ -200,6 +206,7 @@ async function tryBankExercise(mode, level, topic, language, userId) {
 }
 
 async function saveToBankBulk(mode, level, topic, language, exercises) {
+  const supabase = adminClient; // exercise_bank is a shared table (no per-user RLS write policy)
   // exercises is an array — save each as a separate bank entry
   const rows = (Array.isArray(exercises) ? exercises : [exercises]).map(ex => ({
     mode,
@@ -922,6 +929,7 @@ Return ONLY this JSON (no markdown):
 // ─── Report exercise ───────────────────────────────────────────────────────
 
 router.post("/report-exercise", requireAuth, reportLimiter, async (req, res) => {
+  const supabase = adminClient; // updates shared exercise_bank flags (no per-user RLS write policy)
   const { bankId } = req.body;
   if (!bankId) return res.status(400).json({ error: "bankId vaaditaan" });
 
@@ -950,6 +958,7 @@ router.post("/report-exercise", requireAuth, reportLimiter, async (req, res) => 
 // ─── Admin: flagged exercises ──────────────────────────────────────────────
 
 router.get("/admin/flagged-exercises", requireAuth, async (req, res) => {
+  const supabase = adminClient; // admin view over shared exercise_bank
   if (!ADMIN_EMAILS.includes(req.user.email.toLowerCase())) {
     return res.status(403).json({ error: "Ei oikeutta" });
   }
@@ -968,6 +977,7 @@ router.get("/admin/flagged-exercises", requireAuth, async (req, res) => {
 // ─── Admin: AI costs by user ───────────────────────────────────────────────
 
 router.get("/admin/costs-by-user", requireAuth, async (req, res) => {
+  const supabase = adminClient; // GLOBAL ai_usage aggregation across all users (RLS would scope to caller)
   if (!ADMIN_EMAILS.includes(req.user.email.toLowerCase())) {
     return res.status(403).json({ error: "Ei oikeutta" });
   }
@@ -1224,6 +1234,7 @@ Return ONLY JSON array:
 // so the corpus learns over time.
 
 router.post("/grade-translate", requireAuth, aiLimiter, aiGlobalDailyLimiter, checkMonthlyCostLimit, async (req, res) => {
+  const supabase = getRequestDb(adminClient); // shared translation_accepted read; ai_grader insert below stays admin
   const { userAnswer, acceptedTranslations, finnishSentence, taskId, lang } = req.body;
 
   if (!userAnswer || !finnishSentence) {
@@ -1296,7 +1307,9 @@ Return ONLY JSON:
     // confirmed the user's answer was at least "understandable", so it's
     // safe to add to the accepted list for future users.
     if (taskId && result.score >= 2) {
-      supabase
+      // ai_grader rows have no user_id; the RLS insert policy only allows
+      // source='user' rows, so this shared-corpus write stays on admin.
+      adminClient
         .from("translation_accepted")
         .insert({ task_id: taskId, accepted_answer: userAnswer, source: "ai_grader" })
         .then(() => {}, (e) => {
@@ -1322,6 +1335,7 @@ Return ONLY JSON:
 // arbitrary answers cannot be promoted.
 
 router.post("/translate-promote", requireAuth, async (req, res) => {
+  const supabase = getRequestDb(adminClient); // user-source insert satisfies the RLS with_check
   const { taskId, answer } = req.body;
   if (!taskId || !answer || typeof answer !== "string") {
     return res.status(400).json({ error: "Puuttuvia kenttiä" });
@@ -1613,6 +1627,7 @@ router.post("/checkpoint/submit", requireAuth, async (req, res) => {
 // ─── Focus session: topic-targeted exercises based on past mistakes ────────
 
 router.post("/focus-session", requireAuth, aiLimiter, aiGlobalDailyLimiter, checkMonthlyCostLimit, async (req, res) => {
+  const supabase = getRequestDb(adminClient);
   const { topic, count = 10, language = "spanish" } = req.body;
 
   if (!topic || !VALID_TOPICS.has(topic)) {

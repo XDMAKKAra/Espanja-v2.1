@@ -21,7 +21,7 @@ const sub = (jwt) => { try { return JSON.parse(Buffer.from(jwt.split(".")[1], "b
 const ENDPOINTS = [
   "/api/dashboard", "/api/dashboard/v2?language=spanish", "/api/weak-topics?days=7",
   "/api/user-level", "/api/profile", "/api/sr/due", "/api/sr/count?language=spanish",
-  "/api/sr/forecast?language=spanish&days=30", "/api/exam/history", "/api/adaptive/status?mode=vocab",
+  "/api/sr/forecast?language=spanish&days=30", "/api/exam/history",
   "/api/placement/status", "/api/onboarding/diagnostic/state?language=es",
   "/api/digikirja/progress?lang=es&kurssi=kurssi_1&lesson=1", "/api/learning-path",
   "/api/adaptive-state?mode=vocab", "/api/seed-counts",
