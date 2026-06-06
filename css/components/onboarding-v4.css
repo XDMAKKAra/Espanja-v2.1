@@ -356,16 +356,25 @@
 .ob4-bio-form {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 28px;
 }
+/* L-V398 #3 — the markup uses <fieldset>/<legend>; reset the UA default border
+   and padding so the question title no longer cuts through a slop frame. The
+   question reads as a plain label above warm pill choices. */
 .ob4-bio-group {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
 }
 .ob4-bio-question {
-  font-size: 15px;
-  font-weight: 500;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text, #1f1d1a);
+  padding: 0;
   margin: 0;
 }
 .ob4-bio-options {
