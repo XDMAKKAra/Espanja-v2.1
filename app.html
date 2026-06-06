@@ -866,44 +866,55 @@
   <!-- ─── L-V359 product selection (after diagnostic results) ─────────── -->
   <div id="screen-ob-v4-choice" class="screen ob4">
     <div class="ob4-shell ob4-choice">
-      <p class="ob4-step">Viimeinen vaihe</p>
-      <h1 class="ob4-title">Valitse miten jatkat</h1>
-      <p class="ob4-sub">Kartoitus ja ensimmäiset harjoitukset ovat ilmaisia. Kun haluat koko polun tai rajattoman arvioinnin, valitse alta. Voit myös jatkaa ilmaisena ja päättää myöhemmin.</p>
+      <header class="ob4-choice__head">
+        <p class="ob4-step">Viimeinen vaihe</p>
+        <h1 class="ob4-title">Valitse miten jatkat kohti yo-koetta</h1>
+        <p class="ob4-sub">Kartoitus ja ensimmäiset harjoitukset ovat ilmaisia. Avaa koko polku tai rajaton arviointi, tai jatka ilmaiseksi ja päätä myöhemmin.</p>
+      </header>
 
-      <!-- Kurssi (featured) -->
-      <div class="ob4-plan ob4-plan--featured">
-        <div class="ob4-plan__head">
-          <div class="ob4-plan__id">
+      <div class="ob4-plans">
+        <!-- Kurssi (suositeltu) -->
+        <article class="ob4-plan ob4-plan--featured">
+          <span class="ob4-plan__badge">Suositeltu</span>
+          <div class="ob4-plan__top">
             <p class="ob4-plan__name">Kurssi</p>
-            <p class="ob4-plan__tag">Koko abikurssi ylioppilaskokeeseen asti</p>
+            <p class="ob4-plan__tag">Koko abikurssi yo-kokeeseen asti</p>
           </div>
-          <p class="ob4-plan__price"><span class="ob4-plan__num">49</span>&nbsp;€<span class="ob4-plan__unit">kertaostos</span></p>
-        </div>
-        <ul class="ob4-plan__feats">
-          <li>Koko 8-kurssin polku (90 oppituntia / kieli)</li>
-          <li>Kaikki kolme kieltä (es / fr / de)</li>
-          <li>YTL-rubriikin arviointi ja mallikokeet</li>
-          <li>Adaptiivinen vaikeus ja YO-valmiusmittari</li>
-        </ul>
-        <button type="button" class="ob4-btn ob4-btn--primary ob4-plan__cta" id="ob-v4-choice-kurssi" data-product="kurssi">Osta kurssi</button>
-        <p class="ob4-plan__note">14 päivän rahat takaisin</p>
-      </div>
+          <div class="ob4-plan__pricing">
+            <p class="ob4-plan__price"><span class="ob4-plan__num">49</span><span class="ob4-plan__cur">€</span></p>
+            <p class="ob4-plan__per">kertaostos, ei kuukausimaksua</p>
+          </div>
+          <ul class="ob4-plan__feats">
+            <li>Koko 8-kurssin polku, 90 oppituntia per kieli</li>
+            <li>Kaikki kolme kieltä: espanja, ranska, saksa</li>
+            <li>Rajaton arviointi YTL-rubriikilla ja mallikokeet</li>
+            <li>Adaptiivinen vaikeus ja yo-valmiusmittari</li>
+          </ul>
+          <button type="button" class="ob4-btn ob4-btn--primary ob4-plan__cta" id="ob-v4-choice-kurssi" data-product="kurssi">Avaa koko kurssi</button>
+          <p class="ob4-plan__note">14 päivän rahat takaisin, ilman kysymyksiä</p>
+        </article>
 
-      <!-- Treeni (secondary) -->
-      <div class="ob4-plan ob4-plan--treeni">
-        <div class="ob4-plan__head">
-          <div class="ob4-plan__id">
+        <!-- Treeni (kevyempi) -->
+        <article class="ob4-plan ob4-plan--treeni">
+          <div class="ob4-plan__top">
             <p class="ob4-plan__name">Treeni</p>
             <p class="ob4-plan__tag">Rajaton kirjoitusten arviointi ilman kurssia</p>
           </div>
-          <p class="ob4-plan__price"><span class="ob4-plan__num">9</span>&nbsp;€<span class="ob4-plan__unit">/ kk</span></p>
-        </div>
-        <p class="ob4-plan__line">Rajaton arviointi YTL-rubriikilla ja suomenkieliset selitykset, kaikilla kolmella kielellä. Ei rakenteellista oppimispolkua.</p>
-        <button type="button" class="ob4-btn ob4-plan__cta" id="ob-v4-choice-treeni" data-product="treeni">Valitse Treeni</button>
-        <p class="ob4-plan__note">Peruuta milloin vain</p>
+          <div class="ob4-plan__pricing">
+            <p class="ob4-plan__price"><span class="ob4-plan__num">9</span><span class="ob4-plan__cur">€</span><span class="ob4-plan__cur-unit">/ kk</span></p>
+            <p class="ob4-plan__per">laskutetaan kuukausittain</p>
+          </div>
+          <ul class="ob4-plan__feats">
+            <li>Rajaton arviointi YTL-rubriikilla</li>
+            <li>Suomenkieliset selitykset kaikilla kolmella kielellä</li>
+            <li class="ob4-plan__feats-no">Ei rakenteellista oppimispolkua</li>
+          </ul>
+          <button type="button" class="ob4-btn ob4-plan__cta" id="ob-v4-choice-treeni" data-product="treeni">Valitse Treeni</button>
+          <p class="ob4-plan__note">Peruuta milloin vain</p>
+        </article>
       </div>
 
-      <!-- Free continuation -->
+      <!-- Free continuation (quiet exit) -->
       <button type="button" class="ob4-choice__free" id="ob-v4-choice-free">
         <span class="ob4-choice__free-main">Jatka ilmaisena toistaiseksi</span>
         <span class="ob4-choice__free-sub">1 mallikoe ja 1 kirjoitustehtävä auki, ei korttia</span>

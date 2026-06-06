@@ -621,36 +621,61 @@
   }
 }
 
-/* ─── L-V359 product selection (after diagnostic results) ──────────────────
-   Differentiated hierarchy, NOT three identical cards: Kurssi is the featured
-   block (brick border + tint), Treeni is a slimmer card, "jatka ilmaisena" is
-   a quiet full-width row. Cream/brick tokens, no gradients. */
-.ob4-choice { gap: 16px; }
+/* ─── L-V398 #5 product selection — premium, converting (not a luettelo) ─────
+   Two plans side by side on desktop: Kurssi featured (Suositeltu badge, brick
+   tint + soft tinted shadow), Treeni quieter. Equal-height cards with CTAs
+   aligned at the bottom. Check icons via CSS mask (no emoji). Calm centred free
+   exit. Warm cream/brick tokens, flat: no gradients, no glow. */
+#screen-ob-v4-choice {
+  justify-content: flex-start;
+  padding-top: clamp(24px, 4vh, 48px);
+}
+#screen-ob-v4-choice .ob4-shell { max-width: 940px; }
 
-.ob4-plan {
-  border: 1px solid var(--line, #d8d4cb);
-  border-radius: 14px;
-  background: var(--surface, #fff);
-  padding: clamp(18px, 2.6vw, 26px);
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-.ob4-plan--featured {
-  border-color: var(--accent, #a0341f);
-  border-width: 1.5px;
-  background: #fbf3ef;
-}
-.ob4-plan__head {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
+.ob4-choice { gap: 22px; }
+.ob4-choice__head { display: flex; flex-direction: column; gap: 8px; }
+
+.ob4-plans {
+  display: grid;
+  grid-template-columns: 1fr;
   gap: 16px;
 }
-.ob4-plan__name {
-  font-size: 19px;
+@media (min-width: 760px) {
+  .ob4-plans { grid-template-columns: 1.1fr 1fr; gap: 20px; }
+}
+
+.ob4-plan {
+  position: relative;
+  border: 1px solid var(--line, #d8d4cb);
+  border-radius: 18px;
+  background: var(--surface, #fff);
+  padding: clamp(22px, 2.8vw, 30px);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.ob4-plan--featured {
+  border: 1.5px solid var(--accent, #a0341f);
+  background: #fdf5f1;
+  box-shadow: 0 22px 48px -28px rgba(160, 52, 31, 0.45);
+}
+.ob4-plan__badge {
+  position: absolute;
+  top: -12px;
+  left: clamp(22px, 2.8vw, 30px);
+  background: var(--accent, #a0341f);
+  color: #fff;
+  font-size: 12px;
   font-weight: 700;
-  margin: 0 0 2px;
+  letter-spacing: 0.02em;
+  padding: 5px 13px;
+  border-radius: 999px;
+}
+.ob4-plan__top { display: flex; flex-direction: column; gap: 4px; }
+.ob4-plan__name {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0;
   color: var(--text, #1f1d1a);
 }
 .ob4-plan__tag {
@@ -658,85 +683,122 @@
   line-height: 1.45;
   color: var(--text-2, #6f6a62);
   margin: 0;
-  max-width: 34ch;
 }
+.ob4-plan__pricing { display: flex; flex-direction: column; gap: 2px; }
 .ob4-plan__price {
   margin: 0;
-  white-space: nowrap;
-  font-size: 15px;
-  color: var(--text-2, #6f6a62);
-  text-align: right;
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
 }
 .ob4-plan__num {
-  font-size: 30px;
-  font-weight: 700;
+  font-size: clamp(38px, 5vw, 46px);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.02em;
   color: var(--accent, #a0341f);
 }
 .ob4-plan--treeni .ob4-plan__num { color: var(--text, #1f1d1a); }
-.ob4-plan__unit {
-  display: block;
-  font-size: 12px;
+.ob4-plan__cur {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--accent, #a0341f);
+}
+.ob4-plan--treeni .ob4-plan__cur { color: var(--text, #1f1d1a); }
+.ob4-plan__cur-unit {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-2, #6f6a62);
+}
+.ob4-plan__per {
+  margin: 0;
+  font-size: 13px;
   color: var(--text-2, #6f6a62);
 }
 .ob4-plan__feats {
+  list-style: none;
   margin: 0;
-  padding-left: 20px;
+  padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 7px;
+  gap: 10px;
 }
 .ob4-plan__feats li {
-  font-size: 14px;
-  line-height: 1.5;
+  position: relative;
+  padding-left: 28px;
+  font-size: 14.5px;
+  line-height: 1.45;
   color: var(--text, #1f1d1a);
 }
-.ob4-plan__line {
-  margin: 0;
-  font-size: 14px;
-  line-height: 1.55;
-  color: var(--text, #1f1d1a);
+.ob4-plan__feats li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 1px;
+  width: 18px;
+  height: 18px;
+  background: var(--accent, #a0341f);
+  -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M9.55 17.05 4.5 12l1.41-1.41 3.64 3.63 8.14-8.13L19.5 7.5z'/></svg>") center / contain no-repeat;
+          mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M9.55 17.05 4.5 12l1.41-1.41 3.64 3.63 8.14-8.13L19.5 7.5z'/></svg>") center / contain no-repeat;
 }
-.ob4-plan__cta { align-self: flex-start; }
+.ob4-plan--treeni .ob4-plan__feats li::before { background: #5f7d4f; }
+.ob4-plan__feats-no { color: var(--text-2, #6f6a62); }
+.ob4-plan--treeni .ob4-plan__feats-no::before {
+  background: var(--line, #c9c4ba);
+  -webkit-mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><rect x='5' y='11' width='14' height='2.4' rx='1.2'/></svg>") center / contain no-repeat;
+          mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><rect x='5' y='11' width='14' height='2.4' rx='1.2'/></svg>") center / contain no-repeat;
+}
+.ob4-plan__cta {
+  align-self: stretch;
+  text-align: center;
+  margin-top: auto;
+  padding: 14px 20px;
+  font-weight: 600;
+}
+.ob4-plan--featured .ob4-plan__cta { font-size: 16px; }
 .ob4-plan__note {
   margin: 0;
-  font-size: 12px;
+  font-size: 12.5px;
   color: var(--text-2, #6f6a62);
+  text-align: center;
 }
 
 .ob4-choice__free {
   appearance: none;
-  border: 1px dashed var(--line, #d8d4cb);
+  border: 0;
   background: transparent;
-  border-radius: 12px;
-  padding: 14px 18px;
   cursor: pointer;
-  text-align: left;
+  align-self: center;
+  text-align: center;
   display: flex;
   flex-direction: column;
-  gap: 2px;
-  transition: border-color 160ms ease, background 160ms ease;
+  gap: 3px;
+  padding: 6px 10px;
 }
-.ob4-choice__free:hover { border-color: var(--accent, #a0341f); background: #fbf8f3; }
-.ob4-choice__free:active { transform: scale(0.99); }
 .ob4-choice__free-main {
   font-size: 15px;
   font-weight: 600;
-  color: var(--text, #1f1d1a);
-}
-.ob4-choice__free-sub {
-  font-size: 13px;
   color: var(--text-2, #6f6a62);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  transition: color 160ms ease;
 }
+.ob4-choice__free:hover .ob4-choice__free-main { color: var(--accent, #a0341f); }
+.ob4-choice__free-sub { font-size: 12.5px; color: var(--text-2, #8a857c); }
 
 .ob4-choice__pending {
-  border: 1px solid var(--accent, #a0341f);
-  border-radius: 12px;
-  background: #fbf3ef;
-  padding: clamp(16px, 2.4vw, 22px);
+  border: 1.5px solid var(--accent, #a0341f);
+  border-radius: 16px;
+  background: #fdf5f1;
+  padding: clamp(18px, 2.4vw, 24px);
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
+/* The box ships with [hidden] and is revealed by JS only on a 503; the
+   display:flex above would otherwise override [hidden] and leak it onscreen. */
+.ob4-choice__pending[hidden] { display: none; }
 .ob4-choice__pending-title {
   margin: 0;
   font-size: 16px;
@@ -752,9 +814,6 @@
 .ob4-choice__pending .ob4-btn { align-self: flex-start; margin-top: 4px; }
 
 @media (max-width: 640px) {
-  .ob4-plan__head { flex-direction: column; gap: 8px; }
-  .ob4-plan__price { text-align: left; }
-  .ob4-plan__unit { display: inline; }
   .ob4-plan__cta, .ob4-choice__pending .ob4-btn { align-self: stretch; text-align: center; }
 }
 
