@@ -25,11 +25,18 @@ export function initOnboarding({ loadDashboard, loadNextBatch }) {
 
 // ─── Entry point ───────────────────────────────────────────────────────────
 
-export async function checkOnboarding() {
+export async function checkOnboarding(preloadedProfile) {
   try {
-    const res = await apiFetch(`${API}/api/profile`, { headers: authHeader() });
-    if (!res.ok) return false;
-    const { profile } = await res.json();
+    // L-V393: the login fast-path passes the profile section from the batched
+    // /api/dashboard/v2 payload so we skip a redundant /api/profile round-trip.
+    // `undefined` means "no preload" (deep links / cold fallback) -> fetch it;
+    // a null section also falls back to the fetch.
+    let profile = preloadedProfile;
+    if (profile === undefined || profile === null) {
+      const res = await apiFetch(`${API}/api/profile`, { headers: authHeader() });
+      if (!res.ok) return false;
+      ({ profile } = await res.json());
+    }
     if (!profile || !profile.onboarding_completed) {
       // L-V359 — route every fresh-account / mid-onboarding boot to the V4
       // diagnostic-first flow (kartoitus → tulokset → tuotevalinta). Legacy V2

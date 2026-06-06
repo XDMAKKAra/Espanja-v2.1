@@ -20,11 +20,19 @@ let startedAt = 0;
 
 // ─── Public: check if placement needed ─────────────────────────────────────
 
-export async function checkPlacementNeeded() {
+export async function checkPlacementNeeded(preloadedStatus) {
   try {
-    const res = await apiFetch(`${API}/api/placement/status`, { headers: authHeader() });
-    if (!res.ok) return false;
-    const { completed } = await res.json();
+    // L-V393: the login fast-path passes the placement section from the batched
+    // /api/dashboard/v2 payload so we skip a redundant /api/placement/status
+    // round-trip. `undefined`/null falls back to the dedicated fetch.
+    let completed;
+    if (preloadedStatus === undefined || preloadedStatus === null) {
+      const res = await apiFetch(`${API}/api/placement/status`, { headers: authHeader() });
+      if (!res.ok) return false;
+      ({ completed } = await res.json());
+    } else {
+      completed = preloadedStatus.completed;
+    }
     return !completed;
   } catch {
     return false;

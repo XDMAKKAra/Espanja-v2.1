@@ -631,3 +631,20 @@ export async function loadHome() {
   const data = await fetchOhjaamo(activeLang);
   paint(data);
 }
+
+// L-V393 login fast-path: paint the home surface the instant the token lands,
+// before the onboarding/placement gate resolves. Returning users (cached
+// mirror) get real content immediately; cold users get the content-shaped
+// skeleton instead of a frozen "Ladataan..." button.
+export function showHomeShell() {
+  const activeLang = readActiveLang();
+  if (readOhjaamoCache(activeLang)) {
+    // Cached mirror present -> loadHome paints real content synchronously and
+    // only revalidates in the background, so this is effectively instant.
+    loadHome();
+    return;
+  }
+  show("screen-home");
+  const root = document.getElementById("home-root");
+  if (root) root.innerHTML = renderShellSkeleton(activeLang);
+}

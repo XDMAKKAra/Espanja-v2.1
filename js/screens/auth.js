@@ -1,7 +1,8 @@
 import { $, show } from "../ui/nav.js";
-import { API, setAuth } from "../api.js";
+import { API, setAuth, fetchDashboardV2 } from "../api.js";
 import { checkOnboarding } from "./onboarding.js";
 import { checkPlacementNeeded, showPlacementIntro } from "./placement.js";
+import { showHomeShell } from "./home.js";
 
 const DIAG_STORAGE_KEY = "puheo_diagnostic_v1";
 
@@ -121,20 +122,29 @@ $("btn-auth-submit").addEventListener("click", async () => {
       seedMasteryFromDiagnostic(data.token);
       try { localStorage.setItem("puheo_signup_at", String(Date.now())); } catch { /* silent */ }
     }
-    // Check onboarding → placement → dashboard. Sidebar reveal moved AFTER
-    // the destination screen is up so the user never sees a sidebar-on-
-    // empty-cream flash between login and home-rendering. updateSidebarState
-    // itself is idempotent.
-    const needsOnboarding = await checkOnboarding();
+    // L-V393 login fast-path. The old flow awaited THREE sequential round-trips
+    // before showing any screen (/api/profile via checkOnboarding,
+    // /api/placement/status via checkPlacementNeeded, then dashboard) — ~1.4s
+    // warm (worse cold) of a frozen "Ladataan..." button. Now: paint the home
+    // surface immediately (cached real content, or the content-shaped
+    // skeleton), then resolve the gate from ONE batched /api/dashboard/v2 fetch
+    // whose `profile` + `placement` sections feed the two checks so they skip
+    // their own fetch. Null sections fall back to the legacy single-endpoint
+    // calls. The final loadDashboard reuses the cached v2 payload (~1ms), so it
+    // just swaps skeleton -> real content. Sidebar reveal is safe now because
+    // the home surface is content-shaped, not empty cream.
+    showHomeShell();
+    _deps.updateSidebarState();
+    const v2 = await fetchDashboardV2().catch(() => null);
+    const needsOnboarding = await checkOnboarding(v2?.profile ?? undefined);
     if (!needsOnboarding) {
-      const needsPlacement = await checkPlacementNeeded();
+      const needsPlacement = await checkPlacementNeeded(v2?.placement ?? undefined);
       if (needsPlacement) {
         showPlacementIntro();
       } else {
         await _deps.loadDashboard();
       }
     }
-    _deps.updateSidebarState();
   } catch {
     errEl.textContent = "Ei yhteyttä palvelimeen";
     errEl.classList.remove("hidden");

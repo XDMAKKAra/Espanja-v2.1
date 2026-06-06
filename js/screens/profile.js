@@ -5,7 +5,9 @@
 // `openSettingsEditor` helper exported from settings.js.
 
 import { $, show } from "../ui/nav.js";
-import { API, isLoggedIn, clearAuth, authHeader, apiFetch, getAuthEmail } from "../api.js";
+import { API, isLoggedIn, clearAuth, authHeader, apiFetch, getAuthEmail, getProfile } from "../api.js";
+import { getCurriculumList } from "../lib/curriculumCache.js";
+import { state } from "../state.js";
 import { showLoading } from "../ui/loading.js";
 import { MODE_ICONS } from "../ui/icons.js";
 import { timeAgo } from "../ui/timeAgo.js";
@@ -110,15 +112,19 @@ export async function loadProfile() {
   showLoading("Ladataan profiilia…");
   let dashboardData = {};
   let learningPath = [];
+  // L-V393: route profile + curriculum through their shared caches instead of
+  // raw endpoints. getProfile() has a 5-min cache; getCurriculumList() shares
+  // the curriculumCache that oppimispolku already warms, so a profile open
+  // right after browsing Tehtävät makes zero curriculum round-trips. Kicked off
+  // before the awaited fetches so they still run in parallel. Dashboard +
+  // learning-path keep their dedicated endpoints (distinct render shape).
+  const lang = state.language === "fr" || state.language === "de" ? state.language : "es";
+  const profilePromise = window._userProfile ? null : getProfile().catch(() => null);
+  const kurssitPromise = getCurriculumList(lang).catch(() => []);
   try {
-    const profilePromise = window._userProfile
-      ? Promise.resolve(null)
-      : apiFetch(`${API}/api/profile`, { headers: authHeader() }).catch(() => null);
-    const [dashRes, pathRes, profRes, currRes] = await Promise.all([
+    const [dashRes, pathRes] = await Promise.all([
       apiFetch(`${API}/api/dashboard`, { headers: authHeader() }),
       apiFetch(`${API}/api/learning-path`, { headers: authHeader() }).catch(() => null),
-      profilePromise,
-      apiFetch(`${API}/api/curriculum`, { headers: authHeader() }).catch(() => null),
     ]);
     if (dashRes.status === 401) {
       clearAuth();
@@ -130,14 +136,11 @@ export async function loadProfile() {
       const pathJson = await pathRes.json().catch(() => ({}));
       learningPath = pathJson.path || [];
     }
-    if (profRes && profRes.ok) {
-      const profJson = await profRes.json().catch(() => ({}));
-      if (profJson.profile) window._userProfile = profJson.profile;
+    if (profilePromise) {
+      const profJson = await profilePromise;
+      if (profJson && profJson.profile) window._userProfile = profJson.profile;
     }
-    if (currRes && currRes.ok) {
-      const currJson = await currRes.json().catch(() => ({}));
-      dashboardData._kurssit = currJson.kurssit || [];
-    }
+    dashboardData._kurssit = (await kurssitPromise) || [];
   } catch {
     /* fall through to render empty state */
   }
