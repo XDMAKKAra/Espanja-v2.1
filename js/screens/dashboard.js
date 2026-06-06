@@ -527,7 +527,6 @@ function renderDashboard({
     }
   }
 
-  renderGoalRow(chartData);
   renderHeatmap(chartData);
   renderProgressChart(chartData);
 
@@ -683,47 +682,6 @@ function renderDashboard({
         });
       }
     }
-  }
-}
-
-function renderGoalRow(chartData) {
-  const profile = window._userProfile;
-  if (!profile || !profile.onboarding_completed) return;
-
-  // Exam countdown
-  const countdownEl = $("dash-countdown-value");
-  if (profile.exam_date && countdownEl) {
-    const examDate = new Date(profile.exam_date);
-    const daysLeft = Math.max(0, Math.ceil((examDate - new Date()) / (24 * 60 * 60 * 1000)));
-    countdownEl.textContent = daysLeft;
-    if (daysLeft <= 30) countdownEl.style.color = "var(--error)";
-    else if (daysLeft <= 90) countdownEl.style.color = "var(--accent)";
-    else countdownEl.style.color = "";
-    const cd = $("dash-exam-countdown");
-    if (cd) cd.classList.toggle("is-urgent", daysLeft <= 30);
-  } else {
-    const card = $("dash-exam-countdown");
-    if (card) card.classList.add("hidden");
-  }
-
-  // Daily goal
-  const goalMinutes = profile.preferred_session_length || 20;
-  const goalEl = $("dash-goal-minutes");
-  if (goalEl) goalEl.textContent = goalMinutes;
-
-  // Count today's practice minutes from chartData
-  const today = new Date().toISOString().slice(0, 10);
-  const todaySessions = chartData.filter(l => l.createdAt && l.createdAt.slice(0, 10) === today);
-  // Estimate ~3 min per session
-  const todayMinutes = Math.round(todaySessions.length * 3);
-  const todayEl = $("dash-today-minutes");
-  if (todayEl) todayEl.textContent = todayMinutes;
-
-  const barFill = $("dash-goal-bar-fill");
-  if (barFill) {
-    const pct = Math.min(100, (todayMinutes / goalMinutes) * 100);
-    barFill.style.width = `${pct}%`;
-    if (pct >= 100) barFill.style.background = "var(--success)";
   }
 }
 

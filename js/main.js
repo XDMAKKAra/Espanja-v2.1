@@ -834,13 +834,9 @@ $("btn-start").addEventListener("click", async () => {
 
 // ─── Dashboard nav buttons ─────────────────────────────────────────────────
 
-const btnLogout = $("btn-logout");
-if (btnLogout) btnLogout.addEventListener("click", () => {
-  clearAuth();
-  updateSidebarState();
-  show("screen-auth");
-});
-
+// L-V394 — removed dead #btn-logout handler (the id doesn't exist; logout is
+// owned by #sidebar-logout above). clearAuth/updateSidebarState/show stay used
+// there.
 const btnDashStart = $("btn-dash-start");
 if (btnDashStart) btnDashStart.addEventListener("click", () => {
   const back = $("btn-back-to-dash");
