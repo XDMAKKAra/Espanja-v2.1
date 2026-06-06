@@ -108,8 +108,50 @@ function formatExamDate(val) {
   return MONTH_LABELS[ym] || ym;
 }
 
+// L-V393 P3: content-shaped skeleton in place of the full-screen spinner.
+// Shows the profile shell instantly with shimmer placeholders matching the
+// real mode rows / activity rows / chips + the anchor stats, so we never flash
+// a misleading "0 %" before data lands. renderProfile() overwrites every slot.
+function renderProfileSkeleton() {
+  show("screen-profile");
+  const barInline = 'class="skeleton__bar" style="display:inline-block;width:2.4ch;height:1em;vertical-align:middle;border-radius:5px"';
+  const modesEl = document.getElementById("profile-modes");
+  if (modesEl) {
+    modesEl.innerHTML = Array.from({ length: 4 }, () => `
+      <div class="profile-mode-row" aria-hidden="true">
+        <span class="skeleton__bar" style="width:22px;height:22px;border-radius:6px"></span>
+        <span class="skeleton__bar" style="width:42%;height:14px"></span>
+        <span class="skeleton__bar" style="width:26px;height:18px;margin-left:auto"></span>
+      </div>`).join("");
+  }
+  const activityEl = document.getElementById("profile-activity");
+  if (activityEl) {
+    activityEl.innerHTML = Array.from({ length: 3 }, () => `
+      <div class="profile-activity-row" aria-hidden="true" style="opacity:1;transform:none">
+        <span class="skeleton__bar" style="width:58%;height:14px"></span>
+        <span class="skeleton__bar" style="width:28%;height:12px;margin-left:auto"></span>
+      </div>`).join("");
+  }
+  const chipsEl = document.getElementById("profile-chips");
+  if (chipsEl) {
+    chipsEl.innerHTML = Array.from({ length: 3 }, () => `
+      <div class="profile-chip" aria-hidden="true">
+        <div class="profile-chip-main">
+          <span class="skeleton__bar" style="width:40%;height:12px"></span>
+          <span class="skeleton__bar" style="width:64%;height:16px;margin-top:6px"></span>
+        </div>
+      </div>`).join("");
+  }
+  // Replace the zero placeholders on the anchor stats with shimmer so the
+  // screen never shows a real-looking "0 %" / "0" before the fetch resolves.
+  ["profile-stat-readiness", "profile-stat-streak", "profile-stat-total", "profile-stat-week"]
+    .forEach((id) => { const el = document.getElementById(id); if (el) el.innerHTML = `<span ${barInline}></span>`; });
+  const fill = document.getElementById("profile-readiness-fill");
+  if (fill) fill.style.width = "0%";
+}
+
 export async function loadProfile() {
-  showLoading("Ladataan profiilia…");
+  renderProfileSkeleton();
   let dashboardData = {};
   let learningPath = [];
   // L-V393: route profile + curriculum through their shared caches instead of
