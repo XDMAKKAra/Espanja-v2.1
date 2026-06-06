@@ -11,6 +11,7 @@
 // L-V293-1e (Part B + C).
 
 import { API, apiFetch } from "../api.js";
+import { stripLeadingSubjectPronoun } from "../../lib/grading/subjectPronoun.js";
 
 const SUPPORTED_LANGS = ["es", "de", "fr"];
 const PART_FILE = {
@@ -161,9 +162,15 @@ export function gradeQuestion(question, userInput) {
   if (question.type === "fill") {
     const raw = String(userInput || "").trim().toLowerCase();
     const target = String(question.answer || "").trim().toLowerCase();
-    if (raw === target) return { correct: true, normalizedAnswer: raw };
+    // Spanish subject pronouns are optional (L-V397): "(caminar, yo)" → both
+    // "yo caminaba" and "caminaba" are correct. Compare with a leading pronoun
+    // stripped; a wrong verb form ("yo caminé") still differs and fails.
+    const rawNP = stripLeadingSubjectPronoun(raw);
+    const targetNP = stripLeadingSubjectPronoun(target);
+    if (raw === target || rawNP === targetNP) return { correct: true, normalizedAnswer: raw };
     const alts = Array.isArray(question.accepted_alternates) ? question.accepted_alternates : [];
-    if (alts.map(a => String(a).trim().toLowerCase()).includes(raw)) {
+    const altLower = alts.map(a => String(a).trim().toLowerCase());
+    if (altLower.includes(raw) || altLower.map(stripLeadingSubjectPronoun).includes(rawNP)) {
       return { correct: true, normalizedAnswer: raw };
     }
     return { correct: false, normalizedAnswer: raw };

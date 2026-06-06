@@ -80,6 +80,25 @@ describe("gradeAukkotehtava", () => {
     const r = gradeAukkotehtava({ id: "a1", studentAnswer: "hola" });
     expect(r.band).toBe("taydellinen");
   });
+
+  // L-V397 — optional Spanish subject pronoun must not fail a correct answer.
+  it("accepts a leading subject pronoun → täydellinen", () => {
+    vi.mocked(getSeedItemById).mockReturnValue({ id: "g1", answer: "caminaba", alt_answers: [] });
+    const r = gradeAukkotehtava({ id: "g1", studentAnswer: "yo caminaba" });
+    expect(r.band).toBe("taydellinen");
+  });
+
+  it("still rejects a wrong tense even with a pronoun", () => {
+    vi.mocked(getSeedItemById).mockReturnValue({ id: "g1", answer: "caminaba", alt_answers: [] });
+    const r = gradeAukkotehtava({ id: "g1", studentAnswer: "yo caminé" });
+    expect(r.band).toBe("vaarin");
+  });
+
+  it("does not strip the article 'el' (no false accept)", () => {
+    vi.mocked(getSeedItemById).mockReturnValue({ id: "g2", answer: "el coche", alt_answers: [] });
+    const r = gradeAukkotehtava({ id: "g2", studentAnswer: "coche" });
+    expect(r.band).not.toBe("taydellinen");
+  });
 });
 
 describe("gradeMonivalinta", () => {
