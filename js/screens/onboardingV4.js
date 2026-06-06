@@ -859,7 +859,7 @@ function renderSummary() {
       plan: planFromResult.length ? planFromResult : heuristic.plan,
       note: result.meta?.planSource === "fallback"
         ? "Tarkka polku rakentuu kun ensimmäisten harjoitusten data kerääntyy."
-        : "Polku perustuu kurssihistoriaasi, diagnostiikkaasi ja taustatietoihisi.",
+        : "Polku perustuu taso-arvioosi ja taustatietoihisi.",
       loading: false,
     });
   }).catch(() => {
