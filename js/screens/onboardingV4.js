@@ -8,7 +8,7 @@
 // Entrypoint hash: #/aloitus-v4 (V3 stays default until V4 is content-complete).
 
 import { $, show } from "../ui/nav.js";
-import { API, isLoggedIn, apiFetch, setAuth, humanizeApiError } from "../api.js";
+import { API, isLoggedIn, apiFetch, setAuth, humanizeApiError, authHeader } from "../api.js";
 import { setLanguage } from "../state.js";
 import { track } from "../analytics.js";
 import {
@@ -602,11 +602,15 @@ function escapeAttr(s) {
 
 // ─── Step 5: Yhteenveto (tulokset) ──────────────────────────────────────────
 function wireSummary() {
-  $("ob-v4-summary-start")?.addEventListener("click", () => {
+  $("ob-v4-summary-start")?.addEventListener("click", async () => {
     track("ob_v4_completed", { language: state.language, courses: state.coursesCompleted.length });
     // L-V359 — results lead into the account step (create account or continue
     // without one), then the product choice. Logged-in users skip the account
     // step since their results already persist as they go.
+    // L-V398 P0 — a logged-in user has now finished the kartoitus; mark
+    // onboarding complete here too so a Stripe redirect-and-return (or any
+    // reload from the choice step) doesn't bounce them back into the flow.
+    if (isLoggedIn()) await markOnboardingComplete();
     gotoStage(isLoggedIn() ? "choice" : "account");
   });
 }
@@ -663,6 +667,9 @@ async function submitAccount() {
     track("ob_v4_account_created", { language: state.language });
     // Persist the anonymous results onto the new account before moving on.
     await flushDiagnosticToAccount();
+    // L-V398 P0 — the just-created account has finished the kartoitus; mark
+    // onboarding complete so the gate doesn't re-launch it on next load.
+    await markOnboardingComplete();
     // If the user got here by tapping a paid product first, resume that
     // checkout now that they have an account. Otherwise show the choice.
     let pending = null;
@@ -782,8 +789,30 @@ function showCheckoutPending(product) {
   status.scrollIntoView({ behavior: "smooth", block: "center" });
 }
 
-function finishToApp(reason) {
+// L-V398 P0 — the diagnostic flow never set profile.onboarding_completed, so
+// the gate in checkOnboarding (screens/onboarding.js) re-launched the kartoitus
+// on every reload after the user had already finished it. Persist the flag at
+// the terminal steps so a completed user is never sent back. Best-effort: a
+// failed write must not block the user; the next profile fetch picks it up if
+// the server eventually has it. We also update the in-memory profile so
+// same-session navigations stay consistent.
+async function markOnboardingComplete() {
+  if (!isLoggedIn()) return;
+  if (window._userProfile) window._userProfile.onboarding_completed = true;
+  try {
+    await apiFetch(`${API}/api/profile`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", ...authHeader() },
+      body: JSON.stringify({ onboarding_completed: true }),
+    });
+  } catch (err) {
+    console.warn("mark onboarding complete failed (non-fatal):", err.message);
+  }
+}
+
+async function finishToApp(reason) {
   track("ob_v4_choice_resolved", { reason, language: state.language });
+  await markOnboardingComplete();
   if (typeof _deps.loadDashboard === "function") {
     _deps.loadDashboard();
   } else {

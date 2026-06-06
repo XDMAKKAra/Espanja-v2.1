@@ -954,8 +954,18 @@ if (!resetToken && isLoggedIn()) {
     // sidebar so the server-side nickname overrides any stale cache
     // (or absence of cache on a fresh origin like prod after localhost).
     updateSidebarState();
-    // Check if placement test is needed
-    const needsPlacement = await checkPlacementNeeded();
+    // Check if placement test is needed.
+    // L-V398 P0 — the V4 diagnostic-first onboarding replaced the legacy
+    // placement test. A user who finished onboarding (onboarding_completed=true)
+    // already did the V4 kartoitus, which persists user_onboarding_diagnostic —
+    // NOT the diagnostic_results row /api/placement/status checks. Without this
+    // guard the placement test would re-trigger on every load for V4 users (a
+    // second re-trigger vector, unmasked now that the onboarding gate no longer
+    // always fires). Legacy users with onboarding_completed=true already have a
+    // diagnostic_results row, so checkPlacementNeeded returns false for them
+    // anyway — this guard is a no-op there and never hides a needed placement.
+    const alreadyOnboarded = window._userProfile?.onboarding_completed === true;
+    const needsPlacement = alreadyOnboarded ? false : await checkPlacementNeeded();
     if (needsPlacement) {
       showPlacementIntro();
       return;
