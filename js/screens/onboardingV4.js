@@ -162,7 +162,7 @@ function wireIntro() {
     state.miniYoStatus = "skipped";
     await completeDiagnostic({ language: state.language, status: "skipped" });
     track("ob_v4_skipped_at_intro", { language: state.language });
-    gotoStage("courses");
+    gotoStage("biography");
   });
 }
 
@@ -313,7 +313,9 @@ function advanceTestPart(statusIfLast) {
     const finalStatus = statusIfLast || "partial";
     state.miniYoStatus = finalStatus === "completed" ? "completed" : finalStatus;
     completeDiagnostic({ language: state.language, status: state.miniYoStatus });
-    gotoStage("courses");
+    // L-V398 #2 — the "Valitse käymäsi kurssit" step was removed (redundant
+    // with the background questions). Test now leads straight to biography.
+    gotoStage("biography");
     return;
   }
   state.currentPart = TEST_PARTS[idx + 1];
@@ -826,8 +828,10 @@ function renderSummary() {
 
   const stepEl = $("ob-v4-summary-step");
   if (stepEl) {
-    const total = shouldShowTextbook() ? 6 : 5;
-    stepEl.textContent = `Vaihe ${total} / ${total}`;
+    // L-V398 #2 — courses step removed: flow is intro → test → biography →
+    // summary (4 steps; the textbook disambiguator keyed on courses and is no
+    // longer reached).
+    stepEl.textContent = "Vaihe 4 / 4";
   }
 
   // Skeleton-tilaa varten käytetään heuristiikkaa rakenteen pitämiseksi

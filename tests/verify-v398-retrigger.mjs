@@ -82,10 +82,12 @@ const run = async () => {
   const firstActive = await activeId();
   assert("kartoitus appears when onboarding_completed=false (#screen-ob-v4-intro active)",
     firstActive === "screen-ob-v4-intro");
+  const coursesGone = await page.evaluate(() => !document.getElementById("screen-ob-v4-courses"));
+  assert("courses step removed from DOM (L-V398 #2)", coursesGone);
 
   // ── 2) Walk the skip path to the results "start" step ───────────────────────
-  await clickWait("#ob-v4-intro-skip", "#screen-ob-v4-courses.active");
-  await clickWait("#ob-v4-courses-continue", "#screen-ob-v4-biography.active");
+  // L-V398 #2 — courses step removed: intro-skip now lands on biography.
+  await clickWait("#ob-v4-intro-skip", "#screen-ob-v4-biography.active");
   await clickWait("#ob-v4-bio-continue", "#screen-ob-v4-summary.active");
   // Summary "start" (logged-in) → markOnboardingComplete() posts the flag.
   await clickWait("#ob-v4-summary-start", "#screen-ob-v4-choice.active");

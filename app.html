@@ -720,7 +720,7 @@
   <!-- V4 step 1: intro -->
   <div id="screen-ob-v4-intro" class="screen ob4">
     <div class="ob4-shell">
-      <p class="ob4-step">Vaihe 1 / 5</p>
+      <p class="ob4-step">Vaihe 1 / 4</p>
       <h1 class="ob4-title">Räätälöidään sinun polkusi</h1>
       <p class="ob4-sub">Lyhyt taso-arvio kattaa kieliopin, luetun ymmärtämisen ja kirjoittamisen. Saat henkilökohtaisen 3 viikon suunnitelman ja säästät tunteja, koska et harjoittele sitä mitä jo osaat. Voit jatkaa myöhemmin missä jäit.</p>
       <p class="ob4-hint">Voit pilkkoa testin useaan istuntoon. Kirjoitelman voi ohittaa, jos on kiire.</p>
@@ -758,120 +758,10 @@
     </div>
   </div>
 
-  <!-- V4 step 3: multi-select kurssit + arvosanat -->
-  <div id="screen-ob-v4-courses" class="screen ob4">
-    <div class="ob4-shell">
-      <p class="ob4-step">Vaihe 3 / 5</p>
-      <h1 class="ob4-title">Mitä lukio-kursseja olet käynyt?</h1>
-      <p class="ob4-sub">Valitse kaikki käymäsi kurssit, missä tahansa järjestyksessä. Voit lisätä arvosanan jos muistat.</p>
-      <div class="ob4-courses" id="ob-v4-courses-list">
-        <div class="ob4-course" data-course="1">
-          <input type="checkbox" class="ob4-course__check" data-course-num="1" id="ob-v4-c1" />
-          <label class="ob4-course__label" for="ob-v4-c1">
-            <span class="ob4-course__num">Kurssi 1</span>
-            <span class="ob4-course__title">Perussanasto ja preesens</span>
-          </label>
-          <select class="ob4-course__grade" data-course-num="1" aria-label="Arvosana kurssista 1">
-            <option value="skipped">En muista</option>
-            <option value="4">4</option><option value="5">5</option><option value="6">6</option>
-            <option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option>
-          </select>
-        </div>
-        <div class="ob4-course" data-course="2">
-          <input type="checkbox" class="ob4-course__check" data-course-num="2" id="ob-v4-c2" />
-          <label class="ob4-course__label" for="ob-v4-c2">
-            <span class="ob4-course__num">Kurssi 2</span>
-            <span class="ob4-course__title">Arki ja epäsäännölliset verbit</span>
-          </label>
-          <select class="ob4-course__grade" data-course-num="2" aria-label="Arvosana kurssista 2">
-            <option value="skipped">En muista</option>
-            <option value="4">4</option><option value="5">5</option><option value="6">6</option>
-            <option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option>
-          </select>
-        </div>
-        <div class="ob4-course" data-course="3">
-          <input type="checkbox" class="ob4-course__check" data-course-num="3" id="ob-v4-c3" />
-          <label class="ob4-course__label" for="ob-v4-c3">
-            <span class="ob4-course__num">Kurssi 3</span>
-            <span class="ob4-course__title">Mennyt aika ja matkustaminen</span>
-          </label>
-          <select class="ob4-course__grade" data-course-num="3" aria-label="Arvosana kurssista 3">
-            <option value="skipped">En muista</option>
-            <option value="4">4</option><option value="5">5</option><option value="6">6</option>
-            <option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option>
-          </select>
-        </div>
-        <div class="ob4-course" data-course="4">
-          <input type="checkbox" class="ob4-course__check" data-course-num="4" id="ob-v4-c4" />
-          <label class="ob4-course__label" for="ob-v4-c4">
-            <span class="ob4-course__num">Kurssi 4</span>
-            <span class="ob4-course__title">Ennen ja nyt, imperfekti</span>
-          </label>
-          <select class="ob4-course__grade" data-course-num="4" aria-label="Arvosana kurssista 4">
-            <option value="skipped">En muista</option>
-            <option value="4">4</option><option value="5">5</option><option value="6">6</option>
-            <option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option>
-          </select>
-        </div>
-        <div class="ob4-course" data-course="5">
-          <input type="checkbox" class="ob4-course__check" data-course-num="5" id="ob-v4-c5" />
-          <label class="ob4-course__label" for="ob-v4-c5">
-            <span class="ob4-course__num">Kurssi 5</span>
-            <span class="ob4-course__title">Tulevaisuus ja unelmat</span>
-          </label>
-          <select class="ob4-course__grade" data-course-num="5" aria-label="Arvosana kurssista 5">
-            <option value="skipped">En muista</option>
-            <option value="4">4</option><option value="5">5</option><option value="6">6</option>
-            <option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option>
-          </select>
-        </div>
-        <div class="ob4-course" data-course="6">
-          <input type="checkbox" class="ob4-course__check" data-course-num="6" id="ob-v4-c6" />
-          <label class="ob4-course__label" for="ob-v4-c6">
-            <span class="ob4-course__num">Kurssi 6</span>
-            <span class="ob4-course__title">Maailman ongelmat, subjunktiivi</span>
-          </label>
-          <select class="ob4-course__grade" data-course-num="6" aria-label="Arvosana kurssista 6">
-            <option value="skipped">En muista</option>
-            <option value="4">4</option><option value="5">5</option><option value="6">6</option>
-            <option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option>
-          </select>
-        </div>
-        <div class="ob4-course" data-course="7">
-          <input type="checkbox" class="ob4-course__check" data-course-num="7" id="ob-v4-c7" />
-          <label class="ob4-course__label" for="ob-v4-c7">
-            <span class="ob4-course__num">Kurssi 7</span>
-            <span class="ob4-course__title">Kulttuuri ja yhteiskunta</span>
-          </label>
-          <select class="ob4-course__grade" data-course-num="7" aria-label="Arvosana kurssista 7">
-            <option value="skipped">En muista</option>
-            <option value="4">4</option><option value="5">5</option><option value="6">6</option>
-            <option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option>
-          </select>
-        </div>
-        <div class="ob4-course" data-course="8">
-          <input type="checkbox" class="ob4-course__check" data-course-num="8" id="ob-v4-c8" />
-          <label class="ob4-course__label" for="ob-v4-c8">
-            <span class="ob4-course__num">Kurssi 8</span>
-            <span class="ob4-course__title">Yo-koevalmiiksi</span>
-          </label>
-          <select class="ob4-course__grade" data-course-num="8" aria-label="Arvosana kurssista 8">
-            <option value="skipped">En muista</option>
-            <option value="4">4</option><option value="5">5</option><option value="6">6</option>
-            <option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option>
-          </select>
-        </div>
-      </div>
-      <div class="ob4-actions">
-        <button type="button" class="ob4-btn ob4-btn--primary" id="ob-v4-courses-continue">Jatka</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- V4 step 4: biografia -->
+  <!-- V4 step 3: biografia (kurssivalinta-vaihe poistettu L-V398 #2 — redundantti taustakysymysten kanssa) -->
   <div id="screen-ob-v4-biography" class="screen ob4">
     <div class="ob4-shell">
-      <p class="ob4-step">Vaihe 4 / 5</p>
+      <p class="ob4-step">Vaihe 3 / 4</p>
       <h1 class="ob4-title">Pari kysymystä taustastasi</h1>
       <p class="ob4-sub">Auttaa kalibroimaan harjoitukset oikealle tasolle.</p>
       <form class="ob4-bio-form" id="ob-v4-bio-form">
