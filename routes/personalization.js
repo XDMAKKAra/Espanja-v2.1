@@ -11,10 +11,11 @@ import {
   selectWeightedTopic,
   summarizeMiniYOFromRows,
 } from "../lib/personalization.js";
+import { PRODUCT_LANGS } from "../lib/constants.js";
 
 const router = Router();
 
-const VALID_LANGS = new Set(["es", "de", "fr"]);
+const VALID_LANGS = PRODUCT_LANGS;
 
 router.post("/build-profile", requireAuth, async (req, res) => {
   // L-V392 P1-3: user-owned data via per-request RLS client (see progress.js).

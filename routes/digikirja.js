@@ -19,10 +19,11 @@
 import { Router } from "express";
 import adminClient from "../supabase.js";
 import { requireAuth } from "../middleware/auth.js";
+import { PRODUCT_LANGS } from "../lib/constants.js";
 
 const router = Router();
 
-const SUPPORTED_LANGS = new Set(["es", "fr", "de"]);
+const SUPPORTED_LANGS = PRODUCT_LANGS;
 
 function parseRouteParams(src) {
   const lang = String(src.lang || "").toLowerCase();

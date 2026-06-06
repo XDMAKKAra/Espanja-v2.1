@@ -9,6 +9,7 @@ import { Router } from "express";
 import adminClient from "../supabase.js";
 import { requireAuth } from "../middleware/auth.js";
 import { computeStudyPlan } from "../lib/studyPlan.js";
+import { GRADES } from "../lib/constants.js";
 import { Resend } from "resend";
 
 const router = Router();
@@ -29,7 +30,6 @@ const LANG_LABELS = { es: "espanjan", de: "saksan", fr: "ranskan" };
 
 const LANGS = ["es", "de", "fr"];
 const LEVELS = ["lyhyt", "pitka"];
-const GRADES = ["I", "A", "B", "C", "M", "E", "L"];
 const FOCUS_AREAS = ["vocab", "grammar", "writing", "reading", "exam"];
 
 // L-V293-ONBOARDING-DIAGNOSTIC-1a constants.

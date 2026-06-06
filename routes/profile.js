@@ -1,14 +1,15 @@
 import { Router } from "express";
 import adminClient from "../supabase.js";
 import { requireAuth, isTestProEmail } from "../middleware/auth.js";
+import { GRADES } from "../lib/constants.js";
 
 const router = Router();
 
-const VALID_GRADES = ["I", "A", "B", "C", "M", "E", "L", "en tiedä"];
+const VALID_GRADES = [...GRADES, "en tiedä"];
 // L-PLAN-6 — target_grade now spans the full I..L ladder (CURRICULUM_SPEC §2)
 // so I/A users get a slower-paced, repetition-heavy plan and L users get
 // the full 1.5× multiplier + Syvennä loop. Mirror in lib/lessonContext.js.
-const VALID_TARGET_GRADES = ["I", "A", "B", "C", "M", "E", "L"];
+const VALID_TARGET_GRADES = [...GRADES];
 const VALID_REFERRALS = ["friend", "teacher", "google", "tiktok", "instagram", "other"];
 const VALID_STUDY_BACKGROUNDS = ["lukio", "ylakoulu_lukio", "alakoulu", "asunut", "kotikieli"];
 const VALID_WEAK_AREAS = [

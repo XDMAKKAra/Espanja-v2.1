@@ -17,6 +17,7 @@ import {
   VALID_TARGET_GRADES,
 } from "../lib/lessonContext.js";
 import { getLessonLabel } from "../lib/lessonLabels.js";
+import { PRODUCT_LANGS } from "../lib/constants.js";
 
 const router = Router();
 
@@ -126,7 +127,7 @@ function summariseProgress(allProgress, kurssiKey, kertausLessonIndex) {
 }
 
 // ─── GET /api/curriculum ────────────────────────────────────────────────────
-const SUPPORTED_LANGS = new Set(["es", "de", "fr"]);
+const SUPPORTED_LANGS = PRODUCT_LANGS;
 
 router.get("/", optionalAuth, async (req, res) => {
   const supabase = getRequestDb(adminClient);
