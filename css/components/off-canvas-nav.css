@@ -42,10 +42,11 @@
 /* === <1024 px: off-canvas mode ============================ */
 @media (max-width: 1023px) {
 
-  /* Override app-shell.css's `display: none` — we need the element
-     present + transform-able. */
+  /* L-V394 — owns the mobile sidebar display. sidebar-shell.css now scopes
+     its display:grid to >=1024, so nothing competes here and !important is no
+     longer needed (the element must stay present + transform-able as a drawer). */
   .app-sidebar {
-    display: flex !important;
+    display: flex;
     position: fixed;
     top: 0;
     left: 0;

@@ -53,7 +53,8 @@
     grid-template-rows: auto 1fr auto;
   }
   .app-main  { grid-column: 1 / -1; padding: 24px; padding-right: 72px; }
-  .app-sidebar { display: none; }
+  /* L-V394 — mobile sidebar display is owned by off-canvas-nav.css (the
+     drawer). The old `.app-sidebar { display:none }` here only fought it. */
 }
 
 /* === < 768 px === */
@@ -63,10 +64,13 @@
 
 /* === Auth-family screens: full-width, no shell columns === */
 /* Covers screen-auth, screen-reset-password, etc.          */
-/* L-V378 — !important so the auth view stays shell-free even on mobile,
-   where off-canvas-nav.css forces `.app-sidebar { display: flex !important }`
-   for the drawer. auth-mode is more specific and must win for guests. */
-body.auth-mode .app-sidebar { display: none !important; }
+/* L-V378/L-V394 — auth view stays shell-free at all widths. This selector's
+   specificity (0,2,0) beats the per-breakpoint display rules (.app-sidebar,
+   0,1,0) on its own now that off-canvas dropped its !important, so this no
+   longer needs one either. updateSidebarState()'s inline display:none also
+   hides the sidebar for guests (the L-V378 leak was an !important forcing it
+   visible — fewer !important here is strictly safer). */
+body.auth-mode .app-sidebar { display: none; }
 body.auth-mode .app-rail { display: none; }
 body.auth-mode .app-shell {
   grid-template-columns: 1fr;

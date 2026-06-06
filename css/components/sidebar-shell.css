@@ -18,13 +18,23 @@
 
 /* Force three-row grid so logo / nav / footer never bleed into
    each other. style.css used flex which let footer drift up
-   when the nav was empty. */
+   when the nav was empty.
+   L-V394 — display:grid scoped to desktop (>=1024). On mobile the sidebar is
+   the off-canvas drawer and off-canvas-nav.css owns display:flex. This file
+   loads LAST, so leaving display:grid unscoped forced off-canvas to use
+   !important to win at mobile, which in turn forced the auth-mode rule to
+   escalate to !important. Scoping desktop-only gives one owner per breakpoint
+   and lets both drop !important. grid-template-rows lives with the grid. */
 .app-sidebar {
-  display: grid;
-  grid-template-rows: auto 1fr auto;
   gap: 0;
   /* Override style.css padding-bottom 0 so footer has breathing room. */
   padding: 20px 0 16px;
+}
+@media (min-width: 1024px) {
+  .app-sidebar {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+  }
 }
 
 /* The three sidebar slots — used so off-canvas-nav animation
