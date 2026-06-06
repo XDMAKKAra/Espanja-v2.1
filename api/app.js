@@ -45,6 +45,7 @@ try {
   const { default: configRoutes } = await import("../routes/config.js");
   const { default: placementRoutes } = await import("../routes/placement.js");
   const { default: curriculumRoutes } = await import("../routes/curriculum.js");
+  const { default: digikirjaRoutes } = await import("../routes/digikirja.js");
   const { default: statusRoutes } = await import("../routes/status.js");
   const { default: dashboardV2Routes } = await import("../routes/dashboardV2.js");
   const { default: onboardingRoutes } = await import("../routes/onboarding.js");
@@ -102,6 +103,10 @@ try {
   app.use("/api", profileRoutes);
   app.use("/api/placement", placementRoutes);
   app.use("/api/curriculum", curriculumRoutes);
+  // L-V394 — digikirja was mounted in server.js (dev) but missing here, so the
+  // self-assessment + lesson-progress endpoints 404'd in production (Vercel
+  // serves via this entry). Mount it so the digikirja reader works in prod.
+  app.use("/api/digikirja", digikirjaRoutes);
   app.use("/api/config", configRoutes);
   app.use("/api/dev", configRoutes);
   app.use("/api/status", statusRoutes);

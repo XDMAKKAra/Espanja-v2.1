@@ -244,9 +244,15 @@ function syncBadge(ctx, screenId) {
     if (ok) {
       clearLessonContext();
       try { sessionStorage.removeItem("currentLessonTeachingMd"); } catch { /* ignore */ }
-      // Bounce back to the curriculum overview.
-      const lc = await import("../screens/curriculum.js");
-      lc.loadCurriculum();
+      // L-V394 — #screen-path is killed (curriculum.js loadCurriculum() would
+      // leave a blank surface); bounce to the live oppimispolku index instead.
+      // main.js's hashchange router renders oppimispolkuIndex for this hash.
+      if (location.hash === "#/oppimispolku") {
+        import("../screens/oppimispolkuIndex.js")
+          .then((m) => m.loadOppimispolkuIndex?.()).catch(() => { /* noop */ });
+      } else {
+        location.hash = "#/oppimispolku";
+      }
     }
   });
 }

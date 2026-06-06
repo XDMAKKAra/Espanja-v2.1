@@ -147,8 +147,9 @@ function wireIntro() {
       if (!chip) return;
       const lang = chip.dataset.lang;
       if (!SUPPORTED_LANGS.includes(lang)) return;
-      state.language = lang;
-      try { localStorage.setItem("puheo:lang", lang); } catch { /* private mode */ }
+      // L-V394 — setLanguage() already sets state.language AND mirrors to
+      // localStorage["puheo:lang"] (state.js); the prior two lines were a
+      // redundant triple-write and a refactor hazard. Single source now.
       setLanguage(lang);
       reflectLanguageChips();
     });

@@ -79,20 +79,20 @@ Raskaat luokat (FRONTEND, EXERCISE, TESTING) on jaettu S/M/L-tasoihin. **Triage 
 
 | Luokka | Taso | Mitä se on | Skill-stack (kutsu KAIKKI tason) |
 |---|---|---|---|
-| **FRONTEND** | S | yksi CSS-arvo, yhden napin teksti, color-fix, padding/margin-säätö, typo | `frontend-design` |
-| | M | koko komponentti (modaali, kortti, nav-item), state-flow, animaatio, a11y-fix | `frontend-design`, `ui-ux-pro-max` |
-| | L | koko screen-redesign, landing, app-shell, uusi mobile-responsive layout | `frontend-design`, `ui-ux-pro-max` |
+| **FRONTEND** | S | yksi CSS-arvo, yhden napin teksti, color-fix, padding/margin-säätö, typo | `design-taste-frontend` |
+| | M | koko komponentti (modaali, kortti, nav-item), state-flow, animaatio, a11y-fix | `ui-ux-pro-max`, `emil-design-eng`, `design-taste-frontend` |
+| | L | koko screen-redesign, landing, app-shell, uusi mobile-responsive layout | `ui-ux-pro-max`, `emil-design-eng`, `design-taste-frontend` |
 | **EXERCISE** | S | yhden tehtävän teksti/optio-fix, typo, käännös | `humanizer` (jos suomi-tekstiä) |
 | | M | uusi yksittäinen tehtävä (vocab/grammar/reading) tai pisteytys-fix | `practice-problem-sequence-designer`, `retrieval-practice-generator` |
 | | L | kokonainen oppituntiset, tasotesti, adaptiivinen sekvenssi, hinttiketju, rubric | **Core (lataa aina):** `practice-problem-sequence-designer`, `retrieval-practice-generator`, `variation-theory-task-designer`, `cognitive-load-analyser`. **Conditional (lataa jos task vaatii):** `scaffolded-task-modifier` (jos EAL/tasoeroitus), `worked-example-fading-designer` (jos proseduraalinen kielioppi), `criterion-referenced-rubric-generator` (jos rubric-output), `adaptive-hint-sequence-designer` (jos hint-cascade). Älä lataa kaikkia kahdeksaa, valitse mitä task tarvitsee. |
 | **TESTING** | S | yksi olemassaolevan spec:n korjaus, selector-fix | `webapp-testing` |
 | | M | uusi spec yhdelle käyttäjäpolulle, bug-scan | `webapp-testing` |
 | | L | regression-suite, screenshot-vertailu-flow, koko audit | `webapp-testing` |
-| **PLANNING / BRIEF** | — | planner-istunto, brief-kirjoitus, scope-keskustelu, queue-päivitys | `superpowers:brainstorming`, `superpowers:writing-plans` |
+| **PLANNING / BRIEF** | — | planner-istunto, brief-kirjoitus, scope-keskustelu, queue-päivitys | 
 | **SUPABASE / BACKEND** | — | migraatio, RLS, taulu-muutos, edge function, API-reitti, palvelinpuolen logiikka | `supabase`, `supabase-postgres-best-practices` |
 | **COPY / SUOMI-TEKSTI** | — | mikä tahansa käyttäjälle näkyvä suomi-teksti: blog, microcopy, hero, virheviesti, email, oppitunnin selitys, landing-myyntiteksti | `humanizer` |
 
-**Päällekkäisyys-sääntö:** Jos tehtävä koskee suomi-tekstiä → **COPY pätee aina päälle** muiden kategorioiden. Esim. hero-otsikon kirjoittaminen = FRONTEND-M + COPY (eli `frontend-design`, `design-taste-frontend`, `ui-ux-pro-max`, `humanizer`). Pelkkä CSS-spacing-fix herolle ilman tekstimuutosta = vain FRONTEND-S.
+**Päällekkäisyys-sääntö:** Jos tehtävä koskee suomi-tekstiä → **COPY pätee aina päälle** muiden kategorioiden. Esim. hero-otsikon kirjoittaminen = FRONTEND-M + COPY (eli `ui-ux-pro-max`, `emil-design-eng`, `design-taste-frontend`, `humanizer`). Pelkkä CSS-spacing-fix herolle ilman tekstimuutosta = vain FRONTEND-S.
 
 2. **Aloita vastauksesi rivillä:** `Skills invoked: <pilkulla erotettu lista>`. Jos rivi puuttuu, käyttäjä tietää että skipattiin → työ hylätään.
 
@@ -283,8 +283,9 @@ middleware/
   rateLimit.js     — Rate limiters for auth, AI, registration
 lib/
   openai.js        — OpenAI wrapper, shared constants, utilities
-app.html           — Main SPA (all screens)
-app.js             — Frontend logic (2300+ lines, vanilla JS)
+app.html           — Main SPA (all screens, ~3100 rows of screen markup)
+js/main.js         — Frontend entry (router, init, screen-switching) → bundled to /app.bundle.js
+js/screens/*.js    — Per-screen logic (vocab, writing, grammar, reading, exam, dashboard, oppimispolkuIndex, courseDetail, …)
 index.html         — Landing page
 email.js           — Email templates (Resend)
 supabase.js        — Supabase client
@@ -317,3 +318,97 @@ Projektissa on knowledge graph kohteessa `graphify-out/`. Käytä sitä ENNEN ra
 - Käyttäjä eksplisiittisesti sanoo "lue tiedosto" tai "look at the raw file"
 
 **Auto-update:** `.git/hooks/post-commit` ajaa `graphify update .`:n kun commit koskettaa koodia (js/mjs/cjs/ts/tsx/jsx/html/css/json/py). Ei API-kuluja (AST-only). Älä poista hookia.
+
+ **Subagent Strategy**
+Use subagents liberally to keep main context window clean
+Offload research, exploration, and parallel analysis to subagents
+For complex problems, throw more compute at it via subagents
+One tack per subagent for focused execution
+
+. **Self-Improvement Loop**
+After ANY correction from the user: update tasks/lessons.md with the pattern
+Write rules for yourself that prevent the same mistake
+Ruthlessly iterate on these lessons until mistake rate drops
+Review lessons at session start for relevant project
+
+. Verification Before Done
+Never mark a task complete without proving it works
+Diff behavior between main and your changes when relevant
+Ask yourself: "Would a staff engineer approve this?"
+Run tests, check logs, demonstrate correctness
+
+**emand Elegance (Balanced)**
+For non-trivial changes: pause and ask "is there a more elegant way?"
+If a fix feels hacky: "Knowing everything I know now, implement the elegant solution"
+Skip this for simple, obvious fixes - don't over-engineer
+Challenge your own work before presenting it
+
+**Autonomous Bug Fixing**
+When given a bug report: just fix it. Don't ask for hand-holding
+Point at logs, errors, failing tests - then resolve them
+Zero context switching required from the user
+Go fix failing CI tests without being told how
+
+**Core Principles**
+Simplicity First: Make every change as simple as possible. Impact minimal code.
+No Laziness: Find root causes. No temporary fixes. Senior developer standards.
+Minimat Impact: Changes should only touch what's necessary. Avoid introducing bugs.
+
+
+---
+
+# 📣 MARKKINOINTI-SKILLIT — reititys (marketing-skills plugin)
+
+Kun teet **markkinointitehtävää**, kutsu Skill-toolilla vastaava `marketing-skills:<skill>` ENNEN tuotoksen tekoa, samaan tapaan kuin dev-skill-stack. Esim. uusi markkinointisähköposti → kutsu `marketing-skills:emails`. Suomi-teksti: marketing-skill antaa rakenteen/strategian, `humanizer` siivoaa lopullisen suomi-copyn (COPY-sääntö pätee yhä päälle).
+
+| Tehtävä | Kutsu |
+|---|---|
+| Markkinointi-spostit, automaatioflowt, sekvenssit | `marketing-skills:emails` |
+| B2B kylmäspostit (esim. opettajakontaktointi) | `marketing-skills:cold-email` |
+| Some-sisältö + strategia (TikTok/Reels/IG/Shorts) | `marketing-skills:social` |
+| Videosisältö (käsis, hookit, formaatit) | `marketing-skills:video` |
+| AI-kuvageneraatio, kuvatyökalut, optimointi | `marketing-skills:image` |
+| Markkinointisivu-copy | `marketing-skills:copywriting` |
+| Olemassa olevan copyn editointi/viilaus | `marketing-skills:copy-editing` |
+| Sisältöstrategia / content-kalenteri | `marketing-skills:content-strategy` |
+| Landing/lomake-konversio (CRO) | `marketing-skills:cro` |
+| Rekisteröitymisflow | `marketing-skills:signup` |
+| Onboarding / aktivointi signupin jälkeen | `marketing-skills:onboarding` |
+| Popupit, modaalit, overlayt | `marketing-skills:popups` |
+| Paywall / in-app upgrade-hetket | `marketing-skills:paywalls` |
+| Lead-magnetit (ilmaistuote → liidi) | `marketing-skills:lead-magnets` |
+| Ilmaistyökalut/laskurit markkinointivetona | `marketing-skills:free-tools` |
+| Tekninen + on-page SEO | `marketing-skills:seo-audit` |
+| AI-haku-optimointi (AEO/GEO/LLMO) | `marketing-skills:ai-seo` |
+| Skaalattu sivugenerointi (programmatic SEO) | `marketing-skills:programmatic-seo` |
+| Sivuhierarkia / navigaatio / URL-rakenne | `marketing-skills:site-architecture` |
+| Structured data / schema-merkinnät | `marketing-skills:schema` |
+| Vertailu-/alternative-sivut | `marketing-skills:competitors` |
+| Kilpailija-analyysi/profilointi | `marketing-skills:competitor-profiling` |
+| Hakemisto-/directory-submissionit | `marketing-skills:directory-submissions` |
+| App store -optimointi (ASO) | `marketing-skills:aso` |
+| Maksetut mainoskampanjat (Google/Meta/LinkedIn) | `marketing-skills:ads` |
+| Mainosluovan bulk-generointi/iterointi | `marketing-skills:ad-creative` |
+| SMS-markkinointi | `marketing-skills:sms` |
+| Tapahtuma-/event-tracking, analytiikka | `marketing-skills:analytics` |
+| A/B-testaus, kokeiden suunnittelu | `marketing-skills:ab-testing` |
+| Churn-esto, cancel-flow, save-offer, dunning | `marketing-skills:churn-prevention` |
+| Kumppanuus-/co-marketing-kampanjat | `marketing-skills:co-marketing` |
+| Yhteisömarkkinointi (Discord/Reddit/Jodel ym.) | `marketing-skills:community-marketing` |
+| Referral-/affiliate-ohjelmat | `marketing-skills:referrals` |
+| 140 SaaS-markkinointi-ideaa (selailu/valinta) | `marketing-skills:marketing-ideas` |
+| Markkinointipsykologia / mentaalimallit | `marketing-skills:marketing-psychology` |
+| Tuotelaunchit ja julkistukset | `marketing-skills:launch` |
+| Hinnoittelu, paketointi, monetisaatio | `marketing-skills:pricing` |
+| Positiointi, ICP, brändi-ääni (perusta) | `marketing-skills:product-marketing` |
+| Asiakas-/käyttäjätutkimus (voice-of-customer) | `marketing-skills:customer-research` |
+| Liidielinkaari, scoring, routing, pipeline | `marketing-skills:revops` |
+| Myyntimateriaali (deckit, one-pagerit, objection-docs) | `marketing-skills:sales-enablement` |
+| Prospektointi / liidien etsintä | `marketing-skills:prospecting` |
+| Koko 12kk-suunnitelma (AARRR, fCMO) | `marketing-skills:marketing-plan` |
+
+**Säännöt:**
+1. Yksi tehtävä voi vaatia useamman: esim. TikTok-kampanja = `marketing-skills:social` + `marketing-skills:video` (+ `humanizer` suomi-teksteille).
+2. Markkinointi-suomi-teksti → marketing-skill + `humanizer` aina.
+3. Jos epävarma mikä skilli → `marketing-skills:marketing-ideas` tai kysy.
+4. Tämä on reititys; varsinainen pakollinen dev-skill-stack (FRONTEND/EXERCISE/TESTING/BACKEND/COPY) pätee koodimuutoksiin kuten ennenkin.

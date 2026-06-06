@@ -21,6 +21,29 @@ import { state } from "../state.js";
 const SCREEN_ID = "screen-lesson-results";
 const ROOT_ID = "lesson-results-root";
 
+// L-V394 — the legacy #screen-path surface was permanently hidden
+// (app-old-spain.css "KILL SCREEN-PATH"), so curriculum.js loadCurriculum()
+// drops the user on a blank screen. Route post-lesson "continue" actions to
+// the live oppimispolku surface instead — the same hash the sidebar Tehtävät
+// link uses, which main.js's hashchange router renders via
+// oppimispolkuIndex / courseDetail.
+function goToPath(kurssiKey = null) {
+  const lang = (state.language === "de" || state.language === "fr") ? state.language : "es";
+  const target = kurssiKey
+    ? `#/oppimispolku/${lang}/${encodeURIComponent(kurssiKey)}`
+    : "#/oppimispolku";
+  if (location.hash === target) {
+    // Identical hash won't fire hashchange; invoke the loader directly.
+    if (kurssiKey) {
+      import("./courseDetail.js").then((m) => m.loadCourseDetail?.(lang, kurssiKey)).catch(() => { /* noop */ });
+    } else {
+      import("./oppimispolkuIndex.js").then((m) => m.loadOppimispolkuIndex?.(lang)).catch(() => { /* noop */ });
+    }
+    return;
+  }
+  location.hash = target;
+}
+
 function escapeHtml(s) {
   return String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ({
     "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
@@ -295,7 +318,7 @@ async function jumpToKertaustesti(kurssiKey) {
   if (lastIndex && typeof mod.openLesson === "function") {
     try { await mod.openLesson(kurssiKey, lastIndex); return; } catch { /* fall through */ }
   }
-  await mod.loadCurriculum();
+  goToPath(kurssiKey);
 }
 
 // L-PLAN-7, render the "Kertasit myös tätä" section. Inserted as a
@@ -356,13 +379,17 @@ async function goBackToCurriculum(focusKurssiKey = null, gotoLessonIndex = null)
   // Invalidate the dashboard tutor-message cache so the next dashboard load
   // refreshes the greeting with this freshly completed session in scope.
   try { sessionStorage.removeItem("dashTutorMsg"); } catch { /* noop */ }
-  const mod = await import("./curriculum.js");
+  // Fast-track: when we know the course + a target lesson, deep-link straight
+  // into it via curriculum.openLesson (which shows the live #screen-lesson).
   if (focusKurssiKey && Number.isInteger(gotoLessonIndex)) {
-    // Fast-track: jump straight into the next lesson (currently the curriculum
-    // module doesn't expose a deep-link API, so we navigate to the path screen
-    // with the kurssi expanded; the user clicks the next lesson row).
-    await mod.loadCurriculum();
-    return;
+    try {
+      const mod = await import("./curriculum.js");
+      if (typeof mod.openLesson === "function") {
+        await mod.openLesson(focusKurssiKey, gotoLessonIndex);
+        return;
+      }
+    } catch { /* fall through to path nav */ }
   }
-  await mod.loadCurriculum();
+  // Otherwise land on the live oppimispolku surface (see goToPath note).
+  goToPath(focusKurssiKey);
 }
