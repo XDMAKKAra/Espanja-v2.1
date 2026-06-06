@@ -37,6 +37,25 @@ export async function requireAuth(req, res, next) {
   next();
 }
 
+/**
+ * Optional auth: populates req.user when a valid Bearer token is sent,
+ * otherwise lets the request continue anonymously (used by the public
+ * Oppimispolku preview and the guest diagnostic). Unlike requireAuth it does
+ * NOT set req.supabase / the request DB store — callers that use optionalAuth
+ * read via getRequestDb(adminClient) or adminClient directly. Keep it that way
+ * to preserve behaviour.
+ */
+export async function optionalAuth(req, _res, next) {
+  const auth = req.headers.authorization;
+  if (auth?.startsWith("Bearer ")) {
+    try {
+      const { data: { user } } = await adminClient.auth.getUser(auth.slice(7));
+      if (user) req.user = { userId: user.id, email: user.email };
+    } catch { /* anonymous fall-through */ }
+  }
+  next();
+}
+
 // Test accounts loaded from env (comma-separated) — never hardcode emails in source.
 // Read lazily inside isPro() rather than at module load so env changes on the
 // serverless host apply without relying on container recycling.

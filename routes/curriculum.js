@@ -1,7 +1,7 @@
 import { Router } from "express";
 import adminClient from "../supabase.js";
 import { getRequestDb } from "../lib/requestContext.js";
-import { requireAuth } from "../middleware/auth.js";
+import { requireAuth, optionalAuth } from "../middleware/auth.js";
 import { callOpenAI, normalizeLang } from "../lib/openai.js";
 import { KURSSI_META, readLessonFile } from "../lib/curriculum.js";
 import {
@@ -20,19 +20,6 @@ import { getLessonLabel } from "../lib/lessonLabels.js";
 import { PRODUCT_LANGS } from "../lib/constants.js";
 
 const router = Router();
-
-// Optional auth: populates req.user if Bearer token is valid, otherwise lets
-// anonymous requests through (used by the public Oppimispolku preview).
-async function optionalAuth(req, _res, next) {
-  const auth = req.headers.authorization;
-  if (auth?.startsWith("Bearer ")) {
-    try {
-      const { data: { user } } = await adminClient.auth.getUser(auth.slice(7));
-      if (user) req.user = { userId: user.id, email: user.email };
-    } catch { /* anonymous fall-through */ }
-  }
-  next();
-}
 
 const PASS_THRESHOLD = 0.80;
 

@@ -1,6 +1,6 @@
 import { Router } from "express";
 import adminClient from "../supabase.js";
-import { requireAuth } from "../middleware/auth.js";
+import { requireAuth, optionalAuth } from "../middleware/auth.js";
 import { selectDiagnosticQuestions } from "../lib/placementQuestions.js";
 import {
   scorePlacementTest,
@@ -15,20 +15,6 @@ import {
 import { callOpenAI, normalizeLang } from "../lib/openai.js";
 
 const router = Router();
-
-// Optional-auth helper: populates req.user when a valid token is sent,
-// otherwise lets the request continue. Used by /onboarding so guests
-// can complete the diagnostic before signing up.
-async function optionalAuth(req, _res, next) {
-  const auth = req.headers.authorization;
-  if (auth?.startsWith("Bearer ")) {
-    try {
-      const { data: { user } } = await adminClient.auth.getUser(auth.slice(7));
-      if (user) req.user = { userId: user.id, email: user.email };
-    } catch { /* anonymous fall-through */ }
-  }
-  next();
-}
 
 // GET /api/placement/questions — get diagnostic test questions
 router.get("/questions", requireAuth, async (req, res) => {

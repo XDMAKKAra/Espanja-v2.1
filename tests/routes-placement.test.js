@@ -80,6 +80,7 @@ vi.mock("../middleware/auth.js", () => ({
     req.user = { userId: "test-user", email: "t@e.st" };
     next();
   },
+  optionalAuth: (_req, _res, next) => next(),
 }));
 
 let request, app, PLACEMENT_QUESTIONS;
