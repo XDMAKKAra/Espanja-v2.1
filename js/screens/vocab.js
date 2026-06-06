@@ -1099,17 +1099,6 @@ if (gradeRow) {
 }
 
 function endBatch() {
-  // Mastery test: submit result and show mastery result screen
-  if (state._masteryMode && state._masteryTopicKey) {
-    const submit = window._learningPathRef?.submitMasteryResult;
-    if (submit) {
-      submit(state.totalCorrect, state.totalAnswered);
-    }
-    state._masteryMode = false;
-    state._masteryTopicKey = null;
-    return;
-  }
-
   // L-PLAN-5 UPDATE 5, curriculum lesson is bound to a single batch.
   // After this batch the session ends and the post-session lesson results
   // card takes over (showVocabResults handles the lessonCtx hand-off).

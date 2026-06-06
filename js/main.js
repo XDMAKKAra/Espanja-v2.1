@@ -25,7 +25,6 @@ import { initOnboardingV2, showOnboardingV2 } from "./screens/onboardingV2.js";
 import { initOnboardingV3, showOnboardingV3 } from "./screens/onboardingV3.js";
 import { initOnboardingV4, showOnboardingV4 } from "./screens/onboardingV4.js";
 import { initPlacement, checkPlacementNeeded, showPlacementIntro, startPlacementFromRetake } from "./screens/placement.js";
-import { initLearningPath, submitMasteryResult } from "./screens/learningPath.js";
 import { loadCurriculum } from "./screens/curriculum.js";
 import { initQuickReview } from "./screens/quickReview.js";
 // F-ARCH-1 §A — these screens are lazy. Their static imports moved out.
@@ -204,8 +203,6 @@ if (!isLoggedIn()) {
   }
 }
 initPlacement({ loadDashboard });
-initLearningPath({ loadDashboard });
-window._learningPathRef = { submitMasteryResult };
 window._onboardingRef = { checkOnboarding };
 window._placementRef = { checkPlacementNeeded, showPlacementIntro, startPlacementFromRetake };
 

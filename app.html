@@ -1361,40 +1361,9 @@
     <div id="lesson-results-root"></div>
   </div>
 
-  <!-- SCREEN: Mastery test start -->
-  <div id="screen-mastery-intro" class="screen">
-    <div class="mastery-intro-inner">
-      <svg class="mastery-intro-icon icon-lucide" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
-      <div class="mastery-intro-topic" id="mastery-intro-topic">Preteriti</div>
-      <p class="mastery-intro-desc" id="mastery-intro-desc">Yksinkertainen mennyt aika: yksitt&auml;iset tapahtumat.</p>
-      <div class="mastery-intro-rules">
-        <div class="mastery-intro-rule"><strong>20</strong> kysymyst&auml;</div>
-        <div class="mastery-intro-rule"><strong>80%</strong> oikein &mdash; avaa seuraavan aiheen</div>
-        <div class="mastery-intro-rule">Ei vihjeit&auml;, ei scaffoldingia</div>
-      </div>
-      <button class="btn-primary mastery-intro-start" id="btn-mastery-start">Aloita mastery-testi &rarr;</button>
-      <button class="btn-secondary" id="btn-mastery-back">Takaisin polulle</button>
-    </div>
-  </div>
-
-  <!-- SCREEN: Mastery test result -->
-  <div id="screen-mastery-result" class="screen">
-    <div class="mastery-result-inner">
-      <!-- L-SURGICAL-2 (2026-05-17): flip hierarchy, data first, emoji as
-           pinned small marker. Original layout led with 🎉 which trained
-           users to ignore actual feedback. -->
-      <div class="mastery-result-pct" id="mastery-result-pct">90%</div>
-      <div class="mastery-result-score" id="mastery-result-score">18 / 20 oikein</div>
-      <div class="mastery-result-icon mastery-result-icon--small" id="mastery-result-icon" aria-hidden="true">&#127881;</div>
-      <div class="mastery-result-message" id="mastery-result-message">Osaat t&auml;m&auml;n aiheen!</div>
-      <div class="mastery-result-unlock hidden" id="mastery-result-unlock">
-        &#128275; Seuraava aihe avattu: <strong id="mastery-result-next"></strong>
-      </div>
-      <div class="mastery-result-actions">
-        <button class="btn-primary" id="btn-mastery-continue">Takaisin polulle &rarr;</button>
-      </div>
-    </div>
-  </div>
+  <!-- L-V394: mastery-test screens (screen-mastery-intro / -result) removed.
+       The mastery-test feature was unreachable (entry point lived in the dead
+       learningPath.js path-render) and was deleted end-to-end. -->
 
   <!-- LEGACY [L-MERGE-DASH-PATH 2026-05-04]: #screen-dashboard merged into
        #screen-path. The greeting / day-CTA / readiness / recent / chart
