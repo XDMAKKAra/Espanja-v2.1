@@ -15,7 +15,7 @@
 import { show } from "../ui/nav.js";
 import { API, isLoggedIn, authHeader, apiFetch } from "../api.js";
 import { masteryThresholdFor, isPhaseSkipped } from "../lib/lessonAdapter.js";
-import { isAcceptable } from "../lib/accentTolerance.js";
+import { normalizeAnswer, answerMatches } from "../lib/lessonAnswerMatch.js";
 import { attachAccentBarAll } from "../features/accentBar.js";
 import { attachCharCounter, wordsToChars } from "../features/charCounter.js";
 
@@ -201,41 +201,6 @@ function escapeHtml(s) {
   return String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ({
     "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
   }[c]));
-}
-
-// Normalise answers for typed/translate: lowercase, trim, strip diacritics.
-function normalizeAnswer(s) {
-  return String(s || "")
-    .toLowerCase()
-    .trim()
-    .normalize("NFD")
-    .replace(/[̀-ͯ]/g, "")
-    .replace(/\s+/g, " ");
-}
-/**
- * Matches a typed answer against a list of accepted strings using
- * accent-tolerant comparison. Returns:
- *   { ok: true,  hint: null }                    — strict match
- *   { ok: true,  hint: "Muista aksentit: …" }    — match once diacritics
- *                                                  stripped on user side
- *   { ok: false, hint: null }                    — neither matched
- *
- * `hint` is the upgrade-path microcopy the feedback band surfaces so
- * the user knows the missing accent without being rejected.
- */
-function answerMatches(input, accepts, lang = "es") {
-  const list = accepts || [];
-  // First pass: strict normalized equality.
-  const norm = normalizeAnswer(input);
-  if (norm && list.some((a) => normalizeAnswer(a) === norm)) {
-    return { ok: true, hint: null };
-  }
-  // Second pass: accent-tolerant match (with critical-pair guard).
-  for (const exp of list) {
-    const r = isAcceptable(input, exp, lang);
-    if (r.ok) return r;
-  }
-  return { ok: false, hint: null };
 }
 
 // ── Lesson runner state ────────────────────────────────────────────────────
