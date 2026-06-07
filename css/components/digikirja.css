@@ -59,21 +59,23 @@ body:has(#screen-digikirja.active) .app-shell,
 body:has(#screen-digikirja.active) .app-shell[data-rail="off"] {
   grid-template-columns: 1fr;
 }
-/* !important here because the media-query rules in app-shell.css set
-   .app-main { padding: 40px } at 1024–1179px etc. Without !important the
-   user saw a 56px cream band between the browser chrome and the brick
-   topbar — that's --app-gutter-y bleeding through. */
+/* L-V400 — the app-shell.css media rule this once fought is bare `.app-main`
+   (0,1,0); the `body:has(#screen-digikirja.active) .app-main` selector is
+   (1,2,1) and outranks it by specificity alone, so the !important (a relic
+   from a lower-specificity era) is redundant. Verified 0-delta on the shell's
+   computed padding/grid-column/topbar at 1100px (the cream-band breakpoint)
+   and 1440px. */
 body:has(#screen-digikirja.active) .app-main {
-  grid-column: 1 / -1 !important;
-  padding: 0 !important;
+  grid-column: 1 / -1;
+  padding: 0;
 }
 body:has(#screen-digikirja.active) .app-main-inner {
-  max-width: none !important;
-  margin: 0 !important;
+  max-width: none;
+  margin: 0;
 }
 body:has(#screen-digikirja.active) #screen-digikirja.screen.active {
   position: static;
-  padding: 0 !important;
+  padding: 0;
 }
 /* The .dk grid is itself 100dvh tall and sticky-scrolls its sidemenu, so
    the outer .app-main / #screen-digikirja shouldn't keep their own scroll
