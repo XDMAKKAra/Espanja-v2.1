@@ -930,7 +930,10 @@ color: var(--ink-faint);
   transition: border-color 0.15s, transform 0.15s, box-shadow 0.15s;
 }
 .dash-mode-card:hover {
-  border-color: var(--accent-dark) !important;
+  /* L-V400 — dropped !important on both sides of the war with
+     app-old-spain.css's `body.app .dash-mode-card:hover` (0,3,0); that rule
+     wins by specificity normally, so neither side needs !important. */
+  border-color: var(--accent-dark);
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(45, 212, 191,0.18);
 }

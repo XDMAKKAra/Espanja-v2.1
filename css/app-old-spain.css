@@ -351,7 +351,9 @@ body.app .dash-mode-card {
   transition: border-color var(--ed-t-fast), box-shadow var(--ed-t-fast), transform var(--ed-t-fast);
 }
 body.app .dash-mode-card:hover {
-  border-color: color-mix(in oklch, var(--ed-accent) 50%, var(--ed-rule)) !important;
+  /* L-V400 — (0,3,0) outranks dashboard.css's `.dash-mode-card:hover` (0,2,0)
+     by specificity; both dropped !important together. */
+  border-color: color-mix(in oklch, var(--ed-accent) 50%, var(--ed-rule));
   box-shadow: 4px 4px 0 0 var(--ed-accent-soft);
   transform: translate(-1px, -1px);
 }
@@ -444,7 +446,9 @@ body.app .dash-recent-item {
   padding: 14px 4px;
 }
 body.app .dash-recent-item:hover {
-  background: var(--ed-accent-soft) !important;
+  /* L-V400 — (0,3,0) beats dashboard.css's `.dash-recent-item:hover` (0,2,0,
+     normal), so !important was redundant. */
+  background: var(--ed-accent-soft);
 }
 body.app .dash-recent-mode { color: var(--ed-ink); }
 body.app .dash-recent-grade {

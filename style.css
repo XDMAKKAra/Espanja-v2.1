@@ -2439,7 +2439,9 @@ color: var(--ink-soft); margin-bottom: 4px; }
   background: var(--surface); border: 1px solid var(--border);
   padding: 6px 14px; border-radius: 8px;
 }
-.exam-timer-warn { color: var(--error) !important; animation: pulse 1s ease-in-out infinite; }
+/* L-V400 — `.exam-timer-warn` follows `.exam-timer` at equal specificity, so
+   it wins by source order without !important (element carries both classes). */
+.exam-timer-warn { color: var(--error); animation: pulse 1s ease-in-out infinite; }
 @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.5; } }
 
 /* Loading shimmer — applied to placeholder text while async content fetches.
@@ -2509,7 +2511,10 @@ color: var(--ink-soft); margin-bottom: 4px; }
   .reading-q-block { padding: 16px 18px; }
 }
 .reading-q-text { font-size: 15px; font-weight: 600; margin-bottom: 12px; color: var(--ink); }
-.selected-answer { border-color: var(--accent-dark) !important; background: rgba(167,139,250,0.12) !important; color: var(--accent-dark) !important; }
+/* L-V400 — `.selected-answer` follows the `.option-btn` base at equal
+   specificity (source-order win) and no 0,2,0 variant is active in the
+   pre-grading selected state, so !important was redundant. */
+.selected-answer { border-color: var(--accent-dark); background: rgba(167,139,250,0.12); color: var(--accent-dark); }
 .exam-result-row {
   display: flex; justify-content: space-between; align-items: center;
   padding: 10px 0; border-bottom: 1px solid var(--border);
@@ -2533,13 +2538,19 @@ color: var(--ink-soft); margin-bottom: 4px; }
 .exam-textarea:focus { outline:none; border-color: var(--accent-dark); }
 .exam-char-count { font-family:var(--font-mono); font-size:12px; color:var(--ink-soft); margin-top:6px; }
 
-.exam-option.selected-answer { border-color: var(--accent-dark) !important; background:rgba(45, 212, 191,0.08) !important; color: var(--accent-dark) !important; }
+/* L-V400 — `.exam-option.selected-answer` (0,2,0) outranks `.exam-option`
+   (0,1,0), so !important was redundant. */
+.exam-option.selected-answer { border-color: var(--accent-dark); background:rgba(45, 212, 191,0.08); color: var(--accent-dark); }
 
 .exam-reading-block { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:20px; }
 
-.mode-btn-exam { border-color: rgba(167,139,250,0.4) !important; }
+/* L-V400 — both follow their base rules at equal specificity (source-order
+   wins): `.mode-btn-exam` after `.mode-btn`, `.mode-locked:hover` after
+   `.mode-btn:hover`. The element carries both classes, so !important was
+   redundant. (Probe confirmed .mode-btn-exam border stays rgba(167,139,250,.4).) */
+.mode-btn-exam { border-color: rgba(167,139,250,0.4); }
 .mode-locked { opacity: 0.55; cursor: default; }
-.mode-locked:hover { border-color: var(--border) !important; transform: none !important; }
+.mode-locked:hover { border-color: var(--border); transform: none; }
 
 /* ── MODE PAGES ── */
 .mode-page {
@@ -5336,15 +5347,16 @@ margin-bottom: 8px;
 
 .settings-modal-overlay,
 .level-bump-overlay {
-  /* !important needed because some cascading rule (likely .screen.active
-     z-index:1 + position:absolute reset) was overriding these values
-     even after the overlay was reparented to <body>. Playwright reported
-     computed `position: relative; z-index: 1` until we forced them. */
-  position: fixed !important;
-  inset: 0 !important;
-  z-index: 520 !important;
-  width: 100vw !important;
-  height: 100vh !important;
+  /* L-V400 — both overlays are reparented to <body> by their open() handlers
+     (settings.js appendChild, level-bump likewise), so they are no longer
+     `.screen` descendants and nothing competes on these. The !important was a
+     relic from before the reparent. Verified 0-diff on the settings-modal-open
+     harness surface (shares this exact rule). */
+  position: fixed;
+  inset: 0;
+  z-index: 520;
+  width: 100vw;
+  height: 100vh;
   background: rgba(0,0,0,0.78);
   backdrop-filter: blur(8px);
   display: flex; align-items: center; justify-content: center;

@@ -238,7 +238,10 @@ color: var(--ed-ink-faint, var(--ink-faint));
     padding: 18px 20px;
   }
   body.app .lr-shell--three > .lr-side-panel.is-open {
-    display: flex !important;
+    /* L-V400 — (0,4,0) is the highest-specificity display rule on this element
+       and the open state is class-driven (not inline), so !important was
+       redundant. */
+    display: flex;
   }
   /* When Apua closed → middle column expands across both content
      columns so the exercise breathes. */
