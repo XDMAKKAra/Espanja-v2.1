@@ -1546,11 +1546,13 @@ body.app #gram-level-badge {
    The actual .kbd-hint DOM is still rendered (vocab.js queries it), so
    we hide it with display:none and let the scaffold-indicator fall
    back to its inline position above the question block. ─────────── */
+/* L-V400 — `body.app #screen-X .kbd-hint` (1,2,0) outranks style.css's
+   `.kbd-hint` (0,1,0, normal) by specificity, so the !important is redundant. */
 body.app #screen-exercise > .exercise > .kbd-hint,
 body.app #screen-grammar > .exercise > .kbd-hint,
 body.app #screen-exercise .kbd-hint,
 body.app #screen-grammar .kbd-hint {
-  display: none !important;
+  display: none;
 }
 
 /* Single column layout — drill content centres in a generous reading
@@ -1876,8 +1878,10 @@ body.app .translate-promote-hint {
 }
 
 /* Free-mode writing screen — hide the legacy word counter in favour of
-   the existing character counter (merkit). User feedback 2026-05-18. */
-body.app .writing-word-counter { display: none !important; }
+   the existing character counter (merkit). User feedback 2026-05-18.
+   L-V400 — `body.app .writing-word-counter` (0,2,0) beats style.css's
+   `.writing-word-counter` (0,1,0, normal), so the !important is redundant. */
+body.app .writing-word-counter { display: none; }
 
 /* Char counter — replaces wc-block ("X / 50–80 sanaa") with merkit. */
 .writing-char-counter,
