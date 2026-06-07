@@ -251,44 +251,6 @@ body.app .section-h {
 }
 
 /* ═══════════════════════════════════════════════════════════
-   Dashboard surface upgrades. Targeted overrides for the most
-   visible blocks; everything else inherits cream + terracotta
-   from the bridge above.
-   ═══════════════════════════════════════════════════════════ */
-
-/* Level-progress card — quiet paper, terracotta fills. */
-body.app .lpc-eyebrow { color: var(--ed-ink-muted); font-family: var(--ed-sans); font-weight: 600; letter-spacing: 0.01em; }
-body.app .lpc-title {
-  font-family: var(--ed-display);
-  font-variation-settings: "opsz" 32, "SOFT" 40;
-  color: var(--ed-ink);
-}
-body.app .lpc-hint { color: var(--ed-ink-muted); }
-body.app .lpc-bar { background: var(--ed-rule); }
-body.app .lpc-bar__fill { background: var(--ed-accent); }
-body.app .lpc-metric.is-done .lpc-bar__fill,
-body.app .lpc-metric.is-done .lpc-metric__num { color: var(--ed-olive); background: var(--ed-olive); }
-body.app .lpc-metric.is-done .lpc-metric__num { background: transparent; }
-body.app .lpc-badge {
-  color: var(--ed-accent);
-  background: var(--ed-accent-soft);
-  border-color: color-mix(in oklch, var(--ed-accent) 30%, transparent);
-  font-family: var(--ed-sans);
-  font-weight: 600;
-  letter-spacing: 0.01em;
-}
-
-/* Heatmap — olive scale on cream so it reads as marginalia ink. */
-body.app .heatmap-cell { background: var(--ed-bg-deep); }
-body.app .heatmap-cell.lvl-2 { background: color-mix(in oklch, var(--ed-olive) 22%, var(--ed-bg-card)); }
-body.app .heatmap-cell.lvl-3 { background: color-mix(in oklch, var(--ed-olive) 48%, var(--ed-bg-card)); }
-body.app .heatmap-cell.lvl-4 { background: var(--ed-olive); }
-body.app .heatmap-cell:not([class*="lvl-"]):not(.future) {
-  background: transparent;
-  border: 1px dashed color-mix(in oklch, var(--ed-olive) 30%, transparent);
-}
-
-/* ═══════════════════════════════════════════════════════════
    Buttons + inputs. Make the press feedback unmistakable so
    the dashboard feels like the same hand built it as the
    landing's pricing-card stamps.
@@ -2017,7 +1979,6 @@ body.app .app-countdown strong {
    countdown-num, scores, pct, char counters) keep mono — they are not
    listed here. Reduced letter-spacing kills the mono-UPPERCASE feel.
    ═══════════════════════════════════════════════════════════════ */
-body.app .heatmap-label,
 body.app .profile-handle,
 body.app .profile-hero-countdown-label,
 body.app .profile-hero-countdown-unit,
