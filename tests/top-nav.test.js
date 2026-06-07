@@ -10,7 +10,6 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = resolve(__dirname, "..");
 const css = readFileSync(resolve(root, "css/components/top-nav.css"), "utf8");
 const styleCss = readFileSync(resolve(root, "style.css"), "utf8");
-const landingCss = readFileSync(resolve(root, "landing.css"), "utf8");
 
 describe("top-nav CSS contract", () => {
   it("fixed 64px bar with safe-area top padding", () => {
@@ -43,11 +42,8 @@ describe("top-nav CSS contract", () => {
   });
 });
 
-describe("top-nav — imported by both CSS files", () => {
+describe("top-nav — imported by style.css", () => {
   it("style.css imports top-nav.css", () => {
     expect(styleCss).toMatch(/@import[^;]*top-nav\.css/);
-  });
-  it("landing.css imports top-nav.css", () => {
-    expect(landingCss).toMatch(/@import[^;]*top-nav\.css/);
   });
 });

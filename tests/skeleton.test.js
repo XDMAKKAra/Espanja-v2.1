@@ -14,7 +14,6 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = resolve(__dirname, "..");
 const css = readFileSync(resolve(root, "css/components/skeleton.css"), "utf8");
 const styleCss = readFileSync(resolve(root, "style.css"), "utf8");
-const landingCss = readFileSync(resolve(root, "landing.css"), "utf8");
 
 describe("skeleton — base + variants", () => {
   it("declares .skeleton base", () => {
@@ -54,11 +53,8 @@ describe("skeleton — tokenised", () => {
   });
 });
 
-describe("skeleton — imported by both CSS files", () => {
+describe("skeleton — imported by style.css", () => {
   it("style.css @imports skeleton.css", () => {
     expect(styleCss).toMatch(/@import[^;]*skeleton\.css/);
-  });
-  it("landing.css @imports skeleton.css", () => {
-    expect(landingCss).toMatch(/@import[^;]*skeleton\.css/);
   });
 });

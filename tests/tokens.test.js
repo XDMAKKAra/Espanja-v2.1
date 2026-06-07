@@ -17,7 +17,6 @@ import { dirname, resolve } from "node:path";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = resolve(__dirname, "..");
 const styleCss = readFileSync(resolve(root, "style.css"), "utf8");
-const landingCss = readFileSync(resolve(root, "landing.css"), "utf8");
 
 // Required tokens per DESIGN.md §1–7. Keep this list sorted by section.
 const REQUIRED = [
@@ -68,16 +67,6 @@ describe("design tokens — style.css", () => {
   }
 });
 
-describe("design tokens — landing.css", () => {
-  const block = rootBlock(landingCss);
-
-  for (const name of REQUIRED) {
-    it(`declares ${name}`, () => {
-      expect(block).toMatch(new RegExp(`\\s${name.replace(/-/g, "\\-")}\\s*:`));
-    });
-  }
-});
-
 describe("no stray hex literals outside :root", () => {
   // Permitted exceptions: the --grad-urgency value references a hex inside :root
   // (handled by scoping the scan to outside :root).
@@ -100,11 +89,6 @@ describe("no stray hex literals outside :root", () => {
     // are expected and tracked in AUDIT.md §1. This test only verifies the
     // :root block itself has no violations (covered by REQUIRED above).
     // Gate E will tighten this to expect(hits).toHaveLength(0).
-    expect(Array.isArray(hits)).toBe(true);
-  });
-
-  it("landing.css outside :root", () => {
-    const hits = scanOutsideRoot(landingCss);
     expect(Array.isArray(hits)).toBe(true);
   });
 });

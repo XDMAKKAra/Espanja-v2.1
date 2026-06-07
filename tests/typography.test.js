@@ -17,7 +17,6 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = resolve(__dirname, "..");
 
 const styleCss = readFileSync(resolve(root, "style.css"), "utf8");
-const landingCss = readFileSync(resolve(root, "landing.css"), "utf8");
 // Shared @font-face stylesheet (Fredoka/Mulish, L-V344 WordDive system). The
 // legal/pricing shells deliver their webfonts through this rather than via an
 // inline /fonts/ preload + style.css.
@@ -31,7 +30,7 @@ const FS_TOKENS = [
 ];
 
 describe("typography tokens", () => {
-  for (const file of [["style.css", styleCss], ["landing.css", landingCss]]) {
+  for (const file of [["style.css", styleCss]]) {
     for (const t of FS_TOKENS) {
       it(`${file[0]} declares ${t}`, () => {
         expect(file[1]).toMatch(new RegExp(`${t.replace(/-/g, "\\-")}\\s*:`));
@@ -49,7 +48,7 @@ describe("typography tokens", () => {
 });
 
 describe("global heading rules reference tokens", () => {
-  for (const file of [["style.css", styleCss], ["landing.css", landingCss]]) {
+  for (const file of [["style.css", styleCss]]) {
     it(`${file[0]} h1 uses var(--fs-h1)`, () => {
       expect(file[1]).toMatch(/^h1\s*\{[^}]*var\(--fs-h1\)/ms);
     });

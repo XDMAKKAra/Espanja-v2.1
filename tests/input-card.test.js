@@ -11,7 +11,6 @@ const root = resolve(__dirname, "..");
 const inputCss = readFileSync(resolve(root, "css/components/input.css"), "utf8");
 const cardCss = readFileSync(resolve(root, "css/components/card.css"), "utf8");
 const styleCss = readFileSync(resolve(root, "style.css"), "utf8");
-const landingCss = readFileSync(resolve(root, "landing.css"), "utf8");
 
 describe("input / textarea component", () => {
   it("declares .input, .textarea, .select", () => {
@@ -66,8 +65,8 @@ describe("both components honour reduced motion", () => {
   });
 });
 
-describe("style.css + landing.css import both", () => {
-  for (const [name, css] of [["style.css", styleCss], ["landing.css", landingCss]]) {
+describe("style.css imports both", () => {
+  for (const [name, css] of [["style.css", styleCss]]) {
     it(`${name} imports input.css`, () => {
       expect(css).toMatch(/@import[^;]*input\.css/);
     });

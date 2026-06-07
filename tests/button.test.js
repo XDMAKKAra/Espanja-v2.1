@@ -17,7 +17,6 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = resolve(__dirname, "..");
 const buttonCss = readFileSync(resolve(root, "css/components/button.css"), "utf8");
 const styleCss = readFileSync(resolve(root, "style.css"), "utf8");
-const landingCss = readFileSync(resolve(root, "landing.css"), "utf8");
 
 describe("button component — existence", () => {
   for (const variant of ["primary", "secondary", "ghost", "destructive"]) {
@@ -68,11 +67,8 @@ describe("button component — honours reduced motion", () => {
   });
 });
 
-describe("style.css + landing.css import button component", () => {
+describe("style.css imports button component", () => {
   it("style.css @imports button.css", () => {
     expect(styleCss).toMatch(/@import[^;]*button\.css/);
-  });
-  it("landing.css @imports button.css", () => {
-    expect(landingCss).toMatch(/@import[^;]*button\.css/);
   });
 });

@@ -21,7 +21,6 @@ const root = resolve(__dirname, "..");
 
 const CSS_FILES = [
   resolve(root, "style.css"),
-  resolve(root, "landing.css"),
   ...readdirSync(resolve(root, "css/components"))
     .filter((f) => f.endsWith(".css"))
     .map((f) => join(root, "css/components", f)),
