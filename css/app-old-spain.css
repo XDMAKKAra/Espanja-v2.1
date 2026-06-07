@@ -2770,104 +2770,11 @@ body.app #screen-path .curr-card.is-expanded > .curr-status {
   body.app #screen-path .curr-head { display: none; }
 }
 
-/* New minimal bento card — number eyebrow + title only, hairline rule
-   between cards instead of card chrome. Reads as a textbook chapter
-   list, not a marketing tile grid. */
-body.app .curr-bento-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 0;
-  border-top: 1px solid var(--ed-rule);
-}
-body.app .curr-bento-card {
-  display: grid;
-  grid-template-columns: 32px 1fr;
-  align-items: start;
-  gap: 14px;
-  padding: 18px 16px;
-  background: transparent;
-  border: 0;
-  border-bottom: 1px solid var(--ed-rule);
-  border-right: 1px solid var(--ed-rule);
-  border-radius: 0;
-  text-align: left;
-  cursor: pointer;
-  transition: background 160ms ease;
-  min-height: 0;
-  width: 100%;
-  /* Bugfix screenshot 210449: legacy curriculum-bento.css set
-     grid-column: span 6 on --feature cards and span 4 on --done
-     cards, which in the new auto-fill 240px grid meant feature
-     cards wrapped to the next row alone and done cards dragged
-     neighbours sideways. Force every card to one auto column. */
-  grid-column: auto !important;
-  grid-row: auto !important;
-}
-body.app .curr-bento-card:hover {
-  background: var(--ed-bg-deep);
-}
-body.app .curr-bento-card:focus-visible {
-  outline: 2px solid var(--ed-accent);
-  outline-offset: -2px;
-}
-body.app .curr-bento-card--feature {
-  background: var(--ed-accent-soft);
-}
-body.app .curr-bento-card--feature:hover {
-  background: color-mix(in oklch, var(--ed-accent) 18%, var(--ed-bg-card));
-}
-body.app .curr-bento-card--done {
-  opacity: 0.78;
-}
-body.app .curr-bento-card__mark {
-  font-family: var(--ed-mono);
-  font-size: 14px;
-  color: var(--ed-olive);
-  line-height: 1.3;
-  padding-top: 1px;
-  text-align: center;
-}
-body.app .curr-bento-card__mark--next {
-  color: var(--ed-accent);
-  font-family: var(--ed-display);
-  }
-body.app .curr-bento-card__body {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  min-width: 0;
-}
-body.app .curr-bento-num {
-  font-family: var(--ed-sans);
-  font-size: 10px;
-  letter-spacing: 0.14em;
-  color: var(--ed-ink-faint);
-  font-weight: 600;
-}
-body.app .curr-bento-title {
-  font-family: var(--ed-sans);
-  font-size: 15px;
-  font-weight: 600;
-  line-height: 1.3;
-  letter-spacing: -0.005em;
-  color: var(--ed-ink);
-  margin: 0;
-  /* Clamp at 2 lines so cards stay flush in the grid. */
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-body.app .curr-bento-card--feature .curr-bento-title {
-  color: var(--ed-ink);
-}
-
-/* Skeleton bento simplified — drop the 12-tile shimmer in favour of
-   one quiet "Avataan kurssia…" line (already styled earlier as
-   .curr-bento--loading). */
-body.app .curr-bento.curr-bento--loading {
-  border-top: 1px solid var(--ed-rule);
-}
+/* L-V400 — the .curr-bento-* block (minimal bento lesson grid) was removed as
+   dead code: no screen renders .curr-bento-grid/-card/-title (grep across
+   js/, app.html, routes/ = 0). It was the unshipped replacement for the live
+   .curr-lessons list. curriculum-bento.css (its only other home) was deleted
+   and dropped from bundle-entry.css in the same change. */
 
 /* Greeting tightening — when on path screen it currently competes
    with the "Oppimispolku" title. Drop the greeting size + remove
