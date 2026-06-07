@@ -4,7 +4,7 @@
 
 import express from "express";
 import { requireAuth, isTestProEmail } from "../middleware/auth.js";
-import supabase from "../supabase.js";
+import adminClient from "../supabase.js";
 
 const router = express.Router();
 
@@ -29,7 +29,11 @@ router.post("/grant-pro", requireAuth, async (req, res) => {
   }
   const userId = req.user.userId;
   try {
-    const { error } = await supabase
+    // Service-role on purpose: this is a privilege GRANT. subscriptions writes
+    // must bypass RLS — a user-scoped client must NOT be able to upsert its own
+    // subscriptions.active=true, or anyone could self-grant Pro. Gated above by
+    // isTestProEmail. (L-V399 B: verified RLS blocks the user-scoped path.)
+    const { error } = await adminClient
       .from("subscriptions")
       .upsert(
         { user_id: userId, active: true, plan: "dev-grant" },

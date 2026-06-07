@@ -1,5 +1,5 @@
 import { Router } from "express";
-import supabase from "../supabase.js";
+import adminClient from "../supabase.js";
 import { requireAuth } from "../middleware/auth.js";
 import { sm2, bandToQuality } from "../lib/scheduler.js";
 
@@ -22,7 +22,7 @@ router.post("/review", requireAuth, async (req, res) => {
   // RLS-scoped client so Postgres RLS enforces isolation even if a manual
   // .eq("user_id") filter is ever dropped. Falls back to the admin client
   // (unit tests mock requireAuth without setting req.supabase).
-  const db = req.supabase || supabase;
+  const db = req.supabase || adminClient;
 
   try {
     const { data: existing } = await db
@@ -89,7 +89,7 @@ router.get("/due", requireAuth, async (req, res) => {
   // RLS-scoped client so Postgres RLS enforces isolation even if a manual
   // .eq("user_id") filter is ever dropped. Falls back to the admin client
   // (unit tests mock requireAuth without setting req.supabase).
-  const db = req.supabase || supabase;
+  const db = req.supabase || adminClient;
   const today = new Date().toISOString().slice(0, 10);
 
   try {
@@ -132,7 +132,7 @@ router.get("/count", requireAuth, async (req, res) => {
   // RLS-scoped client so Postgres RLS enforces isolation even if a manual
   // .eq("user_id") filter is ever dropped. Falls back to the admin client
   // (unit tests mock requireAuth without setting req.supabase).
-  const db = req.supabase || supabase;
+  const db = req.supabase || adminClient;
   const today = new Date().toISOString().slice(0, 10);
 
   try {
@@ -160,7 +160,7 @@ router.get("/forecast", requireAuth, async (req, res) => {
   // RLS-scoped client so Postgres RLS enforces isolation even if a manual
   // .eq("user_id") filter is ever dropped. Falls back to the admin client
   // (unit tests mock requireAuth without setting req.supabase).
-  const db = req.supabase || supabase;
+  const db = req.supabase || adminClient;
   const clampedDays = Math.max(7, Math.min(60, Number(days) || 30));
 
   try {

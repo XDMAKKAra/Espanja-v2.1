@@ -1,6 +1,6 @@
 import { Router } from "express";
 import crypto from "node:crypto";
-import supabase from "../supabase.js";
+import adminClient from "../supabase.js";
 import { requireAuth } from "../middleware/auth.js";
 
 // Constant-time comparison for the cron-secret header. Prevents timing
@@ -30,7 +30,7 @@ router.post("/weekly-progress", requireAuth, async (req, res) => {
   const userId = req.user.userId;
   const email = req.user.email;
 
-  const { data: logs } = await supabase
+  const { data: logs } = await (req.supabase || adminClient)
     .from("exercise_logs")
     .select("*")
     .eq("user_id", userId)
@@ -83,7 +83,7 @@ router.post("/streak-reminders", async (req, res) => {
 
   // Optimized: query users who practiced yesterday but NOT today directly from exercise_logs
   // This avoids the N+1 pattern of fetching all users then querying logs for each
-  const { data: yesterdayLogs } = await supabase
+  const { data: yesterdayLogs } = await adminClient
     .from("exercise_logs")
     .select("user_id, created_at")
     .gte("created_at", new Date(Date.now() - 30 * DAY_MS).toISOString())
@@ -111,11 +111,11 @@ router.post("/streak-reminders", async (req, res) => {
 
     if (streak >= 2) {
       // Fetch user email only for users we need to send to
-      const { data: { user } } = await supabase.auth.admin.getUserById(userId);
+      const { data: { user } } = await adminClient.auth.admin.getUserById(userId);
       if (!user?.email) continue;
 
       // Check email preferences
-      const { data: prefs } = await supabase
+      const { data: prefs } = await adminClient
         .from("email_preferences")
         .select("streak_reminders")
         .eq("user_id", userId)
@@ -148,7 +148,7 @@ router.post("/streak-reminders", async (req, res) => {
 });
 
 router.get("/preferences", requireAuth, async (req, res) => {
-  const { data, error } = await supabase
+  const { data, error } = await (req.supabase || adminClient)
     .from("email_preferences")
     .select("*")
     .eq("user_id", req.user.userId)
@@ -177,7 +177,7 @@ router.put("/preferences", requireAuth, async (req, res) => {
   if (d1Weakness !== undefined) row.d1_weakness = d1Weakness;
   if (d7Offer !== undefined) row.d7_offer = d7Offer;
   if (examCountdown !== undefined) row.exam_countdown = examCountdown;
-  const { error } = await supabase.from("email_preferences").upsert(row, { onConflict: "user_id" });
+  const { error } = await (req.supabase || adminClient).from("email_preferences").upsert(row, { onConflict: "user_id" });
   if (error) return res.status(500).json({ error: "Asetusten tallennus epäonnistui" });
   res.json({ ok: true });
 });
@@ -196,7 +196,7 @@ async function getUsersRegisteredInWindow(startAgoMs, endAgoMs) {
   // listUsers is paginated; for the near-term volume we expect this is fine.
   const since = new Date(Date.now() - endAgoMs).toISOString();
   const until = new Date(Date.now() - startAgoMs).toISOString();
-  const { data } = await supabase.auth.admin.listUsers({ page: 1, perPage: 1000 });
+  const { data } = await adminClient.auth.admin.listUsers({ page: 1, perPage: 1000 });
   return (data?.users || []).filter((u) => {
     const t = u.created_at;
     return t >= since && t <= until;
@@ -212,14 +212,14 @@ router.post("/d1-weakness", async (req, res) => {
   let sent = 0;
 
   for (const u of users) {
-    const { data: profile } = await supabase
+    const { data: profile } = await adminClient
       .from("user_profile")
       .select("placement_completed, weakness_category")
       .eq("user_id", u.id)
       .single();
     if (!profile?.placement_completed) continue;
 
-    const { data: prefs } = await supabase
+    const { data: prefs } = await adminClient
       .from("email_preferences")
       .select("d1_weakness")
       .eq("user_id", u.id)
@@ -235,7 +235,7 @@ router.post("/d1-weakness", async (req, res) => {
     // don't); fall back to the pre-curated seed-bank example if absent.
     let example = null;
     if (category) {
-      const { data: wrongLogs } = await supabase
+      const { data: wrongLogs } = await adminClient
         .from("exercise_logs")
         .select("item_snapshot, category, created_at")
         .eq("user_id", u.id)
@@ -271,7 +271,7 @@ router.post("/d7-offer", async (req, res) => {
   let sent = 0;
 
   for (const u of users) {
-    const { data: prefs } = await supabase
+    const { data: prefs } = await adminClient
       .from("email_preferences")
       .select("d7_offer")
       .eq("user_id", u.id)
@@ -280,7 +280,7 @@ router.post("/d7-offer", async (req, res) => {
 
     // 7-day stats.
     const weekAgo = new Date(Date.now() - 7 * DAY_MS).toISOString();
-    const { data: logs } = await supabase
+    const { data: logs } = await adminClient
       .from("exercise_logs")
       .select("score_correct, score_total, mode, level")
       .eq("user_id", u.id)
@@ -316,7 +316,7 @@ router.post("/exam-countdown", async (req, res) => {
 
   // Pull all user_profiles with an exam_date set; filter in JS by days-out
   // window. At current volumes this is fine; add indexed daily job later.
-  const { data: profiles } = await supabase
+  const { data: profiles } = await adminClient
     .from("user_profile")
     .select("user_id, exam_date");
   if (!profiles?.length) return res.json({ ok: true, sent: 0 });
@@ -328,14 +328,14 @@ router.post("/exam-countdown", async (req, res) => {
     const inWindow = daysOut === 30 || daysOut === 7;
     if (!inWindow) continue;
 
-    const { data: prefs } = await supabase
+    const { data: prefs } = await adminClient
       .from("email_preferences")
       .select("exam_countdown")
       .eq("user_id", p.user_id)
       .single();
     if (prefs && prefs.exam_countdown === false) continue;
 
-    const { data: { user } } = await supabase.auth.admin.getUserById(p.user_id);
+    const { data: { user } } = await adminClient.auth.admin.getUserById(p.user_id);
     if (!user?.email) continue;
 
     await sendExamCountdownEmail(user.email, {

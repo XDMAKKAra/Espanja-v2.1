@@ -15,7 +15,7 @@
 
 import { Router } from "express";
 import { requireAuth } from "../middleware/auth.js";
-import supabase from "../supabase.js";
+import adminClient from "../supabase.js";
 
 const router = Router();
 
@@ -72,7 +72,7 @@ router.post("/checkout-session", requireAuth, async (req, res) => {
   // Reuse customer record if we have one already
   let customerId = null;
   try {
-    const { data: profile } = await supabase
+    const { data: profile } = await (req.supabase || adminClient)
       .from("user_profile")
       .select("stripe_customer_id, exam_date")
       .eq("user_id", req.user.userId)
@@ -113,7 +113,7 @@ router.post("/portal-session", requireAuth, async (req, res) => {
   if (!stripe) {
     return res.status(503).json({ error: "payment_unavailable" });
   }
-  const { data: profile } = await supabase
+  const { data: profile } = await (req.supabase || adminClient)
     .from("user_profile")
     .select("stripe_customer_id")
     .eq("user_id", req.user.userId)
@@ -146,7 +146,7 @@ router.post("/create-summer-checkout", requireAuth, (_req, res) =>
 async function alreadyProcessed(eventId) {
   if (!eventId) return false;
   try {
-    const { data } = await supabase
+    const { data } = await adminClient
       .from("stripe_events")
       .select("id")
       .eq("id", eventId)
@@ -158,7 +158,7 @@ async function alreadyProcessed(eventId) {
 }
 async function markProcessed(eventId, type) {
   try {
-    await supabase.from("stripe_events").insert({ id: eventId, type, processed_at: new Date().toISOString() });
+    await adminClient.from("stripe_events").insert({ id: eventId, type, processed_at: new Date().toISOString() });
   } catch (err) {
     // Table may not exist yet — log and continue (idempotency degrades gracefully).
     console.warn("[stripe] could not record event id:", err?.message);
@@ -196,14 +196,14 @@ async function applyCheckoutCompleted(session) {
   } else {
     let examDate = null;
     try {
-      const { data } = await supabase.from("user_profile").select("exam_date").eq("user_id", userId).single();
+      const { data } = await adminClient.from("user_profile").select("exam_date").eq("user_id", userId).single();
       examDate = data?.exam_date || null;
     } catch { /* ignore */ }
     update.subscription_expires_at = packageExpiry(examDate);
     update.stripe_subscription_id = null;
   }
 
-  await supabase.from("user_profile").upsert({ user_id: userId, ...update }, { onConflict: "user_id" });
+  await adminClient.from("user_profile").upsert({ user_id: userId, ...update }, { onConflict: "user_id" });
 }
 
 async function applySubscriptionUpdate(sub) {
@@ -227,16 +227,16 @@ async function applySubscriptionUpdate(sub) {
     }
   }
   if (userId) {
-    await supabase.from("user_profile").update(patch).eq("user_id", userId);
+    await adminClient.from("user_profile").update(patch).eq("user_id", userId);
   } else if (sub.customer) {
-    await supabase.from("user_profile").update(patch).eq("stripe_customer_id", sub.customer);
+    await adminClient.from("user_profile").update(patch).eq("stripe_customer_id", sub.customer);
   }
 }
 
 async function applyInvoiceFailed(invoice) {
   const customer = invoice.customer;
   if (!customer) return;
-  await supabase
+  await adminClient
     .from("user_profile")
     .update({ subscription_status: "past_due" })
     .eq("stripe_customer_id", customer);
