@@ -59,3 +59,11 @@ audit-screens/
 # L-V340 load-test generated artifacts
 scripts/load-test-results.json
 scripts/load-test-server.log
+
+# L-V399 cleanup — local-only dev noise
+# personal key template (refers to local paths)
+.env.TARVITTAVAT-AVAIMET.txt
+# throwaway scratch capture artifacts
+tests/_*
+# machine-specific pixel baselines (e2e-visual-layer harness)
+tests/*-snapshots/
