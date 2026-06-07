@@ -21,8 +21,9 @@ import { initExam, startMockExam } from "./screens/exam.js";
 // `js/lib/lazyScreen.js` for the cache + once-init contract.
 import { makeLazyScreen } from "./lib/lazyScreen.js";
 import { initOnboarding, checkOnboarding } from "./screens/onboarding.js";
-import { initOnboardingV2, showOnboardingV2 } from "./screens/onboardingV2.js";
-import { initOnboardingV3, showOnboardingV3 } from "./screens/onboardingV3.js";
+// L-V399 F — V2/V3 onboarding are reachable only via fallback hashes
+// (#/aloitus-v2 / #/aloitus-v3). Moved behind makeLazyScreen() so they no
+// longer ship in the static hot bundle. See lazy wrappers below.
 import { initOnboardingV4, showOnboardingV4 } from "./screens/onboardingV4.js";
 import { initPlacement, checkPlacementNeeded, showPlacementIntro, startPlacementFromRetake } from "./screens/placement.js";
 import { initQuickReview } from "./screens/quickReview.js";
@@ -178,12 +179,22 @@ const lazyVerbReference = makeLazyScreen({
   factory: () => import("./screens/verbReference.js"),
   init: (m) => m.initVerbReference(),
 });
+// L-V399 F — lazy V2/V3 onboarding (fallback hashes only). makeLazyScreen
+// runs init() once before resolving, so show() always fires post-wiring.
+const lazyOnboardingV2 = makeLazyScreen({
+  key: "onboardingV2",
+  factory: () => import("./screens/onboardingV2.js"),
+  init: (m) => m.initOnboardingV2({ loadDashboard }),
+});
+const lazyOnboardingV3 = makeLazyScreen({
+  key: "onboardingV3",
+  factory: () => import("./screens/onboardingV3.js"),
+  init: (m) => m.initOnboardingV3({ loadDashboard }),
+});
 initOnboarding({ loadDashboard, loadNextBatch });
-initOnboardingV2({ loadDashboard });
-initOnboardingV3({ loadDashboard });
 initOnboardingV4({ loadDashboard });
-window._onboardingV2 = { show: showOnboardingV2 };
-window._onboardingV3 = { show: showOnboardingV3 };
+window._onboardingV2 = { show: () => lazyOnboardingV2().then((m) => m.showOnboardingV2()) };
+window._onboardingV3 = { show: () => lazyOnboardingV3().then((m) => m.showOnboardingV3()) };
 window._onboardingV4 = { show: showOnboardingV4 };
 // Hash entry: /app.html#/aloitus → V4 (L-V359 diagnostic-first + product choice)
 // by default. Legacy V2/V3 still reachable via /app.html#/aloitus-v2 and
@@ -196,9 +207,9 @@ if (!isLoggedIn()) {
   if (location.hash === "#/aloitus" || location.hash === "#/aloitus-v4") {
     setTimeout(() => showOnboardingV4(), 0);
   } else if (location.hash === "#/aloitus-v2") {
-    setTimeout(() => showOnboardingV2(), 0);
+    setTimeout(() => lazyOnboardingV2().then((m) => m.showOnboardingV2()), 0);
   } else if (location.hash === "#/aloitus-v3") {
-    setTimeout(() => showOnboardingV3(), 0);
+    setTimeout(() => lazyOnboardingV3().then((m) => m.showOnboardingV3()), 0);
   }
 }
 initPlacement({ loadDashboard });
