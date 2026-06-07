@@ -5949,8 +5949,11 @@ color: var(--ink-faint);
    - dash-hero-grade label is now a flex row with an info-icon affordance.
    ============================================================ */
 
+/* L-V400 — the only other `.mode-topic__n` rule (mode-page.css) sets flex/
+   color, never display, so nothing competes here and the !important was
+   redundant. */
 .mode-topic__n {
-  display: none !important;
+  display: none;
 }
 
 .mastery-result-icon--small {

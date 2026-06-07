@@ -1873,7 +1873,10 @@ body.app .translate-promote-hint {
 .accent-bar__chip:active { transform: scale(0.94); }
 .accent-bar__chip:focus-visible { outline: 2px solid var(--ed-accent, oklch(42% 0.15 28)); outline-offset: 1px; }
 @media (max-width: 480px) {
-  .accent-bar { left: 8px !important; right: 8px; max-width: calc(100vw - 16px) !important; }
+  /* L-V400 — same specificity as the base .accent-bar (0,1,0) but later in
+     source, so it wins without !important (the `right: 8px` here already
+     proves the source-order win). */
+  .accent-bar { left: 8px; right: 8px; max-width: calc(100vw - 16px); }
   .accent-bar__chip { font-size: 1rem; min-width: 30px; height: 30px; }
 }
 
