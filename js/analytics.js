@@ -1,7 +1,8 @@
-// ─── Frontend analytics: PostHog + Sentry ──────────────────────────────────
+// ─── Frontend analytics: Vercel Web Analytics + PostHog + Sentry ───────────
 
 let posthog = null;
 let sentryBrowser = null;
+let vercelAnalytics = null;
 
 // SHA-256 hash for GDPR-safe email identification
 async function hashEmail(email) {
@@ -44,6 +45,22 @@ export function disableAnalytics() {
     }
   } catch { /* silent */ }
   posthog = null;
+}
+
+// Vercel Web Analytics — privacy-friendly page view tracking. This runs
+// automatically and does not require consent as it's privacy-friendly (no
+// cookies, no personal data). Only works in production on Vercel deployments.
+export async function initVercelAnalytics() {
+  if (vercelAnalytics) return; // already initialized
+  try {
+    // Import the inject function from @vercel/analytics
+    const { inject } = await import("@vercel/analytics");
+    inject();
+    vercelAnalytics = true;
+  } catch (err) {
+    // Silent fail - analytics is optional and only works on Vercel
+    console.debug("Vercel Analytics not available:", err.message);
+  }
 }
 
 // Sentry (browser) — error monitoring. Runs under legitimate interest (keeping
