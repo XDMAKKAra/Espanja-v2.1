@@ -35,27 +35,11 @@
        bundled via app.bundle.css (css/fonts.css imported first). -->
   <link rel="preload" href="/fonts/fredoka-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="/fonts/mulish-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
-  <!-- F-ARCH-1 §B, design tokens loaded FIRST so aliases (--text, --space-N,
-       --radius-md, --z-modal, --focus-ring, --ease-spring) are resolvable
-       everywhere downstream. File is additive and does NOT redefine the
-       canonical Puheo tokens declared in style.css. -->
-  <link rel="stylesheet" href="/css/tokens.css" />
-  <!-- L-LIVE-AUDIT-P2 UPDATE 1, single bundle replaces 16 separate CSS requests.
-       Source files remain in repo; bundle produced by `npm run build`. -->
+  <!-- L-V399 A1 — single CSS artifact. tokens.css, onboarding-v3/v4, coming-soon,
+       off-canvas-nav and sidebar-shell are now folded into the bundle in their
+       original cascade positions (see scripts/bundle-entry.css). Rebuild with
+       `npm run build` after touching any bundled stylesheet. -->
   <link rel="stylesheet" href="/app.bundle.css" />
-  <!-- L-ONBOARDING-REDESIGN-1, V3 onboarding styles. Loaded outside bundle
-       so the redesign is testable before the next `npm run build`. -->
-  <link rel="stylesheet" href="/css/components/onboarding-v3.css" />
-  <!-- L-V293-ONBOARDING-DIAGNOSTIC-1a, diagnostic-first V4 styles. -->
-  <link rel="stylesheet" href="/css/components/onboarding-v4.css" />
-  <!-- L-LANG-INFRA-1, coming-soon screen + settings language modal styles. -->
-  <link rel="stylesheet" href="/css/components/coming-soon.css" />
-  <!-- L-HERO-COUNTDOWN-AND-OFFCANVAS-1, off-canvas slide-in sidebar for <1024px. -->
-  <link rel="stylesheet" href="/css/components/off-canvas-nav.css" />
-  <!-- v277 SidebarShell, consolidates sidebar geometry + state under
-       [data-mode] on the <aside>. Loaded last so its rules override
-       style.css + off-canvas-nav.css. -->
-  <link rel="stylesheet" href="/css/components/sidebar-shell.css" />
 </head>
 <body class="app">
 

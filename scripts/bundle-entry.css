@@ -1,7 +1,16 @@
-/* Bundle entry — order MUST match app.html <link> tag order so cascade is preserved.
-   style.css is first because it owns design tokens + @imports the legacy primitives
-   (button.css, input.css, card.css, skeleton.css, feedback.css, modal.css, top-nav.css,
-   bottom-nav.css, side-panel.css). esbuild resolves all @imports recursively. */
+/* Bundle entry — order MUST match the previous app.html <link> tag order so the
+   cascade is preserved. esbuild resolves all @imports recursively and inlines
+   them in this exact order (document order == cascade order).
+
+   L-V399 Vaihe A1 — the 6 stylesheets that app.html used to load as separate
+   <link> tags around the bundle (tokens.css before; onboarding-v3, onboarding-v4,
+   coming-soon, off-canvas-nav, sidebar-shell after) are now folded in here, in
+   their original positions. One artifact, explicit order, and no more "loaded
+   after the bundle to win the cascade" fragility — which also makes a future
+   @layer pass safe (no unlayered app CSS left to flip the cascade). */
+
+/* tokens.css loaded FIRST (additive aliases; does NOT redefine style.css tokens). */
+@import url('../css/tokens.css');
 @import url('../css/fonts.css');
 @import url('../style.css');
 @import url('../css/components/typography.css');
@@ -25,6 +34,13 @@
 @import url('../css/components/home.css');
 @import url('../css/components/library-shelf.css');
 @import url('../css/components/digikirja.css');
-/* 2026-05-18 — Old-Spain register on body.app. Loaded LAST so its
-   var bridge + surface overrides win the cascade everywhere. */
+/* 2026-05-18 — Old-Spain register on body.app: var bridge + surface overrides. */
 @import url('../css/app-old-spain.css');
+/* L-V399 A1 — formerly separate <link> tags, loaded AFTER app-old-spain.css
+   (i.e. these win over it, exactly as before). sidebar-shell stays LAST so its
+   geometry rules override style.css + off-canvas-nav.css (v277 contract). */
+@import url('../css/components/onboarding-v3.css');
+@import url('../css/components/onboarding-v4.css');
+@import url('../css/components/coming-soon.css');
+@import url('../css/components/off-canvas-nav.css');
+@import url('../css/components/sidebar-shell.css');
