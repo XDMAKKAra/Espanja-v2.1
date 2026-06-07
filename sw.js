@@ -1,4 +1,4 @@
-const CACHE_VERSION = "puheo-v400n";
+const CACHE_VERSION = "puheo-v400o";
 const STATIC_ASSETS = [
   "/app.html",
   "/index.html",
@@ -136,7 +136,6 @@ const STATIC_ASSETS = [
   "/js/ui/timeAgo.js",
   "/js/features/spacedRepetition.js",
   "/js/features/writingProgression.js",
-  "/js/features/dailyChallenge.js",
   "/js/features/celebrate.js",
   "/js/features/shareCard.js",
   "/js/features/cardTilt.js",

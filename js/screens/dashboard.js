@@ -4,7 +4,6 @@ import { state, setLanguage } from "../state.js";
 import { showLoading } from "../ui/loading.js";
 import { icon, MODE_ICONS } from "../ui/icons.js";
 import { hideAppCountdown } from "./onboarding.js";
-import { markModeCompletedToday } from "../features/dailyChallenge.js";
 
 let _deps = {};
 export function initDashboard({ loadGrammarDrill, loadReadingTask, loadWritingTask, startCheckout, openBillingPortal, startMockExam, showModePage, loadNextBatch, showProUpsell }) {
@@ -259,10 +258,6 @@ export function loadLastSettings(forcedMode) {
 }
 
 export async function saveProgress({ mode, level, scoreCorrect, scoreTotal, ytlGrade }) {
-  // Mark the daily-challenge done flag locally even when offline / not
-  // logged in, the user did the work, the dashboard should show the
-  // celebratory state.
-  markModeCompletedToday(mode);
   if (!isLoggedIn()) return;
   try {
     await apiFetch(`${API}/api/progress`, {
