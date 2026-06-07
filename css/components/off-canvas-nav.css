@@ -160,16 +160,23 @@
   }
 }
 
-/* === Auth-mode: hide everything off-canvas-related ========= */
-body.auth-mode .app-topbar { display: none !important; }
-body.auth-mode .app-sidebar-backdrop { display: none !important; }
-body.auth-mode #menu-toggle { display: none !important; }
+/* === Auth-mode: hide everything off-canvas-related =========
+   L-V400 — these selectors (body.auth-mode .app-topbar/.app-sidebar-backdrop
+   = 0,2,0; body.auth-mode #menu-toggle = 1,1,0) already outrank the
+   max-width:1023px reveal rules (.app-topbar/.app-sidebar-backdrop = 0,1,0;
+   #menu-toggle = 1,0,0) by specificity, so !important was redundant. */
+body.auth-mode .app-topbar { display: none; }
+body.auth-mode .app-sidebar-backdrop { display: none; }
+body.auth-mode #menu-toggle { display: none; }
 
 /* Desktop (>=1024px): make sure the off-canvas extras stay hidden
-   regardless of body class. */
+   regardless of body class. L-V400 — the drawer reveal rules (display:flex/
+   block, transform:translateX) are all scoped to max-width:1023px and never
+   apply here, and JS sets no inline transform, so these need no !important to
+   win against the base display:none / default transform:none. */
 @media (min-width: 1024px) {
-  .app-topbar { display: none !important; }
-  .app-sidebar-backdrop { display: none !important; }
+  .app-topbar { display: none; }
+  .app-sidebar-backdrop { display: none; }
   /* Ensure desktop sidebar stays in normal flow, never translated */
-  .app-sidebar { transform: none !important; }
+  .app-sidebar { transform: none; }
 }
