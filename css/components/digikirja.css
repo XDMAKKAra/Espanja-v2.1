@@ -203,16 +203,18 @@ body:has(#screen-digikirja.active) #screen-digikirja.screen.active {
   font-weight: 600;
   font-size: 15px;
   letter-spacing: -0.005em;
-  /* Hard-coded paper white instead of var(--ed-accent-ink). The token
-     resolves to oklch(96% 0.012 75) which is cream, but a global h1 rule
-     in style.css was overriding the effective color in the cascade and
-     bleeding the page-title ink color through. Force the topbar text. */
-  color: #fbfaf6 !important;
   text-align: center;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   margin: 0;
+}
+/* Paper white on the brick topbar. The h1 needs to beat app-old-spain.css's
+   `body.app h1` (0,1,1) color; scoping to `.dk__topbar .dk__title` (0,2,0)
+   wins by specificity, so no !important (L-V400). var(--ed-accent-ink)
+   resolves to cream so it's hard-coded. */
+.dk__topbar .dk__title {
+  color: #fbfaf6;
 }
 
 .dk__tools {

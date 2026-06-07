@@ -151,13 +151,13 @@ body:has(.app-countdown:not(.hidden)) .profile-menu-wrap { top: 50px; }
   min-height: 40px;
   transition: background 120ms var(--ease-out, ease), color 120ms var(--ease-out, ease);
 }
-/* L-V390: the `display: flex` above ties specificity with the UA `[hidden]`
-   rule and wins on source order, so the `hidden` attribute on
-   #profile-menu-upgrade was a no-op — "Päivitä Pro" stayed visible for
-   Pro users even when syncProfileMenu set it hidden. Re-assert hidden so
-   the attribute actually hides the item. Same gotcha documented in
-   teaching-panel.css. */
-.profile-menu__item[hidden] { display: none !important; }
+/* L-V390: the bare `display: flex` above tied specificity with the UA
+   `[hidden]` rule, so #profile-menu-upgrade stayed visible for Pro users.
+   Re-assert hidden. L-V400 — `.profile-menu__item[hidden]` (0,2,0) already
+   outranks `.profile-menu__item` (0,1,0) by specificity, so the !important is
+   redundant; dropped. Verified #profile-menu-upgrade stays display:none with
+   the menu open (Pro account probe). */
+.profile-menu__item[hidden] { display: none; }
 .profile-menu__item:hover,
 .profile-menu__item:focus-visible {
   background: color-mix(in srgb, var(--accent) 8%, transparent);

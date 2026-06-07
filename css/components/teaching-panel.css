@@ -10,7 +10,10 @@
    `position: fixed` to relative by specificity, so the orphaned trigger
    flowed in normal document flow below .app-shell and pushed page
    scrollHeight past the viewport (913 vs 768 on 1366×768). */
-.teaching-panel-trigger[hidden] { display: none !important; }
+/* L-V400 — `.teaching-panel-trigger[hidden]` (0,2,0) outranks the
+   `.teaching-panel-trigger { display: inline-flex }` below (0,1,0) by
+   specificity, so the !important was redundant; dropped. */
+.teaching-panel-trigger[hidden] { display: none; }
 
 .teaching-panel-trigger {
   /* Floats to the LEFT of the L-PLAN-4 profile-menu avatar (top-right).
