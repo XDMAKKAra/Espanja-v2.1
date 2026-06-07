@@ -21,9 +21,6 @@ import { initExam, startMockExam } from "./screens/exam.js";
 // `js/lib/lazyScreen.js` for the cache + once-init contract.
 import { makeLazyScreen } from "./lib/lazyScreen.js";
 import { initOnboarding, checkOnboarding } from "./screens/onboarding.js";
-// L-V399 F — V2/V3 onboarding are reachable only via fallback hashes
-// (#/aloitus-v2 / #/aloitus-v3). Moved behind makeLazyScreen() so they no
-// longer ship in the static hot bundle. See lazy wrappers below.
 import { initOnboardingV4, showOnboardingV4 } from "./screens/onboardingV4.js";
 import { initPlacement, checkPlacementNeeded, showPlacementIntro, startPlacementFromRetake } from "./screens/placement.js";
 import { initQuickReview } from "./screens/quickReview.js";
@@ -179,20 +176,11 @@ const lazyVerbReference = makeLazyScreen({
   factory: () => import("./screens/verbReference.js"),
   init: (m) => m.initVerbReference(),
 });
-// L-V399 F — lazy V2/V3 onboarding (fallback hashes only). makeLazyScreen
-// runs init() once before resolving, so show() always fires post-wiring.
-const lazyOnboardingV3 = makeLazyScreen({
-  key: "onboardingV3",
-  factory: () => import("./screens/onboardingV3.js"),
-  init: (m) => m.initOnboardingV3({ loadDashboard }),
-});
 initOnboarding({ loadDashboard, loadNextBatch });
 initOnboardingV4({ loadDashboard });
-window._onboardingV3 = { show: () => lazyOnboardingV3().then((m) => m.showOnboardingV3()) };
 window._onboardingV4 = { show: showOnboardingV4 };
-// Hash entry: /app.html#/aloitus → V4 (L-V359 diagnostic-first + product choice)
-// by default. Legacy V2/V3 still reachable via /app.html#/aloitus-v2 and
-// /app.html#/aloitus-v3 for fallback testing.
+// Hash entry: /app.html#/aloitus → V4 (L-V359 diagnostic-first + product choice).
+// L-V402 removed the legacy V2/V3 fallback hashes (#/aloitus-v2 / -v3).
 // BUGFIX: only trigger onboarding from hash if the user is NOT logged in. For
 // logged-in users, the startup `checkOnboarding()` path below is authoritative
 // — re-running the onboarding here would leave its screen with the `.active`
@@ -200,8 +188,6 @@ window._onboardingV4 = { show: showOnboardingV4 };
 if (!isLoggedIn()) {
   if (location.hash === "#/aloitus" || location.hash === "#/aloitus-v4") {
     setTimeout(() => showOnboardingV4(), 0);
-  } else if (location.hash === "#/aloitus-v3") {
-    setTimeout(() => lazyOnboardingV3().then((m) => m.showOnboardingV3()), 0);
   }
 }
 initPlacement({ loadDashboard });
