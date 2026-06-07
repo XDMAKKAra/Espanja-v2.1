@@ -1140,21 +1140,6 @@
        The mastery-test feature was unreachable (entry point lived in the dead
        learningPath.js path-render) and was deleted end-to-end. -->
 
-  <!-- LEGACY [L-MERGE-DASH-PATH 2026-05-04]: #screen-dashboard merged into
-       #screen-path. The greeting / day-CTA / readiness / recent / chart
-       elements were MOVED into #screen-path; the dashboard sections below
-       (dash-tutor, dash-hero-grade, daily-challenge, dash-weak-topics,
-       dash-heatmap, dash-forecast, dash-adaptive-card, dash-ai-usage,
-       dash-writing-progression, dash-modes, dash-recommendations,
-       dash-full-exam, btn-dash-start, dash-placement-retake) are kept here
-       as inert hidden DOM so that the dashboard.js renderers (which still
-       populate them as a side-effect of loadDashboard) do not crash on
-       null queries. The screen itself is `hidden` and the router redirects
-       "dashboard" → "path", so users never see this markup.
-
-       To fully delete: remove this block AND audit dashboard.js for
-       references to the IDs above (renderRecommendations, renderHeatmap,
-       renderAdaptiveCard, etc.). Defer to a follow-up loop. -->
   <!-- L-V400: legacy #screen-dashboard (hidden ghost) removed. Renders were uncalled (renderDashboard cluster), exits go to #screen-home, nothing showed it. -->
 
   <!-- Task 4 (2026-05-19): screen-mode-vocab / -grammar / -verbsprint mode pages
