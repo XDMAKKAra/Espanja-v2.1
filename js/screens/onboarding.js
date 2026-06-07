@@ -2,12 +2,12 @@ import { $, show } from "../ui/nav.js";
 import { API, authHeader, apiFetch } from "../api.js";
 import { track } from "../analytics.js";
 import { state } from "../state.js";
-import { showPlacementIntro } from "./placement.js";
 import { deriveWeakness } from "../../lib/weakness.js";
-// L-PLAN-4 UPDATE 7, V2 onboarding is now the default boot path. The legacy
-// V1 screens (showWelcome / wirePath / wireGoal) stay in this module for now
-// so #/aloitus + previously-half-done sessions keep working; they will be
-// removed in a follow-up loop after V2 has soaked in production.
+// L-V359 — V4 (diagnostic-first) is the default boot path (checkOnboarding →
+// showOnboardingV4). This module still owns the live path screens
+// (showPathFromPlacement → personalize → path), the S5 goal celebration
+// (maybeShowFirstCelebration → goal) and the persistent app countdown.
+// L-V402 removed the dead V1 welcome screen (showWelcome was never called).
 import { showOnboardingV4 } from "./onboardingV4.js";
 
 // YO-koe 28.9.2026 klo 9:00 Helsinki (EEST = UTC+3)
@@ -17,7 +17,6 @@ const DAY_MS = 24 * 60 * 60 * 1000;
 let _deps = {};
 export function initOnboarding({ loadDashboard, loadNextBatch }) {
   _deps = { loadDashboard, loadNextBatch };
-  wireWelcome();
   wirePath();
   wireGoal();
   wireAppCountdown();
@@ -56,39 +55,6 @@ export async function checkOnboarding(preloadedProfile) {
 
 function daysToExam() {
   return Math.max(0, Math.ceil((EXAM_MS - Date.now()) / DAY_MS));
-}
-
-// ─── S1 Welcome ────────────────────────────────────────────────────────────
-
-function showWelcome() {
-  const daysEl = $("ob-welcome-days");
-  if (daysEl) daysEl.textContent = daysToExam();
-  hideAppCountdown(); // S1–S2 hide the persistent countdown
-  show("screen-ob-welcome");
-  track("onboarding_started", { days_to_exam: daysToExam() });
-  track("onboarding_welcome_viewed", { days_to_exam: daysToExam() });
-}
-
-function wireWelcome() {
-  const cta = $("ob-welcome-cta");
-  const skip = $("ob-welcome-skip");
-  if (cta && !cta.dataset.wired) {
-    cta.dataset.wired = "1";
-    cta.addEventListener("click", () => {
-      track("onboarding_welcome_cta", {});
-      showPlacementIntro();
-    });
-  }
-  if (skip && !skip.dataset.wired) {
-    skip.dataset.wired = "1";
-    skip.addEventListener("click", async () => {
-      skip.disabled = true;
-      track("onboarding_skipped", { step: 1 });
-      await postProfile({ onboarding_completed: true });
-      renderAppCountdown();
-      if (_deps.loadDashboard) _deps.loadDashboard();
-    });
-  }
 }
 
 // ─── S2.5 Personalize (aurora orb) ─────────────────────────────────────────
