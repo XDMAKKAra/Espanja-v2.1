@@ -1,4 +1,4 @@
-const CACHE_VERSION = "puheo-v400t";
+const CACHE_VERSION = "puheo-v400u";
 const STATIC_ASSETS = [
   "/app.html",
   "/index.html",
@@ -102,7 +102,6 @@ const STATIC_ASSETS = [
   "/css/components/onboarding-v3.css",
   // L-V293-ONBOARDING-DIAGNOSTIC-1a — diagnostic-first V4 styles.
   "/css/components/onboarding-v4.css",
-  "/js/screens/onboardingV2.js",
   "/js/screens/onboardingV3.js",
   "/js/lib/studyPlan.js",
   "/css/components/curriculum.css",

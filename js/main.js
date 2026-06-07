@@ -181,11 +181,6 @@ const lazyVerbReference = makeLazyScreen({
 });
 // L-V399 F — lazy V2/V3 onboarding (fallback hashes only). makeLazyScreen
 // runs init() once before resolving, so show() always fires post-wiring.
-const lazyOnboardingV2 = makeLazyScreen({
-  key: "onboardingV2",
-  factory: () => import("./screens/onboardingV2.js"),
-  init: (m) => m.initOnboardingV2({ loadDashboard }),
-});
 const lazyOnboardingV3 = makeLazyScreen({
   key: "onboardingV3",
   factory: () => import("./screens/onboardingV3.js"),
@@ -193,7 +188,6 @@ const lazyOnboardingV3 = makeLazyScreen({
 });
 initOnboarding({ loadDashboard, loadNextBatch });
 initOnboardingV4({ loadDashboard });
-window._onboardingV2 = { show: () => lazyOnboardingV2().then((m) => m.showOnboardingV2()) };
 window._onboardingV3 = { show: () => lazyOnboardingV3().then((m) => m.showOnboardingV3()) };
 window._onboardingV4 = { show: showOnboardingV4 };
 // Hash entry: /app.html#/aloitus → V4 (L-V359 diagnostic-first + product choice)
@@ -206,8 +200,6 @@ window._onboardingV4 = { show: showOnboardingV4 };
 if (!isLoggedIn()) {
   if (location.hash === "#/aloitus" || location.hash === "#/aloitus-v4") {
     setTimeout(() => showOnboardingV4(), 0);
-  } else if (location.hash === "#/aloitus-v2") {
-    setTimeout(() => lazyOnboardingV2().then((m) => m.showOnboardingV2()), 0);
   } else if (location.hash === "#/aloitus-v3") {
     setTimeout(() => lazyOnboardingV3().then((m) => m.showOnboardingV3()), 0);
   }
