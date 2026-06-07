@@ -2648,17 +2648,20 @@
 }
 
 /* L-V318c — wordmark on landing surfaces (CSS-styled Inter-700 brick).
-   landing-editorial.css sets body color via --ed-ink which cascades into
-   .nav__brand; this rule wins with !important on the brand color since
-   the wordmark is a brand-identity element. */
+   L-V400 — the wordmark is a <span class="brand-wordmark"> inside
+   <a class="nav__brand">. .landing .nav__brand sets display/600/--ed-ink on
+   the ANCHOR; this rule targets the SPAN directly, and a directly-applied
+   value always beats an inherited one regardless of !important. So the
+   font/color !important were redundant. (Same 0,2,0 specificity, but the
+   span never inherits — it has its own rule.) */
 .landing .brand-wordmark,
 .brand-wordmark {
-  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
-  font-weight: 700 !important;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-weight: 700;
   font-size: 1.5rem;
   line-height: 1;
   letter-spacing: -0.025em;
-  color: #A0341F !important;
+  color: #A0341F;
   text-transform: lowercase;
   display: inline-block;
   white-space: nowrap;
