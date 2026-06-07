@@ -10,7 +10,7 @@ import { applyFeatureFlags } from "./features/flags.js";
 try { applyFeatureFlags(); } catch (err) { console.error("applyFeatureFlags failed:", err); }
 
 import { initAuth } from "./screens/auth.js";
-import { initDashboard, loadDashboard, navigateToMode, saveLastSettings, loadLastSettings, saveProgress, shareResult } from "./screens/dashboard.js";
+import { initDashboard, loadDashboard, navigateToMode, saveLastSettings, saveProgress, shareResult } from "./screens/dashboard.js";
 import { initVocab, loadNextBatch, startReviewSession } from "./screens/vocab.js";
 import { initGrammar, loadGrammarDrill } from "./screens/grammar.js";
 import { initReading, loadReadingTask } from "./screens/reading.js";
@@ -614,12 +614,6 @@ if (reviewBtn) reviewBtn.addEventListener("click", () => startReviewSession());
 const topBarBtn = $("sr-top-btn");
 if (topBarBtn) topBarBtn.addEventListener("click", () => startReviewSession());
 
-// Retake placement test
-const retakeBtn = $("btn-retake-placement");
-if (retakeBtn) {
-  retakeBtn.addEventListener("click", () => startPlacementFromRetake());
-}
-
 // Sidebar logout
 const sidebarLogout = $("sidebar-logout");
 if (sidebarLogout) {
@@ -846,19 +840,13 @@ $("btn-start").addEventListener("click", async () => {
   }
 });
 
-// ─── Dashboard nav buttons ─────────────────────────────────────────────────
-
-// L-V394 — removed dead #btn-logout handler (the id doesn't exist; logout is
-// owned by #sidebar-logout above). clearAuth/updateSidebarState/show stay used
-// there.
-const btnDashStart = $("btn-dash-start");
-if (btnDashStart) btnDashStart.addEventListener("click", () => {
-  const back = $("btn-back-to-dash");
-  if (back) back.classList.remove("hidden");
-  loadLastSettings();
-  show("screen-start");
-});
-
+// L-V401 — removed dead #screen-dashboard nav wiring (btn-dash-start /
+// btn-retake-placement). Those ids no longer exist in the DOM (legacy
+// dashboard ghost deleted in L-V400), so the handlers were no-ops.
+// loadLastSettings stays alive via dashboard.js; startPlacementFromRetake via
+// window._placementRef (settings.js).
+// btn-back-to-dash IS live: navigateToMode() shows it for vocab/grammar/exam
+// (no #screen-mode-* page → screen-start fallback), so keep this handler.
 const btnBackToDash = $("btn-back-to-dash");
 if (btnBackToDash) btnBackToDash.addEventListener("click", () => loadDashboard());
 
