@@ -574,15 +574,18 @@ if ($("btn-start-writing")) $("btn-start-writing").addEventListener("click", () 
 // (lessonContext active), the natural exit is the dashboard so the lesson
 // state isn't dangling on a mode page that doesn't know about it.
 async function exitToSource(fallbackMode) {
+  // L-V400 — lesson/fallback exit returns to the home screen (#screen-home,
+  // owned by home.js). Was show("screen-dashboard"); that ghost screen was
+  // removed, and home is the real "return home" surface.
   try {
     const { getLessonContext } = await import("./lib/lessonContext.js");
-    if (getLessonContext()) { show("screen-dashboard"); return; }
+    if (getLessonContext()) { show("screen-home"); return; }
   } catch { /* fall through to mode page */ }
   const target = `screen-mode-${state.mode || fallbackMode}`;
   if (document.getElementById(target)) {
     navigateTo(state.mode || fallbackMode);
   } else {
-    show("screen-dashboard");
+    show("screen-home");
   }
 }
 

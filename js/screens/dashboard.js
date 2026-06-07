@@ -79,7 +79,7 @@ export async function loadDashboard() {
   const cacheValid = _dashboardCache && (Date.now() - _dashboardCache.ts) < DASHBOARD_CACHE_TTL_MS;
   if (cacheValid) {
     try {
-      renderDashboard(_dashboardCache.payload);
+      renderSidebarProBadge(_dashboardCache.payload.pro, _dashboardCache.payload.tier);
       _lastRenderAt = Date.now();
       _lastRenderHash = payloadHash(_dashboardCache.payload);
     } catch { /* fall through to fresh fetch */ }
@@ -146,7 +146,7 @@ export async function loadDashboard() {
     const sameAsRecent = freshHash && freshHash === _lastRenderHash &&
       (Date.now() - _lastRenderAt) < DASHBOARD_DEDUPE_MS;
     if (!sameAsRecent) {
-      renderDashboard(dashboardCore);
+      renderSidebarProBadge(dashboardCore.pro, dashboardCore.tier);
       _lastRenderAt = Date.now();
       _lastRenderHash = freshHash;
     }
@@ -239,6 +239,31 @@ function renderFreeChip() {
         </div>` : ""}
       <a class="dash-free-chip__cta" href="/pricing.html?from=meter">Avaa Treeni &rarr;</a>
     </div>`;
+}
+
+// L-V400 — extracted from renderDashboard. The sidebar Pro/KURSSI/TREENI badge
+// is the ONLY live render that function produced; everything else wrote into the
+// removed #screen-path / #screen-dashboard ghost screens. loadDashboard calls
+// this directly now, so renderDashboard + its dead helper cluster can be removed.
+function renderSidebarProBadge(pro, tier) {
+  const proSlot = document.getElementById("sidebar-pro-slot");
+  if (!proSlot) return;
+  if (pro) {
+    const badgeText = tier === "mestari" ? "KURSSI"
+                    : tier === "treeni"  ? "TREENI"
+                    : "PRO";
+    proSlot.innerHTML = `<span class="sidebar-pro-badge sidebar-pro-badge--${tier || 'pro'}">${badgeText}</span> <button class="btn-manage-sub" id="btn-manage-sub">Hallinnoi tilausta</button>`;
+    setTimeout(() => {
+      const manageBtn = document.getElementById("btn-manage-sub");
+      if (manageBtn) manageBtn.addEventListener("click", () => _deps.openBillingPortal());
+    }, 0);
+  } else {
+    proSlot.innerHTML = `<button class="btn-upgrade-small" id="btn-dash-upgrade">Päivitä Pro</button>`;
+    setTimeout(() => {
+      const upgradeBtn = document.getElementById("btn-dash-upgrade");
+      if (upgradeBtn) upgradeBtn.addEventListener("click", () => _deps.startCheckout());
+    }, 0);
+  }
 }
 
 function renderDashboard({
@@ -1254,7 +1279,7 @@ async function startCheckpoint() {
     show("screen-exercise");
   } catch (err) {
     const { showLoadingError } = await import("../ui/loading.js");
-    showLoadingError(err.message, () => show("screen-dashboard"));
+    showLoadingError(err.message, () => show("screen-home"));
   }
 }
 
@@ -1407,7 +1432,7 @@ async function startFocusSession(topic) {
     else window.dispatchEvent(new CustomEvent("puheo:render-exercise"));
   } catch (err) {
     const { showLoadingError } = await import("../ui/loading.js");
-    showLoadingError(err.message, () => show("screen-dashboard"));
+    showLoadingError(err.message, () => show("screen-home"));
   }
 }
 

@@ -9,11 +9,11 @@ const AUTH_SCREENS = new Set([
 ]);
 
 function applyShellMode(id) {
-  // Rail is dashboard-only (Spec §3.2), collapse grid on non-dashboard screens
+  // L-V400 — the rail-on state was #screen-dashboard-only; that ghost screen was
+  // removed (home.js owns the home layout), so the rail is always collapsed.
   const shell = document.getElementById("app-shell");
   if (shell) {
-    if (id === "screen-dashboard") shell.removeAttribute("data-rail");
-    else shell.setAttribute("data-rail", "off");
+    shell.setAttribute("data-rail", "off");
   }
   // Auth-family screens hide sidebar, rail, countdown, mobile nav
   if (AUTH_SCREENS.has(id)) {
