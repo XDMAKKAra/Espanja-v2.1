@@ -66,16 +66,10 @@ describe("desktop content widths — Pass 0.5 Bug 3 acceptance", () => {
     expect(rule[0]).toContain("max-width");
     expect(rule[0]).toContain("var(--app-main-max)");
   });
-  it(".path-inner is wide enough for the merged home grid (≥1080px)", () => {
-    // L-HOME-HOTFIX-2 — widened to 1320px (matches inner .curr) so the
-    // greeting / course path / readiness / footer-grid use the full main
-    // column instead of stacking in the left third on 1440 px+ desktops.
-    const v = cap(".path-inner");
-    expect(v).toBeTruthy();
-    const isWDesktop = /var\(--w-desktop\)/.test(v);
-    const px = parseInt(String(v).match(/(\d+)px/)?.[1] || "0", 10);
-    expect(isWDesktop || px >= 1080).toBe(true);
-  });
+  // L-V401 — removed the `.path-inner` width guard: #screen-path (the old
+  // merged-home grid) was deleted in L-V400 and the `.path-inner` CSS is gone
+  // with it. The current home container width is guarded by the
+  // `.app-main-inner` test above.
   it(".exercise-inner uses --w-desktop", () => {
     expect(cap(".exercise-inner")).toMatch(/var\(--w-desktop\)/);
   });
