@@ -15,6 +15,7 @@ import { renderKaannos }          from "../renderers/kaannos.js";
 import { renderLauseenMuodostus } from "../renderers/lauseenMuodostus.js";
 import { renderCorrection }       from "../renderers/correction.js";
 import { reportMcAdvisory } from "../features/mcAdvisory.js";
+import { fmtElapsed, extractClientHeadwordKey, dedupe } from "../features/vocabHelpers.js";
 import { generateCoachLine, topicLabel, countUp } from "./mode-page.js";
 import { celebrateScore } from "../features/celebrate.js";
 import { generateExerciseShareCard } from "../features/shareCard.js";
@@ -96,32 +97,7 @@ function consumePreloadedBatch() {
   return p;
 }
 
-function fmtElapsed(ms) {
-  if (!Number.isFinite(ms) || ms <= 0) return "—";
-  const s = Math.round(ms / 1000);
-  if (s < 60) return `${s} s`;
-  const m = Math.floor(s / 60);
-  const r = s % 60;
-  return r ? `${m}:${String(r).padStart(2, "0")}` : `${m} min`;
-}
-
 const OPTION_LETTERS = ["A", "B", "C", "D", "E", "F"];
-
-// Mirror of routes/exercises.js extractHeadwordKey, derive a Spanish lemma
-// from the correct option so we can ask the next /generate call to avoid it.
-function extractClientHeadwordKey(ex) {
-  try {
-    if (!ex?.correct || !Array.isArray(ex.options)) return null;
-    const idx = "ABCDEFGH".indexOf(String(ex.correct).trim().toUpperCase());
-    if (idx < 0 || idx >= ex.options.length) return null;
-    const raw = String(ex.options[idx] || "")
-      .replace(/^[A-H]\)\s*/, "")
-      .replace(/^(el|la|los|las|un|una|unos|unas)\s+/i, "")
-      .toLowerCase()
-      .trim();
-    return raw || null;
-  } catch { return null; }
-}
 
 function escapeHtml(s) {
   return String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -1165,16 +1141,6 @@ function endBatch() {
 }
 
 $("btn-continue").addEventListener("click", () => loadNextBatch());
-
-function dedupe(arr) {
-  const seen = new Set();
-  const out = [];
-  for (const x of arr) {
-    const k = x.toLowerCase();
-    if (!seen.has(k)) { seen.add(k); out.push(x); }
-  }
-  return out;
-}
 
 function renderLearningBlock(items) {
   const section = $("results-learning");
