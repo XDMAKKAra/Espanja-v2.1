@@ -1,4 +1,4 @@
-const CACHE_VERSION = "puheo-v400f";
+const CACHE_VERSION = "puheo-v400g";
 const STATIC_ASSETS = [
   "/app.html",
   "/index.html",
@@ -94,7 +94,6 @@ const STATIC_ASSETS = [
   "/css/components/rail.css",
   "/css/components/pro-popup.css",
   "/js/screens/settings.js",
-  "/js/screens/learningPath.js",
   "/css/components/mode-page.css",
   "/css/components/exercise.css",
   "/css/components/results.css",
@@ -108,7 +107,6 @@ const STATIC_ASSETS = [
   "/js/screens/onboardingV3.js",
   "/js/lib/studyPlan.js",
   "/css/components/curriculum.css",
-  "/css/components/curriculum-bento.css",
   "/css/components/lesson-runner.css",
   "/js/screens/curriculum.js",
   "/js/screens/lessonRunner.js",
@@ -156,7 +154,6 @@ const STATIC_ASSETS = [
   "/js/screens/writing.js",
   "/js/screens/exam.js",
   "/js/screens/fullExam.js",
-  "/js/screens/adaptive.js",
   "/js/screens/dash-cta.js",
   "/js/screens/mode-page.js",
   "/js/screens/profile.js",
