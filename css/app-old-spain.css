@@ -672,16 +672,8 @@ body.app .btn-secondary:hover {
   color: var(--ed-accent);
 }
 
-/* Day CTA pill (#dash-day-cta) — legacy navy-on-mint contrast assumption
-   inverts to dark-on-terracotta = 2.18:1 fail. Flip the foreground to
-   cream so the AA-required 4.5:1 lands. */
-body.app .btn--cta--accent,
-body.app .btn--cta--accent:hover {
-  color: var(--ed-accent-ink);
-}
-body.app .btn--cta--accent .btn--cta__title,
-body.app .btn--cta--accent .btn--cta__arrow { color: var(--ed-accent-ink); }
-body.app .btn--cta--accent .btn--cta__meta { color: color-mix(in oklch, var(--ed-accent-ink) 82%, transparent); }
+/* L-V400 — body.app .btn--cta--accent overrides removed as dead code (the
+   accent variant's only user was the removed #screen-path day-CTA). */
 
 /* L-V361 — the home CTAs ("Aloita kirjoittaminen" / "Käännä lauseet") used the
    legacy near-black --ink fill, which reads as off-brand next to the cream/brick
@@ -811,8 +803,7 @@ body.app *:focus-visible {
   body.app .ex-option:hover:not(.is-disabled) {
     transform: none;
     box-shadow: none;
-  }
-}
+  }}
 
 /* ════════════════════════════════════════════════════════════════════
    VAIHE 2 — Exercise surfaces (vocab MCQ, gap-fill, matching, TF,
@@ -834,8 +825,7 @@ body.app *:focus-visible {
     border-radius: 12px;
     box-shadow: var(--ed-shadow-sm);
     padding: 40px 48px 32px;
-  }
-}
+  }}
 
 /* Eyebrow row — chapter-tag look. L-V336: sans + weight, not mono-UPPERCASE. */
 body.app .exercise__top .eyebrow,
@@ -1012,8 +1002,7 @@ body.app .skeleton-row--option {
 @media (prefers-reduced-motion: reduce) {
   body.app .skeleton-row,
   body.app .skeleton-row--display,
-  body.app .skeleton-row--option { animation: none; }
-}
+  body.app .skeleton-row--option { animation: none; }}
 
 /* ═══════════════════════════════════════════════════════════
    Gap-fill (aukkotehtävä) — sentence taittuu kuin oppikirjan
@@ -1464,8 +1453,7 @@ body.app .lr-progress-bar__fill { background: var(--ed-accent); }
     /* Override the Vaihe-2 single-column padding so the two-column
        grid has breathing room on both edges. */
     padding: 36px 56px 28px;
-  }
-}
+  }}
 
 body.app #screen-exercise .exercise__top,
 body.app #screen-grammar .exercise__top {
@@ -1567,8 +1555,7 @@ body.app #screen-grammar .kbd-hint {
     max-width: 720px;
     margin-left: auto;
     margin-right: auto;
-  }
-}
+  }}
 
 /* Drop-cap removed 2026-05-18 — it broke on Finnish prompts where the
    first word is itself a single letter or quote ("L'auseessa" reading
@@ -1639,8 +1626,7 @@ body.app #screen-grammar .exercise__top::after {
   @keyframes oldspain-prompt-in {
     from { opacity: 0; transform: translateY(6px); filter: blur(3px); }
     to   { opacity: 1; transform: translateY(0);  filter: blur(0); }
-  }
-}
+  }}
 
 /* ─── Mobile fallback — strict single-column flow. CSS-grid rules above
    only fire ≥1024px; below that, the existing block layout from Vaihe 2
@@ -1650,8 +1636,7 @@ body.app #screen-grammar .exercise__top::after {
   body.app #screen-exercise .question-block .display,
   body.app #screen-grammar .question-block .display {
     max-width: none;
-  }
-}
+  }}
 
 /* ════════════════════════════════════════════════════════════════════
    VERBISPRINTTI — verb conjugation input layout fix.
@@ -1881,8 +1866,7 @@ body.app .translate-promote-hint {
      source, so it wins without !important (the `right: 8px` here already
      proves the source-order win). */
   .accent-bar { left: 8px; right: 8px; max-width: calc(100vw - 16px); }
-  .accent-bar__chip { font-size: 1rem; min-width: 30px; height: 30px; }
-}
+  .accent-bar__chip { font-size: 1rem; min-width: 30px; height: 30px; }}
 
 /* Free-mode writing screen — hide the legacy word counter in favour of
    the existing character counter (merkit). User feedback 2026-05-18.
@@ -2047,8 +2031,7 @@ body.app.auth-mode .auth-shell {
     grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
     gap: 72px;
     padding: 48px 40px;
-  }
-}
+  }}
 
 /* Aside — cream-paper editorial frame, brick accent rule, Fraunces. */
 @media (min-width: 960px) {
@@ -2070,8 +2053,7 @@ body.app.auth-mode .auth-shell {
     background: radial-gradient(circle, oklch(62% 0.11 78 / 0.10), transparent 60%);
     inset: -30% -20% auto auto;
     width: 320px; height: 320px;
-  }
-}
+  }}
 
 body.app.auth-mode .auth-aside__logo {
   font-family: var(--ed-display);
@@ -2328,24 +2310,6 @@ body.app.auth-mode .auth-inner__logo {
 body.app.auth-mode .auth-inner__logo span {
   color: var(--ed-accent);
   }
-
-/* ═══════════════════════════════════════════════════════════════
-   DASHBOARD — Old-Spain editorial chrome (PR auth-and-shell + 1)
-   The cream-paper greeting + KPI/rail cards already live further up;
-   this block adds the chapter-opener feel: heavy eyebrow rule, larger
-   Fraunces display, ornamental section dividers, and editorial frames
-   around the day-CTA, empty rail, and chart panel. Goal: read as a
-   SanomaPro/Otava textbook page, not a SaaS dashboard.
-   ═══════════════════════════════════════════════════════════════ */
-
-/* Hero band — chapter-opener treatment. Top hairline rule, small caps
-   date eyebrow in brick, larger Fraunces greeting with stronger
-   optical sizing. The rule reads as a textbook "page break". */
-body.app #screen-path .dash-greeting {
-  padding-top: 24px;
-  border-top: 1px solid var(--ed-rule-strong);
-  margin-bottom: 32px;
-}
 body.app .dash-greeting > .eyebrow {
   font-family: var(--ed-sans);
   color: var(--ed-accent);
@@ -2353,54 +2317,6 @@ body.app .dash-greeting > .eyebrow {
   letter-spacing: 0.18em;
   font-size: 11px;
   margin: 0;
-}
-body.app #screen-path .dash-greeting .display {
-  font-size: clamp(2.6rem, 5.2vw, 4.4rem);
-  font-variation-settings: "opsz" 96, "SOFT" 50, "WONK" 0;
-  letter-spacing: -0.028em;
-  line-height: 0.98;
-  margin: 12px 0 12px;
-  max-width: 22ch;
-}
-
-/* PR auto/path-3col-hybrid (2026-05-19) — REMOVED the .path-grid::before
-   hair-rule + ✦ fleuron and the .btn--cta::before "PÄIVÄN HARJOITUS"
-   eyebrow. Both were editorial ornaments that conflict with the new
-   three-column functional layout pulled from Eduix/Mafy references.
-
-   Day-CTA stays brick-fill + cream foreground but without the eyebrow
-   prefix and with sans body type — matches the Eduix "Aloita" button
-   register rather than a textbook chapter opener. */
-body.app #screen-path .btn--cta {
-  background: var(--ed-accent);
-  color: var(--ed-accent-ink);
-  border: 0;
-  border-radius: 6px;
-  padding: 18px 22px;
-  position: relative;
-  box-shadow: 0 6px 18px -10px oklch(20% 0.10 28 / 0.32);
-}
-body.app #screen-path .btn--cta__title {
-  font-family: var(--ed-sans);
-  font-size: 17px;
-  font-weight: 600;
-  letter-spacing: -0.005em;
-  line-height: 1.2;
-}
-body.app #screen-path .btn--cta__meta {
-  font-family: var(--ed-sans);
-  font-size: 11px;
-  letter-spacing: 0.12em;
-  margin-top: 6px;
-  color: oklch(94% 0.012 75 / 0.82);
-}
-body.app #screen-path .btn--cta__arrow {
-  font-family: var(--ed-sans);
-  font-size: 18px;
-  color: var(--ed-accent-ink);
-}
-body.app #screen-path .btn--cta:hover {
-  background: var(--ed-accent-hover);
 }
 
 /* Empty-rail card — editorial framed quote + brick rule below the icon.
@@ -2485,18 +2401,6 @@ body.app .dash-chart-empty__title {
 body.app .dash-chart-empty__sub {
   font-family: var(--ed-serif);
     color: var(--ed-ink-faint);
-}
-
-/* Recent-list section header matches the chart header treatment. */
-body.app #screen-path .section-h h2 {
-  font-family: var(--ed-display);
-  font-weight: 400;
-  font-variation-settings: "opsz" 36;
-  font-size: 16px;
-  letter-spacing: 0.02em;
-  color: var(--ed-ink-muted);
-  border-bottom: 1px solid var(--ed-rule);
-  padding-bottom: 8px;
 }
 
 /* Sidebar item polish — italic Fraunces glyph hint on the active item,
@@ -2685,8 +2589,7 @@ body.app .dash-kpi-row--footnote .dash-kpi-tile__icon {
     margin-bottom: 0;
   }
   body.app .path-grid--three > .path-main { grid-area: main; }
-  body.app .path-grid--three > .path-rail { grid-area: rail; }
-}
+  body.app .path-grid--three > .path-rail { grid-area: rail; }}
 @media (min-width: 1280px) {
   body.app .path-grid--three {
     grid-template-columns: 260px minmax(0, 1fr) minmax(0, 360px);
@@ -2700,108 +2603,12 @@ body.app .dash-kpi-row--footnote .dash-kpi-tile__icon {
     align-self: start;
     max-height: calc(100vh - 80px);
     overflow-y: auto;
-  }
-}
+  }}
 @media (min-width: 1600px) {
   body.app .path-grid--three {
     grid-template-columns: 280px minmax(0, 1fr) minmax(0, 380px);
     gap: 48px;
-  }
-}
-
-/* ═══════════════════════════════════════════════════════════════
-   PATH-SCREEN DISTILL — strip the chrome (PR auto/path-distill)
-   User feedback 2026-05-19: even after the 3-col layout the screen
-   reads as "kalpea SaaS-dashboard". This block hides the visual
-   noise so the page becomes left-TOC + center-grid + nothing else.
-   ═══════════════════════════════════════════════════════════════ */
-
-/* Right rail content all hidden on path-screen — the chart-empty,
-   "Viimeisimmät harjoitukset" list, dash-readiness card, and
-   dash-empty-rail card all competed with the lesson grid. The
-   day-CTA stays as the ONE thing on the right. */
-body.app #screen-path .path-rail #dash-recent-wrap,
-body.app #screen-path .path-rail .dash-chart-section,
-body.app #screen-path .path-rail .dash-readiness,
-body.app #screen-path .path-rail .dash-empty-rail {
-  display: none !important;
-}
-
-/* KPI footnote-strip hidden too — student doesn't need streak/totals
-   on the chapter index page. They live on the (future) overview tab. */
-body.app #screen-path .dash-kpi-row--footnote {
-  display: none !important;
-}
-
-/* Active (expanded) course's outer chrome distilled. The brick-fill
-   rounded panel + step circle + title-row + progress bar are all
-   redundant now that the left TOC carries the "you are here" signal
-   and the bento grid is the actual content. Targeted by .is-expanded
-   (set whenever _state.expanded === k.key) instead of .is-current
-   because the latter is only set when the student has already
-   completed ≥1 lesson — fresh users with zero progress wouldn't
-   get the modifier and the whole list would be hidden by the
-   :not selector below (bug from screenshot 211324). */
-body.app #screen-path .curr-card.is-expanded {
-  background: transparent;
-  border: 0;
-  box-shadow: none;
-  padding: 0;
-  min-height: 0;
-  display: block;
-}
-body.app #screen-path .curr-card.is-expanded > .curr-step,
-body.app #screen-path .curr-card.is-expanded > .curr-body,
-body.app #screen-path .curr-card.is-expanded > .curr-status {
-  display: none;
-}
-
-/* Collapsed (non-expanded) course cards in the middle column are
-   hidden at ≥1280px — they duplicate the left TOC. Mobile falls back
-   to the full course list because the TOC stacks below the main
-   column there. Keying on .is-expanded (not .is-current) so a fresh
-   user whose only progress signal is "Kurssi 1 is unlocked" still
-   sees the active course's lessons in the middle. */
-@media (min-width: 1280px) {
-  body.app #screen-path .curr-card:not(.is-expanded) {
-    display: none;
-  }
-  body.app #screen-path .curr-list::before { display: none; }
-  body.app #screen-path .curr-head { display: none; }
-}
-
-/* L-V400 — the .curr-bento-* block (minimal bento lesson grid) was removed as
-   dead code: no screen renders .curr-bento-grid/-card/-title (grep across
-   js/, app.html, routes/ = 0). It was the unshipped replacement for the live
-   .curr-lessons list. curriculum-bento.css (its only other home) was deleted
-   and dropped from bundle-entry.css in the same change. */
-
-/* Greeting tightening — when on path screen it currently competes
-   with the "Oppimispolku" title. Drop the greeting size + remove
-   the rule above it so the typography reads as a header band. */
-body.app #screen-path .dash-greeting {
-  padding-top: 8px;
-  border-top: 0;
-  margin-bottom: 16px;
-}
-body.app #screen-path .dash-greeting .display {
-  font-size: clamp(1.4rem, 2.4vw, 2rem);
-  margin: 0;
-}
-/* Streak chip stays — small enough that it's just metadata. */
-
-/* ═══════════════════════════════════════════════════════════════
-   KILL SCREEN-PATH — PR auto/kill-screen-path (2026-05-19)
-   The legacy #screen-path was the user-facing flicker every time
-   anything called loadDashboard without going through home.js.
-   Hide it permanently; any code path that activates it (legacy
-   navigateTo("path"), exitToSource, etc.) gets a blank surface
-   while home.js takes over. !important to win over .screen.active.
-   ═══════════════════════════════════════════════════════════════ */
-body.app #screen-path.screen,
-body.app #screen-path.screen.active {
-  display: none !important;
-}
+  }}
 
 /* ═══════════════════════════════════════════════════════════════
    L-V336 round 2 — remaining mono text-labels → sans.

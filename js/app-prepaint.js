@@ -25,14 +25,14 @@
     // `#screen-auth` no longer has `active` baked into HTML — we apply it here
     // synchronously once the DOM is ready, *before* main.js runs.
     var hash = (location.hash || "").replace(/^#\/?/, "");
+    // Only the static, content-ready screens are pre-painted. The dynamic
+    // hashes (koti / oppimispolku / the legacy sanasto+puheoppi that main.js
+    // redirects to oppimispolku) are left UNPAINTED — main.js paints them once
+    // their data resolves. L-V400: these previously pointed at the hidden
+    // #screen-path (display:none = blank), so "no pre-paint" is behaviour-
+    // identical and avoids flashing an empty home shell before async routing
+    // (e.g. onboarding) decides.
     var HASH_TO_SCREEN = {
-      "koti": "screen-path",
-      "oppimispolku": "screen-path",
-      // L-V366 — sanasto/puheoppi mode pages were deleted; main.js redirects
-      // these legacy hashes to #/oppimispolku. Paint the path shell first so
-      // we don't land on a dead screen id (which previously fell through).
-      "sanasto": "screen-path",
-      "puheoppi": "screen-path",
       "luetun": "screen-mode-reading",
       "kirjoitus": "screen-mode-writing",
       "asetukset": "screen-settings",
@@ -40,12 +40,13 @@
     };
     var initial;
     if (loggedIn) {
-      initial = HASH_TO_SCREEN[hash] || "screen-path";
+      initial = HASH_TO_SCREEN[hash] || null;
     } else {
       // Reset-password flow keeps its own screen; everyone else lands on auth.
       initial = (hash === "reset-password") ? "screen-reset-password" : "screen-auth";
     }
     function applyInitial() {
+      if (!initial) return;
       var el = document.getElementById(initial);
       if (el && !document.querySelector(".screen.active")) {
         el.classList.add("active");

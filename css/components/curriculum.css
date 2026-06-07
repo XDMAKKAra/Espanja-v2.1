@@ -6,27 +6,12 @@
    tall scrollable curriculum content. Centered + tall = top inaccessible
    (classic flex+overflow trap). Anchor to top so the kurssi list head stays
    reachable, and stretch horizontally so .curr fills the main column. */
-#screen-path.screen.active,
+/* L-V400 — dropped #screen-path.screen.active from this group (screen removed);
+   #screen-lesson + #screen-lesson-results stay. */
 #screen-lesson.screen.active,
 #screen-lesson-results.screen.active {
   align-items: flex-start;
   justify-content: stretch;
-}
-
-#screen-path .curr {
-  /* hotfix bug 1 — widen oppimispolku to fill the viewport at 100% zoom.
-     Desktop ≥1440 caps at 1320px (Linear-tier reading width); 1024-1439 fills
-     available space; ≤1023 stacks with comfortable gutters. */
-  width: 100%;
-  max-width: min(1320px, 100%);
-  margin: 0 auto;
-  padding: clamp(24px, 4vw, 48px) clamp(16px, 4vw, 32px) 80px;
-  display: flex;
-  flex-direction: column;
-  gap: 28px;
-}
-@media (min-width: 1024px) {
-  #screen-path .curr { max-width: 1320px; }
 }
 
 /* Editorial header — Fraunces title with a quiet eyebrow above, like a
@@ -136,8 +121,7 @@ color: var(--ed-accent, var(--accent, #B73B3E));
     width: 64px;
     height: 64px;
     font-size: 26px;
-  }
-}
+  }}
 .curr-card.is-locked {
   /* L-PLAN-8 UPDATE 6B — bump from 0.45 → 0.55 so the composited text
      hits ~5.7:1 contrast against the page background. */
@@ -438,8 +422,7 @@ color: var(--ink-soft, var(--text-muted, #a1a1aa));
 }
 @media (prefers-reduced-motion: reduce) {
   .curr-lesson-loading { animation: none; opacity: 1; }
-  .curr-lesson-loading__dot { animation: none; opacity: 0.7; }
-}
+  .curr-lesson-loading__dot { animation: none; opacity: 0.7; }}
 
 /* ── #screen-lesson ──────────────────────────────────────────────────────── */
 
@@ -630,14 +613,12 @@ color: var(--ink-faint, var(--text-subtle, #71717a));
       "lessons lessons";
   }
   .curr-progress-bar { max-width: none; }
-  .curr-title { font-size: 15px; }
-}
+  .curr-title { font-size: 15px; }}
 
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   .curr-skeleton-card { animation: none; }
-  .curr-progress-fill, .curr-card, .curr-lesson { transition: none; }
-}
+  .curr-progress-fill, .curr-card, .curr-lesson { transition: none; }}
 
 /* ─────────────────────────────────────────────────────────────────────────── */
 /* L-PLAN-3 — post-session lesson results card.
@@ -783,11 +764,9 @@ color: var(--ink-soft, #a1a1aa);
   grid-column: 1 / -1;
 }
 @media (max-width: 480px) {
-  .lr-fasttrack-row .btn { flex: 1 1 100%; }
-}
+  .lr-fasttrack-row .btn { flex: 1 1 100%; }}
 @media (prefers-reduced-motion: reduce) {
-  .lr-fasttrack { transition: none; }
-}
+  .lr-fasttrack { transition: none; }}
 
 .lr-actions {
   display: flex;
@@ -826,8 +805,7 @@ color: var(--ink-soft, #a1a1aa);
 }
 .lr-deepen__row .btn { flex: 1 1 auto; }
 @media (max-width: 480px) {
-  .lr-deepen__row .btn { flex: 1 1 100%; }
-}
+  .lr-deepen__row .btn { flex: 1 1 100%; }}
 
 /* Deepen-mode results card — eyebrow accent so the bonus run feels
    distinct from the regular completion card. */
@@ -904,10 +882,8 @@ color: var(--ink-soft, var(--text-soft, #c8c8c8));
   }
   .lr-review-summary__headline { grid-area: head; }
   .lr-review-summary__score { grid-area: score; }
-  .lr-review-summary__label { grid-area: label; }
-}
+  .lr-review-summary__label { grid-area: label; }}
 
 @media (prefers-reduced-motion: reduce) {
   .lr-bar-fill { transition: none; }
-  .lr-skeleton-line { animation: none; }
-}
+  .lr-skeleton-line { animation: none; }}

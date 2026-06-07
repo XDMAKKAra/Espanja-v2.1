@@ -277,6 +277,14 @@ function renderDashboard({
       }, 0);
     }
   }
+  // L-V400 — the legacy #screen-path host (greeting / KPI / recent / chart) was
+  // removed. Everything below this point rendered into it and is now invisible,
+  // so bail out once the host is gone. The sidebar Pro-badge render above is the
+  // only live work in this function and has already run. (The whole 282→ block
+  // is a closed dead subgraph: loadTutorMessage/renderFreeChip/updateSrBadge/
+  // loadWeakTopics/renderProgressChart/renderHeatmap/readiness are called only
+  // from here — a follow-up loop can delete them outright.)
+  if (!document.getElementById("dash-username")) return;
   const rawEmail = getAuthEmail();
   const name = (rawEmail && rawEmail.includes("@")) ? rawEmail.split("@")[0] : "";
   $("dash-username").textContent = name;

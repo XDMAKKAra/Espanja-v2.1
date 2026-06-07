@@ -534,8 +534,7 @@ body::before {
   .mobile-nav { display: flex; }
   .screen { padding: 16px; padding-bottom: 80px; }
   .start-inner { max-width: 100%; }
-  .start-topbar .logo { display: none; }
-}
+  .start-topbar .logo { display: none; }}
 
 /* ── START SCREEN ── */
 .start-inner {
@@ -776,8 +775,7 @@ select option { background: var(--surface-2); }
   50% { box-shadow: 0 0 0 5px color-mix(in srgb, var(--accent) 0%, transparent); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .loading-step.is-active .loading-step__dot { animation: none; }
-}
+  .loading-step.is-active .loading-step__dot { animation: none; }}
 
 /* ── EXERCISE ── */
 .exercise-inner {
@@ -1148,8 +1146,7 @@ margin-bottom: 10px;
 }
 @media (prefers-reduced-motion: reduce) {
   .gap-fill-input.correct,
-  .gap-fill-input.wrong { animation: none !important; }
-}
+  .gap-fill-input.wrong { animation: none !important; }}
 .gap-fill-feedback { font-family: var(--font-mono); font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
 .gap-fill-feedback.hidden { display: none; }
 
@@ -1327,8 +1324,7 @@ letter-spacing: 0.1em;
   .sr-grade-btn {
     width: 100%;
     min-height: 48px;
-  }
-}
+  }}
 /* L-LIVE-AUDIT-P1 UPDATE 6 — SR rating buttons read as disabled in audit
    screenshots because the dark background pushed the colored outline + text
    into "muted ghost" territory. Now: text matches outline at full saturation,
@@ -1736,8 +1732,7 @@ margin-bottom: 12px;
 }
 @media (max-width: 860px) {
   .writing-grid { grid-template-columns: 1fr; }
-  .writing-rubric { position: static; order: 2; }
-}
+  .writing-rubric { position: static; order: 2; }}
 
 /* ── WRITING FEEDBACK (visual split layout) ── */
 .feedback-split {
@@ -1883,8 +1878,7 @@ letter-spacing: 0.1em;
 @media (max-width: 900px) {
   .feedback-split { grid-template-columns: 1fr; }
   .feedback-sidebar { order: -1; }
-  .feedback-score-card { margin-bottom: 12px; }
-}
+  .feedback-score-card { margin-bottom: 12px; }}
 
 .feedback-inner {
   max-width: 600px; width: 100%; max-height: calc(100vh - 48px);
@@ -2083,8 +2077,7 @@ color: var(--accent-hover); border: 1px solid var(--accent-hover); border-radius
      parallax shift well under 4px to avoid distraction. */
   .auth-bg-grid {
     animation: authGridDrift 18s ease-in-out infinite alternate;
-  }
-}
+  }}
 @keyframes authGridDrift {
   0%   { transform: translate(0, 0); }
   100% { transform: translate(-12px, -8px); }
@@ -2106,8 +2099,7 @@ color: var(--accent-hover); border: 1px solid var(--accent-hover); border-radius
     grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
     gap: 56px;
     padding: 32px 32px;
-  }
-}
+  }}
 .auth-aside { display: none; }
 @media (min-width: 960px) {
   .auth-aside {
@@ -2144,8 +2136,7 @@ color: var(--accent-hover); border: 1px solid var(--accent-hover); border-radius
     background: radial-gradient(circle, rgba(45, 212, 191, 0.28), transparent 72%);
     pointer-events: none;
   }
-  .auth-aside > * { position: relative; z-index: 1; }
-}
+  .auth-aside > * { position: relative; z-index: 1; }}
 .auth-aside__logo {
   font-family: var(--font-display);
   font-size: 28px;
@@ -2219,8 +2210,7 @@ color: rgba(204, 251, 241, 0.78);
 .auth-inner__logo { display: block; }
 @media (min-width: 960px) {
   /* Aside carries the brand on desktop — hide the inline form logo */
-  .auth-inner__logo { display: none; }
-}
+  .auth-inner__logo { display: none; }}
 .auth-tabs {
   display: flex; gap: 4px;
   background: var(--surface); border: 1px solid var(--border);
@@ -2449,8 +2439,7 @@ color: var(--ink-soft); margin-bottom: 4px; }
 .loading-shimmer { color: var(--ink-faint); animation: loadingShimmer 1.4s ease-in-out infinite; }
 @keyframes loadingShimmer { 0%,100% { opacity: 0.55; } 50% { opacity: 1; } }
 @media (prefers-reduced-motion: reduce) {
-  .loading-shimmer { animation: none; opacity: 0.7; }
-}
+  .loading-shimmer { animation: none; opacity: 0.7; }}
 
 /* Skeleton utility — placeholder bar that matches eventual content layout.
    Use as `<div class="skel" data-h="120"></div>` or set inline height. */
@@ -2476,8 +2465,7 @@ color: var(--ink-soft); margin-bottom: 4px; }
   100% { background-position: -100% 0; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .skel { animation: none; background: var(--surface-2, #f1f5f9); }
-}
+  .skel { animation: none; background: var(--surface-2, #f1f5f9); }}
 /* L-FRONTEND-POLISH-1 — exam progress bar: accent fill, 4px height, clear
    visual weight so the student knows where they are in the exam. */
 .exam-progress-bar {
@@ -2508,8 +2496,7 @@ color: var(--ink-soft); margin-bottom: 4px; }
   border-radius: var(--r-md);
 }
 @media (max-width: 480px) {
-  .reading-q-block { padding: 16px 18px; }
-}
+  .reading-q-block { padding: 16px 18px; }}
 .reading-q-text { font-size: 15px; font-weight: 600; margin-bottom: 12px; color: var(--ink); }
 /* L-V400 — `.selected-answer` follows the `.option-btn` base at equal
    specificity (source-order win) and no 0,2,0 variant is active in the
@@ -2664,8 +2651,7 @@ margin-bottom: 10px;
 
 @media (max-width: 768px) {
   .topic-cards { grid-template-columns: repeat(2, 1fr); }
-  .mode-page-stats { flex-wrap: wrap; }
-}
+  .mode-page-stats { flex-wrap: wrap; }}
 
 /* ── EXERCISE TYPE BADGES ──
    Pill shape; each semantic type gets its own cool colour at 12% bg,
@@ -3002,8 +2988,7 @@ color: var(--ink-soft);
 @media (prefers-reduced-motion: reduce) {
   .ob-orb-core, .ob-orb-glow { animation: none; }
   .ob-ready-inner { animation: none; }
-  .ob-ready-check svg path { animation: none; stroke-dashoffset: 0; }
-}
+  .ob-ready-check svg path { animation: none; stroke-dashoffset: 0; }}
 
 /* ═══════════════════════════════════════════════════════════════════════════
    ONBOARDING S3 — PROFILE READY (editorial hero)
@@ -3118,8 +3103,7 @@ color: var(--ink-soft);
   line-height: 1.45;
 }
 @media (max-width: 480px) {
-  .ob-ready-goals li { font-size: 16px; }
-}
+  .ob-ready-goals li { font-size: 16px; }}
 .ob-ready-goal-icon {
   width: 20px; height: 20px;
   color: var(--ink-soft);
@@ -3299,8 +3283,7 @@ color: var(--ink-soft);
 .ob-goal-skip:disabled { opacity: 0.4; cursor: not-allowed; }
 @media (min-width: 640px) {
   .ob-goal-cards { flex-direction: row; }
-  .ob-goal-card { flex: 1; }
-}
+  .ob-goal-card { flex: 1; }}
 
 /* ═══════════════════════════════════════════════════════════════════════════
    FIRST-EXERCISE CELEBRATION OVERLAY
@@ -3360,8 +3343,7 @@ color: var(--ink-soft);
 }
 @media (prefers-reduced-motion: reduce) {
   .first-celebration,
-  .first-celebration-card { animation: none; }
-}
+  .first-celebration-card { animation: none; }}
 
 /* ═══════════════════════════════════════════════════════════════════════════
    PERSISTENT TOP-BAR COUNTDOWN
@@ -3407,8 +3389,7 @@ color: var(--ink-soft);
    column only and never crosses the brand surface on the left. */
 body:has(.app-countdown:not(.hidden)) #app-main { padding-top: 34px; }
 @media (min-width: 1024px) {
-  .app-countdown { left: var(--app-sidebar, 220px); }
-}
+  .app-countdown { left: var(--app-sidebar, 220px); }}
 
 /* ═══════════════════════════════════════════════════════════════════════════
    ONBOARDING S3 — PATH
@@ -3506,8 +3487,7 @@ color: var(--ink-soft);
     width: 48%;
     vertical-align: top;
     text-align: left;
-  }
-}
+  }}
 
 /* ═══════════════════════════════════════════════════════════════════════════
    ONBOARDING S1 — WELCOME
@@ -3595,8 +3575,7 @@ color: var(--ink-soft);
 @media (max-width: 480px) {
   .ob-welcome-days { font-size: 56px; }
   .ob-welcome-days-unit { font-size: 22px; }
-  .ob-welcome-promise { font-size: 17px; }
-}
+  .ob-welcome-promise { font-size: 17px; }}
 
 /* ═══════════════════════════════════════════════════════════════════════════
    ONBOARDING
@@ -3818,8 +3797,7 @@ color: var(--ink-soft);
   gap: 10px;
 }
 @media (max-width: 400px) {
-  .target-grid { grid-template-columns: repeat(2, 1fr); }
-}
+  .target-grid { grid-template-columns: repeat(2, 1fr); }}
 .ob-target {
   flex-direction: column;
   align-items: center;
@@ -3844,8 +3822,7 @@ color: var(--ink-soft);
   gap: 10px;
 }
 @media (max-width: 400px) {
-  .checkbox-grid { grid-template-columns: 1fr; }
-}
+  .checkbox-grid { grid-template-columns: 1fr; }}
 .ob-checkbox {
   font-size: 0.9rem;
   padding: 12px 14px;
@@ -4283,13 +4260,6 @@ color: var(--ink-soft);
 }
 .placement-alt-btn.hidden { display: none; }
 
-
-/* ── LEARNING PATH ── */
-/* Trim .screen's default 24px frame on the path screen — the path-inner
-   handles its own gutters. Without this, content sits inside two stacked
-   24px paddings. */
-#screen-path.screen { padding: 0; }
-
 .path-inner {
   /* L-HOME-HOTFIX-3-P3 — fill wide screens (1500 max), drop the inner
      scroll container so the page scrolls naturally with the rail flowing
@@ -4347,14 +4317,6 @@ color: var(--ink-soft);
   color: var(--ink);
 }
 .path-rail .section-h { margin: 0 0 12px; }
-
-/* Tracking-tight on display headers — anti-AI-slop typography rule.
-   Inter is the project-locked font; we tighten it instead of swapping. */
-#screen-path .dash-greeting .display,
-#screen-path .curr-head h2 {
-  letter-spacing: -0.025em;
-  font-weight: 700;
-}
 @media (min-width: 1024px) {
   .path-grid {
     display: grid;
@@ -4362,21 +4324,9 @@ color: var(--ink-soft);
     gap: 40px;
     align-items: start;
   }
-  .path-rail { margin-top: 0; }
-}
+  .path-rail { margin-top: 0; }}
 @media (min-width: 1600px) {
-  .path-grid { grid-template-columns: minmax(0, 1fr) 480px; }
-}
-/* Course list inside .path-main no longer needs its own max-width or
-   top-padding — .path-inner caps width and the dash-greeting above
-   provides the breathing zone. Without these overrides the curr block
-   double-paddings the top and re-centres at 1320 inside an already
-   centred 1500 container, leaving fat empty bands on wide screens. */
-#screen-path .path-main .curr {
-  max-width: none;
-  padding: 0 0 32px;
-  margin: 0;
-}
+  .path-grid { grid-template-columns: minmax(0, 1fr) 480px; }}
 .path-header { margin-bottom: 24px; text-align: center; }
 .path-title {
   font-size: 28px; font-weight: 800;
@@ -4612,8 +4562,7 @@ color: var(--ink-soft);
   .path-nodes::before { left: 32px; }
   .path-node:nth-child(even), .path-node:nth-child(odd) {
     margin-left: 0; margin-right: 0;
-  }
-}
+  }}
 
 /* ── QUICK REVIEW MODAL ── */
 .grammar-start-row {
@@ -4751,8 +4700,7 @@ margin: 16px 0 8px;
     min-width: 0; width: 100%;
     padding: 14px 16px;
     font-size: 16px;
-  }
-}
+  }}
 
 /* ── VERB SPRINT ── */
 .vs-prompt {
@@ -5158,8 +5106,7 @@ margin-bottom: 8px;
   .vs-feedback { flex-direction: column; align-items: flex-start; }
   .vs-feedback .btn-next { margin-left: 0; width: 100%; }
 
-  .writing-header-right { width: 100%; margin-left: 0; justify-content: space-between; }
-}
+  .writing-header-right { width: 100%; margin-left: 0; justify-content: space-between; }}
 
 /* ── APP → BLOG TOUCHPOINTS ── */
 .blog-cta-banner {
@@ -5521,8 +5468,7 @@ margin-bottom: 8px;
   .level-bump-modal {
     padding: 32px 20px;
     padding-bottom: max(24px, env(safe-area-inset-bottom, 24px));
-  }
-}
+  }}
 
 
 /* ── Exam timer: paused overlay + 15-min warning modal (Commit 2) ────────── */
@@ -5591,8 +5537,7 @@ margin-bottom: 8px;
   padding: 12px 32px;
 }
 @media (prefers-reduced-motion: reduce) {
-  .exam-paused-overlay, .exam-warning-overlay { backdrop-filter: none; }
-}
+  .exam-paused-overlay, .exam-warning-overlay { backdrop-filter: none; }}
 
 /* ── Writing feedback: "Korjattu versio" block (Commit 6) ────────────────── */
 .feedback-corrected-text {
@@ -5665,8 +5610,7 @@ margin-bottom: 8px;
   .skeleton-bar, .skeleton-option {
     animation: none;
     background: var(--surface-2);
-  }
-}
+  }}
 
 .fetch-error {
   padding: 32px 24px;
@@ -5755,8 +5699,7 @@ margin-bottom: 8px;
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
-  }
-}
+  }}
 
 .mode-btn,
 .topic-card { cursor: pointer; }
@@ -5910,8 +5853,7 @@ color: var(--ink-faint);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .tt-popover { transition: none; }
-}
+  .tt-popover { transition: none; }}
 
 /* ============================================================
    L-LIVE-AUDIT-P2 UPDATE 8 — self-hosted Inter + DM Mono.
@@ -5950,8 +5892,7 @@ color: var(--ink-faint);
   to   { clip-path: circle(150% at var(--vt-origin-x, 50%) var(--vt-origin-y, 50%)); }
 }
 @media (prefers-reduced-motion: reduce) {
-  ::view-transition-new(root) { animation: none; }
-}
+  ::view-transition-new(root) { animation: none; }}
 
 /* ============================================================
    L-SURGICAL-2 (2026-05-17) — app product-register surgical fixes.
@@ -6029,4 +5970,3 @@ color: var(--ink-faint);
 .app-sidebar[data-mode="dark"] .brand-wordmark {
   color: var(--ed-cream, #F5EDE0);
 }
-

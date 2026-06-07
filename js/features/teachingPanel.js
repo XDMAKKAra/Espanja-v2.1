@@ -43,7 +43,12 @@ const EXERCISE_SCREENS = new Set([
 // L-HOME-HOTFIX-2, on the home screen the button changes role: instead of
 // re-opening a lesson teaching page (no lesson context exists there), it
 // opens a static "Miten Puheo toimii" tutorial.
-const HOME_TUTORIAL_SCREENS = new Set(["screen-path"]);
+// L-V400 — was Set(["screen-path"]); that screen was removed, and it had been
+// dormant since the home moved to #screen-home (the Set never matched the
+// active screen), so the "Miten Puheo toimii" home tutorial has not shown for
+// a long time. Keep it dormant (empty) to preserve current behaviour; repoint
+// to "screen-home" in a dedicated change if the home tutorial is revived.
+const HOME_TUTORIAL_SCREENS = new Set();
 
 const HOME_TUTORIAL_MD = [
   "# Miten Puheo toimii",
