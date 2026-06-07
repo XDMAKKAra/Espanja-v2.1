@@ -4,43 +4,53 @@
 
    L-V399 Vaihe A1 — the 6 stylesheets that app.html used to load as separate
    <link> tags around the bundle (tokens.css before; onboarding-v3, onboarding-v4,
-   coming-soon, off-canvas-nav, sidebar-shell after) are now folded in here, in
-   their original positions. One artifact, explicit order, and no more "loaded
-   after the bundle to win the cascade" fragility — which also makes a future
-   @layer pass safe (no unlayered app CSS left to flip the cascade). */
+   coming-soon, off-canvas-nav, sidebar-shell after) are folded in here, in their
+   original positions. One artifact, explicit order.
+
+   L-V399 Vaihe A2 — the entire legacy bundle now lives in a single `base` layer.
+   A single cascade layer resolves internally EXACTLY like unlayered CSS
+   (specificity + source order), so this is behavior-preserving: it does NOT
+   reorder any existing cascade. What it buys is a documented layer ABOVE base:
+   new component CSS authored into `@layer components` (and one-offs into
+   `@layer utilities`) wins over the legacy `base` rules by layer order, without
+   specificity fights or `!important`. See CONVENTIONS.md "CSS-säännöt".
+   NOTE: a deliberate full reorder (splitting base into reset/tokens/components/
+   app/landing sub-layers) is intentionally NOT done here — it flips cascades and
+   cannot be proven behavior-preserving with the current pixel-diff coverage. */
+@layer base, components, utilities;
 
 /* tokens.css loaded FIRST (additive aliases; does NOT redefine style.css tokens). */
-@import url('../css/tokens.css');
-@import url('../css/fonts.css');
-@import url('../style.css');
-@import url('../css/components/typography.css');
-@import url('../css/components/app-shell.css');
-@import url('../css/components/rail.css');
-@import url('../css/components/profile-menu.css');
-@import url('../css/components/dashboard.css');
-@import url('../css/components/mode-page.css');
-@import url('../css/components/exercise.css');
-@import url('../css/components/results.css');
-@import url('../css/components/profile.css');
-@import url('../css/components/meteors.css');
-@import url('../css/components/pro-popup.css');
-@import url('../css/components/onboarding-v2.css');
-@import url('../css/components/curriculum.css');
-@import url('../css/components/curriculum-bento.css');
-@import url('../css/components/teaching-panel.css');
-@import url('../css/components/lesson-runner.css');
-@import url('../css/components/paywall.css');
-@import url('../css/components/sentence-build.css');
-@import url('../css/components/home.css');
-@import url('../css/components/library-shelf.css');
-@import url('../css/components/digikirja.css');
+@import url('../css/tokens.css') layer(base);
+@import url('../css/fonts.css') layer(base);
+@import url('../style.css') layer(base);
+@import url('../css/components/typography.css') layer(base);
+@import url('../css/components/app-shell.css') layer(base);
+@import url('../css/components/rail.css') layer(base);
+@import url('../css/components/profile-menu.css') layer(base);
+@import url('../css/components/dashboard.css') layer(base);
+@import url('../css/components/mode-page.css') layer(base);
+@import url('../css/components/exercise.css') layer(base);
+@import url('../css/components/results.css') layer(base);
+@import url('../css/components/profile.css') layer(base);
+@import url('../css/components/meteors.css') layer(base);
+@import url('../css/components/pro-popup.css') layer(base);
+@import url('../css/components/onboarding-v2.css') layer(base);
+@import url('../css/components/curriculum.css') layer(base);
+@import url('../css/components/curriculum-bento.css') layer(base);
+@import url('../css/components/teaching-panel.css') layer(base);
+@import url('../css/components/lesson-runner.css') layer(base);
+@import url('../css/components/paywall.css') layer(base);
+@import url('../css/components/sentence-build.css') layer(base);
+@import url('../css/components/home.css') layer(base);
+@import url('../css/components/library-shelf.css') layer(base);
+@import url('../css/components/digikirja.css') layer(base);
 /* 2026-05-18 — Old-Spain register on body.app: var bridge + surface overrides. */
-@import url('../css/app-old-spain.css');
+@import url('../css/app-old-spain.css') layer(base);
 /* L-V399 A1 — formerly separate <link> tags, loaded AFTER app-old-spain.css
    (i.e. these win over it, exactly as before). sidebar-shell stays LAST so its
    geometry rules override style.css + off-canvas-nav.css (v277 contract). */
-@import url('../css/components/onboarding-v3.css');
-@import url('../css/components/onboarding-v4.css');
-@import url('../css/components/coming-soon.css');
-@import url('../css/components/off-canvas-nav.css');
-@import url('../css/components/sidebar-shell.css');
+@import url('../css/components/onboarding-v3.css') layer(base);
+@import url('../css/components/onboarding-v4.css') layer(base);
+@import url('../css/components/coming-soon.css') layer(base);
+@import url('../css/components/off-canvas-nav.css') layer(base);
+@import url('../css/components/sidebar-shell.css') layer(base);

@@ -77,7 +77,7 @@ kommentilla joka osoittaa server-lähteeseen.
 2. **Moduuli:** `js/screens/<nimi>.js`, exporttaa init/render-funktio.
 3. **Reititys:** rekisteröi `main.js`:n `HASH_NAV`/`NAV_HASH`-mappeihin; isot/harvoin käytetyt → `makeLazyScreen` (lazy import).
 4. **Screen-vaihto:** käytä **`show(id)`:tä** (`js/ui/nav.js`) ainoana tapana näyttää screen. Älä toggle `.active`-luokkaa käsin äläkä `style.display`-suoraan screen-tasolla — `show()` hoitaa modal-cleanupin, shell-moden ja scroll-resetin.
-5. **CSS:** `css/components/<nimi>.css`; lisää `@import` `scripts/bundle-entry.css`:ään oikealle paikalle järjestyksessä.
+5. **CSS:** `css/components/<nimi>.css`; lisää `@import url('...') layer(components);` `scripts/bundle-entry.css`:ään. Käytä **`layer(components)`** (ei `base`) — uusi sääntö voittaa silloin legacy-`base`-cascaden layer-järjestyksellä ilman `!important`-taistelua (ks. CSS-säännöt: @layer). Todella globaalit one-off-pakotteet → `layer(utilities)`.
 6. **Kieli:** lue aktiivinen kieli `state.language`:sta (EI suoraan `localStorage["puheo:lang"]`).
 
 ## Uusi API-reitti
@@ -101,8 +101,18 @@ kommentilla joka osoittaa server-lähteeseen.
 
 ## CSS-säännöt
 
-- **Token-lähteet (älä lisää uusia kilpailevia):** `style.css :root` (primary), `tokens.css` (vain additiiviset/aliakset), `app-old-spain.css body.app` (app `--ed-*`-layer), `landing-*tokens.css .landing` (landing-scope). Uusi token → lisää oikeaan olemassaolevaan, älä luo uutta `:root`-lohkoa.
-- **`!important` vain `@media (prefers-reduced-motion)` -lohkoissa.** Layout-/väri-`!important` = merkki cascade-ongelmasta → korjaa spesifisyydellä tai `@layer`-järjestyksellä, älä lisää uutta `!important`ia. (Ks. L-V399 cascade-sodat kartassa.)
+- **@layer-arkkitehtuuri (L-V399 A2):** app-bundle (`scripts/bundle-entry.css`) deklaroi `@layer base, components, utilities;` ja kaikki nykyinen legacy-CSS on `base`-layerissa. Layer-järjestys: `base` < `components` < `utilities`. **Uusi komponentti-CSS → `layer(components)`**, jolloin se voittaa legacy-`base`:n layer-järjestyksellä ilman spesifisyystaistelua tai `!important`ia. `utilities` = harvinainen globaali pakote. **HUOM:** `base` on yksi layer tarkoituksella — sen sisällä cascade toimii kuten ennen (spesifisyys + source-order). Älä pilko `base`:a ali-layereihin: se kääntäisi olemassaolevia cascadeja eikä ole behavior-preserving (todistettavissa vain 5 pinnan pikselidiffillä, ei koko appin).
+- **Token-lähteet ovat KONTEKSTIKOHTAISIA, älä dedupoi yli kontekstien:** kukin token-tiedosto palvelee eri sivujoukkoa, joten "sama nimi eri tiedostossa" ei ole turha duplikaatti vaan eri konteksti.
+
+  | Token-tiedosto | Konteksti (mitkä sivut) | Rooli |
+  |---|---|---|
+  | `style.css :root` | app-bundle (app.html) | primary app-tokenit |
+  | `css/tokens.css :root` | app **+ kaikki artikkelit/*.html** | additiiviset (z-index, aliakset) — EI redefinoi style.css:ää |
+  | `css/app-old-spain.css body.app` | app-bundle | `--ed-*` + legacy-bridge (Old-Spain-remap, L-V388-divergenssit) |
+  | `css/landing-*tokens.css .landing` | landing-sivut | landing-scope |
+
+  Uusi token → lisää oikeaan olemassaolevaan kontekstiin, älä luo uutta `:root`-lohkoa. **Älä poista tokenia olettaen toisen tiedoston kattavan sen** — esim. tokens.css elää artikkelisivuilla ilman style.css:ää, joten sen tokenin poisto rikkoo artikkelit (L-V399 A2 -löydös).
+- **`!important` vain `@media (prefers-reduced-motion)` -lohkoissa.** Layout-/väri-`!important` = merkki cascade-ongelmasta → korjaa **`layer(components)`-järjestyksellä** tai spesifisyydellä, älä lisää uutta `!important`ia. **Varo:** `!important` *kääntää* layer-järjestyksen (matalan layerin `!important` voittaa korkeamman layerin normaalisäännön), joten `!important`ien poisto layeroinnin yhteydessä vaatii tapauskohtaisen analyysin — ei blanket-poistoa.
 - **Älä lisää uutta stylesheettiä** ennen kuin olemassaoleva ei riitä — kilpailevat sheetit ovat dokumentoitu bugilähde (L-V388).
 - **Näkyvyys:** käytä `.hidden`-luokkaa (`display:none !important`, style.css) TAI `element.hidden = true`. Jos käytät `[hidden]`-attribuuttia elementtiin jolla on `display`-luokka, varmista `[hidden]{display:none !important}` -guard (attribuutti on muuten no-op).
 - **Lämpimät värit:** ei pure `#000`/`#fff` — warm-black/cream (ks. CLAUDE.md anti-slop).
