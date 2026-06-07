@@ -108,22 +108,19 @@ Neljä onboarding-toteutusta elää rinnakkain. Reititys (`js/main.js`):
   `checkOnboarding` (→ main.js, auth.js), `hideAppCountdown` (→ dashboard.js),
   `showPathFromPlacement` (→ placement.js), `maybeShowFirstCelebration` (→ vocab.js).
 
-### ⚠️ PÄÄTÖSPORTTI ennen mitään B-poistoa (kysy Marcelilta jos epäselvä)
+### Päätös LUKITTU (Marcel 2026-06-07): V2 + V3 = POISTA kokonaan
 
-V2/V3 ovat fallback-testihashien takana. **Suositus: poista V2 + V3 kokonaan** (markup +
-`onboardingV2.js` + `onboardingV3.js` + lazy-wiring + hash-haarat main.js:209–212 +
-`window._onboardingV2/V3`). Perustelu: ne ovat vain manuaalista fallback-testausta varten,
-0 oikeaa käyttäjäpolkua, ja neljän rinnakkaisen onboardingin ylläpito on nettotappio. Jos
-Marcel haluaa pitää V2/V3-vertailuversiot elossa → **älä poista, raportoi** ja tee vain V1-
-ruutujen siivous (B3).
+V2/V3 olivat vain manuaalisen fallback-testihashin (`#/aloitus-v2` / `-v3`) takana — 0 oikeaa
+käyttäjäpolkua. Marcel vahvisti ettei käytä niitä → poista markup + moduulit + wiring + hash-
+haarat. Ei enää päätösporttia, suorita B1 + B2.
 
-### B1. Poista V2-onboarding (jos päätösportti = kill)
+### B1. Poista V2-onboarding
 - Markup app.html (sweep arvioi ~rivit 919–1083, `#screen-ob1-profile … #screen-ob4-plan`;
   varmista grepillä `id="screen-ob1`).
 - `js/screens/onboardingV2.js`, lazy-määrittely main.js:184–187, hash-haara 209–210,
   `window._onboardingV2` (196), sw-precache-rivi jos on.
 
-### B2. Poista V3-onboarding (jos päätösportti = kill)
+### B2. Poista V3-onboarding
 - Markup app.html (sweep ~439–705, `#screen-ob-v3-*`).
 - `js/screens/onboardingV3.js`, lazy main.js:189–192, hash 211–212, `window._onboardingV3` (197),
   sw-precache jos on.
@@ -183,9 +180,9 @@ VERIFY_BASE=http://localhost:3000 TEST_PRO_EMAILS=testpro123@gmail.com TEST_PRO_
 - [ ] OSA A: A1–A6 poistettu, jokainen oma commit + harness 0-diff + vitest all-pass +
       clickthrough 0 erroria. dailyChallenge poistettu VAIN jos done-flag todistetusti
       lukematon. Elävät (onboarding.js shared funcs, `.profile-*`-comma-ryhmä) koskemattomia.
-- [ ] OSA B: päätösportti ratkaistu (V2/V3 kill vai keep). Jos kill → markup + moduulit +
-      wiring + hash-haarat poistettu, V4 toimii edelleen uudelle käyttäjälle alusta loppuun
-      (smoke-spec todistaa). V1-ruudut poistettu vain todistetusti unreachablet; `onboarding.js`
-      jäljellä eikä yksikään importtaaja (auth/dashboard/placement/vocab) hajoa.
+- [ ] OSA B: V2 + V3 poistettu (markup + moduulit + wiring + hash-haarat), V4 toimii edelleen
+      uudelle käyttäjälle alusta loppuun (smoke-spec todistaa). V1-ruudut poistettu vain
+      todistetusti unreachablet; `onboarding.js` jäljellä eikä yksikään importtaaja
+      (auth/dashboard/placement/vocab) hajoa.
 - [ ] sw CACHE_VERSION bumpattu jokaisessa asset-commitissa, STATIC_ASSETS ehjä (ei 404-entryjä).
 - [ ] Email-stack ja muut server-reitit koskemattomia (out of scope).
