@@ -23,7 +23,7 @@
  */
 
 import { API, apiFetch, isLoggedIn, authHeader, fetchDashboardV2, clearDashboardV2 } from "../api.js";
-import { setLanguage } from "../state.js";
+import { setLanguage, LEVELS } from "../state.js";
 import { show } from "../ui/nav.js";
 import { getTier } from "../lib/tier.js";
 import { openPaywall } from "../features/paywallModal.js";
@@ -209,7 +209,7 @@ function renderTabs(activeLang) {
 const EXAM_DATE_ISO = "2026-09-28";
 const DAILY_GOAL = 3;        // tasks/day that fill the ring
 const GOAL_MINUTES = 8;      // rough minutes for the full daily goal
-const GRADES = ["I", "A", "B", "C", "M", "E", "L"];
+const GRADES = LEVELS; // L-V399 D: single-sourced from js/state.js
 
 function daysUntilExam() {
   const today = new Date();

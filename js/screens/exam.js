@@ -1,5 +1,6 @@
 import { $, show } from "../ui/nav.js";
 import { API, isLoggedIn, authHeader } from "../api.js";
+import { LEVELS } from "../state.js";
 import { showLoading, showLoadingError } from "../ui/loading.js";
 import { createExamTimer, clearPersisted as clearTimerPersisted } from "../features/examTimer.js";
 
@@ -206,7 +207,7 @@ async function submitExam() {
     });
     const gradeData = await gradeRes.json();
 
-    const GRADE_ORDER = ["I","A","B","C","M","E","L"];
+    const GRADE_ORDER = LEVELS; // L-V399 D: single-sourced from js/state.js
     const writingIdx = GRADE_ORDER.indexOf(gradeData.grade ?? "C");
     const readingIdx = Math.min(6, Math.round((readingPct / 100) * 6));
     const combinedIdx = Math.round(writingIdx * 0.6 + readingIdx * 0.4);

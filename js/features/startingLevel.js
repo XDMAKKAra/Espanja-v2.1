@@ -1,5 +1,8 @@
-// YTL grade ladder: weakest → strongest
-export const YTL_LEVELS = ["I", "A", "B", "C", "M", "E", "L"];
+import { LEVELS } from "../state.js";
+// YTL grade ladder: weakest → strongest. Single-sourced from js/state.js
+// LEVELS (L-V399 D). Read-only ladder — never mutated, so the shared
+// reference is safe.
+export const YTL_LEVELS = LEVELS;
 
 export const STUDY_BACKGROUNDS = new Set([
   "lukio",

@@ -1,6 +1,6 @@
 import { $, show } from "../ui/nav.js";
 import { API, isLoggedIn, clearAuth, authHeader, apiFetch, getAuthEmail, setDashboardV2, getDashboardV2Section, fetchDashboardV2 } from "../api.js";
-import { state, setLanguage, apiLang } from "../state.js";
+import { state, setLanguage, apiLang, LEVELS } from "../state.js";
 import { showLoading } from "../ui/loading.js";
 import { srDueCount } from "../features/spacedRepetition.js";
 import { getBlogForTopic, trackBlogClick } from "../features/topicBlogMap.js";
@@ -718,7 +718,7 @@ function renderProgressChart(chartData) {
   const el = $("dash-chart");
   if (!el) return;
 
-  const GRADES = ["I", "A", "B", "C", "M", "E", "L"];
+  const GRADES = LEVELS; // L-V399 D: single-sourced from js/state.js
   const pts = chartData.map(logToGradeIdx).filter((g) => g !== null);
 
   if (pts.length === 0) {
@@ -1082,7 +1082,7 @@ export async function saveProgress({ mode, level, scoreCorrect, scoreTotal, ytlG
 
 const GRADE_NAMES = { I: "Improbatur", A: "Approbatur", B: "Lubenter", C: "Cum laude", M: "Magna", E: "Eximia", L: "Laudatur" };
 const SECTION_LABELS = { vocab: "Sanasto", grammar: "Kielioppi", reading: "Luetun ymmärtäminen", writing: "Kirjoittaminen" };
-const GRADE_ORDER_LOCAL = ["I","A","B","C","M","E","L"];
+const GRADE_ORDER_LOCAL = LEVELS; // L-V399 D: single-sourced from js/state.js
 
 function renderGradeWidget(estimate) {
   const { tier, grade, confidence = 0, coverage = {}, total = 0 } = estimate;

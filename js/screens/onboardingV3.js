@@ -8,7 +8,7 @@
 
 import { $, show } from "../ui/nav.js";
 import { API, isLoggedIn, authHeader, apiFetch } from "../api.js";
-import { setLanguage } from "../state.js";
+import { setLanguage, LEVELS } from "../state.js";
 import { track } from "../analytics.js";
 import { computeStudyPlan, gradeLabel } from "../lib/studyPlan.js";
 
@@ -218,7 +218,7 @@ function wireCurrent() {
     // Default target = current + 2 if not set yet
     const targetRow = document.querySelector('[data-ob3-field="target_grade"]');
     if (targetRow && !flow.target_grade) {
-      const ladder = ["I", "A", "B", "C", "M", "E", "L"];
+      const ladder = LEVELS; // L-V399 D: single-sourced from js/state.js
       const idx = ladder.indexOf(flow.current_level);
       const presumed = idx >= 0 && idx + 2 < ladder.length ? ladder[idx + 2] : "M";
       const match = targetRow.querySelector(`.ob3-grade[data-value="${presumed}"]`);

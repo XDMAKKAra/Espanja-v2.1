@@ -11,6 +11,7 @@
 
 import { $, show } from "../ui/nav.js";
 import { API, isLoggedIn, authHeader, apiFetch } from "../api.js";
+import { LEVELS } from "../state.js";
 import { track } from "../analytics.js";
 
 // ── State ────────────────────────────────────────────────────────────────
@@ -147,7 +148,7 @@ function wireOB1() {
 
       // Pre-select target one notch above school grade on first interaction.
       if (field === "schoolGrade" && !v2.targetGrade) {
-        const ladder = ["I", "A", "B", "C", "M", "E", "L"];
+        const ladder = LEVELS; // L-V399 D: single-sourced from js/state.js
         const idx = ladder.indexOf(value);
         if (idx >= 0 && idx < ladder.length - 1) {
           const presumed = ladder[idx + 1];
