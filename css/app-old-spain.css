@@ -320,28 +320,6 @@ body.app .dash-kpi-tile__label {
   color: var(--ed-ink-muted);
 }
 
-/* Daily challenge card — single warm tile, terracotta accent rule. */
-body.app .daily-challenge {
-  background: var(--ed-bg-card);
-  border-color: var(--ed-rule);
-  border-left: 0;
-  border-top: 2px solid var(--ed-accent);
-  border-radius: 10px;
-}
-body.app .daily-challenge__kicker { color: var(--ed-accent); font-family: var(--ed-sans); font-weight: 600; letter-spacing: 0.01em; }
-body.app .daily-challenge__title {
-  font-family: var(--ed-display);
-  font-variation-settings: "opsz" 36, "SOFT" 40;
-  color: var(--ed-ink);
-}
-body.app .daily-challenge__desc { color: var(--ed-ink-muted); }
-body.app .daily-challenge--done {
-  border-top-color: var(--ed-olive);
-  background: color-mix(in oklch, var(--ed-olive) 6%, var(--ed-bg-card));
-}
-body.app .daily-challenge--done .daily-challenge__kicker { color: var(--ed-olive); }
-body.app .daily-challenge__check { background: var(--ed-olive); color: var(--ed-bg); }
-
 /* Mode cards — paper tile with hard-offset shadow on hover, no
    transform jump. Reads as a textbook chapter card, not a SaaS tile. */
 body.app .dash-mode-card {
@@ -2633,7 +2611,6 @@ body.app .dash-total,
 body.app .heatmap-label,
 body.app .dash-rec-sub,
 body.app .dash-empty,
-body.app .daily-challenge__mode,
 body.app .dash-writing-progression-title,
 body.app .dash-writing-progression-empty,
 body.app .profile-handle,

@@ -44,36 +44,10 @@ export function getChallengeCount() {
   return CHALLENGES.length;
 }
 
-const MODE_LABELS = {
-  vocab: "Sanasto",
-  grammar: "Puheoppi",
-  reading: "Luetun ymmärtäminen",
-  writing: "Kirjoittaminen",
-};
-
-const SKIP_KEY = "puheo_dailychallenge_skipped";
 const DONE_KEY = "puheo_dailychallenge_done";
 
 function dayNumber(epoch = Date.now()) {
   return Math.floor(epoch / 86400000);
-}
-
-function isSkippedToday(epoch = Date.now()) {
-  try {
-    const v = localStorage.getItem(SKIP_KEY);
-    return v && Number(v) === dayNumber(epoch);
-  } catch { return false; }
-}
-
-function markSkippedToday(epoch = Date.now()) {
-  try { localStorage.setItem(SKIP_KEY, String(dayNumber(epoch))); } catch { /* ignore */ }
-}
-
-function isDoneToday(epoch = Date.now()) {
-  try {
-    const v = localStorage.getItem(DONE_KEY);
-    return v && Number(v) === dayNumber(epoch);
-  } catch { return false; }
 }
 
 function markDoneToday(epoch = Date.now()) {
@@ -86,54 +60,4 @@ export function markModeCompletedToday(mode, epoch = Date.now()) {
   if (!mode) return;
   const c = getDailyChallenge(epoch);
   if (c && c.mode === mode) markDoneToday(epoch);
-}
-
-export function renderDailyChallengeInto(el, { onAccept } = {}) {
-  if (!el) return;
-  if (isSkippedToday()) {
-    el.classList.add("hidden");
-    el.innerHTML = "";
-    return;
-  }
-  const c = getDailyChallenge();
-  el.classList.remove("hidden");
-
-  if (isDoneToday()) {
-    el.classList.add("daily-challenge--done");
-    el.innerHTML = `
-      <div class="daily-challenge__head">
-        <span class="daily-challenge__kicker">Tänään · haaste</span>
-        <span class="daily-challenge__mode">${MODE_LABELS[c.mode] || c.mode}</span>
-      </div>
-      <h3 class="daily-challenge__title">${c.titleFi}</h3>
-      <p class="daily-challenge__desc daily-challenge__desc--done">
-        <span class="daily-challenge__check" aria-hidden="true">✓</span>
-        Hyvin meni, päivän haaste tehty. Nähdään huomenna uuden parissa.
-      </p>`;
-    return;
-  }
-
-  el.classList.remove("daily-challenge--done");
-  el.innerHTML = `
-    <div class="daily-challenge__head">
-      <span class="daily-challenge__kicker">Tänään · haaste</span>
-      <span class="daily-challenge__mode">${MODE_LABELS[c.mode] || c.mode}</span>
-    </div>
-    <h3 class="daily-challenge__title">${c.titleFi}</h3>
-    <p class="daily-challenge__desc">${c.descFi}</p>
-    <div class="daily-challenge__actions">
-      <button type="button" class="btn--cta btn--cta--mini" data-act="accept" data-mode="${c.mode}">Aloita haaste →</button>
-      <button type="button" class="daily-challenge__skip" data-act="skip">Ohita tänään</button>
-    </div>`;
-  el.addEventListener("click", (ev) => {
-    const t = ev.target.closest("[data-act]");
-    if (!t) return;
-    const act = t.dataset.act;
-    if (act === "skip") {
-      markSkippedToday();
-      el.classList.add("hidden");
-    } else if (act === "accept" && typeof onAccept === "function") {
-      onAccept(c);
-    }
-  }, { once: false });
 }
