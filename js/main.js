@@ -30,7 +30,7 @@ import { initQuickReview } from "./screens/quickReview.js";
 // F-ARCH-1 §A — these screens are lazy. Their static imports moved out.
 // See makeLazyScreen wrappers below (lazyFullExam, lazySettings, …).
 import { wireTopicPicker, topicLabel, loadBriefing } from "./screens/mode-page.js";
-import { initErrorMonitoring } from "./analytics.js";
+import { initErrorMonitoring, initVercelAnalytics } from "./analytics.js";
 import { initConsentGate } from "./features/consent.js";
 // L-PLAN-4 UPDATE 4 — floating profile button (replaces the right rail).
 import { initProfileMenu, syncProfileMenu } from "./features/profileMenu.js";
@@ -993,6 +993,9 @@ if (!resetToken && isLoggedIn()) {
   // Error monitoring (legitimate interest) runs immediately; analytics waits
   // for consent via the banner / stored choice.
   initErrorMonitoring();
+  // Vercel Web Analytics is privacy-friendly (no cookies, no personal data)
+  // and runs automatically without requiring consent.
+  initVercelAnalytics();
   initConsentGate();
 }
 
