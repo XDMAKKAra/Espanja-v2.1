@@ -2727,16 +2727,6 @@ margin-bottom: 10px;
   transition: width 0.3s;
 }
 
-/* Mastery test results inner */
-#screen-mastery-results .results-inner {
-  margin: 0 auto;
-  padding: 40px 20px;
-}
-#screen-mastery-results .btn-primary {
-  width: 100%;
-  margin-top: 16px;
-}
-
 /* ═══════════════════════════════════════════════════════════════════════════
    DAILY-CAP RESULT BANNER (free tier, vocab/grammar)
    ═══════════════════════════════════════════════════════════════════════════ */
@@ -4260,80 +4250,6 @@ color: var(--ink-soft);
 }
 .placement-alt-btn.hidden { display: none; }
 
-/* Mastery intro / result screens */
-.mastery-intro-inner, .mastery-result-inner {
-  max-width: 460px; width: 100%;
-  text-align: center;
-  animation: fadeUp 0.4s ease both;
-  padding: 24px;
-}
-.mastery-intro-icon, .mastery-result-icon {
-  font-size: 48px; margin-bottom: 16px; color: var(--accent-hover);
-}
-.mastery-intro-icon { stroke-width: 1.5; }
-.mastery-intro-topic, .mastery-result-pct {
-  font-size: 28px; font-weight: 800;
-  letter-spacing: -0.02em; margin-bottom: 8px;
-}
-.mastery-intro-desc {
-  font-family: var(--font-mono); font-size: 13px;
-  color: var(--ink-soft); line-height: 1.6;
-  margin-bottom: 28px;
-}
-.mastery-intro-rules {
-  display: flex; flex-direction: column; gap: 8px;
-  margin-bottom: 32px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--r-md);
-  padding: 16px 20px;
-  text-align: left;
-}
-.mastery-intro-rule {
-  font-family: var(--font-mono); font-size: 13px;
-  color: var(--ink-soft);
-}
-.mastery-intro-rule strong { color: var(--ink); margin-right: 4px; }
-.mastery-intro-start { width: 100%; margin-bottom: 12px; }
-
-.mastery-result-pct {
-  background: linear-gradient(130deg, var(--accent), var(--accent));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  font-size: 72px;
-}
-.mastery-result-pct.pass {
-  background: linear-gradient(130deg, var(--success), #16a34a);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-.mastery-result-pct.fail {
-  background: var(--error);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-.mastery-result-score {
-  font-family: var(--font-mono); font-size: 13px;
-  color: var(--ink-soft); margin-bottom: 16px;
-}
-.mastery-result-message {
-  font-size: 16px; font-weight: 600;
-  margin-bottom: 20px;
-}
-.mastery-result-unlock {
-  padding: 12px 18px;
-  background: rgba(34,197,94,0.1);
-  border: 1px solid var(--success);
-  border-radius: var(--r-md);
-  font-size: 14px; color: var(--success);
-  margin-bottom: 24px;
-}
-.mastery-result-unlock.hidden { display: none; }
-.mastery-result-actions { display: flex; flex-direction: column; gap: 8px; }
-
 /* ── QUICK REVIEW MODAL ── */
 .grammar-start-row {
   display: flex; gap: 10px; flex-wrap: wrap;
@@ -5642,13 +5558,6 @@ color: var(--ink-faint);
    redundant. */
 .mode-topic__n {
   display: none;
-}
-
-.mastery-result-icon--small {
-  font-size: 28px;
-  line-height: 1;
-  margin: 8px auto 0;
-  opacity: 0.85;
 }
 
 /* L-V318c — wordmark as CSS-styled text. Renders identically on every
