@@ -1,4 +1,4 @@
-const CACHE_VERSION = "puheo-v400j";
+const CACHE_VERSION = "puheo-v400k";
 const STATIC_ASSETS = [
   "/app.html",
   "/index.html",
@@ -98,7 +98,6 @@ const STATIC_ASSETS = [
   "/css/components/exercise.css",
   "/css/components/results.css",
   "/css/components/profile.css",
-  "/css/components/meteors.css",
   "/css/components/onboarding-v2.css",
   "/css/components/onboarding-v3.css",
   // L-V293-ONBOARDING-DIAGNOSTIC-1a — diagnostic-first V4 styles.
@@ -137,11 +136,9 @@ const STATIC_ASSETS = [
   "/js/ui/timeAgo.js",
   "/js/features/spacedRepetition.js",
   "/js/features/writingProgression.js",
-  "/js/features/wordOfDay.js",
   "/js/features/dailyChallenge.js",
   "/js/features/celebrate.js",
   "/js/features/shareCard.js",
-  "/js/features/meteors.js",
   "/js/features/cardTilt.js",
   "/js/features/tooltip.js",
   "/js/features/landingHero.js",
