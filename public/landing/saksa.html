@@ -93,6 +93,36 @@
   }
   </script>
 
+  <!-- JSON-LD: FAQPage -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Mistä osista lyhyen saksan YO-koe koostuu?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Kokeessa on kuullun ymmärtäminen, luetun ymmärtäminen, sanasto- ja rakenneosa sekä kirjoittaminen. Kaikki tehdään saman koepäivän aikana, ja arvosana lasketaan osien yhteispisteistä." }
+      },
+      {
+        "@type": "Question",
+        "name": "Kuinka pitkä saksan kirjoitelman pitää olla?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Kirjoitusosassa on lyhyt ja pitkä tehtävä. Tehtävänanto kertoo pituushaarukan, ja pisteet tulevat sekä kielestä että sisällöstä. Puheossa harjoittelet molempia pituuksia." }
+      },
+      {
+        "@type": "Question",
+        "name": "Miten Puheon arviointi toimii?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Saat kirjoitelmasta pistehaarukan YTL:n asteikolla ja suomenkielisen perustelun. Haarukka kertoo tason, mutta lopullinen YO-arvosana määräytyy aina koko kokeen yhteispisteistä, ei yhdestä tekstistä." }
+      },
+      {
+        "@type": "Question",
+        "name": "Voiko Puheota kokeilla ilmaiseksi?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Voit. Pääset aloittamaan ilman maksua ja näet, miten harjoitukset ja arviointi toimivat. Koko kahdeksan kurssin polun saat käyttöön maksullisella kurssilla." }
+      }
+    ]
+  }
+  </script>
+
   <link rel="manifest" href="/manifest.json" />
   <link rel="icon" type="image/svg+xml" href="/public/brand/favicon-master.svg" />
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
@@ -121,9 +151,10 @@
       <a class="nav__brand" href="/" aria-label="Puheo etusivu"><span class="brand-wordmark">puheo</span></a>
 
       <nav class="nav__links" aria-label="Sivun osiot">
-        <a class="nav__link" href="#kurssit">Kurssi</a>
-        <a class="nav__link" href="#nayte">Näyte</a>
+        <a class="nav__link" href="#koe">Koe</a>
+        <a class="nav__link" href="#kurssit">Kurssit</a>
         <a class="nav__link" href="#esimerkki">Arviointi</a>
+        <a class="nav__link" href="#ukk">UKK</a>
       </nav>
 
       <div class="nav__cta" id="nav-cta">
@@ -155,9 +186,10 @@
         </button>
       </div>
       <nav class="nav-menu__links" aria-label="Sivun osiot">
-        <a class="nav-menu__link" href="#kurssit">Kurssi</a>
-        <a class="nav-menu__link" href="#nayte">Näyte</a>
+        <a class="nav-menu__link" href="#koe">Koe</a>
+        <a class="nav-menu__link" href="#kurssit">Kurssit</a>
         <a class="nav-menu__link" href="#esimerkki">Arviointi</a>
+        <a class="nav-menu__link" href="#ukk">UKK</a>
         <a class="nav-menu__link" href="/espanjan-abikurssi">Espanjan abikurssi</a>
         <a class="nav-menu__link" href="/ranskan-abikurssi">Ranskan abikurssi</a>
       </nav>
@@ -173,15 +205,14 @@
   </div>
 
   <main class="lp">
-    <!-- ═══ 1. HERO (compact) ───────────────────────────────── -->
+    <!-- ═══ 1. HERO ──────────────────────────────────────────── -->
     <section class="lp-hero" id="hero" aria-labelledby="hero-title">
       <div class="lp-hero__inner">
-        <span class="lp-eyebrow">Saksan abikurssi · lyhyt oppimäärä</span>
-        <h1 class="lp-hero__title" id="hero-title">Saksan abikurssi <em>YO-koetta varten</em></h1>
+        <h1 class="lp-hero__title" id="hero-title">Saksan abikurssi lyhyen oppimäärän YO-kokeeseen</h1>
         <p class="lp-hero__sub">
-          Kahdeksan kurssin oppimispolku lyhyen oppimäärän saksan
-          ylioppilaskokeeseen. Harjoittele oikeilla tehtävätyypeillä ja anna
-          tekoälyn arvioida kirjoitelmasi YTL:n rubriikilla.
+          Kahdeksan kurssin polku vie perusteista YO-tehtävien tasolle.
+          Harjoittelet samoilla tehtävätyypeillä kuin kokeessa, ja jokainen
+          kirjoitelma saa palautteen YTL:n arviointiperusteiden mukaan.
         </p>
         <div class="lp-hero__actions">
           <a class="btn btn--primary btn--lg" href="/app.html#/aloitus" data-lang-cta>
@@ -198,14 +229,69 @@
       </div>
     </section>
 
-    <!-- ═══ 2. COURSE INFO (8 courses, A→E) ─────────────────── -->
-    <section class="lp-section lp-section--tint" id="kurssit" aria-labelledby="kurssit-h">
+    <!-- ═══ 2. WHAT THE EXAM REQUIRES ────────────────────────── -->
+    <section class="lp-section lp-section--tint" id="koe" aria-labelledby="koe-h">
       <div class="lp-section__inner">
-        <span class="lp-eyebrow">Mitä kurssi sisältää</span>
-        <h2 class="lp-h2" id="kurssit-h">Kahdeksan kurssia, A-tasolta E-tasolle</h2>
+        <span class="lp-eyebrow">Mitä koe vaatii</span>
+        <h2 class="lp-h2" id="koe-h">Mitä lyhyen saksan YO-koe vaatii</h2>
         <p class="lp-lede">
-          Polku seuraa YTL:n julkaisemia koetehtäviä ja etenee lukion saksan
-          lyhyen oppimäärän tahtiin. Jokainen kurssi on lukukauden mittainen.
+          Lyhyen oppimäärän saksan koe mittaa neljää taitoa saman koepäivän
+          aikana. Tässä mitä kukin osa testaa ja miten valmistaudut siihen.
+        </p>
+
+        <div class="lp-grid">
+          <ol class="lp-exam__parts" aria-label="Saksan kokeen osat">
+            <li class="lp-exam__part">
+              <span class="lp-exam__num" aria-hidden="true">1</span>
+              <div>
+                <p class="lp-exam__name">Kuullun ymmärtäminen</p>
+                <p class="lp-exam__desc">Kuuntelet saksankielistä puhetta, kuten keskusteluja ja uutispätkiä, ja vastaat kysymyksiin. Testaa, ymmärrätkö puhuttua arkikieltä ja poimitko siitä yksityiskohdat.</p>
+              </div>
+            </li>
+            <li class="lp-exam__part">
+              <span class="lp-exam__num" aria-hidden="true">2</span>
+              <div>
+                <p class="lp-exam__name">Luetun ymmärtäminen</p>
+                <p class="lp-exam__desc">Luet aitoja tekstejä, kuten ilmoituksia, blogeja ja artikkeleita, ja vastaat sisältökysymyksiin. Tärkeintä on löytää pääajatus ja yksityiskohdat ilman sanakirjaa.</p>
+              </div>
+            </li>
+            <li class="lp-exam__part">
+              <span class="lp-exam__num" aria-hidden="true">3</span>
+              <div>
+                <p class="lp-exam__name">Sanasto ja rakenteet</p>
+                <p class="lp-exam__desc">Aukko- ja monivalintatehtävät mittaavat kielioppia lauseyhteydessä: verbin sijaintia (V2), sijamuotoja, aikamuotoja ja sanaston hallintaa.</p>
+              </div>
+            </li>
+            <li class="lp-exam__part">
+              <span class="lp-exam__num" aria-hidden="true">4</span>
+              <div>
+                <p class="lp-exam__name">Kirjoittaminen</p>
+                <p class="lp-exam__desc">Kirjoitat lyhyen ja pitkän tekstin annetuista aiheista. Kirjoitusosa painaa paljon kokonaispisteissä, ja juuri tähän Puheo antaa eniten harjoitusta ja palautetta.</p>
+              </div>
+            </li>
+          </ol>
+
+          <aside class="lp-facts">
+            <h3 class="lp-facts__h">Koeajankohta</h3>
+            <p>Saksan koe järjestetään sekä keväällä että syksyllä. Suurin osa lyhyen saksan kirjoittajista valitsee kevään.</p>
+            <h3 class="lp-facts__h">Miten pisteet muodostuvat</h3>
+            <p>Jokainen osa pisteytetään erikseen, ja arvosana tulee koko kokeen yhteispisteistä. Yksi heikompi osa ei kaada arvosanaa, jos muut kantavat.</p>
+            <h3 class="lp-facts__h">Mihin Puheo keskittyy</h3>
+            <p>Painopiste on sanastossa, rakenteissa ja kirjoittamisessa, eli niissä osissa joita voit harjoitella tehokkaimmin itsenäisesti ennen koetta.</p>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ 3. COURSE PATH (8 courses, A→E) ──────────────────── -->
+    <section class="lp-section" id="kurssit" aria-labelledby="kurssit-h">
+      <div class="lp-section__inner">
+        <span class="lp-eyebrow">Kahdeksan kurssin polku</span>
+        <h2 class="lp-h2" id="kurssit-h">Perusteista E-tasolle, kurssi kerrallaan</h2>
+        <p class="lp-lede">
+          Polku seuraa lukion saksan lyhyen oppimäärän etenemistä. Jokainen
+          kurssi rakentuu edellisen päälle, joten perusrakenteet ovat hallussa
+          ennen kuin tulee Konjunktiv II.
         </p>
 
         <div class="lp-grid">
@@ -228,71 +314,24 @@
             </div>
             <h3 class="lp-facts__h">Mitä harjoittelet</h3>
             <p>Jokainen kurssi harjoittaa koetaitoja: sanastoa, kielioppia, luetun ymmärtämistä ja kirjoittamista. Tehtävämuodot ovat samat kuin itse kokeessa.</p>
-            <h3 class="lp-facts__h">Miten arviointi toimii</h3>
-            <p>Kirjoitelmasta et saa yhtä lukua vaan pistehaarukan YTL:n asteikolla ja suomenkielisen perustelun. Haarukka kertoo tason, ja lopullinen arvosana tulee aina koko kokeen yhteispisteistä.</p>
+            <h3 class="lp-facts__h">Omaan tahtiin</h3>
+            <p>Voit edetä perusteista alkaen tai hypätä kohtaan joka takkuaa. Polku ei ole sidottu lukukauden aikatauluun.</p>
           </aside>
         </div>
       </div>
     </section>
 
-    <!-- ═══ 3. DEMO (real app screenshot) ───────────────────── -->
-    <section class="lp-section" id="nayte" aria-labelledby="nayte-h">
+    <!-- ═══ 4. HOW PUHEO COACHES + WRITING SAMPLE ────────────── -->
+    <section class="lp-section lp-section--tint" id="esimerkki" aria-labelledby="esimerkki-h">
       <div class="lp-section__inner">
-        <span class="lp-eyebrow">Näin se näyttää</span>
-        <h2 class="lp-h2" id="nayte-h">Saksan oppimispolku sovelluksessa</h2>
-        <p class="lp-lede">Kahdeksan kurssia avautuu järjestyksessä, ja näet aina missä menet.</p>
-        <figure class="lp-demo">
-          <div class="lp-demo__frame">
-            <div class="lp-demo__bar" aria-hidden="true">
-              <span class="lp-demo__dot"></span><span class="lp-demo__dot"></span><span class="lp-demo__dot"></span>
-              <span>puheo · oppimispolku</span>
-            </div>
-            <img src="/img/app-demo/oppimispolku-de.png"
-                 alt="Puheo-sovelluksen saksan oppimispolku: kahdeksan kurssia A-tasolta E-tasolle, ensimmäinen kurssi avoinna."
-                 width="1280" height="760" loading="lazy" decoding="async" />
-          </div>
-          <figcaption class="lp-demo__cap">Saksan oppimispolku Puheossa. Eteneminen on lukittu järjestykseen, joten Präsens tulee ennen Konjunktiv II:ta.</figcaption>
-        </figure>
-      </div>
-    </section>
-
-    <!-- ═══ 4. WHY US (numbered rows, not a card grid) ──────── -->
-    <section class="lp-section lp-section--tint" aria-labelledby="why-h">
-      <div class="lp-section__inner">
-        <span class="lp-eyebrow">Miksi Puheo</span>
-        <h2 class="lp-h2" id="why-h">Tehty juuri saksan YO-koetta varten</h2>
-        <div class="lp-why">
-          <div class="lp-why__row">
-            <span class="lp-why__num" aria-hidden="true">1</span>
-            <div>
-              <h3 class="lp-why__h">YTL:n rubriikki, ei yleismittari</h3>
-              <p class="lp-why__b">Arviointi pohjaa YTL:n julkaisemiin koejakoihin ja viralliseen pisteytysrubriikkiin. Viestinnällisyys, kielen rakenteet, sanasto ja kokonaisuus pisteytetään samoilla kriteereillä kuin oikeassa kokeessa.</p>
-            </div>
-          </div>
-          <div class="lp-why__row">
-            <span class="lp-why__num" aria-hidden="true">2</span>
-            <div>
-              <h3 class="lp-why__h">Tuntee saksan sudenkuopat</h3>
-              <p class="lp-why__b">Palaute osaa nimetä juuri ne virheet, joihin lyhyen saksan kirjoittaja kompastuu: verbin sijainti päälauseessa (V2) ja sivulauseessa, Perfektin apuverbi haben tai sein, sijamuodot ja Konjunktiv II. Jokainen korjaus selitetään suomeksi lukion termein.</p>
-            </div>
-          </div>
-          <div class="lp-why__row">
-            <span class="lp-why__num" aria-hidden="true">3</span>
-            <div>
-              <h3 class="lp-why__h">Palaute sekunneissa</h3>
-              <p class="lp-why__b">Pistehaarukan ja perustelun saat heti, et päivien päästä. Ehdit korjata tekstin ja kirjoittaa sen uudelleen saman istunnon aikana, mikä on se kohta jossa oppiminen tapahtuu.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ═══ 5. WRITING SAMPLE (compact grader-card) ─────────── -->
-    <section class="lp-section" id="esimerkki" aria-labelledby="esimerkki-h">
-      <div class="lp-section__inner">
-        <span class="lp-eyebrow">Esimerkki arvioinnista</span>
-        <h2 class="lp-h2" id="esimerkki-h">Näin kirjoitelma pisteytetään</h2>
-        <p class="lp-lede">Lyhyt saksankielinen tehtävä, virheet merkittynä ja arvioitu pistehaarukka YTL:n asteikolla.</p>
+        <span class="lp-eyebrow">Arviointi</span>
+        <h2 class="lp-h2" id="esimerkki-h">Näin Puheo valmentaa saksan kokeeseen</h2>
+        <p class="lp-lede">
+          Oppimispolku avautuu kurssi kerrallaan, joten Präsens tulee ennen
+          Konjunktiv II:ta. Kun kirjoitat tekstin, saat sekunneissa
+          pistehaarukan ja suomenkielisen palautteen, jossa virheet on merkitty
+          ja selitetty. Alla esimerkki saksankielisestä vastauksesta.
+        </p>
 
         <div class="lp-sample">
           <div class="grader-card" data-lang="de" aria-label="Saksankielinen blogikommentti, lyhyt tehtävä, arvioitu pistehaarukka 21–30 / 33.">
@@ -329,8 +368,101 @@ Anna</p>
           arvosana määräytyy koko kokeen yhteispisteistä (kuullun ja luetun
           ymmärtäminen sekä kirjoitus), ei yhdestä kirjoituksesta.
         </p>
+      </div>
+    </section>
 
-        <div class="lp-hero__actions" style="margin-top:28px">
+    <!-- ═══ 5. WHY PUHEO ─────────────────────────────────────── -->
+    <section class="lp-section" id="miksi" aria-labelledby="why-h">
+      <div class="lp-section__inner">
+        <span class="lp-eyebrow">Miksi Puheo</span>
+        <h2 class="lp-h2" id="why-h">Miksi valita Puheo saksan kertaamiseen</h2>
+        <div class="lp-why">
+          <div class="lp-why__row">
+            <span class="lp-why__num" aria-hidden="true">1</span>
+            <div>
+              <h3 class="lp-why__h">Tehty YO-koetta varten, ei yleinen kielikurssi</h3>
+              <p class="lp-why__b">Puheo ei opeta saksaa matkailua varten vaan juuri sitä, mitä lyhyen oppimäärän kokeessa kysytään. Tehtävätyypit, aiheet ja arviointi seuraavat YTL:n koetta.</p>
+            </div>
+          </div>
+          <div class="lp-why__row">
+            <span class="lp-why__num" aria-hidden="true">2</span>
+            <div>
+              <h3 class="lp-why__h">Arviointi YTL:n perusteilla</h3>
+              <p class="lp-why__b">Kirjoitelma pisteytetään samoilla kriteereillä kuin oikeassa kokeessa: viestin välittyminen, kielen rakenteet ja sanasto. Saat pistehaarukan YTL:n asteikolla, et yleisen kielitestin tasoarviota.</p>
+            </div>
+          </div>
+          <div class="lp-why__row">
+            <span class="lp-why__num" aria-hidden="true">3</span>
+            <div>
+              <h3 class="lp-why__h">Palaute kertoo, mistä menetit pisteitä</h3>
+              <p class="lp-why__b">Et saa pelkkää lukua. Palaute nimeää virheet, kuten väärän apuverbin Perfektissä tai partisiipin paikan, ja selittää korjauksen suomeksi. Ehdit kirjoittaa tekstin uudelleen heti.</p>
+            </div>
+          </div>
+          <div class="lp-why__row">
+            <span class="lp-why__num" aria-hidden="true">4</span>
+            <div>
+              <h3 class="lp-why__h">Polku mukautuu tasoosi</h3>
+              <p class="lp-why__b">Harjoitukset painottuvat siihen, mikä sinulla takkuaa. Jos sijamuodot menevät jo, saat lisää kirjoittamista ja vaativampia rakenteita. Perinteinen kertauskirja ei reagoi tähän, eikä yleinen kieliappi tähtää YO-kokeeseen.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ 6. WHO IT'S FOR ──────────────────────────────────── -->
+    <section class="lp-section lp-section--tint" id="kenelle" aria-labelledby="kenelle-h">
+      <div class="lp-section__inner">
+        <span class="lp-eyebrow">Kenelle</span>
+        <h2 class="lp-h2" id="kenelle-h">Kenelle saksan abikurssi sopii</h2>
+        <ul class="lp-audience">
+          <li>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+            <span><b>Abiturientti</b>, joka kirjoittaa lyhyen saksan ensimmäistä kertaa ja haluaa varmistaa perustaidot ennen koetta.</span>
+          </li>
+          <li>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+            <span><b>Korottaja</b>, joka tähtää M- tai E-tasolle ja tarvitsee palautetta siitä, mikä erottaa hyvän vastauksen huipusta.</span>
+          </li>
+          <li>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+            <span><b>Kevään tai syksyn kirjoittaja</b>, joka haluaa harjoitella omaan tahtiin ilman aikataulutettua kurssia.</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ═══ 7. FAQ ───────────────────────────────────────────── -->
+    <section class="lp-section" id="ukk" aria-labelledby="ukk-h">
+      <div class="lp-section__inner">
+        <span class="lp-eyebrow">UKK</span>
+        <h2 class="lp-h2" id="ukk-h">Usein kysyttyä saksan YO-kokeesta</h2>
+        <div class="lp-faq">
+          <div class="lp-faq__item">
+            <h3 class="lp-faq__q">Mistä osista lyhyen saksan koe koostuu?</h3>
+            <p class="lp-faq__a">Kokeessa on kuullun ymmärtäminen, luetun ymmärtäminen, sanasto- ja rakenneosa sekä kirjoittaminen. Kaikki tehdään saman koepäivän aikana, ja arvosana lasketaan osien yhteispisteistä.</p>
+          </div>
+          <div class="lp-faq__item">
+            <h3 class="lp-faq__q">Kuinka pitkä kirjoitelman pitää olla?</h3>
+            <p class="lp-faq__a">Kirjoitusosassa on lyhyt ja pitkä tehtävä. Tehtävänanto kertoo pituushaarukan, ja pisteet tulevat sekä kielestä että sisällöstä. Puheossa harjoittelet molempia pituuksia.</p>
+          </div>
+          <div class="lp-faq__item">
+            <h3 class="lp-faq__q">Miten Puheon arviointi toimii?</h3>
+            <p class="lp-faq__a">Saat kirjoitelmasta pistehaarukan YTL:n asteikolla ja suomenkielisen perustelun. Haarukka kertoo tason, mutta lopullinen YO-arvosana määräytyy aina koko kokeen yhteispisteistä, ei yhdestä tekstistä.</p>
+          </div>
+          <div class="lp-faq__item">
+            <h3 class="lp-faq__q">Voiko Puheota kokeilla ilmaiseksi?</h3>
+            <p class="lp-faq__a">Voit. Pääset aloittamaan ilman maksua ja näet, miten harjoitukset ja arviointi toimivat. Koko kahdeksan kurssin polun saat käyttöön maksullisella kurssilla.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ 8. CLOSING CTA ───────────────────────────────────── -->
+    <section class="lp-section lp-section--tint" aria-labelledby="cta-h">
+      <div class="lp-section__inner lp-cta">
+        <h2 class="lp-h2" id="cta-h">Aloita saksan harjoittelu tänään</h2>
+        <p class="lp-cta__lede">Tee ensimmäinen tehtävä ilmaiseksi ja katso, millä tasolla olet.</p>
+        <div class="lp-hero__actions">
           <a class="btn btn--primary btn--lg" href="/app.html#/aloitus" data-lang-cta>
             Aloita ilmaiseksi
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
@@ -366,9 +498,10 @@ Anna</p>
           <h3 class="landing-footer__col-title">Tuote</h3>
           <ul class="landing-footer__links">
             <li><a href="/">Etusivu</a></li>
-            <li><a href="#kurssit">Kurssi</a></li>
-            <li><a href="#nayte">Näyte</a></li>
+            <li><a href="#koe">Mitä koe vaatii</a></li>
+            <li><a href="#kurssit">Kurssit</a></li>
             <li><a href="#esimerkki">Arviointi</a></li>
+            <li><a href="#ukk">UKK</a></li>
           </ul>
         </nav>
         <nav class="landing-footer__col" aria-label="Tili">
