@@ -6,6 +6,7 @@ import { callOpenAI, normalizeLang } from "../lib/openai.js";
 import { captureAdaptiveSignals, sanitiseGradedItems } from "../lib/adaptiveCapture.js";
 import { readLessonFile } from "../lib/curriculum.js";
 import { pickFeedback, toneBucketFor, bandFor, concentrationConcept } from "../lib/feedbackTemplates.js";
+import { buildReviewQueue } from "../lib/reviewQueue.js";
 import {
   CURRICULUM_KURSSIT,
   CURRICULUM_LESSONS,
@@ -197,6 +198,32 @@ router.get("/", optionalAuth, async (req, res) => {
 // "tutor-message" handler) — this stub forwards to the deferred handler so
 // the route is mounted at the right priority.
 router.get("/tutor-message", optionalAuth, (req, res, next) => _tutorMessageHandler(req, res, next));
+
+// ─── GET /api/curriculum/review-queue ───────────────────────────────────────
+// L-V411 Vaihe C — the resurface surface. Returns bank items for the learner's
+// weak / SR-due concepts, calibrated to their grip. Gated to the kurssi
+// (mestari) tier, same as adaptive capture; free/treeni get an empty locked
+// queue (no error). Registered before /:kurssiKey so the literal path wins.
+router.get("/review-queue", requireAuth, async (req, res) => {
+  try {
+    const lang = PRODUCT_LANGS.has(req.query?.lang) ? req.query.lang : "es";
+    const limit = Math.max(1, Math.min(20, Number(req.query?.limit) || 12));
+    const access = await checkFeatureAccess(req.user.userId, "mistake_tracking");
+    if (!access.allowed) {
+      return res.json({ items: [], concepts: [], dueCount: 0, locked: true });
+    }
+    const queue = await buildReviewQueue({
+      userId: req.user.userId,
+      lang,
+      db: req.supabase || adminClient,
+      limit,
+    });
+    res.json({ ...queue, locked: false });
+  } catch (err) {
+    console.error("review-queue error:", err.message);
+    res.status(500).json({ error: "Kertausjonon haku epäonnistui" });
+  }
+});
 
 // ─── GET /api/curriculum/:kurssiKey ─────────────────────────────────────────
 router.get("/:kurssiKey", optionalAuth, async (req, res) => {
