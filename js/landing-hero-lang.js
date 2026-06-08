@@ -66,6 +66,21 @@
       });
     });
 
+    // L-V403 — "Aloita nyt" routes to the placement flow (#/aloitus), not
+    // straight to signup. Carry the card's currently-selected language so the
+    // placement intro preselects it. onboardingV4 reads localStorage["puheo:lang"]
+    // (resolveLanguage()). Write on pointerdown so it lands before the nav.
+    var offerCta = card.querySelector(".offer-card__cta");
+    if (offerCta) {
+      var persistCardLang = function () {
+        try {
+          localStorage.setItem("puheo:lang", card.getAttribute("data-lang") || "es");
+        } catch (_) { /* storage blocked — onboarding falls back to its default */ }
+      };
+      offerCta.addEventListener("pointerdown", persistCardLang);
+      offerCta.addEventListener("click", persistCardLang);
+    }
+
     // Default to the browser language when it's FR or DE, else Spanish.
     var nav = (navigator.language || "").slice(0, 2).toLowerCase();
     var initial = CONTEXT[nav] ? nav : "es";
