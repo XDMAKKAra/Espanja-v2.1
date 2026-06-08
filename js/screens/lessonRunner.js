@@ -19,6 +19,7 @@ import { masteryThresholdFor, isPhaseSkipped } from "../lib/lessonAdapter.js";
 import { normalizeAnswer, answerMatches } from "../lib/lessonAnswerMatch.js";
 import { attachAccentBarAll } from "../features/accentBar.js";
 import { attachCharCounter, wordsToChars } from "../features/charCounter.js";
+import { REVIEW_PHASE_ID, buildReviewPhase } from "../lib/reviewPhase.js";
 
 const ROOT_ID = "lesson-runner-root";
 const PROGRESS_KEY_PREFIX = "puheo:lessonProgress:";
@@ -235,9 +236,42 @@ function makeState(lesson, targetGrade, kurssiKey, lessonIndex) {
   };
 }
 
+// ── L-V411 Vaihe C — resurface review phase ─────────────────────────────────
+
+// Fetch the calibrated review queue (mastery tier only; the server gates and
+// returns { locked:true } for free/treeni). Returns the payload or null.
+async function fetchReviewQueue(lang) {
+  try {
+    const r = await apiFetch(
+      `${API}/api/curriculum/review-queue?lang=${encodeURIComponent(lang || "es")}&limit=8`,
+      { headers: { ...authHeader() } }
+    );
+    if (!r || !r.ok) return null;
+    const data = await r.json();
+    return (data && !data.locked && Array.isArray(data.items) && data.items.length) ? data : null;
+  } catch { return null; }
+}
+
+// Prepend the review phase before the authored phases when the learner has weak
+// concepts to revisit. Bounded by a timeout so a slow/failed fetch never stalls
+// the lesson start. Runs before loadLessonProgress so the phase list stays
+// consistent across save + resume.
+async function maybePrependReviewPhase(state) {
+  try {
+    if (typeof isLoggedIn === "function" && !isLoggedIn()) return;
+    const queue = await Promise.race([
+      fetchReviewQueue(state.language),
+      new Promise((resolve) => setTimeout(() => resolve(null), 1500)),
+    ]);
+    if (queue && Array.isArray(queue.items) && queue.items.length) {
+      state.phases = [buildReviewPhase(queue), ...state.phases];
+    }
+  } catch { /* non-fatal: the lesson runs without a review phase */ }
+}
+
 // ── Public entry ───────────────────────────────────────────────────────────
 
-export function runPregeneratedLesson(payload, kurssiKey, lessonIndex, targetGrade) {
+export async function runPregeneratedLesson(payload, kurssiKey, lessonIndex, targetGrade) {
   const lesson = payload.pregenerated || payload;
   ensureRoot();
   show("screen-lesson");
@@ -285,6 +319,11 @@ export function runPregeneratedLesson(payload, kurssiKey, lessonIndex, targetGra
       wireLessonTOC(document.getElementById(ROOT_ID), state);
     }
   });
+
+  // L-V411 Vaihe C — prepend a calibrated review phase of previously-weak
+  // concepts (mastery tier; server-gated). Awaited (bounded) before
+  // loadLessonProgress so the phase list is consistent for save/resume.
+  await maybePrependReviewPhase(state);
 
   // Resume: if the student left this lesson mid-practice (saved snapshot
   // matches the current lesson definition + within 24h), skip the teaching
@@ -815,6 +854,11 @@ function captureGraded(state, item, correct, studentAnswer, correctAnswer) {
     correctAnswer: correctAnswer != null ? String(correctAnswer).slice(0, 200) : "",
     explanation: String(item.explanation || "").slice(0, 300),
     phaseType: phase.phase_type || "",
+    // L-V411 Vaihe C — carry the concept tag (review items set _concept) so the
+    // server-side SR capture routes the calibration to the right concept.
+    topics: Array.isArray(item.topics) && item.topics.length
+      ? item.topics.slice(0, 3)
+      : (item._concept ? [item._concept] : []),
   });
 }
 
@@ -907,8 +951,12 @@ function finalizeLesson(root, state) {
   // Lesson done — discard the resume snapshot so the next entry starts
   // fresh (teaching page → first phase).
   clearLessonProgress(state.kurssiKey, state.lessonIndex);
-  const totalCorrect = state.phaseResults.reduce((s, p) => s + (p.skipped ? 0 : p.correct), 0);
-  const totalAsked = state.phaseResults.reduce((s, p) => s + (p.skipped ? 0 : p.total), 0);
+  // L-V411 Vaihe C — the review phase drills PREVIOUS weak concepts, so it must
+  // not distort THIS lesson's mastery score/band. Exclude it from the totals
+  // (its graded answers still flow to the server for SR capture below).
+  const scoredResults = state.phaseResults.filter((p) => p.phaseId !== REVIEW_PHASE_ID);
+  const totalCorrect = scoredResults.reduce((s, p) => s + (p.skipped ? 0 : p.correct), 0);
+  const totalAsked = scoredResults.reduce((s, p) => s + (p.skipped ? 0 : p.total), 0);
   const elapsedMin = Math.max(1, Math.round((Date.now() - state.startedAt) / 60000));
   const tg = state.targetGrade;
   const tutorMsg = buildTutorMessage(tg, state.phaseResults);
