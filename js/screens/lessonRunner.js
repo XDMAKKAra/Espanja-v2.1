@@ -13,6 +13,7 @@
  *  - puheo-finnish-voice, all copy is sinä-form, concrete, no superlatives
  */
 import { show } from "../ui/nav.js";
+import { state as appState } from "../state.js";
 import { API, isLoggedIn, authHeader, apiFetch } from "../api.js";
 import { masteryThresholdFor, isPhaseSkipped } from "../lib/lessonAdapter.js";
 import { normalizeAnswer, answerMatches } from "../lib/lessonAnswerMatch.js";
@@ -212,11 +213,19 @@ function makeState(lesson, targetGrade, kurssiKey, lessonIndex) {
     kurssiKey,
     lessonIndex,
     targetGrade,
+    // L-LANG-INFRA-1 / L-V410: the active language was never set on the runner
+    // state, so finalizeLesson stamped every completion as "es". Pull it from
+    // the canonical app state so completions + adaptive capture are scoped to
+    // the right language.
+    language: (typeof appState.language === "string" && appState.language) || "es",
     phases,
     currentPhaseIdx: 0,
     currentItemIdx: 0,
     correctInPhase: 0,
     answeredInPhase: 0,
+    // L-V410 Vaihe 1 (CAPTURE) — every graded answer, flushed to the server at
+    // lesson finalize to feed user_mistakes + sr_cards (kurssi tier only).
+    gradedItems: [],
     phaseResults: [], // { phaseId, title, correct, total, mastered, skipped }
     sidePanelOpen: false,
     sidePanelOpenMs: 0,
@@ -570,6 +579,7 @@ function wireExerciseHandlers(root, state, item) {
         showItemFeedback(root, correct, item.explanation || "", { hint: null, waitForClick: !correct });
         markChoices(root, item.correct_index, idx);
         recordAnswer(state, correct);
+        captureGraded(state, item, correct, item.choices?.[idx], item.choices?.[Number(item.correct_index)]);
         if (correct) scheduleAdvance(root, state);
       });
     });
@@ -582,6 +592,7 @@ function wireExerciseHandlers(root, state, item) {
       const expected = accepts[0] || "";
       showItemFeedback(root, ok, ok ? "" : `Oikea vastaus: ${expected}`, { hint, waitForClick: !ok });
       recordAnswer(state, ok);
+      captureGraded(state, item, ok, input.value, expected);
       if (ok) scheduleAdvance(root, state);
     };
     submit?.addEventListener("click", tryIt);
@@ -644,6 +655,7 @@ function wireExerciseHandlers(root, state, item) {
       });
       showItemFeedback(root, allOk, allOk ? "" : `Oikeat vastaukset: ${expected.join(", ")}`, { hint: firstHint, waitForClick: !allOk });
       recordAnswer(state, allOk);
+      captureGraded(state, item, allOk, null, expected.join(", "));
       if (allOk) scheduleAdvance(root, state);
     });
   } else if (item.item_type === "writing") {
@@ -779,6 +791,31 @@ function markChoices(root, correctIdx, pickedIdx) {
 function recordAnswer(state, correct) {
   state.answeredInPhase += 1;
   if (correct) state.correctInPhase += 1;
+}
+
+// L-V410 Vaihe 1 (CAPTURE) — record one graded answer for the adaptive layer.
+// `question` doubles as the SR card key, so prefer the stable source string
+// (the prompt/stem the student saw). Called only for discrete-answer item
+// types where right/wrong maps cleanly to a concept (mc / typed / translate /
+// gap_fill); writing + reading are length/comprehension graded and would make
+// noisy SR keys, so they are intentionally excluded.
+function captureGraded(state, item, correct, studentAnswer, correctAnswer) {
+  if (!item) return;
+  const phase = state.phases[state.currentPhaseIdx] || {};
+  const question = String(
+    item.prompt || item.source || item.stem || item.sentence_template ||
+    item.question || phase.title || ""
+  ).trim().slice(0, 300);
+  if (!question) return;
+  state.gradedItems.push({
+    itemType: item.item_type || "unknown",
+    correct: !!correct,
+    question,
+    studentAnswer: studentAnswer != null ? String(studentAnswer).slice(0, 200) : "",
+    correctAnswer: correctAnswer != null ? String(correctAnswer).slice(0, 200) : "",
+    explanation: String(item.explanation || "").slice(0, 300),
+    phaseType: phase.phase_type || "",
+  });
 }
 
 function scheduleAdvance(root, state, advanceItem_ = true) {
@@ -924,6 +961,9 @@ function finalizeLesson(root, state) {
         scoreTotal: totalAsked,
         wrongAnswers: [],
         reviewItems: [],
+        // L-V410 Vaihe 1 (CAPTURE) — graded answers feed the adaptive layer
+        // server-side (gated to kurssi tier). Cap to keep the payload bounded.
+        gradedItems: state.gradedItems.slice(0, 80),
       }),
     }).catch(() => { /* non-critical */ });
   }

@@ -1,8 +1,9 @@
 import { Router } from "express";
 import adminClient from "../supabase.js";
 import { getRequestDb } from "../lib/requestContext.js";
-import { requireAuth, optionalAuth } from "../middleware/auth.js";
+import { requireAuth, optionalAuth, checkFeatureAccess } from "../middleware/auth.js";
 import { callOpenAI, normalizeLang } from "../lib/openai.js";
+import { captureAdaptiveSignals, sanitiseGradedItems } from "../lib/adaptiveCapture.js";
 import { readLessonFile } from "../lib/curriculum.js";
 import {
   CURRICULUM_KURSSIT,
@@ -444,6 +445,23 @@ router.post("/:kurssiKey/lesson/:lessonIndex/complete", requireAuth, async (req,
     const reviewItems = sanitiseReviewItems(req.body?.reviewItems);
     const reviewSummary = buildReviewSummary(reviewItems);
 
+    // L-V410 Vaihe 1 (CAPTURE) — graded answers from the main lesson runner.
+    // Used below to (a) feed the adaptive layer for kurssi-tier accounts and
+    // (b) give the tutor prompt the actual mistakes when the legacy
+    // wrongAnswers array is empty (lessonRunner sends gradedItems instead).
+    const gradedItems = sanitiseGradedItems(req.body?.gradedItems);
+    const effectiveWrong = wrongAnswers.length
+      ? wrongAnswers
+      : gradedItems
+          .filter((g) => !g.correct)
+          .slice(0, 20)
+          .map((g) => ({
+            question: g.question,
+            studentAnswer: g.studentAnswer,
+            correctAnswer: g.correctAnswer,
+            topic_key: (g.topics && g.topics[0]) || null,
+          }));
+
     if (!findKurssi(kurssiKey)) return res.status(404).json({ error: "Kurssia ei löydy" });
 
     const lessons = lessonsForKurssi(kurssiKey);
@@ -499,6 +517,24 @@ router.post("/:kurssiKey/lesson/:lessonIndex/complete", requireAuth, async (req,
       console.warn("[curriculum/complete] exercise_logs insert failed:", err.message);
     }
 
+    // L-V410 Vaihe 1 (CAPTURE) — feed the adaptive flywheel. Gated to the
+    // kurssi (mestari) tier via the mistake_tracking feature; free/treeni keep
+    // the static behaviour. Best-effort: a capture failure never blocks the
+    // completion response.
+    if (gradedItems.length) {
+      try {
+        const access = await checkFeatureAccess(req.user.userId, "mistake_tracking");
+        if (access.allowed) {
+          const cap = await captureAdaptiveSignals(
+            supabase, req.user.userId, normalizeLang(completeLang), gradedItems
+          );
+          console.log(`[curriculum/complete] adaptive capture: ${cap.srUpserted} SR cards, ${cap.mistakesInserted} mistakes`);
+        }
+      } catch (err) {
+        console.warn("[curriculum/complete] adaptive capture failed:", err.message);
+      }
+    }
+
     // Determine kurssi-complete status
     // L-PLAN-6 — pass-threshold is now target_grade-dependent (I/A 0.7,
     // B/C 0.8, M 0.85, E/L 0.9). The default PASS_THRESHOLD constant
@@ -521,8 +557,8 @@ router.post("/:kurssiKey/lesson/:lessonIndex/complete", requireAuth, async (req,
     let tutorMessage = "";
     let metacognitivePrompt = "";
     try {
-      const wrongList = wrongAnswers.length
-        ? wrongAnswers
+      const wrongList = effectiveWrong.length
+        ? effectiveWrong
             .map((w, i) => `  ${i + 1}. opiskelija kirjoitti "${w.studentAnswer}", oikea vastaus "${w.correctAnswer}"${w.topic_key ? ` (aihe: ${w.topic_key})` : ""}`)
             .join("\n")
         : "  (ei virheitä — kaikki oikein)";
