@@ -1,84 +1,48 @@
 /* ============================================================
-   L-V358 — Compact language info page (es/de/fr).
-   Shared layout; only the HTML content differs per language.
-   Reuses .landing tokens (landing-tokens.css), the nav, buttons,
-   and the .grader-card / .rubric styles from landing(-editorial).css.
-
-   Goal: a short, self-contained info page — NOT a full landing scroll.
+   L-V407 — Per-language abikurssi page (es/de/fr).
+   Cohesive single-page layout in WordDive's spirit, Puheo brand:
+   one warm canvas, white rounded panels floating on it, a brick
+   numbered spine tying the panels into one journey, and a split
+   hero (copy + course summary card). Shared layout; only the
+   HTML copy + per-language samples differ.
+   Reuses .landing tokens, nav, buttons, and .grader-card styles.
    ============================================================ */
 
 .landing .lp {
-  --lp-max: 1040px;
+  --lp-max: 1080px;
+  --lp-canvas: #F5EEDF;
+  background: var(--lp-canvas);
 }
 
-.landing .lp-section {
-  padding: 56px 24px;
-}
-.landing .lp-section__inner {
-  max-width: var(--lp-max);
-  margin: 0 auto;
-}
-.landing .lp-section--tint {
-  background: #F6F0E2;
-  border-block: 1px solid var(--line);
-}
-
-/* Quiet section kicker — no pill box (L-V405 anti-slop). */
-.landing .lp-eyebrow {
-  display: inline-block;
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.01em;
-  color: var(--brick);
-  margin: 0 0 10px;
-}
-
-.landing .lp-h2 {
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: clamp(26px, 4vw, 34px);
-  line-height: 1.1;
-  letter-spacing: var(--tracking-snug);
-  color: var(--text);
-  margin: 0 0 12px;
-}
-.landing .lp-lede {
-  font-size: 17px;
-  line-height: 1.55;
-  color: var(--text-muted);
-  max-width: 60ch;
-  margin: 0;
-}
-
-/* ─── HERO (compact) ─────────────────────────────────────── */
+/* ─── HERO (split: copy + course card) on the canvas ─────── */
 .landing .lp-hero {
-  padding: 72px 24px 48px;
+  padding: 64px 24px 40px;
 }
 .landing .lp-hero__inner {
   max-width: var(--lp-max);
   margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.08fr 0.92fr;
+  gap: 52px;
+  align-items: center;
 }
 .landing .lp-hero__title {
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: clamp(34px, 6vw, 52px);
-  line-height: 1.04;
+  font-size: clamp(32px, 4.6vw, 50px);
+  line-height: 1.05;
   letter-spacing: var(--tracking-tight);
   color: var(--text);
   margin: 0 0 16px;
-  max-width: 16ch;
+  max-width: 15ch;
 }
-.landing .lp-hero__title em {
-  /* L-V405: single-colour H1, no two-tone slop. */
-  font-style: normal;
-  color: inherit;
-}
+.landing .lp-hero__title em { font-style: normal; color: inherit; }
 .landing .lp-hero__sub {
   font-size: 18px;
   line-height: 1.55;
   color: var(--text-muted);
-  max-width: 54ch;
-  margin: 0 0 28px;
+  max-width: 52ch;
+  margin: 0 0 26px;
 }
 .landing .lp-hero__actions {
   display: flex;
@@ -89,7 +53,7 @@
 .landing .lp-crosslang {
   font-size: 15px;
   color: var(--text-subtle);
-  margin: 28px 0 0;
+  margin: 24px 0 0;
 }
 .landing .lp-crosslang a {
   color: var(--brick);
@@ -99,25 +63,143 @@
 }
 .landing .lp-crosslang a:hover { border-bottom-color: var(--brick); }
 
-/* ─── COURSE LADDER (8 courses, A→E) ─────────────────────── */
+/* Course summary card (hero anchor) */
+.landing .lp-card {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  padding: 26px 26px 24px;
+  box-shadow: 0 26px 56px -34px rgba(36, 28, 21, 0.5);
+}
+.landing .lp-card__kicker {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--brick);
+  margin: 0 0 16px;
+}
+.landing .lp-card__stats {
+  display: flex;
+  gap: 22px;
+  padding-bottom: 18px;
+  margin-bottom: 18px;
+  border-bottom: 1px solid var(--line);
+}
+.landing .lp-card__stats span { font-size: 12.5px; color: var(--text-subtle); line-height: 1.2; }
+.landing .lp-card__stats b {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 22px;
+  color: var(--text);
+  margin-bottom: 2px;
+}
+.landing .lp-card__list { list-style: none; margin: 0 0 20px; padding: 0; display: grid; gap: 12px; }
+.landing .lp-card__list li {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 11px;
+  align-items: start;
+  font-size: 14.5px;
+  line-height: 1.45;
+  color: var(--text);
+}
+.landing .lp-card__list svg { color: var(--green); margin-top: 2px; flex: none; }
+.landing .lp-card__price {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-subtle);
+  margin: 0 0 16px;
+}
+.landing .lp-card .btn { width: 100%; justify-content: center; }
+
+/* ─── FLOW: numbered journey of panels ───────────────────── */
+.landing .lp-flow {
+  max-width: var(--lp-max);
+  margin: 0 auto;
+  padding: 8px 24px 8px 96px;
+  position: relative;
+}
+/* the connecting spine line */
+.landing .lp-flow::before {
+  content: "";
+  position: absolute;
+  left: 42px;
+  top: 56px;
+  bottom: 56px;
+  width: 2px;
+  background: var(--brick-pale);
+}
+
+.landing .lp-block {
+  position: relative;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  padding: 38px 40px;
+  margin-top: 28px;
+  box-shadow: 0 20px 44px -34px rgba(36, 28, 21, 0.45);
+}
+.landing .lp-block:first-child { margin-top: 0; }
+.landing .lp-block__node {
+  position: absolute;
+  left: -74px;
+  top: 38px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--brick);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 17px;
+  border: 5px solid var(--lp-canvas);
+}
+
+/* ─── shared section typography (inside panels) ──────────── */
+.landing .lp-eyebrow {
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: var(--brick);
+  margin: 0 0 10px;
+}
+.landing .lp-h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(24px, 3.2vw, 31px);
+  line-height: 1.12;
+  letter-spacing: var(--tracking-snug);
+  color: var(--text);
+  margin: 0 0 12px;
+}
+.landing .lp-lede {
+  font-size: 16.5px;
+  line-height: 1.55;
+  color: var(--text-muted);
+  max-width: 62ch;
+  margin: 0;
+}
+
+/* ─── two-column grid (exam / ladder + facts aside) ──────── */
 .landing .lp-grid {
   display: grid;
   grid-template-columns: 1.15fr 1fr;
-  gap: 48px;
+  gap: 44px;
   align-items: start;
-  margin-top: 32px;
+  margin-top: 30px;
 }
-.landing .lp-ladder {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  border-top: 1px solid var(--line);
-}
+
+/* course ladder */
+.landing .lp-ladder { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
 .landing .lp-ladder__row {
   display: grid;
   grid-template-columns: auto 1fr;
   gap: 14px;
-  padding: 14px 0;
+  padding: 13px 0;
   border-bottom: 1px solid var(--line);
 }
 .landing .lp-ladder__level {
@@ -138,21 +220,12 @@
   background: var(--yellow-pale);
   color: #8A6A12;
 }
-.landing .lp-ladder__name {
-  font-weight: 700;
-  font-size: 15px;
-  color: var(--text);
-  margin: 0 0 2px;
-}
-.landing .lp-ladder__desc {
-  font-size: 14px;
-  line-height: 1.45;
-  color: var(--text-muted);
-  margin: 0;
-}
+.landing .lp-ladder__name { font-weight: 700; font-size: 15px; color: var(--text); margin: 0 0 2px; }
+.landing .lp-ladder__desc { font-size: 14px; line-height: 1.45; color: var(--text-muted); margin: 0; }
 
+/* facts aside — tinted so it reads as a sub-card on the white panel */
 .landing .lp-facts {
-  background: var(--paper);
+  background: var(--lp-canvas);
   border: 1px solid var(--line);
   border-radius: var(--r-lg);
   padding: 24px;
@@ -160,138 +233,26 @@
 .landing .lp-facts__h {
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: 18px;
+  font-size: 17px;
   color: var(--text);
   margin: 0 0 6px;
 }
-.landing .lp-facts__h:not(:first-child) { margin-top: 22px; }
-.landing .lp-facts p {
-  font-size: 15px;
-  line-height: 1.55;
-  color: var(--text-muted);
-  margin: 0;
-}
-.landing .lp-facts__stats {
-  display: flex;
-  gap: 28px;
-  margin: 0 0 4px;
-}
+.landing .lp-facts__h:not(:first-child) { margin-top: 20px; }
+.landing .lp-facts p { font-size: 14.5px; line-height: 1.55; color: var(--text-muted); margin: 0; }
+.landing .lp-facts__stats { display: flex; gap: 26px; margin: 0 0 4px; }
 .landing .lp-facts__stat b {
   display: block;
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: 26px;
+  font-size: 25px;
   color: var(--brick);
   line-height: 1;
 }
-.landing .lp-facts__stat span {
-  font-size: 13px;
-  color: var(--text-subtle);
-}
+.landing .lp-facts__stat span { font-size: 13px; color: var(--text-subtle); }
 
-/* ─── DEMO (real app screenshot) ─────────────────────────── */
-.landing .lp-demo__frame {
-  margin-top: 28px;
-  border: 1px solid var(--border-strong);
-  border-radius: var(--r-lg);
-  overflow: hidden;
-  background: var(--cream);
-  box-shadow: 0 24px 48px -28px rgba(36, 28, 21, 0.35);
-}
-.landing .lp-demo__bar {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  padding: 11px 16px;
-  background: var(--paper);
-  border-bottom: 1px solid var(--line);
-}
-.landing .lp-demo__dot {
-  width: 11px; height: 11px; border-radius: 50%;
-  background: var(--line);
-}
-.landing .lp-demo__bar span:last-child {
-  margin-left: 10px;
-  font-size: 13px;
-  color: var(--text-subtle);
-}
-.landing .lp-demo__frame img {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-.landing .lp-demo__cap {
-  font-size: 14px;
-  color: var(--text-subtle);
-  margin: 14px 0 0;
-}
-
-/* ─── WHY US (numbered rows, NOT a card grid) ────────────── */
-.landing .lp-why {
-  margin-top: 32px;
-  display: flex;
-  flex-direction: column;
-  gap: 28px;
-}
-.landing .lp-why__row {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 22px;
-  align-items: baseline;
-  max-width: 72ch;
-}
-.landing .lp-why__num {
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 30px;
-  color: var(--brick);
-  line-height: 1;
-}
-.landing .lp-why__h {
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 19px;
-  color: var(--text);
-  margin: 0 0 5px;
-}
-.landing .lp-why__b {
-  font-size: 16px;
-  line-height: 1.55;
-  color: var(--text-muted);
-  margin: 0;
-}
-
-/* ─── WRITING SAMPLE wrapper (reuses .grader-card) ───────── */
-.landing .lp-sample {
-  margin-top: 28px;
-  max-width: 760px;
-}
-.landing .lp-sample .grader-card {
-  margin: 0;
-}
-.landing .lp-caveat {
-  font-size: 13px;
-  line-height: 1.5;
-  color: var(--text-subtle);
-  max-width: 70ch;
-  margin: 20px 0 0;
-}
-
-/* ─── EXAM PARTS (#koe) — labelled rows, not a card grid ──── */
-.landing .lp-exam__parts {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-.landing .lp-exam__part {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 16px;
-  align-items: start;
-}
+/* exam parts — labelled rows */
+.landing .lp-exam__parts { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 20px; }
+.landing .lp-exam__part { display: grid; grid-template-columns: auto 1fr; gap: 16px; align-items: start; }
 .landing .lp-exam__num {
   display: inline-flex;
   align-items: center;
@@ -306,28 +267,23 @@
   font-size: 14px;
   flex: none;
 }
-.landing .lp-exam__name {
-  font-weight: 700;
-  font-size: 16px;
-  color: var(--text);
-  margin: 0 0 3px;
-}
-.landing .lp-exam__desc {
-  font-size: 15px;
-  line-height: 1.55;
-  color: var(--text-muted);
-  margin: 0;
-}
+.landing .lp-exam__name { font-weight: 700; font-size: 16px; color: var(--text); margin: 0 0 3px; }
+.landing .lp-exam__desc { font-size: 15px; line-height: 1.55; color: var(--text-muted); margin: 0; }
 
-/* ─── AUDIENCE (#kenelle) — check list, not cards ─────────── */
-.landing .lp-audience {
-  list-style: none;
-  margin: 28px 0 0;
-  padding: 0;
-  display: grid;
-  gap: 16px;
-  max-width: 64ch;
-}
+/* writing sample (grader-card) */
+.landing .lp-sample { margin-top: 28px; max-width: 720px; }
+.landing .lp-sample .grader-card { margin: 0; }
+.landing .lp-caveat { font-size: 13px; line-height: 1.5; color: var(--text-subtle); max-width: 70ch; margin: 18px 0 0; }
+
+/* why — numbered rows */
+.landing .lp-why { margin-top: 30px; display: flex; flex-direction: column; gap: 26px; }
+.landing .lp-why__row { display: grid; grid-template-columns: auto 1fr; gap: 22px; align-items: baseline; max-width: 74ch; }
+.landing .lp-why__num { font-family: var(--font-display); font-weight: 600; font-size: 28px; color: var(--brick); line-height: 1; }
+.landing .lp-why__h { font-family: var(--font-display); font-weight: 600; font-size: 18px; color: var(--text); margin: 0 0 5px; }
+.landing .lp-why__b { font-size: 15.5px; line-height: 1.55; color: var(--text-muted); margin: 0; }
+
+/* audience — check list */
+.landing .lp-audience { list-style: none; margin: 26px 0 0; padding: 0; display: grid; gap: 16px; max-width: 66ch; }
 .landing .lp-audience li {
   display: grid;
   grid-template-columns: auto 1fr;
@@ -337,62 +293,58 @@
   line-height: 1.55;
   color: var(--text-muted);
 }
-.landing .lp-audience svg {
-  color: var(--green);
-  margin-top: 3px;
-  flex: none;
-}
-.landing .lp-audience b {
-  color: var(--text);
-  font-weight: 700;
-}
+.landing .lp-audience svg { color: var(--green); margin-top: 3px; flex: none; }
+.landing .lp-audience b { color: var(--text); font-weight: 700; }
 
-/* ─── FAQ (#ukk) ─────────────────────────────────────────── */
-.landing .lp-faq {
-  margin-top: 28px;
-  max-width: 80ch;
-  border-top: 1px solid var(--line);
-}
-.landing .lp-faq__item {
-  border-bottom: 1px solid var(--line);
-  padding: 22px 0;
-}
-.landing .lp-faq__q {
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 18px;
-  color: var(--text);
-  margin: 0 0 8px;
-}
-.landing .lp-faq__a {
-  font-size: 15.5px;
-  line-height: 1.6;
-  color: var(--text-muted);
-  margin: 0;
-}
+/* FAQ */
+.landing .lp-faq { margin-top: 26px; max-width: 80ch; border-top: 1px solid var(--line); }
+.landing .lp-faq__item { border-bottom: 1px solid var(--line); padding: 22px 0; }
+.landing .lp-faq__q { font-family: var(--font-display); font-weight: 600; font-size: 17.5px; color: var(--text); margin: 0 0 8px; }
+.landing .lp-faq__a { font-size: 15.5px; line-height: 1.6; color: var(--text-muted); margin: 0; }
 
-/* ─── CLOSING CTA ────────────────────────────────────────── */
-.landing .lp-cta {
+/* ─── CLOSING CTA band (strong brick finish) ─────────────── */
+.landing .lp-cta-band {
+  margin-top: 40px;
+  padding: 64px 24px;
+  background: var(--brick);
+  color: #fff;
   text-align: center;
 }
-.landing .lp-cta .lp-h2 { margin-bottom: 12px; }
-.landing .lp-cta__lede {
-  font-size: 17px;
-  line-height: 1.55;
-  color: var(--text-muted);
-  max-width: 50ch;
-  margin: 0 auto;
+.landing .lp-cta-band__inner { max-width: 640px; margin: 0 auto; }
+.landing .lp-cta-band h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(26px, 3.6vw, 34px);
+  line-height: 1.1;
+  color: #fff;
+  margin: 0 0 12px;
 }
-.landing .lp-cta .lp-hero__actions {
-  justify-content: center;
-  margin-top: 26px;
+.landing .lp-cta-band p { font-size: 17px; line-height: 1.55; color: rgba(255, 255, 255, 0.88); margin: 0 0 26px; }
+.landing .lp-cta-band .btn--primary {
+  background: #fff;
+  color: var(--brick);
+  border-color: #fff;
 }
+.landing .lp-cta-band .btn--primary:hover { background: rgba(255, 255, 255, 0.9); }
 
 /* ─── MOBILE ─────────────────────────────────────────────── */
+@media (max-width: 860px) {
+  .landing .lp-hero__inner { grid-template-columns: 1fr; gap: 32px; }
+  .landing .lp-grid { grid-template-columns: 1fr; gap: 28px; }
+}
 @media (max-width: 760px) {
-  .landing .lp-section { padding: 44px 18px; }
-  .landing .lp-hero { padding: 56px 18px 36px; }
-  .landing .lp-grid { grid-template-columns: 1fr; gap: 32px; }
-  .landing .lp-hero__actions { gap: 14px; }
-  .landing .lp-why__row { grid-template-columns: auto 1fr; gap: 16px; }
+  .landing .lp-hero { padding: 48px 18px 28px; }
+  .landing .lp-flow { padding: 0 16px; }
+  .landing .lp-flow::before { display: none; }
+  .landing .lp-block { padding: 28px 20px; border-radius: 20px; margin-top: 20px; }
+  .landing .lp-block__node {
+    position: static;
+    width: 34px;
+    height: 34px;
+    font-size: 15px;
+    border-width: 0;
+    margin-bottom: 14px;
+  }
+  .landing .lp-why__row { gap: 16px; }
+  .landing .lp-cta-band { padding: 48px 18px; margin-top: 28px; }
 }
