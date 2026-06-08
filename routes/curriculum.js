@@ -5,6 +5,7 @@ import { requireAuth, optionalAuth, checkFeatureAccess } from "../middleware/aut
 import { callOpenAI, normalizeLang } from "../lib/openai.js";
 import { captureAdaptiveSignals, sanitiseGradedItems } from "../lib/adaptiveCapture.js";
 import { readLessonFile } from "../lib/curriculum.js";
+import { pickFeedback, toneBucketFor, bandFor, concentrationConcept } from "../lib/feedbackTemplates.js";
 import {
   CURRICULUM_KURSSIT,
   CURRICULUM_LESSONS,
@@ -552,57 +553,37 @@ router.post("/:kurssiKey/lesson/:lessonIndex/complete", requireAuth, async (req,
 
     const kurssiName = (CURRICULUM_KURSSIT.find((k) => k.key === kurssiKey)?.title || kurssiKey).split(" — ").slice(1).join(" — ") || kurssiKey;
 
-    // Build the AI prompt. Single OpenAI call returns BOTH the tutor message
-    // and the metacognitive observation so we don't double-charge.
+    // L-V411 Vaihe B — deterministic template lookup, ZERO runtime AI for
+    // discrete lessons (the AI-free flywheel). Tone follows target_grade, band
+    // follows score-vs-threshold, and the message is concept-specific when the
+    // mistakes concentrate on one tagged concept (effectiveWrong topic_key).
+    // Free-production essays keep AI grading in routes/writing.js; this path is
+    // mc/typed/gap_fill/translate only.
     let tutorMessage = "";
     let metacognitivePrompt = "";
-    try {
-      const wrongList = effectiveWrong.length
-        ? effectiveWrong
-            .map((w, i) => `  ${i + 1}. opiskelija kirjoitti "${w.studentAnswer}", oikea vastaus "${w.correctAnswer}"${w.topic_key ? ` (aihe: ${w.topic_key})` : ""}`)
-            .join("\n")
-        : "  (ei virheitä — kaikki oikein)";
-      // L-PLAN-7 — describe what the student also reviewed so the
-      // tutorMessage can reference the cumulative review explicitly,
-      // e.g. "kertasit myös -ar verbejä — niissä menee nyt paremmin".
-      const reviewLine = reviewSummary.length
-        ? "Tässä sessiossa kertasit myös:\n" + reviewSummary
-            .map((r) => `  - ${r.label} → ${r.correct}/${r.total} oikein (${r.headline.toLowerCase()})`)
-            .join("\n")
-        : "";
-      const passLabel = passPct >= targetThreshold ? "hyvä" : "tarvitsee lisäharjoittelua";
-      const aiPrompt = [
-        "Olet Puheo, suomalainen AI-tutori (lukio, espanjan YO-koe).",
-        "Vastaa AINA suomeksi, sinä-muodossa, lämpimästi mutta täsmällisesti.",
-        "Älä käytä bullet-listoja. Älä mainitse pistemääriä numeroin.",
-        "",
-        toneBlock(targetGrade),
-        "",
-        `Konteksti:`,
-        `- Oppilas suoritti oppitunnin aiheesta "${lesson.focus}".`,
-        `- Kurssi: ${kurssiName}.`,
-        `- Tulos: ${scoreCorrect}/${scoreTotal} (${passLabel})${isKertaustesti ? " — KERTAUSTESTI" : ""}.`,
-        `- Väärät vastaukset:`,
-        wrongList,
-        reviewLine,
-        "",
-        "Tehtäväsi: kirjoita kaksi kenttää JSON-objektiin:",
-        "1) tutorMessage: 2–3 lausetta. Jos virheitä on: mainitse juuri se rakenne tai sanaryhmä jossa virheet keskittyivät, selitä lyhyt sääntö, kerro seuraava askel. Jos kaikki oikein: mainitse mitä konkreettisesti hallitset nyt, vihjaa seuraavaan aiheeseen. " + (isKertaustesti
-          ? (kurssiComplete
-              ? `Tämä on kertaustesti ja se meni läpi — lupaa että jatketaan kohti seuraavaa kurssia "${nextKurssi?.title || "seuraavaa"}".`
-              : "Tämä on kertaustesti eikä mennyt läpi — sano että harjoitellaan kurssin rakenteita vielä rauhassa ennen etenemistä.")
-          : ""),
-        "2) metacognitivePrompt: TARKASTI 1 lause, ei kysymys vaan reflektiohuomio. Auta oppilasta tunnistamaan oma kuvionsa virheissä — esim. \"Huomasit varmasti, että preteriti -ir verbeissä on eri pääte kuin -ar verbeissä.\" Jos kaikki oikein, kirjoita positiivinen huomio rakenteen hallinnasta. Tyyli: lyhyt, neutraali, konkreettinen.",
-        "",
-        'Palauta JSON: { "tutorMessage": "...", "metacognitivePrompt": "..." }',
-      ].join("\n");
-      const ai = await callOpenAI(aiPrompt, 200, { temperature: 0.5 });
-      const t = String(ai?.tutorMessage || "").trim();
-      if (t.length >= 20 && !/^[\s\-•*]/.test(t)) tutorMessage = t;
-      const m = String(ai?.metacognitivePrompt || "").trim();
-      if (m.length >= 15 && !/^[\s\-•*]/.test(m)) metacognitivePrompt = m;
-    } catch (err) {
-      console.warn("tutorMessage AI failed:", err.message);
+    {
+      const toneBucket = toneBucketFor(targetGrade);
+      const nextKurssiName = nextKurssi
+        ? "kurssille " + (String(nextKurssi.title || "").replace(/^Kurssi\s*\d+\s*[:—-]\s*/, "").trim() || nextKurssi.title)
+        : "vielä syvemmälle";
+      const fb = isKertaustesti
+        ? pickFeedback({
+            lang: completeLang,
+            toneBucket,
+            kertaustesti: kurssiComplete ? "pass" : "fail",
+            vars: { kurssi: kurssiName, seuraava_kurssi: nextKurssiName },
+          })
+        : pickFeedback({
+            lang: completeLang,
+            toneBucket,
+            band: bandFor(passPct, targetThreshold),
+            concept: concentrationConcept(effectiveWrong),
+            vars: { aihe: lesson.focus, seuraava: "seuraavaan oppituntiin" },
+          });
+      if (fb) {
+        tutorMessage = fb.tutorMessage;
+        metacognitivePrompt = fb.metacognitivePrompt;
+      }
     }
 
     if (!tutorMessage) {
