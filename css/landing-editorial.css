@@ -657,14 +657,21 @@ body.landing > * { position: relative; z-index: 1; }
   .landing .hero__inner {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1.02fr);
     column-gap: clamp(40px, 5vw, 80px);
-    row-gap: var(--ed-sp-6);
     align-items: start;
   }
-  /* L-V387: copy + luottamusblokki pinoutuvat vasempaan sarakkeeseen, kortti
-     täyttää oikean sarakkeen molemmat rivit → ei orpoa valkoista heron alle. */
-  .landing .hero__copy   { grid-column: 1; grid-row: 1; }
-  .landing .hero__social { grid-column: 1; grid-row: 2; }
-  .landing .hero__offer  { grid-column: 2; grid-row: 1 / span 2; align-self: start; }
+  /* L-V404: vasen sarake (.hero__lead) on yksi pino (copy + luottamus); kortti
+     on oikea sarake. Poistettu L-V387:n row-spanning-kortti, joka työnsi
+     luottamuslohkon alas ja jätti ison keskityhjän copyn ja sen väliin. */
+  .landing .hero__offer { align-self: start; }
+}
+
+/* Vasen hero-sarake yhtenä yksikkönä: copy ja luottamussignaalit samassa
+   pinossa, ei kahta irrallista lohkoa. */
+.landing .hero__lead {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ed-sp-6);
+  min-width: 0;
 }
 
 .landing .hero__copy {
@@ -1020,12 +1027,16 @@ body.landing > * { position: relative; z-index: 1; }
   color: var(--ed-ink-faint);
 }
 
-/* ─── L-V387 — hero social proof block (stars + teacher quote + YTL badge) ── */
+/* ─── L-V404 — hero trust signals as the second movement of the left column ──
+   A hairline ties them to the copy above so the hero reads as one unit, not a
+   copy block plus a floating testimonial box. */
 .landing .hero__social {
   display: flex;
   flex-direction: column;
   gap: var(--ed-sp-4);
-  max-width: 480px;
+  max-width: 600px;
+  padding-top: var(--ed-sp-5);
+  border-top: 1px solid var(--border);
 }
 .landing .hero__rating {
   display: flex;
@@ -1060,25 +1071,29 @@ body.landing > * { position: relative; z-index: 1; }
   font-size: var(--ed-fs-meta);
   color: var(--ed-ink-subtle);
 }
+/* De-boxed pull-quote: no card border/shadow, a warm display quotation mark
+   instead. Reads as part of the column, not a glued-on testimonial card. */
 .landing .hero__quote {
   margin: 0;
-  padding: var(--ed-sp-5);
-  background: var(--ed-bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--ed-r-xl);
-  box-shadow: var(--ed-shadow-sm);
+  padding: 0 0 0 32px;
+  background: none;
+  border: 0;
+  box-shadow: none;
   display: flex;
   flex-direction: column;
-  gap: var(--ed-sp-3);
+  gap: var(--ed-sp-2);
+  position: relative;
 }
-.landing .hero__quote-eyebrow {
-  font-family: var(--ed-sans);
-  font-size: var(--ed-fs-micro);
-  font-weight: 700;
-  letter-spacing: var(--ed-tracking-meta);
-  text-transform: uppercase;
-  color: var(--green);
-  margin: 0;
+.landing .hero__quote::before {
+  content: "\201C";
+  position: absolute;
+  left: -2px;
+  top: -0.16em;
+  font-family: var(--font-display);
+  font-size: 2.6rem;
+  line-height: 1;
+  color: var(--ed-gold);
+  opacity: 0.6;
 }
 .landing .hero__quote-text {
   margin: 0;

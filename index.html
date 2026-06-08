@@ -194,6 +194,11 @@
     <section class="hero" id="hero" aria-labelledby="hero-title">
       <div class="hero__inner">
 
+        <!-- L-V404 — vasen sarake on yksi yksikkö: otsikkokopio + luottamus-
+             signaalit (arvio, opettajalaina, YTL-kriteeri) saman .hero__lead-
+             pinon sisällä, hiusviiva erottaa "toisen liikkeen". Aiempi row-
+             spanning-kortti työnsi luottamuslohkon alas ja jätti keskityhjän. -->
+        <div class="hero__lead">
         <div class="hero__copy">
           <p class="hero__kicker">Lyhyen oppimäärän YO-valmennus, espanja, ranska ja saksa</p>
 
@@ -218,11 +223,10 @@
           <p class="hero__trust">Ilmainen aloitus, ei korttia.</p>
         </div>
 
-        <!-- ═══ LUOTTAMUSBLOKKI (L-V387) — tähtiarvio + opettajan palaute +
-             YTL-badge. Desktopilla copyn alla (tasapainottaa korkean kortin,
-             täyttää aiemman tyhjän alueen); mobiilissa CTA:n ja kortin välissä.
-             DOM-järjestys copy → social → offer pitää kortin mobiilissa
-             viimeisenä ilman markupin kahdennusta. -->
+        <!-- Luottamussignaalit: tähtiarvio + opettajalaina (de-boxed pull-
+             quote) + YTL-kriteeripilli. Saman .hero__lead-pinon sisällä copyn
+             alla; mobiilissa CTA:n ja hinnoittelukortin välissä (DOM copy →
+             social → offer). -->
         <div class="hero__social">
           <div class="hero__rating">
             <span class="hero__rating-score"><b>8,9</b>&nbsp;/&nbsp;10</span>
@@ -234,7 +238,6 @@
           </div>
 
           <figure class="hero__quote">
-            <p class="hero__quote-eyebrow">Opettajan palaute</p>
             <blockquote class="hero__quote-text">
               "Annoin saman abikirjoitelman sekä Puheon että itseni
               arvioitavaksi. Pistehaarukka osui samaan, ja perustelu osoitti
@@ -247,6 +250,7 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
             Rakennettu YTL:n virallisille arviointikriteereille
           </span>
+        </div>
         </div>
 
         <div class="hero__offer">
