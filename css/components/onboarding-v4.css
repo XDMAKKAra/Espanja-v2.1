@@ -2,18 +2,87 @@
    Reuses --bg, --surface, --text, --text-2, --accent, --line, --radius tokens
    from the global theme. Mobile-first; no italic; no em-dash; sentence-case. */
 
+/* ── L-V408: Kartoitus portal fullscreen overlay ──────────────────────────
+   When <body> has `.kartoitus-active`, the onboarding surfaces cover the full
+   viewport and shell chrome (topbar, sidebar, mobile-nav) is hidden. This is
+   the structural fix for the "värit rikki logon vieressä" and "hamburger in
+   the corner" problems. Removed by JS when the flow ends. */
+
+body.kartoitus-active .app-topbar,
+body.kartoitus-active #app-sidebar,
+body.kartoitus-active .app-sidebar-backdrop,
+body.kartoitus-active #mobile-nav,
+body.kartoitus-active .profile-menu-wrap {
+  display: none !important;
+}
+
+/* Only the ACTIVE .ob4 screen becomes fixed fullscreen.
+   Non-active .screen elements remain display:none (from style.css).
+   z-index: 40 (--z-modal) so it floats above any remaining shell content. */
+body.kartoitus-active .screen.active.ob4 {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Tall screens (bio, choice, account) top-align because vertical centering
+   clips content on mobile. Intro is short enough to genuinely center. */
+body.kartoitus-active #screen-ob-v4-biography.screen.active,
+body.kartoitus-active #screen-ob-v4-choice.screen.active,
+body.kartoitus-active #screen-ob-v4-account.screen.active {
+  justify-content: flex-start;
+  padding-top: clamp(24px, 6vh, 56px);
+}
+
+/* When the portal is active, reset app-main margin so there is no leftover
+   sidebar gap on desktop. */
+body.kartoitus-active .app-main {
+  margin-left: 0 !important;
+}
+
+/* Ensure non-active ob4 screens are behind active ones (screen switching
+   uses .active class; non-active screens stay hidden via .screen rules). */
+
 .ob4 {
   min-height: 100dvh;
-  background: var(--bg, #faf7f2);
-  color: var(--text, #1f1d1a);
+  background: var(--ob4-bg, #FBF7EF);
+  color: var(--text, #241C15);
   padding: clamp(20px, 5vw, 56px) clamp(16px, 4vw, 32px);
   align-items: center;
   justify-content: center;
 }
 
+/* ── Portal brand header (intro screen only) ─────────────────────────── */
+.ob4-portal-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.ob4-portal-logo {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+}
+.ob4-portal-wordmark {
+  font-family: "Fredoka", var(--font-display, sans-serif);
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--brick, #9B2D2A);
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+
 .ob4-shell {
   width: 100%;
-  max-width: 720px;
+  max-width: 680px;
+  margin: auto;
   display: flex;
   flex-direction: column;
   gap: clamp(20px, 3vw, 28px);
@@ -21,23 +90,27 @@
 
 .ob4-step {
   font-size: 13px;
-  letter-spacing: 0.04em;
-  color: var(--text-2, #6f6a62);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-soft, #5C5145);
   margin: 0;
 }
 
 .ob4-title {
-  font-size: clamp(26px, 4.2vw, 40px);
+  font-family: "Fredoka", var(--font-display, sans-serif);
+  font-size: clamp(28px, 4.5vw, 42px);
   line-height: 1.1;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
   font-weight: 600;
   margin: 0;
+  color: var(--ink, #241C15);
 }
 
 .ob4-sub {
   font-size: 16px;
-  line-height: 1.55;
-  color: var(--text-2, #5e5a52);
+  line-height: 1.6;
+  color: var(--ink-soft, #5C5145);
   margin: 0;
   max-width: 56ch;
 }
@@ -65,11 +138,15 @@
 .ob4-btn:active { transform: scale(0.98); }
 
 .ob4-btn--primary {
-  background: var(--accent, #a0341f);
-  color: var(--surface, #fff);
-  border-color: var(--accent, #a0341f);
+  background: var(--brick, var(--accent, #9B2D2A));
+  color: #FBF7EF;
+  border-color: var(--brick, var(--accent, #9B2D2A));
+  font-family: "Fredoka", var(--font-display, sans-serif);
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: 0.01em;
 }
-.ob4-btn--primary:hover { background: #8c2c1a; }
+.ob4-btn--primary:hover { background: #832523; border-color: #832523; }
 
 .ob4-btn--ghost {
   background: transparent;

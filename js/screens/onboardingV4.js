@@ -26,7 +26,10 @@ import {
   renderWritingPrompt,
 } from "../features/miniYO.js";
 
-const STAGE_ORDER = ["intro", "test", "courses", "biography", "textbook", "summary", "account", "choice"];
+// L-V408 — live flow: intro → biography → choice → account.
+// test/courses/textbook/summary removed from routing; their wire*/render*
+// functions are kept intact for future use (post-purchase taso-arvio).
+const STAGE_ORDER = ["intro", "biography", "choice", "account"];
 
 const SCREEN_ID = {
   intro: "screen-ob-v4-intro",
@@ -78,19 +81,26 @@ export function initOnboardingV4(deps = {}) {
 }
 
 export async function showOnboardingV4(opts = {}) {
+  // L-V408 — logged-in users who have already completed onboarding must not
+  // be trapped here. Route them to home immediately.
+  if (isLoggedIn() && window._userProfile?.onboarding_completed) {
+    if (typeof _deps.loadDashboard === "function") {
+      _deps.loadDashboard();
+    } else {
+      window.location.hash = "#/koti";
+    }
+    return;
+  }
+
   state.language = opts.language || resolveLanguage();
   if (state.language) setLanguage(state.language);
   reflectLanguageChips();
+
+  // L-V408 — activate fullscreen portal: hide shell chrome while kartoitus runs.
+  activatePortal();
+
   show(SCREEN_ID.intro);
   track("ob_v4_started", { language: state.language });
-
-  // Warm server state in the background so resume works without delay.
-  if (isLoggedIn() && state.language) {
-    loadServerState(state.language).then((s) => {
-      state.progress = Array.isArray(s.progress) ? s.progress : [];
-      renderTestProgressHint();
-    });
-  }
 }
 
 function resolveLanguage() {
@@ -100,6 +110,17 @@ function resolveLanguage() {
   } catch {
     return "es";
   }
+}
+
+// ─── L-V408: Portal fullscreen management ──────────────────────────────────
+// Adds `kartoitus-active` to <body> which (via CSS) makes every .ob4 screen
+// position:fixed and hides topbar/sidebar/mobile-nav. Removed on exit.
+function activatePortal() {
+  document.body.classList.add("kartoitus-active");
+}
+
+function deactivatePortal() {
+  document.body.classList.remove("kartoitus-active");
 }
 
 // Mark the chip matching the current language as selected. Pre-selects the
@@ -118,9 +139,10 @@ function reflectLanguageChips() {
 function gotoStage(stage) {
   const id = SCREEN_ID[stage];
   if (id) show(id);
-  if (stage === "test") renderTest();
-  if (stage === "textbook") renderTextbook();
-  if (stage === "summary") renderSummary();
+  // Dead stages kept for reference but never rendered from live flow:
+  // if (stage === "test") renderTest();
+  // if (stage === "textbook") renderTextbook();
+  // if (stage === "summary") renderSummary();
 }
 
 // Decide whether to show the textbook disambiguator. Show when at least
@@ -139,6 +161,9 @@ function advanceFromBiography() {
 }
 
 // ─── Step 1: Intro ──────────────────────────────────────────────────────────
+// L-V408 — taso-arvio removed from live flow. Intro now goes straight to
+// biography (background questions). The "start test" / "skip" buttons are
+// replaced by a single "Jatka" CTA wired below.
 function wireIntro() {
   const langWrap = $("ob-v4-lang");
   if (langWrap) {
@@ -147,23 +172,17 @@ function wireIntro() {
       if (!chip) return;
       const lang = chip.dataset.lang;
       if (!SUPPORTED_LANGS.includes(lang)) return;
-      // L-V394 — setLanguage() already sets state.language AND mirrors to
-      // localStorage["puheo:lang"] (state.js); the prior two lines were a
-      // redundant triple-write and a refactor hazard. Single source now.
       setLanguage(lang);
       reflectLanguageChips();
     });
   }
-  $("ob-v4-intro-start")?.addEventListener("click", () => {
-    state.currentPart = "a_grammar";
-    gotoStage("test");
-  });
-  $("ob-v4-intro-skip")?.addEventListener("click", async () => {
-    state.miniYoStatus = "skipped";
-    await completeDiagnostic({ language: state.language, status: "skipped" });
-    track("ob_v4_skipped_at_intro", { language: state.language });
+  // L-V408 — single CTA goes directly to biography.
+  $("ob-v4-intro-next")?.addEventListener("click", () => {
+    track("ob_v4_intro_continued", { language: state.language });
     gotoStage("biography");
   });
+  // Legacy buttons kept in DOM but no longer wired to test stage.
+  // ob-v4-intro-start / ob-v4-intro-skip are replaced in HTML by ob-v4-intro-next.
 }
 
 // ─── Step 2: Test runner ────────────────────────────────────────────────────
@@ -455,7 +474,9 @@ function wireCourses() {
   });
 }
 
-// ─── Step 4: Biografia ──────────────────────────────────────────────────────
+// ─── Step 2 (live): Biografia ───────────────────────────────────────────────
+// L-V408 — biography is now step 2 in the live flow. After bio → go directly
+// to choice (tier selection). textbook/summary stages removed from live path.
 function wireBiography() {
   const form = $("ob-v4-bio-form");
   if (form) {
@@ -481,7 +502,8 @@ function wireBiography() {
         console.warn("biography save failed (non-fatal):", err.message);
       }
     }
-    advanceFromBiography();
+    // L-V408: go straight to tier choice (skip textbook + summary).
+    gotoStage("choice");
   });
 }
 
@@ -672,6 +694,8 @@ async function submitAccount() {
     // L-V398 P0 — the just-created account has finished the kartoitus; mark
     // onboarding complete so the gate doesn't re-launch it on next load.
     await markOnboardingComplete();
+    // L-V408 — account completed: deactivate portal, show choice/app.
+    deactivatePortal();
     // If the user got here by tapping a paid product first, resume that
     // checkout now that they have an account. Otherwise show the choice.
     let pending = null;
@@ -815,10 +839,12 @@ async function markOnboardingComplete() {
 async function finishToApp(reason) {
   track("ob_v4_choice_resolved", { reason, language: state.language });
   await markOnboardingComplete();
+  // L-V408 — remove fullscreen portal; shell chrome returns before navigating.
+  deactivatePortal();
   if (typeof _deps.loadDashboard === "function") {
     _deps.loadDashboard();
   } else {
-    window.location.hash = "#/dashboard";
+    window.location.hash = "#/koti";
   }
 }
 

@@ -409,15 +409,22 @@
 
   <!-- ─── L-V293-ONBOARDING-DIAGNOSTIC-1a (V4) — diagnostic-first, 5 stepit ── -->
 
-  <!-- V4 step 1: intro -->
+  <!-- V4 step 1: intro (L-V408: uusi copy + kielivalinta, suora jatko taustakysymyksiin) -->
   <div id="screen-ob-v4-intro" class="screen ob4">
     <div class="ob4-shell">
-      <p class="ob4-step">Vaihe 1 / 4</p>
-      <h1 class="ob4-title">Räätälöidään sinun polkusi</h1>
-      <p class="ob4-sub">Lyhyt taso-arvio kattaa kieliopin, luetun ymmärtämisen ja kirjoittamisen. Saat henkilökohtaisen 3 viikon suunnitelman ja säästät tunteja, koska et harjoittele sitä mitä jo osaat. Voit jatkaa myöhemmin missä jäit.</p>
-      <p class="ob4-hint">Voit pilkkoa testin useaan istuntoon. Kirjoitelman voi ohittaa, jos on kiire.</p>
+      <div class="ob4-portal-brand" aria-hidden="true">
+        <svg class="ob4-portal-logo" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20.5 11.3a8 8 0 0 1-8 8 8 8 0 0 1-3.4-.76L4 20l1.46-4.1A8 8 0 0 1 4.5 11.3a8 8 0 0 1 8-8 8 8 0 0 1 8 8Z" fill="var(--brick,#9B2D2A)"/>
+          <circle cx="9.2" cy="11.3" r="1.05" fill="#FBF7EF"/>
+          <circle cx="12.5" cy="11.3" r="1.05" fill="#FBF7EF"/>
+          <circle cx="15.8" cy="11.3" r="1.05" fill="#FBF7EF"/>
+        </svg>
+        <span class="ob4-portal-wordmark">puheo</span>
+      </div>
+      <h1 class="ob4-title">Tervetuloa. Mistä kielestä on kyse?</h1>
+      <p class="ob4-sub">Pari kysymystä taustastasi, niin osaamme aloittaa oikealta kohdalta. Vie alle minuutin.</p>
       <div class="ob4-lang" id="ob-v4-lang" role="radiogroup" aria-label="Valitse kieli">
-        <p class="ob4-lang__label">Mitä kieltä harjoittelet?</p>
+        <p class="ob4-lang__label">Valitse kieli</p>
         <div class="ob4-lang__chips">
           <button type="button" class="ob4-lang__chip" data-lang="es" role="radio" aria-checked="false">Espanja</button>
           <button type="button" class="ob4-lang__chip" data-lang="de" role="radio" aria-checked="false">Saksa</button>
@@ -425,8 +432,7 @@
         </div>
       </div>
       <div class="ob4-actions">
-        <button type="button" class="ob4-btn ob4-btn--primary" id="ob-v4-intro-start">Aloita taso-arvio</button>
-        <button type="button" class="ob4-btn ob4-btn--ghost" id="ob-v4-intro-skip">Ohita kokonaan</button>
+        <button type="button" class="ob4-btn ob4-btn--primary" id="ob-v4-intro-next">Jatka</button>
       </div>
     </div>
   </div>
@@ -450,12 +456,12 @@
     </div>
   </div>
 
-  <!-- V4 step 3: biografia (kurssivalinta-vaihe poistettu L-V398 #2 — redundantti taustakysymysten kanssa) -->
+  <!-- V4 step 2 (L-V408): biografia -->
   <div id="screen-ob-v4-biography" class="screen ob4">
     <div class="ob4-shell">
-      <p class="ob4-step">Vaihe 3 / 4</p>
+      <p class="ob4-step">Vaihe 1 / 3</p>
       <h1 class="ob4-title">Pari kysymystä taustastasi</h1>
-      <p class="ob4-sub">Auttaa kalibroimaan harjoitukset oikealle tasolle.</p>
+      <p class="ob4-sub">Kertomasi auttaa aloittamaan oikealta kohdalta.</p>
       <form class="ob4-bio-form" id="ob-v4-bio-form">
         <fieldset class="ob4-bio-group">
           <legend class="ob4-bio-question">Puhutko kieltä kotona?</legend>
@@ -522,10 +528,10 @@
     </div>
   </div>
 
-  <!-- ─── L-V359 account step (after results, before product choice) ──── -->
+  <!-- ─── L-V359 account step (L-V408: nyt vaihe 3/3) ──── -->
   <div id="screen-ob-v4-account" class="screen ob4">
     <div class="ob4-shell">
-      <p class="ob4-step">Melkein valmista</p>
+      <p class="ob4-step">Vaihe 3 / 3</p>
       <h1 class="ob4-title">Tallenna tuloksesi</h1>
       <p class="ob4-sub">Luo tili, niin tasoarviosi ja oppimispolkusi säilyvät, ja pääset jatkamaan samasta kohdasta millä tahansa laitteella. Voit myös jatkaa ilman tiliä, mutta tulokset katoavat kun suljet sivun.</p>
       <form class="ob4-acct-form" id="ob-v4-acct-form" novalidate>
@@ -559,7 +565,7 @@
   <div id="screen-ob-v4-choice" class="screen ob4">
     <div class="ob4-shell ob4-choice">
       <header class="ob4-choice__head">
-        <p class="ob4-step">Viimeinen vaihe</p>
+        <p class="ob4-step">Vaihe 2 / 3</p>
         <h1 class="ob4-title">Valitse miten jatkat kohti yo-koetta</h1>
         <p class="ob4-sub">Kartoitus ja ensimmäiset harjoitukset ovat ilmaisia. Avaa koko polku tai rajaton arviointi, tai jatka ilmaiseksi ja päätä myöhemmin.</p>
       </header>
