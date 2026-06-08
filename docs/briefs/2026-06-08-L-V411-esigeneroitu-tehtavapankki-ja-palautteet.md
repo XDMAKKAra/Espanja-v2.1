@@ -66,6 +66,24 @@ Adaptiivisuus = kerros authored-kurssin PÄÄLLE, ei erillistä AI-silaa. Author
 
 ---
 
+## GENEROINTI-ORKESTROINTI (subagentit + skillit + KAIKKI KIELET)
+
+**Build-aikainen generointi ajetaan subagenteilla fan-outina**, ei yhtenä isona kutsuna. Jokainen subagentti lataa oman skill-stackinsa ja palauttaa rakenteisen JSON-outputin jonka pää-skripti validoi skeemaa vasten ja committaa. Käytä `Workflow`- tai `Agent`-fan-outia (yksikkö = kieli × konsepti, tai kieli × sävy-bucket). **Ajossa ei subagentteja eikä AI:ta — orkestrointi on vain build-aikana.**
+
+**KIELET: KAIKKI KOLME (es + de + fr) joka vaiheessa.** Jokainen pankki- ja palautetiedosto per kieli: `data/item-bank/{es,de,fr}.json`, `data/feedback/{es,de,fr}.json`. Kielet ovat itsenäisiä fan-out-yksiköitä. **Vaiheen acceptance EI täyty ennen kuin kaikki kolme kieltä on tuotettu + validoitu.** (Muista per-kieli-erot: saksan kielioppikonseptit ≠ espanjan; johda konseptit kunkin kielen omasta kurssidatasta + taksonomiasta, älä käännä espanjan konsepteja sokkona.)
+
+**Tehtävä-generointi (pankin gap-täyttö) — subagentti per (kieli × konsepti):** lataa
+`practice-problem-sequence-designer` (near→far-transfer-sekvenssi),
+`retrieval-practice-generator` (free/cued/recognition-jakauma),
+`variation-theory-task-designer` (kriittisen piirteen variointi + uskottavat distraktorit),
+`cognitive-load-analyser` (ei ylikuormaa),
+`humanizer` (kaikki suomenkielinen ohjeistus + selitys).
+Output: **monipuolinen** item-pool konseptille (eri `item_type`t, vaikeusporras easy→hard, pintapiirrevariaatio) — EI kloonattuja itemejä. Item-muoto = sama kuin authored lesson-item (renderöityy lessonRunnerissa sellaisenaan).
+
+**Palaute-generointi — subagentti per (kieli × sävy-bucket):** lataa `humanizer` (PAKOLLINEN, jokainen template) + `intelligent-tutoring-dialogue-designer`/`retrieval-practice-generator` -henki metakognitiiviseen huomioon. Output: humanisoidut templatet (ei em-dashia, ei "kalibroitu/intuitiivinen", ei sycophantic openereita, ei rule-of-three, ei keksittyjä %-lukuja).
+
+---
+
 ## Vaihe A — TEHTÄVÄPANKKI (build-time pre-gen, tee ENSIN)
 
 **Tavoite:** indeksi joka vastaa kysymykseen "anna N tehtävää konseptista X vaikeudella Y kielellä L" O(1)-haulla, generoitu olemassa olevista kursseista.
@@ -87,13 +105,18 @@ Adaptiivisuus = kerros authored-kurssin PÄÄLLE, ei erillistä AI-silaa. Author
 }
 ```
 
-**Generointi (`scripts/build-item-bank.mjs`):**
-1. Kävele `data/courses/<lang>/**/lesson_*.json`, jokainen item.
-2. Johda item-konseptit prioriteettijärjestyksessä: (a) jos item kantaa jo `concepts[]` → `normalizeTopics`; (b) `inferTopics({ question: stem/prompt, explanation })` (regex, ilmainen); (c) lessonin konteksti (`meta.title` + `phase_type` → karkea mapping, esim. `recall_typed_*` + kielioppikurssi → kieliopin pääkonsepti); (d) **build-aikainen AI-tagger** VAIN itemeille jotka jäivät tageja vaille tai monitulkintaisiksi — output committoidaan, ajossa ei kutsuta. Halpa kertakustannus.
-3. Indeksoi konseptin alle, kanna `difficulty` + `level` jotta Vaihe C voi kalibroida.
-4. **Determinismi:** sama input → sama output (ei `Math.random` skriptissä, järjestä deterministisesti). Aja CI:ssä tai osana `npm run build`-ketjua? → ei pakollinen joka buildiin (kurssit muuttuvat harvoin); committoi tiedosto ja regeneroi käsin kun kurssidata muuttuu. Dokumentoi miten regeneroidaan.
+**Pankin sisältö = INDEKSOI ensin, GENEROI vain gapit:**
+- **(1) Indeksoi olemassa olevat authored-itemit** (`data/courses/<lang>/**/lesson_*.json`). Ne ovat JO monipuolisia ja valmiita (8 kurssia × ~90 lessonia × 3 kieltä). **ÄLÄ re-authoroi olemassa olevaa sisältöä** (muisti: sisältö valmis kaikilla kielillä). Tämä antaa monipuolisuuden ilmaiseksi.
+- **(2) Generoi uusia itemejä subagenteilla VAIN ohut-peitto-konsepteille** (konseptit joilla <3 authored-itemiä indeksoinnin jälkeen). Käytä GENEROINTI-ORKESTROINTI-osion subagentti-stackia (lesson-gen-skillit + humanizer). Generoidut itemit merkitään `"source": "generated"` jotta ne erottuvat authored-itemeistä; committoidaan pankkiin.
 
-**Acceptance A:** `data/item-bank/es.json` (+ de + fr) olemassa; jokainen `TOPIC_LABELS`-avain joka esiintyy kursseissa on indeksoitu ≥1 itemillä; skripti loggaa konseptit joilla on <3 itemiä (= ohut peitto, Vaihe D fallback-kandidaatit); `node --check` + pieni vitest joka lataa pankin ja varmistaa rakenteen + että haku `bank["subjunctive"]` palauttaa renderöitäviä itemejä.
+**Generointi (`scripts/build-item-bank.mjs`):**
+1. Kävele `data/courses/<lang>/**/lesson_*.json`, jokainen item (per kieli es/de/fr).
+2. Johda item-konseptit prioriteettijärjestyksessä: (a) jos item kantaa jo `concepts[]` → `normalizeTopics`; (b) `inferTopics({ question: stem/prompt, explanation })` (regex, ilmainen); (c) lessonin konteksti (`meta.title` + `phase_type` → karkea mapping); (d) **build-aikainen AI-tagger-subagentti** VAIN itemeille jotka jäivät tageja vaille tai monitulkintaisiksi — output committoidaan, ajossa ei kutsuta.
+3. Indeksoi konseptin alle, kanna `difficulty` + `level` + `source` (authored|generated) jotta Vaihe C voi kalibroida.
+4. Tunnista <3-itemin konseptit → fan-out generointi-subagentit (kieli × konsepti) täyttämään pooli ~5-8 monipuoliseen itemiin.
+5. **Determinismi:** sama input → sama output (ei `Math.random` skriptissä, järjestä deterministisesti). Ei pakollinen joka buildiin (kurssit muuttuvat harvoin); committoi tiedosto, regeneroi käsin kun kurssidata muuttuu. Dokumentoi regenerointi.
+
+**Acceptance A (täyttyy vasta kun KAIKKI 3 kieltä valmiit):** `data/item-bank/es.json` + `de.json` + `fr.json` olemassa; jokainen kunkin kielen kursseissa esiintyvä `TOPIC_LABELS`-avain indeksoitu ≥3 itemillä (gap-generointi täyttänyt ohuet); generoidut itemit `source:"generated"` + humanizer-pass; `node --check` + vitest joka lataa kaikki 3 pankkia, varmistaa rakenteen, että `bank["subjunctive"]` (es) palauttaa renderöitäviä monipuolisia itemejä (≥2 eri `item_type`), ja että de/fr-pankit eivät ole tyhjiä eivätkä espanjan klooneja.
 
 ---
 
@@ -107,11 +130,11 @@ sävy-bucket (I/A | B/C | M/E/L)  ×  band (mastered | almost | struggling)  × 
 ```
 Sävy-bucketit vastaavat olemassa olevaa `TONE_DESCRIPTORS`-logiikkaa (`lib/curriculumProgress.js`): I/A lämmin+ei häpeää, B/C suora+lämmin, M/E/L korkea rima. Band: suoritus suhteessa `mastery_threshold`-tasoon. Konseptikohtainen template (esim. `subjunctive` + B/C + struggling = "subjunktiivi horjuu vielä, muista että epävarmuus tai toive que:n jälkeen laukaisee sen; palataan tähän huomenna") voittaa, fallback geneeriseen band-templateen.
 
-**Generointi (`scripts/build-feedback.mjs`):** AI saa luonnostella templatet build-aikana, MUTTA **jokainen aja `humanizer`-skillin läpi** (em-dash pois, ei "kalibroitu/intuitiivinen", ei sycophantic openereita, ei rule-of-three) ENNEN committia. Templatet ovat lyhyitä, muuttujapaikoilla `{konsepti_label}`, `{seuraava_aihe}`. Pidä määrä hallittavana: ~20 aktiivista konseptia × 3 sävyä × 3 bandia, + geneeriset fallbackit. **Ei keksittyjä väitteitä** (ei %-lukuja, ei lukio-nimiä).
+**Generointi (`scripts/build-feedback.mjs`):** fan-out subagenteilla (kieli × sävy-bucket, ks. GENEROINTI-ORKESTROINTI). Subagentti luonnostelee templatet build-aikana, MUTTA **lataa `humanizer`-skillin ja ajaa jokaisen templaten sen läpi** (em-dash pois, ei "kalibroitu/intuitiivinen", ei sycophantic openereita, ei rule-of-three) ENNEN palautusta. Templatet lyhyitä, muuttujapaikoilla `{konsepti_label}`, `{seuraava_aihe}`. Määrä hallittavana: ~20 aktiivista konseptia × 3 sävyä × 3 bandia + geneeriset fallbackit, **per kieli**. **Ei keksittyjä väitteitä** (ei %-lukuja, ei lukio-nimiä). Per-kieli: konseptilabelit + esimerkit kunkin kielen omasta sisällöstä (saksan templatet puhuvat saksan rakenteista).
 
 **Runtime (`lib/feedbackTemplates.js`):** puhdas funktio `pickFeedback({ concept, toneBucket, band, lang })` → `{ tutorMessage, metacognitivePrompt }` fallback-ketjulla. `routes/curriculum.js` `/complete`: **poista `callOpenAI`-lohko diskreeteille lessoneille**, korvaa tällä lookupilla. (Tutori näkee jo oikeat virheet `effectiveWrong`:n kautta L-V410:stä → käytä top-konseptia template-valintaan.)
 
-**Acceptance B:** `/complete` palauttaa template-pohjaisen `tutorMessage` + `metacognitivePrompt`, **0 OpenAI-kutsua** diskreetille lessonille (todenna: ei verkkokutsua / stubattu `callOpenAI` ei laukea); palaute on konseptikohtainen kun virheitä keskittyy yhteen konseptiin; kaikki templatet humanizer-pass; vitest `pickFeedback`-fallback-ketjusta.
+**Acceptance B (KAIKKI 3 kieltä):** `data/feedback/{es,de,fr}.json` olemassa; `/complete` palauttaa template-pohjaisen `tutorMessage` + `metacognitivePrompt`, **0 OpenAI-kutsua** diskreetille lessonille millä tahansa kielellä (todenna: stubattu `callOpenAI` ei laukea); palaute konseptikohtainen kun virheitä keskittyy yhteen konseptiin; kaikki templatet humanizer-pass kaikilla kielillä; vitest `pickFeedback`-fallback-ketjusta + per-kieli-lookup.
 
 ---
 
