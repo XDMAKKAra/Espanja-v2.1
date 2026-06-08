@@ -225,6 +225,29 @@ router.get("/review-queue", requireAuth, async (req, res) => {
   }
 });
 
+// ─── POST /api/curriculum/capture ───────────────────────────────────────────
+// L-V411 Vaihe C (digikirja port) — the digikirja lesson reader has no
+// /complete call, so it flushes graded answers here per phase. Mirrors the
+// capture half of /complete: gated to the kurssi (mestari) tier, writes
+// user_mistakes + sr_cards. This is the real data source for the flywheel,
+// since digikirja (not lessonRunner) is the live lesson path.
+router.post("/capture", requireAuth, async (req, res) => {
+  try {
+    const lang = PRODUCT_LANGS.has(req.body?.lang) ? req.body.lang : "es";
+    const access = await checkFeatureAccess(req.user.userId, "mistake_tracking");
+    if (!access.allowed) return res.json({ captured: false, locked: true });
+    const gradedItems = sanitiseGradedItems(req.body?.gradedItems);
+    if (!gradedItems.length) return res.json({ captured: false });
+    const cap = await captureAdaptiveSignals(
+      req.supabase || adminClient, req.user.userId, normalizeLang(lang), gradedItems
+    );
+    res.json({ captured: true, ...cap });
+  } catch (err) {
+    console.error("capture error:", err.message);
+    res.status(500).json({ error: "Tallennus epäonnistui" });
+  }
+});
+
 // ─── GET /api/curriculum/:kurssiKey ─────────────────────────────────────────
 router.get("/:kurssiKey", optionalAuth, async (req, res) => {
   const supabase = getRequestDb(adminClient);

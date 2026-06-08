@@ -1,7 +1,7 @@
 // L-V411 Vaihe C — synthetic review phase construction (client glue, pure part).
 
 import { describe, it, expect } from "vitest";
-import { REVIEW_PHASE_ID, buildReviewPhase } from "../js/lib/reviewPhase.js";
+import { REVIEW_PHASE_ID, buildReviewPhase, toGradedItem } from "../js/lib/reviewPhase.js";
 
 describe("buildReviewPhase", () => {
   it("produces a renderable phase tagged for SR calibration", () => {
@@ -38,5 +38,37 @@ describe("buildReviewPhase", () => {
     const phase = buildReviewPhase({ items: [] });
     expect(Object.values(phase.mastery_threshold).every((v) => v <= 0.5)).toBe(true);
     expect(phase.skip_for_targets).toEqual([]);
+  });
+});
+
+describe("toGradedItem — capture payload mapping (digikirja port)", () => {
+  it("mc: resolves student + correct answers from choices, carries concept", () => {
+    const item = { item_type: "mc", stem: "Quiero que ella ___.", choices: ["es", "sea"], correct_index: 1, explanation: "subj", _concept: "subjunctive" };
+    const g = toGradedItem(item, { correct: false, choiceIndex: 0 }, { phase_type: "review_mixed", title: "Kertaus" });
+    expect(g.itemType).toBe("mc");
+    expect(g.correct).toBe(false);
+    expect(g.studentAnswer).toBe("es");
+    expect(g.correctAnswer).toBe("sea");
+    expect(g.topics).toEqual(["subjunctive"]);
+    expect(g.phaseType).toBe("review_mixed");
+  });
+
+  it("typed: uses userAnswer + first accept; gap_fill joins arrays", () => {
+    const typed = toGradedItem(
+      { item_type: "typed", prompt: "tener yo", accept: ["tendré", "tengo"] },
+      { correct: true, userAnswer: "tendré" }, {});
+    expect(typed.studentAnswer).toBe("tendré");
+    expect(typed.correctAnswer).toBe("tendré");
+
+    const gap = toGradedItem(
+      { item_type: "gap_fill", sentence_template: "{1} y {2}", answers: [["soy"], ["estoy"]] },
+      { correct: false, userAnswer: ["es", "esta"] }, {});
+    expect(gap.studentAnswer).toBe("es, esta");
+    expect(gap.correctAnswer).toBe("soy, estoy");
+  });
+
+  it("authored item with no concept yields empty topics (server infers)", () => {
+    const g = toGradedItem({ item_type: "mc", stem: "x", choices: ["a", "b"], correct_index: 0 }, { correct: true, choiceIndex: 0 }, {});
+    expect(g.topics).toEqual([]);
   });
 });

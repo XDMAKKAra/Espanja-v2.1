@@ -1,2 +1,0 @@
-function g(t,n,{minChars:e=0,maxChars:o=0}={}){if(!t||!n)return{stop(){}};let u=e||o?`${e}\u2013${o}`:"";function s(){let i=(t.value||"").length;n.textContent=u?`${i} / ${u} merkki\xE4`:`${i} merkki\xE4`,n.classList.toggle("is-met",e>0&&i>=e),n.classList.toggle("is-too-long",o>0&&i>o)}return t.addEventListener("input",s),s(),{stop(){t.removeEventListener("input",s)}}}function p(t){return Math.round((t||0)*6)}export{g as a,p as b};
-//# sourceMappingURL=app-chunk-EVWRWXV5.js.map

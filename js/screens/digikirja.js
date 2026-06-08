@@ -17,6 +17,7 @@ import { isAcceptable } from "../lib/accentTolerance.js";
 import { gradeMatchingPair } from "../features/answerGrading.js";
 import { wordsToChars } from "../features/charCounter.js";
 import { API, isLoggedIn, authHeader, apiFetch, getAuthEmail } from "../api.js";
+import { buildReviewPhase, toGradedItem } from "../lib/reviewPhase.js";
 
 const LS_SIDEMENU = "puheo:dk:sidemenu";
 const SIDEMENU_OPEN = "open";
@@ -41,6 +42,12 @@ function writeProgress(map) {
 }
 function markSivuDone(sivuId) {
   if (!sivuId) return;
+  // L-V411 Vaihe C — flush this completion's graded answers to the adaptive
+  // layer EVERY time the phase is finished in-session (before the progress
+  // dedup below), so re-doing a phase still feeds SR. Guarded to exercise
+  // sivut + mestari tier inside flushPhaseCapture. Fires once per completion
+  // because markSivuDone is only called when the last item is answered.
+  flushPhaseCapture(sivuId);
   const map = readProgress();
   if (map[sivuId] === "done") return;
   map[sivuId] = "done";
@@ -77,6 +84,78 @@ function refreshSidemenuProgress() {
     chip.textContent = `${done} / ${_sivut.length} valmis`;
     chip.dataset.full = done >= _sivut.length ? "true" : "false";
   }
+}
+
+// ── L-V411 Vaihe C (digikirja port) — adaptive capture + resurface ──────────
+// digikirja is the LIVE lesson path, so the flywheel must live here, not in the
+// legacy lessonRunner.
+
+// Review phase, cached per lesson (loadKey) so navigating between sivut does not
+// refetch or change the review content mid-lesson.
+let _reviewCacheKey = "";
+let _reviewPhaseCached = null;
+
+async function fetchReviewQueueDk(lang) {
+  try {
+    const r = await apiFetch(
+      `${API}/api/curriculum/review-queue?lang=${encodeURIComponent(lang || "es")}&limit=8`,
+      { headers: { ...authHeader() } }
+    );
+    if (!r || !r.ok) return null;
+    const data = await r.json();
+    return (data && !data.locked && Array.isArray(data.items) && data.items.length) ? data : null;
+  } catch { return null; }
+}
+
+// Prepend a "Kertaus" review phase to lesson.phases so buildSivut renders it as
+// the first exercise sivu (mastery tier; server-gated). Bounded so a slow fetch
+// never stalls lesson load. Mutates the passed lesson object.
+async function maybePrependReviewPhaseDk(lesson, loadKey) {
+  try {
+    if (typeof isLoggedIn === "function" && !isLoggedIn()) return;
+    if (_reviewCacheKey !== loadKey) {
+      _reviewCacheKey = loadKey;
+      const queue = await Promise.race([
+        fetchReviewQueueDk(_route.lang),
+        new Promise((resolve) => setTimeout(() => resolve(null), 1500)),
+      ]);
+      // digikirja renders only mc/typed/gap_fill/translate (SUPPORTED_ITEM_TYPES,
+      // no match), so drop anything it cannot render before building the phase,
+      // otherwise the render-vs-grade item indices would desync.
+      const dkTypes = new Set(["mc", "typed", "gap_fill", "translate"]);
+      const supported = (queue && Array.isArray(queue.items) ? queue.items : [])
+        .filter((it) => dkTypes.has(it.item_type));
+      _reviewPhaseCached = supported.length
+        ? buildReviewPhase({ ...queue, items: supported }) : null;
+    }
+    if (_reviewPhaseCached) {
+      lesson.phases = [_reviewPhaseCached, ...(Array.isArray(lesson.phases) ? lesson.phases : [])];
+    }
+  } catch { /* non-fatal: lesson loads without a review phase */ }
+}
+
+// Flush a completed phase's graded answers to the adaptive layer. Called once
+// per phase from markSivuDone (server gates to the mestari tier). Best-effort.
+function flushPhaseCapture(sivuId) {
+  if (!isLoggedIn || !isLoggedIn()) return;
+  const sivu = _sivut.find((s) => s.id === sivuId);
+  if (!sivu || sivu.kind !== "tehtava") return;
+  const phase = phaseForSivu(sivu);
+  const st = _exerciseState.get(sivuId);
+  if (!phase || !st || !Array.isArray(st.answered)) return;
+  const items = Array.isArray(phase.items) ? phase.items : [];
+  const graded = [];
+  for (let i = 0; i < items.length; i++) {
+    const res = st.answered[i];
+    if (!items[i] || !res) continue;
+    graded.push(toGradedItem(items[i], res, phase));
+  }
+  if (!graded.length) return;
+  apiFetch(`${API}/api/curriculum/capture`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...authHeader() },
+    body: JSON.stringify({ lang: _route.lang || "es", gradedItems: graded }),
+  }).catch(() => { /* non-critical */ });
 }
 
 // Phase titles in the lesson JSON files were written with AI-slop
@@ -2411,6 +2490,10 @@ export async function showDigikirja(route = {}) {
     if (_loadKey !== loadKey) return;
 
     _lesson = lesson;
+    // L-V411 Vaihe C — prepend the calibrated review phase (mestari; cached per
+    // lesson) before building the sivut so it shows as the first exercise page.
+    await maybePrependReviewPhaseDk(lesson, loadKey);
+    if (_loadKey !== loadKey) return;
     _sivut = buildSivut(lesson);
     // Resolve sivuId against the freshly built sivut list.
     if (!_sivut.some((s) => s.id === _route.sivuId)) {
