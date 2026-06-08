@@ -124,6 +124,69 @@ body.app .op-shell .lp-row__status { display: flex; align-items: center; gap: 12
 body.app .op-shell .lp-row__lock { display: inline-flex; align-items: center; gap: 7px; color: var(--ink-subtle); font-size: 13px; font-weight: 600; }
 body.app .op-shell .lp-row__lock .lucide { width: 15px; height: 15px; color: var(--ink-faint); }
 
+/* ---- L-V409: purchase-lock (buy-locked) ---- */
+/* Distinct from progress-lock: warm amber tint, solid border, visible content,
+   "Avaa Kurssilla" CTA. Progress-lock uses dashed + opacity; buy-lock is
+   inviting — the content is shown so the value is felt, just gated. */
+body.app .op-shell .lp-buy-banner {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  background: color-mix(in oklch, var(--brick) 9%, var(--bg-card));
+  border: 1.5px solid color-mix(in oklch, var(--brick) 28%, transparent);
+  border-radius: var(--r-card);
+  padding: 16px 22px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+body.app .op-shell .lp-buy-banner__text {
+  font-family: var(--font-ui); font-size: 14.5px; color: var(--ink-muted); line-height: 1.45;
+  flex: 1; min-width: 200px;
+}
+body.app .op-shell .lp-buy-banner__text strong { color: var(--ink); font-weight: 700; }
+body.app .op-shell .lp-buy-banner__btn { flex: none; white-space: nowrap; }
+
+body.app .op-shell .lp-row--buy-locked {
+  position: relative; cursor: pointer;
+  background: color-mix(in oklch, var(--brick) 5%, var(--bg-card));
+  border-color: color-mix(in oklch, var(--brick) 20%, transparent);
+  border-style: solid;
+  opacity: 1;
+  transition: background var(--t-fast), border-color var(--t-fast), box-shadow var(--t-fast);
+}
+body.app .op-shell .lp-row--buy-locked:hover {
+  background: color-mix(in oklch, var(--brick) 10%, var(--bg-card));
+  border-color: color-mix(in oklch, var(--brick) 40%, transparent);
+  box-shadow: 0 2px 12px color-mix(in oklch, var(--brick) 12%, transparent);
+}
+body.app .op-shell .lp-row--buy-locked:focus-visible {
+  outline: 2px solid var(--brick); outline-offset: 2px;
+}
+body.app .op-shell .lp-row--buy-locked .lp-row__title { color: var(--ink-muted); }
+body.app .op-shell .lp-row--buy-locked .lp-row__desc { opacity: 0.7; }
+body.app .op-shell .lp-row--buy-locked .lp-row__num { color: color-mix(in oklch, var(--brick) 55%, var(--ink-faint)); }
+
+body.app .op-shell .lp-row__buy-cta {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: var(--brick); color: var(--brick-ink);
+  font-family: var(--font-ui); font-size: 13px; font-weight: 700;
+  padding: 7px 14px; border-radius: var(--r-pill);
+  white-space: nowrap; flex: none; pointer-events: none;
+  transition: background var(--t-fast);
+}
+body.app .op-shell .lp-row--buy-locked:hover .lp-row__buy-cta {
+  background: var(--brick-hover);
+}
+body.app .op-shell .lp-row__buy-cta .lp-buy-lock-icon {
+  width: 13px; height: 13px; stroke-width: 2.2; flex: none;
+}
+body.app .op-shell .lp-buy-label { line-height: 1; }
+
+@media (max-width: 620px) {
+  body.app .op-shell .lp-buy-banner { flex-direction: column; align-items: flex-start; gap: 12px; }
+  body.app .op-shell .lp-buy-banner__btn { width: 100%; text-align: center; justify-content: center; }
+  body.app .op-shell .lp-row--buy-locked { grid-template-columns: 40px 1fr; }
+  body.app .op-shell .lp-row--buy-locked .lp-row__buy-cta { grid-column: 2; }
+}
+
 /* ---- course detail (kurssi) ---- */
 body.app .op-shell .cd-head h1 {
   font-family: var(--font-display); font-weight: 600; font-size: var(--fs-h1);

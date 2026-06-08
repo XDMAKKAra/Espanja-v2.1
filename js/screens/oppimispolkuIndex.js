@@ -9,17 +9,25 @@
  *   kertausPassed   → done   (clickable, green "Suoritettu")
  *   isUnlocked      → active (brick row, "{done}/{total} oppituntia" + chevron)
  *   otherwise       → locked (dashed, lock icon + "Avautuu vuorollaan")
+ *
+ * L-V409: purchase-lock. Non-kurssi users (free / treeni) see a buy-lock
+ * overlay on every row. This is a SEPARATE state from the progress-lock above.
+ *   purchase-locked → lp-row--buy-locked (warm overlay, "Avaa Kurssilla" CTA)
  */
 
 import { show } from "../ui/nav.js";
 import { state } from "../state.js";
 import { getCurriculumList, prefetchCourseDetail } from "../lib/curriculumCache.js";
 import { prefetchChunk, onHoverIntent } from "../lib/prefetch.js";
+import { getTier } from "../lib/tier.js";
+import { openPaywall } from "../features/paywallModal.js";
+import { getProfile } from "../api.js";
 
 // Lucide paths copied verbatim from docs/design-ref/app-export/Icons.jsx.
 const LUCIDE = {
   "chevron-right": '<path d="m9 18 6-6-6-6"/>',
   "lock": '<rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>',
+  "lock-buy": '<rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>',
   "circle-check": '<circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/>',
 };
 function icon(name, attrs = "") {
@@ -63,16 +71,34 @@ function langLabelFor(lang) {
   return lang === "es" ? "Espanja" : lang === "fr" ? "Ranska" : lang === "de" ? "Saksa" : lang;
 }
 
-function renderRow(k, stepNumber, lang) {
+function renderRow(k, stepNumber, lang, buyLocked) {
   const done = !!k.kertausPassed;
-  const locked = !k.isUnlocked;
+  const progressLocked = !k.isUnlocked;
   const completed = k.lessonsCompleted || 0;
   const total = k.lessonCount || 10;
   const title = escapeHtml(k.title);
   const desc = k.description ? `<div class="lp-row__desc">${escapeHtml(k.description)}</div>` : "";
   const body = `<div><div class="lp-row__title">${title}</div>${desc}</div>`;
 
-  if (locked) {
+  // L-V409: purchase-lock takes visual priority for non-kurssi users.
+  // The underlying progress state is preserved as a data attribute so that
+  // once the user upgrades the correct state renders without re-fetch.
+  if (buyLocked) {
+    const progressState = done ? "done" : progressLocked ? "locked" : "active";
+    return `
+      <div class="lp-row lp-row--buy-locked" data-kurssi="${escapeHtml(k.key)}" data-progress="${progressState}"
+           role="button" tabindex="0"
+           aria-label="Kurssi ${stepNumber}: ${title}, vaatii Kurssin">
+        <span class="lp-row__num num">${stepNumber}</span>
+        ${body}
+        <span class="lp-row__buy-cta">
+          ${icon("lock", 'class="lp-buy-lock-icon"')}
+          <span class="lp-buy-label">Avaa Kurssilla</span>
+        </span>
+      </div>`;
+  }
+
+  if (progressLocked) {
     return `
       <div class="lp-row lp-row--locked" data-kurssi="${escapeHtml(k.key)}" aria-label="Kurssi ${stepNumber}: ${title}, lukittu">
         <span class="lp-row__num num">${stepNumber}</span>
@@ -103,10 +129,21 @@ function renderRow(k, stepNumber, lang) {
     </a>`;
 }
 
-function renderShell(lang, kurssit) {
+function renderShell(lang, kurssit, buyLocked) {
   const done = kurssit.filter((k) => k.kertausPassed).length;
   const total = kurssit.length;
   const langLabel = langLabelFor(lang);
+
+  const buyBanner = buyLocked ? `
+    <div class="lp-buy-banner" role="region" aria-label="Kurssin hankinta">
+      <div class="lp-buy-banner__text">
+        <strong>Koko polku avautuu Kurssilla.</strong>
+        Kaikki 8 kurssia, adaptiivinen harjoittelu ja YO-valmius-mittari.
+      </div>
+      <button class="lp-buy-banner__btn btn btn--primary btn--sm" type="button" data-lp-buy="banner">
+        Avaa Kurssi
+      </button>
+    </div>` : "";
 
   return `
     <nav class="crumbs" aria-label="Sijainti">
@@ -122,8 +159,9 @@ function renderShell(lang, kurssit) {
       </div>
       ${PATH_ILLU}
     </div>
+    ${buyBanner}
     <div class="lp-list">
-      ${kurssit.map((k, i) => renderRow(k, i + 1, lang)).join("")}
+      ${kurssit.map((k, i) => renderRow(k, i + 1, lang, buyLocked)).join("")}
     </div>`;
 }
 
@@ -147,7 +185,44 @@ export async function loadOppimispolkuIndex(lang) {
     renderError(root, "Kursseja ei vielä julkaistu tälle kielelle.");
     return;
   }
-  root.innerHTML = renderShell(activeLang, kurssit);
+
+  // L-V409: purchase-lock. Kurssi tier = full access. Free / Treeni = buy-locked.
+  // window._userProfile is set by initAuth/checkOnboarding on normal boot.
+  // If navigating here before that resolves (edge case), fetch lazily so tier
+  // is always accurate — a kurssi user must never see a false buy-lock.
+  if (!window._userProfile) {
+    try {
+      const profData = await getProfile();
+      if (profData?.profile && !window._userProfile) {
+        window._userProfile = profData.profile;
+      }
+    } catch { /* non-fatal — getTier falls back to "free" which is safe */ }
+  }
+  const tier = getTier();
+  const buyLocked = tier !== "kurssi";
+  const paywallVariant = tier === "treeni" ? "upgrade" : "feature";
+
+  root.innerHTML = renderShell(activeLang, kurssit, buyLocked);
+
+  // L-V409: wire buy-lock click handlers (rows + banner button).
+  if (buyLocked) {
+    root.querySelectorAll(".lp-row--buy-locked").forEach((row) => {
+      const open = (e) => {
+        e.preventDefault();
+        openPaywall({ variant: paywallVariant, reason: "oppimispolku" });
+      };
+      row.addEventListener("click", open);
+      row.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(e); }
+      });
+    });
+    const bannerBtn = root.querySelector("[data-lp-buy='banner']");
+    if (bannerBtn) {
+      bannerBtn.addEventListener("click", () => {
+        openPaywall({ variant: paywallVariant, reason: "oppimispolku-banner" });
+      });
+    }
+  }
 
   // v282 perf — hover-prefetch the courseDetail chunk + per-course payload so
   // the next click resolves against a warm cache. Only the clickable rows
