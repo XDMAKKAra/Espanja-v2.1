@@ -194,11 +194,10 @@
     <section class="hero" id="hero" aria-labelledby="hero-title">
       <div class="hero__inner">
 
-        <!-- L-V404 — vasen sarake on yksi yksikkö: otsikkokopio + luottamus-
-             signaalit (arvio, opettajalaina, YTL-kriteeri) saman .hero__lead-
-             pinon sisällä, hiusviiva erottaa "toisen liikkeen". Aiempi row-
-             spanning-kortti työnsi luottamuslohkon alas ja jätti keskityhjän. -->
-        <div class="hero__lead">
+        <!-- L-V406 — vasen sarake = copy + kevyt arviorivi. Opettajalaina ja
+             YTL-merkki siirretty oikeaan sarakkeeseen kortin alle, jotta
+             sarakkeet tasapainottuvat eikä jää keskityhjää (V404 jätti vasemman
+             pinon korttia korkeammaksi → tyhjä alaoikea). -->
         <div class="hero__copy">
           <p class="hero__kicker">Lyhyen oppimäärän YO-valmennus, espanja, ranska ja saksa</p>
 
@@ -220,37 +219,16 @@
             <a class="hero__link-secondary" href="/nayte">Katso miten arviointi toimii →</a>
           </div>
 
-          <p class="hero__trust">Ilmainen aloitus, ei korttia.</p>
-        </div>
-
-        <!-- Luottamussignaalit: tähtiarvio + opettajalaina (de-boxed pull-
-             quote) + YTL-kriteeripilli. Saman .hero__lead-pinon sisällä copyn
-             alla; mobiilissa CTA:n ja hinnoittelukortin välissä (DOM copy →
-             social → offer). -->
-        <div class="hero__social">
-          <div class="hero__rating">
-            <span class="hero__rating-score"><b>8,9</b>&nbsp;/&nbsp;10</span>
+          <p class="hero__proofline">
             <span class="hero__stars" role="img" aria-label="Arvosana 8,9 kymmenestä">
               <span class="hero__stars-track" aria-hidden="true">★★★★★</span>
               <span class="hero__stars-fill" aria-hidden="true" style="width:89%">★★★★★</span>
             </span>
+            <span class="hero__rating-score"><b>8,9</b>&nbsp;/&nbsp;10</span>
             <span class="hero__rating-note">abien palautteen perusteella</span>
-          </div>
+          </p>
 
-          <figure class="hero__quote">
-            <blockquote class="hero__quote-text">
-              "Annoin saman abikirjoitelman sekä Puheon että itseni
-              arvioitavaksi. Pistehaarukka osui samaan, ja perustelu osoitti
-              juuri ne kohdat joista olisin itse vähentänyt."
-            </blockquote>
-            <figcaption class="hero__quote-author">Hanna Lehto, lukion kieltenopettaja</figcaption>
-          </figure>
-
-          <span class="hero__badge">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
-            Rakennettu YTL:n virallisille arviointikriteereille
-          </span>
-        </div>
+          <p class="hero__trust">Ilmainen aloitus, ei korttia.</p>
         </div>
 
         <div class="hero__offer">
@@ -286,6 +264,23 @@
             </a>
             <p class="offer-card__reassure">Voit kokeilla ensin ilmaiseksi, maksu vasta kun haluat.</p>
           </article>
+
+          <!-- Opettajalaina + YTL-merkki kortin alla = oikean sarakkeen "toinen
+               liike", tasapainottaa vasemman copy-pinon. De-boxattu lainaus,
+               ei korttikehystä → vain yksi laatikko (hinnoittelukortti) herossa. -->
+          <figure class="hero__quote">
+            <blockquote class="hero__quote-text">
+              "Annoin saman abikirjoitelman sekä Puheon että itseni
+              arvioitavaksi. Pistehaarukka osui samaan, ja perustelu osoitti
+              juuri ne kohdat joista olisin itse vähentänyt."
+            </blockquote>
+            <figcaption class="hero__quote-author">Hanna Lehto, lukion kieltenopettaja</figcaption>
+          </figure>
+
+          <span class="hero__badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+            Rakennettu YTL:n virallisille arviointikriteereille
+          </span>
         </div>
       </div>
     </section>

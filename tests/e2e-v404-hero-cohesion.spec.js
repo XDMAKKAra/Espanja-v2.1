@@ -24,9 +24,12 @@ test("hero keeps rating + teacher quote + YTL pill, all inside one hero section"
   await expect(hero.locator(".hero__quote-text")).toContainText(/Annoin saman abikirjoitelman/);
   await expect(hero.locator(".hero__quote-author")).toContainText(/Hanna Lehto/);
   await expect(hero.locator(".hero__badge")).toContainText(/YTL/);
-  // Trust block sits in the same left column unit as the copy.
-  await expect(page.locator(".hero__lead .hero__copy")).toHaveCount(1);
-  await expect(page.locator(".hero__lead .hero__social")).toHaveCount(1);
+  // L-V406 balance fix: rating line lives in the copy column; the teacher quote
+  // and YTL badge sit under the offer card so both columns fill evenly. Only the
+  // pricing card is a boxed element in the hero.
+  await expect(page.locator(".hero__copy .hero__proofline")).toHaveCount(1);
+  await expect(page.locator(".hero__offer .hero__quote")).toHaveCount(1);
+  await expect(page.locator(".hero__offer .hero__badge")).toHaveCount(1);
 
   expect(errors, errors.join("\n")).toHaveLength(0);
 });

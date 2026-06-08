@@ -659,19 +659,9 @@ body.landing > * { position: relative; z-index: 1; }
     column-gap: clamp(40px, 5vw, 80px);
     align-items: start;
   }
-  /* L-V404: vasen sarake (.hero__lead) on yksi pino (copy + luottamus); kortti
-     on oikea sarake. Poistettu L-V387:n row-spanning-kortti, joka työnsi
-     luottamuslohkon alas ja jätti ison keskityhjän copyn ja sen väliin. */
+  /* L-V406: vasen sarake = copy (sis. kevyt arviorivi); oikea sarake = kortti +
+     opettajalaina + YTL-merkki. Molemmat sarakkeet täyttyvät, ei keskityhjää. */
   .landing .hero__offer { align-self: start; }
-}
-
-/* Vasen hero-sarake yhtenä yksikkönä: copy ja luottamussignaalit samassa
-   pinossa, ei kahta irrallista lohkoa. */
-.landing .hero__lead {
-  display: flex;
-  flex-direction: column;
-  gap: var(--ed-sp-6);
-  min-width: 0;
 }
 
 .landing .hero__copy {
@@ -679,6 +669,7 @@ body.landing > * { position: relative; z-index: 1; }
   flex-direction: column;
   gap: var(--ed-sp-5);
   max-width: 600px;
+  min-width: 0;
 }
 
 /* Illustration on a soft yellow-pale rounded panel (right column). */
@@ -716,7 +707,9 @@ body.landing > * { position: relative; z-index: 1; }
    quiet — the paid course is shown, not pushed. */
 .landing .hero__offer {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--ed-sp-5);
 }
 .landing .offer-card {
   width: 100%;
@@ -1027,26 +1020,20 @@ body.landing > * { position: relative; z-index: 1; }
   color: var(--ed-ink-faint);
 }
 
-/* ─── L-V404 — hero trust signals as the second movement of the left column ──
-   A hairline ties them to the copy above so the hero reads as one unit, not a
-   copy block plus a floating testimonial box. */
-.landing .hero__social {
-  display: flex;
-  flex-direction: column;
-  gap: var(--ed-sp-4);
-  max-width: 600px;
-  padding-top: var(--ed-sp-5);
-  border-top: 1px solid var(--border);
-}
-.landing .hero__rating {
+/* ─── L-V406 — hero trust signals ──────────────────────────────────────────
+   Rating = a light inline line under the CTAs (part of the copy column, no box).
+   Quote + YTL badge sit under the offer card in the right column, so each column
+   fills to a similar height and there is no mid-hero void. */
+.landing .hero__proofline {
   display: flex;
   align-items: center;
-  gap: var(--ed-sp-3);
   flex-wrap: wrap;
+  gap: 10px;
+  margin: 0;
 }
 .landing .hero__rating-score {
   font-family: var(--font-display);
-  font-size: 1.25rem;
+  font-size: 1.1rem;
   color: var(--text);
   font-variant-numeric: tabular-nums;
 }
@@ -1071,11 +1058,13 @@ body.landing > * { position: relative; z-index: 1; }
   font-size: var(--ed-fs-meta);
   color: var(--ed-ink-subtle);
 }
-/* De-boxed pull-quote: no card border/shadow, a warm display quotation mark
-   instead. Reads as part of the column, not a glued-on testimonial card. */
+/* De-boxed pull-quote under the card: no border/shadow, warm display quote mark.
+   Width matches the card so the right column reads as one stack. */
 .landing .hero__quote {
   margin: 0;
-  padding: 0 0 0 32px;
+  width: 100%;
+  max-width: 440px;
+  padding: 0 0 0 30px;
   background: none;
   border: 0;
   box-shadow: none;
@@ -1097,7 +1086,7 @@ body.landing > * { position: relative; z-index: 1; }
 }
 .landing .hero__quote-text {
   margin: 0;
-  font-size: var(--ed-fs-body-lg);
+  font-size: var(--ed-fs-body);
   line-height: 1.55;
   color: var(--text);
   font-style: normal;
@@ -1112,13 +1101,14 @@ body.landing > * { position: relative; z-index: 1; }
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  align-self: flex-start;
+  width: 100%;
+  max-width: 440px;
   font-size: var(--ed-fs-meta);
   font-weight: 700;
   color: var(--green);
   background: var(--green-pale);
-  padding: 7px 14px;
-  border-radius: var(--ed-r-pill);
+  padding: 9px 14px;
+  border-radius: 14px;
   line-height: 1.3;
 }
 .landing .hero__badge svg { width: 16px; height: 16px; flex: none; }
