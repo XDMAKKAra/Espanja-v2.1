@@ -564,6 +564,43 @@ function wireHoverPrefetch(root, lang) {
 // Course tier: swap the daily-goal slot for "X / 8 kurssia". Needs the
 // curriculum list (not in the dashboard payload), fetched after first paint
 // so the rest of the screen never blocks on it.
+// Fetch the SR review queue for the active language and, if there are pending
+// items, append a review block to the rail. Kurssi tier only; free/treeni
+// users get { locked: true } from the endpoint and we silently skip.
+async function updateReviewBlock(root, activeLang) {
+  try {
+    const res = await apiFetch(
+      `${API}/api/curriculum/review-queue?lang=${encodeURIComponent(activeLang)}&limit=8`,
+      { headers: { ...authHeader() } }
+    );
+    if (!res.ok) return;
+    const data = await res.json();
+    if (data.locked || !Array.isArray(data.items) || !data.items.length) return;
+
+    const n = data.dueCount || data.items.length;
+    const rail = root.querySelector(".home-canvas__rail");
+    if (!rail) return;
+
+    const section = document.createElement("section");
+    section.className = "dash-block dash-block--review";
+    section.setAttribute("aria-label", "Kertaus");
+    section.innerHTML = `
+      <div class="dash-goal__text">
+        <p class="dash-block__label">Kertaus</p>
+        <p class="dash-block__sub">${n} kohtaa odottaa kertausta.</p>
+      </div>
+      <button type="button" class="dash-review__cta">Aloita kertaus</button>
+    `;
+
+    section.querySelector(".dash-review__cta").addEventListener("click", () => {
+      const items = data.items;
+      import("./lessonRunner.js").then((m) => m.runReviewSession({ items, lang: activeLang }));
+    });
+
+    rail.appendChild(section);
+  } catch { /* fail-open: review block is non-critical */ }
+}
+
 async function updateKurssiProgress(root, lang) {
   try {
     const kurssit = await getCurriculumList(lang);
@@ -606,6 +643,7 @@ export async function loadHome() {
     wireNextTaskHandler(root, activeLang);
     wireWallPaywall(root);
     if (tier === "kurssi") updateKurssiProgress(root, activeLang);
+    if (tier === "kurssi") updateReviewBlock(root, activeLang);
   };
 
   const cached = readOhjaamoCache(activeLang);

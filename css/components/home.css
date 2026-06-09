@@ -126,6 +126,26 @@ body.app .dash-block__sub {
   margin: 4px 0 0;
 }
 
+/* L-V411 Vaihe C — home review (kertaus) block. Warm brick tint + compact CTA,
+   reuses the rail .dash-block base so it sits alongside goal/countdown. */
+body.app .dash-block--review { background: color-mix(in oklch, var(--brick) 7%, white); }
+body.app .dash-review__cta {
+  margin-top: 10px;
+  align-self: flex-start;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  background: var(--brick);
+  border: none;
+  border-radius: var(--r-md, 12px);
+  padding: 10px 18px;
+  min-height: 44px;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+body.app .dash-review__cta:hover { opacity: 0.9; }
+
 body.app .dash-bar {
   height: 12px;
   background: rgba(46, 94, 78, 0.18);

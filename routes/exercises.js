@@ -25,6 +25,7 @@ import { pickExerciseType, composePrompt, getMaxTokens } from "../lib/exerciseCo
 import { pickFromSeed, seedCounts } from "../lib/seedBank.js";
 import { pickReadingFromBank } from "../lib/readingBank.js";
 import { topicLabel, VALID_TOPICS } from "../lib/mistakeTaxonomy.js";
+import { getBankItemsForConcept } from "../lib/itemBank.js";
 import { getUserPath } from "../lib/learningPath.js";
 import { composeSession } from "../lib/sessionComposer.js";
 import {
@@ -1571,6 +1572,27 @@ router.post("/focus-session", requireAuth, aiLimiter, aiGlobalDailyLimiter, chec
     const userId = req.user.userId;
     const levelData = await getUserLevel(userId);
     const level = levelData.current_level;
+    const topicLbl = topicLabel(topic);
+
+    // ── Bank-first path (Vaihe D) ───────────────────────────────────────────
+    // Threshold: serve from bank when we have at least min(5, clampedCount) items.
+    // This avoids a near-empty bank session that would be worse than AI generation.
+    const BANK_THRESHOLD = Math.min(5, clampedCount);
+    const bankItems = await getBankItemsForConcept({ concept: topic, lang: language, count: clampedCount });
+
+    if (bankItems.length >= BANK_THRESHOLD) {
+      return res.json({
+        exercises: bankItems,
+        topic,
+        topicLabel: topicLbl,
+        level,
+        pastMistakesUsed: 0,
+        source: "bank",
+      });
+    }
+
+    // ── AI fallback (unchanged) ─────────────────────────────────────────────
+    // Reached only when the bank is too thin for this concept + language combo.
 
     // Fetch past mistakes for this topic (last 14 days) to use as examples
     const since = new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString();
@@ -1588,7 +1610,6 @@ router.post("/focus-session", requireAuth, aiLimiter, aiGlobalDailyLimiter, chec
     ).join("\n");
 
     const lang = LANGUAGE_META[language] || LANGUAGE_META.spanish;
-    const topicLbl = topicLabel(topic);
     const profileCtx = await getUserProfileContext(userId);
 
     const prompt = `Generate ${clampedCount} FOCUSED ${lang.name} exercises targeting ONLY this grammar/vocab topic: ${topicLbl} (key: ${topic}).
@@ -1649,6 +1670,7 @@ Return ONLY JSON array of ${clampedCount} exercises. Mix the types. Example:
       topicLabel: topicLbl,
       level,
       pastMistakesUsed: pastMistakes?.length || 0,
+      source: "ai",
     });
   } catch (err) {
     console.error("Focus session error:", err.message);

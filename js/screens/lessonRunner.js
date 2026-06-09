@@ -271,6 +271,27 @@ async function maybePrependReviewPhase(state) {
 
 // ── Public entry ───────────────────────────────────────────────────────────
 
+/**
+ * L-V411 Vaihe C (surface b) — standalone review session not tied to any
+ * course lesson. Called by the home screen "Aloita kertaus" button.
+ * @param {{ items: object[], lang: string }} opts
+ */
+export async function runReviewSession({ items, lang }) {
+  const syntheticLesson = {
+    meta: { title: "Kertaus", lesson_type: "review", course_key: "kertaus", lesson_index: 0 },
+    phases: [buildReviewPhase({ items: Array.isArray(items) ? items : [] })],
+  };
+  ensureRoot();
+  show("screen-lesson");
+  const root = document.getElementById(ROOT_ID);
+  if (!root) return;
+  const state = makeState(syntheticLesson, "B", "kertaus", 0);
+  state._isReviewSession = true;
+  state.language = lang || (typeof appState.language === "string" && appState.language) || "es";
+  // Skip the teaching page — jump straight to the first (only) phase.
+  renderPhase(root, state);
+}
+
 export async function runPregeneratedLesson(payload, kurssiKey, lessonIndex, targetGrade) {
   const lesson = payload.pregenerated || payload;
   ensureRoot();
@@ -991,29 +1012,48 @@ function finalizeLesson(root, state) {
         <button type="button" class="btn btn-primary" id="lr-done">Takaisin oppimispolulle →</button>
       </div>
     </div>`;
-  document.getElementById("lr-done")?.addEventListener("click", () => {
-    backToCourse(state);
-  });
 
-  // Persist completion to backend (best-effort).
-  if (isLoggedIn() && totalAsked > 0) {
-    apiFetch(`${API}/api/curriculum/${encodeURIComponent(state.kurssiKey)}/lesson/${state.lessonIndex}/complete`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json", ...authHeader() },
-      body: JSON.stringify({
-        // L-V390: stamp the completion with the active language so it is
-        // scoped per language. Without this the server defaulted to "es" and
-        // a German/French completion bled into the Spanish progress.
-        lang: (typeof state.language === "string" && state.language) || "es",
-        scoreCorrect: totalCorrect,
-        scoreTotal: totalAsked,
-        wrongAnswers: [],
-        reviewItems: [],
-        // L-V410 Vaihe 1 (CAPTURE) — graded answers feed the adaptive layer
-        // server-side (gated to kurssi tier). Cap to keep the payload bounded.
-        gradedItems: state.gradedItems.slice(0, 80),
-      }),
-    }).catch(() => { /* non-critical */ });
+  if (state._isReviewSession) {
+    // L-V411 Vaihe C (surface b) — standalone review session: navigate back to
+    // home instead of a course detail page.
+    document.getElementById("lr-done")?.addEventListener("click", () => {
+      location.hash = "#home";
+    });
+    // Best-effort capture to the adaptive layer (no kurssi completion endpoint).
+    if (isLoggedIn() && state.gradedItems.length > 0) {
+      apiFetch(`${API}/api/curriculum/capture`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", ...authHeader() },
+        body: JSON.stringify({
+          lang: state.language || "es",
+          gradedItems: state.gradedItems.slice(0, 80),
+        }),
+      }).catch(() => {});
+    }
+  } else {
+    document.getElementById("lr-done")?.addEventListener("click", () => {
+      backToCourse(state);
+    });
+    // Persist completion to backend (best-effort).
+    if (isLoggedIn() && totalAsked > 0) {
+      apiFetch(`${API}/api/curriculum/${encodeURIComponent(state.kurssiKey)}/lesson/${state.lessonIndex}/complete`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", ...authHeader() },
+        body: JSON.stringify({
+          // L-V390: stamp the completion with the active language so it is
+          // scoped per language. Without this the server defaulted to "es" and
+          // a German/French completion bled into the Spanish progress.
+          lang: (typeof state.language === "string" && state.language) || "es",
+          scoreCorrect: totalCorrect,
+          scoreTotal: totalAsked,
+          wrongAnswers: [],
+          reviewItems: [],
+          // L-V410 Vaihe 1 (CAPTURE) — graded answers feed the adaptive layer
+          // server-side (gated to kurssi tier). Cap to keep the payload bounded.
+          gradedItems: state.gradedItems.slice(0, 80),
+        }),
+      }).catch(() => { /* non-critical */ });
+    }
   }
 }
 
