@@ -69,10 +69,11 @@ test('etusivu: kielivaihto vaihtaa otsikon ja paperin', async ({ page }) => {
 test('nayte: kielivaihto vaihtaa paperin', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto('/nayte', { waitUntil: 'networkidle' });
-  await expect(page.locator('.paper[data-paper="es"]')).toBeVisible();
+  // nayte uses .grader-card[data-paper] (rich grader cards with rubric + tooltips)
+  await expect(page.locator('[data-paper="es"]').first()).toBeVisible();
   await page.locator('.seg-btn[data-lang="de"]').click();
-  await expect(page.locator('.paper[data-paper="de"]')).toBeVisible();
-  await expect(page.locator('.paper[data-paper="es"]')).toBeHidden();
+  await expect(page.locator('[data-paper="de"]').first()).toBeVisible();
+  await expect(page.locator('[data-paper="es"]').first()).toBeHidden();
 });
 
 test('mobiili: hampurilainen avaa overlay-valikon abikurssilinkkeineen', async ({ page }) => {

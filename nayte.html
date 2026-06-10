@@ -36,7 +36,6 @@
 
 <link rel="preload" href="/fonts/fredoka-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preload" href="/fonts/mulish-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
-<link rel="preload" href="/fonts/kalam-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="stylesheet" href="/css/fonts.css" />
 
 <style>
@@ -155,71 +154,199 @@ svg { display: block; }
 }
 .seg-btn[aria-pressed="true"] { background: var(--brick); color: var(--paper); box-shadow: 0 2px 0 var(--brick-deep); }
 
-/* Sample: paper + rubric side by side on desktop */
+/* ── Grader cards ── */
 .sample { padding: 44px 0 8px; }
-.sample-grid { display: grid; grid-template-columns: 1fr; gap: 40px; align-items: start; }
-@media (min-width: 1020px) {
-  .sample-grid { grid-template-columns: 1.05fr .95fr; gap: 56px; }
-}
-.paper-zone { position: relative; max-width: 520px; margin-inline: auto; width: 100%; }
-.paper {
-  position: relative; background: var(--paper); border-radius: 14px;
-  border: 1px solid rgba(110, 85, 60, .12);
-  box-shadow: var(--shadow-warm);
-  transform: rotate(0.8deg);
-  padding: 24px 28px 28px 54px;
-}
-.paper[hidden] { display: none; }
-.paper::before {
-  content: ""; position: absolute; top: 0; bottom: 0; left: 36px;
-  width: 2px; background: rgba(196, 87, 59, .28);
-}
-.paper-head {
-  display: flex; justify-content: space-between; gap: 12px;
-  font-weight: 800; font-size: .8rem; color: var(--ink-soft);
-  border-bottom: 1px dashed var(--line); padding-bottom: 10px; margin-bottom: 16px;
-}
-.essay-line { font-family: "Kalam", cursive; font-weight: 400; font-size: 1.28rem; line-height: 1.5; color: #423426; }
-.essay-line .ok  { text-decoration: underline; text-decoration-color: var(--green); text-decoration-thickness: 2.5px; text-underline-offset: 4px; }
-.essay-line .err { text-decoration: underline wavy; text-decoration-color: var(--brick); text-decoration-thickness: 2px; text-underline-offset: 4px; }
-.note { font-size: .85rem; font-weight: 700; line-height: 1.45; margin: 4px 0 14px; padding-left: 14px; }
-.note-ok { color: var(--green-deep); }
-.note-err { color: var(--brick); }
-.paper-foot { display: flex; align-items: center; gap: 18px; margin-top: 18px; }
-.stamp {
-  flex: none; display: flex; flex-direction: column; align-items: center;
-  border: 2.5px solid var(--brick); outline: 1.5px solid rgba(155, 45, 42, .45); outline-offset: 3px;
-  border-radius: 10px; color: var(--brick); padding: 8px 16px 10px;
-  transform: rotate(-5deg); background: rgba(155, 45, 42, .04);
-}
-.stamp-label { font-weight: 800; font-size: .68rem; letter-spacing: .02em; }
-.stamp-range { font-family: "Fredoka", sans-serif; font-weight: 600; font-size: 1.7rem; line-height: 1.1; }
-.stamp-max { font-family: "Mulish", sans-serif; font-weight: 800; font-size: .72rem; color: var(--ink-soft); margin-top: 2px; }
-.stamp-note { font-size: .85rem; color: var(--ink-soft); font-weight: 600; max-width: 22ch; }
+.sample-inner { max-width: 980px; margin-inline: auto; padding-inline: 22px; }
 
-/* Rubric explainer */
-.rubric-card {
-  background: var(--paper); border-radius: 22px;
-  border: 1px solid rgba(110, 85, 60, .12); box-shadow: var(--shadow-warm);
-  padding: 28px 30px 24px;
+.grader-card {
+  background: var(--paper);
+  border-radius: 20px;
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-warm);
+  overflow: visible;
+  margin-top: 28px;
 }
-.rubric-head { font-family: "Fredoka", sans-serif; font-weight: 600; font-size: 1.25rem; margin-bottom: 6px; }
-.rubric-sub { font-size: .92rem; color: var(--ink-soft); font-weight: 600; margin-bottom: 22px; }
-.rubric-row { padding: 14px 0; }
+.grader-card[hidden] { display: none; }
+
+/* Card header: title + badge */
+.grader-card__head {
+  display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap;
+  padding: 20px 26px 16px;
+  border-bottom: 1px solid var(--line);
+}
+.grader-card__title {
+  font-family: "Fredoka", sans-serif; font-weight: 600; font-size: 1.1rem; color: var(--ink-soft);
+}
+.grader-card__badge {
+  font-family: "Fredoka", sans-serif; font-weight: 600; font-size: 1.35rem;
+  color: var(--brick); white-space: nowrap; letter-spacing: -.01em;
+}
+
+/* Two-column layout on desktop: prose | eval */
+.grader-card__cols {
+  display: grid; grid-template-columns: 1fr; gap: 0;
+}
+@media (min-width: 860px) {
+  .grader-card__cols { grid-template-columns: 1.1fr .9fr; }
+  .grader-card__text { border-right: 1px solid var(--line); }
+}
+.grader-card__text { padding: 24px 26px 22px; }
+.grader-card__eval { padding: 24px 26px 22px; }
+@media (max-width: 859px) {
+  .grader-card__eval { border-top: 1px solid var(--line); }
+}
+
+/* Essay prose */
+.grader-prose {
+  font-family: "Mulish", sans-serif; font-size: 1.03rem; line-height: 1.72;
+  color: var(--ink); white-space: pre-line; margin: 0;
+}
+
+/* Error spans with tooltips — pure CSS, no JS */
+.ge {
+  position: relative; cursor: help; display: inline;
+}
+/* Spelling: wavy gold underline */
+.ge[data-cat="spelling"] {
+  text-decoration: underline wavy; text-decoration-color: var(--gold);
+  text-decoration-thickness: 2px; text-underline-offset: 3px;
+}
+/* Grammar: wavy brick underline */
+.ge[data-cat="grammar"] {
+  text-decoration: underline wavy; text-decoration-color: var(--brick);
+  text-decoration-thickness: 2px; text-underline-offset: 3px;
+}
+
+/* Tooltip shell */
+.ge-tip {
+  display: none;
+  position: absolute; bottom: calc(100% + 8px); left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  width: max-content; max-width: min(260px, 80vw);
+  background: var(--ink); color: var(--paper);
+  font-family: "Mulish", sans-serif; font-size: .82rem; font-weight: 600;
+  line-height: 1.5; text-decoration: none; white-space: normal;
+  padding: 10px 13px; border-radius: 10px;
+  box-shadow: 0 6px 20px rgba(50, 30, 10, .28);
+  pointer-events: none;
+}
+.ge-tip strong {
+  display: block; font-size: .88rem; color: var(--gold-soft); margin-bottom: 4px;
+}
+/* Arrow */
+.ge-tip::after {
+  content: ""; position: absolute; top: 100%; left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent; border-top-color: var(--ink);
+}
+
+/* Show on hover or keyboard-focus */
+.ge:hover .ge-tip,
+.ge:focus .ge-tip,
+.ge:focus-within .ge-tip { display: block; }
+
+/* Prevent tooltip from overflowing right edge on mobile */
+@media (max-width: 500px) {
+  .ge-tip {
+    left: auto; right: 0; transform: none;
+  }
+  .ge-tip::after { left: auto; right: 18px; transform: none; }
+}
+
+/* Legend */
+.grader-legend {
+  margin-top: 16px; display: flex; gap: 18px; flex-wrap: wrap;
+}
+.grader-legend__item {
+  display: flex; align-items: center; gap: 7px;
+  font-size: .82rem; font-weight: 700; color: var(--ink-soft);
+}
+.grader-legend__sw {
+  display: inline-block; width: 28px; height: 3px; border-radius: 2px;
+}
+.grader-legend__sw--spelling { background: var(--gold); }
+.grader-legend__sw--grammar  { background: var(--brick); }
+
+/* Rubric */
+.rubric { display: flex; flex-direction: column; gap: 0; }
+.rubric-row {
+  padding: 12px 0;
+  display: grid; grid-template-columns: 1fr auto;
+  grid-template-rows: auto auto;
+  column-gap: 14px; row-gap: 3px;
+}
 .rubric-row + .rubric-row { border-top: 1px dashed var(--line); }
-.rubric-row-top { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 7px; }
-.rubric-label { font-weight: 800; font-size: .96rem; }
-.rubric-verdict { font-weight: 700; font-size: .8rem; }
-.rv-strong { color: var(--green-deep); }
-.rv-mid { color: #A1700E; }
-.rv-weak { color: var(--brick); }
-.rubric-track { height: 12px; border-radius: 99px; background: var(--cream-deep); overflow: hidden; }
-.rubric-fill { height: 100%; border-radius: 99px; }
-.rf-1 { width: 86%; background: var(--green); }
-.rf-2 { width: 64%; background: var(--gold); }
-.rf-3 { width: 57%; background: var(--gold); }
-.rf-4 { width: 36%; background: var(--brick); }
-.rubric-desc { margin-top: 8px; font-size: .9rem; color: var(--ink-soft); }
+.rubric-row__name {
+  font-family: "Mulish", sans-serif; font-weight: 800; font-size: .9rem; color: var(--ink);
+  grid-column: 1; grid-row: 1;
+}
+.rubric-row__score {
+  font-family: "Fredoka", sans-serif; font-weight: 600; font-size: 1.08rem; color: var(--brick);
+  white-space: nowrap; grid-column: 2; grid-row: 1; text-align: right;
+}
+.rubric-row__fb {
+  font-size: .82rem; color: var(--ink-soft); font-weight: 600; line-height: 1.5;
+  grid-column: 1 / -1; grid-row: 2;
+}
+.rubric-total {
+  margin-top: 14px; padding-top: 14px; border-top: 1.5px solid var(--line);
+  display: grid; grid-template-columns: 1fr auto;
+  grid-template-rows: auto auto;
+  column-gap: 14px; row-gap: 4px;
+}
+.rubric-total__label {
+  font-family: "Fredoka", sans-serif; font-weight: 600; font-size: .85rem;
+  color: var(--ink-soft); grid-column: 1; grid-row: 1; text-transform: uppercase; letter-spacing: .04em;
+}
+.rubric-total__score {
+  font-family: "Fredoka", sans-serif; font-weight: 600; font-size: 1.4rem;
+  color: var(--brick); white-space: nowrap; grid-column: 2; grid-row: 1;
+}
+.rubric-total__note {
+  font-size: .8rem; color: var(--ink-soft); font-weight: 600; line-height: 1.5;
+  grid-column: 1 / -1; grid-row: 2;
+}
+
+/* Verbal feedback box */
+.grader-feedback {
+  margin-top: 18px; background: var(--gold-soft); border-radius: 12px;
+  padding: 16px 18px;
+}
+.grader-feedback__label {
+  font-family: "Fredoka", sans-serif; font-weight: 600; font-size: .9rem;
+  color: #5A431B; margin-bottom: 6px; text-transform: uppercase; letter-spacing: .04em;
+}
+.grader-feedback__body {
+  font-size: .9rem; line-height: 1.6; color: #4A3715; font-weight: 600;
+}
+
+/* Caveat below cards */
+.proof__caveat {
+  max-width: 980px; margin: 18px auto 0; padding-inline: 22px;
+  font-size: .85rem; color: var(--ink-soft); font-weight: 600; line-height: 1.5;
+  text-align: center;
+}
+
+/* ── App screenshot section ── */
+.appshot { padding: 64px 0 8px; }
+.appshot-h {
+  font-family: "Fredoka", sans-serif; font-weight: 600;
+  font-size: clamp(1.6rem, 4.5vw, 2.2rem); text-align: center; margin: 0;
+}
+.appshot-lede {
+  margin: 14px auto 0; max-width: 52ch; text-align: center;
+  color: var(--ink-soft); font-size: 1.04rem;
+}
+.appshot-frame { margin: 32px auto 0; max-width: 760px; padding-inline: 22px; }
+.appshot-frame img {
+  display: block; width: 100%; height: auto;
+  border-radius: 14px; border: 1.5px solid var(--brick); box-shadow: var(--shadow-warm);
+}
+.appshot-frame figcaption {
+  margin-top: 14px; text-align: center; font-size: .9rem;
+  color: var(--ink-soft); font-weight: 600;
+}
 
 /* Honesty */
 .honesty { padding: 72px 0 8px; }
@@ -264,10 +391,6 @@ svg { display: block; }
 }
 @media (max-width: 480px) {
   body { font-size: 16px; }
-  .paper { padding: 20px 18px 24px 42px; transform: rotate(0.5deg); }
-  .paper::before { left: 28px; }
-  .essay-line { font-size: 1.18rem; }
-  .paper-foot { flex-direction: column; align-items: flex-start; gap: 12px; }
   .honesty-card { padding: 26px 22px; }
   .footer-top { grid-template-columns: 1fr; gap: 26px; }
 }
@@ -329,106 +452,212 @@ svg { display: block; }
 </div>
 
 <main id="nayte-main">
-  <!-- ─── HEADER + kielivalinta ─── -->
+  <!-- ─── HEADER ─── -->
   <section class="head" aria-labelledby="head-title">
     <div class="wrap">
       <p class="eyebrow">Näyte arvioinnista</p>
       <h1 id="head-title">Näin Puheo arvioi kirjoitelmasi.</h1>
       <p class="lede">
-        Alla on sama lomakirjoitelma kolmella kielellä, arvioituna YTL:n
-        pisteytysrubriikilla. Vaihda kieli ja katso mitä arvio nostaa esiin.
+        Arvio pohjaa YTL:n viralliseen pisteytysrubriikkiin. Alla sama esimerkki
+        kolmella kielellä: kirjoitelma, virhekohdat selityksineen, rubriikkipisteet
+        ja sanallinen palaute.
       </p>
-      <div class="seg" role="group" aria-label="Valitse kieli">
-        <button class="seg-btn" type="button" data-lang="es" aria-pressed="true">Espanja</button>
-        <button class="seg-btn" type="button" data-lang="fr" aria-pressed="false">Ranska</button>
-        <button class="seg-btn" type="button" data-lang="de" aria-pressed="false">Saksa</button>
-      </div>
     </div>
   </section>
 
-  <!-- ─── SAMPLE: paperi + rubriikki ─── -->
+  <!-- ─── SAMPLE: grader-kortit (es/fr/de) ─── -->
   <section class="sample" aria-label="Arvioitu esimerkkikirjoitelma">
-    <div class="wrap-wide sample-grid">
-      <div class="paper-zone">
-        <article class="paper" data-paper="es" aria-label="Arvioitu kirjoitelma, espanja">
-          <header class="paper-head"><span>Kirjoitelma · espanja</span><span>Tehtävä 2 · "Kerro lomastasi"</span></header>
-          <div>
-            <p class="essay-line">El verano pasado <span class="ok">fui</span> a Barcelona con mi familia.</p>
-            <p class="note note-ok">↳ Preteriti oikein heti alkuun.</p>
-            <p class="essay-line">Visitamos la Sagrada Familia y <span class="err">comemos</span> paella en la playa.</p>
-            <p class="note note-err">↳ comemos → comimos. Kerrot menneestä, joten preteriti.</p>
-            <p class="essay-line"><span class="ok">Hacía</span> calor todos los días y me gustó mucho.</p>
-            <p class="note note-ok">↳ Imperfekti kuvailee, preteriti kertoo. Juuri näin.</p>
-            <p class="essay-line">La comida española es <span class="err">muy más</span> rica que la finlandesa.</p>
-            <p class="note note-err">↳ muy más → mucho más. Vertailua vahvistaa mucho, ei muy.</p>
-          </div>
-          <footer class="paper-foot">
-            <div class="stamp"><span class="stamp-label">Pistehaarukka</span><span class="stamp-range">21&ndash;27</span><span class="stamp-max">/ 33 p</span></div>
-            <p class="stamp-note">Haarukka ja perustelut, ei luvattua yksittäispistettä.</p>
-          </footer>
-        </article>
-
-        <article class="paper" data-paper="fr" hidden aria-label="Arvioitu kirjoitelma, ranska">
-          <header class="paper-head"><span>Kirjoitelma · ranska</span><span>Tehtävä 2 · "Kerro lomastasi"</span></header>
-          <div>
-            <p class="essay-line">L'été dernier, <span class="ok">je suis allé</span> à Paris avec ma famille.</p>
-            <p class="note note-ok">↳ Passé composé être-apuverbillä oikein.</p>
-            <p class="essay-line">Nous <span class="err">visitons</span> le Louvre et mangeons des croissants.</p>
-            <p class="note note-err">↳ visitons → avons visité. Kerrot menneestä, joten passé composé.</p>
-            <p class="essay-line">Il <span class="ok">faisait</span> beau tous les jours et j'ai adoré.</p>
-            <p class="note note-ok">↳ Imparfait kuvailee, passé composé kertoo. Juuri näin.</p>
-            <p class="essay-line">La cuisine française est <span class="err">très meilleure</span> que la cuisine finlandaise.</p>
-            <p class="note note-err">↳ très meilleure → bien meilleure. Meilleur-vertailumuotoa vahvistaa bien.</p>
-          </div>
-          <footer class="paper-foot">
-            <div class="stamp"><span class="stamp-label">Pistehaarukka</span><span class="stamp-range">21&ndash;27</span><span class="stamp-max">/ 33 p</span></div>
-            <p class="stamp-note">Haarukka ja perustelut, ei luvattua yksittäispistettä.</p>
-          </footer>
-        </article>
-
-        <article class="paper" data-paper="de" hidden aria-label="Arvioitu kirjoitelma, saksa">
-          <header class="paper-head"><span>Kirjoitelma · saksa</span><span>Tehtävä 2 · "Kerro lomastasi"</span></header>
-          <div>
-            <p class="essay-line">Letzten Sommer <span class="ok">bin</span> ich nach Berlin <span class="ok">gefahren</span>.</p>
-            <p class="note note-ok">↳ Perfekti sein-apuverbillä oikein.</p>
-            <p class="essay-line">Wir <span class="err">besuchen</span> das Museum und essen Currywurst.</p>
-            <p class="note note-err">↳ besuchen → haben besucht. Kerrot menneestä, joten perfekti.</p>
-            <p class="essay-line">Es <span class="ok">war</span> jeden Tag heiß und es hat mir gefallen.</p>
-            <p class="note note-ok">↳ Präteritum kuvailee, perfekti kertoo. Juuri näin.</p>
-            <p class="essay-line">Das Essen dort ist <span class="err">mehr lecker</span> als zu Hause.</p>
-            <p class="note note-err">↳ mehr lecker → leckerer. Saksan komparatiivi muodostetaan -er-päätteellä.</p>
-          </div>
-          <footer class="paper-foot">
-            <div class="stamp"><span class="stamp-label">Pistehaarukka</span><span class="stamp-range">21&ndash;27</span><span class="stamp-max">/ 33 p</span></div>
-            <p class="stamp-note">Haarukka ja perustelut, ei luvattua yksittäispistettä.</p>
-          </footer>
-        </article>
+    <div class="sample-inner">
+      <div class="seg-wrap" style="text-align:center;margin-bottom:8px;">
+        <div class="seg" role="group" aria-label="Valitse näytekortin kieli" style="display:inline-flex;">
+          <button class="seg-btn" type="button" data-lang="es" aria-pressed="true">Espanja</button>
+          <button class="seg-btn" type="button" data-lang="fr" aria-pressed="false">Ranska</button>
+          <button class="seg-btn" type="button" data-lang="de" aria-pressed="false">Saksa</button>
+        </div>
+        <p style="font-size:.85rem;color:var(--ink-soft);font-weight:600;margin-top:10px;">Vie hiiren virheen päälle tai paina tab: saat suomenkielisen selityksen.</p>
       </div>
 
-      <aside class="rubric-card" aria-label="Rubriikin osa-alueet selitettyinä">
-        <p class="rubric-head">Mitä arvio mittaa</p>
-        <p class="rubric-sub">YTL:n rubriikin neljä osa-aluetta, tämän kirjoitelman profiililla.</p>
-        <div class="rubric-row">
-          <div class="rubric-row-top"><span class="rubric-label">Sisältö ja tehtävänanto</span><span class="rubric-verdict rv-strong">vahva</span></div>
-          <div class="rubric-track"><div class="rubric-fill rf-1"></div></div>
-          <p class="rubric-desc">Vastaako teksti tehtävänantoa ja käsitteleekö se pyydetyt asiat. Tässä vahvin alue: kaikki kysytty löytyy tekstistä.</p>
+      <!-- ── ESPANJA ── -->
+      <article class="grader-card" data-paper="es" aria-label="Espanjankielinen synttärikutsu, lyhyt tehtävä, arvioitu pistehaarukka 21–27 / 33.">
+        <div class="grader-card__head">
+          <p class="grader-card__title">Sähköposti ystävälle &middot; lyhyt &middot; espanja</p>
+          <span class="grader-card__badge">21&ndash;27 / 33 p</span>
         </div>
-        <div class="rubric-row">
-          <div class="rubric-row-top"><span class="rubric-label">Rakenne ja sidosteisuus</span><span class="rubric-verdict rv-mid">kehittyy</span></div>
-          <div class="rubric-track"><div class="rubric-fill rf-2"></div></div>
-          <p class="rubric-desc">Kappalejako, sidossanat ja tekstin eteneminen. Virkkeet ovat ehjiä, mutta sidossanoja on vähän.</p>
+        <div class="grader-card__cols">
+          <div class="grader-card__text">
+            <p class="grader-prose">Hola Marta,
+
+¡Te escribo para invitarte a mi cumpleaños el sábado que viene! La fiesta empieza a las siete en mi casa. Mi madre va a cocinar mucha comida y <span class="ge" data-cat="spelling" tabindex="0">tendrémos<span class="ge-tip"><strong>Oikein: tendremos</strong>Painollinen tavu on toiseksi viimeinen, joten 'tendremos' kirjoitetaan ilman aksenttia.</span></span> también música. <span class="ge" data-cat="grammar" tabindex="0">Espero que vienes<span class="ge-tip"><strong>Oikein: Espero que vengas</strong>Subjunktiivi pakollinen 'esperar que' jälkeen, kun toivot jonkun tekevän jotakin: 'venir' vengas.</span></span> con tu hermano. La semana pasada <span class="ge" data-cat="grammar" tabindex="0">estaba en Madrid<span class="ge-tip"><strong>Oikein: estuve en Madrid</strong>Loppuun saatettu, ajallisesti rajattu matka preteriti ('estuve'), ei imperfekti.</span></span> con la clase y <span class="ge" data-cat="grammar" tabindex="0">era muy divertido<span class="ge-tip"><strong>Oikein: fue muy divertido</strong>Kokonaisarvio päättyneestä tapahtumasta preteriti 'fue'. 'Era' kuvaisi kestävää tilaa.</span></span>. Dime antes del miércoles si puedes venir.
+
+¡Hasta pronto!
+Aino</p>
+            <div class="grader-legend" aria-hidden="true">
+              <span class="grader-legend__item"><span class="grader-legend__sw grader-legend__sw--spelling"></span>Kirjoitusasu</span>
+              <span class="grader-legend__item"><span class="grader-legend__sw grader-legend__sw--grammar"></span>Rakenne</span>
+            </div>
+          </div>
+          <div class="grader-card__eval">
+            <div class="rubric">
+              <div class="rubric-row">
+                <span class="rubric-row__name">Viestinnällisyys</span>
+                <span class="rubric-row__score">8 / 9</span>
+                <span class="rubric-row__fb">Kutsu, paikka, aika ja vastauspyyntö täytetty selkeästi.</span>
+              </div>
+              <div class="rubric-row">
+                <span class="rubric-row__name">Kielen rakenteet</span>
+                <span class="rubric-row__score">4 / 9</span>
+                <span class="rubric-row__fb">Toistuvia preteriti / imperfekti -valintoja ja yksi subjunktiivivirhe.</span>
+              </div>
+              <div class="rubric-row">
+                <span class="rubric-row__name">Sanasto</span>
+                <span class="rubric-row__score">7 / 9</span>
+                <span class="rubric-row__fb">Sopiva epämuodollinen rekisteri, lukio-tason sanasto.</span>
+              </div>
+              <div class="rubric-row">
+                <span class="rubric-row__name">Kokonaisuus</span>
+                <span class="rubric-row__score">5 / 6</span>
+                <span class="rubric-row__fb">Tervehdys ja lopetus paikallaan; sidossanoja niukasti.</span>
+              </div>
+              <div class="rubric-total">
+                <span class="rubric-total__label">Lyhyt kirjoitustehtävä</span>
+                <span class="rubric-total__score">21&ndash;27 / 33</span>
+                <span class="rubric-total__note">Arvioitu pistehaarukka. Vastaa tyypillisesti C–M-tason suoritusta; aikamuotojen hallinta nostaisi haarukan yläpäähän.</span>
+              </div>
+            </div>
+            <div class="grader-feedback">
+              <p class="grader-feedback__label">Sanallinen palaute</p>
+              <p class="grader-feedback__body">Kutsusta tulee selvä heti ensimmäisestä lauseesta, ja rekisteri on juuri oikea ystävälle. Eniten pudotat pisteitä menneessä ajassa: Madridin reissu on päättynyt ja rajattu tapahtuma, joten se vaatii preteritin (estuve, fue), ei imperfektiä. Yksi subjunktiivi jäi myös puuttumaan 'esperar que' -rakenteesta. Korjaa aikamuodot, niin tämä on M-tason vastaus.</p>
+            </div>
+          </div>
         </div>
-        <div class="rubric-row">
-          <div class="rubric-row-top"><span class="rubric-label">Kielen laajuus</span><span class="rubric-verdict rv-mid">kehittyy</span></div>
-          <div class="rubric-track"><div class="rubric-fill rf-3"></div></div>
-          <p class="rubric-desc">Rakenteiden ja sanaston monipuolisuus. Kaksi mennyttä aikamuotoa on jo käytössä, vertailurakenne vielä horjuu.</p>
+      </article>
+
+      <!-- ── RANSKA ── -->
+      <article class="grader-card" data-paper="fr" hidden aria-label="Ranskankielinen mielipidekirjoitus, pitkä tehtävä, arvioitu pistehaarukka 38–48 / 66.">
+        <div class="grader-card__head">
+          <p class="grader-card__title">Mielipidekirjoitus &middot; pitkä &middot; ranska</p>
+          <span class="grader-card__badge">38&ndash;48 / 66 p</span>
         </div>
-        <div class="rubric-row">
-          <div class="rubric-row-top"><span class="rubric-label">Tarkkuus</span><span class="rubric-verdict rv-weak">treenattavaa</span></div>
-          <div class="rubric-track"><div class="rubric-fill rf-4"></div></div>
-          <p class="rubric-desc">Virheiden määrä ja vakavuus. Aikamuotovirhe ja vertailuvirhe vetävät tätä alas, joten treeni kohdistuu tähän.</p>
+        <div class="grader-card__cols">
+          <div class="grader-card__text">
+            <p class="grader-prose">Aujourd'hui, beaucoup de lycées en France et en Finlande interdisent les téléphones portables pendant les cours. Je trouve que cette règle est raisonnable mais difficile à appliquer.
+
+D'un côté, le téléphone distrait l'attention pendant le cours. Mes camarades regardent souvent leurs notifications et ils <span class="ge" data-cat="grammar" tabindex="0">oubliaient<span class="ge-tip"><strong>Oikein: oublient</strong>Kuvaa nykyhetken toistuvaa tilannetta présent, ei imparfait. Imparfait kuvaisi mennyttä toistuvaa toimintaa.</span></span> de noter ce que le prof dit. De l'autre côté, le téléphone est utile pour chercher un mot dans un dictionnaire.
+
+À mon avis, il faut que les profs trouvent un équilibre: le téléphone peut rester dans le sac, mais on peut le sortir <span class="ge" data-cat="grammar" tabindex="0">quand il y a besoin<span class="ge-tip"><strong>Oikein: quand c'est nécessaire</strong>Ranskan idiomi: 'avoir besoin' vaatii subjektin ('j'ai besoin de…'), ei persoonatonta 'il y a besoin' -rakennetta. Luontevampi: 'quand c'est nécessaire' tai 'au besoin'.</span></span>. Si on avait des règles claires, on respecterait mieux la règle.</p>
+            <div class="grader-legend" aria-hidden="true">
+              <span class="grader-legend__item"><span class="grader-legend__sw grader-legend__sw--spelling"></span>Kirjoitusasu</span>
+              <span class="grader-legend__item"><span class="grader-legend__sw grader-legend__sw--grammar"></span>Rakenne</span>
+            </div>
+          </div>
+          <div class="grader-card__eval">
+            <div class="rubric">
+              <div class="rubric-row">
+                <span class="rubric-row__name">Viestinnällisyys</span>
+                <span class="rubric-row__score">16 / 18</span>
+                <span class="rubric-row__fb">Selkeä mielipide, perustelut puolesta ja vastaan, tehtävänanto täytetty.</span>
+              </div>
+              <div class="rubric-row">
+                <span class="rubric-row__name">Kielen rakenteet</span>
+                <span class="rubric-row__score">11 / 18</span>
+                <span class="rubric-row__fb">Si-hypoteesi (imparfait + conditionnel) ja subjunktiivi 'il faut que' jälkeen oikein; yksi aikamuotovirhe.</span>
+              </div>
+              <div class="rubric-row">
+                <span class="rubric-row__name">Sanasto</span>
+                <span class="rubric-row__score">12 / 18</span>
+                <span class="rubric-row__fb">Selkeää lukio-tason sanastoa; yksi suomenkielinen idiomi-käännös.</span>
+              </div>
+              <div class="rubric-row">
+                <span class="rubric-row__name">Kokonaisuus</span>
+                <span class="rubric-row__score">4 / 6</span>
+                <span class="rubric-row__fb">Vahvat sidossanat (d'un côté / de l'autre / à mon avis), kappalejako selvä.</span>
+              </div>
+              <div class="rubric-total">
+                <span class="rubric-total__label">Pitkä kirjoitustehtävä</span>
+                <span class="rubric-total__score">38&ndash;48 / 66</span>
+                <span class="rubric-total__note">Arvioitu pistehaarukka. Vastaa tyypillisesti C–M-tason suoritusta; mielipiderakenne on M-tasoa, idiomivirhe vetää C-puolelle.</span>
+              </div>
+            </div>
+            <div class="grader-feedback">
+              <p class="grader-feedback__label">Sanallinen palaute</p>
+              <p class="grader-feedback__body">Mielipiteesi on heti selvä, ja perustelet sen molemmilta puolilta, mikä on juuri sitä mitä pitkä tehtävä hakee. Si-hypoteesi ja 'il faut que' -subjunktiivi menivät oikein, ja se nostaa rakennepisteitä. Kompastut nykyhetkeen: kun kuvaat tapaa joka toistuu nyt, käytä présensiä (oublient), ei imparfaitia. Yksi suomesta käännetty idiomi ('il y a besoin') vetää sanastoa alas, muuten taso on jo lähellä M:ää.</p>
+            </div>
+          </div>
         </div>
-      </aside>
+      </article>
+
+      <!-- ── SAKSA ── -->
+      <article class="grader-card" data-paper="de" hidden aria-label="Saksankielinen blogikommentti, lyhyt tehtävä, arvioitu pistehaarukka 21–30 / 33.">
+        <div class="grader-card__head">
+          <p class="grader-card__title">Blogikommentti &middot; lyhyt &middot; saksa</p>
+          <span class="grader-card__badge">21&ndash;30 / 33 p</span>
+        </div>
+        <div class="grader-card__cols">
+          <div class="grader-card__text">
+            <p class="grader-prose">Hallo Lena,
+
+dein Blogeintrag über das Auslandsjahr hat mich richtig inspiriert. Ich <span class="ge" data-cat="grammar" tabindex="0">bin<span class="ge-tip"><strong>Oikein: habe</strong>Perfektissä 'wohnen' ottaa 'haben'-apuverbin, ei 'sein'. 'sein' vain liike- tai tilanmuutosverbeillä (gehen, werden, sterben).</span></span> drei Monate in Berlin gewohnt und es war die beste Zeit meines Lebens. Am Anfang konnte ich nur wenig Deutsch, aber nach zwei Wochen <span class="ge" data-cat="grammar" tabindex="0">habe ich verstanden fast alles<span class="ge-tip"><strong>Oikein: habe ich fast alles verstanden</strong>Pääosalauseessa partisiippi viimeiseksi, kun apuverbi on käytössä. Sanajärjestys: subjekti, apuverbi, muut osat, partisiippi.</span></span> im Alltag.
+
+Mein Tipp: nimm einen Sprachkurs, bevor du fährst, im Ausland ist es viel einfacher, neue Freunde zu finden, wenn man schon ein bisschen sprechen kann.
+
+Liebe Grüße,
+Anna</p>
+            <div class="grader-legend" aria-hidden="true">
+              <span class="grader-legend__item"><span class="grader-legend__sw grader-legend__sw--spelling"></span>Kirjoitusasu</span>
+              <span class="grader-legend__item"><span class="grader-legend__sw grader-legend__sw--grammar"></span>Rakenne</span>
+            </div>
+          </div>
+          <div class="grader-card__eval">
+            <div class="rubric">
+              <div class="rubric-row">
+                <span class="rubric-row__name">Viestinnällisyys</span>
+                <span class="rubric-row__score">8 / 9</span>
+                <span class="rubric-row__fb">Reagoi blogiin, jakaa oman kokemuksen ja antaa konkreettisen vinkin.</span>
+              </div>
+              <div class="rubric-row">
+                <span class="rubric-row__name">Kielen rakenteet</span>
+                <span class="rubric-row__score">5 / 9</span>
+                <span class="rubric-row__fb">Apuverbi-virhe Perfektissä ja sanajärjestysvirhe pääosalauseessa; Genitiv ('meines Lebens') oikein.</span>
+              </div>
+              <div class="rubric-row">
+                <span class="rubric-row__name">Sanasto</span>
+                <span class="rubric-row__score">7 / 9</span>
+                <span class="rubric-row__fb">Sopiva rekisteri, idiomaattinen ('die beste Zeit meines Lebens').</span>
+              </div>
+              <div class="rubric-row">
+                <span class="rubric-row__name">Kokonaisuus</span>
+                <span class="rubric-row__score">5 / 6</span>
+                <span class="rubric-row__fb">Tervehdys, lopetus ja perusteltu vinkki; sivulauseen sanajärjestys ('bevor du fährst') oikein.</span>
+              </div>
+              <div class="rubric-total">
+                <span class="rubric-total__label">Lyhyt kirjoitustehtävä</span>
+                <span class="rubric-total__score">21&ndash;30 / 33</span>
+                <span class="rubric-total__note">Arvioitu pistehaarukka. Vastaa tyypillisesti C–M-tason suoritusta; Genitiv on M-tasoa, Perfekt-apuverbi vetää C-puolelle.</span>
+              </div>
+            </div>
+            <div class="grader-feedback">
+              <p class="grader-feedback__label">Sanallinen palaute</p>
+              <p class="grader-feedback__body">Vastaat blogiin luontevasti ja annat konkreettisen vinkin, joten viesti toimii. Kaksi rakennetta jää korjattavaksi: 'wohnen' ottaa Perfektissä apuverbin haben, ei sein, ja partisiippi kuuluu päälauseen loppuun (habe ich fast alles verstanden). Genitiivi ('meines Lebens') meni jo oikein, mikä on M-tason merkki. Kun sanajärjestys vakiintuu, nouset sieltä ylöspäin.</p>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <p class="proof__caveat">
+        Näytetty luku on arvioitu pistehaarukka YTL:n asteikolla (lyhyt tehtävä 0–33 p, pitkä 0–66 p), ei luvattu yksittäispiste. Lopullinen arvosana määräytyy koko kokeen yhteispisteistä (kuullun + luetun + kirjoitus), ei yhdestä kirjoituksesta.
+      </p>
+    </div>
+  </section>
+
+  <!-- ─── APP SCREENSHOT ─── -->
+  <section class="appshot" aria-labelledby="appshot-title">
+    <div class="wrap">
+      <h2 id="appshot-title" class="appshot-h">Arvioinnin takana on koko kurssi.</h2>
+      <p class="appshot-lede">Kirjoitelmien arviointi on yksi osa. Saman tilin takaa avautuu kahdeksan kurssin oppimispolku, mallikokeet ja edistymismittarit.</p>
+      <figure class="appshot-frame">
+        <img src="/public/shots/app-home-path.png" alt="Puheon oppimispolkunäkymä: jatka kurssia, harjoittele YO-koetta, kirjoita ja saa arvio." loading="lazy" width="900" height="650" />
+        <figcaption>Sovelluksen aloitusnäkymä. Tästä jatkat oppimispolkua, teet mallikokeen tai pyydät arvion kirjoituksellesi.</figcaption>
+      </figure>
     </div>
   </section>
 

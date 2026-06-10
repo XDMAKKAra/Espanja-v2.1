@@ -9,7 +9,8 @@
   var buttons = document.querySelectorAll(".seg-btn[data-lang]");
   if (!buttons.length) return;
   var swaps = document.querySelectorAll("[data-es][data-fr][data-de]");
-  var papers = document.querySelectorAll(".paper[data-paper]");
+  // [data-paper] (not just .paper) so it also toggles the /nayte grader-cards.
+  var papers = document.querySelectorAll("[data-paper]");
 
   function setLang(lang) {
     buttons.forEach(function (b) {
