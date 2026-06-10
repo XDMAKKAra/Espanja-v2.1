@@ -6,6 +6,32 @@
    renderöi kaikki sivut tämän tyylitiedoston päälle.
    ============================================================ */
 
+/* ─── Warm-paper design (L-V412 paletti) — artikkeli-kohtaiset ylikirjoitukset ─
+   Ylikirjoitukset on scopettu body.artikkeli-skoopilla jotta pricing/ukk,
+   jotka eivät lataa artikkeli.css:ää, pysyvät koskemattomina.
+   Nav-ylikirjoitukset .landing .nav -skoopilla (html.landing on aina läsnä)
+   mutta artikkeli-ehto body-selektorissa varmistaa ettei riko muita .landing-sivuja.
+   ─────────────────────────────────────────────────────────────────────────────── */
+
+/* Uusi warm-paper-kremavärinen tausta (abikurssi-paletti) */
+body.artikkeli {
+  background: #F6EEDC !important;
+  color: #33271F;
+}
+
+/* Nav: yhtenäinen kermapohja — ei tummaa scrolled-tilaa, ei valkoista nauhaa.
+   Käytetään body.artikkeli + html-yhdistelmää scope-ehtoina. */
+body.artikkeli .nav {
+  background: rgba(246, 238, 220, 0.92) !important;
+  backdrop-filter: saturate(130%) blur(10px);
+  -webkit-backdrop-filter: saturate(130%) blur(10px);
+  border-bottom: 1px solid rgba(110, 85, 60, 0.16);
+}
+body.artikkeli .nav[data-scrolled="true"] {
+  background: rgba(246, 238, 220, 0.96) !important;
+  border-bottom-color: rgba(110, 85, 60, 0.20);
+}
+
 /* ─── Layout-runko ───────────────────────────────────────────── */
 .artikkeli main {
   display: block;
@@ -14,7 +40,9 @@
 .art-wrap {
   max-width: 760px;
   margin: 0 auto;
-  padding: clamp(88px, 12vw, 132px) var(--sp-3) clamp(56px, 9vw, 96px);
+  /* Aiempi clamp(88px…132px) teki liikaa tilaa navin alle.
+     24–28px riittää murupolun alkamiseen navin alta. */
+  padding: clamp(24px, 4vw, 36px) var(--sp-3) clamp(56px, 9vw, 96px);
 }
 
 /* ─── Murupolku ──────────────────────────────────────────────── */
