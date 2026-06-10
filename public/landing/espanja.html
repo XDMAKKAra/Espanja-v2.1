@@ -77,24 +77,56 @@
 <header class="nav">
   <div class="nav-in">
     <a class="brand" href="/">puheo</a>
-    <nav class="nav-links" aria-label="Sivun osiot">
-      <a href="#sisalto">Sisältö</a>
-      <a href="#arviointi">Arviointi</a>
-      <a href="#hinta">Hinta</a>
-      <a href="#ukk">UKK</a>
+    <nav class="nav-menu" aria-label="Päävalikko">
+      <div class="nav-dd">
+        <button class="nav-dd-trigger" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="nav-dd-kurssit">
+          Kurssit
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="nav-dd-menu" id="nav-dd-kurssit" role="menu">
+          <a role="menuitem" href="/espanjan-abikurssi">Espanjan abikurssi</a>
+          <a role="menuitem" href="/ranskan-abikurssi">Ranskan abikurssi</a>
+          <a role="menuitem" href="/saksan-abikurssi">Saksan abikurssi</a>
+        </div>
+      </div>
+      <a href="/nayte">Näyte</a>
+      <a href="/artikkelit/">Oppaat</a>
+      <a href="/pricing.html">Hinnoittelu</a>
+      <a href="/ukk">UKK</a>
     </nav>
-    <div class="nav-cta">
-      <a class="btn btn-primary" href="/app.html#rekisteroidy?tier=kurssi">Osta 49&nbsp;€</a>
+    <div class="nav-right">
+      <a class="nav-login" href="/app.html#kirjaudu">Kirjaudu</a>
+      <a class="btn btn-primary" href="/app.html#/aloitus">Aloita nyt</a>
+      <button class="nav-burger" id="nav-burger" type="button" aria-label="Avaa valikko" aria-expanded="false" aria-controls="nav-overlay">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><line x1="3" y1="7" x2="21" y2="7"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="17" x2="21" y2="17"/></svg>
+      </button>
     </div>
   </div>
 </header>
+<!-- L-V412: overlay must live OUTSIDE .nav — the nav's backdrop-filter makes it
+     a containing block for position:fixed descendants, which would clip it. -->
+<div class="nav-overlay" id="nav-overlay" hidden>
+  <nav class="nav-overlay-in" aria-label="Mobiilivalikko">
+    <p class="nav-overlay-h">Kurssit</p>
+    <a href="/espanjan-abikurssi">Espanjan abikurssi</a>
+    <a href="/ranskan-abikurssi">Ranskan abikurssi</a>
+    <a href="/saksan-abikurssi">Saksan abikurssi</a>
+    <p class="nav-overlay-h">Muu</p>
+    <a href="/">Etusivu</a>
+    <a href="/nayte">Näyte</a>
+    <a href="/artikkelit/">Oppaat</a>
+    <a href="/pricing.html">Hinnoittelu</a>
+    <a href="/ukk">UKK</a>
+    <a href="/app.html#kirjaudu">Kirjaudu</a>
+    <a class="btn btn-primary nav-overlay-cta" href="/app.html#/aloitus">Aloita nyt</a>
+  </nav>
+</div>
 
 <main>
   <!-- ─── HERO: hakusana otsikossa, hinta ja osto heti, artefakti oikealla ─── -->
   <section class="hero" aria-labelledby="hero-title">
     <div class="wrap hero-grid">
       <div>
-        <span class="hero-pill">Lyhyt oppimäärä · syksyn kirjoitukset syyskuussa</span>
         <h1 id="hero-title">Espanjan abikurssi, joka tähtää suoraan <span class="hl" style="white-space: nowrap;">YO-kokeeseen</span>.</h1>
         <p class="hero-sub">
           Koko lyhyen oppimäärän polku: 90 oppituntia, 6 mallikoetta ja
@@ -484,5 +516,6 @@
   </div>
 </footer>
 
+<script src="/js/landing-v2-nav.js"></script>
 </body>
 </html>

@@ -179,6 +179,8 @@ svg { display: block; }
 .nav-dd-menu a:hover { background: var(--cream); color: var(--brick); }
 .nav-right { display: flex; align-items: center; gap: 12px; }
 .nav-burger { display: none; background: none; border: 0; cursor: pointer; color: var(--ink); padding: 4px; }
+.nav-login { font-family: "Fredoka", sans-serif; font-weight: 500; font-size: .95rem; color: var(--ink-soft); text-decoration: none; }
+.nav-login:hover { color: var(--brick); }
 .nav-overlay { display: none; }
 .nav-overlay.open { display: block; position: fixed; left: 0; right: 0; top: 57px; bottom: 0; background: var(--cream); z-index: 49; overflow-y: auto; padding: 20px 22px 48px; }
 .nav-overlay-in { display: flex; flex-direction: column; max-width: 480px; margin-inline: auto; }
@@ -398,6 +400,9 @@ svg { display: block; }
   .nav-menu { display: none; }
   .nav-burger { display: inline-flex; }
 }
+@media (max-width: 520px) {
+  .nav-login { display: none; }
+}
 
 /* ───────────── Path description ───────────── */
 .path-text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px; }
@@ -447,7 +452,8 @@ svg { display: block; }
       <a href="/ukk">UKK</a>
     </nav>
     <div class="nav-right">
-      <a class="btn btn-primary" href="/app.html#rekisteroidy?tier=kurssi">Osta 49&nbsp;€</a>
+      <a class="nav-login" href="/app.html#kirjaudu">Kirjaudu</a>
+      <a class="btn btn-primary" href="/app.html#/aloitus">Aloita nyt</a>
       <button class="nav-burger" id="nav-burger" type="button" aria-label="Avaa valikko" aria-expanded="false" aria-controls="nav-overlay">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><line x1="3" y1="7" x2="21" y2="7"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="17" x2="21" y2="17"/></svg>
       </button>
@@ -467,7 +473,8 @@ svg { display: block; }
     <a href="/artikkelit/">Oppaat</a>
     <a href="/pricing.html">Hinnoittelu</a>
     <a href="/ukk">UKK</a>
-    <a class="btn btn-primary nav-overlay-cta" href="/app.html#rekisteroidy?tier=kurssi">Osta kurssi 49&nbsp;€</a>
+    <a href="/app.html#kirjaudu">Kirjaudu</a>
+    <a class="btn btn-primary nav-overlay-cta" href="/app.html#/aloitus">Aloita nyt</a>
   </nav>
 </div>
 
