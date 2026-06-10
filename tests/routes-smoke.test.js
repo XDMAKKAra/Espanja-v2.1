@@ -37,8 +37,6 @@ vi.mock("../middleware/rateLimit.js", () => {
     aiGlobalDailyLimiter: pass,
     reportLimiter: pass,
     waitlistLimiter: pass,
-    demoGradeLimiter: pass,
-    demoGradeGlobalLimiter: pass,
     clientIp: (req) => req.ip || "",
   };
 });

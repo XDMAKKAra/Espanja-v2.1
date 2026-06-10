@@ -229,27 +229,3 @@ export const waitlistLimiter = createLimiter({
   message: { error: "Liian monta pyyntöä. Yritä hetken kuluttua uudelleen." },
 });
 
-// Per-IP limiter for the anonymous landing writing demo (L-V332). One AI
-// grade per device per 24h — the demo is a taste, not a free-tier substitute.
-// Keyed by the resolved client IP (X-Forwarded-For aware) so it actually
-// distinguishes visitors behind the Vercel proxy. The frontend localStorage
-// flag is cosmetic; this + the global cap below are the real abuse gates.
-export const demoGradeLimiter = createLimiter({
-  windowMs: 24 * 60 * 60 * 1000,
-  max: 1,
-  keyGenerator: clientIp,
-  message: { error: "Olet jo kokeillut tänään. Tee oma tili niin saat arvioinnit rajattomasti." },
-});
-
-// Global daily cap on demo grades across ALL visitors — the hard cost ceiling.
-// Survives IP rotation, X-Forwarded-For spoofing, the per-IP limiter failing
-// open on a DB error, and localStorage bypass: every one of those still funnels
-// through this single counter. Once the day's budget is spent, the demo pauses
-// and points visitors at a real account. Tune with DEMO_GRADE_DAILY_CAP.
-const DEMO_DAILY_CAP = Number(process.env.DEMO_GRADE_DAILY_CAP) || 300;
-export const demoGradeGlobalLimiter = createLimiter({
-  windowMs: 24 * 60 * 60 * 1000,
-  max: DEMO_DAILY_CAP,
-  keyGenerator: () => "global",
-  message: { error: "Demo on juuri nyt tauolla. Tee oma tili, niin pääset kirjoittamaan heti." },
-});
