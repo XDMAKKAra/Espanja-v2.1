@@ -1,4 +1,4 @@
-const CACHE_VERSION = "puheo-v412";
+const CACHE_VERSION = "puheo-v413";
 const STATIC_ASSETS = [
   "/app.html",
   "/index.html",
