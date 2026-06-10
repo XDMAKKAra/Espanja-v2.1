@@ -4,7 +4,7 @@
    (public/landing/{espanja,ranska,saksa}.html). Content differs per page,
    layout is identical, so the design lives here once. Self-contained: these
    pages do NOT load the old landing-editorial / landing-spark stack.
-   Fonts come from /css/fonts.css (Fredoka + Mulish + Caveat).
+   Fonts come from /css/fonts.css (Fredoka + Mulish + Kalam).
    ======================================================================= */
 
 /* ───────────── Tokens ───────────── */
@@ -165,7 +165,7 @@ svg { display: block; }
   font-weight: 800; font-size: .8rem; color: var(--ink-soft);
   border-bottom: 1px dashed var(--line); padding-bottom: 10px; margin-bottom: 16px;
 }
-.essay-line { font-family: "Caveat", cursive; font-weight: 500; font-size: 1.62rem; line-height: 1.35; color: #423426; }
+.essay-line { font-family: "Kalam", cursive; font-weight: 400; font-size: 1.35rem; line-height: 1.5; color: #423426; }
 .essay-line .ok  { text-decoration: underline; text-decoration-color: var(--green); text-decoration-thickness: 2.5px; text-underline-offset: 4px; }
 .essay-line .err { text-decoration: underline wavy; text-decoration-color: var(--brick); text-decoration-thickness: 2px; text-underline-offset: 4px; }
 .note { font-size: .85rem; font-weight: 700; line-height: 1.45; margin: 4px 0 14px; padding-left: 14px; }
@@ -424,7 +424,7 @@ svg { display: block; }
   .wrap, .wrap-narrow { padding-inline: 20px; }
   .paper { transform: rotate(0.8deg); padding: 20px 18px 24px 42px; }
   .paper::before { left: 28px; }
-  .essay-line { font-size: 1.42rem; }
+  .essay-line { font-size: 1.2rem; }
   .paper-foot { flex-direction: column; align-items: flex-start; gap: 12px; }
   .sticky-note { top: -18px; right: 0; max-width: 150px; font-size: .85rem; }
   .tier { padding: 30px 22px 28px; }

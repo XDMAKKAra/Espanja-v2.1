@@ -74,10 +74,10 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/public/favicon/apple-touch-icon.png" />
   <meta name="theme-color" content="#9B2D2A" />
 
-  <!-- L-V412 landing v2: self-hosted Fredoka (display) + Mulish (body) + Caveat (essay). -->
+  <!-- L-V412 landing v2: self-hosted Fredoka (display) + Mulish (body) + Kalam (essay). -->
   <link rel="preload" href="/fonts/fredoka-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="/fonts/mulish-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
-  <link rel="preload" href="/fonts/caveat-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/kalam-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="/css/fonts.css" />
 
 <style>
@@ -176,13 +176,6 @@ svg { display: block; }
   .hero .reassure { justify-content: flex-start; }
   .escape { text-align: left; }
 }
-.micro-pill {
-  display: inline-flex; align-items: center; gap: 8px;
-  background: var(--gold-soft); color: #7A5410;
-  font-weight: 800; font-size: .82rem; border-radius: 99px; padding: 6px 16px;
-}
-.micro-pill::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--terra); }
-
 .seg-label { margin-top: 18px; font-weight: 800; font-size: .95rem; color: var(--ink-soft); }
 .seg {
   margin: 12px auto 0; display: flex; gap: 6px; max-width: 420px;
@@ -233,7 +226,7 @@ svg { display: block; }
   font-weight: 800; font-size: .8rem; color: var(--ink-soft);
   border-bottom: 1px dashed var(--line); padding-bottom: 10px; margin-bottom: 16px;
 }
-.essay-line { font-family: "Caveat", cursive; font-weight: 500; font-size: 1.5rem; line-height: 1.35; color: #423426; }
+.essay-line { font-family: "Kalam", cursive; font-weight: 400; font-size: 1.28rem; line-height: 1.5; color: #423426; }
 .essay-line .ok  { text-decoration: underline; text-decoration-color: var(--green); text-decoration-thickness: 2.5px; text-underline-offset: 4px; }
 .essay-line .err { text-decoration: underline wavy; text-decoration-color: var(--brick); text-decoration-thickness: 2px; text-underline-offset: 4px; }
 .note { font-size: .85rem; font-weight: 700; line-height: 1.45; margin: 4px 0 14px; padding-left: 14px; }
@@ -367,7 +360,7 @@ svg { display: block; }
   body { font-size: 16px; }
   .paper { transform: rotate(0.8deg); padding: 20px 18px 24px 42px; }
   .paper::before { left: 28px; }
-  .essay-line { font-size: 1.4rem; }
+  .essay-line { font-size: 1.18rem; }
   .paper-foot { flex-direction: column; align-items: flex-start; gap: 12px; }
   .price-row { gap: 10px; }
   .price-num { font-size: 2.9rem; }
@@ -393,8 +386,6 @@ svg { display: block; }
   <section class="hero" id="hero" aria-labelledby="hero-title">
     <div class="wrap">
       <div class="hero-copy">
-      <span class="micro-pill">Syksyn YO-kirjoitukset ovat syyskuussa</span>
-
       <p class="seg-label" id="seg-label">Mitä kieltä kirjoitat?</p>
       <div class="seg" role="group" aria-labelledby="seg-label">
         <button class="seg-btn" type="button" data-lang="es" aria-pressed="true">Espanja</button>

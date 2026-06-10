@@ -39,11 +39,9 @@ const STATIC_ASSETS = [
   "/fonts/mulish-latin-ext-500-normal.woff2",
   "/fonts/mulish-latin-ext-600-normal.woff2",
   "/fonts/mulish-latin-ext-700-normal.woff2",
-  // L-V412 — Caveat (handwritten essay lines on landing v2 proof artifacts).
-  "/fonts/caveat-latin-500-normal.woff2",
-  "/fonts/caveat-latin-ext-500-normal.woff2",
-  "/fonts/caveat-latin-600-normal.woff2",
-  "/fonts/caveat-latin-ext-600-normal.woff2",
+  // L-V412 — Kalam (handwritten essay lines on landing v2 proof artifacts).
+  "/fonts/kalam-latin-400-normal.woff2",
+  "/fonts/kalam-latin-ext-400-normal.woff2",
   "/js/pre-launch-gate.js",
   // landing-nav.js still drives nav on artikkelit/pricing/ukk + legacy pages.
   "/js/landing-nav.js",
