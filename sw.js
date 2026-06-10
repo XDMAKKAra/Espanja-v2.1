@@ -1,4 +1,4 @@
-const CACHE_VERSION = "puheo-v414";
+const CACHE_VERSION = "puheo-v415";
 const STATIC_ASSETS = [
   "/app.html",
   "/index.html",
@@ -48,6 +48,7 @@ const STATIC_ASSETS = [
   // L-V412 — shared lang switcher for index + nayte (replaces the old per-page
   // hero-lang/proof-lang scripts).
   "/js/landing-v2-lang.js",
+  "/js/landing-v2-nav.js",
   "/img/illustrations/student-reading.svg",
   "/img/illustrations/student-walking.svg",
   "/img/illustrations/quill-inkwell.svg",
