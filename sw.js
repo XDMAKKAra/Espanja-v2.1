@@ -1,4 +1,4 @@
-const CACHE_VERSION = "puheo-v409";
+const CACHE_VERSION = "puheo-v412";
 const STATIC_ASSETS = [
   "/app.html",
   "/index.html",
@@ -15,18 +15,12 @@ const STATIC_ASSETS = [
   "/public/landing/ranska.html",
   "/css/landing-editorial-tokens.css",
   "/css/landing-editorial.css",
-  // L-V358 — compact language info page layout (es/de/fr).
-  "/css/landing-langpage.css",
-  // L-V373/L-V376 — landing product screenshots (hero is eager; precache so
-  // the first paint shows real app UI instead of a blank frame). Hero now has
-  // one shot per language for the switcher.
-  "/public/shots/app-writing-rubric-es.png",
-  "/public/shots/app-writing-rubric-fr.png",
-  "/public/shots/app-writing-rubric-de.png",
-  "/js/landing-hero-lang.js",
-  // L-V380 — zig-zag feature wall removed from the landing; its three product
-  // screenshots (app-lesson/app-results/app-home-path) are no longer referenced
-  // anywhere, so they are dropped from the precache.
+  // L-V412 — landing v2: index + abikurssi (es/de/fr) self-contained warm-paper
+  // design. abikurssi.css is shared across the three SEO pages; index/nayte
+  // inline their own <style>. landing-langpage.css + the old landing hero JS
+  // (hero-lang/proof-lang/writing-demo/catalog-lang/countdown/lang-cta/init) and
+  // app-writing-rubric screenshots are no longer referenced and were dropped.
+  "/css/abikurssi.css",
   // L-LIVE-AUDIT-P2 UPDATE 1+2 — bundled CSS+JS replace 16 CSS links + 28 JS modules
   // on app.html cold load. Source files stay in repo + cached below for offline robustness.
   "/app.bundle.css",
@@ -45,14 +39,17 @@ const STATIC_ASSETS = [
   "/fonts/mulish-latin-ext-500-normal.woff2",
   "/fonts/mulish-latin-ext-600-normal.woff2",
   "/fonts/mulish-latin-ext-700-normal.woff2",
+  // L-V412 — Caveat (handwritten essay lines on landing v2 proof artifacts).
+  "/fonts/caveat-latin-500-normal.woff2",
+  "/fonts/caveat-latin-ext-500-normal.woff2",
+  "/fonts/caveat-latin-600-normal.woff2",
+  "/fonts/caveat-latin-ext-600-normal.woff2",
   "/js/pre-launch-gate.js",
-  "/js/landing-init.js",
+  // landing-nav.js still drives nav on artikkelit/pricing/ukk + legacy pages.
   "/js/landing-nav.js",
-  "/js/landing-countdown.js",
-  "/js/landing-catalog-lang.js",
-  "/js/landing-proof-lang.js",
-  "/js/landing-writing-demo.js",
-  "/js/landing-lang-cta.js",
+  // L-V412 — shared lang switcher for index + nayte (replaces the old per-page
+  // hero-lang/proof-lang scripts).
+  "/js/landing-v2-lang.js",
   "/img/illustrations/student-reading.svg",
   "/img/illustrations/student-walking.svg",
   "/img/illustrations/quill-inkwell.svg",

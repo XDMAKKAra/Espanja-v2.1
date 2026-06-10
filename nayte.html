@@ -1,446 +1,407 @@
 <!DOCTYPE html>
-<html lang="fi" class="landing">
+<html lang="fi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Pre-launch password gate, sync, no defer/async. -->
-  <script src="/js/pre-launch-gate.js"></script>
+<!-- Pre-launch password gate, sync, no defer/async. -->
+<script src="/js/pre-launch-gate.js"></script>
 
-  <title>Puheo, Näyte arvioinnista: YTL-rubriikki es / fr / de</title>
-  <meta name="description" content="Näin Puheo arvioi YO-kirjoituksen YTL:n rubriikilla. Esimerkkiarviot espanjaksi, ranskaksi ja saksaksi: pistehaarukka ja sanallinen perustelu." />
-  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
-  <link rel="canonical" href="https://puheo.fi/nayte" />
-  <meta property="og:site_name" content="Puheo" />
-  <meta property="og:title" content="Puheo, Näyte arvioinnista: YTL-rubriikki es / fr / de" />
-  <meta property="og:description" content="Näin Puheo arvioi YO-kirjoituksen YTL:n rubriikilla. Esimerkkiarviot espanjaksi, ranskaksi ja saksaksi: pistehaarukka ja sanallinen perustelu." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://puheo.fi/nayte" />
-  <meta property="og:image" content="https://puheo.fi/og-image.png" />
-  <meta property="og:locale" content="fi_FI" />
+<title>Puheo, Näyte arvioinnista: YTL-rubriikki es / fr / de</title>
+<meta name="description" content="Näin Puheo arvioi YO-kirjoituksen YTL:n rubriikilla. Esimerkkiarviot espanjaksi, ranskaksi ja saksaksi: pistehaarukka ja sanallinen perustelu." />
+<meta name="author" content="Puheo" />
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
+<link rel="canonical" href="https://puheo.fi/nayte" />
 
-  <link rel="manifest" href="/manifest.json" />
-  <link rel="icon" type="image/svg+xml" href="/public/brand/favicon-master.svg" />
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
-  <link rel="apple-touch-icon" sizes="180x180" href="/public/favicon/apple-touch-icon.png" />
-  <meta name="theme-color" content="#9B2D2A" />
+<!-- Open Graph -->
+<meta property="og:site_name" content="Puheo" />
+<meta property="og:title" content="Puheo, Näyte arvioinnista: YTL-rubriikki es / fr / de" />
+<meta property="og:description" content="Näin Puheo arvioi YO-kirjoituksen YTL:n rubriikilla. Esimerkkiarviot espanjaksi, ranskaksi ja saksaksi: pistehaarukka ja sanallinen perustelu." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://puheo.fi/nayte" />
+<meta property="og:image" content="https://puheo.fi/og-image.png" />
+<meta property="og:locale" content="fi_FI" />
 
-  <link rel="preload" href="/fonts/fredoka-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin />
-  <link rel="preload" href="/fonts/mulish-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
-  <link rel="stylesheet" href="/css/fonts.css" />
-  <link rel="stylesheet" href="/css/landing-tokens.css" />
-  <link rel="stylesheet" href="/css/landing.css" />
-  <link rel="stylesheet" href="/css/landing-editorial-tokens.css" />
-  <link rel="stylesheet" href="/css/landing-editorial.css" />
-  <link rel="stylesheet" href="/css/landing-spark.css" />
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Puheo, Näyte arvioinnista: YTL-rubriikki es / fr / de" />
+<meta name="twitter:description" content="Näin Puheo arvioi YO-kirjoituksen YTL:n rubriikilla. Pistehaarukka ja sanallinen perustelu." />
+<meta name="twitter:image" content="https://puheo.fi/og-image.png" />
+
+<link rel="manifest" href="/manifest.json" />
+<link rel="icon" type="image/svg+xml" href="/public/brand/favicon-master.svg" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/public/favicon/apple-touch-icon.png" />
+<meta name="theme-color" content="#9B2D2A" />
+
+<link rel="preload" href="/fonts/fredoka-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/fonts/mulish-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/fonts/caveat-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="/css/fonts.css" />
+
+<style>
+:root {
+  --cream:       #F6EEDC;
+  --cream-deep:  #EFE3C9;
+  --paper:       #FCF7EB;
+  --ink:         #33271F;
+  --ink-soft:    #6E5B4D;
+  --brick:       #9B2D2A;
+  --brick-deep:  #7A201E;
+  --terra:       #C4573B;
+  --gold:        #F2B43A;
+  --gold-soft:   #F8DC9B;
+  --green:       #3F7D4E;
+  --green-deep:  #2F6B3E;
+  --green-tint:  #DCEAD8;
+  --line:        rgba(110, 85, 60, .16);
+  --shadow-warm: 0 18px 40px -18px rgba(90, 50, 25, .35);
+}
+*, *::before, *::after { box-sizing: border-box; }
+html, body { overflow-x: clip; }
+body {
+  margin: 0; background: var(--cream); color: var(--ink);
+  font-family: "Mulish", system-ui, sans-serif; font-size: 17px; line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3 { font-family: "Fredoka", sans-serif; font-weight: 600; line-height: 1.12; margin: 0; letter-spacing: -.01em; }
+p { margin: 0; }
+a { color: inherit; }
+svg { display: block; }
+
+.skip-link {
+  position: absolute; left: -9999px; top: 0; z-index: 100;
+  background: var(--brick); color: var(--paper);
+  padding: 10px 18px; border-radius: 0 0 12px 0; font-weight: 700; text-decoration: none;
+}
+.skip-link:focus { left: 0; }
+
+.wrap { max-width: 680px; margin-inline: auto; padding-inline: 22px; }
+.wrap-wide { max-width: 1060px; margin-inline: auto; padding-inline: 28px; }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  font-family: "Fredoka", sans-serif; font-weight: 500; font-size: 1.08rem;
+  text-decoration: none; border-radius: 16px; padding: 16px 30px;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.btn-primary { background: var(--brick); color: var(--paper); box-shadow: 0 4px 0 var(--brick-deep); }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 0 var(--brick-deep); }
+.btn-gold { background: var(--gold); color: var(--ink); box-shadow: 0 4px 0 #C98F1E; }
+.btn-gold:hover { transform: translateY(-2px); box-shadow: 0 6px 0 #C98F1E; }
+.btn-ghost { background: transparent; color: var(--paper); border: 2px solid rgba(252, 247, 235, .45); padding: 14px 28px; }
+.btn-ghost:hover { border-color: var(--paper); }
+
+/* Nav */
+.nav { position: sticky; top: 0; z-index: 50; background: rgba(246, 238, 220, .94); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+.nav-in { max-width: 1060px; margin-inline: auto; padding: 12px 22px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.brand { font-family: "Fredoka", sans-serif; font-weight: 600; font-size: 1.55rem; color: var(--brick); text-decoration: none; line-height: 1; }
+.nav .btn { padding: 10px 20px; font-size: 1rem; }
+
+/* Header */
+.head { padding: 52px 0 8px; text-align: center; }
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 9px;
+  font-weight: 800; font-size: .85rem; color: var(--terra); margin-bottom: 14px;
+}
+.eyebrow::before {
+  content: ""; width: 9px; height: 9px; border-radius: 50%;
+  background: var(--gold); box-shadow: 13px 0 0 var(--terra), 26px 0 0 var(--green);
+  margin-right: 26px;
+}
+.head h1 { font-size: clamp(2.1rem, 6vw, 3.1rem); }
+.head .lede { margin: 16px auto 0; color: var(--ink-soft); font-size: 1.08rem; max-width: 50ch; }
+
+.seg {
+  margin: 28px auto 0; display: flex; gap: 6px; max-width: 420px;
+  background: var(--cream-deep); border-radius: 18px; padding: 6px;
+}
+.seg-btn {
+  flex: 1; border: 0; cursor: pointer; border-radius: 13px; padding: 12px 4px;
+  font-family: "Fredoka", sans-serif; font-weight: 500; font-size: 1.04rem;
+  background: transparent; color: var(--ink-soft);
+  transition: background .15s ease, color .15s ease;
+}
+.seg-btn[aria-pressed="true"] { background: var(--brick); color: var(--paper); box-shadow: 0 2px 0 var(--brick-deep); }
+
+/* Sample: paper + rubric side by side on desktop */
+.sample { padding: 44px 0 8px; }
+.sample-grid { display: grid; grid-template-columns: 1fr; gap: 40px; align-items: start; }
+@media (min-width: 1020px) {
+  .sample-grid { grid-template-columns: 1.05fr .95fr; gap: 56px; }
+}
+.paper-zone { position: relative; max-width: 520px; margin-inline: auto; width: 100%; }
+.paper {
+  position: relative; background: var(--paper); border-radius: 14px;
+  border: 1px solid rgba(110, 85, 60, .12);
+  box-shadow: var(--shadow-warm);
+  transform: rotate(0.8deg);
+  padding: 24px 28px 28px 54px;
+}
+.paper[hidden] { display: none; }
+.paper::before {
+  content: ""; position: absolute; top: 0; bottom: 0; left: 36px;
+  width: 2px; background: rgba(196, 87, 59, .28);
+}
+.paper-head {
+  display: flex; justify-content: space-between; gap: 12px;
+  font-weight: 800; font-size: .8rem; color: var(--ink-soft);
+  border-bottom: 1px dashed var(--line); padding-bottom: 10px; margin-bottom: 16px;
+}
+.essay-line { font-family: "Caveat", cursive; font-weight: 500; font-size: 1.5rem; line-height: 1.35; color: #423426; }
+.essay-line .ok  { text-decoration: underline; text-decoration-color: var(--green); text-decoration-thickness: 2.5px; text-underline-offset: 4px; }
+.essay-line .err { text-decoration: underline wavy; text-decoration-color: var(--brick); text-decoration-thickness: 2px; text-underline-offset: 4px; }
+.note { font-size: .85rem; font-weight: 700; line-height: 1.45; margin: 4px 0 14px; padding-left: 14px; }
+.note-ok { color: var(--green-deep); }
+.note-err { color: var(--brick); }
+.paper-foot { display: flex; align-items: center; gap: 18px; margin-top: 18px; }
+.stamp {
+  flex: none; display: flex; flex-direction: column; align-items: center;
+  border: 2.5px solid var(--brick); outline: 1.5px solid rgba(155, 45, 42, .45); outline-offset: 3px;
+  border-radius: 10px; color: var(--brick); padding: 8px 16px 10px;
+  transform: rotate(-5deg); background: rgba(155, 45, 42, .04);
+}
+.stamp-label { font-weight: 800; font-size: .68rem; letter-spacing: .02em; }
+.stamp-range { font-family: "Fredoka", sans-serif; font-weight: 600; font-size: 1.7rem; line-height: 1.1; }
+.stamp-max { font-family: "Mulish", sans-serif; font-weight: 800; font-size: .72rem; color: var(--ink-soft); margin-top: 2px; }
+.stamp-note { font-size: .85rem; color: var(--ink-soft); font-weight: 600; max-width: 22ch; }
+
+/* Rubric explainer */
+.rubric-card {
+  background: var(--paper); border-radius: 22px;
+  border: 1px solid rgba(110, 85, 60, .12); box-shadow: var(--shadow-warm);
+  padding: 28px 30px 24px;
+}
+.rubric-head { font-family: "Fredoka", sans-serif; font-weight: 600; font-size: 1.25rem; margin-bottom: 6px; }
+.rubric-sub { font-size: .92rem; color: var(--ink-soft); font-weight: 600; margin-bottom: 22px; }
+.rubric-row { padding: 14px 0; }
+.rubric-row + .rubric-row { border-top: 1px dashed var(--line); }
+.rubric-row-top { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 7px; }
+.rubric-label { font-weight: 800; font-size: .96rem; }
+.rubric-verdict { font-weight: 700; font-size: .8rem; }
+.rv-strong { color: var(--green-deep); }
+.rv-mid { color: #A1700E; }
+.rv-weak { color: var(--brick); }
+.rubric-track { height: 12px; border-radius: 99px; background: var(--cream-deep); overflow: hidden; }
+.rubric-fill { height: 100%; border-radius: 99px; }
+.rf-1 { width: 86%; background: var(--green); }
+.rf-2 { width: 64%; background: var(--gold); }
+.rf-3 { width: 57%; background: var(--gold); }
+.rf-4 { width: 36%; background: var(--brick); }
+.rubric-desc { margin-top: 8px; font-size: .9rem; color: var(--ink-soft); }
+
+/* Honesty */
+.honesty { padding: 72px 0 8px; }
+.honesty-card {
+  background: var(--gold-soft); border-radius: 22px; padding: 34px 32px;
+  position: relative; overflow: hidden;
+}
+.honesty-card h2 { font-size: clamp(1.5rem, 4vw, 1.9rem); color: #5A431B; }
+.honesty-card p { margin-top: 12px; color: #5A431B; font-weight: 600; font-size: 1.02rem; }
+.honesty-mark {
+  position: absolute; right: -20px; bottom: -70px;
+  font-family: "Fredoka", sans-serif; font-weight: 700; font-size: 13rem; line-height: 1;
+  color: rgba(155, 45, 42, .12); user-select: none;
+}
+
+/* CTA */
+.cta { margin-top: 80px; background: var(--brick); color: var(--paper); padding: 80px 0; position: relative; overflow: hidden; }
+.cta-glyph { position: absolute; font-family: "Fredoka", sans-serif; font-weight: 700; color: rgba(252, 247, 235, .07); line-height: 1; user-select: none; }
+.cg-1 { font-size: 14rem; top: -40px; left: -16px; transform: rotate(-10deg); }
+.cg-2 { font-size: 11rem; bottom: -50px; right: 4%; transform: rotate(8deg); }
+.cta-in { position: relative; max-width: 620px; margin-inline: auto; padding-inline: 22px; text-align: center; }
+.cta h2 { font-size: clamp(2rem, 6vw, 2.8rem); }
+.cta p { margin-top: 16px; font-size: 1.08rem; color: rgba(252, 247, 235, .85); }
+.cta-btns { margin-top: 30px; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+.cta-fine { margin-top: 24px; font-size: .9rem; color: rgba(252, 247, 235, .65); font-weight: 700; }
+
+/* Footer */
+.footer { background: var(--cream-deep); padding: 36px 0 30px; }
+.footer-in { max-width: 1060px; margin-inline: auto; padding-inline: 22px; text-align: center; }
+.footer-links { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-top: 10px; }
+.footer-links a { text-decoration: none; font-weight: 700; font-size: .9rem; color: var(--ink-soft); }
+.footer-links a:hover { color: var(--brick); }
+.footer-bottom { margin-top: 18px; font-size: .84rem; color: var(--ink-soft); font-weight: 600; }
+
+@media (max-width: 480px) {
+  body { font-size: 16px; }
+  .paper { padding: 20px 18px 24px 42px; transform: rotate(0.5deg); }
+  .paper::before { left: 28px; }
+  .essay-line { font-size: 1.38rem; }
+  .paper-foot { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .honesty-card { padding: 26px 22px; }
+}
+</style>
 </head>
+<body>
 
-<body class="landing">
-  <a href="#nayte-main" class="skip-link">Siirry sisältöön</a>
+<a href="#nayte-main" class="skip-link">Siirry sisältöön</a>
 
-<header class="nav" id="nav" data-scrolled="false">
-    <div class="nav__inner">
-      <a class="nav__brand" href="/" aria-label="Puheo etusivu"><span class="brand-wordmark">puheo</span></a>
-
-      <nav class="nav__links" aria-label="Sivun osiot">
-        <!-- L-V367 — desktop Kurssit-pudotus: abikurssi-sivut olivat vain
-             mobiilin hampurilaisvalikossa, joten desktopilta ei pääsyt niihin
-             navista. Peilaa mobiilivalikon Kurssit-ryhmää. -->
-        <div class="nav__dropdown" id="nav-kurssit-dd">
-          <button class="nav__link nav__dropdown-trigger" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="nav-kurssit-menu">
-            Kurssit
-            <svg class="nav__dropdown-chevron" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
-          </button>
-          <div class="nav__dropdown-menu" id="nav-kurssit-menu" role="menu" aria-label="Kurssit">
-            <a class="nav__dropdown-item" role="menuitem" href="/#kurssit">Kaikki kurssit</a>
-            <a class="nav__dropdown-item" role="menuitem" href="/espanjan-abikurssi">Espanjan abikurssi</a>
-            <a class="nav__dropdown-item" role="menuitem" href="/saksan-abikurssi">Saksan abikurssi</a>
-            <a class="nav__dropdown-item" role="menuitem" href="/ranskan-abikurssi">Ranskan abikurssi</a>
-          </div>
-        </div>
-        <a class="nav__link" href="/nayte" aria-current="page">Näyte</a>
-        <a class="nav__link" href="/artikkelit/">Oppaat</a>
-        <a class="nav__link" href="/#hinnoittelu">Hinnoittelu</a>
-        <a class="nav__link" href="/ukk">FAQ</a>
-      </nav>
-
-      <div class="nav__cta" id="nav-cta">
-        <a class="btn btn--quiet" id="nav-login" href="/app.html#kirjaudu">Kirjaudu</a>
-        <a class="btn btn--primary" id="nav-signup" href="/app.html#rekisteroidy">Aloita ilmaiseksi</a>
-        <a class="btn btn--primary nav__chip" id="nav-chip" href="/app.html" hidden>
-          Jatka harjoittelua
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-        </a>
-      </div>
-
-      <button class="nav__hamburger" id="nav-hamburger" type="button" aria-label="Valikko" aria-expanded="false" aria-controls="nav-menu">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
-          <line x1="3" y1="7" x2="21" y2="7" /><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="17" x2="21" y2="17" />
-        </svg>
-      </button>
-    </div>
-  </header>
-
-  <!-- ─── MOBILE MENU (≤720px) — L-V355. Hamburger opens this full-screen
-       overlay; desktop nav untouched. -->
-  <div class="nav-menu" id="nav-menu" hidden>
-    <div class="nav-menu__panel" role="dialog" aria-modal="true" aria-label="Valikko">
-      <div class="nav-menu__head">
-        <span class="nav-menu__brand brand-wordmark">puheo</span>
-        <button class="nav-menu__close" id="nav-menu-close" type="button" aria-label="Sulje valikko">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
-            <line x1="6" y1="6" x2="18" y2="18" /><line x1="18" y1="6" x2="6" y2="18" />
-          </svg>
-        </button>
-      </div>
-      <div class="nav-menu__cta">
-        <a class="btn btn--primary nav-menu__primary" id="nav-menu-signup" href="/app.html#rekisteroidy">Aloita ilmaiseksi</a>
-        <a class="btn btn--primary nav-menu__primary" id="nav-menu-chip" href="/app.html" hidden>
-          Jatka harjoittelua
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" /></svg>
-        </a>
-        <a class="nav-menu__login" id="nav-menu-login" href="/app.html#kirjaudu">Kirjaudu</a>
-      </div>
-      <nav class="nav-menu__links" aria-label="Sivun osiot">
-        <details class="nav-menu__group" id="nav-menu-kurssit">
-          <summary class="nav-menu__link nav-menu__summary" aria-expanded="false" aria-controls="nav-menu-kurssit-list">
-            Kurssit
-            <span class="nav-menu__pm" aria-hidden="true">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
-                <line x1="5" y1="12" x2="19" y2="12" /><line class="nav-menu__pm-v" x1="12" y1="5" x2="12" y2="19" />
-              </svg>
-            </span>
-          </summary>
-          <div class="nav-menu__sub" id="nav-menu-kurssit-list">
-            <a class="nav-menu__sublink" href="/#kurssit">Kaikki kurssit</a>
-            <a class="nav-menu__sublink" href="/espanjan-abikurssi">Espanjan abikurssi</a>
-            <a class="nav-menu__sublink" href="/saksan-abikurssi">Saksan abikurssi</a>
-            <a class="nav-menu__sublink" href="/ranskan-abikurssi">Ranskan abikurssi</a>
-          </div>
-        </details>
-        <a class="nav-menu__link" href="/nayte" aria-current="page">Näyte</a>
-        <a class="nav-menu__link" href="/artikkelit/">Oppaat</a>
-        <a class="nav-menu__link" href="/#hinnoittelu">Hinnoittelu</a>
-        <a class="nav-menu__link" href="/ukk">FAQ</a>
-      </nav>
-    </div>
+<header class="nav">
+  <div class="nav-in">
+    <a class="brand" href="/">puheo</a>
+    <a class="btn btn-primary" href="/app.html#rekisteroidy?tier=kurssi">Osta 49&nbsp;€</a>
   </div>
-  <main id="nayte-main">
-    <section class="page-head" aria-labelledby="nayte-h1" data-reveal>
-      <div class="page-head__inner">
-        <h1 class="section-title" id="nayte-h1">Näin Puheo arvioi kirjoituksesi.</h1>
-        <p class="page-head__lede">
-          Arvio pohjaa YTL:n julkaisemiin koejakoihin ja viralliseen
-          pisteytysrubriikkiin. Saat pistehaarukan ja sanallisen perustelun:
-          mikä nostaa tekstiä ja mikä pitää sen alhaalla. Alla sama näyte
-          kolmella kielellä.
-        </p>
-        <a class="btn btn--primary" href="/#kokeile">Kokeile omalla tekstilläsi</a>
-      </div>
-    </section>
+</header>
 
-<section id="nayte" class="proof" aria-labelledby="proof-title">
-      <div class="proof__inner">
-        <div class="proof__head" data-reveal>
-          <p class="section-eyebrow">Näyte arvioinnista</p>
-          <h2 class="section-title" id="proof-title">
-            YTL:n rubriikki, ei yleinen mittari.
-          </h2>
-          <p class="proof__lede">
-            Arvio pohjaa YTL:n julkaisemiin koejakoihin ja viralliseen
-            pisteytysrubriikkiin. Saat pistehaarukan ja sanallisen perustelun:
-            mikä nostaa tekstiä ylöspäin ja mikä pitää sen alhaalla.
-          </p>
-        </div>
-
-        <div class="proof__lang-switch" role="tablist" aria-label="Valitse näytekortin kieli">
-          <button class="proof__lang-btn" type="button" role="tab" id="proof-tab-es"
-                  data-lang="es" aria-selected="true" aria-controls="proof-panel-es" tabindex="0">Español</button>
-          <button class="proof__lang-btn" type="button" role="tab" id="proof-tab-fr"
-                  data-lang="fr" aria-selected="false" aria-controls="proof-panel-fr" tabindex="-1">Français</button>
-          <button class="proof__lang-btn" type="button" role="tab" id="proof-tab-de"
-                  data-lang="de" aria-selected="false" aria-controls="proof-panel-de" tabindex="-1">Deutsch</button>
-        </div>
-
-        <div class="proof__panels" data-active-lang="es">
-
-          <div class="grader-card" role="tabpanel" id="proof-panel-es" aria-labelledby="proof-tab-es" data-lang="es" aria-label="Espanjankielinen synttärikutsu, lyhyt tehtävä, arvioitu pistehaarukka 21–27 / 33.">
-            <div class="grader-card__head">
-              <p class="grader-card__title">Sähköposti ystävälle · lyhyt · espanja</p>
-              <span class="grader-card__badge">21&ndash;27 / 33 p</span>
-            </div>
-
-            <div class="grader-card__cols">
-            <div class="grader-card__text">
-            <p class="grader-prose">Hola Marta,
-
-¡Te escribo para invitarte a mi cumpleaños el sábado que viene! La fiesta empieza a las siete en mi casa. Mi madre va a cocinar mucha comida y <span class="ge" data-cat="spelling" tabindex="0">tendrémos<span class="ge-tip"><strong>Oikein: tendremos</strong>Painollinen tavu on toiseksi viimeinen, joten 'tendremos' kirjoitetaan ilman aksenttia.</span></span> también música. <span class="ge" data-cat="grammar" tabindex="0">Espero que vienes<span class="ge-tip"><strong>Oikein: Espero que vengas</strong>Subjunktiivi pakollinen 'esperar que' jälkeen, kun toivot jonkun tekevän jotakin: 'venir' → 'vengas'.</span></span> con tu hermano. La semana pasada <span class="ge" data-cat="grammar" tabindex="0">estaba en Madrid<span class="ge-tip"><strong>Oikein: estuve en Madrid</strong>Loppuun saatettu, ajallisesti rajattu matka → preteriti ('estuve'), ei imperfekti.</span></span> con la clase y <span class="ge" data-cat="grammar" tabindex="0">era muy divertido<span class="ge-tip"><strong>Oikein: fue muy divertido</strong>Kokonaisarvio päättyneestä tapahtumasta → preteriti 'fue'. 'Era' kuvaisi kestävää tilaa.</span></span>. Dime antes del miércoles si puedes venir.
-
-¡Hasta pronto!
-Aino</p>
-            <div class="grader-legend" aria-hidden="true">
-              <span class="grader-legend__item"><span class="grader-legend__sw grader-legend__sw--spelling"></span>Kirjoitusasu</span>
-              <span class="grader-legend__item"><span class="grader-legend__sw grader-legend__sw--grammar"></span>Rakenne</span>
-            </div>
-            </div>
-
-            <div class="grader-card__eval">
-            <div class="rubric">
-              <div class="rubric-row">
-                <span class="rubric-row__name">Viestinnällisyys</span>
-                <span class="rubric-row__score">8 / 9</span>
-                <span class="rubric-row__fb">Kutsu, paikka, aika ja vastauspyyntö täytetty selkeästi.</span>
-              </div>
-              <div class="rubric-row">
-                <span class="rubric-row__name">Kielen rakenteet</span>
-                <span class="rubric-row__score">4 / 9</span>
-                <span class="rubric-row__fb">Toistuvia preteriti / imperfekti -valintoja ja yksi subjunktiivivirhe.</span>
-              </div>
-              <div class="rubric-row">
-                <span class="rubric-row__name">Sanasto</span>
-                <span class="rubric-row__score">7 / 9</span>
-                <span class="rubric-row__fb">Sopiva epämuodollinen rekisteri, lukio-tason sanasto.</span>
-              </div>
-              <div class="rubric-row">
-                <span class="rubric-row__name">Kokonaisuus</span>
-                <span class="rubric-row__score">5 / 6</span>
-                <span class="rubric-row__fb">Tervehdys ja lopetus paikallaan; sidossanoja niukasti.</span>
-              </div>
-              <div class="rubric-total">
-                <span class="rubric-total__label">Lyhyt kirjoitustehtävä</span>
-                <span class="rubric-total__score">21&ndash;27 / 33</span>
-                <span class="rubric-total__note">Arvioitu pistehaarukka. Vastaa tyypillisesti C–M-tason suoritusta; aikamuotojen hallinta nostaisi haarukan yläpäähän.</span>
-              </div>
-            </div>
-
-            <div class="grader-feedback">
-              <p class="grader-feedback__label">Sanallinen palaute</p>
-              <p class="grader-feedback__body">Kutsusta tulee selvä heti ensimmäisestä lauseesta, ja rekisteri on juuri oikea ystävälle. Eniten pudotat pisteitä menneessä ajassa: Madridin reissu on päättynyt ja rajattu tapahtuma, joten se vaatii preteritin (estuve, fue), ei imperfektiä. Yksi subjunktiivi jäi myös puuttumaan 'esperar que' -rakenteesta. Korjaa aikamuodot, niin tämä on M-tason vastaus.</p>
-            </div>
-            </div>
-          </div>
-          </div>
-
-          <div class="grader-card" role="tabpanel" id="proof-panel-fr" aria-labelledby="proof-tab-fr" data-lang="fr" hidden aria-label="Ranskankielinen mielipidekirjoitus, pitkä tehtävä, arvioitu pistehaarukka 38–48 / 66.">
-            <div class="grader-card__head">
-              <p class="grader-card__title">Mielipidekirjoitus · pitkä · ranska</p>
-              <span class="grader-card__badge">38&ndash;48 / 66 p</span>
-            </div>
-
-            <div class="grader-card__cols">
-            <div class="grader-card__text">
-            <p class="grader-prose">Aujourd'hui, beaucoup de lycées en France et en Finlande interdisent les téléphones portables pendant les cours. Je trouve que cette règle est raisonnable mais difficile à appliquer.
-
-D'un côté, le téléphone distrait l'attention pendant le cours. Mes camarades regardent souvent leurs notifications et ils <span class="ge" data-cat="grammar" tabindex="0">oubliaient<span class="ge-tip"><strong>Oikein: oublient</strong>Kuvaa nykyhetken toistuvaa tilannetta → présent, ei imparfait. Imparfait kuvaisi mennyttä toistuvaa toimintaa.</span></span> de noter ce que le prof dit. De l'autre côté, le téléphone est utile pour chercher un mot dans un dictionnaire.
-
-À mon avis, il faut que les profs trouvent un équilibre: le téléphone peut rester dans le sac, mais on peut le sortir <span class="ge" data-cat="grammar" tabindex="0">quand il y a besoin<span class="ge-tip"><strong>Oikein: quand c'est nécessaire</strong>Ranskan idiomi: 'avoir besoin' vaatii subjektin ('j'ai besoin de…'), ei persoonatonta 'il y a besoin' -rakennetta. Luontevampi: 'quand c'est nécessaire' tai 'au besoin'.</span></span>. Si on avait des règles claires, on respecterait mieux la règle.</p>
-            <div class="grader-legend" aria-hidden="true">
-              <span class="grader-legend__item"><span class="grader-legend__sw grader-legend__sw--spelling"></span>Kirjoitusasu</span>
-              <span class="grader-legend__item"><span class="grader-legend__sw grader-legend__sw--grammar"></span>Rakenne</span>
-            </div>
-            </div>
-
-            <div class="grader-card__eval">
-            <div class="rubric">
-              <div class="rubric-row">
-                <span class="rubric-row__name">Viestinnällisyys</span>
-                <span class="rubric-row__score">16 / 18</span>
-                <span class="rubric-row__fb">Selkeä mielipide, perustelut puolesta ja vastaan, tehtävänanto täytetty.</span>
-              </div>
-              <div class="rubric-row">
-                <span class="rubric-row__name">Kielen rakenteet</span>
-                <span class="rubric-row__score">11 / 18</span>
-                <span class="rubric-row__fb">Si-hypoteesi (imparfait + conditionnel) ja subjunktiivi 'il faut que' jälkeen oikein; yksi aikamuotovirhe.</span>
-              </div>
-              <div class="rubric-row">
-                <span class="rubric-row__name">Sanasto</span>
-                <span class="rubric-row__score">12 / 18</span>
-                <span class="rubric-row__fb">Selkeää lukio-tason sanastoa; yksi suomenkielinen idiomi-käännös.</span>
-              </div>
-              <div class="rubric-row">
-                <span class="rubric-row__name">Kokonaisuus</span>
-                <span class="rubric-row__score">4 / 6</span>
-                <span class="rubric-row__fb">Vahvat sidossanat (d'un côté / de l'autre / à mon avis), kappalejako selvä.</span>
-              </div>
-              <div class="rubric-total">
-                <span class="rubric-total__label">Pitkä kirjoitustehtävä</span>
-                <span class="rubric-total__score">38&ndash;48 / 66</span>
-                <span class="rubric-total__note">Arvioitu pistehaarukka. Vastaa tyypillisesti C–M-tason suoritusta; mielipiderakenne on M-tasoa, idiomivirhe vetää C-puolelle.</span>
-              </div>
-            </div>
-
-            <div class="grader-feedback">
-              <p class="grader-feedback__label">Sanallinen palaute</p>
-              <p class="grader-feedback__body">Mielipiteesi on heti selvä, ja perustelet sen molemmilta puolilta, mikä on juuri sitä mitä pitkä tehtävä hakee. Si-hypoteesi ja 'il faut que' -subjunktiivi menivät oikein, ja se nostaa rakennepisteitä. Kompastut nykyhetkeen: kun kuvaat tapaa joka toistuu nyt, käytä présensiä (oublient), ei imparfaitia. Yksi suomesta käännetty idiomi ('il y a besoin') vetää sanastoa alas, muuten taso on jo lähellä M:ää.</p>
-            </div>
-            </div>
-          </div>
-          </div>
-
-          <div class="grader-card" role="tabpanel" id="proof-panel-de" aria-labelledby="proof-tab-de" data-lang="de" hidden aria-label="Saksankielinen blogikommentti, lyhyt tehtävä, arvioitu pistehaarukka 21–30 / 33.">
-            <div class="grader-card__head">
-              <p class="grader-card__title">Blogikommentti · lyhyt · saksa</p>
-              <span class="grader-card__badge">21&ndash;30 / 33 p</span>
-            </div>
-
-            <div class="grader-card__cols">
-            <div class="grader-card__text">
-            <p class="grader-prose">Hallo Lena,
-
-dein Blogeintrag über das Auslandsjahr hat mich richtig inspiriert. Ich <span class="ge" data-cat="grammar" tabindex="0">bin<span class="ge-tip"><strong>Oikein: habe</strong>Perfektissä 'wohnen' ottaa 'haben'-apuverbin, ei 'sein'. 'sein' vain liike- tai tilanmuutosverbeillä (gehen, werden, sterben).</span></span> drei Monate in Berlin gewohnt und es war die beste Zeit meines Lebens. Am Anfang konnte ich nur wenig Deutsch, aber nach zwei Wochen <span class="ge" data-cat="grammar" tabindex="0">habe ich verstanden fast alles<span class="ge-tip"><strong>Oikein: habe ich fast alles verstanden</strong>Pääosalauseessa partisiippi viimeiseksi, kun apuverbi on käytössä. Sanajärjestys: subjekti — apuverbi — muut osat — partisiippi.</span></span> im Alltag.
-
-Mein Tipp: nimm einen Sprachkurs, bevor du fährst — im Ausland ist es viel einfacher, neue Freunde zu finden, wenn man schon ein bisschen sprechen kann.
-
-Liebe Grüße,
-Anna</p>
-            <div class="grader-legend" aria-hidden="true">
-              <span class="grader-legend__item"><span class="grader-legend__sw grader-legend__sw--spelling"></span>Kirjoitusasu</span>
-              <span class="grader-legend__item"><span class="grader-legend__sw grader-legend__sw--grammar"></span>Rakenne</span>
-            </div>
-            </div>
-
-            <div class="grader-card__eval">
-            <div class="rubric">
-              <div class="rubric-row">
-                <span class="rubric-row__name">Viestinnällisyys</span>
-                <span class="rubric-row__score">8 / 9</span>
-                <span class="rubric-row__fb">Reagoi blogiin, jakaa oman kokemuksen ja antaa konkreettisen vinkin.</span>
-              </div>
-              <div class="rubric-row">
-                <span class="rubric-row__name">Kielen rakenteet</span>
-                <span class="rubric-row__score">5 / 9</span>
-                <span class="rubric-row__fb">Apuverbi-virhe Perfektissä ja sanajärjestysvirhe pääosalauseessa; Genitiv ('meines Lebens') oikein.</span>
-              </div>
-              <div class="rubric-row">
-                <span class="rubric-row__name">Sanasto</span>
-                <span class="rubric-row__score">7 / 9</span>
-                <span class="rubric-row__fb">Sopiva rekisteri, idiomaattinen ('die beste Zeit meines Lebens').</span>
-              </div>
-              <div class="rubric-row">
-                <span class="rubric-row__name">Kokonaisuus</span>
-                <span class="rubric-row__score">5 / 6</span>
-                <span class="rubric-row__fb">Tervehdys, lopetus ja perusteltu vinkki; sivulauseen sanajärjestys ('bevor du fährst') oikein.</span>
-              </div>
-              <div class="rubric-total">
-                <span class="rubric-total__label">Lyhyt kirjoitustehtävä</span>
-                <span class="rubric-total__score">21&ndash;30 / 33</span>
-                <span class="rubric-total__note">Arvioitu pistehaarukka. Vastaa tyypillisesti C–M-tason suoritusta; Genitiv on M-tasoa, Perfekt-apuverbi vetää C-puolelle.</span>
-              </div>
-            </div>
-
-            <div class="grader-feedback">
-              <p class="grader-feedback__label">Sanallinen palaute</p>
-              <p class="grader-feedback__body">Vastaat blogiin luontevasti ja annat konkreettisen vinkin, joten viesti toimii. Kaksi rakennetta jää korjattavaksi: 'wohnen' ottaa Perfektissä apuverbin haben, ei sein, ja partisiippi kuuluu päälauseen loppuun (habe ich fast alles verstanden). Genitiivi ('meines Lebens') meni jo oikein, mikä on M-tason merkki. Kun sanajärjestys vakiintuu, nouset sieltä ylöspäin.</p>
-            </div>
-            </div>
-          </div>
-          </div>
-
-        </div>
-
-        <p class="proof__caveat">
-          Näytetty luku on arvioitu pistehaarukka YTL:n asteikolla (lyhyt
-          tehtävä 0–33 p, pitkä 0–66 p), ei luvattu yksittäispiste. Lopullinen
-          arvosana määräytyy koko kokeen yhteispisteistä (kuullun + luetun +
-          kirjoitus), ei yhdestä kirjoituksesta.
-        </p>
-      </div>
-    </section>
-
-    <section class="rubric-explain" aria-labelledby="rubric-explain-title" data-reveal>
-      <div class="rubric-explain__inner">
-        <h2 class="section-title" id="rubric-explain-title">Neljä osa-aluetta, samat kuin kokeessa.</h2>
-        <dl class="rubric-explain__list">
-          <div class="rubric-explain__item">
-            <dt>Viestinnällisyys</dt>
-            <dd>Tuleeko viesti perille ja täyttääkö vastaus tehtävänannon. Tästä saa eniten pisteitä.</dd>
-          </div>
-          <div class="rubric-explain__item">
-            <dt>Kielen rakenteet</dt>
-            <dd>Aikamuodot, sijamuodot, sanajärjestys ja muut kieliopin valinnat. Tässä erottuu taso.</dd>
-          </div>
-          <div class="rubric-explain__item">
-            <dt>Sanasto</dt>
-            <dd>Riittääkö sanavarasto aiheeseen ja onko rekisteri tilanteeseen sopiva.</dd>
-          </div>
-          <div class="rubric-explain__item">
-            <dt>Kokonaisuus</dt>
-            <dd>Tervehdys, lopetus, kappalejako ja sidossanat: pysyykö teksti kasassa.</dd>
-          </div>
-        </dl>
-      </div>
-    </section>
-
-    <section class="page-cta" aria-labelledby="nayte-cta-title" data-reveal>
-      <div class="page-cta__inner">
-        <h2 class="page-cta__title" id="nayte-cta-title">Saman arvion omasta tekstistäsi.</h2>
-        <p class="page-cta__body">
-          Tee ilmainen tili, kirjoita yksi vastaus ja näe pistehaarukka
-          perusteluineen. Espanja, ranska tai saksa.
-        </p>
-        <a class="btn btn--primary btn--lg" href="/app.html#rekisteroidy">Aloita ilmaiseksi</a>
-        <p class="page-cta__fineprint">Ilmainen aloitus, ei korttia.</p>
-      </div>
-    </section>
-  </main>
-
-<footer class="landing-footer" role="contentinfo">
-    <div class="landing-footer__inner">
-      <div class="landing-footer__brand">
-        <a class="landing-footer__brandmark" href="/" aria-label="Puheo etusivu">
-          <span class="landing-footer__brand-dot" aria-hidden="true"></span>
-          Puheo
-        </a>
-        <p class="landing-footer__tagline">
-          Lyhyen oppimäärän YO-koe valmennus espanjaan, ranskaan ja saksaan.
-          Rakennettu YTL:n rubriikin päälle.
-        </p>
-      </div>
-      <div class="landing-footer__cols">
-        <nav class="landing-footer__col" aria-label="Tuote">
-          <h3 class="landing-footer__col-title">Tuote</h3>
-          <ul class="landing-footer__links">
-            <li><a href="/#kurssit">Kurssit</a></li>
-            <li><a href="/nayte">Näyte</a></li>
-            <li><a href="/#hinnoittelu">Hinnoittelu</a></li>
-            <li><a href="/ukk">UKK</a></li>
-          </ul>
-        </nav>
-        <nav class="landing-footer__col" aria-label="Abikurssit">
-          <h3 class="landing-footer__col-title">Abikurssit</h3>
-          <ul class="landing-footer__links">
-            <li><a href="/espanjan-abikurssi">Espanjan abikurssi</a></li>
-            <li><a href="/saksan-abikurssi">Saksan abikurssi</a></li>
-            <li><a href="/ranskan-abikurssi">Ranskan abikurssi</a></li>
-          </ul>
-        </nav>
-        <nav class="landing-footer__col" aria-label="Tili">
-          <h3 class="landing-footer__col-title">Tili</h3>
-          <ul class="landing-footer__links">
-            <li><a href="/app.html#kirjaudu">Kirjaudu</a></li>
-            <li><a href="/app.html#rekisteroidy">Aloita ilmaiseksi</a></li>
-            <li><a href="/pricing.html">Hinnoittelu</a></li>
-          </ul>
-        </nav>
-        <nav class="landing-footer__col" aria-label="Tieto">
-          <h3 class="landing-footer__col-title">Tieto</h3>
-          <ul class="landing-footer__links">
-            <li><a href="/privacy.html">Tietosuoja</a></li>
-            <li><a href="/terms.html">Käyttöehdot</a></li>
-            <li><a href="/refund.html">Palautukset</a></li>
-            <li><a href="/artikkelit/">Oppaat</a></li>
-            <li><a href="mailto:tuki@puheo.fi">Ota yhteyttä</a></li>
-          </ul>
-        </nav>
-      </div>
-      <div class="landing-footer__bottom">
-        <p class="landing-footer__copy">© 2026 Puheo · Tehty Suomessa</p>
+<main id="nayte-main">
+  <!-- ─── HEADER + kielivalinta ─── -->
+  <section class="head" aria-labelledby="head-title">
+    <div class="wrap">
+      <p class="eyebrow">Näyte arvioinnista</p>
+      <h1 id="head-title">Näin Puheo arvioi kirjoitelmasi.</h1>
+      <p class="lede">
+        Alla on sama lomakirjoitelma kolmella kielellä, arvioituna YTL:n
+        pisteytysrubriikilla. Vaihda kieli ja katso mitä arvio nostaa esiin.
+      </p>
+      <div class="seg" role="group" aria-label="Valitse kieli">
+        <button class="seg-btn" type="button" data-lang="es" aria-pressed="true">Espanja</button>
+        <button class="seg-btn" type="button" data-lang="fr" aria-pressed="false">Ranska</button>
+        <button class="seg-btn" type="button" data-lang="de" aria-pressed="false">Saksa</button>
       </div>
     </div>
-  </footer>
+  </section>
 
-  <script type="module" src="/js/landing-init.js"></script>
-  <script src="/js/landing-nav.js"></script>
-  <script src="/js/landing-proof-lang.js"></script>
+  <!-- ─── SAMPLE: paperi + rubriikki ─── -->
+  <section class="sample" aria-label="Arvioitu esimerkkikirjoitelma">
+    <div class="wrap-wide sample-grid">
+      <div class="paper-zone">
+        <article class="paper" data-paper="es" aria-label="Arvioitu kirjoitelma, espanja">
+          <header class="paper-head"><span>Kirjoitelma · espanja</span><span>Tehtävä 2 · "Kerro lomastasi"</span></header>
+          <div>
+            <p class="essay-line">El verano pasado <span class="ok">fui</span> a Barcelona con mi familia.</p>
+            <p class="note note-ok">↳ Preteriti oikein heti alkuun.</p>
+            <p class="essay-line">Visitamos la Sagrada Familia y <span class="err">comemos</span> paella en la playa.</p>
+            <p class="note note-err">↳ comemos → comimos. Kerrot menneestä, joten preteriti.</p>
+            <p class="essay-line"><span class="ok">Hacía</span> calor todos los días y me gustó mucho.</p>
+            <p class="note note-ok">↳ Imperfekti kuvailee, preteriti kertoo. Juuri näin.</p>
+            <p class="essay-line">La comida española es <span class="err">muy más</span> rica que la finlandesa.</p>
+            <p class="note note-err">↳ muy más → mucho más. Vertailua vahvistaa mucho, ei muy.</p>
+          </div>
+          <footer class="paper-foot">
+            <div class="stamp"><span class="stamp-label">Pistehaarukka</span><span class="stamp-range">21&ndash;27</span><span class="stamp-max">/ 33 p</span></div>
+            <p class="stamp-note">Haarukka ja perustelut, ei luvattua yksittäispistettä.</p>
+          </footer>
+        </article>
+
+        <article class="paper" data-paper="fr" hidden aria-label="Arvioitu kirjoitelma, ranska">
+          <header class="paper-head"><span>Kirjoitelma · ranska</span><span>Tehtävä 2 · "Kerro lomastasi"</span></header>
+          <div>
+            <p class="essay-line">L'été dernier, <span class="ok">je suis allé</span> à Paris avec ma famille.</p>
+            <p class="note note-ok">↳ Passé composé être-apuverbillä oikein.</p>
+            <p class="essay-line">Nous <span class="err">visitons</span> le Louvre et mangeons des croissants.</p>
+            <p class="note note-err">↳ visitons → avons visité. Kerrot menneestä, joten passé composé.</p>
+            <p class="essay-line">Il <span class="ok">faisait</span> beau tous les jours et j'ai adoré.</p>
+            <p class="note note-ok">↳ Imparfait kuvailee, passé composé kertoo. Juuri näin.</p>
+            <p class="essay-line">La cuisine française est <span class="err">très meilleure</span> que la cuisine finlandaise.</p>
+            <p class="note note-err">↳ très meilleure → bien meilleure. Meilleur-vertailumuotoa vahvistaa bien.</p>
+          </div>
+          <footer class="paper-foot">
+            <div class="stamp"><span class="stamp-label">Pistehaarukka</span><span class="stamp-range">21&ndash;27</span><span class="stamp-max">/ 33 p</span></div>
+            <p class="stamp-note">Haarukka ja perustelut, ei luvattua yksittäispistettä.</p>
+          </footer>
+        </article>
+
+        <article class="paper" data-paper="de" hidden aria-label="Arvioitu kirjoitelma, saksa">
+          <header class="paper-head"><span>Kirjoitelma · saksa</span><span>Tehtävä 2 · "Kerro lomastasi"</span></header>
+          <div>
+            <p class="essay-line">Letzten Sommer <span class="ok">bin</span> ich nach Berlin <span class="ok">gefahren</span>.</p>
+            <p class="note note-ok">↳ Perfekti sein-apuverbillä oikein.</p>
+            <p class="essay-line">Wir <span class="err">besuchen</span> das Museum und essen Currywurst.</p>
+            <p class="note note-err">↳ besuchen → haben besucht. Kerrot menneestä, joten perfekti.</p>
+            <p class="essay-line">Es <span class="ok">war</span> jeden Tag heiß und es hat mir gefallen.</p>
+            <p class="note note-ok">↳ Präteritum kuvailee, perfekti kertoo. Juuri näin.</p>
+            <p class="essay-line">Das Essen dort ist <span class="err">mehr lecker</span> als zu Hause.</p>
+            <p class="note note-err">↳ mehr lecker → leckerer. Saksan komparatiivi muodostetaan -er-päätteellä.</p>
+          </div>
+          <footer class="paper-foot">
+            <div class="stamp"><span class="stamp-label">Pistehaarukka</span><span class="stamp-range">21&ndash;27</span><span class="stamp-max">/ 33 p</span></div>
+            <p class="stamp-note">Haarukka ja perustelut, ei luvattua yksittäispistettä.</p>
+          </footer>
+        </article>
+      </div>
+
+      <aside class="rubric-card" aria-label="Rubriikin osa-alueet selitettyinä">
+        <p class="rubric-head">Mitä arvio mittaa</p>
+        <p class="rubric-sub">YTL:n rubriikin neljä osa-aluetta, tämän kirjoitelman profiililla.</p>
+        <div class="rubric-row">
+          <div class="rubric-row-top"><span class="rubric-label">Sisältö ja tehtävänanto</span><span class="rubric-verdict rv-strong">vahva</span></div>
+          <div class="rubric-track"><div class="rubric-fill rf-1"></div></div>
+          <p class="rubric-desc">Vastaako teksti tehtävänantoa ja käsitteleekö se pyydetyt asiat. Tässä vahvin alue: kaikki kysytty löytyy tekstistä.</p>
+        </div>
+        <div class="rubric-row">
+          <div class="rubric-row-top"><span class="rubric-label">Rakenne ja sidosteisuus</span><span class="rubric-verdict rv-mid">kehittyy</span></div>
+          <div class="rubric-track"><div class="rubric-fill rf-2"></div></div>
+          <p class="rubric-desc">Kappalejako, sidossanat ja tekstin eteneminen. Virkkeet ovat ehjiä, mutta sidossanoja on vähän.</p>
+        </div>
+        <div class="rubric-row">
+          <div class="rubric-row-top"><span class="rubric-label">Kielen laajuus</span><span class="rubric-verdict rv-mid">kehittyy</span></div>
+          <div class="rubric-track"><div class="rubric-fill rf-3"></div></div>
+          <p class="rubric-desc">Rakenteiden ja sanaston monipuolisuus. Kaksi mennyttä aikamuotoa on jo käytössä, vertailurakenne vielä horjuu.</p>
+        </div>
+        <div class="rubric-row">
+          <div class="rubric-row-top"><span class="rubric-label">Tarkkuus</span><span class="rubric-verdict rv-weak">treenattavaa</span></div>
+          <div class="rubric-track"><div class="rubric-fill rf-4"></div></div>
+          <p class="rubric-desc">Virheiden määrä ja vakavuus. Aikamuotovirhe ja vertailuvirhe vetävät tätä alas, joten treeni kohdistuu tähän.</p>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ─── HONESTY ─── -->
+  <section class="honesty" aria-labelledby="honesty-title">
+    <div class="wrap">
+      <div class="honesty-card">
+        <span class="honesty-mark" aria-hidden="true">?</span>
+        <h2 id="honesty-title">Miksi haarukka eikä tarkka piste?</h2>
+        <p>
+          Sama kirjoitelma voi saada kahdelta arvioijalta hieman eri pisteet.
+          Siksi Puheo antaa pistehaarukan ja perustelut, ei teeskenneltyä
+          tarkkuutta. Näet mitkä lauseet maksoivat pisteitä ja miksi, ja se
+          riittää ohjaamaan treenin oikeaan kohtaan.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── CTA ─── -->
+  <section class="cta" aria-labelledby="cta-title">
+    <span class="cta-glyph cg-1" aria-hidden="true">¿</span>
+    <span class="cta-glyph cg-2" aria-hidden="true">é</span>
+    <div class="cta-in">
+      <h2 id="cta-title">Seuraava arvioitava on sinun tekstisi.</h2>
+      <p>
+        Koko abikurssi, mallikokeet ja rajaton kirjoitelmien arviointi.
+        Maksat kerran, käyttö ylioppilaskokeeseen asti.
+      </p>
+      <div class="cta-btns">
+        <a class="btn btn-gold" href="/app.html#rekisteroidy?tier=kurssi">
+          Osta kurssi 49&nbsp;€
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+        <a class="btn btn-ghost" href="/app.html#/aloitus">Kokeile ensin ilmaiseksi</a>
+      </div>
+      <p class="cta-fine">14 päivän rahat takaisin · Espanja, ranska, saksa · Ei tilausta</p>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="footer-in">
+    <a class="brand" href="/">puheo</a>
+    <nav class="footer-links" aria-label="Alatunnisteen linkit">
+      <a href="/">Etusivu</a>
+      <a href="/espanjan-abikurssi">Espanjan abikurssi</a>
+      <a href="/ranskan-abikurssi">Ranskan abikurssi</a>
+      <a href="/saksan-abikurssi">Saksan abikurssi</a>
+      <a href="/ukk">UKK</a>
+      <a href="mailto:tuki@puheo.fi">tuki@puheo.fi</a>
+    </nav>
+    <p class="footer-bottom">© 2026 Puheo · Tehty Suomessa</p>
+  </div>
+</footer>
+
+<script src="/js/landing-v2-lang.js"></script>
+
 </body>
 </html>

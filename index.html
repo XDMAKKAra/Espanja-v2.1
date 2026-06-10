@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fi" class="landing">
+<html lang="fi">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,8 +7,8 @@
   <!-- Pre-launch password gate, sync, no defer/async. -->
   <script src="/js/pre-launch-gate.js"></script>
 
-  <title>Puheo, Lyhyen kielen YO-koe: espanja, ranska, saksa</title>
-  <meta name="description" content="Lyhyen oppimäärän YO-kokeen valmennus espanjaan, ranskaan ja saksaan. YTL:n rubriikilla kalibroitu kirjoitusten arviointi. 90 oppituntia, 6 mallikoetta. Aloita ilmaiseksi." />
+  <title>Puheo · Abikurssi YO-kokeeseen: espanja, ranska, saksa, 49 €</title>
+  <meta name="description" content="Koko lyhyen oppimäärän abikurssi: 90 oppituntia, 6 mallikoetta ja kirjoitelmien arviointi YTL:n kriteereillä. Kertaostos 49 €, käyttö ylioppilaskokeeseen asti. Espanja, ranska ja saksa." />
   <meta name="author" content="Puheo" />
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
   <meta name="google-site-verification" content="ZdvxnGbBDKI5J3Zl2GmJt_fRfFQ3CdoIo-K00QvZnk4" />
@@ -17,8 +17,8 @@
 
   <!-- Open Graph -->
   <meta property="og:site_name" content="Puheo" />
-  <meta property="og:title" content="Puheo, Lyhyen kielen YO-koe: espanja, ranska, saksa" />
-  <meta property="og:description" content="YTL:n rubriikilla kalibroitu valmennus lyhyen oppimäärän espanjaan, ranskaan ja saksaan. 90 oppituntia, 6 mallikoetta." />
+  <meta property="og:title" content="Puheo · Abikurssi YO-kokeeseen: espanja, ranska, saksa, 49 €" />
+  <meta property="og:description" content="Koko lyhyen oppimäärän abikurssi: 90 oppituntia, 6 mallikoetta ja kirjoitelmien arviointi YTL:n kriteereillä. Kertaostos 49 €." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://puheo.fi/" />
   <meta property="og:image" content="https://puheo.fi/og-image.png" />
@@ -28,8 +28,8 @@
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Puheo, Lyhyen kielen YO-koe: espanja, ranska, saksa" />
-  <meta name="twitter:description" content="YTL:n rubriikilla kalibroitu valmennus lyhyen oppimäärän espanjaan, ranskaan ja saksaan." />
+  <meta name="twitter:title" content="Puheo · Abikurssi YO-kokeeseen: espanja, ranska, saksa, 49 €" />
+  <meta name="twitter:description" content="Koko lyhyen oppimäärän abikurssi YTL:n kriteereillä. Kertaostos 49 €, käyttö ylioppilaskokeeseen asti." />
   <meta name="twitter:image" content="https://puheo.fi/og-image.png" />
 
   <!-- JSON-LD: SoftwareApplication -->
@@ -38,7 +38,7 @@
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
     "name": "Puheo",
-    "description": "YO-kokeen valmennusalusta lyhyen oppimäärän lukiolaisille espanjassa, ranskassa ja saksassa. YTL-rubriikilla kalibroitu kirjoitusten arviointi.",
+    "description": "YO-kokeen valmennusalusta lyhyen oppimäärän lukiolaisille espanjassa, ranskassa ja saksassa. YTL-rubriikilla arvioitu kirjoitusten palaute.",
     "applicationCategory": "EducationalApplication",
     "operatingSystem": "Web, PWA (iOS, Android)",
     "inLanguage": "fi",
@@ -74,616 +74,581 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/public/favicon/apple-touch-icon.png" />
   <meta name="theme-color" content="#9B2D2A" />
 
-  <!-- L-V344 typography: self-hosted Fredoka (display) + Mulish (body). -->
+  <!-- L-V412 landing v2: self-hosted Fredoka (display) + Mulish (body) + Caveat (essay). -->
   <link rel="preload" href="/fonts/fredoka-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="/fonts/mulish-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/caveat-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="/css/fonts.css" />
 
-  <link rel="stylesheet" href="/css/landing-tokens.css" />
-  <link rel="stylesheet" href="/css/landing.css" />
-  <!-- 2026-05-18 Ship 1.5: Old-Spain illustrated register supersedes Ship 1
-       editorial-textbook attempt. landing-editorial-* loaded LAST so its
-       rules win the cascade. -->
-  <link rel="stylesheet" href="/css/landing-editorial-tokens.css" />
-  <link rel="stylesheet" href="/css/landing-editorial.css" />
-  <!-- L-V381 — block-rhythm + spark layer, loaded LAST so its section
-       rhythm, layered warm shadows and scroll-reveal win the cascade.
-       Brand tokens unchanged: this only restructures rhythm and adds motion. -->
-  <link rel="stylesheet" href="/css/landing-spark.css" />
+<style>
+/* ───────────── Tokens ───────────── */
+:root {
+  --cream:       #F6EEDC;
+  --cream-deep:  #EFE3C9;
+  --paper:       #FCF7EB;
+  --ink:         #33271F;
+  --ink-soft:    #6E5B4D;
+  --brick:       #9B2D2A;
+  --brick-deep:  #7A201E;
+  --brick-tint:  #F0DCD2;
+  --terra:       #C4573B;
+  --gold:        #F2B43A;
+  --gold-soft:   #F8DC9B;
+  --green:       #3F7D4E;
+  --green-deep:  #2F6B3E;
+  --green-tint:  #DCEAD8;
+  --line:        rgba(110, 85, 60, .16);
+  --shadow-warm: 0 18px 40px -18px rgba(90, 50, 25, .35);
+}
+
+/* ───────────── Base ───────────── */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { overflow-x: clip; }
+body {
+  margin: 0;
+  background: var(--cream);
+  color: var(--ink);
+  font-family: "Mulish", system-ui, sans-serif;
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3 { font-family: "Fredoka", sans-serif; font-weight: 600; line-height: 1.12; margin: 0; letter-spacing: -.01em; }
+p { margin: 0; }
+a { color: inherit; }
+svg { display: block; }
+
+.skip-link {
+  position: absolute; left: -9999px; top: 0; z-index: 100;
+  background: var(--brick); color: var(--paper);
+  padding: 10px 18px; border-radius: 0 0 12px 0; font-weight: 700; text-decoration: none;
+}
+.skip-link:focus { left: 0; }
+
+.wrap { max-width: 640px; margin-inline: auto; padding-inline: 22px; }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  font-family: "Fredoka", sans-serif; font-weight: 500; font-size: 1.1rem;
+  text-decoration: none; border-radius: 16px; padding: 16px 30px;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.btn-primary { background: var(--brick); color: var(--paper); box-shadow: 0 4px 0 var(--brick-deep); }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 0 var(--brick-deep); }
+.btn-gold { background: var(--gold); color: var(--ink); box-shadow: 0 4px 0 #C98F1E; }
+.btn-gold:hover { transform: translateY(-2px); box-shadow: 0 6px 0 #C98F1E; }
+.btn-ghost { background: transparent; color: var(--paper); border: 2px solid rgba(252, 247, 235, .45); padding: 14px 28px; }
+.btn-ghost:hover { border-color: var(--paper); }
+.btn-block { width: 100%; }
+
+.reassure {
+  margin-top: 14px; font-size: .92rem; font-weight: 700; color: var(--green-deep);
+  display: flex; gap: 8px; justify-content: center; align-items: center; flex-wrap: wrap;
+}
+.reassure .tick {
+  width: 19px; height: 19px; border-radius: 50%; flex: none;
+  background: var(--green-tint); color: var(--green-deep);
+  display: grid; place-items: center; font-size: .72rem; font-weight: 800;
+}
+.escape { display: block; text-align: center; margin-top: 18px; font-size: .92rem; font-weight: 700; color: var(--ink-soft); }
+.escape a { color: var(--ink-soft); }
+.escape a:hover { color: var(--brick); }
+
+/* ───────────── Nav ───────────── */
+.nav { position: sticky; top: 0; z-index: 50; background: rgba(246, 238, 220, .94); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+.nav-in { max-width: 980px; margin-inline: auto; padding: 12px 22px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.brand { font-family: "Fredoka", sans-serif; font-weight: 600; font-size: 1.55rem; color: var(--brick); text-decoration: none; line-height: 1; }
+.nav .btn { padding: 10px 20px; font-size: 1rem; }
+
+/* ───────────── Hero ───────────── */
+.hero { padding: 26px 0 34px; text-align: center; }
+.hero .wrap { max-width: 760px; }
+.hero-art { margin-top: 44px; }
+.hero-art-caption { margin: 24px auto 0; font-size: .95rem; font-weight: 700; color: var(--ink-soft); max-width: 40ch; }
+.nowrap { white-space: nowrap; }
+@media (min-width: 1020px) {
+  .hero { text-align: left; padding-top: 56px; }
+  .hero .wrap { max-width: 1140px; display: grid; grid-template-columns: 1.02fr .98fr; gap: 64px; align-items: center; }
+  .hero-art { margin-top: 0; }
+  .seg { margin-inline: 0; }
+  .hero-sub { margin-inline: 0; }
+  .price-row { justify-content: flex-start; }
+  .hero .reassure { justify-content: flex-start; }
+  .escape { text-align: left; }
+}
+.micro-pill {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--gold-soft); color: #7A5410;
+  font-weight: 800; font-size: .82rem; border-radius: 99px; padding: 6px 16px;
+}
+.micro-pill::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--terra); }
+
+.seg-label { margin-top: 18px; font-weight: 800; font-size: .95rem; color: var(--ink-soft); }
+.seg {
+  margin: 12px auto 0; display: flex; gap: 6px; max-width: 420px;
+  background: var(--cream-deep); border-radius: 18px; padding: 6px;
+}
+.seg-btn {
+  flex: 1; border: 0; cursor: pointer; border-radius: 13px; padding: 12px 4px;
+  font-family: "Fredoka", sans-serif; font-weight: 500; font-size: 1.04rem;
+  background: transparent; color: var(--ink-soft);
+  transition: background .15s ease, color .15s ease;
+}
+.seg-btn[aria-pressed="true"] { background: var(--brick); color: var(--paper); box-shadow: 0 2px 0 var(--brick-deep); }
+
+.hero h1 { margin-top: 20px; font-size: clamp(2rem, 6.8vw, 3.6rem); }
+.hl {
+  background: var(--gold);
+  border-radius: .18em .45em .22em .5em;
+  padding: .02em .14em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+.hero-sub { margin: 12px auto 0; font-size: 1.04rem; color: var(--ink-soft); max-width: 42ch; }
+
+.price-row { margin-top: 18px; display: flex; align-items: baseline; justify-content: center; gap: 12px; flex-wrap: wrap; }
+.price-num { font-family: "Fredoka", sans-serif; font-weight: 600; font-size: 3.2rem; line-height: 1; color: var(--ink); }
+.price-terms { font-weight: 700; font-size: .95rem; color: var(--ink-soft); text-align: left; line-height: 1.4; }
+
+.hero .btn-primary { margin-top: 16px; min-width: min(100%, 340px); font-size: 1.2rem; padding: 17px 34px; }
+
+/* ───────────── Proof: graded paper ───────────── */
+.offer h2, .social h2, .path-sec h2, .faq h2 { font-size: clamp(1.7rem, 5.4vw, 2.3rem); text-align: center; }
+
+.paper-zone { position: relative; max-width: 480px; margin: 0 auto; }
+.paper {
+  position: relative; background: var(--paper); border-radius: 14px;
+  border: 1px solid rgba(110, 85, 60, .12);
+  box-shadow: var(--shadow-warm);
+  transform: rotate(1.2deg);
+  padding: 22px 26px 26px 52px;
+}
+.paper[hidden] { display: none; }
+.paper::before {
+  content: ""; position: absolute; top: 0; bottom: 0; left: 36px;
+  width: 2px; background: rgba(196, 87, 59, .28);
+}
+.paper-head {
+  display: flex; justify-content: space-between; gap: 12px;
+  font-weight: 800; font-size: .8rem; color: var(--ink-soft);
+  border-bottom: 1px dashed var(--line); padding-bottom: 10px; margin-bottom: 16px;
+}
+.essay-line { font-family: "Caveat", cursive; font-weight: 500; font-size: 1.5rem; line-height: 1.35; color: #423426; }
+.essay-line .ok  { text-decoration: underline; text-decoration-color: var(--green); text-decoration-thickness: 2.5px; text-underline-offset: 4px; }
+.essay-line .err { text-decoration: underline wavy; text-decoration-color: var(--brick); text-decoration-thickness: 2px; text-underline-offset: 4px; }
+.note { font-size: .85rem; font-weight: 700; line-height: 1.45; margin: 4px 0 14px; padding-left: 14px; }
+.note-ok { color: var(--green-deep); }
+.note-err { color: var(--brick); }
+.paper-foot { display: flex; align-items: center; gap: 18px; margin-top: 18px; }
+.stamp {
+  flex: none; display: flex; flex-direction: column; align-items: center;
+  border: 2.5px solid var(--brick); outline: 1.5px solid rgba(155, 45, 42, .45); outline-offset: 3px;
+  border-radius: 10px; color: var(--brick); padding: 8px 16px 10px;
+  transform: rotate(-5deg); background: rgba(155, 45, 42, .04);
+}
+.stamp-label { font-weight: 800; font-size: .68rem; letter-spacing: .02em; }
+.stamp-range { font-family: "Fredoka", sans-serif; font-weight: 600; font-size: 1.7rem; line-height: 1.1; }
+.stamp-max { font-family: "Mulish", sans-serif; font-weight: 800; font-size: .72rem; color: var(--ink-soft); margin-top: 2px; }
+.stamp-note { font-size: .85rem; color: var(--ink-soft); font-weight: 600; max-width: 22ch; }
+
+/* ───────────── Offer ───────────── */
+.offer { padding: 64px 0 8px; }
+.offer-card {
+  margin-top: 32px; background: var(--paper); border-radius: 22px;
+  border: 2px solid var(--ink); box-shadow: 8px 8px 0 var(--brick);
+  padding: 32px 28px 30px; position: relative;
+}
+.offer-ribbon {
+  position: absolute; top: -16px; left: 24px;
+  background: var(--gold); color: var(--ink);
+  font-family: "Fredoka", sans-serif; font-weight: 600; font-size: .92rem;
+  padding: 6px 16px; border-radius: 10px; transform: rotate(-2.5deg);
+  box-shadow: 0 3px 0 #C98F1E;
+}
+.offer-list { list-style: none; margin: 0 0 24px; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+.offer-list li { display: flex; gap: 11px; align-items: flex-start; font-size: .99rem; font-weight: 600; }
+.offer-list .tick {
+  flex: none; width: 21px; height: 21px; border-radius: 50%; margin-top: 2px;
+  background: var(--green-tint); color: var(--green-deep);
+  display: grid; place-items: center; font-weight: 800; font-size: .78rem;
+}
+.anchor-box {
+  background: var(--cream); border-radius: 14px; padding: 16px 18px;
+  margin-bottom: 24px; font-size: .95rem; font-weight: 600; color: var(--ink-soft);
+}
+.anchor-box b { color: var(--ink); }
+.treeni-line { margin-top: 22px; text-align: center; font-size: .92rem; font-weight: 700; color: var(--ink-soft); }
+.treeni-line a { color: var(--terra); }
+
+/* ───────────── Social proof ───────────── */
+.social { padding: 72px 0 8px; }
+.rating { display: flex; justify-content: center; align-items: baseline; gap: 10px; margin-top: 18px; flex-wrap: wrap; }
+.rating b { font-family: "Fredoka", sans-serif; font-weight: 600; font-size: 2.4rem; color: var(--ink); }
+.rating .star { color: var(--gold); font-size: 1.5rem; }
+.rating span { font-weight: 700; color: var(--ink-soft); }
+.quote-card {
+  margin: 28px auto 0; max-width: 560px;
+  background: var(--gold-soft); border-radius: 22px; padding: 30px 30px 26px;
+  position: relative; overflow: hidden;
+}
+.quote-card::before {
+  content: "\201C"; position: absolute; top: -42px; left: 10px;
+  font-family: "Fredoka", sans-serif; font-weight: 700; font-size: 9rem;
+  color: rgba(155, 45, 42, .18); line-height: 1;
+}
+.quote-text { position: relative; font-family: "Fredoka", sans-serif; font-weight: 500; font-size: 1.18rem; line-height: 1.45; color: #5A431B; }
+.quote-author { position: relative; margin-top: 16px; font-weight: 800; }
+.quote-author span { font-weight: 600; color: var(--ink-soft); }
+
+/* ───────────── Path (compact) ───────────── */
+.path-sec { padding: 72px 0 8px; }
+.path-lede { margin: 14px auto 0; text-align: center; color: var(--ink-soft); max-width: 46ch; }
+.path-card {
+  margin: 30px auto 0; max-width: 560px;
+  background: var(--paper); border-radius: 22px;
+  border: 1px solid rgba(110, 85, 60, .12); box-shadow: var(--shadow-warm);
+  padding: 14px 24px;
+}
+.path-row { display: flex; align-items: center; gap: 14px; padding: 12px 0; }
+.path-row + .path-row { border-top: 1px dashed var(--line); }
+.path-num {
+  flex: none; width: 34px; height: 34px; border-radius: 50%;
+  display: grid; place-items: center; color: var(--paper);
+  font-family: "Fredoka", sans-serif; font-weight: 600; font-size: .98rem;
+}
+.pn-1 { background: var(--green); } .pn-2 { background: #5C9255; }
+.pn-3 { background: #99A33C; }     .pn-4 { background: #C9A52E; }
+.pn-5 { background: var(--gold); color: var(--ink); } .pn-6 { background: #D98A33; }
+.pn-7 { background: var(--terra); } .pn-8 { background: var(--brick); }
+.path-name { font-family: "Fredoka", sans-serif; font-weight: 500; font-size: 1.05rem; flex: 1; min-width: 0; }
+.path-level { flex: none; font-weight: 800; font-size: .8rem; color: var(--ink-soft); }
+
+/* ───────────── FAQ ───────────── */
+.faq { padding: 72px 0 8px; }
+.faq-list { margin: 28px auto 0; max-width: 560px; display: flex; flex-direction: column; gap: 12px; }
+.faq-item {
+  background: var(--paper); border-radius: 16px;
+  border: 1px solid rgba(110, 85, 60, .14);
+}
+.faq-item summary {
+  cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 14px;
+  font-family: "Fredoka", sans-serif; font-weight: 500; font-size: 1.06rem;
+  padding: 16px 20px;
+}
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary::after {
+  content: "+"; font-family: "Fredoka", sans-serif; font-weight: 600; font-size: 1.4rem;
+  color: var(--terra); line-height: 1; transition: transform .15s ease;
+}
+.faq-item[open] summary::after { transform: rotate(45deg); }
+.faq-item p { padding: 0 20px 18px; color: var(--ink-soft); font-size: .97rem; }
+
+/* ───────────── Final CTA ───────────── */
+.cta { margin-top: 80px; background: var(--brick); color: var(--paper); padding: 80px 0; position: relative; overflow: hidden; }
+.cta-glyph { position: absolute; font-family: "Fredoka", sans-serif; font-weight: 700; color: rgba(252, 247, 235, .07); line-height: 1; user-select: none; }
+.cg-1 { font-size: 14rem; top: -40px; left: -16px; transform: rotate(-10deg); }
+.cg-2 { font-size: 11rem; bottom: -50px; right: 4%; transform: rotate(8deg); }
+.cta-in { position: relative; max-width: 600px; margin-inline: auto; padding-inline: 22px; text-align: center; }
+.cta h2 { font-size: clamp(2rem, 6.5vw, 2.9rem); }
+.cta p { margin-top: 16px; font-size: 1.08rem; color: rgba(252, 247, 235, .85); }
+.cta-btns { margin-top: 30px; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+.cta-fine { margin-top: 24px; font-size: .9rem; color: rgba(252, 247, 235, .65); font-weight: 700; }
+
+/* ───────────── Footer ───────────── */
+.footer { background: var(--cream-deep); padding: 36px 0 30px; }
+.footer-in { max-width: 980px; margin-inline: auto; padding-inline: 22px; text-align: center; }
+.footer-links { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-top: 10px; }
+.footer-links a { text-decoration: none; font-weight: 700; font-size: .9rem; color: var(--ink-soft); }
+.footer-links a:hover { color: var(--brick); }
+.footer-bottom { margin-top: 18px; font-size: .84rem; color: var(--ink-soft); font-weight: 600; }
+
+/* ───────────── Responsive ───────────── */
+@media (max-width: 480px) {
+  body { font-size: 16px; }
+  .paper { transform: rotate(0.8deg); padding: 20px 18px 24px 42px; }
+  .paper::before { left: 28px; }
+  .essay-line { font-size: 1.4rem; }
+  .paper-foot { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .price-row { gap: 10px; }
+  .price-num { font-size: 2.9rem; }
+  .offer-card { padding: 28px 20px 26px; box-shadow: 5px 5px 0 var(--brick); }
+  .path-name { font-size: .98rem; }
+}
+</style>
 </head>
+<body>
 
-<body class="landing">
-  <a href="#hero" class="skip-link">Siirry sisältöön</a>
+<a href="#hero" class="skip-link">Siirry sisältöön</a>
 
-  <!-- ─── NAV ─────────────────────────────────────────────── -->
-  <header class="nav" id="nav" data-scrolled="false">
-    <div class="nav__inner">
-      <a class="nav__brand" href="/" aria-label="Puheo etusivu"><span class="brand-wordmark">puheo</span></a>
-
-      <nav class="nav__links" aria-label="Sivun osiot">
-        <!-- L-V367 — desktop Kurssit-pudotus: abikurssi-sivut olivat vain
-             mobiilin hampurilaisvalikossa, joten desktopilta ei pääsyt niihin
-             navista. Peilaa mobiilivalikon Kurssit-ryhmää. -->
-        <div class="nav__dropdown" id="nav-kurssit-dd">
-          <button class="nav__link nav__dropdown-trigger" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="nav-kurssit-menu">
-            Kurssit
-            <svg class="nav__dropdown-chevron" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
-          </button>
-          <div class="nav__dropdown-menu" id="nav-kurssit-menu" role="menu" aria-label="Kurssit">
-            <a class="nav__dropdown-item" role="menuitem" href="#kurssit">Kaikki kurssit</a>
-            <a class="nav__dropdown-item" role="menuitem" href="/espanjan-abikurssi">Espanjan abikurssi</a>
-            <a class="nav__dropdown-item" role="menuitem" href="/saksan-abikurssi">Saksan abikurssi</a>
-            <a class="nav__dropdown-item" role="menuitem" href="/ranskan-abikurssi">Ranskan abikurssi</a>
-          </div>
-        </div>
-        <a class="nav__link" href="/nayte">Näyte</a>
-        <a class="nav__link" href="/artikkelit/">Oppaat</a>
-        <a class="nav__link" href="#hinnoittelu">Hinnoittelu</a>
-        <a class="nav__link" href="/ukk">FAQ</a>
-      </nav>
-
-      <div class="nav__cta" id="nav-cta">
-        <a class="btn btn--quiet" id="nav-login" href="/app.html#kirjaudu">Kirjaudu</a>
-        <a class="btn btn--primary" id="nav-signup" href="/app.html#/aloitus">Aloita ilmaiseksi</a>
-        <a class="btn btn--primary nav__chip" id="nav-chip" href="/app.html" hidden>
-          Jatka harjoittelua
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-        </a>
-      </div>
-
-      <button class="nav__hamburger" id="nav-hamburger" type="button" aria-label="Valikko" aria-expanded="false" aria-controls="nav-menu">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
-          <line x1="3" y1="7" x2="21" y2="7" /><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="17" x2="21" y2="17" />
-        </svg>
-      </button>
-    </div>
-  </header>
-
-  <!-- ─── MOBILE MENU (≤720px) — L-V355. Hamburger opens this full-screen
-       overlay; desktop nav untouched. -->
-  <div class="nav-menu" id="nav-menu" hidden>
-    <div class="nav-menu__panel" role="dialog" aria-modal="true" aria-label="Valikko">
-      <div class="nav-menu__head">
-        <span class="nav-menu__brand brand-wordmark">puheo</span>
-        <button class="nav-menu__close" id="nav-menu-close" type="button" aria-label="Sulje valikko">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
-            <line x1="6" y1="6" x2="18" y2="18" /><line x1="18" y1="6" x2="6" y2="18" />
-          </svg>
-        </button>
-      </div>
-      <div class="nav-menu__cta">
-        <a class="btn btn--primary nav-menu__primary" id="nav-menu-signup" href="/app.html#/aloitus">Aloita ilmaiseksi</a>
-        <a class="btn btn--primary nav-menu__primary" id="nav-menu-chip" href="/app.html" hidden>
-          Jatka harjoittelua
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" /></svg>
-        </a>
-        <a class="nav-menu__login" id="nav-menu-login" href="/app.html#kirjaudu">Kirjaudu</a>
-      </div>
-      <nav class="nav-menu__links" aria-label="Sivun osiot">
-        <details class="nav-menu__group" id="nav-menu-kurssit">
-          <summary class="nav-menu__link nav-menu__summary" aria-expanded="false" aria-controls="nav-menu-kurssit-list">
-            Kurssit
-            <span class="nav-menu__pm" aria-hidden="true">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
-                <line x1="5" y1="12" x2="19" y2="12" /><line class="nav-menu__pm-v" x1="12" y1="5" x2="12" y2="19" />
-              </svg>
-            </span>
-          </summary>
-          <div class="nav-menu__sub" id="nav-menu-kurssit-list">
-            <a class="nav-menu__sublink" href="#kurssit">Kaikki kurssit</a>
-            <a class="nav-menu__sublink" href="/espanjan-abikurssi">Espanjan abikurssi</a>
-            <a class="nav-menu__sublink" href="/saksan-abikurssi">Saksan abikurssi</a>
-            <a class="nav-menu__sublink" href="/ranskan-abikurssi">Ranskan abikurssi</a>
-          </div>
-        </details>
-        <a class="nav-menu__link" href="/nayte">Näyte</a>
-        <a class="nav-menu__link" href="/artikkelit/">Oppaat</a>
-        <a class="nav-menu__link" href="#hinnoittelu">Hinnoittelu</a>
-        <a class="nav-menu__link" href="/ukk">FAQ</a>
-      </nav>
-    </div>
+<!-- ─── NAV: brand + yksi ostonappi, ei mitään muuta ─── -->
+<header class="nav">
+  <div class="nav-in">
+    <a class="brand" href="/">puheo</a>
+    <a class="btn btn-primary" href="/app.html#rekisteroidy?tier=kurssi">Osta 49&nbsp;€</a>
   </div>
+</header>
 
-  <main>
-    <!-- ═══ HERO, L-V385 Lara-rakenne.
-         Vasen: kicker + otsikko + alaotsikko (arviointilupaus sanoin) +
-         pää-CTA "Aloita ilmaiseksi" + sekundaarilinkki /nayte-demoon.
-         Oikea: kurssi-/hinta-kortti ES/FR/DE-välilehdillä. Ei tuotedemoa
-         landingilla, demo elää /nayte-sivulla. <860px pinoutuu, kortti
-         kopion alle (above-fold-painotus säilyy). -->
-    <section class="hero" id="hero" aria-labelledby="hero-title">
-      <div class="hero__inner">
+<main>
+  <!-- ─── HERO: kielivalinta + lupaus + hinta + osto samassa ruudussa ─── -->
+  <section class="hero" id="hero" aria-labelledby="hero-title">
+    <div class="wrap">
+      <div class="hero-copy">
+      <span class="micro-pill">Syksyn YO-kirjoitukset ovat syyskuussa</span>
 
-        <!-- L-V406 — vasen sarake = copy + kevyt arviorivi. Opettajalaina ja
-             YTL-merkki siirretty oikeaan sarakkeeseen kortin alle, jotta
-             sarakkeet tasapainottuvat eikä jää keskityhjää (V404 jätti vasemman
-             pinon korttia korkeammaksi → tyhjä alaoikea). -->
-        <div class="hero__copy">
-          <p class="hero__kicker">Lyhyen oppimäärän YO-valmennus, espanja, ranska ja saksa</p>
+      <p class="seg-label" id="seg-label">Mitä kieltä kirjoitat?</p>
+      <div class="seg" role="group" aria-labelledby="seg-label">
+        <button class="seg-btn" type="button" data-lang="es" aria-pressed="true">Espanja</button>
+        <button class="seg-btn" type="button" data-lang="fr" aria-pressed="false">Ranska</button>
+        <button class="seg-btn" type="button" data-lang="de" aria-pressed="false">Saksa</button>
+      </div>
 
-          <h1 class="hero__title" id="hero-title">
-            Varmuutta ylioppilaskokeeseen. Stressitöntä kertausta.
-          </h1>
+      <h1 id="hero-title">Varmempi arvosana <span class="hl" data-es="espanjan" data-fr="ranskan" data-de="saksan">espanjan</span> <span class="nowrap">YO-kokeeseen</span>.</h1>
+      <p class="hero-sub">
+        Koko lyhyen oppimäärän abikurssi: 90 oppituntia, 6 mallikoetta ja
+        kirjoitelmien arviointi YTL:n omilla kriteereillä.
+      </p>
 
-          <p class="hero__sub">
-            Kahdeksan kurssin polku, kaikki koeosiot mukana. Kirjoitat oikean
-            YO-tyylisen tehtävän, ja saat tekstistäsi YTL:n kriteereillä
-            pistehaarukan ja perustelun: missä menetit pisteitä ja miksi.
-          </p>
+      <div class="price-row">
+        <span class="price-num">49&nbsp;€</span>
+        <span class="price-terms">kertaostos, ei tilausta<br />käyttö koepäivään asti</span>
+      </div>
 
-          <div class="hero__ctas">
-            <a class="btn btn--primary btn--lg" href="/app.html#/aloitus">
-              Aloita ilmaiseksi
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-            </a>
-            <a class="hero__link-secondary" href="/nayte">Katso miten arviointi toimii →</a>
+      <a class="btn btn-primary" href="/app.html#rekisteroidy?tier=kurssi">
+        Osta kurssi 49&nbsp;€
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
+      <p class="reassure"><span class="tick">✓</span>14 päivän rahat takaisin<span class="tick">✓</span>Heti käyttöön</p>
+      <p class="escape">Etkö ole varma? <a href="/app.html#/aloitus">Kokeile ensin ilmaiseksi</a></p>
+      </div>
+
+      <div class="hero-art">
+      <div class="paper-zone">
+        <article class="paper" data-paper="es" aria-label="Esimerkki arvioidusta kirjoitelmasta, espanja">
+          <header class="paper-head"><span>Kirjoitelma · espanja</span><span>Tehtävä 2</span></header>
+          <div>
+            <p class="essay-line">El verano pasado <span class="ok">fui</span> a Barcelona con mi familia.</p>
+            <p class="note note-ok">↳ Preteriti oikein heti alkuun.</p>
+            <p class="essay-line">Visitamos la Sagrada Familia y <span class="err">comemos</span> paella en la playa.</p>
+            <p class="note note-err">↳ comemos → comimos. Kerrot menneestä, joten preteriti.</p>
+            <p class="essay-line"><span class="ok">Hacía</span> calor todos los días y me gustó mucho.</p>
+            <p class="note note-ok">↳ Imperfekti kuvailee, preteriti kertoo. Juuri näin.</p>
           </div>
+          <footer class="paper-foot">
+            <div class="stamp"><span class="stamp-label">Pistehaarukka</span><span class="stamp-range">21&ndash;27</span><span class="stamp-max">/ 33 p</span></div>
+            <p class="stamp-note">Rubriikin neljä osa-aluetta eriteltyinä, perustelut suomeksi.</p>
+          </footer>
+        </article>
 
-          <p class="hero__proofline">
-            <span class="hero__stars" role="img" aria-label="Arvosana 8,9 kymmenestä">
-              <span class="hero__stars-track" aria-hidden="true">★★★★★</span>
-              <span class="hero__stars-fill" aria-hidden="true" style="width:89%">★★★★★</span>
-            </span>
-            <span class="hero__rating-score"><b>8,9</b>&nbsp;/&nbsp;10</span>
-            <span class="hero__rating-note">abien palautteen perusteella</span>
-          </p>
-
-          <p class="hero__trust">Ilmainen aloitus, ei korttia.</p>
-        </div>
-
-        <div class="hero__offer">
-          <article class="offer-card" id="hero-offer" data-lang="es">
-            <div class="offer-card__tabs" id="hero-lang-switch" role="tablist" aria-label="Valitse kieli">
-              <button class="offer-card__tab" type="button" role="tab" data-lang="es"
-                      aria-selected="true" tabindex="0">Espanja</button>
-              <button class="offer-card__tab" type="button" role="tab" data-lang="fr"
-                      aria-selected="false" tabindex="-1">Ranska</button>
-              <button class="offer-card__tab" type="button" role="tab" data-lang="de"
-                      aria-selected="false" tabindex="-1">Saksa</button>
-            </div>
-
-            <p class="offer-card__context" data-offer-context>Espanjan koko oppimispolku</p>
-            <p class="offer-card__arc" data-offer-arc>Tervehdyksistä subjunktiiviin, A-tasolta YO-kokeeseen</p>
-
-            <div class="offer-card__price">
-              <span class="offer-card__amount">49&nbsp;€</span>
-              <span class="offer-card__period">kertaostos, käyttö ylioppilaskokeeseen asti</span>
-            </div>
-
-            <p class="offer-card__incl-label">Mitä sisältyy</p>
-            <ul class="offer-card__list">
-              <li>Kahdeksan kurssin polku, 90 oppituntia</li>
-              <li>Kaikki koeosiot: luetun ja kuullun ymmärtäminen, sanasto, kielioppi ja kirjoittaminen</li>
-              <li>Kirjoitelmista YTL:n rubriikilla pistehaarukka ja perustelu</li>
-              <li>Kuusi mallikoetta aikarajalla</li>
-            </ul>
-
-            <a class="btn btn--primary btn--lg offer-card__cta" href="/app.html#/aloitus">
-              Aloita nyt
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-            </a>
-            <p class="offer-card__reassure">Voit kokeilla ensin ilmaiseksi, maksu vasta kun haluat.</p>
-          </article>
-
-          <!-- Opettajalaina + YTL-merkki kortin alla = oikean sarakkeen "toinen
-               liike", tasapainottaa vasemman copy-pinon. De-boxattu lainaus,
-               ei korttikehystä → vain yksi laatikko (hinnoittelukortti) herossa. -->
-          <figure class="hero__quote">
-            <blockquote class="hero__quote-text">
-              "Annoin saman abikirjoitelman sekä Puheon että itseni
-              arvioitavaksi. Pistehaarukka osui samaan, ja perustelu osoitti
-              juuri ne kohdat joista olisin itse vähentänyt."
-            </blockquote>
-            <figcaption class="hero__quote-author">Hanna Lehto, lukion kieltenopettaja</figcaption>
-          </figure>
-
-          <span class="hero__badge">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
-            Rakennettu YTL:n virallisille arviointikriteereille
-          </span>
-        </div>
-      </div>
-    </section>
-
-    <!-- ═══ KOKEILE (L-V380): nostettu heti heron alle sivun keskiöksi.
-         Interaktiivinen arviointidemo on uniikki todiste, joten se on
-         ensimmäinen asia heron jälkeen. Yksi AI-arvio per laite per päivä;
-         POST /api/writing/demo-grade. Aiempi zig-zag-screenshot-seinä
-         poistettu (sisälsi väärän etusivu-kuvan "Tekoäly arvioi" -kohdalla). -->
-    <section id="kokeile" class="kokeile" aria-labelledby="kokeile-title">
-      <div class="kokeile__inner">
-        <div class="kokeile__head" data-reveal>
-          <p class="section-eyebrow">Yksi arvio ilman tiliä</p>
-          <h2 class="section-title" id="kokeile-title">Kokeile itse</h2>
-          <p class="kokeile__lede">
-            Kirjoita pari lausetta, niin näytämme miltä YO-tyylinen arvio
-            näyttää.
-          </p>
-        </div>
-
-        <div class="kokeile__card" data-demo data-lang="es" data-reveal>
-          <div class="kokeile__lang-switch" role="tablist" aria-label="Valitse kirjoituskieli">
-            <button class="kokeile__lang-btn" type="button" role="tab" data-lang="es"
-                    aria-selected="true" tabindex="0">Español</button>
-            <button class="kokeile__lang-btn" type="button" role="tab" data-lang="fr"
-                    aria-selected="false" tabindex="-1">Français</button>
-            <button class="kokeile__lang-btn" type="button" role="tab" data-lang="de"
-                    aria-selected="false" tabindex="-1">Deutsch</button>
+        <article class="paper" data-paper="fr" hidden aria-label="Esimerkki arvioidusta kirjoitelmasta, ranska">
+          <header class="paper-head"><span>Kirjoitelma · ranska</span><span>Tehtävä 2</span></header>
+          <div>
+            <p class="essay-line">L'été dernier, <span class="ok">je suis allé</span> à Paris avec ma famille.</p>
+            <p class="note note-ok">↳ Passé composé être-apuverbillä oikein.</p>
+            <p class="essay-line">Nous <span class="err">visitons</span> le Louvre et mangeons des croissants.</p>
+            <p class="note note-err">↳ visitons → avons visité. Kerrot menneestä, joten passé composé.</p>
+            <p class="essay-line">Il <span class="ok">faisait</span> beau tous les jours et j'ai adoré.</p>
+            <p class="note note-ok">↳ Imparfait kuvailee, passé composé kertoo. Juuri näin.</p>
           </div>
+          <footer class="paper-foot">
+            <div class="stamp"><span class="stamp-label">Pistehaarukka</span><span class="stamp-range">21&ndash;27</span><span class="stamp-max">/ 33 p</span></div>
+            <p class="stamp-note">Rubriikin neljä osa-aluetta eriteltyinä, perustelut suomeksi.</p>
+          </footer>
+        </article>
 
-          <form class="kokeile__form" data-demo-form novalidate>
-            <!-- Honeypot: off-screen, real users never see or fill it. A bot
-                 that auto-fills inputs trips it and is rejected server-side. -->
-            <div class="kokeile__hp" aria-hidden="true">
-              <label for="kokeile-company">Älä täytä tätä kenttää</label>
-              <input id="kokeile-company" type="text" name="hp" data-demo-hp
-                     tabindex="-1" autocomplete="off" />
-            </div>
-            <label class="kokeile__prompt" for="kokeile-input" data-demo-prompt>
-              Kirjoita 1-3 lausetta espanjaksi: kerro mitä teit viime kesälomalla.
-            </label>
-            <textarea id="kokeile-input" class="kokeile__input" data-demo-input
-                      maxlength="200" rows="4" autocomplete="off" spellcheck="false"
-                      placeholder="Ayer fui a la playa con mi familia…"></textarea>
-            <div class="kokeile__meta">
-              <span class="kokeile__count" data-demo-count aria-live="polite">0 / 200 merkkiä</span>
-              <span class="kokeile__hint" data-demo-hint>Vähintään 80 merkkiä</span>
-            </div>
-            <button class="btn btn--primary kokeile__submit" type="submit" data-demo-submit disabled>
-              Arvostele kirjoitukseni
-            </button>
-          </form>
-
-          <div class="kokeile__result" data-demo-result hidden aria-live="polite"></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ═══ PROOF, grader card as standalone artifact section. -->
-    <!-- ═══ PROOF TEASER (L-V382) — the full per-language grader sample +
-         rubric explainer moved to the dedicated /nayte page; the live demo
-         above stays the landing centrepiece, this is just the doorway. -->
-    <section id="nayte" class="proof proof--teaser" aria-labelledby="proof-title" data-reveal>
-      <div class="proof__inner">
-        <div class="proof__head">
-          <p class="section-eyebrow">Näyte arvioinnista</p>
-          <h2 class="section-title" id="proof-title">YTL:n rubriikki, ei yleinen mittari.</h2>
-          <p class="proof__lede">
-            Arvio pohjaa YTL:n julkaisemiin koejakoihin ja viralliseen
-            pisteytysrubriikkiin: pistehaarukka ja sanallinen perustelu, ei
-            luvattua yksittäispistettä. Katso oikeat esimerkkiarviot espanjaksi,
-            ranskaksi ja saksaksi sekä rubriikin neljä osa-aluetta.
-          </p>
-          <div class="proof-teaser__actions">
-            <a class="proof-teaser__link" href="/nayte">Katso koko näyte ja rubriikki →</a>
+        <article class="paper" data-paper="de" hidden aria-label="Esimerkki arvioidusta kirjoitelmasta, saksa">
+          <header class="paper-head"><span>Kirjoitelma · saksa</span><span>Tehtävä 2</span></header>
+          <div>
+            <p class="essay-line">Letzten Sommer <span class="ok">bin</span> ich nach Berlin <span class="ok">gefahren</span>.</p>
+            <p class="note note-ok">↳ Perfekti sein-apuverbillä oikein.</p>
+            <p class="essay-line">Wir <span class="err">besuchen</span> das Museum und essen Currywurst.</p>
+            <p class="note note-err">↳ besuchen → haben besucht. Kerrot menneestä, joten perfekti.</p>
+            <p class="essay-line">Es <span class="ok">war</span> jeden Tag heiß und es hat mir gefallen.</p>
+            <p class="note note-ok">↳ Präteritum kuvailee, perfekti kertoo. Juuri näin.</p>
           </div>
-        </div>
+          <footer class="paper-foot">
+            <div class="stamp"><span class="stamp-label">Pistehaarukka</span><span class="stamp-range">21&ndash;27</span><span class="stamp-max">/ 33 p</span></div>
+            <p class="stamp-note">Rubriikin neljä osa-aluetta eriteltyinä, perustelut suomeksi.</p>
+          </footer>
+        </article>
       </div>
-    </section>
-
-    <!-- ═══ TRUST STRIP (L-V381) — compact band that replaces the old
-         grade-flow section (it duplicated the proof section above and carried
-         an amateur flat-SVG illustration the screenshot pivot dropped). Three
-         languages, the syllabus, the honest grading line, and content volume. -->
-    <section class="trust" aria-labelledby="trust-title" data-reveal>
-      <div class="trust__inner">
-        <p class="section-eyebrow">Mihin Puheo on tehty</p>
-        <h2 class="section-title trust__title" id="trust-title">
-          Yksi ainetyyppi, tehty kunnolla.
-        </h2>
-        <p class="trust__lede">
-          Lyhyen oppimäärän kielikoe espanjassa, ranskassa ja saksassa.
-          Kirjoitukset pisteytetään YTL:n omalla rubriikilla, ja saat
-          pistehaarukan perusteluineen, et luvattua yksittäispistettä.
-        </p>
-        <ul class="trust__stats" aria-label="Sisällön volyymi">
-          <li class="trust__stat" style="--reveal-i:0">
-            <span class="trust__stat-num">3</span>
-            <span class="trust__stat-label">kieltä · es&thinsp;/&thinsp;fr&thinsp;/&thinsp;de</span>
-          </li>
-          <li class="trust__stat" style="--reveal-i:1">
-            <span class="trust__stat-num">90</span>
-            <span class="trust__stat-label">oppituntia / kieli</span>
-          </li>
-          <li class="trust__stat" style="--reveal-i:2">
-            <span class="trust__stat-num">6</span>
-            <span class="trust__stat-label">mallikoetta / kieli</span>
-          </li>
-          <li class="trust__stat" style="--reveal-i:3">
-            <span class="trust__stat-num">4</span>
-            <span class="trust__stat-label">rubriikin osa-aluetta</span>
-          </li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- ═══ COURSE CATALOG, visible on landing, language switcher. -->
-    <section id="kurssit" class="catalog landing-section" aria-labelledby="kurssit-otsikko">
-      <div class="catalog__head landing-section__inner">
-        <div class="catalog__intro" data-reveal>
-          <p class="section-eyebrow">Kurssipolku</p>
-          <h2 class="section-title" id="kurssit-otsikko">
-            Kahdeksan kurssia. A&thinsp;→&thinsp;E-progressio.
-          </h2>
-          <p class="catalog__lede">
-            Jokainen kurssi on lukukauden mittainen ja seuraa YTL:n julkaisemia
-            koetehtäviä. Sama runko espanjassa, ranskassa ja saksassa, sisältö
-            paikallisesti.
-          </p>
-        </div>
-      </div>
-
-      <!-- V330 — Catalog default-collapsed accordion (variant B council pick
-           2026-05-27). Stat-summary näkyy ensin; kortit + kieli-vaihtaja
-           paljastuvat klikkauksesta. -->
-      <details class="catalog__accordion" id="catalog-accordion">
-        <summary class="catalog__accordion-summary">
-          <span class="catalog__accordion-stats" aria-hidden="true">
-            <span class="catalog__accordion-stat">
-              <b>8 kurssia</b>
-              <span>aiheittain</span>
-            </span>
-            <span class="catalog__accordion-divider"></span>
-            <span class="catalog__accordion-stat">
-              <b>3 kieltä</b>
-              <span>es · fr · de</span>
-            </span>
-            <span class="catalog__accordion-divider"></span>
-            <span class="catalog__accordion-stat">
-              <b>A → E</b>
-              <span>YTL-progressio</span>
-            </span>
-          </span>
-          <span class="catalog__accordion-cta">
-            <span class="catalog__accordion-cta-label" data-closed>Näytä kaikki kurssit</span>
-            <span class="catalog__accordion-cta-label" data-open>Piilota kurssit</span>
-            <svg class="catalog__accordion-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
-          </span>
-        </summary>
-
-        <div class="catalog__accordion-body">
-          <div class="catalog__lang-switch" role="tablist" aria-label="Valitse kieli">
-            <button class="catalog__lang-btn" type="button" role="tab"
-                    data-lang="es" aria-pressed="true" aria-controls="catalog-grid">Español</button>
-            <button class="catalog__lang-btn" type="button" role="tab"
-                    data-lang="fr" aria-pressed="false" aria-controls="catalog-grid">Français</button>
-            <button class="catalog__lang-btn" type="button" role="tab"
-                    data-lang="de" aria-pressed="false" aria-controls="catalog-grid">Deutsch</button>
-          </div>
-          <p class="catalog__hint" aria-hidden="true">Pyyhkäise sivuttain selataksesi kursseja →</p>
-
-      <ul class="catalog__grid" id="catalog-grid" data-active-lang="es">
-        <li class="catalog-card" data-icon="1">
-          <span class="catalog-card__icon" aria-label="Saludos-aihe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 9h8M8 13h5"/></svg></span>
-          <p class="catalog-card__meta">Lukukausi 1 · A-taso</p>
-          <h3 class="catalog-card__title" data-i18n="title-1"
-              data-es="Saludos y presentaciones"
-              data-fr="Salutations et présentations"
-              data-de="Begrüßungen und Vorstellungen">Saludos y presentaciones</h3>
-          <p class="catalog-card__body" data-i18n="body-1" data-es="Tervehdykset, perhe, päivärytmi. Preesens säännölliset, ser/estar perusteet." data-fr="Tervehdykset, perhe, päivärytmi. Présent säännölliset (-er), määräiset artikkelit le/la/les, negaatio ne...pas." data-de="Tervehdykset, perhe, päivärytmi. Präsens säännölliset, artikkelit Nominativissa.">Tervehdykset, perhe, päivärytmi. Preesens säännölliset, ser/estar perusteet.</p>
-        </li>
-        <li class="catalog-card" data-icon="2">
-          <span class="catalog-card__icon" aria-label="Comida-aihe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 2v8a3 3 0 0 0 3 3v9M9 2v6M6 2v6M15 9a3 3 0 0 1 3-3v15"/></svg></span>
-          <p class="catalog-card__meta">Lukukausi 1 · A&thinsp;→&thinsp;B</p>
-          <h3 class="catalog-card__title" data-i18n="title-2"
-              data-es="Comida y costumbres"
-              data-fr="Cuisine et coutumes"
-              data-de="Essen und Gewohnheiten">Comida y costumbres</h3>
-          <p class="catalog-card__body" data-i18n="body-2" data-es="Arki, ruoka, kulttuuri. Preesens epäsäännölliset, gustar-rakenne." data-fr="Arki, ruoka. Présent epäsäännölliset (être/avoir/aller/faire), partitiivit du/de la/des, suvun ja luvun kongruenssi." data-de="Arki, harrastukset, ruoka. Präsens epäsäännölliset, Akkusativ, modaaliverbit.">Arki, ruoka, kulttuuri. Preesens epäsäännölliset, gustar-rakenne.</p>
-        </li>
-        <li class="catalog-card" data-icon="3">
-          <span class="catalog-card__icon" aria-label="Viajes-aihe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v3M3 13h18"/></svg></span>
-          <p class="catalog-card__meta">Lukukausi 2 · B-taso</p>
-          <h3 class="catalog-card__title" data-i18n="title-3"
-              data-es="Viajes y ciudades"
-              data-fr="Voyages et villes"
-              data-de="Reisen und Städte">Viajes y ciudades</h3>
-          <p class="catalog-card__body" data-i18n="body-3" data-es="Matkustaminen, kaupungit, suunnistus. Preteriti säännölliset ja yleisimmät epäsäännölliset." data-fr="Matkat ja muistot. Passé composé avoir/être-jako, partisiipin accord, prepositiot en/au/aux." data-de="Matkustaminen ja kulkuvälineet. Perfekt haben/sein, partisiipin perfekti, V2-sääntö.">Matkustaminen, kaupungit, suunnistus. Preteriti säännölliset ja yleisimmät epäsäännölliset.</p>
-        </li>
-        <li class="catalog-card" data-icon="4">
-          <span class="catalog-card__icon" aria-label="Estudios-aihe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5v14z"/><path d="M9 7h7M9 11h5"/></svg></span>
-          <p class="catalog-card__meta">Lukukausi 2 · B&thinsp;→&thinsp;C</p>
-          <h3 class="catalog-card__title" data-i18n="title-4"
-              data-es="Estudios y trabajo"
-              data-fr="Études et travail"
-              data-de="Studium und Arbeit">Estudios y trabajo</h3>
-          <p class="catalog-card__body" data-i18n="body-4" data-es="Lapsuus ja luonto. Imperfekti, preteriti vs imperfekti, YO-klassikko." data-fr="Lapsuus ja luonto. Imparfait ja passé composé vs imparfait, keskeytysrakenne." data-de="Lapsuus ja luonto. Präteritum (kirjoitettu kieli), Dativ-prepositiot, sivulauseet weil/dass.">Lapsuus ja luonto. Imperfekti, preteriti vs imperfekti, YO-klassikko.</p>
-        </li>
-        <li class="catalog-card" data-icon="5">
-          <span class="catalog-card__icon" aria-label="Salud-aihe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.84 4.6a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 1 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span>
-          <p class="catalog-card__meta">Lukukausi 3 · C-taso</p>
-          <h3 class="catalog-card__title" data-i18n="title-5"
-              data-es="Salud y vida cotidiana"
-              data-fr="Santé et vie quotidienne"
-              data-de="Gesundheit und Alltag">Salud y vida cotidiana</h3>
-          <p class="catalog-card__body" data-i18n="body-5" data-es="Tulevaisuus, työ, teknologia. Futuuri ja konditionaali." data-fr="Tulevaisuus, työ, teknologia. Futur simple ja proche, conditionnel présent (kohteliaisuusmuodot)." data-de="Tulevaisuus, työ, teknologia. Futur I, wenn-sivulauseet, V-loppu sivulauseessa.">Tulevaisuus, työ, teknologia. Futuuri ja konditionaali.</p>
-        </li>
-        <li class="catalog-card" data-icon="6">
-          <span class="catalog-card__icon" aria-label="Ympäristö-aihe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 20A7 7 0 0 1 4 13C4 7 11 2 20 2c0 9-5 16-11 18zM2 22c4-4 8-6 10-7"/></svg></span>
-          <p class="catalog-card__meta">Lukukausi 3 · C&thinsp;→&thinsp;M</p>
-          <h3 class="catalog-card__title" data-i18n="title-6"
-              data-es="Medio ambiente y sociedad"
-              data-fr="Environnement et société"
-              data-de="Umwelt und Gesellschaft">Medio ambiente y sociedad</h3>
-          <p class="catalog-card__body" data-i18n="body-6" data-es="Ympäristö ja yhteiskunta. Subjunktiivin preesens (ojalá, es importante que), mielipidekirjoitus." data-fr="Ympäristö ja yhteiskunta. Subjonctif présent (il faut que, je veux que, bien que), mielipiteen ilmaisu." data-de="Ympäristö ja yhteiskunta. Passiivi (werden + Partizip II), Konjunktiv II kohteliaisuusmuodot.">Ympäristö ja yhteiskunta. Subjunktiivin preesens (ojalá, es importante que), mielipidekirjoitus.</p>
-        </li>
-        <li class="catalog-card" data-icon="7">
-          <span class="catalog-card__icon" aria-label="Kulttuuri-aihe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="17" x2="22" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/></svg></span>
-          <p class="catalog-card__meta">Lukukausi 4 · M-taso</p>
-          <h3 class="catalog-card__title" data-i18n="title-7"
-              data-es="Cultura y medios"
-              data-fr="Culture et médias"
-              data-de="Kultur und Medien">Cultura y medios</h3>
-          <p class="catalog-card__body" data-i18n="body-7" data-es="Kulttuuri, media. Subjunktiivi syvemmin, pluskvamperfekti." data-fr="Kulttuuri, taide. Plus-que-parfait, subjonctif syvemmin, suhteelliset pronominit qui/que/dont/où." data-de="DACH-kulttuuri ja media. Konjunktiv II (wenn ich hätte), Genitiv perusteet, sivulauseet obwohl/damit.">Kulttuuri, media. Subjunktiivi syvemmin, pluskvamperfekti.</p>
-        </li>
-        <li class="catalog-card" data-icon="8">
-          <span class="catalog-card__icon" aria-label="YO-koe-aihe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5a6 3 0 0 0 12 0v-5"/></svg></span>
-          <p class="catalog-card__meta">Lukukausi 4 · M&thinsp;→&thinsp;E</p>
-          <h3 class="catalog-card__title" data-i18n="title-8"
-              data-es="YO-koe valmennus"
-              data-fr="Préparation BAC court"
-              data-de="Abitur-Vorbereitung">YO-koe valmennus</h3>
-          <p class="catalog-card__body" data-i18n="body-8" data-es="Mallikokeet aikarajalla, YTL-rubriikilla pisteytetyt simulaatiot, subjunktiivi imperfekti (si tuviera)." data-fr="Mallikokeet aikarajalla. Si-hypoteesilauseet (présent/imparfait/plus-que-parfait + conditionnel), kertaus." data-de="Mallikokeet aikarajalla. Konjunktiv II syvemmin, indirekte Rede, kaikkien rakenteiden kertaus.">Mallikokeet aikarajalla, YTL-rubriikilla pisteytetyt simulaatiot, subjunktiivi imperfekti (si tuviera).</p>
-        </li>
-      </ul>
-        </div>
-      </details>
-    </section>
-
-    <!-- ═══ MITÄ SAAT, three numbered editorial blocks. -->
-    <!-- L-V308 — mita-saat + testimoniaalit poistettu mobile-pituuden
-         tiivistämiseksi (audit 14333 → tavoite ≤7000 px). mita-saat
-         toisti pillars/kurssit/nayte-sisältöä eri sanoin, testimoniaalit
-         olivat kolmen anonymin sitaatin vyö ilman uniikkia signaalia.
-         Kovat preserve-sektiot (hero, kurssit, hinnoittelu, nayte/proof,
-         faq, cta) säilyvät. Loput leikkaukset vaativat brand-päätöksen. -->
-
-    <!-- ═══ PRICING, table preserved from Ship 1 (worked), maroon column softened. -->
-    <section id="hinnoittelu" class="landing-section landing-section--pricing">
-      <div class="landing-section__inner">
-        <header class="pricing__head" data-reveal>
-          <h2 class="pricing__title">Hinnoittelu.</h2>
-          <p class="pricing__sub">Yksi kertaostos kattaa koko oppimispolun ylioppilaskokeeseen asti. Kaikki kolme kieltä samassa hinnassa. Tai maksa kuukausittain pelkästä arvioinnista.</p>
-        </header>
-
-        <ul class="pricing-tiers pricing-tiers--duo" aria-label="Hinnoittelun vaihtoehdot">
-          <li class="pricing-tier pricing-tier--featured" data-popular="true" data-reveal style="--reveal-i:0">
-            <span class="pricing-tier__badge" aria-label="Suosituin">Suosituin</span>
-            <span class="pricing-tier__chip">Koko oppimispolku</span>
-            <h3 class="pricing-tier__name">Kurssi</h3>
-            <p class="pricing-tier__lede">Kahdeksan kurssin polku ylioppilaskokeeseen. Yksi kertaostos, ei kuukausimaksua.</p>
-            <div class="pricing-tier__price">
-              <span class="pricing-tier__price-num">49</span>
-              <span class="pricing-tier__price-cur">€</span>
-              <span class="pricing-tier__price-period">kertaostos</span>
-            </div>
-            <ul class="pricing-tier__features">
-              <li>Koko 8-kurssin oppimispolku (90 oppituntia / kieli)</li>
-              <li>Kaikki kolme kieltä (es / fr / de)</li>
-              <li>YTL-rubriikin arviointi ja mallikokeet</li>
-              <li>Adaptiivinen vaikeus ja YO-valmiusmittari</li>
-              <li>Käyttöoikeus ylioppilaskokeeseen asti</li>
-              <li>14 päivän rahat takaisin</li>
-            </ul>
-            <a class="btn btn--primary pricing-tier__cta" href="/app.html#rekisteroidy?tier=kurssi">Osta kurssi</a>
-          </li>
-
-          <li class="pricing-tier pricing-tier--treeni" data-reveal style="--reveal-i:1">
-            <span class="pricing-tier__chip">Pelkkä arviointi</span>
-            <h3 class="pricing-tier__name">Treeni</h3>
-            <p class="pricing-tier__lede">Rajaton kirjoitusten arviointi YTL-rubriikilla. Ei kurssia, vain harjoittelu.</p>
-            <div class="pricing-tier__price">
-              <span class="pricing-tier__price-num">9</span>
-              <span class="pricing-tier__price-cur">€</span>
-              <span class="pricing-tier__price-period">/ kuukausi</span>
-            </div>
-            <ul class="pricing-tier__features">
-              <li>Rajaton kirjoitusten arviointi</li>
-              <li>YTL-rubriikki ja suomenkieliset selitykset</li>
-              <li>Kaikki kolme kieltä (es / fr / de)</li>
-              <li>Ei rakenteellista oppimispolkua</li>
-            </ul>
-            <a class="btn btn--quiet pricing-tier__cta" href="/app.html#rekisteroidy?tier=treeni">Valitse Treeni</a>
-          </li>
-        </ul>
-
-        <p class="pricing__fineprint">
-          Hinnat sisältävät arvonlisäveron. Kurssi on kertaostos, jonka käyttöoikeus kestää ylioppilaskokeeseen asti, ja siihen kuuluu 14 päivän rahat takaisin. Treeni-tilauksen voit peruuttaa sisäänkirjautuneena milloin tahansa, jolloin peruutus astuu voimaan laskutusjakson lopussa.
-        </p>
-      </div>
-    </section>
-
-    <!-- ═══ FINAL CTA, quieter than Ship 1, no glow card. -->
-    <section id="rekisteroidy-cta" class="landing-section landing-section--cta" aria-labelledby="cta-otsikko">
-      <div class="landing-section__inner">
-        <div class="cta-card cta-card--drenched" data-reveal>
-          <div class="cta-card__inner">
-            <h2 class="cta-card__title" id="cta-otsikko">
-              Kokeile <em>ilmaiseksi</em>.
-            </h2>
-            <p class="cta-card__body">
-              Yksi oppitunti, yksi kirjoitustehtävä, yksi mallikoe, valitsemassasi
-              kielessä. Näe miten sensorin rubriikilla pisteytetty arviointi näyttää
-              sinun kirjoituksesi.
-            </p>
-            <a class="btn btn--primary btn--lg cta-card__btn" href="/app.html#/aloitus">
-              Aloita ilmaiseksi
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-            </a>
-            <p class="cta-card__fineprint">
-              Espanja, ranska, saksa
-              <span class="cta-card__sep" aria-hidden="true">·</span>
-              Lyhyt oppimäärä
-              <span class="cta-card__sep" aria-hidden="true">·</span>
-              Päivittyy YTL:n julkaisemien koejakojen myötä
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <!-- ─── FOOTER ──────────────────────────────────────────── -->
-  <footer class="landing-footer" role="contentinfo">
-    <div class="landing-footer__inner">
-      <div class="landing-footer__brand">
-        <a class="landing-footer__brandmark" href="/" aria-label="Puheo etusivu">
-          <span class="landing-footer__brand-dot" aria-hidden="true"></span>
-          Puheo
-        </a>
-        <p class="landing-footer__tagline">
-          Lyhyen oppimäärän YO-koe valmennus espanjaan, ranskaan ja saksaan.
-          Rakennettu YTL:n rubriikin päälle.
-        </p>
-      </div>
-      <div class="landing-footer__cols">
-        <nav class="landing-footer__col" aria-label="Tuote">
-          <h3 class="landing-footer__col-title">Tuote</h3>
-          <ul class="landing-footer__links">
-            <li><a href="#kurssit">Kurssit</a></li>
-            <li><a href="/nayte">Näyte</a></li>
-            <li><a href="#hinnoittelu">Hinnoittelu</a></li>
-            <li><a href="/ukk">UKK</a></li>
-          </ul>
-        </nav>
-        <nav class="landing-footer__col" aria-label="Abikurssit">
-          <h3 class="landing-footer__col-title">Abikurssit</h3>
-          <ul class="landing-footer__links">
-            <li><a href="/espanjan-abikurssi">Espanjan abikurssi</a></li>
-            <li><a href="/saksan-abikurssi">Saksan abikurssi</a></li>
-            <li><a href="/ranskan-abikurssi">Ranskan abikurssi</a></li>
-          </ul>
-        </nav>
-        <nav class="landing-footer__col" aria-label="Tili">
-          <h3 class="landing-footer__col-title">Tili</h3>
-          <ul class="landing-footer__links">
-            <li><a href="/app.html#kirjaudu">Kirjaudu</a></li>
-            <li><a href="/app.html#/aloitus">Aloita ilmaiseksi</a></li>
-            <li><a href="/pricing.html">Hinnoittelu</a></li>
-          </ul>
-        </nav>
-        <nav class="landing-footer__col" aria-label="Tieto">
-          <h3 class="landing-footer__col-title">Tieto</h3>
-          <ul class="landing-footer__links">
-            <li><a href="/privacy.html">Tietosuoja</a></li>
-            <li><a href="/terms.html">Käyttöehdot</a></li>
-            <li><a href="/refund.html">Palautukset</a></li>
-            <li><a href="/artikkelit/">Oppaat</a></li>
-            <li><a href="mailto:tuki@puheo.fi">Ota yhteyttä</a></li>
-          </ul>
-        </nav>
-      </div>
-      <div class="landing-footer__bottom">
-        <p class="landing-footer__copy">© 2026 Puheo · Tehty Suomessa</p>
+      <p class="hero-art-caption">Jokainen kirjoitelmasi saa pistehaarukan ja perustelun suomeksi, ennen kuin sensori näkee tekstisi.</p>
       </div>
     </div>
-  </footer>
+  </section>
 
-  <script type="module" src="/js/landing-init.js"></script>
-  <script src="/js/landing-nav.js"></script>
-  <script src="/js/landing-catalog-lang.js"></script>
-  <script src="/js/landing-hero-lang.js"></script>
-  <script src="/js/landing-proof-lang.js"></script>
-  <script src="/js/landing-writing-demo.js"></script>
+  <!-- ─── OFFER: mitä 49 € sisältää + ankkurointi + osto ─── -->
+  <section class="offer" id="osta" aria-labelledby="offer-title">
+    <div class="wrap">
+      <h2 id="offer-title">Mitä 49&nbsp;€ sisältää.</h2>
+
+      <div class="offer-card">
+        <span class="offer-ribbon">Kurssi</span>
+        <ul class="offer-list">
+          <li><span class="tick">✓</span>Koko 8 kurssin polku, 90 oppituntia</li>
+          <li><span class="tick">✓</span>Kaikki koeosiot: luetun ja kuullun ymmärtäminen, sanasto, kielioppi ja kirjoittaminen</li>
+          <li><span class="tick">✓</span>6 mallikoetta aikarajalla</li>
+          <li><span class="tick">✓</span>Kirjoitelmien arviointi YTL:n rubriikilla</li>
+          <li><span class="tick">✓</span>Espanja, ranska ja saksa samaan hintaan</li>
+          <li><span class="tick">✓</span>Käyttöoikeus ylioppilaskokeeseen asti</li>
+        </ul>
+
+        <div class="anchor-box">
+          Vertailun vuoksi: pelkkä arviointi Treeni-tilauksena maksaa 9&nbsp;€/kk,
+          eli lukuvuoden ajan <b>108&nbsp;€</b>. Kurssi maksaa <b>49&nbsp;€ kerran</b>
+          ja sisältää kaiken.
+        </div>
+
+        <a class="btn btn-primary btn-block" href="/app.html#rekisteroidy?tier=kurssi">
+          Osta kurssi 49&nbsp;€
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+        <p class="reassure"><span class="tick">✓</span>14 päivän rahat takaisin, jos et ole tyytyväinen</p>
+      </div>
+
+      <p class="treeni-line">
+        Haluatko vain kirjoitelmien arvioinnin? <a href="/app.html#rekisteroidy?tier=treeni">Treeni 9&nbsp;€/kk</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- ─── SOCIAL PROOF ─── -->
+  <section class="social" aria-labelledby="social-title">
+    <div class="wrap">
+      <h2 id="social-title">Abit arvioivat, opettaja tarkisti.</h2>
+      <div class="rating">
+        <span class="star" aria-hidden="true">★</span>
+        <b>8,9&nbsp;/&nbsp;10</b>
+        <span>abien palautteen perusteella</span>
+      </div>
+      <figure class="quote-card" style="margin-top: 28px;">
+        <blockquote class="quote-text" style="margin: 0;">
+          Annoin saman abikirjoitelman sekä Puheon että itseni arvioitavaksi.
+          Pistehaarukka osui samaan, ja perustelu osoitti juuri ne kohdat
+          joista olisin itse vähentänyt.
+        </blockquote>
+        <figcaption class="quote-author">Hanna Lehto <span>· lukion kieltenopettaja</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ─── PATH: kompakti, vaihtuu kielen mukaan ─── -->
+  <section class="path-sec" aria-labelledby="path-title">
+    <div class="wrap">
+      <h2 id="path-title">Polku A-tasolta E:hen.</h2>
+      <p class="path-lede">
+        Kahdeksan lukukauden mittaista kurssia, jotka seuraavat YTL:n
+        julkaisemia koetehtäviä. Etenet omaan tahtiin.
+      </p>
+
+      <div class="path-card">
+        <div class="path-row">
+          <span class="path-num pn-1">1</span>
+          <span class="path-name" data-es="Saludos y presentaciones" data-fr="Salutations et présentations" data-de="Begrüßungen und Vorstellungen">Saludos y presentaciones</span>
+          <span class="path-level">A</span>
+        </div>
+        <div class="path-row">
+          <span class="path-num pn-2">2</span>
+          <span class="path-name" data-es="Comida y costumbres" data-fr="Cuisine et coutumes" data-de="Essen und Gewohnheiten">Comida y costumbres</span>
+          <span class="path-level">A → B</span>
+        </div>
+        <div class="path-row">
+          <span class="path-num pn-3">3</span>
+          <span class="path-name" data-es="Viajes y ciudades" data-fr="Voyages et villes" data-de="Reisen und Städte">Viajes y ciudades</span>
+          <span class="path-level">B</span>
+        </div>
+        <div class="path-row">
+          <span class="path-num pn-4">4</span>
+          <span class="path-name" data-es="Estudios y trabajo" data-fr="Études et travail" data-de="Studium und Arbeit">Estudios y trabajo</span>
+          <span class="path-level">B → C</span>
+        </div>
+        <div class="path-row">
+          <span class="path-num pn-5">5</span>
+          <span class="path-name" data-es="Salud y vida cotidiana" data-fr="Santé et vie quotidienne" data-de="Gesundheit und Alltag">Salud y vida cotidiana</span>
+          <span class="path-level">C</span>
+        </div>
+        <div class="path-row">
+          <span class="path-num pn-6">6</span>
+          <span class="path-name" data-es="Medio ambiente y sociedad" data-fr="Environnement et société" data-de="Umwelt und Gesellschaft">Medio ambiente y sociedad</span>
+          <span class="path-level">C → M</span>
+        </div>
+        <div class="path-row">
+          <span class="path-num pn-7">7</span>
+          <span class="path-name" data-es="Cultura y medios" data-fr="Culture et médias" data-de="Kultur und Medien">Cultura y medios</span>
+          <span class="path-level">M</span>
+        </div>
+        <div class="path-row">
+          <span class="path-num pn-8">8</span>
+          <span class="path-name" data-es="YO-koevalmennus" data-fr="Préparation BAC court" data-de="Abitur-Vorbereitung">YO-koevalmennus</span>
+          <span class="path-level">M → E</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── FAQ: ostoepäilyjen purku ─── -->
+  <section class="faq" aria-labelledby="faq-title">
+    <div class="wrap">
+      <h2 id="faq-title">Ennen kuin ostat.</h2>
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary>Onko tämä tilaus joka jatkuu itsestään?</summary>
+          <p>Ei. Kurssi on 49 euron kertaostos. Maksat kerran, eikä mitään veloiteta uudestaan. Käyttöoikeus kestää ylioppilaskokeeseesi asti.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Mitä jos kurssi ei sovikaan minulle?</summary>
+          <p>Saat rahat takaisin 14 päivän sisällä ostosta. Voit myös kokeilla ensin ilmaiseksi: yksi oppitunti, yksi kirjoitustehtävä ja yksi mallikoe.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Käykö tämä minun kielelleni?</summary>
+          <p>Kurssi sisältää espanjan, ranskan ja saksan lyhyen oppimäärän polut. Kaikki kolme kuuluvat samaan hintaan, ja kieltä voi vaihtaa milloin vain.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Ehdinkö vielä syksyn kirjoituksiin?</summary>
+          <p>Polkua ei tarvitse käydä alusta loppuun hyötyäkseen. Mallikokeet ja kirjoitelmien arviointi auttavat heti, ja harjoitukset keskittyvät siihen missä menetät eniten pisteitä.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── FINAL CTA ─── -->
+  <section class="cta" aria-labelledby="cta-title">
+    <span class="cta-glyph cg-1" aria-hidden="true">¿</span>
+    <span class="cta-glyph cg-2" aria-hidden="true">é</span>
+    <div class="cta-in">
+      <h2 id="cta-title">Koepäivä tulee joka tapauksessa.</h2>
+      <p>
+        Aloita treenaaminen tänään. Maksat kerran, ja kurssi on käytössäsi
+        ylioppilaskokeeseen asti.
+      </p>
+      <div class="cta-btns">
+        <a class="btn btn-gold" href="/app.html#rekisteroidy?tier=kurssi">
+          Osta kurssi 49&nbsp;€
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+        <a class="btn btn-ghost" href="/app.html#/aloitus">Kokeile ensin ilmaiseksi</a>
+      </div>
+      <p class="cta-fine">14 päivän rahat takaisin · Espanja, ranska, saksa · Ei tilausta</p>
+    </div>
+  </section>
+</main>
+
+<!-- ─── FOOTER ─── -->
+<footer class="footer">
+  <div class="footer-in">
+    <a class="brand" href="/">puheo</a>
+    <nav class="footer-links" aria-label="Alatunnisteen linkit">
+      <a href="/nayte">Näyte</a>
+      <a href="/ukk">UKK</a>
+      <a href="/privacy.html">Tietosuoja</a>
+      <a href="/terms.html">Käyttöehdot</a>
+      <a href="/refund.html">Palautukset</a>
+      <a href="mailto:tuki@puheo.fi">tuki@puheo.fi</a>
+    </nav>
+    <p class="footer-bottom">© 2026 Puheo · Tehty Suomessa</p>
+  </div>
+</footer>
+
+<script src="/js/landing-v2-lang.js"></script>
+
 </body>
 </html>
