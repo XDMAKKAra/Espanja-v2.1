@@ -124,11 +124,8 @@
   <link rel="stylesheet" href="/css/fonts.css" />
   <link rel="stylesheet" href="/css/landing-tokens.css" />
   <link rel="stylesheet" href="/css/landing.css" />
-  <!-- L-V387: jaettu nav (.nav__hamburger, .nav-menu, .nav__dropdown) elää
-       editorial-tiedostoissa; ilman näitä artikkelit-sivun yläpalkki latautui
-       tyylittömänä (linkit päällekkäin, mobiilivalikko hajalla). Sama setti
-       kuin nayte.html/index.html. artikkeli.css viimeisenä = artikkelityylit
-       voittavat cascaden. -->
+  <!-- Nav v2 (L-V412): uusi .nav-in/.nav-dd/.nav-overlay-rakenne.
+       artikkeli.css sisältää nav-v2-CSS:n. Viimeisenä ladattu = voittaa cascaden. -->
   <link rel="stylesheet" href="/css/landing-editorial-tokens.css" />
   <link rel="stylesheet" href="/css/landing-editorial.css" />
   <link rel="stylesheet" href="/css/landing-spark.css" />
@@ -137,72 +134,52 @@
 <body class="landing artikkeli">
   <a href="#art-main" class="skip-link">Siirry sisältöön</a>
 
-  <header class="nav" id="nav" data-scrolled="false">
-    <div class="nav__inner">
-      <a class="nav__brand" href="/" aria-label="Puheo etusivu"><span class="brand-wordmark">puheo</span></a>
-      <nav class="nav__links" aria-label="Sivun osiot">
-        <div class="nav__dropdown" id="nav-kurssit-dd">
-          <button class="nav__link nav__dropdown-trigger" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="nav-kurssit-menu">
+  <!-- L-V412: overlay OUTSIDE .nav — backdrop-filter on nav creates a containing block
+       for position:fixed, which would clip the overlay if it were nested inside. -->
+  <header class="nav">
+    <div class="nav-in">
+      <a class="brand" href="/">puheo</a>
+      <nav class="nav-menu" aria-label="Päävalikko">
+        <div class="nav-dd">
+          <button class="nav-dd-trigger" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="nav-dd-kurssit">
             Kurssit
-            <svg class="nav__dropdown-chevron" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
           </button>
-          <div class="nav__dropdown-menu" id="nav-kurssit-menu" role="menu" aria-label="Kurssit">
-            <a class="nav__dropdown-item" role="menuitem" href="/#kurssit">Kaikki kurssit</a>
-            <a class="nav__dropdown-item" role="menuitem" href="/espanjan-abikurssi">Espanjan abikurssi</a>
-            <a class="nav__dropdown-item" role="menuitem" href="/saksan-abikurssi">Saksan abikurssi</a>
-            <a class="nav__dropdown-item" role="menuitem" href="/ranskan-abikurssi">Ranskan abikurssi</a>
+          <div class="nav-dd-menu" id="nav-dd-kurssit" role="menu">
+            <a role="menuitem" href="/espanjan-abikurssi">Espanjan abikurssi</a>
+            <a role="menuitem" href="/ranskan-abikurssi">Ranskan abikurssi</a>
+            <a role="menuitem" href="/saksan-abikurssi">Saksan abikurssi</a>
           </div>
         </div>
-        <a class="nav__link" href="/nayte">Näyte</a>
-        <a class="nav__link" href="/artikkelit/">Oppaat</a>
-        <a class="nav__link" href="/#hinnoittelu">Hinnoittelu</a>
-        <a class="nav__link" href="/ukk">FAQ</a>
+        <a href="/nayte">Näyte</a>
+        <a href="/artikkelit/">Oppaat</a>
+        <a href="/pricing.html">Hinnoittelu</a>
+        <a href="/ukk">UKK</a>
       </nav>
-      <div class="nav__cta" id="nav-cta">
-        <a class="btn btn--quiet" id="nav-login" href="/app.html#kirjaudu">Kirjaudu</a>
-        <a class="btn btn--primary" id="nav-signup" href="/app.html#rekisteroidy">Aloita ilmaiseksi</a>
-        <a class="btn btn--primary nav__chip" id="nav-chip" href="/app.html" hidden>Jatka harjoittelua</a>
-      </div>
-      <button class="nav__hamburger" id="nav-hamburger" type="button" aria-label="Valikko" aria-expanded="false" aria-controls="nav-menu">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
-          <line x1="3" y1="7" x2="21" y2="7" /><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="17" x2="21" y2="17" />
-        </svg>
-      </button>
-    </div>
-  </header>
-
-  <div class="nav-menu" id="nav-menu" hidden>
-    <div class="nav-menu__panel" role="dialog" aria-modal="true" aria-label="Valikko">
-      <div class="nav-menu__head">
-        <span class="nav-menu__brand brand-wordmark">puheo</span>
-        <button class="nav-menu__close" id="nav-menu-close" type="button" aria-label="Sulje valikko">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><line x1="6" y1="6" x2="18" y2="18" /><line x1="18" y1="6" x2="6" y2="18" /></svg>
+      <div class="nav-right">
+        <a class="nav-login" href="/app.html#kirjaudu">Kirjaudu</a>
+        <a class="btn btn-primary" href="/app.html#/aloitus">Aloita nyt</a>
+        <button class="nav-burger" id="nav-burger" type="button" aria-label="Avaa valikko" aria-expanded="false" aria-controls="nav-overlay">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><line x1="3" y1="7" x2="21" y2="7"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="17" x2="21" y2="17"/></svg>
         </button>
       </div>
-      <div class="nav-menu__cta">
-        <a class="btn btn--primary nav-menu__primary" id="nav-menu-signup" href="/app.html#rekisteroidy">Aloita ilmaiseksi</a>
-        <a class="btn btn--primary nav-menu__primary" id="nav-menu-chip" href="/app.html" hidden>Jatka harjoittelua</a>
-        <a class="nav-menu__login" id="nav-menu-login" href="/app.html#kirjaudu">Kirjaudu</a>
-      </div>
-      <nav class="nav-menu__links" aria-label="Sivun osiot">
-        <details class="nav-menu__group" id="nav-menu-kurssit">
-          <summary class="nav-menu__link nav-menu__summary" aria-expanded="false" aria-controls="nav-menu-kurssit-list">
-            Kurssit
-            <span class="nav-menu__pm" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12" /><line class="nav-menu__pm-v" x1="12" y1="5" x2="12" y2="19" /></svg></span>
-          </summary>
-          <div class="nav-menu__sub" id="nav-menu-kurssit-list">
-            <a class="nav-menu__sublink" href="/#kurssit">Kaikki kurssit</a>
-            <a class="nav-menu__sublink" href="/espanjan-abikurssi">Espanjan abikurssi</a>
-            <a class="nav-menu__sublink" href="/saksan-abikurssi">Saksan abikurssi</a>
-            <a class="nav-menu__sublink" href="/ranskan-abikurssi">Ranskan abikurssi</a>
-          </div>
-        </details>
-        <a class="nav-menu__link" href="/nayte">Näyte</a>
-        <a class="nav-menu__link" href="/artikkelit/">Oppaat</a>
-        <a class="nav-menu__link" href="/#hinnoittelu">Hinnoittelu</a>
-        <a class="nav-menu__link" href="/ukk">FAQ</a>
-      </nav>
     </div>
+  </header>
+  <div class="nav-overlay" id="nav-overlay" hidden>
+    <nav class="nav-overlay-in" aria-label="Mobiilivalikko">
+      <p class="nav-overlay-h">Kurssit</p>
+      <a href="/espanjan-abikurssi">Espanjan abikurssi</a>
+      <a href="/ranskan-abikurssi">Ranskan abikurssi</a>
+      <a href="/saksan-abikurssi">Saksan abikurssi</a>
+      <p class="nav-overlay-h">Muu</p>
+      <a href="/">Etusivu</a>
+      <a href="/nayte">Näyte</a>
+      <a href="/artikkelit/">Oppaat</a>
+      <a href="/pricing.html">Hinnoittelu</a>
+      <a href="/ukk">UKK</a>
+      <a href="/app.html#kirjaudu">Kirjaudu</a>
+      <a class="btn btn-primary nav-overlay-cta" href="/app.html#/aloitus">Aloita nyt</a>
+    </nav>
   </div>
   <main id="art-main">
     <article class="art-wrap">
@@ -375,6 +352,6 @@
       <div class="landing-footer__bottom"><p class="landing-footer__copy">© 2026 Puheo · Tehty Suomessa</p></div>
     </div>
   </footer>
-  <script src="/js/landing-nav.js"></script>
+  <script src="/js/landing-v2-nav.js"></script>
 </body>
 </html>

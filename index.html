@@ -234,6 +234,27 @@ svg { display: block; }
 
 .hero .btn-primary { margin-top: 16px; min-width: min(100%, 340px); font-size: 1.2rem; padding: 17px 34px; }
 
+/* Mobiili: kevyempi hero-pino, enemmän ilmaa elementtien väliin */
+@media (max-width: 1019px) {
+  .seg-label {
+    position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+    overflow: hidden; clip-path: inset(50%); white-space: nowrap;
+  }
+  .seg { margin-top: 22px; }
+  .hero h1 { margin-top: 28px; }
+  .hero-sub { margin-top: 14px; }
+  .price-row { margin-top: 24px; gap: 10px; }
+  .price-num { font-size: 2.4rem; }
+  .pt2 { display: none; }
+  .hero .btn-primary { margin-top: 18px; }
+  .reassure { margin-top: 12px; font-size: .88rem; }
+  .hero-art { margin-top: 56px; }
+  .essay-line { font-size: 1.16rem; }
+  .paper { padding: 20px 22px 22px 46px; }
+  .paper::before { left: 32px; }
+  .note { padding-left: 10px; }
+}
+
 /* ───────────── Proof: graded paper ───────────── */
 .offer h2, .social h2, .path-sec h2, .faq h2 { font-size: clamp(1.7rem, 5.4vw, 2.3rem); text-align: center; }
 
@@ -495,7 +516,7 @@ svg { display: block; }
 
       <div class="price-row">
         <span class="price-num">49&nbsp;€</span>
-        <span class="price-terms">kertaostos, ei tilausta<br />käyttö koepäivään asti</span>
+        <span class="price-terms">kertaostos, ei tilausta<br class="pt2" /><span class="pt2">käyttö koepäivään asti</span></span>
       </div>
 
       <a class="btn btn-primary" href="/app.html#rekisteroidy?tier=kurssi">

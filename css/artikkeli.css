@@ -32,6 +32,84 @@ body.artikkeli .nav[data-scrolled="true"] {
   border-bottom-color: rgba(110, 85, 60, 0.20);
 }
 
+/* ─── Nav v2 (uusi hampurilainen + dropdown) ─────────────────────
+   Sama kuin abikurssi.css / index.html — lisätty koska artikkelit
+   eivät lataa abikurssi.css:ää tai index.html:n inline-tyylejä.
+   Kaikki säätnöt scopettu body.artikkeli:lla jotta ne voittavat
+   landing-editorial.css:n .landing .nav-menu -säännöt (jotka
+   tekevät nav-menuusta full-screen overlay — väärä tälle sivulle).
+   ──────────────────────────────────────────────────────────────── */
+body.artikkeli .nav { position: sticky; top: 0; z-index: 50; }
+body.artikkeli .nav-in { max-width: 1120px; margin-inline: auto; padding: 12px 22px; display: flex; align-items: center; justify-content: space-between; gap: 18px; }
+body.artikkeli .brand { font-family: "Fredoka", sans-serif; font-weight: 600; font-size: 1.55rem; color: var(--brick); text-decoration: none; line-height: 1; }
+body.artikkeli .nav .btn { padding: 10px 20px; font-size: 1rem; }
+/* Override landing-editorial.css's .landing .nav-menu (full-screen overlay).
+   We need nav-menu to be a horizontal flex row on desktop. */
+body.artikkeli .nav-menu {
+  position: static !important;
+  inset: unset !important;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center;
+  gap: 24px;
+  margin-left: auto;
+  background: none !important;
+  padding: 0 !important;
+  opacity: 1 !important;
+  transform: none !important;
+  overflow: visible !important;
+  z-index: auto !important;
+}
+body.artikkeli .nav-menu > a, body.artikkeli .nav-dd-trigger {
+  font-family: "Fredoka", sans-serif; font-weight: 500; font-size: .98rem; color: var(--ink-soft);
+  text-decoration: none; background: none; border: 0; cursor: pointer; padding: 0;
+  display: inline-flex; align-items: center; gap: 5px;
+}
+body.artikkeli .nav-menu > a:hover, body.artikkeli .nav-dd-trigger:hover { color: var(--brick); }
+body.artikkeli .nav-dd { position: relative; }
+body.artikkeli .nav-dd-trigger svg { transition: transform .15s ease; }
+body.artikkeli .nav-dd:hover .nav-dd-trigger svg, body.artikkeli .nav-dd:focus-within .nav-dd-trigger svg { transform: rotate(180deg); }
+body.artikkeli .nav-dd-menu {
+  position: absolute; top: calc(100% + 12px); left: 0; min-width: 210px;
+  background: var(--paper); border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow-warm);
+  padding: 8px; display: none; flex-direction: column; gap: 2px; z-index: 60;
+}
+body.artikkeli .nav-dd:hover .nav-dd-menu, body.artikkeli .nav-dd:focus-within .nav-dd-menu { display: flex; }
+body.artikkeli .nav-dd-menu a { text-decoration: none; font-weight: 700; font-size: .92rem; color: var(--ink-soft); padding: 9px 12px; border-radius: 9px; white-space: nowrap; }
+body.artikkeli .nav-dd-menu a:hover { background: var(--cream); color: var(--brick); }
+body.artikkeli .nav-right { display: flex; align-items: center; gap: 12px; }
+body.artikkeli .nav-burger { display: none; background: none; border: 0; cursor: pointer; color: var(--ink); padding: 4px; }
+body.artikkeli .nav-login { font-family: "Fredoka", sans-serif; font-weight: 500; font-size: .95rem; color: var(--ink-soft); text-decoration: none; }
+body.artikkeli .nav-login:hover { color: var(--brick); }
+body.artikkeli .nav-overlay { display: none; }
+body.artikkeli .nav-overlay.open { display: block; position: fixed; left: 0; right: 0; top: 57px; bottom: 0; background: var(--cream); z-index: 49; overflow-y: auto; padding: 20px 22px 48px; }
+body.artikkeli .nav-overlay-in { display: flex; flex-direction: column; max-width: 480px; margin-inline: auto; }
+body.artikkeli .nav-overlay-h { font-family: "Fredoka", sans-serif; font-weight: 600; font-size: .8rem; color: var(--terra); margin: 16px 0 4px; }
+body.artikkeli .nav-overlay-in > a { text-decoration: none; font-family: "Fredoka", sans-serif; font-weight: 500; font-size: 1.12rem; color: var(--ink); padding: 12px 4px; border-bottom: 1px solid var(--line); }
+body.artikkeli .nav-overlay-in > a:hover { color: var(--brick); }
+body.artikkeli .nav-overlay-cta { justify-content: center; margin-top: 24px; color: var(--paper); font-size: 1.1rem; border-bottom: 0; }
+@media (max-width: 860px) {
+  body.artikkeli .nav-menu { display: none !important; }
+  body.artikkeli .nav-burger { display: inline-flex !important; }
+}
+@media (max-width: 520px) {
+  body.artikkeli .nav-login { display: none; }
+}
+
+/* ─── Btn (single-dash, nav v2 käyttää näitä) ────────────────────
+   landing.css käyttää .btn--primary (double-dash). Nav v2:n markup
+   käyttää .btn-primary (single-dash). Lisätään tänne jotta artikkelit
+   saavat oikean napin tyylityksen.
+   ──────────────────────────────────────────────────────────────── */
+body.artikkeli .btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  font-family: "Fredoka", sans-serif; font-weight: 500; font-size: 1.08rem;
+  text-decoration: none; border-radius: 16px; padding: 16px 30px;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+body.artikkeli .btn-primary { background: var(--brick); color: #FEF7ED; box-shadow: 0 4px 0 #7A1E1C; }
+body.artikkeli .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 0 #7A1E1C; }
+
 /* ─── Layout-runko ───────────────────────────────────────────── */
 .artikkeli main {
   display: block;
@@ -317,10 +395,11 @@ body.artikkeli .nav[data-scrolled="true"] {
 .hub-wrap {
   max-width: var(--content-max);
   margin: 0 auto;
-  padding: clamp(96px, 13vw, 140px) var(--sp-3) clamp(64px, 10vw, 104px);
+  padding: clamp(28px, 4vw, 40px) var(--sp-3) clamp(64px, 10vw, 104px);
 }
 .hub-head { max-width: 64ch; margin: 0 0 var(--sp-6); }
-.hub-head .eyebrow { display: block; margin: 0 0 12px; text-transform: uppercase; }
+/* eyebrow: normaali Fredoka-teksti, ei mono-UPPERCASE */
+.hub-head .eyebrow { display: block; margin: 0 0 12px; text-transform: none; font-family: var(--font-display); font-weight: 600; font-size: .88rem; color: var(--terra); letter-spacing: .01em; }
 .hub-head h1 {
   font-family: var(--font-display);
   font-weight: 600;
