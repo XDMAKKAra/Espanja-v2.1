@@ -83,6 +83,8 @@ function refreshSidemenuProgress() {
     const done = _sivut.filter((s) => map[s.id] === "done").length;
     chip.textContent = `${done} / ${_sivut.length} valmis`;
     chip.dataset.full = done >= _sivut.length ? "true" : "false";
+    // L-V413: expose the ratio so the CSS pill can paint a subtle fill.
+    chip.style.setProperty("--dk-prog", _sivut.length ? String(done / _sivut.length) : "0");
   }
 }
 

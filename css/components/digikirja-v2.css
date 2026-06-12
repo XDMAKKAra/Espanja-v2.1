@@ -1,0 +1,158 @@
+/* ═══════════════════════════════════════════════════════════════
+   DIGIKIRJA V2 — L-V413 Lohko 2: reader polish layer.
+   Same layout and information architecture as digikirja.css (base);
+   this layer only refines craft: a centered reading column, page-head
+   rhythm, warm table styling, clearer sidemenu states (green = done,
+   brick = active), and a topbar progress pill with a real fill.
+   Loaded into @layer components so it wins base without !important.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Reading column: center the text block instead of pinning it to
+      the left edge of an arbitrarily wide viewport. Line lengths and
+      the left-aligned editorial structure inside stay as they were. */
+.dk__content {
+  width: 100%;
+  max-width: 960px;
+  margin-inline: auto;
+  padding-top: 44px;
+}
+
+/* ── Page head ─────────────────────────────────────────────────── */
+.dk__page-meta {
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  color: var(--ed-ink-subtle);
+  margin-bottom: 12px;
+}
+.dk__page-title {
+  margin-bottom: 18px;
+}
+.dk__page-title em {
+  font-style: normal;
+}
+/* Chapter rule: a short gold stroke under the title, the one warm
+   ornament on the page. */
+.dk__page-title::after {
+  content: "";
+  display: block;
+  width: 52px;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--ed-gold, #C99A22);
+  margin-top: 18px;
+}
+
+/* Lead paragraph: the first prose block after the title reads larger
+   and softer, like a textbook chapter ingress. */
+.dk__page-title + .dk__teoria-p {
+  font-size: 17.5px;
+  line-height: 1.6;
+  color: var(--ed-ink-muted);
+  max-width: 58ch;
+  margin-bottom: 20px;
+}
+
+/* Section heads get more air above so the page breathes in sections. */
+.dk__teoria-h2 {
+  margin-top: 44px;
+}
+.dk__teoria-h2:first-child { margin-top: 0; }
+
+/* ── Bilingual table: warm paper card ──────────────────────────── */
+.dk__bilingual {
+  border-radius: 14px;
+  box-shadow: 0 1px 2px rgba(36, 28, 21, 0.05), 0 8px 20px -16px rgba(36, 28, 21, 0.18);
+}
+.dk__bilingual th,
+.dk__bilingual td {
+  padding: 12px 18px;
+}
+.dk__bilingual thead th {
+  padding-block: 11px;
+  font-size: 12.5px;
+  letter-spacing: 0.02em;
+}
+.dk__bilingual tbody tr:nth-child(even) td {
+  background: color-mix(in oklch, var(--ed-bg) 55%, var(--ed-bg-card));
+}
+
+/* ── Obs / huomio box: align with the card vocabulary ──────────── */
+.dk__obs {
+  border-radius: 14px;
+  padding: 18px 22px;
+}
+
+/* ── Exercise card: a touch of paper depth ─────────────────────── */
+.dk__exercise {
+  box-shadow: 0 1px 2px rgba(36, 28, 21, 0.04), 0 10px 24px -20px rgba(36, 28, 21, 0.20);
+}
+
+/* ── Topbar ─────────────────────────────────────────────────────── */
+.dk__topbar {
+  /* Soft lift so the brick bar reads as a bar, not a flat stripe. */
+  box-shadow: 0 1px 0 rgba(58, 18, 16, 0.35), 0 10px 24px -18px rgba(36, 28, 21, 0.45);
+}
+/* Progress pill: the translucent pill now fills left-to-right with the
+   actual completion ratio (JS sets --dk-prog 0..1). */
+.dk__progress-chip {
+  padding: 5px 12px;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0.30) calc(var(--dk-prog, 0) * 100%),
+    rgba(255, 255, 255, 0.10) calc(var(--dk-prog, 0) * 100%)
+  );
+}
+.dk__progress-chip[data-full="true"] {
+  background: #fbfaf6;
+}
+
+/* ── Sidemenu: rounded rows, green done-state ──────────────────── */
+.dk__sidemenu-list {
+  padding-inline: 10px;
+}
+.dk__row {
+  border-radius: 10px;
+  padding: 9px 12px;
+}
+.dk__group-title {
+  padding-inline: 12px;
+}
+.dk__sidemenu-head {
+  padding-inline: 22px;
+}
+
+/* Done = green check (calm, finished); active = brick block (you are
+   here). Before this both used brick and read as the same state. */
+.dk__row-check {
+  background: var(--ed-olive, #2E5E4E);
+  color: #FBF7EF;
+}
+.dk__row.is-active .dk__row-check {
+  background: var(--ed-accent-ink);
+  color: var(--ed-accent);
+}
+
+/* Collapsed rail keeps its geometry from base; restore the flush
+   padding there so the hidden state doesn't shift. */
+.dk[data-sidemenu="collapsed"] .dk__sidemenu-list {
+  padding-inline: 0;
+}
+
+/* ── Prev/next: clearer direction, paper hover ──────────────────── */
+.dk__prevnext-btn {
+  border-radius: 12px;
+  padding: 12px 16px;
+}
+.dk__prevnext-btn:hover:not([disabled]) {
+  border-color: color-mix(in oklch, var(--ed-accent) 30%, var(--ed-rule));
+}
+.dk__prevnext-btn:hover:not([disabled]) .dk__prevnext-dir {
+  color: var(--ed-accent);
+}
+
+/* ── Mobile: keep the centered column from eating the padding ───── */
+@media (max-width: 1023px) {
+  .dk__content {
+    padding-top: 28px;
+  }
+}
