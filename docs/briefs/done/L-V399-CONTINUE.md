@@ -1,4 +1,4 @@
-# L-V399 — JATKOBRIEF (resume cold from here)
+1# L-V399 — JATKOBRIEF (resume cold from here)
 
 > **Rooli:** WRITER. Tämä jatkaa L-V399-ylläpidettävyysrefaktoria täsmälleen siitä mihin sessio 1 jäi.
 > Lue ENSIN: `docs/briefs/L-V399-CLEANUP-MAP.md` (evidenssikartta) + `CONVENTIONS.md` (konventiot).
