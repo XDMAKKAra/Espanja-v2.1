@@ -81,6 +81,15 @@ export function initOnboardingV4(deps = {}) {
 }
 
 export async function showOnboardingV4(opts = {}) {
+  // Never trap a logged-in user in onboarding. Reaching here via a stale
+  // #/aloitus hash before session/profile hydration would otherwise fail open
+  // (profile not loaded yet → guard sees undefined). Load the profile first;
+  // checkOnboarding re-launches onboarding itself for a genuine new user.
+  if (isLoggedIn() && !window._userProfile) {
+    let needed = false;
+    try { needed = await window._onboardingRef?.checkOnboarding?.(); } catch {}
+    if (needed) return;
+  }
   // L-V408 — logged-in users who have already completed onboarding must not
   // be trapped here. Route them to home immediately.
   if (isLoggedIn() && window._userProfile?.onboarding_completed) {

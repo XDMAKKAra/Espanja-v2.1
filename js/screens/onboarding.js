@@ -36,6 +36,10 @@ export async function checkOnboarding(preloadedProfile) {
       if (!res.ok) return false;
       ({ profile } = await res.json());
     }
+    // Always expose the loaded profile so the V4 guard can trust it (prevents
+    // an onboarded user being dropped into onboarding when reached via a stale
+    // #/aloitus hash before profile hydration).
+    if (profile) window._userProfile = profile;
     if (!profile || !profile.onboarding_completed) {
       // L-V359 — route every fresh-account / mid-onboarding boot to the V4
       // diagnostic-first flow (kartoitus → tulokset → tuotevalinta). Legacy V2
@@ -43,7 +47,6 @@ export async function checkOnboarding(preloadedProfile) {
       showOnboardingV4();
       return true;
     }
-    window._userProfile = profile;
     renderAppCountdown(); // returning user, countdown visible
     return false;
   } catch {
