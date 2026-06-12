@@ -40,10 +40,43 @@ export function initAuth({ updateSidebarState, loadDashboard }) {
   _deps = { updateSidebarState, loadDashboard };
 }
 
-let authMode = "login"; // "login" | "register"
+// L-V413 Lohko 1 — register is the default mode: a visitor without an account
+// is the common case on this screen, so "Luo tili" comes first and login is
+// one click away ("Onko sinulla jo tili?").
+let authMode = "register"; // "login" | "register"
+
+const AUTH_COPY = {
+  register: {
+    title: "Luo tili",
+    subtitle: "Tasoarviosi ja edistymisesi säilyvät, ja voit jatkaa millä tahansa laitteella.",
+    submit: "Luo tili",
+    busy: "Luodaan tiliä…",
+  },
+  login: {
+    title: "Kirjaudu sisään",
+    subtitle: "Jatka siitä mihin jäit.",
+    submit: "Kirjaudu sisään",
+    busy: "Kirjaudutaan…",
+  },
+};
+
+function setAuthMode(mode) {
+  authMode = mode;
+  const copy = AUTH_COPY[mode];
+  const inner = $("auth-inner");
+  if (inner) inner.dataset.authMode = mode;
+  $("auth-title").textContent = copy.title;
+  $("auth-subtitle").textContent = copy.subtitle;
+  $("btn-auth-submit").textContent = copy.submit;
+  $("auth-error").classList.add("hidden");
+  $("auth-success").classList.add("hidden");
+  // Password-manager hint: offer a strong new password when registering,
+  // autofill the saved one when logging in.
+  $("auth-password").setAttribute("autocomplete", mode === "login" ? "current-password" : "new-password");
+}
 
 // Honour ?mode=login / ?mode=register from landing pages so returning users
-// land on the login tab when they click "Kirjaudu sisään" in the nav.
+// land on the login view when they click "Kirjaudu sisään" in the nav.
 // Also honour #rekisteroidy / #kirjaudu hash so landing CTAs can deep-link
 // without triggering NAV_HASH screen routing (which uses /-prefixed slugs).
 try {
@@ -53,48 +86,37 @@ try {
   const wantRegister = requested === "register" || hash === "rekisteroidy";
   const wantLogin = requested === "login" || hash === "kirjaudu";
   if (wantRegister) {
-    // Defer click until DOM is ready, these element handlers register synchronously.
-    queueMicrotask(() => $("tab-register") && $("tab-register").click());
+    queueMicrotask(() => setAuthMode("register"));
   } else if (wantLogin) {
-    queueMicrotask(() => $("tab-login") && $("tab-login").click());
+    queueMicrotask(() => setAuthMode("login"));
   }
 } catch { /* ignore */ }
 
-$("tab-login").addEventListener("click", () => {
-  authMode = "login";
-  $("tab-login").classList.add("active");
-  $("tab-register").classList.remove("active");
-  $("auth-title").textContent = "Kirjaudu sisään";
-  $("btn-auth-submit").textContent = "Kirjaudu sisään →";
-  $("auth-error").classList.add("hidden");
-  // Browser password-manager hint
-  $("auth-password").setAttribute("autocomplete", "current-password");
-});
+// #tab-login / #tab-register are the "Onko sinulla jo tili?" / "Eikö sinulla
+// ole vielä tiliä?" switch links (IDs kept from the old tab pair).
+$("tab-login").addEventListener("click", () => setAuthMode("login"));
+$("tab-register").addEventListener("click", () => setAuthMode("register"));
 
-$("tab-register").addEventListener("click", () => {
-  authMode = "register";
-  $("tab-register").classList.add("active");
-  $("tab-login").classList.remove("active");
-  $("auth-title").textContent = "Luo tili";
-  $("btn-auth-submit").textContent = "Luo tili →";
-  $("auth-error").classList.add("hidden");
-  // Tells password managers to offer/save a strong new password
-  $("auth-password").setAttribute("autocomplete", "new-password");
-});
-
-$("btn-auth-submit").addEventListener("click", async () => {
+$("auth-form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const name = $("auth-name").value.trim();
   const email = $("auth-email").value.trim();
   const password = $("auth-password").value;
   const errEl = $("auth-error");
   errEl.classList.add("hidden");
 
+  if (authMode === "register" && !name) {
+    errEl.textContent = "Kerro nimesi";
+    errEl.classList.remove("hidden");
+    return;
+  }
   if (!email || !password) {
     errEl.textContent = "Täytä kaikki kentät";
     errEl.classList.remove("hidden");
     return;
   }
 
-  $("btn-auth-submit").textContent = "Ladataan...";
+  $("btn-auth-submit").textContent = AUTH_COPY[authMode].busy;
   $("btn-auth-submit").disabled = true;
 
   try {
@@ -102,7 +124,7 @@ $("btn-auth-submit").addEventListener("click", async () => {
     const res = await fetch(`${API}${endpoint}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify(authMode === "register" ? { name, email, password } : { email, password }),
     });
     const data = await res.json();
     if (!res.ok) {
@@ -150,7 +172,7 @@ $("btn-auth-submit").addEventListener("click", async () => {
     errEl.classList.remove("hidden");
   } finally {
     $("btn-auth-submit").disabled = false;
-    $("btn-auth-submit").textContent = authMode === "login" ? "Kirjaudu sisään →" : "Luo tili →";
+    $("btn-auth-submit").textContent = AUTH_COPY[authMode].submit;
   }
 });
 

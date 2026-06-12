@@ -16,25 +16,29 @@ import { test, expect } from "@playwright/test";
 const LIVE = !!(process.env.TEST_SIGNUP_EMAIL && process.env.SUPABASE_SERVICE_ROLE_KEY);
 
 test.describe("signup flow — structure smoke (always runs)", () => {
-  test("auth screen exposes both Login and Register tabs", async ({ page }) => {
+  // L-V413 Lohko 1: register is the default view; #tab-login / #tab-register
+  // are the mode-switch links and only one is visible at a time.
+  test("auth screen defaults to register with a switch to login", async ({ page }) => {
     await page.goto("/app.html");
-    await expect(page.locator("#tab-login")).toBeVisible();
-    await expect(page.locator("#tab-register")).toBeVisible();
+    await expect(page.locator("#auth-name")).toBeVisible();
     await expect(page.locator("#auth-email")).toBeVisible();
     await expect(page.locator("#auth-password")).toBeVisible();
     await expect(page.locator("#btn-auth-submit")).toBeVisible();
+    await expect(page.locator("#tab-login")).toBeVisible();
+    await page.locator("#tab-login").click();
+    await expect(page.locator("#tab-register")).toBeVisible();
+    await expect(page.locator("#auth-name")).toBeHidden();
   });
 
-  test("Register tab switches the form to sign-up mode", async ({ page }) => {
+  test("default form is in sign-up mode", async ({ page }) => {
     await page.goto("/app.html");
-    await page.locator("#tab-register").click();
     const title = await page.locator("#auth-title").innerText();
     expect(title).toMatch(/(rekisteröidy|rekisteröityminen|luo tili)/i);
   });
 
   test("Register with invalid email surfaces a Finnish error message", async ({ page }) => {
     await page.goto("/app.html");
-    await page.locator("#tab-register").click();
+    await page.locator("#auth-name").fill("Testi");
     await page.locator("#auth-email").fill("not-an-email");
     await page.locator("#auth-password").fill("Abcdefg1");
     await page.locator("#btn-auth-submit").click();
@@ -52,9 +56,9 @@ test.describe("signup flow — live end-to-end", () => {
   const password = "Abcdefg1_" + Math.random().toString(36).slice(2, 8);
 
   test("register → confirm → login → placement start", async ({ page, request }) => {
-    // 1. Register via UI
+    // 1. Register via UI (register is the default mode)
     await page.goto("/app.html");
-    await page.locator("#tab-register").click();
+    await page.locator("#auth-name").fill("E2E Testi");
     await page.locator("#auth-email").fill(email);
     await page.locator("#auth-password").fill(password);
     await page.locator("#btn-auth-submit").click();

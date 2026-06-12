@@ -205,7 +205,7 @@
       <aside class="auth-aside" aria-label="Puheo">
         <a href="index.html" class="auth-aside__logo" aria-label="Puheo etusivu"><span class="brand-wordmark">puheo</span></a>
         <p class="auth-aside__eyebrow">Espanjan yo-koe · lyhyt</p>
-        <h2 class="auth-aside__title">Adaptiivinen treeni YO-kokeeseen.</h2>
+        <h2 class="auth-aside__title">Adaptiivinen treeni yo-kokeeseen.</h2>
         <p class="auth-aside__lead">AI-palaute, oma oppimispolku ja päivän putki, kaikki suomeksi.</p>
         <ul class="auth-aside__benefits" role="list">
           <li><svg class="auth-aside__check" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L20 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>60 sekunnin taitotaso-arvio</li>
@@ -214,31 +214,48 @@
         </ul>
         <p class="auth-aside__foot">Suomalainen tuote · Ei mainoksia · Voit perua koska tahansa</p>
       </aside>
-      <div class="auth-inner">
+      <!-- L-V413 Lohko 1 — register-first auth. The old tab pair is replaced by
+           two modes on one form: data-auth-mode="register" (default for new
+           users) and "login". #tab-login / #tab-register IDs are kept on the
+           mode-switch links so deep links (?mode=, #kirjaudu/#rekisteroidy)
+           and existing specs keep working. -->
+      <div class="auth-inner" id="auth-inner" data-auth-mode="register">
         <a href="index.html" class="logo auth-inner__logo"><span class="brand-wordmark">puheo</span></a>
-        <h1 id="auth-title">Kirjaudu sisään</h1>
-        <p class="subtitle">Seuraa edistymistäsi ja jatka siitä mihin jäit.</p>
+        <h1 id="auth-title">Luo tili</h1>
+        <p class="subtitle" id="auth-subtitle">Tasoarviosi ja edistymisesi säilyvät, ja voit jatkaa millä tahansa laitteella.</p>
 
-        <div class="auth-tabs">
-          <button class="auth-tab active" id="tab-login">Kirjaudu</button>
-          <button class="auth-tab" id="tab-register">Rekisteröidy</button>
-        </div>
+        <form class="auth-form" id="auth-form" novalidate>
+          <div class="auth-field auth-field--name">
+            <label for="auth-name">Nimi</label>
+            <input type="text" id="auth-name" class="auth-input" placeholder="Etunimi riittää" autocomplete="name" maxlength="80" />
+          </div>
+          <div class="auth-field">
+            <label for="auth-email">Sähköposti</label>
+            <input type="email" id="auth-email" class="auth-input" placeholder="sinä@esimerkki.fi" autocomplete="email" />
+          </div>
+          <div class="auth-field">
+            <label for="auth-password">Salasana</label>
+            <input type="password" id="auth-password" class="auth-input" placeholder="••••••••" autocomplete="new-password" />
+            <p class="auth-field__help" id="auth-password-help">Vähintään 8 merkkiä, mukana iso ja pieni kirjain sekä numero.</p>
+          </div>
 
-        <div class="config-block">
-          <label>Sähköposti</label>
-          <input type="email" id="auth-email" class="auth-input" placeholder="sinä@esimerkki.fi" autocomplete="email" aria-label="Sähköposti" />
-        </div>
-        <div class="config-block">
-          <label>Salasana</label>
-          <input type="password" id="auth-password" class="auth-input" placeholder="••••••••" autocomplete="current-password" aria-label="Salasana" />
-        </div>
+          <div class="auth-error hidden" id="auth-error" role="alert"></div>
+          <div class="auth-success hidden" id="auth-success"></div>
 
-        <div class="auth-error hidden" id="auth-error"></div>
-        <div class="auth-success hidden" id="auth-success"></div>
-        <button class="btn-primary" id="btn-auth-submit">Kirjaudu sisään →</button>
+          <button type="submit" class="auth-submit" id="btn-auth-submit">Luo tili</button>
+        </form>
 
-        <button class="btn-link" id="btn-forgot">Unohditko salasanan?</button>
-        <button class="btn-ghost" id="btn-guest">Jatka ilman tiliä →</button>
+        <button type="button" class="auth-forgot" id="btn-forgot">Unohditko salasanan?</button>
+
+        <p class="auth-switch auth-switch--to-login">Onko sinulla jo tili?
+          <button type="button" class="auth-switch__link" id="tab-login">Kirjaudu sisään</button>
+        </p>
+        <p class="auth-switch auth-switch--to-register">Eikö sinulla ole vielä tiliä?
+          <button type="button" class="auth-switch__link" id="tab-register">Luo tili</button>
+        </p>
+
+        <div class="auth-divider" aria-hidden="true"></div>
+        <button type="button" class="auth-guest" id="btn-guest">Jatka ilman tiliä</button>
 
         <p class="auth-legal" id="auth-legal">
           Rekisteröitymällä hyväksyt <a href="/terms.html" target="_blank" rel="noopener">käyttöehdot</a> ja <a href="/privacy.html" target="_blank" rel="noopener">tietosuojaselosteen</a>.
