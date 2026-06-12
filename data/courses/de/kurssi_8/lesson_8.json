@@ -45,14 +45,14 @@
       "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
       "skip_for_targets": ["I"],
       "items": [
-        { "item_type": "gap_fill", "sentence_template": "Sehr ___ Frau Schmidt,", "answers": [["geehrte"]], "word_bank": ["geehrte", "geehrter", "liebe", "alte"] },
-        { "item_type": "gap_fill", "sentence_template": "Mit ___ Grüßen,", "answers": [["freundlichen"]], "word_bank": ["freundlichen", "schönen", "herzlichen", "guten"] },
-        { "item_type": "gap_fill", "sentence_template": "Ich würde mich ___, wenn Sie mir antworten könnten.", "answers": [["freuen"]], "word_bank": ["freuen", "ärgern", "wundern", "fragen"] },
-        { "item_type": "gap_fill", "sentence_template": "Könnten ___ mir bitte mitteilen, ob die Stelle noch verfügbar ist?", "answers": [["Sie"]], "word_bank": ["Sie", "du", "ihr", "er"] },
-        { "item_type": "gap_fill", "sentence_template": "Meiner ___ nach ist dieses Thema sehr wichtig.", "answers": [["Meinung"]], "word_bank": ["Meinung", "Ansicht", "Idee", "Hoffnung"] },
-        { "item_type": "gap_fill", "sentence_template": "Ich ___ mich an Sie, weil ich eine Frage habe.", "answers": [["wende"]], "word_bank": ["wende", "schreibe", "gehe", "komme"] },
-        { "item_type": "gap_fill", "sentence_template": "Vielen ___ für Ihre schnelle Antwort.", "answers": [["Dank"]], "word_bank": ["Dank", "Grüße", "Hilfe", "Zeit"] },
-        { "item_type": "gap_fill", "sentence_template": "Zusammenfassend lässt ___ sagen, dass Klimaschutz wichtig ist.", "answers": [["sich"]], "word_bank": ["sich", "es", "man", "ich"] }
+        { "item_type": "gap_fill", "sentence_template": "Sehr {1} Frau Schmidt,", "answers": [["geehrte"]], "word_bank": ["geehrte", "geehrter", "liebe", "alte"] },
+        { "item_type": "gap_fill", "sentence_template": "Mit {1} Grüßen,", "answers": [["freundlichen"]], "word_bank": ["freundlichen", "schönen", "herzlichen", "guten"] },
+        { "item_type": "gap_fill", "sentence_template": "Ich würde mich {1}, wenn Sie mir antworten könnten.", "answers": [["freuen"]], "word_bank": ["freuen", "ärgern", "wundern", "fragen"] },
+        { "item_type": "gap_fill", "sentence_template": "Könnten {1} mir bitte mitteilen, ob die Stelle noch verfügbar ist?", "answers": [["Sie"]], "word_bank": ["Sie", "du", "ihr", "er"] },
+        { "item_type": "gap_fill", "sentence_template": "Meiner {1} nach ist dieses Thema sehr wichtig.", "answers": [["Meinung"]], "word_bank": ["Meinung", "Ansicht", "Idee", "Hoffnung"] },
+        { "item_type": "gap_fill", "sentence_template": "Ich {1} mich an Sie, weil ich eine Frage habe.", "answers": [["wende"]], "word_bank": ["wende", "schreibe", "gehe", "komme"] },
+        { "item_type": "gap_fill", "sentence_template": "Vielen {1} für Ihre schnelle Antwort.", "answers": [["Dank"]], "word_bank": ["Dank", "Grüße", "Hilfe", "Zeit"] },
+        { "item_type": "gap_fill", "sentence_template": "Zusammenfassend lässt {1} sagen, dass Klimaschutz wichtig ist.", "answers": [["sich"]], "word_bank": ["sich", "es", "man", "ich"] }
       ]
     },
     {
@@ -63,11 +63,11 @@
       "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
       "skip_for_targets": ["I", "A"],
       "items": [
-        { "item_type": "gap_fill", "sentence_template": "Formaali: Ich hoffe, dass ___ (Sie/du) meine Frage beantworten können.", "answers": [["Sie"]], "word_bank": ["Sie", "du"] },
-        { "item_type": "gap_fill", "sentence_template": "Formaali pyyntö: 'Ich ___ mich freuen, wenn Sie mir helfen könnten.'", "answers": [["würde"]], "word_bank": ["würde", "will", "möchte", "muss"] },
-        { "item_type": "gap_fill", "sentence_template": "Formaali vastaus: 'Ich bedanke ___ für Ihre Antwort.'", "answers": [["mich"]], "word_bank": ["mich", "mir", "sich", "uns"] },
-        { "item_type": "gap_fill", "sentence_template": "Formaali päätös: 'Mit ___ Grüßen, Anna Mäkinen'", "answers": [["freundlichen"]], "word_bank": null },
-        { "item_type": "gap_fill", "sentence_template": "Kohtelias kysymys: '___ Sie mir bitte sagen, wann das Büro geöffnet ist?'", "answers": [["Könnten"]], "word_bank": ["Könnten", "Können", "Musst", "Wollt"] }
+        { "item_type": "gap_fill", "sentence_template": "Formaali: Ich hoffe, dass {1} (Sie/du) meine Frage beantworten können.", "answers": [["Sie"]], "word_bank": ["Sie", "du"] },
+        { "item_type": "gap_fill", "sentence_template": "Formaali pyyntö: 'Ich {1} mich freuen, wenn Sie mir helfen könnten.'", "answers": [["würde"]], "word_bank": ["würde", "will", "möchte", "muss"] },
+        { "item_type": "gap_fill", "sentence_template": "Formaali vastaus: 'Ich bedanke {1} für Ihre Antwort.'", "answers": [["mich"]], "word_bank": ["mich", "mir", "sich", "uns"] },
+        { "item_type": "gap_fill", "sentence_template": "Formaali päätös: 'Mit {1} Grüßen, Anna Mäkinen'", "answers": [["freundlichen"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Kohtelias kysymys: '{1} Sie mir bitte sagen, wann das Büro geöffnet ist?'", "answers": [["Könnten"]], "word_bank": ["Könnten", "Können", "Musst", "Wollt"] }
       ]
     },
     {

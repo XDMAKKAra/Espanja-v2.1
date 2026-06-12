@@ -91,14 +91,14 @@
       "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
       "skip_for_targets": ["I", "A"],
       "items": [
-        { "item_type": "gap_fill", "sentence_template": "Als ich ankam, ___ er schon ___ (gehen).", "answers": [["war"], ["gegangen"]], "word_bank": ["war", "ist", "hatte", "gegangen", "gegangen"] },
-        { "item_type": "gap_fill", "sentence_template": "Ich ___ schon ___ (essen), als sie anrief.", "answers": [["hatte"], ["gegessen"]], "word_bank": ["hatte", "hat", "war", "gegessen", "essen"] },
-        { "item_type": "gap_fill", "sentence_template": "Nachdem wir ___ (aufräumen) ___, ___ wir Kaffee.", "answers": [["aufgeräumt hatten"], ["tranken", "haben getrunken"]], "word_bank": null },
-        { "item_type": "gap_fill", "sentence_template": "Morgen ___ ich nach Wien ___ (fahren).", "answers": [["werde"], ["fahren"]], "word_bank": ["werde", "bin", "war", "fahren", "gefahren"] },
-        { "item_type": "gap_fill", "sentence_template": "Er ___ schon drei Stunden ___ (warten), als der Zug ankam.", "answers": [["hatte"], ["gewartet"]], "word_bank": ["hatte", "hat", "war", "gewartet", "gewartet"] },
-        { "item_type": "gap_fill", "sentence_template": "Bevor die Energiewende ___ (beginnen) ___, ___ Deutschland viel Kohle.", "answers": [["begonnen hatte", "begann"], ["verbrannte", "hat verbrannt"]], "word_bank": null },
-        { "item_type": "gap_fill", "sentence_template": "Als Greta Thunberg mit ihrem Protest ___ (anfangen) ___, ___ viele Schüler nicht über Klimawandel ___ (nachdenken).", "answers": [["angefangen hatte"], ["hatten"], ["nachgedacht"]], "word_bank": null },
-        { "item_type": "gap_fill", "sentence_template": "Ich ___ (sein) müde, weil ich die ganze Nacht ___ (arbeiten) ___.", "answers": [["war"], ["gearbeitet hatte", "gearbeitet habe"]], "word_bank": null }
+        { "item_type": "gap_fill", "sentence_template": "Als ich ankam, {1} er schon {2} (gehen).", "answers": [["war"], ["gegangen"]], "word_bank": ["war", "ist", "hatte", "gegangen", "gegangen"] },
+        { "item_type": "gap_fill", "sentence_template": "Ich {1} schon {2} (essen), als sie anrief.", "answers": [["hatte"], ["gegessen"]], "word_bank": ["hatte", "hat", "war", "gegessen", "essen"] },
+        { "item_type": "gap_fill", "sentence_template": "Nachdem wir {1} (aufräumen), {2} wir Kaffee.", "answers": [["aufgeräumt hatten"], ["tranken", "haben getrunken"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Morgen {1} ich nach Wien {2} (fahren).", "answers": [["werde"], ["fahren"]], "word_bank": ["werde", "bin", "war", "fahren", "gefahren"] },
+        { "item_type": "gap_fill", "sentence_template": "Er {1} schon drei Stunden {2} (warten), als der Zug ankam.", "answers": [["hatte"], ["gewartet"]], "word_bank": ["hatte", "hat", "war", "gewartet", "gewartet"] },
+        { "item_type": "gap_fill", "sentence_template": "Bevor die Energiewende {1} (beginnen), {2} Deutschland viel Kohle.", "answers": [["begonnen hatte", "begann"], ["verbrannte", "hat verbrannt"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Als Greta Thunberg mit ihrem Protest {1} (anfangen), {2} viele Schüler nicht über Klimawandel {3} (nachdenken).", "answers": [["angefangen hatte"], ["hatten"], ["nachgedacht"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Ich {1} (sein) müde, weil ich die ganze Nacht {2} (arbeiten).", "answers": [["war"], ["gearbeitet hatte", "gearbeitet habe"]], "word_bank": null }
       ]
     },
     {
@@ -109,10 +109,10 @@
       "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
       "skip_for_targets": ["I", "A", "B"],
       "items": [
-        { "item_type": "gap_fill", "sentence_template": "In Berlin: Als ich ___ (ankommen) ___, ___ ich schon mehrere Sehenswürdigkeiten ___ (sehen).", "answers": [["ankam"], ["hatte"], ["gesehen"]], "word_bank": null },
-        { "item_type": "gap_fill", "sentence_template": "Deutschland ___ (sein) lange Zeit das wirtschaftlich stärkste Land in Europa. Inzwischen ___ (wachsen) auch andere Länder schnell.", "answers": [["war"], ["wachsen", "wächst", "ist gewachsen"]], "word_bank": null },
-        { "item_type": "gap_fill", "sentence_template": "Die Energiewende ___ (sein) eine Herausforderung. Bevor die Solarenergie ___ (kommen) ___, ___ Deutschland stark von Kohle ___ (abhängen).", "answers": [["ist", "war"], ["gekommen war"], ["hatte"], ["abgehangen"]], "word_bank": null },
-        { "item_type": "gap_fill", "sentence_template": "Morgen ___ ich nach Berlin ___ (fahren), um das neue Museum ___ (besuchen).", "answers": [["werde"], ["fahren"], ["zu besuchen"]], "word_bank": null }
+        { "item_type": "gap_fill", "sentence_template": "In Berlin: Als ich {1} (ankommen), {2} ich schon mehrere Sehenswürdigkeiten {3} (sehen).", "answers": [["ankam"], ["hatte"], ["gesehen"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Deutschland {1} (sein) lange Zeit das wirtschaftlich stärkste Land in Europa. Inzwischen {2} (wachsen) auch andere Länder schnell.", "answers": [["war"], ["wachsen", "wächst", "ist gewachsen"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Die Energiewende {1} (sein) eine Herausforderung. Bevor die Solarenergie {2} (kommen), {3} Deutschland stark von Kohle {4} (abhängen).", "answers": [["ist", "war"], ["gekommen war"], ["hatte"], ["abgehangen"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Morgen {1} ich nach Berlin {2} (fahren), um das neue Museum {3} (besuchen).", "answers": [["werde"], ["fahren"], ["zu besuchen"]], "word_bank": null }
       ]
     },
     {

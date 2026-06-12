@@ -92,15 +92,15 @@
       "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
       "skip_for_targets": ["I", "A"],
       "items": [
-        { "item_type": "gap_fill", "sentence_template": "Wenn ich mehr Zeit ___ (haben), ___ ich mehr Sport ___ (machen).", "answers": [["gehabt hätte"], ["hätte"], ["gemacht"]], "word_bank": ["gehabt hätte", "hätte", "gemacht", "wäre", "gehabt"] },
-        { "item_type": "gap_fill", "sentence_template": "Wenn es nicht geregnet ___ (haben), ___ wir spazieren ___ (gehen).", "answers": [["hätte"], ["wären"], ["gegangen"]], "word_bank": ["hätte", "wären", "gegangen", "geregnet hätte", "gewesen"] },
-        { "item_type": "gap_fill", "sentence_template": "Er ___ die Prüfung ___ (bestehen), wenn er mehr ___ (lernen) ___.", "answers": [["hätte"], ["bestanden"], ["gelernt"], ["hätte"]], "word_bank": ["hätte", "bestanden", "gelernt", "hätte", "wäre"] },
-        { "item_type": "gap_fill", "sentence_template": "Wenn sie früher ___ (aufstehen) ___, ___ sie den Zug nicht ___ (verpassen).", "answers": [["aufgestanden"], ["wäre"], ["hätte"], ["verpasst"]], "word_bank": ["aufgestanden", "wäre", "hätte", "verpasst", "gegangen"] },
-        { "item_type": "gap_fill", "sentence_template": "Wenn ich das ___ (wissen) ___, ___ ich anders ___ (handeln).", "answers": [["gewusst"], ["hätte"], ["hätte"], ["gehandelt"]], "word_bank": ["gewusst", "hätte", "hätte", "gehandelt", "wäre"] },
-        { "item_type": "gap_fill", "sentence_template": "Wir ___ nach Berlin ___ (fliegen), wenn die Flüge billiger ___ (sein) ___.", "answers": [["wären"], ["geflogen"], ["gewesen"], ["wären"]], "word_bank": ["wären", "geflogen", "gewesen", "wären", "hätten"] },
-        { "item_type": "gap_fill", "sentence_template": "Wenn du mehr geschlafen ___ (haben), ___ du dich besser ___ (fühlen).", "answers": [["hättest"], ["hättest"], ["gefühlt"]], "word_bank": ["hättest", "hättest", "gefühlt", "wärst", "gehabt"] },
-        { "item_type": "gap_fill", "sentence_template": "Sie ___ die Stadt ___ (besuchen), wenn sie Zeit ___ (haben) ___.", "answers": [["hätte"], ["besucht"], ["gehabt"], ["hätte"]], "word_bank": ["hätte", "besucht", "gehabt", "hätte", "wäre"] },
-        { "item_type": "gap_fill", "sentence_template": "Wenn ich in Berlin ___ (sein) ___, ___ ich das Brandenburger Tor ___ (sehen).", "answers": [["gewesen"], ["wäre"], ["hätte"], ["gesehen"]], "word_bank": ["gewesen", "wäre", "hätte", "gesehen", "gegangen"] }
+        { "item_type": "gap_fill", "sentence_template": "Wenn ich mehr Zeit {1} (haben), {2} ich mehr Sport {3} (machen).", "answers": [["gehabt hätte"], ["hätte"], ["gemacht"]], "word_bank": ["gehabt hätte", "hätte", "gemacht", "wäre", "gehabt"] },
+        { "item_type": "gap_fill", "sentence_template": "Wenn es nicht geregnet {1} (haben), {2} wir spazieren {3} (gehen).", "answers": [["hätte"], ["wären"], ["gegangen"]], "word_bank": ["hätte", "wären", "gegangen", "geregnet hätte", "gewesen"] },
+        { "item_type": "gap_fill", "sentence_template": "Er {1} die Prüfung {2} (bestehen), wenn er mehr {3} (lernen) {4}.", "answers": [["hätte"], ["bestanden"], ["gelernt"], ["hätte"]], "word_bank": ["hätte", "bestanden", "gelernt", "hätte", "wäre"] },
+        { "item_type": "gap_fill", "sentence_template": "Wenn sie früher {1} (aufstehen) {2}, {3} sie den Zug nicht {4} (verpassen).", "answers": [["aufgestanden"], ["wäre"], ["hätte"], ["verpasst"]], "word_bank": ["aufgestanden", "wäre", "hätte", "verpasst", "gegangen"] },
+        { "item_type": "gap_fill", "sentence_template": "Wenn ich das {1} (wissen) {2}, {3} ich anders {4} (handeln).", "answers": [["gewusst"], ["hätte"], ["hätte"], ["gehandelt"]], "word_bank": ["gewusst", "hätte", "hätte", "gehandelt", "wäre"] },
+        { "item_type": "gap_fill", "sentence_template": "Wir {1} nach Berlin {2} (fliegen), wenn die Flüge billiger {3} (sein) {4}.", "answers": [["wären"], ["geflogen"], ["gewesen"], ["wären"]], "word_bank": ["wären", "geflogen", "gewesen", "wären", "hätten"] },
+        { "item_type": "gap_fill", "sentence_template": "Wenn du mehr geschlafen {1} (haben), {2} du dich besser {3} (fühlen).", "answers": [["hättest"], ["hättest"], ["gefühlt"]], "word_bank": ["hättest", "hättest", "gefühlt", "wärst", "gehabt"] },
+        { "item_type": "gap_fill", "sentence_template": "Sie {1} die Stadt {2} (besuchen), wenn sie Zeit {3} (haben) {4}.", "answers": [["hätte"], ["besucht"], ["gehabt"], ["hätte"]], "word_bank": ["hätte", "besucht", "gehabt", "hätte", "wäre"] },
+        { "item_type": "gap_fill", "sentence_template": "Wenn ich in Berlin {1} (sein) {2}, {3} ich das Brandenburger Tor {4} (sehen).", "answers": [["gewesen"], ["wäre"], ["hätte"], ["gesehen"]], "word_bank": ["gewesen", "wäre", "hätte", "gesehen", "gegangen"] }
       ]
     },
     {
@@ -111,11 +111,11 @@
       "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
       "skip_for_targets": ["I", "A", "B"],
       "items": [
-        { "item_type": "gap_fill", "sentence_template": "Wenn die Energiewende früher ___ ___ (beginnen), ___ weniger CO₂ ___ ___ (produzieren).", "answers": [["begonnen hätte"], ["hätte"], ["produziert"]], "word_bank": null },
-        { "item_type": "gap_fill", "sentence_template": "Ohne die Finanzkrise ___ viele Menschen ihren Job nicht ___ (verlieren).", "answers": [["hätten"], ["verloren"]], "word_bank": null },
-        { "item_type": "gap_fill", "sentence_template": "Er ___ Bundeskanzler ___, wenn er die Wahl ___ ___ (gewinnen).", "answers": [["wäre"], ["geworden"], ["gewonnen hätte"]], "word_bank": null },
-        { "item_type": "gap_fill", "sentence_template": "Wenn Fridays for Future früher ___ ___ (entstehen), ___ man früher reagiert.", "answers": [["entstanden wäre"], ["hätte"]], "word_bank": null },
-        { "item_type": "gap_fill", "sentence_template": "Deutschland ___ weniger Kohle ___ (verbrauchen), wenn die Atomkraftwerke länger ___ ___ (laufen).", "answers": [["hätte"], ["verbraucht"], ["gelaufen wären"]], "word_bank": null }
+        { "item_type": "gap_fill", "sentence_template": "Wenn die Energiewende früher {1} (beginnen), {2} weniger CO₂ {3} (produzieren).", "answers": [["begonnen hätte"], ["hätte"], ["produziert"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Ohne die Finanzkrise {1} viele Menschen ihren Job nicht {2} (verlieren).", "answers": [["hätten"], ["verloren"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Er {1} Bundeskanzler {2}, wenn er die Wahl {3} (gewinnen).", "answers": [["wäre"], ["geworden"], ["gewonnen hätte"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Wenn Fridays for Future früher {1} (entstehen), {2} man früher reagiert.", "answers": [["entstanden wäre"], ["hätte"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Deutschland {1} weniger Kohle {2} (verbrauchen), wenn die Atomkraftwerke länger {3} (laufen).", "answers": [["hätte"], ["verbraucht"], ["gelaufen wären"]], "word_bank": null }
       ]
     },
     {

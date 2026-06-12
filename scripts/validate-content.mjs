@@ -35,8 +35,11 @@ function checkMcLike(file, ref, it, { stemKey = "stem", choicesKey = "choices", 
   if (!stem || !String(stem).trim()) add("P0", file, ref, "mc: tyhjä stem");
   if (!Array.isArray(choices) || choices.length < 2) { add("P0", file, ref, "mc: alle 2 vaihtoehtoa"); return; }
   if (typeof ci !== "number" || ci < 0 || ci >= choices.length) add("P0", file, ref, `mc: correct_index ${ci} ei osu vaihtoehtoihin (${choices.length})`);
-  const norm = choices.map(normalize);
-  const dupes = norm.filter((c, i) => norm.indexOf(c) !== i);
+  // Case-SENSITIIVINEN: kielitehtävissä iso/pieni kirjain on laillinen distraktori-
+  // ulottuvuus (ranskan kansallisuudet pienellä, saksan muodollinen Sie vs sie).
+  // Vain täysi merkkijonoduplikaatti on defekti.
+  const exact = choices.map((c) => String(c).trim());
+  const dupes = exact.filter((c, i) => exact.indexOf(c) !== i);
   if (dupes.length) add("P0", file, ref, `mc: duplikaattivaihtoehdot: ${[...new Set(dupes)].join(", ")}`);
   choices.forEach((c, i) => { if (!String(c).trim()) add("P0", file, ref, `mc: tyhjä vaihtoehto #${i}`); checkText(file, ref, `choice#${i}`, c); });
   checkText(file, ref, "stem", stem);
@@ -98,7 +101,11 @@ function checkLesson(file) {
           if (Array.isArray(it.word_bank) && it.word_bank.length) {
             const bank = it.word_bank.map(normalize);
             (it.answers || []).forEach((alts, i) => {
-              if (Array.isArray(alts) && alts.length && !alts.some((a) => bank.includes(normalize(a)))) {
+              if (!Array.isArray(alts) || !alts.length) return;
+              // sentence-build ("järjestä sanat"): yksi {1}-aukko, vastaus monisanainen
+              // koko lause, word_bank = sen sanapalaset → bank ei voi "sisältää" vastausta.
+              if (alts.some((a) => /\s/.test(String(a).trim()))) return;
+              if (!alts.some((a) => bank.includes(normalize(a)))) {
                 add("P0", file, ref, `gap_fill: word_bank ei sisällä yhtään hyväksyttyä vastausta aukolle ${i + 1} (${alts[0]})`);
               }
             });
@@ -116,6 +123,14 @@ function checkLesson(file) {
           if (!String(it.prompt || "").trim()) add("P0", file, ref, "writing: tyhjä prompt");
           if (it.min_words != null && it.max_words != null && it.min_words >= it.max_words) add("P0", file, ref, `writing: min_words ${it.min_words} >= max_words ${it.max_words}`);
           checkText(file, ref, "prompt", it.prompt);
+          break;
+        }
+        case "reading_mc": {
+          // saksan oppituntien luetunymmärrys: passage + questions[{question_fi,choices,correct_index}]
+          if (!String(it.passage || "").trim()) add("P0", file, ref, "reading_mc: tyhjä passage");
+          (it.questions || []).forEach((q, qi) => {
+            checkMcLike(file, `${ref}/q${qi}`, { stem: q.question_fi || q.question, choices: q.choices, correct_index: q.correct_index }, {});
+          });
           break;
         }
         default:
@@ -137,6 +152,9 @@ function checkReadingEntry(file, entry, ref) {
   (entry.questions || []).forEach((q, i) => {
     stats.items++;
     const qref = `${ref}/q${i}`;
+    // reading-pankeissa kolme kysymystyyppiä: multiple_choice (options + letter/index
+    // correct), true_false (statement + boolean correct + justification), short_answer
+    // (acceptedAnswers[]). examPools/reading käyttää "A"-kirjaimia, lesson-banket indeksiä.
     if (q.options || q.choices) {
       const choices = q.options || q.choices;
       const correctRaw = q.correct ?? q.correct_index ?? q.answer;
@@ -147,13 +165,17 @@ function checkReadingEntry(file, entry, ref) {
       if (!ok) add("P0", file, qref, `reading-q: correct (${JSON.stringify(correctRaw)}) ei osu vaihtoehtoihin`);
       const norm = choices.map(normalize);
       if (new Set(norm).size !== norm.length) add("P0", file, qref, "reading-q: duplikaattivaihtoehdot");
-    } else if (q.accept || q.expected_answer || q.answer) {
-      const acc = q.accept || [q.expected_answer ?? q.answer];
+    } else if (q.type === "true_false" || typeof q.statement === "string") {
+      if (!String(q.statement || "").trim()) add("P0", file, qref, "reading-q: tyhjä statement (true_false)");
+      const c = q.correct;
+      if (typeof c !== "boolean" && !/^(true|false|tosi|epätosi)$/i.test(String(c))) add("P0", file, qref, `reading-q: true_false correct ei boolean (${JSON.stringify(c)})`);
+    } else if (q.accept || q.acceptedAnswers || q.expected_answer || q.answer) {
+      const acc = q.accept || q.acceptedAnswers || [q.expected_answer ?? q.answer];
       if (!acc.length || acc.some((a) => !String(a).trim())) add("P0", file, qref, "reading-q: avoin vastaus tyhjä");
     } else {
       add("P1", file, qref, `reading-q: ei tunnistettua vastausmuotoa (kentät: ${Object.keys(q).join(",")})`);
     }
-    checkText(file, qref, "question", q.question || q.q || "");
+    checkText(file, qref, "question", q.question || q.q || q.statement || "");
   });
 }
 
@@ -203,7 +225,10 @@ for (const f of fs.readdirSync("data/examPools")) {
   else if (f === "structure.json") d.forEach((q, i) => {
     stats.items++;
     const ref = q.id || `#${i}`;
-    if (q.options) checkMcLike(file, ref, { stem: q.sentence || q.instruction, choices: q.options.map((o) => String(o)), correct_index: typeof q.correct === "number" ? q.correct : "?" }, {});
+    // structure.json: correct on kirjain "A"–"D", optiot "A) ..." -etuliitteellä.
+    const ci = typeof q.correct === "number" ? q.correct
+      : (typeof q.correct === "string" && /^[A-D]$/i.test(q.correct.trim()) ? q.correct.trim().toUpperCase().charCodeAt(0) - 65 : "?");
+    if (q.options) checkMcLike(file, ref, { stem: q.sentence || q.instruction, choices: q.options.map((o) => String(o)), correct_index: ci }, {});
     if (typeof q.correct === "string" && q.options) {
       const letter = q.correct.trim().toUpperCase();
       const idx = letter.charCodeAt(0) - 65;
@@ -227,7 +252,7 @@ for (const lang of ["es", "fr", "de"]) {
       stats.items++;
       const ref = q.id || `#${i}`;
       if (Array.isArray(q.options)) {
-        const correctRaw = q.correct ?? q.correct_index;
+        const correctRaw = q.correct ?? q.correct_index ?? q.answer;
         let ok = typeof correctRaw === "number" ? correctRaw >= 0 && correctRaw < q.options.length : q.options.map(normalize).includes(normalize(String(correctRaw)));
         if (!ok) add("P0", file, ref, `diagnostic: correct ${JSON.stringify(correctRaw)} ei osu optioihin`);
         const norm = q.options.map(normalize);

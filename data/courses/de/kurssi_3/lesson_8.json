@@ -88,16 +88,16 @@
       "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
       "skip_for_targets": ["I"],
       "items": [
-        { "item_type": "gap_fill", "sentence_template": "Letzten Sommer ___ ich mit dem Zug nach Berlin ___. (fahren)", "answers": [["bin", "gefahren"]], "word_bank": ["bin", "habe", "gefahren", "gefahrt"] },
-        { "item_type": "gap_fill", "sentence_template": "Am ersten Tag ___ ich das Hotel ___. (finden)", "answers": [["habe", "gefunden"]], "word_bank": ["habe", "bin", "gefunden", "gefundt"] },
-        { "item_type": "gap_fill", "sentence_template": "Wir ___ das Brandenburger Tor ___. (sehen)", "answers": [["haben", "gesehen"]], "word_bank": ["haben", "sind", "gesehen", "gesehn"] },
-        { "item_type": "gap_fill", "sentence_template": "Im Restaurant ___ wir Currywurst ___. (essen)", "answers": [["haben", "gegessen"]], "word_bank": ["haben", "sind", "gegessen", "geessen"] },
-        { "item_type": "gap_fill", "sentence_template": "Am letzten Tag ___ wir ins Museum ___. (gehen)", "answers": [["sind", "gegangen"]], "word_bank": ["sind", "haben", "gegangen", "gegehen"] },
-        { "item_type": "gap_fill", "sentence_template": "Leider ___ das Wetter am dritten Tag nicht gut.", "answers": [["war"]], "word_bank": ["war", "ist", "hatte", "hat"] },
-        { "item_type": "gap_fill", "sentence_template": "Ich ___ sehr viele Fotos ___. (fotografieren)", "answers": [["habe", "fotografiert"]], "word_bank": ["habe", "bin", "fotografiert", "gefotografiert"] },
-        { "item_type": "gap_fill", "sentence_template": "Wir ___ drei Nächte im Hotel ___. (übernachten)", "answers": [["haben", "übernachtet"]], "word_bank": ["haben", "sind", "übernachtet", "übergeachtet"] },
-        { "item_type": "gap_fill", "sentence_template": "Der Urlaub ___ mir sehr gut ___. (gefallen)", "answers": [["hat", "gefallen"]], "word_bank": ["hat", "ist", "gefallen", "gefällt"] },
-        { "item_type": "gap_fill", "sentence_template": "Schließlich ___ wir nach Hause ___. (fahren)", "answers": [["sind", "gefahren"]], "word_bank": ["sind", "haben", "gefahren", "gefahrt"] }
+        { "item_type": "gap_fill", "sentence_template": "Letzten Sommer {1} ich mit dem Zug nach Berlin {2}. (fahren)", "answers": [["bin"], ["gefahren"]], "word_bank": ["bin", "habe", "gefahren", "gefahrt"] },
+        { "item_type": "gap_fill", "sentence_template": "Am ersten Tag {1} ich das Hotel {2}. (finden)", "answers": [["habe"], ["gefunden"]], "word_bank": ["habe", "bin", "gefunden", "gefundt"] },
+        { "item_type": "gap_fill", "sentence_template": "Wir {1} das Brandenburger Tor {2}. (sehen)", "answers": [["haben"], ["gesehen"]], "word_bank": ["haben", "sind", "gesehen", "gesehn"] },
+        { "item_type": "gap_fill", "sentence_template": "Im Restaurant {1} wir Currywurst {2}. (essen)", "answers": [["haben"], ["gegessen"]], "word_bank": ["haben", "sind", "gegessen", "geessen"] },
+        { "item_type": "gap_fill", "sentence_template": "Am letzten Tag {1} wir ins Museum {2}. (gehen)", "answers": [["sind"], ["gegangen"]], "word_bank": ["sind", "haben", "gegangen", "gegehen"] },
+        { "item_type": "gap_fill", "sentence_template": "Leider {1} das Wetter am dritten Tag nicht gut.", "answers": [["war"]], "word_bank": ["war", "ist", "hatte", "hat"] },
+        { "item_type": "gap_fill", "sentence_template": "Ich {1} sehr viele Fotos {2}. (fotografieren)", "answers": [["habe"], ["fotografiert"]], "word_bank": ["habe", "bin", "fotografiert", "gefotografiert"] },
+        { "item_type": "gap_fill", "sentence_template": "Wir {1} drei Nächte im Hotel {2}. (übernachten)", "answers": [["haben"], ["übernachtet"]], "word_bank": ["haben", "sind", "übernachtet", "übergeachtet"] },
+        { "item_type": "gap_fill", "sentence_template": "Der Urlaub {1} mir sehr gut {2}. (gefallen)", "answers": [["hat"], ["gefallen"]], "word_bank": ["hat", "ist", "gefallen", "gefällt"] },
+        { "item_type": "gap_fill", "sentence_template": "Schließlich {1} wir nach Hause {2}. (fahren)", "answers": [["sind"], ["gefahren"]], "word_bank": ["sind", "haben", "gefahren", "gefahrt"] }
       ]
     },
     {
@@ -108,11 +108,11 @@
       "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
       "skip_for_targets": ["I", "A", "B"],
       "items": [
-        { "item_type": "gap_fill", "sentence_template": "Gestern ___ ich nach München ___. Das ___ sehr schön!", "answers": [["bin", "gefahren", "war"]], "word_bank": ["bin", "habe", "gefahren", "gefahrt", "war", "ist"] },
-        { "item_type": "gap_fill", "sentence_template": "Zuerst ___ wir das Schloss ___. Dann ___ wir Weißwurst ___.", "answers": [["haben", "besichtigt", "haben", "gegessen"]], "word_bank": ["haben", "sind", "besichtigt", "besucht", "gegessen", "geessen"] },
-        { "item_type": "gap_fill", "sentence_template": "Am Abend ___ wir lange im Restaurant ___. Das Essen ___ sehr lecker.", "answers": [["sind", "geblieben", "war"]], "word_bank": ["sind", "haben", "geblieben", "gebleibt", "war", "ist"] },
-        { "item_type": "gap_fill", "sentence_template": "Leider ___ es am letzten Tag ___. Trotzdem ___ wir viel Spaß ___.", "answers": [["hat", "geregnet", "haben", "gehabt"]], "word_bank": ["hat", "ist", "geregnet", "geregnt", "haben", "sind", "gehabt", "gemacht"] },
-        { "item_type": "gap_fill", "sentence_template": "Ich ___ den Urlaub sehr ___. Nächstes Jahr möchte ich wieder nach Bayern ___.", "answers": [["habe", "genossen", "fahren"]], "word_bank": ["habe", "bin", "genossen", "geniessen", "fahren", "gefahren"] }
+        { "item_type": "gap_fill", "sentence_template": "Gestern {1} ich nach München {2}. Das {3} sehr schön!", "answers": [["bin"], ["gefahren"], ["war"]], "word_bank": ["bin", "habe", "gefahren", "gefahrt", "war", "ist"] },
+        { "item_type": "gap_fill", "sentence_template": "Zuerst {1} wir das Schloss {2}. Dann {3} wir Weißwurst {4}.", "answers": [["haben"], ["besichtigt"], ["haben"], ["gegessen"]], "word_bank": ["haben", "sind", "besichtigt", "besucht", "gegessen", "geessen"] },
+        { "item_type": "gap_fill", "sentence_template": "Am Abend {1} wir lange im Restaurant {2}. Das Essen {3} sehr lecker.", "answers": [["sind"], ["geblieben"], ["war"]], "word_bank": ["sind", "haben", "geblieben", "gebleibt", "war", "ist"] },
+        { "item_type": "gap_fill", "sentence_template": "Leider {1} es am letzten Tag {2}. Trotzdem {3} wir viel Spaß {4}.", "answers": [["hat"], ["geregnet"], ["haben"], ["gehabt"]], "word_bank": ["hat", "ist", "geregnet", "geregnt", "haben", "sind", "gehabt", "gemacht"] },
+        { "item_type": "gap_fill", "sentence_template": "Ich {1} den Urlaub sehr {2}. Nächstes Jahr möchte ich wieder nach Bayern {3}.", "answers": [["habe"], ["genossen"], ["fahren"]], "word_bank": ["habe", "bin", "genossen", "geniessen", "fahren", "gefahren"] }
       ]
     },
     {

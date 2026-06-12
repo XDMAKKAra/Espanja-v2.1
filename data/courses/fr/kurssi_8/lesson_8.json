@@ -46,14 +46,14 @@
       "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
       "skip_for_targets": ["I"],
       "items": [
-        { "item_type": "gap_fill", "sentence_template": "Madame, Monsieur, je me ___ de vous contacter car j'ai une question.", "answers": [["permets"]], "word_bank": ["permets", "plais", "cherche", "trouve"] },
-        { "item_type": "gap_fill", "sentence_template": "Je vous ___ reconnaissant(e) de bien vouloir me répondre.", "answers": [["serais"]], "word_bank": ["serais", "suis", "serai", "sois"] },
-        { "item_type": "gap_fill", "sentence_template": "___ vous me préciser les horaires d'ouverture?", "answers": [["Pourriez"]], "word_bank": ["Pourriez", "Pouvez", "Devez", "Voulez"] },
-        { "item_type": "gap_fill", "sentence_template": "En vous ___ de votre attention, je reste à votre disposition.", "answers": [["remerciant"]], "word_bank": ["remerciant", "demandant", "aimant", "parlant"] },
-        { "item_type": "gap_fill", "sentence_template": "À mon ___, il est essentiel d'agir pour le climat.", "answers": [["avis"]], "word_bank": ["avis", "opinion", "idée", "pensée"] },
-        { "item_type": "gap_fill", "sentence_template": "___, je vous adresse mes meilleures salutations.", "answers": [["Cordialement"]], "word_bank": ["Cordialement", "Bisous", "Salut", "À bientôt"] },
-        { "item_type": "gap_fill", "sentence_template": "En ___, il est essentiel que les citoyens s'engagent.", "answers": [["conclusion"]], "word_bank": ["conclusion", "bref", "résumé", "fin"] },
-        { "item_type": "gap_fill", "sentence_template": "Je ___ savoir si des places sont encore disponibles.", "answers": [["voudrais"]], "word_bank": ["voudrais", "veux", "voulais", "voulus"] }
+        { "item_type": "gap_fill", "sentence_template": "Madame, Monsieur, je me {1} de vous contacter car j'ai une question.", "answers": [["permets"]], "word_bank": ["permets", "plais", "cherche", "trouve"] },
+        { "item_type": "gap_fill", "sentence_template": "Je vous {1} reconnaissant(e) de bien vouloir me répondre.", "answers": [["serais"]], "word_bank": ["serais", "suis", "serai", "sois"] },
+        { "item_type": "gap_fill", "sentence_template": "{1} vous me préciser les horaires d'ouverture?", "answers": [["Pourriez"]], "word_bank": ["Pourriez", "Pouvez", "Devez", "Voulez"] },
+        { "item_type": "gap_fill", "sentence_template": "En vous {1} de votre attention, je reste à votre disposition.", "answers": [["remerciant"]], "word_bank": ["remerciant", "demandant", "aimant", "parlant"] },
+        { "item_type": "gap_fill", "sentence_template": "À mon {1}, il est essentiel d'agir pour le climat.", "answers": [["avis"]], "word_bank": ["avis", "opinion", "idée", "pensée"] },
+        { "item_type": "gap_fill", "sentence_template": "{1}, je vous adresse mes meilleures salutations.", "answers": [["Cordialement"]], "word_bank": ["Cordialement", "Bisous", "Salut", "À bientôt"] },
+        { "item_type": "gap_fill", "sentence_template": "En {1}, il est essentiel que les citoyens s'engagent.", "answers": [["conclusion"]], "word_bank": ["conclusion", "bref", "résumé", "fin"] },
+        { "item_type": "gap_fill", "sentence_template": "Je {1} savoir si des places sont encore disponibles.", "answers": [["voudrais"]], "word_bank": ["voudrais", "veux", "voulais", "voulus"] }
       ]
     },
     {
@@ -64,11 +64,11 @@
       "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
       "skip_for_targets": ["I", "A"],
       "items": [
-        { "item_type": "gap_fill", "sentence_template": "Formaali: J'espère que ___ (vous/tu) pouvez m'aider.", "answers": [["vous"]], "word_bank": ["vous", "tu"] },
-        { "item_type": "gap_fill", "sentence_template": "Formaali pyyntö: 'Je ___ savoir si le poste est encore disponible.'", "answers": [["voudrais"]], "word_bank": ["voudrais", "veux", "dois", "peux"] },
-        { "item_type": "gap_fill", "sentence_template": "Formaali lause: 'Je me ___ à votre disposition pour tout renseignement.'", "answers": [["tiens"]], "word_bank": ["tiens", "trouve", "mets", "garde"] },
-        { "item_type": "gap_fill", "sentence_template": "Formaalin sähköpostin lopetus: '___, [Nimi]'", "answers": [["Cordialement"]], "word_bank": null },
-        { "item_type": "gap_fill", "sentence_template": "Kohtelias kysymys: '___ vous m'indiquer où se trouve le bureau?'", "answers": [["Pourriez"]], "word_bank": ["Pourriez", "Pouvez", "Peux", "Peux-tu"] }
+        { "item_type": "gap_fill", "sentence_template": "Formaali: J'espère que {1} (vous/tu) pouvez m'aider.", "answers": [["vous"]], "word_bank": ["vous", "tu"] },
+        { "item_type": "gap_fill", "sentence_template": "Formaali pyyntö: 'Je {1} savoir si le poste est encore disponible.'", "answers": [["voudrais"]], "word_bank": ["voudrais", "veux", "dois", "peux"] },
+        { "item_type": "gap_fill", "sentence_template": "Formaali lause: 'Je me {1} à votre disposition pour tout renseignement.'", "answers": [["tiens"]], "word_bank": ["tiens", "trouve", "mets", "garde"] },
+        { "item_type": "gap_fill", "sentence_template": "Formaalin sähköpostin lopetus: '{1}, [Nimi]'", "answers": [["Cordialement"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Kohtelias kysymys: '{1} vous m'indiquer où se trouve le bureau?'", "answers": [["Pourriez"]], "word_bank": ["Pourriez", "Pouvez", "Peux", "Peux-tu"] }
       ]
     },
     {

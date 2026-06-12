@@ -91,14 +91,14 @@
       "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
       "skip_for_targets": ["I", "A"],
       "items": [
-        { "item_type": "gap_fill", "sentence_template": "___ ich zehn Jahre alt war, lebte ich in Tampere.", "answers": [["Als"]], "word_bank": ["Als", "Wenn"] },
-        { "item_type": "gap_fill", "sentence_template": "___ es schneit, fahre ich nicht mit dem Auto.", "answers": [["Wenn"]], "word_bank": ["Als", "Wenn"] },
-        { "item_type": "gap_fill", "sentence_template": "___ die Mauer fiel, weinten viele Deutsche.", "answers": [["Als"]], "word_bank": ["Als", "Wenn"] },
-        { "item_type": "gap_fill", "sentence_template": "___ ich in Berlin war, habe ich viel gesehen.", "answers": [["Als"]], "word_bank": ["Als", "Wenn"] },
-        { "item_type": "gap_fill", "sentence_template": "___ wir Kinder waren, spielten wir immer im Park.", "answers": [["Wenn", "Als"]], "word_bank": ["Als", "Wenn"] },
-        { "item_type": "gap_fill", "sentence_template": "___ ich Zeit habe, lese ich Zeitung.", "answers": [["Wenn"]], "word_bank": ["Als", "Wenn"] },
-        { "item_type": "gap_fill", "sentence_template": "___ der Zweite Weltkrieg endete, lag Europa in Trümmern.", "answers": [["Als"]], "word_bank": ["Als", "Wenn"] },
-        { "item_type": "gap_fill", "sentence_template": "___ sie jung war, träumte sie von einer Karriere in der Musik.", "answers": [["Als"]], "word_bank": ["Als", "Wenn"] }
+        { "item_type": "gap_fill", "sentence_template": "{1} ich zehn Jahre alt war, lebte ich in Tampere.", "answers": [["Als"]], "word_bank": ["Als", "Wenn"] },
+        { "item_type": "gap_fill", "sentence_template": "{1} es schneit, fahre ich nicht mit dem Auto.", "answers": [["Wenn"]], "word_bank": ["Als", "Wenn"] },
+        { "item_type": "gap_fill", "sentence_template": "{1} die Mauer fiel, weinten viele Deutsche.", "answers": [["Als"]], "word_bank": ["Als", "Wenn"] },
+        { "item_type": "gap_fill", "sentence_template": "{1} ich in Berlin war, habe ich viel gesehen.", "answers": [["Als"]], "word_bank": ["Als", "Wenn"] },
+        { "item_type": "gap_fill", "sentence_template": "{1} wir Kinder waren, spielten wir immer im Park.", "answers": [["Wenn", "Als"]], "word_bank": ["Als", "Wenn"] },
+        { "item_type": "gap_fill", "sentence_template": "{1} ich Zeit habe, lese ich Zeitung.", "answers": [["Wenn"]], "word_bank": ["Als", "Wenn"] },
+        { "item_type": "gap_fill", "sentence_template": "{1} der Zweite Weltkrieg endete, lag Europa in Trümmern.", "answers": [["Als"]], "word_bank": ["Als", "Wenn"] },
+        { "item_type": "gap_fill", "sentence_template": "{1} sie jung war, träumte sie von einer Karriere in der Musik.", "answers": [["Als"]], "word_bank": ["Als", "Wenn"] }
       ]
     },
     {
@@ -109,15 +109,15 @@
       "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
       "skip_for_targets": ["I", "A"],
       "items": [
-        { "item_type": "gap_fill", "sentence_template": "Er lernt viel, ___ er die Prüfung besteht.", "answers": [["damit"]], "word_bank": ["damit", "weil", "obwohl", "während"] },
-        { "item_type": "gap_fill", "sentence_template": "Sie kam, ___ sie sehr müde war.", "answers": [["obwohl"]], "word_bank": ["weil", "obwohl", "damit", "falls"] },
-        { "item_type": "gap_fill", "sentence_template": "Er isst, ___ er fernsieht.", "answers": [["während"]], "word_bank": ["als", "während", "obwohl", "falls"] },
-        { "item_type": "gap_fill", "sentence_template": "___ du Hilfe brauchst, ruf mich an.", "answers": [["Falls", "Wenn"]], "word_bank": ["Falls", "Wenn", "Als", "Damit"] },
-        { "item_type": "gap_fill", "sentence_template": "Ich hoffe, ___ das Wetter besser wird.", "answers": [["dass"]], "word_bank": ["dass", "weil", "obwohl", "als"] },
-        { "item_type": "gap_fill", "sentence_template": "Deutschland investiert in Solarenergie, ___ weniger Öl importiert werden muss.", "answers": [["damit"]], "word_bank": ["damit", "weil", "obwohl", "während"] },
-        { "item_type": "gap_fill", "sentence_template": "Die Inflation stieg, ___ die Energiepreise hoch waren.", "answers": [["weil"]], "word_bank": ["weil", "damit", "obwohl", "falls"] },
-        { "item_type": "gap_fill", "sentence_template": "___ viele Bürger protestierten, hob die Regierung die Subventionen auf.", "answers": [["Obwohl"]], "word_bank": ["Obwohl", "Weil", "Als", "Damit"] },
-        { "item_type": "gap_fill", "sentence_template": "___ der Krieg 1945 endete, begannen die Deutschen mit dem Wiederaufbau.", "answers": [["Als"]], "word_bank": ["Als", "Wenn", "Obwohl", "Während"] }
+        { "item_type": "gap_fill", "sentence_template": "Er lernt viel, {1} er die Prüfung besteht.", "answers": [["damit"]], "word_bank": ["damit", "weil", "obwohl", "während"] },
+        { "item_type": "gap_fill", "sentence_template": "Sie kam, {1} sie sehr müde war.", "answers": [["obwohl"]], "word_bank": ["weil", "obwohl", "damit", "falls"] },
+        { "item_type": "gap_fill", "sentence_template": "Er isst, {1} er fernsieht.", "answers": [["während"]], "word_bank": ["als", "während", "obwohl", "falls"] },
+        { "item_type": "gap_fill", "sentence_template": "{1} du Hilfe brauchst, ruf mich an.", "answers": [["Falls", "Wenn"]], "word_bank": ["Falls", "Wenn", "Als", "Damit"] },
+        { "item_type": "gap_fill", "sentence_template": "Ich hoffe, {1} das Wetter besser wird.", "answers": [["dass"]], "word_bank": ["dass", "weil", "obwohl", "als"] },
+        { "item_type": "gap_fill", "sentence_template": "Deutschland investiert in Solarenergie, {1} weniger Öl importiert werden muss.", "answers": [["damit"]], "word_bank": ["damit", "weil", "obwohl", "während"] },
+        { "item_type": "gap_fill", "sentence_template": "Die Inflation stieg, {1} die Energiepreise hoch waren.", "answers": [["weil"]], "word_bank": ["weil", "damit", "obwohl", "falls"] },
+        { "item_type": "gap_fill", "sentence_template": "{1} viele Bürger protestierten, hob die Regierung die Subventionen auf.", "answers": [["Obwohl"]], "word_bank": ["Obwohl", "Weil", "Als", "Damit"] },
+        { "item_type": "gap_fill", "sentence_template": "{1} der Krieg 1945 endete, begannen die Deutschen mit dem Wiederaufbau.", "answers": [["Als"]], "word_bank": ["Als", "Wenn", "Obwohl", "Während"] }
       ]
     },
     {

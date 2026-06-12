@@ -81,14 +81,14 @@
       "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
       "skip_for_targets": ["I"],
       "items": [
-        { "item_type": "gap_fill", "sentence_template": "Wenn ich die Stelle ___ (bekommen), werde ich sehr ___ (froh) sein.", "answers": [["bekomme", "froh"]], "word_bank": ["bekomme", "bekommen", "bekommt", "froh", "glücklich", "fröhlich"] },
-        { "item_type": "gap_fill", "sentence_template": "Ich interessiere ___ für Medizin, ___ möchte ich Arzt werden.", "answers": [["mich", "deshalb"]], "word_bank": ["mich", "sich", "dich", "deshalb", "obwohl", "außerdem"] },
-        { "item_type": "gap_fill", "sentence_template": "___ ich das Studium beende, werde ich eine Firma ___.", "answers": [["Wenn", "gründen"]], "word_bank": ["Wenn", "Wann", "gründen", "gegründet", "gründe"] },
-        { "item_type": "gap_fill", "sentence_template": "Obwohl es schwer ist, ___ ich ___ auf die Karriere. (freuen)", "answers": [["freue", "mich"]], "word_bank": ["freue", "freut", "mich", "sich", "uns"] },
-        { "item_type": "gap_fill", "sentence_template": "In zehn Jahren ___ ich Ärztin ___, das ist mein Traum.", "answers": [["werde", "werden"]], "word_bank": ["werde", "wird", "werden", "sein"] },
-        { "item_type": "gap_fill", "sentence_template": "Wenn ich Arzt ___ (werden) will, muss ich viel lernen.", "answers": [["werden"]], "word_bank": ["werden", "werde", "wird", "bin"] },
-        { "item_type": "gap_fill", "sentence_template": "Ich ___ ___ um die Stelle als Journalistin. (bewerben, ich)", "answers": [["bewerbe", "mich"]], "word_bank": ["bewerbe", "bewirbt", "mich", "sich", "uns"] },
-        { "item_type": "gap_fill", "sentence_template": "___ ich Zeit habe, ___ ich ___ auf das Gespräch ___. (vorbereiten)", "answers": [["Wenn", "bereite", "mich", "vor"]], "word_bank": ["Wenn", "Wann", "bereite", "bereitet", "mich", "sich", "vor"] }
+        { "item_type": "gap_fill", "sentence_template": "Wenn ich die Stelle {1} (bekommen), werde ich sehr {2} (froh) sein.", "answers": [["bekomme"], ["froh"]], "word_bank": ["bekomme", "bekommen", "bekommt", "froh", "glücklich", "fröhlich"] },
+        { "item_type": "gap_fill", "sentence_template": "Ich interessiere {1} für Medizin, {2} möchte ich Arzt werden.", "answers": [["mich"], ["deshalb"]], "word_bank": ["mich", "sich", "dich", "deshalb", "obwohl", "außerdem"] },
+        { "item_type": "gap_fill", "sentence_template": "{1} ich das Studium beende, werde ich eine Firma {2}.", "answers": [["Wenn"], ["gründen"]], "word_bank": ["Wenn", "Wann", "gründen", "gegründet", "gründe"] },
+        { "item_type": "gap_fill", "sentence_template": "Obwohl es schwer ist, {1} ich {2} auf die Karriere. (freuen)", "answers": [["freue"], ["mich"]], "word_bank": ["freue", "freut", "mich", "sich", "uns"] },
+        { "item_type": "gap_fill", "sentence_template": "In zehn Jahren {1} ich Ärztin {2}, das ist mein Traum.", "answers": [["werde"], ["werden"]], "word_bank": ["werde", "wird", "werden", "sein"] },
+        { "item_type": "gap_fill", "sentence_template": "Wenn ich Arzt {1} (werden) will, muss ich viel lernen.", "answers": [["werden"]], "word_bank": ["werden", "werde", "wird", "bin"] },
+        { "item_type": "gap_fill", "sentence_template": "Ich {1} {2} um die Stelle als Journalistin. (bewerben, ich)", "answers": [["bewerbe"], ["mich"]], "word_bank": ["bewerbe", "bewirbt", "mich", "sich", "uns"] },
+        { "item_type": "gap_fill", "sentence_template": "{1} ich Zeit habe, {2} ich {3} auf das Gespräch {4}. (vorbereiten)", "answers": [["Wenn"], ["bereite"], ["mich"], ["vor"]], "word_bank": ["Wenn", "Wann", "bereite", "bereitet", "mich", "sich", "vor"] }
       ]
     },
     {
@@ -115,14 +115,14 @@
       "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
       "skip_for_targets": ["I", "A", "B"],
       "items": [
-        { "item_type": "gap_fill", "sentence_template": "Ich möchte Arzt werden. ___ interessiere ich mich für Medizin.", "answers": [["Deshalb"]], "word_bank": null },
-        { "item_type": "gap_fill", "sentence_template": "___ es schwer ist, bereite ich mich gut vor.", "answers": [["Obwohl", "Wenn"]], "word_bank": null },
-        { "item_type": "gap_fill", "sentence_template": "Wenn ich die Stelle bekomme, ___ ich ___ sehr freuen.", "answers": [["werde", "mich"]], "word_bank": null },
-        { "item_type": "gap_fill", "sentence_template": "In der Zukunft ___ ich als Ärztin ___, das ist mein großes Ziel.", "answers": [["werde", "arbeiten"]], "word_bank": null },
-        { "item_type": "gap_fill", "sentence_template": "Ich ___ ___ für die neue Stelle als Journalistin. (sich bewerben)", "answers": [["bewerbe mich"]], "word_bank": null },
-        { "item_type": "gap_fill", "sentence_template": "___ ich die Prüfung bestehe, ___ ich eine große Reise machen.", "answers": [["Wenn", "werde"]], "word_bank": null },
-        { "item_type": "gap_fill", "sentence_template": "Das Studium ist lang, ___ gibt es viele Möglichkeiten danach.", "answers": [["aber", "trotzdem", "jedoch"]], "word_bank": null },
-        { "item_type": "gap_fill", "sentence_template": "___ ich in der Zukunft Karriere mache, muss ich jetzt hart arbeiten.", "answers": [["Damit", "Wenn"]], "word_bank": null }
+        { "item_type": "gap_fill", "sentence_template": "Ich möchte Arzt werden. {1} interessiere ich mich für Medizin.", "answers": [["Deshalb"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "{1} es schwer ist, bereite ich mich gut vor.", "answers": [["Obwohl", "Wenn"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Wenn ich die Stelle bekomme, {1} ich {2} sehr freuen.", "answers": [["werde"], ["mich"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "In der Zukunft {1} ich als Ärztin {2}, das ist mein großes Ziel.", "answers": [["werde"], ["arbeiten"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Ich {1} {2} für die neue Stelle als Journalistin. (sich bewerben)", "answers": [["bewerbe"], ["mich"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "{1} ich die Prüfung bestehe, {2} ich eine große Reise machen.", "answers": [["Wenn"], ["werde"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Das Studium ist lang, {1} gibt es viele Möglichkeiten danach.", "answers": [["aber", "trotzdem", "jedoch"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "{1} ich in der Zukunft Karriere mache, muss ich jetzt hart arbeiten.", "answers": [["Damit", "Wenn"]], "word_bank": null }
       ]
     },
     {

@@ -105,14 +105,14 @@
       "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
       "skip_for_targets": ["I", "A"],
       "items": [
-        { "item_type": "gap_fill", "sentence_template": "Das Buch wird von Millionen Menschen ___. (lesen)", "answers": [["gelesen"]], "word_bank": ["gelesen", "liest", "gereist", "lesen"] },
-        { "item_type": "gap_fill", "sentence_template": "Das Haus wird von den Arbeitern ___. (bauen)", "answers": [["gebaut"]], "word_bank": ["gebaut", "baut", "gebaten", "bauen"] },
-        { "item_type": "gap_fill", "sentence_template": "Die Aufgabe wird vom Lehrer ___. (erklären)", "answers": [["erklärt"]], "word_bank": ["erklärt", "erklären", "erkläre", "gelernt"] },
-        { "item_type": "gap_fill", "sentence_template": "Das Auto wird in der Garage ___. (reparieren)", "answers": [["repariert"]], "word_bank": ["repariert", "reparieren", "gerepariert", "gefahren"] },
-        { "item_type": "gap_fill", "sentence_template": "Die E-Mail wird morgen ___. (schreiben)", "answers": [["geschrieben"]], "word_bank": ["geschrieben", "schreibt", "schreiben", "geschribt"] },
-        { "item_type": "gap_fill", "sentence_template": "Das Restaurant wird um 18 Uhr ___. (öffnen)", "answers": [["geöffnet"]], "word_bank": ["geöffnet", "öffnet", "geöffnen", "offen"] },
-        { "item_type": "gap_fill", "sentence_template": "Das Projekt wird nächste Woche ___. (beenden)", "answers": [["beendet"]], "word_bank": ["beendet", "beenden", "geendet", "gebeendet"] },
-        { "item_type": "gap_fill", "sentence_template": "Der Film wird im Kino ___. (zeigen)", "answers": [["gezeigt"]], "word_bank": ["gezeigt", "zeigt", "gezeigen", "gezogen"] }
+        { "item_type": "gap_fill", "sentence_template": "Das Buch wird von Millionen Menschen {1}. (lesen)", "answers": [["gelesen"]], "word_bank": ["gelesen", "liest", "gereist", "lesen"] },
+        { "item_type": "gap_fill", "sentence_template": "Das Haus wird von den Arbeitern {1}. (bauen)", "answers": [["gebaut"]], "word_bank": ["gebaut", "baut", "gebaten", "bauen"] },
+        { "item_type": "gap_fill", "sentence_template": "Die Aufgabe wird vom Lehrer {1}. (erklären)", "answers": [["erklärt"]], "word_bank": ["erklärt", "erklären", "erkläre", "gelernt"] },
+        { "item_type": "gap_fill", "sentence_template": "Das Auto wird in der Garage {1}. (reparieren)", "answers": [["repariert"]], "word_bank": ["repariert", "reparieren", "gerepariert", "gefahren"] },
+        { "item_type": "gap_fill", "sentence_template": "Die E-Mail wird morgen {1}. (schreiben)", "answers": [["geschrieben"]], "word_bank": ["geschrieben", "schreibt", "schreiben", "geschribt"] },
+        { "item_type": "gap_fill", "sentence_template": "Das Restaurant wird um 18 Uhr {1}. (öffnen)", "answers": [["geöffnet"]], "word_bank": ["geöffnet", "öffnet", "geöffnen", "offen"] },
+        { "item_type": "gap_fill", "sentence_template": "Das Projekt wird nächste Woche {1}. (beenden)", "answers": [["beendet"]], "word_bank": ["beendet", "beenden", "geendet", "gebeendet"] },
+        { "item_type": "gap_fill", "sentence_template": "Der Film wird im Kino {1}. (zeigen)", "answers": [["gezeigt"]], "word_bank": ["gezeigt", "zeigt", "gezeigen", "gezogen"] }
       ]
     },
     {
@@ -137,14 +137,14 @@
       "mastery_threshold": { "I": 0.55, "A": 0.60, "B": 0.65, "C": 0.70, "M": 0.80, "E": 0.85, "L": 0.95 },
       "skip_for_targets": ["I", "A", "B"],
       "items": [
-        { "item_type": "gap_fill", "sentence_template": "Das neue Museum ___ nächsten Monat ___ (passiivi preesens, öffnen).", "answers": [["wird", "geöffnet"]], "word_bank": null },
-        { "item_type": "gap_fill", "sentence_template": "In zehn Jahren ___ ich Ärztin ___. (Futur I + tulla joksikin)", "answers": [["werde", "werden"]], "word_bank": null },
-        { "item_type": "gap_fill", "sentence_template": "Es ___ Herbst. Die Tage ___ kürzer. (tulla joksikin x2)", "answers": [["wird", "werden"]], "word_bank": null },
-        { "item_type": "gap_fill", "sentence_template": "Die Hausaufgaben ___ von den Schülern ___ (passiivi, machen).", "answers": [["werden", "gemacht"]], "word_bank": null },
-        { "item_type": "gap_fill", "sentence_template": "Er ___ nächstes Jahr nach Finnland ___. (Futur I, ziehen)", "answers": [["wird", "ziehen"]], "word_bank": null },
-        { "item_type": "gap_fill", "sentence_template": "Das Problem ___ gelöst: keine Sorge. (passiivi, joku ratkaisee sen)", "answers": [["wird"]], "word_bank": null },
-        { "item_type": "gap_fill", "sentence_template": "Du ___ ein toller Lehrer ___! (Futur I + tulla joksikin)", "answers": [["wirst", "werden"]], "word_bank": null },
-        { "item_type": "gap_fill", "sentence_template": "Der Vertrag ___ nächste Woche ___ (passiivi, unterzeichnen = allekirjoittaa).", "answers": [["wird", "unterzeichnet"]], "word_bank": null }
+        { "item_type": "gap_fill", "sentence_template": "Das neue Museum {1} nächsten Monat {2} (passiivi preesens, öffnen).", "answers": [["wird"], ["geöffnet"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "In zehn Jahren {1} ich Ärztin {2}. (Futur I + tulla joksikin)", "answers": [["werde"], ["werden"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Es {1} Herbst. Die Tage {2} kürzer. (tulla joksikin x2)", "answers": [["wird"], ["werden"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Die Hausaufgaben {1} von den Schülern {2} (passiivi, machen).", "answers": [["werden"], ["gemacht"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Er {1} nächstes Jahr nach Finnland {2}. (Futur I, ziehen)", "answers": [["wird"], ["ziehen"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Das Problem {1} gelöst: keine Sorge. (passiivi, joku ratkaisee sen)", "answers": [["wird"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Du {1} ein toller Lehrer {2}! (Futur I + tulla joksikin)", "answers": [["wirst"], ["werden"]], "word_bank": null },
+        { "item_type": "gap_fill", "sentence_template": "Der Vertrag {1} nächste Woche {2} (passiivi, unterzeichnen = allekirjoittaa).", "answers": [["wird"], ["unterzeichnet"]], "word_bank": null }
       ]
     },
     {

@@ -34,10 +34,10 @@
         { "item_type": "mc", "stem": "arbeiten → Partizip II?", "choices": ["gearbeitt", "gearbeitet", "gearbeit", "arbeitete"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "arbeiten → kanta 'arbeit' päättyy -t → lisätään -et: ge + arbeit + et = gearbeitet." },
         { "item_type": "mc", "stem": "reservieren → Partizip II?", "choices": ["gereserviert", "reserviert", "gereseviert", "reservieret"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "-ieren-verbit eivät koskaan saa ge-:tä: reservieren → reserviert (ei gereserviert!)." },
         { "item_type": "mc", "stem": "besuchen → Partizip II?", "choices": ["gebesucht", "besucht", "gesucht", "besuchte"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "besuchen alkaa erottumattomalla etuliitteellä be- → ei ge-:tä. Partizip II = besucht." },
-        { "item_type": "mc", "stem": "lernen → Partizip II?", "choices": ["gelernt", "gelerntet", "lernte", "gelerntet"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "lernen → ge + lern + t = gelernt." },
+        { "item_type": "mc", "stem": "lernen → Partizip II?", "choices": ["gelernt", "gelerntet", "lernte", "lerntest"], "correct_index": 0, "distractor_difficulty": "easy", "explanation": "lernen → ge + lern + t = gelernt." },
         { "item_type": "mc", "stem": "warten → Partizip II?", "choices": ["gewartet", "gewart", "wartete", "gewartt"], "correct_index": 0, "distractor_difficulty": "medium", "explanation": "warten → kanta 'wart' päättyy -t → ge + wart + et = gewartet." },
         { "item_type": "mc", "stem": "erzählen → Partizip II?", "choices": ["geerzählt", "erzählt", "erzählte", "gerzählt"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "erzählen alkaa erottumattomalla etuliitteellä er- → ei ge-:tä. Partizip II = erzählt." },
-        { "item_type": "mc", "stem": "fotografieren → Partizip II?", "choices": ["gefotografiert", "fotografiert", "fotografieret", "gefotografiert"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "-ieren-verbit ei ge-:tä: fotografieren → fotografiert." },
+        { "item_type": "mc", "stem": "fotografieren → Partizip II?", "choices": ["gefotografiert", "fotografiert", "fotografieret", "fotografierte"], "correct_index": 1, "distractor_difficulty": "medium", "explanation": "-ieren-verbit ei ge-:tä: fotografieren → fotografiert." },
         { "item_type": "mc", "stem": "kochen → Partizip II?", "choices": ["geköcht", "gekocht", "kochte", "gekochen"], "correct_index": 1, "distractor_difficulty": "easy", "explanation": "kochen → ge + koch + t = gekocht." },
         { "item_type": "mc", "stem": "verkaufen → Partizip II?", "choices": ["geverkauft", "verkauft", "verkaufte", "gevekauft"], "correct_index": 1, "distractor_difficulty": "hard", "explanation": "verkaufen alkaa erottumattomalla etuliitteellä ver- → ei ge-:tä. Partizip II = verkauft." }
       ]
@@ -110,16 +110,16 @@
       "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
       "skip_for_targets": ["I"],
       "items": [
-        { "item_type": "gap_fill", "sentence_template": "Ich habe gestern Fußball ___. (spielen)", "answers": [["gespielt"]], "word_bank": ["gespielt", "gespielen", "spielte", "gespiel"] },
-        { "item_type": "gap_fill", "sentence_template": "Er hat ein Ticket ___. (kaufen)", "answers": [["gekauft"]], "word_bank": ["gekauft", "gekaufen", "kaufte", "gekaüft"] },
-        { "item_type": "gap_fill", "sentence_template": "Wir haben Deutsch ___. (lernen)", "answers": [["gelernt"]], "word_bank": ["gelernt", "gelernen", "lernte", "gelerntet"] },
-        { "item_type": "gap_fill", "sentence_template": "Sie hat drei Stunden ___. (arbeiten)", "answers": [["gearbeitet"]], "word_bank": ["gearbeitet", "gearbeitt", "arbeitete", "gearbeit"] },
-        { "item_type": "gap_fill", "sentence_template": "Ich habe das Hotel online ___. (reservieren)", "answers": [["reserviert"]], "word_bank": ["reserviert", "gereserviert", "reservierte", "reservieret"] },
-        { "item_type": "gap_fill", "sentence_template": "Wir haben das Museum ___. (besuchen)", "answers": [["besucht"]], "word_bank": ["besucht", "gebesucht", "besuchte", "besuchen"] },
-        { "item_type": "gap_fill", "sentence_template": "Er hat eine Geschichte ___. (erzählen)", "answers": [["erzählt"]], "word_bank": ["erzählt", "geerzählt", "erzählte", "erzählen"] },
-        { "item_type": "gap_fill", "sentence_template": "Sie haben viele Fotos ___. (fotografieren)", "answers": [["fotografiert"]], "word_bank": ["fotografiert", "gefotografiert", "fotografierte", "fotografieret"] },
-        { "item_type": "gap_fill", "sentence_template": "Ich habe Pizza ___. (kochen)", "answers": [["gekocht"]], "word_bank": ["gekocht", "geköcht", "kochte", "gekochen"] },
-        { "item_type": "gap_fill", "sentence_template": "Wir haben auf den Bus ___. (warten)", "answers": [["gewartet"]], "word_bank": ["gewartet", "gewart", "wartete", "gewartet haben"] }
+        { "item_type": "gap_fill", "sentence_template": "Ich habe gestern Fußball {1}. (spielen)", "answers": [["gespielt"]], "word_bank": ["gespielt", "gespielen", "spielte", "gespiel"] },
+        { "item_type": "gap_fill", "sentence_template": "Er hat ein Ticket {1}. (kaufen)", "answers": [["gekauft"]], "word_bank": ["gekauft", "gekaufen", "kaufte", "gekaüft"] },
+        { "item_type": "gap_fill", "sentence_template": "Wir haben Deutsch {1}. (lernen)", "answers": [["gelernt"]], "word_bank": ["gelernt", "gelernen", "lernte", "gelerntet"] },
+        { "item_type": "gap_fill", "sentence_template": "Sie hat drei Stunden {1}. (arbeiten)", "answers": [["gearbeitet"]], "word_bank": ["gearbeitet", "gearbeitt", "arbeitete", "gearbeit"] },
+        { "item_type": "gap_fill", "sentence_template": "Ich habe das Hotel online {1}. (reservieren)", "answers": [["reserviert"]], "word_bank": ["reserviert", "gereserviert", "reservierte", "reservieret"] },
+        { "item_type": "gap_fill", "sentence_template": "Wir haben das Museum {1}. (besuchen)", "answers": [["besucht"]], "word_bank": ["besucht", "gebesucht", "besuchte", "besuchen"] },
+        { "item_type": "gap_fill", "sentence_template": "Er hat eine Geschichte {1}. (erzählen)", "answers": [["erzählt"]], "word_bank": ["erzählt", "geerzählt", "erzählte", "erzählen"] },
+        { "item_type": "gap_fill", "sentence_template": "Sie haben viele Fotos {1}. (fotografieren)", "answers": [["fotografiert"]], "word_bank": ["fotografiert", "gefotografiert", "fotografierte", "fotografieret"] },
+        { "item_type": "gap_fill", "sentence_template": "Ich habe Pizza {1}. (kochen)", "answers": [["gekocht"]], "word_bank": ["gekocht", "geköcht", "kochte", "gekochen"] },
+        { "item_type": "gap_fill", "sentence_template": "Wir haben auf den Bus {1}. (warten)", "answers": [["gewartet"]], "word_bank": ["gewartet", "gewart", "wartete", "gewartet haben"] }
       ]
     },
     {
@@ -130,16 +130,16 @@
       "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
       "skip_for_targets": ["I", "A"],
       "items": [
-        { "item_type": "gap_fill", "sentence_template": "Ich ___ gestern Pizza gekocht.", "answers": [["habe"]], "word_bank": ["habe", "bin", "hatte", "war"] },
-        { "item_type": "gap_fill", "sentence_template": "Du ___ viel gelernt.", "answers": [["hast"]], "word_bank": ["hast", "bist", "hattest", "warst"] },
-        { "item_type": "gap_fill", "sentence_template": "Er ___ das Ticket gekauft.", "answers": [["hat"]], "word_bank": ["hat", "ist", "hatte", "war"] },
-        { "item_type": "gap_fill", "sentence_template": "Wir ___ Deutsch gelernt.", "answers": [["haben"]], "word_bank": ["haben", "sind", "hatten", "waren"] },
-        { "item_type": "gap_fill", "sentence_template": "Ihr ___ das Museum besucht.", "answers": [["habt"]], "word_bank": ["habt", "seid", "hattet", "wart"] },
-        { "item_type": "gap_fill", "sentence_template": "Sie (Plural) ___ viele Fotos fotografiert.", "answers": [["haben"]], "word_bank": ["haben", "sind", "hatten", "waren"] },
-        { "item_type": "gap_fill", "sentence_template": "Maria ___ das Hotel reserviert.", "answers": [["hat"]], "word_bank": ["hat", "ist", "hatte", "war"] },
-        { "item_type": "gap_fill", "sentence_template": "Wir ___ lange gewartet.", "answers": [["haben"]], "word_bank": ["haben", "sind", "hatten", "waren"] },
-        { "item_type": "gap_fill", "sentence_template": "Ich ___ eine Geschichte erzählt.", "answers": [["habe"]], "word_bank": ["habe", "bin", "hatte", "war"] },
-        { "item_type": "gap_fill", "sentence_template": "Er ___ heute nicht gearbeitet.", "answers": [["hat"]], "word_bank": ["hat", "ist", "hatte", "war"] }
+        { "item_type": "gap_fill", "sentence_template": "Ich {1} gestern Pizza gekocht.", "answers": [["habe"]], "word_bank": ["habe", "bin", "hatte", "war"] },
+        { "item_type": "gap_fill", "sentence_template": "Du {1} viel gelernt.", "answers": [["hast"]], "word_bank": ["hast", "bist", "hattest", "warst"] },
+        { "item_type": "gap_fill", "sentence_template": "Er {1} das Ticket gekauft.", "answers": [["hat"]], "word_bank": ["hat", "ist", "hatte", "war"] },
+        { "item_type": "gap_fill", "sentence_template": "Wir {1} Deutsch gelernt.", "answers": [["haben"]], "word_bank": ["haben", "sind", "hatten", "waren"] },
+        { "item_type": "gap_fill", "sentence_template": "Ihr {1} das Museum besucht.", "answers": [["habt"]], "word_bank": ["habt", "seid", "hattet", "wart"] },
+        { "item_type": "gap_fill", "sentence_template": "Sie (Plural) {1} viele Fotos fotografiert.", "answers": [["haben"]], "word_bank": ["haben", "sind", "hatten", "waren"] },
+        { "item_type": "gap_fill", "sentence_template": "Maria {1} das Hotel reserviert.", "answers": [["hat"]], "word_bank": ["hat", "ist", "hatte", "war"] },
+        { "item_type": "gap_fill", "sentence_template": "Wir {1} lange gewartet.", "answers": [["haben"]], "word_bank": ["haben", "sind", "hatten", "waren"] },
+        { "item_type": "gap_fill", "sentence_template": "Ich {1} eine Geschichte erzählt.", "answers": [["habe"]], "word_bank": ["habe", "bin", "hatte", "war"] },
+        { "item_type": "gap_fill", "sentence_template": "Er {1} heute nicht gearbeitet.", "answers": [["hat"]], "word_bank": ["hat", "ist", "hatte", "war"] }
       ]
     },
     {
@@ -150,16 +150,16 @@
       "mastery_threshold": { "I": 0.55, "A": 0.6, "B": 0.65, "C": 0.7, "M": 0.8, "E": 0.85, "L": 0.9 },
       "skip_for_targets": ["I", "A", "B"],
       "items": [
-        { "item_type": "gap_fill", "sentence_template": "Gestern ___ ich Pizza gekocht.", "answers": [["habe"]], "word_bank": ["habe", "ich habe", "hatte", "bin"] },
-        { "item_type": "gap_fill", "sentence_template": "Am Montag ___ wir Fußball gespielt.", "answers": [["haben"]], "word_bank": ["haben", "wir haben", "hatten", "sind"] },
-        { "item_type": "gap_fill", "sentence_template": "Letzte Woche ___ er das Museum besucht.", "answers": [["hat"]], "word_bank": ["hat", "er hat", "hatte", "ist"] },
-        { "item_type": "gap_fill", "sentence_template": "Im Urlaub ___ wir viele Fotos fotografiert.", "answers": [["haben"]], "word_bank": ["haben", "sind", "hatten", "waren"] },
-        { "item_type": "gap_fill", "sentence_template": "Heute Morgen ___ ich lange gewartet.", "answers": [["habe"]], "word_bank": ["habe", "bin", "hatte", "war"] },
-        { "item_type": "gap_fill", "sentence_template": "Vor zwei Tagen ___ sie das Hotel reserviert.", "answers": [["hat"]], "word_bank": ["hat", "ist", "hatte", "war"] },
-        { "item_type": "gap_fill", "sentence_template": "In der Schule ___ wir Deutsch gelernt.", "answers": [["haben"]], "word_bank": ["haben", "sind", "hatten", "waren"] },
-        { "item_type": "gap_fill", "sentence_template": "Letzte Nacht ___ ich gut geschlafen.", "answers": [["habe"]], "word_bank": ["habe", "bin", "hatte", "war"] },
-        { "item_type": "gap_fill", "sentence_template": "Dieses Jahr ___ er viel gearbeitet.", "answers": [["hat"]], "word_bank": ["hat", "ist", "hatte", "war"] },
-        { "item_type": "gap_fill", "sentence_template": "Früher ___ wir oft Musik gehört.", "answers": [["haben"]], "word_bank": ["haben", "sind", "hatten", "waren"] }
+        { "item_type": "gap_fill", "sentence_template": "Gestern {1} ich Pizza gekocht.", "answers": [["habe"]], "word_bank": ["habe", "ich habe", "hatte", "bin"] },
+        { "item_type": "gap_fill", "sentence_template": "Am Montag {1} wir Fußball gespielt.", "answers": [["haben"]], "word_bank": ["haben", "wir haben", "hatten", "sind"] },
+        { "item_type": "gap_fill", "sentence_template": "Letzte Woche {1} er das Museum besucht.", "answers": [["hat"]], "word_bank": ["hat", "er hat", "hatte", "ist"] },
+        { "item_type": "gap_fill", "sentence_template": "Im Urlaub {1} wir viele Fotos fotografiert.", "answers": [["haben"]], "word_bank": ["haben", "sind", "hatten", "waren"] },
+        { "item_type": "gap_fill", "sentence_template": "Heute Morgen {1} ich lange gewartet.", "answers": [["habe"]], "word_bank": ["habe", "bin", "hatte", "war"] },
+        { "item_type": "gap_fill", "sentence_template": "Vor zwei Tagen {1} sie das Hotel reserviert.", "answers": [["hat"]], "word_bank": ["hat", "ist", "hatte", "war"] },
+        { "item_type": "gap_fill", "sentence_template": "In der Schule {1} wir Deutsch gelernt.", "answers": [["haben"]], "word_bank": ["haben", "sind", "hatten", "waren"] },
+        { "item_type": "gap_fill", "sentence_template": "Letzte Nacht {1} ich gut geschlafen.", "answers": [["habe"]], "word_bank": ["habe", "bin", "hatte", "war"] },
+        { "item_type": "gap_fill", "sentence_template": "Dieses Jahr {1} er viel gearbeitet.", "answers": [["hat"]], "word_bank": ["hat", "ist", "hatte", "war"] },
+        { "item_type": "gap_fill", "sentence_template": "Früher {1} wir oft Musik gehört.", "answers": [["haben"]], "word_bank": ["haben", "sind", "hatten", "waren"] }
       ]
     },
     {
