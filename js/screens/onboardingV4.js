@@ -29,7 +29,7 @@ import {
 // L-V408 — live flow: intro → biography → choice → account.
 // test/courses/textbook/summary removed from routing; their wire*/render*
 // functions are kept intact for future use (post-purchase taso-arvio).
-const STAGE_ORDER = ["intro", "biography", "choice", "account"];
+const STAGE_ORDER = ["intro", "biography", "summary", "choice", "account"];
 
 const SCREEN_ID = {
   intro: "screen-ob-v4-intro",
@@ -61,6 +61,7 @@ const state = {
   coursesCompleted: [],
   courseGrades: {},
   biography: { home_usage: null, lived_abroad: null, frequency: null },
+  selfAssess: { skill_focus: [], grammar_ok: [] },
   textbookKey: null,
   textbookFreeText: "",
   miniYoStatus: "in_progress",
@@ -148,10 +149,10 @@ function reflectLanguageChips() {
 function gotoStage(stage) {
   const id = SCREEN_ID[stage];
   if (id) show(id);
+  if (stage === "summary") renderSummary();
   // Dead stages kept for reference but never rendered from live flow:
   // if (stage === "test") renderTest();
   // if (stage === "textbook") renderTextbook();
-  // if (stage === "summary") renderSummary();
 }
 
 // Decide whether to show the textbook disambiguator. Show when at least
@@ -491,11 +492,16 @@ function wireBiography() {
   if (form) {
     form.addEventListener("change", (e) => {
       const t = e.target;
-      if (!(t instanceof HTMLInputElement) || t.type !== "radio") return;
-      const key = t.name;
-      const value = t.value;
-      if (["home_usage", "lived_abroad", "frequency"].includes(key)) {
-        state.biography[key] = value;
+      if (!(t instanceof HTMLInputElement)) return;
+      if (t.type === "radio" && ["home_usage", "lived_abroad", "frequency"].includes(t.name)) {
+        state.biography[t.name] = t.value;
+      } else if (t.type === "checkbox" && ["skill_focus", "grammar_ok"].includes(t.name)) {
+        const arr = state.selfAssess[t.name];
+        if (t.checked) {
+          if (!arr.includes(t.value)) arr.push(t.value);
+        } else {
+          state.selfAssess[t.name] = arr.filter((v) => v !== t.value);
+        }
       }
     });
   }
@@ -511,8 +517,9 @@ function wireBiography() {
         console.warn("biography save failed (non-fatal):", err.message);
       }
     }
-    // L-V408: go straight to tier choice (skip textbook + summary).
-    gotoStage("choice");
+    // After the background + self-assessment questions, show the personalised
+    // feedback (summary) before the purchase step.
+    gotoStage("summary");
   });
 }
 
@@ -866,16 +873,18 @@ function renderSummary() {
     // L-V398 #2 — courses step removed: flow is intro → test → biography →
     // summary (4 steps; the textbook disambiguator keyed on courses and is no
     // longer reached).
-    stepEl.textContent = "Vaihe 4 / 4";
+    stepEl.textContent = "Vaihe 2 / 2";
   }
 
   // Skeleton-tilaa varten käytetään heuristiikkaa rakenteen pitämiseksi
   // näytöllä siihen asti, kunnes reasoner-vastaus saapuu.
   const heuristic = synthesizeSummary(state);
+  const painotus = computePainotus(state);
   renderSummaryBody(recapEl, {
     strengths: heuristic.strengths,
     gaps: heuristic.growth,
     plan: heuristic.plan,
+    painotus,
     note: "Rakennetaan henkilökohtaista polkua...",
     loading: true,
   });
@@ -892,6 +901,7 @@ function renderSummary() {
       strengths: Array.isArray(result.strengths) && result.strengths.length ? result.strengths : heuristic.strengths,
       gaps: Array.isArray(result.gaps) && result.gaps.length ? result.gaps : heuristic.growth,
       plan: planFromResult.length ? planFromResult : heuristic.plan,
+      painotus,
       note: result.meta?.planSource === "fallback"
         ? "Tarkka polku rakentuu kun ensimmäisten harjoitusten data kerääntyy."
         : "Polku perustuu taso-arvioosi ja taustatietoihisi.",
@@ -902,9 +912,10 @@ function renderSummary() {
   });
 }
 
-function renderSummaryBody(recapEl, { strengths, gaps, plan, note, loading }) {
+function renderSummaryBody(recapEl, { strengths, gaps, plan, painotus, note, loading }) {
   const planByWeek = chunkPlanByWeek(plan);
   recapEl.innerHTML = `
+    ${painotus ? `<p class="ob4-summary__painotus">${escapeHtml(painotus)}</p>` : ""}
     <div class="ob4-summary__col">
       <h2 class="ob4-summary__h2">Sinun vahvuutesi</h2>
       <ul class="ob4-summary__list">
@@ -924,6 +935,7 @@ function renderSummaryBody(recapEl, { strengths, gaps, plan, note, loading }) {
       </ol>
       <p class="ob4-summary__plan-note">${escapeHtml(note)}</p>
     </div>
+    <p class="ob4-summary__kartoitus">Oston jälkeen voit tehdä tarkemman kartoitustestin, joka hienosäätää tasosi ja polkusi. Se on vapaaehtoinen, mutta auttaa kohdentamaan harjoittelun oikein.</p>
   `;
 }
 
@@ -955,6 +967,37 @@ async function buildReasonerProfile(language) {
   } catch (_e) {
     return null;
   }
+}
+
+// Build the "Kurssisi painottaa aluksi X" line from the self-assessment answers
+// (skills that feel hardest + grammar topics not yet marked confident).
+function computePainotus(s) {
+  const focusLabels = {
+    kuullun: "kuullun ymmärtämistä",
+    luetun: "luetun ymmärtämistä",
+    kirjoittaminen: "kirjoittamista",
+    sanasto: "sanaston laajentamista",
+    kielioppi: "kielioppia",
+  };
+  const grammarLabels = {
+    verbit: "verbien taivutusta",
+    aikamuodot: "aikamuotoja",
+    subjunktiivi: "subjunktiivia",
+    artikkelit: "artikkeleita ja prepositioita",
+    sanajarjestys: "sanajärjestystä",
+  };
+  const sa = s.selfAssess || {};
+  const items = (sa.skill_focus || []).map((k) => focusLabels[k]).filter(Boolean).slice(0, 2);
+  if (items.length < 2) {
+    const ok = new Set(sa.grammar_ok || []);
+    const gapKey = Object.keys(grammarLabels).find((k) => !ok.has(k));
+    if (gapKey && !items.includes(grammarLabels[gapKey])) items.push(grammarLabels[gapKey]);
+  }
+  if (items.length === 0) return null;
+  const list = items.length === 1
+    ? items[0]
+    : `${items.slice(0, -1).join(", ")} ja ${items[items.length - 1]}`;
+  return `Kurssisi painottaa aluksi ${list}.`;
 }
 
 // Heuristic placeholder summary until L-V294 reasoner is live. Uses the
