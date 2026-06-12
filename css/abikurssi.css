@@ -1,5 +1,5 @@
-/* =======================================================================
-   Puheo — per-language abikurssi SEO landing (L-V412 landing v2).
+﻿/* =======================================================================
+   Puheo â€” per-language abikurssi SEO landing (L-V412 landing v2).
    Shared by /espanjan-abikurssi, /ranskan-abikurssi, /saksan-abikurssi
    (public/landing/{espanja,ranska,saksa}.html). Content differs per page,
    layout is identical, so the design lives here once. Self-contained: these
@@ -7,7 +7,7 @@
    Fonts come from /css/fonts.css (Fredoka + Mulish + Kalam).
    ======================================================================= */
 
-/* ───────────── Tokens ───────────── */
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ Tokens â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 :root {
   --cream:       #F6EEDC;
   --cream-deep:  #EFE3C9;
@@ -27,7 +27,7 @@
   --shadow-warm: 0 18px 40px -18px rgba(90, 50, 25, .35);
 }
 
-/* ───────────── Base ───────────── */
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ Base â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 *, *::before, *::after { box-sizing: border-box; }
 html, body { overflow-x: clip; }
 body {
@@ -92,12 +92,12 @@ svg { display: block; }
 }
 .reassure-center { justify-content: center; }
 
-/* ───────────── Nav ───────────── */
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ Nav â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .nav { position: sticky; top: 0; z-index: 50; background: rgba(246, 238, 220, .94); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
 .nav-in { max-width: 1120px; margin-inline: auto; padding: 12px 22px; display: flex; align-items: center; justify-content: space-between; gap: 18px; }
 .brand { font-family: "Fredoka", sans-serif; font-weight: 600; font-size: 1.55rem; color: var(--brick); text-decoration: none; line-height: 1; }
 .nav .btn { padding: 10px 20px; font-size: 1rem; }
-.nav-menu { display: flex; align-items: center; gap: 24px; margin-left: auto; }
+.nav-menu { display: flex; align-items: center; gap: 24px; margin: 0 auto; }
 .nav-menu > a, .nav-dd-trigger {
   font-family: "Fredoka", sans-serif; font-weight: 500; font-size: .98rem; color: var(--ink-soft);
   text-decoration: none; background: none; border: 0; cursor: pointer; padding: 0;
@@ -134,7 +134,7 @@ svg { display: block; }
   .nav-login { display: none; }
 }
 
-/* ───────────── Hero (2-col desktop) ───────────── */
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ Hero (2-col desktop) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .hero { padding: 64px 0 48px; }
 .hero-grid { display: grid; grid-template-columns: 1.05fr .95fr; gap: 56px; align-items: center; }
 .hero h1 { font-size: clamp(2.4rem, 4.6vw, 3.6rem); max-width: 15ch; }
@@ -183,7 +183,7 @@ svg { display: block; }
 .stamp-max { font-family: "Mulish", sans-serif; font-weight: 800; font-size: .72rem; color: var(--ink-soft); margin-top: 2px; }
 .stamp-note { font-size: .85rem; color: var(--ink-soft); font-weight: 600; max-width: 22ch; }
 
-/* ───────────── Grading ───────────── */
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ Grading â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .grading { padding: 88px 0 80px; }
 .grading-grid { display: grid; grid-template-columns: 1.05fr .95fr; gap: 64px; align-items: center; }
 .grading h2 { font-size: clamp(1.9rem, 3.4vw, 2.6rem); max-width: 17ch; }
@@ -222,7 +222,7 @@ svg { display: block; }
 .rf-4 { width: 36%; background: var(--brick); }
 .rubric-foot { margin-top: 20px; padding-top: 16px; border-top: 1px dashed var(--line); font-size: .87rem; color: var(--ink-soft); font-weight: 600; }
 
-/* ───────────── Path timeline ───────────── */
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ Path timeline â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .path-section { padding: 88px 0 72px; }
 .path-head { max-width: 60ch; margin-bottom: 60px; }
 .path-head h2 { font-size: clamp(1.9rem, 3.4vw, 2.6rem); }
@@ -269,7 +269,7 @@ svg { display: block; }
 .path-cta-lead { font-family: "Fredoka", sans-serif; font-weight: 600; font-size: 1.5rem; }
 .path-cta .btn { margin-top: 18px; }
 
-/* ───────────── FAQ ───────────── */
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ FAQ â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .faq { padding: 80px 0 8px; }
 .faq h2 { font-size: clamp(1.9rem, 3.4vw, 2.6rem); text-align: center; }
 .faq-list { margin: 32px auto 0; max-width: 680px; display: flex; flex-direction: column; gap: 12px; }
@@ -287,7 +287,7 @@ svg { display: block; }
 .faq-item[open] summary::after { transform: rotate(45deg); }
 .faq-item p { padding: 0 20px 18px; color: var(--ink-soft); font-size: .97rem; }
 
-/* ───────────── Cross-language ───────────── */
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ Cross-language â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .xlang { padding: 64px 0 8px; text-align: center; }
 .xlang h2 { font-size: 1.5rem; }
 .xlang-links { margin-top: 18px; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
@@ -304,7 +304,7 @@ svg { display: block; }
 .xd-de { background: var(--gold); }
 .xd-es { background: var(--brick); }
 
-/* ───────────── Final CTA ───────────── */
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ Final CTA â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .cta { margin-top: 80px; background: var(--brick); color: var(--paper); padding: 88px 0; position: relative; overflow: hidden; }
 .cta-glyph { position: absolute; font-family: "Fredoka", sans-serif; font-weight: 700; color: rgba(252, 247, 235, .07); line-height: 1; user-select: none; }
 .cg-1 { font-size: 15rem; top: -44px; left: -18px; transform: rotate(-10deg); }
@@ -315,7 +315,7 @@ svg { display: block; }
 .cta-btns { margin-top: 30px; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
 .cta-fine { margin-top: 24px; font-size: .9rem; color: rgba(252, 247, 235, .65); font-weight: 700; }
 
-/* ───────────── Footer ───────────── */
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ Footer â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .footer { background: var(--cream-deep); padding: 56px 0 28px; }
 .footer-in { max-width: 1120px; margin-inline: auto; padding-inline: 28px; }
 .footer-top { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 40px; }
@@ -334,7 +334,7 @@ svg { display: block; }
   .footer-top { grid-template-columns: 1fr; gap: 26px; }
 }
 
-/* ───────────── New L-V412 components (espanja.html only; fr/de still use old classes) ───────────── */
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ New L-V412 components (espanja.html only; fr/de still use old classes) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 /* Generic section helpers */
 .section-std { padding: 80px 0; }
@@ -346,7 +346,7 @@ svg { display: block; }
 /* Hero kevennetty: TOC layout */
 .hero-price-line { margin-top: 20px; font-weight: 700; font-size: .97rem; color: var(--ink-soft); }
 
-/* ── .toc-card ── */
+/* â”€â”€ .toc-card â”€â”€ */
 .toc-card {
   background: var(--paper);
   border: 1.5px solid var(--line);
@@ -399,7 +399,7 @@ svg { display: block; }
 }
 .toc-list a:hover { color: var(--brick); }
 
-/* ── .exam-map / .exam-part ── */
+/* â”€â”€ .exam-map / .exam-part â”€â”€ */
 .exam-map {
   list-style: none;
   margin: 36px 0 0;
@@ -450,7 +450,7 @@ svg { display: block; }
 .exam-body p { color: var(--ink-soft); font-size: .98rem; }
 .exam-body p + p { margin-top: 6px; }
 
-/* ── .path-exam-note ── */
+/* â”€â”€ .path-exam-note â”€â”€ */
 .path-exam-note {
   margin-top: 6px;
   font-size: .84rem;
@@ -473,7 +473,7 @@ svg { display: block; }
   flex: none;
 }
 
-/* ── .pitfall-list / .pitfall ── */
+/* â”€â”€ .pitfall-list / .pitfall â”€â”€ */
 .pitfall-list {
   list-style: none;
   margin: 32px 0 0;
@@ -525,7 +525,7 @@ svg { display: block; }
   padding: 3px 9px;
 }
 
-/* ── .error-strips / .error-strip ── */
+/* â”€â”€ .error-strips / .error-strip â”€â”€ */
 .error-strips {
   display: flex;
   flex-direction: column;
@@ -571,11 +571,11 @@ svg { display: block; }
   color: var(--ink-soft);
 }
 
-/* ── grading-right: paper in arviointi section ── */
+/* â”€â”€ grading-right: paper in arviointi section â”€â”€ */
 .grading-right { display: flex; flex-direction: column; gap: 28px; }
 .paper-arviointi { transform: rotate(0.8deg); }
 
-/* ── .fit-split ── */
+/* â”€â”€ .fit-split â”€â”€ */
 .fit-split {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -619,14 +619,14 @@ svg { display: block; }
   line-height: 1.45;
 }
 .fit-yes .fit-list li::before {
-  content: "✓";
+  content: "âœ“";
   position: absolute;
   left: 0;
   color: var(--green-deep);
   font-weight: 800;
 }
 .fit-no .fit-list li::before {
-  content: "·";
+  content: "Â·";
   position: absolute;
   left: 4px;
   color: var(--ink-soft);
@@ -634,7 +634,7 @@ svg { display: block; }
   line-height: 1.2;
 }
 
-/* ── .price-strip ── */
+/* â”€â”€ .price-strip â”€â”€ */
 .price-strip {
   display: grid;
   grid-template-columns: auto 1fr;
@@ -709,7 +709,7 @@ svg { display: block; }
   color: var(--ink-soft);
 }
 
-/* ── .guide-rail / .guide-link ── */
+/* â”€â”€ .guide-rail / .guide-link â”€â”€ */
 .guide-rail {
   display: flex;
   flex-direction: column;
@@ -754,7 +754,7 @@ svg { display: block; }
   line-height: 1.65;
 }
 
-/* ───────────── Responsive ───────────── */
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ Responsive â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 @media (max-width: 960px) {
   .hero-grid, .grading-grid { grid-template-columns: 1fr; gap: 48px; }
   .hero { padding-top: 40px; }
