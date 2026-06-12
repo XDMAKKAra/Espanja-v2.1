@@ -736,13 +736,214 @@ body.kartoitus-active .app-main {
 .ob4-choice { gap: 22px; }
 .ob4-choice__head { display: flex; flex-direction: column; gap: 8px; }
 
-.ob4-plans {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 16px;
+/* ── Scoped pricing-cards (pikselikopio pricing.html:stä) ──────────────────
+   Tokens not available in app.html get inline fallbacks here.
+   All rules prefixed with #screen-ob-v4-choice so they cannot leak. */
+
+/* Fallback token aliases for pricing tokens not defined in app token set */
+#screen-ob-v4-choice {
+  --ob-paper:       #FFFDF8;
+  --ob-line:        #E9DFCF;
+  --ob-ink:         #33271F;
+  --ob-ink-soft:    #6E5B4D;
+  --ob-terra:       #C4573B;
+  --ob-brick:       #9B2D2A;
+  --ob-brick-deep:  #7A201E;
+  --ob-green-deep:  #2F6B3E;
+  --ob-green-tint:  #DCEAD8;
+  --ob-cream-deep:  #EFE3C9;
 }
-@media (min-width: 760px) {
-  .ob4-plans { grid-template-columns: 1.1fr 1fr; gap: 20px; }
+
+#screen-ob-v4-choice .pricing-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+@media (max-width: 680px) {
+  #screen-ob-v4-choice .pricing-cards { grid-template-columns: 1fr; }
+  #screen-ob-v4-choice .pcard--featured { margin-top: 20px; }
+}
+
+#screen-ob-v4-choice .pcard {
+  background: var(--ob-paper);
+  border: 1.5px solid var(--ob-line);
+  border-radius: 22px;
+  padding: 32px 30px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  position: relative;
+}
+
+#screen-ob-v4-choice .pcard--featured {
+  border-color: var(--ob-brick);
+  box-shadow: 5px 5px 0 var(--ob-brick);
+}
+
+#screen-ob-v4-choice .pcard__badge {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--ob-brick);
+  color: var(--ob-paper);
+  font-family: "Fredoka", sans-serif;
+  font-weight: 600;
+  font-size: .82rem;
+  padding: 4px 16px;
+  border-radius: 99px;
+  white-space: nowrap;
+  letter-spacing: .03em;
+}
+
+#screen-ob-v4-choice .pcard__chip {
+  font-family: "Fredoka", sans-serif;
+  font-weight: 500;
+  font-size: .82rem;
+  color: var(--ob-terra);
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  display: block;
+}
+
+#screen-ob-v4-choice .pcard__name {
+  font-size: clamp(1.7rem, 4vw, 2.2rem);
+  color: var(--ob-ink);
+  margin: 0;
+}
+
+#screen-ob-v4-choice .pcard__lede {
+  margin-top: 8px;
+  font-size: .95rem;
+  color: var(--ob-ink-soft);
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+#screen-ob-v4-choice .pcard__price {
+  margin-top: 22px;
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+#screen-ob-v4-choice .pcard__price-num {
+  font-family: "Fredoka", sans-serif;
+  font-weight: 600;
+  font-size: 3.4rem;
+  line-height: 1;
+  color: var(--ob-brick);
+}
+#screen-ob-v4-choice .pcard__price-cur {
+  font-family: "Fredoka", sans-serif;
+  font-weight: 600;
+  font-size: 1.8rem;
+  color: var(--ob-brick);
+}
+#screen-ob-v4-choice .pcard__price-period {
+  font-weight: 700;
+  font-size: .9rem;
+  color: var(--ob-ink-soft);
+  margin-left: 4px;
+}
+
+#screen-ob-v4-choice .pcard__rule {
+  border: 0;
+  border-top: 1.5px dashed var(--ob-line);
+  margin: 22px 0;
+}
+
+#screen-ob-v4-choice .pcard__features {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+#screen-ob-v4-choice .pcard__features li {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-size: .95rem;
+  font-weight: 600;
+  color: var(--ob-ink);
+}
+#screen-ob-v4-choice .pcard__tick {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--ob-green-tint);
+  color: var(--ob-green-deep);
+  display: grid;
+  place-items: center;
+  font-size: .7rem;
+  font-weight: 800;
+  margin-top: 2px;
+}
+#screen-ob-v4-choice .pcard__features .pcard__no {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  color: var(--ob-ink-soft);
+}
+#screen-ob-v4-choice .pcard__cross {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--ob-cream-deep);
+  color: var(--ob-ink-soft);
+  display: grid;
+  place-items: center;
+  font-size: .72rem;
+  margin-top: 2px;
+}
+
+#screen-ob-v4-choice .pcard__cta {
+  margin-top: 26px;
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  font-family: "Fredoka", sans-serif;
+  font-weight: 500;
+  font-size: 1.08rem;
+  border-radius: 14px;
+  padding: 14px 24px;
+  transition: transform .15s ease, box-shadow .15s ease;
+  cursor: pointer;
+  border: none;
+  appearance: none;
+  width: 100%;
+  box-sizing: border-box;
+}
+#screen-ob-v4-choice .pcard__cta--primary {
+  background: var(--ob-brick);
+  color: var(--ob-paper);
+  box-shadow: 0 4px 0 var(--ob-brick-deep);
+}
+#screen-ob-v4-choice .pcard__cta--primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 0 var(--ob-brick-deep);
+}
+#screen-ob-v4-choice .pcard__cta--ghost {
+  background: transparent;
+  color: var(--ob-ink-soft);
+  border: 1.5px solid var(--ob-line);
+}
+#screen-ob-v4-choice .pcard__cta--ghost:hover {
+  border-color: var(--ob-brick);
+  color: var(--ob-brick);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #screen-ob-v4-choice .pcard__cta { transition: none; }
 }
 
 .ob4-plan {
