@@ -279,10 +279,11 @@ function navigateTo(nav, { updateHash = true } = {}) {
     // v278 — paint the sidebar shell synchronously with empty list, then
     // hydrate items[] async so the mode-state header doesn't flicker.
     setSidebarMode("mode", { modeKey: nav, modeLabel: MODE_LABELS[nav], items: [] });
-    // L-V413 lohko 3 — the writing selector gets NO course/lesson skeleton in
+    // L-V413 lohko 3+4 — writing and exam get NO course/lesson skeleton in
     // the sidebar: the mixed kurssi-lesson list read as unrelated clutter next
-    // to the task picker. Other modes keep their hydrated lists.
-    if (nav !== "writing") {
+    // to the task picker, and a timed exam wants a calm, focused shell.
+    // Other modes keep their hydrated lists.
+    if (nav !== "writing" && nav !== "exam") {
       import("./lib/sidebarItems.js").then(({ buildSidebarItemsForMode }) => {
         return buildSidebarItemsForMode(nav).then((items) => {
           setSidebarMode("mode", { modeKey: nav, modeLabel: MODE_LABELS[nav], items });

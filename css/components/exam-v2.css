@@ -1,0 +1,378 @@
+/* ═══════════════════════════════════════════════════════════════
+   EXAM V2 — L-V413 Lohko 4: koesimulaation visuaali warm paperiin.
+   Exam logic (parts, timer, autosave, grading) untouched; this layer
+   restyles the shell: a calm header with a tabular timer pill, part
+   steps as pills, paper task cards, a normal-width submit row and a
+   finished results view. Replaces the legacy mono/mint chrome that
+   style.css still carries on these screens.
+   Loaded into @layer components so it wins base without !important.
+   ═══════════════════════════════════════════════════════════════ */
+
+#screen-full-exam,
+#screen-full-exam-results,
+#screen-exam-paused {
+  --ex-paper: #FCF7EB;
+  --ex-white: #FFFDF8;
+  --ex-ink: var(--ed-ink, #33271F);
+  --ex-ink-soft: var(--ed-ink-muted, #6E5B4D);
+  --ex-ink-faint: var(--ed-ink-faint, #9A8875);
+  --ex-brick: var(--ed-accent, #9B2D2A);
+  --ex-brick-deep: #832523;
+  --ex-brick-soft: rgba(155, 45, 42, 0.08);
+  --ex-green: var(--ed-olive, #2E5E4E);
+  --ex-green-soft: rgba(46, 94, 78, 0.10);
+  --ex-line: var(--ed-rule, #E9DFCF);
+  --ex-line-strong: var(--ed-rule-strong, #DBCDB4);
+  --ex-display: "Fredoka", system-ui, sans-serif;
+  --ex-body: "Mulish", "Inter", system-ui, sans-serif;
+}
+
+/* Clearance for the fixed profile chip in the shell's top-right corner
+   so the timer pill never collides with it. */
+#screen-full-exam .exam-inner {
+  padding-top: 44px;
+}
+
+/* ── Header: kicker + part title + timer pill ──────────────────── */
+#screen-full-exam .exam-header {
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+#screen-full-exam .exam-title {
+  font-family: var(--ex-body);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--ex-ink-soft);
+  margin-bottom: 4px;
+}
+#screen-full-exam .exam-subtitle {
+  font-family: var(--ex-display);
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.15;
+  color: var(--ex-ink);
+}
+#screen-full-exam .exam-timer {
+  font-family: var(--ex-body);
+  font-variant-numeric: tabular-nums;
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--ex-ink);
+  background: var(--ex-paper);
+  border: 1px solid var(--ex-line-strong);
+  border-radius: 999px;
+  padding: 8px 18px;
+  flex-shrink: 0;
+}
+#screen-full-exam .exam-timer.exam-timer-warn {
+  color: var(--ex-brick);
+  border-color: var(--ex-brick);
+  background: var(--ex-brick-soft);
+}
+
+/* ── Progress ──────────────────────────────────────────────────── */
+#screen-full-exam .exam-progress-bar {
+  height: 6px;
+  border-radius: 999px;
+  background: var(--ex-line);
+  margin-bottom: 22px;
+}
+#screen-full-exam .exam-progress-fill {
+  background: var(--ex-brick);
+  border-radius: 999px;
+}
+
+/* ── Part steps ────────────────────────────────────────────────── */
+#screen-full-exam .exam-tabs {
+  gap: 8px;
+  margin-bottom: 26px;
+  padding-bottom: 2px;
+}
+#screen-full-exam .exam-tab {
+  font-family: var(--ex-body);
+  font-size: 13.5px;
+  font-weight: 600;
+  letter-spacing: 0;
+  color: var(--ex-ink-soft);
+  background: var(--ex-white);
+  border: 1px solid var(--ex-line-strong);
+  border-radius: 999px;
+  padding: 9px 16px;
+  min-height: 40px;
+  transition: background 140ms ease, border-color 140ms ease, color 140ms ease;
+}
+#screen-full-exam .exam-tab:hover:not(.active) {
+  border-color: color-mix(in oklch, var(--ex-brick) 35%, var(--ex-line-strong));
+  color: var(--ex-ink);
+}
+#screen-full-exam .exam-tab.completed {
+  border-color: color-mix(in oklch, var(--ex-green) 45%, var(--ex-line-strong));
+  color: var(--ex-green);
+  background: var(--ex-green-soft);
+}
+#screen-full-exam .exam-tab.completed::before {
+  content: "✓ ";
+  font-weight: 700;
+}
+#screen-full-exam .exam-tab.active {
+  background: var(--ex-brick);
+  border-color: var(--ex-brick);
+  color: var(--ex-paper);
+}
+#screen-full-exam .exam-tab:focus-visible {
+  outline: 2px solid var(--ex-brick);
+  outline-offset: 2px;
+}
+
+/* ── Task surfaces ─────────────────────────────────────────────── */
+#screen-full-exam .exam-text {
+  background: var(--ex-paper);
+  border: 1px solid var(--ex-line);
+  border-radius: 14px;
+  padding: 22px 24px;
+  font-family: var(--ex-body);
+  box-shadow: 0 1px 2px rgba(36, 28, 21, 0.04);
+}
+#screen-full-exam .exam-text-level {
+  font-family: var(--ex-body);
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--ex-brick);
+  background: var(--ex-brick-soft);
+  border-radius: 6px;
+  padding: 3px 8px;
+}
+#screen-full-exam .exam-text-source {
+  font-style: normal;
+  color: var(--ex-ink-faint);
+}
+#screen-full-exam .reading-q-block {
+  background: var(--ex-paper);
+  border: 1px solid var(--ex-line);
+  border-radius: 14px;
+  box-shadow: 0 1px 2px rgba(36, 28, 21, 0.04);
+}
+#screen-full-exam .reading-q-text {
+  font-family: var(--ex-body);
+  font-size: 15.5px;
+}
+#screen-full-exam .exam-reading-block {
+  background: var(--ex-paper);
+  border: 1px solid var(--ex-line);
+  border-radius: 14px;
+}
+
+/* Choice buttons: warm white, brick selected state. */
+#screen-full-exam .option-btn {
+  background: var(--ex-white);
+  border: 1px solid var(--ex-line-strong);
+  border-radius: 12px;
+  font-family: var(--ex-body);
+  font-size: 15px;
+}
+#screen-full-exam .option-btn:hover:not(:disabled) {
+  background: var(--ex-white);
+  border-color: color-mix(in oklch, var(--ex-brick) 35%, var(--ex-line-strong));
+}
+#screen-full-exam .option-btn.selected-answer,
+#screen-full-exam .exam-option.selected-answer {
+  border-color: var(--ex-brick);
+  background: var(--ex-brick-soft);
+  color: var(--ex-ink);
+  box-shadow: 0 0 0 1px var(--ex-brick) inset;
+}
+
+/* Writing inputs */
+#screen-full-exam .exam-textarea {
+  background: var(--ex-white);
+  border: 1px solid var(--ex-line-strong);
+  border-radius: 12px;
+  font-family: var(--ex-body);
+  font-size: 16px;
+  line-height: 1.6;
+  padding: 14px 16px;
+  transition: border-color 140ms ease, box-shadow 140ms ease;
+}
+#screen-full-exam .exam-textarea:focus {
+  border-color: var(--ex-brick);
+  box-shadow: 0 0 0 3px var(--ex-brick-soft);
+}
+#screen-full-exam .exam-char-count {
+  font-family: var(--ex-body);
+  font-variant-numeric: tabular-nums;
+  font-size: 13px;
+  color: var(--ex-ink-soft);
+}
+#screen-full-exam .auth-input.exam-input {
+  background: var(--ex-white);
+  border: 1px solid var(--ex-line-strong);
+  border-radius: 10px;
+  font-family: var(--ex-body);
+  padding: 10px 12px;
+  min-height: 44px;
+}
+#screen-full-exam .auth-input.exam-input:focus {
+  border-color: var(--ex-brick);
+  box-shadow: 0 0 0 3px var(--ex-brick-soft);
+  outline: none;
+}
+
+/* ── Actions: right-aligned pair, submit no longer a full-width slab */
+#screen-full-exam .exam-actions {
+  justify-content: flex-end;
+  border-top: 1px solid var(--ex-line);
+  padding-top: 18px;
+}
+#screen-full-exam .exam-actions .btn-secondary {
+  flex: 0 0 auto;
+  background: transparent;
+  border: 1px solid var(--ex-line-strong);
+  border-radius: 12px;
+  color: var(--ex-ink-soft);
+  font-family: var(--ex-body);
+  font-size: 14.5px;
+  font-weight: 600;
+  padding: 13px 22px;
+}
+#screen-full-exam .exam-actions .btn-secondary:hover {
+  border-color: var(--ex-ink-soft);
+  color: var(--ex-ink);
+}
+#screen-full-exam .exam-actions .btn-primary {
+  width: auto;
+  flex: 0 0 auto;
+  margin-top: 0;
+  background: var(--ex-brick);
+  color: var(--ex-paper);
+  border-radius: 12px;
+  font-family: var(--ex-display);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  padding: 13px 28px;
+  box-shadow: 0 10px 22px -12px rgba(155, 45, 42, 0.55);
+}
+#screen-full-exam .exam-actions .btn-primary:hover {
+  background: var(--ex-brick-deep);
+  color: var(--ex-paper);
+}
+
+/* ── Results ───────────────────────────────────────────────────── */
+#screen-full-exam-results .results-label {
+  font-family: var(--ex-body);
+  font-size: 13.5px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--ex-ink-soft);
+  margin-bottom: 6px;
+}
+#screen-full-exam-results .grade-display {
+  font-family: var(--ex-display);
+  font-size: clamp(72px, 12vw, 104px);
+  font-weight: 600;
+  line-height: 1.05;
+  color: var(--ex-brick);
+  margin: 6px 0 2px;
+}
+#screen-full-exam-results .exam-points {
+  font-family: var(--ex-body);
+  font-variant-numeric: tabular-nums;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--ex-ink);
+}
+#screen-full-exam-results .exam-results-breakdown {
+  background: var(--ex-paper);
+  border: 1px solid var(--ex-line);
+  border-radius: 14px;
+  padding: 6px 20px;
+  margin: 20px 0;
+  text-align: left;
+}
+#screen-full-exam-results .exam-result-row {
+  font-family: var(--ex-body);
+  font-size: 14.5px;
+  font-variant-numeric: tabular-nums;
+  color: var(--ex-ink);
+  padding: 12px 0;
+  border-bottom: 1px solid var(--ex-line);
+}
+#screen-full-exam-results .feedback-overall {
+  font-family: var(--ex-body);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--ex-ink-soft);
+}
+#screen-full-exam-results .btn-share {
+  border: 1px solid var(--ex-line-strong);
+  border-radius: 12px;
+  color: var(--ex-ink-soft);
+  font-family: var(--ex-body);
+  font-weight: 600;
+}
+#screen-full-exam-results .btn-share:hover {
+  background: var(--ex-paper);
+  border-color: var(--ex-ink-soft);
+  color: var(--ex-ink);
+}
+#screen-full-exam-results .btn-secondary {
+  background: transparent;
+  border: 1px solid var(--ex-line-strong);
+  border-radius: 12px;
+  color: var(--ex-ink-soft);
+  font-family: var(--ex-body);
+  font-weight: 600;
+}
+#screen-full-exam-results .btn-secondary:hover {
+  border-color: var(--ex-ink-soft);
+  color: var(--ex-ink);
+}
+#screen-full-exam-results .btn-primary {
+  background: var(--ex-brick);
+  color: var(--ex-paper);
+  border-radius: 12px;
+  font-family: var(--ex-display);
+  font-weight: 600;
+  margin-top: 0;
+  /* Equal halves with "Uusi koe": the base width:100% let the primary
+     hog the row and shrink the secondary into a stub. */
+  width: auto;
+  flex: 1 1 0;
+}
+#screen-full-exam-results .btn-secondary {
+  flex: 1 1 0;
+  padding: 14px 20px;
+}
+#screen-full-exam-results .btn-primary:hover {
+  background: var(--ex-brick-deep);
+  color: var(--ex-paper);
+}
+
+/* ── Small screens ─────────────────────────────────────────────── */
+@media (max-width: 560px) {
+  #screen-full-exam .exam-header {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  #screen-full-exam .exam-subtitle {
+    font-size: 20px;
+  }
+  #screen-full-exam .exam-timer {
+    font-size: 16px;
+    padding: 6px 14px;
+  }
+  #screen-full-exam .exam-actions {
+    flex-wrap: wrap;
+  }
+  #screen-full-exam .exam-actions .btn-primary {
+    flex: 1 1 100%;
+    order: -1;
+  }
+  #screen-full-exam .exam-actions .btn-secondary {
+    flex: 1 1 auto;
+  }
+}
