@@ -37,7 +37,52 @@ export function setSidebarMode(mode, ctx = {}) {
   if (mode === "mode") { renderModeNav(ctx); wireModeItemDelegation(); }
   if (mode === "home") clearModeNav();
   sb.dataset.mode = mode;
+  setFocusAvailable(mode === "mode" && FOCUS_MODES.has(ctx.modeKey));
 }
+
+// ─── Focus mode: let the user hide the whole sidebar while writing / sitting a
+// mock exam, so the task gets the full width. Desktop only (the sidebar is
+// already off-canvas below 1024px). The content reflows automatically because
+// .app-shell is a grid and collapsing drops the sidebar column. ───────────────
+const FOCUS_MODES = new Set(["writing", "exam"]);
+const COLLAPSE_KEY = "puheo:sidebarCollapsed";
+
+function appShell() { return document.querySelector(".app-shell"); }
+
+function applyCollapsed(on) {
+  const sh = appShell();
+  if (sh) {
+    if (on) sh.setAttribute("data-sidebar-collapsed", "true");
+    else sh.removeAttribute("data-sidebar-collapsed");
+  }
+  const fab = document.getElementById("sidebar-collapse-fab");
+  if (fab) {
+    fab.dataset.collapsed = on ? "true" : "false";
+    fab.setAttribute("aria-pressed", on ? "true" : "false");
+    fab.setAttribute("aria-label", on ? "Näytä valikko" : "Piilota valikko");
+    const lbl = fab.querySelector(".sidebar-collapse-fab__label");
+    if (lbl) lbl.textContent = on ? "Näytä valikko" : "Piilota valikko";
+  }
+}
+
+function setFocusAvailable(available) {
+  document.body.classList.toggle("focus-toggle-available", available);
+  if (!available) {
+    applyCollapsed(false); // never strand a non-focus screen in a collapsed shell
+    return;
+  }
+  let saved = false;
+  try { saved = localStorage.getItem(COLLAPSE_KEY) === "true"; } catch { /* private mode */ }
+  applyCollapsed(saved);
+}
+
+document.addEventListener("click", (e) => {
+  if (!e.target.closest("#sidebar-collapse-fab")) return;
+  const sh = appShell();
+  const next = !(sh && sh.getAttribute("data-sidebar-collapsed") === "true");
+  applyCollapsed(next);
+  try { localStorage.setItem(COLLAPSE_KEY, next ? "true" : "false"); } catch { /* private mode */ }
+});
 
 function clearModeNav() {
   const itemsEl = document.getElementById("sidebar-mode-items");

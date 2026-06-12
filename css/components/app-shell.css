@@ -38,6 +38,50 @@
    third column that no longer exists in the grid. */
 .app-rail { display: none !important; }
 
+/* ─── Focus mode (writing / mock exam): user-collapsible sidebar ───
+   Collapsing drops the sidebar grid column; .app-main spans full width and
+   reflows automatically. Toggle owned by js/components/sidebarShell.js. */
+.app-shell[data-sidebar-collapsed="true"] {
+  grid-template-columns: 1fr;
+}
+.app-shell[data-sidebar-collapsed="true"] .app-sidebar {
+  display: none;
+}
+.app-shell[data-sidebar-collapsed="true"] .app-main {
+  grid-column: 1 / -1;
+}
+
+.sidebar-collapse-fab {
+  display: none;
+  position: fixed;
+  left: calc(var(--app-sidebar) + 16px);
+  bottom: 16px;
+  z-index: 60;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 15px 9px 12px;
+  border: 1px solid var(--line, rgba(110, 85, 60, .18));
+  border-radius: 999px;
+  background: var(--paper, #FCF7EB);
+  color: var(--ink, #33271F);
+  font-family: "Fredoka", "Mulish", sans-serif;
+  font-weight: 500;
+  font-size: .9rem;
+  cursor: pointer;
+  box-shadow: 0 10px 24px -12px rgba(90, 50, 25, .4);
+  transition: left .2s ease, color .15s ease;
+}
+.sidebar-collapse-fab:hover { color: var(--brick, #9B2D2A); }
+.sidebar-collapse-fab__icon { flex-shrink: 0; }
+.sidebar-collapse-fab__icon--show { display: none; }
+.sidebar-collapse-fab[data-collapsed="true"] .sidebar-collapse-fab__icon--hide { display: none; }
+.sidebar-collapse-fab[data-collapsed="true"] .sidebar-collapse-fab__icon--show { display: inline; }
+.app-shell[data-sidebar-collapsed="true"] .sidebar-collapse-fab { left: 16px; }
+
+@media (min-width: 1024px) {
+  body.focus-toggle-available .sidebar-collapse-fab { display: inline-flex; }
+}
+
 /* === 1024–1179 px === */
 @media (max-width: 1179px) {
   .app-shell {

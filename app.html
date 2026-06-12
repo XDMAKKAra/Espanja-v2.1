@@ -173,6 +173,15 @@
     </button>
   </nav>
 
+  <!-- Focus toggle: hide/show the sidebar while writing or sitting a mock exam.
+       Visibility (writing/exam only, desktop) + collapsed state are owned by
+       js/components/sidebarShell.js. Content reflows via the .app-shell grid. -->
+  <button type="button" id="sidebar-collapse-fab" class="sidebar-collapse-fab" data-collapsed="false" aria-pressed="false" aria-label="Piilota valikko">
+    <svg class="sidebar-collapse-fab__icon sidebar-collapse-fab__icon--hide" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/><path d="m14 10-2 2 2 2"/></svg>
+    <svg class="sidebar-collapse-fab__icon sidebar-collapse-fab__icon--show" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/><path d="m12 10 2 2-2 2"/></svg>
+    <span class="sidebar-collapse-fab__label">Piilota valikko</span>
+  </button>
+
   <main class="app-main" id="app-main" role="main">
     <div class="app-main-inner">
 
