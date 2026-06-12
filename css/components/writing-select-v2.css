@@ -1,0 +1,149 @@
+/* ═══════════════════════════════════════════════════════════════
+   WRITING SELECT V2 — L-V413 Lohko 3: kirjoittamisen tehtävävalitsin.
+   The type picker becomes two radio cards and the topic picker a chip
+   grid; both replace the old full-width rows with leading numerals,
+   trailing arrows and a 3px side-stripe current-state (banned pattern).
+   Selection logic (mode-page.js wireTopicPicker) is untouched: it only
+   needs .mode-topic + .is-current inside the .mode-topics container.
+   Scoped to #screen-mode-writing; reading/vocab keep the old base look.
+   ═══════════════════════════════════════════════════════════════ */
+
+#screen-mode-writing {
+  --ws-paper: #FFFDF8;
+  --ws-ink: var(--ed-ink, #33271F);
+  --ws-ink-soft: var(--ed-ink-muted, #6E5B4D);
+  --ws-brick: var(--ed-accent, #9B2D2A);
+  --ws-brick-soft: rgba(155, 45, 42, 0.07);
+  --ws-line: var(--ed-rule, rgba(110, 85, 60, 0.16));
+  --ws-line-strong: var(--ed-rule-strong, rgba(110, 85, 60, 0.30));
+}
+
+/* Neutralize the base row-list chrome on both writing pickers. */
+#screen-mode-writing .mode-topics--cards,
+#screen-mode-writing .mode-topics--chips {
+  border-top: 0;
+  margin-bottom: 30px;
+}
+
+/* Section label */
+#screen-mode-writing .mode-topics--cards .eyebrow,
+#screen-mode-writing .mode-topics--chips .eyebrow {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.005em;
+  text-transform: none;
+  color: var(--ws-ink);
+  margin: 0 0 12px;
+}
+
+/* ── Shared: strip the old row styles from .mode-topic ─────────── */
+#screen-mode-writing .mode-topics--cards .mode-topic,
+#screen-mode-writing .mode-topics--chips .mode-topic {
+  border: 1px solid var(--ws-line-strong);
+  border-left-width: 1px;
+  background: var(--ws-paper);
+  transition: border-color 140ms ease, background 140ms ease,
+              box-shadow 140ms ease, transform 120ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+#screen-mode-writing .mode-topics--cards .mode-topic:active,
+#screen-mode-writing .mode-topics--chips .mode-topic:active {
+  transform: scale(0.985);
+}
+#screen-mode-writing .mode-topics--cards .mode-topic:hover:not(.is-current),
+#screen-mode-writing .mode-topics--chips .mode-topic:hover:not(.is-current) {
+  background: var(--ws-paper);
+  border-color: color-mix(in oklch, var(--ws-brick) 35%, var(--ws-line-strong));
+  border-left-color: color-mix(in oklch, var(--ws-brick) 35%, var(--ws-line-strong));
+}
+#screen-mode-writing .mode-topics--cards .mode-topic:focus-visible,
+#screen-mode-writing .mode-topics--chips .mode-topic:focus-visible {
+  outline: 2px solid var(--ws-brick);
+  outline-offset: 2px;
+}
+
+/* ── Type picker: two radio cards ──────────────────────────────── */
+#screen-mode-writing .mode-topics--cards .mode-topics__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+@media (max-width: 560px) {
+  #screen-mode-writing .mode-topics--cards .mode-topics__grid {
+    grid-template-columns: 1fr;
+  }
+}
+#screen-mode-writing .mode-topics--cards .mode-topic {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 16px 18px;
+  border-radius: 12px;
+  text-align: left;
+}
+#screen-mode-writing .mode-topics--cards .mode-topic__name {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--ws-ink);
+  flex: initial;
+}
+#screen-mode-writing .mode-topics--cards .mode-topic__desc {
+  font-size: 13.5px;
+  color: var(--ws-ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+#screen-mode-writing .mode-topics--cards .mode-topic.is-current {
+  border-color: var(--ws-brick);
+  border-left-color: var(--ws-brick);
+  background: var(--ws-brick-soft);
+  box-shadow: 0 0 0 1px var(--ws-brick) inset;
+}
+/* Selected check, top-right corner of the card. */
+#screen-mode-writing .mode-topics--cards .mode-topic::after {
+  content: "";
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1.5px solid var(--ws-line-strong);
+  background: var(--ws-paper);
+  transition: background 140ms ease, border-color 140ms ease;
+}
+#screen-mode-writing .mode-topics--cards .mode-topic.is-current::after {
+  border-color: var(--ws-brick);
+  background:
+    var(--ws-brick)
+    url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="%23FCF7EB" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg>')
+    center / 13px 13px no-repeat;
+}
+
+/* ── Topic picker: chip grid ───────────────────────────────────── */
+#screen-mode-writing .mode-topics--chips .mode-topics__grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+#screen-mode-writing .mode-topics--chips .mode-topic {
+  display: inline-flex;
+  align-items: center;
+  width: auto;
+  padding: 10px 18px;
+  min-height: 44px;
+  border-radius: 999px;
+}
+#screen-mode-writing .mode-topics--chips .mode-topic__name {
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--ws-ink);
+  flex: initial;
+}
+#screen-mode-writing .mode-topics--chips .mode-topic.is-current {
+  background: var(--ws-brick);
+  border-color: var(--ws-brick);
+}
+#screen-mode-writing .mode-topics--chips .mode-topic.is-current .mode-topic__name {
+  color: #FCF7EB;
+}

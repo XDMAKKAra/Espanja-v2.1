@@ -859,12 +859,11 @@
   <!-- SCREEN: Mode, Kirjoittaminen -->
   <div id="screen-mode-writing" class="screen">
     <div class="mode-page mode-page--writing">
-      <p class="eyebrow">KIRJOITTAMINEN · YO LYHYT</p>
       <h1 class="display">Kirjoittaminen</h1>
-      <p class="mode-page__sub">Kirjoitustehtävä + YTL-kriteerien mukainen YTL-rubriikin arviointi</p>
+      <p class="mode-page__sub">Kirjoitustehtävä ja arviointi YTL-rubriikilla.</p>
 
       <div class="mode-briefing" id="writing-briefing">
-        <p class="eyebrow">VIIMEKSI · —</p>
+        <p class="eyebrow">Viimeksi</p>
         <div class="mode-briefing__stats">
           <div class="mode-briefing__stat">
             <span><span class="mono-num mono-num--lg" id="writing-last-acc">—</span><small>%</small></span>
@@ -881,62 +880,49 @@
         </div>
       </div>
 
-      <div class="mode-topics" role="radiogroup" aria-labelledby="writing-types-label" id="writing-type-cards">
+      <!-- L-V413 lohko 3 — type picker as two radio cards, topic picker as a
+           chip grid. Same .mode-topic class + data-attrs so mode-page.js
+           wireTopicPicker keeps working untouched. -->
+      <div class="mode-topics mode-topics--cards" role="radiogroup" aria-labelledby="writing-types-label" id="writing-type-cards">
         <p class="eyebrow" id="writing-types-label">Tehtävätyyppi</p>
-        <button class="mode-topic is-current" data-type="short" role="radio" aria-checked="true">
-          <span class="mode-topic__n mono-num mono-num--md">01</span>
-          <span class="mode-topic__body">
+        <div class="mode-topics__grid">
+          <button class="mode-topic is-current" data-type="short" role="radio" aria-checked="true">
             <span class="mode-topic__name">Lyhyt tehtävä</span>
-            <span class="mode-topic__desc">33 p · 160–240 merkkiä</span>
-          </span>
-          <span class="mode-topic__chev" aria-hidden="true">→</span>
-        </button>
-        <button class="mode-topic" data-type="long" role="radio" aria-checked="false">
-          <span class="mode-topic__n mono-num mono-num--md">02</span>
-          <span class="mode-topic__body">
+            <span class="mode-topic__desc">33 pistettä · 160–240 merkkiä</span>
+          </button>
+          <button class="mode-topic" data-type="long" role="radio" aria-checked="false">
             <span class="mode-topic__name">Laajempi tehtävä</span>
-            <span class="mode-topic__desc">66 p · 300–450 merkkiä</span>
-          </span>
-          <span class="mode-topic__chev" aria-hidden="true">→</span>
-        </button>
+            <span class="mode-topic__desc">66 pistettä · 300–450 merkkiä</span>
+          </button>
+        </div>
       </div>
 
-      <div class="mode-topics" role="radiogroup" aria-labelledby="writing-topics-label" id="writing-topic-cards">
+      <div class="mode-topics mode-topics--chips" role="radiogroup" aria-labelledby="writing-topics-label" id="writing-topic-cards">
         <p class="eyebrow" id="writing-topics-label">Aihe</p>
-        <button class="mode-topic is-current" data-topic="general" role="radio" aria-checked="true">
-          <span class="mode-topic__n mono-num mono-num--md">01</span>
-          <span class="mode-topic__name">Sekalaiset</span>
-          <span class="mode-topic__chev" aria-hidden="true">→</span>
-        </button>
-        <button class="mode-topic" data-topic="environment and sustainability" role="radio" aria-checked="false">
-          <span class="mode-topic__n mono-num mono-num--md">02</span>
-          <span class="mode-topic__name">Ympäristö</span>
-          <span class="mode-topic__chev" aria-hidden="true">→</span>
-        </button>
-        <button class="mode-topic" data-topic="social life and relationships" role="radio" aria-checked="false">
-          <span class="mode-topic__n mono-num mono-num--md">03</span>
-          <span class="mode-topic__name">Ihmissuhteet</span>
-          <span class="mode-topic__chev" aria-hidden="true">→</span>
-        </button>
-        <button class="mode-topic" data-topic="travel and places" role="radio" aria-checked="false">
-          <span class="mode-topic__n mono-num mono-num--md">04</span>
-          <span class="mode-topic__name">Matkailu</span>
-          <span class="mode-topic__chev" aria-hidden="true">→</span>
-        </button>
-        <button class="mode-topic" data-topic="culture and identity" role="radio" aria-checked="false">
-          <span class="mode-topic__n mono-num mono-num--md">05</span>
-          <span class="mode-topic__name">Kulttuuri</span>
-          <span class="mode-topic__chev" aria-hidden="true">→</span>
-        </button>
-        <button class="mode-topic" data-topic="work and future" role="radio" aria-checked="false">
-          <span class="mode-topic__n mono-num mono-num--md">06</span>
-          <span class="mode-topic__name">Työ &amp; tulevaisuus</span>
-          <span class="mode-topic__chev" aria-hidden="true">→</span>
-        </button>
+        <div class="mode-topics__grid">
+          <button class="mode-topic is-current" data-topic="general" role="radio" aria-checked="true">
+            <span class="mode-topic__name">Sekalaiset</span>
+          </button>
+          <button class="mode-topic" data-topic="environment and sustainability" role="radio" aria-checked="false">
+            <span class="mode-topic__name">Ympäristö</span>
+          </button>
+          <button class="mode-topic" data-topic="social life and relationships" role="radio" aria-checked="false">
+            <span class="mode-topic__name">Ihmissuhteet</span>
+          </button>
+          <button class="mode-topic" data-topic="travel and places" role="radio" aria-checked="false">
+            <span class="mode-topic__name">Matkailu</span>
+          </button>
+          <button class="mode-topic" data-topic="culture and identity" role="radio" aria-checked="false">
+            <span class="mode-topic__name">Kulttuuri</span>
+          </button>
+          <button class="mode-topic" data-topic="work and future" role="radio" aria-checked="false">
+            <span class="mode-topic__name">Työ &amp; tulevaisuus</span>
+          </button>
+        </div>
       </div>
 
       <p class="mode-page__pro-note hidden" id="writing-pro-note">
-        🔒 Pro-ominaisuus.
+        Pro-ominaisuus.
         <button class="btn-link" style="display:inline;width:auto;padding:0" id="writing-upgrade-btn">Päivitä Pro</button>
       </p>
 
@@ -944,7 +930,7 @@
         <button class="btn--cta" id="btn-start-writing" data-target="writing" data-cta-meta="Lyhyt · {TOPIC}">
           <span class="btn--cta__l">
             <span class="btn--cta__title">Aloita kirjoittaminen</span>
-            <span class="btn--cta__meta">Lyhyt · sekalaiset</span>
+            <span class="btn--cta__meta">Lyhyt · Sekalaiset</span>
           </span>
           <span class="btn--cta__arrow" aria-hidden="true">→</span>
         </button>

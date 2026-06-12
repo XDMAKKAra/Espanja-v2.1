@@ -36,6 +36,12 @@ const TOPIC_LABELS = {
   "social media and technology": "Some & teknologia",
   "health and sports": "Terveys & urheilu",
   environment: "Ympäristö",
+  // writing (L-V413 — the CTA meta line used to print the raw English id)
+  general: "Sekalaiset",
+  "environment and sustainability": "Ympäristö",
+  "social life and relationships": "Ihmissuhteet",
+  "culture and identity": "Kulttuuri",
+  "work and future": "Työ & tulevaisuus",
 };
 
 /**

@@ -279,11 +279,16 @@ function navigateTo(nav, { updateHash = true } = {}) {
     // v278 — paint the sidebar shell synchronously with empty list, then
     // hydrate items[] async so the mode-state header doesn't flicker.
     setSidebarMode("mode", { modeKey: nav, modeLabel: MODE_LABELS[nav], items: [] });
-    import("./lib/sidebarItems.js").then(({ buildSidebarItemsForMode }) => {
-      return buildSidebarItemsForMode(nav).then((items) => {
-        setSidebarMode("mode", { modeKey: nav, modeLabel: MODE_LABELS[nav], items });
-      });
-    }).catch(() => { /* keep empty state on failure — non-blocking */ });
+    // L-V413 lohko 3 — the writing selector gets NO course/lesson skeleton in
+    // the sidebar: the mixed kurssi-lesson list read as unrelated clutter next
+    // to the task picker. Other modes keep their hydrated lists.
+    if (nav !== "writing") {
+      import("./lib/sidebarItems.js").then(({ buildSidebarItemsForMode }) => {
+        return buildSidebarItemsForMode(nav).then((items) => {
+          setSidebarMode("mode", { modeKey: nav, modeLabel: MODE_LABELS[nav], items });
+        });
+      }).catch(() => { /* keep empty state on failure — non-blocking */ });
+    }
   } else if (nav === "home" || nav === "path" || nav === "dashboard") {
     setSidebarMode("home");
   }
@@ -487,6 +492,16 @@ document.querySelectorAll(".mode-topics").forEach((container) => {
   wireTopicPicker(container, {
     ctaEl,
     ctaMetaTemplate: (id) => {
+      // L-V413 lohko 3 — the writing CTA meta reflects BOTH live selections
+      // ("Laajempi · Matkailu"), not a hard-coded "Lyhyt · {TOPIC}" template,
+      // and drops the all-caps shout.
+      if (modePage?.classList.contains("mode-page--writing")) {
+        const type = modePage.querySelector('#writing-type-cards .mode-topic.is-current')?.dataset.type || "short";
+        // Read the chip's visible name so the meta always matches the UI
+        // ("Matkailu", not the shared label-map's "Matkailu & paikat").
+        const topicName = modePage.querySelector('#writing-topic-cards .mode-topic.is-current .mode-topic__name')?.textContent?.trim() || "Sekalaiset";
+        return `${type === "long" ? "Laajempi" : "Lyhyt"} · ${topicName}`;
+      }
       const label = topicLabel(id).toUpperCase();
       const tmpl = ctaEl?.dataset.ctaMeta || "{TOPIC}";
       return tmpl.replace("{TOPIC}", label);
