@@ -47,12 +47,29 @@ die Integration (kotoutuminen/kotouttaminen), die Herkunft (alkuperä/kotipaikka
 **Korjaus = joko merkitä molemmat oikeiksi (vaatii MC-logiikan tuen monelle oikealle) tai vaihtaa
 distraktori.** Arkkitehtuuripäätös → en tehnyt yksin. Lista raw-tiedostoissa luokka="vastausavain".
 
-### B. Hienovaraiset subjunktiivi/aikamuotovalinnat (~10 kpl, es/fr/de)
-Agentit flägäsivät epäluotettavin ref-indeksein subjunktiivin aikamuotoja (es estuviera/esté,
-fuera/sea, hablara/hable, protestaran/protesten, volvería/volviera; fr/de mixed conditional).
-Spot-tarkistuksessa osa osoittautui jo oikeiksi (esim. accept hyväksyi molemmat muodot) ja
-agentin ref osoitti väärään itemiin. **Vaativat itemikohtaisen sisältöhaun + kielioppipäätöksen
-ennen muutosta — en korjannut sokkona.** Jos haluat, ajan kohdistetun toisen passin näihin.
+### B. Hienovaraiset subjunktiivi/aikamuotovalinnat — VERIFIOITU 2. PASSILLA
+Kolme verifiointi-subagenttia luki todelliset tiedostot (ei sheettiä) ja antoi verdiktin per kohta.
+Erotteleva sääntö: **päälauseen aikamuoto** ratkaisee subjunktiivin.
+
+**Korjattu (5, päälause preesens/epägrammaattinen → yksiselitteinen):**
+- es k8 l9 gap: `hablara`→`hable` (päälause 'no logra' = preesens).
+- es k8 l9 mc: `protestaran`→`protesten` (correct_index 1→0, päälause 'no mejora' = preesens) + selitys.
+- es k8 l1 vocab: suomi `vierailisi`→`vieraisin` (yo-muoto, persoonavirhe).
+- de k7 l4: `lebst`→`lebtest` (Konjunktiv II edellyttää konjunktiivia wenn-lauseessa).
+- de k4 l9: `Als`→`Wenn` (correct_index 2→3; als+preesens on kategorisesti epägrammaattista) + selitys.
+
+**Jätetty (verdikti KIISTANALAINEN tai pedagoginen intentio):**
+- es k7 l5 `esté`/`estuviera` ('niega que...el día del robo'): molemmat esiintyvät natiivitekstissä.
+- es k8 l4 `volviera`/`volvería` ('dijo que'): epäsuora kerronta hyväksyy molemmat; MC, ei voi merkitä kahta.
+- es k8 l1 `fuera`/`sea` ('No creo que...posible'): 'fuera' puolustettavissa hypoteettisena ("ei olisi ollut mahdollista").
+- es k8 l11 `intentara`: päälause 'eran mínimos' on mennyt → imperf. subj. johdonmukainen; vain P1 (indikatiivi-accept puuttuu), mutta lesson opettaa tarkoituksella imperf. subj. → ei lisätty.
+- fr k8 l5 mixed conditional ('Si nous avions réagi...ne serait pas'): item merkitsee validin mixed
+  conditionalin virheeksi, MUTTA choices on rakennettu "sekoitus=virhe" -premissin varaan → vaatii
+  itemin uudelleenmuotoilun (design-päätös), ei arvon flippiä.
+- fr k5 l5 futur `vendrons`/`allons vendre`: selitys myöntää molemmat, mutta MC merkitsee yhden → sama
+  luokka kuin synonyymi-distraktorit (A).
+- de k7 l4 accept 'wenn du im Lotto gewinnst' (indikatiivi): puhekielessä esiintyy; P1 yli-salliva accept,
+  ei poistettu (Konjunktiv-muoto säilyy accept-listassa).
 
 ### C. Kaksoisaukko mc-formaatissa (muutama, de/es)
 Pari mc-itemiä yrittää testata kahta aukkoa (esim. es era/estaba, de Plusquamperfekt-parit) yhdessä
