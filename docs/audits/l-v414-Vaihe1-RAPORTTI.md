@@ -38,14 +38,18 @@ accepted_alternates-listalta.
 
 ## EI korjattu — Marcelin päätettäväksi
 
-### A. Synonyymi-distraktori -patterni (~12 kpl, kaikki kielet)
-Vocab-MC-tehtävissä toistuva ilmiö: oikeaksi merkitty suomennos OK, mutta jokin distraktori on
-*myös* oikea synonyymi. Esim. es apreciar (arvostaa/arvioida), representar (kuvata/edustaa);
-fr l'oncle (eno/setä), le neveu (veljenpoika/sisarenpoika), à tout à l'heure (pian/nähdään kohta),
-débattre (väitellä/keskustella); de der Vorteil (etu/hyöty), der Standpunkt (näkökulma/kanta),
-die Integration (kotoutuminen/kotouttaminen), die Herkunft (alkuperä/kotipaikka), darstellen (esittää/kuvata).
-**Korjaus = joko merkitä molemmat oikeiksi (vaatii MC-logiikan tuen monelle oikealle) tai vaihtaa
-distraktori.** Arkkitehtuuripäätös → en tehnyt yksin. Lista raw-tiedostoissa luokka="vastausavain".
+### A. Synonyymi-distraktori -patterni — RATKAISTU (valtaosa false alarm)
+Marcelin päätös: vaihda synonyymi-distraktori selvästi vääräksi. Kielikohtaiset asiantuntija-subagentit
+tarkistivat ~17 flägättyä itemiä. **Tulos: suurin osa oli vääriä hälytyksiä** — oppituntien tekijät
+olivat jo niputtaneet molemmat merkitykset YHTEEN choiceen (esim. "setä / eno", "etu / hyöty",
+"väitellä / keskustella", "Cependant / Néanmoins", "näkökulma / kanta"). Ekstraktorin `*`-merkintä
+sai review-agentit lukemaan niputuksen erillisinä vaihtoehtoina.
+- fr: kaikki 6 niputettuja → ei muutoksia.
+- es: 2 aitoa korjattu (k4 l1 'de niño' distraktori→'joven'; k4 l8 oscuro-distraktori 'tumma'→'meluisa'),
+  3 niputettua.
+- de: 3 korjattu (k8 l1 Standpunkt-distraktori→'tunnetila'; k6 l3 Integration 'kotouttaminen'→'hajauttaminen';
+  k7 l2 Herkunft: keyed 'alkuperä / kotipaikka'→'alkuperä / syntyperä', koska 'kotipaikka' ≠ Herkunft),
+  2 niputettua.
 
 ### B. Hienovaraiset subjunktiivi/aikamuotovalinnat — VERIFIOITU 2. PASSILLA
 Kolme verifiointi-subagenttia luki todelliset tiedostot (ei sheettiä) ja antoi verdiktin per kohta.
