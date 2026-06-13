@@ -3,7 +3,7 @@
 Vain viimeisten ~10 loopin tiivistelmät, **uusin ylimpänä**. Yksi rivi per loop (`- YYYY-MM-DD L-VXXX: <yksi virke>`).
 Vanhempi bracket-historia: `IMPROVEMENTS-archive.md`. Pre-audit-historia: `docs/archive/IMPROVEMENTS_PRE_AUDIT.md`. Tarkka muutoshistoria: `git log`.
 
-- 2026-06-13 L-V414 Vaihe 1: semanttinen vastausavain-pass (27 Sonnet-agenttia, es+fr+de) → ~80 verifioitua korjausta (de-WT umlaut-restaurointi, kieli-/accept-/suomi-virheet); synonyymi-distraktorit + hienovaraiset subjunktiivit jätetty Marcelille (raportti l-v414-Vaihe1-RAPORTTI.md)
+- 2026-06-13 L-V414 Vaihe 1+1b: semanttinen vastausavain-pass (es+fr+de, ~30 agenttia) → ~95 verifioitua korjausta (de-WT umlaut-restaurointi, kieli-/accept-/suomi-virheet, 5 subjunktiivia, 5 synonyymi-distraktoria, 9 reading/true_false-aukkoa); validaattori P0=0; kiistanalaiset design-kysymykset raportissa l-v414-Vaihe1-RAPORTTI.md
 - 2026-06-13 L-V414: korjattu fr/kurssi_6/lesson_7 subjonctif-vastausavain (les glaciers → fondent, ei fonde); fr-vocab es-avain todettu skeemakonventioksi (ei bugi)
 
 - 2026-06-13 L-V414: tehtäväsisällön lopputarkastus Vaihe 0 — 889 saksan/ranskan gap_fill oli rikki tuotannossa (`___`-syntaksi, frontti parsii vain `{N}`), konvertoitu; 38 saksan Konjunktiv-gap uudelleenjäsennetty, 41 mc-duplikaattia + 12 gap-mismatchia + 3 match-skeemaa + 1 vastausavain korjattu; validaattori kovetettu (P0 2052→0). Semanttinen vastausavain-pass lykätty.

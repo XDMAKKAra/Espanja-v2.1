@@ -79,6 +79,28 @@ Erotteleva sääntö: **päälauseen aikamuoto** ratkaisee subjunktiivin.
 Pari mc-itemiä yrittää testata kahta aukkoa (esim. es era/estaba, de Plusquamperfekt-parit) yhdessä
 valinnassa. Rakenteellinen uudelleenmuotoilu (jaa kahdeksi tai muuta gap_filliksi) = ei pikafix.
 
+## Vaihe 1b — aukkojen sulku (reading/true_false + pikkupankit)
+Korjattu ekstraktori (`scripts/extract-gap-sheets.mjs`): täydet lukutekstit (ei clippiä),
+true_false `statement`-kenttä mukaan, short_answer, + aiemmin ohitetut `diagnose_questions.json`
+ja `quick-reviews.json`. 3 uutta verifiointiagenttia (gap_{es,fr,de}.txt).
+
+**Korjattu (9 itemiä, verifioitu lukemalla oikeat tiedostot):**
+- examPools/reading R-C-003 q2: kaksi oikeaa vaihtoehtoa (B "Kuusi vuotta" + C "Yli viisi vuotta",
+  12→18=6v) → B muutettu "Kahdeksan vuotta", nyt yksi oikea.
+- de animals-08 q3 true_false: väite sisälsi absurdin "kurpitsoja" (saksa Stare=kottaraiset) → "lokkeja".
+- de health_sports-08 q3 true_false: väite "ensimmäinen" mutta teksti "einer der ersten" (yksi
+  ensimmäisistä) → väite korjattu todeksi.
+- de culture-05 q3 true_false: "tasan vuosi" → "noin vuosi" (teksti 'Ein Jahr später').
+- de health_sports-02 q1: kysymys selvennetty "Minkä seuraavista päivistä" (tekstissä 2 vegepäivää,
+  vaihtoehdoissa 1).
+- es culture-07 q3 suomi: "pinsseli" → "sivellin"; es health-01 q3: "jalkapalloilijaksI"-typo.
+- fr social-03 q4: nimi "Yasmínelle" → "Yasminelle"; fr culture-09 q1: "rotusorron takia" → "alta".
+
+**Kattavuusaukko jäljellä:** true_false/short_answer -väitteet on nyt tarkastettu, mutta tämäkin on
+yksi LLM-passi — ei adversariaalista kaksoispassia. 16 000 itemissä voi yhä olla yksittäisiä
+löytymättömiä semanttisia virheitä. P0-rakenne = 0, mutta "todistetusti virheetön" ei ole saavutettavissa
+yhdellä passilla.
+
 ## Väärät hälytykset (ei toimenpiteitä)
 - **reading-bank fr/de q3 "väite tyhjä / selitys tekstin ulkopuolista":** ekstraktioskriptin artefakti.
   true_false-itemeissä on `statement`-kenttä jota skripti ei tulostanut, ja `text` clipattiin 1200
