@@ -1,69 +1,114 @@
-.aider*
-_audit/
+# ==========================================================================
+# Puheo .gitignore — GitHub sisältää VAIN sen mitä Vercel-deploy + ajava
+# appi tarvitsee. Kaikki dev/sisäinen/Claude-roina pidetään lokaalina.
+# Sääntö: jos tiedosto ei vaikuta tuotantokoodiin tai deployhyn -> tänne.
+# ==========================================================================
+
+# --- Salaisuudet & ympäristö ---
 .env
 .env.local
 .env.*.local
 .env.production
 .env.development
+.env.TARVITTAVAT-AVAIMET.txt
 *.pem
 *.key
-node_modules/
 
-# L-LIVE-AUDIT-P2 — sourcemaps for bundles (committed bundles serve from repo root)
+# --- Riippuvuudet & OS ---
+node_modules/
+.DS_Store
+*.log
+
+# --- Build-artefaktien sourcemapit (bundlet itsessään committataan) ---
 app.bundle.js.map
 app.bundle.css.map
-# F-ARCH-1 §A — code-split chunk sourcemaps (chunks themselves are committed
-# so `npm run build` → deploy works, but their maps stay local).
 chunks/*.map
+
+# --- Tietokanta-tiedostot (lokaali) ---
 *.db
 *.db-shm
 *.db-wal
-.DS_Store
-*.log
+
+# --- Vercel / deploy-työkalut ---
 .vercel
 .agents/
 
-# Local Claude / Continue / scratch setup — do not commit
+# ==========================================================================
+# DEV / TESTIT / TYÖKALUT — ei koskaan GitHubiin
+# ==========================================================================
+tests/
+test-results/
+playwright-report/
+coverage/
+coverage
+playwright.config.js
+vitest.config.js
+.github/
+
+# scripts/ on dev-skriptejä — vain build tarvitsee kaksi tiedostoa
+scripts/*
+!scripts/build-bundle.mjs
+!scripts/bundle-entry.css
+
+# ==========================================================================
+# CLAUDE / AGENT-KONFIGURAATIO — lokaali, ei GitHubiin
+# ==========================================================================
 .claude/
 .continue/
 .superpowers/
+.ruflo/
+.impeccable
 skills/
 skills-lock.json
 spanish/
 graphify-out/
-scripts/screenshot_recon.py
+CLAUDE.md
 
-# Audit / pass artefacts (local only — see training/, ui-ux/, audit/ in work dir)
-audit/
-ui-ux/
-training/
-*-prompt.md
+# ==========================================================================
+# SISÄISET DOKUMENTIT & SUUNNITELMAT — lokaali, ei GitHubiin
+# ==========================================================================
+docs/
+plans/
+agent-prompts/
+cost/
+testing/
+fixes/
+viewport-fix/
+AGENT_PROMPT_STANDARDS.md
+AGENT_STATE.md
+API.md
+AUDIT_LIVE_DASHBOARD.md
+BUGS.md
+CHANGELOG.md
+CONVENTIONS.md
+CURRICULUM_SPEC.md
+DESIGN.md
+IMPROVEMENTS.md
+IMPROVEMENTS-archive.md
+LANDING_PLAN.md
+PLAN.md
+PRODUCT.md
+REMONTTI_AUDIT.md
+ROADMAP.md
+_COMMUNITY_*.md
 
-# Playwright test artifacts
-test-results/
-playwright-report/
-coverage
-
-# Agent test outputs — heavy binaries, regenerable per loop
-scripts/agent-test/screenshots/
-scripts/agent-test/inspiration/
-scripts/agent-test/lighthouse-*.json
-scripts/agent-test/audit-report.json
-
-# Remotion preview reel — captures + rendered MP4s are regenerable
+# ==========================================================================
+# MARKKINOINTI / SOME -SISÄLTÖMOOTTORI — raskaat assetit, lokaali
+# ==========================================================================
+social/
 marketing/preview/public/captures/
 marketing/preview/out/
 marketing/preview/node_modules/
+screenshots/
+tmp/
+audit/
 audit-screens/
+ui-ux/
+training/
+_audit/
+*-prompt.md
 
-# L-V340 load-test generated artifacts
-scripts/load-test-results.json
-scripts/load-test-server.log
-
-# L-V399 cleanup — local-only dev noise
-# personal key template (refers to local paths)
-.env.TARVITTAVAT-AVAIMET.txt
-# throwaway scratch capture artifacts
-tests/_*
-# machine-specific pixel baselines (e2e-visual-layer harness)
-tests/*-snapshots/
+# --- Editori / muu lokaali ---
+.vscode/
+.obsidian/
+.aider*
